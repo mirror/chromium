@@ -29,11 +29,7 @@ class MODULES_EXPORT MediaControlInputElement : public HTMLInputElement,
   void SetOverflowElementIsWanted(bool) final;
   void MaybeRecordDisplayed() final;
 
-  virtual void Trace(blink::Visitor*);
-
-  MediaControlInputElement* OverflowElementForTests() const {
-    return overflow_element_;
-  }
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   MediaControlInputElement(MediaControlsImpl&, MediaControlElementType);
@@ -66,10 +62,10 @@ class MODULES_EXPORT MediaControlInputElement : public HTMLInputElement,
   // Sets/removes a CSS class from this element based on |should_have_class|.
   void SetClass(const AtomicString& class_name, bool should_have_class);
 
-  virtual void UpdateDisplayType();
-
  private:
   friend class MediaControlInputElementTest;
+
+  virtual void UpdateDisplayType();
 
   bool IsMouseFocusable() const override;
   bool IsMediaControlElement() const final;

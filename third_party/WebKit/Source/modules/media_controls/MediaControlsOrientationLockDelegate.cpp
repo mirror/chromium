@@ -10,7 +10,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/Screen.h"
 #include "core/frame/ScreenOrientationController.h"
-#include "core/html/media/HTMLVideoElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/page/ChromeClient.h"
 #include "modules/device_orientation/DeviceOrientationData.h"
 #include "modules/device_orientation/DeviceOrientationEvent.h"
@@ -471,7 +471,7 @@ void MediaControlsOrientationLockDelegate::
               kLockToAnyDelay);
 }
 
-void MediaControlsOrientationLockDelegate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsOrientationLockDelegate) {
   EventListener::Trace(visitor);
   visitor->Trace(video_element_);
 }

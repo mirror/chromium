@@ -12,16 +12,28 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/style/ComputedStyle.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/graphics/Color.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class LayoutThemeTest : public PageTestBase {
+class LayoutThemeTest : public ::testing::Test {
  protected:
+  void SetUp() override;
+  Document& GetDocument() const { return *document_; }
   void SetHtmlInnerHTML(const char* html_content);
+
+ private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  Persistent<Document> document_;
 };
+
+void LayoutThemeTest::SetUp() {
+  dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+  document_ = &dummy_page_holder_->GetDocument();
+  DCHECK(document_);
+}
 
 void LayoutThemeTest::SetHtmlInnerHTML(const char* html_content) {
   GetDocument().documentElement()->SetInnerHTMLFromString(

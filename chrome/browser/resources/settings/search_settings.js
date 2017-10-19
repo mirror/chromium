@@ -213,7 +213,7 @@ cr.define('settings', function() {
     // Dynamically position the bubble at the edge the associated control
     // element.
     var updatePosition = function() {
-      searchBubble.style.top = element.offsetTop +
+      searchBubble.style.top =
           (innards.classList.contains('above') ? -searchBubble.offsetHeight :
                                                  element.offsetHeight) +
           'px';

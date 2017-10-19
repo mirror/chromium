@@ -7,6 +7,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "net/base/filename_util.h"
 #include "net/base/mime_util.h"
+#include "third_party/WebKit/common/mime_util/mime_util.h"
 
 namespace content {
 
@@ -64,8 +65,7 @@ base::Optional<base::FilePath> DropData::GetSafeFilenameForImageFileContents()
   std::string mime_type;
   if (net::GetWellKnownMimeTypeFromExtension(file_contents_filename_extension,
                                              &mime_type) &&
-      base::StartsWith(mime_type, "image/",
-                       base::CompareCase::INSENSITIVE_ASCII)) {
+      blink::IsSupportedImageMimeType(mime_type)) {
     return file_name.ReplaceExtension(file_contents_filename_extension);
   }
   return base::nullopt;

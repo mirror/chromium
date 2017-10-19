@@ -204,16 +204,16 @@ bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
   sk_sp<SkColorSpace> src_sk_color_space = nullptr;
   if (u8_array) {
     src_sk_color_space =
-        CanvasColorParams(src_color_space, kRGBA8CanvasPixelFormat, kNonOpaque)
+        CanvasColorParams(src_color_space, kRGBA8CanvasPixelFormat)
             .GetSkColorSpaceForSkSurfaces();
   } else {
     src_sk_color_space =
-        CanvasColorParams(src_color_space, kF16CanvasPixelFormat, kNonOpaque)
+        CanvasColorParams(src_color_space, kF16CanvasPixelFormat)
             .GetSkColorSpaceForSkSurfaces();
   }
 
   sk_sp<SkColorSpace> dst_sk_color_space =
-      CanvasColorParams(dst_color_space, dst_pixel_format, kNonOpaque)
+      CanvasColorParams(dst_color_space, dst_pixel_format)
           .GetSkColorSpaceForSkSurfaces();
 
   // When the input dataArray is in Uint16, we normally should convert the
@@ -507,6 +507,5 @@ TEST_F(ImageDataTest, ImageDataTooBigToAllocateDoesNotCrash) {
   EXPECT_EQ(image_data, nullptr);
 }
 
-#undef MAYBE_CreateImageDataTooBig
 }  // namspace
 }  // namespace blink

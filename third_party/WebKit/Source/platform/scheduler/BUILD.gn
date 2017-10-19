@@ -35,6 +35,8 @@ jumbo_source_set("scheduler") {
     "base/time_converter.h",
     "base/time_domain.cc",
     "base/time_domain.h",
+    "base/trace_helper.cc",
+    "base/trace_helper.h",
     "base/virtual_time_domain.cc",
     "base/virtual_time_domain.h",
     "base/work_queue.cc",
@@ -123,6 +125,7 @@ jumbo_source_set("scheduler") {
     "//base",
     "//cc",
     "//device/base/synchronization",
+    "//skia",
     "//third_party/WebKit/Source/platform:make_platform_generated",
     "//third_party/WebKit/Source/platform/instrumentation",
     "//third_party/WebKit/Source/platform/wtf",
@@ -159,6 +162,7 @@ jumbo_source_set("test_support") {
   deps = [
     "//base",
     "//base/test:test_support",
+    "//skia",
   ]
 
   configs += [ "//third_party/WebKit/Source/platform:blink_platform_config" ]
@@ -199,7 +203,6 @@ jumbo_source_set("unit_tests") {
     "renderer/web_frame_scheduler_impl_unittest.cc",
     "renderer/web_view_scheduler_impl_unittest.cc",
     "renderer/webthread_impl_for_renderer_scheduler_unittest.cc",
-    "util/tracing_helper_unittest.cc",
   ]
 
   deps = [
@@ -207,6 +210,7 @@ jumbo_source_set("unit_tests") {
     "//base/test:test_support",
     "//components/viz/common",
     "//components/viz/test:test_support",
+    "//skia",
     "//testing/gmock",
     "//testing/gtest",
   ]
@@ -224,6 +228,7 @@ source_set("perf_tests") {
   deps = [
     "//base",
     "//base/test:test_support",
+    "//skia",
     "//testing/gmock",
     "//testing/gtest",
     "//testing/perf",

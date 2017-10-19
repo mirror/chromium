@@ -77,7 +77,7 @@ String ToHexString(const void* p) {
 }
 
 void SetCallStack(TracedValue* value) {
-  static const unsigned char* trace_category_enabled = nullptr;
+  static const unsigned char* trace_category_enabled = 0;
   WTF_ANNOTATE_BENIGN_RACE(&trace_category_enabled, "trace_event category");
   if (!trace_category_enabled)
     trace_category_enabled = TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(
@@ -103,7 +103,7 @@ void InspectorTraceEvents::Dispose() {
   instrumenting_agents_ = nullptr;
 }
 
-void InspectorTraceEvents::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorTraceEvents) {
   visitor->Trace(instrumenting_agents_);
   InspectorAgent::Trace(visitor);
 }
@@ -370,7 +370,7 @@ const char InspectorScheduleStyleInvalidationTrackingEvent::kRuleSet[] =
     "ruleset";
 
 const char* ResourcePriorityString(ResourceLoadPriority priority) {
-  const char* priority_string = nullptr;
+  const char* priority_string = 0;
   switch (priority) {
     case kResourceLoadPriorityVeryLow:
       priority_string = "VeryLow";

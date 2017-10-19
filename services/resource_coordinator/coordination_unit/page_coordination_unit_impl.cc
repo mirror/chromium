@@ -5,7 +5,6 @@
 #include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
 
 #include "base/logging.h"
-#include "base/time/default_tick_clock.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/observers/coordination_unit_graph_observer.h"
 
@@ -14,30 +13,9 @@ namespace resource_coordinator {
 PageCoordinationUnitImpl::PageCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitBase(id, std::move(service_ref)),
-      clock_(new base::DefaultTickClock()) {}
+    : CoordinationUnitBase(id, std::move(service_ref)) {}
 
 PageCoordinationUnitImpl::~PageCoordinationUnitImpl() = default;
-
-void PageCoordinationUnitImpl::SetVisibility(bool visible) {
-  SetProperty(mojom::PropertyType::kVisible, visible);
-}
-
-void PageCoordinationUnitImpl::SetUKMSourceId(int64_t ukm_source_id) {
-  SetProperty(mojom::PropertyType::kUKMSourceId, ukm_source_id);
-}
-
-void PageCoordinationUnitImpl::OnFaviconUpdated() {
-  SendEvent(mojom::Event::kFaviconUpdated);
-}
-
-void PageCoordinationUnitImpl::OnTitleUpdated() {
-  SendEvent(mojom::Event::kTitleUpdated);
-}
-
-void PageCoordinationUnitImpl::OnMainFrameNavigationCommitted() {
-  SendEvent(mojom::Event::kNavigationCommitted);
-}
 
 std::set<CoordinationUnitBase*>
 PageCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
@@ -94,25 +72,7 @@ bool PageCoordinationUnitImpl::IsVisible() const {
   return is_visible;
 }
 
-base::TimeDelta PageCoordinationUnitImpl::TimeSinceLastNavigation() const {
-  if (navigation_committed_time_.is_null())
-    return base::TimeDelta();
-  return clock_->NowTicks() - navigation_committed_time_;
-}
-
-base::TimeDelta PageCoordinationUnitImpl::TimeSinceLastVisibilityChange()
-    const {
-  return clock_->NowTicks() - visibility_change_time_;
-}
-
-void PageCoordinationUnitImpl::SetClockForTest(
-    std::unique_ptr<base::TickClock> test_clock) {
-  clock_ = std::move(test_clock);
-}
-
 void PageCoordinationUnitImpl::OnEventReceived(const mojom::Event event) {
-  if (event == mojom::Event::kNavigationCommitted)
-    navigation_committed_time_ = clock_->NowTicks();
   for (auto& observer : observers())
     observer.OnPageEventReceived(this, event);
 }
@@ -120,8 +80,6 @@ void PageCoordinationUnitImpl::OnEventReceived(const mojom::Event event) {
 void PageCoordinationUnitImpl::OnPropertyChanged(
     const mojom::PropertyType property_type,
     int64_t value) {
-  if (property_type == mojom::PropertyType::kVisible)
-    visibility_change_time_ = clock_->NowTicks();
   for (auto& observer : observers()) {
     observer.OnPagePropertyChanged(this, property_type, value);
   }
@@ -140,8 +98,9 @@ double PageCoordinationUnitImpl::CalculateCPUUsage() {
 
     int64_t process_cpu_usage;
     if (process_coordination_unit->GetProperty(mojom::PropertyType::kCPUUsage,
-                                               &process_cpu_usage))
+                                               &process_cpu_usage)) {
       cpu_usage += (double)process_cpu_usage / pages_in_process;
+    }
   }
 
   return cpu_usage;

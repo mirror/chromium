@@ -60,27 +60,6 @@ std::unique_ptr<GlobalDumpGraph> GraphProcessor::ComputeMemoryGraph(
   for (auto& pid_to_dump : process_dumps) {
     AddEdges(pid_to_dump.second, global_graph.get());
   }
-
-  auto* global_root = global_graph->shared_memory_graph()->root();
-
-  // Third pass: mark recursively nodes as weak if they don't have an associated
-  // dump and all their children are weak.
-  MarkImplicitWeakParentsRecursively(global_root);
-  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
-    MarkImplicitWeakParentsRecursively(pid_to_process.second->root());
-  }
-
-  // Fourth pass: recursively mark nodes as weak if they own a node which is
-  // weak or if they have a parent who is weak.
-  {
-    std::set<const Node*> visited;
-    MarkWeakOwnersAndChildrenRecursively(global_root, &visited);
-    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
-      MarkWeakOwnersAndChildrenRecursively(pid_to_process.second->root(),
-                                           &visited);
-    }
-  }
-
   return global_graph;
 }
 
@@ -88,29 +67,22 @@ void GraphProcessor::CollectAllocatorDumps(
     const base::trace_event::ProcessMemoryDump& source,
     GlobalDumpGraph* global_graph,
     Process* process_graph) {
-  // Turn each dump into a node in the graph of dumps in the appropriate
-  // process dump or global dump.
   for (const auto& path_to_dump : source.allocator_dumps()) {
     const std::string& path = path_to_dump.first;
     const MemoryAllocatorDump& dump = *path_to_dump.second;
 
-    // All global dumps (i.e. those starting with global/) should be redirected
-    // to the shared graph.
     bool is_global = base::StartsWith(path, "global/", CompareCase::SENSITIVE);
-    Process* process =
+    Process* graph =
         is_global ? global_graph->shared_memory_graph() : process_graph;
 
     Node* node;
     auto node_iterator = global_graph->nodes_by_guid().find(dump.guid());
     if (node_iterator == global_graph->nodes_by_guid().end()) {
-      // Storing whether the process is weak here will allow for later
-      // computations on whether or not the node should be removed.
-      bool is_weak = dump.flags() & MemoryAllocatorDump::Flags::WEAK;
-      node = process->CreateNode(dump.guid(), path, is_weak);
+      node = graph->CreateNode(dump.guid(), path);
     } else {
       node = node_iterator->second;
 
-      DCHECK_EQ(node, process->FindNode(path))
+      DCHECK_EQ(node, graph->FindNode(path))
           << "Nodes have different paths but same GUIDs";
       DCHECK(is_global) << "Multiple nodes have same GUID without being global";
     }
@@ -151,68 +123,6 @@ void GraphProcessor::AddEdges(
       global_graph->AddNodeOwnershipEdge(source_it->second, target_it->second,
                                          edge.importance);
     }
-  }
-}
-
-void GraphProcessor::MarkImplicitWeakParentsRecursively(Node* node) {
-  // Ensure that we aren't in a bad state where we have an implicit node
-  // which doesn't have any children.
-  DCHECK(node->is_explicit() || !node->children()->empty());
-
-  // Check that at this stage, any node which is weak is only so because
-  // it was explicitly created as such.
-  DCHECK(!node->is_weak() || node->is_explicit());
-
-  // If a node is already weak then all children will be marked weak at a
-  // later stage.
-  if (node->is_weak())
-    return;
-
-  // Recurse into each child and find out if all the children of this node are
-  // weak.
-  bool all_children_weak = true;
-  for (auto& path_to_child : *node->children()) {
-    MarkImplicitWeakParentsRecursively(path_to_child.second);
-    all_children_weak = all_children_weak && path_to_child.second->is_weak();
-  }
-
-  // If all the children are weak and the parent is only an implicit one then we
-  // consider the parent as weak as well and we will later remove it.
-  node->set_weak(!node->is_explicit() && all_children_weak);
-}
-
-void GraphProcessor::MarkWeakOwnersAndChildrenRecursively(
-    Node* node,
-    std::set<const Node*>* visited) {
-  // If we've already visited this node then nothing to do.
-  if (visited->count(node) != 0)
-    return;
-
-  // If we haven't visited the node which this node owns then wait for that.
-  if (node->owns_edge() && visited->count(node->owns_edge()->target()) == 0)
-    return;
-
-  // If we haven't visited the node's parent then wait for that.
-  if (node->parent() && visited->count(node->parent()) == 0)
-    return;
-
-  // If either the node we own or our parent is weak, then mark this node
-  // as weak.
-  if ((node->owns_edge() && node->owns_edge()->target()->is_weak()) ||
-      (node->parent() && node->parent()->is_weak())) {
-    node->set_weak(true);
-  }
-  visited->insert(node);
-
-  // Recurse into each owner node to mark any other nodes.
-  for (auto* owned_by_edge : *node->owned_by_edges()) {
-    MarkWeakOwnersAndChildrenRecursively(owned_by_edge->source(), visited);
-  }
-
-  // Recurse into each child and find out if all the children of this node are
-  // weak.
-  for (const auto& path_to_child : *node->children()) {
-    MarkWeakOwnersAndChildrenRecursively(path_to_child.second, visited);
   }
 }
 

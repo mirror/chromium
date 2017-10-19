@@ -17,7 +17,6 @@ namespace content {
 class BrowserChildProcessHostDelegate;
 class BrowserChildProcessHostImpl;
 struct ChildProcessData;
-class ChildProcessHost;
 
 // This class allows iteration through either all child processes, or ones of a
 // specific type, depending on which constructor is used.  Note that this should
@@ -36,7 +35,6 @@ class CONTENT_EXPORT BrowserChildProcessHostIterator {
   const ChildProcessData& GetData();
   bool Send(IPC::Message* message);
   BrowserChildProcessHostDelegate* GetDelegate();
-  ChildProcessHost* GetHost();
 
  private:
   bool all_;

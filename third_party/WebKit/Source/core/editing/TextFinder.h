@@ -116,7 +116,7 @@ class CORE_EXPORT TextFinder final
    public:
     FindMatch(Range*, int ordinal);
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
 
     Member<Range> range_;
 
@@ -128,7 +128,7 @@ class CORE_EXPORT TextFinder final
     FloatRect rect_;
   };
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   class DeferredScopeStringMatches;

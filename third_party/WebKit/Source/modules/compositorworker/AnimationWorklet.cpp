@@ -48,7 +48,7 @@ WorkletGlobalScopeProxy* AnimationWorklet::CreateGlobalScope() {
   return proxy;
 }
 
-void AnimationWorklet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationWorklet) {
   Worklet::Trace(visitor);
 }
 

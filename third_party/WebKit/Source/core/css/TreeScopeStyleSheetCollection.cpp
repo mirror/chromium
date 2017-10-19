@@ -97,7 +97,7 @@ void TreeScopeStyleSheetCollection::UpdateStyleSheetList() {
   SwapSheetsForSheetList(new_list);
 }
 
-void TreeScopeStyleSheetCollection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TreeScopeStyleSheetCollection) {
   visitor->Trace(tree_scope_);
   visitor->Trace(style_sheet_candidate_nodes_);
   StyleSheetCollection::Trace(visitor);

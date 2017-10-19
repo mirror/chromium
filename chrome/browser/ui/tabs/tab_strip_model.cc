@@ -189,13 +189,13 @@ class TabStripModel::WebContentsData : public content::WebContentsObserver {
   // navigation within that tab, the group relationship is lost). This
   // property can safely be used to implement features that depend on a
   // logical group of related tabs.
-  WebContents* group_ = nullptr;
+  WebContents* group_;
 
   // The owner models the same relationship as group, except it is more
   // easily discarded, e.g. when the user switches to a tab not part of the
   // same group. This property is used to determine what tab to select next
   // when one is closed.
-  WebContents* opener_ = nullptr;
+  WebContents* opener_;
 
   // True if our group should be reset the moment selection moves away from
   // this tab. This is the case for tabs opened in the foreground at the end
@@ -203,13 +203,13 @@ class TabStripModel::WebContentsData : public content::WebContentsObserver {
   // before selection moves elsewhere, their opener is selected. But if
   // selection shifts to _any_ tab (including their opener), the group
   // relationship is reset to avoid confusing close sequencing.
-  bool reset_group_on_select_ = false;
+  bool reset_group_on_select_;
 
   // Is the tab pinned?
-  bool pinned_ = false;
+  bool pinned_;
 
   // Is the tab interaction blocked by a modal dialog?
-  bool blocked_ = false;
+  bool blocked_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsData);
 };
@@ -218,7 +218,12 @@ TabStripModel::WebContentsData::WebContentsData(TabStripModel* tab_strip_model,
                                                 WebContents* contents)
     : content::WebContentsObserver(contents),
       contents_(contents),
-      tab_strip_model_(tab_strip_model) {}
+      tab_strip_model_(tab_strip_model),
+      group_(nullptr),
+      opener_(nullptr),
+      reset_group_on_select_(false),
+      pinned_(false),
+      blocked_(false) {}
 
 void TabStripModel::WebContentsData::SetWebContents(WebContents* contents) {
   contents_ = contents;
@@ -241,6 +246,8 @@ void TabStripModel::WebContentsData::WebContentsDestroyed() {
 TabStripModel::TabStripModel(TabStripModelDelegate* delegate, Profile* profile)
     : delegate_(delegate),
       profile_(profile),
+      closing_all_(false),
+      in_notify_(false),
       weak_factory_(this) {
   DCHECK(delegate_);
   order_controller_.reset(new TabStripModelOrderController(this));
@@ -1287,10 +1294,9 @@ void TabStripModel::NotifyIfActiveTabChanged(WebContents* old_contents,
                  : TabStripModelObserver::CHANGE_REASON_NONE;
     CHECK(!in_notify_);
     in_notify_ = true;
-    for (auto& observer : observers_) {
+    for (auto& observer : observers_)
       observer.ActiveTabChanged(old_contents, new_contents, active_index(),
                                 reason);
-    }
     in_notify_ = false;
   }
 }

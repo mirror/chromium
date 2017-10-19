@@ -199,7 +199,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
       cast_sink2, &socket2, CastMediaSinkServiceImpl::SinkSource::kMdns);
   EXPECT_THAT(
       tester.GetAllSamples(
-          CastDeviceCountMetrics::kHistogramCastDiscoverySinkSource),
+          CastDeviceCountMetrics::kHistogramCastCachedSinkResolved),
       ElementsAre(Bucket(
           static_cast<int>(CastMediaSinkServiceImpl::SinkSource::kMdns), 1)));
 
@@ -207,7 +207,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
       cast_sink3, &socket3, CastMediaSinkServiceImpl::SinkSource::kDial);
   EXPECT_THAT(
       tester.GetAllSamples(
-          CastDeviceCountMetrics::kHistogramCastDiscoverySinkSource),
+          CastDeviceCountMetrics::kHistogramCastCachedSinkResolved),
       ElementsAre(
           Bucket(static_cast<int>(CastMediaSinkServiceImpl::SinkSource::kMdns),
                  1),
@@ -220,7 +220,7 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
       cast_sink3, &socket3, CastMediaSinkServiceImpl::SinkSource::kMdns);
   EXPECT_THAT(
       tester.GetAllSamples(
-          CastDeviceCountMetrics::kHistogramCastDiscoverySinkSource),
+          CastDeviceCountMetrics::kHistogramCastCachedSinkResolved),
       ElementsAre(
           Bucket(static_cast<int>(CastMediaSinkServiceImpl::SinkSource::kMdns),
                  1),
@@ -327,18 +327,34 @@ TEST_F(CastMediaSinkServiceImplTest, TestOpenChannelFails) {
 
   media_sink_service_impl_.SetTaskRunnerForTest(mock_time_task_runner_);
 
-  EXPECT_CALL(*mock_cast_socket_service_, OpenSocketInternal(ip_endpoint, _, _))
-      .WillRepeatedly(
-          Invoke([&](const auto& ip_endpoint1, auto* net_log, auto open_cb) {
-            std::move(open_cb).Run(&socket);
-            return socket.id();
-          }));
+  ExpectOpenSocketInternal(&socket);
+  std::unique_ptr<net::BackoffEntry> backoff_entry(
+      new net::BackoffEntry(&media_sink_service_impl_.backoff_policy_));
+  media_sink_service_impl_.retry_params_.max_retry_attempts = 3;
+  auto* backoff_entry_ptr = backoff_entry.get();
   media_sink_service_impl_.OpenChannel(
-      ip_endpoint, cast_sink, nullptr,
+      ip_endpoint, cast_sink, std::move(backoff_entry),
       CastMediaSinkServiceImpl::SinkSource::kMdns);
 
-  mock_time_task_runner_->FastForwardUntilNoTasksRemain();
-  EXPECT_EQ(4, media_sink_service_impl_.failure_count_map_[ip_endpoint]);
+  // 1st retry attempt
+  ExpectOpenSocketInternal(&socket);
+  base::TimeDelta delay = backoff_entry_ptr->GetTimeUntilRelease() +
+                          base::TimeDelta::FromSeconds(1);
+  mock_time_task_runner_->FastForwardBy(delay);
+  // 2nd retry attempt
+  ExpectOpenSocketInternal(&socket);
+  delay = backoff_entry_ptr->GetTimeUntilRelease() +
+          base::TimeDelta::FromSeconds(1);
+  mock_time_task_runner_->FastForwardBy(delay);
+  // 3rd retry attempt
+  ExpectOpenSocketInternal(&socket);
+  delay = backoff_entry_ptr->GetTimeUntilRelease() +
+          base::TimeDelta::FromSeconds(1);
+  mock_time_task_runner_->FastForwardBy(delay);
+  // No more retry.
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocketInternal(ip_endpoint, _, _))
+      .Times(0);
+  mock_time_task_runner_->FastForwardBy(delay);
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
@@ -419,10 +435,15 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpenFailed) {
       cast_sink, &socket, CastMediaSinkServiceImpl::SinkSource::kMdns);
 
   EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_map_.size());
+  EXPECT_TRUE(media_sink_service_impl_.failure_count_map_.empty());
 
   socket.SetIPEndpoint(ip_endpoint1);
   media_sink_service_impl_.OnChannelOpenFailed(ip_endpoint1);
   EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
+  EXPECT_EQ(1, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
+
+  media_sink_service_impl_.OnChannelOpenFailed(ip_endpoint1);
+  EXPECT_EQ(2, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
 }
 
 TEST_F(CastMediaSinkServiceImplTest,
@@ -456,7 +477,6 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorMayRetryForCastSink) {
   cast_channel::MockCastSocket socket;
   socket.set_id(1);
   socket.SetIPEndpoint(ip_endpoint1);
-  socket.SetErrorState(cast_channel::ChannelError::CHANNEL_NOT_OPEN);
 
   media_sink_service_impl_.SetTaskRunnerForTest(mock_time_task_runner_);
 
@@ -464,20 +484,15 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorMayRetryForCastSink) {
   media_sink_service_impl_.current_sinks_map_[ip_endpoint1] = cast_sink;
   EXPECT_CALL(socket, ready_state())
       .WillRepeatedly(Return(cast_channel::ReadyState::CLOSED));
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint1, _, _))
-      .WillRepeatedly(
-          Invoke([&](const auto& ip_endpoint, auto* net_log, auto open_cb) {
-            std::move(open_cb).Run(&socket);
-            return socket.id();
-          }));
-
   media_sink_service_impl_.OnError(
       socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
 
-  mock_time_task_runner_->FastForwardUntilNoTasksRemain();
-  EXPECT_EQ(4, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
+  EXPECT_CALL(*mock_cast_socket_service_,
+              OpenSocketInternal(ip_endpoint1, _, _));
+  mock_time_task_runner_->FastForwardBy(base::TimeDelta::FromSeconds(16));
   EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
+
+  base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestOnChannelErrorNoRetryForMissingSink) {
@@ -541,83 +556,6 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAdded) {
   base::RunLoop().RunUntilIdle();
   // Verify sink content.
   EXPECT_EQ(2u, media_sink_service_impl_.current_sinks_map_.size());
-}
-
-TEST_F(CastMediaSinkServiceImplTest, TestOnDialSinkAddedSkipsIfNonCastDevice) {
-  MediaSinkInternal dial_sink1 = CreateDialSink(1);
-  net::IPEndPoint ip_endpoint1(dial_sink1.dial_data().ip_address,
-                               CastMediaSinkServiceImpl::kCastControlPort);
-
-  cast_channel::MockCastSocket socket1;
-  socket1.set_id(1);
-  socket1.SetErrorState(cast_channel::ChannelError::CONNECT_ERROR);
-
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint1, _, _))
-      .Times(1)
-      .WillOnce(DoAll(
-          WithArgs<2>(Invoke(
-              [&socket1](
-                  const base::Callback<void(cast_channel::CastSocket * socket)>&
-                      callback) { std::move(callback).Run(&socket1); })),
-          Return(1)));
-  media_sink_service_impl_.OnDialSinkAdded(dial_sink1);
-
-  // We don't trigger retries, thus each iteration will only increment the
-  // failure count once.
-  for (int i = 0; i < CastMediaSinkServiceImpl::kMaxDialSinkFailureCount - 1;
-       ++i) {
-    EXPECT_CALL(*mock_cast_socket_service_,
-                OpenSocketInternal(ip_endpoint1, _, _))
-        .Times(1)
-        .WillOnce(DoAll(
-            WithArgs<2>(Invoke(
-                [&socket1](const base::Callback<void(cast_channel::CastSocket *
-                                                     socket)>& callback) {
-                  std::move(callback).Run(&socket1);
-                })),
-            Return(1)));
-    media_sink_service_impl_.OnDialSinkAdded(dial_sink1);
-  }
-
-  auto& dial_sink_failure_count =
-      media_sink_service_impl_.dial_sink_failure_count_;
-  auto failure_count_it = dial_sink_failure_count.find(ip_endpoint1.address());
-  ASSERT_TRUE(failure_count_it != dial_sink_failure_count.end());
-  int failure_count = failure_count_it->second;
-  EXPECT_GE(failure_count, CastMediaSinkServiceImpl::kMaxDialSinkFailureCount);
-
-  // OnChannelOpenFailed too many times; next time OnDialSinkAdded is called,
-  // we won't attempt to open channel.
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint1, _, _))
-      .Times(0);
-
-  media_sink_service_impl_.OnDialSinkAdded(dial_sink1);
-
-  EXPECT_EQ(0u, media_sink_service_impl_.current_sinks_map_.size());
-
-  // Same IP address as dial_sink1; thus it is considered to be the same device.
-  // The outcome of the channel does not matter here; the sink is considered a
-  // Cast device since it has been discovered via mDNS.
-  MediaSinkInternal cast_sink = CreateCastSink(1);
-  std::vector<MediaSinkInternal> cast_sinks = {cast_sink};
-  ASSERT_EQ(ip_endpoint1.address(),
-            cast_sink.cast_data().ip_endpoint.address());
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(cast_sink.cast_data().ip_endpoint, _, _))
-      .Times(1);
-  media_sink_service_impl_.OpenChannels(
-      cast_sinks, CastMediaSinkServiceImpl::SinkSource::kMdns);
-
-  failure_count_it = dial_sink_failure_count.find(ip_endpoint1.address());
-  ASSERT_TRUE(failure_count_it == dial_sink_failure_count.end());
-
-  // |dial_sink_failure_count| gets cleared on network change.
-  dial_sink_failure_count[ip_endpoint1.address()] = 6;
-
-  media_sink_service_impl_.OnNetworksChanged("anotherNetworkId");
-  EXPECT_TRUE(dial_sink_failure_count.empty());
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestOnFetchCompleted) {

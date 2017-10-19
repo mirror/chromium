@@ -1,8 +1,4 @@
-function elementSubtreeHasCompositedScrollLayers(element) {
-    var layerTree = window.internals.elementLayerTreeAsText(element);
-    if (layerTree === '')
-        return false;
-    var layers = JSON.parse(layerTree);
+function isUsingCompositedScrolling(layers) {
     var foundScrollingContentsLayer = false;
     layers["layers"].forEach(function(layer) {
         if (layer.name == "Scrolling Contents Layer")
@@ -12,11 +8,7 @@ function elementSubtreeHasCompositedScrollLayers(element) {
     return foundScrollingContentsLayer;
 }
 
-function elementSubtreeHasOpaqueCompositedScrollingContentsLayer(element) {
-    var layerTree = window.internals.elementLayerTreeAsText(element);
-    if (layerTree === '')
-        return false;
-    var layers = JSON.parse(layerTree);
+function hasOpaqueCompositedScrollingContentsLayer(layers) {
     var found = false;
     layers["layers"].forEach(function(layer) {
       if (layer.name == "Scrolling Contents Layer")
@@ -25,11 +17,7 @@ function elementSubtreeHasOpaqueCompositedScrollingContentsLayer(element) {
     return found;
 }
 
-function elementSubtreeHasNotOpaqueCompositedScrollingContentsLayer(element) {
-    var layerTree = window.internals.elementLayerTreeAsText(element);
-    if (layerTree === '')
-        return false;
-    var layers = JSON.parse(layerTree);
+function hasNotOpaqueCompositedScrollingContentsLayer(layers) {
     var found = false;
     layers["layers"].forEach(function(layer) {
       if (layer.name == "Scrolling Contents Layer")

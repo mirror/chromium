@@ -522,13 +522,13 @@ std::unique_ptr<InkDropImpl::HighlightState>
 InkDropImpl::HighlightStateFactory::CreateStartState() {
   switch (highlight_mode_) {
     case InkDropImpl::AutoHighlightMode::NONE:
-      return std::make_unique<NoAutoHighlightHiddenState>(
+      return base::MakeUnique<NoAutoHighlightHiddenState>(
           this, base::TimeDelta(), false);
     case InkDropImpl::AutoHighlightMode::HIDE_ON_RIPPLE:
-      return std::make_unique<HideHighlightOnRippleHiddenState>(
+      return base::MakeUnique<HideHighlightOnRippleHiddenState>(
           this, base::TimeDelta(), false);
     case InkDropImpl::AutoHighlightMode::SHOW_ON_RIPPLE:
-      return std::make_unique<ShowHighlightOnRippleHiddenState>(
+      return base::MakeUnique<ShowHighlightOnRippleHiddenState>(
           this, base::TimeDelta(), false);
   }
   // Required for some compilers.
@@ -542,13 +542,13 @@ InkDropImpl::HighlightStateFactory::CreateHiddenState(
     bool explode) {
   switch (highlight_mode_) {
     case InkDropImpl::AutoHighlightMode::NONE:
-      return std::make_unique<NoAutoHighlightHiddenState>(
+      return base::MakeUnique<NoAutoHighlightHiddenState>(
           this, animation_duration, explode);
     case InkDropImpl::AutoHighlightMode::HIDE_ON_RIPPLE:
-      return std::make_unique<HideHighlightOnRippleHiddenState>(
+      return base::MakeUnique<HideHighlightOnRippleHiddenState>(
           this, animation_duration, explode);
     case InkDropImpl::AutoHighlightMode::SHOW_ON_RIPPLE:
-      return std::make_unique<ShowHighlightOnRippleHiddenState>(
+      return base::MakeUnique<ShowHighlightOnRippleHiddenState>(
           this, animation_duration, explode);
   }
   // Required for some compilers.
@@ -562,13 +562,13 @@ InkDropImpl::HighlightStateFactory::CreateVisibleState(
     bool explode) {
   switch (highlight_mode_) {
     case InkDropImpl::AutoHighlightMode::NONE:
-      return std::make_unique<NoAutoHighlightVisibleState>(
+      return base::MakeUnique<NoAutoHighlightVisibleState>(
           this, animation_duration, explode);
     case InkDropImpl::AutoHighlightMode::HIDE_ON_RIPPLE:
-      return std::make_unique<HideHighlightOnRippleVisibleState>(
+      return base::MakeUnique<HideHighlightOnRippleVisibleState>(
           this, animation_duration, explode);
     case InkDropImpl::AutoHighlightMode::SHOW_ON_RIPPLE:
-      return std::make_unique<ShowHighlightOnRippleVisibleState>(
+      return base::MakeUnique<ShowHighlightOnRippleVisibleState>(
           this, animation_duration, explode);
   }
   // Required for some compilers.
@@ -595,7 +595,7 @@ InkDropImpl::~InkDropImpl() {
   destroying_ = true;
   // Setting a no-op state prevents animations from being triggered on a null
   // |ink_drop_ripple_| as a side effect of the tear down.
-  SetHighlightState(std::make_unique<DestroyingHighlightState>());
+  SetHighlightState(base::MakeUnique<DestroyingHighlightState>());
 
   // Explicitly destroy the InkDropRipple so that this still exists if
   // views::InkDropRippleObserver methods are called on this.
@@ -608,7 +608,7 @@ void InkDropImpl::SetAutoHighlightMode(AutoHighlightMode auto_highlight_mode) {
   // the current |highlight_state_factory_| instance.
   ExitHighlightState();
   highlight_state_factory_ =
-      std::make_unique<HighlightStateFactory>(auto_highlight_mode, this);
+      base::MakeUnique<HighlightStateFactory>(auto_highlight_mode, this);
   SetHighlightState(highlight_state_factory_->CreateStartState());
 }
 

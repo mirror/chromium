@@ -124,43 +124,9 @@ int CommandForKeyEvent(NSEvent* event) {
   if ([event type] != NSKeyDown)
     return -1;
 
-  int cmdNum = MenuCommandForKeyEvent(event);
-  if (cmdNum != -1)
-    return cmdNum;
-
-  // Look in secondary keyboard shortcuts.
-  NSUInteger modifiers = [event modifierFlags];
-  const bool cmdKey = (modifiers & NSCommandKeyMask) != 0;
-  const bool shiftKey = (modifiers & NSShiftKeyMask) != 0;
-  const bool cntrlKey = (modifiers & NSControlKeyMask) != 0;
-  const bool optKey = (modifiers & NSAlternateKeyMask) != 0;
-  const int keyCode = [event keyCode];
-  const unichar keyChar = KeyCharacterForEvent(event);
-
-  cmdNum = CommandForWindowKeyboardShortcut(cmdKey, shiftKey, cntrlKey, optKey,
-                                            keyCode, keyChar);
-  if (cmdNum != -1)
-    return cmdNum;
-
-  cmdNum = CommandForBrowserKeyboardShortcut(
-      cmdKey, shiftKey, cntrlKey, optKey, keyCode, keyChar);
-  if (cmdNum != -1)
-    return cmdNum;
-
-  return -1;
-}
-
-int MenuCommandForKeyEvent(NSEvent* event) {
-  if ([event type] != NSKeyDown)
-    return -1;
-
   // Look in menu.
   NSMenuItem* item = FindMenuItem(event, [NSApp mainMenu]);
-
-  if (!item)
-    return -1;
-
-  if ([item action] == @selector(commandDispatch:) && [item tag] > 0)
+  if (item && [item action] == @selector(commandDispatch:) && [item tag] > 0)
     return [item tag];
 
   // "Close window" doesn't use the |commandDispatch:| mechanism. Menu items
@@ -171,8 +137,27 @@ int MenuCommandForKeyEvent(NSEvent* event) {
     return IDC_CLOSE_WINDOW;
 
   // "Exit" doesn't use the |commandDispatch:| mechanism either.
-  if ([item action] == @selector(terminate:))
+  if (item && [item action] == @selector(terminate:))
     return IDC_EXIT;
+
+  // Look in secondary keyboard shortcuts.
+  NSUInteger modifiers = [event modifierFlags];
+  const bool cmdKey = (modifiers & NSCommandKeyMask) != 0;
+  const bool shiftKey = (modifiers & NSShiftKeyMask) != 0;
+  const bool cntrlKey = (modifiers & NSControlKeyMask) != 0;
+  const bool optKey = (modifiers & NSAlternateKeyMask) != 0;
+  const int keyCode = [event keyCode];
+  const unichar keyChar = KeyCharacterForEvent(event);
+
+  int cmdNum = CommandForWindowKeyboardShortcut(
+      cmdKey, shiftKey, cntrlKey, optKey, keyCode, keyChar);
+  if (cmdNum != -1)
+    return cmdNum;
+
+  cmdNum = CommandForBrowserKeyboardShortcut(
+      cmdKey, shiftKey, cntrlKey, optKey, keyCode, keyChar);
+  if (cmdNum != -1)
+    return cmdNum;
 
   return -1;
 }

@@ -41,7 +41,7 @@ int ConsoleMessageStorage::ExpiredCount() const {
   return expired_count_;
 }
 
-void ConsoleMessageStorage::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ConsoleMessageStorage) {
   visitor->Trace(messages_);
 }
 

@@ -151,10 +151,9 @@ int GetDrmProperty(int fd,
 }
 
 std::string GetNameForEnumValue(drmModePropertyRes* property, uint32_t value) {
-  for (int i = 0; i < property->count_enums; ++i) {
+  for (int i = 0; i < property->count_enums; ++i)
     if (property->enums[i].value == value)
       return property->enums[i].name;
-  }
 
   return std::string();
 }
@@ -197,14 +196,15 @@ bool HasColorCorrectionMatrix(int fd, drmModeCrtc* crtc) {
 
   for (uint32_t i = 0; i < crtc_props->count_props; ++i) {
     ScopedDrmPropertyPtr property(drmModeGetProperty(fd, crtc_props->props[i]));
-    if (property && !strcmp(property->name, "CTM"))
+    if (property && !strcmp(property->name, "CTM")) {
       return true;
+    }
   }
   return false;
 }
 
-bool AreDisplayModesEqual(const DisplayMode_Params& lhs,
-                          const DisplayMode_Params& rhs) {
+bool DisplayModeEquals(const DisplayMode_Params& lhs,
+                       const DisplayMode_Params& rhs) {
   return lhs.size == rhs.size && lhs.is_interlaced == rhs.is_interlaced &&
          lhs.refresh_rate == rhs.refresh_rate;
 }
@@ -221,7 +221,7 @@ DisplayMode_Params GetDisplayModeParams(const display::DisplayMode& mode) {
 
 std::unique_ptr<display::DisplayMode> CreateDisplayModeFromParams(
     const DisplayMode_Params& pmode) {
-  return std::make_unique<display::DisplayMode>(pmode.size, pmode.is_interlaced,
+  return base::MakeUnique<display::DisplayMode>(pmode.size, pmode.is_interlaced,
                                                 pmode.refresh_rate);
 }
 
@@ -271,9 +271,8 @@ GetAvailableDisplayControllerInfos(int fd) {
     connectors.push_back(connector.get());
 
     if (connector && connector->connection == DRM_MODE_CONNECTED &&
-        connector->count_modes != 0) {
+        connector->count_modes != 0)
       available_connectors.push_back(std::move(connector));
-    }
   }
 
   base::flat_map<ScopedDrmConnectorPtr::element_type*, int> connector_crtcs;
@@ -309,7 +308,7 @@ GetAvailableDisplayControllerInfos(int fd) {
     size_t index = std::find(connectors.begin(), connectors.end(), c.get()) -
                    connectors.begin();
     DCHECK_LT(index, connectors.size());
-    displays.push_back(std::make_unique<HardwareDisplayControllerInfo>(
+    displays.push_back(base::MakeUnique<HardwareDisplayControllerInfo>(
         std::move(c), std::move(crtc), index));
   }
 
@@ -326,81 +325,80 @@ bool SameMode(const drmModeModeInfo& lhs, const drmModeModeInfo& rhs) {
          lhs.flags == rhs.flags && strcmp(lhs.name, rhs.name) == 0;
 }
 
-std::unique_ptr<display::DisplayMode> CreateDisplayMode(
-    const drmModeModeInfo& mode) {
-  return std::make_unique<display::DisplayMode>(
-      gfx::Size(mode.hdisplay, mode.vdisplay),
-      mode.flags & DRM_MODE_FLAG_INTERLACE, GetRefreshRate(mode));
+DisplayMode_Params CreateDisplayModeParams(const drmModeModeInfo& mode) {
+  DisplayMode_Params params;
+  params.size = gfx::Size(mode.hdisplay, mode.vdisplay);
+  params.is_interlaced = mode.flags & DRM_MODE_FLAG_INTERLACE;
+  params.refresh_rate = GetRefreshRate(mode);
+  return params;
 }
 
-std::unique_ptr<display::DisplaySnapshot> CreateDisplaySnapshot(
+DisplaySnapshot_Params CreateDisplaySnapshotParams(
     HardwareDisplayControllerInfo* info,
     int fd,
     const base::FilePath& sys_path,
     size_t device_index,
     const gfx::Point& origin) {
-  int64_t display_id = ConnectorIndex(device_index, info->index());
-  const gfx::Size physical_size =
+  DisplaySnapshot_Params params;
+  int64_t connector_index = ConnectorIndex(device_index, info->index());
+  params.display_id = connector_index;
+  params.origin = origin;
+  params.sys_path = sys_path;
+  params.physical_size =
       gfx::Size(info->connector()->mmWidth, info->connector()->mmHeight);
-  const display::DisplayConnectionType type = GetDisplayType(info->connector());
-  const bool is_aspect_preserving_scaling =
+  params.type = GetDisplayType(info->connector());
+  params.is_aspect_preserving_scaling =
       IsAspectPreserving(fd, info->connector());
-  const bool has_color_correction_matrix =
+  params.has_color_correction_matrix =
       HasColorCorrectionMatrix(fd, info->crtc());
-  const gfx::Size maximum_cursor_size = GetMaximumCursorSize(fd);
-
-  std::vector<uint8_t> edid;
-  std::string display_name;
-  int64_t product_id = display::DisplaySnapshot::kInvalidProductID;
-  bool has_overscan = false;
-  gfx::ColorSpace display_color_space;
+  params.maximum_cursor_size = GetMaximumCursorSize(fd);
 
   ScopedDrmPropertyBlobPtr edid_blob(
       GetDrmPropertyBlob(fd, info->connector(), "EDID"));
+
   if (edid_blob) {
-    edid.assign(static_cast<uint8_t*>(edid_blob->data),
-                static_cast<uint8_t*>(edid_blob->data) + edid_blob->length);
+    params.edid.assign(
+        static_cast<uint8_t*>(edid_blob->data),
+        static_cast<uint8_t*>(edid_blob->data) + edid_blob->length);
 
-    display::GetDisplayIdFromEDID(edid, display_id, &display_id, &product_id);
+    display::GetDisplayIdFromEDID(params.edid, connector_index,
+                                  &params.display_id, &params.product_id);
 
-    display::ParseOutputDeviceData(edid, nullptr, nullptr, &display_name,
-                                   nullptr, nullptr);
-    display::ParseOutputOverscanFlag(edid, &has_overscan);
-
-    display_color_space = GetColorSpaceFromEdid(edid);
+    display::ParseOutputDeviceData(params.edid, nullptr, nullptr,
+                                   &params.display_name, nullptr, nullptr);
+    display::ParseOutputOverscanFlag(params.edid, &params.has_overscan);
   } else {
     VLOG(1) << "Failed to get EDID blob for connector "
             << info->connector()->connector_id;
   }
 
-  display::DisplaySnapshot::DisplayModeList modes;
-  const display::DisplayMode* current_mode = nullptr;
-  const display::DisplayMode* native_mode = nullptr;
   for (int i = 0; i < info->connector()->count_modes; ++i) {
     const drmModeModeInfo& mode = info->connector()->modes[i];
-    modes.push_back(CreateDisplayMode(mode));
+    params.modes.push_back(CreateDisplayModeParams(mode));
 
-    if (info->crtc()->mode_valid && SameMode(info->crtc()->mode, mode))
-      current_mode = modes.back().get();
+    if (info->crtc()->mode_valid && SameMode(info->crtc()->mode, mode)) {
+      params.has_current_mode = true;
+      params.current_mode = params.modes.back();
+    }
 
-    if (mode.type & DRM_MODE_TYPE_PREFERRED)
-      native_mode = modes.back().get();
+    if (mode.type & DRM_MODE_TYPE_PREFERRED) {
+      params.has_native_mode = true;
+      params.native_mode = params.modes.back();
+    }
   }
 
   // If no preferred mode is found then use the first one. Using the first one
   // since it should be the best mode.
-  if (!native_mode && !modes.empty())
-    native_mode = modes.front().get();
+  if (!params.has_native_mode && !params.modes.empty()) {
+    params.has_native_mode = true;
+    params.native_mode = params.modes.front();
+  }
 
-  return std::make_unique<display::DisplaySnapshot>(
-      display_id, origin, physical_size, type, is_aspect_preserving_scaling,
-      has_overscan, has_color_correction_matrix, display_color_space,
-      display_name, sys_path, std::move(modes), edid, current_mode, native_mode,
-      product_id, maximum_cursor_size);
+  return params;
 }
 
 // TODO(rjkroege): Remove in a subsequent CL once Mojo IPC is used everywhere.
-std::vector<DisplaySnapshot_Params> CreateDisplaySnapshotParams(
+std::vector<DisplaySnapshot_Params> CreateParamsFromSnapshot(
     const MovableDisplaySnapshots& displays) {
   std::vector<DisplaySnapshot_Params> params;
   for (auto& d : displays) {
@@ -413,7 +411,6 @@ std::vector<DisplaySnapshot_Params> CreateDisplaySnapshotParams(
     p.is_aspect_preserving_scaling = d->is_aspect_preserving_scaling();
     p.has_overscan = d->has_overscan();
     p.has_color_correction_matrix = d->has_color_correction_matrix();
-    p.color_space = d->color_space();
     p.display_name = d->display_name();
     p.sys_path = d->sys_path();
 
@@ -424,13 +421,15 @@ std::vector<DisplaySnapshot_Params> CreateDisplaySnapshotParams(
     p.modes = mode_params;
     p.edid = d->edid();
 
-    p.has_current_mode = d->current_mode();
-    if (d->current_mode())
+    if (d->current_mode()) {
+      p.has_current_mode = true;
       p.current_mode = GetDisplayModeParams(*d->current_mode());
+    }
 
-    p.has_native_mode = d->native_mode();
-    if (d->native_mode())
+    if (d->native_mode()) {
+      p.has_native_mode = true;
       p.native_mode = GetDisplayModeParams(*d->native_mode());
+    }
 
     p.product_id = d->product_id();
     p.maximum_cursor_size = d->maximum_cursor_size();
@@ -440,25 +439,27 @@ std::vector<DisplaySnapshot_Params> CreateDisplaySnapshotParams(
   return params;
 }
 
-std::unique_ptr<display::DisplaySnapshot> CreateDisplaySnapshot(
+std::unique_ptr<display::DisplaySnapshot> CreateDisplaySnapshotFromParams(
     const DisplaySnapshot_Params& params) {
   display::DisplaySnapshot::DisplayModeList modes;
   const display::DisplayMode* current_mode = nullptr;
   const display::DisplayMode* native_mode = nullptr;
-  for (const auto& mode : params.modes) {
+
+  // Find pointers to current and native mode in the copied data.
+  for (auto& mode : params.modes) {
     modes.push_back(CreateDisplayModeFromParams(mode));
-    if (AreDisplayModesEqual(params.current_mode, mode))
+    if (params.has_current_mode && DisplayModeEquals(mode, params.current_mode))
       current_mode = modes.back().get();
-    if (AreDisplayModesEqual(params.native_mode, mode))
+    if (params.has_native_mode && DisplayModeEquals(mode, params.native_mode))
       native_mode = modes.back().get();
   }
 
   return std::make_unique<display::DisplaySnapshot>(
       params.display_id, params.origin, params.physical_size, params.type,
       params.is_aspect_preserving_scaling, params.has_overscan,
-      params.has_color_correction_matrix, params.color_space,
-      params.display_name, params.sys_path, std::move(modes), params.edid,
-      current_mode, native_mode, params.product_id, params.maximum_cursor_size);
+      params.has_color_correction_matrix, params.display_name, params.sys_path,
+      std::move(modes), params.edid, current_mode, native_mode,
+      params.product_id, params.maximum_cursor_size);
 }
 
 int GetFourCCFormatFromBufferFormat(gfx::BufferFormat format) {
@@ -544,6 +545,14 @@ int GetFourCCFormatForOpaqueFramebuffer(gfx::BufferFormat format) {
   }
 }
 
+MovableDisplaySnapshots CreateMovableDisplaySnapshotsFromParams(
+    const std::vector<DisplaySnapshot_Params>& displays) {
+  MovableDisplaySnapshots snapshots;
+  for (const auto& d : displays)
+    snapshots.push_back(CreateDisplaySnapshotFromParams(d));
+  return snapshots;
+}
+
 OverlaySurfaceCandidateList CreateOverlaySurfaceCandidateListFrom(
     const std::vector<OverlayCheck_Params>& params) {
   OverlaySurfaceCandidateList candidates;
@@ -591,23 +600,6 @@ std::vector<OverlayCheckReturn_Params> CreateParamsFromOverlayStatusList(
     params.push_back(p);
   }
   return params;
-}
-
-gfx::ColorSpace GetColorSpaceFromEdid(const std::vector<uint8_t>& edid) {
-  SkColorSpacePrimaries primaries = {0};
-  if (!display::ParseChromaticityCoordinates(edid, &primaries))
-    return gfx::ColorSpace();
-
-  SkMatrix44 color_space_as_matrix;
-  if (!primaries.toXYZD50(&color_space_as_matrix))
-    return gfx::ColorSpace();
-
-  double gamma = 0.0;
-  if (!display::ParseGammaValue(edid, &gamma))
-    return gfx::ColorSpace();
-
-  SkColorSpaceTransferFn transfer = {gamma, 1.f, 0.f, 0.f, 0.f, 0.f, 0.f};
-  return gfx::ColorSpace::CreateCustom(color_space_as_matrix, transfer);
 }
 
 }  // namespace ui

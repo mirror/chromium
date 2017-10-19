@@ -6,8 +6,8 @@
 
 #include "core/dom/DOMTokenList.h"
 #include "core/dom/events/Event.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/forms/HTMLLabelElement.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "platform/Histogram.h"
 #include "platform/runtime_enabled_features.h"
@@ -132,11 +132,8 @@ void MediaControlInputElement::UpdateShownState() {
 }
 
 void MediaControlInputElement::DefaultEventHandler(Event* event) {
-  if (event->type() == EventTypeNames::click) {
-    if (IsOverflowElement())
-      GetMediaControls().MaybeRecordOverflowTimeToAction();
+  if (event->type() == EventTypeNames::click)
     MaybeRecordInteracted();
-  }
 
   HTMLInputElement::DefaultEventHandler(event);
 }
@@ -159,6 +156,8 @@ void MediaControlInputElement::MaybeRecordInteracted() {
 bool MediaControlInputElement::IsOverflowElement() const {
   return is_overflow_element_;
 }
+
+void MediaControlInputElement::UpdateDisplayType() {}
 
 bool MediaControlInputElement::IsMouseFocusable() const {
   return false;
@@ -188,12 +187,7 @@ void MediaControlInputElement::SetClass(const AtomicString& class_name,
     classList().Remove(class_name);
 }
 
-void MediaControlInputElement::UpdateDisplayType() {
-  if (overflow_element_)
-    overflow_element_->UpdateDisplayType();
-}
-
-void MediaControlInputElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlInputElement) {
   HTMLInputElement::Trace(visitor);
   MediaControlElementBase::Trace(visitor);
   visitor->Trace(overflow_element_);

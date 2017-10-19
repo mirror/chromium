@@ -1172,6 +1172,7 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PageMsg_UpdateWindowScreenRect,
                         OnUpdateWindowScreenRect)
     IPC_MESSAGE_HANDLER(PageMsg_SetZoomLevel, OnSetZoomLevel)
+    IPC_MESSAGE_HANDLER(PageMsg_SetDeviceScaleFactor, OnSetDeviceScaleFactor);
     IPC_MESSAGE_HANDLER(PageMsg_WasHidden, OnPageWasHidden)
     IPC_MESSAGE_HANDLER(PageMsg_WasShown, OnPageWasShown)
     IPC_MESSAGE_HANDLER(PageMsg_SetHistoryOffsetAndLength,
@@ -1397,9 +1398,8 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
   view_params.session_storage_namespace_id =
       reply->cloned_session_storage_namespace_id;
   view_params.swapped_out = false;
-  view_params.replicated_frame_state.frame_policy.sandbox_flags = sandbox_flags;
+  view_params.replicated_frame_state.sandbox_flags = sandbox_flags;
   view_params.replicated_frame_state.name = frame_name_utf8;
-  view_params.devtools_main_frame_token = reply->devtools_main_frame_token;
   // Even if the main frame has a name, the main frame's unique name is always
   // the empty string.
   view_params.hidden = is_background_tab;
@@ -1881,10 +1881,6 @@ gfx::Size RenderViewImpl::GetSize() const {
 
 float RenderViewImpl::GetDeviceScaleFactor() const {
   return device_scale_factor_;
-}
-
-float RenderViewImpl::GetZoomLevel() const {
-  return page_zoom_level_;
 }
 
 const WebPreferences& RenderViewImpl::GetWebkitPreferences() {

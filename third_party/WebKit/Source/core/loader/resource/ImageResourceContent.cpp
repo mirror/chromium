@@ -30,9 +30,7 @@ class NullImageResourceInfo final
  public:
   NullImageResourceInfo() {}
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ImageResourceInfo::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ImageResourceInfo::Trace(visitor); }
 
  private:
   const KURL& Url() const override { return url_; }
@@ -97,7 +95,7 @@ void ImageResourceContent::SetImageResourceInfo(ImageResourceInfo* info) {
   info_ = info;
 }
 
-void ImageResourceContent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageResourceContent) {
   visitor->Trace(info_);
   ImageObserver::Trace(visitor);
 }
@@ -244,23 +242,25 @@ bool ImageResourceContent::ImageHasRelativeSize() const {
   return false;
 }
 
-IntSize ImageResourceContent::IntrinsicSize(
-    RespectImageOrientationEnum should_respect_image_orientation) {
-  if (!image_)
-    return IntSize();
-  if (should_respect_image_orientation == kRespectImageOrientation &&
-      image_->IsBitmapImage())
-    return ToBitmapImage(image_.get())->SizeRespectingOrientation();
-  return image_->Size();
-}
-
 LayoutSize ImageResourceContent::ImageSize(
     RespectImageOrientationEnum should_respect_image_orientation,
-    float multiplier) {
+    float multiplier,
+    SizeType size_type) {
   if (!image_)
     return LayoutSize();
 
-  LayoutSize size(IntrinsicSize(should_respect_image_orientation));
+  LayoutSize size;
+
+  if (image_->IsBitmapImage() &&
+      should_respect_image_orientation == kRespectImageOrientation) {
+    size = LayoutSize(ToBitmapImage(image_.get())->SizeRespectingOrientation());
+  } else {
+    size = LayoutSize(image_->Size());
+  }
+
+  if (size_type == kIntrinsicCorrectedToDPR &&
+      HasDevicePixelRatioHeaderValue() && DevicePixelRatioHeaderValue() > 0)
+    multiplier = 1 / DevicePixelRatioHeaderValue();
 
   if (multiplier == 1 || image_->HasRelativeSize())
     return size;
@@ -268,7 +268,7 @@ LayoutSize ImageResourceContent::ImageSize(
   // Don't let images that have a width/height >= 1 shrink below 1 when zoomed.
   LayoutSize minimum_size(
       size.Width() > LayoutUnit() ? LayoutUnit(1) : LayoutUnit(),
-      size.Height() > LayoutUnit() ? LayoutUnit(1) : LayoutUnit());
+      LayoutUnit(size.Height() > LayoutUnit() ? LayoutUnit(1) : LayoutUnit()));
   size.Scale(multiplier);
   size.ClampToMinimumSize(minimum_size);
   return size;

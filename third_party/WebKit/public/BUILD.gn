@@ -274,6 +274,7 @@ source_set("blink_headers") {
     "platform/WebNativeScrollBehavior.h",
     "platform/WebNetworkStateNotifier.h",
     "platform/WebNonCopyable.h",
+    "platform/WebOriginTrialTokenStatus.h",
     "platform/WebPageVisibilityState.h",
     "platform/WebPasswordCredential.h",
     "platform/WebPlatformEventListener.h",
@@ -770,7 +771,6 @@ mojom("mojo_bindings") {
   sources = [
     "platform/address_space.mojom",
     "platform/content_security_policy.mojom",
-    "platform/dedicated_worker_factory.mojom",
     "platform/display_mode.mojom",
     "platform/media_download_in_product_help.mojom",
     "platform/media_engagement.mojom",
@@ -779,6 +779,7 @@ mojom("mojo_bindings") {
     "platform/modules/background_fetch/background_fetch.mojom",
     "platform/modules/background_sync/background_sync.mojom",
     "platform/modules/bluetooth/web_bluetooth.mojom",
+    "platform/modules/broadcastchannel/broadcast_channel.mojom",
     "platform/modules/budget_service/budget_service.mojom",
     "platform/modules/credentialmanager/credential_manager.mojom",
     "platform/modules/fetch/fetch_api_request.mojom",
@@ -795,7 +796,6 @@ mojom("mojo_bindings") {
     "platform/modules/presentation/presentation.mojom",
     "platform/modules/serviceworker/service_worker_error_type.mojom",
     "platform/modules/serviceworker/service_worker_event_status.mojom",
-    "platform/modules/serviceworker/service_worker_object.mojom",
     "platform/modules/serviceworker/service_worker_registration.mojom",
     "platform/modules/serviceworker/service_worker_state.mojom",
     "platform/modules/serviceworker/service_worker_stream_handle.mojom",
@@ -818,7 +818,6 @@ mojom("mojo_bindings") {
     "//device/screen_orientation/public/interfaces",
     "//mojo/common:common_custom_types",
     "//services/network/public/interfaces:interfaces",
-    "//services/service_manager/public/interfaces",
     "//storage/public/interfaces",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
@@ -902,36 +901,6 @@ mojom("offscreen_canvas_mojo_bindings") {
   export_header_blink = "third_party/WebKit/public/platform/WebCommon.h"
 }
 
-# The core_mojo_bindings is separated from the rest of mojom files to allow its deps
-# to depend on types in WebKit/Source/core.
-mojom("core_mojo_bindings") {
-  visibility = [ "//content/*" ]
-  visibility_blink = [
-    "//content/common:mojo_bindings_blink",
-    "//third_party/WebKit/Source/core/*",
-  ]
-  sources = [
-    "platform/modules/broadcastchannel/broadcast_channel.mojom",
-  ]
-  public_deps = [
-    "//third_party/WebKit/common:mojo_bindings",
-    "//url/mojo:url_mojom_origin",
-  ]
-
-  component_output_prefix = "blink_core_mojo_bindings"
-
-  # See comment above.
-  export_class_attribute = "CONTENT_EXPORT"
-  export_define = "CONTENT_IMPLEMENTATION=1"
-  export_header = "content/common/content_export.h"
-
-  # Similarly, the blink variant must be linked with the core component
-  # since it uses types from it in its typemaps.
-  export_class_attribute_blink = "CORE_EXPORT"
-  export_define_blink = "BLINK_CORE_IMPLEMENTATION=1"
-  export_header_blink = "third_party/WebKit/Source/core/CoreExport.h"
-}
-
 # Note that this intentionally depends on the generator target of the mojom
 # target instead of the mojom target itself directly. This is to ensure that the
 # dependencies are header-only and don't link against any bindings code.
@@ -941,8 +910,6 @@ group("generate_mojo_bindings") {
     # Blink public API exposes a number of Mojo interfaces; omitting it will
     # cause non-deterministic compile failures for code that uses the regular
     # variant of the generated files.
-    ":core_mojo_bindings__generator",
-    ":core_mojo_bindings_blink__generator",
     ":mojo_bindings__generator",
     ":mojo_bindings_blink__generator",
     ":offscreen_canvas_mojo_bindings_blink__generator",

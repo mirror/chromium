@@ -28,16 +28,10 @@ void FakeVoiceInteractionFrameworkInstance::ToggleVoiceInteractionSession(
 }
 
 void FakeVoiceInteractionFrameworkInstance::
-    StartVoiceInteractionSessionForRegion(const gfx::Rect& region) {
-  start_session_for_region_count_++;
-  selected_region_ = region;
-}
+    StartVoiceInteractionSessionForRegion(const gfx::Rect& region) {}
 
 void FakeVoiceInteractionFrameworkInstance::SetMetalayerVisibility(
-    bool visible) {
-  set_metalayer_visibility_count_++;
-  metalayer_visible_ = visible;
-}
+    bool visible) {}
 
 void FakeVoiceInteractionFrameworkInstance::SetVoiceInteractionEnabled(
     bool enable,

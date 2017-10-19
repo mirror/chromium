@@ -141,7 +141,7 @@ DISABLE_CFI_PERF
 void ObjectPaintInvalidator::InvalidatePaintOfPreviousVisualRect(
     const LayoutBoxModelObject& paint_invalidation_container,
     PaintInvalidationReason reason) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   // It's caller's responsibility to ensure enclosingSelfPaintingLayer's
   // needsRepaint is set.  Don't set the flag here because getting
   // enclosingSelfPaintLayer has cost and the caller can use various ways (e.g.
@@ -176,9 +176,6 @@ void ObjectPaintInvalidator::
   TraverseNonCompositingDescendantsInPaintOrder(
       object_, [&paint_invalidation_container](const LayoutObject& object) {
         SetPaintingLayerNeedsRepaintDuringTraverse(object);
-        // For SPv175, raster invalidation will be issued after painting.
-        if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
-          return;
         ObjectPaintInvalidator(object).InvalidatePaintOfPreviousVisualRect(
             paint_invalidation_container, PaintInvalidationReason::kSubtree);
       });
@@ -202,7 +199,7 @@ void ObjectPaintInvalidator::
 void ObjectPaintInvalidator::
     InvalidatePaintIncludingNonSelfPaintingLayerDescendants(
         const LayoutBoxModelObject& paint_invalidation_container) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   SlowSetPaintingLayerNeedsRepaint();
   InvalidatePaintIncludingNonSelfPaintingLayerDescendantsInternal(
       paint_invalidation_container);
@@ -272,7 +269,7 @@ void ObjectPaintInvalidator::SetBackingNeedsPaintInvalidationInRect(
     const LayoutBoxModelObject& paint_invalidation_container,
     const LayoutRect& rect,
     PaintInvalidationReason reason) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   // https://bugs.webkit.org/show_bug.cgi?id=61159 describes an unreproducible
   // crash here, so assert but check that the layer is composited.
   DCHECK(paint_invalidation_container.GetCompositingState() != kNotComposited);
@@ -312,7 +309,7 @@ void ObjectPaintInvalidator::InvalidatePaintUsingContainer(
     const LayoutBoxModelObject& paint_invalidation_container,
     const LayoutRect& dirty_rect,
     PaintInvalidationReason invalidation_reason) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   if (paint_invalidation_container.GetFrameView()->ShouldThrottleRendering())
     return;
@@ -365,7 +362,7 @@ void ObjectPaintInvalidatorWithContext::FullyInvalidatePaint(
     PaintInvalidationReason reason,
     const LayoutRect& old_visual_rect,
     const LayoutRect& new_visual_rect) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   // The following logic avoids invalidating twice if one set of bounds contains
   // the other.
   if (!new_visual_rect.Contains(old_visual_rect)) {
@@ -440,16 +437,6 @@ ObjectPaintInvalidatorWithContext::ComputePaintInvalidationReason() {
     object_.GetMutableForPainting().SetPreviousBackgroundObscured(
         background_obscured);
     background_obscuration_changed = true;
-  }
-
-  if (!object_.ShouldCheckForPaintInvalidation() &&
-      (!context_.subtree_flags ||
-       context_.subtree_flags ==
-           PaintInvalidatorContext::kSubtreeVisualRectUpdate)) {
-    // No paint invalidation flag, or just kSubtreeVisualRectUpdate (which has
-    // been handled in PaintInvalidator). No paint invalidation is needed.
-    DCHECK(!background_obscuration_changed);
-    return PaintInvalidationReason::kNone;
   }
 
   if (context_.subtree_flags &
@@ -541,7 +528,7 @@ void ObjectPaintInvalidatorWithContext::InvalidateSelection(
   if (!full_invalidation) {
     // TODO(crbug.com/732612): Implement partial raster invalidation for
     // selection.
-    if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       FullyInvalidatePaint(PaintInvalidationReason::kSelection,
                            old_selection_rect, new_selection_rect);
     }
@@ -569,7 +556,7 @@ void ObjectPaintInvalidatorWithContext::InvalidatePartialRect(
   if (rect.IsEmpty())
     return;
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     // PaintController will handle raster invalidation of the partial rect.
     object_.GetMutableForPainting().SetPartialInvalidationRect(rect);
   } else {
@@ -598,7 +585,7 @@ ObjectPaintInvalidatorWithContext::InvalidatePaintWithComputedReason(
       // for paint offset mutation, but incurs no pixel difference (i.e. bounds
       // stay the same) so no rect-based invalidation is issued. See
       // crbug.com/508383 and crbug.com/515977.
-      if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+      if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
           (context_.subtree_flags &
            PaintInvalidatorContext::kSubtreeInvalidationChecking) &&
           !object_.IsSVGChild()) {
@@ -619,7 +606,7 @@ ObjectPaintInvalidatorWithContext::InvalidatePaintWithComputedReason(
       return PaintInvalidationReason::kDelayedFull;
     default:
       DCHECK(IsImmediateFullPaintInvalidationReason(reason));
-      if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         // This allows descendants to know the computed reason if it's different
         // from the original reason before paint invalidation.
         object_.GetMutableForPainting()

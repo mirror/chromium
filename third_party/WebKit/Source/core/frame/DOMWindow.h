@@ -49,7 +49,7 @@ class CORE_EXPORT DOMWindow : public EventTargetWithInlineData,
   }
 
   // GarbageCollectedFinalized overrides:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 

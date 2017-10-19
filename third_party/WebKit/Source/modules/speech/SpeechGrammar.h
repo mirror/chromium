@@ -53,7 +53,7 @@ class MODULES_EXPORT SpeechGrammar final
   double weight() const { return weight_; }
   void setWeight(double weight) { weight_ = weight; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   SpeechGrammar();

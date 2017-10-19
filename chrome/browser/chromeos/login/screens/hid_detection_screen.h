@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 
-#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -46,7 +45,6 @@ class HIDDetectionScreen : public BaseScreen,
   static const char kContextKeyContinueButtonEnabled[];
 
   using InputDeviceInfoPtr = device::mojom::InputDeviceInfoPtr;
-  using DeviceMap = std::map<std::string, InputDeviceInfoPtr>;
 
   class Delegate {
    public:
@@ -122,31 +120,26 @@ class HIDDetectionScreen : public BaseScreen,
   void StartBTDiscoverySession();
 
   // Updates internal state and UI (if ready) using list of connected devices.
-  void ProcessConnectedDevicesList();
+  void ProcessConnectedDevicesList(std::vector<InputDeviceInfoPtr> devices);
 
   // Checks for lack of mouse or keyboard. If found starts BT devices update.
   // Initiates BTAdapter if it's not active and BT devices update required.
   void TryInitiateBTDevicesUpdate();
 
-  // Processes list of input devices on the check request. Calls the callback
-  // that expects true if screen is required. The returned devices list is not
-  // saved.
+  // Processes list of input devices returned by InputServiceProxy on the check
+  // request. Calls the callback that expects true if screen is required.
   void OnGetInputDevicesListForCheck(
       const base::Callback<void(bool)>& on_check_done,
       std::vector<InputDeviceInfoPtr> devices);
 
-  // Saves and processes list of input devices returned by InputServiceProxy on
-  // regular request.
+  // Processes list of input devices returned by InputServiceProxy on regular
+  // request.
   void OnGetInputDevicesList(std::vector<InputDeviceInfoPtr> devices);
 
   // Called for revision of active devices. If current-placement is available
   // for mouse or keyboard device, sets one of active devices as current or
   // tries to connect some BT device if no appropriate devices are connected.
   void UpdateDevices();
-
-  // Gets the input devices list. The devices list will be kept updated by
-  // OnInputDeviceAdded() and OnInputDeviceRemoved().
-  void GetInputDevicesList();
 
   // Tries to connect some BT devices if no type-appropriate devices are
   // connected.
@@ -161,9 +154,9 @@ class HIDDetectionScreen : public BaseScreen,
   // initiate a discovery session.
   void FindDevicesError();
 
-  // Check the input devices one by one and power off the BT adapter if there
-  // is no bluetooth device.
-  void PowerOff();
+  // Check the input devices returned by InputServiceProxy one by one and power
+  // off the BT adapter if there is no bluetooth device.
+  void OnGetInputDevicesForPowerOff(std::vector<InputDeviceInfoPtr> devices);
 
   // Called by device::BluetoothAdapter in response to a failure to
   // power BT adapter.
@@ -214,9 +207,6 @@ class HIDDetectionScreen : public BaseScreen,
 
   InputServiceProxy input_service_proxy_;
 
-  // Save the connected input devices.
-  DeviceMap devices_;
-
   // The current device discovery session. Only one active discovery session is
   // kept at a time and the instance that |discovery_session_| points to gets
   // replaced by a new one when a new discovery session is initiated.
@@ -239,8 +229,6 @@ class HIDDetectionScreen : public BaseScreen,
   std::unique_ptr<bool> adapter_initially_powered_;
 
   bool switch_on_adapter_when_ready_ = false;
-
-  bool devices_enumerated_ = false;
 
   bool showing_ = false;
 

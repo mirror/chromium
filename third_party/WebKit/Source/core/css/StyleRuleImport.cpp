@@ -57,7 +57,7 @@ void StyleRuleImport::Dispose() {
   resource_ = nullptr;
 }
 
-void StyleRuleImport::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(StyleRuleImport) {
   visitor->Trace(style_sheet_client_);
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(style_sheet_);
@@ -86,7 +86,7 @@ void StyleRuleImport::SetCSSStyleSheet(
   style_sheet_ = StyleSheetContents::Create(this, href, context);
 
   style_sheet_->ParseAuthorStyleSheet(
-      cached_style_sheet, document ? document->GetSecurityOrigin() : nullptr);
+      cached_style_sheet, document ? document->GetSecurityOrigin() : 0);
 
   loading_ = false;
 

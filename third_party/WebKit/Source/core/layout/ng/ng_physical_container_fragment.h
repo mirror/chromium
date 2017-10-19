@@ -17,6 +17,8 @@ class CORE_EXPORT NGPhysicalContainerFragment : public NGPhysicalFragment {
     return children_;
   }
 
+  void UpdateVisualRect() const override;
+
  protected:
   // This modifies the passed-in children vector.
   NGPhysicalContainerFragment(LayoutObject*,

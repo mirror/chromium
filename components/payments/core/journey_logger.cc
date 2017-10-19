@@ -166,6 +166,7 @@ void JourneyLogger::RecordJourneyStatsHistograms(
   DCHECK(!has_recorded_);
   has_recorded_ = true;
 
+  RecordUrlKeyedMetrics(completion_status);
   RecordEventsMetric(completion_status);
 
   // These following metrics only make sense if the Payment Request was
@@ -235,13 +236,15 @@ void JourneyLogger::RecordEventsMetric(CompletionStatus completion_status) {
   if (sections_[SECTION_PAYMENT_METHOD].number_suggestions_shown_ > 0)
     events_ |= EVENT_HAD_INITIAL_FORM_OF_PAYMENT;
 
-  // Record the events in UMA.
+  // Record the events.
   UMA_HISTOGRAM_SPARSE_SLOWLY("PaymentRequest.Events", events_);
+}
 
+void JourneyLogger::RecordUrlKeyedMetrics(CompletionStatus completion_status) {
   if (!ukm_recorder_ || !url_.is_valid())
     return;
 
-  // Record the events in UKM.
+  // Record the Checkout Funnel UKM.
   ukm::SourceId source_id = ukm_recorder_->GetNewSourceID();
   ukm_recorder_->UpdateSourceURL(source_id, url_);
   ukm::builders::PaymentRequest_CheckoutEvents(source_id)

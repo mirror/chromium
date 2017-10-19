@@ -42,13 +42,7 @@ class IntPoint;
 class IntRect;
 class LocalFrame;
 
-// |EWordSiste| is used as a parameter of |StartOfWord()| and |EndOfWord()|
-// to control a returning position when they are called for a position before
-// word boundary.
-enum EWordSide {
-  kNextWordIfOnBoundary = false,
-  kPreviousWordIfOnBoundary = true
-};
+enum EWordSide { kRightWordIfOnBoundary = false, kLeftWordIfOnBoundary = true };
 
 // This struct represents local caret rectangle in |layout_object|.
 struct LocalCaretRect {
@@ -82,6 +76,8 @@ CORE_EXPORT int CaretMaxOffset(const Node*);
 // last position in the last atomic node in boundary for all of the positions
 // in boundary after the last candidate, where
 // endsOfNodeAreVisuallyDistinctPositions(boundary).
+// FIXME: This function should never be called when the line box tree is dirty.
+// See https://bugs.webkit.org/show_bug.cgi?id=97264
 CORE_EXPORT Position MostBackwardCaretPosition(
     const Position&,
     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
@@ -136,26 +132,26 @@ PreviousPositionOf(const VisiblePositionInFlatTree&,
 // returned Position should be canonicalized with |previousBoundary()| by
 // TextItetator.
 CORE_EXPORT Position StartOfWordPosition(const VisiblePosition&,
-                                         EWordSide = kNextWordIfOnBoundary);
+                                         EWordSide = kRightWordIfOnBoundary);
 CORE_EXPORT VisiblePosition StartOfWord(const VisiblePosition&,
-                                        EWordSide = kNextWordIfOnBoundary);
+                                        EWordSide = kRightWordIfOnBoundary);
 CORE_EXPORT PositionInFlatTree
 StartOfWordPosition(const VisiblePositionInFlatTree&,
-                    EWordSide = kNextWordIfOnBoundary);
+                    EWordSide = kRightWordIfOnBoundary);
 CORE_EXPORT VisiblePositionInFlatTree
 StartOfWord(const VisiblePositionInFlatTree&,
-            EWordSide = kNextWordIfOnBoundary);
+            EWordSide = kRightWordIfOnBoundary);
 // TODO(yoichio): Replace |endOfWord| to |endOfWordPosition| because returned
 // Position should be canonicalized with |nextBoundary()| by TextItetator.
 CORE_EXPORT Position EndOfWordPosition(const VisiblePosition&,
-                                       EWordSide = kNextWordIfOnBoundary);
+                                       EWordSide = kRightWordIfOnBoundary);
 CORE_EXPORT VisiblePosition EndOfWord(const VisiblePosition&,
-                                      EWordSide = kNextWordIfOnBoundary);
+                                      EWordSide = kRightWordIfOnBoundary);
 CORE_EXPORT PositionInFlatTree
 EndOfWordPosition(const VisiblePositionInFlatTree&,
-                  EWordSide = kNextWordIfOnBoundary);
+                  EWordSide = kRightWordIfOnBoundary);
 CORE_EXPORT VisiblePositionInFlatTree
-EndOfWord(const VisiblePositionInFlatTree&, EWordSide = kNextWordIfOnBoundary);
+EndOfWord(const VisiblePositionInFlatTree&, EWordSide = kRightWordIfOnBoundary);
 VisiblePosition PreviousWordPosition(const VisiblePosition&);
 VisiblePosition NextWordPosition(const VisiblePosition&);
 
@@ -238,11 +234,15 @@ VisiblePosition NextParagraphPosition(const VisiblePosition&, LayoutUnit x);
 CORE_EXPORT bool IsStartOfParagraph(
     const VisiblePosition&,
     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
-CORE_EXPORT bool IsStartOfParagraph(const VisiblePositionInFlatTree&);
+CORE_EXPORT bool IsStartOfParagraph(
+    const VisiblePositionInFlatTree&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
 CORE_EXPORT bool IsEndOfParagraph(
     const VisiblePosition&,
     EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
-CORE_EXPORT bool IsEndOfParagraph(const VisiblePositionInFlatTree&);
+CORE_EXPORT bool IsEndOfParagraph(
+    const VisiblePositionInFlatTree&,
+    EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);
 bool InSameParagraph(const VisiblePosition&,
                      const VisiblePosition&,
                      EditingBoundaryCrossingRule = kCannotCrossEditingBoundary);

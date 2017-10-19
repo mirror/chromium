@@ -41,6 +41,7 @@
 #include "ui/gl/gl_image_ref_counted_memory.h"
 #include "ui/gl/gl_share_group.h"
 #include "ui/gl/gl_surface.h"
+#include "ui/gl/gl_utils.h"
 #include "ui/gl/init/gl_factory.h"
 
 #if defined(OS_MACOSX)
@@ -56,7 +57,7 @@ void InitializeGpuPreferencesForTestingFromCommandLine(
     GpuPreferences* preferences) {
   // Only initialize specific GpuPreferences members used for testing.
   preferences->use_passthrough_cmd_decoder =
-      gles2::UsePassthroughCommandDecoder(&command_line);
+      gl::UsePassthroughCommandDecoder(&command_line);
 }
 
 class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
@@ -316,7 +317,7 @@ void GLManager::InitializeWithWorkaroundsImpl(
   attribs.buffer_preserved = options.preserve_backbuffer;
   attribs.bind_generates_resource = options.bind_generates_resource;
   translator_cache_ =
-      std::make_unique<gles2::ShaderTranslatorCache>(gpu_preferences_);
+      base::MakeUnique<gles2::ShaderTranslatorCache>(gpu_preferences_);
 
   if (!context_group) {
     scoped_refptr<gles2::FeatureInfo> feature_info =
@@ -369,19 +370,17 @@ void GLManager::InitializeWithWorkaroundsImpl(
 
   ASSERT_TRUE(context_->MakeCurrent(surface_.get()));
 
-  auto result =
-      decoder_->Initialize(surface_.get(), context_.get(), true,
-                           ::gpu::gles2::DisallowedFeatures(), attribs);
-  if (result != gpu::ContextResult::kSuccess)
+  if (!decoder_->Initialize(surface_.get(), context_.get(), true,
+                            ::gpu::gles2::DisallowedFeatures(), attribs)) {
     return;
+  }
   // Client side Capabilities queries return reference, service side return
   // value. Here two sides are joined together.
   capabilities_ = decoder_->GetCapabilities();
 
   // Create the GLES2 helper, which writes the command buffer protocol.
   gles2_helper_.reset(new gles2::GLES2CmdHelper(command_buffer_.get()));
-  ASSERT_EQ(gles2_helper_->Initialize(limits.command_buffer_size),
-            gpu::ContextResult::kSuccess);
+  ASSERT_TRUE(gles2_helper_->Initialize(limits.command_buffer_size));
 
   // Create a transfer buffer.
   transfer_buffer_.reset(new TransferBuffer(gles2_helper_.get()));
@@ -394,8 +393,7 @@ void GLManager::InitializeWithWorkaroundsImpl(
       options.lose_context_when_out_of_memory, support_client_side_arrays,
       this));
 
-  ASSERT_EQ(gles2_implementation_->Initialize(limits),
-            gpu::ContextResult::kSuccess)
+  ASSERT_TRUE(gles2_implementation_->Initialize(limits))
       << "Could not init GLES2Implementation";
 
   MakeCurrent();
@@ -485,7 +483,7 @@ int32_t GLManager::CreateImage(ClientBuffer buffer,
     IOSurfaceGpuMemoryBuffer* gpu_memory_buffer =
         IOSurfaceGpuMemoryBuffer::FromClientBuffer(buffer);
     scoped_refptr<gl::GLImageIOSurface> image(
-        gl::GLImageIOSurface::Create(size, internalformat));
+        new gl::GLImageIOSurface(size, internalformat));
     if (!image->Initialize(gpu_memory_buffer->iosurface(),
                            gfx::GenericSharedMemoryId(1),
                            gfx::BufferFormat::BGRA_8888)) {

@@ -350,8 +350,8 @@ public class FullscreenManagerTest {
         disableBrowserOverrides();
         mActivityTestRule.startMainActivityOnBlankPage();
 
-        EmbeddedTestServer testServer =
-                EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         try {
             final Tab tab = mActivityTestRule.getActivity().getActivityTab();
             final String testUrl = testServer.getURL(

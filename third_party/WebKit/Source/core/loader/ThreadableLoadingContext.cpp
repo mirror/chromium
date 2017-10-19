@@ -28,7 +28,7 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
     return document_.Get();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(document_);
     ThreadableLoadingContext::Trace(visitor);
   }
@@ -49,7 +49,7 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
 
   ResourceFetcher* GetResourceFetcher() override {
     DCHECK(IsContextThread());
-    return worker_global_scope_->EnsureFetcher();
+    return worker_global_scope_->GetResourceFetcher();
   }
 
   ExecutionContext* GetExecutionContext() override {
@@ -57,7 +57,7 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
     return worker_global_scope_.Get();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(worker_global_scope_);
     ThreadableLoadingContext::Trace(visitor);
   }

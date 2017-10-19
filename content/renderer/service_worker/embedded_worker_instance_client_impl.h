@@ -89,7 +89,6 @@ class EmbeddedWorkerInstanceClientImpl
   void StartWorker(
       const EmbeddedWorkerStartParams& params,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
       mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
@@ -107,8 +106,7 @@ class EmbeddedWorkerInstanceClientImpl
       const EmbeddedWorkerStartParams& params,
       mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
       std::unique_ptr<ServiceWorkerContextClient> context_client,
-      blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy,
-      service_manager::mojom::InterfaceProviderPtr interface_provider);
+      blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy);
 
   mojo::AssociatedBinding<mojom::EmbeddedWorkerInstanceClient> binding_;
 

@@ -591,6 +591,14 @@ const char kSecondaryDisplays[] = "settings.display.secondary_displays";
 // display orientation, for the internal display.
 const char kDisplayRotationLock[] = "settings.display.rotation_lock";
 
+// A boolean pref that specifies if the stylus tools should be enabled/disabled.
+const char kEnableStylusTools[] = "settings.enable_stylus_tools";
+
+// A boolean pref that specifies if the ash palette should be launched after an
+// eject input event has been received.
+const char kLaunchPaletteOnEjectEvent[] =
+    "settings.launch_palette_on_eject_event";
+
 // A string pref that contains either a Chrome app ID (see
 // extensions::ExtensionId) or an Android package name (using Java package
 // naming conventions) of the preferred note-taking app. An empty value
@@ -608,12 +616,6 @@ const char kNoteTakingAppEnabledOnLockScreen[] =
 // to run on lock screen, not to actually enable the apps to run on lock screen.
 const char kNoteTakingAppsLockScreenWhitelist[] =
     "settings.note_taking_apps_lock_screen_whitelist";
-
-// Dictionary pref that maps lock screen app ID to a boolean indicating whether
-// the toast dialog has been show and dismissed as the app was being launched
-// on the lock screen.
-const char kNoteTakingAppsLockScreenToastShown[] =
-    "settings.note_taking_apps_lock_screen_toast_shown";
 
 // Whether the preferred note taking app should be requested to restore the last
 // note created on lock screen when launched on lock screen.
@@ -1490,9 +1492,9 @@ const char kContentSuggestionsConsecutiveIgnoredPrefName[] =
 // as an integer YYYYMMDD, in wall time in the local timezone.
 // If sent_day changes, sent_count is reset to 0. Allows limiting per-day
 // notification count.
-const char kContentSuggestionsNotificationsSentDay[] =
+extern const char kContentSuggestionsNotificationsSentDay[] =
     "ntp.content_suggestions.notifications.sent_day";
-const char kContentSuggestionsNotificationsSentCount[] =
+extern const char kContentSuggestionsNotificationsSentCount[] =
     "ntp.content_suggestions.notifications.sent_count";
 #endif  // defined(OS_ANDROID)
 
@@ -1664,11 +1666,6 @@ const char kAuthAndroidNegotiateAccountType[] =
 // Boolean that specifies whether to allow basic auth prompting on cross-
 // domain sub-content requests.
 const char kAllowCrossOriginAuthPrompt[] = "auth.allow_cross_origin_prompt";
-
-#if defined(OS_POSIX)
-// Boolean that specifies whether NTLMv2 is enabled.
-const char kNtlmV2Enabled[] = "auth.ntlm_v2_enabled";
-#endif  // defined(OS_POSIX)
 
 // Boolean that specifies whether the built-in asynchronous DNS client is used.
 const char kBuiltInDnsClientEnabled[] = "async_dns.enabled";
@@ -2456,15 +2453,6 @@ const char kOfflinePrefetchBackoff[] = "offline_prefetch.backoff";
 const char kOfflineUsageStartObserved[] = "offline_pages.start_observed";
 const char kOfflineUsageOnlineObserved[] = "offline_pages.online_observed";
 const char kOfflineUsageOfflineObserved[] = "offline_pages.offline_observed";
-// Boolean flags indicating state of a prefetch subsystem during a day.
-const char kPrefetchUsageEnabledObserved[] =
-    "offline_pages.prefetch_enabled_observed";
-const char kPrefetchUsageHasPagesObserved[] =
-    "offline_pages.prefetch_has_pages_observed";
-const char kPrefetchUsageFetchObserved[] =
-    "offline_pages.prefetch_fetch_observed";
-const char kPrefetchUsageOpenObserved[] =
-    "offline_pages.prefetch_open_observed";
 // A time corresponding to a midnight that starts the day for which
 // OfflineMetricsCollector tracks the Chrome usage. Once current time passes
 // 24hrs from this point, the further tracking is attributed to the next day.
@@ -2476,17 +2464,6 @@ const char kOfflineUsageStartedCount[] = "offline_pages.started_count";
 const char kOfflineUsageOfflineCount[] = "offline_pages.offline_count";
 const char kOfflineUsageOnlineCount[] = "offline_pages.online_count";
 const char kOfflineUsageMixedCount[] = "offline_pages.mixed_count";
-// Accumulated counters of days with specified Prefetch usage. When there is
-// likely a network connection, these counters are reported via UMA and reset.
-const char kPrefetchUsageEnabledCount[] =
-    "offline_pages.prefetch_enabled_count";
-const char kPrefetchUsageHasPagesCount[] =
-    "offline_pages.prefetch_has_pages_count";
-const char kPrefetchUsageFetchedCount[] =
-    "offline_pages.prefetch_fetched_count";
-const char kPrefetchUsageOpenedCount[] = "offline_pages.prefetch_opened_count";
-const char kPrefetchUsageMixedCount[] = "offline_pages.prefetch_mixed_count";
-
 #endif
 
 // Stores the Media Engagement Index schema version. If the stored value

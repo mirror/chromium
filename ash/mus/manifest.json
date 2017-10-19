@@ -7,18 +7,16 @@
       "provides": {
         // Modifications here should correspond with changes to
         // chrome_content_browser_manifest_overlay.json.
-        "system_ui": [
+        "ash": [
           "app_list::mojom::AppList",
           "ash::mojom::AcceleratorController",
           "ash::mojom::CastConfig",
-          "ash::mojom::HighlighterController",
           "ash::mojom::ImeController",
           "ash::mojom::LocaleNotificationController",
           "ash::mojom::LockScreen",
           "ash::mojom::MediaController",
           "ash::mojom::NewWindowController",
           "ash::mojom::NightLightController",
-          "ash::mojom::NoteTakingController",
           "ash::mojom::SessionController",
           "ash::mojom::ShelfController",
           "ash::mojom::ShutdownController",
@@ -27,10 +25,6 @@
           "ash::mojom::TrayAction",
           "ash::mojom::VpnList",
           "ash::mojom::WallpaperController"
-        ],
-        // Test-only interfaces.
-        "test": [
-          "ash::mojom::SystemTrayTestApi"
         ],
         // Only chrome is allowed to use this (required as dbus runs in Chrome).
         "display": [

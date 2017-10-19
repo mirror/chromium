@@ -60,20 +60,13 @@ void WorkerOrWorkletGlobalScope::CountDeprecation(WebFeature feature) {
   ReportingProxy().CountDeprecation(feature);
 }
 
-ResourceFetcher* WorkerOrWorkletGlobalScope::EnsureFetcher() {
+ResourceFetcher* WorkerOrWorkletGlobalScope::GetResourceFetcher() {
   DCHECK(RuntimeEnabledFeatures::OffMainThreadFetchEnabled());
   DCHECK(!IsMainThreadWorkletGlobalScope());
   if (resource_fetcher_)
     return resource_fetcher_;
   WorkerFetchContext* fetch_context = WorkerFetchContext::Create(*this);
   resource_fetcher_ = ResourceFetcher::Create(fetch_context);
-  DCHECK(resource_fetcher_);
-  return resource_fetcher_;
-}
-ResourceFetcher* WorkerOrWorkletGlobalScope::Fetcher() const {
-  DCHECK(RuntimeEnabledFeatures::OffMainThreadFetchEnabled());
-  DCHECK(!IsMainThreadWorkletGlobalScope());
-  DCHECK(resource_fetcher_);
   return resource_fetcher_;
 }
 
@@ -101,7 +94,7 @@ void WorkerOrWorkletGlobalScope::Dispose() {
   }
 }
 
-void WorkerOrWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerOrWorkletGlobalScope) {
   visitor->Trace(resource_fetcher_);
   visitor->Trace(script_controller_);
   ExecutionContext::Trace(visitor);

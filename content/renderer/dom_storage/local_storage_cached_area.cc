@@ -79,7 +79,9 @@ LocalStorageCachedArea::LocalStorageCachedArea(
   leveldb_->AddObserver(std::move(ptr_info));
 }
 
-LocalStorageCachedArea::~LocalStorageCachedArea() {}
+LocalStorageCachedArea::~LocalStorageCachedArea() {
+  cached_areas_->CacheAreaClosed(this);
+}
 
 unsigned LocalStorageCachedArea::GetLength() {
   EnsureLoaded();
@@ -108,22 +110,13 @@ bool LocalStorageCachedArea::SetItem(const base::string16& key,
     return false;
 
   EnsureLoaded();
-  bool result = false;
-  base::NullableString16 old_nullable_value;
-  if (should_send_old_value_on_mutations_)
-    result = map_->SetItem(key, value, &old_nullable_value);
-  else
-    result = map_->SetItem(key, value, nullptr);
-  if (!result)
+  if (!map_->SetItem(key, value, nullptr))
     return false;
 
   // Ignore mutations to |key| until OnSetItemComplete.
   ignore_key_mutations_[key]++;
-  base::Optional<std::vector<uint8_t>> optional_old_value;
-  if (!old_nullable_value.is_null())
-    optional_old_value = String16ToUint8Vector(old_nullable_value.string());
   leveldb_->Put(String16ToUint8Vector(key), String16ToUint8Vector(value),
-                optional_old_value, PackSource(page_url, storage_area_id),
+                PackSource(page_url, storage_area_id),
                 base::BindOnce(&LocalStorageCachedArea::OnSetItemComplete,
                                weak_factory_.GetWeakPtr(), key));
   return true;
@@ -133,21 +126,12 @@ void LocalStorageCachedArea::RemoveItem(const base::string16& key,
                                         const GURL& page_url,
                                         const std::string& storage_area_id) {
   EnsureLoaded();
-  bool result = false;
-  base::string16 old_value;
-  if (should_send_old_value_on_mutations_)
-    result = map_->RemoveItem(key, &old_value);
-  else
-    result = map_->RemoveItem(key, nullptr);
-  if (!result)
+  if (!map_->RemoveItem(key, nullptr))
     return;
 
   // Ignore mutations to |key| until OnRemoveItemComplete.
   ignore_key_mutations_[key]++;
-  base::Optional<std::vector<uint8_t>> optional_old_value;
-  if (should_send_old_value_on_mutations_)
-    optional_old_value = String16ToUint8Vector(old_value);
-  leveldb_->Delete(String16ToUint8Vector(key), optional_old_value,
+  leveldb_->Delete(String16ToUint8Vector(key),
                    PackSource(page_url, storage_area_id),
                    base::BindOnce(&LocalStorageCachedArea::OnRemoveItemComplete,
                                   weak_factory_.GetWeakPtr(), key));
@@ -300,10 +284,6 @@ void LocalStorageCachedArea::AllDeleted(const std::string& source) {
   blink::WebStorageEventDispatcher::DispatchLocalStorageEvent(
       blink::WebString(), blink::WebString(), blink::WebString(),
       origin_.GetURL(), page_url, originating_area);
-}
-
-void LocalStorageCachedArea::ShouldSendOldValueOnMutations(bool value) {
-  should_send_old_value_on_mutations_ = value;
 }
 
 void LocalStorageCachedArea::KeyAddedOrChanged(

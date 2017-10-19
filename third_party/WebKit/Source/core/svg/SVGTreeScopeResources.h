@@ -43,7 +43,7 @@ class SVGTreeScopeResources
   void NotifyResourceAvailable(const AtomicString& id);
   void RemoveElementFromPendingResources(Element&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   void ClearHasPendingResourcesIfPossible(Element&);

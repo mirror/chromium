@@ -74,7 +74,7 @@ class OzonePlatformHeadless : public OzonePlatform {
   }
   std::unique_ptr<display::NativeDisplayDelegate> CreateNativeDisplayDelegate()
       override {
-    return std::make_unique<display::FakeDisplayDelegate>();
+    return base::MakeUnique<display::FakeDisplayDelegate>();
   }
 
   void InitializeUI(const InitParams& params) override {
@@ -85,7 +85,7 @@ class OzonePlatformHeadless : public OzonePlatform {
     if (!PlatformEventSource::GetInstance())
       platform_event_source_.reset(new HeadlessPlatformEventSource);
     KeyboardLayoutEngineManager::SetKeyboardLayoutEngine(
-        std::make_unique<StubKeyboardLayoutEngine>());
+        base::MakeUnique<StubKeyboardLayoutEngine>());
 
     overlay_manager_.reset(new StubOverlayManager());
     input_controller_ = CreateStubInputController();

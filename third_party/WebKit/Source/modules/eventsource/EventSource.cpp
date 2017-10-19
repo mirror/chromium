@@ -334,7 +334,7 @@ void EventSource::OnMessageEvent(const AtomicString& event_type,
                                  const AtomicString& last_event_id) {
   MessageEvent* e = MessageEvent::Create();
   e->initMessageEvent(event_type, false, false, data, event_stream_origin_,
-                      last_event_id, nullptr, nullptr);
+                      last_event_id, 0, nullptr);
 
   probe::willDispatchEventSourceEvent(GetExecutionContext(), this, event_type,
                                       last_event_id, data);
@@ -364,7 +364,7 @@ bool EventSource::HasPendingActivity() const {
   return state_ != kClosed;
 }
 
-void EventSource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventSource) {
   visitor->Trace(parser_);
   visitor->Trace(loader_);
   EventTargetWithInlineData::Trace(visitor);

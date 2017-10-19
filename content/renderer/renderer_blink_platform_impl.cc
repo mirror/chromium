@@ -88,7 +88,6 @@
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "storage/common/database/database_identifier.h"
 #include "storage/common/quota/quota_types.h"
-#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 #include "third_party/WebKit/public/platform/BlameContext.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -332,19 +331,14 @@ std::unique_ptr<blink::WebURLLoader> RendererBlinkPlatformImpl::CreateURLLoader(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
 
-  if (!url_loader_factory_getter_ && child_thread)
-    url_loader_factory_getter_ = CreateDefaultURLLoaderFactoryGetter();
-
-  mojom::URLLoaderFactory* factory =
-      url_loader_factory_getter_
-          ? url_loader_factory_getter_->GetFactoryForURL(request.Url())
-          : nullptr;
+  if (!url_loader_factory_ && child_thread)
+    url_loader_factory_ = CreateNetworkURLLoaderFactory();
 
   // There may be no child thread in RenderViewTests.  These tests can still use
   // data URLs to bypass the ResourceDispatcher.
   return base::MakeUnique<WebURLLoaderImpl>(
       child_thread ? child_thread->resource_dispatcher() : nullptr,
-      std::move(task_runner), factory);
+      std::move(task_runner), url_loader_factory_.get());
 }
 
 scoped_refptr<ChildURLLoaderFactoryGetter>
@@ -1325,15 +1319,9 @@ void RendererBlinkPlatformImpl::QueryStorageUsageAndQuota(
 
 //------------------------------------------------------------------------------
 
-std::unique_ptr<blink::WebTrialTokenValidator>
+blink::WebTrialTokenValidator*
 RendererBlinkPlatformImpl::TrialTokenValidator() {
-  return std::make_unique<WebTrialTokenValidatorImpl>(
-      std::make_unique<blink::TrialTokenValidator>(OriginTrialPolicy()));
-}
-
-std::unique_ptr<blink::TrialPolicy>
-RendererBlinkPlatformImpl::OriginTrialPolicy() {
-  return std::make_unique<TrialPolicyImpl>();
+  return &trial_token_validator_;
 }
 
 void RendererBlinkPlatformImpl::WorkerContextCreated(

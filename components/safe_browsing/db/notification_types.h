@@ -18,8 +18,7 @@ enum NotificationType {
   NOTIFICATION_ALL = NOTIFICATION_SAFE_BROWSING_START,
 
   // A safe browsing database update completed.  Source is the
-  // SafeBrowsingDatabaseManager and the details are none. It is posted on the
-  // UI thread.
+  // SafeBrowsingDatabaseManager and the details are none.
   NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE,
 
   NOTIFICATION_SAFE_BROWSING_END

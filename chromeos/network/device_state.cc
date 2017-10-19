@@ -4,9 +4,8 @@
 
 #include "chromeos/network/device_state.h"
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
@@ -132,7 +131,7 @@ void DeviceState::IPConfigPropertiesChanged(
   } else {
     NET_LOG_EVENT("IPConfig Added: " + ip_config_path, path());
     ip_config = ip_configs_.SetDictionaryWithoutPathExpansion(
-        ip_config_path, std::make_unique<base::DictionaryValue>());
+        ip_config_path, base::MakeUnique<base::DictionaryValue>());
   }
   ip_config->MergeDictionary(&properties);
 }

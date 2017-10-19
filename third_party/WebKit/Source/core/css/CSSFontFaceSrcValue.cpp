@@ -78,7 +78,7 @@ bool CSSFontFaceSrcValue::HasFailedOrCanceledSubresources() const {
   return fetched_ && fetched_->GetResource()->LoadFailedOrCanceled();
 }
 
-FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
+FontResource* CSSFontFaceSrcValue::Fetch(Document* document) const {
   if (!fetched_) {
     ResourceRequest resource_request(absolute_resource_);
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
@@ -89,7 +89,7 @@ FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
     if (RuntimeEnabledFeatures::WebFontsCacheAwareTimeoutAdaptationEnabled())
       params.SetCacheAwareLoadingEnabled(kIsCacheAwareLoadingEnabled);
     params.SetContentSecurityCheck(should_check_content_security_policy_);
-    SecurityOrigin* security_origin = context->GetSecurityOrigin();
+    SecurityOrigin* security_origin = document->GetSecurityOrigin();
 
     // Local fonts are accessible from file: URLs even when
     // allowFileAccessFromFileURLs is false.
@@ -98,29 +98,29 @@ FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
                                          kCrossOriginAttributeAnonymous);
     }
 
-    FontResource* resource = FontResource::Fetch(params, context->Fetcher());
+    FontResource* resource = FontResource::Fetch(params, document->Fetcher());
     if (!resource)
       return nullptr;
     fetched_ = FontResourceHelper::Create(resource);
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.
-    RestoreCachedResourceIfNeeded(context);
+    RestoreCachedResourceIfNeeded(document);
   }
   return fetched_->GetResource();
 }
 
 void CSSFontFaceSrcValue::RestoreCachedResourceIfNeeded(
-    ExecutionContext* context) const {
+    Document* document) const {
   DCHECK(fetched_);
-  DCHECK(context);
-  DCHECK(context->Fetcher());
+  DCHECK(document);
+  DCHECK(document->Fetcher());
 
-  const String resource_url = context->CompleteURL(absolute_resource_);
+  const String resource_url = document->CompleteURL(absolute_resource_);
   DCHECK_EQ(should_check_content_security_policy_,
             fetched_->GetResource()->Options().content_security_policy_option);
-  context->Fetcher()->EmulateLoadStartedForInspector(
-      fetched_->GetResource(), KURL(resource_url),
+  document->Fetcher()->EmulateLoadStartedForInspector(
+      fetched_->GetResource(), KURL(kParsedURLString, resource_url),
       WebURLRequest::kRequestContextFont, FetchInitiatorTypeNames::css);
 }
 

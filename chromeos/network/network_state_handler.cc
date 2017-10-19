@@ -6,8 +6,6 @@
 
 #include <stddef.h>
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/format_macros.h"
@@ -120,7 +118,7 @@ void NetworkStateHandler::Shutdown() {
 
 void NetworkStateHandler::InitShillPropertyHandler() {
   shill_property_handler_ =
-      std::make_unique<internal::ShillPropertyHandler>(this);
+      base::MakeUnique<internal::ShillPropertyHandler>(this);
   shill_property_handler_->Init();
 }
 
@@ -592,7 +590,7 @@ void NetworkStateHandler::AddTetherNetworkState(const std::string& guid,
 
   // Use the GUID as the network's service path.
   std::unique_ptr<NetworkState> tether_network_state =
-      std::make_unique<NetworkState>(guid /* path */);
+      base::MakeUnique<NetworkState>(guid /* path */);
 
   tether_network_state->set_name(name);
   tether_network_state->set_type(kTypeTether);

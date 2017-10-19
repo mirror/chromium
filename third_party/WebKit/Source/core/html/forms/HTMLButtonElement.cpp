@@ -179,7 +179,7 @@ void HTMLButtonElement::AccessKeyAction(bool send_mouse_events) {
   focus();
 
   DispatchSimulatedClick(
-      nullptr, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
+      0, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
 }
 
 bool HTMLButtonElement::IsURLAttribute(const Attribute& attribute) const {

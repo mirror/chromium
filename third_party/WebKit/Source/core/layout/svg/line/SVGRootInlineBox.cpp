@@ -84,8 +84,8 @@ void SVGRootInlineBox::ComputePerCharacterLayoutInformation() {
                             LogicalBottom());
 }
 
-FloatRect SVGRootInlineBox::LayoutInlineBoxes(InlineBox& box) {
-  FloatRect rect;
+LayoutRect SVGRootInlineBox::LayoutInlineBoxes(InlineBox& box) {
+  LayoutRect rect;
   if (box.IsSVGInlineTextBox()) {
     rect = ToSVGInlineTextBox(box).CalculateBoundaries();
   } else {
@@ -94,19 +94,16 @@ FloatRect SVGRootInlineBox::LayoutInlineBoxes(InlineBox& box) {
       rect.Unite(LayoutInlineBoxes(*child));
   }
 
-  LayoutRect logical_rect(rect);
-  if (!box.IsHorizontal())
-    logical_rect.SetSize(logical_rect.Size().TransposedSize());
-
-  box.SetX(logical_rect.X());
-  box.SetY(logical_rect.Y());
-  box.SetLogicalWidth(logical_rect.Width());
+  box.SetX(rect.X());
+  box.SetY(rect.Y());
+  box.SetLogicalWidth(box.IsHorizontal() ? rect.Width() : rect.Height());
+  LayoutUnit logical_height = box.IsHorizontal() ? rect.Height() : rect.Width();
   if (box.IsSVGInlineTextBox())
-    ToSVGInlineTextBox(box).SetLogicalHeight(logical_rect.Height());
+    ToSVGInlineTextBox(box).SetLogicalHeight(logical_height);
   else if (box.IsSVGInlineFlowBox())
-    ToSVGInlineFlowBox(box).SetLogicalHeight(logical_rect.Height());
+    ToSVGInlineFlowBox(box).SetLogicalHeight(logical_height);
   else
-    ToSVGRootInlineBox(box).SetLogicalHeight(logical_rect.Height());
+    ToSVGRootInlineBox(box).SetLogicalHeight(logical_height);
 
   return rect;
 }

@@ -20,17 +20,11 @@ class OSExchangeData;
 // drag-drop operation as the user mouses over other drop targets on their
 // system. This object tells Windows whether or not the drag should continue,
 // and supplies the appropriate cursors.
-class DragSourceWin
+class UI_BASE_EXPORT DragSourceWin
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDropSource> {
  public:
-  // Factory method to avoid exporting the class and all it derives from.
-  static UI_BASE_EXPORT Microsoft::WRL::ComPtr<ui::DragSourceWin> Create();
-
-  // Use Create() to construct these objects. Direct calls to the constructor
-  // are an error - it is only public because a WRL helper function creates the
-  // objects.
   DragSourceWin();
   ~DragSourceWin() override {}
 

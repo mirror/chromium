@@ -2841,16 +2841,6 @@ error::Error GLES2DecoderPassthroughImpl::DoTexStorage2DEXT(
   return error::kNoError;
 }
 
-error::Error GLES2DecoderPassthroughImpl::DoTexStorage2DImageCHROMIUM(
-    GLenum target,
-    GLenum internalFormat,
-    GLenum bufferUsage,
-    GLsizei width,
-    GLsizei height) {
-  NOTIMPLEMENTED();
-  return error::kNoError;
-}
-
 error::Error GLES2DecoderPassthroughImpl::DoGenQueriesEXT(
     GLsizei n,
     volatile GLuint* queries) {
@@ -3141,9 +3131,13 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffers() {
         emulated_front_buffer_ = std::move(available_color_textures_.back());
         available_color_textures_.pop_back();
       } else {
-        emulated_front_buffer_ = std::make_unique<EmulatedColorBuffer>(
-            emulated_default_framebuffer_format_);
-        emulated_front_buffer_->Resize(emulated_back_buffer_->size);
+        emulated_front_buffer_.reset(
+            new EmulatedColorBuffer(emulated_default_framebuffer_format_));
+        if (!emulated_front_buffer_->Resize(emulated_back_buffer_->size)) {
+          DLOG(ERROR)
+              << "Failed to create a new emulated front buffer texture.";
+          return error::kLostContext;
+        }
       }
     }
 
@@ -3367,8 +3361,10 @@ error::Error GLES2DecoderPassthroughImpl::DoRequestExtensionCHROMIUM(
 
   // Make sure newly enabled extensions are exposed and usable.
   context_->ReinitializeDynamicBindings();
-  feature_info_->Initialize(feature_info_->context_type(),
-                            feature_info_->disallowed_features());
+  if (!feature_info_->Initialize(feature_info_->context_type(),
+                                 feature_info_->disallowed_features())) {
+    return error::kLostContext;
+  }
 
   return error::kNoError;
 }
@@ -3838,9 +3834,6 @@ error::Error GLES2DecoderPassthroughImpl::DoDrawArraysInstancedANGLE(
     GLint first,
     GLsizei count,
     GLsizei primcount) {
-  if (!feature_info_->feature_flags().angle_instanced_arrays) {
-    return error::kUnknownCommand;
-  }
   glDrawArraysInstancedANGLE(mode, first, count, primcount);
   return error::kNoError;
 }
@@ -3851,9 +3844,6 @@ error::Error GLES2DecoderPassthroughImpl::DoDrawElementsInstancedANGLE(
     GLenum type,
     const void* indices,
     GLsizei primcount) {
-  if (!feature_info_->feature_flags().angle_instanced_arrays) {
-    return error::kUnknownCommand;
-  }
   glDrawElementsInstancedANGLE(mode, count, type, indices, primcount);
   return error::kNoError;
 }
@@ -3861,9 +3851,6 @@ error::Error GLES2DecoderPassthroughImpl::DoDrawElementsInstancedANGLE(
 error::Error GLES2DecoderPassthroughImpl::DoVertexAttribDivisorANGLE(
     GLuint index,
     GLuint divisor) {
-  if (!feature_info_->feature_flags().angle_instanced_arrays) {
-    return error::kUnknownCommand;
-  }
   glVertexAttribDivisorANGLE(index, divisor);
   return error::kNoError;
 }

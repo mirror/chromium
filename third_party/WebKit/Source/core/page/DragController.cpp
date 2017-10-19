@@ -781,23 +781,6 @@ bool DragController::TryDHTMLDrag(DragData* drag_data,
   return true;
 }
 
-bool SelectTextInsteadOfDrag(const Node& node) {
-  if (!node.IsTextNode())
-    return false;
-
-  // Editable elements loose their draggability,
-  // see https://github.com/whatwg/html/issues/3114.
-  if (HasEditableStyle(node))
-    return true;
-
-  for (Node& node : NodeTraversal::InclusiveAncestorsOf(node)) {
-    if (node.IsHTMLElement() && ToHTMLElement(&node)->draggable())
-      return false;
-  }
-
-  return node.CanStartSelection();
-}
-
 Node* DragController::DraggableNode(const LocalFrame* src,
                                     Node* start_node,
                                     const IntPoint& drag_origin,
@@ -821,11 +804,11 @@ Node* DragController::DraggableNode(const LocalFrame* src,
       // skip over them for the purposes of finding a draggable node.
       continue;
     }
-    if (drag_type != kDragSourceActionSelection &&
-        SelectTextInsteadOfDrag(*node)) {
-      // We have a click in an unselected, selectable text that is not
-      // draggable... so we want to start the selection process instead
-      // of looking for a parent to try to drag.
+    if (drag_type != kDragSourceActionSelection && node->IsTextNode() &&
+        node->CanStartSelection()) {
+      // In this case we have a click in the unselected portion of text. If this
+      // text is selectable, we want to start the selection process instead of
+      // looking for a parent to try to drag.
       return nullptr;
     }
     if (node->IsElementNode()) {
@@ -1339,7 +1322,7 @@ DragState& DragController::GetDragState() {
   return *drag_state_;
 }
 
-void DragController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DragController) {
   visitor->Trace(page_);
   visitor->Trace(document_under_mouse_);
   visitor->Trace(drag_initiator_);

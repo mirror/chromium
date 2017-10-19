@@ -271,6 +271,6 @@ ScriptPromise MediaCapabilities::encodingInfo(
   return promise;
 }
 
-void MediaCapabilities::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(MediaCapabilities) {}
 
 }  // namespace blink

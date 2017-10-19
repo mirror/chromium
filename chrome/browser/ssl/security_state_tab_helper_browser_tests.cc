@@ -93,49 +93,6 @@ void InjectScript(content::WebContents* contents) {
   }
 }
 
-// Gets the Insecure Input Events from the entry's SSLStatus user data.
-security_state::InsecureInputEventData GetInputEvents(
-    content::NavigationEntry* entry) {
-  security_state::SSLStatusInputEventData* input_events =
-      static_cast<security_state::SSLStatusInputEventData*>(
-          entry->GetSSL().user_data.get());
-  if (input_events)
-    return *input_events->input_events();
-
-  return security_state::InsecureInputEventData();
-}
-
-// Stores the Insecure Input Events to the entry's SSLStatus user data.
-void SetInputEvents(content::NavigationEntry* entry,
-                    security_state::InsecureInputEventData events) {
-  security_state::SSLStatus& ssl = entry->GetSSL();
-  security_state::SSLStatusInputEventData* input_events =
-      static_cast<security_state::SSLStatusInputEventData*>(
-          ssl.user_data.get());
-  if (!input_events) {
-    ssl.user_data =
-        base::MakeUnique<security_state::SSLStatusInputEventData>(events);
-  } else {
-    *input_events->input_events() = events;
-  }
-}
-
-void SimulateCreditCardFieldEdit(content::WebContents* contents) {
-  content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
-  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
-  input_events.credit_card_field_edited = true;
-  SetInputEvents(entry, input_events);
-  contents->DidChangeVisibleSecurityState();
-}
-
-void SimulatePasswordFieldShown(content::WebContents* contents) {
-  content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
-  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
-  input_events.password_field_shown = true;
-  SetInputEvents(entry, input_events);
-  contents->DidChangeVisibleSecurityState();
-}
-
 // A WebContentsObserver useful for testing the DidChangeVisibleSecurityState()
 // method: it keeps track of the latest security style and explanation that was
 // fired.
@@ -428,14 +385,15 @@ class SecurityStateTabHelperTest : public CertVerifierBrowserTest {
         contents->GetController().GetVisibleEntry();
     ASSERT_TRUE(entry);
 
-    security_state::InsecureInputEventData input_events = GetInputEvents(entry);
     if (expect_warning) {
       EXPECT_EQ(security_state::HTTP_SHOW_WARNING,
                 security_info.security_level);
-      EXPECT_TRUE(input_events.password_field_shown);
+      EXPECT_TRUE(entry->GetSSL().content_status &
+                  content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
     } else {
       EXPECT_EQ(security_state::NONE, security_info.security_level);
-      EXPECT_FALSE(input_events.password_field_shown);
+      EXPECT_FALSE(entry->GetSSL().content_status &
+                   content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
     }
   }
 
@@ -1216,7 +1174,19 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_TRUE(GetInputEvents(entry).password_field_shown);
+  EXPECT_TRUE(entry->GetSSL().content_status &
+              content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+
+  {
+    // Ensure the warning is still present when HTTPBad Phase 2 flag is enabled.
+    base::test::ScopedCommandLine scoped_command_line;
+    scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+        security_state::switches::kMarkHttpAs,
+        security_state::switches::kMarkHttpAsNonSecureWhileIncognito);
+
+    helper->GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+  }
 }
 
 // Tests that when a visible password field is detected on a blob URL, the
@@ -1310,7 +1280,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_FALSE(GetInputEvents(entry).password_field_shown);
+  EXPECT_FALSE(entry->GetSSL().content_status &
+               content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
 }
 
 // Tests that when a visible password field is detected inside an iframe on an
@@ -1336,7 +1307,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_TRUE(GetInputEvents(entry).password_field_shown);
+  EXPECT_TRUE(entry->GetSSL().content_status &
+              content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
 }
 
 // Tests that when a visible password field is detected inside an iframe on an
@@ -1369,7 +1341,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_TRUE(GetInputEvents(entry).password_field_shown);
+  EXPECT_TRUE(entry->GetSSL().content_status &
+              content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
 }
 
 // Tests that when a visible password field is detected on an HTTPS page load,
@@ -1399,13 +1372,21 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // which it was not in this case.
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_FALSE(GetInputEvents(entry).password_field_shown);
+  EXPECT_FALSE(entry->GetSSL().content_status &
+               content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
 }
 
 // Tests that the security level of a HTTP page is downgraded to
 // HTTP_SHOW_WARNING after editing a form field in the relevant configurations.
 IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
                        SecurityLevelDowngradedAfterEditing) {
+  // Set the mode using the command line flag rather than the field trial to
+  // ensure that fieldtrial_testing_config.json does not interfere.
+  base::test::ScopedCommandLine scoped_command_line;
+  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+      security_state::switches::kMarkHttpAs,
+      security_state::switches::kMarkHttpAsNonSecureWhileIncognitoOrEditing);
+
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
 
@@ -1448,18 +1429,35 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_TRUE(GetInputEvents(entry).insecure_field_edited);
+  security_state::SSLStatusInputEventData* input_events =
+      static_cast<security_state::SSLStatusInputEventData*>(
+          entry->GetSSL().user_data.get());
+  ASSERT_TRUE(input_events);
+  EXPECT_TRUE(input_events->input_events()->insecure_field_edited);
 
   {
-    // Ensure that the security level remains Dangerous in the
-    // kMarkHttpAsDangerous configuration.
+    // Ensure the warning is still present when in the
+    // kMarkHttpAsNonSecureAfterEditing configuration.
     base::test::ScopedCommandLine scoped_command_line;
     scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
         security_state::switches::kMarkHttpAs,
-        security_state::switches::kMarkHttpAsDangerous);
+        security_state::switches::kMarkHttpAsNonSecureAfterEditing);
 
     helper->GetSecurityInfo(&security_info);
-    EXPECT_EQ(security_state::DANGEROUS, security_info.security_level);
+    EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
+    EXPECT_TRUE(security_info.field_edit_downgraded_security_level);
+  }
+
+  {
+    // Ensure the warning is not present when in the
+    // kMarkHttpAsNonSecureWhileIncognito configuration.
+    base::test::ScopedCommandLine scoped_command_line;
+    scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+        security_state::switches::kMarkHttpAs,
+        security_state::switches::kMarkHttpAsNonSecureWhileIncognito);
+
+    helper->GetSecurityInfo(&security_info);
+    EXPECT_EQ(security_state::NONE, security_info.security_level);
     EXPECT_FALSE(security_info.field_edit_downgraded_security_level);
   }
 
@@ -1567,7 +1565,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
   // Trigger the HTTP_SHOW_WARNING state.
   base::RunLoop first_message;
   delegate->set_console_message_callback(first_message.QuitClosure());
-  SimulatePasswordFieldShown(contents);
+  contents->OnPasswordInputShownOnHttp();
   first_message.Run();
 
   // Check that the HTTP_SHOW_WARNING state was actually triggered.
@@ -1585,7 +1583,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
   // Two subsequent triggers of VisibleSecurityStateChanged -- one on the
   // same navigation and one on another navigation -- should only result
   // in one additional console message.
-  SimulateCreditCardFieldEdit(contents);
+  contents->OnCreditCardInputShownOnHttp();
   GURL second_http_url =
       GetURLWithNonLocalHostname(embedded_test_server(), "/title2.html");
   ui_test_utils::NavigateToURL(delegate, second_http_url);
@@ -1595,7 +1593,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
 
   base::RunLoop second_message;
   delegate->set_console_message_callback(second_message.QuitClosure());
-  SimulatePasswordFieldShown(contents);
+  contents->OnPasswordInputShownOnHttp();
   second_message.Run();
 
   helper->GetSecurityInfo(&security_info);
@@ -1635,7 +1633,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // Trigger the HTTP_SHOW_WARNING state.
   base::RunLoop first_message;
   delegate->set_console_message_callback(first_message.QuitClosure());
-  SimulatePasswordFieldShown(contents);
+  contents->OnPasswordInputShownOnHttp();
   first_message.Run();
 
   // Check that the HTTP_SHOW_WARNING state was actually triggered.
@@ -1662,8 +1660,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   EXPECT_TRUE(content::ExecuteScript(
       contents, "document.getElementById('navFrame').src = '/title2.html';"));
   subframe_observer.Wait();
-
-  SimulateCreditCardFieldEdit(contents);
+  contents->OnCreditCardInputShownOnHttp();
   helper->GetSecurityInfo(&security_info);
   EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
 
@@ -1679,7 +1676,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   base::RunLoop second_message;
   delegate->set_console_message_callback(second_message.QuitClosure());
-  SimulatePasswordFieldShown(contents);
+  contents->OnPasswordInputShownOnHttp();
   second_message.Run();
 
   helper->GetSecurityInfo(&security_info);
@@ -1718,7 +1715,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // Trigger the HTTP_SHOW_WARNING state.
   base::RunLoop first_message;
   delegate->set_console_message_callback(first_message.QuitClosure());
-  SimulatePasswordFieldShown(contents);
+  contents->OnPasswordInputShownOnHttp();
   first_message.Run();
 
   // Check that the HTTP_SHOW_WARNING state was actually triggered.
@@ -1740,7 +1737,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // navigation.
   EXPECT_TRUE(content::ExecuteScript(
       contents, "history.pushState({ foo: 'bar' }, 'foo', 'bar');"));
-  SimulateCreditCardFieldEdit(contents);
+  contents->OnCreditCardInputShownOnHttp();
   helper->GetSecurityInfo(&security_info);
   EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
 
@@ -1756,7 +1753,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   base::RunLoop second_message;
   delegate->set_console_message_callback(second_message.QuitClosure());
-  SimulatePasswordFieldShown(contents);
+  contents->OnPasswordInputShownOnHttp();
   second_message.Run();
 
   helper->GetSecurityInfo(&security_info);
@@ -1943,9 +1940,16 @@ IN_PROC_BROWSER_TEST_F(DidChangeVisibleSecurityStateTest,
 }
 
 // Tests that the security level of a HTTP page in Incognito mode is downgraded
-// to HTTP_SHOW_WARNING.
+// to HTTP_SHOW_WARNING when MarkHttpAsNonSecureWhileIncognito is enabled.
 IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
                        SecurityLevelDowngradedForHTTPInIncognito) {
+  // Set the mode using the command line flag rather than the field trial to
+  // ensure that fieldtrial_testing_config.json does not interfere.
+  base::test::ScopedCommandLine scoped_command_line;
+  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+      security_state::switches::kMarkHttpAs,
+      security_state::switches::kMarkHttpAsNonSecureWhileIncognito);
+
   ConsoleWebContentsDelegate* delegate = new ConsoleWebContentsDelegate(
       Browser::CreateParams(browser()->profile(), true));
   content::WebContents* original_contents =
@@ -1999,6 +2003,13 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
 // printed after aborted navigations.
 IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
                        ConsoleMessageNotPrintedForAbortedNavigation) {
+  // Set the mode using the command line flag rather than the field trial to
+  // ensure that fieldtrial_testing_config.json does not interfere.
+  base::test::ScopedCommandLine scoped_command_line;
+  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+      security_state::switches::kMarkHttpAs,
+      security_state::switches::kMarkHttpAsNonSecureWhileIncognito);
+
   ConsoleWebContentsDelegate* delegate = new ConsoleWebContentsDelegate(
       Browser::CreateParams(browser()->profile(), true));
   content::WebContents* original_contents =
@@ -2054,7 +2065,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
 }
 
 // Tests that the security level of a HTTP page in Guest mode is not downgraded
-// to HTTP_SHOW_WARNING.
+// to HTTP_SHOW_WARNING when MarkHttpAsNonSecureWhileIncognito is enabled.
 #if defined(OS_CHROMEOS)
 // Guest mode cannot be readily browser-tested on ChromeOS.
 #define MAYBE_SecurityLevelNotDowngradedForHTTPInGuestMode \
@@ -2065,6 +2076,11 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
 #endif
 IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
                        MAYBE_SecurityLevelNotDowngradedForHTTPInGuestMode) {
+  base::test::ScopedCommandLine scoped_command_line;
+  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+      security_state::switches::kMarkHttpAs,
+      security_state::switches::kMarkHttpAsNonSecureWhileIncognito);
+
   // Create a new browser in Guest Mode.
   EXPECT_EQ(1U, BrowserList::GetInstance()->size());
   content::WindowedNotificationObserver browser_creation_observer(
@@ -2114,6 +2130,45 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   // No console notification should occur.
   EXPECT_TRUE(delegate->console_messages().empty());
+}
+
+// Tests that the security level of a HTTP page is NEUTRAL when MarkHttpAs is
+// not set to either kMarkHttpAsNonSecureWhileIncognito or
+// kMarkHttpAsNonSecureWhileIncognitoOrEditing.
+IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest,
+                       SecurityLevelNeutralByDefaultForHTTP) {
+  // We must explicitly specify a configuration using the command-line
+  // argument or this test can fail based on the values inside the
+  // fieldtrial_testing_config.json file.
+  base::test::ScopedCommandLine scoped_command_line;
+  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+      security_state::switches::kMarkHttpAs,
+      security_state::switches::kMarkHttpAsNonSecureAfterEditing);
+
+  content::WebContents* contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ASSERT_TRUE(contents);
+
+  ASSERT_TRUE(contents->GetBrowserContext()->IsOffTheRecord());
+
+  SecurityStyleTestObserver observer(contents);
+
+  SecurityStateTabHelper* helper =
+      SecurityStateTabHelper::FromWebContents(contents);
+  ASSERT_TRUE(helper);
+
+  // Navigate to an HTTP page. Use a non-local hostname so that it is
+  // not considered secure.
+  GURL http_url =
+      GetURLWithNonLocalHostname(embedded_test_server(), "/title1.html");
+  ui_test_utils::NavigateToURL(browser(), http_url);
+
+  security_state::SecurityInfo security_info;
+  helper->GetSecurityInfo(&security_info);
+  EXPECT_FALSE(security_info.incognito_downgraded_security_level);
+  EXPECT_EQ(security_state::NONE, security_info.security_level);
+  EXPECT_EQ(0u, observer.latest_explanations().neutral_explanations.size());
+  EXPECT_EQ(blink::kWebSecurityStyleNeutral, observer.latest_security_style());
 }
 
 // Tests that the security level of a HTTP page is downgraded to DANGEROUS when
@@ -2400,6 +2455,13 @@ IN_PROC_BROWSER_TEST_F(
 // Tests that the Not Secure chip does not show for error pages on http:// URLs.
 // Regression test for https://crbug.com/760647.
 IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperIncognitoTest, HttpErrorPage) {
+  // Set the mode using the command line flag rather than the field trial to
+  // ensure that fieldtrial_testing_config.json does not interfere.
+  base::test::ScopedCommandLine scoped_command_line;
+  scoped_command_line.GetProcessCommandLine()->AppendSwitchASCII(
+      security_state::switches::kMarkHttpAs,
+      security_state::switches::kMarkHttpAsNonSecureWhileIncognito);
+
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   SecurityStateTabHelper* helper =

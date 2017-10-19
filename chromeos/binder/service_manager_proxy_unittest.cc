@@ -4,10 +4,9 @@
 
 #include "chromeos/binder/service_manager_proxy.h"
 
-#include <memory>
-
 #include "base/guid.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
@@ -61,7 +60,7 @@ TEST_F(BinderServiceManagerProxyTest, AddAndCheck) {
 
   // Add service.
   scoped_refptr<Object> object(
-      new LocalObject(std::make_unique<DummyTransactionHandler>()));
+      new LocalObject(base::MakeUnique<DummyTransactionHandler>()));
   EXPECT_TRUE(ServiceManagerProxy::AddService(&command_broker_, kServiceName,
                                               object, 0));
 

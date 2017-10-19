@@ -30,15 +30,14 @@ namespace {
 
 // Adapts a LazyBackgroundTaskQueue pending task callback to
 // LazyContextTaskQueue's callback.
-void PendingTaskAdapter(LazyContextTaskQueue::PendingTask original_task,
+void PendingTaskAdapter(const LazyContextTaskQueue::PendingTask& original_task,
                         ExtensionHost* host) {
   if (!host) {
-    std::move(original_task).Run(nullptr);
+    original_task.Run(nullptr);
   } else {
-    std::move(original_task)
-        .Run(std::make_unique<LazyContextTaskQueue::ContextInfo>(
-            host->extension()->id(), host->render_process_host(), kMainThreadId,
-            host->GetURL()));
+    original_task.Run(std::make_unique<LazyContextTaskQueue::ContextInfo>(
+        host->extension()->id(), host->render_process_host(), kMainThreadId,
+        host->GetURL()));
   }
 }
 
@@ -87,26 +86,25 @@ bool LazyBackgroundTaskQueue::ShouldEnqueueTask(
 
 void LazyBackgroundTaskQueue::AddPendingTaskToDispatchEvent(
     LazyContextId* context_id,
-    LazyContextTaskQueue::PendingTask task) {
+    const LazyContextTaskQueue::PendingTask& task) {
   AddPendingTask(context_id->browser_context(), context_id->extension_id(),
-                 base::BindOnce(&PendingTaskAdapter, std::move(task)));
+                 base::Bind(&PendingTaskAdapter, task));
 }
 
 void LazyBackgroundTaskQueue::AddPendingTask(
     content::BrowserContext* browser_context,
     const std::string& extension_id,
-    PendingTask task) {
+    const PendingTask& task) {
   if (ExtensionsBrowserClient::Get()->IsShuttingDown()) {
-    std::move(task).Run(nullptr);
+    task.Run(NULL);
     return;
   }
-  PendingTasksList* tasks_list = nullptr;
+  PendingTasksList* tasks_list = NULL;
   PendingTasksKey key(browser_context, extension_id);
   PendingTasksMap::iterator it = pending_tasks_.find(key);
   if (it == pending_tasks_.end()) {
-    auto tasks_list_tmp = std::make_unique<PendingTasksList>();
-    tasks_list = tasks_list_tmp.get();
-    pending_tasks_[key] = std::move(tasks_list_tmp);
+    tasks_list = new PendingTasksList();
+    pending_tasks_[key] = base::WrapUnique(tasks_list);
 
     const Extension* extension =
         ExtensionRegistry::Get(browser_context)->enabled_extensions().GetByID(
@@ -120,7 +118,7 @@ void LazyBackgroundTaskQueue::AddPendingTask(
       // but the extension isn't enabled in incognito mode.
       if (!pm->CreateBackgroundHost(
             extension, BackgroundInfo::GetBackgroundURL(extension))) {
-        std::move(task).Run(nullptr);
+        task.Run(NULL);
         return;
       }
     }
@@ -128,7 +126,7 @@ void LazyBackgroundTaskQueue::AddPendingTask(
     tasks_list = it->second.get();
   }
 
-  tasks_list->push_back(std::move(task));
+  tasks_list->push_back(task);
 }
 
 void LazyBackgroundTaskQueue::ProcessPendingTasks(
@@ -151,8 +149,10 @@ void LazyBackgroundTaskQueue::ProcessPendingTasks(
   // list is modified during processing.
   PendingTasksList tasks;
   tasks.swap(*map_it->second);
-  for (auto& task : tasks)
-    std::move(task).Run(host);
+  for (PendingTasksList::const_iterator it = tasks.begin();
+       it != tasks.end(); ++it) {
+    it->Run(host);
+  }
 
   pending_tasks_.erase(key);
 

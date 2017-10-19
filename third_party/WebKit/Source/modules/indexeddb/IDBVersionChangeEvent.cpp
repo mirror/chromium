@@ -72,7 +72,7 @@ const AtomicString& IDBVersionChangeEvent::InterfaceName() const {
   return EventNames::IDBVersionChangeEvent;
 }
 
-void IDBVersionChangeEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBVersionChangeEvent) {
   Event::Trace(visitor);
 }
 

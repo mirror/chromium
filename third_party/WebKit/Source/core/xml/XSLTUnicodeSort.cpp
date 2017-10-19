@@ -82,7 +82,7 @@ void XsltUnicodeSortFunction(xsltTransformContextPtr ctxt,
           comp->number = 1;
         } else {
           xsltTransformError(
-              ctxt, nullptr, sorts[j],
+              ctxt, 0, sorts[j],
               "xsltDoSortFunction: no support for data-type = %s\n",
               comp->stype);
           comp->number = 0;  // Use default.
@@ -100,7 +100,7 @@ void XsltUnicodeSortFunction(xsltTransformContextPtr ctxt,
         } else if (xmlStrEqual(comp->order, ToXMLChar("descending"))) {
           comp->descending = 1;
         } else {
-          xsltTransformError(ctxt, nullptr, sorts[j],
+          xsltTransformError(ctxt, 0, sorts[j],
                              "xsltDoSortFunction: invalid value %s for order\n",
                              comp->order);
           comp->descending = 0;  // Use default.
@@ -113,7 +113,7 @@ void XsltUnicodeSortFunction(xsltTransformContextPtr ctxt,
 
   results_tab[0] = xsltComputeSortResult(ctxt, sorts[0]);
   for (int i = 1; i < XSLT_MAX_SORT; ++i)
-    results_tab[i] = nullptr;
+    results_tab[i] = 0;
 
   results = results_tab[0];
 
@@ -274,12 +274,12 @@ void XsltUnicodeSortFunction(xsltTransformContextPtr ctxt,
     if (tempstype[j] == 1) {
       // The data-type needs to be recomputed each time.
       xmlFree(const_cast<xmlChar*>(comp->stype));
-      comp->stype = nullptr;
+      comp->stype = 0;
     }
     if (temporder[j] == 1) {
       // The order needs to be recomputed each time.
       xmlFree(const_cast<xmlChar*>(comp->order));
-      comp->order = nullptr;
+      comp->order = 0;
     }
     if (results_tab[j]) {
       for (int i = 0; i < len; ++i)

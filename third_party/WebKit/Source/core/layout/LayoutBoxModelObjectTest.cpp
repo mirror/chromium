@@ -1039,7 +1039,8 @@ TEST_F(LayoutBoxModelObjectTest, StickyRemovedFromRootScrollableArea) {
 }
 
 TEST_F(LayoutBoxModelObjectTest, BackfaceVisibilityChange) {
-  ScopedSlimmingPaintV175ForTest spv175(true);
+  // TODO(wangxianzhu): Change this to V175.
+  ScopedSlimmingPaintV2ForTest spv2(true);
 
   AtomicString base_style =
       "width: 100px; height: 100px; background: blue; position: absolute";

@@ -112,9 +112,7 @@ void WebUIImpl::OnWebUISend(RenderFrameHost* sender,
           sender->GetProcess()->GetID()) ||
       !WebUIControllerFactoryRegistry::GetInstance()->IsURLAcceptableForWebUI(
           web_contents_->GetBrowserContext(), source_url)) {
-    bad_message::ReceivedBadMessage(
-        sender->GetProcess(),
-        bad_message::WEBUI_SEND_FROM_UNAUTHORIZED_PROCESS);
+    NOTREACHED() << "Blocked unauthorized use of WebUIBindings.";
     return;
   }
 

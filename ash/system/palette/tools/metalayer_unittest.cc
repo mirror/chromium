@@ -11,6 +11,7 @@
 #include "ash/system/palette/mock_palette_tool_delegate.h"
 #include "ash/system/palette/palette_ids.h"
 #include "ash/system/palette/palette_tool.h"
+#include "ash/system/palette/test_palette_delegate.h"
 #include "ash/system/palette/tools/metalayer_mode.h"
 #include "ash/system/tray/hover_highlight_view.h"
 #include "ash/test/ash_test_base.h"
@@ -33,6 +34,8 @@ class MetalayerToolTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
 
+    ShellTestApi().SetPaletteDelegate(std::make_unique<TestPaletteDelegate>());
+
     palette_tool_delegate_ = std::make_unique<MockPaletteToolDelegate>();
     tool_ = std::make_unique<MetalayerMode>(palette_tool_delegate_.get());
     highlighter_test_api_ = std::make_unique<HighlighterControllerTestApi>(
@@ -45,6 +48,10 @@ class MetalayerToolTest : public AshTestBase {
     highlighter_test_api_.reset();
     tool_.reset();
     AshTestBase::TearDown();
+  }
+
+  TestPaletteDelegate* test_palette_delegate() {
+    return static_cast<TestPaletteDelegate*>(Shell::Get()->palette_delegate());
   }
 
  protected:
@@ -95,27 +102,27 @@ TEST_F(MetalayerToolTest, PaletteMenuState) {
   }
 }
 
-// Verifies that the metalayer enabled/disabled state propagates to the
-// highlighter controller.
+// Verifies that enabling/disabling the metalayer tool invokes the delegate.
 TEST_F(MetalayerToolTest, EnablingDisablingMetalayerEnablesDisablesController) {
   // Enabling the metalayer tool enables the highligher controller.
   // It should also hide the palette.
   EXPECT_CALL(*palette_tool_delegate_.get(), HidePalette());
   highlighter_test_api_->ResetEnabledState();
   tool_->OnEnable();
-  EXPECT_TRUE(highlighter_test_api_->HandleEnabledStateChangedCalled());
+  EXPECT_TRUE(highlighter_test_api_->handle_enabled_state_changed_called());
   EXPECT_TRUE(highlighter_test_api_->enabled());
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 
   // Disabling the metalayer tool disables the highlighter controller.
   highlighter_test_api_->ResetEnabledState();
   tool_->OnDisable();
-  EXPECT_TRUE(highlighter_test_api_->HandleEnabledStateChangedCalled());
+  EXPECT_TRUE(highlighter_test_api_->handle_enabled_state_changed_called());
   EXPECT_FALSE(highlighter_test_api_->enabled());
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 }
 
-// Verifies that disabling the metalayer support disables the tool.
+// Verifies that disabling the metalayer support in the delegate disables the
+// tool.
 TEST_F(MetalayerToolTest, MetalayerUnsupportedDisablesPaletteTool) {
   Shell::Get()->NotifyVoiceInteractionStatusChanged(
       VoiceInteractionState::RUNNING);
@@ -159,21 +166,13 @@ TEST_F(MetalayerToolTest, MetalayerUnsupportedDisablesPaletteTool) {
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
 }
 
-// Verifies that detaching the highlighter client disables the palette tool.
-TEST_F(MetalayerToolTest, DetachingClientDisablesPaletteTool) {
+// Verifies that invoking the callback passed to the delegate disables the tool.
+TEST_F(MetalayerToolTest, MetalayerCallbackDisablesPaletteTool) {
   tool_->OnEnable();
-  // If the client detaches, the tool should become disabled.
+  // Calling the associated callback |metalayer_done| will disable the tool.
   EXPECT_CALL(*palette_tool_delegate_.get(),
               DisableTool(PaletteToolId::METALAYER));
-  highlighter_test_api_->DetachClient();
-  testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
-
-  // If the client attaches again, the tool should not become enabled.
-  highlighter_test_api_->AttachClient();
-  EXPECT_CALL(*palette_tool_delegate_.get(),
-              EnableTool(PaletteToolId::METALAYER))
-      .Times(0);
-  testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
+  highlighter_test_api_->CallMetalayerDone();
 }
 
 }  // namespace ash

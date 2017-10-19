@@ -31,13 +31,11 @@
       // Calls navigator.requestMediaKeySystemAccess() using the supplied codec
       // lists, and then verifies the result. Sets page title when done.
       function requestMediaKeySystemAccessAndVerifyConfiguration(
-          keySystem, initDataType, audioCodecList, videoCodecList,
-          sessionType) {
+          keySystem, initDataType, audioCodecList, videoCodecList) {
         var configuration = {
             initDataTypes: [initDataType],
             audioCapabilities: [],
-            videoCapabilities: [],
-            sessionTypes: [sessionType]
+            videoCapabilities: []
         };
         if (audioCodecList !== null) {
           for (entry of audioCodecList) {
@@ -90,10 +88,10 @@
       };
 
       function checkKeySystemWithMediaMimeType(keySystem, initDataType,
-          audioCodecList, videoCodecList, sessionType) {
+                                               audioCodecList, videoCodecList) {
         setResultInTitle("");
-        requestMediaKeySystemAccessAndVerifyConfiguration(keySystem,
-            initDataType, audioCodecList, videoCodecList, sessionType);
+        requestMediaKeySystemAccessAndVerifyConfiguration(
+            keySystem, initDataType, audioCodecList, videoCodecList);
       };
     </script>
   </body>

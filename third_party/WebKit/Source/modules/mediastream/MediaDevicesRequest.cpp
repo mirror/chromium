@@ -52,7 +52,7 @@ Document* MediaDevicesRequest::OwnerDocument() {
     return ToDocument(context);
   }
 
-  return nullptr;
+  return 0;
 }
 
 ScriptPromise MediaDevicesRequest::Start() {
@@ -74,7 +74,7 @@ void MediaDevicesRequest::ContextDestroyed(ExecutionContext*) {
   resolver_.Clear();
 }
 
-void MediaDevicesRequest::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaDevicesRequest) {
   visitor->Trace(controller_);
   visitor->Trace(resolver_);
   ContextLifecycleObserver::Trace(visitor);

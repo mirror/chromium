@@ -88,7 +88,7 @@ void DefaultAudioDestinationHandler::StartDestination() {
   // Use Experimental AudioWorkletThread only when AudioWorklet is enabled and
   // there is an active AudioWorkletGlobalScope.
   if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
-      Context()->HasWorkletMessagingProxy()) {
+      Context()->WorkletMessagingProxy()) {
     DCHECK(Context()->WorkletMessagingProxy()->GetWorkletBackingThread());
     destination_->StartWithWorkletThread(
         Context()->WorkletMessagingProxy()->GetWorkletBackingThread());
@@ -115,11 +115,6 @@ void DefaultAudioDestinationHandler::StopRendering() {
     DCHECK(destination_->IsPlaying());
     StopDestination();
   }
-}
-
-void DefaultAudioDestinationHandler::RestartDestination() {
-  StopDestination();
-  StartDestination();
 }
 
 unsigned long DefaultAudioDestinationHandler::MaxChannelCount() const {

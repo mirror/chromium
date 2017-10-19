@@ -643,8 +643,8 @@ void MemoryDumpManager::SetupNextMemoryDump(
   // The utility thread is normally shutdown when disabling the trace and
   // getting here in this case is expected.
   if (mdpinfo->task_runner) {
-    DLOG(ERROR) << "Disabling MemoryDumpProvider \"" << mdpinfo->name
-                << "\". Failed to post task on the task runner provided.";
+    LOG(ERROR) << "Disabling MemoryDumpProvider \"" << mdpinfo->name
+               << "\". Failed to post task on the task runner provided.";
 
     // A locked access is required to R/W |disabled| (for the
     // UnregisterAndDeleteDumpProviderSoon() case).
@@ -763,7 +763,7 @@ void MemoryDumpManager::FinishAsyncProcessDump(
   // and is temporary given the upcoming work on the out-of-process heap
   // profiler.
   const auto& args = pmd_async_state->req_args;
-  if (!pmd_async_state->process_memory_dump->heap_dumps().empty()) {
+  if (args.level_of_detail == MemoryDumpLevelOfDetail::DETAILED) {
     std::unique_ptr<TracedValue> traced_value = base::MakeUnique<TracedValue>();
     pmd_async_state->process_memory_dump->SerializeHeapProfilerDumpsInto(
         traced_value.get());

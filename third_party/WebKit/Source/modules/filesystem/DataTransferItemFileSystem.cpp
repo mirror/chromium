@@ -51,13 +51,13 @@ namespace blink {
 Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
                                                     DataTransferItem& item) {
   if (!item.GetDataObjectItem()->IsFilename())
-    return nullptr;
+    return 0;
 
   // For dragged files getAsFile must be pretty lightweight.
   Blob* file = item.getAsFile();
   // The clipboard may not be in a readable state.
   if (!file)
-    return nullptr;
+    return 0;
   DCHECK(file->IsFile());
 
   DOMFileSystem* dom_file_system =
@@ -66,7 +66,7 @@ Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
           ExecutionContext::From(script_state), *item.GetDataObjectItem());
   if (!dom_file_system) {
     // IsolatedFileSystem may not be enabled.
-    return nullptr;
+    return 0;
   }
 
   // The dropped entries are mapped as top-level entries in the isolated
@@ -77,7 +77,7 @@ Entry* DataTransferItemFileSystem::webkitGetAsEntry(ScriptState* script_state,
   // data when we dispatch drag event.
   FileMetadata metadata;
   if (!GetFileMetadata(ToFile(file)->GetPath(), metadata))
-    return nullptr;
+    return 0;
 
   if (metadata.type == FileMetadata::kTypeDirectory)
     return DirectoryEntry::Create(dom_file_system, virtual_path);

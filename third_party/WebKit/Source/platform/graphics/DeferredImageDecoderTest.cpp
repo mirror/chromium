@@ -101,7 +101,7 @@ class DeferredImageDecoderTest : public ::testing::Test,
 
   void TearDown() override { ImageDecodingStore::Instance().Clear(); }
 
-  void DecoderBeingDestroyed() override { actual_decoder_ = nullptr; }
+  void DecoderBeingDestroyed() override { actual_decoder_ = 0; }
 
   void DecodeRequested() override { ++decode_request_count_; }
 

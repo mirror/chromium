@@ -25,6 +25,7 @@ import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
 import org.chromium.android_webview.test.AwActivityTestRule;
 import org.chromium.android_webview.test.AwJUnit4ClassRunner;
+import org.chromium.android_webview.test.AwTestBase;
 import org.chromium.android_webview.test.AwTestContainerView;
 import org.chromium.android_webview.test.RenderProcessGoneHelper;
 import org.chromium.android_webview.test.TestAwContents;
@@ -108,8 +109,7 @@ public class VisualStateCallbackTest {
         }
     }
 
-    private static class CrashTestDependencyFactory
-            extends AwActivityTestRule.TestDependencyFactory {
+    private static class CrashTestDependencyFactory extends AwTestBase.TestDependencyFactory {
         @Override
         public AwContents createAwContents(AwBrowserContext browserContext, ViewGroup containerView,
                 Context context, InternalAccessDelegate internalAccessAdapter,

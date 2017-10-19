@@ -163,18 +163,12 @@ class MessageListViewTest : public AshTestBase,
     }
   }
 
-  bool is_on_all_notifications_cleared_called() const {
-    return is_on_all_notifications_cleared_called_;
-  }
-
  private:
   // MockNotificationView::Test override
   void RegisterCall(CallType type) override {}
 
   // MessageListView::Observer override
-  void OnAllNotificationsCleared() override {
-    is_on_all_notifications_cleared_called_ = true;
-  }
+  void OnAllNotificationsCleared() override {}
 
   // MessageCenterController override:
   void ClickOnNotification(const std::string& notification_id) override {}
@@ -197,8 +191,6 @@ class MessageListViewTest : public AshTestBase,
   std::unique_ptr<views::Widget> widget_;
   // MessageListView to be tested.
   std::unique_ptr<MessageListView> message_list_view_;
-
-  bool is_on_all_notifications_cleared_called_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(MessageListViewTest);
 };
@@ -459,7 +451,7 @@ TEST_F(MessageListViewTest, ClearAllClosableNotifications) {
 
   RunPendingAnimations();
 
-  EXPECT_TRUE(is_on_all_notifications_cleared_called());
+  EXPECT_EQ(0, message_list_view()->child_count());
 }
 
 // Regression test for crbug.com/713983
@@ -481,9 +473,13 @@ TEST_F(MessageListViewTest, RemoveWhileClearAll) {
                    message_center::RichNotificationData(), nullptr));
 
   message_list_view()->AddNotificationAt(notification_view1, 0);
+  EXPECT_EQ(1, message_list_view()->child_count());
+
   RunPendingAnimations();
 
   message_list_view()->AddNotificationAt(notification_view2, 1);
+  EXPECT_EQ(2, message_list_view()->child_count());
+
   RunPendingAnimations();
 
   // Call RemoveNotification()
@@ -496,7 +492,7 @@ TEST_F(MessageListViewTest, RemoveWhileClearAll) {
       message_list_view()->bounds());
 
   RunPendingAnimations();
-  EXPECT_TRUE(is_on_all_notifications_cleared_called());
+  EXPECT_EQ(0, message_list_view()->child_count());
 }
 
 }  // namespace ash

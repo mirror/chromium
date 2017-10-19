@@ -18,7 +18,6 @@
 #import "ui/base/cocoa/touch_bar_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/render_text.h"
 
 namespace {
 
@@ -27,9 +26,9 @@ NSString* const kEditTouchBarId = @"EDIT";
 NSString* const kNeverTouchBarId = @"NEVER";
 NSString* const kSaveTouchBarId = @"SAVE";
 
-constexpr base::char16 kBulletChar = gfx::RenderText::kPasswordReplacementChar;
-
-void InitEditableLabel(NSTextField* textField, const base::string16& text) {
+NSTextField* EditableUsernameField(const base::string16& text) {
+  base::scoped_nsobject<NSTextField> textField(
+      [[NSTextField alloc] initWithFrame:NSZeroRect]);
   [textField setStringValue:base::SysUTF16ToNSString(text)];
   [textField setEditable:YES];
   [textField setSelectable:YES];
@@ -37,13 +36,14 @@ void InitEditableLabel(NSTextField* textField, const base::string16& text) {
   [textField setBordered:YES];
   [textField setBezeled:YES];
   [[textField cell] setUsesSingleLineMode:YES];
+  [textField sizeToFit];
+  return textField.autorelease();
 }
 
-NSTextField* EditableField(const base::string16& text) {
+NSTextField* UsernameLabel(const base::string16& text) {
   base::scoped_nsobject<NSTextField> textField(
       [[NSTextField alloc] initWithFrame:NSZeroRect]);
-  InitEditableLabel(textField.get(), text);
-  [textField sizeToFit];
+  InitLabel(textField, text);
   return textField.autorelease();
 }
 
@@ -54,17 +54,17 @@ void FillPasswordCombobox(const autofill::PasswordForm& form,
   for (const base::string16& possible_password : form.all_possible_passwords) {
     [combobox
         addItemWithObjectValue:base::SysUTF16ToNSString(
-                                   visible ? possible_password
-                                           : base::string16(
-                                                 possible_password.length(),
-                                                 kBulletChar))];
+                                   visible
+                                       ? possible_password
+                                       : base::string16(
+                                             possible_password.length(), '*'))];
   }
   [combobox setEditable:visible];
   [combobox
       setStringValue:base::SysUTF16ToNSString(
                          visible ? form.password_value
                                  : base::string16(form.password_value.length(),
-                                                  kBulletChar))];
+                                                  '*'))];
   size_t index = std::distance(
       form.all_possible_passwords.begin(),
       std::find(form.all_possible_passwords.begin(),
@@ -73,10 +73,10 @@ void FillPasswordCombobox(const autofill::PasswordForm& form,
     [combobox selectItemAtIndex:index];
 }
 
-NSComboBox* PasswordCombobox(const autofill::PasswordForm& form) {
+NSComboBox* PasswordCombobox(const autofill::PasswordForm& form, bool visible) {
   base::scoped_nsobject<NSComboBox> textField(
       [[NSComboBox alloc] initWithFrame:NSZeroRect]);
-  FillPasswordCombobox(form, false, textField);
+  FillPasswordCombobox(form, visible, textField);
   [textField sizeToFit];
   return textField.autorelease();
 }
@@ -109,7 +109,6 @@ NSButton* EyeIcon(id target, SEL action) {
   base::scoped_nsobject<NSTextField> usernameField_;
   // The field contains the password or IDP origin for federated credentials.
   base::scoped_nsobject<NSTextField> passwordField_;
-  base::scoped_nsobject<NSTextField> passwordText_;
   base::scoped_nsobject<NSButton> passwordViewButton_;
   base::scoped_nsobject<NSButton> saveButton_;
   base::scoped_nsobject<NSButton> neverButton_;
@@ -121,11 +120,6 @@ NSButton* EyeIcon(id target, SEL action) {
 
 @implementation SavePendingPasswordViewController
 
-- (void)dealloc {
-  [passwordField_ setDelegate:nil];
-  [super dealloc];
-}
-
 - (NSButton*)defaultButton {
   return saveButton_;
 }
@@ -134,29 +128,15 @@ NSButton* EyeIcon(id target, SEL action) {
   if (!self.model)
     return;  // The view will be destroyed soon.
   bool visible = [passwordViewButton_ state] == NSOnState;
-  const autofill::PasswordForm& form = self.model->pending_password();
   if (!visible) {
     // The previous state was editable. Save the current result.
     self.model->OnCredentialEdited(
-        form.username_value,
+        self.model->pending_password().username_value,
         base::SysNSStringToUTF16([passwordField_ stringValue]));
   }
-  NSComboBox* combobox = base::mac::ObjCCast<NSComboBox>(passwordField_.get());
-  if (combobox) {
-    FillPasswordCombobox(self.model->pending_password(), visible, combobox);
-  } else {
-    NSRect oldFrame = [passwordField_ frame];
-    CGFloat offsetY = 0;
-    if (visible) {
-      InitEditableLabel(passwordField_.get(), form.password_value);
-      offsetY = NSMidY([passwordText_ frame]) - NSMidY(oldFrame);
-    } else {
-      InitLabel(passwordField_.get(),
-                base::string16(form.password_value.length(), kBulletChar));
-      offsetY = NSMaxY([passwordText_ frame]) - NSMaxY(oldFrame);
-    }
-    [passwordField_ setFrame:NSOffsetRect(oldFrame, 0, offsetY)];
-  }
+  FillPasswordCombobox(
+      self.model->pending_password(), visible,
+      base::mac::ObjCCastStrict<NSComboBox>(passwordField_.get()));
   [[self.view window]
       makeFirstResponder:(visible ? passwordField_.get() : saveButton_.get())];
 }
@@ -211,35 +191,20 @@ NSButton* EyeIcon(id target, SEL action) {
       password_manager::features::kEnableUsernameCorrection);
   const autofill::PasswordForm& form = self.model->pending_password();
   if (enableUsernameEditing)
-    usernameField_.reset([EditableField(form.username_value) retain]);
+    usernameField_.reset([EditableUsernameField(form.username_value) retain]);
   else
-    usernameField_.reset([Label(GetDisplayUsername(form)) retain]);
+    usernameField_.reset([UsernameLabel(GetDisplayUsername(form)) retain]);
   [container addSubview:usernameField_];
 
   bool enablePasswordEditing = base::FeatureList::IsEnabled(
       password_manager::features::kEnablePasswordSelection);
   if (form.federation_origin.unique()) {
     if (enablePasswordEditing) {
-      if (form.all_possible_passwords.size() > 1) {
-        passwordField_.reset([PasswordCombobox(form) retain]);
-        [passwordField_ setDelegate:self];
-      } else {
-        passwordField_.reset([Label(
-            base::string16(form.password_value.length(), kBulletChar)) retain]);
-        // Overwrite the height of the password field because it's higher in the
-        // editable mode.
-        [passwordField_
-            setFrameSize:NSMakeSize(
-                             NSWidth([passwordField_ frame]),
-                             std::max(NSHeight([passwordField_ frame]),
-                                      NSHeight([EditableField(
-                                          form.username_value) frame])))];
-      }
-      if (!self.model->hide_eye_icon()) {
-        passwordViewButton_.reset(
-            [EyeIcon(self, @selector(onEyeClicked:)) retain]);
-        [container addSubview:passwordViewButton_];
-      }
+      passwordField_.reset([PasswordCombobox(form, false) retain]);
+      [passwordField_ setDelegate:self];
+      passwordViewButton_.reset(
+          [EyeIcon(self, @selector(onEyeClicked:)) retain]);
+      [container addSubview:passwordViewButton_];
     } else {
       passwordField_.reset([PasswordLabel(form.password_value) retain]);
     }
@@ -251,31 +216,25 @@ NSButton* EyeIcon(id target, SEL action) {
   }
   [container addSubview:passwordField_];
 
-  NSTextField* usernameText =
+  NSTextField* usernameLabel =
       Label(l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_USERNAME_LABEL));
-  [container addSubview:usernameText];
-  passwordText_.reset([Label(
-      l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_PASSWORD_LABEL)) retain]);
-  [container addSubview:passwordText_];
+  [container addSubview:usernameLabel];
+  NSTextField* passwordLabel =
+      Label(l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_PASSWORD_LABEL));
+  [container addSubview:passwordLabel];
 
   // Layout the elements.
   CGFloat firstColumnSize =
-      std::max(NSWidth([usernameText frame]), NSWidth([passwordText_ frame]));
+      std::max(NSWidth([usernameLabel frame]), NSWidth([passwordLabel frame]));
   // Bottow row.
   CGFloat rowHeight = std::max(NSHeight([passwordField_ frame]),
-                               NSHeight([passwordText_ frame]));
-  CGFloat curY = (rowHeight - NSHeight([passwordText_ frame])) / 2;
-  [passwordText_ setFrameOrigin:NSMakePoint(firstColumnSize -
-                                                NSWidth([passwordText_ frame]),
+                               NSHeight([passwordLabel frame]));
+  CGFloat curY = (rowHeight - NSHeight([passwordLabel frame])) / 2;
+  [passwordLabel setFrameOrigin:NSMakePoint(firstColumnSize -
+                                                NSWidth([passwordLabel frame]),
                                             curY)];
-  CGFloat curX = NSMaxX([passwordText_ frame]) + kItemLabelSpacing;
-  if (base::mac::ObjCCast<NSComboBox>(passwordField_.get())) {
-    // Combobox is center-aligned with the label.
-    curY = (rowHeight - NSHeight([passwordField_ frame])) / 2;
-  } else {
-    // Password field is top-aligned with the label because it's not editable.
-    curY = NSMaxY([passwordText_ frame]) - NSHeight([passwordField_ frame]);
-  }
+  CGFloat curX = NSMaxX([passwordLabel frame]) + kItemLabelSpacing;
+  curY = (rowHeight - NSHeight([passwordField_ frame])) / 2;
   [passwordField_ setFrameOrigin:NSMakePoint(curX, curY)];
   CGFloat remainingWidth = kDesiredRowWidth - NSMinX([passwordField_ frame]);
   if (passwordViewButton_) {
@@ -291,11 +250,11 @@ NSButton* EyeIcon(id target, SEL action) {
   // Next row.
   CGFloat rowY = rowHeight + kRelatedControlVerticalSpacing;
   rowHeight = std::max(NSHeight([usernameField_ frame]),
-                       NSHeight([usernameText frame]));
-  curX = firstColumnSize - NSWidth([usernameText frame]);
-  curY = (rowHeight - NSHeight([usernameText frame])) / 2 + rowY;
-  [usernameText setFrameOrigin:NSMakePoint(curX, curY)];
-  curX = NSMaxX([usernameText frame]) + kItemLabelSpacing;
+                       NSHeight([usernameLabel frame]));
+  curX = firstColumnSize - NSWidth([usernameLabel frame]);
+  curY = (rowHeight - NSHeight([usernameLabel frame])) / 2 + rowY;
+  [usernameLabel setFrameOrigin:NSMakePoint(curX, curY)];
+  curX = NSMaxX([usernameLabel frame]) + kItemLabelSpacing;
   curY = (rowHeight - NSHeight([usernameField_ frame])) / 2 + rowY;
   [usernameField_ setFrameOrigin:NSMakePoint(curX, curY)];
   remainingWidth = kDesiredRowWidth - NSMinX([usernameField_ frame]);

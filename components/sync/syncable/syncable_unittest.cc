@@ -584,7 +584,7 @@ class SyncableClientTagTest : public SyncableDirectoryTest {
   bool CreateWithDefaultTag(Id id, bool deleted) {
     WriteTransaction wtrans(FROM_HERE, UNITTEST, dir().get());
     MutableEntry me(&wtrans, CREATE, PREFERENCES, wtrans.root_id(), test_name_);
-    EXPECT_TRUE(me.good());
+    CHECK(me.good());
     me.PutId(id);
     if (id.ServerKnows()) {
       me.PutBaseVersion(kBaseVersion);
@@ -600,7 +600,7 @@ class SyncableClientTagTest : public SyncableDirectoryTest {
     // Should still be present and valid in the client tag index.
     ReadTransaction trans(FROM_HERE, dir().get());
     Entry me(&trans, GET_BY_CLIENT_TAG, test_tag_);
-    ASSERT_TRUE(me.good());
+    CHECK(me.good());
     EXPECT_EQ(me.GetId(), id);
     EXPECT_EQ(me.GetUniqueClientTag(), test_tag_);
     EXPECT_EQ(me.GetIsDel(), deleted);

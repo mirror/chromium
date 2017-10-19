@@ -65,7 +65,7 @@ class MODULES_EXPORT NavigatorContentUtils final
 
   static void ProvideTo(Navigator&, NavigatorContentUtilsClient*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void SetClientForTest(NavigatorContentUtilsClient* client) {
     client_ = client;

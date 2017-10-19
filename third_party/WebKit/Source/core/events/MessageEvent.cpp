@@ -244,7 +244,7 @@ void MessageEvent::EntangleMessagePorts(ExecutionContext* context) {
   is_ports_dirty_ = true;
 }
 
-void MessageEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MessageEvent) {
   visitor->Trace(data_as_serialized_script_value_);
   visitor->Trace(data_as_blob_);
   visitor->Trace(data_as_array_buffer_);

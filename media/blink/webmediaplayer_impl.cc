@@ -89,6 +89,25 @@ namespace media {
 
 namespace {
 
+// Limits the range of playback rate.
+//
+// TODO(kylep): Revisit these.
+//
+// Vista has substantially lower performance than XP or Windows7.  If you speed
+// up a video too much, it can't keep up, and rendering stops updating except on
+// the time bar. For really high speeds, audio becomes a bottleneck and we just
+// use up the data we have, which may not achieve the speed requested, but will
+// not crash the tab.
+//
+// A very slow speed, ie 0.00000001x, causes the machine to lock up. (It seems
+// like a busy loop). It gets unresponsive, although its not completely dead.
+//
+// Also our timers are not very accurate (especially for ogg), which becomes
+// evident at low speeds and on Vista. Since other speeds are risky and outside
+// the norms, we think 1/16x to 16x is a safe and useful range for now.
+const double kMinRate = 0.0625;
+const double kMaxRate = 16.0;
+
 void SetSinkIdOnMediaThread(scoped_refptr<WebAudioSourceProviderImpl> sink,
                             const std::string& device_id,
                             const url::Origin& security_origin,
@@ -142,9 +161,6 @@ gfx::Size GetRotatedVideoSize(VideoRotation rotation, gfx::Size natural_size) {
 constexpr base::TimeDelta kPrerollAttemptTimeout =
     base::TimeDelta::FromSeconds(3);
 
-// Maximum number, per-WMPI, of media logs of playback rate changes.
-constexpr int kMaxNumPlaybackRateLogs = 10;
-
 }  // namespace
 
 class BufferedDataSourceHostImpl;
@@ -190,7 +206,6 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       load_type_(kLoadTypeURL),
       opaque_(false),
       playback_rate_(0.0),
-      num_playback_rate_logs_(0),
       paused_(true),
       paused_when_hidden_(false),
       seeking_(false),
@@ -703,11 +718,17 @@ void WebMediaPlayerImpl::SetRate(double rate) {
   DVLOG(1) << __func__ << "(" << rate << ")";
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
-  if (rate != playback_rate_) {
-    LIMITED_MEDIA_LOG(INFO, media_log_.get(), num_playback_rate_logs_,
-                      kMaxNumPlaybackRateLogs)
-        << "Effective playback rate changed from " << playback_rate_ << " to "
-        << rate;
+  // TODO(kylep): Remove when support for negatives is added. Also, modify the
+  // following checks so rewind uses reasonable values also.
+  if (rate < 0.0)
+    return;
+
+  // Limit rates to reasonable values by clamping.
+  if (rate != 0.0) {
+    if (rate < kMinRate)
+      rate = kMinRate;
+    else if (rate > kMaxRate)
+      rate = kMaxRate;
   }
 
   playback_rate_ = rate;
@@ -1028,9 +1049,9 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
       return;
     }
   }
-  video_renderer_.Paint(
-      video_frame, canvas, gfx::RectF(gfx_rect), flags,
-      pipeline_metadata_.video_decoder_config.video_rotation(), context_3d);
+  skcanvas_video_renderer_.Paint(video_frame, canvas, gfx::RectF(gfx_rect),
+                                 flags, pipeline_metadata_.video_rotation,
+                                 context_3d);
 }
 
 bool WebMediaPlayerImpl::HasSingleSecurityOrigin() const {
@@ -1116,7 +1137,7 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
     context_3d = Context3D(context_provider_->ContextGL(),
                            context_provider_->GrContext());
   }
-  return video_renderer_.CopyVideoFrameTexturesToGLTexture(
+  return skcanvas_video_renderer_.CopyVideoFrameTexturesToGLTexture(
       context_3d, gl, video_frame.get(), target, texture, internal_format,
       format, type, level, premultiply_alpha, flip_y);
 }
@@ -1455,8 +1476,7 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
   pipeline_metadata_ = metadata;
 
   SetReadyState(WebMediaPlayer::kReadyStateHaveMetadata);
-  UMA_HISTOGRAM_ENUMERATION("Media.VideoRotation",
-                            metadata.video_decoder_config.video_rotation(),
+  UMA_HISTOGRAM_ENUMERATION("Media.VideoRotation", metadata.video_rotation,
                             VIDEO_ROTATION_MAX + 1);
 
   if (HasVideo()) {
@@ -1475,8 +1495,7 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
     if (!surface_layer_for_video_enabled_) {
       DCHECK(!video_weblayer_);
       video_weblayer_.reset(new cc_blink::WebLayerImpl(cc::VideoLayer::Create(
-          compositor_.get(),
-          pipeline_metadata_.video_decoder_config.video_rotation())));
+          compositor_.get(), pipeline_metadata_.video_rotation)));
       video_weblayer_->layer()->SetContentsOpaque(opaque_);
       video_weblayer_->SetContentsOpaqueIsFixed(true);
       client_->SetWebLayer(video_weblayer_.get());
@@ -1573,7 +1592,6 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
       "pipeline_buffering_state", state));
 
   if (state == BUFFERING_HAVE_ENOUGH) {
-    TRACE_EVENT0("media", "WebMediaPlayerImpl::BufferingHaveEnough");
     SetReadyState(CanPlayThrough() ? WebMediaPlayer::kReadyStateHaveEnoughData
                                    : WebMediaPlayer::kReadyStateHaveFutureData);
 
@@ -1668,8 +1686,8 @@ void WebMediaPlayerImpl::OnVideoNaturalSizeChange(const gfx::Size& size) {
 
   // The input |size| is from the decoded video frame, which is the original
   // natural size and need to be rotated accordingly.
-  gfx::Size rotated_size = GetRotatedVideoSize(
-      pipeline_metadata_.video_decoder_config.video_rotation(), size);
+  gfx::Size rotated_size =
+      GetRotatedVideoSize(pipeline_metadata_.video_rotation, size);
 
   RecordVideoNaturalSize(rotated_size);
 
@@ -2615,8 +2633,7 @@ bool WebMediaPlayerImpl::IsStreaming() const {
 }
 
 bool WebMediaPlayerImpl::DoesOverlaySupportMetadata() const {
-  return pipeline_metadata_.video_decoder_config.video_rotation() ==
-         VIDEO_ROTATION_0;
+  return pipeline_metadata_.video_rotation == VIDEO_ROTATION_0;
 }
 
 void WebMediaPlayerImpl::ActivateViewportIntersectionMonitoring(bool activate) {

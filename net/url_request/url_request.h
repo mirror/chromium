@@ -646,8 +646,8 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
     return received_response_content_length_;
   }
 
-  // Available when the request headers are sent, which is before the more
-  // general response_info() is available.
+  // Available at NetworkDelegate::NotifyHeadersReceived() time, which is before
+  // the more general response_info() is available, even though it is a subset.
   const ProxyServer& proxy_server() const { return proxy_server_; }
 
   // Gets the connection attempts made in the process of servicing this
@@ -771,8 +771,6 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
   // Called when the delegate lets a request continue.  Also called on
   // cancellation.
   void OnCallToDelegateComplete();
-
-  void MaybeGenerateNetworkErrorLoggingReport();
 
   // Contextual information used for this request. Cannot be NULL. This contains
   // most of the dependencies which are shared between requests (disk cache,

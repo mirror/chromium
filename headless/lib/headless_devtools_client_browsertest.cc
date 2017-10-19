@@ -44,7 +44,6 @@
   } while (false)
 
 using testing::ElementsAre;
-using testing::NotNull;
 
 namespace headless {
 
@@ -276,13 +275,17 @@ class HeadlessDevToolsClientEvalTest
   }
 
   void OnFirstResult(std::unique_ptr<runtime::EvaluateResult> result) {
+    int value;
     EXPECT_TRUE(result->GetResult()->HasValue());
-    EXPECT_EQ(3, result->GetResult()->GetValue()->GetInt());
+    EXPECT_TRUE(result->GetResult()->GetValue()->GetAsInteger(&value));
+    EXPECT_EQ(3, value);
   }
 
   void OnSecondResult(std::unique_ptr<runtime::EvaluateResult> result) {
+    int value;
     EXPECT_TRUE(result->GetResult()->HasValue());
-    EXPECT_EQ(168, result->GetResult()->GetValue()->GetInt());
+    EXPECT_TRUE(result->GetResult()->GetValue()->GetAsInteger(&value));
+    EXPECT_EQ(168, value);
     FinishAsynchronousTest();
   }
 };
@@ -353,10 +356,10 @@ class HeadlessDevToolsClientObserverTest
       const network::ResponseReceivedParams& params) override {
     EXPECT_EQ(200, params.GetResponse()->GetStatus());
     EXPECT_EQ("OK", params.GetResponse()->GetStatusText());
-    const base::Value* content_type_value =
-        params.GetResponse()->GetHeaders()->FindKey("Content-Type");
-    ASSERT_THAT(content_type_value, NotNull());
-    EXPECT_EQ("text/html", content_type_value->GetString());
+    std::string content_type;
+    EXPECT_TRUE(params.GetResponse()->GetHeaders()->GetString("Content-Type",
+                                                              &content_type));
+    EXPECT_EQ("text/html", content_type);
 
     devtools_client_->GetNetwork()->Disable();
     devtools_client_->GetNetwork()->RemoveObserver(this);
@@ -755,8 +758,9 @@ class TargetDomainCreateTwoContexts : public HeadlessAsyncDevTooledBrowserTest,
       return;
     }
 
-    const base::Value* method_value = message_dict->FindKey("method");
-    if (method_value && method_value->GetString() == "Page.loadEventFired") {
+    std::string method;
+    if (message_dict->GetString("method", &method) &&
+        method == "Page.loadEventFired") {
       if (params.GetTargetId() == page_id_one_) {
         page_one_loaded_ = true;
       } else if (params.GetTargetId() == page_id_two_) {
@@ -766,10 +770,9 @@ class TargetDomainCreateTwoContexts : public HeadlessAsyncDevTooledBrowserTest,
       return;
     }
 
-    const base::Value* id_value = message_dict->FindKey("id");
-    if (!id_value)
+    int message_id = 0;
+    if (!message_dict->GetInteger("id", &message_id))
       return;
-    int message_id = id_value->GetInt();
     const base::DictionaryValue* result_dict;
     if (message_dict->GetDictionary("result", &result_dict)) {
       if (message_id == 101) {
@@ -808,10 +811,9 @@ class TargetDomainCreateTwoContexts : public HeadlessAsyncDevTooledBrowserTest,
         // There's a nested result. We want the inner one.
         EXPECT_TRUE(result_dict->GetDictionary("result", &result_dict));
 
-        const base::Value* value_value = result_dict->FindKey("value");
-        ASSERT_THAT(value_value, NotNull());
-        EXPECT_EQ("", value_value->GetString())
-            << "Page 2 should not share cookies from page one";
+        std::string value;
+        EXPECT_TRUE(result_dict->GetString("value", &value));
+        EXPECT_EQ("", value) << "Page 2 should not share cookies from page one";
 
         devtools_client_->GetTarget()->GetExperimental()->CloseTarget(
             target::CloseTargetParams::Builder()
@@ -978,8 +980,10 @@ class HeadlessDevToolsClientAttachTest
   }
 
   void OnFirstResult(std::unique_ptr<runtime::EvaluateResult> result) {
+    int value;
     EXPECT_TRUE(result->GetResult()->HasValue());
-    EXPECT_EQ(24 * 7, result->GetResult()->GetValue()->GetInt());
+    EXPECT_TRUE(result->GetResult()->GetValue()->GetAsInteger(&value));
+    EXPECT_EQ(24 * 7, value);
 
     HeadlessDevToolsTarget* devtools_target =
         web_contents_->GetDevToolsTarget();
@@ -995,8 +999,10 @@ class HeadlessDevToolsClientAttachTest
   }
 
   void OnSecondResult(std::unique_ptr<runtime::EvaluateResult> result) {
+    int value;
     EXPECT_TRUE(result->GetResult()->HasValue());
-    EXPECT_EQ(27 * 4, result->GetResult()->GetValue()->GetInt());
+    EXPECT_TRUE(result->GetResult()->GetValue()->GetAsInteger(&value));
+    EXPECT_EQ(27 * 4, value);
 
     // If everything worked, this call will not crash, since it
     // detaches devtools_client_.
@@ -1160,40 +1166,6 @@ class DevToolsHeaderStrippingTest : public HeadlessAsyncDevTooledBrowserTest,
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(DevToolsHeaderStrippingTest);
 
-class DevToolsNetworkOfflineEmulationTest
-    : public HeadlessAsyncDevTooledBrowserTest,
-      public page::Observer,
-      public network::Observer {
-  void RunDevTooledTest() override {
-    EXPECT_TRUE(embedded_test_server()->Start());
-    base::RunLoop run_loop;
-    devtools_client_->GetPage()->AddObserver(this);
-    devtools_client_->GetPage()->Enable();
-    devtools_client_->GetNetwork()->AddObserver(this);
-    devtools_client_->GetNetwork()->Enable(run_loop.QuitClosure());
-    base::MessageLoop::ScopedNestableTaskAllower nest_loop(
-        base::MessageLoop::current());
-    run_loop.Run();
-    std::unique_ptr<network::EmulateNetworkConditionsParams> params =
-        network::EmulateNetworkConditionsParams::Builder()
-            .SetOffline(true)
-            .SetLatency(0)
-            .SetDownloadThroughput(0)
-            .SetUploadThroughput(0)
-            .Build();
-    devtools_client_->GetNetwork()->EmulateNetworkConditions(std::move(params));
-    devtools_client_->GetPage()->Navigate(
-        embedded_test_server()->GetURL("/hello.html").spec());
-  }
-
-  void OnLoadingFailed(const network::LoadingFailedParams& failed) override {
-    EXPECT_EQ("net::ERR_INTERNET_DISCONNECTED", failed.GetErrorText());
-    FinishAsynchronousTest();
-  }
-};
-
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(DevToolsNetworkOfflineEmulationTest);
-
 class RawDevtoolsProtocolTest
     : public HeadlessAsyncDevTooledBrowserTest,
       public HeadlessDevToolsClient::RawProtocolListener {
@@ -1291,27 +1263,24 @@ class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
       base::DictionaryValue* node_dict = dom_nodes[i].get();
 
       // Frame IDs are random.
-      if (node_dict->FindKey("frameId"))
+      if (node_dict->HasKey("frameId"))
         node_dict->SetString("frameId", "?");
 
       // Ports are random.
-      if (base::Value* base_url_value = node_dict->FindKey("baseURL")) {
-        node_dict->SetString("baseURL", GURL(base_url_value->GetString())
-                                            .ReplaceComponents(replace_port)
-                                            .spec());
+      std::string url;
+      if (node_dict->GetString("baseURL", &url)) {
+        node_dict->SetString("baseURL",
+                             GURL(url).ReplaceComponents(replace_port).spec());
       }
 
-      if (base::Value* document_url_value = node_dict->FindKey("documentURL")) {
+      if (node_dict->GetString("documentURL", &url)) {
         node_dict->SetString("documentURL",
-                             GURL(document_url_value->GetString())
-                                 .ReplaceComponents(replace_port)
-                                 .spec());
+                             GURL(url).ReplaceComponents(replace_port).spec());
       }
 
       // Merge LayoutTreeNode data into the dictionary.
-      if (base::Value* layout_node_index_value =
-          node_dict->FindKey("layoutNodeIndex")) {
-        int layout_node_index = layout_node_index_value->GetInt();
+      int layout_node_index;
+      if (node_dict->GetInteger("layoutNodeIndex", &layout_node_index)) {
         ASSERT_LE(0, layout_node_index);
         ASSERT_GT(result->GetLayoutTreeNodes()->size(),
                   static_cast<size_t>(layout_node_index));
@@ -1635,9 +1604,10 @@ class NavigatorLanguages : public HeadlessAsyncDevTooledBrowserTest {
   }
 
   void OnResult(std::unique_ptr<runtime::EvaluateResult> result) {
+    std::string value;
     EXPECT_TRUE(result->GetResult()->HasValue());
-    EXPECT_EQ("[\"en-UK\",\"DE\",\"FR\"]",
-              result->GetResult()->GetValue()->GetString());
+    EXPECT_TRUE(result->GetResult()->GetValue()->GetAsString(&value));
+    EXPECT_EQ("[\"en-UK\",\"DE\",\"FR\"]", value);
     FinishAsynchronousTest();
   }
 

@@ -105,7 +105,7 @@ class FormStructureBrowserTest
   void SetUpCommandLine(base::CommandLine* command_line) override {
     // Suppress most output logs because we can't really control the output for
     // arbitrary test sites.
-    command_line->AppendSwitchASCII(switches::kLoggingLevel, "2");
+    command_line->AppendSwitch(switches::kDisableLogging);
   }
 
   // DataDrivenTest:
@@ -166,7 +166,7 @@ std::string FormStructureBrowserTest::FormStructuresToString(
 IN_PROC_BROWSER_TEST_P(FormStructureBrowserTest, DataDrivenHeuristics) {
   // Prints the path of the test to be executed.
   LOG(INFO) << GetParam().MaybeAsASCII();
-  RunOneDataDrivenTest(GetParam(), GetOutputDirectory(kTestName), TEST_PASSING);
+  RunOneDataDrivenTest(GetParam(), GetOutputDirectory(kTestName));
 }
 
 INSTANTIATE_TEST_CASE_P(AllForms,

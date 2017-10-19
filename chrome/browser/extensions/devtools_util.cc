@@ -32,7 +32,9 @@ void InspectBackgroundPage(const Extension* extension, Profile* profile) {
     InspectExtensionHost(host);
   } else {
     LazyBackgroundTaskQueue::Get(profile)->AddPendingTask(
-        profile, extension->id(), base::BindOnce(&InspectExtensionHost));
+        profile,
+        extension->id(),
+        base::Bind(&InspectExtensionHost));
   }
 }
 

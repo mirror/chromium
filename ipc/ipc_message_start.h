@@ -25,6 +25,8 @@ enum IPCMessageStart {
   MediaMsgStart,
   PpapiMsgStart,
   FirefoxImporterUnittestMsgStart,
+  FileUtilitiesMsgStart,
+  DatabaseMsgStart,
   DOMStorageMsgStart,
   SpeechRecognitionMsgStart,
   SafeBrowsingMsgStart,

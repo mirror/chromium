@@ -35,7 +35,7 @@ class MODULES_EXPORT StorageNamespaceController final
         Supplement<Page>::From(page, SupplementName()));
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   InspectorDOMStorageAgent* InspectorAgent() { return inspector_agent_; }
   void SetInspectorAgent(InspectorDOMStorageAgent* agent) {

@@ -6,7 +6,6 @@
 
 #include "base/logging.h"
 #include "base/numerics/safe_conversions.h"
-#include "base/strings/string_util.h"
 
 namespace payments {
 namespace {
@@ -29,11 +28,6 @@ std::vector<uint8_t> FingerprintStringToByteArray(const std::string& input) {
   if (input.size() != kLength) {
     LOG(ERROR) << "Fingerprint \"" << input << "\" should contain exactly "
                << kLength << " characters.";
-    return output;
-  }
-
-  if (!base::IsStringASCII(input)) {
-    LOG(ERROR) << "Fingerprint \"" << input << "\" should be ASCII.";
     return output;
   }
 

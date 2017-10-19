@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,16 +44,13 @@ public final class CastCrashUploader {
     private final ScheduledExecutorService mExecutorService;
     private final String mCrashDumpPath;
     private final String mCrashReportUploadUrl;
-    private final String mUuid;
 
-    public CastCrashUploader(ScheduledExecutorService executorService, String crashDumpPath,
-            String uuid, boolean uploadCrashToStaging) {
-        mExecutorService = executorService;
-        mCrashDumpPath = crashDumpPath;
-        mUuid = uuid;
+    public CastCrashUploader(String crashDumpPath, boolean uploadCrashToStaging) {
+        this.mCrashDumpPath = crashDumpPath;
         mCrashReportUploadUrl = uploadCrashToStaging
                 ? "https://clients2.google.com/cr/staging_report"
                 : "https://clients2.google.com/cr/report";
+        mExecutorService = Executors.newScheduledThreadPool(1);
     }
 
     /** Sets up a periodic uploader, that checks for new dumps to upload every 20 minutes */
@@ -67,14 +65,6 @@ public final class CastCrashUploader {
                 0, // Do first run immediately
                 20, // Run once every 20 minutes
                 TimeUnit.MINUTES);
-    }
-
-    public void uploadOnce() {
-        mExecutorService.schedule(new Runnable() {
-            public void run() {
-                queueAllCrashDumpUploads(false);
-            }
-        }, 0, TimeUnit.MINUTES);
     }
 
     public void removeCrashDumps() {
@@ -173,19 +163,6 @@ public final class CastCrashUploader {
                         uploadCrashDumpStream);
             }
 
-            Log.d(TAG, "UUID: " + mUuid);
-            if (!mUuid.equals("")) {
-                StringBuilder uuidBuilder = new StringBuilder();
-                uuidBuilder.append(dumpFirstLine);
-                uuidBuilder.append("\n");
-                uuidBuilder.append("Content-Disposition: form-data; name=\"comments\"\n");
-                uuidBuilder.append("Content-Type: text/plain\n\n");
-                uuidBuilder.append(mUuid + "\n");
-                uploadCrashDumpStream = new SequenceInputStream(
-                        new ByteArrayInputStream(uuidBuilder.toString().getBytes()),
-                        uploadCrashDumpStream);
-            }
-
             HttpURLConnection connection =
                     (HttpURLConnection) new URL(mCrashReportUploadUrl).openConnection();
 
@@ -194,7 +171,6 @@ public final class CastCrashUploader {
                 connection.setDoOutput(true);
                 connection.setRequestProperty(
                         "Content-Type", "multipart/form-data; boundary=" + mimeBoundary);
-
                 streamCopy(uploadCrashDumpStream, connection.getOutputStream());
 
                 String responseLine = getFirstLine(connection.getInputStream());

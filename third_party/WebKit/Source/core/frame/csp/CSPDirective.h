@@ -23,7 +23,7 @@ class CORE_EXPORT CSPDirective
                ContentSecurityPolicy* policy)
       : name_(name), text_(name + ' ' + value), policy_(policy) {}
   virtual ~CSPDirective() {}
-  virtual void Trace(blink::Visitor* visitor) { visitor->Trace(policy_); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(policy_); }
 
   const String& GetName() const { return name_; }
   const String& GetText() const { return text_; }

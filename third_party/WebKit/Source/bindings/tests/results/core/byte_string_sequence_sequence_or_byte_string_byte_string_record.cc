@@ -56,7 +56,7 @@ ByteStringSequenceSequenceOrByteStringByteStringRecord::ByteStringSequenceSequen
 ByteStringSequenceSequenceOrByteStringByteStringRecord::~ByteStringSequenceSequenceOrByteStringByteStringRecord() = default;
 ByteStringSequenceSequenceOrByteStringByteStringRecord& ByteStringSequenceSequenceOrByteStringByteStringRecord::operator=(const ByteStringSequenceSequenceOrByteStringByteStringRecord&) = default;
 
-void ByteStringSequenceSequenceOrByteStringByteStringRecord::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ByteStringSequenceSequenceOrByteStringByteStringRecord) {
 }
 
 void V8ByteStringSequenceSequenceOrByteStringByteStringRecord::ToImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value, ByteStringSequenceSequenceOrByteStringByteStringRecord& impl, UnionTypeConversionMode conversionMode, ExceptionState& exceptionState) {

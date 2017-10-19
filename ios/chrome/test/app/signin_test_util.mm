@@ -186,7 +186,6 @@ void ResetSigninPromoPreferences() {
   prefs->SetInteger(prefs::kIosBookmarkSigninPromoDisplayedCount, 0);
   prefs->SetBoolean(prefs::kIosBookmarkPromoAlreadySeen, false);
   prefs->SetInteger(prefs::kIosSettingsSigninPromoDisplayedCount, 0);
-  prefs->SetBoolean(prefs::kIosSettingsPromoAlreadySeen, false);
 }
 
 }  // namespace chrome_test_util

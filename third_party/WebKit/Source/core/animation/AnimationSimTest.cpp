@@ -12,7 +12,6 @@
 #include "core/testing/sim/SimDisplayItemList.h"
 #include "core/testing/sim/SimRequest.h"
 #include "core/testing/sim/SimTest.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/web/WebScriptSource.h"
 
@@ -32,10 +31,9 @@ TEST_F(AnimationSimTest, CustomPropertyBaseComputedStyle) {
   // around and not be valid in the exit frame of the next custom property
   // animation.
 
-  ScopedCSSVariables2ForTest css_variables2(true);
-  ScopedCSSAdditiveAnimationsForTest css_additive_animation(true);
-  ScopedStackedCSSPropertyAnimationsForTest stacked_css_property_animation(
-      true);
+  RuntimeEnabledFeatures::SetCSSVariables2Enabled(true);
+  RuntimeEnabledFeatures::SetCSSAdditiveAnimationsEnabled(true);
+  RuntimeEnabledFeatures::SetStackedCSSPropertyAnimationsEnabled(true);
 
   WebView().GetPage()->Animator().Clock().DisableSyntheticTimeForTesting();
 

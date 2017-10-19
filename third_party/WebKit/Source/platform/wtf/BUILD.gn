@@ -4,7 +4,6 @@
 
 assert(!is_ios)
 
-import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 import("//third_party/WebKit/Source/config.gni")
 
@@ -42,7 +41,7 @@ config("wtf_config") {
   }
 }
 
-jumbo_component("wtf") {
+component("wtf") {
   sources = [
     "ASCIICType.cpp",
     "ASCIICType.h",
@@ -326,15 +325,8 @@ jumbo_component("wtf") {
 }
 
 test("wtf_unittests") {
-  deps = [
-    ":wtf_unittests_sources",
-  ]
-}
-
-jumbo_source_set("wtf_unittests_sources") {
   visibility = []  # Allow re-assignment of list.
   visibility = [ "*" ]
-  testonly = true
 
   sources = [
     "ASCIICTypeTest.cpp",
@@ -365,6 +357,7 @@ jumbo_source_set("wtf_unittests_sources") {
     "text/StringBufferTest.cpp",
     "text/StringBuilderTest.cpp",
     "text/StringImplTest.cpp",
+    "text/StringOperatorsTest.cpp",
     "text/StringToNumberTest.cpp",
     "text/StringViewTest.cpp",
     "text/TextCodecICUTest.cpp",

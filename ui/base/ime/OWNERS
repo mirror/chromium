@@ -1,9 +1,11 @@
-# primary reviewers.
+# primary reviewer.
 shuchen@chromium.org
-yhanada@chromium.org
 
 # backup reviewers.
 yukishiino@chromium.org
+komatsu@chromium.org
+mukai@chromium.org
+nona@chromium.org
 
 # For Windows.
 yukawa@chromium.org

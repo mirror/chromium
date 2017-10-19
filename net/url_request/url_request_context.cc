@@ -44,6 +44,7 @@ URLRequestContext::URLRequestContext()
       http_transaction_factory_(nullptr),
       job_factory_(nullptr),
       throttler_manager_(nullptr),
+      backoff_manager_(nullptr),
       network_quality_estimator_(nullptr),
       reporting_service_(nullptr),
       network_error_logging_delegate_(nullptr),
@@ -80,6 +81,7 @@ void URLRequestContext::CopyFrom(const URLRequestContext* other) {
   set_http_transaction_factory(other->http_transaction_factory_);
   set_job_factory(other->job_factory_);
   set_throttler_manager(other->throttler_manager_);
+  set_backoff_manager(other->backoff_manager_);
   set_http_user_agent_settings(other->http_user_agent_settings_);
   set_network_quality_estimator(other->network_quality_estimator_);
   set_reporting_service(other->reporting_service_);
@@ -162,6 +164,11 @@ void URLRequestContext::AssertNoURLRequests() const {
     CHECK(false) << "Leaked " << num_requests << " URLRequest(s). First URL: "
                  << request->url().spec().c_str() << ".";
   }
+}
+
+void URLRequestContext::AssertURLRequestPresent(
+    const URLRequest* request) const {
+  CHECK_GE(url_requests_.count(request), 0u);
 }
 
 bool URLRequestContext::OnMemoryDump(

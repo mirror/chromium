@@ -79,9 +79,7 @@ class ContextFeaturesCache final
 
   void ValidateAgainst(Document*);
 
-  virtual void Trace(blink::Visitor* visitor) {
-    Supplement<Document>::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<Document>::Trace(visitor); }
 
  private:
   explicit ContextFeaturesCache(Document& document)

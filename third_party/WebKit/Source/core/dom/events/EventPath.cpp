@@ -26,10 +26,10 @@
 
 #include "core/dom/events/EventPath.h"
 
+#include "core/EventNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/V0InsertionPoint.h"
-#include "core/event_names.h"
 #include "core/events/TouchEvent.h"
 #include "core/events/TouchEventContext.h"
 #include "core/html/HTMLSlotElement.h"
@@ -198,7 +198,7 @@ TreeScopeEventContext* EventPath::EnsureTreeScopeEventContext(
 
     TreeScopeEventContext* parent_tree_scope_event_context =
         EnsureTreeScopeEventContext(
-            nullptr, tree_scope->OlderShadowRootOrParentTreeScope());
+            0, tree_scope->OlderShadowRootOrParentTreeScope());
     if (parent_tree_scope_event_context &&
         parent_tree_scope_event_context->Target()) {
       tree_scope_event_context->SetTarget(
@@ -403,7 +403,7 @@ void EventPath::CheckReachability(TreeScope& tree_scope,
 }
 #endif
 
-void EventPath::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventPath) {
   visitor->Trace(node_event_contexts_);
   visitor->Trace(node_);
   visitor->Trace(event_);

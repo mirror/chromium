@@ -53,7 +53,7 @@ TEST(BidiResolver, Basic) {
 
 TextDirection DetermineParagraphDirectionality(
     const TextRun& text_run,
-    bool* has_strong_directionality = nullptr) {
+    bool* has_strong_directionality = 0) {
   BidiResolver<TextRunIterator, BidiCharacterRun> resolver;
   resolver.SetStatus(BidiStatus(TextDirection::kLtr, false));
   resolver.SetPositionIgnoringNestedIsolates(TextRunIterator(&text_run, 0));

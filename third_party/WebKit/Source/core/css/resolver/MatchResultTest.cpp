@@ -18,11 +18,11 @@ class MatchResultTest : public ::testing::Test {
   }
 
  private:
-  PersistentHeapVector<Member<MutableStylePropertySet>, 8> property_sets;
+  PersistentHeapVector<Member<MutableStylePropertySet>, 6> property_sets;
 };
 
 void MatchResultTest::SetUp() {
-  for (unsigned i = 0; i < 8; i++)
+  for (unsigned i = 0; i < 6; i++)
     property_sets.push_back(MutableStylePropertySet::Create(kHTMLQuirksMode));
 }
 
@@ -41,41 +41,15 @@ TEST_F(MatchResultTest, UARules) {
   result.AddMatchedProperties(ua_sets[0]);
   result.AddMatchedProperties(ua_sets[1]);
   result.FinishAddingUARules();
-  result.FinishAddingUserRules();
 
   result.FinishAddingAuthorRulesForTreeScope();
 
   TestMatchedPropertiesRange(result.AllRules(), 2, ua_sets);
   TestMatchedPropertiesRange(result.UaRules(), 2, ua_sets);
-  TestMatchedPropertiesRange(result.UserRules(), 0, nullptr);
   TestMatchedPropertiesRange(result.AuthorRules(), 0, nullptr);
 
-  ImportantAuthorRanges importantAuthor(result);
-  EXPECT_EQ(importantAuthor.end(), importantAuthor.begin());
-  ImportantUserRanges importantUser(result);
-  EXPECT_EQ(importantUser.end(), importantUser.begin());
-}
-
-TEST_F(MatchResultTest, UserRules) {
-  const StylePropertySet* user_sets[] = {PropertySet(0), PropertySet(1)};
-
-  MatchResult result;
-
-  result.FinishAddingUARules();
-  result.AddMatchedProperties(user_sets[0]);
-  result.AddMatchedProperties(user_sets[1]);
-  result.FinishAddingUserRules();
-  result.FinishAddingAuthorRulesForTreeScope();
-
-  TestMatchedPropertiesRange(result.AllRules(), 2, user_sets);
-  TestMatchedPropertiesRange(result.UaRules(), 0, nullptr);
-  TestMatchedPropertiesRange(result.UserRules(), 2, user_sets);
-  TestMatchedPropertiesRange(result.AuthorRules(), 0, nullptr);
-
-  ImportantAuthorRanges importantAuthor(result);
-  EXPECT_EQ(importantAuthor.end(), importantAuthor.begin());
-  ImportantUserRanges importantUser(result);
-  EXPECT_EQ(importantUser.end(), ++importantUser.begin());
+  ImportantAuthorRanges important(result);
+  EXPECT_EQ(important.end(), important.begin());
 }
 
 TEST_F(MatchResultTest, AuthorRules) {
@@ -84,29 +58,23 @@ TEST_F(MatchResultTest, AuthorRules) {
   MatchResult result;
 
   result.FinishAddingUARules();
-  result.FinishAddingUserRules();
   result.AddMatchedProperties(author_sets[0]);
   result.AddMatchedProperties(author_sets[1]);
   result.FinishAddingAuthorRulesForTreeScope();
 
   TestMatchedPropertiesRange(result.AllRules(), 2, author_sets);
   TestMatchedPropertiesRange(result.UaRules(), 0, nullptr);
-  TestMatchedPropertiesRange(result.UserRules(), 0, nullptr);
   TestMatchedPropertiesRange(result.AuthorRules(), 2, author_sets);
 
-  ImportantAuthorRanges importantAuthor(result);
-  EXPECT_EQ(importantAuthor.end(), ++importantAuthor.begin());
-  ImportantUserRanges importantUser(result);
-  EXPECT_EQ(importantUser.end(), importantUser.begin());
+  ImportantAuthorRanges important(result);
+  EXPECT_EQ(important.end(), ++important.begin());
 }
 
-TEST_F(MatchResultTest, AllRules) {
+TEST_F(MatchResultTest, UAAndAuthorRules) {
   const StylePropertySet* all_sets[] = {PropertySet(0), PropertySet(1),
-                                        PropertySet(2), PropertySet(3),
-                                        PropertySet(4), PropertySet(5)};
+                                        PropertySet(2), PropertySet(3)};
   const StylePropertySet** ua_sets = &all_sets[0];
-  const StylePropertySet** user_sets = &all_sets[2];
-  const StylePropertySet** author_sets = &all_sets[4];
+  const StylePropertySet** author_sets = &all_sets[2];
 
   MatchResult result;
 
@@ -114,23 +82,16 @@ TEST_F(MatchResultTest, AllRules) {
   result.AddMatchedProperties(ua_sets[1]);
   result.FinishAddingUARules();
 
-  result.AddMatchedProperties(user_sets[0]);
-  result.AddMatchedProperties(user_sets[1]);
-  result.FinishAddingUserRules();
-
   result.AddMatchedProperties(author_sets[0]);
   result.AddMatchedProperties(author_sets[1]);
   result.FinishAddingAuthorRulesForTreeScope();
 
-  TestMatchedPropertiesRange(result.AllRules(), 6, all_sets);
+  TestMatchedPropertiesRange(result.AllRules(), 4, all_sets);
   TestMatchedPropertiesRange(result.UaRules(), 2, ua_sets);
-  TestMatchedPropertiesRange(result.UserRules(), 2, user_sets);
   TestMatchedPropertiesRange(result.AuthorRules(), 2, author_sets);
 
-  ImportantAuthorRanges importantAuthor(result);
-  EXPECT_EQ(importantAuthor.end(), ++importantAuthor.begin());
-  ImportantUserRanges importantUser(result);
-  EXPECT_EQ(importantUser.end(), ++importantUser.begin());
+  ImportantAuthorRanges important(result);
+  EXPECT_EQ(important.end(), ++important.begin());
 }
 
 TEST_F(MatchResultTest, AuthorRulesMultipleScopes) {
@@ -140,7 +101,6 @@ TEST_F(MatchResultTest, AuthorRulesMultipleScopes) {
   MatchResult result;
 
   result.FinishAddingUARules();
-  result.FinishAddingUserRules();
 
   result.AddMatchedProperties(author_sets[0]);
   result.AddMatchedProperties(author_sets[1]);
@@ -152,44 +112,34 @@ TEST_F(MatchResultTest, AuthorRulesMultipleScopes) {
 
   TestMatchedPropertiesRange(result.AllRules(), 4, author_sets);
   TestMatchedPropertiesRange(result.UaRules(), 0, nullptr);
-  TestMatchedPropertiesRange(result.UserRules(), 0, nullptr);
   TestMatchedPropertiesRange(result.AuthorRules(), 4, author_sets);
 
-  ImportantAuthorRanges importantAuthor(result);
+  ImportantAuthorRanges important(result);
 
-  auto iter = importantAuthor.begin();
-  EXPECT_NE(importantAuthor.end(), iter);
+  auto iter = important.begin();
+  EXPECT_NE(important.end(), iter);
   TestMatchedPropertiesRange(*iter, 2, &author_sets[2]);
 
   ++iter;
-  EXPECT_NE(importantAuthor.end(), iter);
+  EXPECT_NE(important.end(), iter);
   TestMatchedPropertiesRange(*iter, 2, author_sets);
 
   ++iter;
-  EXPECT_EQ(importantAuthor.end(), iter);
-
-  ImportantUserRanges importantUser(result);
-  EXPECT_EQ(importantUser.end(), importantUser.begin());
+  EXPECT_EQ(important.end(), iter);
 }
 
-TEST_F(MatchResultTest, AllRulesMultipleScopes) {
+TEST_F(MatchResultTest, UARulesAndAuthorRulesMultipleScopes) {
   const StylePropertySet* all_sets[] = {PropertySet(0), PropertySet(1),
                                         PropertySet(2), PropertySet(3),
-                                        PropertySet(4), PropertySet(5),
-                                        PropertySet(6), PropertySet(7)};
+                                        PropertySet(4), PropertySet(5)};
   const StylePropertySet** ua_sets = &all_sets[0];
-  const StylePropertySet** user_sets = &all_sets[2];
-  const StylePropertySet** author_sets = &all_sets[4];
+  const StylePropertySet** author_sets = &all_sets[2];
 
   MatchResult result;
 
   result.AddMatchedProperties(ua_sets[0]);
   result.AddMatchedProperties(ua_sets[1]);
   result.FinishAddingUARules();
-
-  result.AddMatchedProperties(user_sets[0]);
-  result.AddMatchedProperties(user_sets[1]);
-  result.FinishAddingUserRules();
 
   result.AddMatchedProperties(author_sets[0]);
   result.AddMatchedProperties(author_sets[1]);
@@ -199,26 +149,22 @@ TEST_F(MatchResultTest, AllRulesMultipleScopes) {
   result.AddMatchedProperties(author_sets[3]);
   result.FinishAddingAuthorRulesForTreeScope();
 
-  TestMatchedPropertiesRange(result.AllRules(), 8, all_sets);
+  TestMatchedPropertiesRange(result.AllRules(), 6, all_sets);
   TestMatchedPropertiesRange(result.UaRules(), 2, ua_sets);
-  TestMatchedPropertiesRange(result.UserRules(), 2, user_sets);
   TestMatchedPropertiesRange(result.AuthorRules(), 4, author_sets);
 
-  ImportantAuthorRanges importantAuthor(result);
+  ImportantAuthorRanges important(result);
 
-  ImportantAuthorRangeIterator iter = importantAuthor.begin();
-  EXPECT_NE(importantAuthor.end(), iter);
+  ImportantAuthorRangeIterator iter = important.begin();
+  EXPECT_NE(important.end(), iter);
   TestMatchedPropertiesRange(*iter, 2, &author_sets[2]);
 
   ++iter;
-  EXPECT_NE(importantAuthor.end(), iter);
+  EXPECT_NE(important.end(), iter);
   TestMatchedPropertiesRange(*iter, 2, author_sets);
 
   ++iter;
-  EXPECT_EQ(importantAuthor.end(), iter);
-
-  ImportantUserRanges importantUser(result);
-  EXPECT_EQ(importantUser.end(), ++importantUser.begin());
+  EXPECT_EQ(important.end(), iter);
 }
 
 }  // namespace blink

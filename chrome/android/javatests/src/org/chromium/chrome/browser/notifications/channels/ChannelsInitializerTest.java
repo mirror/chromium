@@ -66,7 +66,7 @@ public class ChannelsInitializerTest {
         // UrlFormatter.formatUrlForSecurityDisplay() is stand-alone.
         mNativeLibraryTestRule.loadNativeLibraryNoBrowserProcess();
 
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mNotificationManagerProxy = new NotificationManagerProxyImpl(
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE));
         mChannelsInitializer =
@@ -244,25 +244,6 @@ public class ChannelsInitializerTest {
                 is(mContext.getString(
                         org.chromium.chrome.R.string.notification_category_content_suggestions)));
         assertThat(channel.getImportance(), is(NotificationManager.IMPORTANCE_NONE));
-        assertThat(channel.getGroup(), is(ChannelDefinitions.CHANNEL_GROUP_ID_GENERAL));
-    }
-
-    @Test
-    @SmallTest
-    @MinAndroidSdkLevel(Build.VERSION_CODES.O)
-    @TargetApi(Build.VERSION_CODES.O)
-    @Feature({"Browser", "Notifications"})
-    public void testEnsureInitialized_webappActions() throws Exception {
-        mChannelsInitializer.ensureInitialized(ChannelDefinitions.CHANNEL_ID_WEBAPP_ACTIONS);
-
-        assertThat(getChannelsIgnoringDefault(), hasSize(1));
-
-        NotificationChannel channel = getChannelsIgnoringDefault().get(0);
-        assertThat(channel.getId(), is(ChannelDefinitions.CHANNEL_ID_WEBAPP_ACTIONS));
-        assertThat(channel.getName().toString(),
-                is(mContext.getString(
-                        org.chromium.chrome.R.string.notification_category_fullscreen_controls)));
-        assertThat(channel.getImportance(), is(NotificationManager.IMPORTANCE_MIN));
         assertThat(channel.getGroup(), is(ChannelDefinitions.CHANNEL_GROUP_ID_GENERAL));
     }
 

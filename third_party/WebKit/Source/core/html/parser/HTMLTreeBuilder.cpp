@@ -266,12 +266,12 @@ void HTMLTreeBuilder::FragmentParsingContext::Init(DocumentFragment* fragment,
       context_element, HTMLStackItem::kItemForContextElement);
 }
 
-void HTMLTreeBuilder::FragmentParsingContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLTreeBuilder::FragmentParsingContext) {
   visitor->Trace(fragment_);
   visitor->Trace(context_element_stack_item_);
 }
 
-void HTMLTreeBuilder::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLTreeBuilder) {
   visitor->Trace(fragment_context_);
   visitor->Trace(tree_);
   visitor->Trace(parser_);
@@ -458,7 +458,7 @@ static void MapLoweredLocalNameToName(PrefixedNameToQualifiedNameMap* map,
 // "Any other start tag" bullet in
 // https://html.spec.whatwg.org/multipage/parsing.html#parsing-main-inforeign
 static void AdjustSVGTagNameCase(AtomicHTMLToken* token) {
-  static PrefixedNameToQualifiedNameMap* case_map = nullptr;
+  static PrefixedNameToQualifiedNameMap* case_map = 0;
   if (!case_map) {
     case_map = new PrefixedNameToQualifiedNameMap;
     std::unique_ptr<const SVGQualifiedName* []> svg_tags =
@@ -474,7 +474,7 @@ static void AdjustSVGTagNameCase(AtomicHTMLToken* token) {
 
 template <std::unique_ptr<const QualifiedName* []> getAttrs(), unsigned length>
 static void AdjustAttributes(AtomicHTMLToken* token) {
-  static PrefixedNameToQualifiedNameMap* case_map = nullptr;
+  static PrefixedNameToQualifiedNameMap* case_map = 0;
   if (!case_map) {
     case_map = new PrefixedNameToQualifiedNameMap;
     std::unique_ptr<const QualifiedName* []> attrs = getAttrs();
@@ -513,7 +513,7 @@ static void AddNamesWithPrefix(PrefixedNameToQualifiedNameMap* map,
 }
 
 static void AdjustForeignAttributes(AtomicHTMLToken* token) {
-  static PrefixedNameToQualifiedNameMap* map = nullptr;
+  static PrefixedNameToQualifiedNameMap* map = 0;
   if (!map) {
     map = new PrefixedNameToQualifiedNameMap;
 
@@ -1479,7 +1479,7 @@ void HTMLTreeBuilder::CallTheAdoptionAgency(AtomicHTMLToken* token) {
       // 9.5
       if (!tree_.ActiveFormattingElements()->Contains(node->GetElement())) {
         tree_.OpenElements()->Remove(node->GetElement());
-        node = nullptr;
+        node = 0;
         continue;
       }
       // 9.6

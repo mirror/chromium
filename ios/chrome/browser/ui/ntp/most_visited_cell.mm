@@ -10,7 +10,6 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/favicon/core/fallback_url_util.h"
-#import "ios/chrome/browser/ui/favicon/favicon_attributes.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
@@ -34,19 +33,25 @@ const CGFloat kMaximumHeight = 100;
   // Weak reference to the relevant GoogleLandingDataSource.
   __weak id<GoogleLandingDataSource> _dataSource;
   // Backs property with the same name.
-  FaviconAttributes* _faviconAttributes;
+  ntp_tiles::TileVisualType _tileType;
 
   UILabel* _label;
   UILabel* _noIconLabel;
   UIImageView* _imageView;
 }
-- (void)setFaviconAttributes:(FaviconAttributes*)attributes;
+// Set the background color and center the first letter of the site title (or
+// domain if the title is a url).
+- (void)updateIconLabelWithColor:(UIColor*)textColor
+                 backgroundColor:(UIColor*)backgroundColor
+        isDefaultBackgroundColor:(BOOL)isDefaultBackgroundColor;
+// Set icon of top site.
+- (void)setImage:(UIImage*)image;
 @end
 
 @implementation MostVisitedCell
 
 @synthesize URL = _URL;
-@synthesize faviconAttributes = _faviconAttributes;
+@synthesize tileType = _tileType;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -97,7 +102,7 @@ const CGFloat kMaximumHeight = 100;
 
 - (void)prepareForReuse {
   [super prepareForReuse];
-  [self setFaviconAttributes:nil];
+  [self setImage:nil];
   [self setText:nil];
   // TODO(crbug.com/495600): -stepToVerifyAccessibilityOnCurrentScreen does not
   // honor -setIsAccessibilityElement and setAccessibilityElementsHidden for
@@ -129,23 +134,30 @@ const CGFloat kMaximumHeight = 100;
                title:(NSString*)title
           dataSource:(id<GoogleLandingDataSource>)dataSource {
   _dataSource = dataSource;
-  [self setFaviconAttributes:nil];
+  _tileType = ntp_tiles::TileVisualType::NONE;
   [self setText:title];
   [self setURL:URL];
   __weak MostVisitedCell* weakSelf = self;
 
-  void (^faviconAttributesBlock)(FaviconAttributes*) =
-      ^(FaviconAttributes* attributes) {
+  void (^faviconImageBlock)(UIImage*) = ^(UIImage* favicon) {
 
-        if (URL == [weakSelf URL]) {  // Tile has not been reused.
-          [self setFaviconAttributes:attributes];
-        }
+    if (URL == [weakSelf URL])  // Tile has not been reused.
+      [weakSelf setImage:favicon];
+  };
+
+  void (^faviconFallbackBlock)(UIColor*, UIColor*, BOOL) =
+      ^(UIColor* textColor, UIColor* backgroundColor, BOOL isDefaultColor) {
+        if (URL == [weakSelf URL])  // Tile has not been reused.
+          [weakSelf updateIconLabelWithColor:textColor
+                             backgroundColor:backgroundColor
+                    isDefaultBackgroundColor:isDefaultColor];
       };
 
-  [_dataSource getFaviconForPageURL:URL
-                               size:kFaviconSize
-                           useCache:YES
-                           callback:faviconAttributesBlock];
+  [_dataSource getFaviconForURL:URL
+                           size:kFaviconSize
+                       useCache:YES
+                  imageCallback:faviconImageBlock
+               fallbackCallback:faviconFallbackBlock];
 }
 
 - (void)removePlaceholderImage {
@@ -161,24 +173,23 @@ const CGFloat kMaximumHeight = 100;
 
 #pragma mark - Private methods
 
-- (void)setFaviconAttributes:(FaviconAttributes*)attributes {
-  _faviconAttributes = attributes;
-  if (!attributes) {
-    [_imageView setImage:nil];
-    [_imageView setBackgroundColor:nil];
-    [_noIconLabel setText:nil];
-    [_noIconLabel setTextColor:nil];
-  } else if (!attributes.faviconImage) {
-    [_imageView setImage:nil];
-    [_imageView setBackgroundColor:attributes.backgroundColor];
-    [_noIconLabel setText:attributes.monogramString];
-    [_noIconLabel setTextColor:attributes.textColor];
-  } else {
-    [_imageView setImage:attributes.faviconImage];
-    [_imageView setBackgroundColor:nil];
-    [_noIconLabel setText:nil];
-    [_noIconLabel setTextColor:nil];
-  }
+- (void)updateIconLabelWithColor:(UIColor*)textColor
+                 backgroundColor:(UIColor*)backgroundColor
+        isDefaultBackgroundColor:(BOOL)isDefaultBackgroundColor {
+  [self setImage:nil];
+  [_noIconLabel
+      setText:base::SysUTF16ToNSString(favicon::GetFallbackIconText(_URL))];
+  [_noIconLabel setTextColor:textColor];
+  [_imageView setBackgroundColor:backgroundColor];
+  _tileType = isDefaultBackgroundColor ? ntp_tiles::TileVisualType::ICON_DEFAULT
+                                       : ntp_tiles::TileVisualType::ICON_COLOR;
+}
+
+- (void)setImage:(UIImage*)image {
+  [_imageView setBackgroundColor:nil];
+  [_noIconLabel setText:nil];
+  [_imageView setImage:image];
+  _tileType = ntp_tiles::TileVisualType::ICON_REAL;
 }
 
 @end

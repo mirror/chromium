@@ -26,7 +26,7 @@ class ScriptModuleResolverImplTestModulator final : public DummyModulator {
   ScriptModuleResolverImplTestModulator() {}
   virtual ~ScriptModuleResolverImplTestModulator() {}
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void SetScriptState(ScriptState* script_state) {
     script_state_ = script_state;
@@ -61,7 +61,7 @@ class ScriptModuleResolverImplTestModulator final : public DummyModulator {
   Member<ModuleScript> module_script_;
 };
 
-void ScriptModuleResolverImplTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptModuleResolverImplTestModulator) {
   visitor->Trace(module_script_);
   DummyModulator::Trace(visitor);
 }
@@ -80,9 +80,10 @@ ModuleScript* CreateReferrerModuleScript(Modulator* modulator,
       "referrer.js", kSharableCrossOrigin,
       WebURLRequest::kFetchCredentialsModeOmit, "", kParserInserted,
       TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
-  KURL referrer_url("https://example.com/referrer.js");
-  auto* referrer_module_script =
-      ModuleScript::CreateForTest(modulator, referrer_record, referrer_url);
+  KURL referrer_url(kParsedURLString, "https://example.com/referrer.js");
+  ModuleScript* referrer_module_script = ModuleScript::CreateForTest(
+      modulator, referrer_record, referrer_url, "", kParserInserted,
+      WebURLRequest::kFetchCredentialsModeOmit);
   return referrer_module_script;
 }
 
@@ -94,8 +95,10 @@ ModuleScript* CreateTargetModuleScript(
       scope.GetIsolate(), "export const pi = 3.14;", "target.js",
       kSharableCrossOrigin, WebURLRequest::kFetchCredentialsModeOmit, "",
       kParserInserted, TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
-  KURL url("https://example.com/target.js");
-  auto* module_script = ModuleScript::CreateForTest(modulator, record, url);
+  KURL url(kParsedURLString, "https://example.com/target.js");
+  ModuleScript* module_script =
+      ModuleScript::CreateForTest(modulator, record, url, "", kParserInserted,
+                                  WebURLRequest::kFetchCredentialsModeOmit);
   if (state != ScriptModuleState::kInstantiated) {
     EXPECT_EQ(ScriptModuleState::kErrored, state);
     v8::Local<v8::Value> error =

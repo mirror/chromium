@@ -102,6 +102,11 @@ void PreviewModeClient::SubmitForm(const std::string& url,
   NOTREACHED();
 }
 
+std::string PreviewModeClient::ShowFileSelectionDialog() {
+  NOTREACHED();
+  return std::string();
+}
+
 pp::URLLoader PreviewModeClient::CreateURLLoader() {
   NOTREACHED();
   return pp::URLLoader();
@@ -126,8 +131,7 @@ void PreviewModeClient::DocumentPaintOccurred() {
   NOTREACHED();
 }
 
-void PreviewModeClient::DocumentLoadComplete(
-    const PDFEngine::DocumentFeatures& document_features) {
+void PreviewModeClient::DocumentLoadComplete(int page_count) {
   client_->PreviewDocumentLoadComplete();
 }
 

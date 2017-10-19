@@ -97,6 +97,12 @@ class PrintPreviewHandler
                             int preview_uid,
                             int preview_response_id);
 
+#if BUILDFLAG(ENABLE_BASIC_PRINTING)
+  // Called when the user press ctrl+shift+p to display the native system
+  // dialog.
+  void ShowSystemDialog();
+#endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
+
   int regenerate_preview_request_count() const {
     return regenerate_preview_request_count_;
   }
@@ -135,7 +141,6 @@ class PrintPreviewHandler
   friend class PrintPreviewHandlerTest;
   FRIEND_TEST_ALL_PREFIXES(PrintPreviewHandlerTest, InitialSettings);
   FRIEND_TEST_ALL_PREFIXES(PrintPreviewHandlerTest, GetPrinters);
-  FRIEND_TEST_ALL_PREFIXES(PrintPreviewHandlerTest, GetPrinterCapabilities);
   class AccessTokenService;
 
   content::WebContents* preview_web_contents() const;
@@ -210,6 +215,10 @@ class PrintPreviewHandler
   // preview is displayed.
   void HandleGetInitialSettings(const base::ListValue* args);
 
+  // Reports histogram data for a print preview UI action. |args| should consist
+  // of two elements: the bucket name, and the bucket event.
+  void HandleReportUiEvent(const base::ListValue* args);
+
   // Forces the opening of a new tab. |args| should consist of one element: the
   // URL to set the new tab to.
   //
@@ -225,6 +234,9 @@ class PrintPreviewHandler
   // Send OAuth2 access token.
   void SendAccessToken(const std::string& callback_id,
                        const std::string& access_token);
+
+  // Send message indicating a request for token was already in progress.
+  void SendRequestInProgress(const std::string& callback_id);
 
   // Sends the printer capabilities to the Web UI. |settings_info| contains
   // printer capabilities information. If |settings_info| is empty, sends
@@ -258,11 +270,29 @@ class PrintPreviewHandler
   // Clears initiator details for the print preview dialog.
   void ClearInitiatorDetails();
 
+  // Called when the directory to save to has been created. Opens a modal
+  // dialog to prompt the user to select the file for Save As PDF.
+  void OnDirectoryCreated(const base::FilePath& path);
+
+  // Posts a task to save |data| to pdf at |print_to_pdf_path_|.
+  void PostPrintToPdfTask();
+
   // Populates |settings| according to the current locale.
   void GetNumberFormatAndMeasurementSystem(base::DictionaryValue* settings);
 
   bool GetPreviewDataAndTitle(scoped_refptr<base::RefCountedBytes>* data,
                               base::string16* title) const;
+
+  // Helper for getting a unique file name for SelectFile() without prompting
+  // the user. Just an adaptor for FileSelected().
+  void OnGotUniqueFileName(const base::FilePath& path);
+
+#if defined(USE_CUPS)
+  void SaveCUPSColorSetting(const base::DictionaryValue* settings);
+
+  void ConvertColorSettingToCUPSColorModel(
+      base::DictionaryValue* settings) const;
+#endif
 
   PdfPrinterHandler* GetPdfPrinterHandler();
 
@@ -286,9 +316,11 @@ class PrintPreviewHandler
 
   // Called when an extension or privet print job is completed.
   // |callback_id|: The javascript callback to run.
+  // |success|: Whether the job succeeded.
   // |error|: The returned print job error. Useful for reporting a specific
-  //     error. None type implies no error.
+  //     error.
   void OnPrintResult(const std::string& callback_id,
+                     bool success,
                      const base::Value& error);
 
   // A count of how many requests received to regenerate preview data.

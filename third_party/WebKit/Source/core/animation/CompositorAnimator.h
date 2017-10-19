@@ -16,7 +16,7 @@ class CORE_EXPORT CompositorAnimator : public GarbageCollectedMixin {
   // Runs the animation frame callback for the frame starting at the given time.
   virtual void Mutate(double monotonic_time_now,
                       const CompositorMutatorInputState&) = 0;
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

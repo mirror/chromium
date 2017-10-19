@@ -50,7 +50,6 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/IdlenessDetector.h"
 #include "core/loader/LinkLoader.h"
 #include "core/loader/NetworkHintsInterface.h"
 #include "core/loader/ProgressTracker.h"
@@ -151,7 +150,7 @@ DocumentLoader::~DocumentLoader() {
   DCHECK_EQ(state_, kSentDidFinishLoad);
 }
 
-void DocumentLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentLoader) {
   visitor->Trace(frame_);
   visitor->Trace(fetcher_);
   visitor->Trace(main_resource_);
@@ -446,7 +445,7 @@ void DocumentLoader::FinishedLoading(double finish_time) {
     // If this is an empty document, it will not have actually been created yet.
     // Force a commit so that the Document actually gets created.
     if (state_ == kProvisional)
-      CommitData(nullptr, 0);
+      CommitData(0, 0);
   }
 
   if (!frame_)
@@ -942,7 +941,6 @@ void DocumentLoader::WillCommitNavigation() {
   if (GetFrameLoader().StateMachine()->CreatingInitialEmptyDocument())
     return;
   probe::willCommitLoad(frame_, this);
-  frame_->GetIdlenessDetector()->WillCommitLoad();
 }
 
 void DocumentLoader::DidCommitNavigation() {

@@ -81,8 +81,13 @@ class PLATFORM_EXPORT Path {
   bool Contains(const FloatPoint&, WindRule) const;
   bool StrokeContains(const FloatPoint&, const StrokeData&) const;
 
-  FloatRect BoundingRect() const;
-  FloatRect StrokeBoundingRect(const StrokeData&) const;
+  enum class BoundsType {
+    kConservative,  // Fast version, includes control points.
+    kExact,         // Tight, slower version.
+  };
+  FloatRect BoundingRect(BoundsType = BoundsType::kConservative) const;
+  FloatRect StrokeBoundingRect(const StrokeData&,
+                               BoundsType = BoundsType::kConservative) const;
 
   float length() const;
   FloatPoint PointAtLength(float length) const;

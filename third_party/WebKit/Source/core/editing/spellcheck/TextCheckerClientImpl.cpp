@@ -14,7 +14,7 @@ namespace blink {
 TextCheckerClientImpl::TextCheckerClientImpl(WebLocalFrameImpl* web_local_frame)
     : web_local_frame_(web_local_frame) {}
 
-void TextCheckerClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextCheckerClientImpl) {
   visitor->Trace(web_local_frame_);
 }
 

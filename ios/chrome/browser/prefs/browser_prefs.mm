@@ -134,7 +134,6 @@ void RegisterBrowserStatePrefs(user_prefs::PrefRegistrySyncable* registry) {
   [HandoffManager registerBrowserStatePrefs:registry];
   registry->RegisterIntegerPref(prefs::kIosSettingsSigninPromoDisplayedCount,
                                 0);
-  registry->RegisterBooleanPref(prefs::kIosSettingsPromoAlreadySeen, false);
 
   registry->RegisterBooleanPref(prefs::kDataSaverEnabled, false);
   registry->RegisterBooleanPref(

@@ -21,28 +21,16 @@
 
 namespace blink {
 
-// Partial implementation of the "set up a worklet environment settings object"
-// algorithm:
-// https://drafts.css-houdini.org/worklets/#script-settings-for-worklets
-WorkletGlobalScope::WorkletGlobalScope(
-    const KURL& url,
-    const String& user_agent,
-    RefPtr<SecurityOrigin> document_security_origin,
-    v8::Isolate* isolate,
-    WorkerClients* worker_clients,
-    WorkerReportingProxy& reporting_proxy)
+WorkletGlobalScope::WorkletGlobalScope(const KURL& url,
+                                       const String& user_agent,
+                                       RefPtr<SecurityOrigin> security_origin,
+                                       v8::Isolate* isolate,
+                                       WorkerClients* worker_clients,
+                                       WorkerReportingProxy& reporting_proxy)
     : WorkerOrWorkletGlobalScope(isolate, worker_clients, reporting_proxy),
       url_(url),
-      user_agent_(user_agent),
-      document_security_origin_(document_security_origin) {
-  // Step 2: "Let inheritedAPIBaseURL be outsideSettings's API base URL."
-  // |url_| is the inheritedAPIBaseURL passed from the parent Document.
-
-  // Step 3: "Let origin be a unique opaque origin."
-  SetSecurityOrigin(SecurityOrigin::CreateUnique());
-
-  // Step 5: "Let inheritedReferrerPolicy be outsideSettings's referrer policy."
-  // TODO(nhiroki): Set the referrer policy (https://crbug.com/773921).
+      user_agent_(user_agent) {
+  SetSecurityOrigin(std::move(security_origin));
 }
 
 WorkletGlobalScope::~WorkletGlobalScope() = default;
@@ -118,12 +106,11 @@ void WorkletGlobalScope::FetchAndInvokeScript(
   // Step 2: "Let script by the result of fetch a worklet script given
   // moduleURLRecord, moduleResponsesMap, credentialOptions, outsideSettings,
   // and insideSettings when it asynchronously completes."
-  String nonce;
+  String nonce = "";
   ParserDisposition parser_state = kNotParserInserted;
   Modulator* modulator = Modulator::From(ScriptController()->GetScriptState());
-  // TODO(nhiroki, ikilpatrick): Update spec to use #script-fetch-options.
-  ScriptFetchOptions options(nonce, parser_state, credentials_mode);
-  ModuleScriptFetchRequest module_request(module_url_record, options);
+  ModuleScriptFetchRequest module_request(module_url_record, nonce,
+                                          parser_state, credentials_mode);
 
   // Step 3 to 5 are implemented in
   // WorkletModuleTreeClient::NotifyModuleTreeLoadFinished.
@@ -149,17 +136,17 @@ void WorkletGlobalScope::SetModulator(Modulator* modulator) {
   modulator_ = modulator;
 }
 
-KURL WorkletGlobalScope::CompleteURL(const String& url) const {
+KURL WorkletGlobalScope::VirtualCompleteURL(const String& url) const {
   // Always return a null URL when passed a null string.
   // TODO(ikilpatrick): Should we change the KURL constructor to have this
   // behavior?
   if (url.IsNull())
     return KURL();
   // Always use UTF-8 in Worklets.
-  return KURL(BaseURL(), url);
+  return KURL(url_, url);
 }
 
-void WorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkletGlobalScope) {
   visitor->Trace(module_responses_map_proxy_);
   visitor->Trace(modulator_);
   ExecutionContext::Trace(visitor);

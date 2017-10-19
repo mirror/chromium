@@ -37,7 +37,7 @@ class ExtensionWebUITest : public ExtensionApiTest {
                                    bool expected_result) {
     std::string script;
     {
-      base::ScopedAllowBlockingForTesting allow_blocking;
+      base::ThreadRestrictions::ScopedAllowIO allow_io;
       // Tests are located in chrome/test/data/extensions/webui/$(name).
       base::FilePath path;
       PathService::Get(chrome::DIR_TEST_DATA, &path);

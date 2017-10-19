@@ -10,14 +10,14 @@ double CSSStyleImageValue::intrinsicWidth(bool& is_null) const {
   is_null = IsCachePending();
   if (is_null)
     return 0;
-  return ImageSize().Width();
+  return ImageLayoutSize().Width().ToDouble();
 }
 
 double CSSStyleImageValue::intrinsicHeight(bool& is_null) const {
   is_null = IsCachePending();
   if (is_null)
     return 0;
-  return ImageSize().Height();
+  return ImageLayoutSize().Height().ToDouble();
 }
 
 double CSSStyleImageValue::intrinsicRatio(bool& is_null) {
@@ -37,6 +37,16 @@ FloatSize CSSStyleImageValue::ElementSize(
 
 bool CSSStyleImageValue::IsAccelerated() const {
   return GetImage() && GetImage()->IsTextureBacked();
+}
+
+int CSSStyleImageValue::SourceHeight() {
+  bool not_used;
+  return intrinsicHeight(not_used);
+}
+
+int CSSStyleImageValue::SourceWidth() {
+  bool not_used;
+  return intrinsicWidth(not_used);
 }
 
 RefPtr<Image> CSSStyleImageValue::GetImage() const {

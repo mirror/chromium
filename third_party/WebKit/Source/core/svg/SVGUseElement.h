@@ -59,7 +59,7 @@ class SVGUseElement final : public SVGGraphicsElement,
   void DispatchPendingEvent();
   void ToClipPath(Path&) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGUseElement(Document&);

@@ -33,7 +33,11 @@ void MediaSinkServiceBase::OnFetchCompleted() {
     return;
   }
 
-  ForceSinkDiscoveryCallback();
+  DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
+  sink_discovery_callback_.Run(std::vector<MediaSinkInternal>(
+      current_sinks_.begin(), current_sinks_.end()));
+  mrp_sinks_ = current_sinks_;
+
   RecordDeviceCounts();
 }
 
@@ -57,13 +61,6 @@ void MediaSinkServiceBase::RestartTimer() {
   if (!finish_timer_ || finish_timer_->IsRunning())
     return;
   StartTimer();
-}
-
-void MediaSinkServiceBase::ForceSinkDiscoveryCallback() {
-  DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
-  sink_discovery_callback_.Run(std::vector<MediaSinkInternal>(
-      current_sinks_.begin(), current_sinks_.end()));
-  mrp_sinks_ = current_sinks_;
 }
 
 }  // namespace media_router

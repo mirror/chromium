@@ -44,7 +44,7 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
                         int32_t help_topic_id) override;
   void ClearErrors() override;
   void ShowUserPodCustomIcon(const AccountId& account_id,
-                             mojom::EasyUnlockIconOptionsPtr icon) override;
+                             mojom::UserPodCustomIconOptionsPtr icon) override;
   void HideUserPodCustomIcon(const AccountId& account_id) override;
   void SetAuthType(const AccountId& account_id,
                    proximity_auth::mojom::AuthType auth_type,
@@ -85,11 +85,6 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   // Flushes the mojo pipes - to be used in tests.
   void FlushForTesting();
 
-  // Enable or disable authentication for the debug overlay.
-  void set_force_fail_auth_for_debug_overlay(bool force_fail) {
-    force_fail_auth_for_debug_overlay_ = force_fail;
-  }
-
  private:
   using PendingAuthenticateUserCall =
       base::OnceCallback<void(const std::string& system_salt)>;
@@ -117,9 +112,6 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
 
   base::ObserverList<LockScreenAppsFocusObserver>
       lock_screen_apps_focus_observers_;
-
-  // If set to false, all auth requests will forcibly fail.
-  bool force_fail_auth_for_debug_overlay_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreenController);
 };

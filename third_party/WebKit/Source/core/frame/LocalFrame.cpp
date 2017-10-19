@@ -81,8 +81,9 @@
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/timing/Performance.h"
 #include "platform/Histogram.h"
+#include "platform/PluginScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/WebFrameScheduler.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/graphics/paint/PaintController.h"
@@ -94,7 +95,6 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/plugins/PluginData.h"
-#include "platform/plugins/PluginScriptForbiddenScope.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/text/TextStream.h"
@@ -215,7 +215,7 @@ LocalFrame::~LocalFrame() {
   DCHECK(!view_);
 }
 
-void LocalFrame::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrame) {
   visitor->Trace(probe_sink_);
   visitor->Trace(performance_monitor_);
   visitor->Trace(idleness_detector_);
@@ -765,8 +765,7 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       page_zoom_factor_(ParentPageZoomFactor(this)),
       text_zoom_factor_(ParentTextZoomFactor(this)),
       in_view_source_mode_(false),
-      interface_registry_(interface_registry),
-      instrumentation_token_(client->GetInstrumentationToken()) {
+      interface_registry_(interface_registry) {
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();
     performance_monitor_ = new PerformanceMonitor(this);
@@ -1089,8 +1088,8 @@ void LocalFrame::MaybeAllowImagePlaceholder(FetchParameters& params) const {
 
 std::unique_ptr<WebURLLoader> LocalFrame::CreateURLLoader(
     const ResourceRequest& request,
-    RefPtr<WebTaskRunner> task_runner) {
-  return Client()->CreateURLLoader(request, std::move(task_runner));
+    WebTaskRunner* task_runner) {
+  return Client()->CreateURLLoader(request, task_runner);
 }
 
 WebPluginContainerImpl* LocalFrame::GetWebPluginContainer(Node* node) const {

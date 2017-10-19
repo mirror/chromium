@@ -45,7 +45,7 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   // ContextLifecycleObserver
   void ContextDestroyed(ExecutionContext*) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   // The Worklet inherits the url and userAgent from the frame->document().

@@ -35,7 +35,7 @@ NativeWidget* CreatePlatformNativeWidgetImplAuraMus(
       aura::CreateInitParamsForTopLevel(MusClient::Get()->window_tree_client(),
                                         std::move(mus_properties));
   desktop_native_widget_aura->SetDesktopWindowTreeHost(
-      std::make_unique<DesktopWindowTreeHostMus>(
+      base::MakeUnique<DesktopWindowTreeHostMus>(
           std::move(window_tree_host_init_params), widget,
           desktop_native_widget_aura));
   return desktop_native_widget_aura;

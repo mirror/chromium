@@ -276,7 +276,11 @@ const base::Feature kServiceWorkerPaymentApps{
 
 // Streaming installed scripts on starting service workers.
 const base::Feature kServiceWorkerScriptStreaming{
-    "ServiceWorkerScriptStreaming", base::FEATURE_ENABLED_BY_DEFAULT};
+    "ServiceWorkerScriptStreaming", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// http://tc39.github.io/ecmascript_sharedmem/shmem.html
+const base::Feature kSharedArrayBuffer{"SharedArrayBuffer",
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 // An experiment to require process isolation for the sign-in origin,
 // https://accounts.google.com.  Launch bug: https://crbug.com/739418.
@@ -434,6 +438,18 @@ const base::Feature kWebNfc{"WebNFC", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kWebVrVsyncAlign{"WebVrVsyncAlign",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_ANDROID)
+
+#if defined(OS_WIN)
+// Emergency "off switch" for new Windows sandbox security mitigation,
+// sandbox::MITIGATION_EXTENSION_POINT_DISABLE.
+const base::Feature kWinSboxDisableExtensionPoints{
+    "WinSboxDisableExtensionPoint", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Emergency "off switch" for new Windows sandbox security mitigation,
+// sandbox::MITIGATION_FORCE_MS_SIGNED_BINS.
+const base::Feature kWinSboxForceMsSigned{"WinSboxForceMsSigned",
+                                          base::FEATURE_ENABLED_BY_DEFAULT};
+#endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
 // Enables caching of media devices for the purpose of enumerating them.

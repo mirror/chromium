@@ -29,6 +29,8 @@
 
 #include "core/dom/Document.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
@@ -224,10 +226,11 @@
 #include "platform/InstanceCounters.h"
 #include "platform/Language.h"
 #include "platform/LengthFunctions.h"
+#include "platform/PluginScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/bindings/Microtask.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -235,7 +238,6 @@
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkStateNotifier.h"
-#include "platform/plugins/PluginScriptForbiddenScope.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scroll/ScrollbarTheme.h"
@@ -254,15 +256,11 @@
 #include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebPrerenderingSupport.h"
 #include "public/platform/modules/insecure_input/insecure_input_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
-#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
-#include "services/metrics/public/cpp/ukm_builders.h"
-#include "services/metrics/public/interfaces/ukm_interface.mojom-shared.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 #ifndef NDEBUG
@@ -312,18 +310,12 @@ class DocumentOutliveTimeReporter : public BlinkGCObserver {
     int outlive_time_count = GetOutliveTimeCount();
     if (outlive_time_count == 5 || outlive_time_count == 10) {
       const char* kUMAString = "Document.OutliveTimeAfterShutdown.GCCount";
-
       if (outlive_time_count == 5)
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount5, kGCCountMax);
       else if (outlive_time_count == 10)
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount10, kGCCountMax);
       else
         NOTREACHED();
-    }
-
-    if (outlive_time_count == 5 || outlive_time_count == 10 ||
-        outlive_time_count == 20 || outlive_time_count == 50) {
-      document_->RecordUkmOutliveTimeAfterShutdown(outlive_time_count);
     }
   }
 
@@ -509,7 +501,7 @@ static void RunAutofocusTask(ExecutionContext* context) {
 
   Document* document = ToDocument(context);
   if (Element* element = document->AutofocusElement()) {
-    document->SetAutofocusElement(nullptr);
+    document->SetAutofocusElement(0);
     element->focus();
   }
 }
@@ -531,7 +523,7 @@ class Document::NetworkStateObserver final
  public:
   explicit NetworkStateObserver(Document& document)
       : ContextLifecycleObserver(&document) {
-    online_observer_handle_ = GetNetworkStateNotifier().AddOnLineObserver(
+    GetNetworkStateNotifier().AddOnLineObserver(
         this,
         TaskRunnerHelper::Get(TaskType::kNetworking, GetExecutionContext()));
   }
@@ -552,16 +544,11 @@ class Document::NetworkStateObserver final
 
   void UnregisterAsObserver(ExecutionContext* context) {
     DCHECK(context);
-    online_observer_handle_ = nullptr;
+    GetNetworkStateNotifier().RemoveOnLineObserver(
+        this, TaskRunnerHelper::Get(TaskType::kNetworking, context));
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ContextLifecycleObserver::Trace(visitor);
-  }
-
- private:
-  std::unique_ptr<NetworkStateNotifier::NetworkStateObserverHandle>
-      online_observer_handle_;
+  DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
 };
 
 Document* Document::Create(const Document& document) {
@@ -576,7 +563,7 @@ Document* Document::Create(const Document& document) {
 
 Document::Document(const DocumentInit& initializer,
                    DocumentClassFlags document_classes)
-    : ContainerNode(nullptr, kCreateDocument),
+    : ContainerNode(0, kCreateDocument),
       TreeScope(*this),
       has_nodes_with_placeholder_style_(false),
       evaluate_media_queries_on_style_recalc_(false),
@@ -632,7 +619,7 @@ Document::Document(const DocumentInit& initializer,
       saw_elements_in_known_namespaces_(false),
       is_srcdoc_document_(initializer.ShouldTreatURLAsSrcdocDocument()),
       is_mobile_document_(false),
-      layout_view_(nullptr),
+      layout_view_(0),
       has_fullscreen_supplement_(false),
       load_event_delay_count_(0),
       load_event_delay_timer_(
@@ -801,7 +788,7 @@ bool Document::HasAppCacheManifest() const {
 
 Location* Document::location() const {
   if (!GetFrame())
-    return nullptr;
+    return 0;
 
   return domWindow()->location();
 }
@@ -1147,13 +1134,13 @@ LocalDOMWindow* Document::ExecutingWindow() const {
     return owning_window;
   if (HTMLImportsController* import = ImportsController())
     return import->Master()->domWindow();
-  return nullptr;
+  return 0;
 }
 
 LocalFrame* Document::ExecutingFrame() {
   LocalDOMWindow* window = ExecutingWindow();
   if (!window)
-    return nullptr;
+    return 0;
   return window->GetFrame();
 }
 
@@ -1543,7 +1530,7 @@ AtomicString Document::contentType() const {
 
 Element* Document::ElementFromPoint(int x, int y) const {
   if (GetLayoutViewItem().IsNull())
-    return nullptr;
+    return 0;
 
   return TreeScope::ElementFromPoint(x, y);
 }
@@ -1800,7 +1787,7 @@ FormController& Document::GetFormController() {
 
 DocumentState* Document::FormElementsState() const {
   if (!form_controller_)
-    return nullptr;
+    return 0;
   return form_controller_->FormElementsState();
 }
 
@@ -1935,7 +1922,7 @@ void Document::SetupFontBuilder(ComputedStyle& document_style) {
   font_builder.CreateFontForDocument(selector, document_style);
 }
 
-void Document::PropagateStyleToViewport() {
+void Document::PropagateStyleToViewport(StyleRecalcChange change) {
   DCHECK(InStyleRecalc());
   DCHECK(documentElement());
 
@@ -2047,42 +2034,48 @@ void Document::PropagateStyleToViewport() {
                 scroll_boundary_behavior_y)));
   }
 
-  RefPtr<ComputedStyle> viewport_style = GetLayoutViewItem().MutableStyle();
-  if (viewport_style->GetWritingMode() != root_writing_mode ||
-      viewport_style->Direction() != root_direction ||
-      viewport_style->VisitedDependentColor(CSSPropertyBackgroundColor) !=
-          background_color ||
-      viewport_style->BackgroundLayers() != background_layers ||
-      viewport_style->ImageRendering() != image_rendering ||
-      viewport_style->OverflowAnchor() != overflow_anchor ||
-      viewport_style->OverflowX() != overflow_x ||
-      viewport_style->OverflowY() != overflow_y ||
-      viewport_style->HasNormalColumnGap() != column_gap_normal ||
-      viewport_style->ColumnGap() != column_gap ||
-      viewport_style->GetScrollSnapType() != snap_type ||
-      viewport_style->GetScrollBehavior() != scroll_behavior ||
-      viewport_style->ScrollBoundaryBehaviorX() != scroll_boundary_behavior_x ||
-      viewport_style->ScrollBoundaryBehaviorY() != scroll_boundary_behavior_y) {
-    RefPtr<ComputedStyle> new_style = ComputedStyle::Clone(*viewport_style);
-    new_style->SetWritingMode(root_writing_mode);
-    new_style->SetDirection(root_direction);
-    new_style->SetBackgroundColor(background_color);
-    new_style->AccessBackgroundLayers() = background_layers;
-    new_style->SetImageRendering(image_rendering);
-    new_style->SetOverflowAnchor(overflow_anchor);
-    new_style->SetOverflowX(overflow_x);
-    new_style->SetOverflowY(overflow_y);
-    if (column_gap_normal)
-      new_style->SetHasNormalColumnGap();
-    else
-      new_style->SetColumnGap(column_gap);
-    new_style->SetScrollSnapType(snap_type);
-    new_style->SetScrollBehavior(scroll_behavior);
-    new_style->SetScrollBoundaryBehaviorX(scroll_boundary_behavior_x);
-    new_style->SetScrollBoundaryBehaviorY(scroll_boundary_behavior_y);
-    GetLayoutViewItem().SetStyle(new_style);
-    SetupFontBuilder(*new_style);
+  RefPtr<ComputedStyle> viewport_style;
+  if (change == kForce || !GetLayoutViewItem().Style()) {
+    viewport_style = StyleResolver::StyleForViewport(*this);
+  } else {
+    const ComputedStyle& old_style = GetLayoutViewItem().StyleRef();
+    if (old_style.GetWritingMode() == root_writing_mode &&
+        old_style.Direction() == root_direction &&
+        old_style.VisitedDependentColor(CSSPropertyBackgroundColor) ==
+            background_color &&
+        old_style.BackgroundLayers() == background_layers &&
+        old_style.ImageRendering() == image_rendering &&
+        old_style.OverflowAnchor() == overflow_anchor &&
+        old_style.OverflowX() == overflow_x &&
+        old_style.OverflowY() == overflow_y &&
+        old_style.HasNormalColumnGap() == column_gap_normal &&
+        old_style.ColumnGap() == column_gap &&
+        old_style.GetScrollSnapType() == snap_type &&
+        old_style.GetScrollBehavior() == scroll_behavior &&
+        old_style.ScrollBoundaryBehaviorX() == scroll_boundary_behavior_x &&
+        old_style.ScrollBoundaryBehaviorY() == scroll_boundary_behavior_y) {
+      return;
+    }
+    viewport_style = ComputedStyle::Clone(old_style);
   }
+  viewport_style->SetWritingMode(root_writing_mode);
+  viewport_style->SetDirection(root_direction);
+  viewport_style->SetBackgroundColor(background_color);
+  viewport_style->AccessBackgroundLayers() = background_layers;
+  viewport_style->SetImageRendering(image_rendering);
+  viewport_style->SetOverflowAnchor(overflow_anchor);
+  viewport_style->SetOverflowX(overflow_x);
+  viewport_style->SetOverflowY(overflow_y);
+  if (column_gap_normal)
+    viewport_style->SetHasNormalColumnGap();
+  else
+    viewport_style->SetColumnGap(column_gap);
+  viewport_style->SetScrollSnapType(snap_type);
+  viewport_style->SetScrollBehavior(scroll_behavior);
+  viewport_style->SetScrollBoundaryBehaviorX(scroll_boundary_behavior_x);
+  viewport_style->SetScrollBoundaryBehaviorY(scroll_boundary_behavior_y);
+  GetLayoutViewItem().SetStyle(viewport_style);
+  SetupFontBuilder(*viewport_style);
 }
 
 #if DCHECK_IS_ON()
@@ -2112,8 +2105,12 @@ static void AssertLayoutTreeUpdated(Node& root) {
 void Document::UpdateStyleAndLayoutTree() {
   DCHECK(IsMainThread());
 
-  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   ScriptForbiddenScope forbid_script;
+  // We should forbid script execution for plugins here because update while
+  // layout is changing, HTMLPlugin element can be reattached and plugin can be
+  // destroyed. Plugin can execute scripts on destroy. It produces crash without
+  // PluginScriptForbiddenScope: crbug.com/550427.
+  PluginScriptForbiddenScope plugin_forbid_script;
 
   if (!View() || !IsActive())
     return;
@@ -2212,30 +2209,16 @@ void Document::UpdateStyle() {
 
   unsigned initial_element_count = GetStyleEngine().StyleForElementCount();
 
+  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   lifecycle_.AdvanceTo(DocumentLifecycle::kInStyleRecalc);
 
   StyleRecalcChange change = kNoChange;
-  if (GetStyleChangeType() >= kSubtreeStyleChange)
+  if (GetStyleChangeType() >= kSubtreeStyleChange) {
     change = kForce;
+    has_nodes_with_placeholder_style_ = false;
+  }
 
   NthIndexCache nth_index_cache(*this);
-
-  // TODO(rune@opera.com): Cannot access the EnsureStyleResolver() before
-  // calling StyleForViewport() below because apparently the StyleResolver's
-  // constructor has side effects. We should fix it. See
-  // printing/setPrinting.html, printing/width-overflow.html though they only
-  // fail on mac when accessing the resolver by what appears to be a viewport
-  // size difference.
-
-  if (change == kForce) {
-    has_nodes_with_placeholder_style_ = false;
-    RefPtr<ComputedStyle> viewport_style =
-        StyleResolver::StyleForViewport(*this);
-    StyleRecalcChange local_change = ComputedStyle::StylePropagationDiff(
-        viewport_style.get(), GetLayoutViewItem().Style());
-    if (local_change != kNoChange)
-      GetLayoutViewItem().SetStyle(std::move(viewport_style));
-  }
 
   ClearNeedsStyleRecalc();
   ClearNeedsReattachLayoutTree();
@@ -2255,13 +2238,15 @@ void Document::UpdateStyle() {
         ViewportDefiningElementDidChange();
     }
     GetStyleEngine().MarkForWhitespaceReattachment();
-    PropagateStyleToViewport();
+    PropagateStyleToViewport(change);
     if (document_element->NeedsReattachLayoutTree() ||
         document_element->ChildNeedsReattachLayoutTree()) {
       TRACE_EVENT0("blink,blink_style", "Document::rebuildLayoutTree");
       WhitespaceAttacher whitespace_attacher;
       document_element->RebuildLayoutTree(whitespace_attacher);
     }
+  } else if (change == kForce) {
+    GetLayoutViewItem().SetStyle(StyleResolver::StyleForViewport(*this));
   }
   GetStyleEngine().ClearWhitespaceReattachSet();
 
@@ -2364,7 +2349,6 @@ void Document::UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(Node* node) {
 void Document::UpdateStyleAndLayout() {
   DCHECK(IsMainThread());
 
-  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   ScriptForbiddenScope forbid_script;
 
   LocalFrameView* frame_view = View();
@@ -2841,7 +2825,7 @@ AXObjectCache* Document::ExistingAXObjectCache() const {
   // If the layoutObject is gone then we are in the process of destruction.
   // This method will be called before m_frame = nullptr.
   if (!AxObjectCacheOwner().GetLayoutView())
-    return nullptr;
+    return 0;
 
   return AxObjectCacheOwner().ax_object_cache_.Get();
 }
@@ -2849,7 +2833,7 @@ AXObjectCache* Document::ExistingAXObjectCache() const {
 AXObjectCache* Document::AxObjectCache() const {
   Settings* settings = GetSettings();
   if (!settings || !settings->GetAccessibilityEnabled())
-    return nullptr;
+    return 0;
 
   // Every document has its own AXObjectCache if accessibility is enabled,
   // except for page popups (such as select popups or context menus),
@@ -2860,7 +2844,7 @@ AXObjectCache* Document::AxObjectCache() const {
 
   // If the document has already been detached, do not make a new axObjectCache.
   if (!cache_owner.GetLayoutView())
-    return nullptr;
+    return 0;
 
   DCHECK(&cache_owner == this || !ax_object_cache_);
   if (!cache_owner.ax_object_cache_)
@@ -3031,7 +3015,7 @@ DocumentParser* Document::ImplicitOpen(
 
 HTMLElement* Document::body() const {
   if (!documentElement() || !IsHTMLHtmlElement(documentElement()))
-    return nullptr;
+    return 0;
 
   for (HTMLElement* child =
            Traversal<HTMLElement>::FirstChild(*documentElement());
@@ -3040,12 +3024,12 @@ HTMLElement* Document::body() const {
       return child;
   }
 
-  return nullptr;
+  return 0;
 }
 
 HTMLBodyElement* Document::FirstBodyElement() const {
   if (!documentElement() || !IsHTMLHtmlElement(documentElement()))
-    return nullptr;
+    return 0;
 
   for (HTMLElement* child =
            Traversal<HTMLElement>::FirstChild(*documentElement());
@@ -3054,7 +3038,7 @@ HTMLBodyElement* Document::FirstBodyElement() const {
       return body;
   }
 
-  return nullptr;
+  return 0;
 }
 
 void Document::setBody(HTMLElement* prp_new_body,
@@ -3105,7 +3089,7 @@ void Document::WillInsertBody() {
 HTMLHeadElement* Document::head() const {
   Node* de = documentElement();
   if (!de)
-    return nullptr;
+    return 0;
 
   return Traversal<HTMLHeadElement>::FirstChild(*de);
 }
@@ -3528,11 +3512,6 @@ int Document::ElapsedTime() const {
 }
 
 bool Document::CanCreateHistoryEntry() const {
-  if (!frame_ || frame_->HasReceivedUserGesture())
-    return true;
-  if (ElapsedTime() >= kElapsedTimeForHistoryEntryWithoutUserGestureMS)
-    return true;
-  UseCounter::Count(*this, WebFeature::kSuppressHistoryEntryWithoutUserGesture);
   // TODO(japhet): This flag controls an intervention to require a user gesture
   // or a long time on page in order for a content-initiated navigation to add
   // an entry to the back/forward list. Removing the flag and making this the
@@ -3542,6 +3521,11 @@ bool Document::CanCreateHistoryEntry() const {
   // https://bugs.chromium.org/p/chromium/issues/detail?id=638198
   if (!GetSettings() || !GetSettings()->GetHistoryEntryRequiresUserGesture())
     return true;
+  if (frame_->HasReceivedUserGesture())
+    return true;
+  if (ElapsedTime() >= kElapsedTimeForHistoryEntryWithoutUserGestureMS)
+    return true;
+  UseCounter::Count(*this, WebFeature::kSuppressHistoryEntryWithoutUserGesture);
   return false;
 }
 
@@ -3677,6 +3661,14 @@ void Document::writeln(LocalDOMWindow* calling_window,
   writeln(text->toString(), calling_window->document(), exception_state);
 }
 
+const KURL& Document::VirtualURL() const {
+  return url_;
+}
+
+KURL Document::VirtualCompleteURL(const String& url) const {
+  return CompleteURL(url);
+}
+
 DOMTimerCoordinator* Document::Timers() {
   return &timers_;
 }
@@ -3705,18 +3697,6 @@ void Document::SetURL(const KURL& url) {
   access_entry_from_url_ = nullptr;
   UpdateBaseURL();
   GetContextFeatures().UrlDidChange(this);
-
-  if (!ukm_recorder_ && IsInMainFrame()) {
-    ukm::mojom::UkmRecorderInterfacePtr interface;
-    frame_->GetInterfaceProvider().GetInterface(mojo::MakeRequest(&interface));
-    ukm_source_id_ = ukm::UkmRecorder::GetNewSourceID();
-    ukm_recorder_.reset(new ukm::MojoUkmRecorder(std::move(interface)));
-  }
-
-  if (ukm_recorder_) {
-    DCHECK(IsInMainFrame());
-    ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
-  }
 }
 
 KURL Document::ValidBaseElementURL() const {
@@ -3794,8 +3774,8 @@ void Document::ProcessBaseElement() {
 
   // Find the first href attribute in a base element and the first target
   // attribute in a base element.
-  const AtomicString* href = nullptr;
-  const AtomicString* target = nullptr;
+  const AtomicString* href = 0;
+  const AtomicString* target = 0;
   for (HTMLBaseElement* base = Traversal<HTMLBaseElement>::FirstWithin(*this);
        base && (!href || !target);
        base = Traversal<HTMLBaseElement>::Next(*base)) {
@@ -4830,13 +4810,13 @@ EventListener* Document::GetWindowAttributeEventListener(
     const AtomicString& event_type) {
   LocalDOMWindow* dom_window = domWindow();
   if (!dom_window)
-    return nullptr;
+    return 0;
   return dom_window->GetAttributeEventListener(event_type);
 }
 
 EventQueue* Document::GetEventQueue() const {
   if (!dom_window_)
-    return nullptr;
+    return 0;
   return dom_window_->GetEventQueue();
 }
 
@@ -5029,7 +5009,7 @@ void Document::AddListenerTypeIfNeeded(const AtomicString& event_type,
 
 HTMLFrameOwnerElement* Document::LocalOwner() const {
   if (!GetFrame())
-    return nullptr;
+    return 0;
   // FIXME: This probably breaks the attempts to layout after a load is finished
   // in implicitClose(), and probably tons of other things...
   return GetFrame()->DeprecatedLocalOwner();
@@ -5647,10 +5627,10 @@ void Document::setDesignMode(const String& value) {
 
 Document* Document::ParentDocument() const {
   if (!frame_)
-    return nullptr;
+    return 0;
   Frame* parent = frame_->Tree().Parent();
   if (!parent || !parent->IsLocalFrame())
-    return nullptr;
+    return 0;
   return ToLocalFrame(parent)->GetDocument();
 }
 
@@ -5929,7 +5909,7 @@ Color Document::ThemeColor() const {
 HTMLLinkElement* Document::LinkManifest() const {
   HTMLHeadElement* head = this->head();
   if (!head)
-    return nullptr;
+    return 0;
 
   // The first link element with a manifest rel must be used. Others are
   // ignored.
@@ -5942,7 +5922,7 @@ HTMLLinkElement* Document::LinkManifest() const {
     return link_element;
   }
 
-  return nullptr;
+  return 0;
 }
 
 void Document::SetFeaturePolicy(const String& feature_policy_header) {
@@ -5981,31 +5961,13 @@ void Document::SetFeaturePolicy(const String& feature_policy_header) {
     frame_->Client()->DidSetFeaturePolicyHeader(parsed_header);
 }
 
-ukm::UkmRecorder* Document::UkmRecorder() {
-  if (ukm_recorder_)
-    return ukm_recorder_.get();
-
-  ukm::mojom::UkmRecorderInterfacePtr interface;
-  Platform::Current()->GetInterfaceProvider()->GetInterface(
-      mojo::MakeRequest(&interface));
-  ukm_recorder_.reset(new ukm::MojoUkmRecorder(std::move(interface)));
-  ukm_source_id_ = ukm_recorder_->GetNewSourceID();
-  ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
-  return ukm_recorder_.get();
-}
-
-int64_t Document::UkmSourceID() const {
-  DCHECK(ukm_recorder_);
-  return ukm_source_id_;
-}
-
 void Document::InitSecurityContext(const DocumentInit& initializer) {
   DCHECK(!GetSecurityOrigin());
 
   if (!initializer.HasSecurityContext()) {
     // No source for a security context.
     // This can occur via document.implementation.createDocument().
-    cookie_url_ = KURL(g_empty_string);
+    cookie_url_ = KURL(kParsedURLString, g_empty_string);
     SetSecurityOrigin(SecurityOrigin::CreateUnique());
     InitContentSecurityPolicy();
     SetFeaturePolicy(g_empty_string);
@@ -6463,12 +6425,12 @@ void Document::exitPointerLock() {
 
 Element* Document::PointerLockElement() const {
   if (!GetPage() || GetPage()->GetPointerLockController().LockPending())
-    return nullptr;
+    return 0;
   if (Element* element = GetPage()->GetPointerLockController().GetElement()) {
     if (element->GetDocument() == this)
       return element;
   }
-  return nullptr;
+  return 0;
 }
 
 void Document::SuppressLoadEvent() {
@@ -6640,7 +6602,7 @@ DocumentLoader* Document::Loader() const {
 
 Node* EventTargetNodeForDocument(Document* doc) {
   if (!doc)
-    return nullptr;
+    return 0;
   Node* node = doc->FocusedElement();
   if (!node && doc->IsPluginDocument()) {
     PluginDocument* plugin_document = ToPluginDocument(doc);
@@ -6936,65 +6898,6 @@ bool Document::hasFocus() const {
   return GetPage() && GetPage()->GetFocusController().IsDocumentFocused(*this);
 }
 
-const AtomicString& Document::BodyAttributeValue(
-    const QualifiedName& name) const {
-  if (auto* bodyElement = body())
-    return bodyElement->FastGetAttribute(name);
-  return g_null_atom;
-}
-
-void Document::SetBodyAttribute(const QualifiedName& name,
-                                const AtomicString& value) {
-  if (auto* bodyElement = body()) {
-    // FIXME: This check is apparently for benchmarks that set the same value
-    // repeatedly.  It's not clear what benchmarks though, it's also not clear
-    // why we don't avoid causing a style recalc when setting the same value to
-    // a presentational attribute in the common case.
-    if (bodyElement->FastGetAttribute(name) != value)
-      bodyElement->setAttribute(name, value);
-  }
-}
-
-const AtomicString& Document::bgColor() const {
-  return BodyAttributeValue(bgcolorAttr);
-}
-
-void Document::setBgColor(const AtomicString& value) {
-  SetBodyAttribute(bgcolorAttr, value);
-}
-
-const AtomicString& Document::fgColor() const {
-  return BodyAttributeValue(textAttr);
-}
-
-void Document::setFgColor(const AtomicString& value) {
-  SetBodyAttribute(textAttr, value);
-}
-
-const AtomicString& Document::alinkColor() const {
-  return BodyAttributeValue(alinkAttr);
-}
-
-void Document::setAlinkColor(const AtomicString& value) {
-  SetBodyAttribute(alinkAttr, value);
-}
-
-const AtomicString& Document::linkColor() const {
-  return BodyAttributeValue(linkAttr);
-}
-
-void Document::setLinkColor(const AtomicString& value) {
-  SetBodyAttribute(linkAttr, value);
-}
-
-const AtomicString& Document::vlinkColor() const {
-  return BodyAttributeValue(vlinkAttr);
-}
-
-void Document::setVlinkColor(const AtomicString& value) {
-  SetBodyAttribute(vlinkAttr, value);
-}
-
 template <unsigned type>
 bool ShouldInvalidateNodeListCachesForAttr(
     const LiveNodeListRegistry& node_lists,
@@ -7170,7 +7073,7 @@ service_manager::InterfaceProvider* Document::GetInterfaceProvider() {
   return &GetFrame()->GetInterfaceProvider();
 }
 
-void Document::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Document) {
   visitor->Trace(imports_controller_);
   visitor->Trace(doc_type_);
   visitor->Trace(implementation_);
@@ -7248,15 +7151,6 @@ void Document::RecordDeferredLoadReason(WouldLoadReason reason) {
        i <= static_cast<int>(reason); ++i)
     RecordLoadReasonToHistogram(static_cast<WouldLoadReason>(i));
   would_load_reason_ = reason;
-}
-
-void Document::RecordUkmOutliveTimeAfterShutdown(int outlive_time_count) {
-  if (!ukm_recorder_)
-    return;
-
-  ukm::builders::Document_OutliveTimeAfterShutdown(ukm_source_id_)
-      .SetGCCount(outlive_time_count)
-      .Record(ukm_recorder_.get());
 }
 
 DEFINE_TRACE_WRAPPERS(Document) {

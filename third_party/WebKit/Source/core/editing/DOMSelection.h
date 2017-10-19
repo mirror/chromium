@@ -102,7 +102,7 @@ class CORE_EXPORT DOMSelection final : public GarbageCollected<DOMSelection>,
   // Microsoft Selection Object API
   void empty();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit DOMSelection(const TreeScope*);

@@ -15,7 +15,7 @@
 namespace blink {
 
 CompositorMutatorClient::CompositorMutatorClient(CompositorMutator* mutator)
-    : mutator_(mutator) {
+    : client_(nullptr), mutator_(mutator) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc"),
                "CompositorMutatorClient::CompositorMutatorClient");
 }
@@ -33,19 +33,24 @@ void CompositorMutatorClient::Mutate(
   mutator_->Mutate(monotonic_time_now, std::move(state));
 }
 
+void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
+  TRACE_EVENT0("cc", "CompositorMutatorClient::SetClient");
+  client_ = client;
+  // TODO(majidvp): For AnimationWorklet we don't need to schedule a mutate
+  // call immediately. Perhaps wait until at least one worklet animation is
+  // started.
+  SetNeedsMutate();
+}
+
 void CompositorMutatorClient::SetMutationUpdate(
     std::unique_ptr<cc::MutatorOutputState> output_state) {
   TRACE_EVENT0("cc", "CompositorMutatorClient::SetMutationUpdate");
   client_->SetMutationUpdate(std::move(output_state));
 }
 
-void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
-  TRACE_EVENT0("cc", "CompositorMutatorClient::SetClient");
-  client_ = client;
-}
-
-bool CompositorMutatorClient::HasAnimators() {
-  return mutator_->HasAnimators();
+void CompositorMutatorClient::SetNeedsMutate() {
+  TRACE_EVENT0("cc", "CompositorMutatorClient::setNeedsMutate");
+  client_->SetNeedsMutate();
 }
 
 }  // namespace blink

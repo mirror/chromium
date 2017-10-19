@@ -5,7 +5,6 @@
 #ifndef CHROME_BROWSER_BANNERS_APP_BANNER_MANAGER_H_
 #define CHROME_BROWSER_BANNERS_APP_BANNER_MANAGER_H_
 
-#include <memory>
 #include <vector>
 
 #include "base/macros.h"
@@ -53,9 +52,6 @@ class AppBannerManager : public content::WebContentsObserver,
                          public blink::mojom::AppBannerService,
                          public SiteEngagementObserver {
  public:
-  // A StatusReporter handles the reporting of |InstallableStatusCode|s.
-  class StatusReporter;
-
   enum class State {
     // The pipeline has not yet been triggered for this page load.
     INACTIVE,
@@ -153,6 +149,10 @@ class AppBannerManager : public content::WebContentsObserver,
   // alerting websites that a banner is about to be created.
   virtual std::string GetBannerType();
 
+  // Returns a string parameter for a devtools console message corresponding to
+  // |code|. Returns the empty string if |code| requires no parameter.
+  std::string GetStatusParam(InstallableStatusCode code);
+
   // Returns true if |has_sufficient_engagement_| is true or IsDebugMode()
   // returns true.
   bool HasSufficientEngagement() const;
@@ -189,7 +189,8 @@ class AppBannerManager : public content::WebContentsObserver,
   // metric being recorded.
   void RecordDidShowBanner(const std::string& event_name);
 
-  // Reports |code| via a UMA histogram or logs it to the console.
+  // Logs an error message corresponding to |code| to the devtools console
+  // attached to |web_contents|. Does nothing if IsDebugMode() returns false.
   void ReportStatus(content::WebContents* web_contents,
                     InstallableStatusCode code);
 
@@ -202,7 +203,7 @@ class AppBannerManager : public content::WebContentsObserver,
   // Stops the banner pipeline, preventing any outstanding callbacks from
   // running and resetting the manager state. This method is virtual to allow
   // tests to intercept it and verify correct behaviour.
-  virtual void Stop(InstallableStatusCode code);
+  virtual void StopWithCode(InstallableStatusCode code);
 
   // Sends a message to the renderer that the page has met the requirements to
   // show a banner. The page can respond to cancel the banner (and possibly
@@ -233,6 +234,7 @@ class AppBannerManager : public content::WebContentsObserver,
   InstallableManager* manager() const { return manager_; }
   State state() const { return state_; }
   bool IsRunning() const;
+  bool IsWaitingForData() const;
 
   // The URL for which the banner check is being conducted.
   GURL validated_url_;
@@ -262,7 +264,7 @@ class AppBannerManager : public content::WebContentsObserver,
   // Returns whether the new experimental flow and UI is enabled.
   static bool IsExperimentalAppBannersEnabled();
 
-  // Voids all outstanding service pointers.
+  // Voids all outstanding weak pointers and service pointers.
   void ResetBindings();
 
   // Record that the banner could be shown at this point, if the triggering
@@ -276,8 +278,8 @@ class AppBannerManager : public content::WebContentsObserver,
   // Called after the manager sends a message to the renderer regarding its
   // intention to show a prompt. The renderer will send a message back with the
   // opportunity to cancel.
-  virtual void OnBannerPromptReply(blink::mojom::AppBannerPromptReply reply,
-                                   const std::string& referrer);
+  void OnBannerPromptReply(blink::mojom::AppBannerPromptReply reply,
+                           const std::string& referrer);
 
   // Does the non-platform specific parts of showing the app banner.
   void ShowBanner();
@@ -311,8 +313,8 @@ class AppBannerManager : public content::WebContentsObserver,
   // Whether the current flow was begun via devtools.
   bool triggered_by_devtools_;
 
- private:
-  std::unique_ptr<StatusReporter> status_reporter_;
+  // Whether the installable status has been logged for this run.
+  bool need_to_log_status_;
 
   // The concrete subclasses of this class are expected to have their lifetimes
   // scoped to the WebContents which they are observing. This allows us to use

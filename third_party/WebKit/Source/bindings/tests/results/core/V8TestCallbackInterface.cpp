@@ -29,7 +29,7 @@ V8TestCallbackInterface::V8TestCallbackInterface(v8::Local<v8::Function> callbac
 
 V8TestCallbackInterface::~V8TestCallbackInterface() {}
 
-void V8TestCallbackInterface::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V8TestCallbackInterface) {
   TestCallbackInterface::Trace(visitor);
 }
 

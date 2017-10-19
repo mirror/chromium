@@ -67,14 +67,14 @@ static void SampleGamepads(ListType* into) {
       SampleGamepad(i, *gamepad, web_gamepad);
       into->Set(i, gamepad);
     } else {
-      into->Set(i, nullptr);
+      into->Set(i, 0);
     }
   }
 }
 
 NavigatorGamepad* NavigatorGamepad::From(Document& document) {
   if (!document.GetFrame() || !document.GetFrame()->DomWindow())
-    return nullptr;
+    return 0;
   Navigator& navigator = *document.GetFrame()->DomWindow()->navigator();
   return &From(navigator);
 }
@@ -98,7 +98,7 @@ GamepadList* NavigatorGamepad::Gamepads() {
   return gamepads_.Get();
 }
 
-void NavigatorGamepad::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorGamepad) {
   visitor->Trace(gamepads_);
   visitor->Trace(gamepads_back_);
   visitor->Trace(pending_events_);
@@ -247,7 +247,7 @@ bool NavigatorGamepad::CheckConnectedGamepads(GamepadList* old_gamepads,
                                               GamepadList* new_gamepads) {
   int disconnection_count = 0;
   for (unsigned i = 0; i < device::Gamepads::kItemsLengthCap; ++i) {
-    Gamepad* old_gamepad = old_gamepads ? old_gamepads->item(i) : nullptr;
+    Gamepad* old_gamepad = old_gamepads ? old_gamepads->item(i) : 0;
     Gamepad* new_gamepad = new_gamepads->item(i);
     bool old_was_connected = old_gamepad && old_gamepad->connected();
     bool new_is_connected = new_gamepad && new_gamepad->connected();

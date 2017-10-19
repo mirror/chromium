@@ -19,7 +19,6 @@
 #include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "base/unguessable_token.h"
 #include "base/values.h"
 
 namespace base {
@@ -69,9 +68,21 @@ class BASE_EXPORT MemoryAllocatorDump {
     DISALLOW_COPY_AND_ASSIGN(Entry);
   };
 
+  // Returns the Guid of the dump for the given |absolute_name| for the
+  // current process.
+  static MemoryAllocatorDumpGuid GetDumpIdFromName(
+      const std::string& absolute_name);
+
+  // MemoryAllocatorDump is owned by ProcessMemoryDump.
+  // TODO(primiano): remove this constructor, ProcessMemoryDump* is not used
+  // for anything other than extracting the MemoryDumpLevelOfDetail these days.
+  MemoryAllocatorDump(const std::string& absolute_name,
+                      ProcessMemoryDump*,
+                      const MemoryAllocatorDumpGuid&);
   MemoryAllocatorDump(const std::string& absolute_name,
                       MemoryDumpLevelOfDetail,
                       const MemoryAllocatorDumpGuid&);
+  MemoryAllocatorDump(const std::string& absolute_name, ProcessMemoryDump*);
   ~MemoryAllocatorDump();
 
   // Standard attribute |name|s for the AddScalar and AddString() methods.

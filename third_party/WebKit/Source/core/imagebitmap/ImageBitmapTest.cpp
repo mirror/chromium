@@ -37,8 +37,8 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "platform/graphics/ColorCorrectionTestUtils.h"
 #include "platform/graphics/StaticBitmapImage.h"
@@ -47,7 +47,6 @@
 #include "platform/image-decoders/ImageDecoder.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceRequest.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColorSpaceXform.h"
@@ -72,6 +71,13 @@ class ImageBitmapTest : public ::testing::Test {
 
     // Save the global memory cache to restore it upon teardown.
     global_memory_cache_ = ReplaceMemoryCacheForTesting(MemoryCache::Create());
+
+    // Save the state of experimental canvas features and color correct
+    // rendering flags to restore them on teardown.
+    experimental_canvas_features =
+        RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
+    color_canvas_extensions =
+        RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
   }
   virtual void TearDown() {
     // Garbage collection is required prior to switching out the
@@ -82,14 +88,20 @@ class ImageBitmapTest : public ::testing::Test {
                                            BlinkGC::kForcedGC);
 
     ReplaceMemoryCacheForTesting(global_memory_cache_.Release());
+    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+        experimental_canvas_features);
+    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
+        color_canvas_extensions);
   }
 
   sk_sp<SkImage> image_, image2_;
   Persistent<MemoryCache> global_memory_cache_;
+  bool experimental_canvas_features;
+  bool color_canvas_extensions;
 };
 
 TEST_F(ImageBitmapTest, ImageResourceConsistency) {
-  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   const ImageBitmapOptions default_options;
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::CreateForTest());
@@ -158,7 +170,7 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
 // Verifies that ImageBitmaps constructed from HTMLImageElements hold a
 // reference to the original Image if the HTMLImageElement src is changed.
 TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
-  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   HTMLImageElement* image =
       HTMLImageElement::Create(*Document::CreateForTest());
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
@@ -688,5 +700,4 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
   }
 }
 
-#undef MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement
 }  // namespace blink

@@ -8,6 +8,7 @@
 
 #include "ash/highlighter/highlighter_gesture_util.h"
 #include "ash/highlighter/highlighter_result_view.h"
+#include "ash/highlighter/highlighter_selection_observer.h"
 #include "ash/highlighter/highlighter_view.h"
 #include "ash/public/cpp/scale_utility.h"
 #include "base/metrics/histogram_macros.h"
@@ -51,10 +52,14 @@ float GetScreenshotScale(aura::Window* window) {
 
 }  // namespace
 
-HighlighterController::HighlighterController()
-    : binding_(this), weak_factory_(this) {}
+HighlighterController::HighlighterController() {}
 
 HighlighterController::~HighlighterController() {}
+
+void HighlighterController::SetObserver(
+    HighlighterSelectionObserver* observer) {
+  observer_ = observer;
+}
 
 void HighlighterController::SetExitCallback(base::OnceClosure exit_callback,
                                             bool require_success) {
@@ -81,21 +86,8 @@ void HighlighterController::SetEnabled(bool enabled) {
     if (highlighter_view_ && !highlighter_view_->animating())
       DestroyPointerView();
   }
-  if (client_)
-    client_->HandleEnabledStateChange(enabled);
-}
-
-void HighlighterController::BindRequest(
-    mojom::HighlighterControllerRequest request) {
-  binding_.Bind(std::move(request));
-}
-
-void HighlighterController::SetClient(
-    mojom::HighlighterControllerClientPtr client) {
-  client_ = std::move(client);
-  client_.set_connection_error_handler(
-      base::Bind(&HighlighterController::OnClientConnectionLost,
-                 weak_factory_.GetWeakPtr()));
+  if (observer_)
+    observer_->HandleEnabledStateChange(enabled);
 }
 
 views::View* HighlighterController::GetPointerView() const {
@@ -182,8 +174,8 @@ void HighlighterController::RecognizeGesture() {
 
   if (!box.IsEmpty() &&
       gesture_type != HighlighterGestureType::kNotRecognized) {
-    if (client_) {
-      client_->HandleSelection(gfx::ToEnclosingRect(
+    if (observer_) {
+      observer_->HandleSelection(gfx::ToEnclosingRect(
           gfx::ScaleRect(box, GetScreenshotScale(current_window))));
     }
 
@@ -195,6 +187,8 @@ void HighlighterController::RecognizeGesture() {
     recognized_gesture_counter_++;
     CallExitCallback();
   } else {
+    if (observer_)
+      observer_->HandleFailedSelection();
     if (!require_success_)
       CallExitCallback();
   }
@@ -239,21 +233,9 @@ void HighlighterController::DestroyResultView() {
   result_view_.reset();
 }
 
-void HighlighterController::OnClientConnectionLost() {
-  client_.reset();
-  binding_.Close();
-  // The client has detached, force-exit the highlighter mode.
-  CallExitCallback();
-}
-
 void HighlighterController::CallExitCallback() {
   if (!exit_callback_.is_null())
     std::move(exit_callback_).Run();
-}
-
-void HighlighterController::FlushMojoForTesting() {
-  if (client_)
-    client_.FlushForTesting();
 }
 
 }  // namespace ash

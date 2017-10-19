@@ -48,7 +48,7 @@ class SVGComponentTransferFunctionElement : public SVGElement {
   SVGAnimatedNumber* offset() { return offset_.Get(); }
   SVGAnimatedEnumeration<ComponentTransferType>* type() { return type_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   SVGComponentTransferFunctionElement(const QualifiedName&, Document&);

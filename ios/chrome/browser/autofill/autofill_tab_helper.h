@@ -37,7 +37,7 @@ class AutofillTabHelper : public web::WebStateObserver,
       password_manager::PasswordGenerationManager* password_generation_manager);
 
   // web::WebStateObserver implementation.
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   // The Objective-C autofill controller instance.
   __strong AutofillController* controller_;

@@ -42,7 +42,7 @@ class TestModuleScriptLoaderClient final
   TestModuleScriptLoaderClient() = default;
   ~TestModuleScriptLoaderClient() override {}
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(module_script_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(module_script_); }
 
   void NotifyNewSingleModuleFinished(ModuleScript* module_script) override {
     was_notify_finished_ = true;
@@ -70,7 +70,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
 
   ~ModuleScriptLoaderTestModulator() override {}
 
-  SecurityOrigin* GetSecurityOriginForFetch() override {
+  SecurityOrigin* GetSecurityOrigin() override {
     return security_origin_.get();
   }
 
@@ -115,7 +115,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
 
   ResourceFetcher* Fetcher() const { return fetcher_.Get(); }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   RefPtr<ScriptState> script_state_;
@@ -124,7 +124,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
   Vector<ModuleRequest> requests_;
 };
 
-void ModuleScriptLoaderTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleScriptLoaderTestModulator) {
   visitor->Trace(fetcher_);
   DummyModulator::Trace(visitor);
 }
@@ -161,7 +161,7 @@ class ModuleScriptLoaderTest : public ::testing::Test {
 void ModuleScriptLoaderTest::SetUp() {
   platform_->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(500, 500));
-  GetDocument().SetURL(KURL("https://example.test"));
+  GetDocument().SetURL(KURL(kParsedURLString, "https://example.test"));
   GetDocument().SetSecurityOrigin(SecurityOrigin::Create(GetDocument().Url()));
 }
 
@@ -175,7 +175,8 @@ void ModuleScriptLoaderTest::InitializeForWorklet() {
   reporting_proxy_ =
       WTF::MakeUnique<MainThreadWorkletReportingProxy>(&GetDocument());
   global_scope_ = new MainThreadWorkletGlobalScope(
-      &GetFrame(), KURL("https://example.test/worklet.js"), "fake user agent",
+      &GetFrame(), KURL(kParsedURLString, "https://example.test/worklet.js"),
+      "fake user agent", GetDocument().GetSecurityOrigin(),
       ToIsolate(&GetDocument()), *reporting_proxy_);
   global_scope_->ScriptController()->InitializeContextIfNeeded("Dummy Context");
   modulator_ = new ModuleScriptLoaderTestModulator(
@@ -191,8 +192,9 @@ void ModuleScriptLoaderTest::InitializeForWorklet() {
 void ModuleScriptLoaderTest::TestFetchDataURL(
     TestModuleScriptLoaderClient* client) {
   ModuleScriptLoaderRegistry* registry = ModuleScriptLoaderRegistry::Create();
-  KURL url("data:text/javascript,export default 'grapes';");
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  KURL url(kParsedURLString, "data:text/javascript,export default 'grapes';");
+  ModuleScriptFetchRequest module_request(
+      url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
                   GetModulator(), client);
 }
@@ -238,8 +240,10 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
 void ModuleScriptLoaderTest::TestInvalidSpecifier(
     TestModuleScriptLoaderClient* client) {
   ModuleScriptLoaderRegistry* registry = ModuleScriptLoaderRegistry::Create();
-  KURL url("data:text/javascript,import 'invalid';export default 'grapes';");
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  KURL url(kParsedURLString,
+           "data:text/javascript,import 'invalid';export default 'grapes';");
+  ModuleScriptFetchRequest module_request(
+      url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   GetModulator()->SetModuleRequests({"invalid"});
   registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
                   GetModulator(), client);
@@ -275,7 +279,8 @@ void ModuleScriptLoaderTest::TestFetchInvalidURL(
   ModuleScriptLoaderRegistry* registry = ModuleScriptLoaderRegistry::Create();
   KURL url;
   EXPECT_FALSE(url.IsValid());
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  ModuleScriptFetchRequest module_request(
+      url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
                   GetModulator(), client);
 }
@@ -305,12 +310,13 @@ TEST_F(ModuleScriptLoaderTest, FetchInvalidURL_OnWorklet) {
 
 void ModuleScriptLoaderTest::TestFetchURL(
     TestModuleScriptLoaderClient* client) {
-  KURL url("https://example.test/module.js");
+  KURL url(kParsedURLString, "https://example.test/module.js");
   URLTestHelpers::RegisterMockedURLLoad(
       url, testing::CoreTestDataPath("module.js"), "text/javascript");
 
   ModuleScriptLoaderRegistry* registry = ModuleScriptLoaderRegistry::Create();
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  ModuleScriptFetchRequest module_request(
+      url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
                   GetModulator(), client);
 }

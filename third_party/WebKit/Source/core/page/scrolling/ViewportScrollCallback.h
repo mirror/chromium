@@ -46,7 +46,7 @@ class ViewportScrollCallback : public ScrollStateCallback {
   void handleEvent(ScrollState*) override;
   void SetScroller(ScrollableArea*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   // ViewportScrollCallback does not assume ownership of BrowserControls or of

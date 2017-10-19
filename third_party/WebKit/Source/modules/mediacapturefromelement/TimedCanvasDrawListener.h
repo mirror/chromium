@@ -28,7 +28,7 @@ class TimedCanvasDrawListener final
       ExecutionContext*);
   void SendNewFrame(sk_sp<SkImage>) override;
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   TimedCanvasDrawListener(std::unique_ptr<WebCanvasCaptureHandler>,

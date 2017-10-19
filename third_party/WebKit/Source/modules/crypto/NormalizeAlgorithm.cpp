@@ -358,15 +358,11 @@ bool GetOptionalInteger(const Dictionary& raw,
                         double max_value,
                         const ErrorContext& context,
                         AlgorithmError* error) {
-  v8::Local<v8::Value> v8_value;
-  if (!raw.Get(property_name, v8_value)) {
-    has_property = false;
-    return true;
-  }
-
-  has_property = true;
   double number;
-  bool ok = v8_value->NumberValue(raw.V8Context()).To(&number);
+  bool ok = DictionaryHelper::Get(raw, property_name, number, has_property);
+
+  if (!has_property)
+    return true;
 
   if (!ok || std::isnan(number)) {
     SetTypeError(context.ToString(property_name, "Is not a number"), error);
@@ -1016,7 +1012,7 @@ const char* OperationToString(WebCryptoOperation op) {
     case kWebCryptoOperationUnwrapKey:
       return "unwrapKey";
   }
-  return nullptr;
+  return 0;
 }
 
 bool ParseAlgorithmDictionary(const String& algorithm_name,

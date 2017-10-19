@@ -30,6 +30,9 @@ namespace chromeos {
 
 namespace {
 
+void DoNothingWithCallStatus(DBusMethodCallStatus call_status) {
+}
+
 void ErrorCallbackFunction(const std::string& error_name,
                            const std::string& error_message) {
   LOG(ERROR) << "Shill Error: " << error_name << " : " << error_message;
@@ -420,22 +423,26 @@ TEST_F(ShillPropertyHandlerTest, ShillPropertyHandlerIPConfigPropertyChanged) {
 
   base::Value ip_address("192.168.1.1");
   DBusThreadManager::Get()->GetShillIPConfigClient()->SetProperty(
-      dbus::ObjectPath(kTestIPConfigPath), shill::kAddressProperty, ip_address,
-      EmptyVoidDBusMethodCallback());
+      dbus::ObjectPath(kTestIPConfigPath),
+      shill::kAddressProperty, ip_address,
+      base::Bind(&DoNothingWithCallStatus));
   base::ListValue dns_servers;
   dns_servers.AppendString("192.168.1.100");
   dns_servers.AppendString("192.168.1.101");
   DBusThreadManager::Get()->GetShillIPConfigClient()->SetProperty(
-      dbus::ObjectPath(kTestIPConfigPath), shill::kNameServersProperty,
-      dns_servers, EmptyVoidDBusMethodCallback());
+      dbus::ObjectPath(kTestIPConfigPath),
+      shill::kNameServersProperty, dns_servers,
+      base::Bind(&DoNothingWithCallStatus));
   base::Value prefixlen(8);
   DBusThreadManager::Get()->GetShillIPConfigClient()->SetProperty(
-      dbus::ObjectPath(kTestIPConfigPath), shill::kPrefixlenProperty, prefixlen,
-      EmptyVoidDBusMethodCallback());
+      dbus::ObjectPath(kTestIPConfigPath),
+      shill::kPrefixlenProperty, prefixlen,
+      base::Bind(&DoNothingWithCallStatus));
   base::Value gateway("192.0.0.1");
   DBusThreadManager::Get()->GetShillIPConfigClient()->SetProperty(
-      dbus::ObjectPath(kTestIPConfigPath), shill::kGatewayProperty, gateway,
-      EmptyVoidDBusMethodCallback());
+      dbus::ObjectPath(kTestIPConfigPath),
+      shill::kGatewayProperty, gateway,
+      base::Bind(&DoNothingWithCallStatus));
   base::RunLoop().RunUntilIdle();
 
   // Add a service with an empty ipconfig and then update

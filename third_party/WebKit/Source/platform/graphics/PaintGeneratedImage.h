@@ -26,8 +26,7 @@ class PLATFORM_EXPORT PaintGeneratedImage : public GeneratedImage {
             const FloatRect&,
             const FloatRect&,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            ImageDecodingMode) override;
+            ImageClampingMode) override;
   void DrawTile(GraphicsContext&, const FloatRect&) final;
 
   PaintGeneratedImage(sk_sp<PaintRecord> record, const IntSize& size)

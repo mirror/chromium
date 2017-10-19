@@ -24,6 +24,7 @@
 #include "chrome/browser/chromeos/policy/device_local_account_policy_provider.h"
 #include "chrome/browser/chromeos/policy/device_local_account_policy_service.h"
 #include "chrome/browser/chromeos/policy/fake_affiliated_invalidation_service_provider.h"
+#include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
@@ -43,12 +44,10 @@
 #include "components/policy/core/common/policy_service_impl.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/policy_constants.h"
-#include "components/policy/proto/chrome_device_policy.pb.h"
 #include "components/policy/proto/cloud_policy.pb.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
-#include "content/public/test/test_utils.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -186,8 +185,8 @@ void CloudExternalDataPolicyObserverTest::SetUp() {
 
   device_local_account_policy_service_.reset(
       new DeviceLocalAccountPolicyService(
-          &session_manager_client_, &device_settings_service_, &cros_settings_,
-          &affiliated_invalidation_service_provider_,
+          &device_settings_test_helper_, &device_settings_service_,
+          &cros_settings_, &affiliated_invalidation_service_provider_,
           base::ThreadTaskRunnerHandle::Get(),
           base::ThreadTaskRunnerHandle::Get(),
           base::ThreadTaskRunnerHandle::Get(),
@@ -271,8 +270,9 @@ void CloudExternalDataPolicyObserverTest::SetDeviceLocalAccountAvatarPolicy(
   if (!value.empty())
     builder.payload().mutable_useravatarimage()->set_value(value);
   builder.Build();
-  session_manager_client_.set_device_local_account_policy(account_id,
-                                                          builder.GetBlob());
+  device_settings_test_helper_.set_device_local_account_policy_blob(
+      account_id,
+      builder.GetBlob());
 }
 
 void CloudExternalDataPolicyObserverTest::AddDeviceLocalAccount(
@@ -283,7 +283,7 @@ void CloudExternalDataPolicyObserverTest::AddDeviceLocalAccount(
   account->set_type(
       em::DeviceLocalAccountInfoProto::ACCOUNT_TYPE_PUBLIC_SESSION);
   device_policy_.Build();
-  session_manager_client_.set_device_policy(device_policy_.GetBlob());
+  device_settings_test_helper_.set_policy_blob(device_policy_.GetBlob());
   ReloadDeviceSettings();
 }
 
@@ -305,7 +305,7 @@ void CloudExternalDataPolicyObserverTest::RemoveDeviceLocalAccount(
         em::DeviceLocalAccountInfoProto::ACCOUNT_TYPE_PUBLIC_SESSION);
   }
   device_policy_.Build();
-  session_manager_client_.set_device_policy(device_policy_.GetBlob());
+  device_settings_test_helper_.set_policy_blob(device_policy_.GetBlob());
   ReloadDeviceSettings();
 }
 
@@ -318,7 +318,7 @@ DeviceLocalAccountPolicyBroker*
 void CloudExternalDataPolicyObserverTest::RefreshDeviceLocalAccountPolicy(
     DeviceLocalAccountPolicyBroker* broker) {
   broker->core()->store()->Load();
-  content::RunAllTasksUntilIdle();
+  device_settings_test_helper_.Flush();
 }
 
 void CloudExternalDataPolicyObserverTest::LogInAsDeviceLocalAccount(

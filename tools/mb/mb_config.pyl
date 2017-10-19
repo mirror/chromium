@@ -32,7 +32,6 @@
     },
 
     'chromium.android': {
-      'Android ASAN (dbg)': 'android_clang_asan_errorprone_findbugs_debug_bot_minimal_symbols',
       'Android Cronet ARM64 Builder': 'android_cronet_release_bot_minimal_symbols_arm64',
       'Android Cronet ARM64 Builder (dbg)': 'android_cronet_debug_static_bot_arm64',
       'Android Cronet ARMv6 Builder': 'android_cronet_release_bot_minimal_symbols_armv6',
@@ -53,9 +52,6 @@
       'Android arm64 Builder (dbg)': 'android_debug_static_bot_arm64',
       'Android x64 Builder (dbg)': 'android_debug_static_bot_x64',
       'Android x86 Builder (dbg)': 'android_debug_static_bot_x86',
-      'Cast Android (dbg)': 'android_cast_debug_static_bot',
-      'KitKat Phone Tester (rel)': 'android_release_bot_minimal_symbols',
-      'Marshmallow Phone Tester (rel)': 'android_release_bot_minimal_symbols_arm64',
     },
 
     'chromium.android.fyi': {
@@ -128,7 +124,6 @@
       'ToTAndroidASan': 'android_clang_tot_asan',
       'ToTAndroid (dbg)': 'android_clang_tot_dbg',
       'ToTAndroid': 'android_clang_tot_release',
-      'ToTAndroidCFI': 'android_clang_tot_cfi_full_thin_lto_release_static_dcheck_always_on',
       'ToTAndroid64': 'android_clang_tot_release_arm64',
       'ToTAndroid x64': 'android_clang_tot_x64',
       'ToTLinux': 'clang_tot_linux_full_symbols_shared_release',
@@ -203,7 +198,6 @@
       'EarlGreyiOS': 'ios',
       'Fuchsia': 'release_bot_fuchsia',
       'Fuchsia (dbg)': 'debug_bot_fuchsia',
-      'Fuchsia ARM64': 'release_bot_fuchsia_arm64',
       'GomaCanaryiOS': 'ios',
       'ios-simulator': 'ios',
       'Headless Linux (dbg)': 'headless_linux_debug_bot',
@@ -256,8 +250,8 @@
       'CrWinGomaStaging': 'release_bot_x86_minimal_symbols',
       'Chromium Linux Goma GCE Staging': 'release_bot',
       'Chromium Mac Goma GCE Staging': 'release_bot',
-      'CrWinGomaGCEStaging': 'release_bot_x86_minimal_symbols_disable_nacl',
-      'CrWinClangGomaGCEStaging': 'win_clang_release_bot_disable_nacl',
+      'CrWinGomaGCEStaging': 'release_bot_x86_minimal_symbols',
+      'CrWinClangGomaGCEStaging': 'win_clang_release_bot',
     },
 
     'chromium.gpu': {
@@ -324,8 +318,7 @@
       'Linux Builder (dbg)(32)': 'debug_bot_x86',
       'Linux Builder': 'release_bot',
       'Deterministic Linux': 'release_bot',
-      'Fuchsia x64': 'release_bot_fuchsia',
-      'Fuchsia ARM64': 'release_bot_fuchsia_arm64',
+      'Fuchsia Compile': 'release_bot_fuchsia',
     },
 
     'chromium.lkgr': {
@@ -397,7 +390,7 @@
     'chromium.sandbox': {
       'Linux Builder SANDBOX': 'release_bot',
       'Deterministic Linux SANDBOX': 'release_bot',
-      'Fuchsia x64 SANDBOX': 'release_bot_fuchsia',
+      'Fuchsia Compile SANDBOX': 'release_bot_fuchsia',
     },
 
     'chromium.swarm': {
@@ -454,6 +447,7 @@
       'WebKit Mac Builder': 'release_bot',
       'WebKit Mac10.11 (retina)': 'release_bot',
       'WebKit Mac10.12': 'release_bot',
+      'WebKit Mac10.9': 'release_bot',
       'WebKit Win Builder (dbg)': 'debug_bot_x86_minimal_symbols',
       'WebKit Win Builder': 'release_bot_x86_minimal_symbols',
       'WebKit Win x64 Builder (dbg)': 'debug_bot_minimal_symbols',
@@ -511,6 +505,10 @@
       'linux_trusty_blink_compile_rel': 'release_bot_minimal_symbols',
       'linux_trusty_blink_dbg': 'debug_trybot',
       'linux_trusty_blink_rel': 'release_bot_minimal_symbols',
+      'mac10.9_blink_compile_dbg': 'debug_trybot',
+      'mac10.9_blink_compile_rel': 'release_bot_minimal_symbols',
+      'mac10.9_blink_dbg': 'debug_trybot',
+      'mac10.9_blink_rel': 'release_bot_minimal_symbols',
       'mac10.10_blink_rel': 'release_bot_minimal_symbols',
       'mac10.11_blink_rel': 'release_bot_minimal_symbols',
       'mac10.11_retina_blink_rel': 'release_bot_minimal_symbols',
@@ -574,7 +572,6 @@
       'chromium_presubmit': 'presubmit',
       'closure_compilation': 'closure_compilation',
       'fuchsia': 'release_trybot_fuchsia',
-      'fuchsia_arm64': 'release_trybot_fuchsia_arm64',
       'fuchsia_compile': 'release_trybot_fuchsia',
       # TODO(kjellander): Remove linux_arm after tryserver restart.
       'linux_arm': 'release_trybot_arm',
@@ -613,7 +610,13 @@
       'linux_chromium_rel_ng': 'gpu_tests_release_trybot',
       'linux_chromium_tsan_rel_ng': 'tsan_disable_nacl_release_trybot',
       'linux_chromium_ubsan_rel_ng': 'ubsan_vptr_release_trybot',
-      'linux_layout_tests_layout_ng': 'release_trybot',
+
+      # These are 'release_bot' rather than 'release_trybot' because
+      # 'release_trybot' includes 'dcheck_always_on', which might cause
+      # some layout test results to be different than for normal release
+      # builds (and we only store baselines for release builds).
+      'linux_layout_tests_layout_ng': 'release_bot',
+
       'linux_mojo': 'release_trybot',
       'linux_mojo_chromeos': 'chromeos_with_codecs_release_trybot',
       'linux_nacl_sdk_build': 'release_bot',
@@ -694,7 +697,7 @@
       'win10_chromium_x64_rel_ng': 'release_trybot',
       'win10_chromium_x64_rel_ng_exp': 'release_trybot',
       'win10_gce_x64_rel': 'release_bot_minimal_symbols',
-      'win_chromium_gn_upload': 'release_bot_x86_minimal_symbols',
+      'win8_chromium_gn_upload': 'release_bot_x86_minimal_symbols',
       'win_x64_archive': 'release_trybot',
       'win_archive': 'release_trybot_x86',
       'win_chromium_compile_dbg_ng': 'debug_trybot_x86_minimal_symbols',
@@ -754,11 +757,6 @@
     'android_clang_tot_asan': [
       'android_without_codecs', 'clang_tot', 'asan', 'shared', 'debug', 'minimal_symbols',
       'strip_debug_info',
-    ],
-
-    'android_clang_tot_cfi_full_thin_lto_release_static_dcheck_always_on': [
-      'android_without_codecs', 'clang_tot', 'cfi_full', 'thin_lto', 'release',
-      'static', 'dcheck_always_on',
     ],
 
     'android_clang_tot_dbg': [
@@ -1513,10 +1511,6 @@
       'release_bot', 'fuchsia',
     ],
 
-    'release_bot_fuchsia_arm64': [
-      'release_bot', 'fuchsia', 'arm64',
-    ],
-
     'release_bot_mac_new_sdk': [
       'release_bot', 'mac_new_sdk',
     ],
@@ -1534,11 +1528,6 @@
     # both MSVC and clang.
     'release_bot_minimal_symbols': [ 'release_bot', 'minimal_symbols' ],
     'release_bot_x86_minimal_symbols': [ 'release_bot', 'x86', 'minimal_symbols' ],
-
-    # TODO(tikuta): Remove this once gcp goma backend supports all windows nacl compilers.
-    'release_bot_x86_minimal_symbols_disable_nacl': [
-      'release_bot', 'x86', 'minimal_symbols', 'disable_nacl'
-    ],
 
     'release_libfuzzer_asan': [
       'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
@@ -1578,10 +1567,6 @@
 
     'release_trybot_fuchsia': [
       'release_trybot', 'fuchsia',
-    ],
-
-    'release_trybot_fuchsia_arm64': [
-      'release_trybot', 'fuchsia', 'arm64',
     ],
 
     'release_trybot_x86': [
@@ -1642,11 +1627,6 @@
 
     'win_clang_release_bot': [
       'clang', 'release_bot', 'minimal_symbols',
-    ],
-
-    # TODO(tikuta): Remove this once gcp goma backend supports all windows nacl compilers.
-    'win_clang_release_bot_disable_nacl': [
-      'clang', 'release_bot', 'minimal_symbols', 'disable_nacl',
     ],
 
     'windows_analyze': [
@@ -1972,7 +1952,7 @@
       'gn_args': ('ozone_auto_platforms=false ozone_platform_wayland=true '
                   'ozone_platform="x11" '
                   'ozone_platform_x11=true ozone_platform_gbm=true '
-                  'enable_package_mash_services=true '
+                  'enable_package_mash_services=true use_ash=false '
                   'use_xkbcommon=true use_ozone=true'),
     },
 

@@ -38,7 +38,7 @@ class SVGImageTest : public ::testing::Test {
     FloatRect dummy_rect(0, 0, 100, 100);
     image->Draw(&canvas, flags, dummy_rect, dummy_rect,
                 kDoNotRespectImageOrientation,
-                Image::kDoNotClampImageToSourceRect, Image::kSyncDecode);
+                Image::kDoNotClampImageToSourceRect);
   }
 
  private:
@@ -60,9 +60,7 @@ class SVGImageTest : public ::testing::Test {
 
     void AsyncLoadCompleted(const blink::Image*) override {}
 
-    virtual void Trace(blink::Visitor* visitor) {
-      ImageObserver::Trace(visitor);
-    }
+    DEFINE_INLINE_VIRTUAL_TRACE() { ImageObserver::Trace(visitor); }
 
    private:
     bool should_pause_;

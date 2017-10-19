@@ -130,11 +130,11 @@ HTMLFrameOwnerElement::~HTMLFrameOwnerElement() {
 Document* HTMLFrameOwnerElement::contentDocument() const {
   return (content_frame_ && content_frame_->IsLocalFrame())
              ? ToLocalFrame(content_frame_)->GetDocument()
-             : nullptr;
+             : 0;
 }
 
 DOMWindow* HTMLFrameOwnerElement::contentWindow() const {
-  return content_frame_ ? content_frame_->DomWindow() : nullptr;
+  return content_frame_ ? content_frame_->DomWindow() : 0;
 }
 
 void HTMLFrameOwnerElement::SetSandboxFlags(SandboxFlags flags) {
@@ -310,7 +310,7 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
   return true;
 }
 
-void HTMLFrameOwnerElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLFrameOwnerElement) {
   visitor->Trace(content_frame_);
   visitor->Trace(embedded_content_view_);
   HTMLElement::Trace(visitor);

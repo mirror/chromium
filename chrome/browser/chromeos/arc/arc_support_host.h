@@ -27,6 +27,7 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
   enum class UIPage {
     NO_PAGE,                // Hide everything.
     TERMS,                  // Terms content page.
+    LSO,                    // LSO page to enter user's credentials.
     ARC_LOADING,            // ARC loading progress page.
     ACTIVE_DIRECTORY_AUTH,  // Active Directory user SAML authentication.
     ERROR,                  // ARC start error page.
@@ -46,11 +47,12 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
   };
 
   // Delegate to handle authentication related events. Currently used for Active
-  // Directory.
+  // Directory and LSO auth.
   class AuthDelegate {
    public:
-    // Called when authentication succeeded.
-    virtual void OnAuthSucceeded() = 0;
+    // Called when authentication succeeded. LSO auth returns the auth token
+    // |auth_code|, Active Directory auth returns an empty string.
+    virtual void OnAuthSucceeded(const std::string& auth_code) = 0;
 
     // Called when authentication failed. |error_msg| contains error details.
     virtual void OnAuthFailed(const std::string& error_msg) = 0;
@@ -103,6 +105,8 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
     virtual ~ErrorDelegate() = default;
   };
 
+  static const char kStorageId[];
+
   using RequestOpenAppCallback = base::Callback<void(Profile* profile)>;
 
   explicit ArcSupportHost(Profile* profile);
@@ -133,6 +137,9 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
 
   // Requests to show the "Terms Of Service" page.
   void ShowTermsOfService();
+
+  // Requests to show the LSO page.
+  void ShowLso();
 
   // Requests to show the "ARC is loading" page.
   void ShowArcLoading();

@@ -205,7 +205,7 @@ bool CSSParserContext::IsDocumentHandleEqual(const Document* other) const {
   return document_.Get() == other;
 }
 
-void CSSParserContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSParserContext) {
   visitor->Trace(document_);
 }
 

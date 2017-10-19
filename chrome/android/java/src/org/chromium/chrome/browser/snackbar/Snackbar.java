@@ -59,7 +59,6 @@ public class Snackbar {
     public static final int UMA_TRANSLATE_NEVER = 19;
     public static final int UMA_TRANSLATE_NEVER_SITE = 20;
     public static final int UMA_SNIPPET_FETCH_FAILED = 21;
-    public static final int UMA_CHROME_HOME_OPT_OUT_SURVEY = 22;
 
     private SnackbarController mController;
     private CharSequence mText;
@@ -67,7 +66,6 @@ public class Snackbar {
     private String mActionText;
     private Object mActionData;
     private int mBackgroundColor;
-    private int mTextApperanceResId;
     private boolean mSingleLine = true;
     private int mDurationMs;
     private Drawable mProfileImage;
@@ -154,15 +152,6 @@ public class Snackbar {
     }
 
     /**
-     * Sets the text appearance for the snackbar. If 0, the snackbar will use default text
-     * appearance.
-     */
-    public Snackbar setTextAppearance(int resId) {
-        mTextApperanceResId = resId;
-        return this;
-    }
-
-    /**
      * @return The {@link SnackbarController} that controls this snackbar.
      */
     @VisibleForTesting
@@ -203,13 +192,6 @@ public class Snackbar {
      */
     int getBackgroundColor() {
         return mBackgroundColor;
-    }
-
-    /**
-     * If method returns zero, then default text appearance for snackbar will be used.
-     */
-    int getTextAppearance() {
-        return mTextApperanceResId;
     }
 
     /**

@@ -101,7 +101,7 @@ AXObject* AXTableColumn::HeaderObject() {
   AXObjectVector headers;
   HeaderObjectsForColumn(headers);
   if (!headers.size())
-    return nullptr;
+    return 0;
 
   return headers[0].Get();
 }

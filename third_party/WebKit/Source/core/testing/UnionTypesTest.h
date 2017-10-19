@@ -35,7 +35,7 @@ class UnionTypesTest final : public GarbageCollectedFinalized<UnionTypesTest>,
   String doubleOrStringOrStringSequenceArg(
       const DoubleOrStringOrStringSequence&);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   UnionTypesTest() : attribute_type_(kSpecificTypeNone) {}

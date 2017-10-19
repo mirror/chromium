@@ -38,7 +38,9 @@ struct CORE_EXPORT NGBoxStrut {
   LayoutUnit InlineSum() const { return inline_start + inline_end; }
   LayoutUnit BlockSum() const { return block_start + block_end; }
 
-  NGLogicalOffset StartOffset() const { return {inline_start, block_start}; }
+  NGLogicalOffset InlineBlockStartOffset() {
+    return {inline_start, block_start};
+  }
 
   bool IsEmpty() const;
 

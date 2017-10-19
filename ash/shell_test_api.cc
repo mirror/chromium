@@ -6,9 +6,10 @@
 
 #include <utility>
 
+#include "ash/palette_delegate.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
-#include "ash/system/power/power_button_controller.h"
+#include "ash/wm/power_button_controller.h"
 #include "components/prefs/testing_pref_service.h"
 
 namespace ash {
@@ -39,6 +40,11 @@ NativeCursorManagerAsh* ShellTestApi::native_cursor_manager_ash() {
 
 DragDropController* ShellTestApi::drag_drop_controller() {
   return shell_->drag_drop_controller_.get();
+}
+
+void ShellTestApi::SetPaletteDelegate(
+    std::unique_ptr<PaletteDelegate> palette_delegate) {
+  shell_->palette_delegate_ = std::move(palette_delegate);
 }
 
 void ShellTestApi::OnLocalStatePrefServiceInitialized(

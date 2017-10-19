@@ -68,7 +68,7 @@ SkBitmap DecodeImage(const base::FilePath& path) {
       reinterpret_cast<const unsigned char*>(file_contents.data());
   SkBitmap bitmap =
       content::DecodeImage(data, gfx::Size(), file_contents.length());
-  if (bitmap.computeByteSize() > kMaxImageCanvas)
+  if (bitmap.computeSize64() > kMaxImageCanvas)
     return SkBitmap();
   return bitmap;
 }

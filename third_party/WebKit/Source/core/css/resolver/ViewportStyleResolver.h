@@ -56,7 +56,7 @@ class CORE_EXPORT ViewportStyleResolver
 
   void CollectViewportRulesFromAuthorSheet(const CSSStyleSheet&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit ViewportStyleResolver(Document&);

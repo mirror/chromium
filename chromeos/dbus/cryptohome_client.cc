@@ -1054,7 +1054,8 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   void OnVoidMethod(VoidDBusMethodCallback callback, dbus::Response* response) {
-    std::move(callback).Run(response != nullptr);
+    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
+                                     : DBUS_METHOD_CALL_FAILURE);
   }
 
   // Calls a method with a bool value reult and block.

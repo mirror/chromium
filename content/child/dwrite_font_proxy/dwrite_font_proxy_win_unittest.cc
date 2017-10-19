@@ -29,9 +29,8 @@ class DWriteFontProxyUnitTest : public testing::Test {
   DWriteFontProxyUnitTest() {
     fake_collection_ = new FakeFontCollection();
     SetupFonts(fake_collection_.get());
-    DWriteFontCollectionProxy::Create(&collection_, factory.Get(),
-                                      fake_collection_->GetTrackingSender());
-    EXPECT_TRUE(collection_.Get());
+    mswr::MakeAndInitialize<DWriteFontCollectionProxy>(
+        &collection_, factory.Get(), fake_collection_->GetTrackingSender());
   }
 
   ~DWriteFontProxyUnitTest() override {
@@ -344,8 +343,8 @@ TEST_F(DWriteFontProxyUnitTest, TestCustomFontFiles) {
     arial.AddFileHandle(IPC::TakePlatformFileForTransit(std::move(file)));
   }
   mswr::ComPtr<DWriteFontCollectionProxy> collection;
-  DWriteFontCollectionProxy::Create(&collection, factory.Get(),
-                                    fonts->GetTrackingSender());
+  mswr::MakeAndInitialize<DWriteFontCollectionProxy>(
+      &collection, factory.Get(), fonts->GetTrackingSender());
 
   // Check that we can get the font family and match a font.
   UINT32 index = UINT_MAX;

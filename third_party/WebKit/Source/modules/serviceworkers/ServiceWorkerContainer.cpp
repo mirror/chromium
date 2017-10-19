@@ -137,14 +137,14 @@ ServiceWorkerContainer::~ServiceWorkerContainer() {
 
 void ServiceWorkerContainer::ContextDestroyed(ExecutionContext*) {
   if (provider_) {
-    provider_->SetClient(nullptr);
+    provider_->SetClient(0);
     provider_ = nullptr;
   }
   controller_ = nullptr;
   navigator_->ClearServiceWorker();
 }
 
-void ServiceWorkerContainer::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ServiceWorkerContainer) {
   visitor->Trace(controller_);
   visitor->Trace(ready_);
   visitor->Trace(navigator_);
@@ -486,7 +486,7 @@ ServiceWorkerContainer::ServiceWorkerContainer(
     ExecutionContext* execution_context,
     NavigatorServiceWorker* navigator)
     : ContextLifecycleObserver(execution_context),
-      provider_(nullptr),
+      provider_(0),
       navigator_(navigator) {
   if (!execution_context)
     return;

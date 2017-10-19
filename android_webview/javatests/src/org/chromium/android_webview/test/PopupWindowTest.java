@@ -15,9 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.android_webview.AwContents;
-import org.chromium.android_webview.test.AwActivityTestRule.PopupInfo;
+import org.chromium.android_webview.test.AwTestBase.PopupInfo;
 import org.chromium.android_webview.test.util.CommonResources;
-import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -141,8 +140,9 @@ public class PopupWindowTest {
         // Now long press on some texts and see if the text handles show up.
         DOMUtils.longPressNode(popupContents.getContentViewCore(), "plain_text");
         assertWaitForSelectActionBarStatus(true, popupContents.getContentViewCore());
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> popupContents.getContentViewCore()
-                    .getSelectionPopupControllerForTesting().hasSelection()));
+        Assert.assertTrue(mActivityTestRule.runTestOnUiThreadAndGetResult(
+                () -> popupContents.getContentViewCore()
+                        .getSelectionPopupControllerForTesting().hasSelection()));
 
         // Now hide the select action bar. This should hide the text handles and
         // clear the selection.

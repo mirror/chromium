@@ -38,7 +38,7 @@ class CORE_EXPORT DOMQuad : public GarbageCollected<DOMQuad>,
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(p1_);
     visitor->Trace(p2_);
     visitor->Trace(p3_);

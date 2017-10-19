@@ -66,8 +66,7 @@ class WebrtcVideoStream : public VideoStream,
   // Called by the |scheduler_|.
   void CaptureNextFrame();
 
-  void OnFrameEncoded(WebrtcVideoEncoder::EncodeResult encode_result,
-                      std::unique_ptr<WebrtcVideoEncoder::EncodedFrame> frame);
+  void OnFrameEncoded(std::unique_ptr<WebrtcVideoEncoder::EncodedFrame> frame);
 
   void OnEncoderCreated(webrtc::VideoCodecType codec_type);
 

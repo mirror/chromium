@@ -49,7 +49,7 @@ class StyleSheetCSSRuleList final : public CSSRuleList {
     return new StyleSheetCSSRuleList(sheet);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     CSSRuleList::Trace(visitor);
   }
@@ -333,7 +333,7 @@ void CSSStyleSheet::deleteRule(unsigned index,
 
   if (!child_rule_cssom_wrappers_.IsEmpty()) {
     if (child_rule_cssom_wrappers_[index])
-      child_rule_cssom_wrappers_[index]->SetParentStyleSheet(nullptr);
+      child_rule_cssom_wrappers_[index]->SetParentStyleSheet(0);
     child_rule_cssom_wrappers_.EraseAt(index);
   }
 }
@@ -438,7 +438,7 @@ void CSSStyleSheet::SetText(const String& text) {
   contents_->ParseString(text);
 }
 
-void CSSStyleSheet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSStyleSheet) {
   visitor->Trace(contents_);
   visitor->Trace(owner_node_);
   visitor->Trace(owner_rule_);

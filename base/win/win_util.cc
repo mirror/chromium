@@ -28,7 +28,6 @@
 #include <uiviewsettingsinterop.h>
 #include <windows.ui.viewmanagement.h>
 #include <winstring.h>
-#include <wrl/client.h>
 #include <wrl/wrappers/corewrappers.h>
 
 #include <memory>
@@ -46,6 +45,7 @@
 #include "base/win/core_winrt_util.h"
 #include "base/win/registry.h"
 #include "base/win/scoped_co_mem.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/scoped_hstring.h"
 #include "base/win/scoped_propvariant.h"
@@ -105,17 +105,12 @@ bool SetProcessDpiAwarenessWrapper(PROCESS_DPI_AWARENESS value) {
     if (SUCCEEDED(hr))
       return true;
     DLOG_IF(ERROR, hr == E_ACCESSDENIED)
-        << "Access denied error from SetProcessDpiAwarenessInternal. Function "
-           "called twice, or manifest was used.";
-    NOTREACHED()
-        << "SetProcessDpiAwarenessInternal failed with unexpected error: "
-        << hr;
-    return false;
+        << "Access denied error from SetProcessDpiAwareness. Function called "
+           "twice, or manifest was used.";
   }
-
-  DCHECK_LT(GetVersion(), VERSION_WIN8_1) << "SetProcessDpiAwarenessInternal "
-                                             "should be available on all "
-                                             "platforms >= Windows 8.1";
+  // TODO(pbos): Consider DCHECKing / NOTREACHED here if the platform version is
+  // >= 8.1. That way we can detect future name changes instead of having to
+  // discover silent failures.
   return false;
 }
 
@@ -137,14 +132,16 @@ bool IsWindows10TabletMode(HWND hwnd) {
 
   ScopedHString view_settings_guid = ScopedHString::Create(
       RuntimeClass_Windows_UI_ViewManagement_UIViewSettings);
-  Microsoft::WRL::ComPtr<IUIViewSettingsInterop> view_settings_interop;
+  ScopedComPtr<IUIViewSettingsInterop> view_settings_interop;
   HRESULT hr = base::win::RoGetActivationFactory(
       view_settings_guid.get(), IID_PPV_ARGS(&view_settings_interop));
   if (FAILED(hr))
     return false;
 
-  Microsoft::WRL::ComPtr<ABI::Windows::UI::ViewManagement::IUIViewSettings>
-      view_settings;
+  ScopedComPtr<ABI::Windows::UI::ViewManagement::IUIViewSettings> view_settings;
+  // TODO(ananta)
+  // Avoid using GetForegroundWindow here and pass in the HWND of the window
+  // intiating the request to display the keyboard.
   hr = view_settings_interop->GetForWindow(hwnd, IID_PPV_ARGS(&view_settings));
   if (FAILED(hr))
     return false;
@@ -160,7 +157,7 @@ bool IsWindows10TabletMode(HWND hwnd) {
 // if the keyboard count is 1 or more.. While this will work in most cases
 // it won't work if there are devices which expose keyboard interfaces which
 // are attached to the machine.
-bool IsKeyboardPresentOnSlate(std::string* reason, HWND hwnd) {
+bool IsKeyboardPresentOnSlate(std::string* reason) {
   bool result = false;
 
   if (GetVersion() < VERSION_WIN8) {
@@ -188,7 +185,7 @@ bool IsKeyboardPresentOnSlate(std::string* reason, HWND hwnd) {
   }
 
   // If it is a tablet device we assume that there is no keyboard attached.
-  if (IsTabletDevice(reason, hwnd)) {
+  if (IsTabletDevice(reason)) {
     if (reason)
       *reason += "Tablet device.\n";
     return false;
@@ -431,14 +428,14 @@ void SetAbortBehaviorForCrashReporting() {
   signal(SIGABRT, ForceCrashOnSigAbort);
 }
 
-bool IsTabletDevice(std::string* reason, HWND hwnd) {
+bool IsTabletDevice(std::string* reason) {
   if (GetVersion() < VERSION_WIN8) {
     if (reason)
       *reason = "Tablet device detection not supported below Windows 8\n";
     return false;
   }
 
-  if (IsWindows10TabletMode(hwnd))
+  if (IsWindows10TabletMode(::GetForegroundWindow()))
     return true;
 
   if (GetSystemMetrics(SM_MAXIMUMTOUCHES) == 0) {
@@ -675,8 +672,7 @@ void EnableHighDPISupport() {
   if (!SetProcessDpiAwarenessWrapper(process_dpi_awareness)) {
     // For windows versions where SetProcessDpiAwareness is not available or
     // failed, try its predecessor.
-    BOOL result = ::SetProcessDPIAware();
-    DCHECK(result) << "SetProcessDPIAware failed.";
+    ::SetProcessDPIAware();
   }
 }
 

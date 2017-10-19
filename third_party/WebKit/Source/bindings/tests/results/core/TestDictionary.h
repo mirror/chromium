@@ -311,7 +311,7 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   inline void setUnrestrictedDoubleMember(double);
 
   v8::Local<v8::Value> ToV8Impl(v8::Local<v8::Object>, v8::Isolate*) const override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   bool has_any_in_record_member_ = false;

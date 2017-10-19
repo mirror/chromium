@@ -87,10 +87,14 @@ class GeolocationTracker {
 
     /**
      * Returns the last known location or null if none is available.
+     *
+     * @param includeGpsFallback Whether the gps provider should also be used as a fallback.
+     *        Otherwise only the network provider will be used.
      */
-    static Location getLastKnownLocation(Context context) {
+    static Location getLastKnownLocation(Context context, boolean includeGpsFallback) {
         if (sUseLocationForTesting) {
-            return chooseLocation(sNetworkLocationForTesting, sGpsLocationForTesting);
+            return chooseLocation(
+                    sNetworkLocationForTesting, sGpsLocationForTesting, includeGpsFallback);
         }
 
         if (!hasPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -102,12 +106,17 @@ class GeolocationTracker {
                 (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location networkLocation =
                 locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        // If no GPS location has been request, just return the network location. For efficiency,
+        // don't even get the GPS location.
+        if (!includeGpsFallback) {
+            return networkLocation;
+        }
         Location gpsLocation = null;
         if (hasPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Only try to get GPS location when ACCESS_FINE_LOCATION is granted.
             gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
-        return chooseLocation(networkLocation, gpsLocation);
+        return chooseLocation(networkLocation, gpsLocation, includeGpsFallback);
     }
 
     /**
@@ -162,8 +171,9 @@ class GeolocationTracker {
                 == PackageManager.PERMISSION_GRANTED;
     }
 
-    private static Location chooseLocation(Location networkLocation, Location gpsLocation) {
-        if (gpsLocation == null) {
+    private static Location chooseLocation(
+            Location networkLocation, Location gpsLocation, boolean includeGpsFallback) {
+        if (!includeGpsFallback || gpsLocation == null) {
             return networkLocation;
         }
 

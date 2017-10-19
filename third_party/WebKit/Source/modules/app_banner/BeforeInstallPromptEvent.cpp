@@ -120,7 +120,7 @@ void BeforeInstallPromptEvent::BannerDismissed() {
   user_choice_->Resolve(result);
 }
 
-void BeforeInstallPromptEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BeforeInstallPromptEvent) {
   visitor->Trace(user_choice_);
   Event::Trace(visitor);
   ContextClient::Trace(visitor);

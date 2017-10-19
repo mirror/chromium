@@ -145,7 +145,7 @@ void OfflineAudioDestinationHandler::InitializeOfflineRenderThread(
   // Use Experimental AudioWorkletThread only when AudioWorklet is enabled and
   // there is an active AudioWorkletGlobalScope.
   if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
-      Context()->HasWorkletMessagingProxy()) {
+      Context()->WorkletMessagingProxy()) {
     DCHECK(Context()->WorkletMessagingProxy()->GetWorkletBackingThread());
     worklet_backing_thread_ =
         Context()->WorkletMessagingProxy()->GetWorkletBackingThread();
@@ -221,7 +221,7 @@ void OfflineAudioDestinationHandler::DoOfflineRendering() {
   while (frames_to_process_ > 0) {
     // Suspend the rendering if a scheduled suspend found at the current
     // sample frame. Otherwise render one quantum.
-    if (RenderIfNotSuspended(nullptr, render_bus_.get(),
+    if (RenderIfNotSuspended(0, render_bus_.get(),
                              AudioUtilities::kRenderQuantumFrames))
       return;
 
@@ -372,7 +372,7 @@ WebThread* OfflineAudioDestinationHandler::GetRenderingThread() {
   // Use Experimental AudioWorkletThread only when AudioWorklet is enabled and
   // there is an active AudioWorkletGlobalScope.
   if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
-      Context()->HasWorkletMessagingProxy()) {
+      Context()->WorkletMessagingProxy()) {
     DCHECK(!render_thread_ && worklet_backing_thread_);
     return worklet_backing_thread_;
   }
@@ -380,19 +380,6 @@ WebThread* OfflineAudioDestinationHandler::GetRenderingThread() {
   DCHECK(render_thread_ && !worklet_backing_thread_);
   return render_thread_.get();
 }
-
-void OfflineAudioDestinationHandler::RestartDestination() {
-  // If the worklet thread is not assigned yet, that means the context has
-  // started without a valid WorkletGlobalScope. Assign the worklet thread,
-  // and it will be picked up when the GetRenderingThread() is called next.
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
-      Context()->HasWorkletMessagingProxy() &&
-      !worklet_backing_thread_) {
-    DCHECK(Context()->WorkletMessagingProxy()->GetWorkletBackingThread());
-    worklet_backing_thread_ =
-        Context()->WorkletMessagingProxy()->GetWorkletBackingThread();
-  }
-};
 
 // ----------------------------------------------------------------
 

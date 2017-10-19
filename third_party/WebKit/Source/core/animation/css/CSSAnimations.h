@@ -102,7 +102,7 @@ class CSSAnimations final {
   }
   void Cancel();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   class RunningAnimation final
@@ -123,7 +123,7 @@ class CSSAnimations final {
       specified_timing = update.specified_timing;
     }
 
-    void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_TRACE() {
       visitor->Trace(animation);
       visitor->Trace(style_rule);
     }
@@ -140,7 +140,7 @@ class CSSAnimations final {
     DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
    public:
-    void Trace(blink::Visitor* visitor) { visitor->Trace(animation); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(animation); }
 
     Member<Animation> animation;
     RefPtr<const ComputedStyle> from;
@@ -204,7 +204,7 @@ class CSSAnimations final {
           previous_iteration_(NullValue()) {}
     bool RequiresIterationEvents(const AnimationEffectReadOnly&) override;
     void OnEventCondition(const AnimationEffectReadOnly&) override;
-    virtual void Trace(blink::Visitor*);
+    DECLARE_VIRTUAL_TRACE();
 
    private:
     const Element& AnimationTarget() const { return *animation_target_; }
@@ -232,7 +232,7 @@ class CSSAnimations final {
       return false;
     }
     void OnEventCondition(const AnimationEffectReadOnly&) override;
-    virtual void Trace(blink::Visitor*);
+    DECLARE_VIRTUAL_TRACE();
 
    private:
     const Element& TransitionTarget() const { return *transition_target_; }

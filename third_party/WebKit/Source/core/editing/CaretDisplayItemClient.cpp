@@ -206,8 +206,8 @@ void CaretDisplayItemClient::InvalidatePaintInPreviousLayoutBlock(
 
   ObjectPaintInvalidatorWithContext object_invalidator(*previous_layout_block_,
                                                        context);
-  // For SPv175 raster invalidation will be done in PaintController.
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+  // For SPv2 raster invalidation will be done in PaintController.
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
       !IsImmediateFullPaintInvalidationReason(
           previous_layout_block_->FullPaintInvalidationReason())) {
     object_invalidator.InvalidatePaintRectangleWithContext(
@@ -270,7 +270,7 @@ void CaretDisplayItemClient::InvalidatePaintInCurrentLayoutBlock(
 
   needs_paint_invalidation_ = false;
 
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
       !IsImmediateFullPaintInvalidationReason(
           layout_block_->FullPaintInvalidationReason())) {
     object_invalidator.FullyInvalidatePaint(PaintInvalidationReason::kCaret,
@@ -296,7 +296,8 @@ void CaretDisplayItemClient::PaintCaret(
   drawing_rect.MoveBy(paint_offset);
 
   IntRect paint_rect = PixelSnappedIntRect(drawing_rect);
-  DrawingRecorder recorder(context, *this, display_item_type, paint_rect);
+  DrawingRecorder drawing_recorder(context, *this, display_item_type,
+                                   paint_rect);
   context.FillRect(paint_rect, color_);
 }
 

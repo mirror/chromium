@@ -53,7 +53,7 @@ class DOMTimerCoordinator {
 
   RefPtr<WebTaskRunner> TimerTaskRunner() const { return timer_task_runner_; }
 
-  void Trace(blink::Visitor*);  // Oilpan.
+  DECLARE_TRACE();  // Oilpan.
 
  private:
   int NextID();

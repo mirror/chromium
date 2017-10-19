@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "ui/compositor/compositor.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/vsync_provider.h"
 #include "ui/ozone/public/ozone_platform.h"
@@ -16,20 +17,20 @@ namespace content {
 
 // static
 std::unique_ptr<SoftwareOutputDeviceOzone> SoftwareOutputDeviceOzone::Create(
-    gfx::AcceleratedWidget widget) {
+    ui::Compositor* compositor) {
   std::unique_ptr<SoftwareOutputDeviceOzone> result(
-      new SoftwareOutputDeviceOzone(widget));
+      new SoftwareOutputDeviceOzone(compositor));
   if (!result->surface_ozone_)
     return nullptr;
   return result;
 }
 
-SoftwareOutputDeviceOzone::SoftwareOutputDeviceOzone(
-    gfx::AcceleratedWidget widget) {
+SoftwareOutputDeviceOzone::SoftwareOutputDeviceOzone(ui::Compositor* compositor)
+    : compositor_(compositor) {
   ui::SurfaceFactoryOzone* factory =
       ui::OzonePlatform::GetInstance()->GetSurfaceFactoryOzone();
 
-  surface_ozone_ = factory->CreateCanvasForWidget(widget);
+  surface_ozone_ = factory->CreateCanvasForWidget(compositor_->widget());
 
   if (!surface_ozone_) {
     LOG(ERROR) << "Failed to initialize canvas";

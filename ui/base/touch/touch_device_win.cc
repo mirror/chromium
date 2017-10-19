@@ -6,7 +6,6 @@
 
 #include "base/logging.h"
 #include "base/win/win_util.h"
-#include "ui/base/win/hidden_window.h"
 
 namespace ui {
 
@@ -39,7 +38,7 @@ int GetAvailablePointerTypes() {
   // - The device has a touch screen.
   // - It is used as a tablet which means that it has no keyboard connected.
   // On Windows 10 it means that it is verifying with ConvertibleSlateMode.
-  if (base::win::IsTabletDevice(nullptr, ui::GetHiddenWindow()))
+  if (base::win::IsTabletDevice(nullptr))
     return POINTER_TYPE_COARSE;
 
   if (GetSystemMetrics(SM_MOUSEPRESENT) == 0)
@@ -54,7 +53,7 @@ int GetAvailablePointerTypes() {
 
 // This method follows the same logic as above but with hover types.
 int GetAvailableHoverTypes() {
-  if (base::win::IsTabletDevice(nullptr, ui::GetHiddenWindow()))
+  if (base::win::IsTabletDevice(nullptr))
     return HOVER_TYPE_NONE;
 
   int available_hover_types;

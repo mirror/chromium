@@ -250,9 +250,8 @@ bool DelegatedFrameHost::ShouldSkipFrame(const gfx::Size& size_in_dip) {
   return size_in_dip != resize_lock_->expected_size();
 }
 
-void DelegatedFrameHost::OnAggregatedSurfaceDamage(
-    const viz::LocalSurfaceId& id,
-    const gfx::Rect& damage_rect) {
+void DelegatedFrameHost::WillDrawSurface(const viz::LocalSurfaceId& id,
+                                         const gfx::Rect& damage_rect) {
   if (id != local_surface_id_)
     return;
   AttemptFrameSubscriberCapture(damage_rect);
@@ -281,11 +280,6 @@ void DelegatedFrameHost::WasResized() {
         surface_info, manager->surface_manager()->reference_factory());
     has_primary_surface_ = true;
     frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
-    if (compositor_)
-      compositor_->OnChildResizing();
-    // Input throttling and guttering are handled differently when surface
-    // synchronization is enabled so exit early here.
-    return;
   }
 
   // If |create_resize_lock_after_commit_| is true, we're waiting to recreate
@@ -555,8 +549,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
   if (!has_primary_surface_)
     return;
 
-  client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(
-      surface_info.id());
+  client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
   local_surface_id_ = surface_info.id().local_surface_id();
 
   released_front_lock_ = NULL;
@@ -801,9 +794,6 @@ void DelegatedFrameHost::OnCompositingLockStateChanged(
   }
 }
 
-void DelegatedFrameHost::OnCompositingChildResizing(
-    ui::Compositor* compositor) {}
-
 void DelegatedFrameHost::OnCompositingShuttingDown(ui::Compositor* compositor) {
   DCHECK_EQ(compositor, compositor_);
   ResetCompositor();
@@ -904,9 +894,8 @@ void DelegatedFrameHost::CreateCompositorFrameSinkSupport() {
                  ->GetHostFrameSinkManager()
                  ->CreateCompositorFrameSinkSupport(this, frame_sink_id_,
                                                     is_root, needs_sync_points);
-  support_->SetAggregatedDamageCallback(
-      base::BindRepeating(&DelegatedFrameHost::OnAggregatedSurfaceDamage,
-                          weak_ptr_factory_.GetWeakPtr()));
+  support_->SetWillDrawSurfaceCallback(base::BindRepeating(
+      &DelegatedFrameHost::WillDrawSurface, weak_ptr_factory_.GetWeakPtr()));
   if (compositor_)
     compositor_->AddFrameSink(frame_sink_id_);
   if (needs_begin_frame_)

@@ -70,7 +70,7 @@ class CORE_EXPORT EffectStack {
       PropertyHandleFilter = nullptr);
 
   bool GetAnimatedBoundingBox(FloatBox&, CSSPropertyID) const;
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   void RemoveRedundantSampledEffects();

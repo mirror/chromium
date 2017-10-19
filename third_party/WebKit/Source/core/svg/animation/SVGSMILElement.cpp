@@ -54,7 +54,7 @@ class RepeatEvent final : public Event {
 
   int Repeat() const { return repeat_; }
 
-  virtual void Trace(blink::Visitor* visitor) { Event::Trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Event::Trace(visitor); }
 
  protected:
   RepeatEvent(const AtomicString& type,
@@ -92,7 +92,7 @@ class ConditionEventListener final : public EventListener {
 
   void DisconnectAnimation() { animation_ = nullptr; }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(animation_);
     visitor->Trace(condition_);
     EventListener::Trace(visitor);
@@ -144,7 +144,7 @@ SVGSMILElement::Condition::Condition(Type type,
 
 SVGSMILElement::Condition::~Condition() = default;
 
-void SVGSMILElement::Condition::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGSMILElement::Condition) {
   visitor->Trace(base_element_);
   visitor->Trace(base_id_observer_);
   visitor->Trace(event_listener_);
@@ -1286,7 +1286,7 @@ void SVGSMILElement::DidChangeAnimationTarget() {
   is_scheduled_ = true;
 }
 
-void SVGSMILElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGSMILElement) {
   visitor->Trace(target_element_);
   visitor->Trace(target_id_observer_);
   visitor->Trace(time_container_);

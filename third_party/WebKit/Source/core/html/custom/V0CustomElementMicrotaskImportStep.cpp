@@ -69,7 +69,7 @@ V0CustomElementMicrotaskImportStep::Process() {
   return kFinishedProcessing;
 }
 
-void V0CustomElementMicrotaskImportStep::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V0CustomElementMicrotaskImportStep) {
   visitor->Trace(import_);
   visitor->Trace(queue_);
   V0CustomElementMicrotaskStep::Trace(visitor);

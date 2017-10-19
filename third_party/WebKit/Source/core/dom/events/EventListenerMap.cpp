@@ -205,7 +205,7 @@ void EventListenerMap::CopyEventListenersNotCreatedFromMarkupToTarget(
   }
 }
 
-void EventListenerMap::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventListenerMap) {
   visitor->Trace(entries_);
 }
 

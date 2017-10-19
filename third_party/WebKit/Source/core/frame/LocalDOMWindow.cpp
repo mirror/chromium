@@ -142,7 +142,7 @@ class PostMessageTimer final
   // Eager finalization is needed to promptly stop this timer object.
   // (see DOMTimer comment for more.)
   EAGERLY_FINALIZE();
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(event_);
     visitor->Trace(window_);
     SuspendableTimer::Trace(visitor);
@@ -674,7 +674,7 @@ void LocalDOMWindow::DispatchMessageEventWithOriginCheck(
     }
   }
 
-  KURL sender(static_cast<MessageEvent*>(event)->origin());
+  KURL sender(kParsedURLString, static_cast<MessageEvent*>(event)->origin());
   if (!document()->GetContentSecurityPolicy()->AllowConnectToSource(
           sender, RedirectStatus::kNoRedirect,
           SecurityViolationReportingPolicy::kSuppressReporting)) {
@@ -1621,7 +1621,7 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
   return new_window;
 }
 
-void LocalDOMWindow::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalDOMWindow) {
   visitor->Trace(document_);
   visitor->Trace(screen_);
   visitor->Trace(history_);

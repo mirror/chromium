@@ -99,7 +99,7 @@ class CORE_EXPORT LinkLoader final
 
   Resource* GetResourceForTesting();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   class FinishObserver;

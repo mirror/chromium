@@ -5,6 +5,7 @@
 #import "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.h"
 
 #include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
+#import "chrome/browser/ui/cocoa/constrained_window/constrained_window_custom_sheet.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_custom_window.h"
 #import "chrome/browser/ui/cocoa/password_reuse_warning_view_controller.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -40,18 +41,13 @@ PasswordReuseWarningDialogCocoa::PasswordReuseWarningDialogCocoa(
   controller_.reset(
       [[PasswordReuseWarningViewController alloc] initWithOwner:this]);
 
-  sheet_.reset([[ConstrainedWindowCustomWindow alloc]
+  // Setup the constrained window that will show the view.
+  base::scoped_nsobject<NSWindow> window([[ConstrainedWindowCustomWindow alloc]
       initWithContentRect:[[controller_ view] bounds]]);
-  [[sheet_ contentView] addSubview:[controller_ view]];
-  [sheet_ makeFirstResponder:controller_.get()];
-
-  parent_window_ = web_contents->GetTopLevelNativeWindow();
-  [parent_window_ beginSheet:sheet_.get()
-           completionHandler:^(NSModalResponse result) {
-             [sheet_ close];
-             [NSApp stopModal];
-
-           }];
+  [[window contentView] addSubview:[controller_ view]];
+  base::scoped_nsobject<CustomConstrainedWindowSheet> sheet(
+      [[CustomConstrainedWindowSheet alloc] initWithCustomWindow:window]);
+  window_ = CreateAndShowWebModalDialogMac(this, web_contents, sheet);
 
   if (service_)
     service_->AddObserver(this);
@@ -63,17 +59,17 @@ PasswordReuseWarningDialogCocoa::~PasswordReuseWarningDialogCocoa() {
 }
 
 void PasswordReuseWarningDialogCocoa::OnStartingGaiaPasswordChange() {
-  Close();
+  window_->CloseWebContentsModalDialog();
 }
 
 void PasswordReuseWarningDialogCocoa::OnGaiaPasswordChanged() {
-  Close();
+  window_->CloseWebContentsModalDialog();
 }
 
 void PasswordReuseWarningDialogCocoa::OnMarkingSiteAsLegitimate(
     const GURL& url) {
   if (url_.GetWithEmptyPath() == url.GetWithEmptyPath())
-    Close();
+    window_->CloseWebContentsModalDialog();
 }
 
 void PasswordReuseWarningDialogCocoa::InvokeActionForTesting(
@@ -86,7 +82,7 @@ void PasswordReuseWarningDialogCocoa::InvokeActionForTesting(
       OnIgnore();
       break;
     case safe_browsing::ChromePasswordProtectionService::CLOSE:
-      Close();
+      window_->CloseWebContentsModalDialog();
       break;
     default:
       NOTREACHED();
@@ -102,18 +98,17 @@ PasswordReuseWarningDialogCocoa::GetObserverType() {
 void PasswordReuseWarningDialogCocoa::OnChangePassword() {
   std::move(callback_).Run(
       safe_browsing::PasswordProtectionService::CHANGE_PASSWORD);
-  Close();
+  window_->CloseWebContentsModalDialog();
 }
 
 void PasswordReuseWarningDialogCocoa::OnIgnore() {
   std::move(callback_).Run(
       safe_browsing::PasswordProtectionService::IGNORE_WARNING);
-  Close();
+  window_->CloseWebContentsModalDialog();
 }
 
-void PasswordReuseWarningDialogCocoa::Close() {
+void PasswordReuseWarningDialogCocoa::OnConstrainedWindowClosed(
+    ConstrainedWindowMac* window) {
   if (callback_)
     std::move(callback_).Run(safe_browsing::PasswordProtectionService::CLOSE);
-
-  [parent_window_ endSheet:sheet_.get() returnCode:NSModalResponseStop];
 }

@@ -206,7 +206,7 @@ public class OriginVerifier {
     /**
      * Cleanup native dependencies on this object.
      */
-    public void cleanUp() {
+    void cleanUp() {
         if (mNativeOriginVerifier == 0) return;
         nativeDestroy(mNativeOriginVerifier);
         mNativeOriginVerifier = 0;
@@ -273,7 +273,7 @@ public class OriginVerifier {
             addVerifiedOriginForPackage(mPackageName, mOrigin, mRelation);
             mOrigin = getPostMessageOriginFromVerifiedOrigin(mPackageName, mOrigin);
         }
-        if (mListener != null) mListener.onOriginVerified(mPackageName, mOrigin, originVerified);
+        mListener.onOriginVerified(mPackageName, mOrigin, originVerified);
         cleanUp();
     }
 

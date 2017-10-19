@@ -15,12 +15,11 @@
 #include "base/time/time.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.h"
-#include "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h"
-#include "chrome/browser/chromeos/policy/off_hours/off_hours_policy_applier.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
+#include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/settings/session_manager_operation.h"
 #include "components/ownership/owner_key_util.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
-#include "components/policy/proto/chrome_device_policy.pb.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
@@ -70,7 +69,7 @@ DeviceSettingsService* DeviceSettingsService::Get() {
 
 DeviceSettingsService::DeviceSettingsService() {
   device_off_hours_controller_ =
-      base::MakeUnique<policy::off_hours::DeviceOffHoursController>();
+      base::MakeUnique<policy::DeviceOffHoursController>();
 }
 
 DeviceSettingsService::~DeviceSettingsService() {
@@ -118,7 +117,7 @@ scoped_refptr<PublicKey> DeviceSettingsService::GetPublicKey() {
 }
 
 void DeviceSettingsService::SetDeviceOffHoursControllerForTesting(
-    std::unique_ptr<policy::off_hours::DeviceOffHoursController> controller) {
+    std::unique_ptr<policy::DeviceOffHoursController> controller) {
   device_off_hours_controller_ = std::move(controller);
 }
 
@@ -308,7 +307,7 @@ void DeviceSettingsService::HandleCompletedOperation(
     device_off_hours_controller_->UpdateOffHoursPolicy(*device_settings_);
     if (device_off_hours_controller_->is_off_hours_mode()) {
       std::unique_ptr<em::ChromeDeviceSettingsProto> off_device_settings =
-          policy::off_hours::ApplyOffHoursPolicyToProto(*device_settings_);
+          policy::ApplyOffHoursPolicyToProto(*device_settings_);
       if (off_device_settings)
         device_settings_.swap(off_device_settings);
     }
@@ -323,6 +322,18 @@ void DeviceSettingsService::HandleCompletedOperation(
   }
   NotifyDeviceSettingsUpdated();
   RunPendingOwnershipStatusCallbacks();
+
+  // The completion callback happens after the notification so clients can
+  // filter self-triggered updates.
+  if (!callback.is_null())
+    callback.Run();
+}
+
+void DeviceSettingsService::HandleError(Status status,
+                                        const base::Closure& callback) {
+  store_status_ = status;
+  LOG(ERROR) << "Session manager operation failed: " << status;
+  NotifyDeviceSettingsUpdated();
 
   // The completion callback happens after the notification so clients can
   // filter self-triggered updates.

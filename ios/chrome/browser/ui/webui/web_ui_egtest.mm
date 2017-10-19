@@ -81,7 +81,8 @@ id<GREYMatcher> WaitForOmniboxText(std::string text) {
 
 // Tests that chrome://version renders and contains correct version number and
 // user agent string.
-- (void)testVersion {
+// TODO(crbug.com/734079): Re-enable this test.
+- (void)DISABLED_testVersion {
   LoadWebUIUrl(kChromeUIVersionHost);
 
   // Verify that app version is present on the page.
@@ -95,7 +96,7 @@ id<GREYMatcher> WaitForOmniboxText(std::string text) {
 }
 
 // Tests that chrome://physical-web renders and the page title is present.
-// TODO(crbug.com/760104): Re-enable this test once physical web is re-enabled.
+// TODO(crbug.com/734079): Re-enable this test.
 - (void)DISABLED_testPhysicalWeb {
   // Enable the Physical Web via Chrome variation.
   base::FieldTrialList::CreateFieldTrial("PhysicalWebEnabled", "Enabled");
@@ -108,9 +109,9 @@ id<GREYMatcher> WaitForOmniboxText(std::string text) {
   [ChromeEarlGrey waitForWebViewContainingText:pageTitle];
 }
 
-// Tests that clicking on a chrome://terms link from chrome://chrome-urls
-// navigates to terms page.
-- (void)testChromeURLNavigateToTerms {
+// Tests that clicking on a link for a native page from chrome://chrome-urls
+// navigates to that page.
+- (void)testChromeURLNavigateToNativePage {
   LoadWebUIUrl(kChromeUIChromeURLsHost);
 
   // Tap on chrome://terms link on the page.

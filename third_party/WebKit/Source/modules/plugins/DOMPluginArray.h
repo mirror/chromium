@@ -58,7 +58,7 @@ class DOMPluginArray final : public GarbageCollected<DOMPluginArray>,
   // PluginsChangedObserver implementation.
   void PluginsChanged();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit DOMPluginArray(LocalFrame*);

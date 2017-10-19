@@ -16,7 +16,6 @@
 #include "content/common/content_switches_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
-#include "content/common/frame_policy.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/input_messages.h"
 #include "content/common/page_messages.h"
@@ -134,9 +133,8 @@ RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
     web_frame = parent->web_frame()->CreateRemoteChild(
         replicated_state.scope,
         blink::WebString::FromUTF8(replicated_state.name),
-        replicated_state.frame_policy.sandbox_flags,
-        FeaturePolicyHeaderToWeb(
-            replicated_state.frame_policy.container_policy),
+        replicated_state.sandbox_flags,
+        FeaturePolicyHeaderToWeb(replicated_state.container_policy),
         proxy.get(), opener);
     proxy->unique_name_ = replicated_state.unique_name;
     render_view = parent->render_view();
@@ -266,7 +264,7 @@ void RenderFrameProxy::DidCommitCompositorFrame() {
 void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
   DCHECK(web_frame_);
   web_frame_->SetReplicatedOrigin(state.origin);
-  web_frame_->SetReplicatedSandboxFlags(state.frame_policy.sandbox_flags);
+  web_frame_->SetReplicatedSandboxFlags(state.sandbox_flags);
   web_frame_->SetReplicatedName(blink::WebString::FromUTF8(state.name));
   web_frame_->SetReplicatedInsecureRequestPolicy(state.insecure_request_policy);
   web_frame_->SetReplicatedPotentiallyTrustworthyUniqueOrigin(
@@ -296,11 +294,12 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
 // properly if this proxy ever parents a local frame.  The proxy's FrameOwner
 // flags are also updated here with the caveat that the FrameOwner won't learn
 // about updates to its flags until they take effect.
-void RenderFrameProxy::OnDidUpdateFramePolicy(const FramePolicy& frame_policy) {
-  web_frame_->SetReplicatedSandboxFlags(frame_policy.sandbox_flags);
-  web_frame_->SetFrameOwnerPolicy(
-      frame_policy.sandbox_flags,
-      FeaturePolicyHeaderToWeb(frame_policy.container_policy));
+void RenderFrameProxy::OnDidUpdateFramePolicy(
+    blink::WebSandboxFlags flags,
+    const ParsedFeaturePolicyHeader& container_policy) {
+  web_frame_->SetReplicatedSandboxFlags(flags);
+  web_frame_->SetFrameOwnerPolicy(flags,
+                                  FeaturePolicyHeaderToWeb(container_policy));
 }
 
 void RenderFrameProxy::MaybeUpdateCompositingHelper() {
@@ -375,7 +374,16 @@ void RenderFrameProxy::OnChildFrameProcessGone() {
 void RenderFrameProxy::OnSetChildFrameSurface(
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
-  SetChildFrameSurface(surface_info, sequence);
+  // If this WebFrame has already been detached, its parent will be null. This
+  // can happen when swapping a WebRemoteFrame with a WebLocalFrame, where this
+  // message may arrive after the frame was removed from the frame tree, but
+  // before the frame has been destroyed. http://crbug.com/446575.
+  if (!web_frame()->Parent())
+    return;
+
+  if (!enable_surface_synchronization_)
+    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+  compositing_helper_->SetFallbackSurfaceInfo(surface_info, sequence);
 }
 
 void RenderFrameProxy::OnUpdateOpener(int opener_routing_id) {
@@ -388,10 +396,12 @@ void RenderFrameProxy::OnDidStartLoading() {
 }
 
 void RenderFrameProxy::OnViewChanged(const viz::FrameSinkId& frame_sink_id) {
-  // In mash the FrameSinkId comes from RendererWindowTreeClient.
-  if (!IsRunningInMash())
-    frame_sink_id_ = frame_sink_id;
+  if (IsRunningInMash()) {
+    // In mash the FrameSinkId comes from RendererWindowTreeClient.
+    return;
+  }
 
+  frame_sink_id_ = frame_sink_id;
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
   ResendFrameRects();
@@ -480,21 +490,6 @@ void RenderFrameProxy::SetMusEmbeddedFrame(
   mus_embedded_frame_ = std::move(mus_embedded_frame);
 }
 #endif
-
-void RenderFrameProxy::SetChildFrameSurface(
-    const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
-  // If this WebFrame has already been detached, its parent will be null. This
-  // can happen when swapping a WebRemoteFrame with a WebLocalFrame, where this
-  // message may arrive after the frame was removed from the frame tree, but
-  // before the frame has been destroyed. http://crbug.com/446575.
-  if (!web_frame()->Parent())
-    return;
-
-  if (!enable_surface_synchronization_)
-    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
-  compositing_helper_->SetFallbackSurfaceId(surface_info.id(), sequence);
-}
 
 void RenderFrameProxy::FrameDetached(DetachType type) {
 #if defined(USE_AURA)

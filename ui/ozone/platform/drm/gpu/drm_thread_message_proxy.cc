@@ -254,7 +254,7 @@ void DrmThreadMessageProxy::OnCheckOverlayCapabilitiesCallback(
 void DrmThreadMessageProxy::OnRefreshNativeDisplaysCallback(
     MovableDisplaySnapshots displays) const {
   sender_->Send(new OzoneHostMsg_UpdateNativeDisplays(
-      CreateDisplaySnapshotParams(displays)));
+      CreateParamsFromSnapshot(displays)));
 }
 
 void DrmThreadMessageProxy::OnConfigureNativeDisplayCallback(

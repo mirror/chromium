@@ -261,21 +261,23 @@ void SVGInlineTextBox::PaintTextMatchMarkerBackground(
       paint_info, point, marker, style, font);
 }
 
-FloatRect SVGInlineTextBox::CalculateBoundaries() const {
+LayoutRect SVGInlineTextBox::CalculateBoundaries() const {
   LineLayoutSVGInlineText line_layout_item =
       LineLayoutSVGInlineText(this->GetLineLayoutItem());
   const SimpleFontData* font_data = line_layout_item.ScaledFont().PrimaryFont();
   DCHECK(font_data);
   if (!font_data)
-    return FloatRect();
+    return LayoutRect();
 
   float scaling_factor = line_layout_item.ScalingFactor();
   DCHECK(scaling_factor);
-  float baseline = font_data->GetFontMetrics().FloatAscent() / scaling_factor;
+  LayoutUnit baseline(font_data->GetFontMetrics().FloatAscent() /
+                      scaling_factor);
 
-  FloatRect text_bounding_rect;
+  LayoutRect text_bounding_rect;
   for (const SVGTextFragment& fragment : text_fragments_)
-    text_bounding_rect.Unite(fragment.OverflowBoundingBox(baseline));
+    text_bounding_rect.Unite(
+        LayoutRect(fragment.OverflowBoundingBox(baseline)));
 
   return text_bounding_rect;
 }

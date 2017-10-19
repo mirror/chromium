@@ -190,10 +190,12 @@ TEST_F(ExtensionAppModelBuilderTest, Uninstall) {
 }
 
 TEST_F(ExtensionAppModelBuilderTest, UninstallTerminatedApp) {
-  ASSERT_NE(nullptr, registry()->GetInstalledExtension(kPackagedApp2Id));
+  const extensions::Extension* app =
+      registry()->GetInstalledExtension(kPackagedApp2Id);
+  ASSERT_TRUE(app != NULL);
 
   // Simulate an app termination.
-  service_->TerminateExtension(kPackagedApp2Id);
+  service_->TrackTerminatedExtensionForTest(app);
 
   service_->UninstallExtension(kPackagedApp2Id,
                                extensions::UNINSTALL_REASON_FOR_TESTING,

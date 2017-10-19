@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-#include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/app/vector_icons/vector_icons.h"
@@ -24,7 +23,6 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/chromeos/resources/grit/ui_chromeos_resources.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
@@ -75,15 +73,16 @@ CupsPrintJobNotification::CupsPrintJobNotification(
       profile_(profile) {
   // Create a notification for the print job. The title, body, icon and buttons
   // of the notification will be updated in UpdateNotification().
-  notification_ = std::make_unique<message_center::Notification>(
+  notification_ = base::MakeUnique<Notification>(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
       base::string16(),  // title
       base::string16(),  // body
       gfx::Image(),      // icon
-      l10n_util::GetStringUTF16(IDS_PRINT_JOB_NOTIFICATION_DISPLAY_SOURCE),
-      GURL(kCupsPrintJobNotificationId),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kCupsPrintJobNotificationId),
+      l10n_util::GetStringUTF16(IDS_PRINT_JOB_NOTIFICATION_DISPLAY_SOURCE),
+      GURL(kCupsPrintJobNotificationId),
+      notification_id_,  // tag
       message_center::RichNotificationData(),
       new CupsPrintJobNotificationDelegate(this));
   UpdateNotification();

@@ -77,7 +77,7 @@ class CORE_EXPORT AnimationEffectReadOnly
     virtual ~EventDelegate() {}
     virtual bool RequiresIterationEvents(const AnimationEffectReadOnly&) = 0;
     virtual void OnEventCondition(const AnimationEffectReadOnly&) = 0;
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
   virtual ~AnimationEffectReadOnly() {}
@@ -117,7 +117,7 @@ class CORE_EXPORT AnimationEffectReadOnly
   void getComputedTiming(ComputedTimingProperties&);
   ComputedTimingProperties getComputedTiming();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit AnimationEffectReadOnly(const Timing&, EventDelegate* = nullptr);

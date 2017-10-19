@@ -60,7 +60,7 @@ inline SVGLinearGradientElement::SVGLinearGradientElement(Document& document)
   AddToPropertyMap(y2_);
 }
 
-void SVGLinearGradientElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGLinearGradientElement) {
   visitor->Trace(x1_);
   visitor->Trace(y1_);
   visitor->Trace(x2_);

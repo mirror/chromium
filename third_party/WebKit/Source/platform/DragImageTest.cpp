@@ -77,8 +77,7 @@ class TestImage : public Image {
             const FloatRect&,
             const FloatRect&,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            ImageDecodingMode) override {
+            ImageClampingMode) override {
     // Image pure virtual stub.
   }
 
@@ -107,7 +106,7 @@ class TestImage : public Image {
 };
 
 TEST(DragImageTest, NullHandling) {
-  EXPECT_FALSE(DragImage::Create(nullptr));
+  EXPECT_FALSE(DragImage::Create(0));
 
   RefPtr<TestImage> null_test_image(TestImage::Create(IntSize()));
   EXPECT_FALSE(DragImage::Create(null_test_image.get()));
@@ -133,7 +132,7 @@ TEST(DragImageTest, CreateDragImage) {
 }
 
 TEST(DragImageTest, TrimWhitespace) {
-  KURL url("http://www.example.com/");
+  KURL url(kParsedURLString, "http://www.example.com/");
   String test_label = "          Example Example Example      \n    ";
   String expected_label = "Example Example Example";
   float device_scale_factor = 1.0f;

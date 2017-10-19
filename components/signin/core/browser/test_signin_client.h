@@ -91,7 +91,6 @@ class TestSigninClient : public SigninClient {
       GaiaAuthConsumer* consumer,
       const std::string& source,
       net::URLRequestContextGetter* getter) override;
-  void PreGaiaLogout(base::OnceClosure callback) override;
 
   // Loads the token database.
   void LoadTokenDatabase();

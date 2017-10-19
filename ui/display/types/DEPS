@@ -2,6 +2,5 @@ include_rules = [
   "-ui",
   "+ui/display/types",
   "+ui/gfx/buffer_types.h",
-  "+ui/gfx/color_space.h",
   "+ui/gfx/geometry",
 ]

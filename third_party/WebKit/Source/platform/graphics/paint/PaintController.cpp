@@ -38,8 +38,9 @@ void PaintController::SetTracksRasterInvalidations(bool value) {
     chunk.raster_invalidation_tracking.clear();
 }
 
-void PaintController::EnsureRasterInvalidationTracking() {
-  if (!raster_invalidation_tracking_info_) {
+void PaintController::SetupRasterUnderInvalidationChecking() {
+  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
+      !raster_invalidation_tracking_info_) {
     raster_invalidation_tracking_info_ =
         std::make_unique<RasterInvalidationTrackingInfo>();
   }
@@ -275,15 +276,17 @@ void PaintController::ProcessNewItem(DisplayItem& display_item) {
     bool chunk_added =
         new_paint_chunks_.IncrementDisplayItemIndex(display_item);
 
-    if (chunk_added && last_chunk_index != kNotFound) {
-      DCHECK(last_chunk_index != new_paint_chunks_.LastChunkIndex());
-      GenerateRasterInvalidations(
-          new_paint_chunks_.PaintChunkAt(last_chunk_index));
-    }
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+      if (chunk_added && last_chunk_index != kNotFound) {
+        DCHECK(last_chunk_index != new_paint_chunks_.LastChunkIndex());
+        GenerateRasterInvalidations(
+            new_paint_chunks_.PaintChunkAt(last_chunk_index));
+      }
 
-    new_paint_chunks_.LastChunk().outset_for_raster_effects =
-        std::max(new_paint_chunks_.LastChunk().outset_for_raster_effects,
-                 display_item.OutsetForRasterEffects().ToFloat());
+      new_paint_chunks_.LastChunk().outset_for_raster_effects =
+          std::max(new_paint_chunks_.LastChunk().outset_for_raster_effects,
+                   display_item.OutsetForRasterEffects().ToFloat());
+    }
   }
 
 #if DCHECK_IS_ON()
@@ -346,23 +349,10 @@ const PaintChunkProperties& PaintController::CurrentPaintChunkProperties()
 }
 
 void PaintController::InvalidateAll() {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-  InvalidateAllInternal();
-}
-
-void PaintController::InvalidateAllInternal() {
-  // TODO(wangxianzhu): Rename this to InvalidateAllForTesting() for SPv2.
   // Can only be called during layout/paintInvalidation, not during painting.
   DCHECK(new_display_item_list_.IsEmpty());
   current_paint_artifact_.Reset();
   current_cache_generation_.Invalidate();
-}
-
-bool PaintController::CacheIsAllInvalid() const {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-  return current_paint_artifact_.IsEmpty() &&
-         current_cache_generation_.GetPaintInvalidationReason() !=
-             PaintInvalidationReason::kNone;
 }
 
 bool PaintController::ClientCacheIsValid(
@@ -601,7 +591,7 @@ void PaintController::CommitNewDisplayItems() {
   new_display_item_indices_by_client_.clear();
 #endif
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
       !new_display_item_list_.IsEmpty())
     GenerateRasterInvalidations(new_paint_chunks_.LastChunk());
 
@@ -616,7 +606,7 @@ void PaintController::CommitNewDisplayItems() {
 
   Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
-    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
       item.Client().ClearPartialInvalidationRect();
 
     if (item.IsCacheable()) {
@@ -695,29 +685,19 @@ size_t PaintController::ApproximateUnsharedMemoryUsage() const {
 void PaintController::AppendDebugDrawingAfterCommit(
     const DisplayItemClient& display_item_client,
     sk_sp<const PaintRecord> record,
-    const FloatRect& record_bounds,
-    const PropertyTreeState* property_tree_state) {
+    const FloatRect& record_bounds) {
   DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   DCHECK(new_display_item_list_.IsEmpty());
-  auto& display_item_list = current_paint_artifact_.GetDisplayItemList();
-  auto& display_item =
-      display_item_list.AllocateAndConstruct<DrawingDisplayItem>(
-          display_item_client, DisplayItem::kDebugDrawing, std::move(record),
-          record_bounds);
+  DrawingDisplayItem& display_item =
+      current_paint_artifact_.GetDisplayItemList()
+          .AllocateAndConstruct<DrawingDisplayItem>(
+              display_item_client, DisplayItem::kDebugDrawing,
+              std::move(record), record_bounds);
   display_item.SetSkippedCache();
-
-  if (property_tree_state) {
-    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
-    // Create a PaintChunk for the debug drawing.
-    PaintChunk chunk(display_item_list.size() - 1, display_item_list.size(),
-                     display_item.GetId(),
-                     PaintChunkProperties(*property_tree_state));
-    current_paint_artifact_.PaintChunks().push_back(chunk);
-  }
 }
 
 void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   if (new_chunk.begin_index >=
       current_cached_subsequence_begin_index_in_new_list_)
     return;
@@ -767,8 +747,6 @@ void PaintController::AddRasterInvalidation(const DisplayItemClient& client,
                                             const FloatRect& rect,
                                             PaintInvalidationReason reason) {
   chunk.raster_invalidation_rects.push_back(rect);
-  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
-    EnsureRasterInvalidationTracking();
   if (raster_invalidation_tracking_info_)
     TrackRasterInvalidation(client, chunk, reason);
 }
@@ -802,7 +780,7 @@ void PaintController::TrackRasterInvalidation(const DisplayItemClient& client,
 void PaintController::GenerateRasterInvalidationsComparingChunks(
     PaintChunk& new_chunk,
     const PaintChunk& old_chunk) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   // TODO(wangxianzhu): Optimize paint offset change.
 
@@ -1048,7 +1026,7 @@ void PaintController::ShowSequenceUnderInvalidationError(
   LOG(ERROR) << under_invalidation_message_prefix_ << " " << reason;
   LOG(ERROR) << "Subsequence client: " << client.DebugName();
 #ifndef NDEBUG
-  ShowDebugData();
+//  showDebugData();
 #else
   LOG(ERROR) << "Run debug build to get more details.";
 #endif

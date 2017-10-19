@@ -1200,21 +1200,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="AppListPlayStoreQueryState">
   <int value="0" label="SUCCESS"/>
   <int value="1" label="CANCELED"/>
-  <int value="2" label="ERROR_DEPRECATED"/>
-  <int value="3" label="PLAY_STORE_PROXY_NOT_AVAILABLE"/>
-  <int value="4" label="FAILED_TO_CALL_CANCEL"/>
-  <int value="5" label="FAILED_TO_CALL_FINDAPPS"/>
-  <int value="6" label="REQUEST_HAS_INVALID_PARAMS"/>
-  <int value="7" label="REQUEST_TIMEOUT"/>
-  <int value="8" label="PHONESKY_RESULT_REQUEST_CODE_UNMATCHED"/>
-  <int value="9" label="PHONESKY_RESULT_SESSION_ID_UNMATCHED"/>
-  <int value="10" label="PHONESKY_REQUEST_REQUEST_CODE_UNMATCHED"/>
-  <int value="11" label="PHONESKY_APP_DISCOVERY_NOT_AVAILABLE"/>
-  <int value="12" label="PHONESKY_VERSION_NOT_SUPPORTED"/>
-  <int value="13" label="PHONESKY_UNEXPECTED_EXCEPTION"/>
-  <int value="14" label="PHONESKY_MALFORMED_QUERY"/>
-  <int value="15" label="PHONESKY_INTERNAL_ERROR"/>
-  <int value="16" label="PHONESKY_RESULT_INVALID_DATA"/>
+  <int value="2" label="ERROR"/>
 </enum>
 
 <enum name="AppListSearchResult">
@@ -1306,13 +1292,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Account needs reauth"/>
   <int value="3" label="Account has unknown state"/>
   <int value="4" label="Account check failed"/>
-</enum>
-
-<enum name="ArcContainerLifetimeEvent">
-  <int value="0" label="Starting"/>
-  <int value="1" label="Failed to start"/>
-  <int value="2" label="Crashed early"/>
-  <int value="3" label="Crashed"/>
 </enum>
 
 <enum name="ArcIntentHandlerAction">
@@ -1696,27 +1675,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Only audio"/>
   <int value="2" label="Only silence"/>
   <int value="3" label="Audio and silence"/>
-</enum>
-
-<enum name="AudioOutputProxyStreamFormat">
-  <int value="0" label="Bitstream"/>
-  <int value="1" label="Linear PCM"/>
-  <int value="2" label="Low latency PCM"/>
-  <int value="3" label="Low latency PCM fall back to Fake"/>
-  <int value="4" label="Fake"/>
-</enum>
-
-<enum name="AudioOutputResamplerLowLatencyOpenStreamResult">
-  <int value="0" label="Creation of low latency stream failed"/>
-  <int value="1" label="Fallback to fake stream succeeded"/>
-  <int value="2" label="Fallback to linear stream succeeded"/>
-  <int value="3" label="Creation of low latency stream succeeded"/>
-  <int value="4" label="Subsequent creation of fake stream failed"/>
-  <int value="5" label="Subsequent creation of fake stream succeeded"/>
-  <int value="6" label="Subsequent creation of linear stream failed"/>
-  <int value="7" label="Subsequent creation of linear stream succeeded"/>
-  <int value="8" label="Subsequent creation of low latency stream failed"/>
-  <int value="9" label="Subsequent creation of low latency stream succeeded"/>
 </enum>
 
 <enum name="AudioOutputStreamCreationResult">
@@ -2768,8 +2726,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="177" label="SWDH_PROVIDER_CREATED_BAD_ID"/>
   <int value="178" label="RFH_KEEP_ALIVE_HANDLE_REQUESTED_INCORRECTLY"/>
   <int value="179" label="BFSI_INVALID_UNIQUE_ID"/>
-  <int value="180" label="BPE_UNEXPECTED_MESSAGE_BEFORE_BPGM_CREATION"/>
-  <int value="181" label="WEBUI_SEND_FROM_UNAUTHORIZED_PROCESS"/>
 </enum>
 
 <enum name="BadMessageReasonExtensions">
@@ -4378,13 +4334,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="Stream was never read at all"/>
 </enum>
 
-<enum name="CheckerableImageType">
-  <int value="0" label="Checkerable image was used with an img tag"/>
-  <int value="1" label="Checkerable image was used with an svg tag"/>
-  <int value="2" label="Checkerable image was used with a css style property"/>
-  <int value="3" label="Not checkerable image"/>
-</enum>
-
 <enum name="CheckerImagingDecision">
   <int value="0" label="Can decode asynchronously."/>
   <int value="1" label="Image is animated."/>
@@ -4431,20 +4380,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="New Tab Creation"/>
   <int value="3" label="Expand Button Pressed"/>
   <int value="4" label="Browser Startup"/>
-</enum>
-
-<enum name="ChromeHomePromoResult">
-  <int value="0" label="Enabled Chome Home"/>
-  <int value="1" label="Disabled Chome Home"/>
-  <int value="2" label="Chrome Home remained enabled"/>
-  <int value="3" label="Chrome Home remained disabled"/>
-  <int value="4" label="No action"/>
-</enum>
-
-<enum name="ChromeHomePromoShowReason">
-  <int value="0" label="NTP"/>
-  <int value="1" label="Menu"/>
-  <int value="2" label="Startup"/>
 </enum>
 
 <enum name="ChromeNotifierServiceActionType">
@@ -5804,35 +5739,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Successful first layout"/>
 </enum>
 
-<enum name="CompileHeuristicsDecision">
-  <int value="0" label="NoCacheHandler">
-    No CachedMetadataHandler was provided, thus caching functionality is
-    disabled.
-  </int>
-  <int value="1" label="CachingDisabled">Caching is disabled by settings.</int>
-  <int value="2" label="CodeTooShortToCache">
-    The script is too short to benefit from caching, thus caching functionality
-    is disabled.
-  </int>
-  <int value="3" label="CacheTooCold">
-    The script is not loaded often enough to benefit from caching, thus not
-    producing cache.
-  </int>
-  <int value="4" label="ProduceParserCache">
-    Parser cache is produced for the script when compiled.
-  </int>
-  <int value="5" label="ConsumeParserCache">
-    Consume previously generated parser cache for the script.
-  </int>
-  <int value="6" label="ProduceCodeCache">
-    Code cache is produced for the script when compiled.
-  </int>
-  <int value="7" label="ConsumeCodeCache">
-    Consume previously generated code cache for the script.
-  </int>
-  <int value="8" label="StreamingCompile">Use streamed compilation result.</int>
-</enum>
-
 <enum name="ComponentUpdaterCalls">
   <int value="0" label="Install"/>
   <int value="1" label="Update"/>
@@ -5892,7 +5798,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="10" label="FAILURE_UNKNOWN_KEY"/>
   <int value="11" label="FAILURE_SESSION_RATE_IMPACT_PARSE"/>
   <int value="12" label="FAILURE_SESSION_RATE_IMPACT_UNKNOWN_FEATURE"/>
-  <int value="13" label="FAILURE_TRACKING_ONLY_PARSE"/>
 </enum>
 
 <enum name="ConnectionDiagnosticsIssue">
@@ -6702,29 +6607,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="0" label="Cache hit with entity"/>
   <int value="1" label="Cache hit without entity"/>
   <int value="2" label="Cache miss"/>
-</enum>
-
-<enum name="CoreAudioDispatchOverrideInitResult">
-  <summary>
-    The result of trying to initialize the CoreAudio dispatch override hotfix.
-    See media/audio/mac/coreaudio_dispatch_override.cc.
-  </summary>
-  <int value="0" label="Not supported"/>
-  <int value="1" label="Initialized successfully"/>
-  <int value="2" label="dyld_dynamic_interpose not found"/>
-  <int value="3" label="dlopen of CoreAudio failed"/>
-  <int value="4" label="Symbol lookup in CoreAudio failed"/>
-  <int value="5" label="dladdr call failed"/>
-</enum>
-
-<enum name="CoreAudioDispatchOverrideLookupEvent">
-  <summary>
-    The types of lookup events that the CoreAudio dispatch override hotfix can
-    emit. See media/audio/mac/coreaudio_dispatch_override.cc.
-  </summary>
-  <int value="0" label="Lookup performed but didn't find ResumeIO/PauseIO"/>
-  <int value="1" label="ResumeIO callsite found"/>
-  <int value="2" label="PauseIO callsite found"/>
 </enum>
 
 <enum name="CorePageTransition">
@@ -7640,18 +7522,12 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="DataReductionProxyLoFiImplicitOptOutAction">
-  <obsolete>
-    Obsolete as of October 2017.
-  </obsolete>
   <int value="0" label="Lo-Fi disabled for the remainder of the session"/>
   <int value="1" label="Lo-Fi disabled until next opt out epoch"/>
   <int value="2" label="Next implict opt out epoch, Lo-Fi re-enabled"/>
 </enum>
 
 <enum name="DataReductionProxyLoFiSessionState">
-  <obsolete>
-    Deprecated as of October 2017 per transition to blacklist.
-  </obsolete>
   <int value="0" label="Lo-Fi was used"/>
   <int value="1"
       label="Lo-Fi was not used because the network quality was always good"/>
@@ -7742,7 +7618,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="HTTP"/>
   <int value="2" label="HTTPS"/>
   <int value="3" label="QUIC"/>
-  <int value="4" label="Direct"/>
 </enum>
 
 <enum name="DataReductionProxyQuicDefaultAlternativeProxy">
@@ -8164,25 +8039,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="Redirection to the default search engine"/>
 </enum>
 
-<enum name="DetachableBasePairResult">
-  <int value="0" label="UnknownError"/>
-  <int value="1" label="ChallengePassed"/>
-  <int value="2" label="ChallengeFailed"/>
-  <int value="3" label="NeedInjectEntropy"/>
-</enum>
-
-<enum name="DetachableBaseROUpdateResult">
-  <int value="1" label="Succeeded"/>
-  <int value="2" label="TransferFailed"/>
-</enum>
-
-<enum name="DetachableBaseRWUpdateResult">
-  <int value="1" label="Succeeded"/>
-  <int value="2" label="TransferFailed"/>
-  <int value="3" label="InvalidKey"/>
-  <int value="4" label="RollbackDisallowed"/>
-</enum>
-
 <enum name="DeviceIdMismatch">
   <int value="0" label="BOTH_NONEMPTY"/>
   <int value="1" label="SYNC_EMPTY"/>
@@ -8412,7 +8268,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="77" label="Validation Message"/>
   <int value="78" label="Web Share Target Picker"/>
   <int value="79" label="Zoom"/>
-  <int value="80" label="Lock Screen Note App Toast"/>
 </enum>
 
 <enum name="DidNavigateToAd">
@@ -9378,33 +9233,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="6" label="USER_VALIDATED"/>
   <int value="7" label="DANGEROUS_HOST"/>
   <int value="8" label="POTENTIALLY_UNWANTED"/>
-</enum>
-
-<enum name="DownloadNotificationForegroundLifecycle">
-  <int value="0" label="START"/>
-  <int value="1" label="UPDATE"/>
-  <int value="2" label="STOP"/>
-</enum>
-
-<enum name="DownloadNotificationInteractions">
-  <int value="0" label="CLICKED"/>
-  <int value="1" label="OPEN"/>
-  <int value="2" label="CANCEL"/>
-  <int value="3" label="PAUSE"/>
-  <int value="4" label="RESUME"/>
-</enum>
-
-<enum name="DownloadNotificationLaunchType">
-  <int value="0" label="LAUNCH"/>
-  <int value="1" label="RELAUNCH"/>
-</enum>
-
-<enum name="DownloadNotificationServiceStopped">
-  <int value="0" label="STOPPED"/>
-  <int value="1" label="DESTROYED"/>
-  <int value="2" label="TASK_REMOVED"/>
-  <int value="3" label="LOW_MEMORY"/>
-  <int value="4" label="START_STICKY"/>
 </enum>
 
 <enum name="DownloadOpenMethod">
@@ -11693,10 +11521,10 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="387" label="DeviceNativePrintersAccessMode"/>
   <int value="388" label="DeviceNativePrintersBlacklist"/>
   <int value="389" label="DeviceNativePrintersWhitelist"/>
-  <int value="390" label="DeviceTPMFirmwareUpdateSettings"/>
+  <int value="390" label="TPMFirmwareUpdateSettings"/>
   <int value="391" label="RunAllFlashInAllowMode"/>
   <int value="392" label="AutoFillCreditCardEnabled"/>
-  <int value="393" label="NtlmV2Enabled"/>
+  <int value="393" label="AllowUserAvatarVideos"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
@@ -13786,12 +13614,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1193" label="NETWORKINGPRIVATE_SELECTCELLULARMOBILENETWORK"/>
   <int value="1194" label="PASSWORDSPRIVATE_IMPORTPASSWORDS"/>
   <int value="1195" label="PASSWORDSPRIVATE_EXPORTPASSWORDS"/>
-  <int value="1196"
-      label="PASSWORDSPRIVATE_UNDOREMOVESAVEDPASSWORDOREXCEPTION"/>
+  <int value="1196" label="LANGUAGESETTINGSPRIVATE_SETTRANSLATEFORLANGUAGE"/>
   <int value="1197"
-      label="ACCESSIBILITY_PRIVATE_SETNATIVECHROMEVOXARCSUPPORTFORCURRENTAPP"/>
+      label="PASSWORDSPRIVATE_UNDOREMOVESAVEDPASSWORDOREXCEPTION"/>
   <int value="1198"
-      label="LANGUAGESETTINGSPRIVATE_SETENABLETRANSLATIONFORLANGUAGE"/>
+      label="ACCESSIBILITY_PRIVATE_SETNATIVECHROMEVOXARCSUPPORTFORCURRENTAPP"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -16681,12 +16508,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2184" label="CrossOriginWorkerTextHtml"/>
   <int value="2185" label="CrossOriginWorkerTextPlain"/>
   <int value="2186" label="CrossOriginWorkerTextXml"/>
-  <int value="2187" label="ImageCaptureSetOptions"/>
-  <int value="2188" label="PerformanceObserverForWindow"/>
-  <int value="2189" label="PerformanceObserverForWorker"/>
-  <int value="2190" label="PaintTimingObserved"/>
-  <int value="2191" label="PaintTimingRequested"/>
-  <int value="2192" label="HTMLMediaElementMediaPlaybackRateOutOfRange"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -17532,7 +17353,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="10" label="DRIVE_SHARED_WITH_ME"/>
   <int value="11" label="DRIVE_RECENT"/>
   <int value="12" label="MEDIA_VIEW"/>
-  <int value="13" label="RECENT"/>
 </enum>
 
 <enum name="FileManagerVolumeType">
@@ -17556,9 +17376,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="7" label="File contents internally deleted."/>
   <int value="8" label="File processing was postponed due to filtering."/>
   <int value="9" label="File was skipped/deleted due to filtering."/>
-  <int value="10" label="File was older than maximum allowed age."/>
-  <int value="11" label="File made for too many files in the directory."/>
-  <int value="12" label="File made for too many bytes in the directory."/>
 </enum>
 
 <enum name="FileMetricsProviderEmbeddedProfileResult">
@@ -19700,7 +19517,7 @@ uploading your change for review.  These are checked by presubmit scripts.
              AMD"/>
 </enum>
 
-<enum name="GpuImageUsageState">
+<enum name="GpuImageDecodeState">
   <int value="0" label="Wasted, once"/>
   <int value="1" label="Used, once"/>
   <int value="2" label="Wasted, relocked"/>
@@ -19903,8 +19720,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-2055973512" label="Login.ConsumerNewUsersAllowed"/>
   <int value="-2021219906"
       label="DataUse.MessageSize.AllServices.Downstream.Foreground.NotCellular"/>
-  <int value="-1724216561"
-      label="Extensions.Functions.SucceededTime.LessThan1ms"/>
   <int value="-1620411628"
       label="DataUse.MessageSize.AllServices.Downstream.Unknown.NotCellular"/>
   <int value="-1607339868"
@@ -19931,7 +19746,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="DataUse.MessageSize.AllServices.Downstream.Unknown.Cellular"/>
   <int value="424952287"
       label="Network.Shill.Wifi.LinkMonitorResponseTimeSample"/>
-  <int value="433324211" label="Extensions.FunctionCalls"/>
   <int value="628921860"
       label="Network.Shill.Ethernet.LinkMonitorResponseTimeSample"/>
   <int value="662206917"
@@ -19940,7 +19754,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="DataUse.MessageSize.AllServices.Upstream.Foreground.Cellular"/>
   <int value="1370064090"
       label="DataUse.MessageSize.AllServices.Upstream.Background.Cellular"/>
-  <int value="1514844119" label="DataUse.Sync.Upload.Bytes"/>
   <int value="1753226325"
       label="DataUse.MessageSize.AllServices.Downstream.Foreground.Cellular"/>
   <int value="1977321258"
@@ -21554,7 +21367,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="5" label="Error: Invalid advertisement interval"/>
   <int value="6" label="Error: Reset advertising"/>
   <int value="7" label="Invalid advertisement error code"/>
-  <int value="8" label="Unknown result"/>
 </enum>
 
 <enum name="InstantTethering_ConnectionToHostResult_Failure">
@@ -23393,12 +23205,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="Success"/>
 </enum>
 
-<enum name="LocalStorageRendererAreaCacheHitEnum">
-  <int value="0" label="Area was not present in cache"/>
-  <int value="1" label="Area with no references loaded from cache"/>
-  <int value="2" label="Area with references loaded"/>
-</enum>
-
 <enum name="LockScreenActionAvailability">
   <int value="0" label="Available"/>
   <int value="1" label="Not available - no action handler app"/>
@@ -23607,7 +23413,6 @@ from previous Chrome versions.
   <int value="-1860481724" label="ChromeHomeExpandButton:enabled"/>
   <int value="-1856902397" label="LoadingWithMojo:enabled"/>
   <int value="-1849706663" label="enable-password-force-saving:disabled"/>
-  <int value="-1847888049" label="AutofillSendBillingCustomerNumber:enabled"/>
   <int value="-1847835522" label="disable-touch-adjustment"/>
   <int value="-1847776781"
       label="enable-loading-ipc-optimization-for-small-resources"/>
@@ -23671,11 +23476,9 @@ from previous Chrome versions.
   <int value="-1648216169" label="NewOmniboxAnswerTypes:disabled"/>
   <int value="-1634878515" label="ChromeHomeModernLayout:enabled"/>
   <int value="-1634154256" label="ZeroSuggestRedirectToChrome:enabled"/>
-  <int value="-1633586675" label="TabModalJsDialog:enabled"/>
   <int value="-1631329950" label="ssl-version-max"/>
   <int value="-1630419335" label="enable-download-notification"/>
   <int value="-1624854957" label="enable-es3-apis"/>
-  <int value="-1620804800" label="NoScriptPreviews:disabled"/>
   <int value="-1620568042" label="FeaturePolicy:disabled"/>
   <int value="-1619757314" label="touch-scrolling-mode"/>
   <int value="-1618707999" label="enable-webfonts-intervention-v2"/>
@@ -23717,7 +23520,6 @@ from previous Chrome versions.
   <int value="-1510839574" label="disable-sync-synced-notifications"/>
   <int value="-1508852757" label="CreditCardAutofillTouchBar:disabled"/>
   <int value="-1504305449" label="NTPPhysicalWebPageSuggestions:enabled"/>
-  <int value="-1498334893" label="ExperimentalVRFeatures:enabled"/>
   <int value="-1497338981" label="disable-accelerated-overflow-scroll"/>
   <int value="-1492589689" label="ContentSuggestionsCategories:enabled"/>
   <int value="-1491417046" label="enable-fullscreen-toolbar-reveal"/>
@@ -23737,7 +23539,6 @@ from previous Chrome versions.
   <int value="-1468126425" label="ResourceLoadScheduler:disabled"/>
   <int value="-1467332609" label="tab-management-experiment-type-anise"/>
   <int value="-1466990325" label="CrosCompUpdates:enabled"/>
-  <int value="-1466759286" label="TabModalJsDialog:disabled"/>
   <int value="-1463410070" label="IPH_DemoMode:enabled"/>
   <int value="-1461261930" label="OutOfBlinkCORS:disabled"/>
   <int value="-1460462432" label="disable-media-source"/>
@@ -23755,8 +23556,6 @@ from previous Chrome versions.
   <int value="-1426817842" label="BlockTabUnders:enabled"/>
   <int value="-1426034869" label="NoCreditCardAbort:enabled"/>
   <int value="-1419788257" label="enable-experimental-hotwording"/>
-  <int value="-1417122729"
-      label="AutofillCreditCardAblationExperiment:disabled"/>
   <int value="-1416754663" label="enable-mac-views-native-app-windows"/>
   <int value="-1416184931" label="TranslateRankerEnforcement:enabled"/>
   <int value="-1411003295" label="disable-encrypted-media"/>
@@ -23807,7 +23606,6 @@ from previous Chrome versions.
   <int value="-1262152606" label="disable-lock-screen-apps"/>
   <int value="-1254070521" label="enable-slimming-paint-invalidation"/>
   <int value="-1251411236" label="disable-new-md-input-view"/>
-  <int value="-1248478422" label="enable-zip-archiver-packer"/>
   <int value="-1246840031" label="OptInImeMenu:disabled"/>
   <int value="-1241747717" label="enable-android-password-link"/>
   <int value="-1235586511" label="enable-datasaver-prompt"/>
@@ -23886,7 +23684,6 @@ from previous Chrome versions.
   <int value="-1033738911" label="enable-mac-views-dialogs"/>
   <int value="-1029920490" label="IdleTimeSpellChecking:enabled"/>
   <int value="-1028733699" label="MacViewsWebUIDialogs:disabled"/>
-  <int value="-1027124889" label="NtlmV2Enabled:enabled"/>
   <int value="-1022971520" label="enable-search-button-in-omnibox-for-str"/>
   <int value="-1022165708" label="BreakingNewsPush:disabled"/>
   <int value="-1020450980" label="gesture-deletion"/>
@@ -23937,7 +23734,6 @@ from previous Chrome versions.
   <int value="-881447505" label="ash-disable-shelf-model-synchronization"/>
   <int value="-881054479" label="WebAssemblyStreaming:disabled"/>
   <int value="-879031960" label="FetchKeepaliveTimeoutSetting:disabled"/>
-  <int value="-876773752" label="enable-tablet-splitview"/>
   <int value="-876148583" label="ArcBootCompletedBroadcast:disabled"/>
   <int value="-867087281" label="enable-virtual-keyboard"/>
   <int value="-866993841" label="OfflinePagesCTV2:disabled"/>
@@ -24004,10 +23800,8 @@ from previous Chrome versions.
   <int value="-697751423" label="disable-quickoffice-component-app"/>
   <int value="-684900739" label="disable-merge-key-char-events"/>
   <int value="-684223908" label="enable-android-wallpapers-app"/>
-  <int value="-680787130" label="ExperimentalVRFeatures:disabled"/>
   <int value="-680589442" label="MacRTL:disabled"/>
   <int value="-671992446" label="TranslateRankerEnforcement:disabled"/>
-  <int value="-670188266" label="enable-zip-archiver-unpacker"/>
   <int value="-667517406" label="overscroll-history-navigation"/>
   <int value="-666508951" label="CrOSContainer:enabled"/>
   <int value="-663476391" label="enable-pixel-canvas-recording:enabled"/>
@@ -24135,7 +23929,6 @@ from previous Chrome versions.
       label="CrossOriginMediaPlaybackRequiresUserGesture:disabled"/>
   <int value="-290672626" label="enable-asm-wasm"/>
   <int value="-288316828" label="enable-delegated-renderer"/>
-  <int value="-281844827" label="AutofillCreditCardAblationExperiment:enabled"/>
   <int value="-279920685" label="affiliation-based-matching:enabled"/>
   <int value="-279493876" label="WebVRExperimentalRendering:enabled"/>
   <int value="-278347667" label="default-tile-height"/>
@@ -24301,7 +24094,6 @@ from previous Chrome versions.
   <int value="278756320" label="disable-app-list-app-info"/>
   <int value="280644887" label="mash"/>
   <int value="283232244" label="OmniboxUIExperimentNarrowDropdown:enabled"/>
-  <int value="293134455" label="AutofillSendBillingCustomerNumber:disabled"/>
   <int value="301869874" label="NTPPhysicalWebPageSuggestions:disabled"/>
   <int value="303058039" label="AccountConsistency:disabled"/>
   <int value="304901781" label="NewUsbBackend:enabled"/>
@@ -24459,7 +24251,6 @@ from previous Chrome versions.
   <int value="719267310"
       label="KeepAliveRendererForKeepaliveRequests:disabled"/>
   <int value="721225492" label="PolicyTool:enabled"/>
-  <int value="723619383" label="TopSitesFromSiteEngagement:enabled"/>
   <int value="724208771" label="TabsInCBD:enabled"/>
   <int value="730024226" label="enable-out-of-process-pdf"/>
   <int value="730750097" label="PermissionsBlacklist:disabled"/>
@@ -24502,7 +24293,6 @@ from previous Chrome versions.
   <int value="867512869" label="mark-non-secure-as"/>
   <int value="869531646" label="enable-session-crashed-bubble"/>
   <int value="871713352" label="ImprovedLanguageSettings:enabled"/>
-  <int value="878773995" label="ChromeHomeBottomNavLabels:disabled"/>
   <int value="879699575" label="disable-gesture-tap-highlight"/>
   <int value="879992337" label="disable-pull-to-refresh-effect"/>
   <int value="880510010" label="enable-permissions-bubbles"/>
@@ -24518,7 +24308,6 @@ from previous Chrome versions.
   <int value="908523940" label="PassiveEventListenersDueToFling:disabled"/>
   <int value="909439558" label="disable-device-discovery"/>
   <int value="916316159" label="disable-new-app-list-mixer"/>
-  <int value="918046854" label="NtlmV2Enabled:disabled"/>
   <int value="926852901" label="DataReductionProxyMainMenu:disabled"/>
   <int value="929462705" label="disable-link-disambiguation-popup"/>
   <int value="935655516" label="password-import-export:disabled"/>
@@ -24531,7 +24320,6 @@ from previous Chrome versions.
   <int value="943319566" label="enable-intent-picker"/>
   <int value="946688335" label="OmniboxSpareRenderer:disabled"/>
   <int value="952558794" label="enable-remote-assistance"/>
-  <int value="955340765" label="ChromeHomeOptOutSnackbar:enabled"/>
   <int value="963457392" label="ChromeHomeModernLayout:disabled"/>
   <int value="979445973" label="OmniboxSpareRenderer:enabled"/>
   <int value="980396200" label="enable-new-korean-ime"/>
@@ -24643,7 +24431,6 @@ from previous Chrome versions.
   <int value="1253698118" label="ash-disable-stable-overview-order"/>
   <int value="1257980502" label="disable-accelerated-video-decode"/>
   <int value="1260186484" label="spurious-power-button-screen-accel"/>
-  <int value="1261713150" label="ChromeHomeOptOutSnackbar:disabled"/>
   <int value="1266886673" label="delay-reload-stop-button-change"/>
   <int value="1268470658" label="disable-android-password-link"/>
   <int value="1269940659" label="EnumerateAudioDevices:enabled"/>
@@ -24673,8 +24460,6 @@ from previous Chrome versions.
   <int value="1320201920" label="enable-touchpad-three-finger-click"/>
   <int value="1330029351" label="AutofillUpstreamShowGoogleLogo:disabled"/>
   <int value="1330264457" label="OmniboxUIExperimentVerticalLayout:disabled"/>
-  <int value="1333847867" label="NoScriptPreviews:enabled"/>
-  <int value="1339426771" label="TopSitesFromSiteEngagement:disabled"/>
   <int value="1340690624" label="WebPaymentsMethodSectionOrderV2:disabled"/>
   <int value="1344833841" label="ImeThread:enabled"/>
   <int value="1351830811" label="do-not-ignore-autocomplete-off"/>
@@ -24853,7 +24638,6 @@ from previous Chrome versions.
   <int value="1851085023" label="PwaMinimalUi:enabled"/>
   <int value="1852630189" label="NTPBookmarkSuggestions:disabled"/>
   <int value="1855524566" label="allow-insecure-websocket-from-https-origin"/>
-  <int value="1858385315" label="ChromeHomeBottomNavLabels:enabled"/>
   <int value="1860597983" label="AndroidSpellChecker:disabled"/>
   <int value="1861251313"
       label="enable-message-center-always-scroll-up-upon-notification-removal"/>
@@ -26000,15 +25784,9 @@ from previous Chrome versions.
 <enum name="MarkHttpAsStatus">
   <int value="0" label="Neutral (deprecated February 2017)"/>
   <int value="1" label="Non-Secure"/>
-  <int value="2"
-      label="Neutral with a verbose warning on sensitive fields (deprecated
-             October 2017)"/>
-  <int value="3"
-      label="Neutral with a verbose warning after editing a form (deprecated
-             October 2017)"/>
-  <int value="4"
-      label="Neutral with a verbose warning in Incognito mode (deprecated
-             October 2017)"/>
+  <int value="2" label="Neutral with a verbose warning on sensitive fields"/>
+  <int value="3" label="Neutral with a verbose warning after editing a form"/>
+  <int value="4" label="Neutral with a verbose warning in Incognito mode"/>
   <int value="5"
       label="Neutral with a verbose warning after editing a form or in
              Incognito mode"/>
@@ -27286,11 +27064,8 @@ from previous Chrome versions.
       label="Persistent sparse histogram accumulated a negative count that
              caused a negative value."/>
   <int value="7"
-      label="Persistent sparse histogram active sample was negative after
-             accumulation (deprecated)."/>
-  <int value="8"
-      label="Persistent sparse histogram active sample wrapped 2^31 during
-             accumulation."/>
+      label="Persistent sparse histogram active sample overflowed during
+             accumulation and became negative."/>
 </enum>
 
 <enum name="NetCacheState">
@@ -28598,16 +28373,6 @@ from previous Chrome versions.
   <int value="3" label="User clicked notification settings (disabled on O+)"/>
 </enum>
 
-<enum name="OfflinePagesAccessEntryPoint">
-  <int value="0" label="Other"/>
-  <int value="1" label="NTP suggestions or bookmarks"/>
-  <int value="2" label="Downloads home"/>
-  <int value="3" label="Omnibox"/>
-  <int value="4" label="CCT"/>
-  <int value="5" label="Clicking link"/>
-  <int value="6" label="Reloading page"/>
-</enum>
-
 <enum name="OfflinePagesAggregatedRequestResult">
   <int value="0" label="Show offline page on disconnected network"/>
   <int value="1" label="Page not found on disconnected network"/>
@@ -28781,21 +28546,6 @@ from previous Chrome versions.
   <int value="3" label="Online pages loaded only">Only navigated online.</int>
   <int value="4" label="Both offlilne and online pages loaded">
     Navigated to both online and offline pages.
-  </int>
-</enum>
-
-<enum name="OfflinePagesPrefetchUsage">
-  <int value="0" label="Has prefetched pages">
-    Reported when Offline Model DB is loaded.
-  </int>
-  <int value="1" label="Only fetched new pages">
-    Reported when at least one page was prefetched in a day, but none opened.
-  </int>
-  <int value="2" label="Only opened prefetched page">
-    User opened at least one prefetched page, but no new pages were prefetched.
-  </int>
-  <int value="3" label="Both fetched and opened prefetched pages">
-    The pages were both prefetched and opened during the day.
   </int>
 </enum>
 
@@ -28984,9 +28734,6 @@ from previous Chrome versions.
   </int>
   <int value="1000" label="STALE_AT_DOWNLOADING">
     Entry became stale while at the DOWNLOADING state.
-  </int>
-  <int value="1050" label="STALE_AT_IMPORTING">
-    Entry became stale while at the IMPORTING state.
   </int>
   <int value="1100" label="STALE_AT_UNKNOWN">
     Entry became stale at an unknown state.
@@ -32059,17 +31806,6 @@ from previous Chrome versions.
   <int value="12" label="RequestDenied"/>
 </enum>
 
-<enum name="PresentationUrlType">
-  <int value="0" label="Other"/>
-  <int value="1" label="Cast"/>
-  <int value="2" label="CastDial"/>
-  <int value="3" label="CastLegacy"/>
-  <int value="4" label="Dial"/>
-  <int value="5" label="Http"/>
-  <int value="6" label="Https"/>
-  <int value="7" label="RemotePlayback"/>
-</enum>
-
 <enum name="PreTapEvents">
   <int value="0" label="no event"/>
   <int value="1" label="tapdown"/>
@@ -32743,24 +32479,6 @@ from previous Chrome versions.
   <int value="7" label="SAVING_ON_HTTP_AFTER_HTTPS"/>
 </enum>
 
-<enum name="ProximityAuth_BleWeaveConnectionResult">
-  <int value="0" label="Closed normally"/>
-  <int value="1" label="Timeout: Setting connection latency"/>
-  <int value="2" label="Timeout: Creating GATT connection"/>
-  <int value="3" label="Timeout: Starting notify session"/>
-  <int value="4" label="Timeout: Finding GATT characteristics"/>
-  <int value="5" label="Timeout: Waiting for connection response"/>
-  <int value="6" label="Error: Bluetooth device not available"/>
-  <int value="7" label="Error: Creating GATT connection"/>
-  <int value="8" label="Error: Starting notify session"/>
-  <int value="9" label="Error: Finding GATT characteristics"/>
-  <int value="10" label="Error: Writing GATT characteristics"/>
-  <int value="11" label="Error: GATT characteristics not available"/>
-  <int value="12" label="Error: Write queue out of sync"/>
-  <int value="13" label="Error: Device lost"/>
-  <int value="14" label="Error: Connection dropped"/>
-</enum>
-
 <enum name="ProximityAuth_BluetoothGattConnectionResult">
   <int value="0" label="Success"/>
   <int value="1" label="Error: Auth canceled"/>
@@ -32771,7 +32489,6 @@ from previous Chrome versions.
   <int value="6" label="Error: In progress"/>
   <int value="7" label="Error: Unknown"/>
   <int value="8" label="Error: Unsupported device"/>
-  <int value="9" label="Unknown result"/>
 </enum>
 
 <enum name="ProximityAuth_BluetoothGattServiceOperationResult">
@@ -32784,7 +32501,6 @@ from previous Chrome versions.
   <int value="6" label="Error: Not authorized"/>
   <int value="7" label="Error: Not paired"/>
   <int value="8" label="Error: Not supported"/>
-  <int value="9" label="Unknown result"/>
 </enum>
 
 <enum name="ProxyStatus">
@@ -33716,7 +33432,6 @@ from previous Chrome versions.
   <int value="13" label="FrameDeferrable"/>
   <int value="14" label="FramePausable"/>
   <int value="15" label="FrameUnpausable"/>
-  <int value="16" label="V8"/>
 </enum>
 
 <enum name="RendererType">
@@ -33829,7 +33544,6 @@ from previous Chrome versions.
   <int value="88" label="IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN"/>
   <int value="89" label="IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP"/>
   <int value="90" label="IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS"/>
-  <int value="91" label="IDC_CONTENT_CONTENT_PICTUREINPICTURE"/>
 </enum>
 
 <enum name="ReportingHeaderEndpointOutcome">
@@ -36379,7 +36093,6 @@ from previous Chrome versions.
   <int value="19" label="TRANSLATE_NEVER"/>
   <int value="20" label="TRANSLATE_NEVER_SITE"/>
   <int value="21" label="SNIPPET_FETCH_FAILED"/>
-  <int value="22" label="CHROME_HOME_OPT_OUT_SURVEY"/>
 </enum>
 
 <enum name="SnippetOpenMethod">
@@ -37627,14 +37340,6 @@ from previous Chrome versions.
   <int value="1" label="Leave the current page"/>
 </enum>
 
-<enum name="StrongPopupBlockerAction">
-  <int value="0" label="Navigation commit"/>
-  <int value="1" label="Commit warn site"/>
-  <int value="2" label="Commit enforced site"/>
-  <int value="3" label="Popup considered"/>
-  <int value="4" label="Popup blocked"/>
-</enum>
-
 <enum name="StyleSheetCacheStatus">
   <int value="0" label="No usable cache found"/>
   <int value="1" label="DiskCache served the CSS source"/>
@@ -38346,7 +38051,6 @@ would be helpful to identify which type is being sent.
   <int value="0" label="Saved on Chrome sign-in"/>
   <int value="1" label="Saved in the content area"/>
   <int value="2" label="Cleared on Chrome sign-out"/>
-  <int value="3" label="Changed in the content area"/>
 </enum>
 
 <enum name="SyncPromoAction">
@@ -39079,216 +38783,20 @@ would be helpful to identify which type is being sent.
 </enum>
 
 <enum name="TPMVersionFingerprint">
-<!--
-Full version information for the fingerprint enum values:
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000422
-  vendor specific: 042203F20274706D3431FFFFFF
-  version fingerprint: 157181839 095e678f
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000420
-  vendor specific: 0420036F0074706D3431FFFFFF
-  version fingerprint: 305524852 1235f074
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 53544d20
-  tpm_model: ffffffff
-  firmware version: 0000000000000d08
-  vendor specific: 48
-  version fingerprint: 368058567 15f020c7
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000422
-  vendor specific: 042203F20274706D3338FFFFFF
-  version fingerprint: 487001745 1d070e91
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000420
-  vendor specific: 0420036F0074706D3338FFFFFF
-  version fingerprint: 517482723 1ed828e3
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 000000000000062b
-  vendor specific: 062B00F30074706D733135FFFF
-  version fingerprint: 545386023 2081ee27
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000420
-  vendor specific: 0420036F0074706D3335FFFFFF
-  version fingerprint: 639195905 26195b01
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000008521
-  vendor specific: 852100E30274706D3738FFFFFF
-  version fingerprint: 847042924 327cd96c
-
-  TPM family: 322e3000
-  spec level: 0000000000000074
-  manufacturer: 43524f53
-  tpm_model: 00000001
-  firmware version: 0dc5c85b01a68fe6
-  vendor specific: 784347206654504D
-  version fingerprint: 987235505 3ad804b1
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000628
-  vendor specific: 062800BE0074706D733135FFFF
-  version fingerprint: 987973414 3ae34726
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 57454300
-  tpm_model: ffffffff
-  firmware version: 0000000000000345
-  vendor specific:
-  version fingerprint: 1311411160 4e2a8bd8
-
-  TPM family: 312e3200
-  spec level: 0000000200000002
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000312
-  vendor specific: 0312000900
-  version fingerprint: 1353576267 50adef4b
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000008520
-  vendor specific: 852000500074706D3738FFFFFF
-  version fingerprint: 1437720528 55b1dfd0
-
-  TPM family: 312e3200
-  spec level: 0000000200000002
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000009312
-  vendor specific: 9312000F00
-  version fingerprint: 1451134301 567e8d5d
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000008520
-  vendor specific: 852000500074706D3439FFFFFF
-  version fingerprint: 1490841853 58dc70fd
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000008520
-  vendor specific: 852000500074706D3435FFFFFF
-  version fingerprint: 1716634300 6651c2bc
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000008521
-  vendor specific: 852100E30274706D3439FFFFFF
-  version fingerprint: 1733077393 674ca991
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 000000000000041f
-  vendor specific: 041F02C20074706D3332FFFFFF
-  version fingerprint: 1828625721 6cfe9d39
-
-  TPM family: 322e3000
-  spec level: 0000000000000074
-  manufacturer: 43524f53
-  tpm_model: 00000001
-  firmware version: 0fd788bd01a68fe6
-  vendor specific: 784347206654504D
-  version fingerprint: 1887455524 70804924
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000422
-  vendor specific: 042203F20274706D3335FFFFFF
-  version fingerprint: 1941011596 73b17c8c
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000008521
-  vendor specific: 852100E30274706D3435FFFFFF
-  version fingerprint: 1953654937 74726899
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000008521
-  vendor specific: 852100E30074706D3738FFFFFF
-  version fingerprint: 1973986381 75a8a44d
-
-  TPM family: 312e3200
-  spec level: 0000000200000003
-  manufacturer: 49465800
-  tpm_model: ffffffff
-  firmware version: 0000000000000422
-  vendor specific: 042203F20274706D3332FFFFFF
-  version fingerprint: 2024714959 78aeb2cf
--->
-
-  <int value="157181839" label="IFX 9655 rev 41 fw 4.34 build 03f2"/>
-  <int value="305524852" label="IFX 9655 rev 41 fw 4.32 build 036f"/>
-  <int value="368058567" label="STM d08"/>
-  <int value="487001745" label="IFX 9655 rev 38 fw 4.34 build 03f2"/>
-  <int value="517482723" label="IFX 9655 rev 38 fw 4.32 build 036f"/>
-  <int value="545386023" label="IFX 9670 rev 15 fw 6.43 build 00f3"/>
-  <int value="639195905" label="IFX 9655 rev 35 fw 4.32 build 036f"/>
-  <int value="847042924" label="IFX 9645 rev 78 fw 133.33 build 00e3"/>
+  <int value="305524852" label="IFX 4.32 build 0x36f variant 1"/>
+  <int value="368058567" label="STM 0xd08"/>
+  <int value="517482723" label="IFX 4.32 build 0x36f variant 2"/>
+  <int value="639195905" label="IFX 4.32 build 0x36f variant 3"/>
   <int value="987235505" label="CROS 0dc5c85b01a68fe6"/>
-  <int value="987973414" label="IFX 9670 rev 15 fw 6.40 build 00be"/>
-  <int value="1311411160" label="WEC 345"/>
-  <int value="1353576267" label="IFX 9635 fw 3.18 build 0009"/>
-  <int value="1437720528" label="IFX 9645 rev 78 fw 133.32 build 0050"/>
-  <int value="1451134301" label="IFX 9635 147.18 build 000f"/>
-  <int value="1490841853" label="IFX 9645 rev 49 fw 133.32 build 0050"/>
-  <int value="1716634300" label="IFX 9645 rev 45 fw 133.32 build 0050"/>
-  <int value="1733077393" label="IFX 9645 rev 49 fw 133.33 build 00e3"/>
-  <int value="1828625721" label="IFX 9655 rev 32 fw 4.31 build 02c2"/>
+  <int value="987973414" label="IFX 6.40 build 0xbe"/>
+  <int value="1311411160" label="WEC 0x345"/>
+  <int value="1353576267" label="IFX 3.18 build 0x9"/>
+  <int value="1437720528" label="IFX 133.32 build 0x5 variant 1"/>
+  <int value="1451134301" label="IFX 147.18 build 0xf"/>
+  <int value="1490841853" label="IFX 133.32 build 0x5 variant 2"/>
+  <int value="1716634300" label="IFX 133.32 build 0x5 variant 3"/>
+  <int value="1828625721" label="IFX 4.31 build 0x2c2"/>
   <int value="1887455524" label="CROS 0fd788bd01a68fe6"/>
-  <int value="1941011596" label="IFX 9655 rev 35 fw 4.34 build 03f2"/>
-  <int value="1953654937" label="IFX 9645 rev 45 fw 133.33 build 00e3"/>
-  <int value="2024714959" label="IFX 9655 rev 32 fw 4.34 build 03f2"/>
 </enum>
 
 <enum name="TrackedPreference">
@@ -39466,7 +38974,6 @@ Full version information for the fingerprint enum values:
   <int value="9" label="FAILURE_SESSION_RATE"/>
   <int value="10" label="FAILURE_AVAILABILITY_MODEL_NOT_READY"/>
   <int value="11" label="FAILURE_AVAILABILITY_PRECONDITION_UNMET"/>
-  <int value="12" label="SUCCESS_TRACKING_ONLY"/>
 </enum>
 
 <enum name="TrimMemoryLevel">

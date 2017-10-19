@@ -199,11 +199,11 @@ void TaskQueue::RemoveFence() {
   impl_->RemoveFence();
 }
 
-bool TaskQueue::HasActiveFence() {
+bool TaskQueue::HasFence() const {
   DCHECK_CALLED_ON_VALID_THREAD(main_thread_checker_);
   if (!impl_)
     return false;
-  return impl_->HasActiveFence();
+  return impl_->HasFence();
 }
 
 bool TaskQueue::BlockedByFence() const {

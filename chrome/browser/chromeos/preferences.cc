@@ -24,6 +24,7 @@
 #include "chrome/browser/chromeos/input_method/input_method_syncer.h"
 #include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/net/wake_on_wifi_manager.h"
+#include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
@@ -42,7 +43,6 @@
 #include "chromeos/timezone/timezone_resolver.h"
 #include "components/drive/drive_pref_names.h"
 #include "components/feedback/tracing_manager.h"
-#include "components/policy/proto/chrome_device_policy.pb.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -269,35 +269,29 @@ void Preferences::RegisterProfilePrefs(
   registry->RegisterStringPref(prefs::kLanguageEnabledExtensionImes, "");
 
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapSearchKeyTo,
-      static_cast<int>(ui::chromeos::ModifierKey::kSearchKey),
+      prefs::kLanguageRemapSearchKeyTo, ui::chromeos::ModifierKey::kSearchKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF |
           PrefRegistry::PUBLIC);  // Used in ash.
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapControlKeyTo,
-      static_cast<int>(ui::chromeos::ModifierKey::kControlKey),
+      prefs::kLanguageRemapControlKeyTo, ui::chromeos::ModifierKey::kControlKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapAltKeyTo,
-      static_cast<int>(ui::chromeos::ModifierKey::kAltKey),
+      prefs::kLanguageRemapAltKeyTo, ui::chromeos::ModifierKey::kAltKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   // We don't sync the CapsLock remapping pref, since the UI hides this pref
   // on certain devices, so syncing a non-default value to a device that
   // doesn't allow changing the pref would be odd. http://crbug.com/167237
+  registry->RegisterIntegerPref(prefs::kLanguageRemapCapsLockKeyTo,
+                                ui::chromeos::ModifierKey::kCapsLockKey);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapCapsLockKeyTo,
-      static_cast<int>(ui::chromeos::ModifierKey::kCapsLockKey));
-  registry->RegisterIntegerPref(
-      prefs::kLanguageRemapEscapeKeyTo,
-      static_cast<int>(ui::chromeos::ModifierKey::kEscapeKey),
+      prefs::kLanguageRemapEscapeKeyTo, ui::chromeos::ModifierKey::kEscapeKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
       prefs::kLanguageRemapBackspaceKeyTo,
-      static_cast<int>(ui::chromeos::ModifierKey::kBackspaceKey),
+      ui::chromeos::ModifierKey::kBackspaceKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapDiamondKeyTo,
-      static_cast<int>(ui::chromeos::ModifierKey::kControlKey),
+      prefs::kLanguageRemapDiamondKeyTo, ui::chromeos::ModifierKey::kControlKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   // The following pref isn't synced since the user may desire a different value
   // depending on whether an external keyboard is attached to a particular
@@ -316,12 +310,17 @@ void Preferences::RegisterProfilePrefs(
       language_prefs::kXkbAutoRepeatIntervalInMs,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 
+  registry->RegisterBooleanPref(
+      prefs::kEnableStylusTools, true,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  registry->RegisterBooleanPref(
+      prefs::kLaunchPaletteOnEjectEvent, true,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   // Don't sync the note-taking app; it may not be installed on other devices.
   registry->RegisterStringPref(prefs::kNoteTakingAppId, std::string());
   registry->RegisterBooleanPref(prefs::kNoteTakingAppEnabledOnLockScreen, true);
   registry->RegisterListPref(prefs::kNoteTakingAppsLockScreenWhitelist);
   registry->RegisterBooleanPref(prefs::kRestoreLastLockScreenNote, true);
-  registry->RegisterDictionaryPref(prefs::kNoteTakingAppsLockScreenToastShown);
 
   // We don't sync wake-on-wifi related prefs because they are device specific.
   registry->RegisterBooleanPref(prefs::kWakeOnWifiDarkConnect, true);

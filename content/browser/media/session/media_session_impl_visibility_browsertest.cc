@@ -63,12 +63,7 @@ class MediaSessionImplVisibilityBrowserTest
     : public ContentBrowserTest,
       public ::testing::WithParamInterface<VisibilityTestData> {
  public:
-  MediaSessionImplVisibilityBrowserTest() {
-    VisibilityTestData params = GetVisibilityTestData();
-    EnableDisableResumingBackgroundVideos(params.background_resuming ==
-                                          BackgroundResuming::ENABLED);
-  }
-
+  MediaSessionImplVisibilityBrowserTest() = default;
   ~MediaSessionImplVisibilityBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
@@ -114,6 +109,14 @@ class MediaSessionImplVisibilityBrowserTest
       command_line->AppendSwitch(switches::kEnableMediaSuspend);
     else
       command_line->AppendSwitch(switches::kDisableMediaSuspend);
+
+    if (params.background_resuming == BackgroundResuming::ENABLED) {
+      command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                      media::kResumeBackgroundVideo.name);
+    } else {
+      command_line->AppendSwitchASCII(switches::kDisableFeatures,
+                                      media::kResumeBackgroundVideo.name);
+    }
   }
 
   const VisibilityTestData& GetVisibilityTestData() {
@@ -222,8 +225,6 @@ class MediaSessionImplVisibilityBrowserTest
     }
   }
 
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   WebContents* web_contents_;
   MediaSessionImpl* media_session_;
   // MessageLoopRunners for waiting MediaSession state to change. Note that the
@@ -237,6 +238,7 @@ class MediaSessionImplVisibilityBrowserTest
   std::unique_ptr<
       base::CallbackList<void(MediaSessionImpl::State)>::Subscription>
       media_session_state_callback_subscription_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaSessionImplVisibilityBrowserTest);
 };

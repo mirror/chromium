@@ -10,7 +10,6 @@
 #include "base/time/default_tick_clock.h"
 #include "base/time/time.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
-#include "services/metrics/public/cpp/ukm_source_id.h"
 #include "services/resource_coordinator/observers/background_metrics_reporter.h"
 #include "services/resource_coordinator/observers/coordination_unit_graph_observer.h"
 
@@ -53,9 +52,9 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   void OnPageEventReceived(const PageCoordinationUnitImpl* page_cu,
                            const mojom::Event event) override;
 
-  void SetClockForTest(base::TickClock* test_clock);
-
  private:
+  friend class MetricsCollectorTest;
+
   struct MetricsReportRecord {
     MetricsReportRecord();
     MetricsReportRecord(const MetricsReportRecord& other);
@@ -89,14 +88,20 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
         first_title_updated;
   };
 
-  // TODO(lpy): Move the FrameData to the FrameCoordinationUnitImpl
   struct FrameData {
     base::TimeTicks last_audible_time;
   };
 
+  struct PageData {
+    base::TimeTicks last_invisible_time;
+    base::TimeTicks navigation_finished_time;
+  };
+
   struct UkmCPUUsageCollectionState {
     size_t num_cpu_usage_measurements = 0u;
-    ukm::SourceId ukm_source_id = ukm::kInvalidSourceId;
+    // |ukm::UkmRecorder::GetNewSourceID| monotonically increases starting at 0,
+    // so -1 implies that the current |ukm_source_id| is invalid.
+    ukm::SourceId ukm_source_id = -1;
   };
 
   bool ShouldReportMetrics(const PageCoordinationUnitImpl* page_cu);
@@ -114,6 +119,7 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   base::DefaultTickClock default_tick_clock_;
   base::TickClock* const clock_;
   std::map<CoordinationUnitID, FrameData> frame_data_map_;
+  std::map<CoordinationUnitID, PageData> page_data_map_;
   // The metrics_report_record_map_ is used to record whether a metric was
   // already reported to avoid reporting multiple metrics.
   std::map<CoordinationUnitID, MetricsReportRecord> metrics_report_record_map_;

@@ -46,8 +46,7 @@ bool LayerTreeFrameSink::BindToClient(LayerTreeFrameSinkClient* client) {
   bool success = true;
 
   if (context_provider_.get()) {
-    auto result = context_provider_->BindToCurrentThread();
-    success = result == gpu::ContextResult::kSuccess;
+    success = context_provider_->BindToCurrentThread();
     if (success) {
       context_provider_->SetLostContextCallback(
           base::Bind(&LayerTreeFrameSink::DidLoseLayerTreeFrameSink,

@@ -7,7 +7,6 @@
 #include <dwrite_2.h>
 #include <usp10.h>
 #include <wrl.h>
-#include <wrl/client.h>
 
 #include <algorithm>
 #include <map>
@@ -20,6 +19,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/win/registry.h"
+#include "base/win/scoped_comptr.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_fallback.h"
 #include "ui/gfx/platform_font_win.h"
@@ -350,22 +350,22 @@ bool GetFallbackFont(const Font& font,
   DCHECK_GE(wcslen(text), static_cast<size_t>(text_length));
   text_length = std::min(wcslen(text), static_cast<size_t>(text_length));
 
-  Microsoft::WRL::ComPtr<IDWriteFactory> factory;
+  base::win::ScopedComPtr<IDWriteFactory> factory;
   gfx::win::CreateDWriteFactory(factory.GetAddressOf());
-  Microsoft::WRL::ComPtr<IDWriteFactory2> factory2;
+  base::win::ScopedComPtr<IDWriteFactory2> factory2;
   factory.CopyTo(factory2.GetAddressOf());
   if (!factory2) {
     // IDWriteFactory2 is not available before Win8.1
     return GetUniscribeFallbackFont(font, text, text_length, result);
   }
 
-  Microsoft::WRL::ComPtr<IDWriteFontFallback> fallback;
+  base::win::ScopedComPtr<IDWriteFontFallback> fallback;
   if (FAILED(factory2->GetSystemFontFallback(fallback.GetAddressOf())))
     return false;
 
   base::string16 locale = base::UTF8ToUTF16(base::i18n::GetConfiguredLocale());
 
-  Microsoft::WRL::ComPtr<IDWriteNumberSubstitution> number_substitution;
+  base::win::ScopedComPtr<IDWriteNumberSubstitution> number_substitution;
   if (FAILED(factory2->CreateNumberSubstitution(
           DWRITE_NUMBER_SUBSTITUTION_METHOD_NONE, locale.c_str(),
           true /* ignoreUserOverride */, number_substitution.GetAddressOf()))) {
@@ -373,13 +373,13 @@ bool GetFallbackFont(const Font& font,
   }
 
   uint32_t mapped_length = 0;
-  Microsoft::WRL::ComPtr<IDWriteFont> mapped_font;
+  base::win::ScopedComPtr<IDWriteFont> mapped_font;
   float scale = 0;
-  Microsoft::WRL::ComPtr<IDWriteTextAnalysisSource> text_analysis;
+  base::win::ScopedComPtr<IDWriteTextAnalysisSource> text_analysis;
   DWRITE_READING_DIRECTION reading_direction =
       base::i18n::IsRTL() ? DWRITE_READING_DIRECTION_RIGHT_TO_LEFT
                           : DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
-  if (FAILED(gfx::win::TextAnalysisSource::Create(
+  if (FAILED(Microsoft::WRL::MakeAndInitialize<gfx::win::TextAnalysisSource>(
           text_analysis.GetAddressOf(), text, locale.c_str(),
           number_substitution.Get(), reading_direction))) {
     return false;

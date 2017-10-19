@@ -25,6 +25,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "content/grit/content_resources.h"
 #include "content/public/child/v8_value_converter.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -277,7 +278,6 @@ Dispatcher::~Dispatcher() {
 
 void Dispatcher::OnRenderFrameCreated(content::RenderFrame* render_frame) {
   script_injection_manager_->OnRenderFrameCreated(render_frame);
-  content_watcher_->OnRenderFrameCreated(render_frame);
 }
 
 bool Dispatcher::IsExtensionActive(const std::string& extension_id) const {
@@ -567,6 +567,13 @@ void Dispatcher::DidCreateDocumentElement(blink::WebLocalFrame* frame) {
             IDR_EXTENSION_CSS);
     frame->GetDocument().InsertStyleSheet(
         WebString::FromUTF8(extension_css.data(), extension_css.length()));
+  }
+
+  // In testing, the document lifetime events can happen after the render
+  // process shutdown event.
+  // See: http://crbug.com/21508 and http://crbug.com/500851
+  if (content_watcher_) {
+    content_watcher_->DidCreateDocumentElement(frame);
   }
 }
 
@@ -889,7 +896,8 @@ bool Dispatcher::OnControlMessageReceived(const IPC::Message& message) {
 void Dispatcher::IdleNotification() {
   if (set_idle_notifications_ && forced_idle_timer_) {
     // Dampen the forced delay as well if the extension stays idle for long
-    // periods of time.
+    // periods of time. (forced_idle_timer_ can be NULL after
+    // OnRenderProcessShutdown has been called.)
     int64_t forced_delay_ms =
         std::max(RenderThread::Get()->GetIdleNotificationDelayInMs(),
                  kMaxExtensionIdleHandlerDelayMs);
@@ -900,6 +908,16 @@ void Dispatcher::IdleNotification() {
         RenderThread::Get(),
         &RenderThread::IdleHandler);
   }
+}
+
+void Dispatcher::OnRenderProcessShutdown() {
+  v8_schema_registry_.reset();
+  forced_idle_timer_.reset();
+  content_watcher_.reset();
+  script_context_set_->ForEach(
+      std::string(), nullptr,
+      base::Bind(&ScriptContextSet::Remove,
+                 base::Unretained(script_context_set_.get())));
 }
 
 void Dispatcher::OnActivateExtension(const std::string& extension_id) {
@@ -922,13 +940,6 @@ void Dispatcher::OnActivateExtension(const std::string& extension_id) {
                    error.c_str());
     LOG(FATAL) << extension_id << " was never loaded: " << error;
   }
-
-  // It's possible that the same extension might generate multiple activation
-  // messages, for example from an extension background page followed by an
-  // extension subframe on a regular tab.  Ensure that any given extension is
-  // only activated once.
-  if (IsExtensionActive(extension_id))
-    return;
 
   active_extension_ids_.insert(extension_id);
 

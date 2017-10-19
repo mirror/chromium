@@ -9,7 +9,6 @@
 #include "core/css/CSSValueIDMappings.h"
 #include "core/css/StylePropertySet.h"
 #include "platform/fonts/FontDescription.h"
-#include "platform/fonts/FontSelector.h"
 
 namespace blink {
 
@@ -21,7 +20,7 @@ class CORE_EXPORT FontStyleResolver {
   STATIC_ONLY(FontStyleResolver);
 
  public:
-  static FontDescription ComputeFont(const StylePropertySet&, FontSelector*);
+  static FontDescription ComputeFont(const StylePropertySet&);
 };
 
 }  // namespace blink

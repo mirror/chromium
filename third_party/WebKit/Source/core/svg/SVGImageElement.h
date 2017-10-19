@@ -42,7 +42,7 @@ class CORE_EXPORT SVGImageElement final
 
  public:
   DECLARE_NODE_FACTORY(SVGImageElement);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   bool CurrentFrameHasSingleSecurityOrigin() const;
 
@@ -62,7 +62,7 @@ class CORE_EXPORT SVGImageElement final
 
   // Exposed for testing.
   ImageResourceContent* CachedImage() const {
-    return GetImageLoader().GetContent();
+    return GetImageLoader().GetImage();
   }
 
  private:
@@ -77,7 +77,6 @@ class CORE_EXPORT SVGImageElement final
                                             MutableStylePropertySet*) override;
 
   void SvgAttributeChanged(const QualifiedName&) override;
-  void ParseAttribute(const AttributeModificationParams&) override;
 
   void AttachLayoutTree(AttachContext&) override;
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;

@@ -5,7 +5,6 @@ document http://127.0.0.1:8000/devtools/resource-tree/resource-tree-htmlimports.
 document http://127.0.0.1:8000/devtools/resource-tree/resources/import-child.html
 document http://127.0.0.1:8000/devtools/resource-tree/resources/import-hello.html
 script http://127.0.0.1:8000/devtools/resource-tree/resources/import-hello.js
-script http://127.0.0.1:8000/inspector/debugger-test.js
 script http://127.0.0.1:8000/inspector/inspector-test.js
 script http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js
 script http://127.0.0.1:8000/inspector/resources-test.js
@@ -15,7 +14,6 @@ http://127.0.0.1:8000/devtools/resource-tree/resource-tree-htmlimports.html == h
 http://127.0.0.1:8000/devtools/resource-tree/resources/import-child.html == http://127.0.0.1:8000/devtools/resource-tree/resources/import-child.html
 http://127.0.0.1:8000/devtools/resource-tree/resources/import-hello.html == http://127.0.0.1:8000/devtools/resource-tree/resources/import-hello.html
 http://127.0.0.1:8000/devtools/resource-tree/resources/import-hello.js == http://127.0.0.1:8000/devtools/resource-tree/resources/import-hello.js
-http://127.0.0.1:8000/inspector/debugger-test.js == http://127.0.0.1:8000/inspector/debugger-test.js
 http://127.0.0.1:8000/inspector/inspector-test.js == http://127.0.0.1:8000/inspector/inspector-test.js
 http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js == http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js
 http://127.0.0.1:8000/inspector/resources-test.js == http://127.0.0.1:8000/inspector/resources-test.js
@@ -24,7 +22,6 @@ Resources Tree:
 Frames
     top
         Scripts
-            debugger-test.js
             import-hello.js
             inspector-test.js
             resource-tree-test.js
@@ -38,7 +35,6 @@ top
   import-child.html
   import-hello.html
   resource-tree-htmlimports.html
-  debugger-test.js
   import-hello.js
   inspector-test.js
   resource-tree-test.js
@@ -50,7 +46,6 @@ top
     import-child.html
     import-hello.html
     resource-tree-htmlimports.html
-    debugger-test.js
     import-hello.js
     inspector-test.js
     resource-tree-test.js
@@ -68,7 +63,6 @@ top
     inspector
       resource-tree
         resource-tree-test.js
-      debugger-test.js
       inspector-test.js
       resources-test.js
 Sources:
@@ -77,7 +71,6 @@ Sources:
   import-child.html
   import-hello.html
   resource-tree-htmlimports.html
-  debugger-test.js
   import-hello.js
   inspector-test.js
   resource-tree-test.js
@@ -94,7 +87,6 @@ Sources:
   inspector
     resource-tree
       resource-tree-test.js
-    debugger-test.js
     inspector-test.js
     resources-test.js
 

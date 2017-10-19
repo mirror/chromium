@@ -28,7 +28,7 @@ class ArcOemCryptoClientImpl : public ArcOemCryptoClient {
                                VoidDBusMethodCallback callback) override {
     if (!service_available_) {
       DVLOG(1) << "ArcOemCrypto D-Bus service not available";
-      std::move(callback).Run(false);
+      std::move(callback).Run(DBUS_METHOD_CALL_FAILURE);
       return;
     }
     dbus::MethodCall method_call(arc_oemcrypto::kArcOemCryptoServiceInterface,
@@ -56,7 +56,8 @@ class ArcOemCryptoClientImpl : public ArcOemCryptoClient {
   // Runs the callback with the method call result.
   void OnVoidDBusMethod(VoidDBusMethodCallback callback,
                         dbus::Response* response) {
-    std::move(callback).Run(response != nullptr);
+    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
+                                     : DBUS_METHOD_CALL_FAILURE);
   }
 
   void OnServiceAvailable(bool service_is_available) {

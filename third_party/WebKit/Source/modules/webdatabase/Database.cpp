@@ -279,7 +279,7 @@ Database::~Database() {
   DCHECK(!opened_);
 }
 
-void Database::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Database) {
   visitor->Trace(database_context_);
   visitor->Trace(sqlite_database_);
   visitor->Trace(database_authorizer_);
@@ -858,7 +858,7 @@ void Database::CloseImmediately() {
   if (GetDatabaseContext()->DatabaseThreadAvailable() && Opened()) {
     LogErrorMessage("forcibly closing database");
     GetDatabaseContext()->GetDatabaseThread()->ScheduleTask(
-        DatabaseCloseTask::Create(this, nullptr));
+        DatabaseCloseTask::Create(this, 0));
   }
 }
 

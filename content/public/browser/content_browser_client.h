@@ -59,6 +59,10 @@ namespace gfx {
 class ImageSkia;
 }
 
+namespace gpu {
+class GpuChannelEstablishFactory;
+}
+
 namespace media {
 class AudioLogFactory;
 class AudioManager;
@@ -608,6 +612,9 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual BrowserPpapiHost* GetExternalBrowserPpapiHost(
       int plugin_child_id);
 
+  // Gets the factory to use to establish a connection to the GPU process.
+  virtual gpu::GpuChannelEstablishFactory* GetGpuChannelEstablishFactory();
+
   // Returns true if the socket operation specified by |params| is allowed from
   // the given |browser_context| and |url|. If |params| is nullptr, this method
   // checks the basic "socket" permission, which is for those operations that
@@ -734,11 +741,6 @@ class CONTENT_EXPORT ContentBrowserClient {
   // utility process. The value of each map entry should be a process name,
   // to use for the service's host process when launched.
   virtual void RegisterOutOfProcessServices(OutOfProcessServiceMap* services) {}
-
-  // Allows the embedder to terminate the browser if a specific service instance
-  // quits or crashes.
-  virtual bool ShouldTerminateOnServiceQuit(
-      const service_manager::Identity& id);
 
   // Allow the embedder to provide a dictionary loaded from a JSON file
   // resembling a service manifest whose capabilities section will be merged

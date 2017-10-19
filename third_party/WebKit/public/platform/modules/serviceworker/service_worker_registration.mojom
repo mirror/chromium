@@ -4,7 +4,6 @@
 
 module blink.mojom;
 
-import "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom";
 import "url/mojo/url.mojom";
 
 const int32 kInvalidServiceWorkerRegistrationHandleId = -1;
@@ -40,35 +39,16 @@ struct ServiceWorkerRegistrationObjectInfo {
   ServiceWorkerRegistrationOptions options;
 
   // Holds one mojo connection to browser process, acts as a reference count to
-  // control lifetime of ServiceWorkerRegistration in the browser process.
+  // control lifetime of ServiceWorkerRegistration on the browser process.
   associated ServiceWorkerRegistrationObjectHost? host_ptr_info;
-
-  // |request| is expected to be bound on the implementation of interface
-  // ServiceWorkerRegistrationObject in the renderer process. The other end
-  // point of this Mojo connection is held by the browser process.
-  associated ServiceWorkerRegistrationObject&? request;
 };
 
-// This interface lives in the browser process, it corresponds to one
+// This interface lives on the browser process, it corresponds to one
 // ServiceWorkerRegistration JavaScript object. The renderer uses it to ask the
 // browser to do operations needed to implement ServiceWorkerRegistration
 // methods.
 interface ServiceWorkerRegistrationObjectHost {
-  // Corresponds to ServiceWorkerRegistration#update().
-  // On success, |error| is kNone without |error_msg| set.
-  // Otherwise, |error| and |error_msg| describe the failure.
-  Update() => (ServiceWorkerErrorType error, string? error_msg);
-
   // TODO(leonhsl): Implement all methods.
+  // Update() => (ServiceWorkerErrorType error, string? error_msg);
   // Unregister() => (ServiceWorkerErrorType error, string? error_msg);
-};
-
-// This interface lives in the renderer process, it corresponds to one
-// ServiceWorkerRegistration JavaScript object. The browser uses it to talk with
-// the corresponding impl of ServiceWorkerRegistration in the renderer.
-interface ServiceWorkerRegistrationObject {
-  // TODO(leonhsl): Implement all methods.
-  // SetVersionAttributes(int32 changed_mask,
-  //                      ServiceWorkerVersionAttributes attrs);
-  // UpdateFound();
 };

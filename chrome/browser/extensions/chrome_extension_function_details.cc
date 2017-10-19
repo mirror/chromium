@@ -20,6 +20,10 @@
 #include "extensions/browser/extension_function.h"
 #include "extensions/browser/extension_function_dispatcher.h"
 
+using content::WebContents;
+using content::RenderViewHost;
+using extensions::WindowController;
+
 ChromeExtensionFunctionDetails::ChromeExtensionFunctionDetails(
     UIThreadExtensionFunction* function)
     : function_(function) {
@@ -104,7 +108,7 @@ gfx::NativeWindow ChromeExtensionFunctionDetails::GetNativeWindowForUI() {
   // Try to use WindowControllerList first because WebContents's
   // GetTopLevelNativeWindow() can't return the top level window when the tab
   // is not focused.
-  extensions::WindowController* controller =
+  WindowController* controller =
       extensions::WindowControllerList::GetInstance()->CurrentWindowForFunction(
           function_);
   if (controller)

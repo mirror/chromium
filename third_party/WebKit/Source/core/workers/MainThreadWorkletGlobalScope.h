@@ -25,6 +25,7 @@ class CORE_EXPORT MainThreadWorkletGlobalScope
   MainThreadWorkletGlobalScope(LocalFrame*,
                                const KURL&,
                                const String& user_agent,
+                               RefPtr<SecurityOrigin>,
                                v8::Isolate*,
                                WorkerReportingProxy&);
   ~MainThreadWorkletGlobalScope() override;
@@ -40,7 +41,7 @@ class CORE_EXPORT MainThreadWorkletGlobalScope
   void ExceptionThrown(ErrorEvent*) final;
   CoreProbeSink* GetProbeSink() final;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 };
 
 DEFINE_TYPE_CASTS(MainThreadWorkletGlobalScope,

@@ -61,7 +61,7 @@ class DataTransferItemList final
                         ExceptionState&);
   DataTransferItem* add(File*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   DataTransferItemList(DataTransfer*, DataObject*);

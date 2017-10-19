@@ -69,7 +69,6 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   HeadlessTabSocket* GetHeadlessTabSocket() const override;
   int GetMainFrameRenderProcessId() const override;
   int GetMainFrameTreeNodeId() const override;
-  std::string GetMainFrameDevToolsId() const override;
 
   // HeadlessDevToolsTarget implementation:
   bool AttachClient(HeadlessDevToolsClient* client) override;

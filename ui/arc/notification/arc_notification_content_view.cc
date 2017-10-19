@@ -119,22 +119,6 @@ class ArcNotificationContentView::EventForwarder : public ui::EventHandler {
         widget->OnGestureEvent(located_event->AsGestureEvent());
       }
     }
-
-    // If AXTree is attached to notification content view, notification surface
-    // always gets focus. Tab key events are consumed by the surface, and tab
-    // focus traversal gets stuck at Android notification. To prevent it, always
-    // pass tab key event to focus manager of content view.
-    // TODO(yawano): include elements inside Android notification in tab focus
-    // traversal rather than skipping them.
-    if (owner_->surface_ && owner_->surface_->GetAXTreeId() != -1 &&
-        event->IsKeyEvent()) {
-      ui::KeyEvent* key_event = event->AsKeyEvent();
-      if (key_event->key_code() == ui::VKEY_TAB &&
-          (key_event->flags() == ui::EF_NONE ||
-           key_event->flags() == ui::EF_SHIFT_DOWN)) {
-        widget->GetFocusManager()->OnKeyEvent(*key_event);
-      }
-    }
   }
 
   ArcNotificationContentView* const owner_;
@@ -315,7 +299,7 @@ const char* ArcNotificationContentView::GetClassName() const {
 
 std::unique_ptr<ArcNotificationContentViewDelegate>
 ArcNotificationContentView::CreateContentViewDelegate() {
-  return std::make_unique<ArcNotificationContentView::ContentViewDelegate>(
+  return base::MakeUnique<ArcNotificationContentView::ContentViewDelegate>(
       this);
 }
 
@@ -666,14 +650,6 @@ void ArcNotificationContentView::GetAccessibleNodeData(
     node_data->role = ui::AX_ROLE_CLIENT;
     node_data->AddIntAttribute(ui::AX_ATTR_CHILD_TREE_ID,
                                surface_->GetAXTreeId());
-
-    views::Widget* widget = GetWidget();
-    if (widget) {
-      const gfx::Rect& bounds = widget->GetWindowBoundsInScreen();
-      node_data->transform.reset(new gfx::Transform());
-      node_data->transform->Translate(gfx::Vector2dF(
-          static_cast<float>(bounds.x()), static_cast<float>(bounds.y())));
-    }
   } else {
     node_data->role = ui::AX_ROLE_BUTTON;
     node_data->AddStringAttribute(

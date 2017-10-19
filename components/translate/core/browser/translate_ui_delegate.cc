@@ -269,8 +269,7 @@ bool TranslateUIDelegate::IsLanguageBlocked() {
 
 void TranslateUIDelegate::SetLanguageBlocked(bool value) {
   if (value) {
-    prefs_->AddToLanguageList(GetOriginalLanguageCode(),
-                              /*force_blocked=*/true);
+    prefs_->BlockLanguage(GetOriginalLanguageCode());
     if (translate_manager_) {
       translate_manager_->GetLanguageState().SetTranslateEnabled(false);
       // Translation has been blocked for this language. Capture that in the
@@ -289,10 +288,6 @@ void TranslateUIDelegate::SetLanguageBlocked(bool value) {
 bool TranslateUIDelegate::IsSiteBlacklisted() {
   std::string host = GetPageHost();
   return !host.empty() && prefs_->IsSiteBlacklisted(host);
-}
-
-bool TranslateUIDelegate::CanBlacklistSite() {
-  return !GetPageHost().empty();
 }
 
 void TranslateUIDelegate::SetSiteBlacklist(bool value) {

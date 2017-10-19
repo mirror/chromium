@@ -327,9 +327,7 @@ void ShelfLayoutManager::UpdateAutoHideForMouseEvent(ui::MouseEvent* event,
 
 void ShelfLayoutManager::ProcessGestureEventOnWindow(ui::GestureEvent* event,
                                                      aura::Window* target) {
-  // Skip event processing if shelf widget is fully visible to let the default
-  // event dispatching do its work.
-  if (IsVisible() || in_shutdown_)
+  if (visibility_state() != SHELF_AUTO_HIDE || in_shutdown_)
     return;
 
   if (IsShelfWindow(target)) {

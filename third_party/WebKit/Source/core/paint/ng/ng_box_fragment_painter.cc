@@ -5,9 +5,6 @@
 #include "core/paint/ng/ng_box_fragment_painter.h"
 
 #include "core/layout/BackgroundBleedAvoidance.h"
-#include "core/layout/HitTestLocation.h"
-#include "core/layout/HitTestResult.h"
-#include "core/layout/ng/geometry/ng_border_edges.h"
 #include "core/layout/ng/geometry/ng_box_strut.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
@@ -21,7 +18,6 @@
 #include "platform/geometry/LayoutRectOutsets.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
-#include "platform/scroll/ScrollTypes.h"
 
 namespace blink {
 
@@ -48,7 +44,7 @@ NGBoxFragmentPainter::NGBoxFragmentPainter(const NGPaintFragment& box)
 
 void NGBoxFragmentPainter::Paint(const PaintInfo& paint_info,
                                  const LayoutPoint& paint_offset) {
-  if (paint_info.phase == PaintPhase::kForeground)
+  if (paint_info.phase == kPaintPhaseForeground)
     PaintBoxDecorationBackground(paint_info, paint_offset);
   PaintChildren(box_fragment_.Children(), paint_info, paint_offset);
 }
@@ -140,12 +136,6 @@ void NGBoxFragmentPainter::PaintBoxDecorationBackgroundWithRect(
 }
 
 static bool RequiresLegacyFallback(const NGPhysicalFragment& fragment) {
-  // Fallback to LayoutObject if this is a root of NG block layout.
-  // If this box is for this painter, LayoutNGBlockFlow will call back.
-  if (fragment.IsBlockLayoutRoot())
-    return true;
-
-  // TODO(kojii): Review if this is still needed.
   LayoutObject* layout_object = fragment.GetLayoutObject();
   return layout_object->IsLayoutReplaced();
 }
@@ -160,17 +150,18 @@ void NGBoxFragmentPainter::PaintChildren(
     const NGPhysicalFragment& fragment = child->PhysicalFragment();
     LayoutPoint child_offset = paint_offset + LayoutSize(fragment.Offset().left,
                                                          fragment.Offset().top);
-    if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
+    if (fragment.Type() == NGPhysicalBoxFragment::kFragmentLineBox) {
+      PaintChildren(child->Children(), child_info, child_offset);
+    } else if (fragment.Type() == NGPhysicalBoxFragment::kFragmentBox) {
       PaintInfo child_paint_info(paint_info);
+
       if (RequiresLegacyFallback(fragment))
         fragment.GetLayoutObject()->Paint(child_paint_info, child_offset);
       else
         NGBoxFragmentPainter(*child).Paint(child_paint_info, child_offset);
 
-    } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
-      PaintChildren(child->Children(), child_info, child_offset);
-
-    } else if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
+      // TODO(layout-dev): Implement support for this.
+    } else if (fragment.Type() == NGPhysicalBoxFragment::kFragmentText) {
       PaintText(*child, paint_info, paint_offset);
     }
   }
@@ -235,7 +226,7 @@ void NGBoxFragmentPainter::PaintFillLayerTextFillBox(
   // painting using a special paint phase that signals to InlineTextBoxes that
   // they should just add their contents to the clip.
   context.BeginLayer(1, SkBlendMode::kDstIn);
-  PaintInfo paint_info(context, mask_rect, PaintPhase::kTextClip,
+  PaintInfo paint_info(context, mask_rect, kPaintPhaseTextClip,
                        kGlobalPaintNormalPhase, 0);
 
   // TODO(eae): Paint text child fragments.
@@ -272,159 +263,6 @@ void NGBoxFragmentPainter::PaintBackground(
   PaintFillLayers(paint_info, background_color,
                   box_fragment_.Style().BackgroundLayers(), paint_rect,
                   geometry, bleed_avoidance);
-}
-
-bool NGBoxFragmentPainter::NodeAtPoint(
-    HitTestResult& result,
-    const HitTestLocation& location_in_container,
-    const LayoutPoint& accumulated_offset,
-    HitTestAction action) {
-  // TODO(eae): Switch to using NG geometry types.
-  LayoutSize offset(box_fragment_.Offset().left, box_fragment_.Offset().top);
-  LayoutPoint adjusted_location = accumulated_offset + offset;
-  LayoutSize size(box_fragment_.Size().width, box_fragment_.Size().height);
-  const ComputedStyle& style = box_fragment_.Style();
-
-  bool hit_test_self = action == kHitTestForeground;
-
-  // TODO(layout-dev): Add support for hit testing overflow controls once we
-  // overflow has been implemented.
-  // if (hit_test_self && HasOverflowClip() &&
-  //   HitTestOverflowControl(result, location_in_container, adjusted_location))
-  // return true;
-
-  bool skip_children = false;
-  if (box_fragment_.ShouldClipOverflow()) {
-    // PaintLayer::HitTestContentsForFragments checked the fragments'
-    // foreground rect for intersection if a layer is self painting,
-    // so only do the overflow clip check here for non-self-painting layers.
-    if (!box_fragment_.HasSelfPaintingLayer() &&
-        !location_in_container.Intersects(box_fragment_.OverflowClipRect(
-            adjusted_location, kExcludeOverlayScrollbarSizeForHitTesting))) {
-      skip_children = true;
-    }
-    if (!skip_children && style.HasBorderRadius()) {
-      LayoutRect bounds_rect(adjusted_location, size);
-      skip_children = !location_in_container.Intersects(
-          style.GetRoundedInnerBorderFor(bounds_rect));
-    }
-  }
-
-  if (!skip_children &&
-      HitTestChildren(result, box_fragment_.Children(), location_in_container,
-                      adjusted_location, action)) {
-    return true;
-  }
-
-  // TODO(eae): Implement once we support clipping in LayoutNG.
-  // if (style.HasBorderRadius() &&
-  //     HitTestClippedOutByBorder(location_in_container, adjusted_location))
-  // return false;
-
-  // Now hit test ourselves.
-  if (hit_test_self && VisibleToHitTestRequest(result.GetHitTestRequest())) {
-    LayoutRect bounds_rect(adjusted_location, size);
-    if (location_in_container.Intersects(bounds_rect)) {
-      Node* node = box_fragment_.GetNode();
-      if (!result.InnerNode() && node) {
-        LayoutPoint point =
-            location_in_container.Point() - ToLayoutSize(adjusted_location);
-        result.SetNodeAndPosition(node, point);
-      }
-      if (result.AddNodeToListBasedTestResult(node, location_in_container,
-                                              bounds_rect) == kStopHitTesting) {
-        return true;
-      }
-    }
-  }
-
-  return false;
-}
-
-bool NGBoxFragmentPainter::VisibleToHitTestRequest(
-    const HitTestRequest& request) const {
-  return box_fragment_.Style().Visibility() == EVisibility::kVisible &&
-         (request.IgnorePointerEventsNone() ||
-          box_fragment_.Style().PointerEvents() != EPointerEvents::kNone) &&
-         !(box_fragment_.GetNode() && box_fragment_.GetNode()->IsInert());
-}
-
-bool NGBoxFragmentPainter::HitTestTextFragment(
-    HitTestResult& result,
-    const NGPhysicalFragment& text_fragment,
-    const HitTestLocation& location_in_container,
-    const LayoutPoint& accumulated_offset) {
-  LayoutSize offset(text_fragment.Offset().left, text_fragment.Offset().top);
-  LayoutPoint adjusted_location = accumulated_offset + offset;
-  LayoutSize size(text_fragment.Size().width, text_fragment.Size().height);
-  LayoutRect border_rect(adjusted_location, size);
-  const ComputedStyle& style = text_fragment.Style();
-
-  if (style.HasBorderRadius()) {
-    FloatRoundedRect border = style.GetRoundedBorderFor(
-        border_rect,
-        text_fragment.BorderEdges() & NGBorderEdges::Physical::kLeft,
-        text_fragment.BorderEdges() & NGBorderEdges::Physical::kRight);
-    if (!location_in_container.Intersects(border))
-      return false;
-  }
-
-  // TODO(layout-dev): Clip to line-top/bottom.
-  LayoutRect rect = LayoutRect(PixelSnappedIntRect(border_rect));
-  if (VisibleToHitTestRequest(result.GetHitTestRequest()) &&
-      location_in_container.Intersects(rect)) {
-    Node* node = text_fragment.GetNode();
-    if (!result.InnerNode() && node) {
-      LayoutPoint point =
-          location_in_container.Point() - ToLayoutSize(accumulated_offset);
-      result.SetNodeAndPosition(node, point);
-    }
-
-    if (result.AddNodeToListBasedTestResult(node, location_in_container,
-                                            rect) == kStopHitTesting) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool NGBoxFragmentPainter::HitTestChildren(
-    HitTestResult& result,
-    const Vector<std::unique_ptr<const NGPaintFragment>>& children,
-    const HitTestLocation& location_in_container,
-    const LayoutPoint& accumulated_offset,
-    HitTestAction action) {
-  for (auto iter = children.rbegin(); iter != children.rend(); iter++) {
-    const std::unique_ptr<const NGPaintFragment>& child = *iter;
-
-    // TODO(layout-dev): Handle self painting layers.
-    const NGPhysicalFragment& fragment = child->PhysicalFragment();
-    bool stop_hit_testing = false;
-    if (fragment.Type() == NGPhysicalFragment::kFragmentBox) {
-      if (RequiresLegacyFallback(fragment)) {
-        stop_hit_testing = fragment.GetLayoutObject()->NodeAtPoint(
-            result, location_in_container, accumulated_offset, action);
-      } else {
-        stop_hit_testing = NGBoxFragmentPainter(*child).NodeAtPoint(
-            result, location_in_container, accumulated_offset, action);
-      }
-
-    } else if (fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
-      stop_hit_testing =
-          HitTestChildren(result, child->Children(), location_in_container,
-                          accumulated_offset, action);
-
-    } else if (fragment.Type() == NGPhysicalFragment::kFragmentText) {
-      // should this hit test on the text itself or the containing node?
-      stop_hit_testing = HitTestTextFragment(
-          result, fragment, location_in_container, accumulated_offset);
-    }
-    if (stop_hit_testing)
-      return true;
-  }
-
-  return false;
 }
 
 }  // namespace blink

@@ -331,6 +331,10 @@ VideoDecoderConfig ChunkDemuxerStream::video_decoder_config() {
 
 bool ChunkDemuxerStream::SupportsConfigChanges() { return true; }
 
+VideoRotation ChunkDemuxerStream::video_rotation() {
+  return VIDEO_ROTATION_0;
+}
+
 bool ChunkDemuxerStream::IsEnabled() const {
   base::AutoLock auto_lock(lock_);
   return is_enabled_;

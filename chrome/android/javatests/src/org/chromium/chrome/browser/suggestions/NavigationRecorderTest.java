@@ -51,7 +51,8 @@ public class NavigationRecorderTest {
     public void setUp() throws InterruptedException {
         mTestSetupRule.startMainActivityWithURL(UrlConstants.NTP_URL);
 
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mNavUrl = mTestServer.getURL("/chrome/test/data/android/google.html");
 
         mInitialTab = mTestSetupRule.getActivity().getActivityTab();

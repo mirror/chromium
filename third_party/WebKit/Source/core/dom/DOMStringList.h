@@ -57,7 +57,7 @@ class CORE_EXPORT DOMStringList final
 
   operator const Vector<String>&() const { return strings_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit DOMStringList() {}

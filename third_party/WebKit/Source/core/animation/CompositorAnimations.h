@@ -43,6 +43,7 @@ namespace blink {
 
 class Animation;
 class CompositorAnimation;
+class CompositorAnimationPlayer;
 class Element;
 class FloatBox;
 class KeyframeEffectModelBase;
@@ -98,7 +99,8 @@ class CORE_EXPORT CompositorAnimations {
                                          double start_time,
                                          double time_offset,
                                          const Timing&,
-                                         const Animation&,
+                                         const Animation*,
+                                         CompositorAnimationPlayer&,
                                          const EffectModel&,
                                          Vector<int>& started_animation_ids,
                                          double animation_playback_rate);
@@ -110,7 +112,7 @@ class CORE_EXPORT CompositorAnimations {
                                                    int id,
                                                    double pause_time);
 
-  static void AttachCompositedLayers(Element&, const Animation&);
+  static void AttachCompositedLayers(Element&, CompositorAnimationPlayer*);
 
   static bool GetAnimatedBoundingBox(FloatBox&,
                                      const EffectModel&,

@@ -88,7 +88,7 @@ WebGLShader* WebGLProgram::GetAttachedShader(GLenum type) {
     case GL_FRAGMENT_SHADER:
       return fragment_shader_;
     default:
-      return nullptr;
+      return 0;
   }
 }
 
@@ -141,7 +141,7 @@ void WebGLProgram::CacheInfoIfNeeded(WebGLRenderingContextBase* context) {
   info_valid_ = true;
 }
 
-void WebGLProgram::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLProgram) {
   visitor->Trace(vertex_shader_);
   visitor->Trace(fragment_shader_);
   WebGLSharedPlatform3DObject::Trace(visitor);

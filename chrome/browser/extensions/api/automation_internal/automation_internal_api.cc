@@ -30,6 +30,7 @@
 #include "content/public/browser/browser_plugin_guest_manager.h"
 #include "content/public/browser/media_session.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
@@ -60,6 +61,7 @@ const char kCannotRequestAutomationOnPage[] =
     "Cannot request automation tree on url \"*\". "
     "Extension manifest must request permission to access this host.";
 const char kRendererDestroyed[] = "The tab was closed.";
+const char kNoMainFrame[] = "No main frame.";
 const char kNoDocument[] = "No document.";
 const char kNodeDestroyed[] =
     "domQuerySelector sent on node which is no longer in the tree.";
@@ -79,16 +81,15 @@ class QuerySelectorHandler : public content::WebContentsObserver {
       : content::WebContentsObserver(web_contents),
         request_id_(request_id),
         callback_(callback) {
-    content::RenderFrameHost* rfh = web_contents->GetMainFrame();
+    content::RenderViewHost* rvh = web_contents->GetRenderViewHost();
 
-    rfh->Send(new ExtensionMsg_AutomationQuerySelector(
-        rfh->GetRoutingID(), request_id, acc_obj_id, query));
+    rvh->Send(new ExtensionMsg_AutomationQuerySelector(
+        rvh->GetRoutingID(), request_id, acc_obj_id, query));
   }
 
   ~QuerySelectorHandler() override {}
 
-  bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* render_frame_host) override {
+  bool OnMessageReceived(const IPC::Message& message) override {
     if (message.type() != ExtensionHostMsg_AutomationQuerySelector_Result::ID)
       return false;
 
@@ -119,14 +120,18 @@ class QuerySelectorHandler : public content::WebContentsObserver {
                        int result_acc_obj_id) {
     std::string error_string;
     switch (error.value) {
-      case ExtensionHostMsg_AutomationQuerySelector_Error::kNone:
-        break;
-      case ExtensionHostMsg_AutomationQuerySelector_Error::kNoDocument:
-        error_string = kNoDocument;
-        break;
-      case ExtensionHostMsg_AutomationQuerySelector_Error::kNodeDestroyed:
-        error_string = kNodeDestroyed;
-        break;
+    case ExtensionHostMsg_AutomationQuerySelector_Error::kNone:
+      error_string = "";
+      break;
+    case ExtensionHostMsg_AutomationQuerySelector_Error::kNoMainFrame:
+      error_string = kNoMainFrame;
+      break;
+    case ExtensionHostMsg_AutomationQuerySelector_Error::kNoDocument:
+      error_string = kNoDocument;
+      break;
+    case ExtensionHostMsg_AutomationQuerySelector_Error::kNodeDestroyed:
+      error_string = kNodeDestroyed;
+      break;
     }
     callback_.Run(error_string, result_acc_obj_id);
     delete this;

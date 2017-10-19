@@ -156,8 +156,7 @@ void MailboxToSurfaceBridge::OnContextAvailable(
   // otherwise the GL context created from it becomes invalid.
   context_provider_ = std::move(provider);
 
-  auto result = context_provider_->BindToCurrentThread();
-  if (result != gpu::ContextResult::kSuccess) {
+  if (!context_provider_->BindToCurrentThread()) {
     DLOG(ERROR) << "Failed to init viz::ContextProvider";
     return;
   }

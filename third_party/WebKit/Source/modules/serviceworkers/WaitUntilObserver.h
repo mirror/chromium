@@ -66,7 +66,7 @@ class MODULES_EXPORT WaitUntilObserver final
       PromiseSettledCallback on_promise_fulfilled = PromiseSettledCallback(),
       PromiseSettledCallback on_promise_rejected = PromiseSettledCallback());
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class InternalsServiceWorker;

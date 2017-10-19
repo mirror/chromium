@@ -175,7 +175,7 @@ MediaStreamAudioSourceNode* MediaStreamAudioSourceNode::Create(
   return Create(*context, *options.mediaStream(), exception_state);
 }
 
-void MediaStreamAudioSourceNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaStreamAudioSourceNode) {
   visitor->Trace(audio_track_);
   visitor->Trace(media_stream_);
   AudioSourceProviderClient::Trace(visitor);

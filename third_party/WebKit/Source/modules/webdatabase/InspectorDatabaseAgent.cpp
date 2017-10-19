@@ -99,9 +99,7 @@ class StatementCallback final : public SQLStatementCallback {
 
   ~StatementCallback() override {}
 
-  virtual void Trace(blink::Visitor* visitor) {
-    SQLStatementCallback::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { SQLStatementCallback::Trace(visitor); }
 
   bool handleEvent(SQLTransaction*, SQLResultSet* result_set) override {
     SQLResultSetRowList* row_list = result_set->rows();
@@ -150,9 +148,7 @@ class StatementErrorCallback final : public SQLStatementErrorCallback {
 
   ~StatementErrorCallback() override {}
 
-  virtual void Trace(blink::Visitor* visitor) {
-    SQLStatementErrorCallback::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { SQLStatementErrorCallback::Trace(visitor); }
 
   bool handleEvent(SQLTransaction*, SQLError* error) override {
     request_callback_->ReportTransactionFailed(error);
@@ -175,9 +171,7 @@ class TransactionCallback final : public SQLTransactionCallback {
 
   ~TransactionCallback() override {}
 
-  virtual void Trace(blink::Visitor* visitor) {
-    SQLTransactionCallback::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { SQLTransactionCallback::Trace(visitor); }
 
   bool handleEvent(SQLTransaction* transaction) override {
     Vector<SQLValue> sql_values;
@@ -208,9 +202,7 @@ class TransactionErrorCallback final : public SQLTransactionErrorCallback {
 
   ~TransactionErrorCallback() override {}
 
-  virtual void Trace(blink::Visitor* visitor) {
-    SQLTransactionErrorCallback::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { SQLTransactionErrorCallback::Trace(visitor); }
 
   bool handleEvent(SQLError* error) override {
     request_callback_->ReportTransactionFailed(error);
@@ -362,18 +354,18 @@ InspectorDatabaseResource* InspectorDatabaseAgent::FindByFileName(
     if (it->value->GetDatabase()->FileName() == file_name)
       return it->value.Get();
   }
-  return nullptr;
+  return 0;
 }
 
 blink::Database* InspectorDatabaseAgent::DatabaseForId(
     const String& database_id) {
   DatabaseResourcesHeapMap::iterator it = resources_.find(database_id);
   if (it == resources_.end())
-    return nullptr;
+    return 0;
   return it->value->GetDatabase();
 }
 
-void InspectorDatabaseAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorDatabaseAgent) {
   visitor->Trace(page_);
   visitor->Trace(resources_);
   InspectorBaseAgent::Trace(visitor);

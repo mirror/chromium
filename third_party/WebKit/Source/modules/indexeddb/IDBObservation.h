@@ -27,7 +27,7 @@ class IDBObservation final : public GarbageCollectedFinalized<IDBObservation>,
   static IDBObservation* Create(const WebIDBObservation&, v8::Isolate*);
   ~IDBObservation();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Implement the IDL
   ScriptValue key(ScriptState*);

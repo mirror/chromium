@@ -70,7 +70,8 @@ class ArcObbMounterClientImpl : public ArcObbMounterClient {
   // Runs the callback with the method call result.
   void OnVoidDBusMethod(VoidDBusMethodCallback callback,
                         dbus::Response* response) {
-    std::move(callback).Run(response != nullptr);
+    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
+                                     : DBUS_METHOD_CALL_FAILURE);
   }
 
   dbus::ObjectProxy* proxy_ = nullptr;

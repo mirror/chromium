@@ -32,7 +32,7 @@
 
 #include <sstream>
 #include <string>
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/wtf/text/WTFString.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -50,10 +50,11 @@ namespace blink {
 
 namespace {
 
-class TimingFunctionTest : public ::testing::Test,
-                           private ScopedFramesTimingFunctionForTest {
+class TimingFunctionTest : public ::testing::Test {
  public:
-  TimingFunctionTest() : ScopedFramesTimingFunctionForTest(true) {}
+  TimingFunctionTest() {
+    RuntimeEnabledFeatures::SetFramesTimingFunctionEnabled(true);
+  }
 
   void NotEqualHelperLoop(
       Vector<std::pair<std::string, RefPtr<TimingFunction>>>& v) {

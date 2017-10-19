@@ -125,10 +125,13 @@ SourcesTestRunner.DebuggerModelMock = class extends SDK.SDKModel {
     }
   }
 
-  _scheduleSetBeakpointCallback(breakpointId, locations) {
+  _scheduleSetBeakpointCallback(callback, breakpointId, locations) {
     setTimeout(innerCallback.bind(this), 0);
 
     function innerCallback() {
+      if (callback)
+        callback(breakpointId, locations);
+
       if (window.setBreakpointCallback) {
         var savedCallback = window.setBreakpointCallback;
         delete window.setBreakpointCallback;
@@ -150,26 +153,26 @@ SourcesTestRunner.DebuggerModelMock = class extends SDK.SDKModel {
     return new SDK.DebuggerModel.Location(this, script.scriptId, line, column);
   }
 
-  setBreakpointByURL(url, lineNumber, columnNumber, condition) {
+  setBreakpointByURL(url, lineNumber, columnNumber, condition, callback) {
     TestRunner.addResult('    debuggerModel.setBreakpoint(' + [url, lineNumber, condition].join(':') + ')');
     var breakpointId = url + ':' + lineNumber;
 
     if (this._breakpoints[breakpointId]) {
-      this._scheduleSetBeakpointCallback(null);
-      return {breakpointId: null, locations: []};
+      this._scheduleSetBeakpointCallback(callback, null);
+      return;
     }
 
     this._breakpoints[breakpointId] = true;
 
     if (lineNumber >= 2000) {
-      this._scheduleSetBeakpointCallback(breakpointId, []);
-      return {breakpointId: breakpointId, locations: []};
+      this._scheduleSetBeakpointCallback(callback, breakpointId, []);
+      return;
     }
 
     if (lineNumber >= 1000) {
       var shiftedLocation = new SDK.DebuggerModel.Location(this, url, lineNumber + 10, columnNumber);
-      this._scheduleSetBeakpointCallback(breakpointId, [shiftedLocation]);
-      return {breakpointId: breakpointId, locations: [shiftedLocation]};
+      this._scheduleSetBeakpointCallback(callback, breakpointId, [shiftedLocation]);
+      return;
     }
 
     var locations = [];
@@ -180,8 +183,7 @@ SourcesTestRunner.DebuggerModelMock = class extends SDK.SDKModel {
       locations.push(location);
     }
 
-    this._scheduleSetBeakpointCallback(breakpointId, locations);
-    return {breakpointId: breakpointId, locations: locations};
+    this._scheduleSetBeakpointCallback(callback, breakpointId, locations);
   }
 
   async removeBreakpoint(breakpointId) {

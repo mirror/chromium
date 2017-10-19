@@ -39,7 +39,6 @@
 #include "net/http/http_response_headers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 using net::IOBuffer;
@@ -518,11 +517,9 @@ class FailToStartWorkerTestHelper : public EmbeddedWorkerTestHelper {
       const GURL& scope,
       const GURL& script_url,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
+      mojom::ServiceWorkerEventDispatcherRequest request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info)
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
     mojom::EmbeddedWorkerInstanceHostAssociatedPtr instance_host_ptr;
     instance_host_ptr.Bind(std::move(instance_host));
@@ -980,11 +977,9 @@ class UpdateJobTestHelper
       const GURL& scope,
       const GURL& script,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
+      mojom::ServiceWorkerEventDispatcherRequest request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info)
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
     const std::string kMockScriptBody = "mock_script";
     const uint64_t kMockScriptSize = 19284;
@@ -1042,9 +1037,7 @@ class UpdateJobTestHelper
     started_workers_.insert(embedded_worker_id);
     EmbeddedWorkerTestHelper::OnStartWorker(
         embedded_worker_id, version_id, scope, script, pause_after_download,
-        std::move(dispatcher_request), std::move(controller_request),
-        std::move(instance_host), std::move(provider_info),
-        std::move(installed_scripts_info));
+        std::move(request), std::move(instance_host), std::move(provider_info));
   }
 
   void OnStopWorker(int embedded_worker_id) override {
@@ -1117,11 +1110,9 @@ class EvictIncumbentVersionHelper : public UpdateJobTestHelper {
       const GURL& scope,
       const GURL& script,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
+      mojom::ServiceWorkerEventDispatcherRequest request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info)
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
     ServiceWorkerVersion* version = context()->GetLiveVersion(version_id);
     ServiceWorkerRegistration* registration =
@@ -1136,9 +1127,7 @@ class EvictIncumbentVersionHelper : public UpdateJobTestHelper {
     }
     UpdateJobTestHelper::OnStartWorker(
         embedded_worker_id, version_id, scope, script, pause_after_download,
-        std::move(dispatcher_request), std::move(controller_request),
-        std::move(instance_host), std::move(provider_info),
-        std::move(installed_scripts_info));
+        std::move(request), std::move(instance_host), std::move(provider_info));
   }
 
   void OnRegistrationFailed(ServiceWorkerRegistration* registration) override {
@@ -1265,33 +1254,33 @@ TEST_F(ServiceWorkerJobTest, Update_NewVersion) {
   EXPECT_FALSE(entry.mask.waiting_changed());
   EXPECT_FALSE(entry.mask.active_changed());
   EXPECT_NE(entry.info.installing_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
   EXPECT_EQ(entry.info.waiting_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.active_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
 
   entry = update_helper->attribute_change_log_[1];
   EXPECT_TRUE(entry.mask.installing_changed());
   EXPECT_TRUE(entry.mask.waiting_changed());
   EXPECT_FALSE(entry.mask.active_changed());
   EXPECT_EQ(entry.info.installing_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.waiting_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.active_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
 
   entry = update_helper->attribute_change_log_[2];
   EXPECT_FALSE(entry.mask.installing_changed());
   EXPECT_TRUE(entry.mask.waiting_changed());
   EXPECT_TRUE(entry.mask.active_changed());
   EXPECT_EQ(entry.info.installing_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
   EXPECT_EQ(entry.info.waiting_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.active_version.version_id,
-            blink::mojom::kInvalidServiceWorkerVersionId);
+            kInvalidServiceWorkerVersionId);
 
   // expected version state transitions:
   // new.installing, new.installed,
@@ -1816,8 +1805,7 @@ class CheckPauseAfterDownloadEmbeddedWorkerInstanceClient
  protected:
   void StartWorker(
       const EmbeddedWorkerStartParams& params,
-      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
+      mojom::ServiceWorkerEventDispatcherRequest request,
       mojom::ServiceWorkerInstalledScriptsInfoPtr scripts_info,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
@@ -1827,9 +1815,9 @@ class CheckPauseAfterDownloadEmbeddedWorkerInstanceClient
     EXPECT_EQ(next_pause_after_download_.value(), params.pause_after_download);
     num_of_startworker_++;
     EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
-        params, std::move(dispatcher_request), std::move(controller_request),
-        std::move(scripts_info), std::move(instance_host),
-        std::move(provider_info), std::move(content_settings_proxy));
+        params, std::move(request), std::move(scripts_info),
+        std::move(instance_host), std::move(provider_info),
+        std::move(content_settings_proxy));
   }
 
  private:

@@ -135,10 +135,8 @@ class CORE_EXPORT RuleFeatureSet {
   bool IsAlive() const { return is_alive_; }
 
  protected:
-  enum PositionType { kSubject, kAncestor };
   InvalidationSet* InvalidationSetForSimpleSelector(const CSSSelector&,
-                                                    InvalidationType,
-                                                    PositionType);
+                                                    InvalidationType);
 
  private:
   // Each map entry is either a DescendantInvalidationSet or
@@ -168,18 +166,14 @@ class CORE_EXPORT RuleFeatureSet {
                                                FeatureMetadata&);
 
   InvalidationSet& EnsureClassInvalidationSet(const AtomicString& class_name,
-                                              InvalidationType,
-                                              PositionType);
+                                              InvalidationType);
   InvalidationSet& EnsureAttributeInvalidationSet(
       const AtomicString& attribute_name,
-      InvalidationType,
-      PositionType);
+      InvalidationType);
   InvalidationSet& EnsureIdInvalidationSet(const AtomicString& id,
-                                           InvalidationType,
-                                           PositionType);
+                                           InvalidationType);
   InvalidationSet& EnsurePseudoInvalidationSet(CSSSelector::PseudoType,
-                                               InvalidationType,
-                                               PositionType);
+                                               InvalidationType);
   SiblingInvalidationSet& EnsureUniversalSiblingInvalidationSet();
   DescendantInvalidationSet& EnsureNthInvalidationSet();
   DescendantInvalidationSet& EnsureTypeRuleInvalidationSet();
@@ -212,6 +206,7 @@ class CORE_EXPORT RuleFeatureSet {
   static void ExtractInvalidationSetFeature(const CSSSelector&,
                                             InvalidationSetFeatures&);
 
+  enum PositionType { kSubject, kAncestor };
   enum FeatureInvalidationType {
     kNormalInvalidation,
     kRequiresSubtreeInvalidation
@@ -259,23 +254,6 @@ class CORE_EXPORT RuleFeatureSet {
       const InvalidationSetFeatures& descendant_features);
 
   void UpdateRuleSetInvalidation(const InvalidationSetFeatures&);
-
-  static InvalidationSet& StoredInvalidationSet(RefPtr<InvalidationSet>&,
-                                                InvalidationType,
-                                                PositionType);
-  static InvalidationSet& EnsureInvalidationSet(
-      HashMap<AtomicString, RefPtr<InvalidationSet>>&,
-      const AtomicString& key,
-      InvalidationType,
-      PositionType);
-  static InvalidationSet& EnsureInvalidationSet(
-      HashMap<CSSSelector::PseudoType,
-              RefPtr<InvalidationSet>,
-              WTF::IntHash<unsigned>,
-              WTF::UnsignedWithZeroKeyHashTraits<unsigned>>&,
-      CSSSelector::PseudoType key,
-      InvalidationType,
-      PositionType);
 
   FeatureMetadata metadata_;
   InvalidationSetMap class_invalidation_sets_;

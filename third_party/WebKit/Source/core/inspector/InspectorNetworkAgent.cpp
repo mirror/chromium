@@ -549,7 +549,7 @@ BuildObjectForResourceResponse(const ResourceResponse& response,
 
 InspectorNetworkAgent::~InspectorNetworkAgent() {}
 
-void InspectorNetworkAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorNetworkAgent) {
   visitor->Trace(inspected_frames_);
   visitor->Trace(worker_global_scope_);
   visitor->Trace(resources_data_);
@@ -574,11 +574,6 @@ void InspectorNetworkAgent::ShouldBlockRequest(const KURL& url, bool* result) {
     }
   }
   return;
-}
-
-void InspectorNetworkAgent::ShouldBypassServiceWorker(bool* result) {
-  *result =
-      state_->booleanProperty(NetworkAgentState::kBypassServiceWorker, false);
 }
 
 void InspectorNetworkAgent::DidBlockRequest(
@@ -803,7 +798,7 @@ void InspectorNetworkAgent::DidReceiveResourceResponse(
   // following didReceiveResponse as there will be no calls to didReceiveData
   // from the network stack.
   if (is_not_modified && cached_resource && cached_resource->EncodedSize())
-    DidReceiveData(identifier, loader, nullptr, cached_resource->EncodedSize());
+    DidReceiveData(identifier, loader, 0, cached_resource->EncodedSize());
 }
 
 static bool IsErrorStatusCode(int status_code) {
@@ -1278,7 +1273,7 @@ Response InspectorNetworkAgent::setUserAgentOverride(const String& user_agent) {
 }
 
 Response InspectorNetworkAgent::setExtraHTTPHeaders(
-    std::unique_ptr<protocol::Network::Headers> headers) {
+    const std::unique_ptr<protocol::Network::Headers> headers) {
   state_->setObject(NetworkAgentState::kExtraRequestHeaders,
                     headers->toValue());
   return Response::OK();
@@ -1355,7 +1350,7 @@ Response InspectorNetworkAgent::replayXHR(const String& request_id) {
 
   ExecutionContext* execution_context = xhr_replay_data->GetExecutionContext();
   if (execution_context->IsContextDestroyed()) {
-    resources_data_->SetXHRReplayData(request_id, nullptr);
+    resources_data_->SetXHRReplayData(request_id, 0);
     return Response::Error("Document is already detached");
   }
 

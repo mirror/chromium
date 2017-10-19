@@ -6,7 +6,7 @@
 
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/events/EventListener.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/track/AudioTrackList.h"
 #include "core/html/track/VideoTrackList.h"
 #include "modules/encryptedmedia/HTMLMediaElementEncryptedMedia.h"
@@ -31,7 +31,7 @@ class MediaElementEventListener final : public EventListener {
   MediaElementEventListener(HTMLMediaElement*, MediaStream*);
   void UpdateSources(ExecutionContext*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   // EventListener implementation.
@@ -133,7 +133,7 @@ void MediaElementEventListener::UpdateSources(ExecutionContext* context) {
   }
 }
 
-void MediaElementEventListener::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaElementEventListener) {
   visitor->Trace(media_element_);
   visitor->Trace(media_stream_);
   visitor->Trace(sources_);
@@ -144,7 +144,6 @@ void MediaElementEventListener::Trace(blink::Visitor* visitor) {
 
 // static
 MediaStream* HTMLMediaElementCapture::captureStream(
-    ScriptState* script_state,
     HTMLMediaElement& element,
     ExceptionState& exception_state) {
   // Avoid capturing from EME-protected Media Elements.
@@ -156,9 +155,9 @@ MediaStream* HTMLMediaElementCapture::captureStream(
     return nullptr;
   }
 
-  ExecutionContext* context = ExecutionContext::From(script_state);
   if (!element.currentSrc().IsEmpty() &&
-      !element.IsMediaDataCORSSameOrigin(context->GetSecurityOrigin())) {
+      !element.IsMediaDataCORSSameOrigin(
+          element.GetExecutionContext()->GetSecurityOrigin())) {
     exception_state.ThrowSecurityError(
         "Cannot capture from element with cross-origin data");
     return nullptr;
@@ -169,7 +168,8 @@ MediaStream* HTMLMediaElementCapture::captureStream(
                         WebVector<WebMediaStreamTrack>());
 
   // Create() duplicates the MediaStreamTracks inside |webStream|.
-  MediaStream* stream = MediaStream::Create(context, web_stream);
+  MediaStream* stream =
+      MediaStream::Create(element.GetExecutionContext(), web_stream);
 
   MediaElementEventListener* listener =
       new MediaElementEventListener(&element, stream);
@@ -184,7 +184,7 @@ MediaStream* HTMLMediaElementCapture::captureStream(
             : MediaStreamRegistry::Registry().LookupMediaStreamDescriptor(
                   element.currentSrc().GetString());
     DCHECK(descriptor);
-    return MediaStream::Create(context, descriptor);
+    return MediaStream::Create(element.GetExecutionContext(), descriptor);
   }
 
   if (element.HasVideo()) {
@@ -195,7 +195,7 @@ MediaStream* HTMLMediaElementCapture::captureStream(
     Platform::Current()->CreateHTMLAudioElementCapturer(
         &web_stream, element.GetWebMediaPlayer());
   }
-  listener->UpdateSources(context);
+  listener->UpdateSources(element.GetExecutionContext());
 
   // If element.currentSrc().isNull() then |stream| will have no tracks, those
   // will be added eventually afterwards via MediaElementEventListener.

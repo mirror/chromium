@@ -32,9 +32,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source_type.h"
 #include "net/ssl/ssl_cert_request_info.h"
-#include "net/url_request/network_error_logging_delegate.h"
 #include "net/url_request/redirect_info.h"
-#include "net/url_request/redirect_util.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_error_job.h"
 #include "net/url_request/url_request_job.h"
@@ -933,13 +931,49 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
     final_upload_progress_ = upload_data_stream_->GetUploadProgress();
   PrepareToRestart();
 
-  bool clear_body = false;
-  net::RedirectUtil::UpdateHttpRequest(url(), method_, redirect_info,
-                                       &extra_request_headers_, &clear_body);
-  if (clear_body)
-    upload_data_stream_.reset();
+  if (redirect_info.new_method != method_) {
+    // TODO(davidben): This logic still needs to be replicated at the consumers.
+    //
+    // The Origin header is sent on anything that is not a GET or HEAD, which
+    // suggests all redirects that change methods (since they always change to
+    // GET) should drop the Origin header.
+    // See https://fetch.spec.whatwg.org/#origin-header
+    // TODO(jww): This is Origin header removal is probably layering violation
+    // and should be refactored into //content. See https://crbug.com/471397.
+    // See also: https://crbug.com/760487
+    extra_request_headers_.RemoveHeader(HttpRequestHeaders::kOrigin);
 
-  method_ = redirect_info.new_method;
+    // The inclusion of a multipart Content-Type header can cause problems with
+    // some
+    // servers:
+    // http://code.google.com/p/chromium/issues/detail?id=843
+    extra_request_headers_.RemoveHeader(HttpRequestHeaders::kContentLength);
+    extra_request_headers_.RemoveHeader(HttpRequestHeaders::kContentType);
+    upload_data_stream_.reset();
+    method_ = redirect_info.new_method;
+  }
+
+  // Cross-origin redirects should not result in an Origin header value that is
+  // equal to the original request's Origin header. This is necessary to prevent
+  // a reflection of POST requests to bypass CSRF protections. If the header was
+  // not set to "null", a POST request from origin A to a malicious origin M
+  // could be redirected by M back to A.
+  //
+  // This behavior is specified in step 10 of the HTTP-redirect fetch
+  // algorithm[1] (which supercedes the behavior outlined in RFC 6454[2].
+  //
+  // [1]: https://fetch.spec.whatwg.org/#http-redirect-fetch
+  // [2]: https://tools.ietf.org/html/rfc6454#section-7
+  //
+  // TODO(jww): This is a layering violation and should be refactored somewhere
+  // up into //net's embedder. https://crbug.com/471397
+  if (!url::Origin(redirect_info.new_url)
+           .IsSameOriginWith(url::Origin(url())) &&
+      extra_request_headers_.HasHeader(HttpRequestHeaders::kOrigin)) {
+    extra_request_headers_.SetHeader(HttpRequestHeaders::kOrigin,
+                                     url::Origin().Serialize());
+  }
+
   referrer_ = redirect_info.new_referrer;
   referrer_policy_ = redirect_info.new_referrer_policy;
   site_for_cookies_ = redirect_info.new_site_for_cookies;
@@ -1141,8 +1175,6 @@ void URLRequest::NotifyRequestCompleted() {
   if (network_delegate_)
     network_delegate_->NotifyCompleted(this, job_.get() != NULL,
                                        status_.error());
-
-  MaybeGenerateNetworkErrorLoggingReport();
 }
 
 void URLRequest::OnCallToDelegate() {
@@ -1159,39 +1191,6 @@ void URLRequest::OnCallToDelegateComplete() {
     return;
   calling_delegate_ = false;
   net_log_.EndEvent(NetLogEventType::URL_REQUEST_DELEGATE);
-}
-
-void URLRequest::MaybeGenerateNetworkErrorLoggingReport() {
-  NetworkErrorLoggingDelegate* delegate =
-      context()->network_error_logging_delegate();
-  if (!delegate)
-    return;
-
-  // TODO(juliatuttle): Figure out whether we should be ignoring errors from
-  // non-HTTPS origins.
-
-  // TODO(juliatuttle): Remove this and reconsider interface once there's a
-  // better story for reporting successes.
-  if (status().ToNetError() == OK)
-    return;
-
-  NetworkErrorLoggingDelegate::ErrorDetails details;
-
-  details.uri = url();
-  details.referrer = GURL(referrer());
-  IPEndPoint endpoint;
-  if (GetRemoteEndpoint(&endpoint))
-    details.server_ip = endpoint.address();
-  // TODO(juliatuttle): Plumb this.
-  details.protocol = kProtoUnknown;
-  details.status_code = GetResponseCode();
-  if (details.status_code == -1)
-    details.status_code = 0;
-  details.elapsed_time =
-      base::TimeTicks::Now() - load_timing_info_.request_start;
-  details.type = status().ToNetError();
-
-  delegate->OnNetworkError(details);
 }
 
 void URLRequest::GetConnectionAttempts(ConnectionAttempts* out) const {

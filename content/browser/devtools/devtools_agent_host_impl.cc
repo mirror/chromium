@@ -30,12 +30,11 @@
 namespace content {
 
 namespace {
-typedef std::map<std::string, DevToolsAgentHostImpl*> DevToolsMap;
-base::LazyInstance<DevToolsMap>::Leaky g_devtools_instances =
-    LAZY_INSTANCE_INITIALIZER;
+typedef std::map<std::string, DevToolsAgentHostImpl*> Instances;
+base::LazyInstance<Instances>::Leaky g_instances = LAZY_INSTANCE_INITIALIZER;
 
 base::LazyInstance<base::ObserverList<DevToolsAgentHostObserver>>::Leaky
-    g_devtools_observers = LAZY_INSTANCE_INITIALIZER;
+    g_observers = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
 const char DevToolsAgentHost::kTypePage[] = "page";
@@ -78,8 +77,7 @@ DevToolsAgentHost::List DevToolsAgentHost::GetOrCreateAll() {
 #if DCHECK_IS_ON()
   for (auto it : result) {
     DevToolsAgentHostImpl* host = static_cast<DevToolsAgentHostImpl*>(it.get());
-    DCHECK(g_devtools_instances.Get().find(host->id_) !=
-           g_devtools_instances.Get().end());
+    DCHECK(g_instances.Get().find(host->id_) != g_instances.Get().end());
   }
 #endif
 
@@ -113,10 +111,10 @@ DevToolsAgentHostImpl::~DevToolsAgentHostImpl() {
 // static
 scoped_refptr<DevToolsAgentHost> DevToolsAgentHost::GetForId(
     const std::string& id) {
-  if (g_devtools_instances == NULL)
+  if (g_instances == NULL)
     return NULL;
-  DevToolsMap::iterator it = g_devtools_instances.Get().find(id);
-  if (it == g_devtools_instances.Get().end())
+  Instances::iterator it = g_instances.Get().find(id);
+  if (it == g_instances.Get().end())
     return NULL;
   return it->second;
 }
@@ -159,14 +157,10 @@ void DevToolsAgentHostImpl::InnerAttachClient(DevToolsAgentHostClient* client) {
 }
 
 void DevToolsAgentHostImpl::AttachClient(DevToolsAgentHostClient* client) {
-  if (SessionByClient(client))
-    return;
   InnerAttachClient(client);
 }
 
 void DevToolsAgentHostImpl::ForceAttachClient(DevToolsAgentHostClient* client) {
-  if (SessionByClient(client))
-    return;
   scoped_refptr<DevToolsAgentHostImpl> protect(this);
   if (!sessions_.empty())
     ForceDetachAllClients(true);
@@ -236,15 +230,11 @@ std::string DevToolsAgentHostImpl::GetId() {
 }
 
 std::string DevToolsAgentHostImpl::GetParentId() {
-  return std::string();
-}
-
-std::string DevToolsAgentHostImpl::GetOpenerId() {
-  return std::string();
+  return "";
 }
 
 std::string DevToolsAgentHostImpl::GetDescription() {
-  return std::string();
+  return "";
 }
 
 GURL DevToolsAgentHostImpl::GetFaviconURL() {
@@ -305,13 +295,13 @@ void DevToolsAgentHostImpl::InspectElement(
 
 // static
 void DevToolsAgentHost::DetachAllClients() {
-  if (g_devtools_instances == NULL)
+  if (g_instances == NULL)
     return;
 
   // Make a copy, since detaching may lead to agent destruction, which
   // removes it from the instances.
-  DevToolsMap copy = g_devtools_instances.Get();
-  for (DevToolsMap::iterator it(copy.begin()); it != copy.end(); ++it) {
+  Instances copy = g_instances.Get();
+  for (Instances::iterator it(copy.begin()); it != copy.end(); ++it) {
     DevToolsAgentHostImpl* agent_host = it->second;
     agent_host->ForceDetachAllClients(true);
   }
@@ -327,8 +317,8 @@ void DevToolsAgentHost::AddObserver(DevToolsAgentHostObserver* observer) {
     DevToolsAgentHostImpl::s_force_creation_count_++;
   }
 
-  g_devtools_observers.Get().AddObserver(observer);
-  for (const auto& id_host : g_devtools_instances.Get())
+  g_observers.Get().AddObserver(observer);
+  for (const auto& id_host : g_instances.Get())
     observer->DevToolsAgentHostCreated(id_host.second);
 }
 
@@ -336,7 +326,7 @@ void DevToolsAgentHost::AddObserver(DevToolsAgentHostObserver* observer) {
 void DevToolsAgentHost::RemoveObserver(DevToolsAgentHostObserver* observer) {
   if (observer->ShouldForceDevToolsAgentHostCreation())
     DevToolsAgentHostImpl::s_force_creation_count_--;
-  g_devtools_observers.Get().RemoveObserver(observer);
+  g_observers.Get().RemoveObserver(observer);
 }
 
 // static
@@ -345,34 +335,27 @@ bool DevToolsAgentHostImpl::ShouldForceCreation() {
 }
 
 void DevToolsAgentHostImpl::NotifyCreated() {
-  DCHECK(g_devtools_instances.Get().find(id_) ==
-         g_devtools_instances.Get().end());
-  g_devtools_instances.Get()[id_] = this;
-  for (auto& observer : g_devtools_observers.Get())
+  DCHECK(g_instances.Get().find(id_) == g_instances.Get().end());
+  g_instances.Get()[id_] = this;
+  for (auto& observer : g_observers.Get())
     observer.DevToolsAgentHostCreated(this);
 }
 
-void DevToolsAgentHostImpl::NotifyNavigated() {
-  for (auto& observer : g_devtools_observers.Get())
-    observer.DevToolsAgentHostNavigated(this);
-}
-
 void DevToolsAgentHostImpl::NotifyAttached() {
-  for (auto& observer : g_devtools_observers.Get())
+  for (auto& observer : g_observers.Get())
     observer.DevToolsAgentHostAttached(this);
 }
 
 void DevToolsAgentHostImpl::NotifyDetached() {
-  for (auto& observer : g_devtools_observers.Get())
+  for (auto& observer : g_observers.Get())
     observer.DevToolsAgentHostDetached(this);
 }
 
 void DevToolsAgentHostImpl::NotifyDestroyed() {
-  DCHECK(g_devtools_instances.Get().find(id_) !=
-         g_devtools_instances.Get().end());
-  for (auto& observer : g_devtools_observers.Get())
+  DCHECK(g_instances.Get().find(id_) != g_instances.Get().end());
+  for (auto& observer : g_observers.Get())
     observer.DevToolsAgentHostDestroyed(this);
-  g_devtools_instances.Get().erase(id_);
+  g_instances.Get().erase(id_);
 }
 
 // DevToolsMessageChunkProcessor -----------------------------------------------

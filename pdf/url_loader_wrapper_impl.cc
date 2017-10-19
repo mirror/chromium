@@ -4,9 +4,8 @@
 
 #include "pdf/url_loader_wrapper_impl.h"
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "net/http/http_util.h"
@@ -196,7 +195,7 @@ void URLLoaderWrapperImpl::ReadResponseBody(char* buffer,
   did_read_callback_ = cc;
   buffer_ = buffer;
   buffer_size_ = buffer_size;
-  read_starter_ = std::make_unique<ReadStarter>(this);
+  read_starter_ = base::MakeUnique<ReadStarter>(this);
 }
 
 void URLLoaderWrapperImpl::ReadResponseBodyImpl() {
@@ -310,7 +309,7 @@ void URLLoaderWrapperImpl::DidRead(int32_t result) {
     // Continue receiving.
     return ReadResponseBodyImpl();
   }
-  DCHECK_GT(result, 0);
+  DCHECK(result > 0);
   memmove(buffer_, start, result);
 
   did_read_callback_.RunAndClear(result);

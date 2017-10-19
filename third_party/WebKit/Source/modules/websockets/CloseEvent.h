@@ -31,8 +31,8 @@
 #ifndef CloseEvent_h
 #define CloseEvent_h
 
+#include "core/EventTypeNames.h"
 #include "core/dom/events/Event.h"
-#include "core/event_type_names.h"
 #include "modules/EventModules.h"
 #include "modules/websockets/CloseEventInit.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -68,7 +68,7 @@ class CloseEvent final : public Event {
     return EventNames::CloseEvent;
   }
 
-  virtual void Trace(blink::Visitor* visitor) { Event::Trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Event::Trace(visitor); }
 
  private:
   CloseEvent() : was_clean_(false), code_(0) {}

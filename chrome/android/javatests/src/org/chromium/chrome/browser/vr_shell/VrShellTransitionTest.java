@@ -149,7 +149,7 @@ public class VrShellTransitionTest {
         mVrTestFramework.loadUrlAndAwaitInitialization(
                 VrTestFramework.getHtmlTestFile("test_navigation_2d_page"), PAGE_LOAD_TIMEOUT_S);
         DOMUtils.clickNode(mVrTestFramework.getFirstTabCvc(), "fullscreen");
-        VrTestFramework.waitOnJavaScriptStep(mVrTestFramework.getFirstTabWebContents());
+        mVrTestFramework.waitOnJavaScriptStep(mVrTestFramework.getFirstTabWebContents());
 
         Assert.assertTrue(DOMUtils.isFullscreen(mVrTestFramework.getFirstTabWebContents()));
         VrTransitionUtils.forceExitVr();
@@ -189,15 +189,15 @@ public class VrShellTransitionTest {
         // Validate our size is what we expect while in VR.
         String javascript = "Math.abs(screen.width - " + expectedWidth + ") <= 1 && "
                 + "Math.abs(screen.height - " + expectedHeight + ") <= 1";
-        Assert.assertTrue(VrTestFramework.pollJavaScriptBoolean(
+        Assert.assertTrue(mVrTestFramework.pollJavaScriptBoolean(
                 javascript, POLL_TIMEOUT_LONG_MS, mVrTestFramework.getFirstTabWebContents()));
 
         // Exit presentation through JavaScript.
-        VrTestFramework.runJavaScriptOrFail("vrDisplay.exitPresent();", POLL_TIMEOUT_SHORT_MS,
+        mVrTestFramework.runJavaScriptOrFail("vrDisplay.exitPresent();", POLL_TIMEOUT_SHORT_MS,
                 mVrTestFramework.getFirstTabWebContents());
 
         // We aren't comparing for equality because there is some rounding that occurs.
-        Assert.assertTrue(VrTestFramework.pollJavaScriptBoolean(
+        Assert.assertTrue(mVrTestFramework.pollJavaScriptBoolean(
                 javascript, POLL_TIMEOUT_LONG_MS, mVrTestFramework.getFirstTabWebContents()));
     }
 }

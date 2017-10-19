@@ -26,10 +26,6 @@ class SubresourceFilterMetricsObserver;
 class UkmPageLoadMetricsObserver;
 class LocalNetworkRequestsPageLoadMetricsObserver;
 
-namespace blink {
-class AutoplayUmaHelper;
-}
-
 namespace content {
 class RenderWidgetHostLatencyTracker;
 }  // namespace content
@@ -44,7 +40,6 @@ class PreviewsUKMObserver;
 
 namespace ukm {
 
-class DelegatingUkmRecorder;
 class UkmEntryBuilder;
 class UkmInterface;
 class TestRecordingHelper;
@@ -62,10 +57,14 @@ class METRICS_EXPORT UkmRecorder {
   UkmRecorder();
   virtual ~UkmRecorder();
 
-  // Provides access to a global UkmRecorder instance for recording metrics.
-  // This is typically passed to the Record() method of a entry object from
-  // ukm_builders.h.
-  // Use TestAutoSetUkmRecorder for capturing data written this way in tests.
+  // Sets an instance of UkmRecorder to provided by Get().
+  // TODO(holte): Migrate callers away from using Get, to using a context
+  // specific getter, or a MojoUkmRecorder.
+  static void Set(UkmRecorder* recorder);
+
+  // Provides access to a previously constructed UkmRecorder instance. Only one
+  // instance exists per process and must have been constructed prior to any
+  // calls to this method.
   static UkmRecorder* Get();
 
   // Get the new source ID, which is unique for the duration of a browser
@@ -77,7 +76,6 @@ class METRICS_EXPORT UkmRecorder {
   virtual void UpdateSourceURL(SourceId source_id, const GURL& url) = 0;
 
  private:
-  friend blink::AutoplayUmaHelper;
   friend ContextualSearchRankerLoggerImpl;
   friend PluginInfoMessageFilter;
   friend UkmPageLoadMetricsObserver;
@@ -92,7 +90,6 @@ class METRICS_EXPORT UkmRecorder {
   friend password_manager::PasswordManagerMetricsRecorder;
   friend previews::PreviewsUKMObserver;
   friend internal::UkmEntryBuilderBase;
-  friend DelegatingUkmRecorder;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,

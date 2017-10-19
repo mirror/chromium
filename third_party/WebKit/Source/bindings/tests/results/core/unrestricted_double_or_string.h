@@ -39,7 +39,7 @@ class CORE_EXPORT UnrestrictedDoubleOrString final {
   UnrestrictedDoubleOrString(const UnrestrictedDoubleOrString&);
   ~UnrestrictedDoubleOrString();
   UnrestrictedDoubleOrString& operator=(const UnrestrictedDoubleOrString&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum class SpecificType {

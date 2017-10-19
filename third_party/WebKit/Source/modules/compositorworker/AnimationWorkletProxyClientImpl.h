@@ -33,7 +33,7 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
 
  public:
   explicit AnimationWorkletProxyClientImpl(CompositorMutatorImpl*);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // AnimationWorkletProxyClient:
   void SetGlobalScope(WorkletGlobalScope*) override;

@@ -182,12 +182,10 @@ class TabManager : public TabStripModelObserver,
   // TODO(tasak): rename this to CanPurgeBackgroundedRenderer.
   bool CanSuspendBackgroundedRenderer(int render_process_id) const;
 
-  // Indicates how TabManager should load pending background tabs. The mode is
-  // recorded in tracing for easier debugging. The existing explicit numbering
-  // should be kept as is when new modes are added.
+  // Indicates how TabManager should load pending background tabs.
   enum BackgroundTabLoadingMode {
-    kStaggered = 0,  // Load a background tab after another tab is done loading.
-    kPaused = 1      // Pause loading background tabs unless a user selects it.
+    kStaggered,  // Load a background tab after another tab has done loading.
+    kPaused      // Pause loading background tabs unless the user selects it.
   };
 
   // Maybe throttle a tab's navigation based on current system status.
@@ -227,17 +225,6 @@ class TabManager : public TabStripModelObserver,
   // Returns true if the tab was created by session restore and initially in
   // foreground.
   bool IsTabRestoredInForeground(content::WebContents* web_contents) const;
-
-  // Returns the number of background tabs that are loading in a background tab
-  // opening session.
-  size_t GetBackgroundTabLoadingCount() const;
-
-  // Returns the number of background tabs that are pending in a background tab
-  // opening session.
-  size_t GetBackgroundTabPendingCount() const;
-
-  // Returns the number of tabs open in all browser instances.
-  int GetTabCount() const;
 
  private:
   friend class TabManagerStatsCollectorTest;
@@ -337,6 +324,9 @@ class TabManager : public TabStripModelObserver,
 
   // Purges data structures in the browser that can be easily recomputed.
   void PurgeBrowserMemory();
+
+  // Returns the number of tabs open in all browser instances.
+  int GetTabCount() const;
 
   // Adds all the stats of the tabs in |browser_info| into |stats_list|.
   // |window_is_active| indicates whether |browser_info|'s window is active.

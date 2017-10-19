@@ -41,9 +41,7 @@ def SetEnvironmentAndGetRuntimeDllDirs():
   if ((sys.platform in ('win32', 'cygwin') or os.path.exists(json_data_file))
       and depot_tools_win_toolchain):
     if ShouldUpdateToolchain():
-      update_result = Update()
-      if update_result != 0:
-        raise Exception('Failed to update, error code %d.' % update_result)
+      Update()
     with open(json_data_file, 'r') as tempf:
       toolchain_data = json.load(tempf)
 
@@ -357,8 +355,8 @@ def _GetDesiredVsToolchainHashes():
     # Update 3 final with 10.0.15063.468 SDK and no vctip.exe.
     return ['f53e4598951162bad6330f7a167486c7ae5db1e5']
   if env_version == '2017':
-    # VS 2017 Update 3.2 with 10.0.15063.468 SDK and patched setenv.cmd.
-    return ['a9e1098bba66d2acccc377d5ee81265910f29272']
+    # VS 2017 Update 3.2 with 10.0.15063.468 SDK.
+    return ['9bc7ccbf9f4bd50d4a3bd185e8ca94ff1618de0b']
   raise Exception('Unsupported VS version %s' % env_version)
 
 
@@ -392,35 +390,6 @@ def Update(force=False):
         depot_tools_win_toolchain):
     import find_depot_tools
     depot_tools_path = find_depot_tools.add_depot_tools_to_path()
-
-    # On Linux, the file system is usually case-sensitive while the Windows
-    # SDK only works on case-insensitive file systems.  If it doesn't already
-    # exist, set up a ciopfs fuse mount to put the SDK in a case-insensitive
-    # part of the file system.
-    toolchain_dir = os.path.join(depot_tools_path, 'win_toolchain', 'vs_files')
-    if sys.platform.startswith('linux') and not os.path.ismount(toolchain_dir):
-      import distutils.spawn
-      ciopfs = distutils.spawn.find_executable('ciopfs')
-      if not ciopfs:
-        # TODO(thakis): Offer to auto-install this?  Or have a
-        # build/install-build-deps-win.sh script and point to that? (Or run
-        # that?)
-        print >>sys.stderr, \
-            "\n\tCouldn't set up case-insensitive mount for Windows SDK."
-        print >>sys.stderr, \
-            "\tPlease run `sudo apt-get install ciopfs` and try again.\n"
-        return 1
-      if not os.path.isdir(toolchain_dir):
-        os.mkdir(toolchain_dir)
-      if not os.path.isdir(toolchain_dir + '.ciopfs'):
-        os.mkdir(toolchain_dir + '.ciopfs')
-      # Without use_ino, clang's #pragma once and Wnonportable-include-path
-      # both don't work right, see https://llvm.org/PR34931
-      # use_ino doesn't slow down builds, so it seems there's no drawback to
-      # just using it always.
-      subprocess.check_call([
-          ciopfs, '-o', 'use_ino', toolchain_dir + '.ciopfs', toolchain_dir])
-
     # Necessary so that get_toolchain_if_necessary.py will put the VS toolkit
     # in the correct directory.
     os.environ['GYP_MSVS_VERSION'] = GetVisualStudioVersion()

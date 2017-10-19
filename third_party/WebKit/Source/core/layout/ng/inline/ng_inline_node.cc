@@ -5,7 +5,6 @@
 #include "core/layout/ng/inline/ng_inline_node.h"
 
 #include "core/layout/BidiRun.h"
-#include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutTextFragment.h"
@@ -61,20 +60,12 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
                     const Vector<RefPtr<NGPhysicalFragment>>& children,
                     const NGConstraintSpace& constraint_space,
                     NGLogicalOffset parent_offset,
-                    NGPhysicalSize parent_size,
                     const Vector<NGInlineItem>& items,
                     const Vector<unsigned, 32>& text_offsets,
                     Vector<FragmentPosition, 32>* positions_for_bidi_runs_out,
                     HashMap<LineLayoutItem, FragmentPosition>* positions_out) {
   for (unsigned child_index = 0; child_index < children.size(); child_index++) {
     const auto& child = children[child_index];
-
-    NGFragment fragment(constraint_space.WritingMode(), *child);
-
-    NGLogicalOffset fragment_offset = child->Offset().ConvertToLogical(
-        constraint_space.WritingMode(), TextDirection::kLtr, parent_size,
-        child->Size());
-
     if (child->Type() == NGPhysicalFragment::kFragmentText) {
       const auto& physical_fragment = ToNGPhysicalTextFragment(*child);
       unsigned item_index = physical_fragment.ItemIndexDeprecated();
@@ -111,22 +102,23 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
         continue;
       }
       bidi_runs->AddRun(run);
+      NGFragment fragment(constraint_space.WritingMode(), physical_fragment);
       // Store text fragments in a vector in the same order as BidiRunList.
       // One LayoutText may produce multiple text fragments that they can't
       // be set to a map.
-      positions_for_bidi_runs_out->push_back(
-          FragmentPosition{&physical_fragment, fragment_offset + parent_offset,
-                           fragment.InlineSize()});
+      positions_for_bidi_runs_out->push_back(FragmentPosition{
+          &physical_fragment, fragment.Offset() + parent_offset,
+          fragment.InlineSize()});
     } else {
       DCHECK_EQ(child->Type(), NGPhysicalFragment::kFragmentBox);
       const auto& physical_fragment = ToNGPhysicalBoxFragment(*child);
 
-      NGLogicalOffset child_offset = fragment_offset + parent_offset;
+      NGFragment fragment(constraint_space.WritingMode(), physical_fragment);
+      NGLogicalOffset child_offset = fragment.Offset() + parent_offset;
       if (physical_fragment.Children().size()) {
         CreateBidiRuns(bidi_runs, physical_fragment.Children(),
-                       constraint_space, child_offset, physical_fragment.Size(),
-                       items, text_offsets, positions_for_bidi_runs_out,
-                       positions_out);
+                       constraint_space, child_offset, items, text_offsets,
+                       positions_for_bidi_runs_out, positions_out);
       } else {
         // An empty inline needs a BidiRun for itself.
         LayoutObject* layout_object = physical_fragment.GetLayoutObject();
@@ -259,6 +251,28 @@ String GetTextForInlineCollection<NGOffsetMappingBuilder>(
   return ToText(node)->data();
 }
 
+// Templated helper function for CollectInlinesInternal().
+template <typename OffsetMappingBuilder>
+void AppendTextTransformedOffsetMapping(OffsetMappingBuilder*,
+                                        const LayoutText*,
+                                        const String&) {}
+
+template <>
+void AppendTextTransformedOffsetMapping<NGOffsetMappingBuilder>(
+    NGOffsetMappingBuilder* concatenated_mapping_builder,
+    const LayoutText* node,
+    const String& text_transformed_string) {
+  // TODO(xiaochengh): We are assuming that DOM data string and text-transformed
+  // strings have the same length, which is incorrect.
+  if (text_transformed_string.IsEmpty())
+    return;
+  NGOffsetMappingBuilder text_transformed_mapping_builder;
+  text_transformed_mapping_builder.AppendIdentityMapping(
+      text_transformed_string.length());
+  text_transformed_mapping_builder.Annotate(node);
+  concatenated_mapping_builder->Concatenate(text_transformed_mapping_builder);
+}
+
 // The function is templated to indicate the purpose of collected inlines:
 // - With EmptyOffsetMappingBuilder: updating layout;
 // - With NGOffsetMappingBuilder: building offset mapping on clean layout.
@@ -286,6 +300,8 @@ LayoutBox* CollectInlinesInternal(
         const String& text =
             GetTextForInlineCollection<OffsetMappingBuilder>(*layout_text);
         builder->Append(text, node->Style(), layout_text);
+        AppendTextTransformedOffsetMapping(
+            &builder->GetConcatenatedOffsetMappingBuilder(), layout_text, text);
       }
       ClearNeedsLayoutIfUpdatingLayout<OffsetMappingBuilder>(layout_text);
 
@@ -402,10 +418,10 @@ const NGOffsetMappingResult& NGInlineNode::ComputeOffsetMappingIfNeeded() {
     CollectInlinesInternal(GetLayoutBlockFlow(), &builder);
     builder.ToString();
 
-    // TODO(xiaochengh): This doesn't compute offset mapping correctly when
-    // text-transform CSS property changes text length.
-    NGOffsetMappingBuilder& mapping_builder = builder.GetOffsetMappingBuilder();
-    mapping_builder.SetDestinationString(Text());
+    NGOffsetMappingBuilder& mapping_builder =
+        builder.GetConcatenatedOffsetMappingBuilder();
+    mapping_builder.Composite(builder.GetOffsetMappingBuilder());
+
     MutableData()->offset_mapping_ =
         WTF::MakeUnique<NGOffsetMappingResult>(mapping_builder.Build());
   }
@@ -577,25 +593,19 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
 
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
+  NGLineBreaker line_breaker(node, *space, &container_builder,
+                             &unpositioned_floats);
 
-  RefPtr<NGInlineBreakToken> break_token;
   NGLineInfo line_info;
   NGExclusionSpace empty_exclusion_space;
   LayoutUnit result;
-  while (!break_token || !break_token->IsFinished()) {
-    NGLineBreaker line_breaker(node, *space, &container_builder,
-                               &unpositioned_floats, break_token.get());
-    if (!line_breaker.NextLine(NGLogicalOffset(), empty_exclusion_space,
-                               &line_info))
-      break;
-
-    break_token = line_breaker.CreateBreakToken();
+  while (line_breaker.NextLine(NGLogicalOffset(), empty_exclusion_space,
+                               &line_info)) {
     LayoutUnit inline_size = line_info.TextIndent();
     for (const NGInlineItemResult item_result : line_info.Results())
       inline_size += item_result.inline_size;
     result = std::max(inline_size, result);
   }
-
   return result;
 }
 
@@ -637,12 +647,7 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
     NGLayoutResult* layout_result) {
-  LayoutBlockFlow* block_flow = GetLayoutBlockFlow();
-
-  // If we have a flow thread, that's where to put the line boxes.
-  if (auto* flow_thread = block_flow->MultiColumnFlowThread())
-    block_flow = flow_thread;
-
+  LayoutNGBlockFlow* block_flow = GetLayoutBlockFlow();
   block_flow->DeleteLineBoxTree();
 
   const Vector<NGInlineItem>& items = Data().items_;
@@ -673,15 +678,10 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
         ToNGPhysicalLineBoxFragment(*container_child);
     NGFragment line_box(constraint_space.WritingMode(), physical_line_box);
 
-    NGLogicalOffset line_box_offset =
-        physical_line_box.Offset().ConvertToLogical(
-            constraint_space.WritingMode(), TextDirection::kLtr,
-            box_fragment->Size(), physical_line_box.Size());
-
     // Create a BidiRunList for this line.
     CreateBidiRuns(&bidi_runs, physical_line_box.Children(), constraint_space,
-                   line_box_offset, physical_line_box.Size(), items,
-                   text_offsets, &positions_for_bidi_runs, &positions);
+                   line_box.Offset(), items, text_offsets,
+                   &positions_for_bidi_runs, &positions);
     // TODO(kojii): When a line contains a list marker but nothing else, there
     // are fragments but there is no BidiRun. How to handle this is TBD.
     if (!bidi_runs.FirstRun())
@@ -710,11 +710,10 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
     PlaceInlineBoxChildren(root_line_box, positions_for_bidi_runs, positions);
 
     // Copy to RootInlineBox.
-    root_line_box->SetLogicalLeft(line_box_offset.inline_offset +
+    root_line_box->SetLogicalLeft(line_box.InlineOffset() +
                                   border_padding.inline_start);
     root_line_box->SetLogicalWidth(line_box.InlineSize());
-    LayoutUnit line_top =
-        line_box_offset.block_offset + border_padding.block_start;
+    LayoutUnit line_top = line_box.BlockOffset() + border_padding.block_start;
     NGLineHeightMetrics line_metrics(Style(), baseline_type);
     const NGLineHeightMetrics& max_with_leading = physical_line_box.Metrics();
     LayoutUnit baseline = line_top + max_with_leading.ascent;

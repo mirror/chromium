@@ -32,7 +32,7 @@ inline SVGViewElement::SVGViewElement(Document& document)
 
 DEFINE_NODE_FACTORY(SVGViewElement)
 
-void SVGViewElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGViewElement) {
   SVGElement::Trace(visitor);
   SVGFitToViewBox::Trace(visitor);
 }

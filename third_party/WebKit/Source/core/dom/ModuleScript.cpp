@@ -11,12 +11,28 @@
 
 namespace blink {
 
-ModuleScript* ModuleScript::Create(const String& source_text,
-                                   Modulator* modulator,
-                                   const KURL& base_url,
-                                   const ScriptFetchOptions& options,
-                                   AccessControlStatus access_control_status,
-                                   const TextPosition& start_position) {
+const char* ModuleInstantiationStateToString(ModuleInstantiationState state) {
+  switch (state) {
+    case ModuleInstantiationState::kUninstantiated:
+      return "uninstantiated";
+    case ModuleInstantiationState::kInstantiated:
+      return "instantiated";
+    case ModuleInstantiationState::kErrored:
+      return "errored";
+  }
+  NOTREACHED();
+  return "";
+}
+
+ModuleScript* ModuleScript::Create(
+    const String& source_text,
+    Modulator* modulator,
+    const KURL& base_url,
+    const String& nonce,
+    ParserDisposition parser_state,
+    WebURLRequest::FetchCredentialsMode credentials_mode,
+    AccessControlStatus access_control_status,
+    const TextPosition& start_position) {
   // https://html.spec.whatwg.org/#creating-a-module-script
   // Step 1. "Let script be a new module script that this algorithm will
   // subsequently initialize, with its module record initially set to null."
@@ -30,19 +46,18 @@ ModuleScript* ModuleScript::Create(const String& source_text,
                                  "ModuleScript", "Create");
 
   // Delegate to Modulator::CompileModule to process Steps 3-5.
-  // TODO(kouhei): pass ScriptFetchOptions to CompileModule.
   ScriptModule result = modulator->CompileModule(
       source_text, base_url.GetString(), access_control_status,
-      options.CredentialsMode(), options.Nonce(), options.ParserState(),
-      start_position, exception_state);
+      credentials_mode, nonce, parser_state, start_position, exception_state);
 
   // CreateInternal processes Steps 8-13.
   // [nospec] We initialize the other ModuleScript members anyway by running
   // Steps 8-13 before Step 6. In a case that compile failed, we will
   // immediately turn the script into errored state. Thus the members will not
   // be used for the speced algorithms, but may be used from inspector.
-  ModuleScript* script = CreateInternal(source_text, modulator, result,
-                                        base_url, options, start_position);
+  ModuleScript* script =
+      CreateInternal(source_text, modulator, result, base_url, nonce,
+                     parser_state, credentials_mode, start_position);
 
   // Step 6. "If result is a List of errors, then:" [spec text]
   if (exception_state.HadException()) {
@@ -85,21 +100,28 @@ ModuleScript* ModuleScript::Create(const String& source_text,
   return script;
 }
 
-ModuleScript* ModuleScript::CreateForTest(Modulator* modulator,
-                                          ScriptModule record,
-                                          const KURL& base_url,
-                                          const ScriptFetchOptions& options) {
+ModuleScript* ModuleScript::CreateForTest(
+    Modulator* modulator,
+    ScriptModule record,
+    const KURL& base_url,
+    const String& nonce,
+    ParserDisposition parser_state,
+    WebURLRequest::FetchCredentialsMode credentials_mode) {
   String dummy_source_text = "";
-  return CreateInternal(dummy_source_text, modulator, record, base_url, options,
+  return CreateInternal(dummy_source_text, modulator, record, base_url, nonce,
+                        parser_state, credentials_mode,
                         TextPosition::MinimumPosition());
 }
 
-ModuleScript* ModuleScript::CreateInternal(const String& source_text,
-                                           Modulator* modulator,
-                                           ScriptModule result,
-                                           const KURL& base_url,
-                                           const ScriptFetchOptions& options,
-                                           const TextPosition& start_position) {
+ModuleScript* ModuleScript::CreateInternal(
+    const String& source_text,
+    Modulator* modulator,
+    ScriptModule result,
+    const KURL& base_url,
+    const String& nonce,
+    ParserDisposition parser_state,
+    WebURLRequest::FetchCredentialsMode credentials_mode,
+    const TextPosition& start_position) {
   // https://html.spec.whatwg.org/#creating-a-module-script
   // Step 8. Set script's module record to result.
   // Step 9. Set script's base URL to the script base URL provided.
@@ -108,9 +130,10 @@ ModuleScript* ModuleScript::CreateInternal(const String& source_text,
   // Step 11. Set script's parser state to the parser state.
   // Step 12. Set script's credentials mode to the credentials mode provided.
   // Step 13. Return script.
-  // [nospec] |source_text| is saved for CSP checks.
-  ModuleScript* module_script = new ModuleScript(
-      modulator, result, base_url, options, source_text, start_position);
+  // [not specced] |source_text| is saved for CSP checks.
+  ModuleScript* module_script =
+      new ModuleScript(modulator, result, base_url, nonce, parser_state,
+                       credentials_mode, source_text, start_position);
 
   // Step 5, a part of ParseModule(): Passing script as the last parameter
   // here ensures result.[[HostDefined]] will be script.
@@ -122,14 +145,18 @@ ModuleScript* ModuleScript::CreateInternal(const String& source_text,
 ModuleScript::ModuleScript(Modulator* settings_object,
                            ScriptModule record,
                            const KURL& base_url,
-                           const ScriptFetchOptions& fetch_options,
+                           const String& nonce,
+                           ParserDisposition parser_state,
+                           WebURLRequest::FetchCredentialsMode credentials_mode,
                            const String& source_text,
                            const TextPosition& start_position)
-    : Script(fetch_options),
-      settings_object_(settings_object),
+    : settings_object_(settings_object),
       record_(this),
       base_url_(base_url),
       preinstantiation_error_(this),
+      nonce_(nonce),
+      parser_state_(parser_state),
+      credentials_mode_(credentials_mode),
       source_text_(source_text),
       start_position_(start_position) {
   if (record.IsNull()) {
@@ -214,7 +241,7 @@ void ModuleScript::SetErrorAndClearRecord(ScriptValue error) {
   }
 }
 
-void ModuleScript::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleScript) {
   visitor->Trace(settings_object_);
   Script::Trace(visitor);
 }

@@ -398,7 +398,7 @@ SQLTransactionBackend::~SQLTransactionBackend() {
   DCHECK(!sqlite_transaction_);
 }
 
-void SQLTransactionBackend::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SQLTransactionBackend) {
   visitor->Trace(database_);
   visitor->Trace(wrapper_);
 }

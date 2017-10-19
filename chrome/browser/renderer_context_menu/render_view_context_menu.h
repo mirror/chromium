@@ -160,7 +160,6 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   void AppendSearchWebForImageItems();
   void AppendProtocolHandlerSubMenu();
   void AppendPasswordItems();
-  void AppendPictureInPictureItem();
 
   // Command enabled query functions.
   bool IsReloadEnabled() const;
@@ -204,7 +203,6 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   void ExecTranslate();
   void ExecLanguageSettings(int event_flags);
   void ExecProtocolHandlerSettings(int event_flags);
-  void ExecPictureInPicture();
 
   // Writes the specified text/url to the system clipboard
   void WriteURLToClipboard(const GURL& url);

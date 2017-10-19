@@ -115,8 +115,7 @@ Layer::Layer()
       cc_layer_(nullptr),
       device_scale_factor_(1.0f),
       cache_render_surface_requests_(0),
-      deferred_paint_requests_(0),
-      trilinear_filtering_request_(0) {
+      deferred_paint_requests_(0) {
   CreateCcLayer();
 }
 
@@ -145,8 +144,7 @@ Layer::Layer(LayerType type)
       cc_layer_(nullptr),
       device_scale_factor_(1.0f),
       cache_render_surface_requests_(0),
-      deferred_paint_requests_(0),
-      trilinear_filtering_request_(0) {
+      deferred_paint_requests_(0) {
   CreateCcLayer();
 }
 
@@ -175,7 +173,7 @@ Layer::~Layer() {
 }
 
 std::unique_ptr<Layer> Layer::Clone() const {
-  auto clone = std::make_unique<Layer>(type_);
+  auto clone = base::MakeUnique<Layer>(type_);
 
   // Background filters.
   clone->SetBackgroundBlur(background_blur_sigma_);
@@ -189,7 +187,7 @@ std::unique_ptr<Layer> Layer::Clone() const {
   clone->SetLayerInverted(layer_inverted_);
   clone->SetLayerBlur(layer_blur_sigma_);
   if (alpha_shape_)
-    clone->SetAlphaShape(std::make_unique<ShapeRects>(*alpha_shape_));
+    clone->SetAlphaShape(base::MakeUnique<ShapeRects>(*alpha_shape_));
 
   // cc::Layer state.
   if (surface_layer_) {
@@ -197,8 +195,8 @@ std::unique_ptr<Layer> Layer::Clone() const {
       clone->SetShowPrimarySurface(surface_layer_->primary_surface_info(),
                                    surface_layer_->surface_reference_factory());
     }
-    if (surface_layer_->fallback_surface_id().is_valid())
-      clone->SetFallbackSurfaceId(surface_layer_->fallback_surface_id());
+    if (surface_layer_->fallback_surface_info().is_valid())
+      clone->SetFallbackSurface(surface_layer_->fallback_surface_info());
   } else if (type_ == LAYER_SOLID_COLOR) {
     clone->SetColor(GetTargetColor());
   }
@@ -218,7 +216,7 @@ std::unique_ptr<Layer> Layer::Clone() const {
 
 std::unique_ptr<Layer> Layer::Mirror() {
   auto mirror = Clone();
-  mirrors_.emplace_back(std::make_unique<LayerMirror>(this, mirror.get()));
+  mirrors_.emplace_back(base::MakeUnique<LayerMirror>(this, mirror.get()));
   return mirror;
 }
 
@@ -575,7 +573,7 @@ bool Layer::ShouldDraw() const {
 // static
 void Layer::ConvertPointToLayer(const Layer* source,
                                 const Layer* target,
-                                gfx::PointF* point) {
+                                gfx::Point* point) {
   if (source == target)
     return;
 
@@ -638,7 +636,6 @@ void Layer::SwitchToLayer(scoped_refptr<cc::Layer> new_layer) {
   new_layer->SetPosition(cc_layer_->position());
   new_layer->SetBackgroundColor(cc_layer_->background_color());
   new_layer->SetCacheRenderSurface(cc_layer_->cache_render_surface());
-  new_layer->SetTrilinearFiltering(cc_layer_->trilinear_filtering());
 
   cc_layer_ = new_layer.get();
   content_layer_ = nullptr;
@@ -706,27 +703,8 @@ void Layer::RemoveDeferredPaintRequest() {
     ScheduleDraw();
 }
 
-// Note: The code that sets this flag would be responsible to unset it on that
-// ui::Layer. We do not want to clone this flag to a cloned layer by accident,
-// which could be a supprise. But we want to preserve it after switching to a
-// new cc::Layer. There could be a whole subtree and the root changed, but does
-// not mean we want to treat the trilinear filtering all different.
-void Layer::AddTrilinearFilteringRequest() {
-  ++trilinear_filtering_request_;
-  TRACE_COUNTER_ID1("ui", "TrilinearFilteringRequests", this,
-                    trilinear_filtering_request_);
-  if (trilinear_filtering_request_ == 1)
-    cc_layer_->SetTrilinearFiltering(true);
-}
-
-void Layer::RemoveTrilinearFilteringRequest() {
-  DCHECK_GT(trilinear_filtering_request_, 0u);
-
-  --trilinear_filtering_request_;
-  TRACE_COUNTER_ID1("ui", "TrilinearFilteringRequests", this,
-                    trilinear_filtering_request_);
-  if (trilinear_filtering_request_ == 0)
-    cc_layer_->SetTrilinearFiltering(false);
+void Layer::SetTrilinearFiltering(bool trilinear_filtering) {
+  cc_layer_->SetTrilinearFiltering(trilinear_filtering);
 }
 
 void Layer::SetTextureMailbox(
@@ -794,14 +772,15 @@ void Layer::SetShowPrimarySurface(
     mirror->dest()->SetShowPrimarySurface(surface_info, ref_factory);
 }
 
-void Layer::SetFallbackSurfaceId(const viz::SurfaceId& surface_id) {
+void Layer::SetFallbackSurface(const viz::SurfaceInfo& surface_info) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
   DCHECK(surface_layer_);
 
-  surface_layer_->SetFallbackSurfaceId(surface_id);
+  // TODO(fsamuel): We should compute the gutter in the display compositor.
+  surface_layer_->SetFallbackSurfaceInfo(surface_info);
 
   for (const auto& mirror : mirrors_)
-    mirror->dest()->SetFallbackSurfaceId(surface_id);
+    mirror->dest()->SetFallbackSurface(surface_info);
 }
 
 const viz::SurfaceInfo* Layer::GetPrimarySurfaceInfo() const {
@@ -810,9 +789,9 @@ const viz::SurfaceInfo* Layer::GetPrimarySurfaceInfo() const {
   return nullptr;
 }
 
-const viz::SurfaceId* Layer::GetFallbackSurfaceId() const {
+const viz::SurfaceInfo* Layer::GetFallbackSurfaceInfo() const {
   if (surface_layer_)
-    return &surface_layer_->fallback_surface_id();
+    return &surface_layer_->fallback_surface_info();
   return nullptr;
 }
 
@@ -1111,22 +1090,22 @@ void Layer::StackRelativeTo(Layer* child, Layer* other, bool above) {
 }
 
 bool Layer::ConvertPointForAncestor(const Layer* ancestor,
-                                    gfx::PointF* point) const {
+                                    gfx::Point* point) const {
   gfx::Transform transform;
   bool result = GetTargetTransformRelativeTo(ancestor, &transform);
-  auto p = gfx::Point3F(*point);
+  auto p = gfx::Point3F(gfx::PointF(*point));
   transform.TransformPoint(&p);
-  *point = p.AsPointF();
+  *point = gfx::ToFlooredPoint(p.AsPointF());
   return result;
 }
 
 bool Layer::ConvertPointFromAncestor(const Layer* ancestor,
-                                     gfx::PointF* point) const {
+                                     gfx::Point* point) const {
   gfx::Transform transform;
   bool result = GetTargetTransformRelativeTo(ancestor, &transform);
-  auto p = gfx::Point3F(*point);
+  auto p = gfx::Point3F(gfx::PointF(*point));
   transform.TransformPointReverse(&p);
-  *point = p.AsPointF();
+  *point = gfx::ToFlooredPoint(p.AsPointF());
   return result;
 }
 

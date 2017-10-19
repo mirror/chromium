@@ -79,7 +79,8 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
         if (mIsDestroyed) return;
 
         for (Tile tile : tiles) {
-            mMostVisitedSites.recordTileImpression(tile);
+            mMostVisitedSites.recordTileImpression(tile.getIndex(), tile.getType(),
+                    tile.getTitleSource(), tile.getSource(), tile.getUrl());
         }
 
         mMostVisitedSites.recordPageImpression(tiles.size());
@@ -132,6 +133,7 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
         RecordUserAction.record("MobileNTPMostVisited");
         NewTabPageUma.recordExplicitUserNavigation(
                 tile.getUrl(), NewTabPageUma.RAPPOR_ACTION_VISITED_SUGGESTED_TILE);
-        mMostVisitedSites.recordOpenedMostVisitedItem(tile);
+        mMostVisitedSites.recordOpenedMostVisitedItem(
+                tile.getIndex(), tile.getType(), tile.getTitleSource(), tile.getSource());
     }
 }

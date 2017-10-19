@@ -17,7 +17,7 @@ AnimationWorkletProxyClientImpl::AnimationWorkletProxyClientImpl(
   DCHECK(IsMainThread());
 }
 
-void AnimationWorkletProxyClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationWorkletProxyClientImpl) {
   AnimationWorkletProxyClient::Trace(visitor);
   CompositorAnimator::Trace(visitor);
 }
@@ -46,10 +46,14 @@ void AnimationWorkletProxyClientImpl::Mutate(
 
   std::unique_ptr<CompositorMutatorOutputState> output = nullptr;
 
+  // TODO(petermayo): Once we move animation worklet to separate thread this
+  // should not return the output and instead get it as argument to a callback.
   if (global_scope_)
     output = global_scope_->Mutate(state);
 
   mutator_->SetMutationUpdate(std::move(output));
+  // Always request another rAF for now.
+  mutator_->SetNeedsMutate();
 }
 
 // static

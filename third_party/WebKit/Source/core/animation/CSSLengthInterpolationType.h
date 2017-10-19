@@ -5,16 +5,15 @@
 #ifndef CSSLengthInterpolationType_h
 #define CSSLengthInterpolationType_h
 
-#include <memory>
-#include "core/CoreExport.h"
 #include "core/animation/CSSInterpolationType.h"
 #include "core/animation/LengthPropertyFunctions.h"
+#include <memory>
 
 namespace blink {
 
 class ComputedStyle;
 
-class CORE_EXPORT CSSLengthInterpolationType : public CSSInterpolationType {
+class CSSLengthInterpolationType : public CSSInterpolationType {
  public:
   CSSLengthInterpolationType(PropertyHandle,
                              const PropertyRegistration* = nullptr);

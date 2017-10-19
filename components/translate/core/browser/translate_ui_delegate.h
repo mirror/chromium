@@ -108,12 +108,7 @@ class TranslateUIDelegate {
   // Returns true if the current webpage is blacklisted.
   bool IsSiteBlacklisted();
 
-  // Returns true if the site of the current webpage can be blacklisted.
-  bool CanBlacklistSite();
-
-  // Sets the blacklisted state for the host of the current page. If
-  // value is true, the current host will be blacklisted and translations
-  // will not be offered for that site.
+  // Sets the value if the current webpage is blacklisted.
   void SetSiteBlacklist(bool value);
 
   // Returns true if the webpage in the current original language should be

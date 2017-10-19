@@ -135,12 +135,12 @@ class TouchTransformControllerTest : public testing::Test {
   // testing::Test:
   void SetUp() override {
     ui::DeviceDataManager::CreateInstance();
-    std::unique_ptr<ScreenBase> screen = std::make_unique<ScreenBase>();
+    std::unique_ptr<ScreenBase> screen = base::MakeUnique<ScreenBase>();
     Screen::SetScreenInstance(screen.get());
-    display_manager_ = std::make_unique<DisplayManager>(std::move(screen));
-    touch_transform_controller_ = std::make_unique<TouchTransformController>(
+    display_manager_ = base::MakeUnique<DisplayManager>(std::move(screen));
+    touch_transform_controller_ = base::MakeUnique<TouchTransformController>(
         nullptr, display_manager_.get(),
-        std::make_unique<DefaultTouchTransformSetter>());
+        base::MakeUnique<DefaultTouchTransformSetter>());
   }
 
   void TearDown() override {

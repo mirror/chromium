@@ -78,11 +78,12 @@ std::unique_ptr<ImageBuffer> ImageBuffer::Create(
 
 std::unique_ptr<ImageBuffer> ImageBuffer::Create(
     const IntSize& size,
+    OpacityMode opacity_mode,
     ImageInitializationMode initialization_mode,
     const CanvasColorParams& color_params) {
   std::unique_ptr<ImageBufferSurface> surface(
       WTF::WrapUnique(new UnacceleratedImageBufferSurface(
-          size, initialization_mode, color_params)));
+          size, opacity_mode, initialization_mode, color_params)));
 
   if (!surface->IsValid())
     return nullptr;
@@ -93,7 +94,7 @@ ImageBuffer::ImageBuffer(std::unique_ptr<ImageBufferSurface> surface)
     : weak_ptr_factory_(this),
       snapshot_state_(kInitialSnapshotState),
       surface_(std::move(surface)),
-      client_(nullptr),
+      client_(0),
       gpu_readback_invoked_in_current_frame_(false),
       gpu_readback_successive_frames_(0),
       gpu_memory_usage_(0) {
@@ -494,7 +495,7 @@ void ImageBuffer::DisableAcceleration() {
   std::unique_ptr<ImageBufferSurface> surface =
       WTF::WrapUnique(new RecordingImageBufferSurface(
           surface_->Size(), RecordingImageBufferSurface::kAllowFallback,
-          surface_->ColorParams()));
+          surface_->GetOpacityMode(), surface_->ColorParams()));
   SetSurface(std::move(surface));
 }
 

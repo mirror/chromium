@@ -182,7 +182,7 @@ class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
   // the local frame.
   const DoublePoint& AbsoluteLocation() const { return absolute_location_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   MouseEvent(const AtomicString& type,

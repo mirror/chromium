@@ -25,13 +25,13 @@
 #include "gpu/command_buffer/client/gpu_control.h"
 #include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/command_buffer/common/command_buffer.h"
-#include "gpu/command_buffer/common/context_result.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
+#include "gpu/config/gpu_driver_bug_workarounds.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
 #include "gpu/ipc/service/image_transport_surface_delegate.h"
@@ -95,15 +95,14 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   // If |surface| is not null, use it directly; in this case, the command
   // buffer gpu thread must be the same as the client thread. Otherwise create
   // a new GLSurface.
-  gpu::ContextResult Initialize(
-      scoped_refptr<gl::GLSurface> surface,
-      bool is_offscreen,
-      SurfaceHandle window,
-      const gles2::ContextCreationAttribHelper& attribs,
-      InProcessCommandBuffer* share_group,
-      GpuMemoryBufferManager* gpu_memory_buffer_manager,
-      ImageFactory* image_factory,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+  bool Initialize(scoped_refptr<gl::GLSurface> surface,
+                  bool is_offscreen,
+                  SurfaceHandle window,
+                  const gles2::ContextCreationAttribHelper& attribs,
+                  InProcessCommandBuffer* share_group,
+                  GpuMemoryBufferManager* gpu_memory_buffer_manager,
+                  ImageFactory* image_factory,
+                  scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // CommandBuffer implementation:
   State GetLastState() override;
@@ -172,9 +171,6 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   void AddFilter(IPC::MessageFilter* message_filter) override;
   int32_t GetRouteID() const override;
 
-  // Upstream this function to GpuControl if needs arise.
-  const GpuFeatureInfo& GetGpuFeatureInfo() const;
-
   using SwapBuffersCompletionCallback = base::Callback<void(
       const std::vector<ui::LatencyInfo>& latency_info,
       gfx::SwapResult result,
@@ -224,6 +220,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
 
     const GpuPreferences& gpu_preferences();
     const GpuFeatureInfo& gpu_feature_info() { return gpu_feature_info_; }
+    const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds();
     scoped_refptr<gl::GLShareGroup> share_group();
     gles2::MailboxManager* mailbox_manager() { return mailbox_manager_; }
     gles2::Outputter* outputter();
@@ -242,6 +239,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
    protected:
     const GpuPreferences gpu_preferences_;
     const GpuFeatureInfo gpu_feature_info_;
+    const GpuDriverBugWorkarounds gpu_driver_bug_workarounds_;
     std::unique_ptr<gles2::MailboxManager> owned_mailbox_manager_;
     gles2::MailboxManager* mailbox_manager_ = nullptr;
     std::unique_ptr<gles2::Outputter> outputter_;
@@ -279,8 +277,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
           image_factory(image_factory) {}
   };
 
-  gpu::ContextResult InitializeOnGpuThread(
-      const InitializeOnGpuThreadParams& params);
+  bool InitializeOnGpuThread(const InitializeOnGpuThreadParams& params);
   void Destroy();
   bool DestroyOnGpuThread();
   void FlushOnGpuThread(int32_t put_offset,

@@ -437,10 +437,10 @@ class LayerTreeHostImplTest : public testing::Test,
     squash1->SetBounds(gfx::Size(140, 300));
     squash1->SetPosition(gfx::PointF(220, 0));
     if (transparent_layer) {
+      // In the it is a transparent layer but should still participate
+      // in hit testing.
       squash1->test_properties()->opacity = 0.0f;
-      // The transparent layer should still participate in hit testing even
-      // through it does not draw content.
-      squash1->SetHitTestableWithoutDrawsContent(true);
+      squash1->SetShouldHitTest(true);
     } else {
       squash1->SetDrawsContent(true);
     }
@@ -3930,7 +3930,9 @@ TEST_F(LayerTreeHostImplTest, ActivationDependenciesInMetadata) {
     child->SetPrimarySurfaceInfo(
         viz::SurfaceInfo(primary_surfaces[i], 1.f /* device_scale_factor */,
                          gfx::Size(10, 10) /* size_in_pixels */));
-    child->SetFallbackSurfaceId(fallback_surfaces[i]);
+    child->SetFallbackSurfaceInfo(
+        viz::SurfaceInfo(fallback_surfaces[i], 1.f /* device_scale_factor */,
+                         gfx::Size(10, 10) /* size_in_pixels */));
     root->test_properties()->AddChild(std::move(child));
   }
 
@@ -7317,6 +7319,7 @@ TEST_F(LayerTreeHostImplTest, OverscrollOnMainThread) {
 // Test that scrolling the inner viewport directly works, as can happen when the
 // scroll chains up to it from an sibling of the outer viewport.
 TEST_F(LayerTreeHostImplTest, ScrollFromOuterViewportSibling) {
+  const gfx::Size content_size(200, 200);
   const gfx::Size viewport_size(100, 100);
 
   LayerTreeImpl* layer_tree_impl = host_impl_->active_tree();
@@ -13089,6 +13092,7 @@ TEST_F(LayerTreeHostImplTest, RasterTilePrioritizationForNonDrawingLayers) {
   root->test_properties()->AddChild(std::move(scoped_drawing_layer));
 
   gfx::Rect layer_rect(0, 0, 500, 500);
+  gfx::Rect empty_rect(0, 0, 0, 0);
   host_impl_->pending_tree()->BuildPropertyTreesForTesting();
 
   hidden_layer->tilings()->AddTiling(gfx::AxisTransform2d(), raster_source);

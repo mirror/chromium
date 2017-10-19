@@ -498,13 +498,11 @@ std::unique_ptr<base::Value> ModelTypeToValue(ModelType model_type) {
 ModelType ModelTypeFromValue(const base::Value& value) {
   if (value.IsType(base::Value::Type::STRING)) {
     std::string result;
-    bool success = value.GetAsString(&result);
-    DCHECK(success);
+    CHECK(value.GetAsString(&result));
     return ModelTypeFromString(result);
   } else if (value.IsType(base::Value::Type::INTEGER)) {
-    int result = 0;
-    bool success = value.GetAsInteger(&result);
-    DCHECK(success);
+    int result;
+    CHECK(value.GetAsInteger(&result));
     return ModelTypeFromInt(result);
   } else {
     NOTREACHED() << "Unsupported value type: " << value.type();

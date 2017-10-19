@@ -86,7 +86,8 @@ public class CaptivePortalTest {
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityFromLauncher();
         mServer = EmbeddedTestServer.createAndStartHTTPSServer(
-                InstrumentationRegistry.getContext(), ServerCertificate.CERT_MISMATCHED_NAME);
+                InstrumentationRegistry.getInstrumentation().getContext(),
+                ServerCertificate.CERT_MISMATCHED_NAME);
 
         CaptivePortalHelper.setOSReportsCaptivePortalForTesting(false);
         CaptivePortalHelper.setCaptivePortalCertificateForTesting("sha256/test");

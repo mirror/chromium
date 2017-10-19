@@ -78,7 +78,7 @@ class CORE_EXPORT InspectorNetworkAgent final
   void Restore() override;
 
   ~InspectorNetworkAgent() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // Probes.
   void DidBlockRequest(ExecutionContext*,
@@ -124,7 +124,6 @@ class CORE_EXPORT InspectorNetworkAgent final
   void DidReceiveScriptResponse(unsigned long identifier);
   void ShouldForceCORSPreflight(bool* result);
   void ShouldBlockRequest(const KURL&, bool* result);
-  void ShouldBypassServiceWorker(bool* result);
 
   void DocumentThreadableLoaderStartedLoadingForClient(unsigned long identifier,
                                                        ThreadableLoaderClient*);

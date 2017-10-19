@@ -78,7 +78,7 @@ class Gamepad final : public GarbageCollectedFinalized<Gamepad>,
   unsigned displayId() const { return display_id_; }
   void SetDisplayId(unsigned val) { display_id_ = val; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   Gamepad();

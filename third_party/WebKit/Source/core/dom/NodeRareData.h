@@ -67,7 +67,7 @@ class NodeMutationObserverData final
     registry_.EraseAt(registry_.Find(registration));
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(registry_);
     visitor->Trace(transient_registry_);
   }
@@ -150,9 +150,9 @@ class NodeRareData : public GarbageCollectedFinalized<NodeRareData>,
     kConnectedFrameCountBits = 10,  // Must fit Page::maxNumberOfFrames.
   };
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
   void FinalizeGarbageCollectedObject();
 
   DECLARE_TRACE_WRAPPERS();

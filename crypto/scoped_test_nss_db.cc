@@ -18,7 +18,7 @@ ScopedTestNSSDB::ScopedTestNSSDB() {
   // NSS is allowed to do IO on the current thread since dispatching
   // to a dedicated thread would still have the affect of blocking
   // the current thread, due to NSS's internal locking requirements
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   if (!temp_dir_.CreateUniqueTempDir())
     return;
@@ -47,7 +47,7 @@ ScopedTestNSSDB::~ScopedTestNSSDB() {
   // NSS is allowed to do IO on the current thread since dispatching
   // to a dedicated thread would still have the affect of blocking
   // the current thread, due to NSS's internal locking requirements
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   if (slot_) {
     SECStatus status = SECMOD_CloseUserDB(slot_.get());

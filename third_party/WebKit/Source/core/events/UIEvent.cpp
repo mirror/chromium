@@ -94,7 +94,7 @@ unsigned UIEvent::which() const {
   return 0;
 }
 
-void UIEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(UIEvent) {
   visitor->Trace(view_);
   visitor->Trace(source_capabilities_);
   Event::Trace(visitor);

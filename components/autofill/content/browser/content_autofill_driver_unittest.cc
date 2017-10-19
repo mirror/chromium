@@ -244,8 +244,6 @@ class MockAutofillManager : public AutofillManager {
 class MockAutofillClient : public TestAutofillClient {
  public:
   MOCK_METHOD0(OnFirstUserGestureObserved, void());
-  MOCK_METHOD1(DidInteractWithNonsecureCreditCardInput,
-               void(content::RenderFrameHost*));
 };
 
 class TestContentAutofillDriver : public ContentAutofillDriver {
@@ -372,6 +370,21 @@ TEST_F(ContentAutofillDriverTest, FormDataSentToRenderer_PreviewForm) {
   EXPECT_TRUE(input_form_data.SameFormAs(output_form_data));
 }
 
+TEST_F(ContentAutofillDriverTest,
+       TypePredictionsNotSentToRendererWhenDisabled) {
+  FormData form;
+  test::CreateTestAddressFormData(&form);
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms(1, &form_structure);
+
+  base::RunLoop run_loop;
+  fake_agent_.SetQuitLoopClosure(run_loop.QuitClosure());
+  driver_->SendAutofillTypePredictionsToRenderer(forms);
+  run_loop.RunUntilIdle();
+
+  EXPECT_FALSE(fake_agent_.GetFieldTypePredictionsAvailable(NULL));
+}
+
 TEST_F(ContentAutofillDriverTest, TypePredictionsSentToRendererWhenEnabled) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kShowAutofillTypePredictions);
@@ -451,37 +464,34 @@ TEST_F(ContentAutofillDriverTest, PreviewFieldWithValue) {
   EXPECT_EQ(input_value, output_value);
 }
 
-// Tests that credit card form interactions trigger a call to the client's
-// |DidInteractWithNonsecureCreditCardInput| function if the page is HTTP.
+// Tests that credit card form interactions are recorded on the current
+// NavigationEntry's SSLStatus if the page is HTTP.
 TEST_F(ContentAutofillDriverTest, CreditCardFormInteraction) {
   GURL url("http://example.test");
   NavigateAndCommit(url);
+  driver_->DidInteractWithCreditCardForm();
+
   content::NavigationEntry* entry =
       web_contents()->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
   EXPECT_EQ(url, entry->GetURL());
-
-  EXPECT_CALL(*test_autofill_client_,
-              DidInteractWithNonsecureCreditCardInput(main_rfh()));
-  driver_->DidInteractWithCreditCardForm();
+  EXPECT_TRUE(!!(entry->GetSSL().content_status &
+                 content::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP));
 }
 
-// Tests that credit card form interactions do NOT trigger a call to the
-// client's |DidInteractWithNonsecureCreditCardInput| function if the page
-// is HTTPS.
+// Tests that credit card form interactions are *not* recorded on the current
+// NavigationEntry's SSLStatus if the page is *not* HTTP.
 TEST_F(ContentAutofillDriverTest, CreditCardFormInteractionOnHTTPS) {
-  EXPECT_CALL(*test_autofill_client_,
-              DidInteractWithNonsecureCreditCardInput(testing::_))
-      .Times(0);
-
   GURL url("https://example.test");
   NavigateAndCommit(url);
+  driver_->DidInteractWithCreditCardForm();
+
   content::NavigationEntry* entry =
       web_contents()->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
   EXPECT_EQ(url, entry->GetURL());
-
-  driver_->DidInteractWithCreditCardForm();
+  EXPECT_FALSE(!!(entry->GetSSL().content_status &
+                  content::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP));
 }
 
 }  // namespace autofill

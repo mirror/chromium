@@ -32,15 +32,14 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static AnimationWorkletGlobalScope* Create(
-      const KURL&,
-      const String& user_agent,
-      RefPtr<SecurityOrigin> document_security_origin,
-      v8::Isolate*,
-      WorkerThread*,
-      WorkerClients*);
+  static AnimationWorkletGlobalScope* Create(const KURL&,
+                                             const String& user_agent,
+                                             RefPtr<SecurityOrigin>,
+                                             v8::Isolate*,
+                                             WorkerThread*,
+                                             WorkerClients*);
   ~AnimationWorkletGlobalScope() override;
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
   void Dispose() override;
   bool IsAnimationWorkletGlobalScope() const final { return true; }
@@ -61,7 +60,7 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
  private:
   AnimationWorkletGlobalScope(const KURL&,
                               const String& user_agent,
-                              RefPtr<SecurityOrigin> document_security_origin,
+                              RefPtr<SecurityOrigin>,
                               v8::Isolate*,
                               WorkerThread*,
                               WorkerClients*);
@@ -74,12 +73,6 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
   typedef HeapHashMap<int, TraceWrapperMember<Animator>> AnimatorMap;
   AnimatorMap animators_;
 };
-
-DEFINE_TYPE_CASTS(AnimationWorkletGlobalScope,
-                  ExecutionContext,
-                  context,
-                  context->IsAnimationWorkletGlobalScope(),
-                  context.IsAnimationWorkletGlobalScope());
 
 }  // namespace blink
 

@@ -10,12 +10,9 @@
 #include "base/macros.h"
 #include "ui/message_center/notification_delegate.h"
 
+class Notification;
 class PrefRegistrySimple;
 class Profile;
-
-namespace message_center {
-class Notification;
-}
 
 // QuitWithAppsController checks whether any apps are running and shows a
 // notification to quit all of them.
@@ -41,15 +38,15 @@ class QuitWithAppsController : public message_center::NotificationDelegate {
  private:
   ~QuitWithAppsController() override;
 
-  std::unique_ptr<message_center::Notification> notification_;
+  std::unique_ptr<Notification> notification_;
   // The Profile instance associated with the notification_. We need to cache
   // the instance here because when we want to cancel the notification we need
   // to provide the profile which was used to add the notification previously.
   // Not owned by this class.
-  Profile* notification_profile_ = nullptr;
+  Profile* notification_profile_;
 
   // Whether to suppress showing the notification for the rest of the session.
-  bool suppress_for_session_ = false;
+  bool suppress_for_session_;
 
   // Display a notification when quitting Chrome with hosted apps running?
   bool hosted_app_quit_notification_;

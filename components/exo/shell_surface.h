@@ -12,7 +12,6 @@
 #include "ash/wm/window_state_observer.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
-#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "components/exo/surface_observer.h"
 #include "components/exo/surface_tree_host.h"
@@ -185,8 +184,21 @@ class ShellSurface : public SurfaceTreeHost,
   // Set orientation for surface.
   void SetOrientation(Orientation orientation);
 
-  // Set shadow bounds in surface coordinates. Empty bounds disable the shadow.
-  void SetShadowBounds(const gfx::Rect& bounds);
+  // Enable/disable rectangular shadow that uses the widget bounds as a content
+  // bounds.
+  void SetRectangularShadowEnabled(bool enabled);
+
+  // [Deprecated] Set the content bounds for the shadow. Shell surface geometry
+  // will be
+  // used if bounds are empty.
+  void SetRectangularShadow_DEPRECATED(const gfx::Rect& content_bounds);
+
+  // Set the content bounds for the shadow in the surface's coordinates.
+  // Setting empty bounds will disable the shadow.
+  void SetRectangularSurfaceShadow(const gfx::Rect& content_bounds);
+
+  // Set the pacity of the background for the window that has a shadow.
+  void SetRectangularShadowBackgroundOpacity(float opacity);
 
   // Set scale factor for surface. The scale factor will be applied to surface
   // and all descendants.
@@ -285,6 +297,9 @@ class ShellSurface : public SurfaceTreeHost,
   // Overridden from ui::CompositorLockClient:
   void CompositorLockTimedOut() override;
 
+  aura::Window* shadow_overlay() { return shadow_overlay_.get(); }
+  aura::Window* shadow_underlay() { return shadow_underlay_.get(); }
+
   Surface* surface_for_testing() { return root_surface(); }
 
  private:
@@ -355,6 +370,7 @@ class ShellSurface : public SurfaceTreeHost,
   // Container Window Id (see ash/public/cpp/shell_window_ids.h)
   int container_;
   bool frame_enabled_ = false;
+  bool shadow_enabled_ = false;
   bool pending_show_widget_ = false;
   base::string16 title_;
   std::string application_id_;
@@ -374,13 +390,18 @@ class ShellSurface : public SurfaceTreeHost,
   gfx::Vector2d pending_origin_offset_accumulator_;
   int resize_component_ = HTCAPTION;  // HT constant (see ui/base/hit_test.h)
   int pending_resize_component_ = HTCAPTION;
-  base::Optional<gfx::Rect> shadow_bounds_;
-  bool shadow_bounds_changed_ = false;
+  std::unique_ptr<aura::Window> shadow_overlay_;
+  std::unique_ptr<aura::Window> shadow_underlay_;
+  gfx::Rect shadow_content_bounds_;
+  bool shadow_content_bounds_changed_ = false;
+  float shadow_background_opacity_ = 1.0;
   base::circular_deque<std::unique_ptr<Config>> pending_configs_;
   std::unique_ptr<ash::WindowResizer> resizer_;
   std::unique_ptr<ScopedAnimationsDisabled> scoped_animations_disabled_;
   int top_inset_height_ = 0;
   int pending_top_inset_height_ = 0;
+  bool shadow_underlay_in_surface_ = true;
+  bool pending_shadow_underlay_in_surface_ = true;
   // TODO(reveman): Use configure callbacks for orientation. crbug.com/765954
   Orientation pending_orientation_ = Orientation::LANDSCAPE;
   Orientation orientation_ = Orientation::LANDSCAPE;

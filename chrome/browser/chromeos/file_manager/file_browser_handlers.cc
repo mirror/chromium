@@ -147,7 +147,7 @@ FileBrowserHandlerList FindFileBrowserHandlersForURL(
           (!base::CommandLine::ForCurrentProcess()->HasSwitch(
                chromeos::switches::kDisableNewZIPUnpacker) ||
            base::CommandLine::ForCurrentProcess()->HasSwitch(
-               chromeos::switches::kEnableZipArchiverUnpacker))) {
+               chromeos::switches::kEnableZipArchiverOnFileManager))) {
         continue;
       }
       results.push_back(handler);
@@ -357,7 +357,7 @@ void FileBrowserHandlerExecutor::ExecuteFileActionsOnUIThread(
     }
     queue->AddPendingTask(
         profile_, extension_->id(),
-        base::BindOnce(
+        base::Bind(
             &FileBrowserHandlerExecutor::SetupPermissionsAndDispatchEvent,
             weak_ptr_factory_.GetWeakPtr(),
             base::Passed(std::move(file_definition_list)),

@@ -19,7 +19,7 @@ namespace blink {
 DOMWindowStorage::DOMWindowStorage(LocalDOMWindow& window)
     : Supplement<LocalDOMWindow>(window) {}
 
-void DOMWindowStorage::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMWindowStorage) {
   visitor->Trace(session_storage_);
   visitor->Trace(local_storage_);
   Supplement<LocalDOMWindow>::Trace(visitor);

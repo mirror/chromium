@@ -1381,9 +1381,6 @@
     <message name="IDS_SETTINGS_INTERNET_NETWORK_CELLULAR_SCAN_COMPLETED" desc="Settings > Internet > Network details: Status text when a scan has completed.">
       Scan completed
     </message>
-    <message name="IDS_SETTINGS_INTERNET_NETWORK_CELLULAR_SCAN_CONNECTED_HELP" desc="Settings > Internet > Network details: Help message for scan button when network is connected.">
-      Disconnect to enable scanning
-    </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_CELLULAR_SCANNING" desc="Settings > Internet > Network details: Status text when a scan is in progress.">
       Scanning...
     </message>
@@ -1614,20 +1611,6 @@
     </message>
     <message name="IDS_SETTINGS_INTERNET_TOGGLE_WIMAX_ACCESSIBILITY_LABEL" desc="Accessibility only label for WiMAX enable/disable toggle .">
       WiMAX enable
-    </message>
-
-     <!-- Network error strings. -->
-    <message name="IDS_NETWORK_ERROR_CANNOT_CHANGE_SHARED_CONFIG" desc="Network error message shown when attempting to change a shared network configuration if the operation is not allowed">
-      Changing shared network configurations is not allowed
-    </message>
-    <message name="IDS_NETWORK_ERROR_NO_USER_CERT" desc="In the network connect dialog, when creating a VPN or enterprise Wi-Fi connection, error message to display when no user certificates are installed.">
-      Please install a user certificate.
-    </message>
-    <message name="IDS_NETWORK_ERROR_POLICY_CONTROLLED" desc="Network error message shown when attempting to remove or illegally modify a policy controlled network">
-      Network is policy controlled
-    </message>
-    <message name="IDS_NETWORK_ERROR_UNKNOWN" desc="Network error message shown for an unknown or unexpected network configuration error">
-      Error configuring network
     </message>
 
      <!-- Strings translating ONC (Open Network Configuration) properties -->
@@ -2202,9 +2185,6 @@
   <message name="IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_DISABLED" desc="Sub label for the Google Assistant button when Assistant is disabled.">
     Disabled
   </message>
-  <message name="IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_TURN_ON" desc="Label for the Google Assistant button when ARC is disabled or value prop is not accepted.">
-    Enable
-  </message>
 </if>
 
   <!-- Search Engines Page -->
@@ -2447,15 +2427,6 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_ADS_BLOCK_RECOMMENDED" desc="The block label for ads in site settings (with the 'recommended' suffix).">
     Blocked on sites that tend to show intrusive ads (recommended)
   </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SOUND_ALLOW" desc="The allow label for sound in site settings.">
-    Allow sites to play sound
-  </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SOUND_ALLOW_RECOMMENDED" desc="The allow label for sound in site settings (with the 'recommended' suffix).">
-    Allow sites to play sound (recommended)
-  </message>
-  <message name="IDS_SETTINGS_SITE_SETTINGS_SOUND_BLOCK" desc="The block label for sound in site settings.">
-    Mute sites that play sound
-  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_AUTOMATIC_DOWNLOAD_ASK" desc="The allow label for automatic download in site settings.">
     Ask when a site tries to download files automatically after the first file
   </message>
@@ -2573,9 +2544,6 @@
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_DIALOG_TITLE" desc="Title of the dialog that warns about resetting all permissions for a site.">
     Reset settings for this site?
-  </message>
-  <message name="IDS_SETTINGS_LOADING_LOCAL_DATA_LIST" desc="Explanation shown while transferring cookies and local data.">
-    Loading, please wait...
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_CONFIRMATION" desc="Text for the dialog that warns about resetting all permissions for a site.">
     Chrome will reset permissions to their defaults

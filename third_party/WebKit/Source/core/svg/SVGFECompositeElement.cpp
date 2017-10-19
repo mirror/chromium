@@ -76,7 +76,7 @@ inline SVGFECompositeElement::SVGFECompositeElement(Document& document)
   AddToPropertyMap(svg_operator_);
 }
 
-void SVGFECompositeElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFECompositeElement) {
   visitor->Trace(k1_);
   visitor->Trace(k2_);
   visitor->Trace(k3_);

@@ -9,7 +9,6 @@
 #include "base/memory/ptr_util.h"
 #include "content/browser/background_fetch/background_fetch_job_controller.h"
 #include "content/browser/background_fetch/background_fetch_registration_id.h"
-#include "content/browser/background_fetch/background_fetch_registration_notifier.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/background_fetch_delegate.h"
 #include "content/public/browser/blob_handle.h"
@@ -40,8 +39,6 @@ BackgroundFetchContext::BackgroundFetchContext(
     : browser_context_(browser_context),
       data_manager_(browser_context, service_worker_context),
       event_dispatcher_(service_worker_context),
-      registration_notifier_(
-          std::make_unique<BackgroundFetchRegistrationNotifier>()),
       delegate_proxy_(browser_context_->GetBackgroundFetchDelegate()),
       weak_factory_(this) {
   // Although this lives only on the IO thread, it is constructed on UI thread.
@@ -59,10 +56,6 @@ void BackgroundFetchContext::StartFetch(
     blink::mojom::BackgroundFetchService::FetchCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  delegate_proxy_.CreateDownloadJob(registration_id.unique_id(), options.title,
-                                    registration_id.origin(), 0,
-                                    requests.size(), {});
-
   data_manager_.CreateRegistration(
       registration_id, requests, options,
       base::BindOnce(&BackgroundFetchContext::DidCreateRegistration,
@@ -74,18 +67,29 @@ void BackgroundFetchContext::DidCreateRegistration(
     const BackgroundFetchRegistrationId& registration_id,
     const BackgroundFetchOptions& options,
     blink::mojom::BackgroundFetchService::FetchCallback callback,
-    blink::mojom::BackgroundFetchError error,
-    const base::Optional<BackgroundFetchRegistration>& registration) {
+    blink::mojom::BackgroundFetchError error) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   RecordRegistrationCreatedError(error);
-  if (error == blink::mojom::BackgroundFetchError::NONE) {
-    DCHECK(registration);
-    // Create the BackgroundFetchJobController to do the actual fetching.
-    CreateController(registration_id, options, registration.value());
+  if (error != blink::mojom::BackgroundFetchError::NONE) {
+    std::move(callback).Run(error, base::nullopt /* registration */);
+    return;
   }
 
-  std::move(callback).Run(error, registration);
+  // Create the BackgroundFetchJobController, which will do the actual fetching.
+  CreateController(registration_id, options);
+
+  // Create the BackgroundFetchRegistration the renderer process will receive,
+  // which enables it to resolve the promise telling the developer it worked.
+  BackgroundFetchRegistration registration;
+  registration.developer_id = registration_id.developer_id();
+  registration.unique_id = registration_id.unique_id();
+  registration.icons = options.icons;
+  registration.title = options.title;
+  registration.download_total = options.download_total;
+
+  std::move(callback).Run(blink::mojom::BackgroundFetchError::NONE,
+                          registration);
 }
 
 BackgroundFetchJobController* BackgroundFetchContext::GetActiveFetch(
@@ -105,25 +109,16 @@ BackgroundFetchJobController* BackgroundFetchContext::GetActiveFetch(
   return controller;
 }
 
-void BackgroundFetchContext::AddRegistrationObserver(
-    const std::string& unique_id,
-    blink::mojom::BackgroundFetchRegistrationObserverPtr observer) {
-  registration_notifier_->AddObserver(unique_id, std::move(observer));
-}
-
 void BackgroundFetchContext::CreateController(
     const BackgroundFetchRegistrationId& registration_id,
-    const BackgroundFetchOptions& options,
-    const BackgroundFetchRegistration& registration) {
+    const BackgroundFetchOptions& options) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  auto controller = std::make_unique<BackgroundFetchJobController>(
-      &delegate_proxy_, registration_id, options, registration, &data_manager_,
-      // Safe because JobControllers are destroyed before RegistrationNotifier.
-      base::BindRepeating(&BackgroundFetchRegistrationNotifier::Notify,
-                          base::Unretained(registration_notifier_.get())),
-      base::BindOnce(&BackgroundFetchContext::DidCompleteJob,
-                     weak_factory_.GetWeakPtr()));
+  std::unique_ptr<BackgroundFetchJobController> controller =
+      std::make_unique<BackgroundFetchJobController>(
+          &delegate_proxy_, registration_id, options, &data_manager_,
+          base::BindOnce(&BackgroundFetchContext::DidCompleteJob,
+                         weak_factory_.GetWeakPtr()));
 
   // Start fetching the first few requests immediately. At some point in the
   // future we may want a more elaborate scheduling mechanism here.
@@ -139,9 +134,6 @@ void BackgroundFetchContext::DidCompleteJob(
 
   const BackgroundFetchRegistrationId& registration_id =
       controller->registration_id();
-
-  // Delete observers for the registration, there won't be any future updates.
-  registration_notifier_->RemoveObservers(registration_id.unique_id());
 
   DCHECK_GT(active_fetches_.count(registration_id.unique_id()), 0u);
   switch (controller->state()) {

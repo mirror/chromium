@@ -1665,7 +1665,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITestWithClientCert, TestWSSClientCert) {
   base::FilePath cert_path = net::GetTestCertsDirectory().Append(
       FILE_PATH_LITERAL("websocket_client_cert.p12"));
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     EXPECT_TRUE(base::ReadFileToString(cert_path, &pkcs12_data));
   }
   EXPECT_EQ(net::OK,
@@ -1744,7 +1744,7 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBadHTTPSDownload) {
   GURL url_non_dangerous = embedded_test_server()->GetURL("/title1.html");
   GURL url_dangerous =
       https_server_expired_.GetURL("/downloads/dangerous/dangerous.exe");
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir downloads_directory_;
 
   // Need empty temp dir to avoid having Chrome ask us for a new filename
@@ -2760,21 +2760,22 @@ class SSLUIWorkerFetchTest
           std::pair<OffMainThreadFetchMode, SSLUIWorkerFetchTestType>>,
       public SSLUITest {
  public:
-  SSLUIWorkerFetchTest() {
-    EXPECT_TRUE(tmp_dir_.CreateUniqueTempDir());
+  SSLUIWorkerFetchTest() { EXPECT_TRUE(tmp_dir_.CreateUniqueTempDir()); }
+  ~SSLUIWorkerFetchTest() override {}
+  void SetUpCommandLine(base::CommandLine* command_line) override {
     if (GetParam().first == OffMainThreadFetchMode::kEnabled) {
-      scoped_feature_list_.InitAndEnableFeature(features::kOffMainThreadFetch);
+      command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                      features::kOffMainThreadFetch.name);
     } else {
-      scoped_feature_list_.InitAndDisableFeature(features::kOffMainThreadFetch);
+      command_line->AppendSwitchASCII(switches::kDisableFeatures,
+                                      features::kOffMainThreadFetch.name);
     }
   }
-
-  ~SSLUIWorkerFetchTest() override {}
 
  protected:
   void WriteFile(const base::FilePath::StringType& filename,
                  base::StringPiece contents) {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     EXPECT_EQ(base::checked_cast<int>(contents.size()),
               base::WriteFile(tmp_dir_.GetPath().Append(filename),
                               contents.data(), contents.size()));
@@ -2921,10 +2922,6 @@ class SSLUIWorkerFetchTest
     CheckSecurityState(tab, CertError::NONE, security_state::NONE,
                        AuthState::NONE);
   }
-
-  base::test::ScopedFeatureList scoped_feature_list_;
-
-  DISALLOW_COPY_AND_ASSIGN(SSLUIWorkerFetchTest);
 };
 
 IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest,
@@ -3989,8 +3986,8 @@ class SSLNetworkTimeBrowserTest : public SSLUITest {
   }
 
  private:
-  base::test::ScopedFeatureList scoped_feature_list_;
   DelayedNetworkTimeInterceptor* interceptor_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(SSLNetworkTimeBrowserTest);
 };
@@ -6164,7 +6161,6 @@ class SymantecMessageSSLUITest : public CertVerifierBrowserTest {
 
   void SetUpOnMainThread() override {
     CertVerifierBrowserTest::SetUpOnMainThread();
-    host_resolver()->AddRule("*", "127.0.0.1");
 
     https_server_.AddDefaultHandlers(base::FilePath(kDocRoot));
 
@@ -6181,7 +6177,7 @@ class SymantecMessageSSLUITest : public CertVerifierBrowserTest {
   void SetUpCertVerifier(bool use_chrome_66_date) {
     net::CertVerifyResult verify_result;
     {
-      base::ScopedAllowBlockingForTesting allow_blocking;
+      base::ThreadRestrictions::ScopedAllowIO allow_io;
       verify_result.verified_cert = net::CreateCertificateChainFromFile(
           net::GetTestCertsDirectory(),
           use_chrome_66_date ? "pre_june_2016.pem" : "post_june_2016.pem",
@@ -6225,10 +6221,7 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PreJune2016) {
   GURL url(https_server()->GetURL("/ssl/google.html"));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   content::ConsoleObserverDelegate console_observer(
-      tab,
-      base::StringPrintf(
-          "*The SSL certificate used to load resources from https://%s:%s*",
-          url.host().c_str(), url.port().c_str()));
+      tab, "*The SSL certificate used to load*ssl/google.html*");
   tab->SetDelegate(&console_observer);
   ui_test_utils::NavigateToURL(browser(), url);
   console_observer.Wait();
@@ -6245,10 +6238,7 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PostJune2016) {
   GURL url(https_server()->GetURL("/ssl/google.html"));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   content::ConsoleObserverDelegate console_observer(
-      tab,
-      base::StringPrintf(
-          "*The SSL certificate used to load resources from https://%s:%s*",
-          url.host().c_str(), url.port().c_str()));
+      tab, "*The SSL certificate used to load*/ssl/google.html*");
   tab->SetDelegate(&console_observer);
   ui_test_utils::NavigateToURL(browser(), url);
   console_observer.Wait();
@@ -6256,35 +6246,20 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PostJune2016) {
       base::MatchPattern(console_observer.message(), "*distrusted in M70*"));
 }
 
-// Tests that the Symantec console message is logged for subresources, but caps
-// out after many subresource loads.
-IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, ManySubresources) {
-  content::SetupCrossSiteRedirector(https_server());
+// Tests that the Symantec console message is logged for subresources.
+IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, Subresource) {
   ASSERT_NO_FATAL_FAILURE(
       SetUpCertVerifier(false /* use Chrome 66 distrust date */));
   ASSERT_TRUE(https_server()->Start());
-  GURL url(https_server()->GetURL("/ssl/page_with_many_subresources.html"));
+  GURL url(https_server()->GetURL("/ssl/page_with_subresource.html"));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-
-  // Observe the message for a cross-site subresource.
-  {
-    content::ConsoleObserverDelegate console_observer(tab, "*https://a.test*");
-    tab->SetDelegate(&console_observer);
-    ui_test_utils::NavigateToURL(browser(), url);
-    console_observer.Wait();
-    EXPECT_TRUE(base::MatchPattern(console_observer.message(),
-                                   "*The SSL certificate used to load*"));
-  }
-  // Observe that the message caps out after some number of subresources.
-  {
-    content::ConsoleObserverDelegate console_observer(tab,
-                                                      "*Additional resources*");
-    tab->SetDelegate(&console_observer);
-    ui_test_utils::NavigateToURL(browser(), url);
-    console_observer.Wait();
-    EXPECT_TRUE(
-        base::MatchPattern(console_observer.message(), "*SSL certificates*"));
-  }
+  content::ConsoleObserverDelegate console_observer(tab,
+                                                    "*google_files/logo.gif*");
+  tab->SetDelegate(&console_observer);
+  ui_test_utils::NavigateToURL(browser(), url);
+  console_observer.Wait();
+  EXPECT_TRUE(base::MatchPattern(console_observer.message(),
+                                 "*The SSL certificate used to load*"));
 }
 
 // TODO(jcampan): more tests to do below.

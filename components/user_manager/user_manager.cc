@@ -25,8 +25,6 @@ void UserManager::Observer::OnUserProfileImageUpdated(
 
 void UserManager::Observer::OnChildStatusChanged(const User& user) {}
 
-void UserManager::Observer::OnUsersSignInConstraintsChanged() {}
-
 void UserManager::UserSessionStateObserver::ActiveUserChanged(
     const User* active_user) {
 }

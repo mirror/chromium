@@ -5,15 +5,16 @@
 #include "content/browser/devtools/protocol/service_worker_handler.h"
 
 #include "base/bind.h"
-#include "base/containers/flat_set.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/containers/flat_set.h"
 #include "content/browser/background_sync/background_sync_context.h"
 #include "content/browser/background_sync/background_sync_manager.h"
 #include "content/browser/devtools/service_worker_devtools_agent_host.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/frame_tree_node.h"
+#include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_watcher.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
@@ -23,12 +24,12 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/devtools_agent_host.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/push_event_payload.h"
 #include "content/public/common/push_messaging_status.mojom.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -156,8 +157,9 @@ void DispatchSyncEventOnIO(scoped_refptr<ServiceWorkerContextWrapper> context,
 ServiceWorkerHandler::ServiceWorkerHandler()
     : DevToolsDomainHandler(ServiceWorker::Metainfo::domainName),
       enabled_(false),
-      process_(nullptr),
-      weak_factory_(this) {}
+      render_frame_host_(nullptr),
+      weak_factory_(this) {
+}
 
 ServiceWorkerHandler::~ServiceWorkerHandler() {
 }
@@ -167,16 +169,18 @@ void ServiceWorkerHandler::Wire(UberDispatcher* dispatcher) {
   ServiceWorker::Dispatcher::wire(dispatcher, this);
 }
 
-void ServiceWorkerHandler::SetRenderer(RenderProcessHost* process_host,
-                                       RenderFrameHostImpl* frame_host) {
-  process_ = process_host;
+void ServiceWorkerHandler::SetRenderFrameHost(
+    RenderFrameHostImpl* render_frame_host) {
+  render_frame_host_ = render_frame_host;
   // Do not call UpdateHosts yet, wait for load to commit.
-  if (!process_host) {
+  if (!render_frame_host) {
     ClearForceUpdate();
     context_ = nullptr;
     return;
   }
-  StoragePartition* partition = process_host->GetStoragePartition();
+  StoragePartition* partition = BrowserContext::GetStoragePartition(
+      render_frame_host->GetProcess()->GetBrowserContext(),
+      render_frame_host->GetSiteInstance());
   DCHECK(partition);
   context_ = static_cast<ServiceWorkerContextWrapper*>(
       partition->GetServiceWorkerContext());
@@ -283,7 +287,7 @@ Response ServiceWorkerHandler::InspectWorker(const std::string& version_id) {
   if (!context_)
     return CreateContextErrorResponse();
 
-  int64_t id = blink::mojom::kInvalidServiceWorkerVersionId;
+  int64_t id = kInvalidServiceWorkerVersionId;
   if (!base::StringToInt64(version_id, &id))
     return CreateInvalidVersionIdErrorResponse();
   BrowserThread::PostTask(
@@ -308,7 +312,7 @@ Response ServiceWorkerHandler::DeliverPushMessage(
     const std::string& data) {
   if (!enabled_)
     return CreateDomainNotEnabledErrorResponse();
-  if (!process_)
+  if (!render_frame_host_)
     return CreateContextErrorResponse();
   int64_t id = 0;
   if (!base::StringToInt64(registration_id, &id))
@@ -316,9 +320,9 @@ Response ServiceWorkerHandler::DeliverPushMessage(
   PushEventPayload payload;
   if (data.size() > 0)
     payload.setData(data);
-  BrowserContext::DeliverPushMessage(process_->GetBrowserContext(),
-                                     GURL(origin), id, payload,
-                                     base::Bind(&PushDeliveryNoOp));
+  BrowserContext::DeliverPushMessage(
+      render_frame_host_->GetProcess()->GetBrowserContext(), GURL(origin), id,
+      payload, base::Bind(&PushDeliveryNoOp));
   return Response::OK();
 }
 
@@ -329,14 +333,16 @@ Response ServiceWorkerHandler::DispatchSyncEvent(
     bool last_chance) {
   if (!enabled_)
     return CreateDomainNotEnabledErrorResponse();
-  if (!process_)
+  if (!render_frame_host_)
     return CreateContextErrorResponse();
   int64_t id = 0;
   if (!base::StringToInt64(registration_id, &id))
     return CreateInvalidVersionIdErrorResponse();
 
   StoragePartitionImpl* partition =
-      static_cast<StoragePartitionImpl*>(process_->GetStoragePartition());
+      static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
+          render_frame_host_->GetProcess()->GetBrowserContext(),
+          render_frame_host_->GetSiteInstance()));
   BackgroundSyncContext* sync_context = partition->GetBackgroundSyncContext();
 
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,

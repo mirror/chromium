@@ -58,7 +58,7 @@ _cronet_deps = [
   "//components/metrics/proto:proto",
   "//components/prefs:prefs",
   "//ios/net:net",
-  "//ios/web/public:user_agent",
+  "//ios/web:user_agent",
   "//ios/web/public/global_state",
   "//net",
   "//url",
@@ -94,8 +94,6 @@ source_set("cronet_sources") {
   if (!use_platform_icu_alternatives) {
     deps += [ "//base:i18n" ]
   }
-
-  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 source_set("cronet_sources_with_global_state") {
@@ -188,7 +186,6 @@ static_library("cronet_static") {
   public_deps = [
     "//components/grpc_support",
   ]
-  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 # A static library which contains all dependencies of :cronet_static.

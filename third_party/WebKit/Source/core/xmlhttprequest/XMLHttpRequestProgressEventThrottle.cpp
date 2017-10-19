@@ -27,7 +27,7 @@
 
 #include "core/xmlhttprequest/XMLHttpRequestProgressEventThrottle.h"
 
-#include "core/event_type_names.h"
+#include "core/EventTypeNames.h"
 #include "core/events/ProgressEvent.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/probe/CoreProbes.h"
@@ -187,7 +187,7 @@ void XMLHttpRequestProgressEventThrottle::Resume() {
   StartOneShot(0, BLINK_FROM_HERE);
 }
 
-void XMLHttpRequestProgressEventThrottle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XMLHttpRequestProgressEventThrottle) {
   visitor->Trace(target_);
 }
 

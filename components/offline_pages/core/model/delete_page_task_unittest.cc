@@ -15,7 +15,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/offline_pages/core/client_policy_controller.h"
 #include "components/offline_pages/core/model/offline_page_item_generator.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_page_metadata_store_test_util.h"
@@ -61,9 +60,6 @@ class DeletePageTaskTest : public testing::Test,
     return &store_test_util_;
   }
   OfflinePageMetadataStoreSQL* store() { return store_test_util_.store(); }
-  ClientPolicyController* policy_controller() {
-    return policy_controller_.get();
-  }
   OfflinePageItemGenerator* generator() { return &generator_; }
   TestTaskRunner* runner() { return &runner_; }
   DeletePageResult last_delete_page_result() {
@@ -78,7 +74,6 @@ class DeletePageTaskTest : public testing::Test,
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
   OfflinePageMetadataStoreTestUtil store_test_util_;
-  std::unique_ptr<ClientPolicyController> policy_controller_;
   OfflinePageItemGenerator generator_;
   TestTaskRunner runner_;
   base::ScopedTempDir temp_dir_;
@@ -99,7 +94,6 @@ DeletePageTaskTest::~DeletePageTaskTest() {}
 void DeletePageTaskTest::SetUp() {
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
   store_test_util_.BuildStoreInMemory();
-  policy_controller_ = base::MakeUnique<ClientPolicyController>();
   generator()->SetArchiveDirectory(temp_dir());
 }
 
@@ -269,7 +263,7 @@ TEST_F(DeletePageTaskTest, DeletePageByUrlPredicate) {
   });
 
   auto task = DeletePageTask::CreateTaskMatchingUrlPredicateForCachedPages(
-      store(), policy_controller(), predicate, delete_page_callback());
+      store(), predicate, delete_page_callback());
   runner()->RunTask(std::move(task));
 
   EXPECT_EQ(DeletePageResult::SUCCESS, last_delete_page_result());
@@ -302,7 +296,7 @@ TEST_F(DeletePageTaskTest, DeletePageByUrlPredicateNotFound) {
       base::Bind([](const GURL& url) -> bool { return false; });
 
   auto task = DeletePageTask::CreateTaskMatchingUrlPredicateForCachedPages(
-      store(), policy_controller(), predicate, delete_page_callback());
+      store(), predicate, delete_page_callback());
   runner()->RunTask(std::move(task));
 
   EXPECT_EQ(DeletePageResult::SUCCESS, last_delete_page_result());

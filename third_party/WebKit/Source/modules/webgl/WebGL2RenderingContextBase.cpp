@@ -8,8 +8,8 @@
 #include "bindings/modules/v8/WebGLAny.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "modules/webgl/WebGLActiveInfo.h"
@@ -393,12 +393,14 @@ void WebGL2RenderingContextBase::blitFramebuffer(GLint src_x0,
   if (isContextLost())
     return;
 
-  bool user_framebuffer_bound = GetFramebufferBinding(GL_DRAW_FRAMEBUFFER);
+  bool default_framebuffer_bound = !GetFramebufferBinding(GL_DRAW_FRAMEBUFFER);
   DrawingBuffer::ScopedRGBEmulationForBlitFramebuffer emulation(
-      GetDrawingBuffer(), user_framebuffer_bound);
+      GetDrawingBuffer(), !default_framebuffer_bound);
   ContextGL()->BlitFramebufferCHROMIUM(src_x0, src_y0, src_x1, src_y1, dst_x0,
                                        dst_y0, dst_x1, dst_y1, mask, filter);
-  MarkContextChanged(kCanvasChanged);
+  if (default_framebuffer_bound) {
+    MarkContextChanged(kCanvasChanged);
+  }
 }
 
 bool WebGL2RenderingContextBase::ValidateTexFuncLayer(const char* function_name,
@@ -3612,11 +3614,6 @@ void WebGL2RenderingContextBase::clearBufferfv(
 
   ContextGL()->ClearBufferfv(buffer, drawbuffer,
                              value.View()->DataMaybeShared() + src_offset);
-  // The other clearBuffer entry points will currently generate an
-  // error if they're called against the default back buffer. If
-  // support for extended canvas color spaces is added, this call
-  // might need to be added to the other versions.
-  MarkContextChanged(kCanvasChanged);
 }
 
 void WebGL2RenderingContextBase::clearBufferfv(GLenum buffer,
@@ -3637,11 +3634,6 @@ void WebGL2RenderingContextBase::clearBufferfv(GLenum buffer,
                                                    drawing_buffer_.get());
 
   ContextGL()->ClearBufferfv(buffer, drawbuffer, value.data() + src_offset);
-  // The other clearBuffer entry points will currently generate an
-  // error if they're called against the default back buffer. If
-  // support for extended canvas color spaces is added, this call
-  // might need to be added to the other versions.
-  MarkContextChanged(kCanvasChanged);
 }
 
 void WebGL2RenderingContextBase::clearBufferfi(GLenum buffer,
@@ -4715,7 +4707,7 @@ void WebGL2RenderingContextBase::bindVertexArray(
     return;
 
   if (vertex_array &&
-      (vertex_array->IsDeleted() || !vertex_array->Validate(nullptr, this))) {
+      (vertex_array->IsDeleted() || !vertex_array->Validate(0, this))) {
     SynthesizeGLError(GL_INVALID_OPERATION, "bindVertexArray",
                       "invalid vertexArray");
     return;
@@ -5495,7 +5487,7 @@ ScriptValue WebGL2RenderingContextBase::getFramebufferAttachmentParameter(
   return ScriptValue::CreateNull(script_state);
 }
 
-void WebGL2RenderingContextBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGL2RenderingContextBase) {
   visitor->Trace(read_framebuffer_binding_);
   visitor->Trace(transform_feedback_binding_);
   visitor->Trace(default_transform_feedback_);

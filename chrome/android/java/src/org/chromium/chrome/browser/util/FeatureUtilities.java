@@ -25,7 +25,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.library_loader.LibraryLoader;
-import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.firstrun.FirstRunUtils;
@@ -55,7 +54,6 @@ public class FeatureUtilities {
     private static Boolean sHasGoogleAccountAuthenticator;
     private static Boolean sHasRecognitionIntentHandler;
     private static Boolean sChromeHomeEnabled;
-    private static Boolean sChromeHomePendingState;
     private static String sChromeHomeSwipeLogicType;
 
     private static String sCachedHerbFlavor;
@@ -204,16 +202,6 @@ public class FeatureUtilities {
     }
 
     /**
-     * Finalize any static settings that will change when the browser restarts.
-     */
-    public static void finalizePendingFeatures() {
-        if (sChromeHomePendingState != null) {
-            sChromeHomeEnabled = sChromeHomePendingState;
-            sChromeHomePendingState = null;
-        }
-    }
-
-    /**
      * Caches which flavor of Herb the user prefers from native.
      */
     private static void cacheHerbFlavor() {
@@ -280,11 +268,6 @@ public class FeatureUtilities {
             manager.clearChromeHomeUserPreference();
         }
 
-        if (manager.isChromeHomeUserPreferenceSet()) {
-            RecordHistogram.recordBooleanHistogram(
-                    "Android.ChromeHome.UserPreference.Enabled", manager.isChromeHomeUserEnabled());
-        }
-
         UmaSessionStats.registerSyntheticFieldTrial(SYNTHETIC_CHROME_HOME_EXPERIMENT_NAME,
                 isChromeHomeEnabled() ? ENABLED_EXPERIMENT_GROUP : DISABLED_EXPERIMENT_GROUP);
     }
@@ -296,7 +279,7 @@ public class FeatureUtilities {
      */
     public static void switchChromeHomeUserSetting(boolean enabled) {
         ChromePreferenceManager.getInstance().setChromeHomeUserEnabled(enabled);
-        sChromeHomePendingState = enabled;
+        sChromeHomeEnabled = enabled;
     }
 
     /**
@@ -349,6 +332,14 @@ public class FeatureUtilities {
     }
 
     /**
+     * @return Whether or not the expand button for Chrome Home is enabled.
+     */
+    public static boolean isChromeHomeExpandButtonEnabled() {
+        if (!ChromeFeatureList.isInitialized()) return false;
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_EXPAND_BUTTON);
+    }
+
+    /**
      * @return The type of swipe logic used for opening the bottom sheet in Chrome Home. Null is
      *         returned if the command line is not initialized or no experiment is specified.
      */
@@ -360,21 +351,6 @@ public class FeatureUtilities {
         }
 
         return sChromeHomeSwipeLogicType;
-    }
-
-    /**
-     * @return Whether the Chrome Home promo should be shown for cold-start.
-     */
-    public static boolean shouldShowChromeHomePromoForStartup() {
-        if (isChromeHomeEnabled()
-                || !ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
-            return false;
-        }
-
-        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
-
-        // Don't show the promo is the user has Chrome Home enabled.
-        return !prefManager.isChromeHomeUserPreferenceSet();
     }
 
     /**

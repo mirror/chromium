@@ -30,7 +30,7 @@ namespace content {
 
 namespace {
 
-const uint32_t kPepperFilteredMessageClasses[] = {
+const uint32_t kFilteredMessageClasses[] = {
     PpapiMsgStart, FrameMsgStart,
 };
 
@@ -94,8 +94,8 @@ PendingHostCreator::~PendingHostCreator() {
 }  // namespace
 
 PepperRendererConnection::PepperRendererConnection(int render_process_id)
-    : BrowserMessageFilter(kPepperFilteredMessageClasses,
-                           arraysize(kPepperFilteredMessageClasses)),
+    : BrowserMessageFilter(kFilteredMessageClasses,
+                           arraysize(kFilteredMessageClasses)),
       render_process_id_(render_process_id) {
   // Only give the renderer permission for stable APIs.
   in_process_host_.reset(new BrowserPpapiHostImpl(this,

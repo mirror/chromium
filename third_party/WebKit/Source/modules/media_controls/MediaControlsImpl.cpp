@@ -39,10 +39,10 @@
 #include "core/frame/UseCounter.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/geometry/DOMRect.h"
+#include "core/html/HTMLMediaElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/media/AutoplayPolicy.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "core/html/media/HTMLMediaElementControlsList.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/html/track/TextTrack.h"
 #include "core/html/track/TextTrackContainer.h"
 #include "core/html/track/TextTrackList.h"
@@ -216,7 +216,7 @@ class MediaControlsImpl::MediaControlsResizeObserverDelegate final
     controls_->NotifyElementSizeChanged(entries[0]->contentRect());
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(controls_);
     ResizeObserver::Delegate::Trace(visitor);
   }
@@ -262,7 +262,7 @@ class MediaControlsImpl::MediaElementMutationCallback
 
   void Disconnect() { observer_->disconnect(); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(controls_);
     visitor->Trace(observer_);
     MutationObserver::Delegate::Trace(visitor);
@@ -1381,12 +1381,7 @@ void MediaControlsImpl::OnWaiting() {
   UpdateCSSClassFromState();
 }
 
-void MediaControlsImpl::MaybeRecordOverflowTimeToAction() {
-  overflow_list_->MaybeRecordTimeTaken(
-      MediaControlOverflowMenuListElement::kTimeToAction);
-}
-
-void MediaControlsImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(element_mutation_callback_);
   visitor->Trace(resize_observer_);
   visitor->Trace(panel_);

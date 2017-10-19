@@ -62,7 +62,7 @@ class RTCSessionDescription final
 
   WebRTCSessionDescription WebSessionDescription();
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit RTCSessionDescription(WebRTCSessionDescription);

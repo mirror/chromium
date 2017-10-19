@@ -61,11 +61,9 @@
 #include "public/platform/WebSocketHandshakeThrottle.h"
 #include "public/platform/WebStorageNamespace.h"
 #include "public/platform/WebThread.h"
-#include "public/platform/WebTrialTokenValidator.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "third_party/WebKit/common/origin_trials/trial_policy.h"
 
 namespace blink {
 
@@ -109,7 +107,7 @@ static void CallOnMainThreadFunction(WTF::MainThreadFunction function,
       CrossThreadBind(function, CrossThreadUnretained(context)));
 }
 
-Platform::Platform() : main_thread_(nullptr) {
+Platform::Platform() : main_thread_(0) {
   WTF::Partitions::Initialize(MaxObservedSizeFunction);
 }
 
@@ -278,13 +276,6 @@ Platform::CreateWebSocketHandshakeThrottle() {
 std::unique_ptr<WebImageCaptureFrameGrabber>
 Platform::CreateImageCaptureFrameGrabber() {
   return nullptr;
-}
-
-std::unique_ptr<WebTrialTokenValidator> Platform::TrialTokenValidator() {
-  return std::unique_ptr<WebTrialTokenValidator>{};
-}
-std::unique_ptr<TrialPolicy> Platform::OriginTrialPolicy() {
-  return std::unique_ptr<TrialPolicy>{};
 }
 
 std::unique_ptr<WebFeaturePolicy> Platform::CreateFeaturePolicy(

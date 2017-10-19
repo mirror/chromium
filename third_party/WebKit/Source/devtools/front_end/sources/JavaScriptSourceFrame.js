@@ -1538,11 +1538,10 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
       const maxLengthToCheck = 1024;
       if (lineNumber >= this.textEditor.linesCount)
         return Promise.resolve(/** @type {?Array<!Workspace.UILocation>} */ ([]));
-      var lineLength = this.textEditor.line(lineNumber).length;
-      if (lineLength >= maxLengthToCheck)
+      if (this.textEditor.line(lineNumber).length >= maxLengthToCheck)
         return Promise.resolve(/** @type {?Array<!Workspace.UILocation>} */ ([]));
       return this._breakpointManager
-          .possibleBreakpoints(this._debuggerSourceCode, new TextUtils.TextRange(lineNumber, 0, lineNumber, lineLength))
+          .possibleBreakpoints(this._debuggerSourceCode, new TextUtils.TextRange(lineNumber, 0, lineNumber + 1, 0))
           .then(locations => locations.length ? locations : null);
     }
 

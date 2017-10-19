@@ -75,6 +75,7 @@ CONTENT_EXPORT
 extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerPaymentApps;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerScriptStreaming;
+CONTENT_EXPORT extern const base::Feature kSharedArrayBuffer;
 CONTENT_EXPORT extern const base::Feature kSignInProcessIsolation;
 CONTENT_EXPORT extern const base::Feature kSitePerProcess;
 CONTENT_EXPORT extern const base::Feature kSkipCompositingSmallScrollers;
@@ -111,6 +112,11 @@ CONTENT_EXPORT extern const base::Feature kImeThread;
 CONTENT_EXPORT extern const base::Feature kWebNfc;
 CONTENT_EXPORT extern const base::Feature kWebVrVsyncAlign;
 #endif  // defined(OS_ANDROID)
+
+#if defined(OS_WIN)
+CONTENT_EXPORT extern const base::Feature kWinSboxDisableExtensionPoints;
+CONTENT_EXPORT extern const base::Feature kWinSboxForceMsSigned;
+#endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
 CONTENT_EXPORT extern const base::Feature kDeviceMonitorMac;

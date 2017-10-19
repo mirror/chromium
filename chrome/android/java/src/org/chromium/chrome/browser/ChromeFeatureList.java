@@ -160,9 +160,8 @@ public abstract class ChromeFeatureList {
     public static final String CCT_REDIRECT_PRECONNECT = "CCTRedirectPreconnect";
     public static final String CHROME_HOME = "ChromeHome";
     public static final String CHROME_HOME_DESTROY_SUGGESTIONS = "ChromeHomeDestroySuggestions";
-    public static final String CHROME_HOME_BOTTOM_NAV_LABELS = "ChromeHomeBottomNavLabels";
     public static final String CHROME_HOME_DOODLE = "ChromeHomeDoodle";
-    public static final String CHROME_HOME_OPT_OUT_SNACKBAR = "ChromeHomeOptOutSnackbar";
+    public static final String CHROME_HOME_EXPAND_BUTTON = "ChromeHomeExpandButton";
     public static final String CHROME_HOME_PERSONALIZED_OMNIBOX_SUGGESTIONS =
             "ChromeHomePersonalizedOmniboxSuggestions";
     public static final String CHROME_HOME_PROMO = "ChromeHomePromo";
@@ -234,6 +233,7 @@ public abstract class ChromeFeatureList {
     public static final String WEB_PAYMENTS_SINGLE_APP_UI_SKIP = "WebPaymentsSingleAppUiSkip";
     public static final String WEBVR_AUTOPRESENT = "WebVrAutopresent";
     public static final String WEBVR_CARDBOARD_SUPPORT = "WebVRCardboardSupport";
+    public static final String XGEO_VISIBLE_NETWORKS = "XGEOVisibleNetworks";
 
     private static native boolean nativeIsInitialized();
     private static native boolean nativeIsEnabled(String featureName);

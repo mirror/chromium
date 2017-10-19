@@ -4,6 +4,8 @@
 
 #include "gpu/command_buffer/service/gpu_preferences.h"
 
+#include "base/sys_info.h"
+
 namespace gpu {
 
 GpuPreferences::GpuPreferences() = default;

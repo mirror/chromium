@@ -32,7 +32,6 @@ SuggestionsProfile CreateSuggestions(std::set<std::string> urls) {
     ChromeSuggestion* suggestion = suggestions.add_suggestions();
     suggestion->set_url(*it);
   }
-  suggestions.set_timestamp(123);
   return suggestions;
 }
 

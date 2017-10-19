@@ -53,6 +53,8 @@ enum AudioParamType {
   kParamTypeAudioBufferSourceDetune,
   kParamTypeBiquadFilterFrequency,
   kParamTypeBiquadFilterQ,
+  kParamTypeBiquadFilterQLowpass,
+  kParamTypeBiquadFilterQHighpass,
   kParamTypeBiquadFilterGain,
   kParamTypeBiquadFilterDetune,
   kParamTypeDelayDelayTime,
@@ -80,7 +82,7 @@ enum AudioParamType {
   kParamTypeAudioListenerUpX,
   kParamTypeAudioListenerUpY,
   kParamTypeAudioListenerUpZ,
-  kParamTypeConstantSourceOffset,
+  kParamTypeConstantSourceValue,
   kParamTypeAudioWorklet,
 };
 
@@ -160,12 +162,17 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
 
   float IntrinsicValue() const { return NoBarrierLoad(&intrinsic_value_); }
 
+  // Update any histograms with the given value.
+  void UpdateHistograms(float new_value);
+
  private:
   AudioParamHandler(BaseAudioContext&,
                     AudioParamType,
                     double default_value,
                     float min,
                     float max);
+
+  void WarnIfOutsideRange(float value, float min_value, float max_value);
 
   // sampleAccurate corresponds to a-rate (audio rate) vs. k-rate in the Web
   // Audio specification.
@@ -213,7 +220,7 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
                             float min_value,
                             float max_value);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   // |handler| always returns a valid object.
   AudioParamHandler& Handler() const { return *handler_; }
   // |context| always returns a valid object.

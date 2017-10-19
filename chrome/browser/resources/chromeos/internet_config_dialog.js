@@ -23,36 +23,37 @@ Polymer({
       value: chrome.networkingPrivate,
     },
 
-    /** @private */
-    shareAllowEnable_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('shareNetworkAllowEnable');
-      }
-    },
-
-    /** @private */
-    shareDefault_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('shareNetworkDefault');
-      }
-    },
-
     /**
      * The network GUID to configure, or empty when configuring a new network.
      * @private
      */
     guid_: String,
 
-    /** @private */
-    enableConnect_: Boolean,
+    /**
+     * The type of network being configured.
+     * @private {!chrome.networkingPrivate.NetworkType}
+     */
+    type_: String,
 
     /**
-     * The current properties if an existing network is being configured, or
-     * a minimal subset for a new network. Note: network-config may modify
-     * this (specifically .name).
-     * @type {!chrome.networkingPrivate.NetworkProperties}
+     * The name of the network being configured (set by network-config).
+     * @private
+     */
+    name_: {
+      type: String,
+      value: '',
+    },
+
+    /** @private */
+    enableConnect_: String,
+
+    /** @private */
+    enableSave_: String,
+
+    /**
+     * The current properties for an existing network, or a minimal subset when
+     * a new network is being configured.
+     * @type {!chrome.networkingPrivate.NetworkProperties|undefined}
      */
     networkProperties_: Object,
   },
@@ -62,14 +63,15 @@ Polymer({
     var dialogArgs = chrome.getVariableValue('dialogArguments');
     assert(dialogArgs);
     var args = JSON.parse(dialogArgs);
-    var type = /** @type {chrome.networkingPrivate.NetworkType} */ (args.type);
-    assert(type);
+    this.type_ =
+        /** @type {chrome.networkingPrivate.NetworkType} */ (args.type);
+    assert(this.type_);
     this.guid_ = args.guid || '';
 
     this.networkProperties_ = {
       GUID: this.guid_,
-      Name: '',
-      Type: type,
+      Name: this.name_,
+      Type: this.type_,
     };
 
     this.$.networkConfig.init();
@@ -85,13 +87,17 @@ Polymer({
    * @private
    */
   getTitle_: function() {
-    return this.networkProperties_.Name ||
-        this.i18n('OncType' + this.networkProperties_.Type);
+    return this.name_ || this.i18n('OncType' + this.type_);
   },
 
   /** @private */
   onCancelTap_: function() {
     this.close_();
+  },
+
+  /** @private */
+  onSaveTap_: function() {
+    this.$.networkConfig.saveOrConnect();
   },
 
   /** @private */

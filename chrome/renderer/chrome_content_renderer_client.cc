@@ -479,6 +479,8 @@ void ChromeContentRendererClient::RenderThreadStarted() {
     thread->RegisterExtension(extensions_v8::BenchmarkingExtension::Get());
   if (command_line->HasSwitch(switches::kEnableNetBenchmarking))
     thread->RegisterExtension(extensions_v8::NetBenchmarkingExtension::Get());
+  if (command_line->HasSwitch(switches::kInstantProcess))
+    thread->RegisterExtension(extensions_v8::SearchBoxExtension::Get());
 
   // chrome-search: and chrome-distiller: pages  should not be accessible by
   // normal content, and should also be unable to script anything but themselves
@@ -634,6 +636,10 @@ void ChromeContentRendererClient::RenderFrameCreated(
 
 void ChromeContentRendererClient::RenderViewCreated(
     content::RenderView* render_view) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  ChromeExtensionsRendererClient::GetInstance()->RenderViewCreated(render_view);
+#endif
+
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   // This is a workaround keeping the behavior that, the Blink side spellcheck
   // enabled state is initialized on RenderView creation.
@@ -1693,10 +1699,10 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
   const char* in_future_string =
       cert_validity_start < chrome_66_not_before ? "in M66" : "in M70";
   *console_message = base::StringPrintf(
-      "The SSL certificate used to load resources from %s"
+      "The SSL certificate used to load %s"
       " will be distrusted %s. Once distrusted, users will be prevented from "
-      "loading these resources. See https://g.co/chrome/symantecpkicerts for "
+      "loading this resource. See https://g.co/chrome/symantecpkicerts for "
       "more information.",
-      url::Origin(url).Serialize().c_str(), in_future_string);
+      url.spec().c_str(), in_future_string);
   return true;
 }

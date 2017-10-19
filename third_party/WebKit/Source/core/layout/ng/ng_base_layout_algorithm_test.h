@@ -33,9 +33,6 @@ class NGBaseLayoutAlgorithmTest
 
   std::pair<RefPtr<NGPhysicalBoxFragment>, RefPtr<NGConstraintSpace>>
   RunBlockLayoutAlgorithmForElement(Element* element);
-
-  static const NGPhysicalBoxFragment* CurrentFragmentFor(
-      const LayoutNGBlockFlow*);
 };
 
 class FragmentChildIterator {

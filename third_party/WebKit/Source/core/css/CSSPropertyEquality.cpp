@@ -206,8 +206,6 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
       return a.OffsetAnchor() == b.OffsetAnchor();
     case CSSPropertyOffsetDistance:
       return a.OffsetDistance() == b.OffsetDistance();
-    case CSSPropertyOffsetPath:
-      return DataEquivalent(a.OffsetPath(), b.OffsetPath());
     case CSSPropertyOffsetPosition:
       return a.OffsetPosition() == b.OffsetPosition();
     case CSSPropertyOffsetRotate:

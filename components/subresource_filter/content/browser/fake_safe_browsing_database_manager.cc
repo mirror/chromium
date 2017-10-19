@@ -10,8 +10,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
 
-FakeSafeBrowsingDatabaseManager::FakeSafeBrowsingDatabaseManager()
-    : weak_factory_(this) {}
+FakeSafeBrowsingDatabaseManager::FakeSafeBrowsingDatabaseManager() {}
 
 void FakeSafeBrowsingDatabaseManager::AddBlacklistedUrl(
     const GURL& url,
@@ -62,7 +61,7 @@ bool FakeSafeBrowsingDatabaseManager::CheckUrlForSubresourceFilter(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&FakeSafeBrowsingDatabaseManager::
                      OnCheckUrlForSubresourceFilterComplete,
-                 weak_factory_.GetWeakPtr(), base::Unretained(client), url));
+                 base::Unretained(this), base::Unretained(client), url));
   return false;
 }
 

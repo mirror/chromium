@@ -137,16 +137,6 @@ public class DownloadBroadcastManager extends Service {
                 break;
 
             case ACTION_DOWNLOAD_RESUME:
-                // If user manually resumes a download, update the network type if it
-                // is not metered previously.
-                boolean canDownloadWhileMetered = entry.canDownloadWhileMetered
-                        || DownloadManagerService.isActiveNetworkMetered(mApplicationContext);
-                // Update the SharedPreference entry.
-                mDownloadSharedPreferenceHelper.addOrReplaceSharedPreferenceEntry(
-                        new DownloadSharedPreferenceEntry(entry.id, entry.notificationId,
-                                entry.isOffTheRecord, canDownloadWhileMetered, entry.fileName, true,
-                                entry.isTransient));
-
                 mDownloadNotificationService.notifyDownloadPending(entry.id, entry.fileName,
                         entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.isTransient,
                         null, true);
@@ -194,7 +184,6 @@ public class DownloadBroadcastManager extends Service {
     @VisibleForTesting
     void propagateInteraction(Intent intent) {
         String action = intent.getAction();
-        DownloadNotificationUmaHelper.recordNotificationInteractionHistogram(action);
         final ContentId id = getContentIdFromIntent(intent);
 
         // Handle actions that do not require a specific entry or service delegate.
@@ -230,14 +219,13 @@ public class DownloadBroadcastManager extends Service {
                 break;
 
             case ACTION_DOWNLOAD_RESUME:
-                DownloadItem item = (entry != null)
-                        ? entry.buildDownloadItem()
-                        : new DownloadItem(false,
-                                  new DownloadInfo.Builder()
-                                          .setDownloadGuid(id.id)
-                                          .setIsOffTheRecord(isOffTheRecord)
-                                          .build());
-                downloadServiceDelegate.resumeDownload(id, item, true /* hasUserGesture */);
+                DownloadInfo info = new DownloadInfo.Builder()
+                                            .setDownloadGuid(id.id)
+                                            .setIsOffTheRecord(isOffTheRecord)
+                                            .build();
+
+                downloadServiceDelegate.resumeDownload(
+                        id, new DownloadItem(false, info), true /* hasUserGesture */);
                 break;
 
             default:

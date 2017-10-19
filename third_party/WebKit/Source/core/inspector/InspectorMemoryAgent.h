@@ -52,7 +52,7 @@ class CORE_EXPORT InspectorMemoryAgent final
   }
   ~InspectorMemoryAgent() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   protocol::Response getDOMCounters(int* documents,
                                     int* nodes,

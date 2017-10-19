@@ -80,19 +80,21 @@ void SnapLayerToPhysicalPixelBoundary(ui::Layer* snapped_layer,
   DCHECK(snapped_layer);
   DCHECK(snapped_layer->Contains(layer_to_snap));
 
-  gfx::PointF view_offset(layer_to_snap->GetTargetBounds().origin());
-  ui::Layer::ConvertPointToLayer(layer_to_snap->parent(), snapped_layer,
-                                 &view_offset);
+  gfx::Point view_offset_dips = layer_to_snap->GetTargetBounds().origin();
+  ui::Layer::ConvertPointToLayer(
+      layer_to_snap->parent(), snapped_layer, &view_offset_dips);
+  auto view_offset = gfx::PointF(view_offset_dips);
 
   float scale_factor = GetDeviceScaleFactor(layer_to_snap);
   view_offset.Scale(scale_factor);
-  gfx::PointF view_offset_snapped(gfx::ToRoundedPoint(view_offset));
+  gfx::PointF view_offset_snapped(gfx::ToRoundedInt(view_offset.x()),
+                                  gfx::ToRoundedInt(view_offset.y()));
 
   gfx::Vector2dF fudge = view_offset_snapped - view_offset;
   fudge.Scale(1.0 / scale_factor);
   layer_to_snap->SetSubpixelPositionOffset(fudge);
 #if DCHECK_IS_ON()
-  gfx::PointF layer_offset;
+  gfx::Point layer_offset;
   gfx::PointF origin;
   Layer::ConvertPointToLayer(
       layer_to_snap->parent(), snapped_layer, &layer_offset);

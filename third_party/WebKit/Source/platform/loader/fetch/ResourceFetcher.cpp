@@ -29,7 +29,7 @@
 
 #include "base/time/time.h"
 #include "platform/Histogram.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/loader/fetch/FetchContext.h"
@@ -376,10 +376,8 @@ void ResourceFetcher::DidLoadResourceFromMemoryCache(
       resource_request.GetRequestContext(), resource,
       FetchContext::ResourceResponseType::kFromMemoryCache);
 
-  if (resource->EncodedSize() > 0) {
-    Context().DispatchDidReceiveData(identifier, nullptr,
-                                     resource->EncodedSize());
-  }
+  if (resource->EncodedSize() > 0)
+    Context().DispatchDidReceiveData(identifier, 0, resource->EncodedSize());
 
   Context().DispatchDidFinishLoading(
       identifier, 0, 0, resource->GetResponse().DecodedBodyLength());
@@ -457,7 +455,7 @@ Resource* ResourceFetcher::ResourceForStaticData(
     resource->SetResourceBuffer(data);
   resource->SetIdentifier(CreateUniqueIdentifier());
   resource->SetCacheIdentifier(cache_identifier);
-  resource->Finish(0.0, Context().GetLoadingTaskRunner().get());
+  resource->Finish();
 
   if (ShouldResourceBeAddedToMemoryCache(params, resource) &&
       !substitute_data.IsValid()) {
@@ -476,8 +474,7 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
   resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
-                              params.Url(), blocked_reason),
-                          Context().GetLoadingTaskRunner().get());
+      params.Url(), blocked_reason));
   return resource;
 }
 
@@ -1371,7 +1368,7 @@ void ResourceFetcher::HandleLoaderFinish(Resource* resource,
       resource->GetResponse().DecodedBodyLength());
 
   if (type == kDidFinishLoading)
-    resource->Finish(finish_time, Context().GetLoadingTaskRunner().get());
+    resource->Finish(finish_time);
 
   HandleLoadCompletion(resource);
 }
@@ -1393,7 +1390,7 @@ void ResourceFetcher::HandleLoaderError(Resource* resource,
 
   if (error.IsCancellation())
     RemovePreload(resource);
-  resource->FinishAsError(error, Context().GetLoadingTaskRunner().get());
+  resource->FinishAsError(error);
 
   HandleLoadCompletion(resource);
 }
@@ -1726,7 +1723,7 @@ void ResourceFetcher::StopFetchingIncludingKeepaliveLoaders() {
   StopFetchingInternal(StopFetchingTarget::kIncludingKeepaliveLoaders);
 }
 
-void ResourceFetcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ResourceFetcher) {
   visitor->Trace(context_);
   visitor->Trace(scheduler_);
   visitor->Trace(archive_);

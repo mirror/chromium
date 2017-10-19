@@ -68,7 +68,7 @@ EventTarget* TestEventTarget::GetParentTarget() {
 }
 
 std::unique_ptr<EventTargetIterator> TestEventTarget::GetChildIterator() const {
-  return std::make_unique<EventTargetIteratorUniquePtrImpl<TestEventTarget>>(
+  return base::MakeUnique<EventTargetIteratorUniquePtrImpl<TestEventTarget>>(
       children_);
 }
 

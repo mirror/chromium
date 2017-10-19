@@ -222,7 +222,7 @@ void ContentSecurityPolicy::ApplyPolicySideEffectsToExecutionContext() {
 
 ContentSecurityPolicy::~ContentSecurityPolicy() {}
 
-void ContentSecurityPolicy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ContentSecurityPolicy) {
   visitor->Trace(execution_context_);
   visitor->Trace(policies_);
   visitor->Trace(console_messages_);
@@ -333,7 +333,7 @@ void ContentSecurityPolicy::AddPolicyFromHeaderValue(
     Member<CSPDirectiveList> policy =
         CSPDirectiveList::Create(this, begin, position, type, source);
 
-    if (!policy->AllowEval(nullptr,
+    if (!policy->AllowEval(0,
                            SecurityViolationReportingPolicy::kSuppressReporting,
                            kWillNotThrowException, g_empty_string) &&
         disable_eval_error_message_.IsNull()) {
@@ -584,7 +584,7 @@ bool ContentSecurityPolicy::AllowEval(
 
 String ContentSecurityPolicy::EvalDisabledErrorMessage() const {
   for (const auto& policy : policies_) {
-    if (!policy->AllowEval(nullptr,
+    if (!policy->AllowEval(0,
                            SecurityViolationReportingPolicy::kSuppressReporting,
                            kWillNotThrowException, g_empty_string)) {
       return policy->EvalDisabledErrorMessage();
@@ -1045,11 +1045,11 @@ bool ContentSecurityPolicy::IsActive() const {
 }
 
 const KURL ContentSecurityPolicy::Url() const {
-  return execution_context_->Url();
+  return execution_context_->ContextURL();
 }
 
 KURL ContentSecurityPolicy::CompleteURL(const String& url) const {
-  return execution_context_->CompleteURL(url);
+  return execution_context_->ContextCompleteURL(url);
 }
 
 void ContentSecurityPolicy::EnforceSandboxFlags(SandboxFlags mask) {
@@ -1169,7 +1169,7 @@ static void GatherSecurityPolicyViolationEventData(
   if (!source_location)
     source_location = SourceLocation::Capture(context);
   if (source_location->LineNumber()) {
-    KURL source = KURL(source_location->Url());
+    KURL source = KURL(kParsedURLString, source_location->Url());
     init.setSourceFile(StripURLForUseInReport(context, source, redirect_status,
                                               effective_type));
     init.setLineNumber(source_location->LineNumber());
@@ -1233,8 +1233,9 @@ void ContentSecurityPolicy::ReportViolation(
   // we should at least stop spamming reporting endpoints. See
   // https://crbug.com/524356 for detail.
   if (!violation_data.sourceFile().IsEmpty() &&
-      ShouldBypassContentSecurityPolicy(KURL(violation_data.sourceFile()),
-                                        execution_context_)) {
+      ShouldBypassContentSecurityPolicy(
+          KURL(kParsedURLString, violation_data.sourceFile()),
+          execution_context_)) {
     return;
   }
 
@@ -1328,7 +1329,8 @@ void ContentSecurityPolicy::PostViolationReport(
                    DirectiveType::kFrameAncestors);
         KURL url = context_frame
                        ? frame->GetDocument()->CompleteURLWithOverride(
-                             report_endpoint, KURL(violation_data.blockedURI()))
+                             report_endpoint, KURL(kParsedURLString,
+                                                   violation_data.blockedURI()))
                        : CompleteURL(report_endpoint);
         PingLoader::SendViolationReport(
             frame, url, report,

@@ -351,13 +351,17 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
       const PaintLayer* compositing_stacking_context,
       const PaintLayer* compositing_container,
       IntPoint graphics_layer_parent_location);
-  void UpdateChildContainmentLayerGeometry();
+  void UpdateChildContainmentLayerGeometry(
+      const IntRect& clipping_box,
+      const IntRect& local_compositing_bounds);
   void UpdateChildTransformLayerGeometry();
   void UpdateMaskLayerGeometry();
   void UpdateTransformGeometry(
       const IntPoint& snapped_offset_from_composited_ancestor,
       const IntRect& relative_compositing_bounds);
-  void UpdateForegroundLayerGeometry();
+  void UpdateForegroundLayerGeometry(
+      const FloatSize& relative_compositing_bounds_size,
+      const IntRect& clipping_box);
   void UpdateBackgroundLayerGeometry(
       const FloatSize& relative_compositing_bounds_size);
   void UpdateDecorationOutlineLayerGeometry(
@@ -439,7 +443,7 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // Result is transform origin in pixels.
   FloatPoint3D ComputeTransformOrigin(const IntRect& border_box) const;
 
-  void UpdateHitTestableWithoutDrawsContent(const bool&);
+  void UpdateShouldHitTest(const bool&);
   void UpdateOpacity(const ComputedStyle&);
   void UpdateTransform(const ComputedStyle&);
   void UpdateLayerBlendMode(const ComputedStyle&);
@@ -521,12 +525,6 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // Clear the groupedMapping entry on the layer at the given index, only if
   // that layer does not appear earlier in the set of layers for this object.
   bool InvalidateLayerIfNoPrecedingEntry(size_t);
-
-  // ContentsBox() of the CLM for the <iframe> element that owns us.
-  LayoutPoint FrameOwnerContentsLocation() const;
-
-  // Main GraphicsLayer of the CLM for the iframe's content document.
-  GraphicsLayer* FrameContentsGraphicsLayer() const;
 
   PaintLayer& owning_layer_;
 

@@ -43,13 +43,13 @@ std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext(
   attribs.fail_if_major_perf_caveat = false;
   attribs.bind_generates_resource = false;
 
-  auto context = gpu::GLInProcessContext::CreateWithoutInit();
-  auto result = context->Initialize(
-      nullptr, nullptr, is_offscreen, gpu::kNullSurfaceHandle, shared_context,
-      attribs, gpu::SharedMemoryLimits(), gpu_memory_buffer_manager,
-      image_factory, std::move(task_runner));
+  std::unique_ptr<gpu::GLInProcessContext> context =
+      base::WrapUnique(gpu::GLInProcessContext::Create(
+          nullptr, nullptr, is_offscreen, gpu::kNullSurfaceHandle,
+          shared_context, attribs, gpu::SharedMemoryLimits(),
+          gpu_memory_buffer_manager, image_factory, std::move(task_runner)));
 
-  DCHECK_EQ(result, gpu::ContextResult::kSuccess);
+  DCHECK(context);
   return context;
 }
 
@@ -83,8 +83,8 @@ TestInProcessContextProvider::TestInProcessContextProvider(
 TestInProcessContextProvider::~TestInProcessContextProvider() {
 }
 
-gpu::ContextResult TestInProcessContextProvider::BindToCurrentThread() {
-  return gpu::ContextResult::kSuccess;
+bool TestInProcessContextProvider::BindToCurrentThread() {
+  return true;
 }
 
 gpu::gles2::GLES2Interface* TestInProcessContextProvider::ContextGL() {
@@ -121,11 +121,6 @@ base::Lock* TestInProcessContextProvider::GetLock() {
 const gpu::Capabilities& TestInProcessContextProvider::ContextCapabilities()
     const {
   return capabilities_;
-}
-
-const gpu::GpuFeatureInfo& TestInProcessContextProvider::GetGpuFeatureInfo()
-    const {
-  return gpu_feature_info_;
 }
 
 void TestInProcessContextProvider::SetLostContextCallback(

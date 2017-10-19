@@ -8,8 +8,6 @@
 #include <objidl.h>
 #include <shlobj.h>
 #include <stddef.h>
-#include <wrl/client.h>
-
 #include <memory>
 #include <string>
 #include <vector>
@@ -23,6 +21,7 @@
 #endif
 
 #include "base/macros.h"
+#include "base/win/scoped_comptr.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
 #include "ui/base/ui_base_export.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -114,7 +113,7 @@ class DataObjectImpl : public DownloadFileObserver,
   typedef std::vector<std::unique_ptr<StoredDataInfo>> StoredData;
   StoredData contents_;
 
-  Microsoft::WRL::ComPtr<IDataObject> source_object_;
+  base::win::ScopedComPtr<IDataObject> source_object_;
 
   bool is_aborting_;
   bool in_drag_loop_;
@@ -186,7 +185,7 @@ class UI_BASE_EXPORT OSExchangeDataProviderWin
 
  private:
   scoped_refptr<DataObjectImpl> data_;
-  Microsoft::WRL::ComPtr<IDataObject> source_object_;
+  base::win::ScopedComPtr<IDataObject> source_object_;
 
   DISALLOW_COPY_AND_ASSIGN(OSExchangeDataProviderWin);
 };

@@ -42,153 +42,161 @@ BluetoothInternalsTest.prototype = {
   ],
 
   preLoad: function() {
-    /**
-     * A test adapter factory proxy for the chrome://bluetooth-internals
-     * page.
-     */
-    class TestAdapterFactoryProxy extends TestBrowserProxy {
-      constructor() {
-        super([
-          'getAdapter',
-        ]);
+    // A function that is called from chrome://bluetooth-internals to allow this
+    // test to replace the real Mojo browser proxy with a fake one, before any
+    // other code runs.
+    window.setupFn = function() {
+      return importModules([
+        'content/public/renderer/frame_interfaces',
+        'device/bluetooth/public/interfaces/adapter.mojom',
+        'device/bluetooth/public/interfaces/device.mojom',
+        'mojo/public/js/bindings',
+      ]).then(function([frameInterfaces, adapter, device, bindings]) {
+        /**
+         * A test adapter factory proxy for the chrome://bluetooth-internals
+         * page.
+         */
+        class TestAdapterFactoryProxy extends TestBrowserProxy {
+          constructor() {
+            super([
+              'getAdapter',
+            ]);
 
-        this.binding = new mojo.Binding(bluetooth.mojom.AdapterFactory, this);
-        this.adapter = new TestAdapterProxy();
-        this.adapterBinding_ = new mojo.Binding(bluetooth.mojom.Adapter,
-                                                this.adapter);
-      }
+            this.binding = new bindings.Binding(adapter.AdapterFactory, this);
+            this.adapter = new TestAdapterProxy();
+            this.adapterBinding_ = new bindings.Binding(adapter.Adapter,
+                                                        this.adapter);
+          }
 
-      getAdapter() {
-        this.methodCalled('getAdapter');
+          getAdapter() {
+            this.methodCalled('getAdapter');
 
-        // Create message pipe bound to TestAdapter.
-        return Promise.resolve({
-          adapter: this.adapterBinding_.createInterfacePtrAndBind(),
-        });
-      }
-    }
+            // Create message pipe bound to TestAdapter.
+            return Promise.resolve({
+              adapter: this.adapterBinding_.createInterfacePtrAndBind(),
+            });
+          }
+        }
 
-    /**
-     * A test adapter proxy for the chrome://bluetooth-internals page.
-     */
-    class TestAdapterProxy extends TestBrowserProxy {
-      constructor() {
-        super([
-          'getInfo',
-          'getDevices',
-          'setClient',
-        ]);
+        /**
+         * A test adapter proxy for the chrome://bluetooth-internals page.
+         */
+        class TestAdapterProxy extends TestBrowserProxy {
+          constructor() {
+            super([
+              'getInfo',
+              'getDevices',
+              'setClient',
+            ]);
 
-        this.deviceProxyMap = new Map();
-        this.adapterInfo_ = null;
-        this.devices_ = [];
-        this.connectResult_ = bluetooth.mojom.AdapterInfo.SUCCESS;
-      }
+            this.deviceProxyMap = new Map();
+            this.adapterInfo_ = null;
+            this.devices_ = [];
+            this.connectResult_ = adapter.AdapterInfo.SUCCESS;
+          }
 
-      connectToDevice(address) {
-        assert(this.deviceProxyMap.has(address), 'Device does not exist');
+          connectToDevice(address) {
+            assert(this.deviceProxyMap.has(address), 'Device does not exist');
 
-        return Promise.resolve({
-          result: this.connectResult_,
-          device: this.deviceProxyMap.get(
-              address).binding.createInterfacePtrAndBind(),
-        });
-      }
+            return Promise.resolve({
+              result: this.connectResult_,
+              device: this.deviceProxyMap.get(
+                  address).binding.createInterfacePtrAndBind(),
+            });
+          }
 
-      getInfo() {
-        this.methodCalled('getInfo');
-        return Promise.resolve({info: this.adapterInfo_});
-      }
+          getInfo() {
+            this.methodCalled('getInfo');
+            return Promise.resolve({info: this.adapterInfo_});
+          }
 
-      getDevices() {
-        this.methodCalled('getDevices');
-        return Promise.resolve({devices: this.devices_});
-      }
+          getDevices() {
+            this.methodCalled('getDevices');
+            return Promise.resolve({devices: this.devices_});
+          }
 
-      setClient(client) {
-        this.methodCalled('setClient', client);
-      }
+          setClient(client) {
+            this.methodCalled('setClient', client);
+          }
 
-      setTestAdapter(adapterInfo) {
-        this.adapterInfo_ = adapterInfo;
-      }
+          setTestAdapter(adapterInfo) {
+            this.adapterInfo_ = adapterInfo;
+          }
 
-      setTestConnectResult(connectResult) {
-        this.connectResult_ = connectResult;
-      }
+          setTestConnectResult(connectResult) {
+            this.connectResult_ = connectResult;
+          }
 
-      setTestDevices(devices) {
-        this.devices_ = devices;
-        this.devices_.forEach(function(device) {
-          this.deviceProxyMap.set(
-              device.address, new TestDeviceProxy(device));
-        }, this);
-      }
-    }
-
-    /**
-     * A test Device proxy for the chrome://bluetooth-internals
-     * page. Proxies are generated by a TestAdapterProxy which provides
-     * the DeviceInfo.
-     * @param {!device.DeviceInfo} info
-     */
-    class TestDeviceProxy extends TestBrowserProxy {
-      constructor(info) {
-        super([
-          'getInfo',
-          'getServices',
-        ]);
-
-        this.binding = new mojo.Binding(bluetooth.mojom.Device, this);
-        this.info_ = info;
-        this.services_ = [];
-      }
-
-      disconnect() {
-        this.binding.close();
-      }
-
-      getInfo() {
-        this.methodCalled('getInfo');
-        return Promise.resolve({info: this.info_});
-      }
-
-      getServices() {
-        this.methodCalled('getServices');
-        return Promise.resolve({services: this.services_});
-      }
-
-      setTestServices(services) {
-        this.services_ = services;
-      }
-    }
-
-    window.setupFn = () => {
-      this.adapterInterceptor = new MojoInterfaceInterceptor(
-          bluetooth.mojom.AdapterFactory.name);
-      this.adapterInterceptor.oninterfacerequest = (e) => {
-        this.adapterFactory = new TestAdapterFactoryProxy();
-        this.adapterFactory.binding.bind(e.handle);
-
-        this.adapterFactory.adapter.setTestDevices([
-          this.fakeDeviceInfo1(),
-          this.fakeDeviceInfo2(),
-        ]);
-        this.adapterFactory.adapter.setTestAdapter(
-            this.fakeAdapterInfo());
-
-        this.adapterFactory.adapter.deviceProxyMap.forEach(
-            function(deviceProxy) {
-              deviceProxy.setTestServices([
-                this.fakeServiceInfo1(),
-                this.fakeServiceInfo2(),
-              ])
+          setTestDevices(devices) {
+            this.devices_ = devices;
+            this.devices_.forEach(function(device) {
+              this.deviceProxyMap.set(
+                  device.address, new TestDeviceProxy(device));
             }, this);
-      };
-      this.adapterInterceptor.start();
-      this.setupResolver.resolve();
-      return Promise.resolve();
-    };
+          }
+        }
+
+        /**
+         * A test Device proxy for the chrome://bluetooth-internals
+         * page. Proxies are generated by a TestAdapterProxy which provides
+         * the DeviceInfo.
+         * @param {!device.DeviceInfo} info
+         */
+        class TestDeviceProxy extends TestBrowserProxy {
+          constructor(info) {
+            super([
+              'getInfo',
+              'getServices',
+            ]);
+
+            this.binding = new bindings.Binding(device.Device, this);
+            this.info_ = info;
+            this.services_ = [];
+          }
+
+          disconnect() {
+            this.binding.close();
+          }
+
+          getInfo() {
+            this.methodCalled('getInfo');
+            return Promise.resolve({info: this.info_});
+          }
+
+          getServices() {
+            this.methodCalled('getServices');
+            return Promise.resolve({services: this.services_});
+          }
+
+          setTestServices(services) {
+            this.services_ = services;
+          }
+        }
+
+        frameInterfaces.addInterfaceOverrideForTesting(
+            adapter.AdapterFactory.name, function(handle) {
+              this.adapterFactory = new TestAdapterFactoryProxy();
+              this.adapterFactory.binding.bind(handle);
+
+              this.adapterFactory.adapter.setTestDevices([
+                this.fakeDeviceInfo1(),
+                this.fakeDeviceInfo2(),
+              ]);
+              this.adapterFactory.adapter.setTestAdapter(
+                  this.fakeAdapterInfo());
+
+              this.adapterFactory.adapter.deviceProxyMap.forEach(
+                  function(deviceProxy) {
+                    deviceProxy.setTestServices([
+                      this.fakeServiceInfo1(),
+                      this.fakeServiceInfo2(),
+                    ])
+                  }, this);
+
+              this.setupResolver.resolve();
+            }.bind(this));
+      }.bind(this));
+    }.bind(this);
   },
 
   /**
@@ -215,7 +223,7 @@ BluetoothInternalsTest.prototype = {
     return {
       address: "AA:AA:84:96:92:84",
       name: "AAA",
-      nameForDisplay: "AAA",
+      name_for_display: "AAA",
       rssi: {value: -40},
       services: [],
     };
@@ -229,7 +237,7 @@ BluetoothInternalsTest.prototype = {
     return {
       address: "BB:BB:84:96:92:84",
       name: "BBB",
-      nameForDisplay: "BBB",
+      name_for_display: "BBB",
       rssi: null,
       services: [],
     };
@@ -244,7 +252,7 @@ BluetoothInternalsTest.prototype = {
     return {
       address: "CC:CC:84:96:92:84",
       name: "CCC",
-      nameForDisplay: "CCC",
+      name_for_display: "CCC",
     };
   },
 
@@ -254,9 +262,8 @@ BluetoothInternalsTest.prototype = {
    */
   fakeServiceInfo1: function() {
     return {
-      id: 'service1',
-      uuid: {uuid: '00002a05-0000-1000-8000-00805f9b34fb'},
-      isPrimary: true,
+      uuid: '00002a05-0000-1000-8000-00805f9b34fb',
+      is_primary: true,
     }
   },
 
@@ -266,9 +273,8 @@ BluetoothInternalsTest.prototype = {
    */
   fakeServiceInfo2: function() {
     return {
-      id: 'service2',
-      uuid: {uuid: '0000180d-0000-1000-8000-00805f9b34fb'},
-      isPrimary: true,
+      uuid: '0000180d-0000-1000-8000-00805f9b34fb',
+      is_primary: true,
     }
   },
 
@@ -283,7 +289,7 @@ BluetoothInternalsTest.prototype = {
       uuid: '00002a19-0000-1000-8000-00805f9b34fb',
       properties: Number.MAX_SAFE_INTEGER,
       permissions: Number.MAX_SAFE_INTEGER,
-      lastKnownValue: [],
+      last_known_value: [],
     };
   },
 };
@@ -375,7 +381,7 @@ TEST_F('BluetoothInternalsTest', 'Startup_BluetoothInternals',
 
       adapterBroker.adapterClient_.deviceChanged(deviceInfo);
 
-      expectEquals(deviceInfo.nameForDisplay,
+      expectEquals(deviceInfo.name_for_display,
                    nameForDisplayColumn.textContent);
       expectEquals(deviceInfo.address, addressColumn.textContent);
 
@@ -455,7 +461,7 @@ TEST_F('BluetoothInternalsTest', 'Startup_BluetoothInternals',
 
       // Copy device info because device collection will not copy this object.
       var newDeviceInfo = fakeDeviceInfo1();
-      newDeviceInfo.nameForDisplay = 'DDDD';
+      newDeviceInfo.name_for_display = 'DDDD';
       newDeviceInfo.rssi = { value: -20 };
       newDeviceInfo.services = ['service1', 'service2', 'service3'];
 
@@ -474,7 +480,7 @@ TEST_F('BluetoothInternalsTest', 'Startup_BluetoothInternals',
       adapterBroker.adapterClient_.deviceAdded(originalDeviceInfo);
 
       var newDeviceInfo = fakeDeviceInfo3();
-      newDeviceInfo.nameForDisplay = 'DDDD';
+      newDeviceInfo.name_for_display = 'DDDD';
       newDeviceInfo.rssi = { value: -20 };
       newDeviceInfo.services = ['service1', 'service2', 'service3'];
 
@@ -718,7 +724,7 @@ TEST_F('BluetoothInternalsTest', 'Startup_BluetoothInternals',
       [
         'name',
         'address',
-        'isGattConnected',
+        'is_gatt_connected',
         'rssi.value',
         'services.length',
       ].forEach(function(propName){
@@ -733,7 +739,7 @@ TEST_F('BluetoothInternalsTest', 'Startup_BluetoothInternals',
           value = value[part];
         }
 
-        if (propName == 'isGattConnected')
+        if (propName == 'is_gatt_connected')
           value = value ? 'Connected' : 'Not Connected';
 
         if (typeof(value) === 'boolean') {

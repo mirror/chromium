@@ -40,8 +40,8 @@
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/imagebitmap/ImageBitmapOptions.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
@@ -258,7 +258,7 @@ void ImageBitmapFactories::ImageBitmapLoader::LoadBlobAsync(
   loader_->Start(context, blob->GetBlobDataHandle());
 }
 
-void ImageBitmapFactories::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageBitmapFactories) {
   visitor->Trace(pending_loaders_);
   Supplement<LocalDOMWindow>::Trace(visitor);
   Supplement<WorkerGlobalScope>::Trace(visitor);
@@ -358,7 +358,7 @@ void ImageBitmapFactories::ImageBitmapLoader::ResolvePromiseOnOriginalThread(
   factory_->DidFinishLoading(this);
 }
 
-void ImageBitmapFactories::ImageBitmapLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageBitmapFactories::ImageBitmapLoader) {
   visitor->Trace(factory_);
   visitor->Trace(resolver_);
 }

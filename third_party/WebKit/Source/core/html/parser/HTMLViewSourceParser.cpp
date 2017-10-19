@@ -43,7 +43,7 @@ HTMLViewSourceParser::HTMLViewSourceParser(HTMLViewSourceDocument& document,
 }
 
 void HTMLViewSourceParser::PumpTokenizer() {
-  xss_auditor_.Init(GetDocument(), nullptr);
+  xss_auditor_.Init(GetDocument(), 0);
 
   while (true) {
     source_tracker_.Start(input_.Current(), tokenizer_.get(), token_);

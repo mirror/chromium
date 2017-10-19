@@ -22,7 +22,6 @@
 #import "chrome/browser/ui/cocoa/download/download_shelf_context_menu_controller.h"
 #import "chrome/browser/ui/cocoa/download/download_shelf_controller.h"
 #include "chrome/browser/ui/cocoa/download/md_download_item_view.h"
-#import "chrome/browser/ui/cocoa/nsview_additions.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #import "chrome/browser/ui/cocoa/ui_localizer.h"
 #include "chrome/common/chrome_features.h"
@@ -263,8 +262,7 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
     [self updateTheme:[[[self view] window] themeProvider]];
 
   NSView* view = [self view];
-  [view setHidden:NSMaxX([view.superview cr_localizedRect:view.frame]) >
-                  NSMaxX(view.superview.bounds)];
+  [view setHidden:NSMaxX(view.frame) > NSMaxX(view.superview.bounds)];
 }
 
 - (void)downloadWasOpened {

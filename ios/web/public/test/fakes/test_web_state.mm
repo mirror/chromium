@@ -39,7 +39,7 @@ TestWebState::TestWebState()
 
 TestWebState::~TestWebState() {
   for (auto& observer : observers_)
-    observer.WebStateDestroyed(this);
+    observer.WebStateDestroyed();
   for (auto& observer : observers_)
     observer.ResetWebState();
 };
@@ -77,13 +77,13 @@ UIView* TestWebState::GetView() {
 void TestWebState::WasShown() {
   is_visible_ = true;
   for (auto& observer : observers_)
-    observer.WasShown(this);
+    observer.WasShown();
 }
 
 void TestWebState::WasHidden() {
   is_visible_ = false;
   for (auto& observer : observers_)
-    observer.WasHidden(this);
+    observer.WasHidden();
 }
 
 const NavigationManager* TestWebState::GetNavigationManager() const {
@@ -213,32 +213,32 @@ void TestWebState::SetLoading(bool is_loading) {
 
   if (is_loading) {
     for (auto& observer : observers_)
-      observer.DidStartLoading(this);
+      observer.DidStartLoading();
   } else {
     for (auto& observer : observers_)
-      observer.DidStopLoading(this);
+      observer.DidStopLoading();
   }
 }
 
 void TestWebState::OnPageLoaded(
     PageLoadCompletionStatus load_completion_status) {
   for (auto& observer : observers_)
-    observer.PageLoaded(this, load_completion_status);
+    observer.PageLoaded(load_completion_status);
 }
 
 void TestWebState::OnNavigationStarted(NavigationContext* navigation_context) {
   for (auto& observer : observers_)
-    observer.DidStartNavigation(this, navigation_context);
+    observer.DidStartNavigation(navigation_context);
 }
 
 void TestWebState::OnNavigationFinished(NavigationContext* navigation_context) {
   for (auto& observer : observers_)
-    observer.DidFinishNavigation(this, navigation_context);
+    observer.DidFinishNavigation(navigation_context);
 }
 
 void TestWebState::OnRenderProcessGone() {
   for (auto& observer : observers_)
-    observer.RenderProcessGone(this);
+    observer.RenderProcessGone();
 }
 
 void TestWebState::ShowTransientContentView(CRWContentView* content_view) {
@@ -256,10 +256,6 @@ CRWContentView* TestWebState::GetTransientContentView() {
 }
 
 void TestWebState::SetCurrentURL(const GURL& url) {
-  url_ = url;
-}
-
-void TestWebState::SetVisibleURL(const GURL& url) {
   url_ = url;
 }
 

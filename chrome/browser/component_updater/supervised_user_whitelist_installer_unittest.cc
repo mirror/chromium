@@ -4,7 +4,6 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -22,6 +21,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_path_override.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/component_updater/supervised_user_whitelist_installer.h"
@@ -34,13 +34,11 @@
 #include "components/component_updater/component_updater_service.h"
 #include "components/crx_file/id_util.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/safe_json/testing_json_parser.h"
 #include "components/update_client/crx_update_item.h"
 #include "components/update_client/update_client.h"
 #include "components/update_client/utils.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_service_manager_context.h"
-#include "content/public/test/test_utils.h"
-#include "services/data_decoder/public/cpp/testing_json_parser.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -98,7 +96,7 @@ class MockComponentUpdateService : public ComponentUpdateService,
 
   bool RegisterComponent(const CrxComponent& component) override {
     EXPECT_EQ(nullptr, component_.get());
-    component_ = std::make_unique<CrxComponent>(component);
+    component_.reset(new CrxComponent(component));
     if (!registration_callback_.is_null())
       registration_callback_.Run();
 
@@ -201,7 +199,8 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
  public:
   SupervisedUserWhitelistInstallerTest()
       : testing_profile_manager_(TestingBrowserProcess::GetGlobal()),
-        user_data_dir_override_(chrome::DIR_USER_DATA) {}
+        user_data_dir_override_(chrome::DIR_USER_DATA),
+        manifest_(base::MakeUnique<base::DictionaryValue>()) {}
 
   ~SupervisedUserWhitelistInstallerTest() override {}
 
@@ -233,12 +232,23 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     std::string crx_id(kCrxId);
     whitelist_path_ =
         installed_whitelist_directory_.AppendASCII(crx_id + ".json");
-    large_icon_path_ = whitelist_version_directory_.AppendASCII(kLargeIconFile);
 
-    auto crx_dict = std::make_unique<base::DictionaryValue>();
+    std::unique_ptr<base::DictionaryValue> whitelist_dict(
+        new base::DictionaryValue);
+    whitelist_dict->SetString("sites", kWhitelistFile);
+    manifest_->Set("whitelisted_content", std::move(whitelist_dict));
+
+    large_icon_path_ = whitelist_version_directory_.AppendASCII(kLargeIconFile);
+    std::unique_ptr<base::DictionaryValue> icons_dict(
+        new base::DictionaryValue);
+    icons_dict->SetString("128", kLargeIconFile);
+    manifest_->Set("icons", std::move(icons_dict));
+
+    manifest_->SetString("version", kVersion);
+
+    std::unique_ptr<base::DictionaryValue> crx_dict(new base::DictionaryValue);
     crx_dict->SetString("name", kName);
-    std::unique_ptr<base::ListValue> clients =
-        std::make_unique<base::ListValue>();
+    std::unique_ptr<base::ListValue> clients(new base::ListValue);
     clients->AppendString(kClientId);
     clients->AppendString(kOtherClientId);
     crx_dict->Set("clients", std::move(clients));
@@ -265,26 +275,13 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     PrepareWhitelistFile(whitelist_directory.AppendASCII(kWhitelistFile));
     base::FilePath manifest_file =
         whitelist_directory.AppendASCII("manifest.json");
-
-    base::DictionaryValue manifest;
-
-    auto whitelist_dict = std::make_unique<base::DictionaryValue>();
-    whitelist_dict->SetString("sites", kWhitelistFile);
-    manifest.Set("whitelisted_content", std::move(whitelist_dict));
-
-    auto icons_dict = std::make_unique<base::DictionaryValue>();
-    icons_dict->SetString("128", kLargeIconFile);
-    manifest.Set("icons", std::move(icons_dict));
-
-    manifest.SetString("version", kVersion);
-
-    ASSERT_TRUE(JSONFileValueSerializer(manifest_file).Serialize(manifest));
+    ASSERT_TRUE(JSONFileValueSerializer(manifest_file).Serialize(*manifest_));
   }
 
   void RegisterExistingComponents() {
     local_state_.Set(prefs::kRegisteredSupervisedUserWhitelists, pref_);
     installer_->RegisterComponents();
-    content::RunAllTasksUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
     base::RunLoop().RunUntilIdle();
   }
 
@@ -297,12 +294,11 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     EXPECT_EQ(version, component->version.GetString());
   }
 
-  content::TestBrowserThreadBundle thread_bundle_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   TestingProfileManager testing_profile_manager_;
   base::ScopedPathOverride user_data_dir_override_;
-  data_decoder::TestingJsonParser::ScopedFactoryOverride json_parser_override_;
+  safe_json::TestingJsonParser::ScopedFactoryOverride json_parser_override_;
   TestingPrefServiceSimple local_state_;
-  content::TestServiceManagerContext service_manager_context_;
   std::unique_ptr<SupervisedUserWhitelistInstaller> installer_;
   base::FilePath whitelist_base_directory_;
   base::FilePath whitelist_directory_;
@@ -310,6 +306,7 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
   base::FilePath installed_whitelist_directory_;
   base::FilePath whitelist_path_;
   base::FilePath large_icon_path_;
+  std::unique_ptr<base::DictionaryValue> manifest_;
   base::DictionaryValue pref_;
   MockComponentUpdateService component_update_service_;
 };
@@ -362,17 +359,18 @@ TEST_F(SupervisedUserWhitelistInstallerTest, InstallNewWhitelist) {
   // installer only calls |ComponentReady| if the install of the component
   // has succeeded.
   component->installer->Install(
-      unpacked_path, base::Bind(
-                         [](WhitelistLoadObserver* observer,
-                            const update_client::CrxInstaller::Result& result) {
-                           EXPECT_EQ(0, result.error);
-                           EXPECT_EQ(0, result.extended_error);
-                           if (result.error)
-                             observer->Quit();
-                         },
-                         &observer));
+      std::move(manifest_), unpacked_path,
+      base::Bind(
+          [](WhitelistLoadObserver* observer,
+             const update_client::CrxInstaller::Result& result) {
+            EXPECT_EQ(0, result.error);
+            EXPECT_EQ(0, result.extended_error);
+            if (result.error)
+              observer->Quit();
+          },
+          &observer));
 
-  content::RunAllTasksUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   observer.Wait();
   EXPECT_EQ(whitelist_path_.value(), observer.whitelist_path().value());
@@ -430,7 +428,7 @@ TEST_F(SupervisedUserWhitelistInstallerTest,
   {
     base::RunLoop run_loop;
     installer_->UnregisterWhitelist(kClientId, kCrxId);
-    content::RunAllTasksUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
     run_loop.RunUntilIdle();
   }
   EXPECT_TRUE(component_update_service_.registered_component());
@@ -444,7 +442,7 @@ TEST_F(SupervisedUserWhitelistInstallerTest,
     // This does the same thing in our case as calling UnregisterWhitelist(),
     // but it exercises a different code path.
     profile_attributes_storage()->RemoveProfile(GetProfilePath(kOtherClientId));
-    content::RunAllTasksUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
     run_loop.RunUntilIdle();
   }
   EXPECT_FALSE(component_update_service_.registered_component());

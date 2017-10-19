@@ -228,7 +228,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
                             : LayoutRect();
   }
   void ClearPartialInvalidationRect() const final {
-    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
     return GetMutableForPainting().SetPartialInvalidationRect(LayoutRect());
   }
   String DebugName() const final;
@@ -1474,7 +1474,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // View coordinates means the coordinate space of |view()|.
   LayoutRect SelectionRectInViewCoordinates() const;
 
-  bool CanBeSelectionLeaf() const;
+  virtual bool CanBeSelectionLeaf() const { return false; }
   bool HasSelectedChildren() const {
     return GetSelectionState() != SelectionState::kNone;
   }
@@ -2058,7 +2058,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     return BackgroundChangedSinceLastPaintInvalidation() ||
            ShouldCheckForPaintInvalidation() || ShouldInvalidateSelection() ||
            NeedsPaintOffsetAndVisualRectUpdate() ||
-           (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+           (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
             rare_paint_data_ &&
             !rare_paint_data_->PartialInvalidationRect().IsEmpty());
   }
@@ -2097,8 +2097,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   virtual bool VisualRectRespectsVisibility() const { return true; }
   virtual LayoutRect LocalVisualRectIgnoringVisibility() const;
-
-  virtual bool CanBeSelectionLeafInternal() const { return false; }
 
  private:
   // Used only by applyFirstLineChanges to get a first line style based off of a
@@ -2792,14 +2790,8 @@ inline double AdjustScrollForAbsoluteZoom(double value,
   return AdjustScrollForAbsoluteZoom(value, layout_object.StyleRef());
 }
 
-enum class LayoutObjectSide {
-  kRemainingTextIfOnBoundary,
-  kFirstLetterIfOnBoundary
-};
-CORE_EXPORT const LayoutObject* AssociatedLayoutObjectOf(
-    const Node&,
-    int offset_in_node,
-    LayoutObjectSide = LayoutObjectSide::kRemainingTextIfOnBoundary);
+CORE_EXPORT const LayoutObject* AssociatedLayoutObjectOf(const Node&,
+                                                         int offset_in_node);
 
 #define DEFINE_LAYOUT_OBJECT_TYPE_CASTS(thisType, predicate)           \
   DEFINE_TYPE_CASTS(thisType, LayoutObject, object, object->predicate, \

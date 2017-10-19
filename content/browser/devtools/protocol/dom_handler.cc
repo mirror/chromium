@@ -24,9 +24,8 @@ void DOMHandler::Wire(UberDispatcher* dispatcher) {
   DOM::Dispatcher::wire(dispatcher, this);
 }
 
-void DOMHandler::SetRenderer(RenderProcessHost* process_host,
-                             RenderFrameHostImpl* frame_host) {
-  host_ = frame_host;
+void DOMHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
+  host_ = host;
 }
 
 Response DOMHandler::Disable() {

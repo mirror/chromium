@@ -17,13 +17,13 @@ class AddressNormalizationManagerTest : public testing::Test {
  protected:
   AddressNormalizationManagerTest() {}
 
-  void Initialize(const std::string& app_locale) {
+  void Initialize(const std::string& country_code) {
     manager_ = std::make_unique<AddressNormalizationManager>(
-        &address_normalizer_, app_locale);
+        &address_normalizer_, country_code);
   }
 
   void Finalize() {
-    manager_->FinalizeWithCompletionCallback(
+    manager_->FinalizePendingRequestsWithCompletionCallback(
         base::BindOnce(&AddressNormalizationManagerTest::CompletionCallback,
                        base::Unretained(this)));
   }
@@ -36,10 +36,10 @@ class AddressNormalizationManagerTest : public testing::Test {
 };
 
 TEST_F(AddressNormalizationManagerTest, SynchronousResult) {
-  Initialize("en-US");
+  Initialize("US");
 
   AutofillProfile profile_to_normalize;
-  manager_->NormalizeAddressUntilFinalized(&profile_to_normalize);
+  manager_->StartNormalizingAddress(&profile_to_normalize);
 
   EXPECT_FALSE(completion_callback_called_);
   Finalize();
@@ -47,11 +47,11 @@ TEST_F(AddressNormalizationManagerTest, SynchronousResult) {
 }
 
 TEST_F(AddressNormalizationManagerTest, AsynchronousResult) {
-  Initialize("en-US");
+  Initialize("US");
   address_normalizer_.DelayNormalization();
 
   AutofillProfile profile_to_normalize;
-  manager_->NormalizeAddressUntilFinalized(&profile_to_normalize);
+  manager_->StartNormalizingAddress(&profile_to_normalize);
 
   EXPECT_FALSE(completion_callback_called_);
   Finalize();

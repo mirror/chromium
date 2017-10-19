@@ -193,7 +193,7 @@ class BootfsData(object):
 
 
 def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
-                bootdata, summary_output, power_off, target_cpu):
+                summary_output, power_off, target_cpu):
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
@@ -258,12 +258,13 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
   # Run mkbootfs with the manifest to copy the necessary files into the bootfs.
   mkbootfs_path = os.path.join(SDK_ROOT, 'tools', 'mkbootfs')
   bootfs_name = bin_name + '.bootfs'
-  if not bootdata:
-    bootdata = os.path.join(_TargetCpuToSdkBinPath(target_cpu), 'bootdata.bin')
-  args = [mkbootfs_path, '-o', bootfs_name,
-          '--target=boot', bootdata,
-          '--target=system', manifest_file.name]
-  if _RunAndCheck(dry_run, args) != 0:
+  if _RunAndCheck(
+      dry_run,
+      [mkbootfs_path, '-o', bootfs_name,
+       # TODO(wez): Parameterize this on the |target_cpu| from GN.
+       '--target=boot', os.path.join(
+           _TargetCpuToSdkBinPath(target_cpu), 'bootdata.bin'),
+       '--target=system', manifest_file.name]) != 0:
     return None
 
   return BootfsData(bootfs_name, symbols_mapping, target_cpu)
@@ -379,12 +380,10 @@ def _GetResultsFromImg(dry_run, test_launcher_summary_output):
                          'cp', '::/output.json', test_launcher_summary_output])
 
 
-def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
-               test_launcher_summary_output):
-  if not kernel_path:
-    # TODO(wez): Parameterize this on the |target_cpu| from GN.
-    kernel_path = os.path.join(_TargetCpuToSdkBinPath(bootfs_data.target_cpu),
-                               'zircon.bin')
+def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
+  # TODO(wez): Parameterize this on the |target_cpu| from GN.
+  kernel_path = os.path.join(_TargetCpuToSdkBinPath(bootfs_data.target_cpu),
+                             'zircon.bin')
 
   if use_device:
     # TODO(fuchsia): This doesn't capture stdout as there's no way to do so

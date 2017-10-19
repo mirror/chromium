@@ -41,7 +41,7 @@ public class CustomTabTabPersistenceIntegrationTest {
     public void setUp() throws InterruptedException {
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(),
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(),
                         ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL));
     }
 

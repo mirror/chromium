@@ -4,7 +4,6 @@
 
 #include "content/public/browser/context_factory.h"
 
-#include "base/logging.h"
 #include "content/browser/compositor/image_transport_factory.h"
 
 namespace content {

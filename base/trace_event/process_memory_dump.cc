@@ -50,11 +50,6 @@ size_t GetSystemPageCount(size_t mapped_size, size_t page_size) {
 }
 #endif
 
-UnguessableToken GetTokenForCurrentProcess() {
-  static UnguessableToken instance = UnguessableToken::Create();
-  return instance;
-}
-
 }  // namespace
 
 // static
@@ -193,11 +188,9 @@ ProcessMemoryDump::ProcessMemoryDump(
     scoped_refptr<HeapProfilerSerializationState>
         heap_profiler_serialization_state,
     const MemoryDumpArgs& dump_args)
-    : process_token_(GetTokenForCurrentProcess()),
-      heap_profiler_serialization_state_(
+    : heap_profiler_serialization_state_(
           std::move(heap_profiler_serialization_state)),
       dump_args_(dump_args) {}
-
 ProcessMemoryDump::~ProcessMemoryDump() {}
 ProcessMemoryDump::ProcessMemoryDump(ProcessMemoryDump&& other) = default;
 ProcessMemoryDump& ProcessMemoryDump::operator=(ProcessMemoryDump&& other) =
@@ -205,15 +198,15 @@ ProcessMemoryDump& ProcessMemoryDump::operator=(ProcessMemoryDump&& other) =
 
 MemoryAllocatorDump* ProcessMemoryDump::CreateAllocatorDump(
     const std::string& absolute_name) {
-  return AddAllocatorDumpInternal(std::make_unique<MemoryAllocatorDump>(
-      absolute_name, dump_args_.level_of_detail, GetDumpId(absolute_name)));
+  return AddAllocatorDumpInternal(
+      std::make_unique<MemoryAllocatorDump>(absolute_name, this));
 }
 
 MemoryAllocatorDump* ProcessMemoryDump::CreateAllocatorDump(
     const std::string& absolute_name,
     const MemoryAllocatorDumpGuid& guid) {
-  return AddAllocatorDumpInternal(std::make_unique<MemoryAllocatorDump>(
-      absolute_name, dump_args_.level_of_detail, guid));
+  return AddAllocatorDumpInternal(
+      std::make_unique<MemoryAllocatorDump>(absolute_name, this, guid));
 }
 
 MemoryAllocatorDump* ProcessMemoryDump::AddAllocatorDumpInternal(
@@ -441,8 +434,8 @@ void ProcessMemoryDump::CreateSharedMemoryOwnershipEdgeInternal(
 
   // The guid of the local dump created by SharedMemoryTracker for the memory
   // segment.
-  auto local_shm_guid =
-      GetDumpId(SharedMemoryTracker::GetDumpNameForTracing(shared_memory_guid));
+  auto local_shm_guid = MemoryAllocatorDump::GetDumpIdFromName(
+      SharedMemoryTracker::GetDumpNameForTracing(shared_memory_guid));
 
   // The dump guid of the global dump created by the tracker for the memory
   // segment.
@@ -475,18 +468,9 @@ void ProcessMemoryDump::AddSuballocation(const MemoryAllocatorDumpGuid& source,
 
 MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {
   DCHECK(is_black_hole_non_fatal_for_testing_);
-  if (!black_hole_mad_) {
-    std::string name = "discarded";
-    black_hole_mad_.reset(new MemoryAllocatorDump(
-        name, dump_args_.level_of_detail, GetDumpId(name)));
-  }
+  if (!black_hole_mad_)
+    black_hole_mad_.reset(new MemoryAllocatorDump("discarded", this));
   return black_hole_mad_.get();
-}
-
-MemoryAllocatorDumpGuid ProcessMemoryDump::GetDumpId(
-    const std::string& absolute_name) {
-  return MemoryAllocatorDumpGuid(StringPrintf(
-      "%s:%s", process_token().ToString().c_str(), absolute_name.c_str()));
 }
 
 bool ProcessMemoryDump::MemoryAllocatorDumpEdge::operator==(

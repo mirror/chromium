@@ -77,6 +77,7 @@ class CTLogVerifier;
 class HostResolver;
 class HttpAuthHandlerFactory;
 class HttpAuthPreferences;
+class LoggingNetworkChangeObserver;
 class NetworkQualityEstimator;
 class ProxyConfigService;
 class RTTAndThroughputEstimatesObserver;
@@ -248,9 +249,6 @@ class IOThread : public content::BrowserThreadDelegate {
   void UpdateAndroidAuthNegotiateAccountType();
   void UpdateNegotiateDisableCnameLookup();
   void UpdateNegotiateEnablePort();
-#if defined(OS_POSIX)
-  void UpdateNtlmV2Enabled();
-#endif
 
   extensions::EventRouterForwarder* extension_event_router_forwarder() {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -281,6 +279,9 @@ class IOThread : public content::BrowserThreadDelegate {
 
   Globals* globals_;
 
+  // Observer that logs network changes to the ChromeNetLog.
+  std::unique_ptr<net::LoggingNetworkChangeObserver> network_change_observer_;
+
   std::unique_ptr<certificate_transparency::TreeStateTracker> ct_tree_tracker_;
 
   BooleanPrefMember system_enable_referrers_;
@@ -297,9 +298,6 @@ class IOThread : public content::BrowserThreadDelegate {
   std::string auth_schemes_;
   BooleanPrefMember negotiate_disable_cname_lookup_;
   BooleanPrefMember negotiate_enable_port_;
-#if defined(OS_POSIX)
-  BooleanPrefMember ntlm_v2_enabled_;
-#endif
   StringPrefMember auth_server_whitelist_;
   StringPrefMember auth_delegate_whitelist_;
 

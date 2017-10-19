@@ -545,10 +545,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
 
                     @Override
                     public void clearClientCertPreferences(Runnable onCleared) {
-                        // clang-format off
-                        ThreadUtils.runOnUiThread(() ->
-                                AwContentsStatics.clearClientCertPreferences(onCleared));
-                        // clang-format on
+                        AwContentsStatics.clearClientCertPreferences(onCleared);
                     }
 
                     @Override
@@ -577,19 +574,15 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                      */
                     // TODO(ntfschr): add @Override once next android SDK rolls
                     public void initSafeBrowsing(Context context, ValueCallback<Boolean> callback) {
-                        // clang-format off
-                        ThreadUtils.runOnUiThread(() -> AwContentsStatics.initSafeBrowsing(context,
-                                    CallbackConverter.fromValueCallback(callback)));
-                        // clang-format on
+                        AwContentsStatics.initSafeBrowsing(
+                                context, CallbackConverter.fromValueCallback(callback));
                     }
 
                     // TODO(ntfschr): add @Override once next android SDK rolls
                     public void setSafeBrowsingWhitelist(
                             List<String> urls, ValueCallback<Boolean> callback) {
-                        // clang-format off
-                        ThreadUtils.runOnUiThread(() -> AwContentsStatics.setSafeBrowsingWhitelist(
-                                urls, CallbackConverter.fromValueCallback(callback)));
-                        // clang-format on
+                        AwContentsStatics.setSafeBrowsingWhitelist(
+                                urls, CallbackConverter.fromValueCallback(callback));
                     }
 
                     /**

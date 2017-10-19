@@ -1153,8 +1153,6 @@ void OmniboxViewViews::OnCompositingEnded(ui::Compositor* compositor) {
 void OmniboxViewViews::OnCompositingLockStateChanged(
     ui::Compositor* compositor) {}
 
-void OmniboxViewViews::OnCompositingChildResizing(ui::Compositor* compositor) {}
-
 void OmniboxViewViews::OnCompositingShuttingDown(ui::Compositor* compositor) {
   scoped_observer_.RemoveAll();
 }

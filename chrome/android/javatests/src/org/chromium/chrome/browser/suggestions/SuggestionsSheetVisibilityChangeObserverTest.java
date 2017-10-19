@@ -27,7 +27,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Restriction;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ntp.NtpUiCaptureTestData;
@@ -133,7 +132,6 @@ public class SuggestionsSheetVisibilityChangeObserverTest {
 
     @Test
     @MediumTest
-    @RetryOnFailure
     public void testHomeSheetVisibilityOnNewTab() {
         // Show the new tab view
         ThreadUtils.runOnUiThreadBlocking(

@@ -50,7 +50,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/svg/SVGTreeScopeResources.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -528,7 +528,7 @@ void TreeScope::SetNeedsStyleRecalcForViewportUnits() {
   }
 }
 
-void TreeScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TreeScope) {
   visitor->Trace(root_node_);
   visitor->Trace(document_);
   visitor->Trace(parent_tree_scope_);

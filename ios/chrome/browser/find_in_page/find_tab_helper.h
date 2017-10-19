@@ -80,9 +80,8 @@ class FindTabHelper : public web::WebStateObserver,
 
   // web::WebStateObserver.
   void NavigationItemCommitted(
-      web::WebState* web_state,
       const web::LoadCommittedDetails& load_details) override;
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   // The ObjC find in page controller.
   base::scoped_nsobject<FindInPageController> controller_;

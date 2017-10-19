@@ -63,11 +63,6 @@
 #include "content/public/common/pepper_plugin_info.h"
 #endif
 
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#include "content/public/common/cdm_info.h"
-#include "content/public/common/content_client.h"
-#endif
-
 #if BUILDFLAG(ENABLE_WEBRTC)
 #include "third_party/webrtc_overrides/init_webrtc.h"  // nogncheck
 #endif
@@ -363,27 +358,11 @@ void PreloadPepperPlugins() {
                            << plugin.path.value() << " "
                            << error.ToString();
 
-      ignore_result(library);  // Prevent release-mode warning.
+      (void)library;  // Prevent release-mode warning.
     }
   }
 }
 #endif
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-// Loads registered library CDMs but does not initialize them. This is needed by
-// the zygote on Linux to get access to the CDMs before entering the sandbox.
-void PreloadLibraryCdms() {
-  std::vector<CdmInfo> cdms;
-  GetContentClient()->AddContentDecryptionModules(&cdms, nullptr);
-  for (const auto& cdm : cdms) {
-    base::NativeLibraryLoadError error;
-    base::NativeLibrary library = base::LoadNativeLibrary(cdm.path, &error);
-    VLOG_IF(1, !library) << "Unable to load CDM " << cdm.path.value()
-                         << " (error: " << error.ToString() << ")";
-    ignore_result(library);  // Prevent release-mode warning.
-  }
-}
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 // This function triggers the static and lazy construction of objects that need
 // to be created before imposing the sandbox.
@@ -412,10 +391,6 @@ static void ZygotePreSandboxInit() {
 #if BUILDFLAG(ENABLE_PLUGINS)
   // Ensure access to the Pepper plugins before the sandbox is turned on.
   PreloadPepperPlugins();
-#endif
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  // Ensure access to the library CDMs before the sandbox is turned on.
-  PreloadLibraryCdms();
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
   InitializeWebRtcModule();

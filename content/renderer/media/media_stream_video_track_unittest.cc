@@ -7,9 +7,9 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_checker_impl.h"
 #include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_track.h"
@@ -34,8 +34,7 @@ ACTION_P(RunClosure, closure) {
 class MediaStreamVideoTrackTest : public ::testing::Test {
  public:
   MediaStreamVideoTrackTest()
-      : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI),
+      : child_process_(new ChildProcess()),
         mock_source_(nullptr),
         source_started_(false) {}
 
@@ -60,6 +59,10 @@ class MediaStreamVideoTrackTest : public ::testing::Test {
   }
 
  protected:
+  base::MessageLoop* io_message_loop() const {
+    return child_process_->io_message_loop();
+  }
+
   void InitializeSource() {
     blink_source_.Reset();
     mock_source_ = new MockMediaStreamVideoSource(
@@ -121,10 +124,8 @@ class MediaStreamVideoTrackTest : public ::testing::Test {
   }
 
  private:
-  // The ScopedTaskEnvironment prevents the ChildProcess from leaking a
-  // TaskScheduler.
-  const base::test::ScopedTaskEnvironment scoped_task_environment_;
-  const ChildProcess child_process_;
+  const base::MessageLoopForUI message_loop_;
+  const std::unique_ptr<ChildProcess> child_process_;
   blink::WebMediaStreamSource blink_source_;
   // |mock_source_| is owned by |webkit_source_|.
   MockMediaStreamVideoSource* mock_source_;

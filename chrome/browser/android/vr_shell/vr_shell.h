@@ -15,7 +15,6 @@
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
 #include "chrome/browser/vr/exit_vr_prompt_choice.h"
-#include "chrome/browser/vr/ui.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
@@ -71,7 +70,9 @@ class VrShell : device::GvrGamepadDataProvider,
   VrShell(JNIEnv* env,
           const base::android::JavaParamRef<jobject>& obj,
           ui::WindowAndroid* window,
-          const vr::UiInitialState& ui_initial_state,
+          bool for_web_vr,
+          bool web_vr_autopresentation_expected,
+          bool in_cct,
           VrShellDelegate* delegate,
           gvr_context* gvr_api,
           bool reprojected_rendering,
@@ -181,9 +182,9 @@ class VrShell : device::GvrGamepadDataProvider,
                             vr::ExitVrPromptChoice choice);
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds);
 
-  void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event,
-                             int content_id);
+  void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 
+  void SetWebVRSecureOrigin(bool secure_origin);
   void ConnectPresentingService(
       device::mojom::VRSubmitFrameClientPtr submit_client,
       device::mojom::VRPresentationProviderRequest request,
@@ -265,9 +266,6 @@ class VrShell : device::GvrGamepadDataProvider,
   device::CardboardGamepadDataFetcher* cardboard_gamepad_data_fetcher_ =
       nullptr;
   int64_t cardboard_gamepad_timer_ = 0;
-
-  // Content id
-  int content_id_ = 0;
 
   gfx::SizeF display_size_meters_;
   gfx::Size display_size_pixels_;

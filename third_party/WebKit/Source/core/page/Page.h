@@ -66,7 +66,7 @@ class PageScaleConstraintsSet;
 class PluginData;
 class PluginsChangedObserver;
 class PointerLockController;
-class ScopedPagePauser;
+class ScopedPageSuspender;
 class ScrollingCoordinator;
 class SmoothScrollSequencer;
 class Settings;
@@ -293,7 +293,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   void AcceptLanguagesChanged();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void LayerTreeViewInitialized(WebLayerTreeView&, LocalFrameView*);
   void WillCloseLayerTreeView(WebLayerTreeView&, LocalFrameView*);
@@ -303,7 +303,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   void RegisterPluginsChangedObserver(PluginsChangedObserver*);
 
  private:
-  friend class ScopedPagePauser;
+  friend class ScopedPageSuspender;
 
   explicit Page(PageClients&);
 
@@ -312,7 +312,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   // SettingsDelegate overrides.
   void SettingsChanged(SettingsDelegate::ChangeType) override;
 
-  // ScopedPagePauser helpers.
+  // ScopedPageSuspender helpers.
   void SetPaused(bool);
 
   // Notify |plugins_changed_observers_| that plugins have changed.

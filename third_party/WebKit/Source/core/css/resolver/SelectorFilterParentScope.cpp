@@ -6,6 +6,6 @@
 
 namespace blink {
 
-SelectorFilterParentScope* SelectorFilterParentScope::current_scope_ = nullptr;
+SelectorFilterParentScope* SelectorFilterParentScope::current_scope_ = 0;
 
 }  // namespace blink

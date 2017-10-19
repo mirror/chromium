@@ -30,7 +30,6 @@
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "platform/loader/fetch/ScriptFetchOptions.h"
 #include "platform/wtf/text/TextEncoding.h"
 #include "platform/wtf/text/TextPosition.h"
 #include "platform/wtf/text/WTFString.h"
@@ -62,7 +61,7 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   }
 
   ~ScriptLoader() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
   enum LegacyTypeSupport {
@@ -162,7 +161,9 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   // https://html.spec.whatwg.org/#fetch-a-module-script-tree
   void FetchModuleScriptTree(const KURL&,
                              Modulator*,
-                             const ScriptFetchOptions&);
+                             const String& nonce,
+                             ParserDisposition,
+                             WebURLRequest::FetchCredentialsMode);
 
   enum class ExecuteScriptResult {
     kShouldFireErrorEvent,

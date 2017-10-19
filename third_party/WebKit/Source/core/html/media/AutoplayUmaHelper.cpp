@@ -9,14 +9,11 @@
 #include "core/dom/events/Event.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/media/AutoplayPolicy.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "platform/Histogram.h"
 #include "platform/wtf/CurrentTime.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
-#include "services/metrics/public/cpp/ukm_entry_builder.h"
-#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace blink {
 
@@ -26,18 +23,6 @@ const int32_t kMaxOffscreenDurationUmaMS = 60 * 60 * 1000;
 const int32_t kOffscreenDurationUmaBucketCount = 50;
 const int32_t kMaxWaitTimeUmaMS = 30 * 1000;
 const int32_t kWaitTimeBucketCount = 50;
-
-const char kAutoplayAttemptUkmEvent[] = "Media.Autoplay.Attempt";
-const char kAutoplayAttemptUkmSourceMetric[] = "Source";
-const char kAutoplayAttemptUkmAudioTrackMetric[] = "AudioTrack";
-const char kAutoplayAttemptUkmVideoTrackMetric[] = "VideoTrack";
-const char kAutoplayAttemptUkmUserGestureRequiredMetric[] =
-    "UserGestureRequired";
-const char kAutoplayAttemptUkmMutedMetric[] = "Muted";
-
-const char kAutoplayMutedUnmuteUkmEvent[] = "Media.Autoplay.Muted.UnmuteAction";
-const char kAutoplayMutedUnmuteUkmSourceMetric[] = "Source";
-const char kAutoplayMutedUnmuteUkmResultMetric[] = "Result";
 
 }  // namespace
 
@@ -183,22 +168,6 @@ void AutoplayUmaHelper::OnAutoplayInitiated(AutoplaySource source) {
     }
   }
 
-  // Record UKM autoplay event.
-  {
-    std::unique_ptr<ukm::UkmEntryBuilder> builder =
-        CreateUkmBuilder(kAutoplayAttemptUkmEvent);
-    builder->AddMetric(kAutoplayAttemptUkmSourceMetric,
-                       source == AutoplaySource::kMethod);
-    builder->AddMetric(kAutoplayAttemptUkmAudioTrackMetric,
-                       element_->HasAudio());
-    builder->AddMetric(kAutoplayAttemptUkmVideoTrackMetric,
-                       element_->HasVideo());
-    builder->AddMetric(
-        kAutoplayAttemptUkmUserGestureRequiredMetric,
-        element_->GetAutoplayPolicy().IsGestureNeededForPlayback());
-    builder->AddMetric(kAutoplayAttemptUkmMutedMetric, element_->muted());
-  }
-
   element_->addEventListener(EventTypeNames::playing, this, false);
 }
 
@@ -288,24 +257,6 @@ void AutoplayUmaHelper::RecordAutoplayUnmuteStatus(
        static_cast<int>(AutoplayUnmuteActionStatus::kNumberOfStatus)));
 
   autoplay_unmute_histogram.Count(static_cast<int>(status));
-
-  // Record UKM event for unmute muted autoplay.
-  {
-    std::unique_ptr<ukm::UkmEntryBuilder> builder =
-        CreateUkmBuilder(kAutoplayMutedUnmuteUkmEvent);
-
-    int source = static_cast<int>(AutoplaySource::kAttribute);
-    if (sources_.size() ==
-        static_cast<size_t>(AutoplaySource::kNumberOfSources)) {
-      source = static_cast<int>(AutoplaySource::kDualSource);
-    } else if (sources_.count(AutoplaySource::kMethod)) {
-      source = static_cast<int>(AutoplaySource::kAttribute);
-    }
-
-    builder->AddMetric(kAutoplayMutedUnmuteUkmSourceMetric, source);
-    builder->AddMetric(kAutoplayMutedUnmuteUkmResultMetric,
-                       status == AutoplayUnmuteActionStatus::kSuccess);
-  }
 }
 
 void AutoplayUmaHelper::VideoWillBeDrawnToCanvas() {
@@ -491,16 +442,7 @@ bool AutoplayUmaHelper::ShouldRecordUserPausedAutoplayingCrossOriginVideo()
              CrossOriginAutoplayResult::kUserPaused);
 }
 
-std::unique_ptr<ukm::UkmEntryBuilder> AutoplayUmaHelper::CreateUkmBuilder(
-    const char* event) {
-  ukm::UkmRecorder* ukm_recorder = element_->GetDocument().UkmRecorder();
-  DCHECK(ukm_recorder);
-
-  return ukm_recorder->GetEntryBuilder(element_->GetDocument().UkmSourceID(),
-                                       event);
-}
-
-void AutoplayUmaHelper::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AutoplayUmaHelper) {
   EventListener::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
   visitor->Trace(element_);

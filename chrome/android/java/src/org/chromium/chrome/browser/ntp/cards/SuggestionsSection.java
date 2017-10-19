@@ -21,6 +21,7 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
+import org.chromium.chrome.browser.suggestions.ContentSuggestionPlaceholder;
 import org.chromium.chrome.browser.suggestions.SuggestionsOfflineModelObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
@@ -48,6 +49,7 @@ public class SuggestionsSection extends InnerNode {
 
     // Children
     private final SectionHeader mHeader;
+    private final @Nullable ContentSuggestionPlaceholder mPlaceholder;
     private final SuggestionsList mSuggestionsList;
     private final @Nullable StatusItem mStatus;
     private final ActionItem mMoreButton;
@@ -103,9 +105,11 @@ public class SuggestionsSection extends InnerNode {
         boolean isChromeHomeEnabled = FeatureUtilities.isChromeHomeEnabled();
         if (isChromeHomeEnabled) {
             mStatus = null;
-            addChildren(mHeader, mSuggestionsList, mMoreButton);
+            mPlaceholder = new ContentSuggestionPlaceholder();
+            addChildren(mHeader, mPlaceholder, mSuggestionsList, mMoreButton);
         } else {
             mStatus = StatusItem.createNoSuggestionsItem(info);
+            mPlaceholder = null;
             addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton);
         }
 
@@ -253,6 +257,11 @@ public class SuggestionsSection extends InnerNode {
             mStatus.setVisible(!hasSuggestions());
         }
 
+        // A manual fetch can complete after the placeholder is shown, thus we can have both a
+        // placeholder and some suggestions present with no status change notification. We need to
+        // update its visibility here to avoid that.
+        updatePlaceholderVisibility();
+
         // When the ActionItem stops being dismissable, it is possible that it was being
         // interacted with. We need to reset the view's related property changes.
         if (mMoreButton.isVisible()) {
@@ -365,6 +374,14 @@ public class SuggestionsSection extends InnerNode {
         return mSuggestionsList.getItemCount();
     }
 
+    public int getPrefetchedSuggestionsCount() {
+        int count = 0;
+        for (SnippetArticle suggestion : mSuggestionsList) {
+            if (suggestion.isPrefetched()) ++count;
+        }
+        return count;
+    }
+
     public boolean isDataStale() {
         return mIsDataStale;
     }
@@ -379,7 +396,8 @@ public class SuggestionsSection extends InnerNode {
      * check, as it's standing for content, but the status card is not.
      */
     public boolean hasCards() {
-        return hasSuggestions();
+        return hasSuggestions()
+                || (FeatureUtilities.isChromeHomeEnabled() && mPlaceholder.isVisible());
     }
 
     /**
@@ -398,6 +416,12 @@ public class SuggestionsSection extends InnerNode {
             suggestionIds[i] = mSuggestionsList.getSuggestionAt(i).mIdWithinCategory;
         }
         return suggestionIds;
+    }
+
+    private boolean updatePlaceholderVisibility() {
+        if (!FeatureUtilities.isChromeHomeEnabled()) return false;
+        mPlaceholder.setVisible(isLoading() && !hasSuggestions());
+        return mPlaceholder.isVisible();
     }
 
     /**
@@ -434,8 +458,7 @@ public class SuggestionsSection extends InnerNode {
                     "updateSuggestions: Category %d is stale, will keep already seen suggestions.",
                     getCategory());
         }
-        appendSuggestions(suggestions, /* keepSectionSize = */ true,
-                /* reportPrefetchedSuggestionsCount = */ false);
+        appendSuggestions(suggestions, /*keepSectionSize=*/true);
     }
 
     /**
@@ -443,12 +466,9 @@ public class SuggestionsSection extends InnerNode {
      *
      * @param suggestions The suggestions to be added at the end of the current list.
      * @param keepSectionSize Whether the section size should stay the same -- will be enforced by
-     *         replacing not-yet-seen suggestions with the new suggestions.
-     * @param reportPrefetchedSuggestionsCount Whether to report the number of prefetched article
-     *         suggestions.
+     *                        replacing not-yet-seen suggestions with the new suggestions.
      */
-    public void appendSuggestions(List<SnippetArticle> suggestions, boolean keepSectionSize,
-            boolean reportPrefetchedSuggestionsCount) {
+    public void appendSuggestions(List<SnippetArticle> suggestions, boolean keepSectionSize) {
         if (keepSectionSize) {
             Log.d(TAG, "updateSuggestions: keeping the first %d suggestion",
                     mNumberOfSuggestionsSeen);
@@ -457,8 +477,11 @@ public class SuggestionsSection extends InnerNode {
         }
         mSuggestionsList.addAll(suggestions);
 
-        mOfflineModelObserver.updateAllSuggestionsOfflineAvailability(
-                reportPrefetchedSuggestionsCount);
+        for (SnippetArticle article : suggestions) {
+            if (!article.requiresExactOfflinePage()) {
+                mOfflineModelObserver.updateOfflinableSuggestionAvailability(article);
+            }
+        }
 
         if (!keepSectionSize) {
             NewTabPageUma.recordUIUpdateResult(NewTabPageUma.UI_UPDATE_SUCCESS_APPENDED);
@@ -534,8 +557,7 @@ public class SuggestionsSection extends InnerNode {
                     if (!isAttached()) return; // The section has been dismissed.
 
                     mMoreButton.updateState(ActionItem.State.BUTTON);
-                    appendSuggestions(suggestions, /* keepSectionSize = */ false,
-                            /* reportPrefetchedSuggestionsCount = */ false);
+                    appendSuggestions(suggestions, /* keepSectionSize = */ false);
                 },
                 () -> {  /* failureRunnable */
                     if (!isAttached()) return; // The section has been dismissed.
@@ -554,6 +576,9 @@ public class SuggestionsSection extends InnerNode {
 
         boolean isLoading = SnippetsBridge.isCategoryLoading(status);
         mMoreButton.updateState(isLoading ? ActionItem.State.LOADING : ActionItem.State.BUTTON);
+        if (updatePlaceholderVisibility()) {
+            mPlaceholder.trackVisibilityDuration();
+        }
     }
 
     /** Clears the suggestions and related data, resetting the state of the section. */

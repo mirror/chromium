@@ -26,6 +26,8 @@ class HistogramMessageFilter : public BrowserMessageFilter {
   ~HistogramMessageFilter() override;
 
   // Message handlers.
+  void OnChildHistogramData(int sequence_number,
+                            const std::vector<std::string>& pickled_histograms);
   void OnGetBrowserHistogram(const std::string& name,
                              std::string* histogram_json);
 

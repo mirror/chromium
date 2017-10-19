@@ -211,28 +211,22 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       render_pass->CreateAndAppendSharedQuadState();
 
   if (raster_source_->IsSolidColor()) {
-    float max_contents_scale = GetIdealContentsScale();
-
-    // The downstream CA layers use shared_quad_state to generate resources of
-    // the right size even if it is a solid color picture layer.
-    PopulateScaledSharedQuadState(shared_quad_state, max_contents_scale,
-                                  max_contents_scale, contents_opaque());
+    PopulateSharedQuadState(shared_quad_state, contents_opaque());
 
     AppendDebugBorderQuad(render_pass, gfx::Rect(bounds()), shared_quad_state,
                           append_quads_data);
 
-    gfx::Rect scaled_visible_layer_rect =
-        shared_quad_state->visible_quad_layer_rect;
     SolidColorLayerImpl::AppendSolidQuads(
         render_pass, draw_properties().occlusion_in_content_space,
-        shared_quad_state, scaled_visible_layer_rect,
+        shared_quad_state, visible_layer_rect(),
         raster_source_->GetSolidColor(),
         !layer_tree_impl()->settings().enable_edge_anti_aliasing,
         append_quads_data);
     return;
   }
 
-  float device_scale_factor = layer_tree_impl()->device_scale_factor();
+  float device_scale_factor =
+      layer_tree_impl() ? layer_tree_impl()->device_scale_factor() : 1;
   float max_contents_scale = MaximumTilingContentsScale();
   PopulateScaledSharedQuadState(shared_quad_state, max_contents_scale,
                                 max_contents_scale, contents_opaque());
@@ -693,10 +687,6 @@ void PictureLayerImpl::UpdateRasterSource(
     tilings_->UpdateTilingsToCurrentRasterSourceForCommit(
         raster_source_, invalidation_, MinimumContentsScale(),
         MaximumContentsScale());
-    // We're in a commit, make sure to update the state of the checker image
-    // tracker with the new async attribute data.
-    layer_tree_impl()->UpdateImageDecodingHints(
-        raster_source_->TakeDecodingModeMap());
   }
 }
 

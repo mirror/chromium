@@ -11,7 +11,6 @@
 #include "base/cancelable_callback.h"
 #include "base/debug/task_annotator.h"
 #include "base/macros.h"
-#include "base/memory/scoped_refptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/pending_task.h"
@@ -230,6 +229,12 @@ class PLATFORM_EXPORT TaskQueueManager
     TimeDomain* time_domain_;
   };
 
+  class DeletionSentinel : public base::RefCounted<DeletionSentinel> {
+   private:
+    friend class base::RefCounted<DeletionSentinel>;
+    ~DeletionSentinel() {}
+  };
+
   // TaskQueueSelector::Observer implementation:
   void OnTaskQueueEnabled(internal::TaskQueueImpl* queue) override;
   void OnTriedToSelectBlockedWorkQueue(
@@ -377,6 +382,7 @@ class PLATFORM_EXPORT TaskQueueManager
   internal::TaskQueueImpl* currently_executing_task_queue_;  // NOT OWNED
 
   Observer* observer_;  // NOT OWNED
+  scoped_refptr<DeletionSentinel> deletion_sentinel_;
   base::WeakPtrFactory<TaskQueueManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TaskQueueManager);

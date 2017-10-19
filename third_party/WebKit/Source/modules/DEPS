@@ -1,5 +1,4 @@
 include_rules = [
-    "+base/memory/scoped_refptr.h",
     "+bindings",
     "+core",
     # We do not want any new dependencies on core/exported or
@@ -12,6 +11,5 @@ include_rules = [
     "+platform",
     "+public/platform",
     "+public/web",
-    "+services/service_manager/public/interfaces/interface_provider.mojom-blink.h",
     "-web",
 ]

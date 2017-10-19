@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 
 namespace arc {
 
@@ -14,15 +15,30 @@ FakeArcSession::FakeArcSession() = default;
 
 FakeArcSession::~FakeArcSession() = default;
 
-void FakeArcSession::Start(ArcInstanceMode request_mode) {
-  target_mode_ = request_mode;
+void FakeArcSession::StartForLoginScreen() {
+  is_for_login_screen_ = true;
   if (boot_failure_emulation_enabled_) {
     for (auto& observer : observer_list_)
       observer.OnSessionStopped(boot_failure_reason_, false);
-  } else if (!boot_suspended_ &&
-             target_mode_ == ArcInstanceMode::FULL_INSTANCE) {
+  }
+}
+
+bool FakeArcSession::IsForLoginScreen() {
+  return is_for_login_screen_;
+}
+
+void FakeArcSession::Start() {
+  is_for_login_screen_ = false;
+  if (boot_failure_emulation_enabled_) {
+    for (auto& observer : observer_list_)
+      observer.OnSessionStopped(boot_failure_reason_, false);
+  } else if (!boot_suspended_) {
     running_ = true;
   }
+}
+
+bool FakeArcSession::IsRunning() {
+  return running_;
 }
 
 void FakeArcSession::Stop() {
@@ -30,16 +46,12 @@ void FakeArcSession::Stop() {
   StopWithReason(ArcStopReason::SHUTDOWN);
 }
 
-base::Optional<ArcInstanceMode> FakeArcSession::GetTargetMode() {
-  return target_mode_;
+void FakeArcSession::OnShutdown() {
+  StopWithReason(ArcStopReason::SHUTDOWN);
 }
 
 bool FakeArcSession::IsStopRequested() {
   return stop_requested_;
-}
-
-void FakeArcSession::OnShutdown() {
-  StopWithReason(ArcStopReason::SHUTDOWN);
 }
 
 void FakeArcSession::StopWithReason(ArcStopReason reason) {

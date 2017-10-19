@@ -331,7 +331,6 @@ class CloseAfterCommit : public ui::CompositorObserver,
                             base::TimeTicks start_time) override {}
   void OnCompositingEnded(ui::Compositor* compositor) override {}
   void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
-  void OnCompositingChildResizing(ui::Compositor* compositor) override {}
   void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
 
   // views::WidgetObserver:
@@ -1036,11 +1035,6 @@ void LoginDisplayHostImpl::OnDisplayMetricsChanged(
   }
 
   if (GetOobeUI()) {
-    // Reset widget size for voice interaction OOBE, since the screen rotation
-    // will break the widget size if it is not full screen.
-    if (is_voice_interaction_oobe_)
-      login_window_->SetSize(primary_display.work_area_size());
-
     const gfx::Size& size = primary_display.size();
     GetOobeUI()->GetCoreOobeView()->SetClientAreaSize(size.width(),
                                                       size.height());

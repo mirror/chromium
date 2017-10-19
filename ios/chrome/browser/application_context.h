@@ -58,6 +58,7 @@ class VariationsService;
 }
 
 class ApplicationContext;
+class CRLSetFetcher;
 class IOSChromeIOThread;
 class PrefService;
 
@@ -81,6 +82,12 @@ class ApplicationContext {
   // Returns whether the last complete shutdown was clean (i.e. happened while
   // the application was backgrounded).
   virtual bool WasLastShutdownClean() = 0;
+
+  // Indicates that shutdown is happening.
+  virtual void SetIsShuttingDown() = 0;
+
+  // Returns whether the application is shutting down.
+  virtual bool IsShuttingDown() = 0;
 
   // Gets the local state associated with this application.
   virtual PrefService* GetLocalState() = 0;
@@ -126,6 +133,9 @@ class ApplicationContext {
   // Gets the ComponentUpdateService.
   virtual component_updater::ComponentUpdateService*
   GetComponentUpdateService() = 0;
+
+  // Gets the CRLSetFetcher.
+  virtual CRLSetFetcher* GetCRLSetFetcher() = 0;
 
   // Gets the PhysicalWebDataSource.
   virtual physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() = 0;

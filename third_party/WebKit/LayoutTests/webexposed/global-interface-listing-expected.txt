@@ -402,9 +402,6 @@ interface AudioTrackList : EventTarget
     setter onaddtrack
     setter onchange
     setter onremovetrack
-interface AudioWorkletNode : AudioNode
-    attribute @@toStringTag
-    method constructor
 interface AuthenticatorAssertionResponse : AuthenticatorResponse
     attribute @@toStringTag
     getter authenticatorData
@@ -1083,11 +1080,6 @@ interface ConvolverNode : AudioNode
     method constructor
     setter buffer
     setter normalize
-interface CookieStore
-    attribute @@toStringTag
-    method constructor
-    method getAll
-    method set
 interface CountQueuingStrategy
     method constructor
     method size
@@ -1457,11 +1449,8 @@ interface Document : Node
     attribute @@unscopables
     getter URL
     getter activeElement
-    getter alinkColor
-    getter all
     getter anchors
     getter applets
-    getter bgColor
     getter body
     getter characterSet
     getter charset
@@ -1479,7 +1468,6 @@ interface Document : Node
     getter documentURI
     getter domain
     getter embeds
-    getter fgColor
     getter firstElementChild
     getter fonts
     getter forms
@@ -1492,7 +1480,6 @@ interface Document : Node
     getter inputEncoding
     getter lastElementChild
     getter lastModified
-    getter linkColor
     getter links
     getter onabort
     getter onauxclick
@@ -1602,7 +1589,6 @@ interface Document : Node
     getter timeline
     getter title
     getter visibilityState
-    getter vlinkColor
     getter webkitCurrentFullScreenElement
     getter webkitFullscreenElement
     getter webkitFullscreenEnabled
@@ -1614,9 +1600,7 @@ interface Document : Node
     getter xmlVersion
     method adoptNode
     method append
-    method captureEvents
     method caretRangeFromPoint
-    method clear
     method close
     method constructor
     method createAttribute
@@ -1661,21 +1645,15 @@ interface Document : Node
     method querySelector
     method querySelectorAll
     method registerElement
-    method releaseEvents
     method webkitCancelFullScreen
     method webkitExitFullscreen
     method write
     method writeln
-    setter alinkColor
-    setter all
-    setter bgColor
     setter body
     setter cookie
     setter designMode
     setter dir
     setter domain
-    setter fgColor
-    setter linkColor
     setter onabort
     setter onauxclick
     setter onbeforecopy
@@ -1771,7 +1749,6 @@ interface Document : Node
     setter rootScroller
     setter selectedStylesheetSet
     setter title
-    setter vlinkColor
     setter xmlStandalone
     setter xmlVersion
 interface DocumentFragment : Node
@@ -2399,7 +2376,22 @@ interface HTMLDivElement : HTMLElement
     setter align
 interface HTMLDocument : Document
     attribute @@toStringTag
+    getter alinkColor
+    getter all
+    getter bgColor
+    getter fgColor
+    getter linkColor
+    getter vlinkColor
+    method captureEvents
+    method clear
     method constructor
+    method releaseEvents
+    setter alinkColor
+    setter all
+    setter bgColor
+    setter fgColor
+    setter linkColor
+    setter vlinkColor
 interface HTMLElement : Element
     attribute @@toStringTag
     getter accessKey
@@ -2808,7 +2800,6 @@ interface HTMLImageElement : HTMLElement
     attribute @@toStringTag
     getter align
     getter alt
-    getter async
     getter border
     getter complete
     getter crossOrigin
@@ -2834,7 +2825,6 @@ interface HTMLImageElement : HTMLElement
     method decode
     setter align
     setter alt
-    setter async
     setter border
     setter crossOrigin
     setter height
@@ -3832,7 +3822,6 @@ interface Image
     attribute @@toStringTag
     getter align
     getter alt
-    getter async
     getter border
     getter complete
     getter crossOrigin
@@ -3858,7 +3847,6 @@ interface Image
     method decode
     setter align
     setter alt
-    setter async
     setter border
     setter crossOrigin
     setter height
@@ -6085,7 +6073,6 @@ interface SVGGraphicsElement : SVGElement
     method getScreenCTM
 interface SVGImageElement : SVGGraphicsElement
     attribute @@toStringTag
-    getter async
     getter height
     getter href
     getter preserveAspectRatio
@@ -6094,7 +6081,6 @@ interface SVGImageElement : SVGGraphicsElement
     getter y
     method constructor
     method decode
-    setter async
 interface SVGLength
     attribute @@toStringTag
     attribute SVG_LENGTHTYPE_CM
@@ -9120,6 +9106,7 @@ interface webkitURL
     attribute eventSender
     attribute frames
     attribute gamepadController
+    attribute gin
     attribute internals
     attribute layoutTestController
     attribute length
@@ -9137,7 +9124,6 @@ interface webkitURL
     getter audioWorklet
     getter caches
     getter clientInformation
-    getter cookieStore
     getter crypto
     getter customElements
     getter defaultStatus
@@ -9329,7 +9315,6 @@ interface webkitURL
     method webkitRequestFileSystem
     method webkitResolveLocalFileSystemURL
     setter clientInformation
-    setter cookieStore
     setter defaultStatus
     setter defaultstatus
     setter devicePixelRatio

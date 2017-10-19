@@ -28,6 +28,7 @@ class MODULES_EXPORT PaintWorkletGlobalScope final
   static PaintWorkletGlobalScope* Create(LocalFrame*,
                                          const KURL&,
                                          const String& user_agent,
+                                         RefPtr<SecurityOrigin>,
                                          v8::Isolate*,
                                          WorkerReportingProxy&,
                                          PaintWorkletPendingGeneratorRegistry*,
@@ -43,13 +44,14 @@ class MODULES_EXPORT PaintWorkletGlobalScope final
   CSSPaintDefinition* FindDefinition(const String& name);
   double devicePixelRatio() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:
   PaintWorkletGlobalScope(LocalFrame*,
                           const KURL&,
                           const String& user_agent,
+                          RefPtr<SecurityOrigin>,
                           v8::Isolate*,
                           WorkerReportingProxy&,
                           PaintWorkletPendingGeneratorRegistry*);

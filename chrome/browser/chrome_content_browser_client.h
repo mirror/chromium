@@ -244,6 +244,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void DidCreatePpapiPlugin(content::BrowserPpapiHost* browser_host) override;
   content::BrowserPpapiHost* GetExternalBrowserPpapiHost(
       int plugin_process_id) override;
+  gpu::GpuChannelEstablishFactory* GetGpuChannelEstablishFactory() override;
   bool AllowPepperSocketAPI(
       content::BrowserContext* browser_context,
       const GURL& url,
@@ -311,8 +312,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void RegisterInProcessServices(StaticServiceMap* services) override;
   void RegisterOutOfProcessServices(
       OutOfProcessServiceMap* services) override;
-  bool ShouldTerminateOnServiceQuit(
-      const service_manager::Identity& id) override;
   std::unique_ptr<base::Value> GetServiceManifestOverlay(
       base::StringPiece name) override;
   std::vector<content::ContentBrowserClient::ServiceManifestInfo>

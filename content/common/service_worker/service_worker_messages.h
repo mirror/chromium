@@ -100,7 +100,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::ServiceWorkerResponse)
   IPC_STRUCT_TRAITS_MEMBER(cors_exposed_header_names)
 IPC_STRUCT_TRAITS_END()
 
-IPC_STRUCT_TRAITS_BEGIN(blink::mojom::ServiceWorkerObjectInfo)
+IPC_STRUCT_TRAITS_BEGIN(content::ServiceWorkerObjectInfo)
   IPC_STRUCT_TRAITS_MEMBER(handle_id)
   IPC_STRUCT_TRAITS_MEMBER(url)
   IPC_STRUCT_TRAITS_MEMBER(state)
@@ -130,7 +130,7 @@ IPC_STRUCT_TRAITS_END()
 IPC_STRUCT_BEGIN(ServiceWorkerMsg_MessageToDocument_Params)
   IPC_STRUCT_MEMBER(int, thread_id)
   IPC_STRUCT_MEMBER(int, provider_id)
-  IPC_STRUCT_MEMBER(blink::mojom::ServiceWorkerObjectInfo, service_worker_info)
+  IPC_STRUCT_MEMBER(content::ServiceWorkerObjectInfo, service_worker_info)
   IPC_STRUCT_MEMBER(base::string16, message)
   IPC_STRUCT_MEMBER(std::vector<blink::MessagePortChannel>, message_ports)
 IPC_STRUCT_END()
@@ -143,7 +143,7 @@ IPC_STRUCT_TRAITS_END()
 IPC_STRUCT_BEGIN(ServiceWorkerMsg_SetControllerServiceWorker_Params)
   IPC_STRUCT_MEMBER(int, thread_id)
   IPC_STRUCT_MEMBER(int, provider_id)
-  IPC_STRUCT_MEMBER(blink::mojom::ServiceWorkerObjectInfo, object_info)
+  IPC_STRUCT_MEMBER(content::ServiceWorkerObjectInfo, object_info)
   IPC_STRUCT_MEMBER(bool, should_notify_controllerchange)
 
   // |used_features| is the set of features that the worker has used.
@@ -153,6 +153,12 @@ IPC_STRUCT_END()
 
 //---------------------------------------------------------------------------
 // Messages sent from the child process to the browser.
+
+IPC_MESSAGE_CONTROL4(ServiceWorkerHostMsg_UpdateServiceWorker,
+                     int /* thread_id */,
+                     int /* request_id */,
+                     int /* provider_id */,
+                     int64_t /* registration_id */)
 
 IPC_MESSAGE_CONTROL4(ServiceWorkerHostMsg_UnregisterServiceWorker,
                      int /* thread_id */,
@@ -270,11 +276,24 @@ IPC_MESSAGE_ROUTED1(ServiceWorkerHostMsg_ClaimClients,
 // extract it and dispatch the message to the correct ServiceWorkerDispatcher
 // on the correct thread.
 
+// Response to ServiceWorkerHostMsg_UpdateServiceWorker.
+IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_ServiceWorkerUpdated,
+                     int /* thread_id */,
+                     int /* request_id */)
+
 // Response to ServiceWorkerHostMsg_UnregisterServiceWorker.
 IPC_MESSAGE_CONTROL3(ServiceWorkerMsg_ServiceWorkerUnregistered,
                      int /* thread_id */,
                      int /* request_id */,
                      bool /* is_success */)
+
+// Sent when any kind of update error occurs during a
+// UpdateServiceWorker handler above.
+IPC_MESSAGE_CONTROL4(ServiceWorkerMsg_ServiceWorkerUpdateError,
+                     int /* thread_id */,
+                     int /* request_id */,
+                     blink::mojom::ServiceWorkerErrorType,
+                     base::string16 /* message */)
 
 // Sent when any kind of registration error occurs during a
 // UnregisterServiceWorker handler above.

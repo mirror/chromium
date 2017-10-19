@@ -46,7 +46,7 @@ ColorChooserUIController::~ColorChooserUIController() {
   EndChooser();
 }
 
-void ColorChooserUIController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ColorChooserUIController) {
   visitor->Trace(frame_);
   visitor->Trace(client_);
   ColorChooser::Trace(visitor);
@@ -67,7 +67,7 @@ void ColorChooserUIController::EndChooser() {
 }
 
 AXObject* ColorChooserUIController::RootAXObject() {
-  return nullptr;
+  return 0;
 }
 
 void ColorChooserUIController::DidChooseColor(const WebColor& color) {

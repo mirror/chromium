@@ -134,9 +134,8 @@ void SecurityHandler::AttachToRenderFrameHost() {
   DidChangeVisibleSecurityState();
 }
 
-void SecurityHandler::SetRenderer(RenderProcessHost* process_host,
-                                  RenderFrameHostImpl* frame_host) {
-  host_ = frame_host;
+void SecurityHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
+  host_ = host;
   if (enabled_ && host_)
     AttachToRenderFrameHost();
 }

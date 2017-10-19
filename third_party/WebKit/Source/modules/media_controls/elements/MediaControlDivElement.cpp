@@ -26,7 +26,7 @@ bool MediaControlDivElement::IsMediaControlElement() const {
   return true;
 }
 
-void MediaControlDivElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlDivElement) {
   HTMLDivElement::Trace(visitor);
   MediaControlElementBase::Trace(visitor);
 }

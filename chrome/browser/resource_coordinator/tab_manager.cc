@@ -25,7 +25,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread.h"
 #include "base/time/tick_clock.h"
-#include "base/trace_event/trace_event_argument.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
@@ -174,18 +173,6 @@ base::flat_set<const BrowserInfo*> GetOccludedBrowsers(
   }
 
   return occluded_browsers;
-}
-
-std::unique_ptr<base::trace_event::ConvertableToTraceFormat> DataAsTraceValue(
-    TabManager::BackgroundTabLoadingMode mode,
-    size_t num_of_pending_navigations,
-    size_t num_of_loading_contents) {
-  std::unique_ptr<base::trace_event::TracedValue> data(
-      new base::trace_event::TracedValue());
-  data->SetInteger("background_tab_loading_mode", mode);
-  data->SetInteger("num_of_pending_navigations", num_of_pending_navigations);
-  data->SetInteger("num_of_loading_contents", num_of_loading_contents);
-  return std::move(data);
 }
 
 }  // namespace
@@ -611,25 +598,11 @@ bool TabManager::IsTabRestoredInForeground(WebContents* web_contents) const {
   return GetWebContentsData(web_contents)->is_restored_in_foreground();
 }
 
-size_t TabManager::GetBackgroundTabLoadingCount() const {
-  if (!IsInBackgroundTabOpeningSession())
-    return 0;
+bool TabManager::IsInBackgroundTabOpeningSession() const {
+  if (background_tab_loading_mode_ != BackgroundTabLoadingMode::kStaggered)
+    return false;
 
-  return loading_contents_.size();
-}
-
-size_t TabManager::GetBackgroundTabPendingCount() const {
-  if (!IsInBackgroundTabOpeningSession())
-    return 0;
-
-  return pending_navigations_.size();
-}
-
-int TabManager::GetTabCount() const {
-  int tab_count = 0;
-  for (auto* browser : *BrowserList::GetInstance())
-    tab_count += browser->tab_strip_model()->count();
-  return tab_count;
+  return !(pending_navigations_.empty() && loading_contents_.empty());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -741,6 +714,13 @@ void TabManager::PurgeBrowserMemory() {
     // touch back/forward.
     web_contents->GetController().ClearAllScreenshots();
   }
+}
+
+int TabManager::GetTabCount() const {
+  int tab_count = 0;
+  for (auto* browser : *BrowserList::GetInstance())
+    tab_count += browser->tab_strip_model()->count();
+  return tab_count;
 }
 
 void TabManager::AddTabStats(const BrowserInfo& browser_info,
@@ -934,9 +914,6 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
 }
 
 void TabManager::PauseBackgroundTabOpeningIfNeeded() {
-  TRACE_EVENT_INSTANT0("navigation",
-                       "TabManager::PauseBackgroundTabOpeningIfNeeded",
-                       TRACE_EVENT_SCOPE_THREAD);
   if (IsInBackgroundTabOpeningSession()) {
     stats_collector_->TrackPausedBackgroundTabs(pending_navigations_.size());
     stats_collector_->OnBackgroundTabOpeningSessionEnded();
@@ -946,9 +923,6 @@ void TabManager::PauseBackgroundTabOpeningIfNeeded() {
 }
 
 void TabManager::ResumeBackgroundTabOpeningIfNeeded() {
-  TRACE_EVENT_INSTANT0("navigation",
-                       "TabManager::ResumeBackgroundTabOpeningIfNeeded",
-                       TRACE_EVENT_SCOPE_THREAD);
   background_tab_loading_mode_ = BackgroundTabLoadingMode::kStaggered;
   LoadNextBackgroundTabIfNeeded();
 
@@ -1187,21 +1161,8 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   std::stable_sort(pending_navigations_.begin(), pending_navigations_.end(),
                    ComparePendingNavigations);
 
-  TRACE_EVENT_INSTANT1(
-      "navigation", "TabManager::MaybeThrottleNavigation",
-      TRACE_EVENT_SCOPE_THREAD, "data",
-      DataAsTraceValue(background_tab_loading_mode_,
-                       pending_navigations_.size(), loading_contents_.size()));
-
   StartForceLoadTimer();
   return content::NavigationThrottle::DEFER;
-}
-
-bool TabManager::IsInBackgroundTabOpeningSession() const {
-  if (background_tab_loading_mode_ != BackgroundTabLoadingMode::kStaggered)
-    return false;
-
-  return !(pending_navigations_.empty() && loading_contents_.empty());
 }
 
 bool TabManager::CanLoadNextTab() const {
@@ -1230,9 +1191,6 @@ void TabManager::OnDidFinishNavigation(
   while (it != pending_navigations_.end()) {
     BackgroundTabNavigationThrottle* throttle = *it;
     if (throttle->navigation_handle() == navigation_handle) {
-      TRACE_EVENT_INSTANT1("navigation", "TabManager::OnDidFinishNavigation",
-                           TRACE_EVENT_SCOPE_THREAD,
-                           "found_navigation_handle_to_remove", true);
       pending_navigations_.erase(it);
       break;
     }
@@ -1271,25 +1229,12 @@ void TabManager::OnWebContentsDestroyed(content::WebContents* contents) {
 }
 
 void TabManager::StartForceLoadTimer() {
-  TRACE_EVENT_INSTANT1(
-      "navigation", "TabManager::StartForceLoadTimer", TRACE_EVENT_SCOPE_THREAD,
-      "data",
-      DataAsTraceValue(background_tab_loading_mode_,
-                       pending_navigations_.size(), loading_contents_.size()));
-
   force_load_timer_->Stop();
   force_load_timer_->Start(FROM_HERE, kBackgroundTabLoadTimeout, this,
                            &TabManager::LoadNextBackgroundTabIfNeeded);
 }
 
 void TabManager::LoadNextBackgroundTabIfNeeded() {
-  TRACE_EVENT_INSTANT2(
-      "navigation", "TabManager::LoadNextBackgroundTabIfNeeded",
-      TRACE_EVENT_SCOPE_THREAD, "is_force_load_timer_running",
-      force_load_timer_->IsRunning(), "data",
-      DataAsTraceValue(background_tab_loading_mode_,
-                       pending_navigations_.size(), loading_contents_.size()));
-
   if (background_tab_loading_mode_ != BackgroundTabLoadingMode::kStaggered)
     return;
 

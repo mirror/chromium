@@ -73,7 +73,7 @@ class CSSPaintDefinition final
     return paint_.NewLocal(isolate);
   }
 
-  void Trace(blink::Visitor* visitor){};
+  DEFINE_INLINE_TRACE(){};
   DECLARE_TRACE_WRAPPERS();
 
  private:

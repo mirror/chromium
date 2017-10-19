@@ -294,11 +294,11 @@ class MockConnectionManager : public ServerConnectionManager {
                                      int64_t sync_ts);
 
   // Functions to handle the various types of server request.
-  bool ProcessGetUpdates(sync_pb::ClientToServerMessage* csm,
+  void ProcessGetUpdates(sync_pb::ClientToServerMessage* csm,
                          sync_pb::ClientToServerResponse* response);
-  bool ProcessCommit(sync_pb::ClientToServerMessage* csm,
+  void ProcessCommit(sync_pb::ClientToServerMessage* csm,
                      sync_pb::ClientToServerResponse* response_buffer);
-  bool ProcessClearServerData(sync_pb::ClientToServerMessage* csm,
+  void ProcessClearServerData(sync_pb::ClientToServerMessage* csm,
                               sync_pb::ClientToServerResponse* response);
   void AddDefaultBookmarkData(sync_pb::SyncEntity* entity, bool is_folder);
 

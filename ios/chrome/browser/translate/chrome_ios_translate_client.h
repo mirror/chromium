@@ -74,7 +74,7 @@ class ChromeIOSTranslateClient
   friend class web::WebStateUserData<ChromeIOSTranslateClient>;
 
   // web::WebStateObserver implementation.
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   std::unique_ptr<translate::TranslateManager> translate_manager_;
   translate::IOSTranslateDriver translate_driver_;

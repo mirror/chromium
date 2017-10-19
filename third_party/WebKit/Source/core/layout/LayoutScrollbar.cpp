@@ -88,7 +88,7 @@ LayoutScrollbar::~LayoutScrollbar() {
   UpdateScrollbarParts(true);
 }
 
-void LayoutScrollbar::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LayoutScrollbar) {
   visitor->Trace(style_source_);
   Scrollbar::Trace(visitor);
 }
@@ -96,7 +96,7 @@ void LayoutScrollbar::Trace(blink::Visitor* visitor) {
 LayoutBox* LayoutScrollbar::StyleSource() const {
   return style_source_ && style_source_->GetLayoutObject()
              ? style_source_->GetLayoutObject()->EnclosingBox()
-             : nullptr;
+             : 0;
 }
 
 void LayoutScrollbar::DisconnectFromScrollableArea() {

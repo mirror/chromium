@@ -225,7 +225,7 @@ void HTMLAnchorElement::ParseAttribute(
 
 void HTMLAnchorElement::AccessKeyAction(bool send_mouse_events) {
   DispatchSimulatedClick(
-      nullptr, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
+      0, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
 }
 
 bool HTMLAnchorElement::IsURLAttribute(const Attribute& attribute) const {

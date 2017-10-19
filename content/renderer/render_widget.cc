@@ -1279,8 +1279,10 @@ void RenderWidget::Resize(const ResizeParams& params) {
     // If the ID is not valid, then the compositor will defer commits until
     // it receives a valid surface ID. This is a no-op if surface
     // synchronization is disabled.
-    DCHECK(!compositor_->IsSurfaceSynchronizationEnabled() ||
-           !params.needs_resize_ack || local_surface_id_.is_valid());
+    // TODO(crbug.com/758387): Re-enable this DCHECK once the mash login screen
+    // is fixed.
+    // DCHECK(!compositor_->IsSurfaceSynchronizationEnabled() ||
+    //       local_surface_id_.is_valid());
     compositor_->SetViewportSize(params.physical_backing_size,
                                  local_surface_id_);
     compositor_->SetBrowserControlsHeight(
@@ -2001,6 +2003,15 @@ void RenderWidget::OnRequestCompositionUpdates(bool immediate_request,
   if (!immediate_request)
     return;
   UpdateCompositionInfo(true /* immediate request */);
+}
+
+void RenderWidget::OnSetDeviceScaleFactor(float device_scale_factor) {
+  if (device_scale_factor_ == device_scale_factor)
+    return;
+
+  device_scale_factor_ = device_scale_factor;
+  OnDeviceScaleFactorChanged();
+  physical_backing_size_ = gfx::ScaleToCeiledSize(size_, device_scale_factor_);
 }
 
 void RenderWidget::OnOrientationChange() {

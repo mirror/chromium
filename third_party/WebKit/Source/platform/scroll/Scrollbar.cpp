@@ -84,7 +84,7 @@ Scrollbar::~Scrollbar() {
   theme_.UnregisterScrollbar(*this);
 }
 
-void Scrollbar::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Scrollbar) {
   visitor->Trace(scrollable_area_);
   visitor->Trace(chrome_client_);
 }

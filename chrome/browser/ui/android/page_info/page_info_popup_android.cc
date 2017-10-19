@@ -14,7 +14,6 @@
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/browser/ui/page_info/page_info.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
-#include "chrome/common/chrome_features.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/security_state/core/security_state.h"
@@ -52,7 +51,6 @@ PageInfoPopupAndroid::PageInfoPopupAndroid(JNIEnv* env,
     return;
 
   url_ = nav_entry->GetURL();
-  web_contents_ = web_contents;
 
   popup_jobject_.Reset(env, java_page_info_pop);
 
@@ -121,8 +119,6 @@ void PageInfoPopupAndroid::SetPermissionInfo(
   permissions_to_display.push_back(CONTENT_SETTINGS_TYPE_POPUPS);
   permissions_to_display.push_back(CONTENT_SETTINGS_TYPE_ADS);
   permissions_to_display.push_back(CONTENT_SETTINGS_TYPE_AUTOPLAY);
-  if (base::FeatureList::IsEnabled(features::kSoundContentSetting))
-    permissions_to_display.push_back(CONTENT_SETTINGS_TYPE_SOUND);
 
   std::map<ContentSettingsType, ContentSetting>
       user_specified_settings_to_display;
@@ -185,11 +181,6 @@ base::Optional<ContentSetting> PageInfoPopupAndroid::GetSettingToDisplay(
     // setting should show up in Page Info is in ShouldShowPermission in
     // page_info.cc.
     return permission.default_setting;
-  } else if (permission.type == CONTENT_SETTINGS_TYPE_SOUND) {
-    // The sound content setting should always show up when the tab is playing
-    // audio or has recently played audio.
-    if (web_contents_->WasRecentlyAudible())
-      return permission.default_setting;
   }
   return base::Optional<ContentSetting>();
 }

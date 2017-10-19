@@ -145,7 +145,8 @@ public class PermissionTestRule extends ChromeActivityTestRule<ChromeActivity> {
         mListener = new InfoBarTestAnimationListener();
         container.addAnimationListener(mListener);
         // TODO(yolandyan): refactor to use EmbeddedTestServerRule
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     private void ruleTearDown() throws Exception {

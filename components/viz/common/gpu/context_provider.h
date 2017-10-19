@@ -14,7 +14,6 @@
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "components/viz/common/viz_common_export.h"
 #include "gpu/command_buffer/common/capabilities.h"
-#include "gpu/command_buffer/common/context_result.h"
 
 class GrContext;
 
@@ -24,7 +23,6 @@ class Lock;
 
 namespace gpu {
 class ContextSupport;
-struct GpuFeatureInfo;
 namespace gles2 {
 class GLES2Interface;
 }
@@ -61,7 +59,7 @@ class VIZ_COMMON_EXPORT ContextProvider
   // from the same thread unless the function has some explicitly specified
   // rules for access on a different thread. See SetupLockOnMainThread(), which
   // can be used to provide access from multiple threads.
-  virtual gpu::ContextResult BindToCurrentThread() = 0;
+  virtual bool BindToCurrentThread() = 0;
 
   virtual gpu::gles2::GLES2Interface* ContextGL() = 0;
   virtual gpu::ContextSupport* ContextSupport() = 0;
@@ -74,9 +72,6 @@ class VIZ_COMMON_EXPORT ContextProvider
 
   // Returns the capabilities of the currently bound 3d context.
   virtual const gpu::Capabilities& ContextCapabilities() const = 0;
-
-  // Returns feature blacklist decisions and driver bug workarounds info.
-  virtual const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const = 0;
 
   // Sets a callback to be called when the context is lost. This should be
   // called from the same thread that the context is bound to. To avoid races,

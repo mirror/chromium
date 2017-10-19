@@ -50,7 +50,7 @@ const AtomicString& ProgressEvent::InterfaceName() const {
   return EventNames::ProgressEvent;
 }
 
-void ProgressEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ProgressEvent) {
   Event::Trace(visitor);
 }
 

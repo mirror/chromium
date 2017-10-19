@@ -51,13 +51,13 @@ class BroadcastChannel final : public EventTargetWithInlineData,
   // ContextLifecycleObserver:
   void ContextDestroyed(ExecutionContext*) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   BroadcastChannel(ExecutionContext*, const String& name);
 
   // mojom::blink::BroadcastChannelClient:
-  void OnMessage(BlinkCloneableMessage) override;
+  void OnMessage(const WTF::Vector<uint8_t>& message) override;
 
   // Called when the mojo binding disconnects.
   void OnError();

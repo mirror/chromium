@@ -12,8 +12,8 @@
 namespace blink {
 
 void SVGTextPainter::Paint(const PaintInfo& paint_info) {
-  if (paint_info.phase != PaintPhase::kForeground &&
-      paint_info.phase != PaintPhase::kSelection)
+  if (paint_info.phase != kPaintPhaseForeground &&
+      paint_info.phase != kPaintPhaseSelection)
     return;
 
   PaintInfo block_info(paint_info);
@@ -25,8 +25,8 @@ void SVGTextPainter::Paint(const PaintInfo& paint_info) {
   BlockPainter(layout_svg_text_).Paint(block_info, LayoutPoint());
 
   // Paint the outlines, if any
-  if (paint_info.phase == PaintPhase::kForeground) {
-    block_info.phase = PaintPhase::kOutline;
+  if (paint_info.phase == kPaintPhaseForeground) {
+    block_info.phase = kPaintPhaseOutline;
     BlockPainter(layout_svg_text_).Paint(block_info, LayoutPoint());
   }
 }

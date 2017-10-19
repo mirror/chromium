@@ -8,16 +8,12 @@
 #include <memory>
 #include <string>
 
-#include "ash/login/lock_screen_controller.h"
 #include "ash/login/ui/layout_util.h"
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_data_dispatcher.h"
 #include "ash/login/ui/non_accessible_view.h"
-#include "ash/shell.h"
 #include "base/strings/utf_string_conversions.h"
-#include "ui/base/ime/chromeos/ime_keyboard.h"
-#include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/view.h"
@@ -37,11 +33,16 @@ struct UserMetadata {
 
   AccountId account_id;
   bool enable_pin = false;
-  bool enable_click_to_unlock = false;
-  mojom::EasyUnlockIconId easy_unlock_id = mojom::EasyUnlockIconId::NONE;
-
   views::View* view = nullptr;
 };
+
+// Creates a button with |text| that cannot be focused.
+views::MdTextButton* CreateButton(views::ButtonListener* listener,
+                                  const std::string& text) {
+  auto* view = views::MdTextButton::Create(listener, base::ASCIIToUTF16(text));
+  view->SetFocusBehavior(views::View::FocusBehavior::NEVER);
+  return view;
+}
 
 }  // namespace
 
@@ -113,60 +114,6 @@ class LockDebugView::DebugDataDispatcherTransformer
                                            debug_user->enable_pin);
   }
 
-  // Enables click to auth for the user at |user_index|.
-  void CycleEasyUnlockForUserIndex(size_t user_index) {
-    DCHECK(user_index >= 0 && user_index < debug_users_.size());
-    UserMetadata* debug_user = &debug_users_[user_index];
-
-    // EasyUnlockIconId state transition.
-    auto get_next_id = [](mojom::EasyUnlockIconId id) {
-      switch (id) {
-        case mojom::EasyUnlockIconId::NONE:
-          return mojom::EasyUnlockIconId::SPINNER;
-        case mojom::EasyUnlockIconId::SPINNER:
-          return mojom::EasyUnlockIconId::LOCKED;
-        case mojom::EasyUnlockIconId::LOCKED:
-          return mojom::EasyUnlockIconId::LOCKED_TO_BE_ACTIVATED;
-        case mojom::EasyUnlockIconId::LOCKED_TO_BE_ACTIVATED:
-          return mojom::EasyUnlockIconId::LOCKED_WITH_PROXIMITY_HINT;
-        case mojom::EasyUnlockIconId::LOCKED_WITH_PROXIMITY_HINT:
-          return mojom::EasyUnlockIconId::HARDLOCKED;
-        case mojom::EasyUnlockIconId::HARDLOCKED:
-          return mojom::EasyUnlockIconId::UNLOCKED;
-        case mojom::EasyUnlockIconId::UNLOCKED:
-          return mojom::EasyUnlockIconId::NONE;
-      }
-      return mojom::EasyUnlockIconId::NONE;
-    };
-    debug_user->easy_unlock_id = get_next_id(debug_user->easy_unlock_id);
-
-    // Enable/disable click to unlock.
-    debug_user->enable_click_to_unlock =
-        debug_user->easy_unlock_id == mojom::EasyUnlockIconId::UNLOCKED;
-
-    // Prepare icon that we will show.
-    auto icon = mojom::EasyUnlockIconOptions::New();
-    icon->icon = debug_user->easy_unlock_id;
-    if (icon->icon == mojom::EasyUnlockIconId::SPINNER) {
-      icon->aria_label = base::ASCIIToUTF16("Icon is spinning");
-    } else if (icon->icon == mojom::EasyUnlockIconId::LOCKED ||
-               icon->icon == mojom::EasyUnlockIconId::LOCKED_TO_BE_ACTIVATED) {
-      icon->autoshow_tooltip = true;
-      icon->tooltip = base::ASCIIToUTF16(
-          "This is a long message to trigger overflow. This should show up "
-          "automatically. icon_id=" +
-          std::to_string(static_cast<int>(icon->icon)));
-    } else {
-      icon->tooltip =
-          base::ASCIIToUTF16("This should not show up automatically.");
-    }
-
-    // Show icon and enable/disable click to unlock.
-    debug_dispatcher_.ShowEasyUnlockIcon(debug_user->account_id, icon);
-    debug_dispatcher_.SetClickToUnlockEnabledForUser(
-        debug_user->account_id, debug_user->enable_click_to_unlock);
-  }
-
   void ToggleLockScreenNoteButton() {
     if (lock_screen_note_state_ == mojom::TrayActionState::kAvailable) {
       lock_screen_note_state_ = mojom::TrayActionState::kNotAvailable;
@@ -199,25 +146,9 @@ class LockDebugView::DebugDataDispatcherTransformer
       }
     }
   }
-  void OnClickToUnlockEnabledForUserChanged(const AccountId& user,
-                                            bool enabled) override {
-    // Forward notification only if the user is currently being shown.
-    for (size_t i = 0u; i < debug_users_.size(); ++i) {
-      if (debug_users_[i].account_id == user) {
-        debug_users_[i].enable_click_to_unlock = enabled;
-        debug_dispatcher_.SetClickToUnlockEnabledForUser(user, enabled);
-        break;
-      }
-    }
-  }
   void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override {
     lock_screen_note_state_ = state;
     debug_dispatcher_.SetLockScreenNoteState(state);
-  }
-  void OnShowEasyUnlockIcon(
-      const AccountId& user,
-      const mojom::EasyUnlockIconOptionsPtr& icon) override {
-    debug_dispatcher_.ShowEasyUnlockIcon(user, icon);
   }
 
  private:
@@ -250,26 +181,29 @@ LockDebugView::LockDebugView(mojom::TrayActionState initial_note_action_state,
                                debug_data_dispatcher_->debug_dispatcher());
   AddChildView(lock_);
 
-  debug_row_ = new NonAccessibleView();
-  debug_row_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kHorizontal));
-  AddChildView(debug_row_);
+  debug_ = new NonAccessibleView();
+  debug_->SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
+  AddChildView(debug_);
 
-  per_user_action_column_ = new NonAccessibleView();
-  per_user_action_column_->SetLayoutManager(
+  toggle_blur_ = CreateButton(this, "Blur");
+  debug_->AddChildView(
+      login_layout_util::WrapViewForPreferredSize(toggle_blur_));
+
+  toggle_note_action_ = CreateButton(this, "Toggle note action");
+  debug_->AddChildView(
+      login_layout_util::WrapViewForPreferredSize(toggle_note_action_));
+
+  add_user_ = CreateButton(this, "Add");
+  debug_->AddChildView(login_layout_util::WrapViewForPreferredSize(add_user_));
+
+  remove_user_ = CreateButton(this, "Remove");
+  debug_->AddChildView(
+      login_layout_util::WrapViewForPreferredSize(remove_user_));
+
+  user_column_ = new NonAccessibleView();
+  user_column_->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical));
-  debug_row_->AddChildView(per_user_action_column_);
-
-  auto* margin = new NonAccessibleView();
-  margin->SetPreferredSize(gfx::Size(10, 10));
-  debug_row_->AddChildView(margin);
-
-  toggle_blur_ = AddButton("Blur");
-  toggle_note_action_ = AddButton("Toggle note action");
-  toggle_caps_lock_ = AddButton("Toggle caps lock");
-  add_user_ = AddButton("Add user");
-  remove_user_ = AddButton("Remove user");
-  toggle_auth_ = AddButton("Force fail auth");
+  debug_->AddChildView(user_column_);
 
   RebuildDebugUserColumn();
 }
@@ -279,8 +213,8 @@ LockDebugView::~LockDebugView() = default;
 void LockDebugView::Layout() {
   views::View::Layout();
   lock_->SetBoundsRect(GetLocalBounds());
-  debug_row_->SetPosition(gfx::Point());
-  debug_row_->SizeToPreferredSize();
+  debug_->SetPosition(gfx::Point());
+  debug_->SizeToPreferredSize();
 }
 
 void LockDebugView::ButtonPressed(views::Button* sender,
@@ -291,17 +225,8 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     return;
   }
 
-  // Enable or disable note action.
   if (sender == toggle_note_action_) {
     debug_data_dispatcher_->ToggleLockScreenNoteButton();
-    return;
-  }
-
-  // Enable or disable caps lock.
-  if (sender == toggle_caps_lock_) {
-    chromeos::input_method::ImeKeyboard* keyboard =
-        chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
-    keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
     return;
   }
 
@@ -319,66 +244,22 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     return;
   }
 
-  // Enable/disable auth. This is useful for testing auth failure scenarios on
-  // Linux Desktop builds, where the cryptohome dbus stub accepts all passwords
-  // as valid.
-  if (sender == toggle_auth_) {
-    force_fail_auth_ = !force_fail_auth_;
-    toggle_auth_->SetText(base::ASCIIToUTF16(
-        force_fail_auth_ ? "Allow auth" : "Force fail auth"));
-    Shell::Get()
-        ->lock_screen_controller()
-        ->set_force_fail_auth_for_debug_overlay(force_fail_auth_);
-    return;
-  }
-
   // Enable or disable PIN.
-  for (size_t i = 0u; i < per_user_action_column_toggle_pin_.size(); ++i) {
-    if (per_user_action_column_toggle_pin_[i] == sender)
+  for (size_t i = 0u; i < user_column_entries_toggle_pin_.size(); ++i) {
+    if (user_column_entries_toggle_pin_[i] == sender)
       debug_data_dispatcher_->TogglePinStateForUserIndex(i);
-  }
-
-  // Cycle easy unlock.
-  for (size_t i = 0u;
-       i < per_user_action_column_cycle_easy_unlock_state_.size(); ++i) {
-    if (per_user_action_column_cycle_easy_unlock_state_[i] == sender)
-      debug_data_dispatcher_->CycleEasyUnlockForUserIndex(i);
   }
 }
 
 void LockDebugView::RebuildDebugUserColumn() {
-  per_user_action_column_->RemoveAllChildViews(true /*delete_children*/);
-  per_user_action_column_toggle_pin_.clear();
-  per_user_action_column_cycle_easy_unlock_state_.clear();
+  user_column_->RemoveAllChildViews(true /*delete_children*/);
+  user_column_entries_toggle_pin_.clear();
 
   for (size_t i = 0u; i < num_users_; ++i) {
-    auto* row = new NonAccessibleView();
-    row->SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
-
-    views::View* toggle_pin =
-        AddButton("Toggle PIN", false /*add_to_debug_row*/);
-    per_user_action_column_toggle_pin_.push_back(toggle_pin);
-    row->AddChildView(toggle_pin);
-
-    views::View* toggle_click_auth =
-        AddButton("Cycle easy unlock", false /*add_to_debug_row*/);
-    per_user_action_column_cycle_easy_unlock_state_.push_back(
-        toggle_click_auth);
-    row->AddChildView(toggle_click_auth);
-
-    per_user_action_column_->AddChildView(row);
+    views::View* toggle_pin = CreateButton(this, "Toggle PIN");
+    user_column_entries_toggle_pin_.push_back(toggle_pin);
+    user_column_->AddChildView(toggle_pin);
   }
-}
-
-views::MdTextButton* LockDebugView::AddButton(const std::string& text,
-                                              bool add_to_debug_row) {
-  // Creates a button with |text| that cannot be focused.
-  auto* button = views::MdTextButton::Create(this, base::ASCIIToUTF16(text));
-  button->SetFocusBehavior(views::View::FocusBehavior::NEVER);
-  if (add_to_debug_row)
-    debug_row_->AddChildView(
-        login_layout_util::WrapViewForPreferredSize(button));
-  return button;
 }
 
 }  // namespace ash

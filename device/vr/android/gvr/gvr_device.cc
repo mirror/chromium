@@ -87,6 +87,7 @@ mojom::VREyeParametersPtr CreateEyeParamater(
 }
 
 mojom::VRDisplayInfoPtr CreateVRDisplayInfo(gvr::GvrApi* gvr_api,
+                                            gfx::Size recommended_size,
                                             uint32_t device_id) {
   TRACE_EVENT0("input", "GvrDelegate::CreateVRDisplayInfo");
 
@@ -107,7 +108,6 @@ mojom::VRDisplayInfoPtr CreateVRDisplayInfo(gvr::GvrApi* gvr_api,
       gvr_api->CreateEmptyBufferViewportList();
   gvr_buffer_viewports.SetToRecommendedBufferViewports();
 
-  gfx::Size recommended_size = GetRecommendedWebVrSize(gvr_api);
   device->leftEye = CreateEyeParamater(gvr_api, GVR_LEFT_EYE,
                                        gvr_buffer_viewports, recommended_size);
   device->rightEye = CreateEyeParamater(gvr_api, GVR_RIGHT_EYE,
@@ -124,7 +124,7 @@ std::unique_ptr<GvrDevice> GvrDevice::Create() {
   return device;
 }
 
-GvrDevice::GvrDevice() : weak_ptr_factory_(this) {
+GvrDevice::GvrDevice() : VRDevice(), weak_ptr_factory_(this) {
   GetGvrDelegateProvider();
   JNIEnv* env = base::android::AttachCurrentThread();
   non_presenting_context_.Reset(
@@ -134,7 +134,8 @@ GvrDevice::GvrDevice() : weak_ptr_factory_(this) {
   jlong context = Java_NonPresentingGvrContext_getNativeGvrContext(
       env, non_presenting_context_);
   gvr_api_ = gvr::GvrApi::WrapNonOwned(reinterpret_cast<gvr_context*>(context));
-  SetVRDisplayInfo(CreateVRDisplayInfo(gvr_api_.get(), GetId()));
+  display_info_ = CreateVRDisplayInfo(
+      gvr_api_.get(), GetRecommendedWebVrSize(gvr_api_.get()), id());
 }
 
 GvrDevice::~GvrDevice() {
@@ -144,16 +145,18 @@ GvrDevice::~GvrDevice() {
   Java_NonPresentingGvrContext_shutdown(env, non_presenting_context_);
 }
 
+mojom::VRDisplayInfoPtr GvrDevice::GetVRDisplayInfo() {
+  return display_info_.Clone();
+}
+
 void GvrDevice::RequestPresent(
     VRDisplayImpl* display,
     mojom::VRSubmitFrameClientPtr submit_client,
     mojom::VRPresentationProviderRequest request,
     mojom::VRDisplayHost::RequestPresentCallback callback) {
   GvrDelegateProvider* delegate_provider = GetGvrDelegateProvider();
-  if (!delegate_provider) {
-    std::move(callback).Run(false);
-    return;
-  }
+  if (!delegate_provider)
+    return std::move(callback).Run(false);
 
   // RequestWebVRPresent is async as we may trigger a DON (Device ON) flow that
   // pauses Chrome.
@@ -181,20 +184,36 @@ void GvrDevice::ExitPresent() {
 }
 
 void GvrDevice::GetPose(
+    VRDisplayImpl* display,
     mojom::VRMagicWindowProvider::GetPoseCallback callback) {
-  if (in_browsing_mode_) {
+  GvrDelegateProvider* delegate_provider = GetGvrDelegateProvider();
+  if (!delegate_provider) {
     std::move(callback).Run(nullptr);
     return;
   }
-  std::move(callback).Run(
-      GvrDelegate::GetVRPosePtrWithNeckModel(gvr_api_.get(), nullptr));
+  delegate_provider->GetNextMagicWindowPose(gvr_api_.get(), display,
+                                            std::move(callback));
 }
 
-void GvrDevice::OnListeningForActivate(bool listening) {
+void GvrDevice::OnDisplayAdded(VRDisplayImpl* display) {
   GvrDelegateProvider* delegate_provider = GetGvrDelegateProvider();
   if (!delegate_provider)
     return;
-  delegate_provider->OnListeningForActivateChanged(listening);
+  delegate_provider->OnDisplayAdded(display);
+}
+
+void GvrDevice::OnDisplayRemoved(VRDisplayImpl* display) {
+  GvrDelegateProvider* delegate_provider = GetGvrDelegateProvider();
+  if (!delegate_provider)
+    return;
+  delegate_provider->OnDisplayRemoved(display);
+}
+
+void GvrDevice::OnListeningForActivateChanged(VRDisplayImpl* display) {
+  GvrDelegateProvider* delegate_provider = GetGvrDelegateProvider();
+  if (!delegate_provider)
+    return;
+  delegate_provider->OnListeningForActivateChanged(display);
 }
 
 void GvrDevice::PauseTracking() {
@@ -210,17 +229,14 @@ GvrDelegateProvider* GvrDevice::GetGvrDelegateProvider() {
   // try to get it, set the device ID.
   GvrDelegateProvider* delegate_provider = GvrDelegateProviderFactory::Create();
   if (delegate_provider)
-    delegate_provider->SetDeviceId(GetId());
+    delegate_provider->SetDeviceId(id());
   return delegate_provider;
 }
 
 void GvrDevice::OnDIPScaleChanged(JNIEnv* env, const JavaRef<jobject>& obj) {
-  SetVRDisplayInfo(CreateVRDisplayInfo(gvr_api_.get(), GetId()));
-}
-
-void GvrDevice::Activate(mojom::VRDisplayEventReason reason,
-                         base::Callback<void(bool)> on_handled) {
-  OnActivate(reason, std::move(on_handled));
+  display_info_ = CreateVRDisplayInfo(
+      gvr_api_.get(), GetRecommendedWebVrSize(gvr_api_.get()), id());
+  OnChanged();
 }
 
 }  // namespace device

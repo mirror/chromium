@@ -17,7 +17,7 @@ public:
 class HeapObject;
 
 class PartOther {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    ALLOW_ONLY_INLINE_ALLOCATION();
 public:
     void Trace(Visitor*);
 

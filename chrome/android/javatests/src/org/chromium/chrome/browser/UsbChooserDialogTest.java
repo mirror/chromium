@@ -66,6 +66,8 @@ public class UsbChooserDialogTest {
 
     private UsbChooserDialogWithFakeNatives mChooserDialog;
 
+    // ChromeActivityTestCaseBase:
+
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();

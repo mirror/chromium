@@ -111,6 +111,8 @@ class LayoutListMarker final : public LayoutBox {
 
   bool IsText() const { return !IsImage(); }
 
+  bool CanBeSelectionLeaf() const override { return true; }
+
   LayoutUnit GetWidthOfTextWithSuffix() const;
   void UpdateMargins();
   void UpdateContent();

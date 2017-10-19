@@ -253,6 +253,7 @@ class HomedirMethodsImpl : public HomedirMethods {
     std::vector<KeyDefinition> key_definitions;
     for (RepeatedPtrField<KeyData>::const_iterator it = key_data.begin();
          it != key_data.end(); ++it) {
+
       // Extract |type|, |label| and |revision|.
       DCHECK_EQ(KeyData::KEY_TYPE_PASSWORD, it->type());
       key_definitions.push_back(KeyDefinition(std::string() /* secret */,
@@ -373,8 +374,9 @@ class HomedirMethodsImpl : public HomedirMethods {
     callback.Run(true, MOUNT_ERROR_NONE);
   }
 
-  void OnDBusResultCallback(const DBusResultCallback& callback, bool result) {
-    callback.Run(result);
+  void OnDBusResultCallback(const DBusResultCallback& callback,
+                            chromeos::DBusMethodCallStatus call_status) {
+    callback.Run(call_status == chromeos::DBUS_METHOD_CALL_SUCCESS);
   }
 
   base::WeakPtrFactory<HomedirMethodsImpl> weak_ptr_factory_;

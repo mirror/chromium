@@ -12,7 +12,6 @@
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_details.h"
 #include "components/payments/core/payment_instrument.h"
-#include "components/payments/core/payment_item.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payment_shipping_option.h"
 #include "components/strings/grit/components_strings.h"
@@ -42,10 +41,6 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 // -dealloc this weak reference is expected to be nil.
 @property(nonatomic, weak) PaymentRequestCoordinator* weakSelf;
 
-// Updates the current total amount and asks the view controller to update the
-// Payment Summary item so that the changes in total amount are reflected.
-- (void)updatePaymentSummaryItem;
-
 @end
 
 @implementation PaymentRequestCoordinator {
@@ -70,9 +65,6 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
   // The selected shipping address, pending approval from the page.
   autofill::AutofillProfile* _pendingShippingAddress;
 
-  // The current total amount. Used to keep track of changes to total amount.
-  std::unique_ptr<payments::PaymentItem> _currentTotal;
-
   // Timer used to update the Payment Summary item.
   NSTimer* _updatePaymentSummaryItemTimer;
 }
@@ -91,10 +83,6 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 
 - (void)start {
   _weakSelf = self;
-
-  _currentTotal =
-      std::make_unique<payments::PaymentItem>(self.paymentRequest->GetTotal(
-          self.paymentRequest->selected_payment_method()));
 
   _mediator =
       [[PaymentRequestMediator alloc] initWithPaymentRequest:_paymentRequest];
@@ -185,9 +173,28 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 }
 
 - (void)updatePaymentDetails:(payments::PaymentDetails)paymentDetails {
+  [_updatePaymentSummaryItemTimer invalidate];
+
+  DCHECK(_paymentRequest->payment_details().total);
+  BOOL totalValueChanged =
+      (paymentDetails.total &&
+       *_paymentRequest->payment_details().total != *paymentDetails.total);
+  [_mediator setTotalValueChanged:totalValueChanged];
+
   _paymentRequest->UpdatePaymentDetails(paymentDetails);
 
-  [self updatePaymentSummaryItem];
+  [_viewController updatePaymentSummaryItem];
+
+  if (totalValueChanged) {
+    // If the total value changed, update the Payment Summary item after a
+    // certain time interval in order to clear the 'Updated' label on the item.
+    _updatePaymentSummaryItemTimer = [NSTimer
+        scheduledTimerWithTimeInterval:kUpdatePaymentSummaryItemIntervalSeconds
+                                target:_viewController
+                              selector:@selector(updatePaymentSummaryItem)
+                              userInfo:nil
+                               repeats:NO];
+  }
 
   // If there are no available shipping options, reset the previously selected
   // shipping address. Otherwise, if a shipping address had been selected, set
@@ -253,9 +260,7 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 - (void)paymentRequestViewControllerDidSelectPaymentSummaryItem:
     (PaymentRequestViewController*)controller {
   // Return if there are no display items.
-  if (_paymentRequest
-          ->GetDisplayItems(_paymentRequest->selected_payment_method())
-          .empty())
+  if (_paymentRequest->payment_details().display_items.empty())
     return;
 
   _itemsDisplayCoordinator = [[PaymentItemsDisplayCoordinator alloc]
@@ -464,8 +469,6 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
   _paymentRequest->set_selected_payment_method(paymentMethod);
   [_viewController updatePaymentMethodSection];
 
-  [self updatePaymentSummaryItem];
-
   [_methodSelectionCoordinator stop];
   _methodSelectionCoordinator = nil;
 }
@@ -486,8 +489,6 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
   _paymentRequest->set_selected_payment_method(paymentMethod);
   [_viewController updatePaymentMethodSection];
 
-  [self updatePaymentSummaryItem];
-
   [_creditCardEditCoordinator stop];
   _creditCardEditCoordinator = nil;
 }
@@ -496,31 +497,6 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
     (CreditCardEditCoordinator*)coordinator {
   [_creditCardEditCoordinator stop];
   _creditCardEditCoordinator = nil;
-}
-
-#pragma mark - Helper methods
-
-- (void)updatePaymentSummaryItem {
-  const payments::PaymentItem total =
-      _paymentRequest->GetTotal(_paymentRequest->selected_payment_method());
-  DCHECK(_currentTotal);
-  BOOL totalValueChanged = (*_currentTotal != total);
-  _currentTotal.reset(new payments::PaymentItem(total));
-
-  [_mediator setTotalValueChanged:totalValueChanged];
-  [_viewController updatePaymentSummaryItem];
-
-  [_updatePaymentSummaryItemTimer invalidate];
-  if (totalValueChanged) {
-    // If the total value changed, update the Payment Summary item after a
-    // certain time interval in order to clear the 'Updated' label on the item.
-    _updatePaymentSummaryItemTimer = [NSTimer
-        scheduledTimerWithTimeInterval:kUpdatePaymentSummaryItemIntervalSeconds
-                                target:_viewController
-                              selector:@selector(updatePaymentSummaryItem)
-                              userInfo:nil
-                               repeats:NO];
-  }
 }
 
 @end

@@ -5,11 +5,12 @@
         <td></td>
     </tr>
 </table>
+<div id="results"></div>
 <script src="../../resources/testharness.js"></script>
 <script src="../../resources/testharnessreport.js"></script>
 <script src="../../resources/check-layout-th.js"></script>
 <script>
     document.body.offsetTop;
     document.getElementById("table").style.height = "100px";
-    checkLayout('#table');
+    checkLayout('#table', results);
 </script>

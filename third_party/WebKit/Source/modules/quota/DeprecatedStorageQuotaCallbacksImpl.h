@@ -56,7 +56,7 @@ class MODULES_EXPORT DeprecatedStorageQuotaCallbacksImpl final
   }
 
   ~DeprecatedStorageQuotaCallbacksImpl() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void DidQueryStorageUsageAndQuota(unsigned long long usage_in_bytes,
                                     unsigned long long quota_in_bytes) override;

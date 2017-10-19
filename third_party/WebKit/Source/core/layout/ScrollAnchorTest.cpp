@@ -21,12 +21,14 @@ typedef bool TestParamRootLayerScrolling;
 class ScrollAnchorTest
     : public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
       private ScopedRootLayerScrollingForTest,
-      private ScopedScrollAnchoringForTest,
       public RenderingTest {
  public:
-  ScrollAnchorTest()
-      : ScopedRootLayerScrollingForTest(GetParam()),
-        ScopedScrollAnchoringForTest(true) {}
+  ScrollAnchorTest() : ScopedRootLayerScrollingForTest(GetParam()) {
+    RuntimeEnabledFeatures::SetScrollAnchoringEnabled(true);
+  }
+  ~ScrollAnchorTest() {
+    RuntimeEnabledFeatures::SetScrollAnchoringEnabled(false);
+  }
 
  protected:
   void Update() {
@@ -68,9 +70,6 @@ class ScrollAnchorTest
       scrolling_element->setScrollTop(scrolling_element->scrollTop() +
                                       delta.Height());
   }
-
- private:
-  std::unique_ptr<ScopedScrollAnchoringForTest> scroll_anchoring_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, ScrollAnchorTest, ::testing::Bool());

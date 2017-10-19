@@ -4,7 +4,6 @@
 
 #include "base/command_line.h"
 #include "base/run_loop.h"
-#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
@@ -111,15 +110,7 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
                                                ExerciseAcceleratedJpegDecoding,
                                                UseMojoService>> {
  public:
-  VideoCaptureBrowserTest() {
-    params_ = TestParams(GetParam());
-    if (params_.use_mojo_service) {
-      scoped_feature_list_.InitAndEnableFeature(
-          video_capture::kMojoVideoCapture);
-    }
-  }
-
-  ~VideoCaptureBrowserTest() override {}
+  VideoCaptureBrowserTest() { params_ = TestParams(GetParam()); }
 
   void SetUpAndStartCaptureDeviceOnIOThread(base::Closure continuation) {
     video_capture_manager_ = media_stream_manager_->video_capture_manager();
@@ -167,6 +158,10 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
       base::CommandLine::ForCurrentProcess()->AppendSwitch(
           switches::kDisableAcceleratedMjpegDecode);
     }
+    if (params_.use_mojo_service) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kEnableFeatures, video_capture::kMojoVideoCapture.name);
+    }
   }
 
   // This cannot be part of an override of SetUp(), because at the time when
@@ -209,8 +204,6 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
   }
 
  protected:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   TestParams params_;
   MediaStreamManager* media_stream_manager_ = nullptr;
   VideoCaptureManager* video_capture_manager_ = nullptr;
@@ -219,9 +212,6 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
   MockMediaStreamProviderListener mock_stream_provider_listener_;
   MockVideoCaptureControllerEventHandler mock_controller_event_handler_;
   base::WeakPtr<VideoCaptureController> controller_;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(VideoCaptureBrowserTest);
 };
 
 IN_PROC_BROWSER_TEST_P(VideoCaptureBrowserTest, StartAndImmediatelyStop) {

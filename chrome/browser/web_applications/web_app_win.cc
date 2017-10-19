@@ -52,8 +52,7 @@ void GetImageCheckSum(const gfx::ImageFamily& image, base::MD5Digest* digest) {
     SkBitmap bitmap = it->AsBitmap();
 
     base::StringPiece image_data(
-        reinterpret_cast<const char*>(bitmap.getPixels()),
-        bitmap.computeByteSize());
+        reinterpret_cast<const char*>(bitmap.getPixels()), bitmap.getSize());
     base::MD5Update(&md5_context, image_data);
   }
 

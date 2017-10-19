@@ -222,7 +222,7 @@ class ComboboxTest : public ViewsTestBase {
     combobox_->SizeToPreferredSize();
 
     event_generator_ =
-        std::make_unique<ui::test::EventGenerator>(widget_->GetNativeWindow());
+        base::MakeUnique<ui::test::EventGenerator>(widget_->GetNativeWindow());
     event_generator_->set_target(ui::test::EventGenerator::Target::WINDOW);
   }
 

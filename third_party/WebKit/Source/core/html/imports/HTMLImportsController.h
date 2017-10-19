@@ -70,7 +70,7 @@ class HTMLImportsController final
   HTMLImportLoader* LoaderAt(size_t i) const { return loaders_[i]; }
   HTMLImportLoader* LoaderFor(const Document&) const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void Dispose();
 

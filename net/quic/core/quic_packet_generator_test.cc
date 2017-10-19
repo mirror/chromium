@@ -107,11 +107,13 @@ class TestPacketGenerator : public QuicPacketGenerator {
   TestPacketGenerator(QuicConnectionId connection_id,
                       QuicFramer* framer,
                       QuicRandom* random_generator,
+                      QuicBufferAllocator* buffer_allocator,
                       DelegateInterface* delegate,
                       SimpleDataProducer* producer)
       : QuicPacketGenerator(connection_id,
                             framer,
                             random_generator,
+                            buffer_allocator,
                             delegate),
         producer_(producer) {}
 
@@ -121,9 +123,13 @@ class TestPacketGenerator : public QuicPacketGenerator {
       QuicStreamOffset offset,
       bool fin,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
-    // Save data before data is consumed.
-    if (iov.total_length > 0) {
-      producer_->SaveStreamData(id, iov, 0, offset, iov.total_length);
+    if (QuicPacketCreatorPeer::framer(
+            QuicPacketGeneratorPeer::GetPacketCreator(this))
+            ->HasDataProducer()) {
+      // Save data before data is consumed.
+      if (iov.total_length > 0) {
+        producer_->SaveStreamData(id, iov, 0, offset, iov.total_length);
+      }
     }
     return QuicPacketGenerator::ConsumeDataFastPath(id, iov, offset, fin, 0,
                                                     ack_listener);
@@ -135,9 +141,13 @@ class TestPacketGenerator : public QuicPacketGenerator {
       QuicStreamOffset offset,
       StreamSendingState state,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
-    // Save data before data is consumed.
-    if (iov.total_length > 0) {
-      producer_->SaveStreamData(id, iov, 0, offset, iov.total_length);
+    if (QuicPacketCreatorPeer::framer(
+            QuicPacketGeneratorPeer::GetPacketCreator(this))
+            ->HasDataProducer()) {
+      // Save data before data is consumed.
+      if (iov.total_length > 0) {
+        producer_->SaveStreamData(id, iov, 0, offset, iov.total_length);
+      }
     }
     return QuicPacketGenerator::ConsumeData(id, iov, offset, state,
                                             std::move(ack_listener));
@@ -155,6 +165,7 @@ class QuicPacketGeneratorTest : public QuicTest {
         generator_(42,
                    &framer_,
                    &random_generator_,
+                   &buffer_allocator_,
                    &delegate_,
                    &producer_),
         creator_(QuicPacketGeneratorPeer::GetPacketCreator(&generator_)) {
@@ -263,6 +274,7 @@ class QuicPacketGeneratorTest : public QuicTest {
 
   QuicFramer framer_;
   MockRandom random_generator_;
+  SimpleBufferAllocator buffer_allocator_;
   StrictMock<MockDelegate> delegate_;
   TestPacketGenerator generator_;
   QuicPacketCreator* creator_;

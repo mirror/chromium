@@ -62,6 +62,7 @@ class CORE_EXPORT Keyframe : public RefCounted<Keyframe> {
     return the_clone;
   }
 
+  virtual bool IsAnimatableValueKeyframe() const { return false; }
   virtual bool IsStringKeyframe() const { return false; }
   virtual bool IsTransitionKeyframe() const { return false; }
 

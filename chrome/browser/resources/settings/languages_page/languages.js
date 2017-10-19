@@ -23,7 +23,6 @@ var kLanguageCodeToTranslateCode = {
   'zh-HK': 'zh-TW',
   'zh-MO': 'zh-TW',
   'zh-SG': 'zh-CN',
-  'zh': 'zh-CH',
 };
 
 // Some ISO 639 language codes have been renamed, e.g. "he" to "iw", but
@@ -295,8 +294,6 @@ Polymer({
           this.languages.prospectiveUILanguage) {
         continue;
       }
-      // This conversion primarily strips away the region part.
-      // For example "fr-CA" --> "fr".
       var translateCode = this.convertLanguageCodeForTranslate(
           this.languages.enabled[i].language.code);
       this.set(
@@ -545,6 +542,7 @@ Polymer({
       return;
 
     this.languageSettingsPrivate_.enableLanguage(languageCode);
+    this.disableTranslateLanguage(languageCode);
   },
 
   /**
@@ -575,6 +573,7 @@ Polymer({
 
     // Remove the language from preferred languages.
     this.languageSettingsPrivate_.disableLanguage(languageCode);
+    this.enableTranslateLanguage(languageCode);
   },
 
   /**
@@ -669,8 +668,8 @@ Polymer({
    * @param {string} languageCode
    */
   enableTranslateLanguage: function(languageCode) {
-    this.languageSettingsPrivate_.setEnableTranslationForLanguage(
-        languageCode, true);
+    languageCode = this.convertLanguageCodeForTranslate(languageCode);
+    this.deletePrefListItem('translate_blocked_languages', languageCode);
   },
 
   /**
@@ -679,8 +678,9 @@ Polymer({
    * @param {string} languageCode
    */
   disableTranslateLanguage: function(languageCode) {
-    this.languageSettingsPrivate_.setEnableTranslationForLanguage(
-        languageCode, false);
+    this.appendPrefListItem(
+        'translate_blocked_languages',
+        this.convertLanguageCodeForTranslate(languageCode));
   },
 
   /**

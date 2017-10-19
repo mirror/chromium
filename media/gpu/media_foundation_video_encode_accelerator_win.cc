@@ -25,6 +25,7 @@
 #include "media/base/win/mf_initializer.h"
 #include "third_party/libyuv/include/libyuv.h"
 
+using base::win::ScopedComPtr;
 using media::mf::MediaBufferScopedPointer;
 
 namespace media {
@@ -48,24 +49,6 @@ constexpr const wchar_t* const kMediaFoundationVideoEncoderDLLs[] = {
 
 // Resolutions that some platforms support, should be listed in ascending order.
 constexpr const gfx::Size kOptionalMaxResolutions[] = {gfx::Size(3840, 2176)};
-
-eAVEncH264VProfile GetH264VProfile(VideoCodecProfile profile) {
-  switch (profile) {
-    case H264PROFILE_BASELINE:
-      return eAVEncH264VProfile_Base;
-    case H264PROFILE_MAIN:
-      return eAVEncH264VProfile_Main;
-    case H264PROFILE_HIGH: {
-      // eAVEncH264VProfile_High requires Windows 8.
-      if (base::win::GetVersion() < base::win::VERSION_WIN8) {
-        return eAVEncH264VProfile_unknown;
-      }
-      return eAVEncH264VProfile_High;
-    }
-    default:
-      return eAVEncH264VProfile_unknown;
-  }
-}
 
 }  // namespace
 
@@ -126,7 +109,7 @@ MediaFoundationVideoEncodeAccelerator::GetSupportedProfiles() {
   frame_rate_ = kMaxFrameRateNumerator / kMaxFrameRateDenominator;
   input_visible_size_ = gfx::Size(kMaxResolutionWidth, kMaxResolutionHeight);
   if (!CreateHardwareEncoderMFT() || !SetEncoderModes() ||
-      !InitializeInputOutputSamples(H264PROFILE_BASELINE)) {
+      !InitializeInputOutputSamples()) {
     ReleaseEncoderResources();
     DVLOG(1)
         << "Hardware encode acceleration is not available on this platform.";
@@ -150,13 +133,6 @@ MediaFoundationVideoEncodeAccelerator::GetSupportedProfiles() {
   profile.max_framerate_denominator = kMaxFrameRateDenominator;
   profile.max_resolution = highest_supported_resolution;
   profiles.push_back(profile);
-
-  profile.profile = H264PROFILE_MAIN;
-  profiles.push_back(profile);
-
-  profile.profile = H264PROFILE_HIGH;
-  profiles.push_back(profile);
-
   return profiles;
 }
 
@@ -178,7 +154,7 @@ bool MediaFoundationVideoEncodeAccelerator::Initialize(
     return false;
   }
 
-  if (GetH264VProfile(output_profile) == eAVEncH264VProfile_unknown) {
+  if (H264PROFILE_BASELINE != output_profile) {
     DLOG(ERROR) << "Output profile not supported= " << output_profile;
     return false;
   }
@@ -221,7 +197,7 @@ bool MediaFoundationVideoEncodeAccelerator::Initialize(
     return false;
   }
 
-  if (!InitializeInputOutputSamples(output_profile)) {
+  if (!InitializeInputOutputSamples()) {
     DLOG(ERROR) << "Failed initializing input-output samples.";
     return false;
   }
@@ -398,8 +374,7 @@ bool MediaFoundationVideoEncodeAccelerator::CreateHardwareEncoderMFT() {
   return true;
 }
 
-bool MediaFoundationVideoEncodeAccelerator::InitializeInputOutputSamples(
-    VideoCodecProfile output_profile) {
+bool MediaFoundationVideoEncodeAccelerator::InitializeInputOutputSamples() {
   DCHECK(main_client_task_runner_->BelongsToCurrentThread());
 
   DWORD input_count = 0;
@@ -447,7 +422,7 @@ bool MediaFoundationVideoEncodeAccelerator::InitializeInputOutputSamples(
                                          MFVideoInterlace_Progressive);
   RETURN_ON_HR_FAILURE(hr, "Couldn't set interlace mode", false);
   hr = imf_output_media_type_->SetUINT32(MF_MT_MPEG2_PROFILE,
-                                         GetH264VProfile(output_profile));
+                                         eAVEncH264VProfile_Base);
   RETURN_ON_HR_FAILURE(hr, "Couldn't set codec profile", false);
   hr = encoder_->SetOutputType(output_stream_id_, imf_output_media_type_.Get(),
                                0);
@@ -537,7 +512,7 @@ void MediaFoundationVideoEncodeAccelerator::EncodeTask(
   DVLOG(3) << __func__;
   DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
 
-  Microsoft::WRL::ComPtr<IMFMediaBuffer> input_buffer;
+  base::win::ScopedComPtr<IMFMediaBuffer> input_buffer;
   input_sample_->GetBufferByIndex(0, input_buffer.GetAddressOf());
 
   {
@@ -625,7 +600,7 @@ void MediaFoundationVideoEncodeAccelerator::ProcessOutput() {
   RETURN_ON_HR_FAILURE(hr, "Couldn't get encoded data", );
   DVLOG(3) << "Got encoded data " << hr;
 
-  Microsoft::WRL::ComPtr<IMFMediaBuffer> output_buffer;
+  base::win::ScopedComPtr<IMFMediaBuffer> output_buffer;
   hr = output_sample_->GetBufferByIndex(0, output_buffer.GetAddressOf());
   RETURN_ON_HR_FAILURE(hr, "Couldn't get buffer by index", );
   DWORD size = 0;

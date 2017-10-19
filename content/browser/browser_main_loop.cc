@@ -58,7 +58,6 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
-#include "content/browser/compositor/gpu_process_transport_factory.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
 #include "content/browser/download/download_resource_handler.h"
@@ -126,7 +125,6 @@
 #include "sql/sql_memory_dump_provider.h"
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "ui/base/clipboard/clipboard.h"
-#include "ui/display/display_switches.h"
 #include "ui/gfx/switches.h"
 
 #if defined(USE_AURA) || defined(OS_MACOSX)
@@ -172,7 +170,6 @@
 #include "content/common/sandbox_win.h"
 #include "net/base/winsock_init.h"
 #include "ui/base/l10n/l10n_util_win.h"
-#include "ui/display/win/screen_win.h"
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -214,7 +211,7 @@
 #include "content/browser/plugin_service_impl.h"
 #endif
 
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+#if BUILDFLAG(ENABLE_MOJO_CDM) && BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "content/browser/media/cdm_registry_impl.h"
 #endif
 
@@ -521,48 +518,6 @@ class GpuDataManagerVisualProxy : public GpuDataManagerObserver {
 };
 
 }  // namespace internal
-#endif
-
-#if defined(OS_WIN)
-namespace {
-
-// Provides a bridge whereby display::win::ScreenWin can ask the GPU process
-// about the HDR status of the system.
-class HDRProxy {
- public:
-  static void Initialize() {
-    display::win::ScreenWin::SetRequestHDRStatusCallback(
-        base::Bind(&HDRProxy::RequestHDRStatus));
-  }
-
-  static void RequestHDRStatus() {
-    // The request must be sent to the GPU process from the IO thread.
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::Bind(&HDRProxy::RequestOnIOThread));
-  }
-
- private:
-  static void RequestOnIOThread() {
-    auto* gpu_process_host =
-        GpuProcessHost::Get(GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, false);
-    if (gpu_process_host) {
-      gpu_process_host->RequestHDRStatus(
-          base::Bind(&HDRProxy::GotResultOnIOThread));
-    } else {
-      bool hdr_enabled = false;
-      GotResultOnIOThread(hdr_enabled);
-    }
-  }
-  static void GotResultOnIOThread(bool hdr_enabled) {
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::Bind(&HDRProxy::GotResult, hdr_enabled));
-  }
-  static void GotResult(bool hdr_enabled) {
-    display::win::ScreenWin::SetHDREnabled(hdr_enabled);
-  }
-};
-
-}  // namespace
 #endif
 
 // The currently-running BrowserMainLoop.  There can be one or zero.
@@ -876,7 +831,7 @@ int BrowserMainLoop::PreCreateThreads() {
   }
 #endif
 
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+#if BUILDFLAG(ENABLE_MOJO_CDM) && BUILDFLAG(ENABLE_LIBRARY_CDMS)
   // Prior to any processing happening on the IO thread, we create the
   // CDM service as it is predominantly used from the IO thread. This must
   // be called on the main thread since it involves file path checks.
@@ -1481,29 +1436,39 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       is_mus) {
     established_gpu_channel = always_uses_gpu = false;
   }
+  gpu::GpuChannelEstablishFactory* factory =
+      GetContentClient()->browser()->GetGpuChannelEstablishFactory();
+  if (!factory) {
+    BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
+    factory = BrowserGpuChannelHostFactory::instance();
+  }
+#if !defined(OS_ANDROID)
   if (!is_mus) {
-    host_frame_sink_manager_ = base::MakeUnique<viz::HostFrameSinkManager>();
-
-    // TODO(crbug.com/676384): Remove flag along with surface sequences.
+    // TODO(kylechar): Remove flag along with surface sequences.
+    // See https://crbug.com/676384.
     auto surface_lifetime_type =
-        parsed_command_line_.HasSwitch(switches::kDisableSurfaceReferences)
+        base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kDisableSurfaceReferences)
             ? viz::SurfaceManager::LifetimeType::SEQUENCES
             : viz::SurfaceManager::LifetimeType::REFERENCES;
     frame_sink_manager_impl_ =
         std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
 
+    host_frame_sink_manager_ = base::MakeUnique<viz::HostFrameSinkManager>();
+
     // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
     // Gpu process, instead get the mojo pointer from the Gpu process.
     surface_utils::ConnectWithLocalFrameSinkManager(
         host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
-
-    // Initialize GpuChannelHostFactory and ImageTransportFactory.
-    BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    ImageTransportFactory::SetFactory(
-        std::make_unique<GpuProcessTransportFactory>(
-            BrowserGpuChannelHostFactory::instance(), GetResizeTaskRunner()));
   }
+#endif
 
+  DCHECK(factory);
+  if (!is_mus) {
+    ImageTransportFactory::Initialize(GetResizeTaskRunner());
+    ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
+        factory);
+  }
 #if defined(USE_AURA)
   if (env_->mode() == aura::Env::Mode::LOCAL) {
     env_->set_context_factory(GetContextFactory());
@@ -1529,8 +1494,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   }
 
 #if defined(OS_WIN)
-  if (base::FeatureList::IsEnabled(features::kHighDynamicRange))
-    HDRProxy::Initialize();
   system_message_window_.reset(new media::SystemMessageWindowWin);
 #elif defined(OS_LINUX) && defined(USE_UDEV)
   device_monitor_linux_.reset(

@@ -21,16 +21,7 @@ class FakeBackgroundFetchDelegate : public BackgroundFetchDelegate {
  public:
   FakeBackgroundFetchDelegate() {}
 
-  // BackgroundFetchDelegate implementation:
-  void CreateDownloadJob(
-      const std::string& job_unique_id,
-      const std::string& title,
-      const url::Origin& origin,
-      int completed_parts,
-      int total_parts,
-      const std::vector<std::string>& current_guids) override {}
-  void DownloadUrl(const std::string& job_unique_id,
-                   const std::string& guid,
+  void DownloadUrl(const std::string& guid,
                    const std::string& method,
                    const GURL& url,
                    const net::NetworkTrafficAnnotationTag& traffic_annotation,
@@ -70,14 +61,9 @@ class FakeController : public BackgroundFetchDelegateProxy::Controller {
     request_started_ = true;
   }
 
-  void DidUpdateRequest(
-      const scoped_refptr<BackgroundFetchRequestInfo>& request,
-      const std::string& download_guid,
-      uint64_t bytes_downloaded) override {}
-
+  // Called when the given |request| has been completed.
   void DidCompleteRequest(
-      const scoped_refptr<BackgroundFetchRequestInfo>& request,
-      const std::string& download_guid) override {
+      const scoped_refptr<BackgroundFetchRequestInfo>& request) override {
     request_completed_ = true;
   }
 
@@ -110,8 +96,7 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest) {
   EXPECT_FALSE(controller.request_started_);
   EXPECT_FALSE(controller.request_completed_);
 
-  delegate_proxy_.StartRequest("jobid1",
-                               controller.weak_ptr_factory_.GetWeakPtr(),
+  delegate_proxy_.StartRequest(controller.weak_ptr_factory_.GetWeakPtr(),
                                url::Origin(), request);
   base::RunLoop().RunUntilIdle();
 
@@ -129,8 +114,7 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest_NotCompleted) {
   EXPECT_FALSE(controller.request_completed_);
 
   delegate_.set_complete_downloads(false);
-  delegate_proxy_.StartRequest("jobid1",
-                               controller.weak_ptr_factory_.GetWeakPtr(),
+  delegate_proxy_.StartRequest(controller.weak_ptr_factory_.GetWeakPtr(),
                                url::Origin(), request);
   base::RunLoop().RunUntilIdle();
 

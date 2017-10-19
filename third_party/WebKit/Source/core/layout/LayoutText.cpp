@@ -45,11 +45,8 @@
 #include "core/layout/line/EllipsisBox.h"
 #include "core/layout/line/GlyphOverflow.h"
 #include "core/layout/line/InlineTextBox.h"
-#include "core/layout/ng/inline/ng_inline_node.h"
-#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "platform/fonts/CharacterRange.h"
 #include "platform/geometry/FloatQuad.h"
-#include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/text/BidiResolver.h"
 #include "platform/text/Character.h"
@@ -245,7 +242,7 @@ void LayoutText::RemoveAndDestroyTextBoxes() {
 
 void LayoutText::WillBeDestroyed() {
   if (SecureTextTimer* secure_text_timer =
-          g_secure_text_timers ? g_secure_text_timers->Take(this) : nullptr)
+          g_secure_text_timers ? g_secure_text_timers->Take(this) : 0)
     delete secure_text_timer;
 
   RemoveAndDestroyTextBoxes();
@@ -1105,7 +1102,7 @@ void LayoutText::ComputePreferredLogicalWidths(
   TextDirection text_direction = style_to_use.Direction();
   if ((Is8Bit() && text_direction == TextDirection::kLtr) ||
       IsOverride(style_to_use.GetUnicodeBidi())) {
-    run = nullptr;
+    run = 0;
   } else {
     TextRun text_run(GetText());
     BidiStatus status(text_direction, false);
@@ -1611,7 +1608,7 @@ void LayoutText::SecureText(UChar mask) {
   int last_typed_character_offset_to_reveal = -1;
   UChar revealed_text;
   SecureTextTimer* secure_text_timer =
-      g_secure_text_timers ? g_secure_text_timers->at(this) : nullptr;
+      g_secure_text_timers ? g_secure_text_timers->at(this) : 0;
   if (secure_text_timer && secure_text_timer->IsActive()) {
     last_typed_character_offset_to_reveal =
         secure_text_timer->LastTypedCharacterOffset();
@@ -1852,12 +1849,6 @@ LayoutRect LayoutText::VisualOverflowRect() const {
 }
 
 LayoutRect LayoutText::LocalVisualRectIgnoringVisibility() const {
-  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
-    NGPhysicalOffsetRect visual_rect;
-    if (LayoutNGBlockFlow::LocalVisualRectFor(this, &visual_rect))
-      return visual_rect.ToLayoutRect();
-  }
-
   return UnionRect(VisualOverflowRect(), LocalSelectionRect());
 }
 
@@ -1907,32 +1898,7 @@ LayoutRect LayoutText::LocalSelectionRect() const {
   return rect;
 }
 
-bool LayoutText::ShouldUseNGAlternatives() const {
-  // LayoutNG alternatives rely on |TextLength()| property, which is correct
-  // only when fragment painting is enabled.
-  return RuntimeEnabledFeatures::LayoutNGEnabled() &&
-         RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled() &&
-         EnclosingNGBlockFlow();
-}
-
-const NGOffsetMappingResult& LayoutText::GetNGOffsetMapping() const {
-  DCHECK(EnclosingNGBlockFlow());
-  return NGInlineNode(EnclosingNGBlockFlow()).ComputeOffsetMappingIfNeeded();
-}
-
 int LayoutText::CaretMinOffset() const {
-  if (ShouldUseNGAlternatives()) {
-    // ::first-letter handling should be done by LayoutTextFragment override.
-    DCHECK(!IsTextFragment());
-    if (!GetNode())
-      return 0;
-    const unsigned candidate =
-        GetNGOffsetMapping().StartOfNextNonCollapsedCharacter(*GetNode(), 0);
-    // Align with the legacy behavior that 0 is returned if the entire node
-    // contains only collapsed whitespaces.
-    return candidate == TextLength() ? 0 : candidate;
-  }
-
   InlineTextBox* box = FirstTextBox();
   if (!box)
     return 0;
@@ -1943,19 +1909,6 @@ int LayoutText::CaretMinOffset() const {
 }
 
 int LayoutText::CaretMaxOffset() const {
-  if (ShouldUseNGAlternatives()) {
-    // ::first-letter handling should be done by LayoutTextFragment override.
-    DCHECK(!IsTextFragment());
-    if (!GetNode())
-      return TextLength();
-    const unsigned candidate =
-        GetNGOffsetMapping().EndOfLastNonCollapsedCharacter(*GetNode(),
-                                                            TextLength());
-    // Align with the legacy behavior that |TextLength()| is returned if the
-    // entire node contains only collapsed whitespaces.
-    return candidate == 0u ? TextLength() : candidate;
-  }
-
   InlineTextBox* box = LastTextBox();
   if (!LastTextBox())
     return TextLength();
@@ -1967,44 +1920,10 @@ int LayoutText::CaretMaxOffset() const {
 }
 
 unsigned LayoutText::ResolvedTextLength() const {
-  if (ShouldUseNGAlternatives()) {
-    // ::first-letter handling should be done by LayoutTextFragment override.
-    DCHECK(!IsTextFragment());
-    if (!GetNode())
-      return 0;
-    const NGOffsetMappingResult& mapping = GetNGOffsetMapping();
-    const unsigned start = mapping.GetTextContentOffset(*GetNode(), 0);
-    const unsigned end = mapping.GetTextContentOffset(*GetNode(), TextLength());
-    DCHECK_LE(start, end);
-    return end - start;
-  }
-
   int len = 0;
   for (InlineTextBox* box : InlineTextBoxesOf(*this))
     len += box->Len();
   return len;
-}
-
-bool LayoutText::HasNonCollapsedText() const {
-  if (ShouldUseNGAlternatives())
-    return ResolvedTextLength();
-  return FirstTextBox();
-}
-
-bool LayoutText::ContainsCaretOffset(int text_offset) const {
-  // TODO(crbug.com/771398): Add LayoutNG alternative.
-  for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
-    if (text_offset < static_cast<int>(box->Start()) &&
-        !ContainsReversedText()) {
-      // The offset we're looking for is before this node
-      // this means the offset must be in content that is
-      // not laid out. Return false.
-      return false;
-    }
-    if (box->ContainsCaretOffset(text_offset))
-      return true;
-  }
-  return false;
 }
 
 void LayoutText::MomentarilyRevealLastTypedCharacter(

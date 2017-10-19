@@ -180,7 +180,6 @@ void DeriveCommandLine(const GURL& start_url,
     ash::switches::kAshTouchHud,
     ash::switches::kAuraLegacyPowerButton,
     ash::switches::kForceClamshellPowerButton,
-    ash::switches::kShowMdLogin,
     chromeos::switches::kDefaultWallpaperLarge,
     chromeos::switches::kDefaultWallpaperSmall,
     chromeos::switches::kGuestWallpaperLarge,
@@ -216,6 +215,7 @@ void DeriveCommandLine(const GURL& start_url,
     chromeos::switches::kHasChromeOSKeyboard,
     chromeos::switches::kLoginProfile,
     chromeos::switches::kNaturalScrollDefault,
+    chromeos::switches::kShowMdLogin,
     chromeos::switches::kShowNonMdLogin,
     chromeos::switches::kSystemInDevMode,
     policy::switches::kDeviceManagementUrl,
@@ -259,7 +259,7 @@ class ChromeRestartRequest
   void RestartJob();
 
   // Called when RestartJob D-Bus method call is complete.
-  void OnRestartJob(base::ScopedFD local_auth_fd, bool result);
+  void OnRestartJob(base::ScopedFD local_auth_fd, DBusMethodCallStatus status);
 
   const std::vector<std::string> argv_;
   base::OneShotTimer timer_;
@@ -316,7 +316,7 @@ void ChromeRestartRequest::RestartJob() {
 }
 
 void ChromeRestartRequest::OnRestartJob(base::ScopedFD local_auth_fd,
-                                        bool result) {
+                                        DBusMethodCallStatus status) {
   // Now that the call is complete, local_auth_fd can be closed and discarded,
   // which will happen automatically when it goes out of scope.
   VLOG(1) << "OnRestartJob";

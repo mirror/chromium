@@ -31,9 +31,6 @@ ASH_PUBLIC_EXPORT extern const char kAccessibilitySwitchAccessEnabled[];
 ASH_PUBLIC_EXPORT extern const char kShouldAlwaysShowAccessibilityMenu[];
 
 ASH_PUBLIC_EXPORT extern const char kHasSeenStylus[];
-ASH_PUBLIC_EXPORT extern const char kShownPaletteWelcomeBubble[];
-ASH_PUBLIC_EXPORT extern const char kEnableStylusTools[];
-ASH_PUBLIC_EXPORT extern const char kLaunchPaletteOnEjectEvent[];
 
 ASH_PUBLIC_EXPORT extern const char kNightLightEnabled[];
 ASH_PUBLIC_EXPORT extern const char kNightLightTemperature[];

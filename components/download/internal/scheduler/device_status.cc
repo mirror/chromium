@@ -25,10 +25,6 @@ bool DeviceStatus::operator==(const DeviceStatus& rhs) const {
          battery_status == rhs.battery_status;
 }
 
-bool DeviceStatus::operator!=(const DeviceStatus& rhs) const {
-  return !(*this == rhs);
-}
-
 DeviceStatus::Result DeviceStatus::MeetsCondition(
     const SchedulingParams& params) const {
   DeviceStatus::Result result;

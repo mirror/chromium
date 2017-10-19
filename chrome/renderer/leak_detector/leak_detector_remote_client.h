@@ -21,6 +21,9 @@ class LeakDetectorRemoteClient : public content::RenderThreadObserver,
       const std::vector<metrics::MemoryLeakReportProto>& reports) override;
 
  private:
+  // contents::RenderThreadObserver:
+  void OnRenderProcessShutdown() override;
+
   // Callback for remote function LeakDetectorRemote::GetParams().
   void OnParamsReceived(
       mojo::StructPtr<metrics::mojom::LeakDetectorParams> result);

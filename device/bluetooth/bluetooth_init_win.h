@@ -5,15 +5,12 @@
 #ifndef DEVICE_BLUETOOTH_BLUETOOTH_INIT_WIN_H_
 #define DEVICE_BLUETOOTH_BLUETOOTH_INIT_WIN_H_
 
-// windows.h needs to be included before bluetoothapis.h.
+// windows.h needs to be included before BluetoothAPIs.h.
 #include <windows.h>
 
-#include <bluetoothapis.h>
+#include <BluetoothAPIs.h>
 #include <delayimp.h>
-
-// ws2def.h needs to be included before ws2bth.h.
 #include <ws2def.h>
-
 #include <ws2bth.h>
 
 #include "device/bluetooth/bluetooth_export.h"

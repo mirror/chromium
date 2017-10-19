@@ -34,7 +34,7 @@ void ReportingObserver::disconnect() {
   ReportingContext::From(execution_context_)->UnregisterObserver(this);
 }
 
-void ReportingObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ReportingObserver) {
   visitor->Trace(execution_context_);
   visitor->Trace(callback_);
 }

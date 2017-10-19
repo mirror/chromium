@@ -83,16 +83,17 @@ const char kTopChromeMD[] = "top-chrome-md";
 // Material design mode for the |kTopChromeMD| switch.
 const char kTopChromeMDMaterial[] = "material";
 
-// Auto-switching mode |kTopChromeMD| switch. This mode toggles between
-// material and material-hybrid depending on device.
-const char kTopChromeMDMaterialAuto[] = "material-auto";
-
 // Material design hybrid mode for the |kTopChromeMD| switch. Targeted for
 // mouse/touch hybrid devices.
 const char kTopChromeMDMaterialHybrid[] = "material-hybrid";
 
 // Classic, non-material, mode for the |kTopChromeMD| switch.
 const char kTopChromeMDNonMaterial[] = "non-material";
+
+// Disable new window behavior for virtual keyboard (do not change work area in
+// non-sticky mode).
+const char kDisableNewVirtualKeyboardBehavior[] =
+    "disable-new-virtual-keyboard-behavior";
 
 // Applies the material design mode passed via --top-chrome-md to elements
 // throughout Chrome (not just top Chrome).

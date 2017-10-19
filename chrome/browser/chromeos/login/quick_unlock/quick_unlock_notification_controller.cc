@@ -10,6 +10,7 @@
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_storage.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_utils.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_navigator.h"
@@ -22,7 +23,6 @@
 #include "content/public/browser/notification_service.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/message_center/notification.h"
 
 namespace chromeos {
 namespace quick_unlock {
@@ -169,8 +169,7 @@ void QuickUnlockNotificationController::Observe(
     return;
   }
 
-  std::unique_ptr<message_center::Notification> notification =
-      CreateNotification();
+  std::unique_ptr<Notification> notification = CreateNotification();
   g_browser_process->notification_ui_manager()->Add(*notification, profile_);
 }
 
@@ -209,19 +208,19 @@ void QuickUnlockNotificationController::UnregisterObserver() {
   }
 }
 
-std::unique_ptr<message_center::Notification>
+std::unique_ptr<Notification>
 QuickUnlockNotificationController::CreateNotification() {
-  return std::make_unique<message_center::Notification>(
+  return base::MakeUnique<Notification>(
       message_center::NOTIFICATION_TYPE_SIMPLE, params_.notification_id,
       l10n_util::GetStringUTF16(params_.title_message_id),
       l10n_util::GetStringUTF16(params_.body_message_id),
       // TODO(http://crbug.com/291747): Change this to actual icon for
       // quick unlock feature notification.
       ui::ResourceBundle::GetSharedInstance().GetImageNamed(params_.icon_id),
-      l10n_util::GetStringUTF16(params_.feature_name_id), GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  params_.notifier),
-      message_center::RichNotificationData(), this);
+      l10n_util::GetStringUTF16(params_.feature_name_id), GURL(),
+      params_.notification_id, message_center::RichNotificationData(), this);
 }
 
 QuickUnlockNotificationController::NotificationParams::NotificationParams() {}

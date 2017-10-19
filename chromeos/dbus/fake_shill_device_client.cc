@@ -5,7 +5,6 @@
 #include "chromeos/dbus/fake_shill_device_client.h"
 
 #include <algorithm>
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -132,11 +131,11 @@ void FakeShillDeviceClient::ClearProperty(const dbus::ObjectPath& device_path,
   base::DictionaryValue* device_properties = NULL;
   if (!stub_devices_.GetDictionaryWithoutPathExpansion(device_path.value(),
                                                        &device_properties)) {
-    PostVoidCallback(std::move(callback), false);
+    PostVoidCallback(std::move(callback), DBUS_METHOD_CALL_FAILURE);
     return;
   }
   device_properties->RemoveWithoutPathExpansion(name, NULL);
-  PostVoidCallback(std::move(callback), true);
+  PostVoidCallback(std::move(callback), DBUS_METHOD_CALL_SUCCESS);
 }
 
 void FakeShillDeviceClient::RequirePin(const dbus::ObjectPath& device_path,
@@ -533,7 +532,7 @@ void FakeShillDeviceClient::SetSimLockStatus(const std::string& device_path,
           shill::kSIMLockStatusProperty, &simlock_dict)) {
     simlock_dict = device_properties->SetDictionaryWithoutPathExpansion(
         shill::kSIMLockStatusProperty,
-        std::make_unique<base::DictionaryValue>());
+        base::MakeUnique<base::DictionaryValue>());
   }
   simlock_dict->Clear();
   simlock_dict->SetKey(shill::kSIMLockTypeProperty, base::Value(status.type));
@@ -618,9 +617,9 @@ void FakeShillDeviceClient::PassStubDeviceProperties(
 
 // Posts a task to run a void callback with status code |status|.
 void FakeShillDeviceClient::PostVoidCallback(VoidDBusMethodCallback callback,
-                                             bool result) {
+                                             DBusMethodCallStatus status) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), result));
+      FROM_HERE, base::BindOnce(std::move(callback), status));
 }
 
 void FakeShillDeviceClient::NotifyObserversPropertyChanged(
@@ -648,7 +647,7 @@ base::DictionaryValue* FakeShillDeviceClient::GetDeviceProperties(
   if (!stub_devices_.GetDictionaryWithoutPathExpansion(
       device_path, &properties)) {
     properties = stub_devices_.SetDictionaryWithoutPathExpansion(
-        device_path, std::make_unique<base::DictionaryValue>());
+        device_path, base::MakeUnique<base::DictionaryValue>());
   }
   return properties;
 }

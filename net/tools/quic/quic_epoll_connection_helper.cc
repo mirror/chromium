@@ -29,13 +29,18 @@ QuicRandom* QuicEpollConnectionHelper::GetRandomGenerator() {
   return random_generator_;
 }
 
-QuicBufferAllocator* QuicEpollConnectionHelper::GetStreamSendBufferAllocator() {
+QuicBufferAllocator*
+QuicEpollConnectionHelper::GetStreamFrameBufferAllocator() {
   if (allocator_type_ == QuicAllocator::BUFFER_POOL) {
-    return &stream_buffer_allocator_;
+    return &buffer_allocator_;
   } else {
     DCHECK(allocator_type_ == QuicAllocator::SIMPLE);
     return &simple_buffer_allocator_;
   }
+}
+
+QuicBufferAllocator* QuicEpollConnectionHelper::GetStreamSendBufferAllocator() {
+  return GetStreamFrameBufferAllocator();
 }
 
 }  // namespace net

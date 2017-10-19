@@ -42,11 +42,6 @@ void ShowPasswordReuseModalWarningDialog(
     ChromePasswordProtectionService* service,
     OnWarningDone done_callback);
 
-// Called by ChromeContentBrowserClient to create a
-// PasswordProtectionNavigationThrottle if appropriate.
-std::unique_ptr<PasswordProtectionNavigationThrottle>
-MaybeCreateNavigationThrottle(content::NavigationHandle* navigation_handle);
-
 // ChromePasswordProtectionService extends PasswordProtectionService by adding
 // access to SafeBrowsingNaivigationObserverManager and Profile.
 class ChromePasswordProtectionService : public PasswordProtectionService {
@@ -112,6 +107,10 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   void MaybeFinishCollectingThreatDetails(content::WebContents* web_contents,
                                           bool did_proceed);
 
+  const std::map<Origin, int64_t>& unhandled_password_reuses() const {
+    return unhandled_password_reuses_;
+  }
+
   // Called when sync user's Gaia password changed.
   void OnGaiaPasswordChanged();
 
@@ -164,18 +163,6 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   // Gets change password URl based on |account_info_|.
   GURL GetChangePasswordURL();
 
-  void HandleUserActionOnModalWarning(
-      content::WebContents* web_contents,
-      PasswordProtectionService::WarningAction action);
-
-  void HandleUserActionOnPageInfo(
-      content::WebContents* web_contents,
-      PasswordProtectionService::WarningAction action);
-
-  void HandleUserActionOnSettings(
-      content::WebContents* web_contents,
-      PasswordProtectionService::WarningAction action);
-
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyUserPopulationForPasswordOnFocusPing);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
@@ -184,9 +171,6 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
                            VerifyPasswordReuseUserEventNotRecorded);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyPasswordReuseDetectedUserEventRecorded);
-  FRIEND_TEST_ALL_PREFIXES(
-      ChromePasswordProtectionServiceTest,
-      VerifyPasswordReuseLookupEventNotRecordedFeatureNotEnabled);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyPasswordReuseLookupUserEventRecorded);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
@@ -206,9 +190,6 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   // Returns whether the profile is valid and has safe browsing service enabled.
   bool IsSafeBrowsingEnabled();
 
-  std::unique_ptr<sync_pb::UserEventSpecifics>
-  GetUserEventSpecificsWithNavigationId(int64_t navigation_id);
-
   std::unique_ptr<sync_pb::UserEventSpecifics> GetUserEventSpecifics(
       content::WebContents* web_contents);
 
@@ -225,11 +206,6 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
           ReputationVerdict verdict,
       const std::string& verdict_token);
 
-  void LogPasswordReuseDialogInteraction(
-      int64_t navigation_id,
-      sync_pb::UserEventSpecifics::GaiaPasswordReuse::
-          PasswordReuseDialogInteraction::InteractionResult interaction_result);
-
   // Constructor used for tests only.
   ChromePasswordProtectionService(
       Profile* profile,
@@ -244,6 +220,10 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
       navigation_observer_manager_;
   base::ObserverList<Observer> observer_list_;
   std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
+  // The map of password reuse origin of top-level frame to navigation ID. These
+  // are password reuses that user hasn't chosen to change password, or
+  // mark site as legitimate yet.
+  std::map<Origin, int64_t> unhandled_password_reuses_;
   DISALLOW_COPY_AND_ASSIGN(ChromePasswordProtectionService);
 };
 

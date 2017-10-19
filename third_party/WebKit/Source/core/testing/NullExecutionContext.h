@@ -27,10 +27,6 @@ class NullExecutionContext
 
   void SetURL(const KURL& url) { url_ = url; }
 
-  const KURL& Url() const override { return url_; }
-  const KURL& BaseURL() const override { return url_; }
-  KURL CompleteURL(const String&) const override { return url_; }
-
   void DisableEval(const String&) override {}
   String UserAgent() const override { return String(); }
 
@@ -52,16 +48,18 @@ class NullExecutionContext
 
   void SetUpSecurityContext();
 
-  ResourceFetcher* Fetcher() const override { return nullptr; }
-
   using SecurityContext::GetSecurityOrigin;
   using SecurityContext::GetContentSecurityPolicy;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(queue_);
     SecurityContext::Trace(visitor);
     ExecutionContext::Trace(visitor);
   }
+
+ protected:
+  const KURL& VirtualURL() const override { return url_; }
+  KURL VirtualCompleteURL(const String&) const override { return url_; }
 
  private:
   bool tasks_need_suspension_;

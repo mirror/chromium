@@ -21,25 +21,25 @@ namespace extensions {
 
 namespace {
 
-void FinishTask(LazyContextTaskQueue::PendingTask task,
+void FinishTask(const LazyContextTaskQueue::PendingTask& task,
                 const ExtensionId& extension_id,
                 int process_id,
                 int thread_id) {
   auto params = std::make_unique<LazyContextTaskQueue::ContextInfo>(
       extension_id, content::RenderProcessHost::FromID(process_id), thread_id,
       GURL());
-  std::move(task).Run(std::move(params));
+  task.Run(std::move(params));
 }
 
-void DidStartActiveWorkerForPattern(LazyContextTaskQueue::PendingTask task,
-                                    const ExtensionId& extension_id,
-                                    int process_id,
-                                    int thread_id) {
+void DidStartActiveWorkerForPattern(
+    const LazyContextTaskQueue::PendingTask& task,
+    const ExtensionId& extension_id,
+    int process_id,
+    int thread_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(FinishTask, std::move(task), extension_id, process_id,
-                     thread_id));
+      base::Bind(FinishTask, task, extension_id, process_id, thread_id));
 }
 
 void DidStartActiveWorkerFail() {
@@ -51,11 +51,10 @@ void GetServiceWorkerInfoOnIO(
     const GURL& pattern,
     const ExtensionId& extension_id,
     content::ServiceWorkerContext* service_worker_context,
-    LazyContextTaskQueue::PendingTask task) {
+    const LazyContextTaskQueue::PendingTask& task) {
   service_worker_context->StartActiveWorkerForPattern(
       pattern,
-      base::BindOnce(&DidStartActiveWorkerForPattern, std::move(task),
-                     extension_id),
+      base::BindOnce(&DidStartActiveWorkerForPattern, task, extension_id),
       base::BindOnce(&DidStartActiveWorkerFail));
 }
 
@@ -82,7 +81,7 @@ bool ServiceWorkerTaskQueue::ShouldEnqueueTask(content::BrowserContext* context,
 
 void ServiceWorkerTaskQueue::AddPendingTaskToDispatchEvent(
     LazyContextId* context_id,
-    LazyContextTaskQueue::PendingTask task) {
+    const LazyContextTaskQueue::PendingTask& task) {
   DCHECK(context_id->is_for_service_worker());
   content::StoragePartition* partition =
       BrowserContext::GetStoragePartitionForSite(
@@ -92,9 +91,8 @@ void ServiceWorkerTaskQueue::AddPendingTaskToDispatchEvent(
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &GetServiceWorkerInfoOnIO, context_id->service_worker_scope(),
-          context_id->extension_id(), service_worker_context, std::move(task)));
+      base::Bind(&GetServiceWorkerInfoOnIO, context_id->service_worker_scope(),
+                 context_id->extension_id(), service_worker_context, task));
 }
 
 }  // namespace extensions

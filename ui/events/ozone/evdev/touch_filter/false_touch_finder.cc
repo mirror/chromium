@@ -21,14 +21,15 @@ FalseTouchFinder::FalseTouchFinder(
     gfx::Size touchscreen_size)
     : last_noise_time_(ui::EventTimeForNow()) {
   if (touch_noise_filtering) {
-    noise_filters_.push_back(std::make_unique<FarApartTapsTouchNoiseFilter>());
     noise_filters_.push_back(
-        std::make_unique<HorizontallyAlignedTouchNoiseFilter>());
+        base::MakeUnique<FarApartTapsTouchNoiseFilter>());
     noise_filters_.push_back(
-        std::make_unique<SinglePositionTouchNoiseFilter>());
+        base::MakeUnique<HorizontallyAlignedTouchNoiseFilter>());
+    noise_filters_.push_back(
+        base::MakeUnique<SinglePositionTouchNoiseFilter>());
   }
   if (edge_filtering) {
-    edge_touch_filter_ = std::make_unique<EdgeTouchFilter>(touchscreen_size);
+    edge_touch_filter_ = base::MakeUnique<EdgeTouchFilter>(touchscreen_size);
   }
 }
 

@@ -35,14 +35,10 @@ bool EqualSid(const Sid& sid, const wchar_t* sddl_sid) {
   return equal;
 }
 
-struct KnownCapabilityTestEntry {
-  WellKnownCapabilities capability;
-  const wchar_t* sddl_sid;
-};
-
-struct NamedCapabilityTestEntry {
-  const wchar_t* capability_name;
-  const wchar_t* sddl_sid;
+struct CapabilityTestEntry {
+  WellKnownCapabilities capability_;
+  const wchar_t* capability_name_;
+  const wchar_t* sddl_sid_;
 };
 
 }  // namespace
@@ -99,38 +95,22 @@ TEST(SidTest, GetPSID) {
   ASSERT_TRUE(EqualSid(Sid(::WinProxySid), ATL::Sids::Proxy()));
 }
 
-TEST(SidTest, KnownCapability) {
-  if (base::win::GetVersion() < base::win::VERSION_WIN8)
-    return;
+TEST(SidTest, AppContainer) {
+  const CapabilityTestEntry capabilities[] = {
+      {kInternetClient, L"internetClient", L"S-1-15-3-1"},
+      {kInternetClientServer, L"internetClientServer", L"S-1-15-3-2"},
+      {kRegistryRead, L"registryRead",
+       L"S-1-15-3-1024-1065365936-1281604716-3511738428-"
+       "1654721687-432734479-3232135806-4053264122-3456934681"},
+      {kLpacCryptoServices, L"lpacCryptoServices",
+       L"S-1-15-3-1024-3203351429-2120443784-2872670797-"
+       "1918958302-2829055647-4275794519-765664414-2751773334"},
+      {kEnterpriseAuthentication, L"enterpriseAuthentication", L"S-1-15-3-8"},
+      {kPrivateNetworkClientServer, L"privateNetworkClientServer",
+       L"S-1-15-3-3"}};
 
-  Sid sid_invalid_well_known =
-      Sid::FromKnownCapability(kMaxWellKnownCapability);
-  EXPECT_FALSE(sid_invalid_well_known.IsValid());
-
-  const KnownCapabilityTestEntry capabilities[] = {
-      {kInternetClient, L"S-1-15-3-1"},
-      {kInternetClientServer, L"S-1-15-3-2"},
-      {kPrivateNetworkClientServer, L"S-1-15-3-3"},
-      {kPicturesLibrary, L"S-1-15-3-4"},
-      {kVideosLibrary, L"S-1-15-3-5"},
-      {kMusicLibrary, L"S-1-15-3-6"},
-      {kDocumentsLibrary, L"S-1-15-3-7"},
-      {kEnterpriseAuthentication, L"S-1-15-3-8"},
-      {kSharedUserCertificates, L"S-1-15-3-9"},
-      {kRemovableStorage, L"S-1-15-3-10"},
-      {kAppointments, L"S-1-15-3-11"},
-      {kContacts, L"S-1-15-3-12"},
-  };
-
-  for (auto capability : capabilities) {
-    EXPECT_TRUE(EqualSid(Sid::FromKnownCapability(capability.capability),
-                         capability.sddl_sid))
-        << "Known Capability: " << capability.sddl_sid;
-  }
-}
-
-TEST(SidTest, NamedCapability) {
-  if (base::win::GetVersion() < base::win::VERSION_WIN10)
+  // No support for AppContainer less than Win10 RS2.
+  if (base::win::GetVersion() < base::win::VERSION_WIN10_RS2)
     return;
 
   Sid sid_nullptr = Sid::FromNamedCapability(nullptr);
@@ -139,46 +119,19 @@ TEST(SidTest, NamedCapability) {
   Sid sid_empty = Sid::FromNamedCapability(L"");
   EXPECT_FALSE(sid_empty.IsValid());
 
-  const NamedCapabilityTestEntry capabilities[] = {
-      {L"internetClient", L"S-1-15-3-1"},
-      {L"internetClientServer", L"S-1-15-3-2"},
-      {L"registryRead",
-       L"S-1-15-3-1024-1065365936-1281604716-3511738428-"
-       "1654721687-432734479-3232135806-4053264122-3456934681"},
-      {L"lpacCryptoServices",
-       L"S-1-15-3-1024-3203351429-2120443784-2872670797-"
-       "1918958302-2829055647-4275794519-765664414-2751773334"},
-      {L"enterpriseAuthentication", L"S-1-15-3-8"},
-      {L"privateNetworkClientServer", L"S-1-15-3-3"}};
+  WellKnownCapabilities invalid_well_known =
+      static_cast<WellKnownCapabilities>(kMaxWellKnownCapability + 1);
+  Sid sid_invalid_well_known = Sid::FromKnownCapability(invalid_well_known);
+  EXPECT_FALSE(sid_invalid_well_known.IsValid());
 
   for (auto capability : capabilities) {
-    EXPECT_TRUE(EqualSid(Sid::FromNamedCapability(capability.capability_name),
-                         capability.sddl_sid))
-        << "Named Capability: " << capability.sddl_sid;
+    EXPECT_TRUE(EqualSid(Sid::FromNamedCapability(capability.capability_name_),
+                         capability.sddl_sid_))
+        << "Named Capability: " << capability.sddl_sid_;
+    EXPECT_TRUE(EqualSid(Sid::FromKnownCapability(capability.capability_),
+                         capability.sddl_sid_))
+        << "Known Capability: " << capability.sddl_sid_;
   }
-}
-
-TEST(SidTest, Sddl) {
-  Sid sid_sddl = Sid::FromSddlString(L"S-1-1-0");
-  ASSERT_TRUE(sid_sddl.IsValid());
-  base::string16 sddl_str;
-  ASSERT_TRUE(sid_sddl.ToSddlString(&sddl_str));
-  ASSERT_EQ(L"S-1-1-0", sddl_str);
-}
-
-TEST(SidTest, SubAuthorities) {
-  DWORD world_subauthorities[] = {0};
-  SID_IDENTIFIER_AUTHORITY world_authority = {SECURITY_WORLD_SID_AUTHORITY};
-  Sid sid_world =
-      Sid::FromSubAuthorities(&world_authority, 1, world_subauthorities);
-  ASSERT_TRUE(EqualSid(sid_world, ATL::Sids::World()));
-  ASSERT_TRUE(Sid::FromSubAuthorities(&world_authority, 0, nullptr).IsValid());
-
-  DWORD admin_subauthorities[] = {32, 544};
-  SID_IDENTIFIER_AUTHORITY nt_authority = {SECURITY_NT_AUTHORITY};
-  Sid sid_admin =
-      Sid::FromSubAuthorities(&nt_authority, 2, admin_subauthorities);
-  ASSERT_TRUE(EqualSid(sid_admin, ATL::Sids::Admins()));
 }
 
 }  // namespace sandbox

@@ -20,15 +20,15 @@ namespace blink {
 
 OffscreenCanvasResourceProvider::OffscreenCanvasResourceProvider(int width,
                                                                  int height)
-    : width_(width), height_(height), next_resource_id_(0u) {}
+    : width_(width), height_(height), next_resource_id_(1u) {}
 
 OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() {}
 
 std::unique_ptr<OffscreenCanvasResourceProvider::FrameResource>
 OffscreenCanvasResourceProvider::CreateOrRecycleFrameResource() {
-  if (recyclable_resource_) {
-    recyclable_resource_->spare_lock_ = true;
-    return std::move(recyclable_resource_);
+  if (recycleable_resource_) {
+    recycleable_resource_->spare_lock_ = true;
+    return std::move(recycleable_resource_);
   }
   return std::unique_ptr<FrameResource>(new FrameResource());
 }
@@ -125,7 +125,7 @@ void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedGPUContext(
     GLenum format =
         (kN32_SkColorType == kRGBA_8888_SkColorType) ? GL_RGBA : GL_BGRA_EXT;
     gl->TexImage2D(GL_TEXTURE_2D, 0, format, width_, height_, 0, format,
-                   GL_UNSIGNED_BYTE, nullptr);
+                   GL_UNSIGNED_BYTE, 0);
     gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -212,9 +212,9 @@ void OffscreenCanvasResourceProvider::ReclaimResourceInternal(
     it->value->spare_lock_ = false;
   } else {
     // Really reclaim the resources
-    recyclable_resource_ = std::move(it->value);
-    // release SkImage immediately since it is not recyclable
-    recyclable_resource_->image_ = nullptr;
+    recycleable_resource_ = std::move(it->value);
+    // release SkImage immediately since it is not recycleable
+    recycleable_resource_->image_ = nullptr;
     resources_.erase(it);
   }
 }

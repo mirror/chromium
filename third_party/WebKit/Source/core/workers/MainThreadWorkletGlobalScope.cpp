@@ -17,11 +17,12 @@ MainThreadWorkletGlobalScope::MainThreadWorkletGlobalScope(
     LocalFrame* frame,
     const KURL& url,
     const String& user_agent,
+    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy)
     : WorkletGlobalScope(url,
                          user_agent,
-                         frame->GetDocument()->GetSecurityOrigin(),
+                         std::move(security_origin),
                          isolate,
                          nullptr /* worker_clients */,
                          reporting_proxy),
@@ -52,7 +53,7 @@ CoreProbeSink* MainThreadWorkletGlobalScope::GetProbeSink() {
   return probe::ToCoreProbeSink(GetFrame());
 }
 
-void MainThreadWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MainThreadWorkletGlobalScope) {
   WorkletGlobalScope::Trace(visitor);
   ContextClient::Trace(visitor);
 }

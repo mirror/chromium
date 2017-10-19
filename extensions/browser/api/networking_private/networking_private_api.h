@@ -25,7 +25,6 @@ extern const char kErrorNotReady[];
 extern const char kErrorNotSupported[];
 extern const char kErrorPolicyControlled[];
 extern const char kErrorSimLocked[];
-extern const char kErrorUnconfiguredNetwork[];
 
 }  // namespace networking_private
 

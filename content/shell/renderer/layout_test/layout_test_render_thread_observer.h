@@ -31,6 +31,7 @@ class LayoutTestRenderThreadObserver : public RenderThreadObserver {
   ~LayoutTestRenderThreadObserver() override;
 
   // RenderThreadObserver implementation.
+  void OnRenderProcessShutdown() override;
   bool OnControlMessageReceived(const IPC::Message& message) override;
 
   test_runner::WebTestInterfaces* test_interfaces() const {

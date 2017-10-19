@@ -5,7 +5,6 @@
 #include "chrome/browser/chromeos/policy/device_local_account_policy_service.h"
 
 #include <algorithm>
-#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -25,6 +24,7 @@
 #include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/policy/device_local_account_policy_provider.h"
 #include "chrome/browser/chromeos/policy/fake_affiliated_invalidation_service_provider.h"
+#include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
@@ -43,7 +43,6 @@
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/core/common/schema_registry.h"
 #include "components/policy/policy_constants.h"
-#include "components/policy/proto/chrome_device_policy.pb.h"
 #include "components/policy/proto/cloud_policy.pb.h"
 #include "components/policy/proto/device_management_backend.pb.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -164,7 +163,7 @@ void DeviceLocalAccountPolicyServiceTestBase::TearDown() {
 
 void DeviceLocalAccountPolicyServiceTestBase::CreatePolicyService() {
   service_.reset(new DeviceLocalAccountPolicyService(
-      &session_manager_client_, &device_settings_service_, &cros_settings_,
+      &device_settings_test_helper_, &device_settings_service_, &cros_settings_,
       &affiliated_invalidation_service_provider_,
       base::ThreadTaskRunnerHandle::Get(), extension_cache_task_runner_,
       base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get(),
@@ -177,7 +176,7 @@ void DeviceLocalAccountPolicyServiceTestBase::
   device_local_account_policy_.policy_data().set_settings_entity_id(account_id);
   device_local_account_policy_.policy_data().set_username(account_id);
   device_local_account_policy_.Build();
-  session_manager_client_.set_device_local_account_policy(
+  device_settings_test_helper_.set_device_local_account_policy_blob(
       account_id, device_local_account_policy_.GetBlob());
 }
 
@@ -192,7 +191,7 @@ void DeviceLocalAccountPolicyServiceTestBase::AddDeviceLocalAccountToPolicy(
 
 void DeviceLocalAccountPolicyServiceTestBase::InstallDevicePolicy() {
   device_policy_.Build();
-  session_manager_client_.set_device_policy(device_policy_.GetBlob());
+  device_settings_test_helper_.set_policy_blob(device_policy_.GetBlob());
   ReloadDeviceSettings();
 }
 

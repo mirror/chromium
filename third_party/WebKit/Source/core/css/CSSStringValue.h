@@ -24,7 +24,7 @@ class CSSStringValue : public CSSValue {
     return string_ == other.string_;
   }
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSStringValue(const String&);

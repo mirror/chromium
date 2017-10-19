@@ -29,12 +29,12 @@ class DummyModulator : public Modulator {
  public:
   DummyModulator();
   virtual ~DummyModulator();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   ScriptModuleResolver* GetScriptModuleResolver() override;
   WebTaskRunner* TaskRunner() override;
   ReferrerPolicy GetReferrerPolicy() override;
-  SecurityOrigin* GetSecurityOriginForFetch() override;
+  SecurityOrigin* GetSecurityOrigin() override;
   ScriptState* GetScriptState() override;
 
   void FetchTree(const ModuleScriptFetchRequest&, ModuleTreeClient*) override;

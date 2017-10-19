@@ -48,8 +48,7 @@ ui::WindowShowState ShellNativeAppWindow::GetRestoredState() const {
 }
 
 void ShellNativeAppWindow::ShowInactive() {
-  // app_shell does not differentiate between active and inactive windows.
-  Show();
+  NOTIMPLEMENTED();
 }
 
 void ShellNativeAppWindow::Close() {

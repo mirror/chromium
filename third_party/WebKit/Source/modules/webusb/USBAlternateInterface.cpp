@@ -51,7 +51,7 @@ HeapVector<Member<USBEndpoint>> USBAlternateInterface::endpoints() const {
   return endpoints;
 }
 
-void USBAlternateInterface::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(USBAlternateInterface) {
   visitor->Trace(interface_);
 }
 

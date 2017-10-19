@@ -46,6 +46,7 @@ AnimationHost::AnimationHost(ThreadInstance thread_instance)
       thread_instance_(thread_instance),
       supports_scroll_animations_(false),
       needs_push_properties_(false),
+      mutator_needs_mutate_(false),
       mutator_(nullptr) {
   if (thread_instance_ == ThreadInstance::IMPL) {
     scroll_offset_animations_impl_ =
@@ -270,7 +271,7 @@ bool AnimationHost::NeedsTickAnimations() const {
 }
 
 bool AnimationHost::NeedsTickMutator() const {
-  return mutator_ && mutator_->HasAnimators();
+  return mutator_ && mutator_needs_mutate_;
 }
 
 bool AnimationHost::NeedsTickAnimationPlayers() const {
@@ -303,10 +304,12 @@ bool AnimationHost::TickAnimations(base::TimeTicks monotonic_time) {
   if (NeedsTickMutator()) {
     // TODO(majidvp): At the moment we call this for both active and pending
     // trees similar to other animations. However our final goal is to only call
-    // it once, ideally after activation, and only when the input
-    // to an active timeline has changed. http://crbug.com/767210
+    // it once, ideally after activation. http://crbug.com/767210
+    mutator_needs_mutate_ = false;
     mutator_->Mutate(monotonic_time, CollectAnimatorsState(monotonic_time));
-    did_animate = true;
+    // Calling mutate may update |mutator_needs_mutate_| so we have to take that
+    // into account again.
+    did_animate |= mutator_needs_mutate_;
   }
 
   return did_animate;
@@ -616,6 +619,10 @@ void AnimationHost::SetMutationUpdate(
 
     worklet_player_to_update->SetLocalTime(animation_state.local_time);
   }
+}
+
+void AnimationHost::SetNeedsMutate() {
+  mutator_needs_mutate_ = true;
 }
 
 }  // namespace cc

@@ -66,17 +66,16 @@ class GLHelperBenchmark : public testing::Test {
     attributes.bind_generates_resource = false;
     attributes.gpu_preference = gl::PreferDiscreteGpu;
 
-    context_ = gpu::GLInProcessContext::CreateWithoutInit();
-    auto result = context_->Initialize(nullptr,                 /* service */
-                                       nullptr,                 /* surface */
-                                       true,                    /* offscreen */
-                                       gpu::kNullSurfaceHandle, /* window */
-                                       nullptr, /* share_context */
-                                       attributes, gpu::SharedMemoryLimits(),
-                                       nullptr, /* gpu_memory_buffer_manager */
-                                       nullptr, /* image_factory */
-                                       base::ThreadTaskRunnerHandle::Get());
-    DCHECK_EQ(result, gpu::ContextResult::kSuccess);
+    context_.reset(
+        gpu::GLInProcessContext::Create(nullptr,                 /* service */
+                                        nullptr,                 /* surface */
+                                        true,                    /* offscreen */
+                                        gpu::kNullSurfaceHandle, /* window */
+                                        nullptr, /* share_context */
+                                        attributes, gpu::SharedMemoryLimits(),
+                                        nullptr, /* gpu_memory_buffer_manager */
+                                        nullptr, /* image_factory */
+                                        base::ThreadTaskRunnerHandle::Get()));
     gl_ = context_->GetImplementation();
     gpu::ContextSupport* support = context_->GetImplementation();
 
@@ -165,8 +164,7 @@ TEST_F(GLHelperBenchmark, ScaleBenchmark) {
                 false);
         // Scale once beforehand before we start measuring.
         const gfx::Rect output_rect(dst_size);
-        scaler->Scale(src_texture, src_size, gfx::Vector2dF(), dst_texture,
-                      output_rect);
+        scaler->Scale(src_texture, src_size, dst_texture, output_rect);
         gl_->Finish();
 
         base::TimeTicks start_time = base::TimeTicks::Now();
@@ -175,8 +173,7 @@ TEST_F(GLHelperBenchmark, ScaleBenchmark) {
         while (true) {
           for (int i = 0; i < 50; i++) {
             iterations++;
-            scaler->Scale(src_texture, src_size, gfx::Vector2dF(), dst_texture,
-                          output_rect);
+            scaler->Scale(src_texture, src_size, dst_texture, output_rect);
             gl_->Flush();
           }
           gl_->Finish();

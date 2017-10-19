@@ -47,7 +47,7 @@ class DatasetDOMStringMap final : public DOMStringMap {
                ExceptionState&) override;
   bool DeleteItem(const String& name) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit DatasetDOMStringMap(Element* element) : element_(element) {}

@@ -56,10 +56,11 @@ class GURL;
 
 // Called to ask CRWWebDelegate if |CRWWebController| should open the given URL.
 // CRWWebDelegate can intercept the request by returning NO and processing URL
-// in its own way.
+// in own way.
 - (BOOL)webController:(CRWWebController*)webController
         shouldOpenURL:(const GURL&)url
-      mainDocumentURL:(const GURL&)mainDocumentURL;
+      mainDocumentURL:(const GURL&)mainDocumentURL
+          linkClicked:(BOOL)linkClicked;
 
 // Called to ask if external URL should be opened. External URL is one that
 // cannot be presented by CRWWebController.

@@ -48,7 +48,7 @@ const AtomicString& WebGLContextEvent::InterfaceName() const {
   return EventNames::WebGLContextEvent;
 }
 
-void WebGLContextEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLContextEvent) {
   Event::Trace(visitor);
 }
 

@@ -54,7 +54,7 @@ class GCObservation final : public GarbageCollectedFinalized<GCObservation>,
   bool wasCollected() const { return collected_; }
   void SetWasCollected();
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit GCObservation(v8::Local<v8::Value>);

@@ -5,7 +5,6 @@
 #include "core/layout/ng/ng_layout_result.h"
 
 #include "core/layout/ng/ng_exclusion_space.h"
-#include "core/layout/ng/ng_positioned_float.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -13,8 +12,7 @@ namespace blink {
 
 NGLayoutResult::NGLayoutResult(
     RefPtr<NGPhysicalFragment> physical_fragment,
-    Vector<NGOutOfFlowPositionedDescendant>& oof_positioned_descendants,
-    Vector<NGPositionedFloat>& positioned_floats,
+    Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants,
     Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
     std::unique_ptr<const NGExclusionSpace> exclusion_space,
     const WTF::Optional<NGBfcOffset> bfc_offset,
@@ -27,9 +25,8 @@ NGLayoutResult::NGLayoutResult(
       end_margin_strut_(end_margin_strut),
       intrinsic_block_size_(intrinsic_block_size),
       status_(status) {
-  oof_positioned_descendants_.swap(oof_positioned_descendants);
-  positioned_floats_.swap(positioned_floats);
   unpositioned_floats_.swap(unpositioned_floats);
+  oof_positioned_descendants_.swap(oof_positioned_descendants);
 }
 
 // Keep the implementation of the destructor here, to avoid dependencies on
@@ -39,14 +36,13 @@ NGLayoutResult::~NGLayoutResult() {}
 RefPtr<NGLayoutResult> NGLayoutResult::CloneWithoutOffset() const {
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants(
       oof_positioned_descendants_);
-  Vector<NGPositionedFloat> positioned_floats(positioned_floats_);
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats(unpositioned_floats_);
   std::unique_ptr<const NGExclusionSpace> exclusion_space(
       WTF::WrapUnique(new NGExclusionSpace(*exclusion_space_)));
   return WTF::AdoptRef(new NGLayoutResult(
       physical_fragment_->CloneWithoutOffset(), oof_positioned_descendants,
-      positioned_floats, unpositioned_floats, std::move(exclusion_space),
-      bfc_offset_, end_margin_strut_, intrinsic_block_size_, Status()));
+      unpositioned_floats, std::move(exclusion_space), bfc_offset_,
+      end_margin_strut_, intrinsic_block_size_, Status()));
 }
 
 }  // namespace blink

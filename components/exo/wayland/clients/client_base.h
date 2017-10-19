@@ -24,6 +24,7 @@
 
 namespace base {
 class CommandLine;
+class MessageLoopForUI;
 }
 
 namespace exo {
@@ -108,6 +109,7 @@ class ClientBase {
   std::unique_ptr<wl_shell_surface> shell_surface_;
   Globals globals_;
 #if defined(USE_GBM)
+  std::unique_ptr<base::MessageLoopForUI> ui_loop_;
   base::ScopedFD drm_fd_;
   std::unique_ptr<gbm_device> device_;
 #endif

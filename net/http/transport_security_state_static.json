@@ -190,22 +190,22 @@
     {
       "name": "yahoo",
       "static_spki_hashes": [
-         "DigiCertAssuredIDRoot",
-         "DigiCertGlobalRoot",
-         "DigiCertGlobalRootG2",
-         "DigiCertGlobalRootG3",
-         "DigiCertTrustedRootG4",
-         "DigiCertEVRoot",
          "VeriSignClass2_G2",
          "VeriSignClass2_G3",
          "VeriSignClass3_G3",
          "VeriSignClass3_G4",
          "VeriSignClass3_G5",
          "VeriSignUniversal",
+         "GeoTrustGlobal",
+         "GeoTrustPrimary",
+         "GeoTrustPrimary_G2",
+         "GeoTrustPrimary_G3",
+         "GeoTrustUniversal",
+         "DigiCertGlobalRoot",
+         "DigiCertEVRoot",
          "YahooBackup1",
          "YahooBackup2"
-      ],
-      "report_uri": "http://csp.yahoo.com/beacon/csp?src=yahoocom-hpkp-report-only"
+      ]
     },
     {
       "name": "swehackCom",
@@ -232,15 +232,6 @@
         "COMODOECCCertificationAuthority"
       ],
       "report_uri": "https://log.ncsccs.com/report/hpkp"
-    },
-    {
-      "name": "tumblr",
-      "static_spki_hashes": [
-        "DigiCertEVRoot",
-        "DigiCertSHA2HighAssuranceServerCA",
-        "TumblrBackup"
-      ],
-      "report_uri": "https://cspreports.srvcs.tumblr.com/hpkp"
     }
   ],
 
@@ -340,7 +331,6 @@
     { "name": "google-analytics.com", "include_subdomains": true, "mode": "force-https", "pins": "google" },
     { "name": "stats.g.doubleclick.net", "include_subdomains": true, "mode": "force-https", "pins": "google" },
     { "name": "chromiumbugs.appspot.com", "include_subdomains": true, "mode": "force-https", "pins": "google" },
-    { "name": "youtube.com", "mode": "force-https", "include_subdomains": true, "pins": "google" },
 
     { "name": "webfilings.appspot.com", "include_subdomains": true, "mode": "force-https", "pins": "google" },
     { "name": "webfilings-eu.appspot.com", "include_subdomains": true, "mode": "force-https", "pins": "google" },
@@ -604,6 +594,7 @@
     { "name": "static.googleadsserving.cn", "include_subdomains": true, "pins": "google" },
     { "name": "urchin.com", "include_subdomains": true, "pins": "google" },
     { "name": "www.googlegroups.com", "include_subdomains": true, "pins": "google", "expect_ct": true, "expect_ct_report_uri": "https://clients3.google.com/ct_upload" },
+    { "name": "youtube.com", "include_subdomains": true, "pins": "google" },
     { "name": "youtu.be", "include_subdomains": true, "pins": "google" },
     { "name": "youtube-nocookie.com", "include_subdomains": true, "pins": "google" },
     { "name": "ytimg.com", "include_subdomains": true, "pins": "google" },
@@ -25982,6 +25973,7 @@
     { "name": "handymanlondonplease.co.uk", "include_subdomains": true, "mode": "force-https" },
     { "name": "hangtenseo.com", "include_subdomains": true, "mode": "force-https" },
     { "name": "hanksservice.com", "include_subdomains": true, "mode": "force-https" },
+    { "name": "hanover.edu", "include_subdomains": true, "mode": "force-https" },
     { "name": "happycarb.de", "include_subdomains": true, "mode": "force-https" },
     { "name": "happydoq.ch", "include_subdomains": true, "mode": "force-https" },
     { "name": "hapsfordmill.co.uk", "include_subdomains": true, "mode": "force-https" },
@@ -37927,52 +37919,6 @@
     { "name": "zutsu-raku.com", "include_subdomains": true, "mode": "force-https" },
     { "name": "zwy.ch", "include_subdomains": true, "mode": "force-https" },
     { "name": "zyciedlazwierzat.pl", "include_subdomains": true, "mode": "force-https" },
-    { "name": "188522.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "arai21.net", "include_subdomains": true, "mode": "force-https" },
-    { "name": "arto.bg", "include_subdomains": true, "mode": "force-https" },
-    { "name": "arvutiladu.ee", "include_subdomains": true, "mode": "force-https" },
-    { "name": "awf0.xyz", "include_subdomains": true, "mode": "force-https" },
-    { "name": "axel-fischer.science", "include_subdomains": true, "mode": "force-https" },
-    { "name": "byiu.info", "include_subdomains": true, "mode": "force-https" },
-    { "name": "cal.goip.de", "include_subdomains": true, "mode": "force-https" },
-    { "name": "clintonplasticsurgery.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "cloudberlin.goip.de", "include_subdomains": true, "mode": "force-https" },
-    { "name": "comw.cc", "include_subdomains": true, "mode": "force-https" },
-    { "name": "dantransports.fr", "include_subdomains": true, "mode": "force-https" },
-    { "name": "extreme-players.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "fejes.house", "include_subdomains": true, "mode": "force-https" },
-    { "name": "freifunk-burgaltendorf.de", "include_subdomains": true, "mode": "force-https" },
-    { "name": "fukushimacoffee.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "fysesbjerg.dk", "include_subdomains": true, "mode": "force-https" },
-    { "name": "hcstr.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "huislaw.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "imcsx.co", "include_subdomains": true, "mode": "force-https" },
-    { "name": "juchheim-methode.de", "include_subdomains": true, "mode": "force-https" },
-    { "name": "junqueiropolis.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "kalender.goip.de", "include_subdomains": true, "mode": "force-https" },
-    { "name": "kinepolis-studio.be", "include_subdomains": true, "mode": "force-https" },
-    { "name": "kry.no", "include_subdomains": true, "mode": "force-https" },
-    { "name": "kry.se", "include_subdomains": true, "mode": "force-https" },
-    { "name": "linan.blog", "include_subdomains": true, "mode": "force-https" },
-    { "name": "maeplasticsurgery.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "moonchart.co.uk", "include_subdomains": true, "mode": "force-https" },
-    { "name": "nautiljon.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "openmirrors.cf", "include_subdomains": true, "mode": "force-https" },
-    { "name": "plexhome13.ddns.net", "include_subdomains": true, "mode": "force-https" },
-    { "name": "pro-netz.de", "include_subdomains": true, "mode": "force-https" },
-    { "name": "schmidtplasticsurgery.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "ssnet.vip", "include_subdomains": true, "mode": "force-https" },
-    { "name": "tetsai.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "thederminstitute.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "twinkieman.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "twisted-brains.org", "include_subdomains": true, "mode": "force-https" },
-    { "name": "unblocked.pro", "include_subdomains": true, "mode": "force-https" },
-    { "name": "upd.jp", "include_subdomains": true, "mode": "force-https" },
-    { "name": "uscp8.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "vida.es", "include_subdomains": true, "mode": "force-https" },
-    { "name": "viepixel.at", "include_subdomains": true, "mode": "force-https" },
-    { "name": "wochennummern.de", "include_subdomains": true, "mode": "force-https" },
-    { "name": "wplatin.com", "include_subdomains": true, "mode": "force-https" },
     // END OF BULK ENTRIES
 
     // Manual additions and changes in Chrome 51 or later that do not belong in a
@@ -38033,23 +37979,9 @@
     { "name": "patrick.dark.name", "include_subdomains": true, "mode": "force-https" },
     { "name": "techmasters.andover.edu", "include_subdomains": true, "mode": "force-https" },
     { "name": "simpletax.ca", "include_subdomains": true, "mode": "force-https" },
-    {
-      "name": "scotthelme.co.uk",
-      "mode": "force-https", "include_subdomains": true,
-      "expect_staple": true, "include_subdomains_for_expect_staple": true,
-      "expect_staple_report_uri": "https://scotthelme.report-uri.io/r/default/staple/reportOnly",
-      "expect_ct": true,
-      "expect_ct_report_uri": "https://scotthelme.report-uri.io/r/default/ct/reportOnly"
-    },
+    { "name": "scotthelme.co.uk", "include_subdomains": true, "mode": "force-https", "expect_staple": true, "expect_staple_report_uri": "https://scotthelme.report-uri.io/r/default/staple/reportOnly", "include_subdomains_for_expect_staple": true, "expect_ct": true, "expect_ct_report_uri": "https://scotthelme.report-uri.io/r/default/ct/reportOnly", "include_subdomains_for_expect_ct": true },
     { "name": "hstspreload.appspot.com", "include_subdomains": true, "mode": "force-https" },
-    {
-      "name": "matteomarescotti.it",
-      "mode": "force-https", "include_subdomains": true,
-      "expect_staple": true, "include_subdomains_for_expect_staple": true,
-      "expect_staple_report_uri": "https://matteomarescotti.report-uri.io/r/default/staple/reportOnly",
-      "expect_ct": true,
-      "expect_ct_report_uri": "https://matteomarescotti.report-uri.io/r/default/ct/reportOnly"
-    },
+    { "name": "matteomarescotti.it", "include_subdomains": true, "mode": "force-https", "expect_staple": true, "expect_staple_report_uri": "https://matteomarescotti.report-uri.io/r/default/staple/reportOnly", "include_subdomains_for_expect_staple": true },
     { "name": "www.cnet.com", "include_subdomains": true, "mode": "force-https" },
     {
       "name": "alessandroz.pro",
@@ -38129,11 +38061,6 @@
     { "name": "mitm-software.badssl.com", "include_subdomains": true, "mode": "force-https" },
     { "name": "hyatt.com", "mode": "force-https" },
     { "name": "www.hyatt.com", "include_subdomains": true, "mode": "force-https" },
-    {
-      "name": "www.tumblr.com",
-      "mode": "force-https", "include_subdomains": false,
-      "include_subdomains_for_pinning": true, "pins": "tumblr"
-    },
     // END OF MANUAL ENTRIES
 
     // TODO(lgarron): hstspreload.org can't scan IPv6-only sites due to Google

@@ -113,8 +113,7 @@ void SyncServiceBase::InitializeEngine() {
     sync_thread_ = std::make_unique<base::Thread>("Chrome_SyncThread");
     base::Thread::Options options;
     options.timer_slack = base::TIMER_SLACK_MAXIMUM;
-    bool success = sync_thread_->StartWithOptions(options);
-    DCHECK(success);
+    CHECK(sync_thread_->StartWithOptions(options));
   }
 
   SyncEngine::InitParams params;

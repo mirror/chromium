@@ -104,9 +104,9 @@ void BrowserInstantController::OnSearchEngineBaseURLChanged(
     if (!contents)
       continue;
 
-    // Send the new NTP URL to the renderer.
+    // Send new search URLs to the renderer.
     content::RenderProcessHost* rph = contents->GetMainFrame()->GetProcess();
-    instant_service->SendNewTabPageURLToRenderer(rph);
+    instant_service->SendSearchURLsToRenderer(rph);
 
     if (!instant_service->IsInstantProcess(rph->GetID()))
       continue;

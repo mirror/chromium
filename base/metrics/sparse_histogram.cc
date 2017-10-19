@@ -62,6 +62,10 @@ HistogramBase* SparseHistogram::FactoryGet(const std::string& name,
       allocator->FinalizeHistogram(histogram_ref,
                                    histogram == tentative_histogram_ptr);
     }
+
+    ReportHistogramActivity(*histogram, HISTOGRAM_CREATED);
+  } else {
+    ReportHistogramActivity(*histogram, HISTOGRAM_LOOKUP);
   }
 
   CHECK_EQ(SPARSE_HISTOGRAM, histogram->GetHistogramType());

@@ -43,7 +43,7 @@ class InsertParagraphSeparatorCommand final : public CompositeEditCommand {
         paste_blockquote_into_unquoted_area);
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   InsertParagraphSeparatorCommand(Document&,

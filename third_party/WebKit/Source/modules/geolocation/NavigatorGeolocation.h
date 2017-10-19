@@ -41,7 +41,7 @@ class NavigatorGeolocation final
   static Geolocation* geolocation(Navigator&);
   Geolocation* geolocation();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:

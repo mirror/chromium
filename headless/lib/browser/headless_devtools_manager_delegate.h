@@ -13,8 +13,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/values.h"
 #include "content/public/browser/devtools_manager_delegate.h"
-#include "headless/lib/browser/headless_network_conditions.h"
-#include "headless/public/headless_browser_context.h"
 #include "printing/features/features.h"
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
@@ -87,11 +85,6 @@ class HeadlessDevToolsManagerDelegate
       int session_id,
       int command_id,
       const base::DictionaryValue* params);
-  std::unique_ptr<base::DictionaryValue> Close(
-      content::DevToolsAgentHost* agent_host,
-      int session_id,
-      int command_id,
-      const base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> SetWindowBounds(
       content::DevToolsAgentHost* agent_host,
       int session_id,
@@ -117,10 +110,6 @@ class HeadlessDevToolsManagerDelegate
       int session_id,
       int command_id,
       const base::DictionaryValue* params);
-
-  void SetNetworkConditions(
-      std::vector<HeadlessBrowserContext*> browser_contexts,
-      HeadlessNetworkConditions conditions);
 
   void PrintToPDF(content::DevToolsAgentHost* agent_host,
                   int session_id,

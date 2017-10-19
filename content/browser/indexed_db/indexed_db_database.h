@@ -27,7 +27,6 @@
 #include "content/browser/indexed_db/indexed_db_pending_connection.h"
 #include "content/browser/indexed_db/indexed_db_transaction_coordinator.h"
 #include "content/browser/indexed_db/list_set.h"
-#include "content/common/content_export.h"
 #include "content/common/indexed_db/indexed_db_metadata.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBTypes.h"
 
@@ -43,7 +42,6 @@ class IndexedDBFactory;
 class IndexedDBKey;
 class IndexedDBKeyPath;
 class IndexedDBKeyRange;
-class IndexedDBMetadataCoding;
 class IndexedDBTransaction;
 struct IndexedDBValue;
 
@@ -60,7 +58,6 @@ class CONTENT_EXPORT IndexedDBDatabase
       const base::string16& name,
       scoped_refptr<IndexedDBBackingStore> backing_store,
       scoped_refptr<IndexedDBFactory> factory,
-      std::unique_ptr<IndexedDBMetadataCoding> metadata_coding,
       const Identifier& unique_identifier);
 
   const Identifier& identifier() const { return identifier_; }
@@ -70,13 +67,17 @@ class CONTENT_EXPORT IndexedDBDatabase
   const base::string16& name() const { return metadata_.name; }
   const url::Origin& origin() const { return identifier_.first; }
 
-  void AddObjectStore(IndexedDBObjectStoreMetadata metadata,
+  void AddObjectStore(const IndexedDBObjectStoreMetadata& metadata,
                       int64_t new_max_object_store_id);
-  IndexedDBObjectStoreMetadata RemoveObjectStore(int64_t object_store_id);
+  void RemoveObjectStore(int64_t object_store_id);
+  void SetObjectStoreName(int64_t object_store_id, const base::string16& name);
   void AddIndex(int64_t object_store_id,
-                IndexedDBIndexMetadata metadata,
+                const IndexedDBIndexMetadata& metadata,
                 int64_t new_max_index_id);
-  IndexedDBIndexMetadata RemoveIndex(int64_t object_store_id, int64_t index_id);
+  void RemoveIndex(int64_t object_store_id, int64_t index_id);
+  void SetIndexName(int64_t object_store_id,
+                    int64_t index_id,
+                    const base::string16& name);
 
   void OpenConnection(std::unique_ptr<IndexedDBPendingConnection> connection);
   void DeleteDatabase(scoped_refptr<IndexedDBCallbacks> callbacks,
@@ -215,9 +216,9 @@ class CONTENT_EXPORT IndexedDBDatabase
   leveldb::Status DeleteObjectStoreOperation(int64_t object_store_id,
                                              IndexedDBTransaction* transaction);
   void DeleteObjectStoreAbortOperation(
-      IndexedDBObjectStoreMetadata object_store_metadata);
+      const IndexedDBObjectStoreMetadata& object_store_metadata);
   void RenameObjectStoreAbortOperation(int64_t object_store_id,
-                                       base::string16 old_name);
+                                       const base::string16& old_name);
   leveldb::Status VersionChangeOperation(
       int64_t version,
       scoped_refptr<IndexedDBCallbacks> callbacks,
@@ -228,10 +229,10 @@ class CONTENT_EXPORT IndexedDBDatabase
                                        IndexedDBTransaction* transaction);
   void CreateIndexAbortOperation(int64_t object_store_id, int64_t index_id);
   void DeleteIndexAbortOperation(int64_t object_store_id,
-                                 IndexedDBIndexMetadata index_metadata);
+                                 const IndexedDBIndexMetadata& index_metadata);
   void RenameIndexAbortOperation(int64_t object_store_id,
                                  int64_t index_id,
-                                 base::string16 old_name);
+                                 const base::string16& old_name);
   leveldb::Status GetOperation(int64_t object_store_id,
                                int64_t index_id,
                                std::unique_ptr<IndexedDBKeyRange> key_range,
@@ -282,7 +283,6 @@ class CONTENT_EXPORT IndexedDBDatabase
   IndexedDBDatabase(const base::string16& name,
                     scoped_refptr<IndexedDBBackingStore> backing_store,
                     scoped_refptr<IndexedDBFactory> factory,
-                    std::unique_ptr<IndexedDBMetadataCoding> metadata_coding,
                     const Identifier& unique_identifier);
   virtual ~IndexedDBDatabase();
 
@@ -332,7 +332,6 @@ class CONTENT_EXPORT IndexedDBDatabase
 
   const Identifier identifier_;
   scoped_refptr<IndexedDBFactory> factory_;
-  std::unique_ptr<IndexedDBMetadataCoding> metadata_coding_;
 
   IndexedDBTransactionCoordinator transaction_coordinator_;
   int64_t transaction_count_ = 0;

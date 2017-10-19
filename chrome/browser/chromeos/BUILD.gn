@@ -20,7 +20,7 @@ source_set("chromeos") {
   configs += [ "//build/config/compiler:wexit_time_destructors" ]
 
   public_deps = [
-    ":install_attributes_proto",
+    ":device_policy_proto",
     "//ash/resources",
     "//ash/strings",
     "//chrome:extra_resources",
@@ -29,7 +29,6 @@ source_set("chromeos") {
     "//chrome/app/resources:platform_locale_settings",
     "//chrome/app/theme:theme_resources",
     "//chromeos:power_manager_proto",
-    "//components/policy/proto",
     "//components/wallpaper",
     "//content/app/resources",
     "//ui/accessibility:ax_gen",
@@ -71,7 +70,6 @@ source_set("chromeos") {
     "//components/browser_sync",
     "//components/captive_portal",
     "//components/certificate_reporting:cert_logger_proto",
-    "//components/component_updater:crl_set_installer",
     "//components/constrained_window",
     "//components/content_settings/core/browser",
     "//components/crash/content/app",
@@ -111,6 +109,7 @@ source_set("chromeos") {
     "//components/renderer_context_menu",
     "//components/safe_browsing:csd_proto",
     "//components/safe_browsing/db:metadata_proto",
+    "//components/safe_json",
     "//components/session_manager/core",
     "//components/signin/core/browser",
     "//components/ssl_config",
@@ -151,7 +150,6 @@ source_set("chromeos") {
     "//mojo/common",
     "//net",
     "//ppapi/proxy:ipc",  # For PpapiMsg_LoadPlugin
-    "//services/data_decoder/public/cpp",
     "//services/device/public/interfaces",
     "//services/preferences/public/interfaces",
     "//services/service_manager/public/cpp",
@@ -324,6 +322,8 @@ source_set("chromeos") {
     "arc/auth/arc_background_auth_code_fetcher.cc",
     "arc/auth/arc_background_auth_code_fetcher.h",
     "arc/auth/arc_fetcher_base.h",
+    "arc/auth/arc_manual_auth_code_fetcher.cc",
+    "arc/auth/arc_manual_auth_code_fetcher.h",
     "arc/auth/arc_robot_auth_code_fetcher.cc",
     "arc/auth/arc_robot_auth_code_fetcher.h",
     "arc/bluetooth/arc_bluetooth_bridge.cc",
@@ -386,8 +386,6 @@ source_set("chromeos") {
     "arc/intent_helper/arc_navigation_throttle.h",
     "arc/intent_helper/arc_settings_service.cc",
     "arc/intent_helper/arc_settings_service.h",
-    "arc/intent_helper/intent_picker_controller.cc",
-    "arc/intent_helper/intent_picker_controller.h",
     "arc/intent_helper/open_with_menu.cc",
     "arc/intent_helper/open_with_menu.h",
     "arc/kiosk/arc_kiosk_bridge.cc",
@@ -812,14 +810,10 @@ source_set("chromeos") {
     "lock_screen_apps/app_manager_impl.h",
     "lock_screen_apps/app_window_metrics_tracker.cc",
     "lock_screen_apps/app_window_metrics_tracker.h",
-    "lock_screen_apps/first_app_run_toast_manager.cc",
-    "lock_screen_apps/first_app_run_toast_manager.h",
     "lock_screen_apps/focus_cycler_delegate.h",
     "lock_screen_apps/state_controller.cc",
     "lock_screen_apps/state_controller.h",
     "lock_screen_apps/state_observer.h",
-    "lock_screen_apps/toast_dialog_view.cc",
-    "lock_screen_apps/toast_dialog_view.h",
     "logging.cc",
     "logging.h",
     "login/app_launch_controller.cc",
@@ -1172,8 +1166,6 @@ source_set("chromeos") {
     "net/wake_on_wifi_manager.h",
     "night_light/night_light_client.cc",
     "night_light/night_light_client.h",
-    "note_taking_controller_client.cc",
-    "note_taking_controller_client.h",
     "note_taking_helper.cc",
     "note_taking_helper.h",
     "options/cert_library.cc",
@@ -1256,6 +1248,8 @@ source_set("chromeos") {
     "policy/device_local_account_policy_store.h",
     "policy/device_network_configuration_updater.cc",
     "policy/device_network_configuration_updater.h",
+    "policy/device_off_hours_controller.cc",
+    "policy/device_off_hours_controller.h",
     "policy/device_policy_decoder_chromeos.cc",
     "policy/device_policy_decoder_chromeos.h",
     "policy/device_policy_remover.h",
@@ -1276,16 +1270,8 @@ source_set("chromeos") {
     "policy/login_profile_policy_provider.h",
     "policy/network_configuration_updater.cc",
     "policy/network_configuration_updater.h",
-    "policy/off_hours/device_off_hours_controller.cc",
-    "policy/off_hours/device_off_hours_controller.h",
     "policy/off_hours/off_hours_interval.cc",
     "policy/off_hours/off_hours_interval.h",
-    "policy/off_hours/off_hours_policy_applier.cc",
-    "policy/off_hours/off_hours_policy_applier.h",
-    "policy/off_hours/off_hours_proto_parser.cc",
-    "policy/off_hours/off_hours_proto_parser.h",
-    "policy/off_hours/time_utils.cc",
-    "policy/off_hours/time_utils.h",
     "policy/off_hours/weekly_time.cc",
     "policy/off_hours/weekly_time.h",
     "policy/policy_cert_service.cc",
@@ -1854,13 +1840,13 @@ source_set("unit_tests") {
     "policy/device_cloud_policy_manager_chromeos_unittest.cc",
     "policy/device_cloud_policy_store_chromeos_unittest.cc",
     "policy/device_local_account_policy_service_unittest.cc",
+    "policy/device_off_hours_controller_unittest.cc",
     "policy/dm_token_storage_unittest.cc",
     "policy/extension_cache_unittest.cc",
     "policy/fake_affiliated_invalidation_service_provider.cc",
     "policy/fake_affiliated_invalidation_service_provider.h",
     "policy/heartbeat_scheduler_unittest.cc",
     "policy/network_configuration_updater_unittest.cc",
-    "policy/off_hours/device_off_hours_controller_unittest.cc",
     "policy/off_hours/off_hours_interval_unittest.cc",
     "policy/off_hours/weekly_time_unittest.cc",
     "policy/pre_signin_policy_fetcher_unittest.cc",
@@ -1880,11 +1866,11 @@ source_set("unit_tests") {
     "power/renderer_freezer_unittest.cc",
     "preferences_unittest.cc",
     "printing/cups_printers_manager_unittest.cc",
-    "printing/printer_detector_test_util.h",
     "printing/printer_event_tracker_unittest.cc",
     "printing/printers_sync_bridge_unittest.cc",
     "printing/specifics_translation_unittest.cc",
     "printing/synced_printers_manager_unittest.cc",
+    "printing/printer_detector_test_util.h",
     "printing/usb_printer_detector_unittest.cc",
     "printing/zeroconf_printer_detector_unittest.cc",
     "profiles/profile_list_chromeos_unittest.cc",
@@ -1969,6 +1955,7 @@ source_set("unit_tests") {
   deps = [
     ":arc_test_support",
     ":attestation_proto",
+    ":device_policy_proto",
     ":test_support",
     "//ash",
     "//ash/resources",
@@ -1983,7 +1970,6 @@ source_set("unit_tests") {
     "//components/drive:test_support_chromeos",
     "//components/invalidation/public",
     "//components/policy:generated",
-    "//components/policy/proto",
     "//components/prefs:test_support",
     "//components/resources",
     "//components/sync",
@@ -1994,7 +1980,6 @@ source_set("unit_tests") {
     "//device/bluetooth",
     "//google_apis:test_support",
     "//mojo/public/cpp/system:system",
-    "//services/service_manager/public/cpp/test:test_support",
     "//skia",
     "//testing/gmock",
     "//testing/gtest",
@@ -2009,8 +1994,9 @@ source_set("unit_tests") {
   ]
 }
 
-proto_library("install_attributes_proto") {
+proto_library("device_policy_proto") {
   sources = [
+    "policy/proto/chrome_device_policy.proto",
     "policy/proto/install_attributes.proto",
   ]
 }
@@ -2033,7 +2019,7 @@ action("device_policy_remover_generate") {
   descriptor_pool_path = "//third_party/protobuf/python"
   symbol_database_path = "$root_build_dir/pyproto"
   chrome_device_policy_pb2_path =
-      "$root_build_dir/pyproto/components/policy/proto"
+      "$root_build_dir/pyproto/chrome/browser/chromeos/policy/proto"
 
   outputs = [
     device_policy_remover_path,
@@ -2050,7 +2036,7 @@ action("device_policy_remover_generate") {
   ]
 
   public_deps = [
-    "//components/policy/proto",
+    ":device_policy_proto",
     "//third_party/protobuf:py_proto",
   ]
 }

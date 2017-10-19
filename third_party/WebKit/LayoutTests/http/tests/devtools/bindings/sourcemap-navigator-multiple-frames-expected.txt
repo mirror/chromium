@@ -9,7 +9,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
 
 Running: attachFrame1
@@ -20,7 +19,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
   (no domain)
     _test_create-iframe1.js
@@ -41,7 +39,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
   (no domain)
     _test_create-iframe1.js
@@ -71,7 +68,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
   (no domain)
     _test_create-iframe1.js
@@ -94,7 +90,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
   (no domain)
     _test_create-iframe1.js

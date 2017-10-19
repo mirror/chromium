@@ -21,7 +21,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
@@ -197,8 +196,8 @@ public class BottomSheetBackBehaviorTest {
             throws ExecutionException, InterruptedException, TimeoutException {
         final Tab tab = mBottomSheet.getActiveTab();
 
-        EmbeddedTestServer testServer =
-                EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
 
         String testUrl = testServer.getURL(TEST_PAGE);
         ChromeTabUtils.loadUrlOnUiThread(tab, testUrl);
@@ -228,11 +227,10 @@ public class BottomSheetBackBehaviorTest {
 
     @Test
     @SmallTest
-    @DisabledTest(message = "crbug.com/766350")
     public void testBackButton_backFromExternalNewTab()
             throws InterruptedException, TimeoutException {
-        EmbeddedTestServer testServer =
-                EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         launchNewTabFromExternalApp(testServer.getURL(TEST_PAGE));
 
         // Back button should send Chrome to the background.

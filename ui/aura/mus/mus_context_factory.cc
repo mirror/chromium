@@ -59,10 +59,8 @@ void MusContextFactory::OnEstablishedGpuChannel(
       gpu_->CreateContextProvider(std::move(gpu_channel));
   // If the binding fails, then we need to return early since the compositor
   // expects a successfully initialized/bound provider.
-  if (context_provider->BindToCurrentThread() != gpu::ContextResult::kSuccess) {
-    // TODO(danakj): We should retry if the result was not kFatalFailure.
+  if (!context_provider->BindToCurrentThread())
     return;
-  }
   std::unique_ptr<cc::LayerTreeFrameSink> layer_tree_frame_sink =
       window_port->RequestLayerTreeFrameSink(std::move(context_provider),
                                              gpu_->gpu_memory_buffer_manager());
@@ -83,8 +81,7 @@ MusContextFactory::SharedMainThreadContextProvider() {
         gpu_->EstablishGpuChannelSync();
     shared_main_thread_context_provider_ =
         gpu_->CreateContextProvider(std::move(gpu_channel));
-    if (shared_main_thread_context_provider_->BindToCurrentThread() !=
-        gpu::ContextResult::kSuccess)
+    if (!shared_main_thread_context_provider_->BindToCurrentThread())
       shared_main_thread_context_provider_ = nullptr;
   }
   return shared_main_thread_context_provider_;

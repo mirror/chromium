@@ -33,7 +33,7 @@ HINSTANCE GetCurrentResourceDLL() {
 void ResourceBundle::LoadCommonResources() {
   // As a convenience, add the current resource module as a data packs.
   data_packs_.push_back(
-      std::make_unique<ResourceDataDLL>(GetCurrentResourceDLL()));
+      base::MakeUnique<ResourceDataDLL>(GetCurrentResourceDLL()));
 
   LoadChromeResources();
 }

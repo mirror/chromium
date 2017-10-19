@@ -1997,14 +1997,17 @@ void remote_surface_set_rectangular_shadow_DEPRECATED(wl_client* client,
                                                       int32_t y,
                                                       int32_t width,
                                                       int32_t height) {
-  NOTIMPLEMENTED();
+  ShellSurface* shell_surface = GetUserDataAs<ShellSurface>(resource);
+  gfx::Rect content_bounds(x, y, width, height);
+  shell_surface->SetRectangularShadow_DEPRECATED(content_bounds);
 }
 
-void remote_surface_set_rectangular_shadow_background_opacity_DEPRECATED(
+void remote_surface_set_rectangular_shadow_background_opacity(
     wl_client* client,
     wl_resource* resource,
     wl_fixed_t opacity) {
-  NOTIMPLEMENTED();
+  GetUserDataAs<ShellSurface>(resource)->SetRectangularShadowBackgroundOpacity(
+      wl_fixed_to_double(opacity));
 }
 
 void remote_surface_set_title(wl_client* client,
@@ -2076,7 +2079,8 @@ void remote_surface_set_rectangular_surface_shadow(wl_client* client,
                                                    int32_t width,
                                                    int32_t height) {
   ShellSurface* shell_surface = GetUserDataAs<ShellSurface>(resource);
-  shell_surface->SetShadowBounds(gfx::Rect(x, y, width, height));
+  gfx::Rect content_bounds(x, y, width, height);
+  shell_surface->SetRectangularSurfaceShadow(content_bounds);
 }
 
 void remote_surface_set_systemui_visibility(wl_client* client,
@@ -2126,7 +2130,7 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_set_window_geometry,
     remote_surface_set_scale,
     remote_surface_set_rectangular_shadow_DEPRECATED,
-    remote_surface_set_rectangular_shadow_background_opacity_DEPRECATED,
+    remote_surface_set_rectangular_shadow_background_opacity,
     remote_surface_set_title,
     remote_surface_set_top_inset,
     remote_surface_activate,

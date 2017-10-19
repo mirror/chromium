@@ -322,9 +322,6 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual WebEffectiveConnectionType GetEffectiveConnectionType() {
     return WebEffectiveConnectionType::kTypeUnknown;
   }
-  // Overrides the effective connection type for testing.
-  virtual void SetEffectiveConnectionTypeForTesting(
-      WebEffectiveConnectionType) {}
 
   // Returns whether or not Client Lo-Fi is enabled for the frame
   // (and so image requests may be replaced with a placeholder).
@@ -354,15 +351,14 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual TextCheckerClient& GetTextCheckerClient() const = 0;
 
-  virtual std::unique_ptr<WebURLLoader> CreateURLLoader(
-      const ResourceRequest&,
-      RefPtr<WebTaskRunner>) = 0;
+  virtual std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
+                                                        WebTaskRunner*) = 0;
 
   virtual void AnnotatedRegionsChanged() = 0;
 
   virtual void DidBlockFramebust(const KURL&) {}
 
-  virtual String GetInstrumentationToken() = 0;
+  virtual String GetDevToolsFrameToken() = 0;
 };
 
 }  // namespace blink

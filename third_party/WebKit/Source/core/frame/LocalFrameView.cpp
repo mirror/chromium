@@ -106,8 +106,8 @@
 #include "platform/Histogram.h"
 #include "platform/Language.h"
 #include "platform/PlatformChromeClient.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/WebFrameScheduler.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/geometry/DoubleRect.h"
 #include "platform/geometry/FloatRect.h"
@@ -127,6 +127,7 @@
 #include "platform/runtime_enabled_features.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollerSizeMetrics.h"
 #include "platform/text/TextStream.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/CurrentTime.h"
@@ -244,7 +245,7 @@ LocalFrameView::~LocalFrameView() {
 #endif
 }
 
-void LocalFrameView::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrameView) {
   visitor->Trace(frame_);
   visitor->Trace(parent_);
   visitor->Trace(fragment_anchor_);
@@ -605,7 +606,7 @@ LayoutViewItem LocalFrameView::GetLayoutViewItem() const {
 
 ScrollingCoordinator* LocalFrameView::GetScrollingCoordinator() const {
   Page* p = GetPage();
-  return p ? p->GetScrollingCoordinator() : nullptr;
+  return p ? p->GetScrollingCoordinator() : 0;
 }
 
 CompositorAnimationHost* LocalFrameView::GetCompositorAnimationHost() const {
@@ -690,7 +691,7 @@ bool LocalFrameView::ShouldUseCustomScrollbars(
   Document* doc = frame_->GetDocument();
 
   // Try the <body> element first as a scrollbar source.
-  Element* body = doc ? doc->body() : nullptr;
+  Element* body = doc ? doc->body() : 0;
   if (body && body->GetLayoutObject() &&
       body->GetLayoutObject()->Style()->HasPseudoStyle(kPseudoIdScrollbar)) {
     custom_scrollbar_element = body;
@@ -698,7 +699,7 @@ bool LocalFrameView::ShouldUseCustomScrollbars(
   }
 
   // If the <body> didn't have a custom style, then the root element might.
-  Element* doc_element = doc ? doc->documentElement() : nullptr;
+  Element* doc_element = doc ? doc->documentElement() : 0;
   if (doc_element && doc_element->GetLayoutObject() &&
       doc_element->GetLayoutObject()->Style()->HasPseudoStyle(
           kPseudoIdScrollbar)) {
@@ -1254,10 +1255,10 @@ void LocalFrameView::UpdateLayout() {
         LayoutBox* root_layout_object =
             document->documentElement()
                 ? document->documentElement()->GetLayoutBox()
-                : nullptr;
+                : 0;
         LayoutBox* body_layout_object = root_layout_object && document->body()
                                             ? document->body()->GetLayoutBox()
-                                            : nullptr;
+                                            : 0;
         if (body_layout_object && body_layout_object->StretchesToViewport())
           body_layout_object->SetChildNeedsLayout();
         else if (root_layout_object &&
@@ -2221,6 +2222,26 @@ void LocalFrameView::HandleLoadCompleted() {
   // finishes.
   if (!NeedsLayout())
     ClearFragmentAnchor();
+
+  if (!scrollable_areas_)
+    return;
+  for (const auto& scrollable_area : *scrollable_areas_) {
+    if (!scrollable_area->IsPaintLayerScrollableArea())
+      continue;
+    PaintLayerScrollableArea* paint_layer_scrollable_area =
+        ToPaintLayerScrollableArea(scrollable_area);
+    if (paint_layer_scrollable_area->ScrollsOverflow() &&
+        !paint_layer_scrollable_area->Layer()->IsRootLayer() &&
+        paint_layer_scrollable_area->VisibleContentRect().Size().Area() > 0) {
+      CheckedNumeric<int> size =
+          paint_layer_scrollable_area->VisibleContentRect().Width();
+      size *= paint_layer_scrollable_area->VisibleContentRect().Height();
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          "Event.Scroll.ScrollerSize.OnLoad",
+          size.ValueOrDefault(std::numeric_limits<int>::max()), 1,
+          kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+    }
+  }
 }
 
 void LocalFrameView::ClearLayoutSubtreeRoot(const LayoutObject& root) {
@@ -3322,6 +3343,7 @@ void LocalFrameView::PaintTree() {
 
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     if (GetLayoutView()->Layer()->NeedsRepaint()) {
+      paint_controller_->SetupRasterUnderInvalidationChecking();
       GraphicsContext graphics_context(*paint_controller_);
       if (RuntimeEnabledFeatures::PrintBrowserEnabled())
         graphics_context.SetPrinting(true);
@@ -4699,8 +4721,6 @@ LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
                                           bool is_smooth,
                                           ScrollType scroll_type,
                                           bool is_for_scroll_sequence) {
-  GetLayoutBox()->SetPendingOffsetToScroll(LayoutSize());
-
   LayoutRect view_rect(VisibleContentRect());
   LayoutRect expose_rect = ScrollAlignment::GetRectToExpose(
       view_rect, rect_in_content, align_x, align_y);

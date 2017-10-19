@@ -220,7 +220,7 @@ class AppListViewFullscreenTest : public AppListViewTest {
 
     // Adds suggestion apps to the start page view and show start page view.
     for (size_t i = 0; i < apps_num; i++)
-      model->results()->Add(std::make_unique<TestStartPageSearchResult>());
+      model->results()->Add(base::MakeUnique<TestStartPageSearchResult>());
     EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
     start_page_view()->UpdateForTesting();
     EXPECT_EQ(apps_num, GetVisibleViews(start_page_view()->tile_views()));
@@ -337,7 +337,7 @@ class AppListViewFocusTest : public views::ViewsTestBase {
     const int kAppListItemNum = test_api_->TilesPerPage(0) + 1;
     AppListTestModel* model = delegate_->GetTestModel();
     for (size_t i = 0; i < kSuggestionAppNum; i++)
-      model->results()->Add(std::make_unique<TestStartPageSearchResult>());
+      model->results()->Add(base::MakeUnique<TestStartPageSearchResult>());
     AppListFolderItem* folder_item =
         model->CreateAndPopulateFolderWithApps(kItemNumInFolder);
     model->PopulateApps(kAppListItemNum);
@@ -390,7 +390,7 @@ class AppListViewFocusTest : public views::ViewsTestBase {
       relevance -= 0.5;
       for (int i = 0; i < data.second; ++i) {
         std::unique_ptr<TestSearchResult> result =
-            std::make_unique<TestSearchResult>();
+            base::MakeUnique<TestSearchResult>();
         result->set_display_type(data.first);
         result->set_relevance(relevance);
         results->Add(std::move(result));
@@ -1231,35 +1231,6 @@ TEST_F(AppListViewFullscreenTest, SetStateFailsWhenClosing) {
   ASSERT_EQ(AppListView::CLOSED, view_->app_list_state());
 }
 
-// Tests that going into a folder view, then setting the AppListState to PEEKING
-// hides the folder view.
-TEST_F(AppListViewFullscreenTest, FolderViewToPeeking) {
-  Initialize(0, false, false);
-  AppListTestModel* model = delegate_->GetTestModel();
-  model->PopulateApps(kInitialItems);
-  const std::string folder_id =
-      model->MergeItems(model->top_level_item_list()->item_at(0)->id(),
-                        model->top_level_item_list()->item_at(1)->id());
-  model->FindFolderItem(folder_id);
-  Show();
-  AppsGridViewTestApi test_api(view_->app_list_main_view()
-                                   ->contents_view()
-                                   ->apps_container_view()
-                                   ->apps_grid_view());
-  test_api.PressItemAt(0);
-  EXPECT_TRUE(view_->app_list_main_view()
-                  ->contents_view()
-                  ->apps_container_view()
-                  ->IsInFolderView());
-
-  view_->SetState(AppListView::PEEKING);
-
-  EXPECT_FALSE(view_->app_list_main_view()
-                   ->contents_view()
-                   ->apps_container_view()
-                   ->IsInFolderView());
-}
-
 // Tests that when a click or tap event propagates to the AppListView, if the
 // event location is within the bounds of AppsGridView, do not close the
 // AppListView.
@@ -1472,7 +1443,7 @@ TEST_F(AppListViewTest, StartPageTest) {
 
   // Check tiles hide and show on deletion and addition.
   EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
-  model->results()->Add(std::make_unique<TestStartPageSearchResult>());
+  model->results()->Add(base::MakeUnique<TestStartPageSearchResult>());
   start_page_view->UpdateForTesting();
   EXPECT_EQ(1u, GetVisibleViews(start_page_view->tile_views()));
   model->results()->DeleteAll();
@@ -1482,7 +1453,7 @@ TEST_F(AppListViewTest, StartPageTest) {
   // Tiles should not update when the start page is not active but should be
   // correct once the start page is shown.
   EXPECT_TRUE(SetAppListState(AppListModel::STATE_APPS));
-  model->results()->Add(std::make_unique<TestStartPageSearchResult>());
+  model->results()->Add(base::MakeUnique<TestStartPageSearchResult>());
   start_page_view->UpdateForTesting();
   EXPECT_EQ(0u, GetVisibleViews(start_page_view->tile_views()));
   EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));

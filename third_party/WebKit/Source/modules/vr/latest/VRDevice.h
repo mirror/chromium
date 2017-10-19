@@ -59,7 +59,7 @@ class VRDevice final : public EventTargetWithInlineData,
     return display_info_;
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   void SetVRDisplayInfo(device::mojom::blink::VRDisplayInfoPtr);

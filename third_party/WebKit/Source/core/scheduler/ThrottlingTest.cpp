@@ -16,15 +16,24 @@ using ::testing::ElementsAre;
 
 namespace blink {
 
-class DisableBackgroundThrottlingIsRespectedTest
-    : public SimTest,
-      private ScopedTimerThrottlingForBackgroundTabsForTest {
+class DisableBackgroundThrottlingIsRespectedTest : public SimTest {
  public:
-  DisableBackgroundThrottlingIsRespectedTest()
-      : ScopedTimerThrottlingForBackgroundTabsForTest(false) {}
   void SetUp() override {
+    background_tab_timer_throttling_feature_ =
+        WTF::MakeUnique<ScopedBackgroundTabTimerThrottlingForTest>(false);
     SimTest::SetUp();
   }
+
+  void TearDown() { background_tab_timer_throttling_feature_.reset(); }
+
+ private:
+  typedef ScopedRuntimeEnabledFeatureForTest<
+      RuntimeEnabledFeatures::TimerThrottlingForBackgroundTabsEnabled,
+      RuntimeEnabledFeatures::SetTimerThrottlingForBackgroundTabsEnabled>
+      ScopedBackgroundTabTimerThrottlingForTest;
+
+  std::unique_ptr<ScopedBackgroundTabTimerThrottlingForTest>
+      background_tab_timer_throttling_feature_;
 };
 
 TEST_F(DisableBackgroundThrottlingIsRespectedTest,

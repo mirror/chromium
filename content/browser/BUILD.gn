@@ -86,7 +86,6 @@ source_set("browser") {
     "//gpu",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
-    "//gpu/ipc/common:gpu_preferences_util",
     "//gpu/ipc/host",
     "//gpu/vulkan:features",
     "//media",
@@ -145,7 +144,6 @@ source_set("browser") {
     "//storage/common",
     "//third_party/WebKit/common:blink_common",
     "//third_party/WebKit/public:blink_headers",
-    "//third_party/WebKit/public:core_mojo_bindings",
     "//third_party/WebKit/public:features",
     "//third_party/WebKit/public:mojo_bindings",
     "//third_party/WebKit/public:resources",
@@ -400,8 +398,6 @@ source_set("browser") {
     "background_fetch/background_fetch_job_controller.h",
     "background_fetch/background_fetch_registration_id.cc",
     "background_fetch/background_fetch_registration_id.h",
-    "background_fetch/background_fetch_registration_notifier.cc",
-    "background_fetch/background_fetch_registration_notifier.h",
     "background_fetch/background_fetch_request_info.cc",
     "background_fetch/background_fetch_request_info.h",
     "background_fetch/background_fetch_service_impl.cc",
@@ -533,8 +529,6 @@ source_set("browser") {
     # needed on all platforms.
     "compositor/surface_utils.cc",
     "compositor/surface_utils.h",
-    "dedicated_worker/dedicated_worker_host.cc",
-    "dedicated_worker/dedicated_worker_host.h",
     "devtools/browser_devtools_agent_host.cc",
     "devtools/browser_devtools_agent_host.h",
     "devtools/devtools_agent_host_impl.cc",
@@ -882,8 +876,6 @@ source_set("browser") {
     "indexed_db/indexed_db_leveldb_coding.h",
     "indexed_db/indexed_db_leveldb_operations.cc",
     "indexed_db/indexed_db_leveldb_operations.h",
-    "indexed_db/indexed_db_metadata_coding.cc",
-    "indexed_db/indexed_db_metadata_coding.h",
     "indexed_db/indexed_db_observer.cc",
     "indexed_db/indexed_db_observer.h",
     "indexed_db/indexed_db_pending_connection.cc",
@@ -1020,8 +1012,6 @@ source_set("browser") {
     "media/android/browser_surface_view_manager.h",
     "media/android/media_player_renderer.cc",
     "media/android/media_player_renderer.h",
-    "media/android/media_player_renderer_web_contents_observer.cc",
-    "media/android/media_player_renderer_web_contents_observer.h",
     "media/android/media_resource_getter_impl.cc",
     "media/android/media_resource_getter_impl.h",
     "media/android/media_web_contents_observer_android.cc",
@@ -1416,6 +1406,8 @@ source_set("browser") {
     "service_manager/common_browser_interfaces.h",
     "service_manager/service_manager_context.cc",
     "service_manager/service_manager_context.h",
+    "service_worker/browser_side_controller_service_worker.cc",
+    "service_worker/browser_side_controller_service_worker.h",
     "service_worker/embedded_worker_instance.cc",
     "service_worker/embedded_worker_instance.h",
     "service_worker/embedded_worker_registry.cc",
@@ -1920,13 +1912,6 @@ source_set("browser") {
     if (use_pangocairo) {
       sources += [ "renderer_host/pepper/pepper_truetype_font_list_pango.cc" ]
     }
-  }
-
-  if (enable_library_cdms) {
-    sources += [
-      "media/cdm_storage_impl.cc",
-      "media/cdm_storage_impl.h",
-    ]
   }
 
   if (use_atk) {

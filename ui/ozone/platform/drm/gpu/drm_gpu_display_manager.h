@@ -13,7 +13,6 @@
 #include "base/macros.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/ozone/common/gpu/ozone_gpu_message_params.h"
-#include "ui/ozone/platform/drm/common/display_types.h"
 
 namespace display {
 class DisplayMode;
@@ -34,7 +33,7 @@ class DrmGpuDisplayManager {
 
   // Returns a list of the connected displays. When this is called the list of
   // displays is refreshed.
-  MovableDisplaySnapshots GetDisplays();
+  std::vector<DisplaySnapshot_Params> GetDisplays();
 
   // Returns all scanout formats for |widget| representing a particular display
   // controller or default display controller for kNullAcceleratedWidget.

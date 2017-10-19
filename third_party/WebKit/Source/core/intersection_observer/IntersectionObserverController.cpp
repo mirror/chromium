@@ -97,7 +97,7 @@ void IntersectionObserverController::RemoveTrackedObserversForRoot(
   tracked_intersection_observers_.RemoveAll(to_remove);
 }
 
-void IntersectionObserverController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IntersectionObserverController) {
   visitor->Trace(tracked_intersection_observers_);
   visitor->Trace(pending_intersection_observers_);
   SuspendableObject::Trace(visitor);

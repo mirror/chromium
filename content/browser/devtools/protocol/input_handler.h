@@ -37,9 +37,7 @@ class InputHandler : public DevToolsDomainHandler,
   static std::vector<InputHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(RenderProcessHost* process_host,
-                   RenderFrameHostImpl* frame_host) override;
-
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
   void OnSwapCompositorFrame(
       const viz::CompositorFrameMetadata& frame_metadata);
   Response Disable() override;
@@ -58,7 +56,6 @@ class InputHandler : public DevToolsDomainHandler,
       Maybe<bool> auto_repeat,
       Maybe<bool> is_keypad,
       Maybe<bool> is_system_key,
-      Maybe<int> location,
       std::unique_ptr<DispatchKeyEventCallback> callback) override;
 
   void DispatchMouseEvent(

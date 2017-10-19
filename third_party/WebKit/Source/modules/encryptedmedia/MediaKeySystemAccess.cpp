@@ -169,6 +169,6 @@ ScriptPromise MediaKeySystemAccess::createMediaKeys(ScriptState* script_state) {
   return promise;
 }
 
-void MediaKeySystemAccess::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(MediaKeySystemAccess) {}
 
 }  // namespace blink

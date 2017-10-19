@@ -333,9 +333,10 @@ bool IsStartOfParagraph(const VisiblePosition& pos,
                                                       boundary_crossing_rule);
 }
 
-bool IsStartOfParagraph(const VisiblePositionInFlatTree& pos) {
+bool IsStartOfParagraph(const VisiblePositionInFlatTree& pos,
+                        EditingBoundaryCrossingRule boundary_crossing_rule) {
   return IsStartOfParagraphAlgorithm<EditingInFlatTreeStrategy>(
-      pos, kCannotCrossEditingBoundary);
+      pos, boundary_crossing_rule);
 }
 
 bool IsEndOfParagraph(const VisiblePosition& pos,
@@ -344,9 +345,10 @@ bool IsEndOfParagraph(const VisiblePosition& pos,
                                                     boundary_crossing_rule);
 }
 
-bool IsEndOfParagraph(const VisiblePositionInFlatTree& pos) {
+bool IsEndOfParagraph(const VisiblePositionInFlatTree& pos,
+                      EditingBoundaryCrossingRule boundary_crossing_rule) {
   return IsEndOfParagraphAlgorithm<EditingInFlatTreeStrategy>(
-      pos, kCannotCrossEditingBoundary);
+      pos, boundary_crossing_rule);
 }
 
 // TODO(editing-dev): We should move |PreviousParagraphPosition()| to

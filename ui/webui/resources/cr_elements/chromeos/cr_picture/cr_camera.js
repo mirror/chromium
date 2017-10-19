@@ -38,6 +38,15 @@ Polymer({
     switchModeLabel: String,
 
     /**
+     * True when video mode is allowed.
+     * @private {boolean}
+     */
+    allowVideoMode: {
+      type: Boolean,
+      observer: 'allowVideoModeChanged_',
+    },
+
+    /**
      * True if currently in video mode.
      * @private {boolean}
      */
@@ -132,12 +141,7 @@ Polymer({
       this.cameraStartInProgress_ = false;
     }.bind(this);
 
-    var videoConstraints = {
-      width: {ideal: CAPTURE_SIZE.width},
-      height: {ideal: CAPTURE_SIZE.height},
-    };
-    navigator.webkitGetUserMedia(
-        {video: videoConstraints}, successCallback, errorCallback);
+    navigator.webkitGetUserMedia({video: true}, successCallback, errorCallback);
   },
 
   /** Stops the camera stream capture if it's currently active. */
@@ -166,7 +170,20 @@ Polymer({
    * @private
    */
   onTapSwitchMode_: function() {
+    if (!this.allowVideoMode)
+      return;
     this.videomode = !this.videomode;
+    this.fire('switch-mode', this.videomode);
+  },
+
+  /**
+   * Switch out of video mode if not allowed.
+   * @private
+   */
+  allowVideoModeChanged_: function() {
+    if (this.allowVideoMode || !this.videomode)
+      return;
+    this.videomode = false;
     this.fire('switch-mode', this.videomode);
   },
 

@@ -688,7 +688,7 @@ void GraphicsContext::DrawTextPasses(const DrawTextFunc& draw_text) {
     PaintFlags stroke_flags(ImmutableState()->StrokeFlags());
     if (mode_flags & kTextModeFill) {
       // shadow was already applied during fill pass
-      stroke_flags.setLooper(nullptr);
+      stroke_flags.setLooper(0);
     }
     draw_text(stroke_flags);
   }
@@ -784,7 +784,6 @@ void GraphicsContext::DrawHighlightForText(const Font& font,
 
 void GraphicsContext::DrawImage(
     Image* image,
-    Image::ImageDecodingMode decode_mode,
     const FloatRect& dest,
     const FloatRect* src_ptr,
     SkBlendMode op,
@@ -802,13 +801,12 @@ void GraphicsContext::DrawImage(
   if (ShouldApplyHighContrastFilterToImage(*image))
     image_flags.setColorFilter(high_contrast_filter_);
   image->Draw(canvas_, image_flags, dest, src, should_respect_image_orientation,
-              Image::kClampImageToSourceRect, decode_mode);
+              Image::kClampImageToSourceRect);
   paint_controller_.SetImagePainted();
 }
 
 void GraphicsContext::DrawImageRRect(
     Image* image,
-    Image::ImageDecodingMode decode_mode,
     const FloatRoundedRect& dest,
     const FloatRect& src_rect,
     SkBlendMode op,
@@ -817,8 +815,7 @@ void GraphicsContext::DrawImageRRect(
     return;
 
   if (!dest.IsRounded()) {
-    DrawImage(image, decode_mode, dest.Rect(), &src_rect, op,
-              respect_orientation);
+    DrawImage(image, dest.Rect(), &src_rect, op, respect_orientation);
     return;
   }
 
@@ -851,8 +848,7 @@ void GraphicsContext::DrawImageRRect(
     PaintCanvasAutoRestore auto_restore(canvas_, true);
     canvas_->clipRRect(dest, image_flags.isAntiAlias());
     image->Draw(canvas_, image_flags, dest.Rect(), src_rect,
-                respect_orientation, Image::kClampImageToSourceRect,
-                decode_mode);
+                respect_orientation, Image::kClampImageToSourceRect);
   }
 
   paint_controller_.SetImagePainted();
@@ -909,9 +905,7 @@ void GraphicsContext::DrawTiledImage(Image* image,
 
   if (h_rule == Image::kStretchTile && v_rule == Image::kStretchTile) {
     // Just do a scale.
-    // Since there is no way for the developer to specify decode behavior, use
-    // kSync by default.
-    DrawImage(image, Image::kSyncDecode, dest, &src_rect, op);
+    DrawImage(image, dest, &src_rect, op);
     return;
   }
 

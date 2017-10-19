@@ -11,7 +11,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
-#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
@@ -31,11 +30,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/origin_util.h"
 #include "url/gurl.h"
-
-#if defined(OS_ANDROID)
-#include "base/android/jni_string.h"
-#include "jni/PermissionUmaUtil_jni.h"
-#endif
 
 // UMA keys need to be statically initialized so plain function would not
 // work. Use macros instead.
@@ -309,10 +303,6 @@ void PermissionUmaUtil::PermissionGranted(
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptAcceptedPriorIgnoreCountPrefix,
       autoblocker->GetIgnoreCount(requesting_origin, permission));
-#if defined(OS_ANDROID)
-  if (permission == CONTENT_SETTINGS_TYPE_GEOLOCATION)
-    RecordWithBatteryBucket("Permissions.BatteryLevel.Accepted.Geolocation");
-#endif
 }
 
 void PermissionUmaUtil::PermissionDenied(
@@ -331,10 +321,6 @@ void PermissionUmaUtil::PermissionDenied(
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDeniedPriorIgnoreCountPrefix,
       autoblocker->GetIgnoreCount(requesting_origin, permission));
-#if defined(OS_ANDROID)
-  if (permission == CONTENT_SETTINGS_TYPE_GEOLOCATION)
-    RecordWithBatteryBucket("Permissions.BatteryLevel.Denied.Geolocation");
-#endif
 }
 
 void PermissionUmaUtil::PermissionDismissed(
@@ -353,10 +339,24 @@ void PermissionUmaUtil::PermissionDismissed(
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDismissedPriorIgnoreCountPrefix,
       autoblocker->GetIgnoreCount(requesting_origin, permission));
-#if defined(OS_ANDROID)
-  if (permission == CONTENT_SETTINGS_TYPE_GEOLOCATION)
-    RecordWithBatteryBucket("Permissions.BatteryLevel.Dismissed.Geolocation");
-#endif
+}
+
+void PermissionUmaUtil::PermissionIgnored(
+    ContentSettingsType permission,
+    PermissionRequestGestureType gesture_type,
+    const GURL& requesting_origin,
+    Profile* profile) {
+  PermissionDecisionAutoBlocker* autoblocker =
+      PermissionDecisionAutoBlocker::GetForProfile(profile);
+  RecordPermissionAction(permission, PermissionAction::IGNORED,
+                         PermissionSourceUI::PROMPT, gesture_type,
+                         requesting_origin, profile);
+  RecordPermissionPromptPriorCount(
+      permission, kPermissionsPromptIgnoredPriorDismissCountPrefix,
+      autoblocker->GetDismissCount(requesting_origin, permission));
+  RecordPermissionPromptPriorCount(
+      permission, kPermissionsPromptIgnoredPriorIgnoreCountPrefix,
+      autoblocker->GetIgnoreCount(requesting_origin, permission));
 }
 
 void PermissionUmaUtil::PermissionRevoked(ContentSettingsType permission,
@@ -403,7 +403,6 @@ void PermissionUmaUtil::RecordEmbargoPromptSuppressionFromSource(
     case PermissionStatusSource::UNSPECIFIED:
     case PermissionStatusSource::KILL_SWITCH:
     case PermissionStatusSource::INSECURE_ORIGIN:
-    case PermissionStatusSource::FEATURE_POLICY:
       // The permission wasn't under embargo, so don't record anything. We may
       // embargo it later.
       break;
@@ -469,7 +468,6 @@ void PermissionUmaUtil::PermissionPromptResolved(
       break;
     case PermissionAction::IGNORED:
       RecordEngagementMetric(requests, web_contents, "Ignored");
-      PermissionIgnored(requests, web_contents);
       break;
     default:
       NOTREACHED();
@@ -621,14 +619,6 @@ void PermissionUmaUtil::PermissionPromptDeniedWithPersistenceToggle(
                    << " not accounted for";
   }
 }
-
-#if defined(OS_ANDROID)
-void PermissionUmaUtil::RecordWithBatteryBucket(const std::string& histogram) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_PermissionUmaUtil_recordWithBatteryBucket(
-      env, base::android::ConvertUTF8ToJavaString(env, histogram));
-}
-#endif
 
 void PermissionUmaUtil::FakeOfficialBuildForTest() {
   gIsFakeOfficialBuildForTest = true;
@@ -797,37 +787,5 @@ void PermissionUmaUtil::RecordPromptDecided(
   } else {
     RecordPermissionPromptDenied(permission_prompt_type,
                                  permission_gesture_type);
-  }
-}
-
-// static
-void PermissionUmaUtil::PermissionIgnored(
-    const std::vector<PermissionRequest*>& requests,
-    const content::WebContents* web_contents) {
-  Profile* profile =
-      Profile::FromBrowserContext(web_contents->GetBrowserContext());
-  PermissionDecisionAutoBlocker* autoblocker =
-      PermissionDecisionAutoBlocker::GetForProfile(profile);
-
-  for (PermissionRequest* request : requests) {
-    ContentSettingsType permission = request->GetContentSettingsType();
-    // TODO(timloh): We only record ignore metrics for permissions which use
-    // PermissionRequestImpl as the other subclasses don't support
-    // GetGestureType and GetContentSettingsType.
-    if (permission == CONTENT_SETTINGS_TYPE_DEFAULT)
-      continue;
-
-    PermissionRequestGestureType gesture_type = request->GetGestureType();
-    const GURL& requesting_origin = request->GetOrigin();
-
-    RecordPermissionAction(permission, PermissionAction::IGNORED,
-                           PermissionSourceUI::PROMPT, gesture_type,
-                           requesting_origin, profile);
-    RecordPermissionPromptPriorCount(
-        permission, kPermissionsPromptIgnoredPriorDismissCountPrefix,
-        autoblocker->GetDismissCount(requesting_origin, permission));
-    RecordPermissionPromptPriorCount(
-        permission, kPermissionsPromptIgnoredPriorIgnoreCountPrefix,
-        autoblocker->GetIgnoreCount(requesting_origin, permission));
   }
 }

@@ -106,7 +106,7 @@ class DesktopCaptureDeviceAuraTest : public testing::Test {
  protected:
   void SetUp() override {
     // The ContextFactory must exist before any Compositors are created.
-    ImageTransportFactory::SetFactory(
+    ImageTransportFactory::InitializeForUnitTests(
         std::make_unique<NoTransportImageTransportFactory>());
     helper_.reset(new aura::test::AuraTestHelper());
     helper_->SetUp(

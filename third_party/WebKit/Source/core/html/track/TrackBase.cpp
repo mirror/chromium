@@ -30,7 +30,7 @@
 
 #include "core/html/track/TrackBase.h"
 
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 
 namespace blink {
 
@@ -48,7 +48,7 @@ TrackBase::TrackBase(WebMediaPlayer::TrackType type,
 
 TrackBase::~TrackBase() {}
 
-void TrackBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TrackBase) {
   Supplementable<TrackBase>::Trace(visitor);
   visitor->Trace(media_element_);
 }

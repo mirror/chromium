@@ -4,12 +4,7 @@
 
 #include "ash/shelf/login_shelf_view.h"
 
-#include <memory>
-#include <vector>
-
 #include "ash/focus_cycler.h"
-#include "ash/lock_screen_action/lock_screen_action_background_controller.h"
-#include "ash/lock_screen_action/test_lock_screen_action_background_controller.h"
 #include "ash/login/mock_lock_screen_client.h"
 #include "ash/login/ui/login_test_base.h"
 #include "ash/root_window_controller.h"
@@ -63,12 +58,6 @@ class LoginShelfViewTest : public LoginTestBase {
   ~LoginShelfViewTest() override {}
 
   void SetUp() override {
-    action_background_controller_factory_ =
-        base::Bind(&LoginShelfViewTest::CreateActionBackgroundController,
-                   base::Unretained(this));
-    LockScreenActionBackgroundController::SetFactoryCallbackForTesting(
-        &action_background_controller_factory_);
-
     LoginTestBase::SetUp();
     login_shelf_view_ = GetPrimaryShelf()->GetLoginShelfViewForTesting();
     Shell::Get()->tray_action()->SetClient(
@@ -77,12 +66,6 @@ class LoginShelfViewTest : public LoginTestBase {
     // Set initial states.
     NotifySessionStateChanged(SessionState::OOBE);
     NotifyShutdownPolicyChanged(false);
-  }
-
-  void TearDown() override {
-    LockScreenActionBackgroundController::SetFactoryCallbackForTesting(nullptr);
-    action_background_controller_ = nullptr;
-    LoginTestBase::TearDown();
   }
 
  protected:
@@ -127,27 +110,7 @@ class LoginShelfViewTest : public LoginTestBase {
 
   LoginShelfView* login_shelf_view_;  // Unowned.
 
-  TestLockScreenActionBackgroundController* action_background_controller() {
-    return action_background_controller_;
-  }
-
  private:
-  std::unique_ptr<LockScreenActionBackgroundController>
-  CreateActionBackgroundController() {
-    auto result = std::make_unique<TestLockScreenActionBackgroundController>();
-    EXPECT_FALSE(action_background_controller_);
-    action_background_controller_ = result.get();
-    return result;
-  }
-
-  LockScreenActionBackgroundController::FactoryCallback
-      action_background_controller_factory_;
-
-  // LockScreenActionBackgroundController created by
-  // |CreateActionBackgroundController|.
-  TestLockScreenActionBackgroundController* action_background_controller_ =
-      nullptr;
-
   DISALLOW_COPY_AND_ASSIGN(LoginShelfViewTest);
 };
 
@@ -222,30 +185,12 @@ TEST_F(LoginShelfViewTest, ShouldUpdateUiAfterLockScreenNoteState) {
       ShowsShelfButtons({LoginShelfView::kShutdown, LoginShelfView::kSignOut}));
 
   NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kLaunching);
-  // Shelf buttons should not be changed until the lock screen action background
-  // show animation completes.
-  ASSERT_EQ(LockScreenActionBackgroundState::kShowing,
-            action_background_controller()->state());
-  EXPECT_TRUE(
-      ShowsShelfButtons({LoginShelfView::kShutdown, LoginShelfView::kSignOut}));
-
-  // Complete lock screen action background animation - this should change the
-  // visible buttons.
-  ASSERT_TRUE(action_background_controller()->FinishShow());
   EXPECT_TRUE(ShowsShelfButtons({LoginShelfView::kCloseNote}));
 
   NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kActive);
   EXPECT_TRUE(ShowsShelfButtons({LoginShelfView::kCloseNote}));
 
-  NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kAvailable);
-  // When lock screen action background is animating to hidden state, the close
-  // button should immediately be replaced by kShutdown and kSignout buttons.
-  ASSERT_EQ(LockScreenActionBackgroundState::kHiding,
-            action_background_controller()->state());
-  EXPECT_TRUE(
-      ShowsShelfButtons({LoginShelfView::kShutdown, LoginShelfView::kSignOut}));
-
-  ASSERT_TRUE(action_background_controller()->FinishHide());
+  NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kBackground);
   EXPECT_TRUE(
       ShowsShelfButtons({LoginShelfView::kShutdown, LoginShelfView::kSignOut}));
 
@@ -279,7 +224,6 @@ TEST_F(LoginShelfViewTest, ClickUnlockButton) {
   NotifySessionStateChanged(SessionState::LOCKED);
 
   NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kActive);
-  ASSERT_TRUE(action_background_controller()->FinishShow());
   EXPECT_TRUE(tray_action_client_.close_note_reasons().empty());
   Click(LoginShelfView::kCloseNote);
   EXPECT_EQ(std::vector<mojom::CloseLockScreenNoteReason>(

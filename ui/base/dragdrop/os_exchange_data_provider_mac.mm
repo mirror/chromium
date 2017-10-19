@@ -209,7 +209,7 @@ OSExchangeDataProviderMac::CreateDataFromPasteboard(NSPasteboard* pasteboard) {
   for (NSPasteboardItem* item in [pasteboard pasteboardItems])
     ClipboardUtil::AddDataToPasteboard(provider->pasteboard_->get(), item);
 
-  return std::make_unique<OSExchangeData>(
+  return base::MakeUnique<OSExchangeData>(
       base::WrapUnique<OSExchangeData::Provider>(provider));
 }
 

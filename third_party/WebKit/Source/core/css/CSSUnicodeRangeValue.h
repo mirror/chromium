@@ -44,7 +44,7 @@ class CSSUnicodeRangeValue : public CSSValue {
 
   bool Equals(const CSSUnicodeRangeValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 

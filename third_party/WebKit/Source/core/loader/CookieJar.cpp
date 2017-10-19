@@ -42,7 +42,7 @@ namespace blink {
 
 static WebCookieJar* ToCookieJar(const Document* document) {
   if (!document || !document->GetFrame())
-    return nullptr;
+    return 0;
   return document->GetFrame()->Client()->CookieJar();
 }
 

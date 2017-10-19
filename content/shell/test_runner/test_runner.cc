@@ -240,7 +240,6 @@ class TestRunnerBindings : public gin::Wrappable<TestRunnerBindings> {
   void SetPopupBlockingEnabled(bool block_popups);
   void SetPrinting();
   void SetScriptsAllowed(bool allowed);
-  void SetShouldGeneratePixelResults(bool);
   void SetShouldStayOnPageAfterHandlingBeforeUnload(bool value);
   void SetSpellCheckResolvedCallback(v8::Local<v8::Function> callback);
   void SetStorageAllowed(bool allowed);
@@ -580,8 +579,6 @@ gin::ObjectTemplateBuilder TestRunnerBindings::GetObjectTemplateBuilder(
       .SetMethod("setPrinting", &TestRunnerBindings::SetPrinting)
       .SetMethod("setScriptsAllowed", &TestRunnerBindings::SetScriptsAllowed)
       .SetMethod("setScrollbarPolicy", &TestRunnerBindings::NotImplemented)
-      .SetMethod("setShouldGeneratePixelResults",
-                 &TestRunnerBindings::SetShouldGeneratePixelResults)
       .SetMethod(
           "setShouldStayOnPageAfterHandlingBeforeUnload",
           &TestRunnerBindings::SetShouldStayOnPageAfterHandlingBeforeUnload)
@@ -1216,11 +1213,6 @@ void TestRunnerBindings::SetPrinting() {
 void TestRunnerBindings::ClearPrinting() {
   if (runner_)
     runner_->ClearPrinting();
-}
-
-void TestRunnerBindings::SetShouldGeneratePixelResults(bool value) {
-  if (runner_)
-    runner_->setShouldGeneratePixelResults(value);
 }
 
 void TestRunnerBindings::SetShouldStayOnPageAfterHandlingBeforeUnload(

@@ -13,16 +13,15 @@
 #include "base/memory/weak_ptr.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/network.h"
-#include "content/public/common/network_service.mojom.h"
 #include "net/base/net_errors.h"
 #include "net/cookies/canonical_cookie.h"
 
 namespace net {
-class HttpRequestHeaders;
 class URLRequest;
 }  // namespace net
 
 namespace content {
+
 class DevToolsAgentHostImpl;
 class RenderFrameHostImpl;
 struct BeginNavigationParams;
@@ -45,8 +44,7 @@ class NetworkHandler : public DevToolsDomainHandler,
   static std::vector<NetworkHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(RenderProcessHost* process_host,
-                   RenderFrameHostImpl* frame_host) override;
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
 
   Response Enable(Maybe<int> max_total_size,
                   Maybe<int> max_resource_size) override;
@@ -79,8 +77,6 @@ class NetworkHandler : public DevToolsDomainHandler,
       std::unique_ptr<SetCookiesCallback> callback) override;
 
   Response SetUserAgentOverride(const std::string& user_agent) override;
-  Response SetExtraHTTPHeaders(
-      std::unique_ptr<Network::Headers> headers) override;
   Response CanEmulateNetworkConditions(bool* result) override;
   Response EmulateNetworkConditions(
       bool offline,
@@ -119,6 +115,7 @@ class NetworkHandler : public DevToolsDomainHandler,
                         net::Error error_code);
 
   bool enabled() const { return enabled_; }
+  std::string UserAgentOverride() const;
 
   Network::Frontend* frontend() const { return frontend_.get(); }
 
@@ -131,18 +128,13 @@ class NetworkHandler : public DevToolsDomainHandler,
                                     const std::string& interception_id);
   void InterceptedNavigationRequestFinished(const std::string& interception_id);
   bool ShouldCancelNavigation(const GlobalRequestID& global_request_id);
-  void AppendDevToolsHeaders(net::HttpRequestHeaders* headers);
 
  private:
-  void SetNetworkConditions(mojom::NetworkConditionsPtr conditions);
-
   std::unique_ptr<Network::Frontend> frontend_;
-  RenderProcessHost* process_;
   RenderFrameHostImpl* host_;
   bool enabled_;
   bool interception_enabled_;
   std::string user_agent_;
-  std::vector<std::pair<std::string, std::string>> extra_headers_;
   base::flat_map<std::string, GlobalRequestID> navigation_requests_;
   base::flat_set<GlobalRequestID> canceled_navigation_requests_;
   std::string host_id_;

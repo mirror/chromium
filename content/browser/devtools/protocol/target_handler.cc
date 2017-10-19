@@ -15,17 +15,13 @@ namespace protocol {
 namespace {
 
 std::unique_ptr<Target::TargetInfo> CreateInfo(DevToolsAgentHost* host) {
-  std::unique_ptr<Target::TargetInfo> target_info =
-      Target::TargetInfo::Create()
-          .SetTargetId(host->GetId())
-          .SetTitle(host->GetTitle())
-          .SetUrl(host->GetURL().spec())
-          .SetType(host->GetType())
-          .SetAttached(host->IsAttached())
-          .Build();
-  if (!host->GetOpenerId().empty())
-    target_info->SetOpenerId(host->GetOpenerId());
-  return target_info;
+  return Target::TargetInfo::Create()
+      .SetTargetId(host->GetId())
+      .SetTitle(host->GetTitle())
+      .SetUrl(host->GetURL().spec())
+      .SetType(host->GetType())
+      .SetAttached(host->IsAttached())
+      .Build();
 }
 
 }  // namespace
@@ -118,9 +114,8 @@ void TargetHandler::Wire(UberDispatcher* dispatcher) {
   Target::Dispatcher::wire(dispatcher, this);
 }
 
-void TargetHandler::SetRenderer(RenderProcessHost* process_host,
-                                RenderFrameHostImpl* frame_host) {
-  auto_attacher_.SetRenderFrameHost(frame_host);
+void TargetHandler::SetRenderFrameHost(RenderFrameHostImpl* render_frame_host) {
+  auto_attacher_.SetRenderFrameHost(render_frame_host);
 }
 
 Response TargetHandler::Disable() {
@@ -332,12 +327,6 @@ void TargetHandler::DevToolsAgentHostCreated(DevToolsAgentHost* host) {
     return;
   frontend_->TargetCreated(CreateInfo(host));
   reported_hosts_.insert(host);
-}
-
-void TargetHandler::DevToolsAgentHostNavigated(DevToolsAgentHost* host) {
-  if (reported_hosts_.find(host) == reported_hosts_.end())
-    return;
-  frontend_->TargetInfoChanged(CreateInfo(host));
 }
 
 void TargetHandler::DevToolsAgentHostDestroyed(DevToolsAgentHost* host) {

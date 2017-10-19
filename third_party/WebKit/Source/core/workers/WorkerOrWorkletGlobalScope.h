@@ -64,8 +64,7 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   virtual WorkerThread* GetThread() const = 0;
 
   // Available only when off-main-thread-fetch is enabled.
-  ResourceFetcher* Fetcher() const override;
-  ResourceFetcher* EnsureFetcher();
+  ResourceFetcher* GetResourceFetcher();
 
   WorkerClients* Clients() const { return worker_clients_.Get(); }
 
@@ -75,7 +74,7 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
 
   WorkerReportingProxy& ReportingProxy() { return reporting_proxy_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CrossThreadPersistent<WorkerClients> worker_clients_;

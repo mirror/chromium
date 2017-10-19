@@ -16,12 +16,39 @@ using GlobalMemoryDumpPtr = memory_instrumentation::mojom::GlobalMemoryDumpPtr;
 using ProcessMemoryDumpPtr =
     memory_instrumentation::mojom::ProcessMemoryDumpPtr;
 using OSMemDumpPtr = memory_instrumentation::mojom::OSMemDumpPtr;
-using PageInfoPtr = resource_coordinator::mojom::PageInfoPtr;
 using ProcessType = memory_instrumentation::mojom::ProcessType;
 using ProcessInfoPtr = resource_coordinator::mojom::ProcessInfoPtr;
 using ProcessInfoVector = std::vector<ProcessInfoPtr>;
 
 namespace {
+
+class ScopedMockRendererUptimeTracker : public metrics::RendererUptimeTracker {
+ public:
+  ScopedMockRendererUptimeTracker() {
+    previous_tracker_ =
+        RendererUptimeTracker::SetMockRendererUptimeTracker(this);
+  }
+
+  ~ScopedMockRendererUptimeTracker() override {
+    RendererUptimeTracker* tracker =
+        RendererUptimeTracker::SetMockRendererUptimeTracker(previous_tracker_);
+    DCHECK_EQ(this, tracker);
+  }
+
+  void SetProcessUptime(int pid, base::TimeDelta uptime) {
+    renderer_uptime_[pid] = uptime;
+  }
+
+  base::TimeDelta GetProcessUptime(int pid) override {
+    auto uptime = renderer_uptime_.find(pid);
+    CHECK(uptime != renderer_uptime_.end());
+    return uptime->second;
+  }
+
+ private:
+  std::map<int, base::TimeDelta> renderer_uptime_;
+  RendererUptimeTracker* previous_tracker_;
+};
 
 // Provide fake to surface ReceivedMemoryDump and ReceivedProcessInfos to public
 // visibility.
@@ -35,8 +62,10 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
 
   void ReceivedMemoryDump(
       bool success,
+      uint64_t dump_guid,
       memory_instrumentation::mojom::GlobalMemoryDumpPtr ptr) override {
-    ProcessMemoryMetricsEmitter::ReceivedMemoryDump(success, std::move(ptr));
+    ProcessMemoryMetricsEmitter::ReceivedMemoryDump(success, dump_guid,
+                                                    std::move(ptr));
   }
 
   void ReceivedProcessInfos(ProcessInfoVector process_infos) override {
@@ -53,17 +82,6 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
         return 1;
       default:
         return 0;
-    }
-  }
-
-  base::Optional<base::TimeDelta> GetProcessUptime(
-      const base::Time& now,
-      base::ProcessId pid) override {
-    switch (pid) {
-      case 401:
-        return base::TimeDelta::FromSeconds(21);
-      default:
-        return base::TimeDelta::FromSeconds(42);
     }
   }
 
@@ -116,13 +134,13 @@ base::flat_map<const char*, int64_t> GetExpectedBrowserMetrics() {
           {"Resident", 10},
           {"Malloc", 20},
           {"PrivateMemoryFootprint", 30},
-          {"Uptime", 42},
       },
       base::KEEP_FIRST_OF_DUPES);
 }
 
 void PopulateRendererMetrics(GlobalMemoryDumpPtr& global_dump,
                              base::flat_map<const char*, int64_t>& metrics_mb,
+                             ScopedMockRendererUptimeTracker* uptime_tracker,
                              base::ProcessId pid) {
   ProcessMemoryDumpPtr pmd(
       memory_instrumentation::mojom::ProcessMemoryDump::New());
@@ -133,6 +151,8 @@ void PopulateRendererMetrics(GlobalMemoryDumpPtr& global_dump,
       metrics_mb["PartitionAlloc"] * 1024;
   pmd->chrome_dump->blink_gc_total_kb = metrics_mb["BlinkGC"] * 1024;
   pmd->chrome_dump->v8_total_kb = metrics_mb["V8"] * 1024;
+  uptime_tracker->SetProcessUptime(
+      pid, base::TimeDelta::FromSeconds(metrics_mb["Uptime"]));
   OSMemDumpPtr os_dump =
       GetFakeOSMemDump(metrics_mb["Resident"] * 1024,
                        metrics_mb["PrivateMemoryFootprint"] * 1024);
@@ -143,22 +163,18 @@ void PopulateRendererMetrics(GlobalMemoryDumpPtr& global_dump,
 
 base::flat_map<const char*, int64_t> GetExpectedRendererMetrics() {
   return base::flat_map<const char*, int64_t>(
-      {{"ProcessType", static_cast<int64_t>(ProcessType::RENDERER)},
-       {"Resident", 110},
-       {"Malloc", 120},
-       {"PrivateMemoryFootprint", 130},
-       {"PartitionAlloc", 140},
-       {"BlinkGC", 150},
-       {"V8", 160},
-       {"NumberOfExtensions", 0},
-       {"Uptime", 42}},
+      {
+          {"ProcessType", static_cast<int64_t>(ProcessType::RENDERER)},
+          {"Resident", 110},
+          {"Malloc", 120},
+          {"PrivateMemoryFootprint", 130},
+          {"PartitionAlloc", 140},
+          {"BlinkGC", 150},
+          {"V8", 160},
+          {"NumberOfExtensions", 0},
+          {"Uptime", 10},
+      },
       base::KEEP_FIRST_OF_DUPES);
-}
-
-void AddPageMetrics(base::flat_map<const char*, int64_t>& expected_metrics) {
-  expected_metrics["IsVisible"] = true;
-  expected_metrics["TimeSinceLastNavigation"] = 20;
-  expected_metrics["TimeSinceLastVisibilityChange"] = 15;
 }
 
 void PopulateGpuMetrics(GlobalMemoryDumpPtr& global_dump,
@@ -185,20 +201,20 @@ base::flat_map<const char*, int64_t> GetExpectedGpuMetrics() {
           {"Malloc", 220},
           {"PrivateMemoryFootprint", 230},
           {"CommandBuffer", 240},
-          {"Uptime", 42},
       },
       base::KEEP_FIRST_OF_DUPES);
 }
 
 void PopulateMetrics(GlobalMemoryDumpPtr& global_dump,
                      ProcessType ptype,
-                     base::flat_map<const char*, int64_t>& metrics_mb) {
+                     base::flat_map<const char*, int64_t>& metrics_mb,
+                     ScopedMockRendererUptimeTracker* uptime_tracker) {
   switch (ptype) {
     case ProcessType::BROWSER:
       PopulateBrowserMetrics(global_dump, metrics_mb);
       return;
     case ProcessType::RENDERER:
-      PopulateRendererMetrics(global_dump, metrics_mb, 101);
+      PopulateRendererMetrics(global_dump, metrics_mb, uptime_tracker, 101);
       return;
     case ProcessType::GPU:
       PopulateGpuMetrics(global_dump, metrics_mb);
@@ -252,14 +268,8 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
     ukm::SourceId first_source_id = ukm::UkmRecorder::GetNewSourceID();
     ukm_recorder.UpdateSourceURL(first_source_id,
                                  GURL("http://www.url201.com/"));
-    PageInfoPtr page_info(resource_coordinator::mojom::PageInfo::New());
 
-    page_info->ukm_source_id = first_source_id;
-    page_info->is_visible = true;
-    page_info->time_since_last_visibility_change =
-        base::TimeDelta::FromSeconds(15);
-    page_info->time_since_last_navigation = base::TimeDelta::FromSeconds(20);
-    process_info->page_infos.push_back(std::move(page_info));
+    process_info->ukm_source_ids.push_back(first_source_id);
     process_infos.push_back(std::move(process_info));
   }
 
@@ -274,18 +284,9 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
                                  GURL("http://www.url2021.com/"));
     ukm_recorder.UpdateSourceURL(second_source_id,
                                  GURL("http://www.url2022.com/"));
-    PageInfoPtr page_info1(resource_coordinator::mojom::PageInfo::New());
-    page_info1->ukm_source_id = first_source_id;
-    page_info1->time_since_last_visibility_change =
-        base::TimeDelta::FromSeconds(11);
-    page_info1->time_since_last_navigation = base::TimeDelta::FromSeconds(21);
-    PageInfoPtr page_info2(resource_coordinator::mojom::PageInfo::New());
-    page_info2->ukm_source_id = second_source_id;
-    page_info2->time_since_last_visibility_change =
-        base::TimeDelta::FromSeconds(12);
-    page_info2->time_since_last_navigation = base::TimeDelta::FromSeconds(22);
-    process_info->page_infos.push_back(std::move(page_info1));
-    process_info->page_infos.push_back(std::move(page_info2));
+
+    process_info->ukm_source_ids.push_back(first_source_id);
+    process_info->ukm_source_ids.push_back(second_source_id);
 
     process_infos.push_back(std::move(process_info));
   }
@@ -316,6 +317,7 @@ class ProcessMemoryMetricsEmitterTest
   }
 
   ukm::TestAutoSetUkmRecorder test_ukm_recorder_;
+  ScopedMockRendererUptimeTracker uptime_tracker_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ProcessMemoryMetricsEmitterTest);
@@ -324,15 +326,16 @@ class ProcessMemoryMetricsEmitterTest
 TEST_P(ProcessMemoryMetricsEmitterTest, CollectsSingleProcessUKMs) {
   base::flat_map<const char*, int64_t> expected_metrics =
       GetExpectedProcessMetrics(GetParam());
+  uint64_t dump_guid = 333;
 
   GlobalMemoryDumpPtr global_dump(
       memory_instrumentation::mojom::GlobalMemoryDump::New());
-  PopulateMetrics(global_dump, GetParam(), expected_metrics);
+  PopulateMetrics(global_dump, GetParam(), expected_metrics, &uptime_tracker_);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
       new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
   emitter->ReceivedProcessInfos(ProcessInfoVector());
-  emitter->ReceivedMemoryDump(true, std::move(global_dump));
+  emitter->ReceivedMemoryDump(true, dump_guid, std::move(global_dump));
 
   EXPECT_EQ(2u, test_ukm_recorder_.entries_count());
   CheckMemoryUkmEntryMetrics(0, expected_metrics);
@@ -348,16 +351,16 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsExtensionProcessUKMs) {
   base::flat_map<const char*, int64_t> expected_metrics =
       GetExpectedRendererMetrics();
   expected_metrics["NumberOfExtensions"] = 1;
-  expected_metrics["Uptime"] = 21;
+  uint64_t dump_guid = 333;
 
   GlobalMemoryDumpPtr global_dump(
       memory_instrumentation::mojom::GlobalMemoryDump::New());
-  PopulateRendererMetrics(global_dump, expected_metrics, 401);
+  PopulateRendererMetrics(global_dump, expected_metrics, &uptime_tracker_, 401);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
       new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
   emitter->ReceivedProcessInfos(ProcessInfoVector());
-  emitter->ReceivedMemoryDump(true, std::move(global_dump));
+  emitter->ReceivedMemoryDump(true, dump_guid, std::move(global_dump));
 
   EXPECT_EQ(2u, test_ukm_recorder_.entries_count());
   CheckMemoryUkmEntryMetrics(0, expected_metrics);
@@ -368,20 +371,21 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsManyProcessUKMsSingleDump) {
       ProcessType::BROWSER, ProcessType::RENDERER, ProcessType::GPU,
       ProcessType::GPU,     ProcessType::RENDERER, ProcessType::BROWSER,
   };
+  uint64_t dump_guid = 333;
 
   GlobalMemoryDumpPtr global_dump(
       memory_instrumentation::mojom::GlobalMemoryDump::New());
   std::vector<base::flat_map<const char*, int64_t>> entries_metrics;
   for (const auto& ptype : entries_ptypes) {
     auto expected_metrics = GetExpectedProcessMetrics(ptype);
-    PopulateMetrics(global_dump, ptype, expected_metrics);
+    PopulateMetrics(global_dump, ptype, expected_metrics, &uptime_tracker_);
     entries_metrics.push_back(expected_metrics);
   }
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
       new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
   emitter->ReceivedProcessInfos(ProcessInfoVector());
-  emitter->ReceivedMemoryDump(true, std::move(global_dump));
+  emitter->ReceivedMemoryDump(true, dump_guid, std::move(global_dump));
 
   EXPECT_EQ(7u, test_ukm_recorder_.entries_count());
   for (size_t i = 0; i < entries_ptypes.size(); ++i) {
@@ -403,12 +407,11 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsManyProcessUKMsManyDumps) {
         memory_instrumentation::mojom::GlobalMemoryDump::New());
     for (const auto& ptype : entries_ptypes[i]) {
       auto expected_metrics = GetExpectedProcessMetrics(ptype);
-      PopulateMetrics(global_dump, ptype, expected_metrics);
-      expected_metrics.erase("TimeSinceLastVisible");
+      PopulateMetrics(global_dump, ptype, expected_metrics, &uptime_tracker_);
       entries_metrics.push_back(expected_metrics);
     }
     emitter->ReceivedProcessInfos(ProcessInfoVector());
-    emitter->ReceivedMemoryDump(true, std::move(global_dump));
+    emitter->ReceivedMemoryDump(true, i, std::move(global_dump));
   }
 
   EXPECT_EQ(8u, test_ukm_recorder_.entries_count());
@@ -422,13 +425,12 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ReceiveProcessInfoFirst) {
       memory_instrumentation::mojom::GlobalMemoryDump::New());
   base::flat_map<const char*, int64_t> expected_metrics =
       GetExpectedRendererMetrics();
-  AddPageMetrics(expected_metrics);
-  PopulateRendererMetrics(global_dump, expected_metrics, 201);
+  PopulateRendererMetrics(global_dump, expected_metrics, &uptime_tracker_, 201);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
       new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
   emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
-  emitter->ReceivedMemoryDump(true, std::move(global_dump));
+  emitter->ReceivedMemoryDump(true, 0xBEEF, std::move(global_dump));
 
   EXPECT_EQ(1,
             test_ukm_recorder_.CountEntries(
@@ -456,12 +458,11 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ReceiveProcessInfoSecond) {
       memory_instrumentation::mojom::GlobalMemoryDump::New());
   base::flat_map<const char*, int64_t> expected_metrics =
       GetExpectedRendererMetrics();
-  AddPageMetrics(expected_metrics);
-  PopulateRendererMetrics(global_dump, expected_metrics, 201);
+  PopulateRendererMetrics(global_dump, expected_metrics, &uptime_tracker_, 201);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
       new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
-  emitter->ReceivedMemoryDump(true, std::move(global_dump));
+  emitter->ReceivedMemoryDump(true, 0xBEEF, std::move(global_dump));
   emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
 
   EXPECT_EQ(1,
@@ -490,13 +491,13 @@ TEST_F(ProcessMemoryMetricsEmitterTest, ProcessInfoHasTwoURLs) {
       memory_instrumentation::mojom::GlobalMemoryDump::New());
   base::flat_map<const char*, int64_t> expected_metrics =
       GetExpectedRendererMetrics();
-  PopulateRendererMetrics(global_dump, expected_metrics, 200);
-  PopulateRendererMetrics(global_dump, expected_metrics, 201);
-  PopulateRendererMetrics(global_dump, expected_metrics, 202);
+  PopulateRendererMetrics(global_dump, expected_metrics, &uptime_tracker_, 200);
+  PopulateRendererMetrics(global_dump, expected_metrics, &uptime_tracker_, 201);
+  PopulateRendererMetrics(global_dump, expected_metrics, &uptime_tracker_, 202);
 
   scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
       new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
-  emitter->ReceivedMemoryDump(true, std::move(global_dump));
+  emitter->ReceivedMemoryDump(true, 0xBEEF, std::move(global_dump));
   emitter->ReceivedProcessInfos(GetProcessInfo(test_ukm_recorder_));
 
   // Check that if there are two URLs, neither is emitted.

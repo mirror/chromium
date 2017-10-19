@@ -70,7 +70,7 @@ cr.define('print_preview.ticket_items', function() {
           print_preview.ticket_items.MarginsTypeValue.NO_MARGINS) {
         return false;
       }
-      const microns = this.landscape_.getValue() ?
+      var microns = this.landscape_.getValue() ?
           this.mediaSize_.getValue().width_microns :
           this.mediaSize_.getValue().height_microns;
       if (microns < HeaderFooter.MINIMUM_HEIGHT_MICRONS_) {
@@ -82,7 +82,7 @@ cr.define('print_preview.ticket_items', function() {
           print_preview.ticket_items.MarginsTypeValue.MINIMUM) {
         return true;
       }
-      let margins;
+      var margins;
       if (this.marginsType_.getValue() ==
           print_preview.ticket_items.MarginsTypeValue.CUSTOM) {
         if (!this.customMargins_.isValid()) {
@@ -92,7 +92,7 @@ cr.define('print_preview.ticket_items', function() {
       } else {
         margins = this.getDocumentInfoInternal().margins;
       }
-      const orientEnum = print_preview.ticket_items.CustomMarginsOrientation;
+      var orientEnum = print_preview.ticket_items.CustomMarginsOrientation;
       return margins == null || margins.get(orientEnum.TOP) > 0 ||
           margins.get(orientEnum.BOTTOM) > 0;
     }

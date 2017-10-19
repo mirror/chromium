@@ -15,10 +15,6 @@ const base::Feature kOfflinePreviews{"OfflinePreviews",
 const base::Feature kClientLoFi{"ClientLoFi",
                                 base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enables the NoScript previews for Android.
-const base::Feature kNoScriptPreviews{"NoScriptPreviews",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Enables the Stale Previews timestamp on Previews infobars.
 const base::Feature kStalePreviewsTimestamp{"StalePreviewsTimestamp",
                                             base::FEATURE_ENABLED_BY_DEFAULT};

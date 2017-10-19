@@ -302,7 +302,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
     explicit RevealSelectionScope(Editor*);
     ~RevealSelectionScope();
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
 
    private:
     Member<Editor> editor_;
@@ -313,7 +313,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void SetTypingStyle(EditingStyle*);
   void ClearTypingStyle();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   Member<LocalFrame> frame_;

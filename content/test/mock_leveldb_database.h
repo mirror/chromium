@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_TEST_MOCK_LEVELDB_DATABASE_H_
-#define CONTENT_TEST_MOCK_LEVELDB_DATABASE_H_
-
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 
 namespace content {
@@ -59,5 +56,3 @@ class MockLevelDBDatabase : public leveldb::mojom::LevelDBDatabase {
 };
 
 }  // namespace content
-
-#endif  // CONTENT_TEST_MOCK_LEVELDB_DATABASE_H_

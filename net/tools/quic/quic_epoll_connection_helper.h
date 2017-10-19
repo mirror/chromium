@@ -37,6 +37,8 @@ class QuicEpollConnectionHelper : public QuicConnectionHelperInterface {
   // QuicEpollConnectionHelperInterface
   const QuicClock* GetClock() const override;
   QuicRandom* GetRandomGenerator() override;
+
+  QuicBufferAllocator* GetStreamFrameBufferAllocator() override;
   QuicBufferAllocator* GetStreamSendBufferAllocator() override;
 
  private:
@@ -44,9 +46,8 @@ class QuicEpollConnectionHelper : public QuicConnectionHelperInterface {
 
   const QuicEpollClock clock_;
   QuicRandom* random_generator_;
-  // Set up allocators.  They take up minimal memory before use.
-  // Allocator for stream send buffers.
-  QuicStreamBufferAllocator stream_buffer_allocator_;
+  // Set up both allocators.  They take up minimal memory before use.
+  QuicStreamBufferAllocator buffer_allocator_;
   SimpleBufferAllocator simple_buffer_allocator_;
   QuicAllocator allocator_type_;
 

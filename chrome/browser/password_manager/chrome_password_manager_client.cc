@@ -324,12 +324,8 @@ void ChromePasswordManagerClient::ShowManualFallbackForSaving(
 #if !defined(OS_ANDROID)
   PasswordsClientUIDelegate* manage_passwords_ui_controller =
       PasswordsClientUIDelegateFromWebContents(web_contents());
-  // There may be no UI controller for ChromeOS login page
-  // (see crbug.com/774676).
-  if (manage_passwords_ui_controller) {
-    manage_passwords_ui_controller->OnShowManualFallbackForSaving(
-        std::move(form_to_save), has_generated_password, is_update);
-  }
+  manage_passwords_ui_controller->OnShowManualFallbackForSaving(
+      std::move(form_to_save), has_generated_password, is_update);
 #endif  // !defined(OS_ANDROID)
 }
 
@@ -340,10 +336,7 @@ void ChromePasswordManagerClient::HideManualFallbackForSaving() {
 #if !defined(OS_ANDROID)
   PasswordsClientUIDelegate* manage_passwords_ui_controller =
       PasswordsClientUIDelegateFromWebContents(web_contents());
-  // There may be no UI controller for ChromeOS login page
-  // (see crbug.com/774676).
-  if (manage_passwords_ui_controller)
-    manage_passwords_ui_controller->OnHideManualFallbackForSaving();
+  manage_passwords_ui_controller->OnHideManualFallbackForSaving();
 #endif  // !defined(OS_ANDROID)
 }
 
@@ -480,7 +473,7 @@ void ChromePasswordManagerClient::LogPasswordReuseDetectedEvent() {
 #endif
 
 ukm::UkmRecorder* ChromePasswordManagerClient::GetUkmRecorder() {
-  return ukm::UkmRecorder::Get();
+  return g_browser_process->ukm_recorder();
 }
 
 ukm::SourceId ChromePasswordManagerClient::GetUkmSourceId() {

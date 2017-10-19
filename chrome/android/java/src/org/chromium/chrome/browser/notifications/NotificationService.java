@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.notifications;
 
-import android.annotation.TargetApi;
 import android.app.IntentService;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -15,7 +14,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.PersistableBundle;
 import android.os.StrictMode;
-import android.os.SystemClock;
 import android.util.Log;
 
 import org.chromium.base.ThreadUtils;
@@ -47,10 +45,8 @@ public class NotificationService extends IntentService {
                 // rather than GcmNetworkManager or FirebaseJobDispatcher since the JobScheduler
                 // allows us to execute immediately by setting an override deadline of zero
                 // milliseconds.
-                JobScheduler scheduler =
-                        (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+                // TODO(crbug.com/685210): UMA to check this does not introduce noticeable latency.
                 PersistableBundle extras = NotificationJobService.getJobExtrasFromIntent(intent);
-                putJobScheduledTimeInExtras(extras);
                 JobInfo job =
                         new JobInfo
                                 .Builder(TaskIds.NOTIFICATION_SERVICE_JOB_ID,
@@ -58,6 +54,8 @@ public class NotificationService extends IntentService {
                                 .setExtras(extras)
                                 .setOverrideDeadline(0)
                                 .build();
+                JobScheduler scheduler =
+                        (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
                 scheduler.schedule(job);
             } else {
                 // TODO(peter): Do we need to acquire a wake lock here?
@@ -65,12 +63,6 @@ public class NotificationService extends IntentService {
                 intent.setClass(context, NotificationService.class);
                 context.startService(intent);
             }
-        }
-
-        @TargetApi(Build.VERSION_CODES.N)
-        private static void putJobScheduledTimeInExtras(PersistableBundle extras) {
-            extras.putLong(NotificationConstants.EXTRA_JOB_SCHEDULED_TIME_MS,
-                    SystemClock.elapsedRealtime());
         }
     }
 

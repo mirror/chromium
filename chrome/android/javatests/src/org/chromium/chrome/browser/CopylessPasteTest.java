@@ -63,7 +63,8 @@ public class CopylessPasteTest {
     @Before
     public void setUp() throws Exception {
         // We have to set up the test server before starting the activity.
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
 
         mCallbackHelper = new CopylessHelper();
 

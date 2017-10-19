@@ -8,17 +8,21 @@
 namespace ui {
 namespace chromeos {
 
-enum class ModifierKey : int {
-  kSearchKey = 0,  // Customizable.
-  kControlKey,     // Customizable.
-  kAltKey,         // Customizable.
-  kVoidKey,
-  kCapsLockKey,   // Customizable.
-  kEscapeKey,     // Customizable.
-  kBackspaceKey,  // Customizable.
-  // IMPORTANT: Add new keys to the end, because the keys may have been stored
-  // in user preferences.
-  kNumModifierKeys,
+// TODO(crbug.com/772313): convert ModifierKey into a real enum class and remove
+// this scoping hack.
+struct ModifierKey {
+  enum ModifierKeyValue {
+    kSearchKey = 0,  // Customizable.
+    kControlKey,     // Customizable.
+    kAltKey,         // Customizable.
+    kVoidKey,
+    kCapsLockKey,   // Customizable.
+    kEscapeKey,     // Customizable.
+    kBackspaceKey,  // Customizable.
+    // IMPORTANT: Add new keys to the end, because the keys may have been stored
+    // in user preferences.
+    kNumModifierKeys,
+  };
 };
 
 }  // namespace chromeos

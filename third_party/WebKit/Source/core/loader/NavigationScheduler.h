@@ -76,7 +76,7 @@ class CORE_EXPORT NavigationScheduler final
   void StartTimer();
   void Cancel();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit NavigationScheduler(LocalFrame*);

@@ -11,7 +11,6 @@ with a traditional find-and-replace regexp:
 *   Constructing `scoped_ptr<T>` from `NULL`: <https://crbug.com/173286>
 *   Implicit conversions of `scoped_refptr<T>` to `T*`: <https://crbug.com/110610>
 *   Rename everything in Blink to follow Chromium style: <https://crbug.com/563793>
-*   Clean up of deprecated `base::Value` APIs: <https://crbug.com/581865>
 
 ## Caveats
 

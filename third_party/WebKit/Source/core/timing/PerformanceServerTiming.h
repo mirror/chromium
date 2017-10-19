@@ -44,7 +44,7 @@ class CORE_EXPORT PerformanceServerTiming final
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   const String name_;

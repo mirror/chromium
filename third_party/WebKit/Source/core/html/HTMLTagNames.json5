@@ -37,10 +37,7 @@
       name: "aside",
       interfaceName: "HTMLElement",
     },
-    {
-      name: "audio",
-      interfaceHeaderDir: "core/html/media",
-    },
+    "audio",
     {
       name: "b",
       interfaceName: "HTMLElement",
@@ -494,10 +491,7 @@
       name: "var",
       interfaceName: "HTMLElement",
     },
-    {
-      name: "video",
-      interfaceHeaderDir: "core/html/media",
-    },
+    "video",
     {
       name: "wbr",
       JSInterfaceName: "HTMLElement",

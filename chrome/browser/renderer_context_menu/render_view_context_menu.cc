@@ -38,7 +38,6 @@
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings.h"
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings_factory.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
-#include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile.h"
@@ -53,7 +52,6 @@
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
-#include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/translate/chrome_translate_client.h"
 #include "chrome/browser/translate/translate_service.h"
 #include "chrome/browser/ui/autofill/chrome_autofill_client.h"
@@ -82,7 +80,6 @@
 #include "components/metrics/proto/omnibox_input_type.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match.h"
-#include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/common/experiments.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
@@ -327,11 +324,10 @@ const struct UmaEnumCommandIdPair {
     {88, -1, IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN},
     {89, -1, IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP},
     {90, -1, IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS},
-    {91, -1, IDC_CONTENT_CONTENT_PICTUREINPICTURE},
     // Add new items here and use |enum_id| from the next line.
     // Also, add new items to RenderViewContextMenuItem enum in
     // tools/metrics/histograms/enums.xml.
-    {92, -1, 0},  // Must be the last. Increment |enum_id| when new IDC
+    {91, -1, 0},  // Must be the last. Increment |enum_id| when new IDC
                   // was added.
 };
 
@@ -1263,7 +1259,6 @@ void RenderViewContextMenu::AppendVideoItems() {
                                   IDS_CONTENT_CONTEXT_SAVEVIDEOAS);
   menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_COPYAVLOCATION,
                                   IDS_CONTENT_CONTEXT_COPYVIDEOLOCATION);
-  AppendPictureInPictureItem();
   AppendMediaRouterItem();
 }
 
@@ -1534,14 +1529,12 @@ void RenderViewContextMenu::AppendPasswordItems() {
                                     IDS_CONTENT_CONTEXT_FORCESAVEPASSWORD);
     add_separator = true;
   }
-  if (password_manager_util::ManualPasswordGenerationEnabled(
-          ProfileSyncServiceFactory::GetSyncServiceForBrowserContext(
-              source_web_contents_->GetBrowserContext()))) {
+  if (password_manager::ManualPasswordGenerationEnabled()) {
     menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_GENERATEPASSWORD,
                                     IDS_CONTENT_CONTEXT_GENERATEPASSWORD);
     add_separator = true;
   }
-  if (password_manager_util::ShowAllSavedPasswordsContextMenuEnabled()) {
+  if (password_manager::ShowAllSavedPasswordsContextMenuEnabled()) {
     menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS,
                                     IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
     add_separator = true;
@@ -1549,13 +1542,6 @@ void RenderViewContextMenu::AppendPasswordItems() {
 
   if (add_separator)
     menu_model_.AddSeparator(ui::NORMAL_SEPARATOR);
-}
-
-void RenderViewContextMenu::AppendPictureInPictureItem() {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnablePictureInPicture))
-    menu_model_.AddItemWithStringId(IDC_CONTENT_CONTENT_PICTUREINPICTURE,
-                                    IDS_CONTENT_CONTENT_PICTUREINPICTURE);
 }
 
 // Menu delegate functions -----------------------------------------------------
@@ -1750,8 +1736,6 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
       return IsRouteMediaEnabled();
 
     case IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN:
-    // TODO(apacible): Update PIP conditions when finalized.
-    case IDC_CONTENT_CONTENT_PICTUREINPICTURE:
       return true;
 
     default:
@@ -2029,13 +2013,8 @@ void RenderViewContextMenu::ExecuteCommand(int id, int event_flags) {
       break;
 
     case IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS:
-      password_manager_util::UserTriggeredShowAllSavedPasswordsFromContextMenu(
-          autofill::ChromeAutofillClient::FromWebContents(
-              source_web_contents_));
-      break;
-
-    case IDC_CONTENT_CONTENT_PICTUREINPICTURE:
-      ExecPictureInPicture();
+      autofill::ChromeAutofillClient::FromWebContents(source_web_contents_)
+          ->ExecuteCommand(autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
       break;
 
     default:
@@ -2613,17 +2592,6 @@ void RenderViewContextMenu::ExecProtocolHandlerSettings(int event_flags) {
       ForceNewTabDispositionFromEventFlags(event_flags);
   GURL url = chrome::GetSettingsUrl(chrome::kHandlerSettingsSubPage);
   OpenURL(url, GURL(), disposition, ui::PAGE_TRANSITION_LINK);
-}
-
-void RenderViewContextMenu::ExecPictureInPicture() {
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnablePictureInPicture))
-    return;
-
-  PictureInPictureWindowController* window_controller =
-      PictureInPictureWindowController::GetOrCreateForWebContents(
-          embedder_web_contents_);
-  window_controller->Show();
 }
 
 void RenderViewContextMenu::WriteURLToClipboard(const GURL& url) {

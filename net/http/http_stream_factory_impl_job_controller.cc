@@ -983,8 +983,7 @@ void HttpStreamFactoryImpl::JobController::OnAlternativeProxyJobFailed(
 
   // Need to mark alt proxy as broken regardless of whether the job is bound.
   ProxyDelegate* proxy_delegate = session_->context().proxy_delegate;
-  if (proxy_delegate && net_error != ERR_NETWORK_CHANGED &&
-      net_error != ERR_INTERNET_DISCONNECTED) {
+  if (proxy_delegate) {
     proxy_delegate->OnAlternativeProxyBroken(
         alternative_job_->alternative_proxy_server());
   }
@@ -1000,7 +999,7 @@ void HttpStreamFactoryImpl::JobController::ReportBrokenAlternativeService() {
 
   if (error_to_report == ERR_NETWORK_CHANGED ||
       error_to_report == ERR_INTERNET_DISCONNECTED) {
-    // No need to mark alternative service as broken.
+    // No need to mark alternative service or proxy as broken.
     return;
   }
 

@@ -14,8 +14,8 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/manifest_handlers/background_info.h"
-#include "extensions/renderer/api/automation/automation_api_helper.h"
 #include "extensions/renderer/console.h"
+#include "extensions/renderer/content_watcher.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/extension_bindings_system.h"
 #include "extensions/renderer/renderer_messaging_service.h"
@@ -105,10 +105,6 @@ ExtensionFrameHelper::ExtensionFrameHelper(content::RenderFrame* render_frame,
       did_create_current_document_element_(false),
       weak_ptr_factory_(this) {
   g_frame_helpers.Get().insert(this);
-  if (render_frame->IsMainFrame()) {
-    // Manages its own lifetime.
-    new AutomationApiHelper(render_frame);
-  }
 }
 
 ExtensionFrameHelper::~ExtensionFrameHelper() {
@@ -197,6 +193,14 @@ void ExtensionFrameHelper::ScheduleAtDocumentEnd(
 void ExtensionFrameHelper::ScheduleAtDocumentIdle(
     const base::Closure& callback) {
   document_idle_callbacks_.push_back(callback);
+}
+
+void ExtensionFrameHelper::DidMatchCSS(
+    const blink::WebVector<blink::WebString>& newly_matching_selectors,
+    const blink::WebVector<blink::WebString>& stopped_matching_selectors) {
+  extension_dispatcher_->content_watcher()->DidMatchCSS(
+      render_frame()->GetWebFrame(), newly_matching_selectors,
+      stopped_matching_selectors);
 }
 
 void ExtensionFrameHelper::DidStartProvisionalLoad(

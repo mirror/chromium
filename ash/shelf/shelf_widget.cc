@@ -6,7 +6,6 @@
 
 #include "ash/animation/animation_change_type.h"
 #include "ash/focus_cycler.h"
-#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
@@ -21,6 +20,7 @@
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
 #include "base/command_line.h"
+#include "chromeos/chromeos_switches.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/gfx/skbitmap_operations.h"
@@ -114,7 +114,8 @@ ShelfWidget::DelegateView::~DelegateView() {}
 
 // static
 bool ShelfWidget::IsUsingMdLoginShelf() {
-  return switches::IsUsingMdLogin() &&
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+             chromeos::switches::kShowMdLogin) &&
          (Shell::Get()->session_controller()->GetSessionState() ==
               session_manager::SessionState::LOCKED ||
           Shell::Get()->session_controller()->GetSessionState() ==
@@ -158,9 +159,7 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
       status_area_widget_(nullptr),
       delegate_view_(new DelegateView(this)),
       shelf_view_(new ShelfView(Shell::Get()->shelf_model(), shelf_, this)),
-      login_shelf_view_(
-          new LoginShelfView(RootWindowController::ForWindow(shelf_container)
-                                 ->lock_screen_action_background_controller())),
+      login_shelf_view_(new LoginShelfView()),
       background_animator_(SHELF_BACKGROUND_DEFAULT,
                            shelf_,
                            Shell::Get()->wallpaper_controller()),

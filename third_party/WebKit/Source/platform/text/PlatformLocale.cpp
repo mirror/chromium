@@ -186,7 +186,7 @@ Locale& Locale::DefaultLocale() {
   return *g_default_locale;
 }
 
-void Locale::ResetDefaultLocale() {
+void Locale::ResetDefautlLocale() {
   // This is safe because no one owns a Locale object returned by
   // DefaultLocale().
   delete g_default_locale;

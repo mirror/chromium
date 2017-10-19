@@ -8,14 +8,13 @@
 #include <string>
 
 #include "base/logging.h"
-#include "base/macros.h"
 #include "base/strings/string_util.h"
-#include "build/build_config.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/service_manager_connection.h"
 #include "media/mojo/interfaces/constants.mojom.h"
+#include "media/mojo/interfaces/media_service.mojom.h"
 #include "media/mojo/services/media_interface_provider.h"
 #include "services/service_manager/public/cpp/connector.h"
 
@@ -29,86 +28,12 @@
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "base/guid.h"
-#include "content/browser/media/cdm_storage_impl.h"
 #include "content/public/browser/cdm_registry.h"
 #include "content/public/common/cdm_info.h"
 #include "media/base/key_system_names.h"
-#include "mojo/public/cpp/bindings/interface_request.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
-#if defined(OS_MACOSX)
-#include "sandbox/mac/seatbelt_extension.h"
-#endif  // defined(OS_MACOSX)
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
-
-#if defined(OS_MACOSX)
-#include "media/mojo/interfaces/media_service_mac.mojom.h"
-#else
-#include "media/mojo/interfaces/media_service.mojom.h"
-#endif  // defined(OS_MACOSX)
+#endif
 
 namespace content {
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS) && defined(OS_MACOSX)
-
-namespace {
-
-#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-// TODO(xhwang): Move this to a common place.
-const base::FilePath::CharType kSignatureFileExtension[] =
-    FILE_PATH_LITERAL(".sig");
-
-// Returns the signature file path given the |file_path|. This function should
-// only be used when the signature file and the file are located in the same
-// directory, which is the case for the CDM and CDM adapter.
-base::FilePath GetSigFilePath(const base::FilePath& file_path) {
-  return file_path.AddExtension(kSignatureFileExtension);
-}
-#endif  // BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-
-class SeatbeltExtensionTokenProviderImpl
-    : public media::mojom::SeatbeltExtensionTokenProvider {
- public:
-  explicit SeatbeltExtensionTokenProviderImpl(const base::FilePath& cdm_path)
-      : cdm_path_(cdm_path) {}
-  void GetTokens(GetTokensCallback callback) final {
-    std::vector<sandbox::SeatbeltExtensionToken> tokens;
-
-    // Allow the CDM to be loaded in the CDM service process.
-    auto cdm_token = sandbox::SeatbeltExtension::Issue(
-        sandbox::SeatbeltExtension::FILE_READ, cdm_path_.value());
-    if (cdm_token) {
-      tokens.push_back(std::move(*cdm_token));
-    } else {
-      std::move(callback).Run({});
-      return;
-    }
-
-#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-    // If CDM host verification is enabled, also allow to open the CDM signature
-    // file.
-    auto cdm_sig_token =
-        sandbox::SeatbeltExtension::Issue(sandbox::SeatbeltExtension::FILE_READ,
-                                          GetSigFilePath(cdm_path_).value());
-    if (cdm_sig_token) {
-      tokens.push_back(std::move(*cdm_sig_token));
-    } else {
-      std::move(callback).Run({});
-      return;
-    }
-#endif  // BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-
-    std::move(callback).Run(std::move(tokens));
-  }
-
- private:
-  base::FilePath cdm_path_;
-
-  DISALLOW_COPY_AND_ASSIGN(SeatbeltExtensionTokenProviderImpl);
-};
-
-}  // namespace
-
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS) && defined(OS_MACOSX)
 
 MediaInterfaceProxy::MediaInterfaceProxy(
     RenderFrameHost* render_frame_host,
@@ -173,7 +98,7 @@ void MediaInterfaceProxy::CreateCdm(
 }
 
 service_manager::mojom::InterfaceProviderPtr
-MediaInterfaceProxy::GetFrameServices(const std::string& cdm_file_system_id) {
+MediaInterfaceProxy::GetFrameServices() {
   // Register frame services.
   service_manager::mojom::InterfaceProviderPtr interfaces;
 
@@ -190,12 +115,6 @@ MediaInterfaceProxy::GetFrameServices(const std::string& cdm_file_system_id) {
           ->GetURLRequestContext();
   provider->registry()->AddInterface(base::Bind(
       &ProvisionFetcherImpl::Create, base::RetainedRef(context_getter)));
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  DCHECK(!cdm_file_system_id.empty());
-  provider->registry()->AddInterface(base::Bind(
-      &CdmStorageImpl::Create, render_frame_host_, cdm_file_system_id));
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #endif  // BUILDFLAG(ENABLE_MOJO_CDM)
 
   GetContentClient()->browser()->ExposeInterfacesToMediaService(
@@ -228,7 +147,7 @@ void MediaInterfaceProxy::ConnectToMediaService() {
   connector->BindInterface(media::mojom::kMediaServiceName, &media_service);
 
   media_service->CreateInterfaceFactory(MakeRequest(&interface_factory_ptr_),
-                                        GetFrameServices(std::string()));
+                                        GetFrameServices());
 
   interface_factory_ptr_.set_connection_error_handler(
       base::BindOnce(&MediaInterfaceProxy::OnMediaServiceConnectionError,
@@ -272,7 +191,6 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory(
   std::string cdm_guid = service_manager::mojom::kInheritUserID;
 
   base::FilePath cdm_path;
-  std::string cdm_file_system_id;
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   std::unique_ptr<CdmInfo> cdm_info = GetCdmInfoForKeySystem(key_system);
@@ -288,26 +206,20 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory(
     NOTREACHED() << "Invalid CDM GUID " << cdm_info->guid;
     return nullptr;
   }
-  if (!CdmStorageImpl::IsValidCdmFileSystemId(cdm_info->file_system_id)) {
-    NOTREACHED() << "Invalid file system ID " << cdm_info->file_system_id;
-    return nullptr;
-  }
   cdm_guid = cdm_info->guid;
   cdm_path = cdm_info->path;
-  cdm_file_system_id = cdm_info->file_system_id;
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
   auto found = cdm_interface_factory_map_.find(cdm_guid);
   if (found != cdm_interface_factory_map_.end())
     return found->second.get();
 
-  return ConnectToCdmService(cdm_guid, cdm_path, cdm_file_system_id);
+  return ConnectToCdmService(cdm_guid, cdm_path);
 }
 
 media::mojom::InterfaceFactory* MediaInterfaceProxy::ConnectToCdmService(
     const std::string& cdm_guid,
-    const base::FilePath& cdm_path,
-    const std::string& cdm_file_system_id) {
+    const base::FilePath& cdm_path) {
   DVLOG(1) << __func__ << ": cdm_guid = " << cdm_guid;
 
   DCHECK(!cdm_interface_factory_map_.count(cdm_guid));
@@ -321,22 +233,13 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::ConnectToCdmService(
   connector->BindInterface(identity, &media_service);
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#if defined(OS_MACOSX)
   // LoadCdm() should always be called before CreateInterfaceFactory().
-  media::mojom::SeatbeltExtensionTokenProviderPtr token_provider_ptr;
-  mojo::MakeStrongBinding(
-      std::make_unique<SeatbeltExtensionTokenProviderImpl>(cdm_path),
-      mojo::MakeRequest(&token_provider_ptr));
-
-  media_service->LoadCdm(cdm_path, std::move(token_provider_ptr));
-#else
   media_service->LoadCdm(cdm_path);
-#endif  // defined(OS_MACOSX)
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
   InterfaceFactoryPtr interface_factory_ptr;
   media_service->CreateInterfaceFactory(MakeRequest(&interface_factory_ptr),
-                                        GetFrameServices(cdm_file_system_id));
+                                        GetFrameServices());
   interface_factory_ptr.set_connection_error_handler(
       base::BindOnce(&MediaInterfaceProxy::OnCdmServiceConnectionError,
                      base::Unretained(this), cdm_guid));

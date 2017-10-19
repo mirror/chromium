@@ -74,7 +74,7 @@ void PagePopupSupplement::Uninstall(LocalFrame& frame) {
   frame.RemoveSupplement(SupplementName());
 }
 
-void PagePopupSupplement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PagePopupSupplement) {
   visitor->Trace(controller_);
   Supplement<LocalFrame>::Trace(visitor);
 }

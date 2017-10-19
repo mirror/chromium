@@ -84,10 +84,10 @@ class Port(object):
         # work until we need to test and support baselines across multiple OS versions.
         ('retina', 'x86'),
 
+        ('mac10.9', 'x86'),
         ('mac10.10', 'x86'),
         ('mac10.11', 'x86'),
         ('mac10.12', 'x86'),
-        ('mac10.13', 'x86'),
         ('win7', 'x86'),
         ('win10', 'x86'),
         ('trusty', 'x86_64'),
@@ -100,7 +100,7 @@ class Port(object):
     )
 
     CONFIGURATION_SPECIFIER_MACROS = {
-        'mac': ['retina', 'mac10.10', 'mac10.11', 'mac10.12', 'mac10.13'],
+        'mac': ['retina', 'mac10.9', 'mac10.10', 'mac10.11', 'mac10.12'],
         'win': ['win7', 'win10'],
         'linux': ['trusty'],
         'android': ['kitkat'],
@@ -172,11 +172,11 @@ class Port(object):
             self._name, self._version, self._architecture, self._test_configuration)
 
     def primary_driver_flag(self):
-        """Returns the driver flag that is used for flag-specific expectations and baselines. This
-           is the flag in LayoutTests/additional-driver-flag.setting, if present, otherwise the
-           first flag passed by --additional-driver-flag.
+        """Returns the driver flag that is used for flag-specific expectations
+           and baselines.  This is the flag in LayoutTests/rwt.flag if present,
+           otherwise the first flag passed by --additional-driver-flag.
         """
-        flag_file = self._filesystem.join(self.layout_tests_dir(), 'additional-driver-flag.setting')
+        flag_file = self._filesystem.join(self.layout_tests_dir(), 'rwt.flag')
         if self._filesystem.exists(flag_file):
             flag = self._filesystem.read_text_file(flag_file).strip()
             if flag:

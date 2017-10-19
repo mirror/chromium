@@ -10,7 +10,7 @@ This is a work in progress.  It currently supports the following flow for
 regenerating a flag-specific expectations file from scratch:
 
 1. make a local git branch
-2. echo '--your-flag' > third_party/WebKit/LayoutTests/additional-driver-flag.setting
+2. echo '--your-flag' > third_party/WebKit/LayoutTests/rwt.flag
 3. rm third_party/WebKit/LayoutTests/FlagExpectations/your-flag
 4. git cl upload
 5. git cl try -b linux_chromium_rel_ng -b win_chromium_rel_ng -b mac_chromium_rel_ng
@@ -91,7 +91,7 @@ class TryFlag(object):
             self._host.print_('-- %s: %s/results.html' % (
                 BUILDERS[build.builder_name].version,
                 buildbot.results_url(build.builder_name, build.build_number)))
-            results = buildbot.fetch_results(build, True)
+            results = buildbot.fetch_results(build, full=True)
             results.for_each_test(
                 lambda result, b=build: self._process_result(b, result))
 

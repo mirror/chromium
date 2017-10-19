@@ -41,7 +41,7 @@ class MODULES_EXPORT ScreenOrientationControllerImpl final
   static void ProvideTo(LocalFrame&, WebScreenOrientationClient*);
   static ScreenOrientationControllerImpl* From(LocalFrame&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class MediaControlsOrientationLockAndRotateToFullscreenDelegateTest;

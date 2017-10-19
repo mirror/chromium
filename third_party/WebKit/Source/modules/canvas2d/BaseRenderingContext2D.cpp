@@ -11,9 +11,8 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
-#include "core/html/TextMetrics.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "core/svg/SVGImageElement.h"
@@ -749,7 +748,7 @@ void BaseRenderingContext2D::ClipInternal(const Path& path,
   c->clipPath(sk_path, SkClipOp::kIntersect,
               clip_antialiasing_ == kAntiAliased);
   if (CanvasHeuristicParameters::kComplexClipsAreExpensive &&
-      !sk_path.isRect(nullptr) && HasImageBuffer()) {
+      !sk_path.isRect(0) && HasImageBuffer()) {
     GetImageBuffer()->SetHasExpensiveOp();
   }
 }
@@ -1085,7 +1084,7 @@ void BaseRenderingContext2D::DrawImageInternal(PaintCanvas* c,
     image_flags.setAntiAlias(ShouldDrawImageAntialiased(dst_rect));
     image->Draw(c, image_flags, dst_rect, src_rect,
                 kDoNotRespectImageOrientation,
-                Image::kDoNotClampImageToSourceRect, Image::kSyncDecode);
+                Image::kDoNotClampImageToSourceRect);
   } else {
     c->save();
     c->clipRect(dst_rect);
@@ -1161,11 +1160,6 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
           CustomCountHistogram, scoped_us_counter_image_bitmap_gpu,
           ("Blink.Canvas.DrawImage.ImageBitmap.GPU", 0, 10000000, 50));
       timer.emplace(scoped_us_counter_image_bitmap_gpu);
-    } else if (image_source->IsOffscreenCanvas()) {
-      DEFINE_THREAD_SAFE_STATIC_LOCAL(
-          CustomCountHistogram, scoped_us_counter_offscreencanvas_gpu,
-          ("Blink.Canvas.DrawImage.OffscreenCanvas.GPU", 0, 10000000, 50));
-      timer.emplace(scoped_us_counter_offscreencanvas_gpu);
     } else {
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, scoped_us_counter_others_gpu,
@@ -1220,11 +1214,6 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
           CustomCountHistogram, scoped_us_counter_image_bitmap_cpu,
           ("Blink.Canvas.DrawImage.ImageBitmap.CPU", 0, 10000000, 50));
       timer.emplace(scoped_us_counter_image_bitmap_cpu);
-    } else if (image_source->IsOffscreenCanvas()) {
-      DEFINE_THREAD_SAFE_STATIC_LOCAL(
-          CustomCountHistogram, scoped_us_counter_offscreencanvas_cpu,
-          ("Blink.Canvas.DrawImage.OffscreenCanvas.CPU", 0, 10000000, 50));
-      timer.emplace(scoped_us_counter_offscreencanvas_cpu);
     } else {
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, scoped_us_counter_others_cpu,
@@ -1352,7 +1341,7 @@ void BaseRenderingContext2D::drawImage(ScriptState* script_state,
 
 void BaseRenderingContext2D::ClearCanvas() {
   FloatRect canvas_rect(0, 0, Width(), Height());
-  CheckOverdraw(canvas_rect, nullptr, CanvasRenderingContext2DState::kNoImage,
+  CheckOverdraw(canvas_rect, 0, CanvasRenderingContext2DState::kNoImage,
                 kClipFill);
   PaintCanvas* c = DrawingCanvas();
   if (c)
@@ -1738,7 +1727,7 @@ void BaseRenderingContext2D::putImageData(ImageData* data,
   IntRect source_rect(dest_rect);
   source_rect.Move(-dest_offset);
 
-  CheckOverdraw(dest_rect, nullptr, CanvasRenderingContext2DState::kNoImage,
+  CheckOverdraw(dest_rect, 0, CanvasRenderingContext2DState::kNoImage,
                 kUntransformedUnclippedFill);
 
   // Color / format convert ImageData to canvas settings if needed
@@ -1866,8 +1855,39 @@ void BaseRenderingContext2D::CheckOverdraw(
 
 float BaseRenderingContext2D::GetFontBaseline(
     const FontMetrics& font_metrics) const {
-  return TextMetrics::GetFontBaseline(GetState().GetTextBaseline(),
-                                      font_metrics);
+  // If the font is so tiny that the lroundf operations result in two
+  // different types of text baselines to return the same baseline, use
+  // floating point metrics (crbug.com/338908).
+  // If you changed the heuristic here, for consistency please also change it
+  // in SimpleFontData::platformInit().
+  bool use_float_ascent_descent =
+      font_metrics.Ascent() < 3 || font_metrics.Height() < 2;
+  switch (GetState().GetTextBaseline()) {
+    case kTopTextBaseline:
+      return use_float_ascent_descent ? font_metrics.FloatAscent()
+                                      : font_metrics.Ascent();
+    case kHangingTextBaseline:
+      // According to
+      // http://wiki.apache.org/xmlgraphics-fop/LineLayout/AlignmentHandling
+      // "FOP (Formatting Objects Processor) puts the hanging baseline at 80% of
+      // the ascender height"
+      return use_float_ascent_descent ? (font_metrics.FloatAscent() * 4.0) / 5.0
+                                      : (font_metrics.Ascent() * 4) / 5;
+    case kBottomTextBaseline:
+    case kIdeographicTextBaseline:
+      return use_float_ascent_descent ? -font_metrics.FloatDescent()
+                                      : -font_metrics.Descent();
+    case kMiddleTextBaseline:
+      return use_float_ascent_descent
+                 ? -font_metrics.FloatDescent() +
+                       font_metrics.FloatHeight() / 2.0
+                 : -font_metrics.Descent() + font_metrics.Height() / 2;
+    case kAlphabeticTextBaseline:
+    default:
+      // Do nothing.
+      break;
+  }
+  return 0;
 }
 
 String BaseRenderingContext2D::textAlign() const {
@@ -1901,7 +1921,7 @@ BaseRenderingContext2D::GetUsage() {
   return usage_counters_;
 }
 
-void BaseRenderingContext2D::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BaseRenderingContext2D) {
   visitor->Trace(state_stack_);
 }
 

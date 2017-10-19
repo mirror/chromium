@@ -37,6 +37,7 @@
 #include "core/animation/ElementAnimations.h"
 #include "core/animation/InvalidatableInterpolation.h"
 #include "core/animation/KeyframeEffect.h"
+#include "core/animation/LegacyStyleInterpolation.h"
 #include "core/animation/TransitionInterpolation.h"
 #include "core/animation/animatable/AnimatableValue.h"
 #include "core/animation/css/CSSAnimatableValueFactory.h"
@@ -403,13 +404,6 @@ void StyleResolver::MatchAuthorRulesV0(const Element& element,
   collector.SortAndTransferMatchedRules();
 }
 
-void StyleResolver::MatchUserRules(ElementRuleCollector& collector) {
-  collector.ClearMatchedRules();
-  GetDocument().GetStyleEngine().CollectMatchingUserRules(collector);
-  collector.SortAndTransferMatchedRules();
-  collector.FinishAddingUserRules();
-}
-
 void StyleResolver::MatchUARules(ElementRuleCollector& collector) {
   collector.SetMatchingUARules(true);
 
@@ -445,7 +439,6 @@ void StyleResolver::MatchAllRules(StyleResolverState& state,
                                   ElementRuleCollector& collector,
                                   bool include_smil_properties) {
   MatchUARules(collector);
-  MatchUserRules(collector);
 
   // Now check author rules, beginning first with presentational attributes
   // mapped from HTML.
@@ -889,7 +882,6 @@ bool StyleResolver::PseudoStyleForElementInternal(
     collector.SetPseudoStyleRequest(pseudo_style_request);
 
     MatchUARules(collector);
-    MatchUserRules(collector);
     MatchAuthorRules(*state.GetElement(), collector);
     collector.FinishAddingAuthorRulesForTreeScope();
 
@@ -908,7 +900,7 @@ bool StyleResolver::PseudoStyleForElementInternal(
 
     // FIXME: Passing 0 as the Element* introduces a lot of complexity
     // in the StyleAdjuster::AdjustComputedStyle code.
-    StyleAdjuster::AdjustComputedStyle(state, nullptr);
+    StyleAdjuster::AdjustComputedStyle(state, 0);
 
     UpdateBaseComputedStyle(state, pseudo_element);
   }
@@ -918,7 +910,7 @@ bool StyleResolver::PseudoStyleForElementInternal(
   // require adjustment to have happened before deciding which properties to
   // transition.
   if (ApplyAnimatedStandardProperties(state, pseudo_element))
-    StyleAdjuster::AdjustComputedStyle(state, nullptr);
+    StyleAdjuster::AdjustComputedStyle(state, 0);
 
   GetDocument().GetStyleEngine().IncStyleForElementCount();
   INCREMENT_STYLE_STATS_COUNTER(GetDocument().GetStyleEngine(),
@@ -1087,10 +1079,8 @@ void StyleResolver::CollectPseudoRulesForElement(
     unsigned rules_to_include) {
   collector.SetPseudoStyleRequest(PseudoStyleRequest(pseudo_id));
 
-  if (rules_to_include & kUAAndUserCSSRules) {
+  if (rules_to_include & kUAAndUserCSSRules)
     MatchUARules(collector);
-    MatchUserRules(collector);
-  }
 
   if (rules_to_include & kAuthorCSSRules) {
     collector.SetSameOriginOnly(!(rules_to_include & kCrossOriginCSSRules));
@@ -1264,8 +1254,10 @@ void StyleResolver::ApplyAnimatedStandardProperties(
       CSSInterpolationTypesMap map(state.GetDocument().GetPropertyRegistry());
       CSSInterpolationEnvironment environment(map, state, nullptr);
       InvalidatableInterpolation::ApplyStack(entry.value, environment);
-    } else {
+    } else if (interpolation.IsTransitionInterpolation()) {
       ToTransitionInterpolation(interpolation).Apply(state);
+    } else {
+      ToLegacyStyleInterpolation(interpolation).Apply(state);
     }
   }
 }
@@ -1861,10 +1853,6 @@ void StyleResolver::ApplyMatchedStandardProperties(
     ApplyMatchedProperties<kHighPropertyPriority, kCheckNeedsApplyPass>(
         state, range, true, apply_inherited_only, needs_apply_pass);
   }
-  for (auto range : ImportantUserRanges(match_result)) {
-    ApplyMatchedProperties<kHighPropertyPriority, kCheckNeedsApplyPass>(
-        state, range, true, apply_inherited_only, needs_apply_pass);
-  }
   ApplyMatchedProperties<kHighPropertyPriority, kCheckNeedsApplyPass>(
       state, match_result.UaRules(), true, apply_inherited_only,
       needs_apply_pass);
@@ -1915,16 +1903,9 @@ void StyleResolver::ApplyMatchedStandardProperties(
   // Now do the author and user normal priority properties and all the
   // !important properties.
   ApplyMatchedProperties<kLowPropertyPriority, kCheckNeedsApplyPass>(
-      state, match_result.UserRules(), false, apply_inherited_only,
-      needs_apply_pass);
-  ApplyMatchedProperties<kLowPropertyPriority, kCheckNeedsApplyPass>(
       state, match_result.AuthorRules(), false, apply_inherited_only,
       needs_apply_pass);
   for (auto range : ImportantAuthorRanges(match_result)) {
-    ApplyMatchedProperties<kLowPropertyPriority, kCheckNeedsApplyPass>(
-        state, range, true, apply_inherited_only, needs_apply_pass);
-  }
-  for (auto range : ImportantUserRanges(match_result)) {
     ApplyMatchedProperties<kLowPropertyPriority, kCheckNeedsApplyPass>(
         state, range, true, apply_inherited_only, needs_apply_pass);
   }
@@ -2043,7 +2024,7 @@ void StyleResolver::UpdateMediaType() {
   }
 }
 
-void StyleResolver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleResolver) {
   visitor->Trace(matched_properties_cache_);
   visitor->Trace(selector_filter_);
   visitor->Trace(document_);

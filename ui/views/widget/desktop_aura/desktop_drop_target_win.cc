@@ -149,7 +149,7 @@ void DesktopDropTargetWin::Translate(
     return;
 
   data->reset(new OSExchangeData(
-      std::make_unique<OSExchangeDataProviderWin>(data_object)));
+      base::MakeUnique<OSExchangeDataProviderWin>(data_object)));
   location = root_location;
   aura::Window::ConvertPointToTarget(root_window_, target_window_, &location);
   event->reset(new ui::DropTargetEvent(

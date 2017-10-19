@@ -51,10 +51,10 @@
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/forms/HTMLFormElement.h"
 #include "core/html/forms/HTMLInputElement.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "core/html_names.h"
 #include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
@@ -355,7 +355,7 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
     // in that case. See https://crbug.com/534561
     WebSecurityOrigin origin = web_view_->MainFrame()->GetSecurityOrigin();
     if (!origin.IsNull())
-      data.page_url = KURL(origin.ToString());
+      data.page_url = KURL(kParsedURLString, origin.ToString());
   } else {
     data.page_url =
         UrlFromFrame(ToLocalFrame(web_view_->GetPage()->MainFrame()));

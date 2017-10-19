@@ -1091,8 +1091,7 @@
                 "description": "Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets the current virtual time policy.  Note this supersedes any previous time budget.",
                 "parameters": [
                     { "name": "policy", "$ref": "VirtualTimePolicy" },
-                    { "name": "budget", "type": "integer", "optional": true, "description": "If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent." },
-                    { "name": "maxVirtualTimeTaskStarvationCount", "type": "integer", "optional": true, "description": "If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock." }
+                    { "name": "budget", "type": "integer", "optional": true, "description": "If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent." }
                 ],
                 "experimental": true
             },
@@ -3835,8 +3834,7 @@
                     { "name": "type", "type": "string" },
                     { "name": "title", "type": "string" },
                     { "name": "url", "type": "string" },
-                    { "name": "attached", "type": "boolean", "description": "Whether the target has an attached client." },
-                    { "name": "openerId", "optional": true, "$ref": "TargetID", "description": "Opener target Id" }
+                    { "name": "attached", "type": "boolean", "description": "Whether the target has an attached client." }
                 ]
             },
             {
@@ -4271,8 +4269,7 @@
                     { "name": "nativeVirtualKeyCode", "type": "integer", "optional": true, "description": "Native virtual key code (default: 0)." },
                     { "name": "autoRepeat", "type": "boolean", "optional": true, "description": "Whether the event was generated from auto repeat (default: false)." },
                     { "name": "isKeypad", "type": "boolean", "optional": true, "description": "Whether the event was generated from the keypad (default: false)." },
-                    { "name": "isSystemKey", "type": "boolean", "optional": true, "description": "Whether the event was a system key event (default: false)." },
-                    { "name": "location", "type": "integer", "optional": true, "experimental": true, "description": "Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default: 0)." }
+                    { "name": "isSystemKey", "type": "boolean", "optional": true, "description": "Whether the event was a system key event (default: false)." }
                 ],
                 "description": "Dispatches a key event to the page."
             },
@@ -5227,10 +5224,6 @@
             }
         ],
         "commands": [
-            {
-                "name": "close",
-                "description": "Close browser gracefully."
-            },
             {
                 "name": "getWindowForTarget",
                 "description": "Get the browser window that contains the devtools target.",

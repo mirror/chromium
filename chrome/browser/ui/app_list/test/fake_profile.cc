@@ -190,6 +190,11 @@ chrome_browser_net::Predictor* FakeProfile::GetNetworkPredictor() {
   return nullptr;
 }
 
+void FakeProfile::ClearNetworkingHistorySince(
+    base::Time time,
+    const base::Closure& completion) {
+}
+
 GURL FakeProfile::GetHomePage() {
   return GURL();
 }

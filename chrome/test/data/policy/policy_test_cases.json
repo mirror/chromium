@@ -859,16 +859,6 @@
     ]
   },
 
-  "NtlmV2Enabled": {
-    "os": ["linux", "mac", "chromeos", "android"],
-    "test_policy": { "NtlmV2Enabled": true },
-    "pref_mappings": [
-      { "pref": "auth.ntlm_v2_enabled",
-        "local_state": true
-      }
-    ]
-  },
-
   "ExtensionInstallBlacklist": {
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "ExtensionInstallBlacklist": ["*"] },
@@ -3290,6 +3280,15 @@
     ]
   },
 
+  "DeviceUserAvatarSettings": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "allow-videos": true
+    },
+    "pref_mappings": [
+      { "pref": "cros.allow_user_avatar_videos"}
+    ]
+  },
 
   "----- Chrome Frame policies -------------------------------------------": {},
 

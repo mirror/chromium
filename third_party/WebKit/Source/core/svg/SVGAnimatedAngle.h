@@ -60,7 +60,7 @@ class SVGAnimatedAngle final : public SVGAnimatedProperty<SVGAngle>,
   void SetAnimatedValue(SVGPropertyBase*) override;
   void AnimationEnded() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 

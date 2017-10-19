@@ -149,7 +149,7 @@ class LoggingChangeDelegate : public SyncManager::ChangeDelegate {
                 << "): " << ValueToString(*change_value);
       if (it->action != ChangeRecord::ACTION_DELETE) {
         ReadNode node(trans);
-        DCHECK_EQ(node.InitByIdLookup(it->id), BaseNode::INIT_OK);
+        CHECK_EQ(node.InitByIdLookup(it->id), BaseNode::INIT_OK);
         std::unique_ptr<base::DictionaryValue> details(node.ToValue());
         VLOG(1) << "Details: " << ValueToString(*details);
       }
@@ -347,8 +347,7 @@ int SyncClientMain(int argc, char* argv[]) {
 
   // Set up database directory for the syncer.
   base::ScopedTempDir database_dir;
-  bool success = database_dir.CreateUniqueTempDir();
-  DCHECK(success);
+  CHECK(database_dir.CreateUniqueTempDir());
 
   // Developers often add types to ModelTypeSet::All() before the server
   // supports them.  We need to be explicit about which types we want here.
@@ -436,9 +435,8 @@ int SyncClientMain(int argc, char* argv[]) {
   std::unique_ptr<InvalidatorShim> shim(
       new InvalidatorShim(sync_manager.get()));
   invalidator->RegisterHandler(shim.get());
-  success = invalidator->UpdateRegisteredIds(
-      shim.get(), ModelTypeSetToObjectIdSet(model_types));
-  DCHECK(success);
+  CHECK(invalidator->UpdateRegisteredIds(
+      shim.get(), ModelTypeSetToObjectIdSet(model_types)));
   ModelTypeConnector* model_type_connector =
       sync_manager->GetModelTypeConnector();
   for (ModelTypeSet::Iterator it = model_types.First(); it.Good(); it.Inc()) {

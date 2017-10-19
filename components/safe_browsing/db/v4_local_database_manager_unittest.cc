@@ -49,7 +49,6 @@ class FakeGetHashProtocolManager : public V4GetHashProtocolManager {
         full_hash_infos_(full_hash_infos) {}
 
   void GetFullHashes(const FullHashToStoreAndHashPrefixesMap&,
-                     const std::vector<std::string>&,
                      FullHashCallback callback) override {
     // Async, since the real manager might use a fetcher.
     base::ThreadTaskRunnerHandle::Get()->PostTask(

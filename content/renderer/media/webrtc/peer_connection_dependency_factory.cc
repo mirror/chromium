@@ -36,7 +36,6 @@
 #include "content/renderer/media/media_stream_video_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/rtc_peer_connection_handler.h"
-#include "content/renderer/media/webrtc/audio_codec_factory.h"
 #include "content/renderer/media/webrtc/stun_field_trial.h"
 #include "content/renderer/media/webrtc/webrtc_video_capturer_adapter.h"
 #include "content/renderer/media/webrtc_audio_device_impl.h"
@@ -62,10 +61,11 @@
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/webrtc/api/audio_codecs/builtin_audio_decoder_factory.h"
+#include "third_party/webrtc/api/audio_codecs/builtin_audio_encoder_factory.h"
 #include "third_party/webrtc/api/mediaconstraintsinterface.h"
 #include "third_party/webrtc/api/videosourceproxy.h"
 #include "third_party/webrtc/modules/video_coding/codecs/h264/include/h264.h"
-#include "third_party/webrtc/rtc_base/refcountedobject.h"
 #include "third_party/webrtc/rtc_base/ssladapter.h"
 
 #if defined(OS_ANDROID)
@@ -255,8 +255,9 @@ void PeerConnectionDependencyFactory::InitializeSignalingThread(
 
   pc_factory_ = webrtc::CreatePeerConnectionFactory(
       worker_thread_, signaling_thread_, audio_device_.get(),
-      CreateWebrtcAudioEncoderFactory(), CreateWebrtcAudioDecoderFactory(),
-      encoder_factory.release(), decoder_factory.release());
+      webrtc::CreateBuiltinAudioEncoderFactory(),
+      webrtc::CreateBuiltinAudioDecoderFactory(), encoder_factory.release(),
+      decoder_factory.release());
   CHECK(pc_factory_.get());
 
   webrtc::PeerConnectionFactoryInterface::Options factory_options;
@@ -563,7 +564,7 @@ void PeerConnectionDependencyFactory::EnsureWebRtcAudioDeviceImpl() {
   if (audio_device_.get())
     return;
 
-  audio_device_ = new rtc::RefCountedObject<WebRtcAudioDeviceImpl>();
+  audio_device_ = new WebRtcAudioDeviceImpl();
 }
 
 }  // namespace content

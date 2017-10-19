@@ -40,21 +40,17 @@ void GlobalDumpGraph::AddNodeOwnershipEdge(Node* owner,
   owned->AddOwnedByEdge(edge);
 }
 
-Node* GlobalDumpGraph::CreateNode(Process* process_graph, Node* parent) {
-  all_nodes_.emplace_front(process_graph, parent);
+Node* GlobalDumpGraph::CreateNode(Process* process_graph) {
+  all_nodes_.emplace_front(process_graph);
   return &*all_nodes_.begin();
 }
 
 Process::Process(GlobalDumpGraph* global_graph)
-    : global_graph_(global_graph),
-      root_(global_graph->CreateNode(this, nullptr)) {}
+    : global_graph_(global_graph), root_(global_graph->CreateNode(this)) {}
 Process::~Process() {}
 
 Node* Process::CreateNode(MemoryAllocatorDumpGuid guid,
-                          base::StringPiece path,
-                          bool weak) {
-  DCHECK(!path.empty());
-
+                          base::StringPiece path) {
   std::string path_string = path.as_string();
   base::StringTokenizer tokenizer(path_string, "/");
 
@@ -66,15 +62,10 @@ Node* Process::CreateNode(MemoryAllocatorDumpGuid guid,
     Node* parent = current;
     current = current->GetChild(key);
     if (!current) {
-      current = global_graph_->CreateNode(this, parent);
+      current = global_graph_->CreateNode(this);
       parent->InsertChild(key, current);
     }
   }
-
-  // The final node should have the weakness specified by the
-  // argument and also be considered explicit.
-  current->set_weak(weak);
-  current->set_explicit(true);
 
   // Add to the global guid map as well.
   global_graph_->nodes_by_guid_.emplace(guid, current);
@@ -82,8 +73,6 @@ Node* Process::CreateNode(MemoryAllocatorDumpGuid guid,
 }
 
 Node* Process::FindNode(base::StringPiece path) {
-  DCHECK(!path.empty());
-
   std::string path_string = path.as_string();
   base::StringTokenizer tokenizer(path_string, "/");
   Node* current = root_;
@@ -96,8 +85,8 @@ Node* Process::FindNode(base::StringPiece path) {
   return current;
 }
 
-Node::Node(Process* dump_graph, Node* parent)
-    : dump_graph_(dump_graph), parent_(parent), owns_edge_(nullptr) {}
+Node::Node(Process* dump_graph)
+    : dump_graph_(dump_graph), owns_edge_(nullptr) {}
 Node::~Node() {}
 
 Node* Node::GetChild(base::StringPiece name) {

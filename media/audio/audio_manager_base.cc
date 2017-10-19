@@ -9,13 +9,10 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_macros.h"
-#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
-#include "build/buildflag.h"
 #include "media/audio/audio_device_description.h"
 #include "media/audio/audio_output_dispatcher_impl.h"
 #include "media/audio/audio_output_proxy.h"
@@ -23,10 +20,6 @@
 #include "media/audio/fake_audio_input_stream.h"
 #include "media/audio/fake_audio_output_stream.h"
 #include "media/base/media_switches.h"
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-#include "media/audio/audio_input_stream_data_interceptor.h"
-#endif  // BUILDFLAG(ENABLE_WEBRTC)
 
 namespace media {
 
@@ -50,18 +43,6 @@ std::unique_ptr<AudioDebugRecorder> GetNullptrAudioDebugRecorder(
     const AudioParameters& params) {
   return nullptr;
 }
-
-// This enum must match the numbering for AudioOutputProxyStreamFormat in
-// enums.xml. Do not reorder or remove items, only add new items before
-// STREAM_FORMAT_MAX.
-enum StreamFormat {
-  STREAM_FORMAT_BITSTREAM = 0,
-  STREAM_FORMAT_PCM_LINEAR = 1,
-  STREAM_FORMAT_PCM_LOW_LATENCY = 2,
-  STREAM_FORMAT_PCM_LOW_LATENCY_FALLBACK_TO_FAKE = 3,
-  STREAM_FORMAT_FAKE = 4,
-  STREAM_FORMAT_MAX = 4,
-};
 
 }  // namespace
 
@@ -245,23 +226,6 @@ AudioInputStream* AudioManagerBase::MakeAudioInputStream(
 
   if (stream) {
     input_streams_.insert(stream);
-
-#if BUILDFLAG(ENABLE_WEBRTC)
-    if (!params.IsBitstreamFormat() && debug_recording_manager_) {
-      // Using unretained for |debug_recording_manager_| is safe since it
-      // outlives the audio thread, on which streams are operated.
-      // Note: The AudioInputStreamDataInterceptor takes ownership of the
-      // created stream and cleans it up when it is Close()d, transparently to
-      // the user of the stream. I the case where the audio manager closes the
-      // stream (Mac), this will result in a dangling pointer.
-      stream = new AudioInputStreamDataInterceptor(
-          base::BindRepeating(
-              &AudioDebugRecordingManager::RegisterDebugRecordingSource,
-              base::Unretained(debug_recording_manager_.get()),
-              FILE_PATH_LITERAL("input"), params),
-          stream);
-    }
-#endif  // BUILDFLAG(ENABLE_WEBRTC)
   }
 
   return stream;
@@ -271,8 +235,6 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStreamProxy(
     const AudioParameters& params,
     const std::string& device_id) {
   CHECK(GetTaskRunner()->BelongsToCurrentThread());
-  DCHECK(params.IsValid());
-  base::Optional<StreamFormat> uma_stream_format;
 
   // If the caller supplied an empty device id to select the default device,
   // we fetch the actual device id of the default device so that the lookup
@@ -302,14 +264,7 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStreamProxy(
         GetPreferredOutputStreamParameters(output_device_id, params);
 
     // Ensure we only pass on valid output parameters.
-    if (output_params.IsValid()) {
-      if (params.effects() != output_params.effects()) {
-        // Turn off effects that weren't requested.
-        output_params.set_effects(params.effects() & output_params.effects());
-      }
-
-      uma_stream_format = STREAM_FORMAT_PCM_LOW_LATENCY;
-    } else {
+    if (!output_params.IsValid()) {
       // We've received invalid audio output parameters, so switch to a mock
       // output device based on the input parameters.  This may happen if the OS
       // provided us junk values for the hardware configuration.
@@ -323,32 +278,11 @@ AudioOutputStream* AudioManagerBase::MakeAudioOutputStreamProxy(
       // Tell the AudioManager to create a fake output device.
       output_params = params;
       output_params.set_format(AudioParameters::AUDIO_FAKE);
-      uma_stream_format = STREAM_FORMAT_PCM_LOW_LATENCY_FALLBACK_TO_FAKE;
+    } else if (params.effects() != output_params.effects()) {
+      // Turn off effects that weren't requested.
+      output_params.set_effects(params.effects() & output_params.effects());
     }
-
     output_params.set_latency_tag(params.latency_tag());
-
-  } else {
-    switch (output_params.format()) {
-      case AudioParameters::AUDIO_PCM_LINEAR:
-        uma_stream_format = STREAM_FORMAT_PCM_LINEAR;
-        break;
-      case AudioParameters::AUDIO_FAKE:
-        uma_stream_format = STREAM_FORMAT_FAKE;
-        break;
-      default:
-        if (output_params.IsBitstreamFormat())
-          uma_stream_format = STREAM_FORMAT_BITSTREAM;
-        else
-          NOTREACHED();
-    }
-  }
-
-  if (uma_stream_format) {
-    UMA_HISTOGRAM_ENUMERATION("Media.AudioOutputStreamProxy.StreamFormat",
-                              *uma_stream_format, STREAM_FORMAT_MAX + 1);
-  } else {
-    NOTREACHED();
   }
 
   std::unique_ptr<DispatcherParams> dispatcher_params =
@@ -503,12 +437,12 @@ std::unique_ptr<AudioLog> AudioManagerBase::CreateAudioLog(
   return audio_log_factory_->CreateAudioLog(component);
 }
 
-void AudioManagerBase::InitializeDebugRecording() {
+void AudioManagerBase::InitializeOutputDebugRecording() {
   if (!GetTaskRunner()->BelongsToCurrentThread()) {
     // AudioManager is deleted on the audio thread, so it's safe to post
     // unretained.
     GetTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&AudioManagerBase::InitializeDebugRecording,
+        FROM_HERE, base::Bind(&AudioManagerBase::InitializeOutputDebugRecording,
                               base::Unretained(this)));
     return;
   }
@@ -517,15 +451,15 @@ void AudioManagerBase::InitializeDebugRecording() {
   debug_recording_manager_ = CreateAudioDebugRecordingManager(GetTaskRunner());
 }
 
-void AudioManagerBase::EnableDebugRecording(
+void AudioManagerBase::EnableOutputDebugRecording(
     const base::FilePath& base_file_name) {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   DCHECK(debug_recording_manager_)
-      << "InitializeDebugRecording() must be called before enabling";
+      << "InitializeOutputDebugRecording() must be called before enabling";
   debug_recording_manager_->EnableDebugRecording(base_file_name);
 }
 
-void AudioManagerBase::DisableDebugRecording() {
+void AudioManagerBase::DisableOutputDebugRecording() {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   if (debug_recording_manager_)
     debug_recording_manager_->DisableDebugRecording();

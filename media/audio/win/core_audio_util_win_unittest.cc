@@ -18,7 +18,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using Microsoft::WRL::ComPtr;
 using base::win::ScopedCOMInitializer;
 
 namespace media {
@@ -64,7 +63,7 @@ TEST_F(CoreAudioUtilWinTest, NumberOfActiveDevices) {
 TEST_F(CoreAudioUtilWinTest, CreateDeviceEnumerator) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
-  ComPtr<IMMDeviceEnumerator> enumerator =
+  ScopedComPtr<IMMDeviceEnumerator> enumerator =
       CoreAudioUtil::CreateDeviceEnumerator();
   EXPECT_TRUE(enumerator.Get());
 }
@@ -85,7 +84,7 @@ TEST_F(CoreAudioUtilWinTest, CreateDefaultDevice) {
   };
 
   // Create default devices for all flow/role combinations above.
-  ComPtr<IMMDevice> audio_device;
+  ScopedComPtr<IMMDevice> audio_device;
   for (size_t i = 0; i < arraysize(data); ++i) {
     audio_device =
         CoreAudioUtil::CreateDefaultDevice(data[i].flow, data[i].role);
@@ -102,7 +101,7 @@ TEST_F(CoreAudioUtilWinTest, CreateDevice) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
   // Get name and ID of default device used for playback.
-  ComPtr<IMMDevice> default_render_device =
+  ScopedComPtr<IMMDevice> default_render_device =
       CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
   AudioDeviceName default_render_name;
   EXPECT_TRUE(SUCCEEDED(CoreAudioUtil::GetDeviceName(
@@ -110,7 +109,7 @@ TEST_F(CoreAudioUtilWinTest, CreateDevice) {
 
   // Use the uniqe ID as input to CreateDevice() and create a corresponding
   // IMMDevice.
-  ComPtr<IMMDevice> audio_device =
+  ScopedComPtr<IMMDevice> audio_device =
       CoreAudioUtil::CreateDevice(default_render_name.unique_id);
   EXPECT_TRUE(audio_device.Get());
 
@@ -136,7 +135,7 @@ TEST_F(CoreAudioUtilWinTest, GetDefaultDeviceName) {
   };
 
   // Get name and ID of default devices for all flow/role combinations above.
-  ComPtr<IMMDevice> audio_device;
+  ScopedComPtr<IMMDevice> audio_device;
   AudioDeviceName device_name;
   for (size_t i = 0; i < arraysize(data); ++i) {
     audio_device =
@@ -151,7 +150,7 @@ TEST_F(CoreAudioUtilWinTest, GetDefaultDeviceName) {
 TEST_F(CoreAudioUtilWinTest, GetAudioControllerID) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
-  ComPtr<IMMDeviceEnumerator> enumerator(
+  ScopedComPtr<IMMDeviceEnumerator> enumerator(
       CoreAudioUtil::CreateDeviceEnumerator());
   ASSERT_TRUE(enumerator.Get());
 
@@ -159,13 +158,13 @@ TEST_F(CoreAudioUtilWinTest, GetAudioControllerID) {
   // the associated device.
   EDataFlow flows[] = { eRender , eCapture };
   for (size_t i = 0; i < arraysize(flows); ++i) {
-    ComPtr<IMMDeviceCollection> collection;
+    ScopedComPtr<IMMDeviceCollection> collection;
     ASSERT_TRUE(SUCCEEDED(enumerator->EnumAudioEndpoints(
         flows[i], DEVICE_STATE_ACTIVE, collection.GetAddressOf())));
     UINT count = 0;
     collection->GetCount(&count);
     for (UINT j = 0; j < count; ++j) {
-      ComPtr<IMMDevice> device;
+      ScopedComPtr<IMMDevice> device;
       collection->Item(j, device.GetAddressOf());
       std::string controller_id(
           CoreAudioUtil::GetAudioControllerID(device.Get(), enumerator.Get()));
@@ -178,7 +177,7 @@ TEST_F(CoreAudioUtilWinTest, GetFriendlyName) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
   // Get name and ID of default device used for recording.
-  ComPtr<IMMDevice> audio_device =
+  ScopedComPtr<IMMDevice> audio_device =
       CoreAudioUtil::CreateDefaultDevice(eCapture, eConsole);
   AudioDeviceName device_name;
   HRESULT hr = CoreAudioUtil::GetDeviceName(audio_device.Get(), &device_name);
@@ -203,7 +202,7 @@ TEST_F(CoreAudioUtilWinTest, DeviceIsDefault) {
 
   // Verify that the default render device is correctly identified as a
   // default device.
-  ComPtr<IMMDevice> audio_device =
+  ScopedComPtr<IMMDevice> audio_device =
       CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
   AudioDeviceName name;
   EXPECT_TRUE(
@@ -219,7 +218,7 @@ TEST_F(CoreAudioUtilWinTest, CreateDefaultClient) {
   EDataFlow data[] = {eRender, eCapture};
 
   for (size_t i = 0; i < arraysize(data); ++i) {
-    ComPtr<IAudioClient> client;
+    ScopedComPtr<IAudioClient> client;
     client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
     EXPECT_TRUE(client.Get());
   }
@@ -231,8 +230,8 @@ TEST_F(CoreAudioUtilWinTest, CreateClient) {
   EDataFlow data[] = {eRender, eCapture};
 
   for (size_t i = 0; i < arraysize(data); ++i) {
-    ComPtr<IMMDevice> device;
-    ComPtr<IAudioClient> client;
+    ScopedComPtr<IMMDevice> device;
+    ScopedComPtr<IAudioClient> client;
     device = CoreAudioUtil::CreateDefaultDevice(data[i], eConsole);
     EXPECT_TRUE(device.Get());
     EXPECT_EQ(data[i], CoreAudioUtil::GetDataFlow(device.Get()));
@@ -244,8 +243,8 @@ TEST_F(CoreAudioUtilWinTest, CreateClient) {
 TEST_F(CoreAudioUtilWinTest, GetSharedModeMixFormat) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
-  ComPtr<IMMDevice> device;
-  ComPtr<IAudioClient> client;
+  ScopedComPtr<IMMDevice> device;
+  ScopedComPtr<IAudioClient> client;
   device = CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
   EXPECT_TRUE(device.Get());
   client = CoreAudioUtil::CreateClient(device.Get());
@@ -296,7 +295,7 @@ TEST_F(CoreAudioUtilWinTest, GetDevicePeriod) {
   // Verify that the device periods are valid for the default render and
   // capture devices.
   for (size_t i = 0; i < arraysize(data); ++i) {
-    ComPtr<IAudioClient> client;
+    ScopedComPtr<IAudioClient> client;
     REFERENCE_TIME shared_time_period = 0;
     REFERENCE_TIME exclusive_time_period = 0;
     client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
@@ -319,7 +318,7 @@ TEST_F(CoreAudioUtilWinTest, GetPreferredAudioParameters) {
   // Verify that the preferred audio parameters are OK for the default render
   // and capture devices.
   for (size_t i = 0; i < arraysize(data); ++i) {
-    ComPtr<IAudioClient> client;
+    ScopedComPtr<IAudioClient> client;
     AudioParameters params;
     client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
     EXPECT_TRUE(client.Get());
@@ -332,7 +331,7 @@ TEST_F(CoreAudioUtilWinTest, GetPreferredAudioParameters) {
 TEST_F(CoreAudioUtilWinTest, SharedModeInitialize) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
-  ComPtr<IAudioClient> client;
+  ScopedComPtr<IAudioClient> client;
   client = CoreAudioUtil::CreateDefaultClient(eRender, eConsole);
   EXPECT_TRUE(client.Get());
 
@@ -400,9 +399,9 @@ TEST_F(CoreAudioUtilWinTest, CreateRenderAndCaptureClients) {
   uint32_t endpoint_buffer_size = 0;
 
   for (size_t i = 0; i < arraysize(data); ++i) {
-    ComPtr<IAudioClient> client;
-    ComPtr<IAudioRenderClient> render_client;
-    ComPtr<IAudioCaptureClient> capture_client;
+    ScopedComPtr<IAudioClient> client;
+    ScopedComPtr<IAudioRenderClient> render_client;
+    ScopedComPtr<IAudioCaptureClient> capture_client;
 
     client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
     EXPECT_TRUE(client.Get());
@@ -440,7 +439,7 @@ TEST_F(CoreAudioUtilWinTest, FillRenderEndpointBufferWithSilence) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
   // Create default clients using the default mixing format for shared mode.
-  ComPtr<IAudioClient> client(
+  ScopedComPtr<IAudioClient> client(
       CoreAudioUtil::CreateDefaultClient(eRender, eConsole));
   EXPECT_TRUE(client.Get());
 
@@ -452,7 +451,7 @@ TEST_F(CoreAudioUtilWinTest, FillRenderEndpointBufferWithSilence) {
                                       &endpoint_buffer_size, NULL);
   EXPECT_GT(endpoint_buffer_size, 0u);
 
-  ComPtr<IAudioRenderClient> render_client(
+  ScopedComPtr<IAudioRenderClient> render_client(
       CoreAudioUtil::CreateRenderClient(client.Get()));
   EXPECT_TRUE(render_client.Get());
 
@@ -479,19 +478,19 @@ TEST_F(CoreAudioUtilWinTest, GetMatchingOutputDeviceID) {
 
   bool found_a_pair = false;
 
-  ComPtr<IMMDeviceEnumerator> enumerator(
+  ScopedComPtr<IMMDeviceEnumerator> enumerator(
       CoreAudioUtil::CreateDeviceEnumerator());
   ASSERT_TRUE(enumerator.Get());
 
   // Enumerate all active input and output devices and fetch the ID of
   // the associated device.
-  ComPtr<IMMDeviceCollection> collection;
+  ScopedComPtr<IMMDeviceCollection> collection;
   ASSERT_TRUE(SUCCEEDED(enumerator->EnumAudioEndpoints(
       eCapture, DEVICE_STATE_ACTIVE, collection.GetAddressOf())));
   UINT count = 0;
   collection->GetCount(&count);
   for (UINT i = 0; i < count && !found_a_pair; ++i) {
-    ComPtr<IMMDevice> device;
+    ScopedComPtr<IMMDevice> device;
     collection->Item(i, device.GetAddressOf());
     base::win::ScopedCoMem<WCHAR> wide_id;
     device->GetId(&wide_id);

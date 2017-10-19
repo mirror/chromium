@@ -18,7 +18,7 @@ class RTCAnswerOptionsPlatform final
 
   bool VoiceActivityDetection() const { return voice_activity_detection_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit RTCAnswerOptionsPlatform(bool voice_activity_detection)

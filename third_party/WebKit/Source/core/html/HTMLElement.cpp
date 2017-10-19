@@ -812,13 +812,13 @@ void HTMLElement::setSpellcheck(bool enable) {
 }
 
 void HTMLElement::click() {
-  DispatchSimulatedClick(nullptr, kSendNoEvents,
+  DispatchSimulatedClick(0, kSendNoEvents,
                          SimulatedClickCreationScope::kFromScript);
 }
 
 void HTMLElement::AccessKeyAction(bool send_mouse_events) {
   DispatchSimulatedClick(
-      nullptr, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
+      0, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
 }
 
 String HTMLElement::title() const {
@@ -931,7 +931,7 @@ TextDirection HTMLElement::Directionality(
       *strong_directionality_text_node =
           has_strong_directionality
               ? const_cast<HTMLInputElement*>(input_element)
-              : nullptr;
+              : 0;
     }
     return text_direction;
   }
@@ -971,7 +971,7 @@ TextDirection HTMLElement::Directionality(
     node = FlatTreeTraversal::Next(*node, this);
   }
   if (strong_directionality_text_node)
-    *strong_directionality_text_node = nullptr;
+    *strong_directionality_text_node = 0;
   return TextDirection::kLtr;
 }
 

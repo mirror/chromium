@@ -22,9 +22,6 @@ namespace {
 
 class MockSchedulerWorkerDelegate : public SchedulerWorker::Delegate {
  public:
-  void OnCanScheduleSequence(scoped_refptr<Sequence> sequence) override {
-    ADD_FAILURE() << "Unexpected call to OnCanScheduleSequence().";
-  }
   void OnMainEntry(SchedulerWorker* worker) override {}
   scoped_refptr<Sequence> GetWork(SchedulerWorker* worker) override {
     return nullptr;

@@ -39,7 +39,6 @@ class BrowserWindowHistogramHelper : public ui::CompositorObserver {
                             base::TimeTicks start_time) override {}
   void OnCompositingEnded(ui::Compositor* compositor) override;
   void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
-  void OnCompositingChildResizing(ui::Compositor* compositor) override {}
   void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
   ScopedObserver<ui::Compositor, ui::CompositorObserver> scoped_observer_;

@@ -115,7 +115,7 @@ void MouseEventManager::Clear() {
 
 MouseEventManager::~MouseEventManager() = default;
 
-void MouseEventManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MouseEventManager) {
   visitor->Trace(frame_);
   visitor->Trace(scroll_manager_);
   visitor->Trace(node_under_mouse_);
@@ -706,7 +706,7 @@ WebInputEventResult MouseEventManager::HandleMouseReleaseEvent(
 void MouseEventManager::UpdateSelectionForMouseDrag() {
   frame_->GetEventHandler()
       .GetSelectionController()
-      .UpdateSelectionForMouseDrag(drag_start_pos_,
+      .UpdateSelectionForMouseDrag(mouse_press_node_, drag_start_pos_,
                                    FlooredIntPoint(last_known_mouse_position_));
 }
 
@@ -819,7 +819,7 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
   mouse_down_may_start_drag_ = false;
 
   frame_->GetEventHandler().GetSelectionController().HandleMouseDraggedEvent(
-      event, mouse_down_pos_, drag_start_pos_,
+      event, mouse_down_pos_, drag_start_pos_, mouse_press_node_.Get(),
       FlooredIntPoint(last_known_mouse_position_));
 
   // The call into HandleMouseDraggedEvent may have caused a re-layout,

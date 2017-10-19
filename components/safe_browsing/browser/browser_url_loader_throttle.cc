@@ -10,7 +10,6 @@
 #include "components/safe_browsing/common/utils.h"
 #include "components/safe_browsing/net_event_logger.h"
 #include "content/public/common/resource_request.h"
-#include "content/public/common/resource_response.h"
 #include "net/log/net_log_event_type.h"
 #include "net/url_request/redirect_info.h"
 
@@ -82,9 +81,7 @@ void BrowserURLLoaderThrottle::WillRedirectRequest(
                      base::Unretained(this)));
 }
 
-void BrowserURLLoaderThrottle::WillProcessResponse(
-    const content::ResourceResponseHead& response_head,
-    bool* defer) {
+void BrowserURLLoaderThrottle::WillProcessResponse(bool* defer) {
   if (blocked_) {
     // OnCheckUrlResult() has set |blocked_| to true and called
     // |delegate_->CancelWithError|, but this method is called before the

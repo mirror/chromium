@@ -779,9 +779,7 @@ void CompositorImpl::OnGpuChannelEstablished(
                                          requires_alpha_channel_),
           shared_context,
           ui::command_buffer_metrics::DISPLAY_COMPOSITOR_ONSCREEN_CONTEXT);
-  auto result = context_provider->BindToCurrentThread();
-  if (result != gpu::ContextResult::kSuccess) {
-    // TODO(danakj): Give up on fatal error instead of after 2 tries.
+  if (!context_provider->BindToCurrentThread()) {
     LOG(ERROR) << "Failed to init viz::ContextProvider for compositor.";
     LOG_IF(FATAL, ++num_successive_context_creation_failures_ >= 2)
         << "Too many context creation failures. Giving up... ";

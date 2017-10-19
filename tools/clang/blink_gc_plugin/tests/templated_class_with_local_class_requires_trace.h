@@ -38,12 +38,12 @@ private:
         }
     private:
         Member<HeapObject> m_heapObject;
-        std::unique_ptr<HeapObject> m_object;
+        OwnPtr<HeapObject> m_object;
     };
 
     Member<Local> m_local;
     Member<T> m_memberRef;
-    std::unique_ptr<T> m_uniqueRef;
+    OwnPtr<T> m_ownRef;
 };
 
 } // namespace blink

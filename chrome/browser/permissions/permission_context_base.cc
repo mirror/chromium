@@ -60,15 +60,11 @@ const char kPermissionBlockedRepeatedIgnoresMessage[] =
 const char kPermissionBlockedBlacklistMessage[] =
     "this origin is not allowed to request %s permission.";
 
-const char kPermissionBlockedFeaturePolicyMessage[] =
-    "%s permission has been blocked because of a Feature Policy applied to the "
-    "current document. See https://goo.gl/EuHzyv for more details.";
-
 void LogPermissionBlockedMessage(content::WebContents* web_contents,
                                  const char* message,
                                  ContentSettingsType type) {
   web_contents->GetMainFrame()->AddMessageToConsole(
-      content::CONSOLE_MESSAGE_LEVEL_WARNING,
+      content::CONSOLE_MESSAGE_LEVEL_INFO,
       base::StringPrintf(message,
                          PermissionUtil::GetPermissionString(type).c_str()));
 }
@@ -124,10 +120,9 @@ void PermissionContextBase::RequestPermission(
   // Synchronously check the content setting to see if the user has already made
   // a decision, or if the origin is under embargo. If so, respect that
   // decision.
-  content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
-      id.render_process_id(), id.render_frame_id());
-  PermissionResult result =
-      GetPermissionStatus(rfh, requesting_origin, embedding_origin);
+  // TODO(raymes): Pass in the RenderFrameHost of the request here.
+  PermissionResult result = GetPermissionStatus(
+      nullptr /* render_frame_host */, requesting_origin, embedding_origin);
 
   if (result.content_setting == CONTENT_SETTING_ALLOW ||
       result.content_setting == CONTENT_SETTING_BLOCK) {
@@ -152,11 +147,6 @@ void PermissionContextBase::RequestPermission(
       case PermissionStatusSource::SAFE_BROWSING_BLACKLIST:
         LogPermissionBlockedMessage(web_contents,
                                     kPermissionBlockedBlacklistMessage,
-                                    content_settings_type_);
-        break;
-      case PermissionStatusSource::FEATURE_POLICY:
-        LogPermissionBlockedMessage(web_contents,
-                                    kPermissionBlockedFeaturePolicyMessage,
                                     content_settings_type_);
         break;
       case PermissionStatusSource::INSECURE_ORIGIN:
@@ -255,7 +245,7 @@ PermissionResult PermissionContextBase::GetPermissionStatus(
   if (render_frame_host &&
       !PermissionAllowedByFeaturePolicy(render_frame_host)) {
     return PermissionResult(CONTENT_SETTING_BLOCK,
-                            PermissionStatusSource::FEATURE_POLICY);
+                            PermissionStatusSource::UNSPECIFIED);
   }
 
   ContentSetting content_setting = GetPermissionStatusInternal(
@@ -335,7 +325,7 @@ void PermissionContextBase::DecidePermission(
 
   std::unique_ptr<PermissionRequest> request_ptr =
       base::MakeUnique<PermissionRequestImpl>(
-          requesting_origin, content_settings_type_, user_gesture,
+          requesting_origin, content_settings_type_, profile_, user_gesture,
           base::Bind(&PermissionContextBase::PermissionDecided,
                      weak_factory_.GetWeakPtr(), id, requesting_origin,
                      embedding_origin, user_gesture, callback),

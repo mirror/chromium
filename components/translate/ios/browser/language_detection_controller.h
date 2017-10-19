@@ -100,11 +100,9 @@ class LanguageDetectionController : public web::WebStateObserver {
 
   // web::WebStateObserver implementation:
   void PageLoaded(
-      web::WebState* web_state,
       web::PageLoadCompletionStatus load_completion_status) override;
-  void DidFinishNavigation(web::WebState* web_state,
-                           web::NavigationContext* navigation_context) override;
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void DidFinishNavigation(web::NavigationContext* navigation_context) override;
+  void WebStateDestroyed() override;
 
   CallbackList language_detection_callbacks_;
   JsLanguageDetectionManager* js_manager_;

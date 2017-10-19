@@ -78,7 +78,7 @@ void WorkerInspectorController::ConnectFrontend(int session_id,
                                         nullptr, session->V8Session()));
   if (thread_->GlobalScope()->IsWorkerGlobalScope() &&
       RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    DCHECK(ToWorkerGlobalScope(thread_->GlobalScope())->EnsureFetcher());
+    DCHECK(ToWorkerGlobalScope(thread_->GlobalScope())->GetResourceFetcher());
     InspectorNetworkAgent* network_agent =
         InspectorNetworkAgent::CreateForWorker(
             ToWorkerGlobalScope(thread_->GlobalScope()));
@@ -145,7 +145,7 @@ void WorkerInspectorController::DidProcessTask() {
     it.value->flushProtocolNotifications();
 }
 
-void WorkerInspectorController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerInspectorController) {
   visitor->Trace(probe_sink_);
   visitor->Trace(sessions_);
 }

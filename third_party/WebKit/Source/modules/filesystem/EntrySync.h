@@ -63,7 +63,7 @@ class EntrySync : public EntryBase, public ScriptWrappable {
   void remove(ExceptionState&) const;
   EntrySync* getParent() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   EntrySync(DOMFileSystemBase*, const String& full_path);

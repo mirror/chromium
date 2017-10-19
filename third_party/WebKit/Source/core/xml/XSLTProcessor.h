@@ -86,7 +86,7 @@ class XSLTProcessor final : public GarbageCollectedFinalized<XSLTProcessor>,
 
   typedef HashMap<String, String> ParameterMap;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   XSLTProcessor(Document& document) : document_(&document) {}

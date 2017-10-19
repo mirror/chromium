@@ -49,7 +49,7 @@ class DOMMimeType final : public GarbageCollected<DOMMimeType>,
   const String& description() const;
   DOMPlugin* enabledPlugin() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   DOMMimeType(LocalFrame*, const MimeClassInfo&);

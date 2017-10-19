@@ -191,7 +191,9 @@ TEST_P(ScrollingCoordinatorTest, fastScrollingCanBeDisabledWithSetting) {
 }
 
 TEST_P(ScrollingCoordinatorTest, fastFractionalScrollingDiv) {
-  ScopedFractionalScrollOffsetsForTest fractional_scroll_offsets(true);
+  bool orig_fractional_offsets_enabled =
+      RuntimeEnabledFeatures::FractionalScrollOffsetsEnabled();
+  RuntimeEnabledFeatures::SetFractionalScrollOffsetsEnabled(true);
 
   RegisterMockedHttpURLLoad("fractional-scroll-div.html");
   NavigateTo(base_url_ + "fractional-scroll-div.html");
@@ -224,24 +226,27 @@ TEST_P(ScrollingCoordinatorTest, fastFractionalScrollingDiv) {
   ASSERT_TRUE(web_scroll_layer);
   ASSERT_NEAR(1.2f, web_scroll_layer->ScrollPosition().x, 0.01f);
   ASSERT_NEAR(1.2f, web_scroll_layer->ScrollPosition().y, 0.01f);
+
+  RuntimeEnabledFeatures::SetFractionalScrollOffsetsEnabled(
+      orig_fractional_offsets_enabled);
 }
 
 static WebLayer* WebLayerFromElement(Element* element) {
   if (!element)
-    return nullptr;
+    return 0;
   LayoutObject* layout_object = element->GetLayoutObject();
   if (!layout_object || !layout_object->IsBoxModelObject())
-    return nullptr;
+    return 0;
   PaintLayer* layer = ToLayoutBoxModelObject(layout_object)->Layer();
   if (!layer)
-    return nullptr;
+    return 0;
   if (!layer->HasCompositedLayerMapping())
-    return nullptr;
+    return 0;
   CompositedLayerMapping* composited_layer_mapping =
       layer->GetCompositedLayerMapping();
   GraphicsLayer* graphics_layer = composited_layer_mapping->MainGraphicsLayer();
   if (!graphics_layer)
-    return nullptr;
+    return 0;
   return graphics_layer->PlatformLayer();
 }
 

@@ -853,13 +853,10 @@ TEST_F(DataReductionProxyConfigTest, ShouldEnableLoFi) {
   request->SetLoadFlags(request->load_flags() |
                         net::LOAD_MAIN_FRAME_DEPRECATED);
   std::unique_ptr<TestPreviewsDecider> previews_decider =
-      base::MakeUnique<TestPreviewsDecider>(true);
+      base::MakeUnique<TestPreviewsDecider>(false);
+
   EXPECT_TRUE(
       config()->ShouldEnableLoFi(*request.get(), *previews_decider.get()));
-
-  previews_decider = base::MakeUnique<TestPreviewsDecider>(false);
-  EXPECT_FALSE(
-      config()->ShouldEnableLitePages(*request.get(), *previews_decider.get()));
 }
 
 TEST_F(DataReductionProxyConfigTest, ShouldEnableLitePages) {
@@ -877,12 +874,9 @@ TEST_F(DataReductionProxyConfigTest, ShouldEnableLitePages) {
   request->SetLoadFlags(request->load_flags() |
                         net::LOAD_MAIN_FRAME_DEPRECATED);
   std::unique_ptr<TestPreviewsDecider> previews_decider =
-      base::MakeUnique<TestPreviewsDecider>(true);
-  EXPECT_TRUE(
-      config()->ShouldEnableLitePages(*request.get(), *previews_decider.get()));
+      base::MakeUnique<TestPreviewsDecider>(false);
 
-  previews_decider = base::MakeUnique<TestPreviewsDecider>(false);
-  EXPECT_FALSE(
+  EXPECT_TRUE(
       config()->ShouldEnableLitePages(*request.get(), *previews_decider.get()));
 }
 
@@ -961,6 +955,12 @@ TEST_F(DataReductionProxyConfigTest, ShouldAcceptServerPreview) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kDataReductionProxyLoFi,
       switches::kDataReductionProxyLoFiValueAlwaysOn);
+  EXPECT_TRUE(config()->ShouldAcceptServerPreview(*request.get(),
+                                                  *previews_decider.get()));
+
+  // DataReductionProxyPreviewsBlackListTransition should not be affected by
+  // lofi being off by the prefs rules.
+  config()->SetLoFiModeOff();
   EXPECT_TRUE(config()->ShouldAcceptServerPreview(*request.get(),
                                                   *previews_decider.get()));
 }

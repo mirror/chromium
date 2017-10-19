@@ -175,7 +175,7 @@ void WebCursor::CreateCustomData(const SkBitmap& bitmap,
     return;
 
   // Fill custom_data directly with the NativeImage pixels.
-  custom_data->resize(bitmap.computeByteSize());
+  custom_data->resize(bitmap.getSize());
   if (!custom_data->empty()) {
     //This will divide color values by alpha (un-premultiply) if necessary
     SkImageInfo dstInfo = bitmap.info().makeAlphaType(kUnpremul_SkAlphaType);

@@ -48,7 +48,7 @@ class NavigatorShare::ShareClientImpl final
 
   void OnConnectionError();
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(navigator_);
     visitor->Trace(resolver_);
   }
@@ -92,7 +92,7 @@ NavigatorShare& NavigatorShare::From(Navigator& navigator) {
   return *supplement;
 }
 
-void NavigatorShare::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorShare) {
   visitor->Trace(clients_);
   Supplement<Navigator>::Trace(visitor);
 }

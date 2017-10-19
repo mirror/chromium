@@ -58,7 +58,6 @@ class EventTarget;
 class LocalDOMWindow;
 class SuspendableObject;
 class PublicURLManager;
-class ResourceFetcher;
 class SecurityOrigin;
 class ScriptState;
 enum class TaskType : unsigned;
@@ -74,7 +73,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   MERGE_GARBAGE_COLLECTED_MIXINS();
 
  public:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   static ExecutionContext* From(const ScriptState*);
 
@@ -103,9 +102,8 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   SecurityOrigin* GetSecurityOrigin();
   ContentSecurityPolicy* GetContentSecurityPolicy();
-  virtual const KURL& Url() const = 0;
-  virtual const KURL& BaseURL() const = 0;
-  virtual KURL CompleteURL(const String& url) const = 0;
+  const KURL& Url() const;
+  KURL CompleteURL(const String& url) const;
   virtual void DisableEval(const String& error_message) = 0;
   virtual LocalDOMWindow* ExecutingWindow() const { return nullptr; }
   virtual String UserAgent() const = 0;
@@ -116,9 +114,11 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   // not be used after the ExecutionContext is destroyed.
   virtual DOMTimerCoordinator* Timers() = 0;
 
-  virtual ResourceFetcher* Fetcher() const = 0;
-
   virtual SecurityContext& GetSecurityContext() = 0;
+  KURL ContextURL() const { return VirtualURL(); }
+  KURL ContextCompleteURL(const String& url) const {
+    return VirtualCompleteURL(url);
+  }
 
   virtual bool CanExecuteScripts(ReasonForCallingCanExecuteScripts) {
     return false;
@@ -197,6 +197,9 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
  protected:
   ExecutionContext();
   virtual ~ExecutionContext();
+
+  virtual const KURL& VirtualURL() const = 0;
+  virtual KURL VirtualCompleteURL(const String&) const = 0;
 
  private:
   bool DispatchErrorEventInternal(ErrorEvent*, AccessControlStatus);

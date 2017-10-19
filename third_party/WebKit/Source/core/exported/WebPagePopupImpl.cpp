@@ -52,8 +52,8 @@
 #include "core/page/PagePopupSupplement.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/LayoutTestSupport.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/animation/CompositorAnimationHost.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -247,9 +247,9 @@ bool PagePopupFeaturesClient::IsEnabled(Document*,
 WebPagePopupImpl::WebPagePopupImpl(WebWidgetClient* client)
     : widget_client_(client),
       closing_(false),
-      layer_tree_view_(nullptr),
-      root_layer_(nullptr),
-      root_graphics_layer_(nullptr),
+      layer_tree_view_(0),
+      root_layer_(0),
+      root_graphics_layer_(0),
       is_accelerated_compositing_active_(false) {
   DCHECK(client);
 }
@@ -301,8 +301,7 @@ bool WebPagePopupImpl::InitializePage() {
   ProvideContextFeaturesTo(*page_, WTF::MakeUnique<PagePopupFeaturesClient>());
   DEFINE_STATIC_LOCAL(LocalFrameClient, empty_local_frame_client,
                       (EmptyLocalFrameClient::Create()));
-  LocalFrame* frame =
-      LocalFrame::Create(&empty_local_frame_client, *page_, nullptr);
+  LocalFrame* frame = LocalFrame::Create(&empty_local_frame_client, *page_, 0);
   frame->SetPagePopupOwner(popup_client_->OwnerElement());
   frame->SetView(LocalFrameView::Create(*frame));
   frame->Init();
@@ -344,10 +343,10 @@ void WebPagePopupImpl::DestroyPage() {
 
 AXObject* WebPagePopupImpl::RootAXObject() {
   if (!page_ || !page_->MainFrame())
-    return nullptr;
+    return 0;
   Document* document = ToLocalFrame(page_->MainFrame())->GetDocument();
   if (!document)
-    return nullptr;
+    return 0;
   AXObjectCache* cache = document->AxObjectCache();
   DCHECK(cache);
   return ToAXObjectCacheBase(cache)->GetOrCreate(ToLayoutView(
@@ -360,7 +359,7 @@ void WebPagePopupImpl::SetWindowRect(const IntRect& rect_in_screen) {
 
 void WebPagePopupImpl::SetRootGraphicsLayer(GraphicsLayer* layer) {
   root_graphics_layer_ = layer;
-  root_layer_ = layer ? layer->PlatformLayer() : nullptr;
+  root_layer_ = layer ? layer->PlatformLayer() : 0;
 
   is_accelerated_compositing_active_ = !!layer;
   if (layer_tree_view_) {

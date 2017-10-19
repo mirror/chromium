@@ -18,7 +18,7 @@ class {{v8_class}} final : public {{cpp_class}} {
 
   ~{{v8_class}}() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
 {% for method in methods %}
   {{method.cpp_type}} {{method.name}}({{method.argument_declarations | join(', ')}}) override;

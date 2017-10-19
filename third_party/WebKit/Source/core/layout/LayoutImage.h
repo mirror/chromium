@@ -104,8 +104,6 @@ class CORE_EXPORT LayoutImage : public LayoutReplaced {
 
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
 
-  bool CanBeSelectionLeafInternal() const final { return true; }
-
  private:
   bool IsImage() const override { return true; }
 

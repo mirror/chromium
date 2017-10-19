@@ -25,8 +25,6 @@
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/profiles/profile_attributes_entry.h"
-#include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/profiles/profile_impl.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/sessions/session_restore.h"
@@ -494,7 +492,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest, StartupURLsForTwoProfiles) {
 
   Profile* other_profile = nullptr;
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     other_profile = profile_manager->GetProfile(dest_path);
   }
   ASSERT_TRUE(other_profile);
@@ -682,7 +680,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest,
   base::FilePath dest_path4 = profile_manager->user_data_dir().Append(
       FILE_PATH_LITERAL("New Profile 4"));
 
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   Profile* profile_home1 = profile_manager->GetProfile(dest_path1);
   ASSERT_TRUE(profile_home1);
   Profile* profile_home2 = profile_manager->GetProfile(dest_path2);
@@ -795,7 +793,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest, ProfilesLaunchedAfterCrash) {
   Profile* profile_last = nullptr;
   Profile* profile_urls = nullptr;
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     profile_home = profile_manager->GetProfile(dest_path1);
     ASSERT_TRUE(profile_home);
     profile_last = profile_manager->GetProfile(dest_path2);
@@ -898,46 +896,6 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest, ProfilesLaunchedAfterCrash) {
   // observe count 3 in bucket 0 (which represents bubble shown).
   histogram_tester.ExpectBucketCount("SessionCrashed.Bubble", 0, 3);
 #endif  // !defined(OS_MACOSX) && !defined(GOOGLE_CHROME_BUILD)
-}
-
-IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest,
-                       LaunchMultipleLockedProfiles) {
-  ASSERT_TRUE(embedded_test_server()->Start());
-
-  ProfileManager* profile_manager = g_browser_process->profile_manager();
-  base::FilePath user_data_dir = profile_manager->user_data_dir();
-  Profile* profile1 = nullptr;
-  Profile* profile2 = nullptr;
-  {
-    base::ScopedAllowBlockingForTesting allow_blocking;
-    profile1 = profile_manager->GetProfile(
-        user_data_dir.Append(FILE_PATH_LITERAL("New Profile 1")));
-    profile2 = profile_manager->GetProfile(
-        user_data_dir.Append(FILE_PATH_LITERAL("New Profile 2")));
-  }
-  ASSERT_TRUE(profile1);
-  ASSERT_TRUE(profile2);
-
-  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-  StartupBrowserCreator browser_creator;
-  std::vector<GURL> urls;
-  urls.push_back(embedded_test_server()->GetURL("/title1.html"));
-  std::vector<Profile*> last_opened_profiles;
-  last_opened_profiles.push_back(profile1);
-  last_opened_profiles.push_back(profile2);
-  SessionStartupPref pref(SessionStartupPref::URLS);
-  pref.urls = urls;
-  SessionStartupPref::SetStartupPref(profile2, pref);
-  ProfileAttributesEntry* entry = nullptr;
-  ASSERT_TRUE(profile_manager->GetProfileAttributesStorage()
-                  .GetProfileAttributesWithPath(profile1->GetPath(), &entry));
-  entry->SetIsSigninRequired(true);
-
-  browser_creator.Start(command_line, profile_manager->user_data_dir(),
-                        profile1, last_opened_profiles);
-
-  ASSERT_EQ(0u, chrome::GetBrowserCount(profile1));
-  ASSERT_EQ(1u, chrome::GetBrowserCount(profile2));
 }
 
 class SupervisedUserBrowserCreatorTest : public InProcessBrowserTest {
@@ -1162,7 +1120,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest, MAYBE_WelcomePages) {
 
   Profile* profile1 = nullptr;
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     profile1 = Profile::CreateProfile(
         dest_path.Append(FILE_PATH_LITERAL("New Profile 1")), nullptr,
         Profile::CreateMode::CREATE_MODE_SYNCHRONOUS);

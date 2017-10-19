@@ -221,9 +221,7 @@ struct FrameFetchContext::FrozenState final
   const bool is_main_frame;
   const bool is_svg_image_chrome_client;
 
-  void Trace(blink::Visitor* visitor) {
-    visitor->Trace(content_security_policy);
-  }
+  DEFINE_INLINE_TRACE() { visitor->Trace(content_security_policy); }
 };
 
 ResourceFetcher* FrameFetchContext::CreateFetcher(DocumentLoader* loader,
@@ -465,7 +463,7 @@ void FrameFetchContext::DispatchWillSendRequest(
                          MasterDocumentLoader(), request, redirect_response,
                          initiator_info, resource_type);
   if (IdlenessDetector* idleness_detector = GetFrame()->GetIdlenessDetector())
-    idleness_detector->OnWillSendRequest(MasterDocumentLoader()->Fetcher());
+    idleness_detector->OnWillSendRequest();
   if (GetFrame()->FrameScheduler())
     GetFrame()->FrameScheduler()->DidStartLoading(identifier);
 }
@@ -518,6 +516,10 @@ void FrameFetchContext::DispatchDidReceiveResponse(
   }
 
   if (response.IsLegacySymantecCert()) {
+    // TODO(estark): Consider capping this after the message has been printed
+    // some number of times, since this could get spammy for sites that have
+    // lots of subresources with Symantec certs.
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=770406#c1
     GetLocalFrameClient()->ReportLegacySymantecCert(
         response.Url(), response.CertValidityStart());
   }
@@ -559,7 +561,7 @@ void FrameFetchContext::DispatchDidDownloadData(unsigned long identifier,
 
   GetFrame()->Loader().Progress().IncrementProgress(identifier, data_length);
   probe::didReceiveData(GetFrame()->GetDocument(), identifier,
-                        MasterDocumentLoader(), nullptr, data_length);
+                        MasterDocumentLoader(), 0, data_length);
   probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
                                      encoded_data_length);
 }
@@ -1157,7 +1159,7 @@ void FrameFetchContext::ParseAndPersistClientHints(
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    RefPtr<WebTaskRunner> task_runner) {
+    WebTaskRunner* task_runner) {
   DCHECK(!IsDetached());
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
     WrappedResourceRequest webreq(request);
@@ -1202,7 +1204,7 @@ FetchContext* FrameFetchContext::Detach() {
   return this;
 }
 
-void FrameFetchContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FrameFetchContext) {
   visitor->Trace(document_loader_);
   visitor->Trace(document_);
   visitor->Trace(frozen_state_);

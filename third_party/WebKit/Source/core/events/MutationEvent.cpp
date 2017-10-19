@@ -67,7 +67,7 @@ const AtomicString& MutationEvent::InterfaceName() const {
   return EventNames::MutationEvent;
 }
 
-void MutationEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MutationEvent) {
   visitor->Trace(related_node_);
   Event::Trace(visitor);
 }

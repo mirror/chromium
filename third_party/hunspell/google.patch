@@ -847,11 +847,7 @@ index abcdb8f..c8c5cf4 100644
  #include "csutil.hxx"
  
  #include <limits>
- #include <string>
-
--#define MAXWORDUTF8LEN (MAXWORDLEN * 2)
-+#define MAXWORDUTF8LEN (MAXWORDLEN * 3)
-
+@@ -89,9 +92,15 @@
  class HunspellImpl
  {
  public:

@@ -4,7 +4,6 @@
 
 #include "ash/system/enterprise/tray_enterprise.h"
 
-#include "ash/ash_view_ids.h"
 #include "ash/login_status.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
@@ -58,7 +57,6 @@ views::View* TrayEnterprise::CreateDefaultView(LoginStatus status) {
   if (status == LoginStatus::PUBLIC)
     return nullptr;
   tray_view_ = new LabelTrayView(this, kSystemMenuBusinessIcon);
-  tray_view_->set_id(VIEW_ID_TRAY_ENTERPRISE);
   UpdateEnterpriseMessage();
   return tray_view_;
 }

@@ -44,7 +44,7 @@ OffscreenCanvasRenderingContext2D::OffscreenCanvasRenderingContext2D(
     canvas->SetDisableReadingFromCanvasTrue();
 }
 
-void OffscreenCanvasRenderingContext2D::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(OffscreenCanvasRenderingContext2D) {
   CanvasRenderingContext::Trace(visitor);
   BaseRenderingContext2D::Trace(visitor);
 }
@@ -290,8 +290,7 @@ void OffscreenCanvasRenderingContext2D::setFont(const String& new_font) {
     return;
   CSSParser::ParseValue(style, CSSPropertyFont, new_font, true);
 
-  FontDescription desc =
-      FontStyleResolver::ComputeFont(*style, Host()->GetFontSelector());
+  FontDescription desc = FontStyleResolver::ComputeFont(*style);
 
   Font font = Font(desc);
   ModifiableState().SetFont(font, Host()->GetFontSelector());
@@ -462,7 +461,13 @@ void OffscreenCanvasRenderingContext2D::DrawTextInternal(
 
 TextMetrics* OffscreenCanvasRenderingContext2D::measureText(
     const String& text) {
+  TextMetrics* metrics = TextMetrics::Create();
+
   const Font& font = AccessFont();
+  const SimpleFontData* font_data = font.PrimaryFont();
+  DCHECK(font_data);
+  if (!font_data)
+    return metrics;
 
   TextDirection direction;
   if (GetState().GetDirection() ==
@@ -470,9 +475,41 @@ TextMetrics* OffscreenCanvasRenderingContext2D::measureText(
     direction = DetermineDirectionality(text);
   else
     direction = ToTextDirection(GetState().GetDirection());
+  TextRun text_run(
+      text, 0, 0,
+      TextRun::kAllowTrailingExpansion | TextRun::kForbidLeadingExpansion,
+      direction, false);
+  text_run.SetNormalizeSpace(true);
+  FloatRect text_bounds = font.SelectionRectForText(
+      text_run, FloatPoint(), font.GetFontDescription().ComputedSize(), 0, -1);
 
-  return TextMetrics::Create(font, direction, GetState().GetTextBaseline(),
-                             GetState().GetTextAlign(), text);
+  // x direction
+  metrics->SetWidth(font.Width(text_run));
+  metrics->SetActualBoundingBoxLeft(-text_bounds.X());
+  metrics->SetActualBoundingBoxRight(text_bounds.MaxX());
+
+  // y direction
+  const FontMetrics& font_metrics = font_data->GetFontMetrics();
+  const float ascent = font_metrics.FloatAscent();
+  const float descent = font_metrics.FloatDescent();
+  const float baseline_y = GetFontBaseline(font_metrics);
+
+  metrics->SetFontBoundingBoxAscent(ascent - baseline_y);
+  metrics->SetFontBoundingBoxDescent(descent + baseline_y);
+  metrics->SetActualBoundingBoxAscent(-text_bounds.Y() - baseline_y);
+  metrics->SetActualBoundingBoxDescent(text_bounds.MaxY() + baseline_y);
+
+  // Note : top/bottom and ascend/descend are currently the same, so there's no
+  // difference between the EM box's top and bottom and the font's ascend and
+  // descend
+  metrics->SetEmHeightAscent(0);
+  metrics->SetEmHeightDescent(0);
+
+  metrics->SetHangingBaseline(0.8f * ascent - baseline_y);
+  metrics->SetAlphabeticBaseline(-baseline_y);
+  metrics->SetIdeographicBaseline(-descent - baseline_y);
+
+  return metrics;
 }
 
 const Font& OffscreenCanvasRenderingContext2D::AccessFont() {

@@ -90,9 +90,6 @@ declare_args() {
   # A temporary arg for enabling MCVD while it's being implemented.
   # See http://crbug.com/660942
   enable_media_codec_video_decoder = false
-
-  # A temporary arg for enabling D3D11VideoDecoder
-  enable_d3d11_video_decoder = false
 }
 
 # enable_hls_sample_aes can only be true if enable_mse_mpeg2ts_stream_parser is.
@@ -138,13 +135,16 @@ declare_args() {
 # TODO(xhwang): Remove |enable_plugins| once pepper CDM support is removed.
 enable_library_cdms = enable_plugins && (is_linux || is_mac || is_win)
 
+# Enables host verification for CDMs.
+enable_cdm_host_verification = enable_library_cdms && (is_mac || is_win) &&
+                               (is_chrome_branded || enable_widevine)
+
 declare_args() {
   # Experiment to enable mojo media services (e.g. "renderer", "cdm", see
   # |mojo_media_services|). When enabled, selected mojo paths will be enabled in
   # the media pipeline and corresponding services will hosted in the selected
   # remote process (e.g. "utility" process, see |mojo_media_host|).
-  enable_mojo_media = is_android || is_chromecast || enable_library_cdms ||
-                      enable_d3d11_video_decoder
+  enable_mojo_media = is_android || is_chromecast || enable_library_cdms
 
   # Enable the TestMojoMediaClient to be used in mojo MediaService. This is for
   # testing only and will override the default platform MojoMediaClient, if any.
@@ -157,11 +157,6 @@ declare_args() {
   # will be linked if this feature is enabled, increasing the binary size. This
   # feature does not make sense if the mojo renderer is not enabled.
   enable_runtime_media_renderer_selection = is_cast_desktop_build
-
-  # Enables host verification for CDMs.
-  # Windows and Mac.
-  enable_cdm_host_verification =
-      enable_library_cdms && (is_mac || is_win) && is_chrome_branded
 }
 
 # This feature can only be enabled when using Mojo media. Furthermore, the
@@ -170,9 +165,6 @@ declare_args() {
 assert(
     !enable_runtime_media_renderer_selection || enable_mojo_media,
     "Runtime media renderer selection only applies when mojo media is enabled.")
-
-assert(!enable_cdm_host_verification || is_mac || is_win,
-       "CDM host verification is only supported on Mac and Windows.")
 
 # Use another declare_args() to pick up possible overrides of enable_mojo_media
 # from --args command line flags. See "gn help declare_args".
@@ -225,18 +217,6 @@ declare_args() {
     } else if (enable_library_cdms) {
       mojo_media_services = [ "cdm" ]
       enable_standalone_cdm_service = true
-    }
-
-    if (is_win) {
-      if (enable_d3d11_video_decoder) {
-        mojo_media_services += [
-          "cdm",
-          "video_decoder",
-        ]
-
-        # TODO(liberato): This is temporary.
-        mojo_media_host = "gpu"
-      }
     }
   }
 }

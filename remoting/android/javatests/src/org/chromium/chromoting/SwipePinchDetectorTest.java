@@ -33,7 +33,7 @@ public class SwipePinchDetectorTest {
 
     @Before
     public void setUp() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mDetector = new SwipePinchDetector(context);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         MotionEvent.PointerProperties pointer0 = new MotionEvent.PointerProperties();

@@ -118,15 +118,16 @@ MessageLoop::~MessageLoop() {
   // tasks.  Normally, we should only pass through this loop once or twice.  If
   // we end up hitting the loop limit, then it is probably due to one task that
   // is being stubborn.  Inspect the queues to see who is left.
-  bool tasks_remain;
+  bool did_work;
   for (int i = 0; i < 100; ++i) {
     DeletePendingTasks();
+    ReloadWorkQueue();
     // If we end up with empty queues, then break out of the loop.
-    tasks_remain = incoming_task_queue_->triage_tasks().HasTasks();
-    if (!tasks_remain)
+    did_work = DeletePendingTasks();
+    if (!did_work)
       break;
   }
-  DCHECK(!tasks_remain);
+  DCHECK(!did_work);
 
   // Let interested parties have one last shot at accessing this.
   for (auto& observer : destruction_observers_)
@@ -278,6 +279,7 @@ std::unique_ptr<MessageLoop> MessageLoop::CreateUnbound(
 MessageLoop::MessageLoop(Type type, MessagePumpFactoryCallback pump_factory)
     : type_(type),
 #if defined(OS_WIN)
+      pending_high_res_tasks_(0),
       in_high_res_mode_(false),
 #endif
       nestable_tasks_allowed_(true),
@@ -351,7 +353,8 @@ void MessageLoop::Quit() {
 
 void MessageLoop::EnsureWorkScheduled() {
   DCHECK_EQ(this, current());
-  if (incoming_task_queue_->triage_tasks().HasTasks())
+  ReloadWorkQueue();
+  if (!work_queue_.empty())
     pump_->ScheduleWork();
 }
 
@@ -367,12 +370,19 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
   if (run_loop_client_->IsNested())
     return false;
 
-  while (incoming_task_queue_->deferred_tasks().HasTasks()) {
-    PendingTask pending_task = incoming_task_queue_->deferred_tasks().Pop();
+  while (!deferred_non_nestable_work_queue_.empty()) {
+    PendingTask pending_task =
+        std::move(deferred_non_nestable_work_queue_.front());
+    deferred_non_nestable_work_queue_.pop();
+
     if (!pending_task.task.IsCancelled()) {
       RunTask(&pending_task);
       return true;
     }
+
+#if defined(OS_WIN)
+    DecrementHighResTaskCountIfNeeded(pending_task);
+#endif
   }
 
   return false;
@@ -381,6 +391,10 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
 void MessageLoop::RunTask(PendingTask* pending_task) {
   DCHECK(NestableTasksAllowed());
   current_pending_task_ = pending_task;
+
+#if defined(OS_WIN)
+  DecrementHighResTaskCountIfNeeded(*pending_task);
+#endif
 
   // Execute the task and assume the worst: It is probably not reentrant.
   nestable_tasks_allowed_ = false;
@@ -409,17 +423,71 @@ bool MessageLoop::DeferOrRunPendingTask(PendingTask pending_task) {
 
   // We couldn't run the task now because we're in a nested run loop
   // and the task isn't nestable.
-  incoming_task_queue_->deferred_tasks().Push(std::move(pending_task));
+  deferred_non_nestable_work_queue_.push(std::move(pending_task));
   return false;
 }
 
-void MessageLoop::DeletePendingTasks() {
-  incoming_task_queue_->triage_tasks().Clear();
-  incoming_task_queue_->deferred_tasks().Clear();
-  // TODO(robliao): Determine if we can move delayed task destruction before
-  // deferred tasks to maintain the MessagePump DoWork, DoDelayedWork, and
-  // DoIdleWork processing order.
-  incoming_task_queue_->delayed_tasks().Clear();
+void MessageLoop::AddToDelayedWorkQueue(PendingTask pending_task) {
+  // Move to the delayed work queue.
+  delayed_work_queue_.push(std::move(pending_task));
+}
+
+bool MessageLoop::SweepDelayedWorkQueueAndReturnTrueIfStillHasWork() {
+  while (!delayed_work_queue_.empty()) {
+    const PendingTask& pending_task = delayed_work_queue_.top();
+    if (!pending_task.task.IsCancelled())
+      return true;
+
+#if defined(OS_WIN)
+    DecrementHighResTaskCountIfNeeded(pending_task);
+#endif
+    delayed_work_queue_.pop();
+  }
+  return false;
+}
+
+bool MessageLoop::DeletePendingTasks() {
+  bool did_work = !work_queue_.empty();
+  while (!work_queue_.empty()) {
+    PendingTask pending_task = std::move(work_queue_.front());
+    work_queue_.pop();
+    if (!pending_task.delayed_run_time.is_null()) {
+      // We want to delete delayed tasks in the same order in which they would
+      // normally be deleted in case of any funny dependencies between delayed
+      // tasks.
+      AddToDelayedWorkQueue(std::move(pending_task));
+    }
+  }
+  did_work |= !deferred_non_nestable_work_queue_.empty();
+  while (!deferred_non_nestable_work_queue_.empty()) {
+    deferred_non_nestable_work_queue_.pop();
+  }
+  did_work |= !delayed_work_queue_.empty();
+
+  // Historically, we always delete the task regardless of valgrind status. It's
+  // not completely clear why we want to leak them in the loops above.  This
+  // code is replicating legacy behavior, and should not be considered
+  // absolutely "correct" behavior.  See TODO above about deleting all tasks
+  // when it's safe.
+  while (!delayed_work_queue_.empty()) {
+    delayed_work_queue_.pop();
+  }
+  return did_work;
+}
+
+void MessageLoop::ReloadWorkQueue() {
+  // We can improve performance of our loading tasks from the incoming queue to
+  // |*work_queue| by waiting until the last minute (|*work_queue| is empty) to
+  // load. That reduces the number of locks-per-task significantly when our
+  // queues get large.
+  if (work_queue_.empty()) {
+#if defined(OS_WIN)
+    pending_high_res_tasks_ +=
+        incoming_task_queue_->ReloadWorkQueue(&work_queue_);
+#else
+    incoming_task_queue_->ReloadWorkQueue(&work_queue_);
+#endif
+  }
 }
 
 void MessageLoop::ScheduleWork() {
@@ -432,24 +500,32 @@ bool MessageLoop::DoWork() {
     return false;
   }
 
-  // Execute oldest task.
-  while (incoming_task_queue_->triage_tasks().HasTasks()) {
-    PendingTask pending_task = incoming_task_queue_->triage_tasks().Pop();
-    if (pending_task.task.IsCancelled())
-      continue;
+  for (;;) {
+    ReloadWorkQueue();
+    if (work_queue_.empty())
+      break;
 
-    if (!pending_task.delayed_run_time.is_null()) {
-      int sequence_num = pending_task.sequence_num;
-      TimeTicks delayed_run_time = pending_task.delayed_run_time;
-      incoming_task_queue_->delayed_tasks().Push(std::move(pending_task));
-      // If we changed the topmost task, then it is time to reschedule.
-      if (incoming_task_queue_->delayed_tasks().Peek().sequence_num ==
-          sequence_num) {
-        pump_->ScheduleDelayedWork(delayed_run_time);
+    // Execute oldest task.
+    do {
+      PendingTask pending_task = std::move(work_queue_.front());
+      work_queue_.pop();
+
+      if (pending_task.task.IsCancelled()) {
+#if defined(OS_WIN)
+        DecrementHighResTaskCountIfNeeded(pending_task);
+#endif
+      } else if (!pending_task.delayed_run_time.is_null()) {
+        int sequence_num = pending_task.sequence_num;
+        TimeTicks delayed_run_time = pending_task.delayed_run_time;
+        AddToDelayedWorkQueue(std::move(pending_task));
+        // If we changed the topmost task, then it is time to reschedule.
+        if (delayed_work_queue_.top().sequence_num == sequence_num)
+          pump_->ScheduleDelayedWork(delayed_run_time);
+      } else {
+        if (DeferOrRunPendingTask(std::move(pending_task)))
+          return true;
       }
-    } else if (DeferOrRunPendingTask(std::move(pending_task))) {
-      return true;
-    }
+    } while (!work_queue_.empty());
   }
 
   // Nothing happened.
@@ -458,7 +534,7 @@ bool MessageLoop::DoWork() {
 
 bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
   if (!NestableTasksAllowed() ||
-      !incoming_task_queue_->delayed_tasks().HasTasks()) {
+      !SweepDelayedWorkQueueAndReturnTrueIfStillHasWork()) {
     recent_time_ = *next_delayed_work_time = TimeTicks();
     return false;
   }
@@ -470,8 +546,7 @@ bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
   // fall behind (and have a lot of ready-to-run delayed tasks), the more
   // efficient we'll be at handling the tasks.
 
-  TimeTicks next_run_time =
-      incoming_task_queue_->delayed_tasks().Peek().delayed_run_time;
+  TimeTicks next_run_time = delayed_work_queue_.top().delayed_run_time;
   if (next_run_time > recent_time_) {
     recent_time_ = TimeTicks::Now();  // Get a better view of Now();
     if (next_run_time > recent_time_) {
@@ -480,12 +555,12 @@ bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
     }
   }
 
-  PendingTask pending_task = incoming_task_queue_->delayed_tasks().Pop();
+  PendingTask pending_task =
+      std::move(const_cast<PendingTask&>(delayed_work_queue_.top()));
+  delayed_work_queue_.pop();
 
-  if (incoming_task_queue_->delayed_tasks().HasTasks()) {
-    *next_delayed_work_time =
-        incoming_task_queue_->delayed_tasks().Peek().delayed_run_time;
-  }
+  if (SweepDelayedWorkQueueAndReturnTrueIfStillHasWork())
+    *next_delayed_work_time = delayed_work_queue_.top().delayed_run_time;
 
   return DeferOrRunPendingTask(std::move(pending_task));
 }
@@ -503,7 +578,7 @@ bool MessageLoop::DoIdleWork() {
   // _if_ triggered by the timer happens with good resolution. If we don't
   // do this the default resolution is 15ms which might not be acceptable
   // for some tasks.
-  bool high_res = incoming_task_queue_->HasPendingHighResolutionTasks();
+  bool high_res = pending_high_res_tasks_ > 0;
   if (high_res != in_high_res_mode_) {
     in_high_res_mode_ = high_res;
     Time::ActivateHighResolutionTimer(in_high_res_mode_);
@@ -511,6 +586,16 @@ bool MessageLoop::DoIdleWork() {
 #endif
   return false;
 }
+
+#if defined(OS_WIN)
+void MessageLoop::DecrementHighResTaskCountIfNeeded(
+    const PendingTask& pending_task) {
+  if (!pending_task.is_high_res)
+    return;
+  --pending_high_res_tasks_;
+  DCHECK_GE(pending_high_res_tasks_, 0);
+}
+#endif
 
 #if !defined(OS_NACL)
 //------------------------------------------------------------------------------

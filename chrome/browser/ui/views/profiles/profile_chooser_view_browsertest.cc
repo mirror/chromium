@@ -43,7 +43,7 @@
 namespace {
 
 Profile* CreateTestingProfile(const std::string& profile_name) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   size_t starting_number_of_profiles = profile_manager->GetNumberOfProfiles();
 
@@ -62,7 +62,7 @@ Profile* CreateTestingProfile(const std::string& profile_name) {
 }
 
 Profile* CreateProfileOutsideUserDataDir() {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::FilePath path;
   if (!base::CreateNewTempDirectory(base::FilePath::StringType(), &path))
     NOTREACHED() << "Could not create directory at " << path.MaybeAsASCII();
@@ -77,7 +77,7 @@ Profile* CreateProfileOutsideUserDataDir() {
 // Set up the profiles to enable Lock. Takes as parameter a profile that will be
 // signed in, and also creates a supervised user (necessary for lock).
 void SetupProfilesForLock(Profile* signed_in) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   const char signed_in_email[] = "me@google.com";
 
   // Set up the |signed_in| profile.

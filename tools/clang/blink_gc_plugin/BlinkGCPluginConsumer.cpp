@@ -590,6 +590,7 @@ void BlinkGCPluginConsumer::DumpClass(RecordInfo* info) {
                        (static_cast<RawPtr*>(Parent())->HasReferenceType() ?
                         "reference" : "raw") :
                    Parent()->IsRefPtr() ? "ref" :
+                   Parent()->IsOwnPtr() ? "own" :
                    Parent()->IsUniquePtr() ? "unique" :
                    (Parent()->IsMember() || Parent()->IsWeakMember()) ? "mem" :
                    "val");

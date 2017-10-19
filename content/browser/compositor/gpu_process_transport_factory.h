@@ -33,10 +33,6 @@ class SingleThreadTaskGraphRunner;
 class SurfaceManager;
 }
 
-namespace gpu {
-class GpuChannelEstablishFactory;
-}
-
 namespace ui {
 class ContextProviderCommandBuffer;
 }
@@ -53,8 +49,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
                                    public ui::ContextFactoryPrivate,
                                    public ImageTransportFactory {
  public:
-  GpuProcessTransportFactory(
-      gpu::GpuChannelEstablishFactory* gpu_channel_factory,
+  explicit GpuProcessTransportFactory(
       scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner);
 
   ~GpuProcessTransportFactory() override;
@@ -98,6 +93,8 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   ui::ContextFactoryPrivate* GetContextFactoryPrivate() override;
   viz::FrameSinkManagerImpl* GetFrameSinkManager() override;
   viz::GLHelper* GetGLHelper() override;
+  void SetGpuChannelEstablishFactory(
+      gpu::GpuChannelEstablishFactory* factory) override;
 #if defined(OS_MACOSX)
   void SetCompositorSuspendedForRecycle(ui::Compositor* compositor,
                                         bool suspended) override;
@@ -108,7 +105,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
 
   PerCompositorData* CreatePerCompositorData(ui::Compositor* compositor);
   std::unique_ptr<viz::SoftwareOutputDevice> CreateSoftwareOutputDevice(
-      gfx::AcceleratedWidget widget);
+      ui::Compositor* compositor);
   void EstablishedGpuChannel(
       base::WeakPtr<ui::Compositor> compositor,
       bool create_gpu_output_surface,
@@ -148,7 +145,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   scoped_refptr<viz::VulkanInProcessContextProvider>
       shared_vulkan_context_provider_;
 
-  gpu::GpuChannelEstablishFactory* const gpu_channel_factory_;
+  gpu::GpuChannelEstablishFactory* gpu_channel_factory_ = nullptr;
 
   base::WeakPtrFactory<GpuProcessTransportFactory> callback_factory_;
 

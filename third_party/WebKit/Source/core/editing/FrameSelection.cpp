@@ -146,7 +146,7 @@ ContainerNode* RootEditableElementOrTreeScopeRootNodeOf(
     return selection_root;
 
   Node* const node = position.ComputeContainerNode();
-  return node ? &node->GetTreeScope().RootNode() : nullptr;
+  return node ? &node->GetTreeScope().RootNode() : 0;
 }
 
 VisibleSelection FrameSelection::ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -1004,7 +1004,7 @@ void FrameSelection::ShowTreeForThis() const {
 
 #endif
 
-void FrameSelection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FrameSelection) {
   visitor->Trace(frame_);
   visitor->Trace(layout_selection_);
   visitor->Trace(selection_editor_);
@@ -1028,9 +1028,12 @@ bool FrameSelection::SelectWordAroundCaret() {
   // http://crbug.com/657237 for more details.
   if (!selection.IsCaret())
     return false;
-  const VisiblePosition& position = selection.VisibleStart();
-  static const EWordSide kWordSideList[2] = {kNextWordIfOnBoundary,
-                                             kPreviousWordIfOnBoundary};
+  return SelectWordAroundPosition(selection.VisibleStart());
+}
+
+bool FrameSelection::SelectWordAroundPosition(const VisiblePosition& position) {
+  static const EWordSide kWordSideList[2] = {kRightWordIfOnBoundary,
+                                             kLeftWordIfOnBoundary};
   for (EWordSide word_side : kWordSideList) {
     // TODO(yoichio): We should have Position version of |start/endOfWord|
     // for avoiding unnecessary canonicalization.
@@ -1060,7 +1063,7 @@ GranularityStrategy* FrameSelection::GetGranularityStrategy() {
   // initialize it right in the constructor - the correct settings may not be
   // set yet.
   SelectionStrategy strategy_type = SelectionStrategy::kCharacter;
-  Settings* settings = frame_ ? frame_->GetSettings() : nullptr;
+  Settings* settings = frame_ ? frame_->GetSettings() : 0;
   if (settings &&
       settings->GetSelectionStrategy() == SelectionStrategy::kDirection)
     strategy_type = SelectionStrategy::kDirection;

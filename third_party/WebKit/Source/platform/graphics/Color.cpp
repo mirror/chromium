@@ -270,11 +270,11 @@ static inline const NamedColor* FindNamedColor(const String& name) {
   char buffer[64];  // easily big enough for the longest color name
   unsigned length = name.length();
   if (length > sizeof(buffer) - 1)
-    return nullptr;
+    return 0;
   for (unsigned i = 0; i < length; ++i) {
     UChar c = name[i];
     if (!c || c > 0x7F)
-      return nullptr;
+      return 0;
     buffer[i] = ToASCIILower(static_cast<char>(c));
   }
   buffer[length] = '\0';

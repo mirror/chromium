@@ -14,7 +14,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "build/build_config.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/WebTaskRunner.h"
@@ -306,7 +305,6 @@ class RendererSchedulerImplTest : public ::testing::Test {
         MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL);
     idle_task_runner_ = scheduler_->IdleTaskRunner();
     timer_task_runner_ = scheduler_->TimerTaskQueue();
-    v8_task_runner_ = scheduler_->V8TaskQueue();
     fake_queue_ = scheduler_->NewLoadingTaskQueue(
         MainThreadTaskQueue::QueueType::FRAME_LOADING);
   }
@@ -612,7 +610,6 @@ class RendererSchedulerImplTest : public ::testing::Test {
   // - 'M': Loading Control task
   // - 'I': Idle task
   // - 'T': Timer task
-  // - 'V': V8 task
   void PostTestTasks(std::vector<std::string>* run_order,
                      const std::string& task_descriptor) {
     std::istringstream stream(task_descriptor);
@@ -643,10 +640,6 @@ class RendererSchedulerImplTest : public ::testing::Test {
           break;
         case 'T':
           timer_task_runner_->PostTask(
-              FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
-          break;
-        case 'V':
-          v8_task_runner_->PostTask(
               FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
           break;
         default:
@@ -722,7 +715,6 @@ class RendererSchedulerImplTest : public ::testing::Test {
   scoped_refptr<base::SingleThreadTaskRunner> loading_control_task_runner_;
   scoped_refptr<SingleThreadIdleTaskRunner> idle_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> timer_task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> v8_task_runner_;
   bool simulate_timer_task_ran_;
   bool simulate_compositor_task_ran_;
   uint64_t next_begin_frame_number_ = viz::BeginFrameArgs::kStartingFrameNumber;
@@ -2536,13 +2528,12 @@ TEST_F(RendererSchedulerImplTest, TestRendererBackgroundedTimerSuspension) {
   ASSERT_TRUE(run_order.empty());
 
   // Timer tasks should be paused until the foregrounded signal.
-  PostTestTasks(&run_order, "T4 T5 V1");
+  PostTestTasks(&run_order, "T4 T5");
   now += base::TimeDelta::FromSeconds(10);
   clock_->SetNowTicks(now);
   RunUntilIdle();
-  EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("V1")));
+  EXPECT_THAT(run_order, ::testing::ElementsAre());
 
-  run_order.clear();
   scheduler_->SetRendererBackgrounded(false);
   RunUntilIdle();
   EXPECT_THAT(run_order,
@@ -3781,8 +3772,6 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->VirtualTimeControlTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
-  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
-            scheduler_->GetVirtualTimeDomain());
 
   // The main control task queue remains in the real time domain.
   EXPECT_EQ(scheduler_->ControlTaskQueue()->GetTimeDomain(),
@@ -3817,31 +3806,6 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
 }
 
-TEST_F(RendererSchedulerImplTest, EnableVirtualTimeAfterThrottling) {
-  std::unique_ptr<WebViewSchedulerImpl> web_view_scheduler =
-      base::WrapUnique(new WebViewSchedulerImpl(
-          nullptr, nullptr, scheduler_.get(),
-          false /* disable_background_timer_throttling */));
-  scheduler_->AddWebViewScheduler(web_view_scheduler.get());
-
-  std::unique_ptr<WebFrameSchedulerImpl> web_frame_scheduler =
-      web_view_scheduler->CreateWebFrameSchedulerImpl(
-          nullptr, WebFrameScheduler::FrameType::kSubframe);
-
-  RefPtr<WebTaskRunner> timer_wtr =
-      web_frame_scheduler->ThrottleableTaskRunner();
-  TaskQueue* timer_tq =
-      static_cast<WebTaskRunnerImpl*>(timer_wtr.get())->GetTaskQueue();
-
-  web_frame_scheduler->SetCrossOrigin(true);
-  web_frame_scheduler->SetFrameVisible(false);
-  EXPECT_TRUE(scheduler_->task_queue_throttler()->IsThrottled(timer_tq));
-
-  scheduler_->EnableVirtualTime();
-  EXPECT_EQ(timer_tq->GetTimeDomain(), scheduler_->GetVirtualTimeDomain());
-  EXPECT_FALSE(scheduler_->task_queue_throttler()->IsThrottled(timer_tq));
-}
-
 TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
   scheduler_->EnableVirtualTime();
 
@@ -3861,8 +3825,6 @@ TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
   EXPECT_EQ(scheduler_->TimerTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->ControlTaskQueue()->GetTimeDomain(),
-            scheduler_->real_time_domain());
-  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_FALSE(scheduler_->VirtualTimeControlTaskQueue());
 }
@@ -4128,26 +4090,6 @@ TEST_F(RendererSchedulerImplTest, LoadingControlTasks) {
                                    std::string("L3"), std::string("L4"),
                                    std::string("L5"), std::string("L6")));
 }
-
-#if defined(OS_ANDROID)
-TEST_F(RendererSchedulerImplTest, PauseTimersForAndroidWebView) {
-  ScopedAutoAdvanceNowEnabler enable_auto_advance_now(mock_task_runner_);
-  // Tasks in some queues don't fire when the timers are paused.
-  std::vector<std::string> run_order;
-  PostTestTasks(&run_order, "D1 C1 L1 I1 T1");
-  scheduler_->PauseTimersForAndroidWebView();
-  EnableIdleTasks();
-  RunUntilIdle();
-  EXPECT_THAT(run_order,
-              ::testing::ElementsAre(std::string("D1"), std::string("C1"),
-                                     std::string("L1"), std::string("I1")));
-  // The rest queued tasks fire when the timers are resumed.
-  run_order.clear();
-  scheduler_->ResumeTimersForAndroidWebView();
-  RunUntilIdle();
-  EXPECT_THAT(run_order, ::testing::ElementsAre(std::string("T1")));
-}
-#endif  // defined(OS_ANDROID)
 
 }  // namespace renderer_scheduler_impl_unittest
 }  // namespace scheduler

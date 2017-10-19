@@ -41,7 +41,7 @@ class CORE_EXPORT CSSValue : public GarbageCollectedFinalized<CSSValue> {
     ThreadState* state =
         ThreadStateFor<ThreadingTrait<CSSValue>::kAffinity>::GetState();
     const char* type_name = "blink::CSSValue";
-    return state->Heap().AllocateOnArenaIndex(
+    return ThreadHeap::AllocateOnArenaIndex(
         state, size,
         is_eager ? BlinkGC::kEagerSweepArenaIndex
                  : BlinkGC::kCSSValueArenaIndex,
@@ -166,8 +166,8 @@ class CORE_EXPORT CSSValue : public GarbageCollectedFinalized<CSSValue> {
   bool operator==(const CSSValue&) const;
 
   void FinalizeGarbageCollectedObject();
-  void TraceAfterDispatch(blink::Visitor* visitor) {}
-  void Trace(blink::Visitor*);
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {}
+  DECLARE_TRACE();
 
   // ~CSSValue should be public, because non-public ~CSSValue causes C2248
   // error: 'blink::CSSValue::~CSSValue' : cannot access protected member

@@ -10,7 +10,7 @@
  */
 
 // Expose for testing.
-/** @type {!Map<string, !bluetooth.mojom.DevicePtr|!Promise} */
+/** @type {!Map<string, !interfaces.BluetoothDevice.DevicePtr|!Promise} */
 var connectedDevices = null;
 
 cr.define('device_broker', function() {
@@ -22,7 +22,7 @@ cr.define('device_broker', function() {
    * DevicePtr. If a connection is in progress, the promise resolves when
    * the existing connection request promise is fulfilled.
    * @param {string} address
-   * @return {!Promise<!bluetooth.mojom.DevicePtr>}
+   * @return {!Promise<!interfaces.BluetoothDevice.DevicePtr>}
    */
   function connectToDevice(address) {
     var deviceOrPromise = connectedDevices.get(address) || null;

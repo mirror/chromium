@@ -17,7 +17,6 @@ import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.base.StrictModeContext;
 import org.chromium.chrome.browser.UrlConstants;
 
 import java.io.File;
@@ -264,9 +263,7 @@ public class DownloadManagerDelegate {
                 (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         Uri contentUri = null;
         try {
-            try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
-                contentUri = manager.getUriForDownloadedFile(downloadId);
-            }
+            contentUri = manager.getUriForDownloadedFile(downloadId);
         } catch (SecurityException e) {
             Log.e(TAG, "unable to get content URI from DownloadManager");
         }

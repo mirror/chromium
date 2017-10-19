@@ -61,7 +61,7 @@ public final class OAuth2TokenService
 
     private OAuth2TokenService(long nativeOAuth2Service) {
         mNativeOAuth2TokenServiceDelegateAndroid = nativeOAuth2Service;
-        mObservers = new ObserverList<>();
+        mObservers = new ObserverList<OAuth2TokenServiceObserver>();
         AccountTrackerService.get().addSystemAccountsSeededListener(this);
     }
 
@@ -104,7 +104,7 @@ public final class OAuth2TokenService
     }
 
     /**
-     * Called by native to list the active account names in the OS.
+     * Called by native to list the activite account names in the OS.
      */
     @VisibleForTesting
     @CalledByNative
@@ -140,7 +140,12 @@ public final class OAuth2TokenService
             String username, String scope, final long nativeCallback) {
         Account account = getAccountOrNullFromUsername(username);
         if (account == null) {
-            ThreadUtils.postOnUiThread(() -> nativeOAuth2TokenFetched(null, false, nativeCallback));
+            ThreadUtils.postOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    nativeOAuth2TokenFetched(null, false, nativeCallback);
+                }
+            });
             return;
         }
         String oauth2Scope = OAUTH2_SCOPE_PREFIX + scope;
@@ -189,7 +194,7 @@ public final class OAuth2TokenService
     public static String getOAuth2AccessTokenWithTimeout(
             Context context, Account account, String scope, long timeout, TimeUnit unit) {
         assert !ThreadUtils.runningOnUiThread();
-        final AtomicReference<String> result = new AtomicReference<>();
+        final AtomicReference<String> result = new AtomicReference<String>();
         final Semaphore semaphore = new Semaphore(0);
         getOAuth2AccessToken(
                 context, account, scope, new AccountManagerFacade.GetAuthTokenCallback() {
@@ -220,7 +225,7 @@ public final class OAuth2TokenService
     }
 
     /**
-     * Called by native to check whether the account has an OAuth2 refresh token.
+     * Called by native to check wether the account has an OAuth2 refresh token.
      */
     @CalledByNative
     public static boolean hasOAuth2RefreshToken(String accountName) {
@@ -368,7 +373,7 @@ public final class OAuth2TokenService
 
     @CalledByNative
     private static void saveStoredAccounts(String[] accounts) {
-        Set<String> set = new HashSet<>(Arrays.asList(accounts));
+        Set<String> set = new HashSet<String>(Arrays.asList(accounts));
         ContextUtils.getAppSharedPreferences().edit()
                 .putStringSet(STORED_ACCOUNTS_KEY, set).apply();
     }

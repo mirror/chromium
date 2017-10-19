@@ -26,9 +26,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.Property;
-import android.view.animation.Interpolator;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -46,8 +44,7 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
     private static final long DURATION_SHEET_HALF_EXPANSION_MS = 400;
     private static final long DURATION_SHEET_HALF_PAUSE_MS = 300;
     private static final long DURATION_SHEET_FULL_EXPANSION_MS = 500;
-    private static final long DURATION_HIGHLIGHT_EXPANSION_MS = 400;
-    private static final long DURATION_HIGHLIGHT_START_DELAY_MS = 200;
+    private static final long DURATION_HIGHLIGHT_MS = 400;
 
     private static final float PHONE_HEIGHT_PERCENT = .9f;
     private static final float PHONE_ASPECT_RATIO_PERCENT = .524f;
@@ -158,7 +155,6 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
     }
 
     private void buildAnimation() {
-        Interpolator interpolator = new FastOutSlowInInterpolator();
         AnimatorSet set = new AnimatorSet();
 
         Property<ChromeHomePromoIllustration, Float> sheetAnimationProperty =
@@ -192,8 +188,7 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
                         invalidateSelf();
                     }
                 }, 0, 1f);
-        highlightAnimation.setStartDelay(DURATION_HIGHLIGHT_START_DELAY_MS);
-        highlightAnimation.setDuration(DURATION_HIGHLIGHT_EXPANSION_MS);
+        highlightAnimation.setDuration(DURATION_HIGHLIGHT_MS);
 
         Animator sheetFullHeightAnimation =
                 ObjectAnimator.ofFloat(this, sheetAnimationProperty, 0.5f, 1f);
@@ -218,7 +213,6 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
 
         set.playSequentially(sheetHalfHeightAnimation, highlightAnimation, fullHeightTransition);
         set.setStartDelay(DURATION_SHEET_COLLAPSED_MS);
-        set.setInterpolator(interpolator);
         set.addListener(new CancelAwareAnimatorListener() {
             private final Handler mHandler = new Handler();
             private final Runnable mRepeatRunnable = new Runnable() {
@@ -524,9 +518,7 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
 
         @Override
         public void setAlpha(int i) {
-            int previousAlpha = mAlpha;
             mAlpha = i;
-            if (previousAlpha != mAlpha) invalidateSelf();
         }
 
         @Override
@@ -617,9 +609,7 @@ public class ChromeHomePromoIllustration extends Drawable implements Drawable.Ca
 
         @Override
         public void setAlpha(int i) {
-            int previousAlpha = mAlpha;
             mAlpha = i;
-            if (previousAlpha != mAlpha) invalidateSelf();
         }
 
         @Override

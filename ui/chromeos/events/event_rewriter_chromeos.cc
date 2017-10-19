@@ -59,7 +59,7 @@ const int kUnknownProductId = -1;
 // user preference target key, and replaces the flag accordingly.
 const struct ModifierRemapping {
   int flag;
-  ui::chromeos::ModifierKey remap_to;
+  int remap_to;
   const char* pref_name;
   EventRewriterChromeOS::MutableKeyState result;
 } kModifierRemappings[] = {
@@ -124,7 +124,7 @@ const ModifierRemapping* GetRemappedKey(
     return nullptr;
 
   for (size_t i = 0; i < arraysize(kModifierRemappings); ++i) {
-    if (value == static_cast<int>(kModifierRemappings[i].remap_to))
+    if (value == kModifierRemappings[i].remap_to)
       return &kModifierRemappings[i];
   }
   return nullptr;
@@ -595,7 +595,7 @@ ui::EventRewriteStatus EventRewriterChromeOS::RewriteMouseWheelEvent(
       break;
     case ui::EVENT_REWRITE_CONTINUE:
       if (flags != wheel_event.flags()) {
-        *rewritten_event = std::make_unique<ui::MouseWheelEvent>(wheel_event);
+        *rewritten_event = base::MakeUnique<ui::MouseWheelEvent>(wheel_event);
         (*rewritten_event)->set_flags(flags);
         status = ui::EVENT_REWRITE_REWRITTEN;
       }

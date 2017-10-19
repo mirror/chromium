@@ -6,9 +6,10 @@
 #define CompositorAnimationPlayer_h
 
 #include <memory>
-#include "base/memory/scoped_refptr.h"
+#include "base/memory/ref_counted.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_player.h"
+#include "cc/animation/worklet_animation_player.h"
 #include "platform/PlatformExport.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/wtf/Noncopyable.h"
@@ -32,6 +33,9 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
     return WTF::WrapUnique(new CompositorAnimationPlayer());
   }
 
+  static std::unique_ptr<CompositorAnimationPlayer> CreateWorkletPlayer(
+      const String& name);
+
   ~CompositorAnimationPlayer();
 
   cc::AnimationPlayer* CcAnimationPlayer() const;
@@ -53,6 +57,7 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
 
  private:
   CompositorAnimationPlayer();
+  CompositorAnimationPlayer(scoped_refptr<cc::AnimationPlayer>);
 
   // cc::AnimationDelegate implementation.
   void NotifyAnimationStarted(base::TimeTicks monotonic_time,

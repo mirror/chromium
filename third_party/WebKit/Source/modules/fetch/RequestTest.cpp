@@ -21,7 +21,7 @@ TEST(ServiceWorkerRequestTest, FromString) {
   V8TestingScope scope;
   DummyExceptionStateForTesting exception_state;
 
-  KURL url("http://www.example.com/");
+  KURL url(kParsedURLString, "http://www.example.com/");
   Request* request =
       Request::Create(scope.GetScriptState(), url, exception_state);
   ASSERT_FALSE(exception_state.HadException());
@@ -33,7 +33,7 @@ TEST(ServiceWorkerRequestTest, FromRequest) {
   V8TestingScope scope;
   DummyExceptionStateForTesting exception_state;
 
-  KURL url("http://www.example.com/");
+  KURL url(kParsedURLString, "http://www.example.com/");
   Request* request1 =
       Request::Create(scope.GetScriptState(), url, exception_state);
   DCHECK(request1);
@@ -49,12 +49,12 @@ TEST(ServiceWorkerRequestTest, FromAndToWebRequest) {
   V8TestingScope scope;
   WebServiceWorkerRequest web_request;
 
-  const KURL url("http://www.example.com/");
+  const KURL url(kParsedURLString, "http://www.example.com/");
   const String method = "GET";
   struct {
     const char* key;
     const char* value;
-  } headers[] = {{"X-Foo", "bar"}, {"X-Quux", "foop"}, {nullptr, nullptr}};
+  } headers[] = {{"X-Foo", "bar"}, {"X-Quux", "foop"}, {0, 0}};
   const String referrer = "http://www.referrer.com/";
   const WebReferrerPolicy kReferrerPolicy = kWebReferrerPolicyAlways;
   const WebURLRequest::RequestContext kContext =

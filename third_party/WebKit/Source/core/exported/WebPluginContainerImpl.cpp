@@ -72,6 +72,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/KeyboardCodes.h"
 #include "platform/exported/WrappedResourceResponse.h"
@@ -79,7 +80,6 @@
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/CullRect.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/ForeignLayerDisplayItem.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
@@ -161,12 +161,13 @@ void WebPluginContainerImpl::Paint(GraphicsContext& context,
     return;
   }
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
-          context, *element_->GetLayoutObject(), DisplayItem::kWebPlugin))
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+          context, *element_->GetLayoutObject(), DisplayItem::Type::kWebPlugin))
     return;
 
-  DrawingRecorder recorder(context, *element_->GetLayoutObject(),
-                           DisplayItem::kWebPlugin, cull_rect.rect_);
+  LayoutObjectDrawingRecorder drawing_recorder(
+      context, *element_->GetLayoutObject(), DisplayItem::Type::kWebPlugin,
+      cull_rect.rect_);
   context.Save();
 
   // The plugin is positioned in the root frame's coordinates, so it needs to
@@ -356,12 +357,13 @@ int WebPluginContainerImpl::PrintBegin(
 void WebPluginContainerImpl::PrintPage(int page_number,
                                        GraphicsContext& gc,
                                        const IntRect& print_rect) {
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
-          gc, *element_->GetLayoutObject(), DisplayItem::kWebPlugin))
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+          gc, *element_->GetLayoutObject(), DisplayItem::Type::kWebPlugin))
     return;
 
-  DrawingRecorder recorder(gc, *element_->GetLayoutObject(),
-                           DisplayItem::kWebPlugin, print_rect);
+  LayoutObjectDrawingRecorder drawing_recorder(gc, *element_->GetLayoutObject(),
+                                               DisplayItem::Type::kWebPlugin,
+                                               print_rect);
   gc.Save();
 
   WebCanvas* canvas = gc.Canvas();
@@ -745,7 +747,7 @@ void WebPluginContainerImpl::Dispose() {
   }
 }
 
-void WebPluginContainerImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebPluginContainerImpl) {
   visitor->Trace(element_);
   ContextClient::Trace(visitor);
   PluginView::Trace(visitor);

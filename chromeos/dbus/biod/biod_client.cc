@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "chromeos/dbus/biod/fake_biod_client.h"
 #include "chromeos/dbus/biod/messages.pb.h"
@@ -26,7 +27,8 @@ namespace {
 
 // D-Bus response handler for methods that use void callbacks.
 void OnVoidResponse(VoidDBusMethodCallback callback, dbus::Response* response) {
-  std::move(callback).Run(response != nullptr);
+  std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
+                                   : DBUS_METHOD_CALL_FAILURE);
 }
 
 }  // namespace
@@ -133,7 +135,7 @@ class BiodClientImpl : public BiodClient {
 
   void CancelEnrollSession(VoidDBusMethodCallback callback) override {
     if (!current_enroll_session_path_) {
-      std::move(callback).Run(true);
+      std::move(callback).Run(DBUS_METHOD_CALL_SUCCESS);
       return;
     }
     dbus::MethodCall method_call(biod::kEnrollSessionInterface,
@@ -149,7 +151,7 @@ class BiodClientImpl : public BiodClient {
 
   void EndAuthSession(VoidDBusMethodCallback callback) override {
     if (!current_auth_session_path_) {
-      std::move(callback).Run(true);
+      std::move(callback).Run(DBUS_METHOD_CALL_SUCCESS);
       return;
     }
     dbus::MethodCall method_call(biod::kAuthSessionInterface,
@@ -256,7 +258,7 @@ class BiodClientImpl : public BiodClient {
     }
 
     if (result.IsValid())
-      current_enroll_session_path_ = std::make_unique<dbus::ObjectPath>(result);
+      current_enroll_session_path_ = base::MakeUnique<dbus::ObjectPath>(result);
     callback.Run(result);
   }
 
@@ -286,7 +288,7 @@ class BiodClientImpl : public BiodClient {
     }
 
     if (result.IsValid())
-      current_auth_session_path_ = std::make_unique<dbus::ObjectPath>(result);
+      current_auth_session_path_ = base::MakeUnique<dbus::ObjectPath>(result);
     callback.Run(result);
   }
 

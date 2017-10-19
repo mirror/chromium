@@ -46,7 +46,7 @@ class PLATFORM_EXPORT PrerenderClient : public GarbageCollectedMixin {
   virtual void DidSendLoadForPrerender() = 0;
   virtual void DidSendDOMContentLoadedForPrerender() = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

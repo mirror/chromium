@@ -436,7 +436,7 @@ cr.define('print_preview_test', function() {
             origin: cr.isChromeOS ? 'chrome_os' : 'local',
             account: '',
             capabilities: 0,
-            displayName: '',
+            name: '',
             extensionId: '',
             extensionName: '',
           },
@@ -458,7 +458,7 @@ cr.define('print_preview_test', function() {
             origin: origin,
             account: '',
             capabilities: 0,
-            displayName: 'One',
+            name: 'One',
             extensionId: '',
             extensionName: '',
           }, {
@@ -466,7 +466,7 @@ cr.define('print_preview_test', function() {
             origin: origin,
             account: '',
             capabilities: 0,
-            displayName: 'Two',
+            name: 'Two',
             extensionId: '',
             extensionName: '',
           }, {
@@ -474,7 +474,7 @@ cr.define('print_preview_test', function() {
             origin: origin,
             account: '',
             capabilities: 0,
-            displayName: 'Three',
+            name: 'Three',
             extensionId: '',
             extensionName: '',
           },
@@ -1251,7 +1251,7 @@ cr.define('print_preview_test', function() {
         recentDestinations: [1, 2, 3].map(function(i) {
           return {
             id: 'ID' + i, origin: origin, account: '',
-            capabilities: getCddTemplate('ID' + i), displayName: '',
+            capabilities: getCddTemplate('ID' + i), name: '',
             extensionId: '', extensionName: ''
           };
         }),
@@ -1407,7 +1407,7 @@ cr.define('print_preview_test', function() {
             origin: 'local',
             account: '',
             capabilities: 0,
-            displayName: 'One',
+            name: 'One',
             extensionId: '',
             extensionName: '',
           },

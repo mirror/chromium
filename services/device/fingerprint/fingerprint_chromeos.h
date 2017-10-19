@@ -74,10 +74,10 @@ class SERVICES_DEVICE_FINGERPRINT_EXPORT FingerprintChromeOS
                                 const dbus::ObjectPath& record_path,
                                 const std::string& label);
 
-  void OnCloseEnrollSessionForAuth(bool result);
+  void OnCloseEnrollSessionForAuth(chromeos::DBusMethodCallStatus result);
   void OnCloseAuthSessionForEnroll(const std::string& user_id,
                                    const std::string& label,
-                                   bool result);
+                                   chromeos::DBusMethodCallStatus result);
   void ScheduleStartEnroll(const std::string& user_id,
                            const std::string& label);
   void ScheduleStartAuth();

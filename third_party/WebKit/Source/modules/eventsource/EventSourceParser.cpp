@@ -4,7 +4,7 @@
 
 #include "modules/eventsource/EventSourceParser.h"
 
-#include "core/event_type_names.h"
+#include "core/EventTypeNames.h"
 #include "modules/eventsource/EventSource.h"
 #include "platform/wtf/ASCIICType.h"
 #include "platform/wtf/Assertions.h"
@@ -131,7 +131,7 @@ String EventSourceParser::FromUTF8(const char* bytes, size_t size) {
   return codec_->Decode(bytes, size, WTF::kDataEOF);
 }
 
-void EventSourceParser::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventSourceParser) {
   visitor->Trace(client_);
 }
 

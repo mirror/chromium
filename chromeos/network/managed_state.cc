@@ -6,9 +6,8 @@
 
 #include <stdint.h>
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chromeos/network/device_state.h"
 #include "chromeos/network/network_event_log.h"
@@ -47,9 +46,9 @@ std::unique_ptr<ManagedState> ManagedState::Create(ManagedType type,
                                                    const std::string& path) {
   switch (type) {
     case MANAGED_TYPE_NETWORK:
-      return std::make_unique<NetworkState>(path);
+      return base::MakeUnique<NetworkState>(path);
     case MANAGED_TYPE_DEVICE:
-      return std::make_unique<DeviceState>(path);
+      return base::MakeUnique<DeviceState>(path);
   }
   return NULL;
 }

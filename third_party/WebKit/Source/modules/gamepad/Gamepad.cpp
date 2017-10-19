@@ -110,7 +110,7 @@ void Gamepad::SetHand(const device::GamepadHand& hand) {
   }
 }
 
-void Gamepad::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Gamepad) {
   visitor->Trace(buttons_);
   visitor->Trace(pose_);
 }

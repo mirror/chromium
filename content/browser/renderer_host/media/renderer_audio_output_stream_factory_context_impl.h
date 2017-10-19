@@ -47,7 +47,8 @@ class CONTENT_EXPORT RendererAudioOutputStreamFactoryContextImpl
       int render_process_id,
       media::AudioSystem* audio_system,
       media::AudioManager* audio_manager,
-      MediaStreamManager* media_stream_manager);
+      MediaStreamManager* media_stream_manager,
+      const std::string& salt);
 
   ~RendererAudioOutputStreamFactoryContextImpl() override;
 
@@ -71,6 +72,7 @@ class CONTENT_EXPORT RendererAudioOutputStreamFactoryContextImpl
 
  private:
   // Used for hashing the device_id.
+  const std::string salt_;
   media::AudioSystem* const audio_system_;
   media::AudioManager* const audio_manager_;
   MediaStreamManager* const media_stream_manager_;

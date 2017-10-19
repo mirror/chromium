@@ -42,7 +42,7 @@ class CORE_EXPORT RootScrollerController
   // of this class need to be made aware of layout updates.
   static RootScrollerController* Create(Document&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Sets the element that will be used as the root scroller. This can be
   // nullptr, in which case we'll use the default element (documentElement) as

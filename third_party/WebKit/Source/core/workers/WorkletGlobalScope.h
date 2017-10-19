@@ -67,9 +67,6 @@ class CORE_EXPORT WorkletGlobalScope
   ExecutionContext* GetExecutionContext() const;
 
   // ExecutionContext
-  const KURL& Url() const final { return url_; }
-  const KURL& BaseURL() const final { return url_; }
-  KURL CompleteURL(const String&) const final;
   String UserAgent() const final { return user_agent_; }
   SecurityContext& GetSecurityContext() final { return *this; }
   EventQueue* GetEventQueue() const final {
@@ -102,37 +99,28 @@ class CORE_EXPORT WorkletGlobalScope
 
   void SetModulator(Modulator*);
 
-  SecurityOrigin* DocumentSecurityOrigin() const {
-    return document_security_origin_.get();
-  }
-
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
-  // Partial implementation of the "set up a worklet environment settings
-  // object" algorithm:
-  // https://drafts.css-houdini.org/worklets/#script-settings-for-worklets
-  //
-  // The url, user_agent and document_security_origin arguments are inherited
-  // from the parent Document.
+  // The url, userAgent and securityOrigin arguments are inherited from the
+  // parent ExecutionContext for Worklets.
   WorkletGlobalScope(const KURL&,
                      const String& user_agent,
-                     RefPtr<SecurityOrigin> document_security_origin,
+                     RefPtr<SecurityOrigin>,
                      v8::Isolate*,
                      WorkerClients*,
                      WorkerReportingProxy&);
 
  private:
+  const KURL& VirtualURL() const final { return url_; }
+  KURL VirtualCompleteURL(const String&) const final;
+
   EventTarget* ErrorEventTarget() final { return nullptr; }
   void DidUpdateSecurityOrigin() final {}
 
   const KURL url_;
   const String user_agent_;
-
-  // Used for module fetch.
-  const RefPtr<SecurityOrigin> document_security_origin_;
-
   Member<WorkletModuleResponsesMapProxy> module_responses_map_proxy_;
   // LocalDOMWindow::modulator_ workaround equivalent.
   // TODO(kouhei): Remove this.

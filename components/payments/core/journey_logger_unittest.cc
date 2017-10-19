@@ -969,9 +969,7 @@ TEST(JourneyLoggerTest,
   EXPECT_EQ(JourneyLogger::EVENT_SHOWN | JourneyLogger::EVENT_PAY_CLICKED |
                 JourneyLogger::EVENT_REQUEST_SHIPPING |
                 JourneyLogger::EVENT_REQUEST_PAYER_EMAIL |
-                JourneyLogger::EVENT_REQUEST_METHOD_BASIC_CARD |
-                JourneyLogger::EVENT_USER_ABORTED |
-                JourneyLogger::EVENT_HAD_NECESSARY_COMPLETE_SUGGESTIONS,
+                JourneyLogger::EVENT_REQUEST_METHOD_BASIC_CARD,
             step_metric->value);
 }
 
@@ -1017,9 +1015,7 @@ TEST(JourneyLoggerTest,
   ASSERT_NE(nullptr, step_metric);
   EXPECT_EQ(JourneyLogger::EVENT_SHOWN | JourneyLogger::EVENT_REQUEST_SHIPPING |
                 JourneyLogger::EVENT_REQUEST_PAYER_EMAIL |
-                JourneyLogger::EVENT_REQUEST_METHOD_BASIC_CARD |
-                JourneyLogger::EVENT_COMPLETED |
-                JourneyLogger::EVENT_HAD_NECESSARY_COMPLETE_SUGGESTIONS,
+                JourneyLogger::EVENT_REQUEST_METHOD_BASIC_CARD,
             step_metric->value);
 }
 

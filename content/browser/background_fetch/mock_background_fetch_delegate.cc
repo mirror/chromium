@@ -55,16 +55,7 @@ MockBackgroundFetchDelegate::MockBackgroundFetchDelegate() {}
 
 MockBackgroundFetchDelegate::~MockBackgroundFetchDelegate() {}
 
-void MockBackgroundFetchDelegate::CreateDownloadJob(
-    const std::string& job_unique_id,
-    const std::string& title,
-    const url::Origin& origin,
-    int completed_parts,
-    int total_parts,
-    const std::vector<std::string>& current_guids) {}
-
 void MockBackgroundFetchDelegate::DownloadUrl(
-    const std::string& job_unique_id,
     const std::string& guid,
     const std::string& method,
     const GURL& url,
@@ -93,20 +84,6 @@ void MockBackgroundFetchDelegate::DownloadUrl(
       base::BindOnce(&BackgroundFetchDelegate::Client::OnDownloadStarted,
                      client(), guid, std::move(response)));
 
-  if (test_response->data.size()) {
-    // Report progress at 50% complete.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&BackgroundFetchDelegate::Client::OnDownloadUpdated,
-                       client(), guid, test_response->data.size() / 2));
-
-    // Report progress at 100% complete.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&BackgroundFetchDelegate::Client::OnDownloadUpdated,
-                       client(), guid, test_response->data.size()));
-  }
-
   if (test_response->succeeded_) {
     base::FilePath response_path;
     if (!temp_directory_.IsValid()) {
@@ -131,11 +108,9 @@ void MockBackgroundFetchDelegate::DownloadUrl(
   } else {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
-        base::BindOnce(&BackgroundFetchDelegate::Client::OnDownloadComplete,
-                       client(), guid,
-                       std::make_unique<BackgroundFetchResult>(
-                           base::Time::Now(),
-                           BackgroundFetchResult::FailureReason::UNKNOWN)));
+        base::BindOnce(
+            &BackgroundFetchDelegate::Client::OnDownloadComplete, client(),
+            guid, std::make_unique<BackgroundFetchResult>(base::Time::Now())));
   }
 
   seen_guids_.insert(guid);

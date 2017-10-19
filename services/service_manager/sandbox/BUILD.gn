@@ -5,7 +5,6 @@
 component("sandbox") {
   sources = [
     "export.h",
-    "sandbox_delegate.h",
     "sandbox_type.cc",
     "sandbox_type.h",
     "switches.cc",
@@ -22,24 +21,6 @@ component("sandbox") {
     "//base",
   ]
   if (is_mac) {
-    sources += [
-      "mac/sandbox_mac.h",
-      "mac/sandbox_mac.mm",
-    ]
-    deps += [ "//sandbox/mac:seatbelt" ]
     public_deps += [ "mac:packaged_sb_files" ]
-    libs = [
-      "AppKit.framework",
-      "CoreFoundation.framework",
-      "CoreGraphics.framework",
-      "Foundation.framework",
-      "IOSurface.framework",
-    ]
-  }
-  if (is_win) {
-    sources += [
-      "features.cc",
-      "features.h",
-    ]
   }
 }

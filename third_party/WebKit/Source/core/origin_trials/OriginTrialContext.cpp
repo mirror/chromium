@@ -1,5 +1,4 @@
 // Copyright 2015 The Chromium Authors. All rights reserved.
-// // TODO(https://crbug.com/738505): Delete the validator.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -9,8 +8,6 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/WindowProxy.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
-#include "common/origin_trials/trial_token.h"
-#include "common/origin_trials/trial_token_validator.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
@@ -22,6 +19,7 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebOriginTrialTokenStatus.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebTrialTokenValidator.h"
 #include "v8/include/v8.h"
@@ -34,7 +32,7 @@ static EnumerationHistogram& TokenValidationResultHistogram() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, histogram,
       ("OriginTrials.ValidationResult",
-       static_cast<int>(OriginTrialTokenStatus::kLast)));
+       static_cast<int>(WebOriginTrialTokenStatus::kLast)));
   return histogram;
 }
 
@@ -86,11 +84,10 @@ String ExtractTokenOrQuotedString(const String& header_value, unsigned& pos) {
 
 }  // namespace
 
-OriginTrialContext::OriginTrialContext(
-    ExecutionContext& context,
-    std::unique_ptr<WebTrialTokenValidator> validator)
+OriginTrialContext::OriginTrialContext(ExecutionContext& context,
+                                       WebTrialTokenValidator* validator)
     : Supplement<ExecutionContext>(context),
-      trial_token_validator_(std::move(validator)) {}
+      trial_token_validator_(validator) {}
 
 // static
 const char* OriginTrialContext::SupplementName() {
@@ -225,22 +222,22 @@ bool OriginTrialContext::EnableTrialFromToken(const String& token) {
   // Origin trials are only enabled for secure origins
   if (!GetSupplementable()->IsSecureContext()) {
     TokenValidationResultHistogram().Count(
-        static_cast<int>(OriginTrialTokenStatus::kInsecure));
+        static_cast<int>(WebOriginTrialTokenStatus::kInsecure));
     return false;
   }
 
   if (!trial_token_validator_) {
     TokenValidationResultHistogram().Count(
-        static_cast<int>(OriginTrialTokenStatus::kNotSupported));
+        static_cast<int>(WebOriginTrialTokenStatus::kNotSupported));
     return false;
   }
 
   WebSecurityOrigin origin(GetSupplementable()->GetSecurityOrigin());
   WebString trial_name;
   bool valid = false;
-  OriginTrialTokenStatus token_result =
+  WebOriginTrialTokenStatus token_result =
       trial_token_validator_->ValidateToken(token, origin, &trial_name);
-  if (token_result == OriginTrialTokenStatus::kSuccess) {
+  if (token_result == WebOriginTrialTokenStatus::kSuccess) {
     valid = true;
     enabled_trials_.insert(trial_name);
   }
@@ -249,7 +246,7 @@ bool OriginTrialContext::EnableTrialFromToken(const String& token) {
   return valid;
 }
 
-void OriginTrialContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(OriginTrialContext) {
   Supplement<ExecutionContext>::Trace(visitor);
 }
 

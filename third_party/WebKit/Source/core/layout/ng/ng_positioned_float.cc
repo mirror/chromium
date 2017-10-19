@@ -9,7 +9,7 @@
 namespace blink {
 
 NGPositionedFloat::NGPositionedFloat(RefPtr<NGLayoutResult> layout_result,
-                                     const NGBfcOffset& bfc_offset)
-    : layout_result(layout_result), bfc_offset(bfc_offset) {}
+                                     const NGLogicalOffset& logical_offset)
+    : layout_result(layout_result), logical_offset(logical_offset) {}
 
 }  // namespace blink

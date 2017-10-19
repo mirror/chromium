@@ -68,7 +68,7 @@ class CORE_EXPORT Performance final : public PerformanceBase,
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit Performance(LocalDOMWindow*);

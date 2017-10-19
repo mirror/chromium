@@ -206,7 +206,7 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
             @Override
             public void evaluate() throws Throwable {
                 startMainActivityForSyncTest();
-                mContext = InstrumentationRegistry.getTargetContext();
+                mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
                 setUpMockAndroidSyncSettings();
 
@@ -254,7 +254,8 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
         // Setting a SharedPreference here via the SigninTestUtil.setUpAuthForTest() call below
         // causes Android to cache them before the files get cleared, meaning that a data clear
         // is useless and test runs influence each other.
-        ApplicationTestUtils.clearAppData(InstrumentationRegistry.getTargetContext());
+        ApplicationTestUtils.clearAppData(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
 
         // This must be called before super.setUp() in order for test authentication to work.
         SigninTestUtil.setUpAuthForTest(InstrumentationRegistry.getInstrumentation());

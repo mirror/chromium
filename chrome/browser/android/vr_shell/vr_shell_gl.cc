@@ -207,11 +207,7 @@ void VrShellGl::Initialize() {
 }
 
 void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
-  bool reinitializing = ready_to_draw_;
-
-  // We should only ever re-initialize when our surface is destroyed, which
-  // should only ever happen when drawing to a surface.
-  CHECK(!reinitializing || !surfaceless_rendering_);
+  CHECK(!ready_to_draw_);
   if (gl::GetGLImplementation() == gl::kGLImplementationNone &&
       !gl::init::InitializeGLOneOff()) {
     LOG(ERROR) << "gl::init::InitializeGLOneOff failed";
@@ -258,28 +254,22 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   content_surface_texture_->SetDefaultBufferSize(
       content_tex_physical_size_.width(), content_tex_physical_size_.height());
 
-  if (!reinitializing)
-    InitializeRenderer();
+  InitializeRenderer();
 
   ui_->OnGlInitialized(content_texture_id,
                        vr::UiElementRenderer::kTextureLocationExternal);
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
-  if (daydream_support_ && !reinitializing) {
+  if (daydream_support_) {
     base::PostTaskWithTraits(
         FROM_HERE, {base::TaskPriority::BACKGROUND},
         base::Bind(LoadControllerModelTask, weak_ptr_factory_.GetWeakPtr(),
                    task_runner_));
   }
 
-  if (reinitializing && mailbox_bridge_) {
-    mailbox_bridge_ = nullptr;
-    CreateOrResizeWebVRSurface(webvr_surface_size_);
-  }
-
   ready_to_draw_ = true;
-  if (!paused_ && !reinitializing)
+  if (!paused_)
     OnVSync(base::TimeTicks::Now());
 }
 
@@ -297,7 +287,7 @@ void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
 
   // ContentPhysicalBoundsChanged is getting called twice with
   // identical sizes? Avoid thrashing the existing context.
-  if (mailbox_bridge_ && (size == webvr_surface_size_)) {
+  if (size == webvr_surface_size_) {
     return;
   }
 
@@ -376,10 +366,6 @@ void VrShellGl::ConnectPresentingService(
 
   CreateOrResizeWebVRSurface(webvr_size);
   ScheduleWebVrFrameTimeout();
-}
-
-void VrShellGl::OnSwapContents(int new_content_id) {
-  content_id_ = new_content_id;
 }
 
 void VrShellGl::OnContentFrameAvailable() {
@@ -751,24 +737,7 @@ void VrShellGl::HandleControllerAppButtonActivity(
 
 void VrShellGl::SendGestureToContent(
     std::unique_ptr<blink::WebInputEvent> event) {
-  if (ContentGestureIsLocked(event->GetType()))
-    return;
-
-  browser_->ProcessContentGesture(std::move(event), content_id_);
-}
-
-bool VrShellGl::ContentGestureIsLocked(blink::WebInputEvent::Type type) {
-  // TODO (asimjour) create a new MouseEnter event when we swap webcontents and
-  // pointer is on the content quad.
-  if (type == blink::WebInputEvent::kGestureScrollBegin ||
-      type == blink::WebInputEvent::kMouseMove ||
-      type == blink::WebInputEvent::kMouseDown ||
-      type == blink::WebInputEvent::kMouseEnter)
-    locked_content_id_ = content_id_;
-
-  if (locked_content_id_ != content_id_)
-    return true;
-  return false;
+  browser_->ProcessContentGesture(std::move(event));
 }
 
 bool VrShellGl::ResizeForWebVR(int16_t frame_index) {
@@ -1189,7 +1158,7 @@ void VrShellGl::OnVSync(base::TimeTicks frame_time) {
     // DrawFrame.
     gfx::Transform head_pose;
     device::GvrDelegate::GetGvrPoseWithNeckModel(gvr_api_.get(), &head_pose);
-    UpdateController(head_pose);
+    UpdateController(render_info_primary_.head_pose);
   } else {
     DrawFrame(-1);
   }

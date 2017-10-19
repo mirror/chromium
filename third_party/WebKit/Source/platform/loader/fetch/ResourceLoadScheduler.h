@@ -23,7 +23,7 @@ class PLATFORM_EXPORT ResourceLoadSchedulerClient
   // Called when the request is granted to run.
   virtual void Run() = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 // The ResourceLoadScheduler provides a unified per-frame infrastructure to
@@ -63,7 +63,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
                                              : &FetchContext::NullInstance());
   }
   ~ResourceLoadScheduler() {}
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Stops all operations including observing throttling signals.
   // ResourceLoadSchedulerClient::Run() will not be called once this method is

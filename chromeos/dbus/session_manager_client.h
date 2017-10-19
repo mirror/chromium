@@ -153,16 +153,18 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
 
   // The ActiveSessionsCallback is used for the RetrieveActiveSessions()
   // method. It receives |sessions| argument where the keys are cryptohome_ids
-  // for all users that are currently active.
+  // for all users that are currently active and |success| argument which
+  // indicates whether or not the request succeded.
   using ActiveSessionsCallback =
-      DBusMethodCallback<ActiveSessionsMap /* sessions */>;
+      base::Callback<void(const ActiveSessionsMap& sessions, bool success)>;
 
   // Enumerates active user sessions. Usually Chrome naturally keeps track of
   // active users when they are added into current session. When Chrome is
   // restarted after crash by session_manager it only receives cryptohome id and
   // user_id_hash for one user. This method is used to retrieve list of all
   // active users.
-  virtual void RetrieveActiveSessions(ActiveSessionsCallback callback) = 0;
+  virtual void RetrieveActiveSessions(
+      const ActiveSessionsCallback& callback) = 0;
 
   // Used for RetrieveDevicePolicy, RetrievePolicyForUser and
   // RetrieveDeviceLocalAccountPolicy. Takes a serialized protocol buffer as
@@ -275,6 +277,10 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // sync fails or there's no network, the callback is never invoked.
   virtual void GetServerBackedStateKeys(const StateKeysCallback& callback) = 0;
 
+  // Used for several ARC methods.  Takes a boolean indicating whether the
+  // operation was successful or not.
+  using ArcCallback = base::Callback<void(bool success)>;
+
   // Asynchronously starts the ARC instance for the user whose cryptohome is
   // located by |cryptohome_id|.  Flag |disable_boot_completed_broadcast|
   // blocks Android ACTION_BOOT_COMPLETED broadcast for 3rd party applications.
@@ -313,7 +319,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // |callback| with the result; true on success, false on failure (either
   // session manager failed to stop an instance or session manager can not be
   // reached).
-  virtual void StopArcInstance(VoidDBusMethodCallback callback) = 0;
+  virtual void StopArcInstance(const ArcCallback& callback) = 0;
 
   // Adjusts the amount of CPU the ARC instance is allowed to use. When
   // |restriction_state| is CONTAINER_CPU_RESTRICTION_FOREGROUND the limit is
@@ -324,11 +330,11 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // supported, the function asynchronously runs the |callback| with false.
   virtual void SetArcCpuRestriction(
       login_manager::ContainerCpuRestrictionState restriction_state,
-      VoidDBusMethodCallback callback) = 0;
+      const ArcCallback& callback) = 0;
 
   // Emits the "arc-booted" upstart signal.
   virtual void EmitArcBooted(const cryptohome::Identification& cryptohome_id,
-                             VoidDBusMethodCallback callback) = 0;
+                             const ArcCallback& callback) = 0;
 
   // Asynchronously retrieves the timestamp which ARC instance is invoked.
   // Returns nullopt if there is no ARC instance or ARC is not available.
@@ -340,7 +346,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // result; true on success, false on failure (either session manager failed
   // to remove user data or session manager can not be reached).
   virtual void RemoveArcData(const cryptohome::Identification& cryptohome_id,
-                             VoidDBusMethodCallback callback) = 0;
+                             const ArcCallback& callback) = 0;
 
   // Creates the instance.
   static SessionManagerClient* Create(DBusClientImplementationType type);

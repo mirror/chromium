@@ -21,9 +21,7 @@ class FakeGraphicsLayerClient : public GraphicsLayerClient {
   bool IsTrackingRasterInvalidations() const override {
     return is_tracking_raster_invalidations_;
   }
-  bool NeedsRepaint(const GraphicsLayer&) const override {
-    return needs_repaint_;
-  }
+  bool NeedsRepaint(const GraphicsLayer&) const override { return true; }
   void PaintContents(const GraphicsLayer*,
                      GraphicsContext&,
                      GraphicsLayerPaintingPhase,
@@ -33,11 +31,8 @@ class FakeGraphicsLayerClient : public GraphicsLayerClient {
     is_tracking_raster_invalidations_ = is_tracking_raster_invalidations;
   }
 
-  void SetNeedsRepaint(bool needs_repaint) { needs_repaint_ = needs_repaint; }
-
  private:
   bool is_tracking_raster_invalidations_ = false;
-  bool needs_repaint_ = false;
 };
 
 }  // namespace blink

@@ -21,6 +21,7 @@ CONTENT_EXPORT extern const char kAgcStartupMinVolume[];
 CONTENT_EXPORT extern const char kAllowFileAccessFromFiles[];
 CONTENT_EXPORT extern const char kAllowInsecureLocalhost[];
 CONTENT_EXPORT extern const char kAllowLoopbackInPeerConnection[];
+CONTENT_EXPORT extern const char kAllowNoSandboxJob[];
 CONTENT_EXPORT extern const char kAllowSandboxDebugging[];
 CONTENT_EXPORT extern const char kAndroidFontsPath[];
 CONTENT_EXPORT extern const char kBlinkSettings[];
@@ -74,7 +75,6 @@ CONTENT_EXPORT extern const char kDisableLocalStorage[];
 CONTENT_EXPORT extern const char kDisableLogging[];
 CONTENT_EXPORT extern const char kDisableMojoLocalStorage[];
 CONTENT_EXPORT extern const char kDisableNamespaceSandbox[];
-CONTENT_EXPORT extern const char kDisableNewContentRenderingTimeout[];
 CONTENT_EXPORT extern const char kDisableNotifications[];
 CONTENT_EXPORT extern const char kDisableOriginTrialControlledBlinkFeatures[];
 CONTENT_EXPORT extern const char kDisablePartialRaster[];
@@ -121,6 +121,15 @@ CONTENT_EXPORT extern const char kEnableDistanceFieldText[];
 CONTENT_EXPORT extern const char kEnableExperimentalCanvasFeatures[];
 CONTENT_EXPORT extern const char kEnableExperimentalWebPlatformFeatures[];
 CONTENT_EXPORT extern const char kEnableFeatures[];
+CONTENT_EXPORT extern const char kEnableWebFontsInterventionV2[];
+CONTENT_EXPORT extern const char
+    kEnableWebFontsInterventionV2SwitchValueEnabledWith2G[];
+CONTENT_EXPORT extern const char
+    kEnableWebFontsInterventionV2SwitchValueEnabledWith3G[];
+CONTENT_EXPORT extern const char
+    kEnableWebFontsInterventionV2SwitchValueEnabledWithSlow2G[];
+CONTENT_EXPORT extern const char
+    kEnableWebFontsInterventionV2SwitchValueDisabled[];
 CONTENT_EXPORT extern const char kEnableGpuAsyncWorkerContext[];
 CONTENT_EXPORT extern const char kEnableGpuMemoryBufferCompositorResources[];
 CONTENT_EXPORT extern const char kEnableGpuMemoryBufferVideoFrames[];
@@ -152,6 +161,7 @@ CONTENT_EXPORT extern const char kEnableUseZoomForDSF[];
 CONTENT_EXPORT extern const char kEnableViewport[];
 CONTENT_EXPORT extern const char kEnableVtune[];
 CONTENT_EXPORT extern const char kEnableVulkan[];
+CONTENT_EXPORT extern const char kEnableWebFontsInterventionTrigger[];
 CONTENT_EXPORT extern const char kEnableWebGLDraftExtensions[];
 CONTENT_EXPORT extern const char kEnableWebGLImageChromium[];
 CONTENT_EXPORT extern const char kEnableWebVR[];
@@ -212,6 +222,7 @@ CONTENT_EXPORT extern const char kProcessPerTab[];
 CONTENT_EXPORT extern const char kProcessType[];
 CONTENT_EXPORT extern const char kProxyServer[];
 CONTENT_EXPORT extern const char kPullToRefresh[];
+CONTENT_EXPORT extern const char kReduceSecurityForTesting[];
 CONTENT_EXPORT extern const char kReducedReferrerGranularity[];
 CONTENT_EXPORT extern const char kRegisterPepperPlugins[];
 CONTENT_EXPORT extern const char kRemoteDebuggingPort[];
@@ -300,6 +311,7 @@ CONTENT_EXPORT extern const char kPrefetchArgumentOther[];
 // like renderers, etc.
 CONTENT_EXPORT extern const char kDeviceScaleFactor[];
 CONTENT_EXPORT extern const char kDisableLegacyIntermediateWindow[];
+CONTENT_EXPORT extern const char kDisableWin32kLockDown[];
 CONTENT_EXPORT extern const char kEnableAcceleratedVpxDecode[];
 CONTENT_EXPORT extern const char kEnableWin7WebRtcHWH264Decoding[];
 // Switch to pass the font cache shared memory handle to the renderer.

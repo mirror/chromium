@@ -84,8 +84,7 @@ class LinkLoader::FinishObserver final
  public:
   FinishObserver(LinkLoader* loader, Resource* resource)
       : loader_(loader), resource_(resource) {
-    resource_->AddFinishObserver(
-        this, loader_->client_->GetLoadingTaskRunner().get());
+    resource_->AddFinishObserver(this);
   }
 
   // ResourceFinishObserver implementation
@@ -107,7 +106,7 @@ class LinkLoader::FinishObserver final
     resource_ = nullptr;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(loader_);
     visitor->Trace(resource_);
     blink::ResourceFinishObserver::Trace(visitor);
@@ -518,7 +517,7 @@ void LinkLoader::Abort() {
   }
 }
 
-void LinkLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LinkLoader) {
   visitor->Trace(finish_observer_);
   visitor->Trace(client_);
   visitor->Trace(prerender_);

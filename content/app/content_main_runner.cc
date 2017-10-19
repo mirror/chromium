@@ -73,6 +73,7 @@
 #include "base/mac/scoped_nsautorelease_pool.h"
 #include "base/power_monitor/power_monitor_device_source.h"
 #include "content/browser/mach_broker_mac.h"
+#include "content/common/sandbox_init_mac.h"
 #endif  // OS_WIN
 
 #if defined(OS_POSIX)
@@ -691,6 +692,8 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     std::unique_ptr<base::FieldTrialList> field_trial_list;
     if (!process_type.empty() && process_type != switches::kZygoteProcess)
       InitializeFieldTrialAndFeatureList(&field_trial_list);
+
+    base::HistogramBase::EnableActivityReportHistogram(process_type);
 
     MainFunctionParams main_params(command_line);
     main_params.ui_task = ui_task_;

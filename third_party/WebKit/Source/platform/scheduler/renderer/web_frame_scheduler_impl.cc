@@ -8,54 +8,18 @@
 #include "base/trace_event/blame_context.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/base/real_time_domain.h"
+#include "platform/scheduler/base/trace_helper.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
 #include "platform/scheduler/child/web_task_runner_impl.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
-#include "platform/scheduler/util/tracing_helper.h"
 #include "public/platform/BlameContext.h"
 #include "public/platform/WebString.h"
 
 namespace blink {
 namespace scheduler {
-
-namespace {
-
-const char* VisibilityStateToString(bool is_visible) {
-  if (is_visible) {
-    return "visible";
-  } else {
-    return "hidden";
-  }
-}
-
-const char* PausedStateToString(bool is_paused) {
-  if (is_paused) {
-    return "paused";
-  } else {
-    return "running";
-  }
-}
-
-const char* StoppedStateToString(bool is_stopped) {
-  if (is_stopped) {
-    return "stopped";
-  } else {
-    return "running";
-  }
-}
-
-const char* CrossOriginStateToString(bool is_cross_origin) {
-  if (is_cross_origin) {
-    return "cross-origin";
-  } else {
-    return "same-origin";
-  }
-}
-
-}  // namespace
 
 WebFrameSchedulerImpl::ActiveConnectionHandleImpl::ActiveConnectionHandleImpl(
     WebFrameSchedulerImpl* frame_scheduler)
@@ -78,31 +42,11 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       parent_web_view_scheduler_(parent_web_view_scheduler),
       blame_context_(blame_context),
       throttling_state_(WebFrameScheduler::ThrottlingState::kNotThrottled),
-      frame_visible_(
-          true,
-          "WebFrameScheduler.FrameVisible",
-          this,
-          VisibilityStateToString),
-      page_visible_(
-          true,
-          "WebFrameScheduler.PageVisible",
-          this,
-          VisibilityStateToString),
-      page_stopped_(
-          false,
-          "WebFrameScheduler.PageStopped",
-          this,
-          StoppedStateToString),
-      frame_paused_(
-          false,
-          "WebFrameScheduler.FramePaused",
-          this,
-          PausedStateToString),
-      cross_origin_(
-          false,
-          "WebFrameScheduler.Origin",
-          this,
-          CrossOriginStateToString),
+      frame_visible_(true),
+      page_visible_(true),
+      page_stopped_(false),
+      frame_paused_(false),
+      cross_origin_(false),
       frame_type_(frame_type),
       active_connection_count_(0),
       weak_factory_(this) {
@@ -397,32 +341,36 @@ void WebFrameSchedulerImpl::AsValueInto(
                        : "Subframe");
   if (loading_task_queue_) {
     state->SetString("loading_task_queue",
-                     PointerToString(loading_task_queue_.get()));
+                     trace_helper::PointerToString(loading_task_queue_.get()));
   }
   if (loading_control_task_queue_) {
-    state->SetString("loading_control_task_queue",
-                     PointerToString(loading_control_task_queue_.get()));
+    state->SetString(
+        "loading_control_task_queue",
+        trace_helper::PointerToString(loading_control_task_queue_.get()));
   }
   if (throttleable_task_queue_)
-    state->SetString("throttleable_task_queue",
-                     PointerToString(throttleable_task_queue_.get()));
+    state->SetString(
+        "throttleable_task_queue",
+        trace_helper::PointerToString(throttleable_task_queue_.get()));
   if (deferrable_task_queue_) {
-    state->SetString("deferrable_task_queue",
-                     PointerToString(deferrable_task_queue_.get()));
+    state->SetString(
+        "deferrable_task_queue",
+        trace_helper::PointerToString(deferrable_task_queue_.get()));
   }
   if (pausable_task_queue_) {
     state->SetString("pausable_task_queue",
-                     PointerToString(pausable_task_queue_.get()));
+                     trace_helper::PointerToString(pausable_task_queue_.get()));
   }
   if (unpausable_task_queue_) {
-    state->SetString("unpausable_task_queue",
-                     PointerToString(unpausable_task_queue_.get()));
+    state->SetString(
+        "unpausable_task_queue",
+        trace_helper::PointerToString(unpausable_task_queue_.get()));
   }
   if (blame_context_) {
     state->BeginDictionary("blame_context");
-    state->SetString(
-        "id_ref",
-        PointerToString(reinterpret_cast<void*>(blame_context_->id())));
+    state->SetString("id_ref",
+                     trace_helper::PointerToString(
+                         reinterpret_cast<void*>(blame_context_->id())));
     state->SetString("scope", blame_context_->scope());
     state->EndDictionary();
   }
@@ -527,14 +475,6 @@ base::WeakPtr<WebFrameSchedulerImpl> WebFrameSchedulerImpl::AsWeakPtr() {
 
 bool WebFrameSchedulerImpl::IsExemptFromThrottling() const {
   return has_active_connection();
-}
-
-void WebFrameSchedulerImpl::OnTraceLogEnabled() {
-  frame_visible_.OnTraceLogEnabled();
-  page_visible_.OnTraceLogEnabled();
-  page_stopped_.OnTraceLogEnabled();
-  frame_paused_.OnTraceLogEnabled();
-  cross_origin_.OnTraceLogEnabled();
 }
 
 }  // namespace scheduler

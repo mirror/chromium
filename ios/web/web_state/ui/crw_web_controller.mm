@@ -724,6 +724,9 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 - (BOOL)isCurrentNavigationItemPOST;
 // Returns YES if current navigation item is WKNavigationTypeBackForward.
 - (BOOL)isCurrentNavigationBackForward;
+// Returns whether the given navigation is triggered by a user link click.
+- (BOOL)isLinkNavigation:(WKNavigationType)navigationType;
+
 // Returns YES if the given WKBackForwardListItem is valid to use for
 // navigation.
 - (BOOL)isBackForwardListItemValid:(WKBackForwardListItem*)item;
@@ -734,7 +737,8 @@ typedef void (^ViewportStateCompletion)(const web::PageViewportState*);
 - (void)setNativeController:(id<CRWNativeContent>)nativeController;
 // Returns whether |url| should be opened.
 - (BOOL)shouldOpenURL:(const GURL&)url
-      mainDocumentURL:(const GURL&)mainDocumentURL;
+      mainDocumentURL:(const GURL&)mainDocumentURL
+          linkClicked:(BOOL)linkClicked;
 // Returns YES if the navigation action is associated with a main frame request.
 - (BOOL)isMainFrameNavigationAction:(WKNavigationAction*)action;
 // Returns whether external URL navigation action should be opened.
@@ -1022,14 +1026,11 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
 - (NSDictionary*)WKWebViewObservers {
   NSMutableDictionary* result = [NSMutableDictionary dictionary];
-  if (@available(iOS 10, *)) {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
     result[@"serverTrust"] = @"webViewSecurityFeaturesDidChange";
-  }
-#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
-  else {
+  } else {
     result[@"certificateChain"] = @"webViewSecurityFeaturesDidChange";
   }
-#endif
 
   [result addEntriesFromDictionary:@{
     @"estimatedProgress" : @"webViewEstimatedProgressDidChange",
@@ -1344,6 +1345,19 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   WKNavigationType currentNavigationType =
       [self currentBackForwardListItemHolder]->navigation_type();
   return currentNavigationType == WKNavigationTypeBackForward;
+}
+
+- (BOOL)isLinkNavigation:(WKNavigationType)navigationType {
+  switch (navigationType) {
+    case WKNavigationTypeLinkActivated:
+      return YES;
+    case WKNavigationTypeOther:
+      // Sometimes link navigation is not detected by navigation type, so
+      // check last user interaction with the page in the recent time.
+      return [self userClickedRecently];
+    default:
+      return NO;
+  }
 }
 
 - (BOOL)isBackForwardListItemValid:(WKBackForwardListItem*)item {
@@ -2833,18 +2847,26 @@ registerLoadRequestForURL:(const GURL&)requestURL
 // method, which provides less information than the WKWebView version. Audit
 // this for things that should be handled in the subclass instead.
 - (BOOL)shouldAllowLoadWithNavigationAction:(WKNavigationAction*)action {
+  // External application launcher needs |isNavigationTypeLinkActivated| to
+  // decide if the user intended to open the application by clicking on a link.
+  BOOL isNavigationTypeLinkActivated =
+      action.navigationType == WKNavigationTypeLinkActivated;
+
   // The WebDelegate may instruct the CRWWebController to stop loading, and
   // instead instruct the next page to be loaded in an animation.
   NSURLRequest* request = action.request;
   GURL requestURL = net::GURLWithNSURL(request.URL);
   GURL mainDocumentURL = net::GURLWithNSURL(request.mainDocumentURL);
+  BOOL isPossibleLinkClick = [self isLinkNavigation:action.navigationType];
   DCHECK(_webView);
-  if (![self shouldOpenURL:requestURL mainDocumentURL:mainDocumentURL]) {
+  if (![self shouldOpenURL:requestURL
+           mainDocumentURL:mainDocumentURL
+               linkClicked:isPossibleLinkClick]) {
     return NO;
   }
 
-  // If the URL doesn't look like one that can be shown as a web page, try to
-  // open the link with an external application.
+  // If the URL doesn't look like one we can show, try to open the link with an
+  // external application.
   // TODO(droger):  Check transition type before opening an external
   // application? For example, only allow it for TYPED and LINK transitions.
   if (![CRWWebController webControllerCanShow:requestURL]) {
@@ -2873,11 +2895,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
       }
     }
 
-    // External application launcher needs |isNavigationTypeLinkActivated| to
-    // decide if the user intended to open the application by clicking on a
-    // link.
-    BOOL isNavigationTypeLinkActivated =
-        action.navigationType == WKNavigationTypeLinkActivated;
     if ([_delegate openExternalURL:requestURL
                          sourceURL:sourceURL
                        linkClicked:isNavigationTypeLinkActivated]) {
@@ -3638,14 +3655,18 @@ registerLoadRequestForURL:(const GURL&)requestURL
 #pragma mark WebDelegate Calls
 
 - (BOOL)shouldOpenURL:(const GURL&)url
-      mainDocumentURL:(const GURL&)mainDocumentURL {
-  if (![_delegate respondsToSelector:@selector
-                  (webController:shouldOpenURL:mainDocumentURL:)]) {
+      mainDocumentURL:(const GURL&)mainDocumentURL
+          linkClicked:(BOOL)linkClicked {
+  if (![_delegate respondsToSelector:@selector(webController:
+                                               shouldOpenURL:
+                                             mainDocumentURL:
+                                                 linkClicked:)]) {
     return YES;
   }
   return [_delegate webController:self
                     shouldOpenURL:url
-                  mainDocumentURL:mainDocumentURL];
+                  mainDocumentURL:mainDocumentURL
+                      linkClicked:linkClicked];
 }
 
 - (BOOL)isMainFrameNavigationAction:(WKNavigationAction*)action {
@@ -3716,12 +3737,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
   base::ScopedCFTypeRef<SecTrustRef> trust;
   if (@available(iOS 10, *)) {
     trust.reset([_webView serverTrust], base::scoped_policy::RETAIN);
-  }
-#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
-  else {
+  } else {
     trust = web::CreateServerTrustFromChain([_webView certificateChain], host);
   }
-#endif
 
   [_SSLStatusUpdater updateSSLStatusForNavigationItem:currentNavItem
                                          withCertHost:host
@@ -4595,15 +4613,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   // Report cases where SSL cert is missing for a secure connection.
   if (_documentURL.SchemeIsCryptographic()) {
-    scoped_refptr<net::X509Certificate> cert;
-    if (@available(iOS 10, *)) {
-      cert = web::CreateCertFromTrust([_webView serverTrust]);
-    }
-#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
-    else {
-      cert = web::CreateCertFromChain([_webView certificateChain]);
-    }
-#endif
+    scoped_refptr<net::X509Certificate> cert =
+        web::CreateCertFromChain([_webView certificateChain]);
     UMA_HISTOGRAM_BOOLEAN("WebController.WKWebViewHasCertForSecureConnection",
                           static_cast<bool>(cert));
   }

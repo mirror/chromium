@@ -60,11 +60,11 @@ AXMenuListOption* AXMenuListPopup::MenuListOptionAXObject(
     HTMLElement* element) const {
   DCHECK(element);
   if (!IsHTMLOptionElement(*element))
-    return nullptr;
+    return 0;
 
   AXObject* object = AxObjectCache().GetOrCreate(element);
   if (!object || !object->IsMenuListOption())
-    return nullptr;
+    return 0;
 
   return ToAXMenuListOption(object);
 }

@@ -52,6 +52,7 @@
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLImageElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLLabelElement.h"
@@ -59,7 +60,6 @@
 #include "core/html/forms/HTMLSelectElement.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
 #include "core/html/forms/LabelsNodeList.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/imagebitmap/ImageBitmapOptions.h"
@@ -114,7 +114,7 @@ static inline LayoutObject* FirstChildInContinuation(
     r = ToLayoutInline(r)->Continuation();
   }
 
-  return nullptr;
+  return 0;
 }
 
 static inline bool IsInlineWithContinuation(LayoutObject* object) {
@@ -158,7 +158,7 @@ static inline LayoutInline* StartOfContinuations(LayoutObject* r) {
                               ->GetNode()
                               ->GetLayoutObject());
 
-  return nullptr;
+  return 0;
 }
 
 static inline LayoutObject* EndOfContinuations(LayoutObject* layout_object) {
@@ -192,7 +192,7 @@ static LayoutBoxModelObject* NextContinuation(LayoutObject* layout_object) {
     return ToLayoutInline(layout_object)->Continuation();
   if (layout_object->IsLayoutBlockFlow())
     return ToLayoutBlockFlow(layout_object)->InlineElementContinuation();
-  return nullptr;
+  return 0;
 }
 
 AXLayoutObject::AXLayoutObject(LayoutObject* layout_object,
@@ -215,7 +215,7 @@ AXLayoutObject::~AXLayoutObject() {
 
 LayoutBoxModelObject* AXLayoutObject::GetLayoutBoxModelObject() const {
   if (!layout_object_ || !layout_object_->IsBoxModelObject())
-    return nullptr;
+    return 0;
   return ToLayoutBoxModelObject(layout_object_);
 }
 
@@ -224,11 +224,11 @@ ScrollableArea* AXLayoutObject::GetScrollableAreaIfScrollable() const {
     return DocumentFrameView()->LayoutViewportScrollableArea();
 
   if (!layout_object_ || !layout_object_->IsBox())
-    return nullptr;
+    return 0;
 
   LayoutBox* box = ToLayoutBox(layout_object_);
   if (!box->CanBeScrolledAndHasScrollableArea())
-    return nullptr;
+    return 0;
 
   return box->GetScrollableArea();
 }
@@ -316,7 +316,7 @@ void AXLayoutObject::Detach() {
   if (layout_object_)
     layout_object_->SetHasAXObject(false);
 #endif
-  layout_object_ = nullptr;
+  layout_object_ = 0;
 }
 
 //
@@ -1486,7 +1486,7 @@ AXObject* AXLayoutObject::ElementAccessibilityHitTest(
 AXObject* AXLayoutObject::ComputeParent() const {
   DCHECK(!IsDetached());
   if (!layout_object_)
-    return nullptr;
+    return 0;
 
   if (AriaRoleAttribute() == kMenuBarRole)
     return AxObjectCache().GetOrCreate(layout_object_->Parent());
@@ -1509,12 +1509,12 @@ AXObject* AXLayoutObject::ComputeParent() const {
     return AxObjectCache().GetOrCreate(frame->PagePopupOwner());
   }
 
-  return nullptr;
+  return 0;
 }
 
 AXObject* AXLayoutObject::ComputeParentIfExists() const {
   if (!layout_object_)
-    return nullptr;
+    return 0;
 
   if (AriaRoleAttribute() == kMenuBarRole)
     return AxObjectCache().Get(layout_object_->Parent());
@@ -1537,7 +1537,7 @@ AXObject* AXLayoutObject::ComputeParentIfExists() const {
     return AxObjectCache().Get(frame->PagePopupOwner());
   }
 
-  return nullptr;
+  return 0;
 }
 
 //
@@ -1547,21 +1547,21 @@ AXObject* AXLayoutObject::ComputeParentIfExists() const {
 
 AXObject* AXLayoutObject::RawFirstChild() const {
   if (!layout_object_)
-    return nullptr;
+    return 0;
 
   LayoutObject* first_child = FirstChildConsideringContinuation(layout_object_);
 
   if (!first_child)
-    return nullptr;
+    return 0;
 
   return AxObjectCache().GetOrCreate(first_child);
 }
 
 AXObject* AXLayoutObject::RawNextSibling() const {
   if (!layout_object_)
-    return nullptr;
+    return 0;
 
-  LayoutObject* next_sibling = nullptr;
+  LayoutObject* next_sibling = 0;
 
   LayoutInline* inline_continuation =
       layout_object_->IsLayoutBlockFlow()
@@ -1608,7 +1608,7 @@ AXObject* AXLayoutObject::RawNextSibling() const {
   }
 
   if (!next_sibling)
-    return nullptr;
+    return 0;
 
   return AxObjectCache().GetOrCreate(next_sibling);
 }
@@ -1709,7 +1709,7 @@ LocalFrameView* AXLayoutObject::DocumentFrameView() const {
 
 Element* AXLayoutObject::AnchorElement() const {
   if (!layout_object_)
-    return nullptr;
+    return 0;
 
   AXObjectCacheImpl& cache = AxObjectCache();
   LayoutObject* curr_layout_object;
@@ -1730,7 +1730,7 @@ Element* AXLayoutObject::AnchorElement() const {
 
   // bail if none found
   if (!curr_layout_object)
-    return nullptr;
+    return 0;
 
   // Search up the DOM tree for an anchor element.
   // NOTE: this assumes that any non-image with an anchor is an
@@ -1745,7 +1745,7 @@ Element* AXLayoutObject::AnchorElement() const {
       return ToElement(&runner);
   }
 
-  return nullptr;
+  return 0;
 }
 
 //
@@ -2017,10 +2017,9 @@ bool AXLayoutObject::OnNativeSetSelectionAction(const AXRange& selection) {
     return false;
   }
 
-  if (anchor_object->GetLayoutObject()->GetNode() &&
-      anchor_object->GetLayoutObject()->GetNode()->DispatchEvent(
+  if (anchor_object->GetLayoutObject()->GetNode()->DispatchEvent(
           Event::CreateCancelableBubble(EventTypeNames::selectstart)) !=
-          DispatchEventResult::kNotCanceled)
+      DispatchEventResult::kNotCanceled)
     return false;
 
   if (!IsValidSelectionBound(anchor_object) ||
@@ -2318,23 +2317,23 @@ AXObject* AXLayoutObject::AccessibilityImageMapHitTest(
     HTMLAreaElement* area,
     const IntPoint& point) const {
   if (!area)
-    return nullptr;
+    return 0;
 
   AXObject* parent = AxObjectCache().GetOrCreate(area->ImageElement());
   if (!parent)
-    return nullptr;
+    return 0;
 
   for (const auto& child : parent->Children()) {
     if (child->GetBoundsInFrameCoordinates().Contains(point))
       return child.Get();
   }
 
-  return nullptr;
+  return 0;
 }
 
 LayoutObject* AXLayoutObject::LayoutParentObject() const {
   if (!layout_object_)
-    return nullptr;
+    return 0;
 
   LayoutObject* start_of_conts = layout_object_->IsLayoutBlockFlow()
                                      ? StartOfContinuations(layout_object_)
@@ -2346,16 +2345,15 @@ LayoutObject* AXLayoutObject::LayoutParentObject() const {
   }
 
   LayoutObject* parent = layout_object_->Parent();
-  start_of_conts = parent && parent->IsLayoutInline()
-                       ? StartOfContinuations(parent)
-                       : nullptr;
+  start_of_conts =
+      parent && parent->IsLayoutInline() ? StartOfContinuations(parent) : 0;
   if (start_of_conts) {
     // Case 2: node's parent is an inline which is some node's continuation;
     // parent is the earliest node in the continuation chain.
     return start_of_conts;
   }
 
-  LayoutObject* first_child = parent ? parent->SlowFirstChild() : nullptr;
+  LayoutObject* first_child = parent ? parent->SlowFirstChild() : 0;
   if (first_child && first_child->GetNode()) {
     // Case 3: The first sibling is the beginning of a continuation chain. Find
     // the origin of that continuation.  Get the node's layoutObject and follow
@@ -2389,20 +2387,20 @@ bool AXLayoutObject::IsSVGImage() const {
 
 void AXLayoutObject::DetachRemoteSVGRoot() {
   if (AXSVGRoot* root = RemoteSVGRootElement())
-    root->SetParent(nullptr);
+    root->SetParent(0);
 }
 
 AXSVGRoot* AXLayoutObject::RemoteSVGRootElement() const {
   // FIXME(dmazzoni): none of this code properly handled multiple references to
   // the same remote SVG document. I'm disabling this support until it can be
   // fixed properly.
-  return nullptr;
+  return 0;
 }
 
 AXObject* AXLayoutObject::RemoteSVGElementHitTest(const IntPoint& point) const {
   AXObject* remote = RemoteSVGRootElement();
   if (!remote)
-    return nullptr;
+    return 0;
 
   IntSize offset =
       point - RoundedIntPoint(GetBoundsInFrameCoordinates().Location());
@@ -2457,7 +2455,7 @@ void AXLayoutObject::AddHiddenChildren() {
               AxObjectCache().Get(child.GetLayoutObject())) {
         if (child_object->AccessibilityIsIgnored()) {
           const auto& children = child_object->Children();
-          child_object = children.size() ? children.back().Get() : nullptr;
+          child_object = children.size() ? children.back().Get() : 0;
         }
         if (child_object)
           insertion_index = children_.Find(child_object) + 1;

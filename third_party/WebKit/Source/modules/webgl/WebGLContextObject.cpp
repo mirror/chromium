@@ -50,7 +50,7 @@ gpu::gles2::GLES2Interface* WebGLContextObject::GetAGLInterface() const {
   return context_->ContextGL();
 }
 
-void WebGLContextObject::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLContextObject) {
   visitor->Trace(context_);
   WebGLObject::Trace(visitor);
 }

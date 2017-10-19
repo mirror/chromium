@@ -19,14 +19,14 @@ namespace vr {
 
 namespace {
 
-static constexpr float kWidth = 0.472f;
-static constexpr float kHeight = 0.064f;
-static constexpr float kFontHeight = 0.027f;
-static constexpr float kSecurityIconOffsetLeft = 0.022f;
-static constexpr float kSecurityIconOffsetRight = 0.016f;
-static constexpr float kSecurityIconSize = 0.03f;
-static constexpr float kUrlRightMargin = 0.02f;
-static constexpr float kRadius = 0.004f;
+static constexpr float kWidth = 0.472;
+static constexpr float kHeight = 0.064;
+static constexpr float kFontHeight = 0.027;
+static constexpr float kSecurityIconOffsetLeft = 0.022;
+static constexpr float kSecurityIconOffsetRight = 0.016;
+static constexpr float kSecurityIconSize = 0.03;
+static constexpr float kUrlRightMargin = 0.02;
+static constexpr float kRadius = 0.004;
 
 }  // namespace
 
@@ -73,11 +73,11 @@ void WebVrUrlToastTexture::Draw(SkCanvas* canvas,
   // Site security state icon.
   if ((state_.security_level != security_state::NONE || state_.offline_page) &&
       state_.vector_icon != nullptr && state_.should_display_url) {
-    VectorIcon::DrawVectorIcon(&gfx_canvas, *state_.vector_icon,
-                               ToPixels(kSecurityIconSize),
-                               {ToPixels(kSecurityIconOffsetLeft),
-                                ToPixels((kHeight - kSecurityIconSize) / 2)},
-                               color_scheme().transient_warning_foreground);
+    DrawVectorIcon(&gfx_canvas, *state_.vector_icon,
+                   ToPixels(kSecurityIconSize),
+                   {ToPixels(kSecurityIconOffsetLeft),
+                    ToPixels((kHeight - kSecurityIconSize) / 2)},
+                   color_scheme().transient_warning_foreground);
   }
 
   if (state_.should_display_url) {

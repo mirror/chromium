@@ -30,7 +30,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
-#include "core/dom/BlinkTransferableMessageStructTraits.h"
+#include "core/dom/BlinkMessagePortMessageStructTraits.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -46,9 +46,6 @@
 #include "public/platform/WebString.h"
 
 namespace blink {
-
-// The maximum number of MessageEvents to dispatch from one task.
-static const int kMaximumMessagesPerTask = 200;
 
 MessagePort* MessagePort::Create(ExecutionContext& execution_context) {
   return new MessagePort(execution_context);
@@ -72,7 +69,7 @@ void MessagePort::postMessage(ScriptState* script_state,
   DCHECK(GetExecutionContext());
   DCHECK(!IsNeutered());
 
-  BlinkTransferableMessage msg;
+  BlinkMessagePortMessage msg;
   msg.message = message;
 
   // Make sure we aren't connected to any of the passed-in ports.
@@ -90,7 +87,7 @@ void MessagePort::postMessage(ScriptState* script_state,
     return;
 
   channel_.PostMojoMessage(
-      mojom::blink::TransferableMessage::SerializeAsMessage(&msg));
+      mojom::blink::MessagePortMessage::SerializeAsMessage(&msg));
 }
 
 MessagePortChannel MessagePort::Disentangle() {
@@ -112,7 +109,7 @@ void MessagePort::MessageAvailable() {
 
   task_runner_->PostTask(BLINK_FROM_HERE,
                          CrossThreadBind(&MessagePort::DispatchMessages,
-                                         WrapCrossThreadPersistent(this)));
+                                         WrapCrossThreadWeakPersistent(this)));
 }
 
 void MessagePort::start() {
@@ -157,7 +154,7 @@ const AtomicString& MessagePort::InterfaceName() const {
   return EventTargetNames::MessagePort;
 }
 
-bool MessagePort::TryGetMessage(BlinkTransferableMessage& message) {
+bool MessagePort::TryGetMessage(BlinkMessagePortMessage& message) {
   if (IsNeutered())
     return false;
 
@@ -165,7 +162,7 @@ bool MessagePort::TryGetMessage(BlinkTransferableMessage& message) {
   if (!channel_.GetMojoMessage(&mojo_message))
     return false;
 
-  if (!mojom::blink::TransferableMessage::DeserializeFromMessage(
+  if (!mojom::blink::MessagePortMessage::DeserializeFromMessage(
           std::move(mojo_message), &message)) {
     return false;
   }
@@ -186,9 +183,7 @@ void MessagePort::DispatchMessages() {
   if (!Started())
     return;
 
-  // There's an upper bound on the loop iterations in one DispatchMessages call,
-  // otherwise page JS could make it loop forever or starve other work.
-  for (int i = 0; i < kMaximumMessagesPerTask; ++i) {
+  while (true) {
     // Because close() doesn't cancel any in flight calls to dispatchMessages(),
     // and can be triggered by the onmessage event handler, we need to check if
     // the port is still open before each dispatch.
@@ -202,7 +197,7 @@ void MessagePort::DispatchMessages() {
       break;
     }
 
-    BlinkTransferableMessage message;
+    BlinkMessagePortMessage message;
     if (!TryGetMessage(message))
       break;
 
@@ -287,7 +282,7 @@ MojoHandle MessagePort::EntangledHandleForTesting() const {
   return channel_.GetHandle().get().value();
 }
 
-void MessagePort::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MessagePort) {
   ContextLifecycleObserver::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
 }

@@ -6,7 +6,6 @@
 #include <map>
 #include <memory>
 
-#include "build/build_config.h"
 #include "net/quic/core/congestion_control/rtt_stats.h"
 #include "net/quic/core/congestion_control/send_algorithm_interface.h"
 #include "net/quic/core/quic_types.h"
@@ -385,7 +384,7 @@ TEST_P(SendAlgorithmTest, AppLimitedBurstsOverWiredNetwork) {
 TEST_P(SendAlgorithmTest, SatelliteNetworkTransfer) {
   CreateSetup(kTestLinkWiredBandwidth, kTestSatellitePropagationDelay,
               kTestWiredBdp);
-  const QuicByteCount kTransferSizeBytes = 12 * 1024 * 1024;
+  const QuicByteCount kTransferSizeBytes = 20 * 1024 * 1024;
   const QuicTime::Delta maximum_elapsed_time =
       EstimatedElapsedTime(kTransferSizeBytes, kTestLinkWiredBandwidth,
                            kTestSatellitePropagationDelay) *

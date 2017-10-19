@@ -17,8 +17,7 @@ struct StructTraits<arc::mojom::ArcBitmapDataView, SkBitmap> {
     const SkImageInfo& info = r.info();
     DCHECK_EQ(info.colorType(), kRGBA_8888_SkColorType);
 
-    return base::make_span(static_cast<uint8_t*>(r.getPixels()),
-                           r.computeByteSize());
+    return base::make_span(static_cast<uint8_t*>(r.getPixels()), r.getSize());
   }
   static uint32_t width(const SkBitmap& r) { return r.width(); }
   static uint32_t height(const SkBitmap& r) { return r.height(); }

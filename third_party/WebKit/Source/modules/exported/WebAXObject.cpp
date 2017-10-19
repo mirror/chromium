@@ -120,7 +120,7 @@ WebScopedAXContext::WebScopedAXContext(WebDocument& root_document)
 }
 
 WebScopedAXContext::~WebScopedAXContext() {
-  private_.reset(nullptr);
+  private_.reset(0);
 }
 
 WebAXObject WebScopedAXContext::Root() const {
@@ -497,7 +497,7 @@ bool WebAXObject::IsInLiveRegion() const {
   if (IsDetached())
     return false;
 
-  return !!private_->LiveRegionRoot();
+  return 0 != private_->LiveRegionRoot();
 }
 
 bool WebAXObject::LiveRegionAtomic() const {

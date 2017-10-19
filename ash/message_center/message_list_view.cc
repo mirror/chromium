@@ -4,7 +4,6 @@
 
 #include "ash/message_center/message_list_view.h"
 
-#include "ash/message_center/message_center_style.h"
 #include "ash/message_center/message_center_view.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -24,6 +23,7 @@
 
 using message_center::MessageView;
 using message_center::Notification;
+using message_center::kMarginBetweenItems;
 
 namespace ash {
 
@@ -43,10 +43,18 @@ MessageListView::MessageListView()
   layout->SetDefaultFlex(1);
   SetLayoutManager(layout);
 
+  // Set the margin to 0 for the layout. BoxLayout assumes the same margin
+  // for top and bottom, but the bottom margin here should be smaller
+  // because of the shadow of message view. Use an empty border instead
+  // to provide this margin.
+  gfx::Insets shadow_insets = MessageView::GetShadowInsets();
   SetBackground(
       views::CreateSolidBackground(MessageCenterView::kBackgroundColor));
   SetBorder(views::CreateEmptyBorder(
-      gfx::Insets(message_center_style::kMarginBetweenItems)));
+      kMarginBetweenItems - shadow_insets.top(),  /* top */
+      kMarginBetweenItems - shadow_insets.left(), /* left */
+      0,                                          /* bottom */
+      kMarginBetweenItems - shadow_insets.right() /* right */));
   animator_.AddObserver(this);
 }
 
@@ -60,6 +68,8 @@ void MessageListView::Layout() {
 
   gfx::Rect child_area = GetContentsBounds();
   int top = child_area.y();
+  int between_items =
+      kMarginBetweenItems - MessageView::GetShadowInsets().bottom();
 
   for (int i = 0; i < child_count(); ++i) {
     views::View* child = child_at(i);
@@ -67,7 +77,7 @@ void MessageListView::Layout() {
       continue;
     int height = child->GetHeightForWidth(child_area.width());
     child->SetBounds(child_area.x(), top, child_area.width(), height);
-    top += height + message_center_style::kMarginBetweenItems;
+    top += height + between_items;
   }
 }
 
@@ -197,7 +207,7 @@ int MessageListView::GetHeightForWidth(int width) const {
     if (!IsValidChild(child))
       continue;
     height += child->GetHeightForWidth(width) + padding;
-    padding = message_center_style::kMarginBetweenItems;
+    padding = kMarginBetweenItems - MessageView::GetShadowInsets().bottom();
   }
 
   return height + GetInsets().height();
@@ -338,16 +348,14 @@ void MessageListView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
 
   if (clear_all_started_) {
     clear_all_started_ = false;
+    // TODO(yoshiki): we shouldn't touch views in OnAllNotificationsCleared().
+    // Or rename it to like OnAllNotificationsClearing().
     for (auto& observer : observers_)
       observer.OnAllNotificationsCleared();
 
-    // Just return here if new animation is initiated in the above observers,
-    // since the code below assumes no animation is running. In the current
-    // impelementation, the observer tries removing the notification and their
-    // views and starts animation if the message center keeps opening.
-    // The code below will be executed when the new animation is finished.
-    if (animator_.IsAnimating())
-      return;
+    // Need to update layout after deleting the views.
+    if (!deleted_when_done_.empty())
+      need_update = true;
   }
 
   // None of these views should be deleted.
@@ -389,17 +397,9 @@ void MessageListView::DoUpdateIfPossible() {
     return;
   }
 
-  // Start the clearing all animation if necessary.
-  if (!clearing_all_views_.empty() && !clear_all_started_) {
-    AnimateClearingOneNotification();
-    return;
-  }
-
-  // Skip during the clering all animation.
-  // This checks |clear_all_started_! rather than |clearing_all_views_|, since
-  // the latter is empty during the animation of the last element.
-  if (clear_all_started_) {
-    DCHECK(!clearing_all_views_.empty());
+  if (!clearing_all_views_.empty()) {
+    if (!clear_all_started_)
+      AnimateClearingOneNotification();
     return;
   }
 
@@ -477,7 +477,7 @@ std::vector<int> MessageListView::ComputeRepositionOffsets(
 
 void MessageListView::AnimateNotifications() {
   int target_index = -1;
-  int padding = message_center_style::kMarginBetweenItems;
+  int padding = kMarginBetweenItems - MessageView::GetShadowInsets().bottom();
   gfx::Rect child_area = GetContentsBounds();
   if (reposition_top_ >= 0) {
     // Find the target item.
@@ -527,10 +527,6 @@ bool MessageListView::AnimateChild(views::View* child,
                                    int top,
                                    int height,
                                    bool animate_on_move) {
-  // Do not call this during clearing all animation.
-  DCHECK(clearing_all_views_.empty());
-  DCHECK(!clear_all_started_);
-
   gfx::Rect child_area = GetContentsBounds();
   if (adding_views_.find(child) != adding_views_.end()) {
     child->SetBounds(child_area.right(), top, child_area.width(), height);
@@ -562,9 +558,11 @@ void MessageListView::AnimateClearingOneNotification() {
 
   // Slide from left to right.
   gfx::Rect new_bounds = child->bounds();
-  new_bounds.set_x(new_bounds.right() +
-                   message_center_style::kMarginBetweenItems);
+  new_bounds.set_x(new_bounds.right() + kMarginBetweenItems);
   animator_.AnimateViewTo(child, new_bounds);
+
+  // Deleting the child after animation.
+  deleted_when_done_.insert(child);
 
   // Schedule to start sliding out next notification after a short delay.
   if (!clearing_all_views_.empty()) {

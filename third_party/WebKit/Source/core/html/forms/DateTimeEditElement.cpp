@@ -522,7 +522,7 @@ DateTimeEditElement::DateTimeEditElement(Document& document,
 
 DateTimeEditElement::~DateTimeEditElement() {}
 
-void DateTimeEditElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DateTimeEditElement) {
   visitor->Trace(fields_);
   visitor->Trace(edit_control_owner_);
   HTMLDivElement::Trace(visitor);
@@ -606,7 +606,7 @@ void DateTimeEditElement::DisabledStateChanged() {
 }
 
 DateTimeFieldElement* DateTimeEditElement::FieldAt(size_t field_index) const {
-  return field_index < fields_.size() ? fields_[field_index].Get() : nullptr;
+  return field_index < fields_.size() ? fields_[field_index].Get() : 0;
 }
 
 size_t DateTimeEditElement::FieldIndexOf(

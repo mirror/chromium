@@ -119,7 +119,7 @@ class DedicatedWorkerMessagingProxyForTest
   ~DedicatedWorkerMessagingProxyForTest() override = default;
 
   void StartWithSourceCode(const String& source) {
-    KURL script_url("http://fake.url/");
+    KURL script_url(kParsedURLString, "http://fake.url/");
     security_origin_ = SecurityOrigin::Create(script_url);
     std::unique_ptr<Vector<CSPHeaderAndType>> headers =
         WTF::MakeUnique<Vector<CSPHeaderAndType>>();
@@ -146,7 +146,7 @@ class DedicatedWorkerMessagingProxyForTest
     return static_cast<DedicatedWorkerThreadForTest*>(GetWorkerThread());
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(mock_worker_thread_lifecycle_observer_);
     DedicatedWorkerMessagingProxy::Trace(visitor);
   }

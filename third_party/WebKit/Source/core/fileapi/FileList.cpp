@@ -31,7 +31,7 @@ FileList::FileList() {}
 
 File* FileList::item(unsigned index) const {
   if (index >= files_.size())
-    return nullptr;
+    return 0;
   return files_[index].Get();
 }
 
@@ -49,7 +49,7 @@ Vector<String> FileList::PathsForUserVisibleFiles() const {
   return paths;
 }
 
-void FileList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FileList) {
   visitor->Trace(files_);
 }
 

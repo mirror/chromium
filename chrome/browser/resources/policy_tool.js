@@ -39,15 +39,6 @@ policy.Page.disableEditing = function() {
   $('main-section').hidden = true;
 };
 
-/**
- * Disables saving to disk by hiding the 'load session' form and showing an
- * error message instead.
- */
-policy.Page.disableSaving = function() {
-  $('saving').hidden = false;
-  $('session-choice').hidden = true;
-};
-
 /** @override */
 policy.Page.setPolicyValues = function(values) {
   var page = this.getInstance();
@@ -119,7 +110,7 @@ policy.Page.prototype.enableEditing = function() {
 };
 
 /**
- * Extracts current policy values to send to backend for saving.
+ * Extracts current policy values to send to backend for logging.
  * @return {Object} The dictionary containing policy values.
  */
 policy.Page.prototype.getDictionary = function() {
@@ -253,6 +244,18 @@ policy.PolicyTable.prototype.getDictionary = function() {
     result[policy.name] = {value: policy.value};
   }
   return result;
+};
+
+// Add error showing function.
+
+/**
+ * Shows an error message to the user.
+ * @param {String} message_name Identifier for the error message.
+ */
+policy.showErrorMessage = function(message_name) {
+  // TODO(urusant): improve error showing.
+  alert(loadTimeData.getString(message_name));
+  console.log(loadTimeData.getString(message_name));
 };
 
 // Call the main inttialization function when the page finishes loading.

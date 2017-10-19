@@ -7,9 +7,9 @@
 #include <windows.h>
 #include <objbase.h>
 #include <stdint.h>
-#include <wrl/client.h>
 
 #include "base/win/scoped_bstr.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_variant.h"
 
 using base::win::ScopedVariant;
@@ -18,13 +18,13 @@ namespace installer {
 
 bool WMI::CreateLocalConnection(bool set_blanket,
                                 IWbemServices** wmi_services) {
-  Microsoft::WRL::ComPtr<IWbemLocator> wmi_locator;
+  base::win::ScopedComPtr<IWbemLocator> wmi_locator;
   HRESULT hr = ::CoCreateInstance(CLSID_WbemLocator, NULL, CLSCTX_INPROC_SERVER,
                                   IID_PPV_ARGS(&wmi_locator));
   if (FAILED(hr))
     return false;
 
-  Microsoft::WRL::ComPtr<IWbemServices> wmi_services_r;
+  base::win::ScopedComPtr<IWbemServices> wmi_services_r;
   hr = wmi_locator->ConnectServer(base::win::ScopedBstr(L"ROOT\\CIMV2"), NULL,
                                   NULL, 0, NULL, 0, 0,
                                   wmi_services_r.GetAddressOf());
@@ -51,14 +51,14 @@ bool WMI::CreateClassMethodObject(IWbemServices* wmi_services,
   // a method rolled into one entity.
   base::win::ScopedBstr b_class_name(class_name.c_str());
   base::win::ScopedBstr b_method_name(method_name.c_str());
-  Microsoft::WRL::ComPtr<IWbemClassObject> class_object;
+  base::win::ScopedComPtr<IWbemClassObject> class_object;
   HRESULT hr;
   hr = wmi_services->GetObject(b_class_name, 0, NULL,
                                class_object.GetAddressOf(), NULL);
   if (FAILED(hr))
     return false;
 
-  Microsoft::WRL::ComPtr<IWbemClassObject> params_def;
+  base::win::ScopedComPtr<IWbemClassObject> params_def;
   hr = class_object->GetMethod(b_method_name, 0, params_def.GetAddressOf(),
                                NULL);
   if (FAILED(hr))
@@ -89,13 +89,13 @@ bool SetParameter(IWbemClassObject* class_method,
 // the values in the returned out_params, are VT_I4, which is int32_t.
 
 bool WMIProcess::Launch(const std::wstring& command_line, int* process_id) {
-  Microsoft::WRL::ComPtr<IWbemServices> wmi_local;
+  base::win::ScopedComPtr<IWbemServices> wmi_local;
   if (!WMI::CreateLocalConnection(true, wmi_local.GetAddressOf()))
     return false;
 
   const wchar_t class_name[] = L"Win32_Process";
   const wchar_t method_name[] = L"Create";
-  Microsoft::WRL::ComPtr<IWbemClassObject> process_create;
+  base::win::ScopedComPtr<IWbemClassObject> process_create;
   if (!WMI::CreateClassMethodObject(wmi_local.Get(), class_name, method_name,
                                     process_create.GetAddressOf()))
     return false;
@@ -106,7 +106,7 @@ bool WMIProcess::Launch(const std::wstring& command_line, int* process_id) {
                     b_command_line.AsInput()))
     return false;
 
-  Microsoft::WRL::ComPtr<IWbemClassObject> out_params;
+  base::win::ScopedComPtr<IWbemClassObject> out_params;
   HRESULT hr = wmi_local->ExecMethod(
       base::win::ScopedBstr(class_name), base::win::ScopedBstr(method_name), 0,
       NULL, process_create.Get(), out_params.GetAddressOf(), NULL);
@@ -132,13 +132,13 @@ bool WMIProcess::Launch(const std::wstring& command_line, int* process_id) {
 }
 
 base::string16 WMIComputerSystem::GetModel() {
-  Microsoft::WRL::ComPtr<IWbemServices> services;
+  base::win::ScopedComPtr<IWbemServices> services;
   if (!WMI::CreateLocalConnection(true, services.GetAddressOf()))
     return base::string16();
 
   base::win::ScopedBstr query_language(L"WQL");
   base::win::ScopedBstr query(L"SELECT * FROM Win32_ComputerSystem");
-  Microsoft::WRL::ComPtr<IEnumWbemClassObject> enumerator;
+  base::win::ScopedComPtr<IEnumWbemClassObject> enumerator;
   HRESULT hr =
       services->ExecQuery(query_language, query,
                           WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY,
@@ -146,7 +146,7 @@ base::string16 WMIComputerSystem::GetModel() {
   if (FAILED(hr) || !enumerator.Get())
     return base::string16();
 
-  Microsoft::WRL::ComPtr<IWbemClassObject> class_object;
+  base::win::ScopedComPtr<IWbemClassObject> class_object;
   ULONG items_returned = 0;
   hr = enumerator->Next(WBEM_INFINITE, 1, class_object.GetAddressOf(),
                         &items_returned);

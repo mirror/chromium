@@ -351,7 +351,7 @@ class EventListener : public ISensorEvents, public base::win::IUnknownImpl {
 // static
 std::unique_ptr<PlatformSensorReaderWin> PlatformSensorReaderWin::Create(
     mojom::SensorType type,
-    Microsoft::WRL::ComPtr<ISensorManager> sensor_manager) {
+    base::win::ScopedComPtr<ISensorManager> sensor_manager) {
   DCHECK(sensor_manager);
 
   auto params = CreateReaderInitParamsForSensor(type);
@@ -378,11 +378,11 @@ std::unique_ptr<PlatformSensorReaderWin> PlatformSensorReaderWin::Create(
 }
 
 // static
-Microsoft::WRL::ComPtr<ISensor> PlatformSensorReaderWin::GetSensorForType(
+base::win::ScopedComPtr<ISensor> PlatformSensorReaderWin::GetSensorForType(
     REFSENSOR_TYPE_ID sensor_type,
-    Microsoft::WRL::ComPtr<ISensorManager> sensor_manager) {
-  Microsoft::WRL::ComPtr<ISensor> sensor;
-  Microsoft::WRL::ComPtr<ISensorCollection> sensor_collection;
+    base::win::ScopedComPtr<ISensorManager> sensor_manager) {
+  base::win::ScopedComPtr<ISensor> sensor;
+  base::win::ScopedComPtr<ISensorCollection> sensor_collection;
   HRESULT hr = sensor_manager->GetSensorsByType(
       sensor_type, sensor_collection.GetAddressOf());
   if (FAILED(hr) || !sensor_collection)
@@ -396,7 +396,7 @@ Microsoft::WRL::ComPtr<ISensor> PlatformSensorReaderWin::GetSensorForType(
 }
 
 PlatformSensorReaderWin::PlatformSensorReaderWin(
-    Microsoft::WRL::ComPtr<ISensor> sensor,
+    base::win::ScopedComPtr<ISensor> sensor,
     std::unique_ptr<ReaderInitParams> params)
     : init_params_(std::move(params)),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -455,7 +455,7 @@ void PlatformSensorReaderWin::ListenSensorEvent() {
 
 bool PlatformSensorReaderWin::SetReportingInterval(
     const PlatformSensorConfiguration& configuration) {
-  Microsoft::WRL::ComPtr<IPortableDeviceValues> props;
+  base::win::ScopedComPtr<IPortableDeviceValues> props;
   if (SUCCEEDED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr,
                                    CLSCTX_ALL, IID_PPV_ARGS(&props)))) {
     unsigned interval =
@@ -465,7 +465,7 @@ bool PlatformSensorReaderWin::SetReportingInterval(
         SENSOR_PROPERTY_CURRENT_REPORT_INTERVAL, interval);
 
     if (SUCCEEDED(hr)) {
-      Microsoft::WRL::ComPtr<IPortableDeviceValues> return_props;
+      base::win::ScopedComPtr<IPortableDeviceValues> return_props;
       hr = sensor_->SetProperties(props.Get(), return_props.GetAddressOf());
       return SUCCEEDED(hr);
     }

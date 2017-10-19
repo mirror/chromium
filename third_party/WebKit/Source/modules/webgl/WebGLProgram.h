@@ -62,7 +62,7 @@ class WebGLProgram final : public WebGLSharedPlatform3DObject {
   bool AttachShader(WebGLShader*);
   bool DetachShader(WebGLShader*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:

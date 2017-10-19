@@ -82,7 +82,7 @@ ScriptPromise NavigationPreloadManager::SetEnabled(bool enable,
   return promise;
 }
 
-void NavigationPreloadManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigationPreloadManager) {
   visitor->Trace(registration_);
 }
 

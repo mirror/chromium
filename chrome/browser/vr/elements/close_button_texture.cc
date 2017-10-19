@@ -45,10 +45,9 @@ void CloseButtonTexture::Draw(SkCanvas* sk_canvas,
 
   float icon_size = size_.height() * kIconScaleFactor;
   float icon_corner_offset = (size_.height() - icon_size) / 2;
-  VectorIcon::DrawVectorIcon(
-      canvas, vector_icons::kClose16Icon, icon_size,
-      gfx::PointF(icon_corner_offset, icon_corner_offset),
-      color_scheme().close_button_foreground);
+  DrawVectorIcon(canvas, vector_icons::kClose16Icon, icon_size,
+                 gfx::PointF(icon_corner_offset, icon_corner_offset),
+                 color_scheme().close_button_foreground);
 }
 
 gfx::Size CloseButtonTexture::GetPreferredTextureSize(int maximum_width) const {

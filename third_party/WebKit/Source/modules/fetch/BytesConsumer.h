@@ -71,10 +71,6 @@ class MODULES_EXPORT BytesConsumer
     // data by |read| and the state changes from waiting to readable, this
     // function will not be called.
     virtual void OnStateChange() = 0;
-
-    // Each implementation should return a string that represents the
-    // implementation for debug purpose.
-    virtual String DebugName() const = 0;
   };
 
   virtual ~BytesConsumer() {}
@@ -165,7 +161,7 @@ class MODULES_EXPORT BytesConsumer
   // Returns a BytesConsumer whose state is Errored.
   static BytesConsumer* CreateErrored(const Error&);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   // This InternalState directly corresponds to the states in the class

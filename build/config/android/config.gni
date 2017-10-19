@@ -44,7 +44,7 @@ if (is_android) {
   if (!defined(default_android_sdk_root)) {
     default_android_sdk_root = "//third_party/android_tools/sdk"
     default_android_sdk_version = "26"
-    default_android_sdk_build_tools_version = "26.0.2"
+    default_android_sdk_build_tools_version = "26.0.0"
     default_android_sdk_tools_version_suffix = "-25.3.2"
   }
 
@@ -137,8 +137,8 @@ if (is_android) {
     # Mark APKs as android:debuggable="true".
     debuggable_apks = !is_official_build
 
-    # Set to false to disable the Errorprone compiler
-    use_errorprone_java_compiler = true
+    # Set to true to enable the Errorprone compiler
+    use_errorprone_java_compiler = false
 
     # Enables EMMA Java code coverage. Instruments classes during build to
     # produce .ec files during runtime
@@ -368,8 +368,13 @@ if (is_android) {
   }
 
   if (defined(android_secondary_abi_cpu)) {
-    android_secondary_abi_toolchain =
-        "//build/toolchain/android:android_clang_${android_secondary_abi_cpu}"
+    if (is_clang) {
+      android_secondary_abi_toolchain =
+          "//build/toolchain/android:android_clang_${android_secondary_abi_cpu}"
+    } else {
+      android_secondary_abi_toolchain =
+          "//build/toolchain/android:android_${android_secondary_abi_cpu}"
+    }
   }
 }
 

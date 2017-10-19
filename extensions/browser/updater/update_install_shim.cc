@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/values.h"
 #include "components/update_client/update_client_errors.h"
 #include "content/public/browser/browser_thread.h"
 
@@ -32,7 +33,8 @@ void UpdateInstallShim::OnUpdateError(int error) {
   VLOG(1) << "OnUpdateError (" << extension_id_ << ") " << error;
 }
 
-void UpdateInstallShim::Install(const base::FilePath& unpack_path,
+void UpdateInstallShim::Install(std::unique_ptr<base::DictionaryValue> manifest,
+                                const base::FilePath& unpack_path,
                                 const Callback& callback) {
   base::ScopedTempDir temp_dir;
   if (!temp_dir.CreateUniqueTempDir()) {

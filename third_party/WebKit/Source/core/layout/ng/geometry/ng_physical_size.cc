@@ -5,7 +5,6 @@
 #include "core/layout/ng/geometry/ng_physical_size.h"
 
 #include "core/layout/ng/geometry/ng_logical_size.h"
-#include "platform/geometry/LayoutSize.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
@@ -17,10 +16,6 @@ bool NGPhysicalSize::operator==(const NGPhysicalSize& other) const {
 NGLogicalSize NGPhysicalSize::ConvertToLogical(NGWritingMode mode) const {
   return mode == kHorizontalTopBottom ? NGLogicalSize(width, height)
                                       : NGLogicalSize(height, width);
-}
-
-LayoutSize NGPhysicalSize::ToLayoutSize() const {
-  return {width, height};
 }
 
 String NGPhysicalSize::ToString() const {

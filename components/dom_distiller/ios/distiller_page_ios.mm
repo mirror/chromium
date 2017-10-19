@@ -112,11 +112,10 @@ class DistillerWebStateObserver : public web::WebStateObserver {
 
   // WebStateObserver implementation:
   void PageLoaded(
-      web::WebState* web_state,
       web::PageLoadCompletionStatus load_completion_status) override;
-  void WebStateDestroyed(web::WebState* web_state) override;
-  void DidStartLoading(web::WebState* web_state) override;
-  void DidStopLoading(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
+  void DidStartLoading() override;
+  void DidStopLoading() override;
 
  private:
   DistillerPageIOS* distiller_page_;  // weak, owns this object.
@@ -134,7 +133,6 @@ DistillerWebStateObserver::DistillerWebStateObserver(
 }
 
 void DistillerWebStateObserver::PageLoaded(
-    web::WebState* web_state,
     web::PageLoadCompletionStatus load_completion_status) {
   if (!loading_) {
     return;
@@ -143,20 +141,20 @@ void DistillerWebStateObserver::PageLoaded(
   distiller_page_->OnLoadURLDone(load_completion_status);
 }
 
-void DistillerWebStateObserver::WebStateDestroyed(web::WebState* web_state) {
+void DistillerWebStateObserver::WebStateDestroyed() {
   distiller_page_->DetachWebState();
 }
 
-void DistillerWebStateObserver::DidStartLoading(web::WebState* web_state) {
+void DistillerWebStateObserver::DidStartLoading() {
   loading_ = true;
 }
 
-void DistillerWebStateObserver::DidStopLoading(web::WebState* web_state) {
-  if (web_state->IsShowingWebInterstitial()) {
+void DistillerWebStateObserver::DidStopLoading() {
+  if (web_state()->IsShowingWebInterstitial()) {
     // If there is an interstitial, stop the distillation.
     // The interstitial is not displayed to the user who cannot choose to
     // continue.
-    PageLoaded(web_state, web::PageLoadCompletionStatus::FAILURE);
+    PageLoaded(web::PageLoadCompletionStatus::FAILURE);
   }
 }
 
@@ -211,9 +209,9 @@ void DistillerPageIOS::DistillPageImpl(const GURL& url,
   web::NavigationManager::WebLoadParams params(url_);
   web_state_->SetWebUsageEnabled(true);
   web_state_->GetNavigationManager()->LoadURLWithParams(params);
-  // LoadIfNecessary is needed because the view is not created (but needed) when
-  // loading the page. TODO(crbug.com/705819): Remove this call.
-  web_state_->GetNavigationManager()->LoadIfNecessary();
+  // GetView is needed because the view is not created (but needed) when
+  // loading the page.
+  web_state_->GetView();
 }
 
 void DistillerPageIOS::OnLoadURLDone(

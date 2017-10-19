@@ -10,10 +10,9 @@
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
-#include "ash/system/power/power_button_controller.h"
-#include "ash/system/power/tablet_power_button_controller_test_api.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/lock_state_controller_test_api.h"
+#include "ash/wm/power_button_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -45,10 +44,8 @@ void PowerButtonTestBase::SetUp() {
   session_manager_client_ = new chromeos::FakeSessionManagerClient;
   dbus_setter->SetSessionManagerClient(
       base::WrapUnique(session_manager_client_));
-  if (has_tablet_mode_switch_) {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kAshEnableTabletMode);
-  }
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kAshEnableTabletMode);
   AshTestBase::SetUp();
 
   lock_state_controller_ = Shell::Get()->lock_state_controller();
@@ -80,14 +77,11 @@ void PowerButtonTestBase::InitPowerButtonControllerMembers(
     SendAccelerometerUpdate(kSidewaysVector, kUpVector);
     tablet_controller_ =
         power_button_controller_->tablet_power_button_controller_for_test();
-    tablet_test_api_ = std::make_unique<TabletPowerButtonControllerTestApi>(
+    tablet_test_api_ = std::make_unique<TabletPowerButtonController::TestApi>(
         tablet_controller_);
-    screenshot_controller_ =
-        power_button_controller_->screenshot_controller_for_test();
   } else {
     tablet_test_api_ = nullptr;
     tablet_controller_ = nullptr;
-    screenshot_controller_ = nullptr;
   }
 }
 
@@ -104,8 +98,6 @@ void PowerButtonTestBase::SendAccelerometerUpdate(
   power_button_controller_->OnAccelerometerUpdated(update);
   tablet_controller_ =
       power_button_controller_->tablet_power_button_controller_for_test();
-  screenshot_controller_ =
-      power_button_controller_->screenshot_controller_for_test();
 
   if (tablet_test_api_ && tablet_test_api_->IsObservingAccelerometerReader(
                               chromeos::AccelerometerReader::GetInstance()))

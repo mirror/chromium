@@ -87,7 +87,6 @@
 #include "printing/features/features.h"
 #include "rlz/features/features.h"
 #include "ui/events/keycodes/keyboard_codes.h"
-#include "url/gurl.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/api/commands/command_service.h"
@@ -1288,18 +1287,5 @@ bool CanCreateBookmarkApp(const Browser* browser) {
       ->CanCreateBookmarkApp();
 }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
-
-#if defined(OS_CHROMEOS)
-void QueryAndDisplayArcApps(
-    const Browser* browser,
-    const std::vector<arc::ArcNavigationThrottle::AppInfo>& app_info,
-    IntentPickerResponse callback) {
-  browser->window()->ShowIntentPickerBubble(app_info, callback);
-}
-
-void SetIntentPickerViewVisibility(Browser* browser, bool visible) {
-  browser->window()->SetIntentPickerViewVisibility(visible);
-}
-#endif  // defined(OS_CHROMEOS)
 
 }  // namespace chrome

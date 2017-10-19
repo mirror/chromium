@@ -135,7 +135,7 @@ DeviceOrientationDispatcher& DeviceOrientationController::DispatcherInstance()
   return DeviceOrientationDispatcher::Instance(false);
 }
 
-void DeviceOrientationController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DeviceOrientationController) {
   visitor->Trace(override_orientation_data_);
   DeviceSingleWindowEventController::Trace(visitor);
   Supplement<Document>::Trace(visitor);

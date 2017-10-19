@@ -35,7 +35,7 @@ inline SVGPathElement::SVGPathElement(Document& document)
   AddToPropertyMap(path_);
 }
 
-void SVGPathElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGPathElement) {
   visitor->Trace(path_);
   SVGGeometryElement::Trace(visitor);
 }
@@ -146,7 +146,7 @@ void SVGPathElement::RemovedFrom(ContainerNode* root_parent) {
 
 FloatRect SVGPathElement::GetBBox() {
   // We want the exact bounds.
-  return SVGPathElement::AsPath().BoundingRect();
+  return SVGPathElement::AsPath().BoundingRect(Path::BoundsType::kExact);
 }
 
 }  // namespace blink

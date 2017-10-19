@@ -29,7 +29,6 @@
 #include "platform/instrumentation/tracing/web_process_memory_dump.h"
 #include "platform/wtf/text/UTF8.h"
 #include "platform/wtf/text/Unicode.h"
-#include "third_party/skia/include/core/SkData.h"
 
 namespace blink {
 
@@ -174,7 +173,7 @@ size_t SharedBuffer::GetSomeDataInternal(const char*& some_data,
                                          size_t position) const {
   size_t total_size = size();
   if (position >= total_size) {
-    some_data = nullptr;
+    some_data = 0;
     return 0;
   }
 
@@ -229,7 +228,7 @@ sk_sp<SkData> SharedBuffer::GetAsSkData() const {
   size_t buffer_length = size();
   sk_sp<SkData> data = SkData::MakeUninitialized(buffer_length);
   char* buffer = static_cast<char*>(data->writable_data());
-  const char* segment = nullptr;
+  const char* segment = 0;
   size_t position = 0;
   while (size_t segment_size = GetSomeDataInternal(segment, position)) {
     memcpy(buffer + position, segment, segment_size);

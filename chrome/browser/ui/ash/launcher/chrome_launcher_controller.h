@@ -35,6 +35,7 @@ class ArcAppDeferredLauncherController;
 class BrowserShortcutLauncherItemController;
 class BrowserStatusMonitor;
 class ChromeLauncherControllerUserSwitchObserver;
+class ChromeLauncherPrefsObserver;
 class GURL;
 class Profile;
 class LauncherControllerHelper;
@@ -243,9 +244,6 @@ class ChromeLauncherController
 
   void SetProfileForTest(Profile* profile);
 
-  // Flush responses to ash::mojom::ShelfObserver messages.
-  void FlushForTesting();
-
   // Helpers that call through to corresponding ShelfModel functions.
   void PinAppWithID(const std::string& app_id);
   bool IsAppPinned(const std::string& app_id);
@@ -436,6 +434,8 @@ class ChromeLauncherController
   // A special observer class to detect user switches.
   std::unique_ptr<ChromeLauncherControllerUserSwitchObserver>
       user_switch_observer_;
+
+  std::unique_ptr<ChromeLauncherPrefsObserver> prefs_observer_;
 
   std::unique_ptr<ArcAppDeferredLauncherController> arc_deferred_launcher_;
 

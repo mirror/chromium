@@ -31,10 +31,12 @@ namespace net {
 
 QuicPacketCreator::QuicPacketCreator(QuicConnectionId connection_id,
                                      QuicFramer* framer,
+                                     QuicBufferAllocator* buffer_allocator,
                                      DelegateInterface* delegate)
     : delegate_(delegate),
       debug_delegate_(nullptr),
       framer_(framer),
+      buffer_allocator_(buffer_allocator),
       send_version_in_packet_(framer->perspective() == Perspective::IS_CLIENT),
       have_diversification_nonce_(false),
       max_packet_length_(0),
@@ -205,7 +207,16 @@ void QuicPacketCreator::CreateStreamFrame(QuicStreamId id,
       std::min<size_t>(BytesFree() - min_frame_size, data_size);
 
   bool set_fin = fin && bytes_consumed == data_size;  // Last frame.
-  *frame = QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed));
+  if (framer_->HasDataProducer()) {
+    *frame =
+        QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed));
+    return;
+  }
+  UniqueStreamBuffer buffer =
+      NewStreamBuffer(buffer_allocator_, bytes_consumed);
+  QuicUtils::CopyToBuffer(iov, iov_offset, bytes_consumed, buffer.get());
+  *frame = QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed,
+                                         std::move(buffer)));
 }
 
 void QuicPacketCreator::ReserializeAllFrames(
@@ -325,8 +336,17 @@ void QuicPacketCreator::CreateAndSerializeStreamFrame(
 
   const bool set_fin = fin && (bytes_consumed == remaining_data_size);
   std::unique_ptr<QuicStreamFrame> frame;
-  frame = QuicMakeUnique<QuicStreamFrame>(id, set_fin, stream_offset,
-                                          bytes_consumed);
+  if (framer_->HasDataProducer()) {
+    frame = QuicMakeUnique<QuicStreamFrame>(id, set_fin, stream_offset,
+                                            bytes_consumed);
+  } else {
+    UniqueStreamBuffer stream_buffer =
+        NewStreamBuffer(buffer_allocator_, bytes_consumed);
+    QuicUtils::CopyToBuffer(iov, iov_offset, bytes_consumed,
+                            stream_buffer.get());
+    frame = QuicMakeUnique<QuicStreamFrame>(
+        id, set_fin, stream_offset, bytes_consumed, std::move(stream_buffer));
+  }
   QUIC_DVLOG(1) << ENDPOINT << "Adding frame: " << *frame;
 
   // TODO(ianswett): AppendTypeByte and AppendStreamFrame could be optimized
@@ -602,6 +622,13 @@ bool QuicPacketCreator::StreamFrameStartsWithChlo(
     QuicIOVector iov,
     size_t iov_offset,
     const QuicStreamFrame& frame) const {
+  if (!framer_->HasDataProducer()) {
+    return frame.stream_id == kCryptoStreamId &&
+           frame.data_length >= sizeof(kCHLO) &&
+           strncmp(frame.data_buffer, reinterpret_cast<const char*>(&kCHLO),
+                   sizeof(kCHLO)) == 0;
+  }
+
   if (framer_->perspective() == Perspective::IS_SERVER ||
       frame.stream_id != kCryptoStreamId || frame.data_length < sizeof(kCHLO)) {
     return false;

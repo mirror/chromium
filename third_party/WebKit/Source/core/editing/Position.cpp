@@ -52,7 +52,7 @@ bool CanBeAnchorNode<EditingInFlatTreeStrategy>(Node* node) {
 #endif
 
 template <typename Strategy>
-void PositionTemplate<Strategy>::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PositionTemplate<Strategy>) {
   visitor->Trace(anchor_node_);
 }
 
@@ -151,7 +151,7 @@ PositionTemplate<Strategy>::PositionTemplate(const PositionTemplate& other)
 template <typename Strategy>
 Node* PositionTemplate<Strategy>::ComputeContainerNode() const {
   if (!anchor_node_)
-    return nullptr;
+    return 0;
 
   switch (AnchorType()) {
     case PositionAnchorType::kBeforeChildren:
@@ -163,7 +163,7 @@ Node* PositionTemplate<Strategy>::ComputeContainerNode() const {
       return Strategy::Parent(*anchor_node_);
   }
   NOTREACHED();
-  return nullptr;
+  return 0;
 }
 
 template <typename Strategy>
@@ -250,33 +250,33 @@ int PositionTemplate<Strategy>::ComputeEditingOffset() const {
 template <typename Strategy>
 Node* PositionTemplate<Strategy>::ComputeNodeBeforePosition() const {
   if (!anchor_node_)
-    return nullptr;
+    return 0;
   switch (AnchorType()) {
     case PositionAnchorType::kBeforeChildren:
-      return nullptr;
+      return 0;
     case PositionAnchorType::kAfterChildren:
       return Strategy::LastChild(*anchor_node_);
     case PositionAnchorType::kOffsetInAnchor:
-      return offset_ ? Strategy::ChildAt(*anchor_node_, offset_ - 1) : nullptr;
+      return offset_ ? Strategy::ChildAt(*anchor_node_, offset_ - 1) : 0;
     case PositionAnchorType::kBeforeAnchor:
       return Strategy::PreviousSibling(*anchor_node_);
     case PositionAnchorType::kAfterAnchor:
       return anchor_node_.Get();
   }
   NOTREACHED();
-  return nullptr;
+  return 0;
 }
 
 template <typename Strategy>
 Node* PositionTemplate<Strategy>::ComputeNodeAfterPosition() const {
   if (!anchor_node_)
-    return nullptr;
+    return 0;
 
   switch (AnchorType()) {
     case PositionAnchorType::kBeforeChildren:
       return Strategy::FirstChild(*anchor_node_);
     case PositionAnchorType::kAfterChildren:
-      return nullptr;
+      return 0;
     case PositionAnchorType::kOffsetInAnchor:
       return Strategy::ChildAt(*anchor_node_, offset_);
     case PositionAnchorType::kBeforeAnchor:
@@ -285,7 +285,7 @@ Node* PositionTemplate<Strategy>::ComputeNodeAfterPosition() const {
       return Strategy::NextSibling(*anchor_node_);
   }
   NOTREACHED();
-  return nullptr;
+  return 0;
 }
 
 // An implementation of |Range::firstNode()|.
@@ -350,16 +350,29 @@ bool PositionTemplate<Strategy>::IsConnected() const {
   return IsPositionConnected(*this);
 }
 
+static bool IsPositionValidFor(const Position& position,
+                               const Document& document) {
+  if (position.IsNull())
+    return true;
+  if (position.GetDocument() != document)
+    return false;
+  return position.AnchorNode()->isConnected();
+}
+
+static bool IsPositionValidFor(const PositionInFlatTree& position,
+                               const Document& document) {
+  if (position.IsNull())
+    return true;
+  if (position.GetDocument() != document)
+    return false;
+  return FlatTreeTraversal::Contains(document, *position.AnchorNode());
+}
+
+// TODO(xiaochengh): Consolidate the two overloads of |IsPositionValidFor()|
+// with |IsConnected()|.
 template <typename Strategy>
 bool PositionTemplate<Strategy>::IsValidFor(const Document& document) const {
-  if (IsNull())
-    return true;
-  if (GetDocument() != document)
-    return false;
-  if (!IsConnected())
-    return false;
-  return !IsOffsetInAnchor() ||
-         OffsetInContainerNode() <= LastOffsetInNode(*AnchorNode());
+  return IsPositionValidFor(*this, document);
 }
 
 int ComparePositions(const PositionInFlatTree& position_a,

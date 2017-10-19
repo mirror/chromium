@@ -11,7 +11,7 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/typed_arrays/DOMTypedArray.h"
 #include "modules/encryptedmedia/ContentDecryptionModuleResultPromise.h"
@@ -35,7 +35,7 @@ class SetMediaKeysHandler : public ScriptPromiseResolver {
   static ScriptPromise Create(ScriptState*, HTMLMediaElement&, MediaKeys*);
   ~SetMediaKeysHandler() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   SetMediaKeysHandler(ScriptState*, HTMLMediaElement&, MediaKeys*);
@@ -307,7 +307,7 @@ void SetMediaKeysHandler::SetFailed(ExceptionCode code,
   Fail(code, error_message);
 }
 
-void SetMediaKeysHandler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SetMediaKeysHandler) {
   visitor->Trace(element_);
   visitor->Trace(new_media_keys_);
   ScriptPromiseResolver::Trace(visitor);
@@ -455,10 +455,10 @@ void HTMLMediaElementEncryptedMedia::DidResumePlaybackBlockedForKey() {
 
 WebContentDecryptionModule*
 HTMLMediaElementEncryptedMedia::ContentDecryptionModule() {
-  return media_keys_ ? media_keys_->ContentDecryptionModule() : nullptr;
+  return media_keys_ ? media_keys_->ContentDecryptionModule() : 0;
 }
 
-void HTMLMediaElementEncryptedMedia::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLMediaElementEncryptedMedia) {
   visitor->Trace(media_element_);
   visitor->Trace(media_keys_);
   Supplement<HTMLMediaElement>::Trace(visitor);

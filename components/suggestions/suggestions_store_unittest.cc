@@ -37,7 +37,6 @@ void AddSuggestion(SuggestionsProfile* suggestions,
 
 SuggestionsProfile CreateTestSuggestions() {
   SuggestionsProfile suggestions;
-  suggestions.set_timestamp(123);
   ChromeSuggestion* suggestion = suggestions.add_suggestions();
   suggestion->set_url(kTestTitle);
   suggestion->set_title(kTestUrl);

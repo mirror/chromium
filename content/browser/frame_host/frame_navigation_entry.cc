@@ -23,8 +23,6 @@ FrameNavigationEntry::FrameNavigationEntry(
     scoped_refptr<SiteInstanceImpl> source_site_instance,
     const GURL& url,
     const Referrer& referrer,
-    const std::vector<GURL>& redirect_chain,
-    const PageState& page_state,
     const std::string& method,
     int64_t post_id)
     : frame_unique_name_(frame_unique_name),
@@ -34,8 +32,6 @@ FrameNavigationEntry::FrameNavigationEntry(
       source_site_instance_(std::move(source_site_instance)),
       url_(url),
       referrer_(referrer),
-      redirect_chain_(redirect_chain),
-      page_state_(page_state),
       method_(method),
       post_id_(post_id) {}
 

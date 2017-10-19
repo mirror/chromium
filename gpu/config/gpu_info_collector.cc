@@ -229,6 +229,7 @@ void MergeGPUInfoGL(GPUInfo* basic_gpu_info,
   basic_gpu_info->passthrough_cmd_decoder =
       context_gpu_info.passthrough_cmd_decoder;
   basic_gpu_info->supports_overlays = context_gpu_info.supports_overlays;
+  basic_gpu_info->hdr = context_gpu_info.hdr;
   basic_gpu_info->context_info_state = context_gpu_info.context_info_state;
   basic_gpu_info->initialization_time = context_gpu_info.initialization_time;
   basic_gpu_info->video_decode_accelerator_capabilities =
@@ -305,15 +306,7 @@ void IdentifyActiveGPU(GPUInfo* gpu_info) {
 
 void FillGPUInfoFromSystemInfo(GPUInfo* gpu_info,
                                angle::SystemInfo* system_info) {
-  // We fill gpu_info even when angle::GetSystemInfo failed so that we can see
-  // partial information even when GPU info collection fails. Handle malformed
-  // angle::SystemInfo first.
-  if (system_info->gpus.empty()) {
-    return;
-  }
-  if (system_info->primaryGPUIndex < 0) {
-    system_info->primaryGPUIndex = 0;
-  }
+  DCHECK(system_info->primaryGPUIndex >= 0);
 
   angle::GPUDeviceInfo* primary =
       &system_info->gpus[system_info->primaryGPUIndex];

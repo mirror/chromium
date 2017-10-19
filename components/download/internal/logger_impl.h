@@ -10,7 +10,6 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "components/download/internal/log_sink.h"
-#include "components/download/public/download_params.h"
 #include "components/download/public/logger.h"
 
 namespace base {
@@ -20,7 +19,6 @@ class Value;
 namespace download {
 
 class LogSource;
-struct Entry;
 
 // The internal Logger implementation.  Note that this Logger will not do any
 // actual work in response to LogSink requests if there are no Observers
@@ -37,17 +35,9 @@ class LoggerImpl : public Logger, public LogSink {
   void AddObserver(Observer* observer) override;
   void RemoveObserver(Observer* observer) override;
   base::Value GetServiceStatus() override;
-  base::Value GetServiceDownloads() override;
 
   // LogSink implementation.
   void OnServiceStatusChanged() override;
-  void OnServiceDownloadsAvailable() override;
-  void OnServiceDownloadChanged(const std::string& guid) override;
-  void OnServiceDownloadFailed(CompletionType completion_type,
-                               const Entry& entry) override;
-  void OnServiceRequestMade(DownloadClient client,
-                            const std::string& guid,
-                            DownloadParams::StartResult start_result) override;
 
   LogSource* log_source_;
   base::ObserverList<Observer> observers_;

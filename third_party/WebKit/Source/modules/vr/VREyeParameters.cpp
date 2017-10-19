@@ -28,7 +28,7 @@ void VREyeParameters::Update(
   render_height_ = eye_parameters->renderHeight;
 }
 
-void VREyeParameters::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VREyeParameters) {
   visitor->Trace(offset_);
   visitor->Trace(field_of_view_);
 }

@@ -259,7 +259,7 @@ void InspectorWorkerAgent::DispatchMessageFromWorker(
                                            proxy->InspectorId());
 }
 
-void InspectorWorkerAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorWorkerAgent) {
   visitor->Trace(connected_proxies_);
   visitor->Trace(inspected_frames_);
   InspectorBaseAgent::Trace(visitor);

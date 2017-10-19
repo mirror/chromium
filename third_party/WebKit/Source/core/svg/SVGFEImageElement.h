@@ -49,7 +49,7 @@ class SVGFEImageElement final : public SVGFilterPrimitiveStandardAttributes,
 
   // Promptly remove as a ImageResource client.
   EAGERLY_FINALIZE();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGFEImageElement(Document&);

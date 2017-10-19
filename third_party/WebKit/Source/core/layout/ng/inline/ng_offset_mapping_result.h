@@ -10,7 +10,6 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Vector.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -91,12 +90,11 @@ class CORE_EXPORT NGOffsetMappingResult {
       HashMap<Persistent<const Node>, std::pair<unsigned, unsigned>>;
 
   NGOffsetMappingResult(NGOffsetMappingResult&&);
-  NGOffsetMappingResult(UnitVector&&, RangeMap&&, String);
+  NGOffsetMappingResult(UnitVector&&, RangeMap&&);
   ~NGOffsetMappingResult();
 
   const UnitVector& GetUnits() const { return units_; }
   const RangeMap& GetRanges() const { return ranges_; }
-  const String& GetText() const { return text_; }
 
   // Returns the NGOffsetMappingUnit that contains the given offset in the DOM
   // node. If there are multiple qualifying units, returns the last one.
@@ -122,26 +120,14 @@ class CORE_EXPORT NGOffsetMappingResult {
   // character does not exist.
   unsigned EndOfLastNonCollapsedCharacter(const Node&, unsigned offset) const;
 
-  // Returns true if the character at the position is non-collapsed. If the
-  // offset is at the end of the node, returns false.
-  // TODO(xiaochengh): Rename to IsBeforeNonCollapsedCharacter().
-  bool IsNonCollapsedCharacter(const Node&, unsigned offset) const;
-
-  // Returns true if the offset is right after a non-collapsed character. If the
-  // offset is at the beginning of the node, returns false.
-  bool IsAfterNonCollapsedCharacter(const Node&, unsigned offset) const;
-
   // TODO(xiaochengh): Add APIs for reverse mapping.
 
  private:
   UnitVector units_;
   RangeMap ranges_;
-  String text_;
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMappingResult);
 };
-
-const NGOffsetMappingResult* GetNGOffsetMappingFor(const Node&, unsigned);
 
 }  // namespace blink
 

@@ -373,6 +373,11 @@ BrowserPpapiHost*
   return nullptr;
 }
 
+gpu::GpuChannelEstablishFactory*
+ContentBrowserClient::GetGpuChannelEstablishFactory() {
+  return nullptr;
+}
+
 bool ContentBrowserClient::AllowPepperSocketAPI(
     BrowserContext* browser_context,
     const GURL& url,
@@ -482,11 +487,6 @@ base::string16 ContentBrowserClient::GetAppContainerSidForSandboxType(
 std::unique_ptr<base::Value> ContentBrowserClient::GetServiceManifestOverlay(
     base::StringPiece name) {
   return nullptr;
-}
-
-bool ContentBrowserClient::ShouldTerminateOnServiceQuit(
-    const service_manager::Identity& id) {
-  return false;
 }
 
 std::vector<ContentBrowserClient::ServiceManifestInfo>

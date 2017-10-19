@@ -322,6 +322,10 @@ void WebRuntimeFeatures::ForceOverlayFullscreenVideo(bool enable) {
   RuntimeEnabledFeatures::SetForceOverlayFullscreenVideoEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableSharedArrayBuffer(bool enable) {
+  RuntimeEnabledFeatures::SetSharedArrayBufferEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableSharedWorker(bool enable) {
   RuntimeEnabledFeatures::SetSharedWorkerEnabled(enable);
 }
@@ -360,6 +364,22 @@ void WebRuntimeFeatures::EnableWebVRExperimentalRendering(bool enable) {
 
 void WebRuntimeFeatures::EnablePresentationAPI(bool enable) {
   RuntimeEnabledFeatures::SetPresentationEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableWebFontsInterventionV2With2G(bool enable) {
+  RuntimeEnabledFeatures::SetWebFontsInterventionV2With2GEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableWebFontsInterventionV2With3G(bool enable) {
+  RuntimeEnabledFeatures::SetWebFontsInterventionV2With3GEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableWebFontsInterventionV2WithSlow2G(bool enable) {
+  RuntimeEnabledFeatures::SetWebFontsInterventionV2WithSlow2GEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableWebFontsInterventionTrigger(bool enable) {
+  RuntimeEnabledFeatures::SetWebFontsInterventionTriggerEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableRenderingPipelineThrottling(bool enable) {

@@ -146,7 +146,7 @@ bool MediaValuesDynamic::HasValues() const {
   return frame_;
 }
 
-void MediaValuesDynamic::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaValuesDynamic) {
   visitor->Trace(frame_);
   MediaValues::Trace(visitor);
 }

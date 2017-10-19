@@ -66,7 +66,7 @@
   ntp_snippets::metrics::OnSuggestionShown(
       suggestionsAbove + indexPath.item, [categoryWrapper category],
       indexPath.item, suggestion.publishDate, suggestion.score,
-      suggestion.fetchDate);
+      suggestion.fetchDate, /*is_prefetched=*/false, /*is_offline=*/false);
 }
 
 - (void)onMoreButtonTappedAtPosition:(NSInteger)position

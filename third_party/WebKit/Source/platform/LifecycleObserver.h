@@ -37,9 +37,7 @@ class LifecycleNotifier;
 template <typename Context, typename Observer>
 class LifecycleObserver : public GarbageCollectedMixin {
  public:
-  virtual void Trace(blink::Visitor* visitor) {
-    visitor->Trace(lifecycle_context_);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(lifecycle_context_); }
 
   Context* LifecycleContext() const { return lifecycle_context_; }
 
@@ -59,9 +57,6 @@ class LifecycleObserver : public GarbageCollectedMixin {
 template <typename Context, typename Observer>
 inline void LifecycleObserver<Context, Observer>::SetContext(Context* context) {
   using Notifier = LifecycleNotifier<Context, Observer>;
-
-  if (lifecycle_context_ == context)
-    return;
 
   if (lifecycle_context_) {
     static_cast<Notifier*>(lifecycle_context_)

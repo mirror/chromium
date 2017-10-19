@@ -52,7 +52,7 @@
 #include "ash/media_controller.h"
 #include "ash/message_center/message_center_controller.h"
 #include "ash/new_window_controller.h"
-#include "ash/note_taking_controller.h"
+#include "ash/palette_delegate.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_model.h"
@@ -81,9 +81,7 @@
 #include "ash/system/network/vpn_list.h"
 #include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/palette/palette_tray.h"
-#include "ash/system/palette/palette_welcome_bubble.h"
 #include "ash/system/power/peripheral_battery_notifier.h"
-#include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/power_event_observer.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/video_activity_notifier.h"
@@ -113,6 +111,7 @@
 #include "ash/wm/native_cursor_manager_ash_mus.h"
 #include "ash/wm/overlay_event_filter.h"
 #include "ash/wm/overview/window_selector_controller.h"
+#include "ash/wm/power_button_controller.h"
 #include "ash/wm/resize_shadow_controller.h"
 #include "ash/wm/root_window_finder.h"
 #include "ash/wm/screen_pinning_controller.h"
@@ -345,15 +344,13 @@ void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
 // static
 void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry, bool for_test) {
   AccessibilityController::RegisterProfilePrefs(registry, for_test);
-  BluetoothPowerController::RegisterProfilePrefs(registry);
-  LockScreenController::RegisterProfilePrefs(registry, for_test);
   LogoutButtonTray::RegisterProfilePrefs(registry);
   NightLightController::RegisterProfilePrefs(registry);
-  PaletteTray::RegisterProfilePrefs(registry);
-  PaletteWelcomeBubble::RegisterProfilePrefs(registry);
   ShelfController::RegisterProfilePrefs(registry);
-  TouchDevicesController::RegisterProfilePrefs(registry);
   TrayCapsLock::RegisterProfilePrefs(registry, for_test);
+  BluetoothPowerController::RegisterProfilePrefs(registry);
+  LockScreenController::RegisterProfilePrefs(registry, for_test);
+  TouchDevicesController::RegisterProfilePrefs(registry);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -472,12 +469,6 @@ FirstRunHelper* Shell::CreateFirstRunHelper() {
 void Shell::SetLargeCursorSizeInDip(int large_cursor_size_in_dip) {
   window_tree_host_manager_->cursor_window_controller()
       ->SetLargeCursorSizeInDip(large_cursor_size_in_dip);
-}
-
-void Shell::UpdateCursorCompositingEnabled() {
-  SetCursorCompositingEnabled(
-      window_tree_host_manager_->cursor_window_controller()
-          ->ShouldEnableCursorCompositing());
 }
 
 void Shell::SetCursorCompositingEnabled(bool enabled) {
@@ -623,7 +614,6 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       new_window_controller_(std::make_unique<NewWindowController>()),
       session_controller_(std::make_unique<SessionController>(
           shell_delegate->GetShellConnector())),
-      note_taking_controller_(std::make_unique<NoteTakingController>()),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(std::make_unique<ShutdownController>()),
       system_tray_controller_(std::make_unique<SystemTrayController>()),
@@ -881,6 +871,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   accessibility_delegate_.reset(shell_delegate_->CreateAccessibilityDelegate());
   accessibility_controller_ = std::make_unique<AccessibilityController>(
       shell_delegate_->GetShellConnector());
+  palette_delegate_ = shell_delegate_->CreatePaletteDelegate();
   toast_manager_ = std::make_unique<ToastManager>();
 
   // Install the custom factory early on so that views::FocusManagers for Tray,

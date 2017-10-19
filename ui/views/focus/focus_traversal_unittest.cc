@@ -152,7 +152,7 @@ class BorderView : public NativeViewHost {
 
     if (details.child == this && details.is_add) {
       if (!widget_) {
-        widget_ = std::make_unique<Widget>();
+        widget_ = base::MakeUnique<Widget>();
         Widget::InitParams params(Widget::InitParams::TYPE_CONTROL);
         params.parent = details.parent->GetWidget()->GetNativeView();
         params.ownership = Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;

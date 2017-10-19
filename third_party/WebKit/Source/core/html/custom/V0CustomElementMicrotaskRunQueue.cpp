@@ -40,7 +40,7 @@ void V0CustomElementMicrotaskRunQueue::RequestDispatchIfNeeded() {
   dispatch_is_pending_ = true;
 }
 
-void V0CustomElementMicrotaskRunQueue::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V0CustomElementMicrotaskRunQueue) {
   visitor->Trace(sync_queue_);
   visitor->Trace(async_queue_);
 }

@@ -519,7 +519,7 @@ GpuProcessHost::~GpuProcessHost() {
 
   std::string message;
   bool block_offscreen_contexts = true;
-  if (!in_process_ && process_launched_) {
+  if (!in_process_) {
     int exit_code;
     base::TerminationStatus status = process_->GetTerminationStatus(
         false /* known_dead */, &exit_code);
@@ -596,17 +596,16 @@ bool GpuProcessHost::Init() {
 
   process_->GetHost()->CreateChannelMojo();
 
+  gpu::GpuPreferences gpu_preferences = GetGpuPreferencesFromCommandLine();
+  GpuDataManagerImpl::GetInstance()->UpdateGpuPreferences(&gpu_preferences);
   if (in_process_) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(GetGpuMainThreadFactory());
-    gpu::GpuPreferences gpu_preferences = GetGpuPreferencesFromCommandLine();
-    GpuDataManagerImpl::GetInstance()->UpdateGpuPreferences(&gpu_preferences);
-    in_process_gpu_thread_.reset(GetGpuMainThreadFactory()(
-        InProcessChildThreadParams(
+    in_process_gpu_thread_.reset(
+        GetGpuMainThreadFactory()(InProcessChildThreadParams(
             base::ThreadTaskRunnerHandle::Get(),
             process_->GetInProcessBrokerClientInvitation(),
-            process_->child_connection()->service_token()),
-        gpu_preferences));
+            process_->child_connection()->service_token())));
     base::Thread::Options options;
 #if defined(OS_WIN)
     // WGL needs to create its own window and pump messages on it.
@@ -625,10 +624,10 @@ bool GpuProcessHost::Init() {
   process_->child_channel()
       ->GetAssociatedInterfaceSupport()
       ->GetRemoteAssociatedInterface(&gpu_main_ptr_);
-  viz::mojom::GpuHostPtr host_proxy;
+  ui::mojom::GpuHostPtr host_proxy;
   gpu_host_binding_.Bind(mojo::MakeRequest(&host_proxy));
   gpu_main_ptr_->CreateGpuService(mojo::MakeRequest(&gpu_service_ptr_),
-                                  std::move(host_proxy),
+                                  std::move(host_proxy), gpu_preferences,
                                   activity_flags_.CloneHandle());
 
 #if defined(USE_OZONE)
@@ -746,10 +745,6 @@ void GpuProcessHost::RequestGPUInfo(RequestGPUInfoCallback request_cb) {
   }
 
   request_gpu_info_callbacks_.push_back(std::move(request_cb));
-}
-
-void GpuProcessHost::RequestHDRStatus(RequestHDRStatusCallback request_cb) {
-  gpu_service_ptr_->RequestHDRStatus(std::move(request_cb));
 }
 
 #if defined(OS_ANDROID)

@@ -171,7 +171,9 @@ class CSSParserImpl {
       CSSParserScopedTokenBuffer prelude_buffer,
       const RangeOffset& prelude_offset,
       CSSParserTokenStream& block);
-  StyleRule* ConsumeStyleRule(CSSParserTokenStream&);
+  StyleRule* ConsumeStyleRule(CSSParserScopedTokenBuffer prelude_buffer,
+                              const RangeOffset& prelude_offset,
+                              CSSParserTokenStream& block);
 
   void ConsumeDeclarationList(CSSParserTokenStream&, StyleRule::RuleType);
   void ConsumeDeclaration(CSSParserTokenRange,

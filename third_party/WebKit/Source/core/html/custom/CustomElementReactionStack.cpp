@@ -27,7 +27,7 @@ Persistent<CustomElementReactionStack>& GetCustomElementReactionStack() {
 
 CustomElementReactionStack::CustomElementReactionStack() {}
 
-void CustomElementReactionStack::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CustomElementReactionStack) {
   visitor->Trace(map_);
   visitor->Trace(stack_);
   visitor->Trace(backup_queue_);

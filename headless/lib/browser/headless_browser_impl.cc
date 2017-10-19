@@ -103,10 +103,7 @@ void HeadlessBrowserImpl::Shutdown() {
   weak_ptr_factory_.InvalidateWeakPtrs();
 
   // Destroy all browser contexts.
-  {
-    base::AutoLock lock(browser_contexts_lock_);
-    browser_contexts_.clear();
-  }
+  browser_contexts_.clear();
 
   BrowserMainThread()->PostTask(FROM_HERE,
                                 base::MessageLoop::QuitWhenIdleClosure());
@@ -115,7 +112,6 @@ void HeadlessBrowserImpl::Shutdown() {
 std::vector<HeadlessBrowserContext*>
 HeadlessBrowserImpl::GetAllBrowserContexts() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  base::AutoLock lock(browser_contexts_lock_);
 
   std::vector<HeadlessBrowserContext*> result;
   result.reserve(browser_contexts_.size());
@@ -166,7 +162,6 @@ HeadlessBrowserContext* HeadlessBrowserImpl::CreateBrowserContext(
 
   HeadlessBrowserContext* result = browser_context.get();
 
-  base::AutoLock lock(browser_contexts_lock_);
   browser_contexts_[browser_context->Id()] = std::move(browser_context);
 
   return result;
@@ -174,7 +169,6 @@ HeadlessBrowserContext* HeadlessBrowserImpl::CreateBrowserContext(
 
 void HeadlessBrowserImpl::DestroyBrowserContext(
     HeadlessBrowserContextImpl* browser_context) {
-  base::AutoLock lock(browser_contexts_lock_);
   auto it = browser_contexts_.find(browser_context->Id());
   DCHECK(it != browser_contexts_.end());
   browser_contexts_.erase(it);
@@ -224,24 +218,10 @@ HeadlessWebContentsImpl* HeadlessBrowserImpl::GetWebContentsForWindowId(
 
 HeadlessBrowserContext* HeadlessBrowserImpl::GetBrowserContextForId(
     const std::string& id) {
-  base::AutoLock lock(browser_contexts_lock_);
   auto find_it = browser_contexts_.find(id);
   if (find_it == browser_contexts_.end())
     return nullptr;
   return find_it->second.get();
-}
-
-LockedPtr<HeadlessBrowserContextImpl>
-HeadlessBrowserImpl::GetBrowserContextForRenderFrame(
-    int render_process_id,
-    int render_frame_id) const {
-  MoveableAutoLock lock(browser_contexts_lock_);
-  for (const auto& pair : browser_contexts_) {
-    if (pair.second->GetDevToolsFrameToken(render_process_id, render_frame_id))
-      return LockedPtr<HeadlessBrowserContextImpl>(std::move(lock),
-                                                   pair.second.get());
-  }
-  return LockedPtr<HeadlessBrowserContextImpl>(std::move(lock), nullptr);
 }
 
 HeadlessDevToolsTarget* HeadlessBrowserImpl::GetDevToolsTarget() {

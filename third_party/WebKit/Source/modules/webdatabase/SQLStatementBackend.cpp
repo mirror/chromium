@@ -106,7 +106,7 @@ SQLStatementBackend::SQLStatementBackend(SQLStatement* frontend,
   frontend_->SetBackend(this);
 }
 
-void SQLStatementBackend::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SQLStatementBackend) {
   visitor->Trace(frontend_);
   visitor->Trace(result_set_);
 }
@@ -120,7 +120,7 @@ SQLErrorData* SQLStatementBackend::SqlError() const {
 }
 
 SQLResultSet* SQLStatementBackend::SqlResultSet() const {
-  return result_set_->IsValid() ? result_set_.Get() : nullptr;
+  return result_set_->IsValid() ? result_set_.Get() : 0;
 }
 
 bool SQLStatementBackend::Execute(Database* db) {

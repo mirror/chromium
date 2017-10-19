@@ -518,8 +518,11 @@ void NodeChannel::OnChannelMessage(const void* payload,
   // RELAY_EVENT_MESSAGE.
   {
     MachPortRelay* relay = delegate_->GetMachPortRelay();
-    if (handles && !relay)
-      MachPortRelay::ReceivePorts(handles.get());
+    if (handles && !relay) {
+      if (!MachPortRelay::ReceivePorts(handles.get())) {
+        LOG(ERROR) << "Error receiving mach ports.";
+      }
+    }
   }
 #endif  // defined(OS_WIN)
 
@@ -816,7 +819,11 @@ void NodeChannel::ProcessPendingMessagesWithMachPorts() {
   while (!pending_writes.empty()) {
     Channel::MessagePtr message = std::move(pending_writes.front());
     pending_writes.pop();
-    relay->SendPortsToProcess(message.get(), remote_process_handle);
+    if (!relay->SendPortsToProcess(message.get(), remote_process_handle)) {
+      LOG(ERROR) << "Error on sending mach ports. Remote process is likely "
+                 << "gone. Dropping message.";
+      return;
+    }
 
     base::AutoLock lock(channel_lock_);
     if (!channel_) {
@@ -892,7 +899,11 @@ void NodeChannel::WriteChannelMessage(Channel::MessagePtr message) {
         }
       }
 
-      relay->SendPortsToProcess(message.get(), remote_process_handle);
+      if (!relay->SendPortsToProcess(message.get(), remote_process_handle)) {
+        LOG(ERROR) << "Error on sending mach ports. Remote process is likely "
+                   << "gone. Dropping message.";
+        return;
+      }
     }
   }
 #endif

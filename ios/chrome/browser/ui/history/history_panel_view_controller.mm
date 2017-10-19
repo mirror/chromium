@@ -151,10 +151,6 @@ CGFloat kShadowOpacity = 0.2f;
   [_appBar headerViewController].headerView.trackingScrollView =
       [_historyCollectionController collectionView];
   [_appBar addSubviewsToParent];
-  // Prevent the touch events on appBar from being forwarded to the
-  // collectionView.  See https://crbug.com/773580
-  [_appBar.headerViewController.headerView
-      stopForwardingTouchEventsForView:_appBar.navigationBar];
 
   // Add navigation bar buttons.
   _leftBarButtonItem =
@@ -318,10 +314,6 @@ CGFloat kShadowOpacity = 0.2f;
 }
 
 - (void)openPrivacySettings {
-  // Ignore the button tap if view controller presenting.
-  if ([self presentedViewController]) {
-    return;
-  }
   [self exitSearchMode];
   base::RecordAction(
       base::UserMetricsAction("HistoryPage_InitClearBrowsingData"));
@@ -329,10 +321,6 @@ CGFloat kShadowOpacity = 0.2f;
 }
 
 - (void)enterEditingMode {
-  // Ignore the button tap if view controller presenting.
-  if ([self presentedViewController]) {
-    return;
-  }
   [_historyCollectionController setEditing:YES];
   [_clearBrowsingBar setEditing:YES];
   if (_historyCollectionController.searching) {

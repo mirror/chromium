@@ -52,7 +52,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(SecurityContext);
 
  public:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   using InsecureNavigationsSet = HashSet<unsigned, WTF::AlreadyHashed>;
 

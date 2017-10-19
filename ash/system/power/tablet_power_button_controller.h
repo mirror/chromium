@@ -38,6 +38,38 @@ class ASH_EXPORT TabletPowerButtonController
       public chromeos::PowerManagerClient::Observer,
       public TabletModeObserver {
  public:
+  // Helper class used by tablet power button tests to access internal state.
+  class ASH_EXPORT TestApi {
+   public:
+    explicit TestApi(TabletPowerButtonController* controller);
+    ~TestApi();
+
+    // Returns true when |shutdown_timer_| is running.
+    bool ShutdownTimerIsRunning() const;
+
+    // Emulates |shutdown_timer_| timeout.
+    void TriggerShutdownTimeout();
+
+    // Returns true if |controller_| is observing |reader|.
+    bool IsObservingAccelerometerReader(
+        chromeos::AccelerometerReader* reader) const;
+
+    // Calls |controller_|'s ParseSpuriousPowerButtonSwitches() method.
+    void ParseSpuriousPowerButtonSwitches(
+        const base::CommandLine& command_line);
+
+    // Calls |controller_|'s IsSpuriousPowerButtonEvent() method.
+    bool IsSpuriousPowerButtonEvent() const;
+
+    // Sends |event| to |display_controller_|.
+    void SendKeyEvent(ui::KeyEvent* event);
+
+   private:
+    TabletPowerButtonController* controller_;  // Not owned.
+
+    DISALLOW_COPY_AND_ASSIGN(TestApi);
+  };
+
   // Public for tests.
   static constexpr float kGravity = 9.80665f;
 
@@ -56,10 +88,6 @@ class ASH_EXPORT TabletPowerButtonController
                               base::TickClock* tick_clock);
   ~TabletPowerButtonController() override;
 
-  // Returns true if power button events should be handled by this class instead
-  // of PowerButtonController.
-  bool ShouldHandlePowerButtonEvents() const;
-
   // Handles a power button event.
   void OnPowerButtonEvent(bool down, const base::TimeTicks& timestamp);
 
@@ -74,12 +102,10 @@ class ASH_EXPORT TabletPowerButtonController
   void OnTabletModeStarted() override;
   void OnTabletModeEnded() override;
 
-  // Cancel the ongoing tablet power button behavior.
-  void CancelTabletPowerButton();
+  // Overrides the tick clock used by |this| for testing.
+  void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
 
  private:
-  friend class TabletPowerButtonControllerTestApi;
-
   // Parses command-line switches that provide settings used to attempt to
   // ignore accidental power button presses by looking at accelerometer data.
   void ParseSpuriousPowerButtonSwitches(const base::CommandLine& command_line);

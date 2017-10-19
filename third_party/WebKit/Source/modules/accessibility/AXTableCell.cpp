@@ -80,11 +80,11 @@ bool AXTableCell::ComputeAccessibilityIsIgnored(
 
 AXObject* AXTableCell::ParentTable() const {
   if (!layout_object_ || !layout_object_->IsTableCell())
-    return nullptr;
+    return 0;
 
   // If the document no longer exists, we might not have an axObjectCache.
   if (IsDetached())
-    return nullptr;
+    return 0;
 
   // Do not use getOrCreate. parentTable() can be called while the layout tree
   // is being modified by javascript, and creating a table element may try to

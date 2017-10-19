@@ -23,9 +23,7 @@ namespace {
 
 const int kVendorMicrosoft = 0x045e;
 const int kProductXbox360Controller = 0x028e;
-const int kProductXboxOneController2013 = 0x02d1;
-const int kProductXboxOneController2015 = 0x02dd;
-const int kProductXboxOneSController = 0x02ea;
+const int kProductXboxOneController = 0x02d1;
 
 const int kXbox360ReadEndpoint = 1;
 const int kXbox360ControlEndpoint = 2;
@@ -235,25 +233,6 @@ void CopyNSStringAsUTF16LittleEndian(NSString* src,
   [as16 getBytes:dest length:dest_len - sizeof(UChar)];
 }
 
-XboxController::ControllerType ControllerTypeFromIds(int vendor_id,
-                                                     int product_id) {
-  if (vendor_id == kVendorMicrosoft) {
-    switch (product_id) {
-      case kProductXbox360Controller:
-        return XboxController::XBOX_360_CONTROLLER;
-      case kProductXboxOneController2013:
-        return XboxController::XBOX_ONE_CONTROLLER_2013;
-      case kProductXboxOneController2015:
-        return XboxController::XBOX_ONE_CONTROLLER_2015;
-      case kProductXboxOneSController:
-        return XboxController::XBOX_ONE_S_CONTROLLER;
-      default:
-        break;
-    }
-  }
-  return XboxController::UNKNOWN_CONTROLLER;
-}
-
 }  // namespace
 
 XboxController::XboxController(Delegate* delegate)
@@ -296,7 +275,7 @@ bool XboxController::OpenDevice(io_service_t service) {
 
   UInt16 vendor_id;
   kr = (*device_)->GetDeviceVendor(device_, &vendor_id);
-  if (kr != KERN_SUCCESS)
+  if (kr != KERN_SUCCESS || vendor_id != kVendorMicrosoft)
     return false;
 
   UInt16 product_id;
@@ -304,11 +283,10 @@ bool XboxController::OpenDevice(io_service_t service) {
   if (kr != KERN_SUCCESS)
     return false;
 
-  controller_type_ = ControllerTypeFromIds(vendor_id, product_id);
-
   IOUSBFindInterfaceRequest request;
-  switch (controller_type_) {
-    case XBOX_360_CONTROLLER:
+  switch (product_id) {
+    case kProductXbox360Controller:
+      controller_type_ = XBOX_360_CONTROLLER;
       read_endpoint_ = kXbox360ReadEndpoint;
       control_endpoint_ = kXbox360ControlEndpoint;
       request.bInterfaceClass = 255;
@@ -316,9 +294,8 @@ bool XboxController::OpenDevice(io_service_t service) {
       request.bInterfaceProtocol = 1;
       request.bAlternateSetting = kIOUSBFindInterfaceDontCare;
       break;
-    case XBOX_ONE_CONTROLLER_2013:
-    case XBOX_ONE_CONTROLLER_2015:
-    case XBOX_ONE_S_CONTROLLER:
+    case kProductXboxOneController:
+      controller_type_ = XBOX_ONE_CONTROLLER;
       read_endpoint_ = kXboxOneReadEndpoint;
       control_endpoint_ = kXboxOneControlEndpoint;
       request.bInterfaceClass = 255;
@@ -443,9 +420,7 @@ bool XboxController::OpenDevice(io_service_t service) {
     } else if (i == control_endpoint_) {
       if (direction != kUSBOut)
         return false;
-      if (controller_type_ == XBOX_ONE_CONTROLLER_2013 ||
-          controller_type_ == XBOX_ONE_CONTROLLER_2015 ||
-          controller_type_ == XBOX_ONE_S_CONTROLLER)
+      if (controller_type_ == XBOX_ONE_CONTROLLER)
         WriteXboxOneInit();
     }
   }
@@ -482,30 +457,14 @@ void XboxController::SetLEDPattern(LEDPattern pattern) {
 }
 
 int XboxController::GetVendorId() const {
-  switch (controller_type_) {
-    case XBOX_360_CONTROLLER:
-    case XBOX_ONE_CONTROLLER_2013:
-    case XBOX_ONE_CONTROLLER_2015:
-    case XBOX_ONE_S_CONTROLLER:
-      return kVendorMicrosoft;
-    default:
-      return 0;
-  }
+  return kVendorMicrosoft;
 }
 
 int XboxController::GetProductId() const {
-  switch (controller_type_) {
-    case XBOX_360_CONTROLLER:
-      return kProductXbox360Controller;
-    case XBOX_ONE_CONTROLLER_2013:
-      return kProductXboxOneController2013;
-    case XBOX_ONE_CONTROLLER_2015:
-      return kProductXboxOneController2015;
-    case XBOX_ONE_S_CONTROLLER:
-      return kProductXboxOneSController;
-    default:
-      return 0;
-  }
+  if (controller_type_ == XBOX_360_CONTROLLER)
+    return kProductXbox360Controller;
+  else
+    return kProductXboxOneController;
 }
 
 XboxController::ControllerType XboxController::GetControllerType() const {
@@ -627,16 +586,13 @@ void XboxController::IOError() {
 }
 
 void XboxController::WriteXboxOneInit() {
-  const UInt8 length = 5;
+  const UInt8 length = 2;
 
   // This buffer will be released in WriteComplete when WritePipeAsync
   // finishes.
   UInt8* buffer = new UInt8[length];
   buffer[0] = 0x05;
   buffer[1] = 0x20;
-  buffer[2] = 0x00;
-  buffer[3] = 0x01;
-  buffer[4] = 0x00;
   kern_return_t kr =
       (*interface_)
           ->WritePipeAsync(interface_, control_endpoint_, buffer,
@@ -719,21 +675,9 @@ bool XboxDataFetcher::RegisterForNotifications() {
 
   listening_ = true;
 
-  if (!RegisterForDeviceNotifications(kVendorMicrosoft,
-                                      kProductXboxOneController2013,
-                                      &xbox_one_2013_device_added_iter_,
-                                      &xbox_one_2013_device_removed_iter_))
-    return false;
-
-  if (!RegisterForDeviceNotifications(kVendorMicrosoft,
-                                      kProductXboxOneController2015,
-                                      &xbox_one_2015_device_added_iter_,
-                                      &xbox_one_2015_device_removed_iter_))
-    return false;
-
   if (!RegisterForDeviceNotifications(
-          kVendorMicrosoft, kProductXboxOneSController,
-          &xbox_one_s_device_added_iter_, &xbox_one_s_device_removed_iter_))
+          kVendorMicrosoft, kProductXboxOneController,
+          &xbox_one_device_added_iter_, &xbox_one_device_removed_iter_))
     return false;
 
   if (!RegisterForDeviceNotifications(
@@ -825,7 +769,7 @@ void XboxDataFetcher::AddController(XboxController* controller) {
                                XboxController::XBOX_360_CONTROLLER
                            ? @"Xbox 360 Controller"
                            : @"Xbox One Controller",
-                       controller->GetVendorId(), controller->GetProductId()];
+                       controller->GetProductId(), controller->GetVendorId()];
   CopyNSStringAsUTF16LittleEndian(ident, state->data.id,
                                   sizeof(state->data.id));
 

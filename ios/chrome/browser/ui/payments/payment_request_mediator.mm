@@ -14,7 +14,6 @@
 #include "components/autofill/core/browser/field_types.h"
 #include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/currency_formatter.h"
-#include "components/payments/core/payment_item.h"
 #include "components/payments/core/payment_prefs.h"
 #include "components/payments/core/payment_shipping_option.h"
 #include "components/payments/core/strings_util.h"
@@ -26,7 +25,6 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_detail_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_footer_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
-#import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/payments/cells/autofill_profile_item.h"
 #import "ios/chrome/browser/ui/payments/cells/payment_method_item.h"
 #import "ios/chrome/browser/ui/payments/cells/payments_text_item.h"
@@ -94,9 +92,7 @@ using ::payment_request_util::GetShippingSectionTitle;
 }
 
 - (BOOL)hasPaymentItems {
-  return !self.paymentRequest
-              ->GetDisplayItems(self.paymentRequest->selected_payment_method())
-              .empty();
+  return !self.paymentRequest->payment_details().display_items.empty();
 }
 
 - (BOOL)requestShipping {
@@ -110,17 +106,16 @@ using ::payment_request_util::GetShippingSectionTitle;
 }
 
 - (CollectionViewItem*)paymentSummaryItem {
-  const payments::PaymentItem& total = self.paymentRequest->GetTotal(
-      self.paymentRequest->selected_payment_method());
-
   PriceItem* item = [[PriceItem alloc] init];
-  item.item = base::SysUTF8ToNSString(total.label);
+  item.item = base::SysUTF8ToNSString(
+      self.paymentRequest->payment_details().total->label);
   payments::CurrencyFormatter* currencyFormatter =
       self.paymentRequest->GetOrCreateCurrencyFormatter();
   item.price = base::SysUTF16ToNSString(l10n_util::GetStringFUTF16(
       IDS_PAYMENT_REQUEST_ORDER_SUMMARY_SHEET_TOTAL_FORMAT,
       base::UTF8ToUTF16(currencyFormatter->formatted_currency_code()),
-      currencyFormatter->Format(total.amount.value)));
+      currencyFormatter->Format(
+          self.paymentRequest->payment_details().total->amount.value)));
   item.notification = self.totalValueChanged
                           ? l10n_util::GetNSString(IDS_PAYMENTS_UPDATED_LABEL)
                           : nil;
@@ -149,18 +144,14 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
+  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
+  item.text = base::SysUTF16ToNSString(
+      GetShippingAddressSectionString(self.paymentRequest->shipping_type()));
   if (self.paymentRequest->shipping_profiles().empty()) {
-    item.text = base::SysUTF16ToNSString(
-        GetAddShippingAddressButtonLabel(self.paymentRequest->shipping_type()));
-    item.trailingImage = TintImage([UIImage imageNamed:@"ic_add"],
-                                   [[MDCPalette greyPalette] tint400]);
-    item.textColor = [[MDCPalette cr_bluePalette] tint500];
+    item.detailText = [l10n_util::GetNSString(IDS_ADD)
+        uppercaseStringWithLocale:[NSLocale currentLocale]];
   } else {
-    item.text = base::SysUTF16ToNSString(GetChooseShippingAddressButtonLabel(
-        self.paymentRequest->shipping_type()));
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
-    item.textColor = [[MDCPalette cr_bluePalette] tint500];
   }
   return item;
 }
@@ -179,11 +170,10 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
+  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
   item.text = base::SysUTF16ToNSString(
-      GetChooseShippingOptionButtonLabel(self.paymentRequest->shipping_type()));
+      GetShippingOptionSectionString(self.paymentRequest->shipping_type()));
   item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
-  item.textColor = [[MDCPalette cr_bluePalette] tint500];
   return item;
 }
 
@@ -225,19 +215,14 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
+  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
   item.text =
       l10n_util::GetNSString(IDS_PAYMENT_REQUEST_PAYMENT_METHOD_SECTION_NAME);
   if (self.paymentRequest->payment_methods().empty()) {
-    item.text = l10n_util::GetNSString(IDS_ADD_PAYMENT_METHOD);
-    item.trailingImage = TintImage([UIImage imageNamed:@"ic_add"],
-                                   [[MDCPalette greyPalette] tint400]);
-    item.textColor = [[MDCPalette cr_bluePalette] tint500];
+    item.detailText = [l10n_util::GetNSString(IDS_ADD)
+        uppercaseStringWithLocale:[NSLocale currentLocale]];
   } else {
-    item.text = l10n_util::GetNSString(IDS_CHOOSE_PAYMENT_METHOD);
-    item.text = @"Choose Payment Method";
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
-    item.textColor = [[MDCPalette cr_bluePalette] tint500];
   }
   return item;
 }
@@ -269,17 +254,13 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
+  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
   item.text = l10n_util::GetNSString(IDS_PAYMENTS_CONTACT_DETAILS_LABEL);
   if (self.paymentRequest->contact_profiles().empty()) {
-    item.text = l10n_util::GetNSString(IDS_PAYMENT_REQUEST_ADD_CONTACT_INFO);
-    item.trailingImage = TintImage([UIImage imageNamed:@"ic_add"],
-                                   [[MDCPalette greyPalette] tint400]);
-    item.textColor = [[MDCPalette cr_bluePalette] tint500];
+    item.detailText = [l10n_util::GetNSString(IDS_ADD)
+        uppercaseStringWithLocale:[NSLocale currentLocale]];
   } else {
-    item.text = l10n_util::GetNSString(IDS_PAYMENT_REQUEST_CHOOSE_CONTACT_INFO);
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
-    item.textColor = [[MDCPalette cr_bluePalette] tint500];
   }
   return item;
 }

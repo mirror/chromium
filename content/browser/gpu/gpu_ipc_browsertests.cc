@@ -14,7 +14,6 @@
 #include "content/public/browser/gpu_utils.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/content_browser_test.h"
-#include "gpu/ipc/client/command_buffer_proxy_impl.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
@@ -91,8 +90,8 @@ class ContextTestBase : public content::ContentBrowserTest {
     CHECK(gpu_channel_host);
 
     provider_ = CreateContext(std::move(gpu_channel_host));
-    auto result = provider_->BindToCurrentThread();
-    CHECK_EQ(result, gpu::ContextResult::kSuccess);
+    bool bound = provider_->BindToCurrentThread();
+    CHECK(bound);
     gl_ = provider_->ContextGL();
     context_support_ = provider_->ContextSupport();
 
@@ -227,7 +226,7 @@ IN_PROC_BROWSER_TEST_F(BrowserGpuChannelHostFactoryTest,
   // retain the host after provider is destroyed.
   scoped_refptr<ui::ContextProviderCommandBuffer> provider =
       CreateContext(GetGpuChannel());
-  ASSERT_EQ(provider->BindToCurrentThread(), gpu::ContextResult::kSuccess);
+  EXPECT_TRUE(provider->BindToCurrentThread());
 
   sk_sp<GrContext> gr_context = sk_ref_sp(provider->GrContext());
 
@@ -279,7 +278,7 @@ IN_PROC_BROWSER_TEST_F(BrowserGpuChannelHostFactoryTest,
   provider->SetLostContextCallback(
       base::Bind(&BrowserGpuChannelHostFactoryTest::OnContextLost,
                  base::Unretained(this), run_loop.QuitClosure(), &counter));
-  ASSERT_EQ(provider->BindToCurrentThread(), gpu::ContextResult::kSuccess);
+  EXPECT_TRUE(provider->BindToCurrentThread());
   GpuProcessHost::CallOnIO(GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED,
                            false /* force_create */,
                            base::Bind([](GpuProcessHost* host) {
@@ -303,56 +302,5 @@ IN_PROC_BROWSER_TEST_F(GpuProcessHostBrowserTest, Shutdown) {
   StopGpuProcess(run_loop.QuitClosure());
   run_loop.Run();
 }
-
-// Disabled outside linux like other tests here sadface.
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-IN_PROC_BROWSER_TEST_F(BrowserGpuChannelHostFactoryTest, CreateTransferBuffer) {
-  DCHECK(!IsChannelEstablished());
-  EstablishAndWait();
-
-  // This is for an offscreen context, so the default framebuffer doesn't need
-  // any alpha, depth, stencil, antialiasing.
-  gpu::gles2::ContextCreationAttribHelper attributes;
-  attributes.alpha_size = -1;
-  attributes.depth_size = 0;
-  attributes.stencil_size = 0;
-  attributes.samples = 0;
-  attributes.sample_buffers = 0;
-  attributes.bind_generates_resource = false;
-
-  auto impl = std::make_unique<gpu::CommandBufferProxyImpl>(
-      GetGpuChannel(), content::kGpuStreamIdDefault,
-      base::ThreadTaskRunnerHandle::Get());
-  ASSERT_EQ(
-      impl->Initialize(gpu::kNullSurfaceHandle, nullptr,
-                       content::kGpuStreamPriorityDefault, attributes, GURL()),
-      gpu::ContextResult::kSuccess);
-
-  // Creating a transfer buffer works normally.
-  int32_t id = -1;
-  scoped_refptr<gpu::Buffer> buffer = impl->CreateTransferBuffer(100, &id);
-  EXPECT_TRUE(buffer);
-  EXPECT_GE(id, 0);
-
-  // If the context is lost, creating a transfer buffer still works. This is
-  // important for initializing a client side context. If it is lost for some
-  // transient reason, we don't want that to be confused with a fatal error,
-  // like failing to make a transfer buffer.
-
-  // Lose the connection to the gpu to lose the context.
-  GetGpuChannel()->DestroyChannel();
-  // It's not visible until we run the task queue.
-  EXPECT_EQ(impl->GetLastState().error, gpu::error::kNoError);
-  // Wait to see the error occur.
-  base::RunLoop().RunUntilIdle();
-  EXPECT_NE(impl->GetLastState().error, gpu::error::kNoError);
-
-  // Creating a transfer buffer still works.
-  id = -1;
-  buffer = impl->CreateTransferBuffer(100, &id);
-  EXPECT_TRUE(buffer);
-  EXPECT_GE(id, 0);
-}
-#endif
 
 }  // namespace content

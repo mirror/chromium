@@ -11,6 +11,7 @@
 
 #include "base/i18n/streaming_utf8_validator.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "chromeos/network/tether_constants.h"
@@ -34,7 +35,7 @@ class NetworkStateTest : public testing::Test {
   }
 
   bool SetStringProperty(const std::string& key, const std::string& value) {
-    return SetProperty(key, std::make_unique<base::Value>(value));
+    return SetProperty(key, base::MakeUnique<base::Value>(value));
   }
 
   bool SignalInitialPropertiesReceived() {

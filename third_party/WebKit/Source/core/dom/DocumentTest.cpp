@@ -47,7 +47,6 @@
 #include "core/page/ValidationMessageClient.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/heap/Handle.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -102,7 +101,7 @@ class TestSynchronousMutationObserver
           node_to_be_removed_(node_with_index.GetNode()),
           offset_(offset) {}
 
-    void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_TRACE() {
       visitor->Trace(node_);
       visitor->Trace(node_to_be_removed_);
     }
@@ -124,7 +123,7 @@ class TestSynchronousMutationObserver
           old_length_(old_length),
           new_length_(new_length) {}
 
-    void Trace(blink::Visitor* visitor) { visitor->Trace(node_); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(node_); }
   };
 
   TestSynchronousMutationObserver(Document&);
@@ -164,7 +163,7 @@ class TestSynchronousMutationObserver
     return updated_character_data_records_;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // Implement |SynchronousMutationObserver| member functions.
@@ -241,7 +240,7 @@ void TestSynchronousMutationObserver::NodeWillBeRemoved(Node& node) {
   removed_nodes_.push_back(&node);
 }
 
-void TestSynchronousMutationObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TestSynchronousMutationObserver) {
   visitor->Trace(children_changed_nodes_);
   visitor->Trace(merge_text_nodes_records_);
   visitor->Trace(move_tree_to_new_document_nodes_);
@@ -265,7 +264,7 @@ class TestDocumentShutdownObserver
     return context_destroyed_called_counter_;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // Implement |DocumentShutdownObserver| member functions.
@@ -284,7 +283,7 @@ void TestDocumentShutdownObserver::ContextDestroyed(Document*) {
   ++context_destroyed_called_counter_;
 }
 
-void TestDocumentShutdownObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TestDocumentShutdownObserver) {
   DocumentShutdownObserver::Trace(visitor);
 }
 
@@ -319,8 +318,7 @@ class MockDocumentValidationMessageClient
   }
   void WillBeDestroyed() override {}
 
-  // virtual void Trace(blink::Visitor* visitor) {
-  // ValidationMessageClient::trace(visitor); }
+  // DEFINE_INLINE_VIRTUAL_TRACE() { ValidationMessageClient::trace(visitor); }
 };
 
 class MockWebApplicationCacheHost : public blink::WebApplicationCacheHost {
@@ -403,7 +401,7 @@ TEST_F(DocumentTest, PrintRelayout) {
 // specification.
 TEST_F(DocumentTest, LinkManifest) {
   // Test the default result.
-  EXPECT_EQ(nullptr, GetDocument().LinkManifest());
+  EXPECT_EQ(0, GetDocument().LinkManifest());
 
   // Check that we use the first manifest with <link rel=manifest>
   HTMLLinkElement* link = HTMLLinkElement::Create(GetDocument(), false);
@@ -455,9 +453,9 @@ TEST_F(DocumentTest, LinkManifest) {
   // Check that link outside of the <head> are ignored.
   GetDocument().head()->RemoveChild(link);
   GetDocument().head()->RemoveChild(link2);
-  EXPECT_EQ(nullptr, GetDocument().LinkManifest());
+  EXPECT_EQ(0, GetDocument().LinkManifest());
   GetDocument().body()->AppendChild(link);
-  EXPECT_EQ(nullptr, GetDocument().LinkManifest());
+  EXPECT_EQ(0, GetDocument().LinkManifest());
   GetDocument().head()->AppendChild(link);
   GetDocument().head()->AppendChild(link2);
 
@@ -854,7 +852,7 @@ TEST_F(DocumentTest, SandboxDisablesAppCache) {
 }
 
 TEST_F(DocumentTest, SuboriginDisablesAppCache) {
-  ScopedSuboriginsForTest suborigins(true);
+  RuntimeEnabledFeatures::SetSuboriginsEnabled(true);
   RefPtr<SecurityOrigin> origin =
       SecurityOrigin::CreateFromString("https://test.com");
   Suborigin suborigin;

@@ -115,9 +115,6 @@ Press any key to continue exploring.
   <message desc="Message shown when packing is in progress." name="IDS_ZIP_ARCHIVER_PACKING_PROGRESS_MESSAGE">
     Please wait, packing...
   </message>
-  <message desc="Label text used to cancel zip operation in progress." name="IDS_ZIP_ARCHIVER_PACKING_CANCEL_BUTTON_LABEL">
-    Cancel
-  </message>
 
 
   <!-- File Manager -->
@@ -300,9 +297,6 @@ Press any key to continue exploring.
   </message>
   <message name="IDS_FILE_BROWSER_PREPARING_LABEL" desc="Label informing about preparing the file.">
     Preparing
-  </message>
-  <message name="IDS_FILE_BROWSER_QUICK_VIEW_CLOSE_BUTTON_LABEL" desc="Label for button to close QuickView.">
-    Back
   </message>
   <message name="IDS_FILE_BROWSER_QUICK_VIEW_OPEN_IN_NEW_BUTTON_LABEL" desc="Label for button to open a file with external app.">
     Open
@@ -584,7 +578,7 @@ Press any key to continue exploring.
     Show hidden files
   </message>
   <message name="IDS_FILE_BROWSER_TASKS_BUTTON_LABEL" desc="Label for button that selects a task to open the current file.">
-    Open
+    Tasks
   </message>
   <message name="IDS_FILE_BROWSER_CANCEL_SELECTION_BUTTON_LABEL" desc="Label for button that unselects all selected items.">
     Cancel selection
@@ -3309,8 +3303,20 @@ Battery full
   </message>
 
   <!-- Renaming device notifications -->
+  <message name="IDS_RENAMING_OF_DEVICE_PENDING_TITLE" desc="Title of notification message which is shown when renaming process of some device is in progress">
+    Renaming...
+  </message>
+  <message name="IDS_RENAMING_OF_DEVICE_FINISHED_TITLE" desc="Title of notification message which is shown when renaming process finshes">
+    Renaming finished
+  </message>
   <message name="IDS_RENAMING_OF_DEVICE_FAILED_TITLE" desc="Title of notification message which is shown when renaming process fails">
     Renaming failed
+  </message>
+  <message name="IDS_RENAMING_OF_DEVICE_PENDING_MESSAGE" desc="Text of notification message which is shown when renaming process of some device is in progress">
+    The renaming process can take a couple of seconds. Please wait.
+  </message>
+  <message name="IDS_RENAMING_OF_DEVICE_FINISHED_SUCCESS_MESSAGE" desc="Text of notification message which is shown when renaming finishes without any errors.">
+    Renaming finished successfully!
   </message>
   <message name="IDS_RENAMING_OF_DEVICE_FINISHED_FAILURE_MESSAGE" desc="Text of notification message which is shown when there are some errors while renaming.">
     Aw, Snap! There was an error during renaming.
@@ -4978,7 +4984,7 @@ Battery full
   <message name="IDS_ARC_OPT_IN_DIALOG_BUTTON_SEND_FEEDBACK" desc="Send feedback button of the opt-in dialog for Android apps.">
     Send feedback
   </message>
-  <message name="IDS_ARC_OPT_IN_DIALOG_PROGRESS_TERMS" desc="Name of Terms Of Services loading progress of the opt-in dialog for Android apps.">
+  <message name="IDS_ARC_OPT_IN_DIALOG_PROGRESS_LSO" desc="Name of LSO loading progress of the opt-in dialog for Android apps.">
     Just a sec...
   </message>
   <message name="IDS_ARC_OPT_IN_DIALOG_PROGRESS_ANDROID" desc="Name of Android loading progress of the opt-in dialog for Android apps.">
@@ -5152,11 +5158,8 @@ Battery full
   <message name="IDS_ARC_MIGRATE_ENCRYPTION_NOTIFICATION_RESTART_BUTTON" desc="Label for the button in the notification that navigates the user to sign-out for completing the encryption update step.">
     Sign out &amp; sign back in
   </message>
-  <message name="IDS_ARC_MIGRATE_ENCRYPTION_SUCCESS_TITLE" desc="Title of the toast shown on the first sign-in after the successfully completed migration needed for using Android apps.">
-    OS update successful
-  </message>
   <message name="IDS_ARC_MIGRATE_ENCRYPTION_SUCCESS_MESSAGE" desc="Message of the toast shown on the first sign-in after the successfully completed migration needed for using Android apps.">
-    You can now use Android apps.
+    Update successful. You can now use Android apps.
   </message>
   <message name="IDS_VOICE_INTERACTION_VALUE_PROP_LOADING" desc="Loading message of the voice interaction value prop dialog.">
     Loading Google Assistant...
@@ -5339,13 +5342,5 @@ Battery full
   </message>
   <message name="IDS_HATS_NOTIFICATION_TAKE_SURVEY_BUTTON" desc="The title of the button in the notification for Happiness Tracking Survey to take the said survey.">
     Take survey
-  </message>
-
-  <!-- Lock screen note app toast dialog -->
-  <message name="IDS_LOCK_SCREEN_NOTE_APP_TOAST_DIALOG_TITLE" desc="Title of the dialog shown to the user when they first launch note taking app from the lock screen - the title contains the launched app's name.">
-    Taking notes with <ph name="LOCK_SCREEN_APP_NAME">$1<ex>Lock Screen Enabled App</ex></ph>
-  </message>
-  <message name="IDS_LOCK_SCREEN_NOTE_APP_TOAST_DIALOG_MESSAGE" desc="Message shown in the body of the dialog shown to the user when they launch note taking app from the lock screen for the first time - the message has a placeholder for the launched app's name.">
-    Lock screen notes are accessible from the lock screen and automatically saved to <ph name="LOCK_SCREEN_APP_NAME">$1<ex>Lock Screen Enabled App</ex></ph>.
   </message>
 </grit-part>

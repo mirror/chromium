@@ -18,7 +18,7 @@
 #include "headless/public/headless_browser_context.h"
 #include "headless/public/headless_export.h"
 #include "headless/public/headless_web_contents.h"
-#include "net/base/host_port_pair.h"
+#include "net/base/ip_endpoint.h"
 #include "ui/gfx/geometry/size.h"
 
 #if defined(OS_WIN)
@@ -116,7 +116,7 @@ struct HEADLESS_EXPORT HeadlessBrowser::Options {
 
   // Address at which DevTools should listen for connections. Disabled by
   // default. Mutually exclusive with devtools_socket_fd.
-  net::HostPortPair devtools_endpoint;
+  net::IPEndPoint devtools_endpoint;
 
   // The fd of an already-open socket inherited from a parent process. Disabled
   // by default. Mutually exclusive with devtools_endpoint.
@@ -173,9 +173,6 @@ struct HEADLESS_EXPORT HeadlessBrowser::Options {
   // Run a browser context in an incognito mode. Enabled by default.
   bool incognito_mode;
 
-  // Whether cookies are allowed. Enabled by default.
-  bool allow_cookies;
-
   // Set a callback that is invoked to override WebPreferences for RenderViews
   // created within the HeadlessBrowser. Called whenever the WebPreferences of a
   // RenderView change. Executed on the browser main thread.
@@ -206,7 +203,7 @@ class HEADLESS_EXPORT HeadlessBrowser::Options::Builder {
 
   // Browser-wide settings.
 
-  Builder& EnableDevToolsServer(const net::HostPortPair& endpoint);
+  Builder& EnableDevToolsServer(const net::IPEndPoint& endpoint);
   Builder& EnableDevToolsServer(const size_t socket_fd);
   Builder& SetMessagePump(base::MessagePump* message_pump);
   Builder& SetSingleProcessMode(bool single_process_mode);
@@ -230,7 +227,6 @@ class HEADLESS_EXPORT HeadlessBrowser::Options::Builder {
   Builder& SetWindowSize(const gfx::Size& window_size);
   Builder& SetUserDataDir(const base::FilePath& user_data_dir);
   Builder& SetIncognitoMode(bool incognito_mode);
-  Builder& SetAllowCookies(bool allow_cookies);
   Builder& SetOverrideWebPreferencesCallback(
       base::Callback<void(WebPreferences*)> callback);
   Builder& SetCrashReporterEnabled(bool enabled);

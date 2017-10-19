@@ -8,6 +8,6 @@
     ImplementedAs=HTMLMediaElementCapture,
     RuntimeEnabled=MediaCaptureFromVideo
 ] partial interface HTMLMediaElement {
-    [RaisesException, CallWith=ScriptState] MediaStream captureStream();
+    [RaisesException] MediaStream captureStream();
     // TODO(mcasas): Implement captureStreamUntilEnded() http://crbug.com/575495.
 };

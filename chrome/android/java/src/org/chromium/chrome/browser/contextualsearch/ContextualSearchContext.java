@@ -8,7 +8,6 @@ import android.text.TextUtils;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
-import org.chromium.content_public.browser.WebContents;
 
 import java.util.regex.Pattern;
 
@@ -129,15 +128,6 @@ public abstract class ContextualSearchContext {
         }
         // Notify of an initial selection if it's not empty.
         if (endOffset > startOffset) onSelectionChanged();
-    }
-
-    /**
-     * Sets the surrounding text to just identify the current selection.
-     * @param selection The current selection on the base page.
-     */
-    void setSurroundingText(WebContents basePageWebContents, String selection) {
-        String encoding = basePageWebContents != null ? basePageWebContents.getEncoding() : null;
-        setSurroundingText(encoding, selection, 0, selection.length());
     }
 
     /**

@@ -16,7 +16,7 @@ ScreenOrientationController* ScreenOrientationController::From(
       Supplement<LocalFrame>::From(frame, SupplementName()));
 }
 
-void ScreenOrientationController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScreenOrientationController) {
   Supplement<LocalFrame>::Trace(visitor);
 }
 

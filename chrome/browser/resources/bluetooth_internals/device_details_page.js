@@ -20,7 +20,7 @@ cr.define('device_details_page', function() {
   var PROPERTY_NAMES = {
     name: 'Name',
     address: 'Address',
-    isGattConnected: 'GATT Connected',
+    is_gatt_connected: 'GATT Connected',
     'rssi.value': 'Latest RSSI',
     'services.length': 'Services',
   };
@@ -33,16 +33,16 @@ cr.define('device_details_page', function() {
    * compononent that lists all of the active services on the device.
    * @constructor
    * @param {string} id
-   * @param {!bluetooth.mojom.DeviceInfo} deviceInfo
+   * @param {!interfaces.BluetoothDevice.DeviceInfo} deviceInfo
    * @extends {cr.ui.pageManager.Page}
    */
   function DeviceDetailsPage(id, deviceInfo) {
-    Page.call(this, id, deviceInfo.nameForDisplay, id);
+    Page.call(this, id, deviceInfo.name_for_display, id);
 
-    /** @type !bluetooth.mojom.DeviceInfo} */
+    /** @type {interfaces.BluetoothDevice.DeviceInfo} */
     this.deviceInfo = deviceInfo;
 
-    /** @private {!bluetooth.mojom.Device.ptrClass} */
+    /** @private {?interfaces.BluetoothDevice.Device.ptrClass} */
     this.devicePtr_ = null;
 
     /** @private {!object_fieldset.ObjectFieldSet} */
@@ -118,7 +118,7 @@ cr.define('device_details_page', function() {
             }
 
             Snackbar.show(
-                this.deviceInfo.nameForDisplay + ': ' + error.message,
+                this.deviceInfo.name_for_display + ': ' + error.message,
                 SnackbarType.ERROR, 'Retry', this.connect.bind(this));
 
             this.updateConnectionStatus_(
@@ -139,7 +139,7 @@ cr.define('device_details_page', function() {
 
     /** Redraws the contents of the page with the current |deviceInfo|. */
     redraw: function() {
-      var isConnected = this.deviceInfo.isGattConnected;
+      var isConnected = this.deviceInfo.is_gatt_connected;
 
       // Update status if connection has changed.
       if (isConnected)
@@ -161,9 +161,9 @@ cr.define('device_details_page', function() {
         serviceCount = services.length;
 
       var deviceViewObj = {
-        name: this.deviceInfo.nameForDisplay,
+        name: this.deviceInfo.name_for_display,
         address: this.deviceInfo.address,
-        isGattConnected: connectedText,
+        is_gatt_connected: connectedText,
         'rssi.value': rssiValue,
         'services.length': serviceCount,
       };
@@ -174,7 +174,7 @@ cr.define('device_details_page', function() {
 
     /**
      * Sets the page's device info and forces a redraw.
-     * @param {!bluetooth.mojom.DeviceInfo}
+     * @param {!interfaces.BluetoothDevice.DeviceInfo}
      */
     setDeviceInfo: function(info) {
       this.deviceInfo = info;

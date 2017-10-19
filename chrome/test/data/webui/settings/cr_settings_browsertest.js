@@ -1034,7 +1034,6 @@ CrSettingsSiteDataTest.prototype = {
   browsePreload: 'chrome://settings/site_settings/site_data.html',
 
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
-    'test_util.js',
     '../test_browser_proxy.js',
     'test_local_data_browser_proxy.js',
     'site_data_test.js',
@@ -1135,10 +1134,9 @@ CrSettingsInternetPageTest.prototype = {
 
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
-    ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
     ROOT_PATH + 'ui/webui/resources/js/assert.js',
     '../fake_chrome_event.js',
-    '../chromeos/fake_networking_private.js',
+    'fake_networking_private.js',
     'internet_page_tests.js',
   ]),
 };
@@ -1572,7 +1570,7 @@ CrSettingsPrintingPageTest.prototype = {
   __proto__: CrSettingsBrowserTest.prototype,
 
   /** @override */
-  browsePreload: 'chrome://settings/printing_page/cups_printers.html',
+  browsePreload: 'chrome://settings/printing_page/cups_add_printer_dialog.html',
 
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([

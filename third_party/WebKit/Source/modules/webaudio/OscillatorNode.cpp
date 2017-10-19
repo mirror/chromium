@@ -284,8 +284,8 @@ void OscillatorHandler::Process(size_t frames_to_process) {
       CalculateSampleAccuratePhaseIncrements(frames_to_process);
 
   float frequency = 0;
-  float* higher_wave_data = nullptr;
-  float* lower_wave_data = nullptr;
+  float* higher_wave_data = 0;
+  float* lower_wave_data = 0;
   float table_interpolation_factor = 0;
 
   if (!has_sample_accurate_values) {
@@ -439,7 +439,7 @@ OscillatorNode* OscillatorNode::Create(BaseAudioContext* context,
   return node;
 }
 
-void OscillatorNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(OscillatorNode) {
   visitor->Trace(frequency_);
   visitor->Trace(detune_);
   AudioScheduledSourceNode::Trace(visitor);

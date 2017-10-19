@@ -31,7 +31,6 @@
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/web/WebSharedWorker.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerClient.h"
 #include "url/origin.h"
@@ -111,7 +110,7 @@ class WebServiceWorkerNetworkProviderForSharedWorker
   int64_t ControllerServiceWorkerID() override {
     if (provider_->context()->controller())
       return provider_->context()->controller()->version_id();
-    return blink::mojom::kInvalidServiceWorkerVersionId;
+    return kInvalidServiceWorkerVersionId;
   }
 
   ServiceWorkerNetworkProvider* provider() { return provider_.get(); }
@@ -132,8 +131,7 @@ EmbeddedSharedWorkerStub::EmbeddedSharedWorkerStub(
     int route_id,
     blink::mojom::WorkerContentSettingsProxyPtr content_settings,
     mojom::SharedWorkerHostPtr host,
-    mojom::SharedWorkerRequest request,
-    service_manager::mojom::InterfaceProviderPtr interface_provider)
+    mojom::SharedWorkerRequest request)
     : binding_(this, std::move(request)),
       host_(std::move(host)),
       route_id_(route_id),
@@ -152,8 +150,7 @@ EmbeddedSharedWorkerStub::EmbeddedSharedWorkerStub(
       url_, blink::WebString::FromUTF8(name_),
       blink::WebString::FromUTF8(info->content_security_policy),
       info->content_security_policy_type, info->creation_address_space,
-      info->data_saver_enabled, content_settings.PassInterface().PassHandle(),
-      interface_provider.PassInterface().PassHandle());
+      info->data_saver_enabled, content_settings.PassInterface().PassHandle());
 
   // If the host drops its connection, then self-destruct.
   binding_.set_connection_error_handler(base::BindOnce(

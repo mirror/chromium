@@ -98,8 +98,8 @@ public class AccessibilityTabModelWrapper extends LinearLayout {
      */
     public void setup(AccessibilityTabModelAdapterListener listener) {
         if (FeatureUtilities.isChromeHomeEnabled()) {
-            mTabIconDarkColor =
-                    ApiCompatibilityUtils.getColorStateList(getResources(), R.color.black_alpha_65);
+            mTabIconDarkColor = ApiCompatibilityUtils.getColorStateList(
+                    getResources(), R.color.toolbar_light_tint);
             mTabIconSelectedDarkColor = ApiCompatibilityUtils.getColorStateList(
                     getResources(), R.color.light_active_color);
             mTabIconLightColor =

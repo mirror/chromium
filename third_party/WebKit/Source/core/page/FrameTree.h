@@ -63,7 +63,7 @@ class CORE_EXPORT FrameTree final {
   unsigned ScopedChildCount() const;
   void InvalidateScopedChildCount();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   Member<Frame> this_frame_;

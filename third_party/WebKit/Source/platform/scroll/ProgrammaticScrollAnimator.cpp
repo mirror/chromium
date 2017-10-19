@@ -198,7 +198,7 @@ void ProgrammaticScrollAnimator::AnimationFinished() {
   }
 }
 
-void ProgrammaticScrollAnimator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ProgrammaticScrollAnimator) {
   visitor->Trace(scrollable_area_);
   ScrollAnimatorCompositorCoordinator::Trace(visitor);
 }

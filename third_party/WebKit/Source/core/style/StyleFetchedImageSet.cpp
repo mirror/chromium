@@ -135,7 +135,7 @@ bool StyleFetchedImageSet::KnownToBeOpaque(const Document&,
       Image::kPreCacheMetadata);
 }
 
-void StyleFetchedImageSet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleFetchedImageSet) {
   visitor->Trace(best_fit_image_);
   visitor->Trace(image_set_value_);
   StyleImage::Trace(visitor);

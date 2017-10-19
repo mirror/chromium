@@ -284,7 +284,7 @@ HeapCompact::MovableObjectFixups& HeapCompact::Fixups() {
   return *fixups_;
 }
 
-bool HeapCompact::ShouldCompact(ThreadHeap* heap,
+bool HeapCompact::ShouldCompact(ThreadState* state,
                                 BlinkGC::StackState stack_state,
                                 BlinkGC::GCType gc_type,
                                 BlinkGC::GCReason reason) {
@@ -322,7 +322,7 @@ bool HeapCompact::ShouldCompact(ThreadHeap* heap,
   // TODO: add some form of compaction overhead estimate to the marking
   // time estimate.
 
-  UpdateHeapResidency(heap);
+  UpdateHeapResidency(state);
 
 #if STRESS_TEST_HEAP_COMPACTION
   // Exercise the handling of object movement by compacting as
@@ -363,7 +363,7 @@ void HeapCompact::RegisterMovingObjectCallback(MovableReference reference,
   Fixups().AddFixupCallback(reference, callback, callback_data);
 }
 
-void HeapCompact::UpdateHeapResidency(ThreadHeap* heap) {
+void HeapCompact::UpdateHeapResidency(ThreadState* thread_state) {
   size_t total_arena_size = 0;
   size_t total_free_list_size = 0;
 
@@ -373,7 +373,8 @@ void HeapCompact::UpdateHeapResidency(ThreadHeap* heap) {
 #endif
   for (int i = BlinkGC::kVector1ArenaIndex; i <= BlinkGC::kHashTableArenaIndex;
        ++i) {
-    NormalPageArena* arena = static_cast<NormalPageArena*>(heap->Arena(i));
+    NormalPageArena* arena =
+        static_cast<NormalPageArena*>(thread_state->Arena(i));
     size_t arena_size = arena->ArenaSize();
     size_t free_list_size = arena->FreeListSize();
     total_arena_size += arena_size;

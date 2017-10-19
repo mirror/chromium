@@ -28,7 +28,7 @@ KURL Credential::ParseStringAsURL(const String& url,
   return parsed_url;
 }
 
-void Credential::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Credential) {
   visitor->Trace(platform_credential_);
 }
 

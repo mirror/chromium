@@ -799,11 +799,15 @@ namespace {
 // Ensures that |browser| has |num_tabs| open tabs.
 void EnsureTabsInBrowser(Browser* browser, int num_tabs) {
   for (int i = 0; i < num_tabs; ++i) {
-    ui_test_utils::NavigateToURLWithDisposition(
-        browser, GURL(chrome::kChromeUICreditsURL),
-        i == 0 ? WindowOpenDisposition::CURRENT_TAB
-               : WindowOpenDisposition::NEW_BACKGROUND_TAB,
-        ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+    content::WindowedNotificationObserver load(
+        content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+        content::NotificationService::AllSources());
+    OpenURLParams open(GURL(chrome::kChromeUICreditsURL), content::Referrer(),
+                       i == 0 ? WindowOpenDisposition::CURRENT_TAB
+                              : WindowOpenDisposition::NEW_BACKGROUND_TAB,
+                       ui::PAGE_TRANSITION_TYPED, false);
+    browser->OpenURL(open);
+    load.Wait();
   }
 
   EXPECT_EQ(num_tabs, browser->tab_strip_model()->count());
@@ -812,18 +816,18 @@ void EnsureTabsInBrowser(Browser* browser, int num_tabs) {
 // Creates a browser with |num_tabs| tabs.
 Browser* CreateBrowserWithTabs(int num_tabs) {
   Browser* current_browser = BrowserList::GetInstance()->GetLastActive();
-  ui_test_utils::BrowserAddedObserver browser_added_observer;
   chrome::NewWindow(current_browser);
-  Browser* new_browser = browser_added_observer.WaitForSingleNewBrowser();
-  EXPECT_EQ(new_browser, BrowserList::GetInstance()->GetLastActive());
+  base::RunLoop().RunUntilIdle();
+  Browser* new_browser = BrowserList::GetInstance()->GetLastActive();
+  EXPECT_NE(current_browser, new_browser);
   EnsureTabsInBrowser(new_browser, num_tabs);
   return new_browser;
 }
 
 }  // namespace
 
-// Flaky on Linux.  Times out on Windows debug builds. http://crbug.com/772839.
-#if defined(OS_LINUX) || (defined(OS_WIN) && !defined(NDEBUG))
+// Flaky on Linux. http://crbug.com/772839.
+#if defined(OS_LINUX)
 #define MAYBE_DiscardTabsWithMinimizedAndOccludedWindows \
   DISABLED_DiscardTabsWithMinimizedAndOccludedWindows
 #else

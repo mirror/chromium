@@ -58,7 +58,7 @@ class XPathExpression : public GarbageCollected<XPathExpression>,
                         const ScriptValue&,
                         ExceptionState&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   XPathExpression();

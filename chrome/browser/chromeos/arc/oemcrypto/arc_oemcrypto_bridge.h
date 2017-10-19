@@ -9,7 +9,7 @@
 
 #include <vector>
 
-#include "base/macros.h"
+#include "chromeos/dbus/dbus_method_call_status.h"
 #include "components/arc/common/oemcrypto.mojom.h"
 #include "components/arc/common/oemcrypto_daemon.mojom.h"
 #include "components/arc/instance_holder.h"
@@ -46,7 +46,7 @@ class ArcOemCryptoBridge
 
  private:
   void OnBootstrapMojoConnection(mojom::OemCryptoServiceRequest request,
-                                 bool result);
+                                 chromeos::DBusMethodCallStatus result);
   void ConnectToDaemon(mojom::OemCryptoServiceRequest request);
 
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.

@@ -33,34 +33,6 @@ Persistence.Persistence = class extends Common.Object {
   }
 
   /**
-   * @param {!Workspace.Project} project
-   */
-  ignoreProject(project) {
-    this._mapping.ignoreProject(project);
-  }
-
-  /**
-   * @param {!Workspace.Project} project
-   */
-  removeIgnoredProject(project) {
-    this._mapping.removeIgnoredProject(project);
-  }
-
-  /**
-   * @param {!Persistence.PersistenceBinding} binding
-   */
-  addBinding(binding) {
-    this._establishBinding(binding);
-  }
-
-  /**
-   * @param {!Persistence.PersistenceBinding} binding
-   */
-  removeBinding(binding) {
-    this._innerRemoveBinding(binding);
-  }
-
-  /**
    * @param {function(function(!Persistence.PersistenceBinding), function(!Persistence.PersistenceBinding)):!Persistence.MappingSystem} mappingFactory
    */
   _setMappingForTest(mappingFactory) {
@@ -143,7 +115,7 @@ Persistence.Persistence = class extends Common.Object {
   /**
    * @param {!Persistence.PersistenceBinding} binding
    */
-  _innerRemoveBinding(binding) {
+  _onBindingRemoved(binding) {
     binding._removed = true;
     if (binding.network[Persistence.Persistence._binding] !== binding)
       return;
@@ -169,13 +141,6 @@ Persistence.Persistence = class extends Common.Object {
     this._notifyBindingEvent(binding.network);
     this._notifyBindingEvent(binding.fileSystem);
     this.dispatchEventToListeners(Persistence.Persistence.Events.BindingRemoved, binding);
-  }
-
-  /**
-   * @param {!Persistence.PersistenceBinding} binding
-   */
-  _onBindingRemoved(binding) {
-    this._innerRemoveBinding(binding);
   }
 
   /**
@@ -432,17 +397,7 @@ Persistence.PersistenceBinding = class {
 Persistence.MappingSystem = function() {};
 
 Persistence.MappingSystem.prototype = {
-  dispose: function() {},
-
-  /**
-   * @param {!Workspace.Project} project
-   */
-  ignoreProject(project) {},
-
-  /**
-   * @param {!Workspace.Project} project
-   */
-  removeIgnoredProject(project) {}
+  dispose: function() {}
 };
 
 /** @type {!Persistence.Persistence} */

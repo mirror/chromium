@@ -17,7 +17,7 @@ AddEventListenerOptionsResolved::AddEventListenerOptionsResolved(
 
 AddEventListenerOptionsResolved::~AddEventListenerOptionsResolved() {}
 
-void AddEventListenerOptionsResolved::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AddEventListenerOptionsResolved) {
   AddEventListenerOptions::Trace(visitor);
 }
 

@@ -35,7 +35,7 @@ Permissions* NavigatorPermissions::permissions(Navigator& navigator) {
   return self.permissions_.Get();
 }
 
-void NavigatorPermissions::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorPermissions) {
   visitor->Trace(permissions_);
   Supplement<Navigator>::Trace(visitor);
 }

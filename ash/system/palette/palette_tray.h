@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/palette_delegate.h"
 #include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "ash/system/palette/palette_tool_manager.h"
@@ -30,9 +31,7 @@ class ImageView;
 
 namespace ash {
 
-class PaletteTrayTestApi;
 class PaletteToolManager;
-class PaletteWelcomeBubble;
 class TrayBubbleWrapper;
 
 // The PaletteTray shows the palette in the bottom area of the screen. This
@@ -45,11 +44,32 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
                                public PaletteToolManager::Delegate,
                                public ui::InputDeviceEventObserver {
  public:
+  // For testing.
+  class TestApi {
+   public:
+    explicit TestApi(PaletteTray* palette_tray);
+    ~TestApi();
+
+    PaletteToolManager* GetPaletteToolManager() {
+      return palette_tray_->palette_tool_manager_.get();
+    }
+
+    TrayBubbleWrapper* GetTrayBubbleWrapper() {
+      return palette_tray_->bubble_.get();
+    }
+
+    bool IsStylusWatcherActive() { return !!palette_tray_->watcher_; }
+
+   private:
+    PaletteTray* palette_tray_ = nullptr;  // not owned
+
+    DISALLOW_COPY_AND_ASSIGN(TestApi);
+  };
+
   explicit PaletteTray(Shelf* shelf);
   ~PaletteTray() override;
 
   static void RegisterLocalStatePrefs(PrefRegistrySimple* registry);
-  static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
   // SessionObserver:
   void OnSessionStateChanged(session_manager::SessionState state) override;
@@ -57,7 +77,6 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   // ShellObserver:
   void OnLockStateChanged(bool locked) override;
   void OnLocalStatePrefServiceInitialized(PrefService* pref_service) override;
-  void OnActiveUserPrefServiceChanged(PrefService* prefs) override;
 
   // TrayBackgroundView:
   void ClickedOutsideBubble() override;
@@ -81,14 +100,8 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   // for determining if an event should be propagated through to the palette.
   bool ContainsPointInScreen(const gfx::Point& point);
 
-  // Returns true if the palette should be visible in the UI. This happens when:
-  // there is a stylus input, there is an internal display, and the user has not
-  // disabled it in settings. This can be overridden by passing switches.
-  bool ShouldShowPalette() const;
-
  private:
   class StylusWatcher;
-  friend class PaletteTrayTestApi;
 
   // ui::InputDeviceObserver:
   void OnTouchscreenDeviceConfigurationChanged() override;
@@ -113,7 +126,7 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   void UpdateIconVisibility();
 
   // Called when the palette enabled pref has changed.
-  void OnPaletteEnabledPrefChanged();
+  void OnPaletteEnabledPrefChanged(bool enabled);
 
   // Called when the has seen stylus pref has changed.
   void OnHasSeenStylusPrefChanged();
@@ -122,13 +135,16 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   bool DeactivateActiveTool();
 
   std::unique_ptr<PaletteToolManager> palette_tool_manager_;
-  std::unique_ptr<PaletteWelcomeBubble> welcome_bubble_;
   std::unique_ptr<TrayBubbleWrapper> bubble_;
   std::unique_ptr<StylusWatcher> watcher_;
 
+  // Manages the callback OnPaletteEnabledPrefChanged callback registered to
+  // the PaletteDelegate instance.
+  std::unique_ptr<PaletteDelegate::EnableListenerSubscription>
+      palette_enabled_subscription_;
+
   PrefService* local_state_pref_service_ = nullptr;  // Not owned.
-  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_local_;
-  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_user_;
+  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
 
   // Weak pointer, will be parented by TrayContainer for its lifetime.
   views::ImageView* icon_;

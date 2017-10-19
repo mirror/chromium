@@ -15,7 +15,7 @@
 #include "core/frame/Settings.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/html/HTMLSpanElement.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -36,14 +36,18 @@ IntPoint VisiblePositionToContentsPoint(const VisiblePosition& pos) {
 
 using TextNodeVector = HeapVector<Member<Text>>;
 
-class GranularityStrategyTest : public PageTestBase {
+class GranularityStrategyTest : public ::testing::Test {
  protected:
   void SetUp() override;
 
+  DummyPageHolder& GetDummyPageHolder() const { return *dummy_page_holder_; }
+  Document& GetDocument() const;
+  LocalFrame& GetFrame() const { return dummy_page_holder_->GetFrame(); }
   void SetSelection(const VisibleSelection&);
+  FrameSelection& Selection() const;
   Text* AppendTextNode(const String& data);
   int LayoutCount() const {
-    return GetDummyPageHolder().GetFrameView().LayoutCount();
+    return dummy_page_holder_->GetFrameView().LayoutCount();
   }
   void SetInnerHTML(const char*);
   // Parses the text node, appending the info to m_letterPos and m_wordMiddles.
@@ -79,17 +83,33 @@ class GranularityStrategyTest : public PageTestBase {
   // Pixel coordinates of the middles of the words in the text being tested.
   // (y coordinate is based on y coordinates of m_letterPos)
   Vector<IntPoint> word_middles_;
+
+ private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  Persistent<Document> document_;
 };
 
 void GranularityStrategyTest::SetUp() {
-  PageTestBase::SetUp();
-  GetFrame().GetSettings()->SetDefaultFontSize(12);
-  GetFrame().GetSettings()->SetSelectionStrategy(SelectionStrategy::kDirection);
+  dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+  document_ = &dummy_page_holder_->GetDocument();
+  DCHECK(document_);
+  GetDummyPageHolder().GetFrame().GetSettings()->SetDefaultFontSize(12);
+  GetDummyPageHolder().GetFrame().GetSettings()->SetSelectionStrategy(
+      SelectionStrategy::kDirection);
+}
+
+Document& GranularityStrategyTest::GetDocument() const {
+  return *document_;
 }
 
 void GranularityStrategyTest::SetSelection(
     const VisibleSelection& new_selection) {
-  Selection().SetSelection(new_selection.AsSelection());
+  dummy_page_holder_->GetFrame().Selection().SetSelection(
+      new_selection.AsSelection());
+}
+
+FrameSelection& GranularityStrategyTest::Selection() const {
+  return dummy_page_holder_->GetFrame().Selection();
 }
 
 Text* GranularityStrategyTest::AppendTextNode(const String& data) {

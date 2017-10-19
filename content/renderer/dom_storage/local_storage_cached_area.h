@@ -11,13 +11,13 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/nullable_string16.h"
 #include "content/common/content_export.h"
-#include "content/common/dom_storage/dom_storage_map.h"
 #include "content/common/leveldb_wrapper.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
 namespace content {
+class DOMStorageMap;
 class LocalStorageArea;
 class LocalStorageCachedAreas;
 
@@ -62,8 +62,6 @@ class CONTENT_EXPORT LocalStorageCachedArea
 
   const url::Origin& origin() { return origin_; }
 
-  size_t memory_used() const { return map_ ? map_->memory_used() : 0; }
-
  private:
   friend class base::RefCounted<LocalStorageCachedArea>;
   ~LocalStorageCachedArea() override;
@@ -87,7 +85,6 @@ class CONTENT_EXPORT LocalStorageCachedArea
                   const std::vector<uint8_t>& old_value,
                   const std::string& source) override;
   void AllDeleted(const std::string& source) override;
-  void ShouldSendOldValueOnMutations(bool value) override;
 
   // Common helper for KeyAdded() and KeyChanged()
   void KeyAddedOrChanged(const std::vector<uint8_t>& key,
@@ -111,8 +108,6 @@ class CONTENT_EXPORT LocalStorageCachedArea
   scoped_refptr<DOMStorageMap> map_;
   std::map<base::string16, int> ignore_key_mutations_;
   bool ignore_all_mutations_ = false;
-  // See ShouldSendOldValueOnMutations().
-  bool should_send_old_value_on_mutations_ = true;
   mojom::LevelDBWrapperPtr leveldb_;
   mojo::AssociatedBinding<mojom::LevelDBObserver> binding_;
   LocalStorageCachedAreas* cached_areas_;

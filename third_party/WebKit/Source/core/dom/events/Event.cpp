@@ -26,9 +26,6 @@
 #include "core/dom/StaticNodeList.h"
 #include "core/dom/events/EventDispatchMediator.h"
 #include "core/dom/events/EventTarget.h"
-#include "core/events/FocusEvent.h"
-#include "core/events/MouseEvent.h"
-#include "core/events/PointerEvent.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/UseCounter.h"
 #include "core/svg/SVGElement.h"
@@ -234,7 +231,7 @@ void Event::preventDefault() {
     prevent_default_called_during_passive_ = true;
 
     const LocalDOMWindow* window =
-        event_path_ ? event_path_->GetWindowEventContext().Window() : nullptr;
+        event_path_ ? event_path_->GetWindowEventContext().Window() : 0;
     if (window && handling_passive_ == PassiveMode::kPassive) {
       window->PrintErrorMessage(
           "Unable to preventDefault inside passive event listener invocation.");
@@ -255,16 +252,6 @@ void Event::SetTarget(EventTarget* target) {
   target_ = target;
   if (target_)
     ReceivedTarget();
-}
-
-void Event::SetRelatedTargetIfExists(EventTarget* related_target) {
-  if (IsMouseEvent()) {
-    ToMouseEvent(this)->SetRelatedTarget(related_target);
-  } else if (IsPointerEvent()) {
-    ToPointerEvent(this)->SetRelatedTarget(related_target);
-  } else if (IsFocusEvent()) {
-    ToFocusEvent(this)->SetRelatedTarget(related_target);
-  }
 }
 
 void Event::ReceivedTarget() {}
@@ -376,7 +363,7 @@ void Event::setCancelBubble(ScriptState* script_state, bool cancel) {
     propagation_stopped_ = true;
 }
 
-void Event::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Event) {
   visitor->Trace(current_target_);
   visitor->Trace(target_);
   visitor->Trace(underlying_event_);

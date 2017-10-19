@@ -232,7 +232,7 @@ class PolicyTestCases {
   typedef PolicyTestCaseMap::const_iterator iterator;
 
   PolicyTestCases() {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     base::FilePath path = ui_test_utils::GetTestFilePath(
         base::FilePath(FILE_PATH_LITERAL("policy")),
         base::FilePath(FILE_PATH_LITERAL("policy_test_cases.json")));

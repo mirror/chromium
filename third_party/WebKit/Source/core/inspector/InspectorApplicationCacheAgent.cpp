@@ -227,7 +227,7 @@ InspectorApplicationCacheAgent::BuildObjectForApplicationCacheResource(
   return value;
 }
 
-void InspectorApplicationCacheAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorApplicationCacheAgent) {
   visitor->Trace(inspected_frames_);
   InspectorBaseAgent::Trace(visitor);
 }

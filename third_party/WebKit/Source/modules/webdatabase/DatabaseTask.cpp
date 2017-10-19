@@ -136,8 +136,7 @@ const char* Database::DatabaseCloseTask::DebugTaskName() const {
 
 Database::DatabaseTransactionTask::DatabaseTransactionTask(
     SQLTransactionBackend* transaction)
-    : DatabaseTask(transaction->GetDatabase(), nullptr),
-      transaction_(transaction) {}
+    : DatabaseTask(transaction->GetDatabase(), 0), transaction_(transaction) {}
 
 Database::DatabaseTransactionTask::~DatabaseTransactionTask() {}
 

@@ -33,14 +33,6 @@ constexpr base::TimeDelta kDelayedStart = base::TimeDelta::FromSeconds(5);
 // Media Remoting to deliver the media contents.
 constexpr double kMaxMediaBitrateCapacityFraction = 0.9;
 
-constexpr int kPixelPerSec4K = 3840 * 2160 * 30;  // 4k 30fps.
-constexpr int kPixelPerSec2K = 1920 * 1080 * 30;  // 1080p 30fps.
-
-// The minimum media element duration that is allowed for media remoting.
-// Frequent switching into and out of media remoting for short-duration media
-// can feel "janky" to the user.
-constexpr double kMinRemotingMediaDurationInSec = 60;
-
 }  // namespace
 
 RendererController::RendererController(scoped_refptr<SharedSession> session)
@@ -345,9 +337,6 @@ bool RendererController::CanBeRemoting() const {
   if (is_remote_playback_disabled_)
     return false;
 
-  if (client_->Duration() <= kMinRemotingMediaDurationInSec)
-    return false;
-
   return true;
 }
 
@@ -426,7 +415,7 @@ void RendererController::WaitForStabilityBeforeStart(
           &RendererController::OnDelayedStartTimerFired, base::Unretained(this),
           start_trigger,
           client_->AudioDecodedByteCount() + client_->VideoDecodedByteCount(),
-          client_->DecodedFrameCount(), clock_->NowTicks()));
+          clock_->NowTicks()));
 
   session_->EstimateTransmissionCapacity(
       base::BindOnce(&RendererController::OnReceivedTransmissionCapacity,
@@ -441,7 +430,6 @@ void RendererController::CancelDelayedStart() {
 void RendererController::OnDelayedStartTimerFired(
     StartTrigger start_trigger,
     size_t decoded_bytes_before_delay,
-    unsigned decoded_frame_count_before_delay,
     base::TimeTicks delayed_start_time) {
   DCHECK(is_dominant_content_);
   DCHECK(!remote_rendering_started_);
@@ -457,23 +445,6 @@ void RendererController::OnDelayedStartTimerFired(
   const double capacity_kbps = transmission_capacity_ * 8.0 / 1000.0;
   metrics_recorder_.RecordMediaBitrateVersusCapacity(kilobits_per_second,
                                                      capacity_kbps);
-  if (has_video()) {
-    const double frame_rate =
-        (client_->DecodedFrameCount() - decoded_frame_count_before_delay) /
-        elapsed.InSecondsF();
-    const double pixel_per_sec =
-        frame_rate * pipeline_metadata_.natural_size.GetArea();
-    if ((pixel_per_sec > kPixelPerSec4K) ||
-        ((pixel_per_sec > kPixelPerSec2K) &&
-         !session_->HasVideoCapability(
-             mojom::RemotingSinkVideoCapability::SUPPORT_4K))) {
-      VLOG(1) << "Media remoting is not supported: frame_rate = " << frame_rate
-              << " resolution = " << pipeline_metadata_.natural_size.ToString();
-      encountered_renderer_fatal_error_ = true;
-      return;
-    }
-  }
-
   if (kilobits_per_second <= kMaxMediaBitrateCapacityFraction * capacity_kbps) {
     StartRemoting(start_trigger);
   } else {

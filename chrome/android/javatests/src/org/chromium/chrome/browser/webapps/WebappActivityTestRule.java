@@ -4,17 +4,16 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
-
 import android.content.Intent;
 import android.net.Uri;
-import android.support.test.InstrumentationRegistry;
 import android.view.ViewGroup;
 
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+
+import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -85,8 +84,7 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
      * {@link UrlUtils} cannot parse this type of URL.
      */
     public Intent createIntent() {
-        Intent intent =
-                new Intent(InstrumentationRegistry.getTargetContext(), WebappActivity0.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(), WebappActivity0.class);
         intent.setData(Uri.parse(WebappActivity.WEBAPP_SCHEME + "://" + WEBAPP_ID));
         intent.putExtra(ShortcutHelper.EXTRA_ID, WEBAPP_ID);
         intent.putExtra(ShortcutHelper.EXTRA_URL, "about:blank");
@@ -141,7 +139,7 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
      * Waits until any loads in progress of a selected activity have completed.
      */
     protected void waitUntilIdle(final ChromeActivity activity) {
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        getInstrumentation().waitForIdleSync();
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -149,7 +147,7 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
             }
         }, STARTUP_TIMEOUT, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
 
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        getInstrumentation().waitForIdleSync();
     }
 
     /**
@@ -171,7 +169,7 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
         // This is to make sure splash screen won't disappear during test.
         intent.putExtra(ShortcutHelper.EXTRA_URL, getUrlFromTestServer("/slow?2"));
         launchActivity(intent);
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        getInstrumentation().waitForIdleSync();
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -184,7 +182,7 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
             }
         }, STARTUP_TIMEOUT, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
 
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        getInstrumentation().waitForIdleSync();
         ViewGroup splashScreen = getActivity().getSplashScreenForTests();
         if (splashScreen == null) {
             Assert.fail("No splash screen available.");

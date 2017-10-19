@@ -36,6 +36,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
+#include "chromeos/login/login_state.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
@@ -61,10 +62,9 @@
 
 using chromeos::BluetoothPairingDialog;
 using chromeos::DBusThreadManager;
+using chromeos::LoginState;
 using chromeos::UpdateEngineClient;
 using device::BluetoothDevice;
-using session_manager::SessionState;
-using session_manager::SessionManager;
 using views::Widget;
 
 namespace {
@@ -94,20 +94,6 @@ ash::mojom::UpdateSeverity GetUpdateSeverity(UpgradeDetector* detector) {
   }
   NOTREACHED();
   return ash::mojom::UpdateSeverity::CRITICAL;
-}
-
-const chromeos::NetworkState* GetNetworkState(const std::string& network_id) {
-  if (network_id.empty())
-    return nullptr;
-  return chromeos::NetworkHandler::Get()
-      ->network_state_handler()
-      ->GetNetworkStateFromGuid(network_id);
-}
-
-bool IsArcVpn(const std::string& network_id) {
-  const chromeos::NetworkState* network_state = GetNetworkState(network_id);
-  return network_state && network_state->type() == shill::kTypeVPN &&
-         network_state->vpn_provider_type() == shill::kProviderArcVpn;
 }
 
 }  // namespace
@@ -164,10 +150,56 @@ SystemTrayClient* SystemTrayClient::Get() {
 }
 
 // static
+ash::LoginStatus SystemTrayClient::GetUserLoginStatus() {
+  if (!LoginState::Get()->IsUserLoggedIn())
+    return ash::LoginStatus::NOT_LOGGED_IN;
+
+  // Session manager client owns screen lock status.
+  if (DBusThreadManager::Get()->GetSessionManagerClient()->IsScreenLocked())
+    return ash::LoginStatus::LOCKED;
+
+  LoginState::LoggedInUserType user_type =
+      LoginState::Get()->GetLoggedInUserType();
+  switch (user_type) {
+    case LoginState::LOGGED_IN_USER_NONE:
+      return ash::LoginStatus::NOT_LOGGED_IN;
+    case LoginState::LOGGED_IN_USER_REGULAR:
+      return ash::LoginStatus::USER;
+    case LoginState::LOGGED_IN_USER_OWNER:
+      return ash::LoginStatus::OWNER;
+    case LoginState::LOGGED_IN_USER_GUEST:
+      return ash::LoginStatus::GUEST;
+    case LoginState::LOGGED_IN_USER_PUBLIC_ACCOUNT:
+      return ash::LoginStatus::PUBLIC;
+    case LoginState::LOGGED_IN_USER_SUPERVISED:
+      return ash::LoginStatus::SUPERVISED;
+    case LoginState::LOGGED_IN_USER_KIOSK_APP:
+      return ash::LoginStatus::KIOSK_APP;
+    case LoginState::LOGGED_IN_USER_ARC_KIOSK_APP:
+      return ash::LoginStatus::ARC_KIOSK_APP;
+  }
+  NOTREACHED();
+  return ash::LoginStatus::NOT_LOGGED_IN;
+}
+
+// static
 int SystemTrayClient::GetDialogParentContainerId() {
-  return SessionManager::Get()->session_state() == SessionState::ACTIVE
-             ? ash::kShellWindowId_SystemModalContainer
-             : ash::kShellWindowId_LockSystemModalContainer;
+  const ash::LoginStatus login_status = GetUserLoginStatus();
+  if (login_status == ash::LoginStatus::NOT_LOGGED_IN ||
+      login_status == ash::LoginStatus::LOCKED) {
+    return ash::kShellWindowId_LockSystemModalContainer;
+  }
+
+  session_manager::SessionManager* const session_manager =
+      session_manager::SessionManager::Get();
+  const bool session_started = session_manager->IsSessionStarted();
+  const bool is_in_secondary_login_screen =
+      session_manager->IsInSecondaryLoginScreen();
+
+  if (!session_started || is_in_secondary_login_screen)
+    return ash::kShellWindowId_LockSystemModalContainer;
+
+  return ash::kShellWindowId_SystemModalContainer;
 }
 
 // static
@@ -313,7 +345,7 @@ void SystemTrayClient::ShowPublicAccountInfo() {
 
 void SystemTrayClient::ShowEnterpriseInfo() {
   // At the login screen, lock screen, etc. show enterprise help in a window.
-  if (SessionManager::Get()->IsUserSessionBlocked()) {
+  if (session_manager::SessionManager::Get()->IsUserSessionBlocked()) {
     scoped_refptr<chromeos::HelpAppLauncher> help_app(
         new chromeos::HelpAppLauncher(nullptr /* parent_window */));
     help_app->ShowHelpTopic(chromeos::HelpAppLauncher::HELP_ENTERPRISE);
@@ -329,11 +361,14 @@ void SystemTrayClient::ShowEnterpriseInfo() {
 
 void SystemTrayClient::ShowNetworkConfigure(const std::string& network_id) {
   // UI is not available at the lock screen.
-  if (SessionManager::Get()->IsScreenLocked())
+  if (session_manager::SessionManager::Get()->IsScreenLocked())
     return;
 
   DCHECK(chromeos::NetworkHandler::IsInitialized());
-  const chromeos::NetworkState* network_state = GetNetworkState(network_id);
+  const chromeos::NetworkState* network_state =
+      chromeos::NetworkHandler::Get()
+          ->network_state_handler()
+          ->GetNetworkStateFromGuid(network_id);
   if (!network_state) {
     LOG(ERROR) << "Network not found: " << network_id;
     return;
@@ -402,18 +437,23 @@ void SystemTrayClient::ShowNetworkSettings(const std::string& network_id) {
 
 void SystemTrayClient::ShowNetworkSettingsHelper(const std::string& network_id,
                                                  bool show_configure) {
-  SessionManager* const session_manager = SessionManager::Get();
-  if (session_manager->IsInSecondaryLoginScreen())
+  if (session_manager::SessionManager::Get()->IsInSecondaryLoginScreen())
     return;
-  if (!session_manager->IsSessionStarted()) {
+  if (!LoginState::Get()->IsUserLoggedIn()) {
+    DCHECK(!network_id.empty());
     chromeos::LoginDisplayHost::default_host()->OpenInternetDetailDialog(
         network_id);
     return;
   }
 
-  if (IsArcVpn(network_id)) {
-    // Special case: clicking on a connected ARCVPN will ask Android to
-    // show the settings dialog.
+  // Special case: clicking on a connected ARCVPN will ask Android to
+  // show the settings dialog.
+  const chromeos::NetworkState* network_state =
+      chromeos::NetworkHandler::Get()
+          ->network_state_handler()
+          ->GetNetworkStateFromGuid(network_id);
+  if (network_state && network_state->type() == shill::kTypeVPN &&
+      network_state->vpn_provider_type() == shill::kProviderArcVpn) {
     auto* net_instance = ARC_GET_INSTANCE_FOR_METHOD(
         arc::ArcServiceManager::Get()->arc_bridge_service()->net(),
         ConfigureAndroidVpn);

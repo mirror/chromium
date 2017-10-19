@@ -563,7 +563,8 @@ public class DownloadActivityTest {
 
         // Start the activity up.
         Intent intent = new Intent();
-        intent.setClass(InstrumentationRegistry.getTargetContext(), DownloadActivity.class);
+        intent.setClass(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                DownloadActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return mActivityTestRule.launchActivity(intent);
     }

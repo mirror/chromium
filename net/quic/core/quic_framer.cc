@@ -159,6 +159,7 @@ QuicFramer::QuicFramer(const QuicTransportVersionVector& supported_versions,
                        Perspective perspective)
     : visitor_(nullptr),
       error_(QUIC_NO_ERROR),
+      last_packet_number_(0),
       largest_packet_number_(0),
       last_serialized_connection_id_(0),
       last_version_label_(0),
@@ -639,10 +640,9 @@ bool QuicFramer::ProcessDataPacket(QuicDataReader* encrypted_reader,
 
   QuicDataReader reader(decrypted_buffer, decrypted_length, endianness());
 
-  // Update the largest packet number after we have decrypted the packet
+  // Set the last packet number after we have decrypted the packet
   // so we are confident is not attacker controlled.
-  largest_packet_number_ =
-      std::max(header.packet_number, largest_packet_number_);
+  SetLastPacketNumber(header);
 
   if (!visitor_->OnPacketHeader(header)) {
     // The visitor suppresses further processing of the packet.
@@ -801,6 +801,12 @@ const QuicTime::Delta QuicFramer::CalculateTimestampFromWire(
                 next_epoch + time_delta_us));
 
   return QuicTime::Delta::FromMicroseconds(time);
+}
+
+void QuicFramer::SetLastPacketNumber(const QuicPacketHeader& header) {
+  last_packet_number_ = header.packet_number;
+  largest_packet_number_ =
+      std::max(header.packet_number, largest_packet_number_);
 }
 
 QuicPacketNumber QuicFramer::CalculatePacketNumberFromWire(

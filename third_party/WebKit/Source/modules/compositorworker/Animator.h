@@ -27,7 +27,7 @@ class Animator final : public GarbageCollectedFinalized<Animator>,
  public:
   Animator(v8::Isolate*, AnimatorDefinition*, v8::Local<v8::Object> instance);
   ~Animator();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
   // Returns true if it successfully invoked animate callback in JS. It receives

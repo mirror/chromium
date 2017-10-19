@@ -33,7 +33,7 @@ TSAN_TEST(FontObjectThreadedTest, GetFontDefinition) {
         MutableStylePropertySet::Create(kHTMLStandardMode);
     CSSParser::ParseValue(style, CSSPropertyFont, "15px Ahem", true);
 
-    FontDescription desc = FontStyleResolver::ComputeFont(*style, nullptr);
+    FontDescription desc = FontStyleResolver::ComputeFont(*style);
 
     EXPECT_EQ(desc.SpecifiedSize(), 15);
     EXPECT_EQ(desc.ComputedSize(), 15);

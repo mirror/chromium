@@ -86,7 +86,6 @@
 #include "storage/browser/blob/blob_reader.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -333,13 +332,13 @@ void CountScriptResources(
   int version_id;
   size_t index = infos.size() - 1;
   if (infos[index].installing_version.version_id !=
-      blink::mojom::kInvalidServiceWorkerVersionId)
+      kInvalidServiceWorkerVersionId)
     version_id = infos[index].installing_version.version_id;
   else if (infos[index].waiting_version.version_id !=
-           blink::mojom::kInvalidServiceWorkerVersionId)
+           kInvalidServiceWorkerVersionId)
     version_id = infos[1].waiting_version.version_id;
   else if (infos[index].active_version.version_id !=
-           blink::mojom::kInvalidServiceWorkerVersionId)
+           kInvalidServiceWorkerVersionId)
     version_id = infos[index].active_version.version_id;
   else
     return;
@@ -1338,16 +1337,11 @@ class MockContentBrowserClient : public TestContentBrowserClient {
 class ServiceWorkerVersionOffMainThreadFetchTest
     : public ServiceWorkerVersionBrowserTest {
  public:
-  ServiceWorkerVersionOffMainThreadFetchTest() {
-    scoped_feature_list_.InitAndEnableFeature(features::kOffMainThreadFetch);
-  }
-
   ~ServiceWorkerVersionOffMainThreadFetchTest() override {}
-
- private:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
-  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerVersionOffMainThreadFetchTest);
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                    features::kOffMainThreadFetch.name);
+  }
 };
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest, FetchWithSaveData) {

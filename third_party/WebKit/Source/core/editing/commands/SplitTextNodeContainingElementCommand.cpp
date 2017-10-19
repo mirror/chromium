@@ -64,7 +64,7 @@ void SplitTextNodeContainingElementCommand::DoApply(EditingState*) {
   SplitElement(parent, text_.Get());
 }
 
-void SplitTextNodeContainingElementCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SplitTextNodeContainingElementCommand) {
   visitor->Trace(text_);
   CompositeEditCommand::Trace(visitor);
 }

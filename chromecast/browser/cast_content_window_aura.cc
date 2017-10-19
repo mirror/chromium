@@ -27,6 +27,8 @@ std::unique_ptr<CastContentWindow> CastContentWindow::Create(
 CastContentWindowAura::CastContentWindowAura() {}
 CastContentWindowAura::~CastContentWindowAura() {}
 
+void CastContentWindowAura::SetTransparent() {}
+
 void CastContentWindowAura::ShowWebContents(content::WebContents* web_contents,
                                             CastWindowManager* window_manager) {
   DCHECK(window_manager);

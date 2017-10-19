@@ -32,14 +32,10 @@ class CONTENT_EXPORT WebServiceWorkerInstalledScriptsManagerImpl final
  private:
   WebServiceWorkerInstalledScriptsManagerImpl(
       std::vector<GURL>&& installed_urls,
-      scoped_refptr<ThreadSafeScriptContainer> script_container,
-      mojom::ServiceWorkerInstalledScriptsManagerHostPtr manager_host);
+      scoped_refptr<ThreadSafeScriptContainer> script_container);
 
   const std::set<GURL> installed_urls_;
   scoped_refptr<ThreadSafeScriptContainer> script_container_;
-
-  scoped_refptr<mojom::ThreadSafeServiceWorkerInstalledScriptsManagerHostPtr>
-      manager_host_;
 };
 
 }  // namespace content

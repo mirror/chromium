@@ -536,12 +536,11 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   // Overridden from GLES2Decoder.
   base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
-  gpu::ContextResult Initialize(
-      const scoped_refptr<gl::GLSurface>& surface,
-      const scoped_refptr<gl::GLContext>& context,
-      bool offscreen,
-      const DisallowedFeatures& disallowed_features,
-      const ContextCreationAttribHelper& attrib_helper) override;
+  bool Initialize(const scoped_refptr<gl::GLSurface>& surface,
+                  const scoped_refptr<gl::GLContext>& context,
+                  bool offscreen,
+                  const DisallowedFeatures& disallowed_features,
+                  const ContextCreationAttribHelper& attrib_helper) override;
   void Destroy(bool have_context) override;
   void SetSurface(const scoped_refptr<gl::GLSurface>& surface) override;
   void ReleaseSurface() override;
@@ -1034,12 +1033,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                       GLsizei width,
                       GLsizei height,
                       GLsizei depth);
-
-  void DoTexStorage2DImageCHROMIUM(GLenum target,
-                                   GLenum internal_format,
-                                   GLenum buffer_usage,
-                                   GLsizei width,
-                                   GLsizei height);
 
   void DoProduceTextureCHROMIUM(GLenum target, const volatile GLbyte* key);
   void DoProduceTextureDirectCHROMIUM(GLuint texture,
@@ -2070,7 +2063,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   bool WasContextLost() const override;
   bool WasContextLostByRobustnessExtension() const override;
   void MarkContextLost(error::ContextLostReason reason) override;
-  bool CheckResetStatus() override;
+  bool CheckResetStatus();
 
   bool GetCompressedTexSizeInBytes(
       const char* function_name, GLsizei width, GLsizei height, GLsizei depth,
@@ -2885,7 +2878,7 @@ bool BackTexture::AllocateNativeGpuMemoryBuffer(const gfx::Size& size,
               gfx::BufferFormat::RGBX_8888
 #endif
               : gfx::BufferFormat::RGBA_8888,
-          gfx::BufferUsage::SCANOUT, format);
+          format);
   if (!image || !image->BindTexImage(Target()))
     return false;
 
@@ -3189,7 +3182,7 @@ base::WeakPtr<GLES2Decoder> GLES2DecoderImpl::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-gpu::ContextResult GLES2DecoderImpl::Initialize(
+bool GLES2DecoderImpl::Initialize(
     const scoped_refptr<gl::GLSurface>& surface,
     const scoped_refptr<gl::GLContext>& context,
     bool offscreen,
@@ -3241,15 +3234,14 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
       feature_info_->feature_flags().is_swiftshader_for_webgl) {
     group_ = NULL;  // Must not destroy ContextGroup if it is not initialized.
     Destroy(true);
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
-  auto result =
-      group_->Initialize(this, attrib_helper.context_type, disallowed_features);
-  if (result != gpu::ContextResult::kSuccess) {
+  if (!group_->Initialize(this, attrib_helper.context_type,
+                          disallowed_features)) {
     group_ = NULL;  // Must not destroy ContextGroup if it is not initialized.
     Destroy(true);
-    return result;
+    return false;
   }
   CHECK_GL_ERROR();
 
@@ -3276,7 +3268,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
     if (!supported) {
       Destroy(true);
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     }
   }
 
@@ -3291,7 +3283,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     if (!feature_info_->IsES3Capable()) {
       LOG(ERROR) << "ES3 is blacklisted/disabled/unsupported by driver.";
       Destroy(true);
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     }
     feature_info_->EnableES3Validators();
 
@@ -3627,7 +3619,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
             gfx::Size(state_.viewport_width, state_.viewport_height))) {
       LOG(ERROR) << "Could not allocate offscreen buffer storage.";
       Destroy(true);
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     }
     if (!offscreen_single_buffer_) {
       // Allocate the offscreen saved color texture.
@@ -3640,10 +3632,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
       if (offscreen_saved_frame_buffer_->CheckStatus() !=
           GL_FRAMEBUFFER_COMPLETE) {
         LOG(ERROR) << "Offscreen saved FBO was incomplete.";
-        bool was_lost = CheckResetStatus();
         Destroy(true);
-        return was_lost ? gpu::ContextResult::kTransientFailure
-                        : gpu::ContextResult::kFatalFailure;
+        return false;
       }
     }
   }
@@ -3709,7 +3699,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     LOCAL_COPY_REAL_GL_ERRORS_TO_WRAPPER("glClearWorkaroundInit");
     clear_framebuffer_blit_.reset(new ClearFramebufferResourceManager(this));
     if (LOCAL_PEEK_GL_ERROR("glClearWorkaroundInit") != GL_NO_ERROR)
-      return gpu::ContextResult::kFatalFailure;
+      return false;
   }
 
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
@@ -3724,23 +3714,21 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
   if (attrib_helper.enable_oop_rasterization) {
     if (!features().chromium_raster_transport)
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     sk_sp<const GrGLInterface> interface(
         CreateGrGLInterface(gl_version_info()));
     // TODO(enne): if this or gr_context creation below fails in practice for
     // different reasons than the ones the renderer would fail on for gpu
     // raster, expose this in gpu::Capabilities so the renderer can handle it.
     if (!interface)
-      return gpu::ContextResult::kFatalFailure;
+      return false;
 
     gr_context_ = sk_sp<GrContext>(
         GrContext::Create(kOpenGL_GrBackend,
                           reinterpret_cast<GrBackendContext>(interface.get())));
     if (!gr_context_) {
       LOG(ERROR) << "Could not create GrContext";
-      bool was_lost = CheckResetStatus();
-      return was_lost ? gpu::ContextResult::kTransientFailure
-                      : gpu::ContextResult::kFatalFailure;
+      return false;
     }
 
     // TODO(enne): this cache is for this decoder only and each decoder has
@@ -3754,7 +3742,7 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
                                         kMaxGaneshResourceCacheBytes);
   }
 
-  return gpu::ContextResult::kSuccess;
+  return true;
 }
 
 Capabilities GLES2DecoderImpl::GetCapabilities() {
@@ -3762,8 +3750,8 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   Capabilities caps;
   const gl::GLVersionInfo& version_info = gl_version_info();
   caps.VisitPrecisions([&version_info](
-                           GLenum shader, GLenum type,
-                           Capabilities::ShaderPrecision* shader_precision) {
+      GLenum shader, GLenum type,
+      Capabilities::ShaderPrecision* shader_precision) {
     GLint range[2] = {0, 0};
     GLint precision = 0;
     QueryShaderPrecisionFormat(version_info, shader, type, range, &precision);
@@ -3935,11 +3923,20 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   caps.occlusion_query = feature_info_->feature_flags().occlusion_query;
   caps.occlusion_query_boolean =
       feature_info_->feature_flags().occlusion_query_boolean;
-  caps.timer_queries = query_manager_->GPUTimingAvailable();
+  caps.timer_queries =
+      query_manager_->GPUTimingAvailable();
+  caps.disable_multisampling_color_mask_usage =
+      workarounds().disable_multisampling_color_mask_usage;
   caps.gpu_rasterization =
       group_->gpu_feature_info()
           .status_values[GPU_FEATURE_TYPE_GPU_RASTERIZATION] ==
       kGpuFeatureStatusEnabled;
+  caps.disable_webgl_rgb_multisampling_usage =
+      workarounds().disable_webgl_rgb_multisampling_usage;
+  caps.software_to_accelerated_canvas_upgrade =
+      !workarounds().disable_software_to_accelerated_canvas_upgrade;
+  caps.emulate_rgb_buffer_with_rgba =
+      workarounds().disable_gl_rgb_format;
   if (workarounds().disable_non_empty_post_sub_buffers_for_onscreen_surfaces &&
       !surface_->IsOffscreen()) {
     caps.disable_non_empty_post_sub_buffers = true;
@@ -3948,9 +3945,10 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
       group_->gpu_preferences().enable_threaded_texture_mailboxes) {
     caps.disable_2d_canvas_copy_on_write = true;
   }
+  if (workarounds().disable_overlay_ca_layers) {
+    caps.disable_overlay_ca_layers = true;
+  }
   caps.texture_npot = feature_info_->feature_flags().npot_ok;
-  caps.texture_storage_image =
-      feature_info_->feature_flags().chromium_texture_storage_image;
 
   return caps;
 }
@@ -9307,7 +9305,7 @@ void GLES2DecoderImpl::DoUniform1iv(GLint fake_location,
                                    &count)) {
     return;
   }
-  auto values_copy = std::make_unique<GLint[]>(count);
+  auto values_copy = base::MakeUnique<GLint[]>(count);
   GLint* safe_values = values_copy.get();
   std::copy(values, values + count, safe_values);
   if (type == GL_SAMPLER_2D || type == GL_SAMPLER_2D_RECT_ARB ||
@@ -10432,8 +10430,10 @@ error::Error GLES2DecoderImpl::HandleDrawArraysInstancedANGLE(
   if (!features().angle_instanced_arrays)
     return error::kUnknownCommand;
 
-  return DoDrawArrays("glDrawArraysInstancedANGLE", true,
-                      static_cast<GLenum>(c.mode), static_cast<GLint>(c.first),
+  return DoDrawArrays("glDrawArraysIntancedANGLE",
+                      true,
+                      static_cast<GLenum>(c.mode),
+                      static_cast<GLint>(c.first),
                       static_cast<GLsizei>(c.count),
                       static_cast<GLsizei>(c.primcount));
 }
@@ -17822,91 +17822,6 @@ void GLES2DecoderImpl::DoTexStorage3D(GLenum target,
       "widthXheight", width * height, "depth", depth);
   TexStorageImpl(target, levels, internal_format, width, height, depth,
                  ContextState::k3D, "glTexStorage3D");
-}
-
-void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
-                                                   GLenum internal_format,
-                                                   GLenum buffer_usage,
-                                                   GLsizei width,
-                                                   GLsizei height) {
-  TRACE_EVENT2("gpu", "GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM", "width",
-               width, "height", height);
-
-  ScopedGLErrorSuppressor suppressor(
-      "GLES2CmdDecoder::DoTexStorage2DImageCHROMIUM", state_.GetErrorState());
-
-  if (!texture_manager()->ValidForTarget(target, 0, width, height, 1)) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glTexStorage2DImageCHROMIUM",
-                       "dimensions out of range");
-    return;
-  }
-
-  TextureRef* texture_ref =
-      texture_manager()->GetTextureInfoForTarget(&state_, target);
-  if (!texture_ref) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glTexStorage2DImageCHROMIUM",
-                       "unknown texture for target");
-    return;
-  }
-
-  Texture* texture = texture_ref->texture();
-  if (texture->IsImmutable()) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glTexStorage2DImageCHROMIUM",
-                       "texture is immutable");
-    return;
-  }
-
-  gfx::BufferFormat buffer_format;
-  GLint untyped_format;
-  switch (internal_format) {
-    case GL_RGBA8_OES:
-      buffer_format = gfx::BufferFormat::RGBA_8888;
-      untyped_format = GL_RGBA;
-      break;
-    case GL_BGRA8_EXT:
-      buffer_format = gfx::BufferFormat::BGRA_8888;
-      untyped_format = GL_BGRA_EXT;
-      break;
-    case GL_RGBA16F_EXT:
-      buffer_format = gfx::BufferFormat::RGBA_F16;
-      untyped_format = GL_RGBA;
-      break;
-    case GL_R8_EXT:
-      buffer_format = gfx::BufferFormat::R_8;
-      untyped_format = GL_RED_EXT;
-      break;
-    default:
-      LOCAL_SET_GL_ERROR(GL_INVALID_ENUM, "glTexStorage2DImageCHROMIUM",
-                         "Invalid buffer format");
-      return;
-  }
-
-  DCHECK_EQ(buffer_usage, static_cast<GLenum>(GL_SCANOUT_CHROMIUM));
-
-  if (!GetContextGroup()->image_factory()) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glTexStorage2DImageCHROMIUM",
-                       "Cannot create GL image");
-    return;
-  }
-
-  scoped_refptr<gl::GLImage> image =
-      GetContextGroup()->image_factory()->CreateAnonymousImage(
-          gfx::Size(width, height), buffer_format, gfx::BufferUsage::SCANOUT,
-          untyped_format);
-  if (!image || !image->BindTexImage(target)) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glTexStorage2DImageCHROMIUM",
-                       "Failed to create or bind GL Image");
-    return;
-  }
-
-  texture_manager()->SetLevelInfo(
-      texture_ref, target, 0, image->GetInternalFormat(), width, height, 1, 0,
-      image->GetInternalFormat(), GL_UNSIGNED_BYTE, gfx::Rect(width, height));
-  texture_manager()->SetLevelImage(texture_ref, target, 0, image.get(),
-                                   Texture::BOUND);
-
-  if (texture->IsAttachedToFramebuffer())
-    framebuffer_state_.clear_state_dirty = true;
 }
 
 void GLES2DecoderImpl::DoProduceTextureCHROMIUM(GLenum target,

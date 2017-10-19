@@ -33,6 +33,8 @@ class CORE_EXPORT CSSStyleImageValue : public CSSResourceValue,
 
   // CanvasImageSource
   bool IsCSSImageValue() const final { return true; }
+  int SourceWidth() final;
+  int SourceHeight() final;
   bool WouldTaintOrigin(
       SecurityOrigin* destination_security_origin) const final {
     return true;
@@ -46,7 +48,7 @@ class CORE_EXPORT CSSStyleImageValue : public CSSResourceValue,
   }
   bool IsAccelerated() const override;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(image_value_);
     CSSResourceValue::Trace(visitor);
   }
@@ -55,13 +57,14 @@ class CORE_EXPORT CSSStyleImageValue : public CSSResourceValue,
   CSSStyleImageValue(const CSSImageValue* image_value)
       : image_value_(image_value) {}
 
-  virtual IntSize ImageSize() const {
+  virtual LayoutSize ImageLayoutSize() const {
     DCHECK(!IsCachePending());
     ImageResourceContent* resource_content =
         image_value_->CachedImage()->CachedImage();
-    return resource_content
-               ? resource_content->IntrinsicSize(kDoNotRespectImageOrientation)
-               : IntSize(0, 0);
+    return resource_content ? resource_content->ImageSize(
+                                  kDoNotRespectImageOrientation, 1,
+                                  ImageResourceContent::kIntrinsicSize)
+                            : LayoutSize(0, 0);
   }
 
   virtual bool IsCachePending() const { return image_value_->IsCachePending(); }

@@ -4,10 +4,7 @@
 
 #include "ash/wm/splitview/split_view_controller.h"
 
-#include "ash/display/screen_orientation_controller_chromeos.h"
-#include "ash/display/screen_orientation_controller_test_api.h"
 #include "ash/public/cpp/ash_switches.h"
-#include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/system/overview/overview_button_tray.h"
 #include "ash/system/status_area_widget.h"
@@ -24,7 +21,6 @@
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/test/test_window_delegate.h"
-#include "ui/display/test/display_manager_test_api.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/widget/widget.h"
 
@@ -262,9 +258,7 @@ TEST_F(SplitViewControllerTest, EnterOverviewTest) {
                         split_view_controller()->GetDefaultSnappedWindow());
   EXPECT_TRUE(iter == windows.end());
 
-  // TODO(sammiequon|xdai): Exit overview as a stop gap solution to avoid memory
-  // leak during shutdown. Fix and remove the ToggleOverview. See
-  // crbug.com/766725
+  // End overview mode before test shutdown to avoid use after free.
   ToggleOverview();
 }
 
@@ -292,72 +286,6 @@ TEST_F(SplitViewControllerTest, SplitDividerBasicTest) {
 
   EndSplitView();
   EXPECT_TRUE(!split_view_divider());
-}
-
-// Verifys that the bounds of the two windows in splitview are as expected.
-TEST_F(SplitViewControllerTest, SplitDividerWindowBounds) {
-  std::unique_ptr<aura::Window> window1(CreateTestWindow());
-  std::unique_ptr<aura::Window> window2(CreateTestWindow());
-
-  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
-  split_view_controller()->SnapWindow(window2.get(),
-                                      SplitViewController::RIGHT);
-  ASSERT_TRUE(split_view_divider());
-
-  // Verify with two freshly snapped windows are roughly the same width (off by
-  // one pixel at most due to the display maybe being even and the divider being
-  // a fixed odd pixel width).
-  int window1_width = window1->GetBoundsInScreen().width();
-  int window2_width = window2->GetBoundsInScreen().width();
-  gfx::Rect divider_bounds =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-  const int screen_width =
-      ScreenUtil::GetDisplayWorkAreaBoundsInParent(window1.get()).width();
-  EXPECT_NEAR(window1_width, window2_width, 1);
-  EXPECT_EQ(screen_width,
-            window1_width + divider_bounds.width() + window2_width);
-
-  // Drag the divider to a position two thirds of the screen size. Verify window
-  // 1 is wider than window 2.
-  GetEventGenerator().set_current_location(divider_bounds.CenterPoint());
-  GetEventGenerator().DragMouseTo(screen_width * 0.67f, 0);
-  window1_width = window1->GetBoundsInScreen().width();
-  window2_width = window2->GetBoundsInScreen().width();
-  const int old_window1_width = window1_width;
-  const int old_window2_width = window2_width;
-  EXPECT_GT(window1_width, 2 * window2_width);
-  EXPECT_EQ(screen_width,
-            window1_width + divider_bounds.width() + window2_width);
-
-  // Drag the divider to a position close to two thirds of the screen size.
-  // Verify the divider snaps to two thirds of the screen size, and the windows
-  // remain the same size as previously.
-  divider_bounds =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-  GetEventGenerator().set_current_location(divider_bounds.CenterPoint());
-  GetEventGenerator().DragMouseTo(screen_width * 0.7f, 0);
-  window1_width = window1->GetBoundsInScreen().width();
-  window2_width = window2->GetBoundsInScreen().width();
-  EXPECT_EQ(window1_width, old_window1_width);
-  EXPECT_EQ(window2_width, old_window2_width);
-
-  // Drag the divider to a position one third of the screen size. Verify window
-  // 1 is wider than window 2.
-  divider_bounds =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-  GetEventGenerator().set_current_location(divider_bounds.CenterPoint());
-  GetEventGenerator().DragMouseTo(screen_width * 0.33f, 0);
-  window1_width = window1->GetBoundsInScreen().width();
-  window2_width = window2->GetBoundsInScreen().width();
-  EXPECT_GT(window2_width, 2 * window1_width);
-  EXPECT_EQ(screen_width,
-            window1_width + divider_bounds.width() + window2_width);
-
-  // Verify that the left window from dragging the divider to two thirds of the
-  // screen size is roughly the same size as the right window after dragging the
-  // divider to one third of the screen size, and vice versa.
-  EXPECT_NEAR(window1_width, old_window2_width, 1);
-  EXPECT_NEAR(window2_width, old_window1_width, 1);
 }
 
 // Tests that the bounds of the snapped windows and divider are adjusted when
@@ -394,9 +322,9 @@ TEST_F(SplitViewControllerTest, DisplayConfigurationChangeTest) {
       split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
 
   // Test that the new bounds are different with the old ones.
-  EXPECT_NE(bounds_window1, new_bounds_window1);
-  EXPECT_NE(bounds_window2, new_bounds_window2);
-  EXPECT_NE(bounds_divider, new_bounds_divider);
+  EXPECT_FALSE(bounds_window1 == new_bounds_window1);
+  EXPECT_FALSE(bounds_window2 == new_bounds_window2);
+  EXPECT_FALSE(bounds_divider == new_bounds_divider);
 
   // Test that |window1|, divider, |window2| are still aligned properly.
   EXPECT_EQ(new_bounds_divider.x(),
@@ -408,8 +336,9 @@ TEST_F(SplitViewControllerTest, DisplayConfigurationChangeTest) {
 // Verify the left and right windows get swapped when SwapWindows is called or
 // the divider is double tapped.
 TEST_F(SplitViewControllerTest, SwapWindows) {
-  std::unique_ptr<aura::Window> window1(CreateTestWindow());
-  std::unique_ptr<aura::Window> window2(CreateTestWindow());
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
 
   split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
   split_view_controller()->SnapWindow(window2.get(),
@@ -429,10 +358,19 @@ TEST_F(SplitViewControllerTest, SwapWindows) {
   EXPECT_EQ(right_bounds, window1->GetBoundsInScreen());
 
   // Perform a double tap on the divider center.
-  const gfx::Point divider_center =
+  gfx::Point divider_center =
       split_view_divider()
           ->GetDividerBoundsInScreen(false /* is_dragging */)
           .CenterPoint();
+  // The divider shifts after we click it once, so click it once before double
+  // clicking.
+  // TODO(sammiequon): Investigate why the divider shifts after the first click
+  // and remove the extra click.
+  GetEventGenerator().set_current_location(divider_center);
+  GetEventGenerator().ClickLeftButton();
+  divider_center = split_view_divider()
+                       ->GetDividerBoundsInScreen(false /* is_dragging */)
+                       .CenterPoint();
   GetEventGenerator().set_current_location(divider_center);
   GetEventGenerator().DoubleClickLeftButton();
 
@@ -447,7 +385,8 @@ TEST_F(SplitViewControllerTest, LongPressEntersSplitView) {
   LongPressOnOverivewButtonTray();
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
 
-  std::unique_ptr<aura::Window> window1(CreateTestWindow());
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   wm::ActivateWindow(window1.get());
 
   // Verify that with only one window, split view does not get activated.
@@ -455,7 +394,7 @@ TEST_F(SplitViewControllerTest, LongPressEntersSplitView) {
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
 
   // Verify that with two windows, split view gets activated.
-  std::unique_ptr<aura::Window> window2(CreateTestWindow());
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
   wm::ActivateWindow(window2.get());
   LongPressOnOverivewButtonTray();
   EXPECT_TRUE(split_view_controller()->IsSplitViewModeActive());
@@ -465,8 +404,9 @@ TEST_F(SplitViewControllerTest, LongPressEntersSplitView) {
 // windows, split view mode gets exited when the overview button gets a long
 // press event.
 TEST_F(SplitViewControllerTest, LongPressExitsSplitView) {
-  std::unique_ptr<aura::Window> window1(CreateTestWindow());
-  std::unique_ptr<aura::Window> window2(CreateTestWindow());
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
   wm::ActivateWindow(window2.get());
   wm::ActivateWindow(window1.get());
   split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
@@ -495,7 +435,8 @@ TEST_F(SplitViewControllerTest, LongPressExitsSplitView) {
 TEST_F(SplitViewControllerTest, LongPressInOverviewMode) {
   ToggleOverview();
 
-  std::unique_ptr<aura::Window> window1(CreateTestWindow());
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   wm::ActivateWindow(window1.get());
   ASSERT_FALSE(split_view_controller()->IsSplitViewModeActive());
 
@@ -505,7 +446,7 @@ TEST_F(SplitViewControllerTest, LongPressInOverviewMode) {
 
   // Verify that with two windows, a long press on the overview button tray will
   // enter splitview.
-  std::unique_ptr<aura::Window> window2(CreateTestWindow());
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
   wm::ActivateWindow(window2.get());
   LongPressOnOverivewButtonTray();
   EXPECT_TRUE(split_view_controller()->IsSplitViewModeActive());
@@ -514,12 +455,13 @@ TEST_F(SplitViewControllerTest, LongPressInOverviewMode) {
 
 TEST_F(SplitViewControllerTest, LongPressWithUnsnappableWindow) {
   // Add one unsnappable window and two regular windows.
-  std::unique_ptr<aura::Window> unsnappable_window(CreateTestWindow());
+  const gfx::Rect bounds(0, 0, 200, 200);
+  std::unique_ptr<aura::Window> unsnappable_window(CreateWindow(bounds));
   unsnappable_window->SetProperty(aura::client::kResizeBehaviorKey,
                                   ui::mojom::kResizeBehaviorNone);
   ASSERT_FALSE(split_view_controller()->IsSplitViewModeActive());
-  std::unique_ptr<aura::Window> window2(CreateTestWindow());
-  std::unique_ptr<aura::Window> window3(CreateTestWindow());
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window3(CreateWindow(bounds));
   wm::ActivateWindow(window2.get());
   wm::ActivateWindow(window3.get());
   wm::ActivateWindow(unsnappable_window.get());
@@ -539,145 +481,7 @@ TEST_F(SplitViewControllerTest, LongPressWithUnsnappableWindow) {
             Shell::Get()->mru_window_tracker()->BuildMruWindowList()[0]);
   LongPressOnOverivewButtonTray();
   EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
-}
-
-// Test the rotation functionalities in split view mode.
-TEST_F(SplitViewControllerTest, RotationTest) {
-  UpdateDisplay("807x407");
-  int64_t display_id = display::Screen::GetScreen()->GetPrimaryDisplay().id();
-  display::DisplayManager* display_manager = Shell::Get()->display_manager();
-  display::test::ScopedSetInternalDisplayId set_internal(display_manager,
-                                                         display_id);
-  ScreenOrientationControllerTestApi test_api(
-      Shell::Get()->screen_orientation_controller());
-
-  // Set the screen orientation to LANDSCAPE_PRIMARY.
-  test_api.SetDisplayRotation(display::Display::ROTATE_0,
-                              display::Display::ROTATION_SOURCE_ACTIVE);
-  EXPECT_EQ(test_api.GetCurrentOrientation(),
-            blink::kWebScreenOrientationLockLandscapePrimary);
-
-  const gfx::Rect bounds(0, 0, 200, 200);
-  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
-  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
-
-  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
-  split_view_controller()->SnapWindow(window2.get(),
-                                      SplitViewController::RIGHT);
-  gfx::Rect bounds_window1 = window1->GetBoundsInScreen();
-  gfx::Rect bounds_window2 = window2->GetBoundsInScreen();
-  gfx::Rect bounds_divider =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-
-  // Test |window1|, divider and |window2| are aligned horizontally.
-  // |window1| is on the left, then the divider, and then |window2|.
-  EXPECT_EQ(bounds_divider.x(), bounds_window1.x() + bounds_window1.width());
-  EXPECT_EQ(bounds_window2.x(), bounds_divider.x() + bounds_divider.width());
-  EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
-  EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
-
-  // Rotate the screen by 90 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_90,
-                              display::Display::ROTATION_SOURCE_ACTIVE);
-  EXPECT_EQ(test_api.GetCurrentOrientation(),
-            blink::kWebScreenOrientationLockPortraitPrimary);
-
-  bounds_window1 = window1->GetBoundsInScreen();
-  bounds_window2 = window2->GetBoundsInScreen();
-  bounds_divider =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-
-  // Test that |window1|, divider, |window2| are now aligned vertically.
-  // |window2| is on the top, then the divider, and then |window1|.
-  EXPECT_EQ(bounds_divider.y(), bounds_window2.y() + bounds_window2.height());
-  EXPECT_EQ(bounds_window1.y(), bounds_divider.y() + bounds_divider.height());
-  EXPECT_EQ(bounds_window1.width(), bounds_divider.width());
-  EXPECT_EQ(bounds_window1.width(), bounds_window2.width());
-
-  // Rotate the screen by 180 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_180,
-                              display::Display::ROTATION_SOURCE_ACTIVE);
-  EXPECT_EQ(test_api.GetCurrentOrientation(),
-            blink::kWebScreenOrientationLockLandscapeSecondary);
-
-  bounds_window1 = window1->GetBoundsInScreen();
-  bounds_window2 = window2->GetBoundsInScreen();
-  bounds_divider =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-
-  // Test that |window1|, divider, |window2| are now aligned horizontally.
-  // |window2| is on the left, then the divider, and then |window1|.
-  EXPECT_EQ(bounds_divider.x(), bounds_window2.x() + bounds_window2.width());
-  EXPECT_EQ(bounds_window1.x(), bounds_divider.x() + bounds_divider.width());
-  EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
-  EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
-
-  // Rotate the screen by 270 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_270,
-                              display::Display::ROTATION_SOURCE_ACTIVE);
-  EXPECT_EQ(test_api.GetCurrentOrientation(),
-            blink::kWebScreenOrientationLockPortraitSecondary);
-  bounds_window1 = window1->GetBoundsInScreen();
-  bounds_window2 = window2->GetBoundsInScreen();
-  bounds_divider =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-
-  // Test that |window1|, divider, |window2| are now aligned vertically.
-  // |window1| is on the top, then the divider, and then |window2|.
-  EXPECT_EQ(bounds_divider.y(), bounds_window1.y() + bounds_window1.height());
-  EXPECT_EQ(bounds_window2.y(), bounds_divider.y() + bounds_divider.height());
-  EXPECT_EQ(bounds_window1.width(), bounds_divider.width());
-  EXPECT_EQ(bounds_window1.width(), bounds_window2.width());
-
-  // Rotate the screen back to 0 degree.
-  test_api.SetDisplayRotation(display::Display::ROTATE_0,
-                              display::Display::ROTATION_SOURCE_ACTIVE);
-  EXPECT_EQ(test_api.GetCurrentOrientation(),
-            blink::kWebScreenOrientationLockLandscapePrimary);
-  bounds_window1 = window1->GetBoundsInScreen();
-  bounds_window2 = window2->GetBoundsInScreen();
-  bounds_divider =
-      split_view_divider()->GetDividerBoundsInScreen(false /* is_dragging */);
-
-  // Test |window1|, divider and |window2| are aligned horizontally.
-  // |window1| is on the left, then the divider, and then |window2|.
-  EXPECT_EQ(bounds_divider.x(), bounds_window1.x() + bounds_window1.width());
-  EXPECT_EQ(bounds_window2.x(), bounds_divider.x() + bounds_divider.width());
-  EXPECT_EQ(bounds_window1.height(), bounds_divider.height());
-  EXPECT_EQ(bounds_window1.height(), bounds_window2.height());
-}
-
-// Test that if the split view mode is active when exiting tablet mode, we
-// should also end split view mode.
-TEST_F(SplitViewControllerTest, ExitTabletModeEndSplitView) {
-  const gfx::Rect bounds(0, 0, 400, 400);
-  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
-
-  split_view_controller()->SnapWindow(window1.get(), SplitViewController::LEFT);
-  EXPECT_TRUE(split_view_controller()->IsSplitViewModeActive());
-
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
-  EXPECT_FALSE(split_view_controller()->IsSplitViewModeActive());
-}
-
-// Tests that if a window's minimum size is larger than half of the display work
-// area's size, it can't be snapped.
-TEST_F(SplitViewControllerTest, SnapWindowWithMinimumSizeTest) {
-  const gfx::Rect bounds(0, 0, 400, 400);
-  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
-  EXPECT_TRUE(split_view_controller()->CanSnap(window1.get()));
-
-  const gfx::Rect display_bounds =
-      split_view_controller()->GetDisplayWorkAreaBoundsInScreen(window1.get());
-  aura::test::TestWindowDelegate* delegate =
-      static_cast<aura::test::TestWindowDelegate*>(window1->delegate());
-  delegate->set_minimum_size(
-      gfx::Size(display_bounds.width() * 0.5f, display_bounds.height()));
-  EXPECT_TRUE(split_view_controller()->CanSnap(window1.get()));
-
-  delegate->set_minimum_size(
-      gfx::Size(display_bounds.width() * 0.67f, display_bounds.height()));
-  EXPECT_FALSE(split_view_controller()->CanSnap(window1.get()));
+  ToggleOverview();
 }
 
 }  // namespace ash

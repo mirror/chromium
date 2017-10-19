@@ -99,7 +99,6 @@
       'FILES': [
         'deprecated_bool.h',
         'ppb_cursor_control_dev.h',
-        'ppb_device_ref_dev.h',
         'ppb_file_chooser_dev.h',
         'ppb_memory_dev.h',
         'ppb_opengles2ext_dev.h',

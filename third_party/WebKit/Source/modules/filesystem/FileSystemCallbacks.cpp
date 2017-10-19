@@ -143,7 +143,7 @@ ScriptErrorCallback* ScriptErrorCallback::Wrap(ErrorCallback* callback) {
   return new ScriptErrorCallback(callback);
 }
 
-void ScriptErrorCallback::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptErrorCallback) {
   ErrorCallbackBase::Trace(visitor);
   visitor->Trace(callback_);
 }

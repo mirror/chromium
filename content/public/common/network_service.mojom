@@ -10,7 +10,6 @@ import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
 import "services/network/public/interfaces/cookie_manager.mojom";
-import "services/network/public/interfaces/restricted_cookie_manager.mojom";
 
 // Parameters for constructing a network context.
 struct NetworkContextParams {
@@ -58,21 +57,6 @@ struct NetworkContextParams {
   bool http_09_on_non_default_ports_enabled = false;
 };
 
-struct NetworkConditions {
-  // If set, the offline state is simulated and other fields are ignored.
-  bool offline;
-
-  // Channel round-trip latency, i.e. minimum time between request sent and
-  // response received.
-  mojo.common.mojom.TimeDelta latency;
-
-  // Maximal aggregated download throughput (bytes/sec). 0 disables download throttling.
-  double download_throughput;
-
-  // Maximal aggregated upload throughput (bytes/sec). 0 disables upload throttling.
-  double upload_throughput;
-};
-
 // Represents a distinct context for making network requests, with its own
 // storage (e.g. cookies and cache).
 interface NetworkContext {
@@ -89,12 +73,6 @@ interface NetworkContext {
   // Get the CookieManager associated with this network context.
   GetCookieManager(network.mojom.CookieManager& cookie_manager);
 
-  // TODO(crbug.com/729800): Switch from {process,frame}_id to the network
-  //                         service's representation of security principals.
-  GetRestrictedCookieManager(
-      network.mojom.RestrictedCookieManager& restricted_cookie_manager,
-      int32 render_process_id, int32 render_frame_id);
-
   // Clears network objects with implicit URL history information. Data related
   // to events that happened prior to |start_time| may be retained. Only applies
   // to network objects without more specific methods (Channel ID, Cookies,
@@ -103,14 +81,6 @@ interface NetworkContext {
   //
   // The callback will be invoked once the data has been deleted.
   ClearNetworkingHistorySince(mojo.common.mojom.Time start_time) => ();
-
-  // Configures network conditions for the specified throttling profile.
-  // The throttling will be applied only to requests that have
-  // X-DevTools-Emulate-Network-Conditions-Client-Id: <profile_id>
-  // header with matching <profile_id>.
-  // Passing null NetworkConditions disables the throttling.
-  // TODO(caseq): get rid of header, make profile_id part of ResourceRequest.
-  SetNetworkConditions(string profile_id, NetworkConditions? conditions);
 };
 
 // Browser interface to the network service.

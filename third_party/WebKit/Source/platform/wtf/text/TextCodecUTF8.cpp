@@ -70,7 +70,7 @@ void TextCodecUTF8::RegisterEncodingNames(EncodingNameRegistrar registrar) {
 }
 
 void TextCodecUTF8::RegisterCodecs(TextCodecRegistrar registrar) {
-  registrar("UTF-8", Create, nullptr);
+  registrar("UTF-8", Create, 0);
 }
 
 static inline int NonASCIISequenceLength(uint8_t first_byte) {
@@ -158,27 +158,20 @@ static inline UChar* AppendCharacter(UChar* destination, int character) {
   return destination;
 }
 
-void TextCodecUTF8::ConsumePartialSequenceBytes(int num_bytes) {
-  DCHECK_GE(partial_sequence_size_, num_bytes);
-  partial_sequence_size_ -= num_bytes;
-  memmove(partial_sequence_, partial_sequence_ + num_bytes,
-          partial_sequence_size_);
+void TextCodecUTF8::ConsumePartialSequenceByte() {
+  --partial_sequence_size_;
+  memmove(partial_sequence_, partial_sequence_ + 1, partial_sequence_size_);
 }
 
-void TextCodecUTF8::HandleError(int character,
-                                UChar*& destination,
+void TextCodecUTF8::HandleError(UChar*& destination,
                                 bool stop_on_error,
                                 bool& saw_error) {
   saw_error = true;
   if (stop_on_error)
     return;
-  // Each error generates a replacement character and consumes 1-3 bytes.
+  // Each error generates a replacement character and consumes one byte.
   *destination++ = kReplacementCharacter;
-  DCHECK(IsNonCharacter(character));
-  int num_bytes_consumed = -character;
-  DCHECK_GE(num_bytes_consumed, 1);
-  DCHECK_LE(num_bytes_consumed, 3);
-  ConsumePartialSequenceBytes(num_bytes_consumed);
+  ConsumePartialSequenceByte();
 }
 
 template <>
@@ -192,7 +185,7 @@ bool TextCodecUTF8::HandlePartialSequence<LChar>(LChar*& destination,
   do {
     if (IsASCII(partial_sequence_[0])) {
       *destination++ = partial_sequence_[0];
-      ConsumePartialSequenceBytes(1);
+      ConsumePartialSequenceByte();
       continue;
     }
     int count = NonASCIISequenceLength(partial_sequence_[0]);
@@ -241,12 +234,12 @@ bool TextCodecUTF8::HandlePartialSequence<UChar>(UChar*& destination,
   do {
     if (IsASCII(partial_sequence_[0])) {
       *destination++ = partial_sequence_[0];
-      ConsumePartialSequenceBytes(1);
+      ConsumePartialSequenceByte();
       continue;
     }
     int count = NonASCIISequenceLength(partial_sequence_[0]);
     if (!count) {
-      HandleError(kNonCharacter1, destination, stop_on_error, saw_error);
+      HandleError(destination, stop_on_error, saw_error);
       if (stop_on_error)
         return false;
       continue;
@@ -262,7 +255,7 @@ bool TextCodecUTF8::HandlePartialSequence<UChar>(UChar*& destination,
           return false;
         }
         // An incomplete partial sequence at the end is an error.
-        HandleError(kNonCharacter1, destination, stop_on_error, saw_error);
+        HandleError(destination, stop_on_error, saw_error);
         if (stop_on_error)
           return false;
         continue;
@@ -274,7 +267,7 @@ bool TextCodecUTF8::HandlePartialSequence<UChar>(UChar*& destination,
     }
     int character = DecodeNonASCIISequence(partial_sequence_, count);
     if (IsNonCharacter(character)) {
-      HandleError(character, destination, stop_on_error, saw_error);
+      HandleError(destination, stop_on_error, saw_error);
       if (stop_on_error)
         return false;
       continue;

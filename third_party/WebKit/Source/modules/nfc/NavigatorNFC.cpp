@@ -36,7 +36,7 @@ NFC* NavigatorNFC::nfc(Navigator& navigator) {
   return self.nfc_.Get();
 }
 
-void NavigatorNFC::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorNFC) {
   visitor->Trace(nfc_);
   Supplement<Navigator>::Trace(visitor);
 }

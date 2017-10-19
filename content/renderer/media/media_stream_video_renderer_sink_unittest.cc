@@ -9,9 +9,9 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_task_environment.h"
 #include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/mock_media_stream_registry.h"
@@ -57,10 +57,8 @@ class MediaStreamVideoRendererSinkTest : public testing::Test {
                    base::Unretained(this)),
         base::Bind(&MediaStreamVideoRendererSinkTest::RepaintCallback,
                    base::Unretained(this)),
-        child_process_->io_task_runner(),
-        scoped_task_environment_.GetMainThreadTaskRunner(),
-        scoped_task_environment_.GetMainThreadTaskRunner(),
-        nullptr /* gpu_factories */);
+        child_process_->io_task_runner(), message_loop_.task_runner(),
+        message_loop_.task_runner(), nullptr /* gpu_factories */);
     base::RunLoop().RunUntilIdle();
 
     EXPECT_TRUE(IsInStoppedState());
@@ -111,10 +109,9 @@ class MediaStreamVideoRendererSinkTest : public testing::Test {
   scoped_refptr<MediaStreamVideoRendererSink> media_stream_video_renderer_sink_;
 
  protected:
-  // A ChildProcess is needed to fool the Tracks and Sources into believing they
-  // are on the right threads. A ScopedTaskEnvironment must be instantiated
-  // before ChildProcess to prevent it from leaking a TaskScheduler.
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
+  // and Sources in |registry_| into believing they are on the right threads.
+  base::MessageLoopForUI message_loop_;
   const std::unique_ptr<ChildProcess> child_process_;
 
   blink::WebMediaStreamTrack blink_track_;
@@ -207,10 +204,8 @@ class MediaStreamVideoRendererSinkTransparencyTest
         base::Bind(&MediaStreamVideoRendererSinkTransparencyTest::
                        VerifyTransparentFrame,
                    base::Unretained(this)),
-        child_process_->io_task_runner(),
-        scoped_task_environment_.GetMainThreadTaskRunner(),
-        scoped_task_environment_.GetMainThreadTaskRunner(),
-        nullptr /* gpu_factories */);
+        child_process_->io_task_runner(), message_loop_.task_runner(),
+        message_loop_.task_runner(), nullptr /* gpu_factories */);
   }
 
   void VerifyTransparentFrame(scoped_refptr<media::VideoFrame> frame) {

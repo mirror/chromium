@@ -72,20 +72,20 @@ class CORE_EXPORT ImageResourceContent final
   float DevicePixelRatioHeaderValue() const;
   bool HasDevicePixelRatioHeaderValue() const;
 
-  // Returns the intrinsic width and height of the image, or 0x0 if no image
-  // exists. If the image is a BitmapImage, then this corresponds to the
-  // physical pixel dimensions of the image. If the image is an SVGImage, this
-  // does not quite return the intrinsic width/height, but rather a concrete
-  // object size resolved using a default object size of 300x150.
-  // TODO(fs): Make SVGImages return proper intrinsic width/height.
-  IntSize IntrinsicSize(
-      RespectImageOrientationEnum should_respect_image_orientation);
+  enum SizeType {
+    // Report the intrinsic size.
+    kIntrinsicSize,
+
+    // Report the intrinsic size corrected to account for image density.
+    kIntrinsicCorrectedToDPR,
+  };
 
   // This method takes a zoom multiplier that can be used to increase the
   // natural size of the image by the zoom.
   LayoutSize ImageSize(
       RespectImageOrientationEnum should_respect_image_orientation,
-      float multiplier);
+      float multiplier,
+      SizeType = kIntrinsicSize);
 
   void UpdateImageAnimationPolicy();
 
@@ -96,7 +96,7 @@ class CORE_EXPORT ImageResourceContent final
     return size_available_ != Image::kSizeUnavailable;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Content status and deriving predicates.
   // https://docs.google.com/document/d/1O-fB83mrE0B_V8gzXNqHgmRLCvstTB4MMi3RnVLr8bE/edit#heading=h.6cyqmir0f30h

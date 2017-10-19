@@ -54,7 +54,7 @@ class PrefsFunctionalTest : public InProcessBrowserTest {
 
 IN_PROC_BROWSER_TEST_F(PrefsFunctionalTest, TestDownloadDirPref) {
   ASSERT_TRUE(embedded_test_server()->Start());
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir new_download_dir;
   ASSERT_TRUE(new_download_dir.CreateUniqueTempDir());
 

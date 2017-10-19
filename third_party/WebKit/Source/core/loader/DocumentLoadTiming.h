@@ -89,7 +89,7 @@ class CORE_EXPORT DocumentLoadTiming final {
 
   double ReferenceMonotonicTime() const { return reference_monotonic_time_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   void MarkRedirectEnd();

@@ -268,6 +268,7 @@ class ChromeBrowsingDataRemoverDelegate
 #endif
   SubTask clear_hostname_resolution_cache_;
   SubTask clear_network_predictor_;
+  SubTask clear_networking_history_;
   SubTask clear_passwords_;
   SubTask clear_passwords_stats_;
   SubTask clear_http_auth_cache_;

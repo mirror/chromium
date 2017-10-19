@@ -55,7 +55,7 @@ class CORE_EXPORT CSSQuadValue : public CSSValue {
            DataEquivalent(bottom_, other.bottom_);
   }
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  protected:
   CSSQuadValue(CSSValue* top,

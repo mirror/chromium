@@ -18,22 +18,6 @@ Polymer({
      */
     networkingPrivate: Object,
 
-    /** @private */
-    shareAllowEnable_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('shareNetworkAllowEnable');
-      }
-    },
-
-    /** @private */
-    shareDefault_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('shareNetworkDefault');
-      }
-    },
-
     /**
      * The GUID when an existing network is being configured. This will be
      * empty when configuring a new network.
@@ -41,17 +25,29 @@ Polymer({
      */
     guid_: String,
 
-    /** @private */
-    enableConnect_: Boolean,
-
-    /** @private */
-    enableSave_: Boolean,
+    /**
+     * The type of network is being configured.
+     * @private {!chrome.networkingPrivate.NetworkType}
+     */
+    type_: String,
 
     /**
-     * The current properties if an existing network is being configured, or
-     * a minimal subset for a new network. Note: network-config may modify
-     * this (specifically .name).
-     * @private {!chrome.networkingPrivate.NetworkProperties}
+     * The network of the network being configured. This is 2-way data bound to
+     * |name| in the network-config element which will set the property.
+     * @private
+     */
+    name_: String,
+
+    /** @private */
+    enableConnect_: String,
+
+    /** @private */
+    enableSave_: String,
+
+    /**
+     * The current properties if an existing network being configured, or
+     * a minimal subset for a new network.
+     * @private {!chrome.networkingPrivate.NetworkProperties|undefined}
      */
     networkProperties_: Object,
   },
@@ -70,14 +66,15 @@ Polymer({
 
     // Set networkProperties for new configurations and for existing
     // configurations until the current properties are loaded.
-    var name = queryParams.get('name') || '';
+    this.name_ = queryParams.get('name') || '';
     var typeParam = queryParams.get('type');
-    var type = (typeParam && CrOnc.getValidType(typeParam)) || CrOnc.Type.WI_FI;
-    assert(type && type != CrOnc.Type.ALL);
+    this.type_ =
+        (typeParam && CrOnc.getValidType(typeParam)) || CrOnc.Type.WI_FI;
+    assert(this.type_ && this.type_ != CrOnc.Type.ALL);
     this.networkProperties_ = {
       GUID: this.guid_,
-      Name: name,
-      Type: type,
+      Name: this.name_,
+      Type: this.type_,
     };
 
     // First focus this page (which will focus a button), then init the config
@@ -103,33 +100,7 @@ Polymer({
    * @private
    */
   getTitle_: function() {
-    return this.networkProperties_.Name ||
-        this.i18n('OncType' + this.networkProperties_.Type);
-  },
-
-  /**
-   * @return {boolean}
-   * @private
-   */
-  isConfigured_: function() {
-    var source = this.networkProperties_.Source;
-    return !!this.guid_ && !!source && source != CrOnc.Source.NONE;
-  },
-
-  /**
-   * @return {string}
-   * @private
-   */
-  getSaveOrConnectLabel_: function() {
-    return this.i18n(this.isConfigured_() ? 'save' : 'networkButtonConnect');
-  },
-
-  /**
-   * @return {boolean}
-   * @private
-   */
-  getSaveOrConnectEnabled_: function() {
-    return this.isConfigured_() ? this.enableSave_ : this.enableConnect_;
+    return this.name_ || this.i18n('OncType' + this.type_);
   },
 
   /** @private */
@@ -138,7 +109,12 @@ Polymer({
   },
 
   /** @private */
-  onSaveOrConnectTap_: function() {
+  onSaveTap_: function() {
+    this.$.networkConfig.saveOrConnect();
+  },
+
+  /** @private */
+  onConnectTap_: function() {
     this.$.networkConfig.saveOrConnect();
   },
 });

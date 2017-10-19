@@ -61,7 +61,7 @@ bool StyleMedia::matchMedium(const String& query) const {
   return screen_eval.Eval(*media);
 }
 
-void StyleMedia::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleMedia) {
   ContextClient::Trace(visitor);
 }
 

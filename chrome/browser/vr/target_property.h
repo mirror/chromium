@@ -7,7 +7,6 @@
 
 namespace vr {
 
-// Must be zero-based as this will be stored in a bitset.
 enum TargetProperty {
   TRANSFORM = 0,
   LAYOUT_OFFSET,
@@ -16,12 +15,6 @@ enum TargetProperty {
   BACKGROUND_COLOR,
   FOREGROUND_COLOR,
   GRID_COLOR,
-  SPINNER_ANGLE_START,
-  SPINNER_ANGLE_SWEEP,
-  SPINNER_ROTATION,
-
-  // This must be last.
-  LAST_TARGET_PROPERTY = SPINNER_ROTATION,
 };
 
 }  // namespace vr

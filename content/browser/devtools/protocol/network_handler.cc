@@ -22,6 +22,9 @@
 #include "content/browser/devtools/protocol/security.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/common/devtools/devtools_network_conditions.h"
+#include "content/common/devtools/devtools_network_controller.h"
+#include "content/common/devtools/devtools_network_transaction.h"
 #include "content/common/navigation_params.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -29,7 +32,6 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_handle.h"
-#include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/service_worker_context.h"
@@ -46,7 +48,6 @@
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_response_headers.h"
-#include "net/http/http_util.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -62,9 +63,6 @@ using SetCookiesCallback = Network::Backend::SetCookiesCallback;
 using DeleteCookiesCallback = Network::Backend::DeleteCookiesCallback;
 using ClearBrowserCookiesCallback =
     Network::Backend::ClearBrowserCookiesCallback;
-
-const char kDevToolsEmulateNetworkConditionsClientId[] =
-    "X-DevTools-Emulate-Network-Conditions-Client-Id";
 
 class CookieRetriever : public base::RefCountedThreadSafe<CookieRetriever> {
   public:
@@ -639,7 +637,8 @@ class NetworkNavigationThrottle : public content::NavigationThrottle {
 
 void ConfigureServiceWorkerContextOnIO() {
   std::set<std::string> headers;
-  headers.insert(kDevToolsEmulateNetworkConditionsClientId);
+  headers.insert(
+      DevToolsNetworkTransaction::kDevToolsEmulateNetworkConditionsClientId);
   content::ServiceWorkerContext::AddExcludedHeadersForFetchEvent(headers);
 }
 
@@ -647,7 +646,6 @@ void ConfigureServiceWorkerContextOnIO() {
 
 NetworkHandler::NetworkHandler(const std::string& host_id)
     : DevToolsDomainHandler(Network::Metainfo::domainName),
-      process_(nullptr),
       host_(nullptr),
       enabled_(false),
       interception_enabled_(false),
@@ -676,10 +674,8 @@ void NetworkHandler::Wire(UberDispatcher* dispatcher) {
   Network::Dispatcher::wire(dispatcher, this);
 }
 
-void NetworkHandler::SetRenderer(RenderProcessHost* process_host,
-                                 RenderFrameHostImpl* frame_host) {
-  process_ = process_host;
-  host_ = frame_host;
+void NetworkHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
+  host_ = host;
 }
 
 Response NetworkHandler::Enable(Maybe<int> max_total_size,
@@ -693,37 +689,40 @@ Response NetworkHandler::Disable() {
   user_agent_ = std::string();
   SetRequestInterceptionEnabled(false, Maybe<protocol::Array<String>>(),
                                 Maybe<protocol::Array<String>>());
-  SetNetworkConditions(nullptr);
-  extra_headers_.clear();
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DevToolsNetworkController::SetNetworkState, host_id_,
+                     nullptr));
   return Response::FallThrough();
 }
 
 Response NetworkHandler::ClearBrowserCache() {
-  if (!process_)
-    return Response::InternalError();
-  content::BrowsingDataRemover* remover =
-      content::BrowserContext::GetBrowsingDataRemover(
-          process_->GetBrowserContext());
-  remover->Remove(base::Time(), base::Time::Max(),
-                  content::BrowsingDataRemover::DATA_TYPE_CACHE,
-                  content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
+  if (host_) {
+    content::BrowsingDataRemover* remover =
+        content::BrowserContext::GetBrowsingDataRemover(
+            host_->GetSiteInstance()->GetProcess()->GetBrowserContext());
+    remover->Remove(base::Time(), base::Time::Max(),
+                    content::BrowsingDataRemover::DATA_TYPE_CACHE,
+                    content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);
+  }
+
   return Response::OK();
 }
 
 void NetworkHandler::ClearBrowserCookies(
     std::unique_ptr<ClearBrowserCookiesCallback> callback) {
-  if (!process_) {
+  if (!host_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &ClearCookiesOnIO,
-          base::Unretained(
-              process_->GetStoragePartition()->GetURLRequestContext()),
-          std::move(callback)));
+      base::BindOnce(&ClearCookiesOnIO,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     std::move(callback)));
 }
 
 void NetworkHandler::GetCookies(Maybe<Array<String>> protocol_urls,
@@ -739,16 +738,16 @@ void NetworkHandler::GetCookies(Maybe<Array<String>> protocol_urls,
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &CookieRetriever::RetrieveCookiesOnIO, retriever,
-          base::Unretained(
-              process_->GetStoragePartition()->GetURLRequestContext()),
-          urls));
+      base::BindOnce(&CookieRetriever::RetrieveCookiesOnIO, retriever,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     urls));
 }
 
 void NetworkHandler::GetAllCookies(
     std::unique_ptr<GetAllCookiesCallback> callback) {
-  if (!process_) {
+  if (!host_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -758,10 +757,10 @@ void NetworkHandler::GetAllCookies(
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &CookieRetriever::RetrieveAllCookiesOnIO, retriever,
-          base::Unretained(
-              process_->GetStoragePartition()->GetURLRequestContext())));
+      base::BindOnce(&CookieRetriever::RetrieveAllCookiesOnIO, retriever,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext())));
 }
 
 void NetworkHandler::SetCookie(const std::string& name,
@@ -774,7 +773,7 @@ void NetworkHandler::SetCookie(const std::string& name,
                                Maybe<std::string> same_site,
                                Maybe<double> expires,
                                std::unique_ptr<SetCookieCallback> callback) {
-  if (!process_) {
+  if (!host_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -786,33 +785,33 @@ void NetworkHandler::SetCookie(const std::string& name,
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &SetCookieOnIO,
-          base::Unretained(
-              process_->GetStoragePartition()->GetURLRequestContext()),
-          name, value, url.fromMaybe(""), domain.fromMaybe(""),
-          path.fromMaybe(""), secure.fromMaybe(false),
-          http_only.fromMaybe(false), same_site.fromMaybe(""),
-          expires.fromMaybe(-1),
-          base::BindOnce(&CookieSetOnIO, std::move(callback))));
+      base::BindOnce(&SetCookieOnIO,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     name, value, url.fromMaybe(""), domain.fromMaybe(""),
+                     path.fromMaybe(""), secure.fromMaybe(false),
+                     http_only.fromMaybe(false), same_site.fromMaybe(""),
+                     expires.fromMaybe(-1),
+                     base::BindOnce(&CookieSetOnIO, std::move(callback))));
 }
 
 void NetworkHandler::SetCookies(
     std::unique_ptr<protocol::Array<Network::CookieParam>> cookies,
     std::unique_ptr<SetCookiesCallback> callback) {
-  if (!process_) {
+  if (!host_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &SetCookiesOnIO,
-          base::Unretained(
-              process_->GetStoragePartition()->GetURLRequestContext()),
-          std::move(cookies),
-          base::BindOnce(&CookiesSetOnIO, std::move(callback))));
+      base::BindOnce(&SetCookiesOnIO,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     std::move(cookies),
+                     base::BindOnce(&CookiesSetOnIO, std::move(callback))));
 }
 
 void NetworkHandler::DeleteCookies(
@@ -821,7 +820,7 @@ void NetworkHandler::DeleteCookies(
     Maybe<std::string> domain,
     Maybe<std::string> path,
     std::unique_ptr<DeleteCookiesCallback> callback) {
-  if (!process_) {
+  if (!host_) {
     callback->sendFailure(Response::InternalError());
     return;
   }
@@ -832,13 +831,14 @@ void NetworkHandler::DeleteCookies(
   }
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &DeleteCookiesOnIO,
-          base::Unretained(
-              process_->GetStoragePartition()->GetURLRequestContext()),
-          name, url.fromMaybe(""), domain.fromMaybe(""), path.fromMaybe(""),
-          base::BindOnce(&DeleteCookiesCallback::sendSuccess,
-                         std::move(callback))));
+      base::BindOnce(&DeleteCookiesOnIO,
+                     base::Unretained(host_->GetProcess()
+                                          ->GetStoragePartition()
+                                          ->GetURLRequestContext()),
+                     name, url.fromMaybe(""), domain.fromMaybe(""),
+                     path.fromMaybe(""),
+                     base::BindOnce(&DeleteCookiesCallback::sendSuccess,
+                                    std::move(callback))));
 }
 
 Response NetworkHandler::SetUserAgentOverride(const std::string& user_agent) {
@@ -848,25 +848,6 @@ Response NetworkHandler::SetUserAgentOverride(const std::string& user_agent) {
     return Response::InvalidParams("Invalid characters found in userAgent");
   }
   user_agent_ = user_agent;
-  return Response::FallThrough();
-}
-
-Response NetworkHandler::SetExtraHTTPHeaders(
-    std::unique_ptr<protocol::Network::Headers> headers) {
-  std::vector<std::pair<std::string, std::string>> new_headers;
-  std::unique_ptr<protocol::DictionaryValue> object = headers->toValue();
-  for (size_t i = 0; i < object->size(); ++i) {
-    auto entry = object->at(i);
-    std::string value;
-    if (!entry.second->asString(&value))
-      return Response::InvalidParams("Invalid header value, string expected");
-    if (!net::HttpUtil::IsValidHeaderName(entry.first))
-      return Response::InvalidParams("Invalid header name");
-    if (!net::HttpUtil::IsValidHeaderValue(value))
-      return Response::InvalidParams("Invalid header value");
-    new_headers.emplace_back(entry.first, value);
-  }
-  extra_headers_.swap(new_headers);
   return Response::FallThrough();
 }
 
@@ -881,17 +862,15 @@ Response NetworkHandler::EmulateNetworkConditions(
     double download_throughput,
     double upload_throughput,
     Maybe<protocol::Network::ConnectionType>) {
-  mojom::NetworkConditionsPtr network_conditions;
-  bool throttling_enabled = offline || latency > 0 || download_throughput > 0 ||
-                            upload_throughput > 0;
-  if (throttling_enabled) {
-    network_conditions = mojom::NetworkConditions::New();
-    network_conditions->offline = offline;
-    network_conditions->latency = base::TimeDelta::FromMilliseconds(latency);
-    network_conditions->download_throughput = download_throughput;
-    network_conditions->upload_throughput = upload_throughput;
-  }
-  SetNetworkConditions(std::move(network_conditions));
+  std::unique_ptr<DevToolsNetworkConditions> conditions(
+      new DevToolsNetworkConditions(offline, std::max(latency, 0.0),
+                                    std::max(download_throughput, 0.0),
+                                    std::max(upload_throughput, 0.0)));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DevToolsNetworkController::SetNetworkState, host_id_,
+                     std::move(conditions)));
+
   return Response::FallThrough();
 }
 
@@ -1049,6 +1028,10 @@ void NetworkHandler::NavigationFailed(
       Page::ResourceTypeEnum::Document, error_string, cancelled);
 }
 
+std::string NetworkHandler::UserAgentOverride() const {
+  return enabled_ ? user_agent_ : std::string();
+}
+
 DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(
     bool enabled,
     Maybe<protocol::Array<std::string>> patterns,
@@ -1135,7 +1118,7 @@ void NetworkHandler::ContinueInterceptedRequest(
     std::unique_ptr<ContinueInterceptedRequestCallback> callback) {
   DevToolsURLRequestInterceptor* devtools_url_request_interceptor =
       DevToolsURLRequestInterceptor::FromBrowserContext(
-          process_->GetBrowserContext());
+          WebContents::FromRenderFrameHost(host_)->GetBrowserContext());
   if (!devtools_url_request_interceptor) {
     callback->sendFailure(Response::InternalError());
     return;
@@ -1233,23 +1216,6 @@ bool NetworkHandler::ShouldCancelNavigation(
     return false;
   canceled_navigation_requests_.erase(it);
   return true;
-}
-
-void NetworkHandler::AppendDevToolsHeaders(net::HttpRequestHeaders* headers) {
-  headers->SetHeader(kDevToolsEmulateNetworkConditionsClientId, host_id_);
-  if (!user_agent_.empty())
-    headers->SetHeader(net::HttpRequestHeaders::kUserAgent, user_agent_);
-  for (auto& entry : extra_headers_)
-    headers->SetHeader(entry.first, entry.second);
-}
-
-void NetworkHandler::SetNetworkConditions(
-    mojom::NetworkConditionsPtr conditions) {
-  if (!process_)
-    return;
-  StoragePartition* partition = process_->GetStoragePartition();
-  mojom::NetworkContext* context = partition->GetNetworkContext();
-  context->SetNetworkConditions(host_id_, std::move(conditions));
 }
 
 }  // namespace protocol

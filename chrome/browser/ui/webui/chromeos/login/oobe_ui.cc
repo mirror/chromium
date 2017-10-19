@@ -8,7 +8,6 @@
 
 #include <memory>
 
-#include "ash/public/cpp/ash_switches.h"
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -536,8 +535,11 @@ void OobeUI::GetLocalizedStrings(base::DictionaryValue* localized_strings) {
                                chromeos::switches::kDisableMdErrorScreen)
                                ? "off"
                                : "on");
-  localized_strings->SetString("showMdLogin",
-                               ash::switches::IsUsingMdLogin() ? "on" : "off");
+  localized_strings->SetString(
+      "showMdLogin", base::CommandLine::ForCurrentProcess()->HasSwitch(
+                         chromeos::switches::kShowMdLogin)
+                         ? "on"
+                         : "off");
 }
 
 void OobeUI::AddWebUIHandler(std::unique_ptr<BaseWebUIHandler> handler) {

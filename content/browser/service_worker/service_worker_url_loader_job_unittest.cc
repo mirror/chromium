@@ -10,7 +10,6 @@
 #include "content/browser/service_worker/embedded_worker_test_helper.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_registration.h"
-#include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/public/common/content_features.h"
@@ -284,6 +283,7 @@ class Helper : public EmbeddedWorkerTestHelper {
  protected:
   void OnFetchEvent(
       int embedded_worker_id,
+      int fetch_event_id,
       const ServiceWorkerFetchRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
@@ -293,8 +293,9 @@ class Helper : public EmbeddedWorkerTestHelper {
     switch (response_mode_) {
       case ResponseMode::kDefault:
         EmbeddedWorkerTestHelper::OnFetchEvent(
-            embedded_worker_id, request, std::move(preload_handle),
-            std::move(response_callback), std::move(finish_callback));
+            embedded_worker_id, fetch_event_id, request,
+            std::move(preload_handle), std::move(response_callback),
+            std::move(finish_callback));
         return;
       case ResponseMode::kBlob:
         response_callback->OnResponse(
@@ -498,9 +499,8 @@ class ServiceWorkerURLLoaderJobTest
         registration_.get(), GURL("https://example.com/service_worker.js"),
         storage()->NewVersionId(), helper_->context()->AsWeakPtr());
     std::vector<ServiceWorkerDatabase::ResourceRecord> records;
-    records.push_back(WriteToDiskCacheSync(
-        storage(), version_->script_url(), storage()->NewResourceId(),
-        {} /* headers */, "I'm the body", "I'm the meta data"));
+    records.push_back(ServiceWorkerDatabase::ResourceRecord(
+        storage()->NewResourceId(), version_->script_url(), 100));
     version_->script_cache_map()->SetResources(records);
     version_->set_fetch_handler_existence(
         ServiceWorkerVersion::FetchHandlerExistence::EXISTS);

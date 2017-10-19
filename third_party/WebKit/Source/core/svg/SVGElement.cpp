@@ -690,7 +690,7 @@ const HeapHashSet<WeakMember<SVGElement>>& SVGElement::InstancesForElement()
 SVGElement* SVGElement::CorrespondingElement() const {
   DCHECK(!HasSVGRareData() || !SvgRareData()->CorrespondingElement() ||
          ContainingShadowRoot());
-  return HasSVGRareData() ? SvgRareData()->CorrespondingElement() : nullptr;
+  return HasSVGRareData() ? SvgRareData()->CorrespondingElement() : 0;
 }
 
 SVGUseElement* SVGElement::CorrespondingUseElement() const {
@@ -1146,7 +1146,7 @@ void SVGElement::InvalidateInstances() {
 
   // Mark all use elements referencing 'element' for rebuilding
   for (SVGElement* instance : set) {
-    instance->SetCorrespondingElement(nullptr);
+    instance->SetCorrespondingElement(0);
 
     if (SVGUseElement* element = instance->CorrespondingUseElement()) {
       if (element->isConnected())
@@ -1350,7 +1350,7 @@ void SVGElement::RemoveAllOutgoingReferences() {
   outgoing_references.clear();
 }
 
-void SVGElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGElement) {
   visitor->Trace(elements_with_relative_lengths_);
   visitor->Trace(attribute_to_property_map_);
   visitor->Trace(svg_rare_data_);

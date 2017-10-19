@@ -116,10 +116,18 @@ void ServiceWorkerGlobalScope::EvaluateClassicScript(
     InstalledScriptsManager::ScriptData script_data;
     InstalledScriptsManager::ScriptStatus status =
         installed_scripts_manager->GetScriptData(script_url, &script_data);
-    if (status == InstalledScriptsManager::ScriptStatus::kFailed) {
-      // This eventually terminates the worker thread.
-      ReportingProxy().DidEvaluateWorkerScript(false);
-      return;
+    switch (status) {
+      case InstalledScriptsManager::ScriptStatus::kTaken:
+        // kTaken should not be returned since requesting the main script should
+        // be the first and no script has been taken until here.
+        NOTREACHED();
+        return;
+      case InstalledScriptsManager::ScriptStatus::kFailed:
+        // This eventually terminates the worker thread.
+        ReportingProxy().DidEvaluateWorkerScript(false);
+        return;
+      case InstalledScriptsManager::ScriptStatus::kSuccess:
+        break;
     }
 
     DCHECK(source_code.IsEmpty());
@@ -283,7 +291,7 @@ void ServiceWorkerGlobalScope::DispatchExtendableEventWithRespondWith(
   wait_until_observer->DidDispatchEvent(false /* event_dispatch_failed */);
 }
 
-void ServiceWorkerGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ServiceWorkerGlobalScope) {
   visitor->Trace(clients_);
   visitor->Trace(registration_);
   WorkerGlobalScope::Trace(visitor);

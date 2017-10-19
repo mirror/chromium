@@ -9,7 +9,7 @@
 #include "core/dom/events/Event.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/fullscreen/Fullscreen.h"
-#include "core/html/media/HTMLVideoElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/page/ChromeClient.h"
 #include "modules/device_orientation/DeviceOrientationData.h"
 #include "modules/device_orientation/DeviceOrientationEvent.h"
@@ -271,7 +271,7 @@ MediaControlsRotateToFullscreenDelegate::ComputeScreenOrientation() const {
   return SimpleOrientation::kUnknown;
 }
 
-void MediaControlsRotateToFullscreenDelegate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsRotateToFullscreenDelegate) {
   EventListener::Trace(visitor);
   visitor->Trace(video_element_);
   visitor->Trace(visibility_observer_);

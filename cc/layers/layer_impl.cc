@@ -63,7 +63,7 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
       should_check_backface_visibility_(false),
       draws_content_(false),
       contributes_to_drawn_render_surface_(false),
-      hit_testable_without_draws_content_(false),
+      should_hit_test_(false),
       is_resized_by_browser_controls_(false),
       viewport_layer_type_(NOT_VIEWPORT_LAYER),
       background_color_(0),
@@ -318,8 +318,7 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
   layer->use_parent_backface_visibility_ = use_parent_backface_visibility_;
   layer->should_check_backface_visibility_ = should_check_backface_visibility_;
   layer->draws_content_ = draws_content_;
-  layer->hit_testable_without_draws_content_ =
-      hit_testable_without_draws_content_;
+  layer->should_hit_test_ = should_hit_test_;
   layer->non_fast_scrollable_region_ = non_fast_scrollable_region_;
   layer->touch_action_region_ = touch_action_region_;
   layer->background_color_ = background_color_;
@@ -380,7 +379,7 @@ void LayerImpl::SetIsResizedByBrowserControls(bool resized) {
   is_resized_by_browser_controls_ = resized;
 }
 
-std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
+std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue);
   result->SetInteger("LayerId", id());
   result->SetString("LayerType", LayerTypeAsString());
@@ -404,8 +403,6 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
   result->Set("Transform", std::move(list));
 
   result->SetBoolean("DrawsContent", draws_content_);
-  result->SetBoolean("HitTestableWithoutDrawsContent",
-                     hit_testable_without_draws_content_);
   result->SetBoolean("Is3dSorted", Is3dSorted());
   result->SetDouble("OPACITY", Opacity());
   result->SetBoolean("ContentsOpaque", contents_opaque_);
@@ -419,13 +416,7 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
     result->Set("TouchRegion", std::move(region));
   }
 
-  return result;
-}
-
-std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
-  std::unique_ptr<base::DictionaryValue> result = LayerAsJson();
-
-  auto list = std::make_unique<base::ListValue>();
+  list = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < test_properties()->children.size(); ++i)
     list->Append(test_properties()->children[i]->LayerTreeAsJson());
   result->Set("Children", std::move(list));
@@ -591,14 +582,16 @@ void LayerImpl::SetDrawsContent(bool draws_content) {
     return;
 
   draws_content_ = draws_content;
+  if (draws_content)
+    SetShouldHitTest(true);
   NoteLayerPropertyChanged();
 }
 
-void LayerImpl::SetHitTestableWithoutDrawsContent(bool should_hit_test) {
-  if (hit_testable_without_draws_content_ == should_hit_test)
+void LayerImpl::SetShouldHitTest(bool should_hit_test) {
+  if (should_hit_test_ == should_hit_test)
     return;
 
-  hit_testable_without_draws_content_ = should_hit_test;
+  should_hit_test_ = should_hit_test;
   NoteLayerPropertyChanged();
 }
 

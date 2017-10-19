@@ -130,7 +130,7 @@ void MediaStreamSource::ConsumeAudio(AudioBus* bus, size_t number_of_frames) {
     consumer->ConsumeAudio(bus, number_of_frames);
 }
 
-void MediaStreamSource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaStreamSource) {
   visitor->Trace(observers_);
 }
 

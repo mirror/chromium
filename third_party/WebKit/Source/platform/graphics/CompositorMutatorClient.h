@@ -21,20 +21,21 @@ class PLATFORM_EXPORT CompositorMutatorClient
   virtual ~CompositorMutatorClient();
 
   void SetMutationUpdate(std::unique_ptr<cc::MutatorOutputState>);
+  // TODO(petermayo): Remove this.  Without CompositorWorker, it becomes
+  // unnecessary.  crbug.com/746212
+  void SetNeedsMutate();
 
   // cc::LayerTreeMutator
-  void SetClient(cc::LayerTreeMutatorClient*);
   void Mutate(base::TimeTicks monotonic_time,
               std::unique_ptr<cc::MutatorInputState>) override;
-  // TODO(majidvp): Remove this when CC knows about timeline input.
-  bool HasAnimators() override;
+  void SetClient(cc::LayerTreeMutatorClient*) override;
 
   CompositorMutator* Mutator() { return mutator_.Get(); }
 
  private:
+  cc::LayerTreeMutatorClient* client_;
   // Accessed by main and compositor threads.
   CrossThreadPersistent<CompositorMutator> mutator_;
-  cc::LayerTreeMutatorClient* client_;
 };
 
 }  // namespace blink

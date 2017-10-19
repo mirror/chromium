@@ -39,6 +39,7 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.ToolbarProgressBar;
@@ -61,10 +62,12 @@ public class BottomToolbarPhone extends ToolbarPhone {
         @Override
         public void onSheetOpened(@StateChangeReason int reason) {
             onPrimaryColorChanged(true);
-            // If the toolbar is focused, switch focus to the bottom sheet before changing the
-            // content description. If the content description is changed while the view is
-            // focused, the new content description is read immediately.
-            if (hasFocus() && !urlHasFocus()) mBottomSheet.requestFocus();
+            if (mUseToolbarHandle) {
+                // If the toolbar is focused, switch focus to the bottom sheet before changing the
+                // content description. If the content description is changed while the view is
+                // focused, the new content description is read immediately.
+                if (hasFocus() && !urlHasFocus()) mBottomSheet.requestFocus();
+            }
         }
 
         @Override
@@ -144,8 +147,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
     /** The toolbar handle view that indicates the toolbar can be pulled upward. */
     private ImageView mToolbarHandleView;
 
-    /** Whether or not the expand button should be used. */
-    private boolean mUseExpandButton;
+    /** Whether or not the toolbar handle should be used. */
+    private boolean mUseToolbarHandle;
 
     /** The shadow above the bottom toolbar. */
     private ImageView mBottomToolbarTopShadow;
@@ -310,7 +313,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      * @return Whether the expand button is currently being used.
      */
     public boolean isUsingExpandButton() {
-        return mUseExpandButton;
+        return !mUseToolbarHandle;
     }
 
     /**
@@ -318,6 +321,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      * @param useLightDrawable If the handle color should be light.
      */
     public void updateHandleTint(boolean useLightDrawable) {
+        if (!mUseToolbarHandle) return;
         mToolbarHandleView.setImageDrawable(useLightDrawable ? mHandleLight : mHandleDark);
     }
 
@@ -508,6 +512,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      *         correctly offset them from the handle that sits above them.
      */
     private int getExtraTopMargin() {
+        if (!mUseToolbarHandle) return 0;
         return getResources().getDimensionPixelSize(R.dimen.bottom_toolbar_top_margin);
     }
 
@@ -709,7 +714,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
         mToolbarHandleView = (ImageView) getRootView().findViewById(R.id.toolbar_handle);
         mToolbarHandleView.setImageDrawable(mHandleDark);
 
-        setUseExpandButton();
+        setUseToolbarHandle();
 
         initBottomToolbarTopShadow();
 
@@ -720,6 +725,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
     public void onNativeLibraryReady() {
         super.onNativeLibraryReady();
 
+        setUseToolbarHandle();
         mNewTabButton.setIsModern();
     }
 
@@ -731,13 +737,14 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
         // TODO(mdjones): Creating a new tab from the tab switcher skips the
         // drawTabSwitcherFadeAnimation which would otherwise make this line unnecessary.
-        if (mTabSwitcherState == STATIC_TAB) mToolbarHandleView.setAlpha(1f);
+        if (mTabSwitcherState == STATIC_TAB && mUseToolbarHandle) mToolbarHandleView.setAlpha(1f);
 
         // The tab switcher's background color should not affect the toolbar handle; it should only
         // switch color based on the static tab's theme color. This is done so fade in/out looks
         // correct.
-        mToolbarHandleView.setImageDrawable(isLightTheme() ? mHandleDark : mHandleLight);
-        if (mUseExpandButton) {
+        if (mUseToolbarHandle) {
+            mToolbarHandleView.setImageDrawable(isLightTheme() ? mHandleDark : mHandleLight);
+        } else {
             ColorStateList tint = isIncognito() ? mLightModeTint : mDarkModeTint;
             mExpandButton.setTint(tint);
         }
@@ -776,8 +783,11 @@ public class BottomToolbarPhone extends ToolbarPhone {
                         ? View.INVISIBLE
                         : View.VISIBLE);
 
-        mToolbarHandleView.setAlpha(1f - progress);
-        if (mUseExpandButton) mExpandButton.setAlpha(1f - progress);
+        if (mUseToolbarHandle) {
+            mToolbarHandleView.setAlpha(1f - progress);
+        } else {
+            mExpandButton.setAlpha(1f - progress);
+        }
 
         updateToolbarBackground(ColorUtils.getColorWithOverlay(
                 getTabThemeColor(), getToolbarColorForVisualState(mVisualState), progress));
@@ -805,7 +815,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
         // the toolbar in Chrome Home does not have an animation overlay component.
         if (mTextureCaptureMode) {
             super.drawTabSwitcherAnimationOverlay(canvas, 0f);
-            if (mUseExpandButton && mExpandButton.getVisibility() != View.GONE) {
+            if (!mUseToolbarHandle && mExpandButton.getVisibility() != View.GONE) {
                 canvas.save();
                 translateCanvasToView(this, mToolbarButtonsContainer, canvas);
                 drawChild(canvas, mExpandButton, SystemClock.uptimeMillis());
@@ -896,22 +906,25 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
     @Override
     protected void onAccessibilityStatusChanged(boolean enabled) {
-        setUseExpandButton();
+        setUseToolbarHandle();
     }
 
     /**
-     * Sets whether or not the expand button is used and updates the handle view and expand button
+     * Sets whether or not the toolbar handle is used and updates the handle view and expand button
      * accordingly.
      */
-    private void setUseExpandButton() {
-        mUseExpandButton = AccessibilityUtil.isAccessibilityEnabled();
+    private void setUseToolbarHandle() {
+        mUseToolbarHandle = !AccessibilityUtil.isAccessibilityEnabled()
+                && !FeatureUtilities.isChromeHomeExpandButtonEnabled();
 
         // This method may be called due to an accessibility state change. Return early if the
         // needed views are null.
         if (mToolbarHandleView == null || mExpandButton == null) return;
 
-        mExpandButton.setVisibility(mUseExpandButton ? View.VISIBLE : View.GONE);
+        mToolbarHandleView.setVisibility(mUseToolbarHandle ? View.VISIBLE : View.GONE);
+        mExpandButton.setVisibility(mUseToolbarHandle ? View.GONE : View.VISIBLE);
 
+        updateToolbarTopMargin();
         updateVisualsForToolbarState();
     }
 
@@ -971,7 +984,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 mToggleTabStackButton.setAlpha(1.f);
                 mToggleTabStackButton.setVisibility(View.VISIBLE);
 
-                if (mUseExpandButton) {
+                if (!mUseToolbarHandle) {
                     if (mTabSwitcherState != ENTERING_TAB_SWITCHER) mExpandButton.setAlpha(1.f);
                     mExpandButton.setVisibility(View.VISIBLE);
                 }
@@ -1105,7 +1118,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
             mToggleTabStackButton.setVisibility(
                     mToolbarButtonVisibilityPercent > 0.f ? View.VISIBLE : View.INVISIBLE);
 
-            if (mUseExpandButton) {
+            if (!mUseToolbarHandle) {
                 if (mTabSwitcherState != ENTERING_TAB_SWITCHER) mExpandButton.setAlpha(buttonAlpha);
                 mExpandButton.setVisibility(
                         mToolbarButtonVisibilityPercent > 0.f ? View.VISIBLE : View.INVISIBLE);
@@ -1114,7 +1127,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
             mToggleTabStackButton.setAlpha(1.f);
             mToggleTabStackButton.setVisibility(View.VISIBLE);
 
-            if (mUseExpandButton) {
+            if (!mUseToolbarHandle) {
                 if (mTabSwitcherState != ENTERING_TAB_SWITCHER) mExpandButton.setAlpha(1.f);
                 mExpandButton.setVisibility(View.VISIBLE);
             }

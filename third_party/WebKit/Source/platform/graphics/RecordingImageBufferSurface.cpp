@@ -23,10 +23,11 @@ namespace blink {
 RecordingImageBufferSurface::RecordingImageBufferSurface(
     const IntSize& size,
     AllowFallback allow_fallback,
+    OpacityMode opacity_mode,
     const CanvasColorParams& color_params)
-    : ImageBufferSurface(size, color_params),
+    : ImageBufferSurface(size, opacity_mode, color_params),
       allow_fallback_(allow_fallback),
-      image_buffer_(nullptr),
+      image_buffer_(0),
       current_frame_pixel_count_(0),
       previous_frame_pixel_count_(0),
       frame_was_cleared_(true),
@@ -97,7 +98,7 @@ void RecordingImageBufferSurface::FallBackToRasterCanvas(
   canvas_fallback_histogram.Count(reason);
 
   fallback_surface_ = WTF::WrapUnique(new UnacceleratedImageBufferSurface(
-      Size(), kInitializeImagePixels, ColorParams()));
+      Size(), GetOpacityMode(), kInitializeImagePixels, ColorParams()));
   // If the fallback surface fails to be created, then early out.
   if (!fallback_surface_->IsValid())
     return;

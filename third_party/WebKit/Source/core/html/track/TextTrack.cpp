@@ -33,7 +33,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/track/CueTimeline.h"
 #include "core/html/track/TextTrackCueList.h"
 #include "core/html/track/TextTrackList.h"
@@ -174,7 +174,7 @@ void TextTrack::RemoveAllCues() {
     GetCueTimeline()->RemoveCues(this, cues_.Get());
 
   for (size_t i = 0; i < cues_->length(); ++i)
-    cues_->AnonymousIndexedGetter(i)->SetTrack(nullptr);
+    cues_->AnonymousIndexedGetter(i)->SetTrack(0);
 
   cues_->RemoveAll();
   if (active_cues_)
@@ -273,7 +273,7 @@ void TextTrack::removeCue(TextTrackCue* cue, ExceptionState& exception_state) {
   // If the cue is active, a timeline needs to be available.
   DCHECK(!cue->IsActive() || GetCueTimeline());
 
-  cue->SetTrack(nullptr);
+  cue->SetTrack(0);
 
   if (GetCueTimeline())
     GetCueTimeline()->RemoveCue(this, cue);
@@ -356,11 +356,11 @@ const AtomicString& TextTrack::InterfaceName() const {
 
 ExecutionContext* TextTrack::GetExecutionContext() const {
   HTMLMediaElement* owner = MediaElement();
-  return owner ? owner->GetExecutionContext() : nullptr;
+  return owner ? owner->GetExecutionContext() : 0;
 }
 
 HTMLMediaElement* TextTrack::MediaElement() const {
-  return track_list_ ? track_list_->Owner() : nullptr;
+  return track_list_ ? track_list_->Owner() : 0;
 }
 
 CueTimeline* TextTrack::GetCueTimeline() const {
@@ -371,7 +371,7 @@ Node* TextTrack::Owner() const {
   return MediaElement();
 }
 
-void TextTrack::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrack) {
   visitor->Trace(cues_);
   visitor->Trace(active_cues_);
   visitor->Trace(track_list_);

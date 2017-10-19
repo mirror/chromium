@@ -45,8 +45,9 @@ class RenderWidgetHostViewGuestTest : public testing::Test {
 
   void SetUp() override {
 #if !defined(OS_ANDROID)
-    ImageTransportFactory::SetFactory(
-        std::make_unique<NoTransportImageTransportFactory>());
+    ImageTransportFactory::InitializeForUnitTests(
+        std::unique_ptr<ImageTransportFactory>(
+            new NoTransportImageTransportFactory));
 #endif
     browser_context_.reset(new TestBrowserContext);
     MockRenderProcessHost* process_host =
@@ -143,8 +144,9 @@ class RenderWidgetHostViewGuestSurfaceTest
 
   void SetUp() override {
 #if !defined(OS_ANDROID)
-    ImageTransportFactory::SetFactory(
-        std::make_unique<NoTransportImageTransportFactory>());
+    ImageTransportFactory::InitializeForUnitTests(
+        std::unique_ptr<ImageTransportFactory>(
+            new NoTransportImageTransportFactory));
 #endif
     browser_context_.reset(new TestBrowserContext);
     MockRenderProcessHost* process_host =

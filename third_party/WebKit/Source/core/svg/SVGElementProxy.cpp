@@ -34,7 +34,7 @@ class SVGElementProxy::IdObserver : public IdTargetObserver {
     clients_.clear();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(clients_);
     visitor->Trace(tree_scope_);
     IdTargetObserver::Trace(visitor);
@@ -177,7 +177,7 @@ void SVGElementProxy::ContentChanged(TreeScope& tree_scope) {
     observer->ContentChanged();
 }
 
-void SVGElementProxy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGElementProxy) {
   visitor->Trace(clients_);
   visitor->Trace(observers_);
   visitor->Trace(document_);
@@ -196,7 +196,7 @@ void SVGElementProxySet::NotifyContentChanged(TreeScope& tree_scope) {
     proxy->ContentChanged(tree_scope);
 }
 
-void SVGElementProxySet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGElementProxySet) {
   visitor->Trace(element_proxies_);
 }
 

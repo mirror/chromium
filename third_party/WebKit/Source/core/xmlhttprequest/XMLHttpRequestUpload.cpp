@@ -25,7 +25,7 @@
 
 #include "core/xmlhttprequest/XMLHttpRequestUpload.h"
 
-#include "core/event_type_names.h"
+#include "core/EventTypeNames.h"
 #include "core/events/ProgressEvent.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/wtf/Assertions.h"
@@ -84,7 +84,7 @@ void XMLHttpRequestUpload::HandleRequestError(const AtomicString& type) {
                           last_total_bytes_to_be_sent_);
 }
 
-void XMLHttpRequestUpload::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XMLHttpRequestUpload) {
   visitor->Trace(xml_http_request_);
   XMLHttpRequestEventTarget::Trace(visitor);
 }

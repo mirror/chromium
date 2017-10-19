@@ -122,7 +122,7 @@ WindowPortLocal::CreateLayerTreeFrameSink() {
   auto* context_factory_private =
       aura::Env::GetInstance()->context_factory_private();
   frame_sink_id_ = context_factory_private->AllocateFrameSinkId();
-  auto frame_sink = std::make_unique<LayerTreeFrameSinkLocal>(
+  auto frame_sink = base::MakeUnique<LayerTreeFrameSinkLocal>(
       frame_sink_id_, context_factory_private->GetHostFrameSinkManager(),
       window_->GetName());
   frame_sink->SetSurfaceChangedCallback(base::Bind(
@@ -180,7 +180,7 @@ void WindowPortLocal::OnSurfaceChanged(const viz::SurfaceInfo& surface_info) {
           ->surface_manager()
           ->reference_factory();
   window_->layer()->SetShowPrimarySurface(surface_info, reference_factory);
-  window_->layer()->SetFallbackSurfaceId(surface_info.id());
+  window_->layer()->SetFallbackSurface(surface_info);
 }
 
 bool WindowPortLocal::ShouldRestackTransientChildren() {

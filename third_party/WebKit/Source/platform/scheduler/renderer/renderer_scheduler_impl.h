@@ -13,7 +13,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/trace_event/trace_log.h"
-#include "build/build_config.h"
 #include "device/base/synchronization/shared_memory_seqlock_buffer.h"
 #include "platform/PlatformExport.h"
 #include "platform/scheduler/base/pollable_thread_safe_flag.h"
@@ -112,10 +111,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void DidAnimateForInputOnCompositorThread() override;
   void SetRendererHidden(bool hidden) override;
   void SetRendererBackgrounded(bool backgrounded) override;
-#if defined(OS_ANDROID)
-  void PauseTimersForAndroidWebView();
-  void ResumeTimersForAndroidWebView();
-#endif
   std::unique_ptr<RendererPauseHandle> PauseRenderer() override
       WARN_UNUSED_RESULT;
   void AddPendingNavigation(NavigatingFrameType type) override;
@@ -155,7 +150,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<MainThreadTaskQueue> CompositorTaskQueue();
   scoped_refptr<MainThreadTaskQueue> LoadingTaskQueue();
   scoped_refptr<MainThreadTaskQueue> TimerTaskQueue();
-  scoped_refptr<MainThreadTaskQueue> V8TaskQueue();
 
   // Returns a new task queue created with given params.
   scoped_refptr<MainThreadTaskQueue> NewTaskQueue(
@@ -548,7 +542,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   scoped_refptr<MainThreadTaskQueue> default_loading_task_queue_;
   scoped_refptr<MainThreadTaskQueue> default_timer_task_queue_;
-  scoped_refptr<MainThreadTaskQueue> v8_task_queue_;
 
   // Note |virtual_time_domain_| is lazily created.
   std::unique_ptr<AutoAdvancingVirtualTimeDomain> virtual_time_domain_;
@@ -576,7 +569,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     TaskCostEstimator loading_task_cost_estimator;
     TaskCostEstimator timer_task_cost_estimator;
     IdleTimeEstimator idle_time_estimator;
-    TraceableState<UseCase, kTracingCategoryNameDefault> current_use_case;
+    UseCase current_use_case;
     Policy current_policy;
     base::TimeTicks current_policy_expiration_time;
     base::TimeTicks estimated_next_frame_begin;
@@ -589,13 +582,13 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     int navigation_task_expected_count;
     ExpensiveTaskPolicy expensive_task_policy;
     bool renderer_hidden;
-    TraceableState<bool, kTracingCategoryNameDefault> renderer_backgrounded;
+    bool renderer_backgrounded;
     bool stopping_when_backgrounded_enabled;
     bool stopped_when_backgrounded;
     bool was_shutdown;
-    TraceableState<bool, kTracingCategoryNameInfo> loading_tasks_seem_expensive;
-    TraceableState<bool, kTracingCategoryNameInfo> timer_tasks_seem_expensive;
-    TraceableState<bool, kTracingCategoryNameDefault> touchstart_expected_soon;
+    bool loading_tasks_seem_expensive;
+    bool timer_tasks_seem_expensive;
+    bool touchstart_expected_soon;
     bool have_seen_a_begin_main_frame;
     bool have_reported_blocking_intervention_in_current_policy;
     bool have_reported_blocking_intervention_since_navigation;
@@ -603,11 +596,10 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool begin_frame_not_expected_soon;
     bool in_idle_period_for_testing;
     bool use_virtual_time;
-    TraceableState<bool, kTracingCategoryNameDefault> is_audio_playing;
+    bool is_audio_playing;
     bool compositor_will_send_main_frame_not_expected;
     bool virtual_time_stopped;
     bool has_navigated;
-    bool pause_timers_for_webview;
     std::unique_ptr<base::SingleSampleMetric> max_queueing_time_metric;
     base::TimeDelta max_queueing_time;
     base::TimeTicks background_status_changed_at;
@@ -616,6 +608,12 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     WakeUpBudgetPool* wake_up_budget_pool;                // Not owned.
     RendererMetricsHelper metrics_helper;
     RendererProcessType process_type;
+    StateTracer<kTracingCategoryNameDefault> use_case_tracer;
+    StateTracer<kTracingCategoryNameDefault> backgrounding_tracer;
+    StateTracer<kTracingCategoryNameDefault> audio_playing_tracer;
+    StateTracer<kTracingCategoryNameDefault> touchstart_expected_soon_tracer;
+    StateTracer<kTracingCategoryNameInfo> loading_tasks_seem_expensive_tracer;
+    StateTracer<kTracingCategoryNameInfo> timer_tasks_seem_expensive_tracer;
   };
 
   struct AnyThread {

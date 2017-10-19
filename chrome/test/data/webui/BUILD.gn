@@ -53,7 +53,6 @@ js2gtest("browser_tests_js_webui") {
     "bluetooth_internals_browsertest.js",
     "certificate_viewer_dialog_test.js",
     "chrome_send_browsertest.js",
-    "cr_components/cr_components_browsertest.js",
     "cr_elements/cr_elements_browsertest.js",
     "engagement/site_engagement_browsertest.js",
     "extensions/cr_extensions_browsertest.js",
@@ -160,12 +159,10 @@ js2gtest("unit_tests_js") {
   if (is_chromeos) {
     sources += [
       "../../../browser/resources/chromeos/braille_ime/braille_ime_unittest.gtestjs",
-      "../../../browser/resources/chromeos/select_to_speak/paragraph_utils_unittest.gtestjs",
       "../../../browser/resources/chromeos/select_to_speak/select_to_speak_unittest.gtestjs",
     ]
     extra_js_files += [
       "../../../browser/resources/chromeos/braille_ime/braille_ime.js",
-      "../../../browser/resources/chromeos/select_to_speak/paragraph_utils.js",
       "../../../browser/resources/chromeos/select_to_speak/select_to_speak.js",
       "../../../browser/resources/chromeos/select_to_speak/test_support.js",
     ]

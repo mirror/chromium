@@ -147,8 +147,7 @@ static PositionType CanonicalPosition(const PositionType& position) {
     return PositionType();
 
   // The new position should be in the same block flow element. Favor that.
-  Element* const original_block =
-      node ? EnclosingBlockFlowElement(*node) : nullptr;
+  Element* const original_block = node ? EnclosingBlockFlowElement(*node) : 0;
   const bool next_is_outside_original_block =
       !next_node->IsDescendantOf(original_block) && next_node != original_block;
   const bool prev_is_outside_original_block =
@@ -539,7 +538,7 @@ VisiblePosition StartOfBlock(const VisiblePosition& visible_position,
   Element* start_block =
       position.ComputeContainerNode()
           ? EnclosingBlock(position.ComputeContainerNode(), rule)
-          : nullptr;
+          : 0;
   return start_block ? VisiblePosition::FirstPositionInNode(*start_block)
                      : VisiblePosition();
 }
@@ -551,7 +550,7 @@ VisiblePosition EndOfBlock(const VisiblePosition& visible_position,
   Element* end_block =
       position.ComputeContainerNode()
           ? EnclosingBlock(position.ComputeContainerNode(), rule)
-          : nullptr;
+          : 0;
   return end_block ? VisiblePosition::LastPositionInNode(*end_block)
                    : VisiblePosition();
 }
@@ -763,11 +762,6 @@ static LayoutUnit BoundingBoxLogicalHeight(LayoutObject* o,
   return o->Style()->IsHorizontalWritingMode() ? rect.Height() : rect.Width();
 }
 
-// TODO(editing-dev): The semantics seems wrong when we're in a one-letter block
-// with first-letter style, e.g., <div>F</div>, where the letter is laid-out in
-// an anonymous first-letter LayoutTextFragment instead of the LayoutObject of
-// the text node. It seems weird to return false in this case.
-// TODO(crbug.com/766448): Change parameter type to |const LayoutObject*|.
 bool HasRenderedNonAnonymousDescendantsWithHeight(LayoutObject* layout_object) {
   LayoutObject* stop = layout_object->NextInPreOrderAfterChildren();
   for (LayoutObject* o = layout_object->SlowFirstChild(); o && o != stop;
@@ -827,15 +821,24 @@ static bool InRenderedText(const PositionTemplate<Strategy>& position) {
   const LayoutText* text_layout_object = ToLayoutText(layout_object);
   const int text_offset =
       offset_in_node - text_layout_object->TextStartOffset();
-  if (!text_layout_object->ContainsCaretOffset(text_offset))
-    return false;
-  // Return false for offsets inside composed characters.
-  // TODO(editing-dev): Previous/NextGraphemeBoundaryOf() work on DOM offsets,
-  // So they should use |offset_in_node| instead of |text_offset|.
-  return text_offset == text_layout_object->CaretMinOffset() ||
-         text_offset == NextGraphemeBoundaryOf(*anchor_node,
-                                               PreviousGraphemeBoundaryOf(
-                                                   *anchor_node, text_offset));
+  for (InlineTextBox* box : InlineTextBoxesOf(*text_layout_object)) {
+    if (text_offset < static_cast<int>(box->Start()) &&
+        !text_layout_object->ContainsReversedText()) {
+      // The offset we're looking for is before this node
+      // this means the offset must be in content that is
+      // not laid out. Return false.
+      return false;
+    }
+    if (box->ContainsCaretOffset(text_offset)) {
+      // Return false for offsets inside composed characters.
+      return text_offset == text_layout_object->CaretMinOffset() ||
+             text_offset == NextGraphemeBoundaryOf(
+                                *anchor_node, PreviousGraphemeBoundaryOf(
+                                                  *anchor_node, text_offset));
+    }
+  }
+
+  return false;
 }
 
 static FloatQuad LocalToAbsoluteQuadOf(const LocalCaretRect& caret_rect) {
@@ -857,16 +860,31 @@ bool RendersInDifferentPosition(const Position& position1,
          LocalToAbsoluteQuadOf(caret_rect2);
 }
 
-// TODO(editing-dev): Share code with IsVisuallyEquivalentCandidate if possible.
+static bool IsVisuallyEmpty(const LayoutObject* layout) {
+  for (LayoutObject* child = layout->SlowFirstChild(); child;
+       child = child->NextSibling()) {
+    if (child->IsBox()) {
+      if (!ToLayoutBox(child)->Size().IsEmpty())
+        return false;
+    } else if (child->IsLayoutInline()) {
+      if (ToLayoutInline(child)->FirstLineBoxIncludingCulling())
+        return false;
+    } else if (child->IsText()) {
+      if (ToLayoutText(child)->HasTextBoxes())
+        return false;
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
+// FIXME: Share code with isCandidate, if possible.
 bool EndsOfNodeAreVisuallyDistinctPositions(const Node* node) {
-  if (!node)
+  if (!node || !node->GetLayoutObject())
     return false;
 
-  LayoutObject* layout_object = node->GetLayoutObject();
-  if (!layout_object)
-    return false;
-
-  if (!layout_object->IsInline())
+  if (!node->GetLayoutObject()->IsInline())
     return true;
 
   // Don't include inline tables.
@@ -879,10 +897,10 @@ bool EndsOfNodeAreVisuallyDistinctPositions(const Node* node) {
     return true;
 
   // There is a VisiblePosition inside an empty inline-block container.
-  return layout_object->IsAtomicInlineLevel() &&
+  return node->GetLayoutObject()->IsAtomicInlineLevel() &&
          CanHaveChildrenForEditing(node) &&
-         !ToLayoutBox(layout_object)->Size().IsEmpty() &&
-         !HasRenderedNonAnonymousDescendantsWithHeight(layout_object);
+         !ToLayoutBox(node->GetLayoutObject())->Size().IsEmpty() &&
+         IsVisuallyEmpty(node->GetLayoutObject());
 }
 
 template <typename Strategy>
@@ -962,8 +980,7 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
 
     // skip position in non-laid out or invisible node
     const LayoutObject* const layout_object =
-        AssociatedLayoutObjectOf(*current_node, current_pos.OffsetInLeafNode(),
-                                 LayoutObjectSide::kFirstLetterIfOnBoundary);
+        AssociatedLayoutObjectOf(*current_node, current_pos.OffsetInLeafNode());
     if (!layout_object ||
         layout_object->Style()->Visibility() != EVisibility::kVisible)
       continue;
@@ -997,7 +1014,7 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
     if (!layout_object->IsText())
       continue;
     const LayoutText* const text_layout_object = ToLayoutText(layout_object);
-    if (!text_layout_object->HasNonCollapsedText())
+    if (!text_layout_object->FirstTextBox())
       continue;
     const unsigned text_start_offset = text_layout_object->TextStartOffset();
     if (current_node != start_node) {
@@ -1053,9 +1070,26 @@ static bool DoesContinueOnNextLine(const LayoutText& text_layout_object,
   return true;
 }
 
+// Returns true if |text_layout_object| has visible first-letter.
+bool HasVisibleFirstLetter(const LayoutText& text_layout_object) {
+  if (!text_layout_object.IsTextFragment())
+    return false;
+  const LayoutTextFragment& layout_text_fragment =
+      ToLayoutTextFragment(text_layout_object);
+  if (!layout_text_fragment.IsRemainingTextLayoutObject())
+    return false;
+  const LayoutObject* first_letter_layout_object =
+      layout_text_fragment.GetFirstLetterPseudoElement()->GetLayoutObject();
+  if (!first_letter_layout_object)
+    return false;
+  return first_letter_layout_object->Style()->Visibility() ==
+         EVisibility::kVisible;
+}
+
 // Returns true when both of the following hold:
 // (i)  |offset_in_node| is not the first offset in |text_layout_object|
 // (ii) |offset_in_node| and |offset_in_node - 1| are different caret positions
+// TODO(editing-dev): Document the behavior when there is ::first-letter.
 static bool CanBeBackwardCaretPosition(const LayoutText* text_layout_object,
                                        int offset_in_node) {
   const unsigned text_start_offset = text_layout_object->TextStartOffset();
@@ -1063,8 +1097,15 @@ static bool CanBeBackwardCaretPosition(const LayoutText* text_layout_object,
   const unsigned text_offset = offset_in_node - text_start_offset;
   InlineTextBox* const last_text_box = text_layout_object->LastTextBox();
   for (InlineTextBox* box : InlineTextBoxesOf(*text_layout_object)) {
-    if (text_offset == box->Start())
+    if (text_offset == box->Start()) {
+      if (HasVisibleFirstLetter(*text_layout_object)) {
+        // |offset_in_node| is at start of remaining text of
+        // |Text| node with :first-letter.
+        DCHECK_GE(offset_in_node, 1);
+        return true;
+      }
       continue;
+    }
     if (text_offset <= box->Start() + box->Len()) {
       if (text_offset > box->Start())
         return true;
@@ -1180,7 +1221,7 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
     if (!layout_object->IsText())
       continue;
     const LayoutText* const text_layout_object = ToLayoutText(layout_object);
-    if (!text_layout_object->HasNonCollapsedText())
+    if (!text_layout_object->FirstTextBox())
       continue;
     const unsigned text_start_offset = text_layout_object->TextStartOffset();
     if (current_node != start_node) {
@@ -1325,6 +1366,8 @@ static bool IsVisuallyEquivalentCandidateAlgorithm(
       layout_object->IsLayoutGrid()) {
     if (ToLayoutBlock(layout_object)->LogicalHeight() ||
         IsHTMLBodyElement(*anchor_node)) {
+      // TODO(editing-dev): It seems wrong to check physical appearance, e.g.,
+      // height, during position canonicalization. Find an alternative.
       if (!HasRenderedNonAnonymousDescendantsWithHeight(layout_object))
         return position.AtFirstEditingPositionForNode();
       return HasEditableStyle(*anchor_node) && AtEditingBoundary(position);

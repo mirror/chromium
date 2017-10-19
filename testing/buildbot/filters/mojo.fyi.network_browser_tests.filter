@@ -69,7 +69,6 @@
 # Timed out tests.
 -ActivityLogApiTest.TriggerEvent
 -AllProcesses/MemlogBrowserTest.EndToEnd/0
--AllProcesses/MemlogBrowserTest.EndToEndTracing/0
 -AllUrlsApiTest.RegularExtensions
 -AllUrlsApiTest.WhitelistedExtension
 -AppApiTest.ClientRedirectToAppFromExtension
@@ -204,7 +203,6 @@
 -BrowserCloseManagerWithDownloadsBrowserTest/BrowserCloseManagerWithDownloadsBrowserTest.TestWithOffTheRecordWindowAndRegularDownload/0
 -BrowserCloseManagerWithDownloadsBrowserTest/BrowserCloseManagerWithDownloadsBrowserTest.TestWithOffTheRecordWindowAndRegularDownload/1
 -BrowserOnly/MemlogBrowserTest.EndToEnd/0
--BrowserOnly/MemlogBrowserTest.EndToEndTracing/0
 -BrowserTest.CancelBeforeUnloadResetsURL
 -BrowserTest.InterstitialCancelsGuestViewDialogs
 -BrowsingDataRemoverBrowserTest.Database
@@ -813,7 +811,6 @@
 -JavaScript/ExtensionBindingsApiTest.ApiEnums/0
 -JavaScript/ExtensionBindingsApiTest.EventOverriding/0
 -JavaScript/ExtensionBindingsApiTest.ExceptionInHandlerShouldNotCrash/0
--JavaScript/ExtensionBindingsApiTest.ExtensionSubframeGetsBindings/0
 -JavaScript/ExtensionBindingsApiTest.InternalAPIsNotOnChromeObject/0
 -JavaScript/ExtensionBindingsApiTest.LastError/0
 -JavaScript/ExtensionBindingsApiTest.ModuleSystem/0
@@ -930,7 +927,6 @@
 -Native/ExtensionBindingsApiTest.ApiEnums/0
 -Native/ExtensionBindingsApiTest.EventOverriding/0
 -Native/ExtensionBindingsApiTest.ExceptionInHandlerShouldNotCrash/0
--Native/ExtensionBindingsApiTest.ExtensionSubframeGetsBindings/0
 -Native/ExtensionBindingsApiTest.InternalAPIsNotOnChromeObject/0
 -Native/ExtensionBindingsApiTest.LastError/0
 -Native/ExtensionBindingsApiTest.ModuleSystem/0
@@ -1556,7 +1552,6 @@
 -StreamsPrivateApiTest.FileURL
 -StreamsPrivateApiTest.Headers
 -StreamsPrivateApiTest.Navigate
--SymantecMessageSSLUITest.ManySubresources
 -SymantecMessageSSLUITest.PostJune2016
 -SymantecMessageSSLUITest.PreJune2016
 -SymantecMessageSSLUITest.Subresource
@@ -1961,19 +1956,9 @@
 -ExtensionURLRewriteBrowserTest.BookmarksURLOverride
 -ExtensionURLRewriteBrowserTest.NewTabPageURLOverride
 -ExtensionUnloadBrowserTest.UnloadWithContentScripts
--ExtensionWebstorePrivateApiTest.AppInstallBubble
--ExtensionWebstorePrivateApiTest.BeginInstall
--ExtensionWebstorePrivateApiTest.EmptyCrx
 -ExtensionWebstorePrivateApiTest.IconUrl
--ExtensionWebstorePrivateApiTest.IncorrectManifest1
--ExtensionWebstorePrivateApiTest.IncorrectManifest2
 -ExtensionWebstorePrivateApiTest.InstallAccepted
--ExtensionWebstorePrivateApiTest.InstallCancelled
--ExtensionWebstorePrivateApiTest.InstallLocalized
--ExtensionWebstorePrivateApiTest.InstallTheme
 -ExtensionWebstorePrivateApiTest.MissingDownloadDir
--ExtensionWebstorePrivateApiTestChild.InstallBlocked
--ExtensionWebstorePrivateApiTestSupervised.InstallBlocked
 -ExternallyConnectableMessagingTest.EnablingAndDisabling
 -ExternallyConnectableMessagingTest.FromIframeWithPermission
 -ExternallyConnectableMessagingTest.FromIframeWithoutPermission
@@ -2002,7 +1987,6 @@
 -ImageFetcherImplBrowserTest.MultipleFetch
 -ImageFetcherImplBrowserTest.NormalFetch
 -InProcessBrowserTest.ExternalConnectionFail
--InstantThemeTest.ThemeBackgroundAccess
 -IsolatedAppTest.CookieIsolation
 -JavaScriptBindings/ExternallyConnectableMessagingTest.EnablingAndDisabling/0
 -JavaScriptBindings/ExternallyConnectableMessagingTest.FromIframeWithPermission/0
@@ -2149,7 +2133,6 @@
 -SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/0
 -SSLUIWorkerFetchTest.TestUnsafeContentsInWorkerWithUserException/1
 -SafeBrowsingServiceTest.Prefetch
--SafeJsonParserTest.Parse
 -SecurityStateTabHelperTest.BrokenHTTPS
 -SecurityStateTabHelperTest.MixedContentWithSHA1Cert
 -SecurityStateTabHelperTest.PasswordSecurityLevelDowngradedOnFilesystemUrl
@@ -2202,15 +2185,12 @@
 -WebstoreInlineInstallerListenerTest.InstallStageListenerTest
 -WebstoreInlineInstallerRedirectTest.NoRedirectDataWhenSafeBrowsingDisabled
 -WebstoreInlineInstallerTest.AllowInlineInstallFromFullscreenForBrowser
--WebstoreInlineInstallerTest.BlockInlineInstallFromFullscreenForTab
 -WebstoreInlineInstallerTest.ReinstallDisabledExtension
 -WebstoreReinstallerBrowserTest.TestWebstoreReinstall
 -WebstoreStartupInstallUnpackFailureTest.WebstoreStartupInstallUnpackFailureTest
 -WebstoreStartupInstallerSupervisedUsersTest.InstallProhibited
 -WebstoreStartupInstallerTest.Install
 -WebstoreStartupInstallerTest.InstallFromHostedApp
--WebstoreStartupInstallerTest.InstallNotAllowedFromNonVerifiedDomains
--WebstoreStartupInstallerTest.InstallNotSupported
 -WindowOpenApiTest.BrowserIsApp
 -WindowOpenApiTest.PopupBlockingExtension
 -WindowOpenApiTest.WindowOpenPopupDefault

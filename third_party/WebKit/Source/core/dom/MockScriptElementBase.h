@@ -53,9 +53,7 @@ class MockScriptElementBase
                void(HTMLScriptElementOrSVGScriptElement&));
   MOCK_CONST_METHOD0(Loader, ScriptLoader*());
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ScriptElementBase::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ScriptElementBase::Trace(visitor); }
 };
 
 }  // namespace blink

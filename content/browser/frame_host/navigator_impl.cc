@@ -321,24 +321,24 @@ bool NavigatorImpl::NavigateToEntry(
   if (frame_tree_node->IsMainFrame()) {
     const GURL& virtual_url = entry.GetVirtualURL();
     if (!virtual_url.is_valid() && !virtual_url.is_empty()) {
-      LOG(WARNING) << "Refusing to load for invalid virtual URL: "
-                   << virtual_url.possibly_invalid_spec();
+      DLOG(WARNING) << "Refusing to load for invalid virtual URL: "
+                    << virtual_url.possibly_invalid_spec().substr(0, 1024);
       return false;
     }
   }
 
   // Don't attempt to navigate to non-empty invalid URLs.
   if (!dest_url.is_valid() && !dest_url.is_empty()) {
-    LOG(WARNING) << "Refusing to load invalid URL: "
-                 << dest_url.possibly_invalid_spec();
+    DLOG(WARNING) << "Refusing to load invalid URL: "
+                  << dest_url.possibly_invalid_spec().substr(0, 1024);
     return false;
   }
 
   // The renderer will reject IPC messages with URLs longer than
   // this limit, so don't attempt to navigate with a longer URL.
   if (dest_url.spec().size() > url::kMaxURLChars) {
-    LOG(WARNING) << "Refusing to load URL as it exceeds " << url::kMaxURLChars
-                 << " characters.";
+    DLOG(WARNING) << "Refusing to load URL as it exceeds " << url::kMaxURLChars
+                  << " characters.";
     return false;
   }
 
@@ -606,8 +606,7 @@ void NavigatorImpl::DidNavigate(
   // error page.  In that case, the SiteInstance can still be considered unused
   // until a navigation to a real page.
   SiteInstanceImpl* site_instance = render_frame_host->GetSiteInstance();
-  if (!site_instance->HasSite() &&
-      SiteInstanceImpl::ShouldAssignSiteForURL(params.url) &&
+  if (!site_instance->HasSite() && ShouldAssignSiteForURL(params.url) &&
       !params.url_is_unreachable) {
     site_instance->SetSite(params.url);
   }
@@ -700,6 +699,17 @@ void NavigatorImpl::DidNavigate(
     delegate_->DidNavigateAnyFramePostCommit(render_frame_host, details,
                                              params);
   }
+}
+
+bool NavigatorImpl::ShouldAssignSiteForURL(const GURL& url) {
+  // about:blank should not "use up" a new SiteInstance.  The SiteInstance can
+  // still be used for a normal web site.
+  if (url == url::kAboutBlankURL)
+    return false;
+
+  // The embedder will then have the opportunity to determine if the URL
+  // should "use up" the SiteInstance.
+  return GetContentClient()->browser()->ShouldAssignSiteForURL(url);
 }
 
 void NavigatorImpl::RequestOpenURL(
@@ -915,7 +925,7 @@ void NavigatorImpl::RequestTransferURL(
     frame_entry = new FrameNavigationEntry(
         node->unique_name(), -1, -1, nullptr,
         static_cast<SiteInstanceImpl*>(source_site_instance), dest_url,
-        referrer_to_use, redirect_chain, PageState(), method, -1);
+        referrer_to_use, method, -1);
   }
   NavigateToEntry(node, *frame_entry, *entry.get(), ReloadType::NONE, false,
                   false, false, post_body);

@@ -231,7 +231,7 @@ class TableViewTest : public ViewsTestBase {
     parent->Layout();
     helper_.reset(new TableViewTestHelper(table_));
 
-    widget_ = std::make_unique<Widget>();
+    widget_ = base::MakeUnique<Widget>();
     Widget::InitParams params = CreateParams(Widget::InitParams::TYPE_WINDOW);
     params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
     params.bounds = gfx::Rect(0, 0, 650, 650);
@@ -1278,7 +1278,7 @@ class TableViewFocusTest : public TableViewTest {
 };
 
 WidgetDelegate* TableViewFocusTest::GetWidgetDelegate(Widget* widget) {
-  delegate_ = std::make_unique<RemoveFocusChangeListenerDelegate>(widget);
+  delegate_ = base::MakeUnique<RemoveFocusChangeListenerDelegate>(widget);
   return delegate_.get();
 }
 

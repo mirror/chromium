@@ -171,32 +171,38 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
     LocalFrame* frame,
     const KURL& url,
     const String& user_agent,
+    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy,
     PaintWorkletPendingGeneratorRegistry* pending_generator_registry,
     size_t global_scope_number) {
-  auto* global_scope =
-      new PaintWorkletGlobalScope(frame, url, user_agent, isolate,
+  PaintWorkletGlobalScope* paint_worklet_global_scope =
+      new PaintWorkletGlobalScope(frame, url, user_agent,
+                                  std::move(security_origin), isolate,
                                   reporting_proxy, pending_generator_registry);
   String context_name("PaintWorklet #");
   context_name.append(String::Number(global_scope_number));
-  global_scope->ScriptController()->InitializeContextIfNeeded(context_name);
+  paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded(
+      context_name);
   MainThreadDebugger::Instance()->ContextCreated(
-      global_scope->ScriptController()->GetScriptState(),
-      global_scope->GetFrame(), global_scope->GetSecurityOrigin());
-  return global_scope;
+      paint_worklet_global_scope->ScriptController()->GetScriptState(),
+      paint_worklet_global_scope->GetFrame(),
+      paint_worklet_global_scope->GetSecurityOrigin());
+  return paint_worklet_global_scope;
 }
 
 PaintWorkletGlobalScope::PaintWorkletGlobalScope(
     LocalFrame* frame,
     const KURL& url,
     const String& user_agent,
+    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy,
     PaintWorkletPendingGeneratorRegistry* pending_generator_registry)
     : MainThreadWorkletGlobalScope(frame,
                                    url,
                                    user_agent,
+                                   std::move(security_origin),
                                    isolate,
                                    reporting_proxy),
       pending_generator_registry_(pending_generator_registry) {}
@@ -307,7 +313,7 @@ double PaintWorkletGlobalScope::devicePixelRatio() const {
   return GetFrame()->DevicePixelRatio();
 }
 
-void PaintWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PaintWorkletGlobalScope) {
   visitor->Trace(paint_definitions_);
   visitor->Trace(pending_generator_registry_);
   MainThreadWorkletGlobalScope::Trace(visitor);

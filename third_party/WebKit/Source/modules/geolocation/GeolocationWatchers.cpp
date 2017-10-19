@@ -9,7 +9,7 @@
 
 namespace blink {
 
-void GeolocationWatchers::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(GeolocationWatchers) {
   visitor->Trace(id_to_notifier_map_);
   visitor->Trace(notifier_to_id_map_);
 }
@@ -34,7 +34,7 @@ GeoNotifier* GeolocationWatchers::Find(int id) {
   DCHECK_GT(id, 0);
   IdToNotifierMap::iterator iter = id_to_notifier_map_.find(id);
   if (iter == id_to_notifier_map_.end())
-    return nullptr;
+    return 0;
   return iter->value;
 }
 

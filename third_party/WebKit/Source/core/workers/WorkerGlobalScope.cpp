@@ -87,7 +87,7 @@ KURL WorkerGlobalScope::CompleteURL(const String& url) const {
   if (url.IsNull())
     return KURL();
   // Always use UTF-8 in Workers.
-  return KURL(BaseURL(), url);
+  return KURL(url_, url);
 }
 
 void WorkerGlobalScope::EvaluateClassicScript(
@@ -254,6 +254,8 @@ WorkerGlobalScope::LoadingScriptFromInstalledScriptsManager(
       GetThread()->GetInstalledScriptsManager()->GetScriptData(script_url,
                                                                &script_data);
   switch (status) {
+    case InstalledScriptsManager::ScriptStatus::kTaken:
+      return LoadResult::kNotHandled;
     case InstalledScriptsManager::ScriptStatus::kFailed:
       return LoadResult::kFailed;
     case InstalledScriptsManager::ScriptStatus::kSuccess:
@@ -379,13 +381,13 @@ WorkerGlobalScope::WorkerGlobalScope(
       event_queue_(WorkerEventQueue::Create(this)),
       timers_(TaskRunnerHelper::Get(TaskType::kJavascriptTimer, this)),
       time_origin_(time_origin),
-      font_selector_(OffscreenFontSelector::Create(this)) {
+      font_selector_(OffscreenFontSelector::Create()) {
   InstanceCounters::IncrementCounter(
       InstanceCounters::kWorkerGlobalScopeCounter);
   SetSecurityOrigin(SecurityOrigin::Create(url_));
-  if (creation_params->starter_origin) {
+  if (creation_params->starter_origin_privilege_data) {
     GetSecurityOrigin()->TransferPrivilegesFrom(
-        creation_params->starter_origin->CreatePrivilegeData());
+        std::move(creation_params->starter_origin_privilege_data));
   }
   ApplyContentSecurityPolicyFromVector(
       *creation_params->content_security_policy_parsed_headers);
@@ -451,7 +453,11 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
 }
 
-void WorkerGlobalScope::Trace(blink::Visitor* visitor) {
+KURL WorkerGlobalScope::VirtualCompleteURL(const String& url) const {
+  return CompleteURL(url);
+}
+
+DEFINE_TRACE(WorkerGlobalScope) {
   visitor->Trace(location_);
   visitor->Trace(navigator_);
   visitor->Trace(event_queue_);

@@ -32,10 +32,7 @@ class PLATFORM_EXPORT CompositedLayerRasterInvalidator {
 
   void Generate(const gfx::Rect& layer_bounds,
                 const Vector<const PaintChunk*>&,
-                const PropertyTreeState&,
-                // For SPv175 only. For SPv2 we can get it from the first chunk
-                // which always exists.
-                const DisplayItemClient* layer_display_item_client = nullptr);
+                const PropertyTreeState&);
 
   bool Matches(const PaintChunk& paint_chunk) const {
     return paint_chunks_info_.size() && paint_chunks_info_[0].is_cacheable &&
@@ -74,7 +71,7 @@ class PLATFORM_EXPORT CompositedLayerRasterInvalidator {
                                    PaintInvalidationReason);
   void InvalidateRasterForOldChunk(const PaintChunkInfo&,
                                    PaintInvalidationReason);
-  void InvalidateRasterForWholeLayer(const DisplayItemClient*);
+  void InvalidateRasterForWholeLayer();
 
   RasterInvalidationFunction raster_invalidation_function_;
   gfx::Rect layer_bounds_;

@@ -67,9 +67,11 @@ void BroadcastChannel::postMessage(const ScriptValue& message,
   if (exception_state.HadException())
     return;
 
-  BlinkCloneableMessage msg;
-  msg.message = std::move(value);
-  remote_client_->OnMessage(std::move(msg));
+  Vector<char> data;
+  value->ToWireBytes(data);
+  Vector<uint8_t> mojo_data;
+  mojo_data.AppendVector(data);
+  remote_client_->OnMessage(std::move(mojo_data));
 }
 
 void BroadcastChannel::close() {
@@ -90,15 +92,19 @@ void BroadcastChannel::ContextDestroyed(ExecutionContext*) {
   close();
 }
 
-void BroadcastChannel::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BroadcastChannel) {
   ContextLifecycleObserver::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
 }
 
-void BroadcastChannel::OnMessage(BlinkCloneableMessage message) {
+void BroadcastChannel::OnMessage(const WTF::Vector<uint8_t>& message) {
   // Queue a task to dispatch the event.
+  RefPtr<SerializedScriptValue> value = SerializedScriptValue::Create(
+      message.IsEmpty() ? nullptr
+                        : reinterpret_cast<const char*>(&message.front()),
+      message.size());
   MessageEvent* event = MessageEvent::Create(
-      nullptr, std::move(message.message),
+      nullptr, std::move(value),
       GetExecutionContext()->GetSecurityOrigin()->ToString());
   event->SetTarget(this);
   bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(

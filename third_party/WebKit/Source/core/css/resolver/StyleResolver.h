@@ -145,7 +145,7 @@ class CORE_EXPORT StyleResolver final
 
   static bool HasAuthorBackground(const StyleResolverState&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit StyleResolver(Document&);
@@ -165,7 +165,6 @@ class CORE_EXPORT StyleResolver final
                                     unsigned rules_to_include);
   void MatchRuleSet(ElementRuleCollector&, RuleSet*);
   void MatchUARules(ElementRuleCollector&);
-  void MatchUserRules(ElementRuleCollector&);
   void MatchScopedRules(const Element&, ElementRuleCollector&);
   void MatchAuthorRules(const Element&, ElementRuleCollector&);
   void MatchAuthorRulesV0(const Element&, ElementRuleCollector&);

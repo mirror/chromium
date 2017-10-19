@@ -8,7 +8,6 @@
 
 #include "base/command_line.h"
 #include "base/memory/ref_counted.h"
-#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/chromeos/extensions/input_method_event_router.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
@@ -77,24 +76,14 @@ class TestListener : public content::NotificationObserver {
 };
 
 class ExtensionInputMethodApiTest : public ExtensionApiTest {
- public:
-  ExtensionInputMethodApiTest() {
-    scoped_feature_list_.InitAndEnableFeature(features::kOptInImeMenu);
-  }
-
-  ~ExtensionInputMethodApiTest() override {}
-
   void SetUpCommandLine(base::CommandLine* command_line) override {
     ExtensionApiTest::SetUpCommandLine(command_line);
     command_line->AppendSwitchASCII(
         extensions::switches::kWhitelistedExtensionID,
         "ilanclmaeigfpnmdlgelmhkpkegdioip");
+    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                    features::kOptInImeMenu.name);
   }
-
- private:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
-  DISALLOW_COPY_AND_ASSIGN(ExtensionInputMethodApiTest);
 };
 
 }  // namespace

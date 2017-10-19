@@ -25,7 +25,7 @@ class MockLayerTreeMutator : public LayerTreeMutator {
                void(base::TimeTicks now,
                     std::unique_ptr<MutatorInputState>& input_state));
   MOCK_METHOD1(SetClient, void(LayerTreeMutatorClient* client));
-  MOCK_METHOD0(HasAnimators, bool());
+  MOCK_METHOD0(TakeMutations, base::Closure());
 };
 
 }  // namespace cc

@@ -12,7 +12,6 @@
 #include "components/viz/client/client_layer_tree_frame_sink.h"
 #include "components/viz/client/hit_test_data_provider.h"
 #include "components/viz/client/local_surface_id_provider.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "content/renderer/mash_util.h"
 #include "content/renderer/render_frame_proxy.h"
 
@@ -79,10 +78,7 @@ void RendererWindowTreeClient::SetVisible(bool visible) {
     return;
 
   visible_ = visible;
-  if (tree_) {
-    tree_->SetWindowVisibility(GetAndAdvanceNextChangeId(), root_window_id_,
-                               visible);
-  }
+  // TODO(sky): determine when window should be updated.
 }
 
 void RendererWindowTreeClient::RequestLayerTreeFrameSink(
@@ -176,8 +172,7 @@ void RendererWindowTreeClient::OnEmbed(
     const base::Optional<viz::LocalSurfaceId>& local_surface_id) {
   root_window_id_ = root->window_id;
   tree_ = std::move(tree);
-  tree_->SetWindowVisibility(GetAndAdvanceNextChangeId(), root_window_id_,
-                             visible_);
+  // TODO(sky): determine when window should be updated.
   for (MusEmbeddedFrame* frame : embedded_frames_)
     frame->OnTreeAvailable();
 
@@ -303,13 +298,7 @@ void RendererWindowTreeClient::OnWindowCursorChanged(ui::Id window_id,
 void RendererWindowTreeClient::OnWindowSurfaceChanged(
     ui::Id window_id,
     const viz::SurfaceInfo& surface_info) {
-  for (MusEmbeddedFrame* embedded_frame : embedded_frames_) {
-    if (embedded_frame->window_id_ == window_id) {
-      embedded_frame->render_frame_proxy_->SetChildFrameSurface(
-          surface_info, viz::SurfaceSequence());
-      return;
-    }
-  }
+  NOTIMPLEMENTED();
 }
 
 void RendererWindowTreeClient::OnDragDropStart(
@@ -347,9 +336,7 @@ void RendererWindowTreeClient::OnDragDropDone() {}
 void RendererWindowTreeClient::OnChangeCompleted(uint32_t change_id,
                                                  bool success) {
   // Don't DCHECK success, as it's possible we'll try to do some operations
-  // after unembedded, which means all operations will fail. Additionally
-  // setting the window visibility may fail for the root frame (the browser
-  // controls the visibility of the root frame).
+  // after unembedded, which means all operations will fail.
 }
 
 void RendererWindowTreeClient::RequestClose(uint32_t window_id) {}

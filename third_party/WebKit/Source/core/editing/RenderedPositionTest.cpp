@@ -47,5 +47,4 @@ TEST_F(RenderedPositionTest, GetSamplePointForVisibility) {
             RenderedPosition::GetSamplePointForVisibility(top, bottom));
 }
 
-#undef MAYBE_IsVisible
 }  // namespace blink

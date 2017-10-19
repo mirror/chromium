@@ -1175,7 +1175,7 @@ IN_PROC_BROWSER_TEST_P(BrowserCloseManagerWithDownloadsBrowserTest,
   {
     base::FilePath path =
         profile_manager->user_data_dir().AppendASCII("test_profile");
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     if (!base::PathExists(path))
       ASSERT_TRUE(base::CreateDirectory(path));
     other_profile =

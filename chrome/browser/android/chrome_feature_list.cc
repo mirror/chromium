@@ -62,10 +62,9 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kCCTRedirectPreconnect,
     &kChromeHomeFeature,
     &kChromeHomeDestroySuggestions,
-    &kChromeHomeBottomNavLabels,
     &kChromeHomeDoodle,
+    &kChromeHomeExpandButton,
     &kChromeHomePromo,
-    &kChromeHomeOptOutSnackbar,
     &kChromeHomeSwipeLogic,
     &kChromeMemexFeature,
     &kContentSuggestionsLargeThumbnail,
@@ -112,6 +111,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kWebPaymentsSingleAppUiSkip,
     &kWebVrAutopresent,
     &kWebVRCardboardSupport,
+    &kXGEOVisibleNetworks,
     &ntp_snippets::kIncreasedVisibility,
     &ntp_snippets::kForeignSessionsSuggestionsFeature,
     &ntp_snippets::kNotificationsFeature,
@@ -173,17 +173,14 @@ const base::Feature kChromeHomeFeature{"ChromeHome",
 const base::Feature kChromeHomeDestroySuggestions{
     "ChromeHomeDestroySuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
 
-const base::Feature kChromeHomeBottomNavLabels{
-    "ChromeHomeBottomNavLabels", base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kChromeHomeDoodle{"ChromeHomeDoodle",
                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
+const base::Feature kChromeHomeExpandButton{"ChromeHomeExpandButton",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kChromeHomePromo{"ChromeHomePromo",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kChromeHomeOptOutSnackbar{
-    "ChromeHomeOptOutSnackbar", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomeSwipeLogic{"ChromeHomeSwipeLogic",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
@@ -284,7 +281,7 @@ const base::Feature kPwaImprovedSplashScreen{"PwaImprovedSplashScreen",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kPwaPersistentNotification{
-    "PwaPersistentNotification", base::FEATURE_DISABLED_BY_DEFAULT};
+    "PwaPersistentNotification", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kReaderModeInCCT{"ReaderModeInCCT",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
@@ -297,9 +294,6 @@ const base::Feature kSpecialLocaleFeature{"SpecialLocale",
 
 const base::Feature kSpecialLocaleWrapper{"SpecialLocaleWrapper",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
-
-const base::Feature kTabModalJsDialog{"TabModalJsDialog",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kTabReparenting{"TabReparenting",
                                     base::FEATURE_ENABLED_BY_DEFAULT};
@@ -324,6 +318,9 @@ const base::Feature kWebVrAutopresent{"WebVrAutopresent",
 
 const base::Feature kWebVRCardboardSupport{"WebVRCardboardSupport",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kXGEOVisibleNetworks{"XGEOVisibleNetworks",
+                                         base::FEATURE_ENABLED_BY_DEFAULT};
 
 static jboolean IsInitialized(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   return !!base::FeatureList::GetInstance();

@@ -11,7 +11,6 @@
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/render_text_wrapper.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
-#include "components/url_formatter/elide_url.h"
 #include "components/url_formatter/url_formatter.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/canvas.h"
@@ -26,17 +25,17 @@ namespace vr {
 
 namespace {
 
-static constexpr float kWidth = 0.672f;
-static constexpr float kHeight = 0.088f;
-static constexpr float kFontHeight = 0.027f;
+static constexpr float kWidth = 0.672;
+static constexpr float kHeight = 0.088;
+static constexpr float kFontHeight = 0.027;
 static constexpr float kBackButtonWidth = kHeight;
-static constexpr float kBackIconSize = 0.0375f;
-static constexpr float kBackIconOffset = 0.005f;
-static constexpr float kFieldSpacing = 0.014f;
-static constexpr float kSecurityIconSize = 0.03f;
-static constexpr float kUrlRightMargin = 0.02f;
-static constexpr float kSeparatorWidth = 0.002f;
-static constexpr float kChipTextLineMargin = kHeight * 0.3f;
+static constexpr float kBackIconSize = 0.0375;
+static constexpr float kBackIconOffset = 0.005;
+static constexpr float kFieldSpacing = 0.014;
+static constexpr float kSecurityIconSize = 0.03;
+static constexpr float kUrlRightMargin = 0.02;
+static constexpr float kSeparatorWidth = 0.002;
+static constexpr float kChipTextLineMargin = kHeight * 0.3;
 static constexpr SkScalar kStrikeThicknessFactor = (SK_Scalar1 / 9);
 
 using security_state::SecurityLevel;
@@ -195,7 +194,7 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
   canvas->drawRRect(round_rect, paint);
 
   // Back button icon.
-  VectorIcon::DrawVectorIcon(
+  DrawVectorIcon(
       &gfx_canvas, vector_icons::kBackArrowIcon, ToPixels(kBackIconSize),
       {ToPixels(kBackButtonWidth / 2 + kBackIconOffset - kBackIconSize / 2),
        ToPixels(kHeight - kBackIconSize) / 2},
@@ -222,11 +221,11 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
       state_.vector_icon != nullptr && state_.should_display_url) {
     gfx::RectF icon_region(left_edge, kHeight / 2 - kSecurityIconSize / 2,
                            kSecurityIconSize, kSecurityIconSize);
-    VectorIcon::DrawVectorIcon(
-        &gfx_canvas, *state_.vector_icon, ToPixels(kSecurityIconSize),
-        {ToPixels(icon_region.x()), ToPixels(icon_region.y())},
-        GetSecurityChipColor(state_.security_level, state_.offline_page,
-                             color_scheme()));
+    DrawVectorIcon(&gfx_canvas, *state_.vector_icon,
+                   ToPixels(kSecurityIconSize),
+                   {ToPixels(icon_region.x()), ToPixels(icon_region.y())},
+                   GetSecurityChipColor(state_.security_level,
+                                        state_.offline_page, color_scheme()));
     security_hit_region_ = icon_region;
     left_edge += kSecurityIconSize + kFieldSpacing;
   }
@@ -296,24 +295,21 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
 
 void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
                               const gfx::Rect& text_bounds) {
+  url::Parsed parsed;
 
   url_formatter::FormatUrlTypes format_types =
       url_formatter::kFormatUrlOmitDefaults;
   if (state_.offline_page)
     format_types |= url_formatter::kFormatUrlOmitHTTPS;
-
-  url::Parsed parsed;
-  const base::string16 unelided_url = url_formatter::FormatUrl(
+  const base::string16 text = url_formatter::FormatUrl(
       state_.gurl, format_types, net::UnescapeRule::NORMAL, &parsed, nullptr,
       nullptr);
 
   int pixel_font_height = texture_size.height() * kFontHeight / kHeight;
-  gfx::FontList font_list;
-  if (!GetFontList(pixel_font_height, unelided_url, &font_list))
-    failure_callback_.Run(UiUnsupportedMode::kUnhandledCodePoint);
 
-  const base::string16 text = url_formatter::ElideUrlSimple(
-      state_.gurl, unelided_url, font_list, text_bounds.width(), &parsed);
+  gfx::FontList font_list;
+  if (!GetFontList(pixel_font_height, text, &font_list))
+    failure_callback_.Run(UiUnsupportedMode::kUnhandledCodePoint);
 
   std::unique_ptr<gfx::RenderText> render_text(CreateRenderText());
   render_text->SetFontList(font_list);
@@ -323,6 +319,21 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
   render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_FORCE_LTR);
   render_text->SetText(text);
   render_text->SetDisplayRect(text_bounds);
+
+  // Until we can properly elide a URL, we need to bail if the origin portion
+  // cannot be displayed in its entirety.
+  base::string16 mandatory_prefix = text;
+  int length = parsed.CountCharactersBefore(url::Parsed::PORT, false);
+  if (length > 0)
+    mandatory_prefix = text.substr(0, length);
+  // Ellipsis-based eliding replaces the last character in the string with an
+  // ellipsis, so to reliably check that the origin is intact, check both length
+  // and string equality.
+  if (render_text->GetDisplayText().size() < mandatory_prefix.size() ||
+      render_text->GetDisplayText().substr(0, mandatory_prefix.size()) !=
+          mandatory_prefix) {
+    failure_callback_.Run(UiUnsupportedMode::kCouldNotElideURL);
+  }
 
   RenderTextWrapper vr_render_text(render_text.get());
   ApplyUrlStyling(text, parsed, state_.security_level, &vr_render_text,

@@ -73,7 +73,7 @@ class UndoStack final : public GarbageCollected<UndoStack> {
 
   UndoStepRange UndoSteps() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   UndoStack();

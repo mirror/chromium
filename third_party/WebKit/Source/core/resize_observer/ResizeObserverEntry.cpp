@@ -17,7 +17,7 @@ ResizeObserverEntry::ResizeObserverEntry(Element* target,
       FloatPoint(content_rect.Location()), FloatSize(content_rect.Size())));
 }
 
-void ResizeObserverEntry::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ResizeObserverEntry) {
   visitor->Trace(target_);
   visitor->Trace(content_rect_);
 }

@@ -39,18 +39,35 @@ class BaseParallelResourceThrottle : public content::ResourceThrottle {
                            bool* defer) override;
   void WillProcessResponse(bool* defer) override;
   const char* GetNameForLogging() const override;
-  bool MustProcessResponseBeforeReadingBody() override;
 
   virtual void CancelResourceLoad();
 
  private:
-  class URLLoaderThrottleHolder;
+  class URLLoaderThrottleDelegateImpl
+      : public content::URLLoaderThrottle::Delegate {
+   public:
+    explicit URLLoaderThrottleDelegateImpl(BaseParallelResourceThrottle* owner)
+        : owner_(owner) {}
+    ~URLLoaderThrottleDelegateImpl() override = default;
+
+    // content::URLLoaderThrottle::Delegate implementation:
+    void CancelWithError(int error_code) override;
+    void Resume() override;
+
+   private:
+    BaseParallelResourceThrottle* const owner_;
+    DISALLOW_COPY_AND_ASSIGN(URLLoaderThrottleDelegateImpl);
+  };
 
   const net::URLRequest* const request_;
   const content::ResourceType resource_type_;
+
+  // The following two members need to outlive |url_loader_throttle_| which
+  // holds raw pointers to them.
+  URLLoaderThrottleDelegateImpl url_loader_throttle_delegate_;
   NetEventLogger net_event_logger_;
 
-  std::unique_ptr<URLLoaderThrottleHolder> url_loader_throttle_holder_;
+  std::unique_ptr<BrowserURLLoaderThrottle> url_loader_throttle_;
 
   DISALLOW_COPY_AND_ASSIGN(BaseParallelResourceThrottle);
 };

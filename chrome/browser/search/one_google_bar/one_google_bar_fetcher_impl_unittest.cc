@@ -7,6 +7,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "base/optional.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -15,14 +16,12 @@
 #include "base/time/time.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_data.h"
 #include "components/google/core/browser/google_url_tracker.h"
-#include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_service_manager_context.h"
+#include "components/safe_json/testing_json_parser.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/data_decoder/public/cpp/testing_json_parser.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -109,11 +108,10 @@ class OneGoogleBarFetcherImplTest : public testing::Test {
 
  private:
   // variations::AppendVariationHeaders and SafeJsonParser require a
-  // threads and a ServiceManagerConnection to be set.
-  content::TestBrowserThreadBundle thread_bundle_;
-  content::TestServiceManagerContext service_manager_context_;
+  // ThreadTaskRunnerHandle to be set.
+  base::MessageLoop message_loop_;
 
-  data_decoder::TestingJsonParser::ScopedFactoryOverride factory_override_;
+  safe_json::TestingJsonParser::ScopedFactoryOverride factory_override_;
 
   net::TestURLFetcherFactory url_fetcher_factory_;
 

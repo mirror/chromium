@@ -51,9 +51,7 @@ class MockPlatformTiming : public DocumentTimeline::PlatformTiming {
   MOCK_METHOD1(WakeAfter, void(double));
   MOCK_METHOD0(ServiceOnNextFrame, void());
 
-  void Trace(blink::Visitor* visitor) {
-    DocumentTimeline::PlatformTiming::Trace(visitor);
-  }
+  DEFINE_INLINE_TRACE() { DocumentTimeline::PlatformTiming::Trace(visitor); }
 };
 
 class AnimationDocumentTimelineTest : public ::testing::Test {
@@ -97,8 +95,9 @@ class AnimationDocumentTimelineTest : public ::testing::Test {
 };
 
 TEST_F(AnimationDocumentTimelineTest, EmptyKeyframeAnimation) {
-  StringKeyframeEffectModel* effect =
-      StringKeyframeEffectModel::Create(StringKeyframeVector());
+  AnimatableValueKeyframeEffectModel* effect =
+      AnimatableValueKeyframeEffectModel::Create(
+          AnimatableValueKeyframeVector());
   KeyframeEffect* keyframe_effect =
       KeyframeEffect::Create(element.Get(), effect, timing);
 
@@ -113,8 +112,9 @@ TEST_F(AnimationDocumentTimelineTest, EmptyKeyframeAnimation) {
 }
 
 TEST_F(AnimationDocumentTimelineTest, EmptyForwardsKeyframeAnimation) {
-  StringKeyframeEffectModel* effect =
-      StringKeyframeEffectModel::Create(StringKeyframeVector());
+  AnimatableValueKeyframeEffectModel* effect =
+      AnimatableValueKeyframeEffectModel::Create(
+          AnimatableValueKeyframeVector());
   timing.fill_mode = Timing::FillMode::FORWARDS;
   KeyframeEffect* keyframe_effect =
       KeyframeEffect::Create(element.Get(), effect, timing);
@@ -349,12 +349,16 @@ TEST_F(AnimationDocumentTimelineTest, PlaybackRateFastWithOriginTime) {
 TEST_F(AnimationDocumentTimelineTest, PauseForTesting) {
   float seek_time = 1;
   timing.fill_mode = Timing::FillMode::FORWARDS;
-  KeyframeEffect* anim1 = KeyframeEffect::Create(
-      element.Get(), StringKeyframeEffectModel::Create(StringKeyframeVector()),
-      timing);
-  KeyframeEffect* anim2 = KeyframeEffect::Create(
-      element.Get(), StringKeyframeEffectModel::Create(StringKeyframeVector()),
-      timing);
+  KeyframeEffect* anim1 =
+      KeyframeEffect::Create(element.Get(),
+                             AnimatableValueKeyframeEffectModel::Create(
+                                 AnimatableValueKeyframeVector()),
+                             timing);
+  KeyframeEffect* anim2 =
+      KeyframeEffect::Create(element.Get(),
+                             AnimatableValueKeyframeEffectModel::Create(
+                                 AnimatableValueKeyframeVector()),
+                             timing);
   Animation* animation1 = timeline->Play(anim1);
   Animation* animation2 = timeline->Play(anim2);
   timeline->PauseAnimationsForTesting(seek_time);
@@ -389,7 +393,7 @@ TEST_F(AnimationDocumentTimelineTest, DelayBeforeAnimationStart) {
 }
 
 TEST_F(AnimationDocumentTimelineTest, UseAnimationAfterTimelineDeref) {
-  Animation* animation = timeline->Play(nullptr);
+  Animation* animation = timeline->Play(0);
   timeline.Clear();
   // Test passes if this does not crash.
   animation->setStartTime(0, false);
@@ -402,8 +406,7 @@ TEST_F(AnimationDocumentTimelineTest, PlayAfterDocumentDeref) {
   timeline = &document->Timeline();
   document = nullptr;
 
-  KeyframeEffect* keyframe_effect =
-      KeyframeEffect::Create(nullptr, nullptr, timing);
+  KeyframeEffect* keyframe_effect = KeyframeEffect::Create(0, nullptr, timing);
   // Test passes if this does not crash.
   timeline->Play(keyframe_effect);
 }

@@ -8,12 +8,10 @@ namespace blink {
 
 NGInlineBreakToken::NGInlineBreakToken(NGInlineNode node,
                                        unsigned item_index,
-                                       unsigned text_offset,
-                                       bool is_forced_break)
+                                       unsigned text_offset)
     : NGBreakToken(kInlineBreakToken, kUnfinished, node),
       item_index_(item_index),
-      text_offset_(text_offset),
-      is_forced_break_(is_forced_break) {
+      text_offset_(text_offset) {
   // Use nullptr for the initial layout, rather than (0, 0) break token.
   DCHECK(item_index || text_offset);
 }

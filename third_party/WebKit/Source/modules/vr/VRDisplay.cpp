@@ -72,7 +72,7 @@ class VRDisplayFrameRequestCallback
     vr_display_->OnMagicWindowVSync(monotonic_time);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(vr_display_);
 
     FrameRequestCallbackCollection::FrameCallback::Trace(visitor);
@@ -1029,7 +1029,7 @@ bool VRDisplay::FocusedOrPresenting() {
   return navigator_vr_->IsFocused() || is_presenting_;
 }
 
-void VRDisplay::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRDisplay) {
   visitor->Trace(navigator_vr_);
   visitor->Trace(capabilities_);
   visitor->Trace(stage_parameters_);

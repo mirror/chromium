@@ -40,8 +40,7 @@ TEST(CanvasColorParamsTest, MatchSkColorSpaceWithGfxColorSpace) {
     for (int iter_pixel_format = 0; iter_pixel_format < 4;
          iter_pixel_format++) {
       CanvasColorParams color_params(canvas_color_spaces[iter_color_space],
-                                     canvas_pixel_formats[iter_pixel_format],
-                                     kNonOpaque);
+                                     canvas_pixel_formats[iter_pixel_format]);
 
       std::unique_ptr<SkColorSpaceXform> color_space_xform_canvas =
           SkColorSpaceXform::New(src_rgb_color_space.get(),

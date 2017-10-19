@@ -33,12 +33,6 @@ TEST(FirstRunDialogControllerTest, SetStatsDefault) {
   EXPECT_TRUE([controller isStatsReportingEnabled]);
 }
 
-TEST(FirstRunDialogControllerTest, MakeDefaultBrowserDefault) {
-  TestController controller(MakeTestController(YES, YES));
-  [controller view];
-  EXPECT_TRUE([controller isMakeDefaultBrowserEnabled]);
-}
-
 TEST(FirstRunDialogControllerTest, ShowBrowser) {
   TestController controller(MakeTestController(YES, YES));
   NSView* checkbox = FindBrowserButton([controller view]);

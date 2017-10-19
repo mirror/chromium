@@ -69,7 +69,7 @@ class CORE_EXPORT DOMException final
   static String GetErrorName(ExceptionCode);
   static String GetErrorMessage(ExceptionCode);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   DOMException(unsigned short code,

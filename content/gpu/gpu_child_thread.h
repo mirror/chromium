@@ -34,9 +34,12 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
-#include "services/ui/gpu/gpu_main.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
 #include "ui/gfx/native_widget_types.h"
+
+namespace gpu {
+class GpuInit;
+}
 
 namespace content {
 class GpuServiceFactory;
@@ -45,10 +48,17 @@ class GpuServiceFactory;
 // these per process. It does process initialization and shutdown. It forwards
 // IPC messages to gpu::GpuChannelManager, which is responsible for issuing
 // rendering commands to the GPU.
-class GpuChildThread : public ChildThreadImpl, public ui::GpuMain::Delegate {
+class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
  public:
+  struct LogMessage {
+    int severity;
+    std::string header;
+    std::string message;
+  };
+  typedef std::vector<LogMessage> DeferredMessages;
+
   GpuChildThread(std::unique_ptr<gpu::GpuInit> gpu_init,
-                 ui::GpuMain::LogMessages deferred_messages);
+                 DeferredMessages deferred_messages);
 
   GpuChildThread(const InProcessChildThreadParams& params,
                  std::unique_ptr<gpu::GpuInit> gpu_init);
@@ -63,8 +73,6 @@ class GpuChildThread : public ChildThreadImpl, public ui::GpuMain::Delegate {
 
   void CreateGpuMainService(ui::mojom::GpuMainAssociatedRequest request);
 
-  bool in_process_gpu() const;
-
   // ChildThreadImpl:.
   bool Send(IPC::Message* msg) override;
 
@@ -73,12 +81,21 @@ class GpuChildThread : public ChildThreadImpl, public ui::GpuMain::Delegate {
       const std::string& name,
       mojo::ScopedInterfaceEndpointHandle handle) override;
 
-  // ui::GpuMain::Delegate:
-  void OnInitializationFailed() override;
-  void OnGpuServiceConnection(viz::GpuServiceImpl* gpu_service) override;
+  // ui::mojom::GpuMain:
+  void CreateGpuService(viz::mojom::GpuServiceRequest request,
+                        ui::mojom::GpuHostPtr gpu_host,
+                        const gpu::GpuPreferences& preferences,
+                        mojo::ScopedSharedBufferHandle activity_flags) override;
+  void CreateFrameSinkManager(
+      viz::mojom::FrameSinkManagerRequest request,
+      viz::mojom::FrameSinkManagerClientPtr client) override;
 
   void BindServiceFactoryRequest(
       service_manager::mojom::ServiceFactoryRequest request);
+
+  gpu::GpuChannelManager* gpu_channel_manager() {
+    return gpu_service_->gpu_channel_manager();
+  }
 
 #if defined(OS_ANDROID)
   static std::unique_ptr<media::AndroidOverlay> CreateAndroidOverlay(
@@ -88,7 +105,10 @@ class GpuChildThread : public ChildThreadImpl, public ui::GpuMain::Delegate {
       media::AndroidOverlayConfig);
 #endif
 
-  ui::GpuMain gpu_main_;
+  std::unique_ptr<gpu::GpuInit> gpu_init_;
+
+  // Error messages collected in gpu_main() before the thread is created.
+  DeferredMessages deferred_messages_;
 
   // ServiceFactory for service_manager::Service hosting.
   std::unique_ptr<GpuServiceFactory> service_factory_;
@@ -98,6 +118,8 @@ class GpuChildThread : public ChildThreadImpl, public ui::GpuMain::Delegate {
       service_factory_bindings_;
 
   AssociatedInterfaceRegistryImpl associated_interfaces_;
+  std::unique_ptr<viz::GpuServiceImpl> gpu_service_;
+  mojo::AssociatedBinding<ui::mojom::GpuMain> gpu_main_binding_;
 
   // Holds a closure that releases pending interface requests on the IO thread.
   base::Closure release_pending_requests_closure_;

@@ -8,7 +8,6 @@
 #include "core/CoreExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -29,12 +28,6 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   // Associate the offset mapping with a simple annotation with the given node
   // as its value.
   void Annotate(const LayoutText*);
-
-  // Annotate the offset range with the given node.
-  void AnnotateRange(unsigned start, unsigned end, const LayoutText*);
-
-  // Annotatie the offset range ending at domain end of the specified length.
-  void AnnotateSuffix(unsigned length, const LayoutText*);
 
   // Append an identity offset mapping of the specified length with null
   // annotation to the builder.
@@ -66,9 +59,6 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   // Composite the offset mapping held by another builder to this builder.
   void Composite(const NGOffsetMappingBuilder&);
 
-  // Set the destination string of the offset mapping.
-  void SetDestinationString(String);
-
   // Finalize and return the offset mapping.
   NGOffsetMappingResult Build() const;
 
@@ -85,9 +75,6 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   // A mock implementation that stores the annotation value of all offsets in
   // the plain way. It will be replaced by a real implementation for efficiency.
   Vector<const LayoutText*> annotation_;
-
-  // The destination string of the offset mapping.
-  String destination_string_;
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMappingBuilder);
 };

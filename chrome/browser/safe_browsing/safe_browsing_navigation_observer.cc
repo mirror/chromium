@@ -270,8 +270,7 @@ void SafeBrowsingNavigationObserver::OnContentSettingChanged(
     std::string resource_identifier) {
   // For all the content settings that can be changed via page info UI, we
   // assume there is a user gesture associated with the content setting change.
-  if (web_contents() &&
-      primary_pattern.Matches(web_contents()->GetLastCommittedURL()) &&
+  if (primary_pattern.Matches(web_contents()->GetLastCommittedURL()) &&
       PageInfoUI::ContentSettingsTypeInPageInfo(content_type)) {
     DidGetUserInteraction(blink::WebInputEvent::kMouseDown);
   }

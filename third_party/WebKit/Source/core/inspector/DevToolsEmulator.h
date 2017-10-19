@@ -28,7 +28,7 @@ class CORE_EXPORT DevToolsEmulator final
  public:
   ~DevToolsEmulator();
   static DevToolsEmulator* Create(WebViewImpl*);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Settings overrides.
   void SetTextAutosizingEnabled(bool);

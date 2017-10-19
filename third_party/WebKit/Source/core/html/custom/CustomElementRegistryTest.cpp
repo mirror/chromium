@@ -18,7 +18,7 @@
 #include "core/html/custom/CustomElementDescriptor.h"
 #include "core/html/custom/CustomElementTestHelpers.h"
 #include "core/testing/DummyPageHolder.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -176,7 +176,7 @@ class LogUpgradeDefinition : public TestCustomElementDefinition {
                 "attr1", "attr2", HTMLNames::contenteditableAttr.LocalName(),
             }) {}
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     TestCustomElementDefinition::Trace(visitor);
     visitor->Trace(element_);
     visitor->Trace(adopted_);
@@ -208,7 +208,7 @@ class LogUpgradeDefinition : public TestCustomElementDefinition {
     Member<Document> old_owner_;
     Member<Document> new_owner_;
 
-    void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_TRACE() {
       visitor->Trace(old_owner_);
       visitor->Trace(new_owner_);
     }

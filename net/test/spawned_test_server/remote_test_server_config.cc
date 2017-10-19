@@ -43,7 +43,7 @@ RemoteTestServerConfig& RemoteTestServerConfig::operator=(
     const RemoteTestServerConfig&) = default;
 
 RemoteTestServerConfig RemoteTestServerConfig::Load() {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   RemoteTestServerConfig result;
 

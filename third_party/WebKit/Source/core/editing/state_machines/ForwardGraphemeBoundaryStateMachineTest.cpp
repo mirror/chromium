@@ -10,8 +10,6 @@
 
 namespace blink {
 
-namespace forward_grapheme_boundary_state_machine_test {
-
 // Notations:
 // | indicates inidicates initial offset position.
 // SOT indicates start of text.
@@ -21,6 +19,7 @@ namespace forward_grapheme_boundary_state_machine_test {
 // [U] indicates regional indicator symbol U.
 // [S] indicates regional indicator symbol S.
 
+namespace {
 // kWatch kVS16, kEye kVS16 are valid standardized variants.
 const UChar32 kWatch = 0x231A;
 const UChar32 kEye = WTF::Unicode::kEyeCharacter;
@@ -39,6 +38,7 @@ const UChar kTrail = 0xDC66;
 const UChar32 kRisU = 0x1F1FA;
 // U+1F1F8 is REGIONAL INDICATOR SYMBOL LETTER S
 const UChar32 kRisS = 0x1F1F8;
+}  // namespace
 
 class ForwardGraphemeBoundaryStatemachineTest
     : public GraphemeStateMachineTestBase {
@@ -712,7 +712,5 @@ TEST_F(ForwardGraphemeBoundaryStatemachineTest, oddNumberedFlags) {
                                    AsCodePoints(kRisS, kRisU)));
   EXPECT_EQ(2, machine.FinalizeAndGetBoundaryOffset());
 }
-
-}  // namespace forward_grapheme_boundary_state_machine_test
 
 }  // namespace blink

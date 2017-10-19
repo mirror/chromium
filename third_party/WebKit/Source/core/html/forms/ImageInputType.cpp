@@ -154,7 +154,7 @@ void ImageInputType::StartResourceLoading() {
 
   LayoutImageResource* image_resource =
       ToLayoutImage(layout_object)->ImageResource();
-  image_resource->SetImageResource(image_loader.GetContent());
+  image_resource->SetImageResource(image_loader.GetImage());
 }
 
 bool ImageInputType::ShouldRespectAlignAttribute() {
@@ -183,11 +183,11 @@ unsigned ImageInputType::Height() const {
 
     // If the image is available, use its height.
     HTMLImageLoader* image_loader = GetElement().ImageLoader();
-    if (image_loader && image_loader->GetContent()) {
-      return image_loader->GetContent()
-          ->IntrinsicSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
-          .Height();
-    }
+    if (image_loader && image_loader->GetImage())
+      return image_loader->GetImage()
+          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr), 1)
+          .Height()
+          .ToUnsigned();
   }
 
   GetElement().GetDocument().UpdateStyleAndLayout();
@@ -206,11 +206,11 @@ unsigned ImageInputType::Width() const {
 
     // If the image is available, use its width.
     HTMLImageLoader* image_loader = GetElement().ImageLoader();
-    if (image_loader && image_loader->GetContent()) {
-      return image_loader->GetContent()
-          ->IntrinsicSize(LayoutObject::ShouldRespectImageOrientation(nullptr))
-          .Width();
-    }
+    if (image_loader && image_loader->GetImage())
+      return image_loader->GetImage()
+          ->ImageSize(LayoutObject::ShouldRespectImageOrientation(nullptr), 1)
+          .Width()
+          .ToUnsigned();
   }
 
   GetElement().GetDocument().UpdateStyleAndLayout();

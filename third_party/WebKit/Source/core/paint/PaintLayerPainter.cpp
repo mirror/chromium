@@ -9,6 +9,7 @@
 #include "core/paint/ClipPathClipper.h"
 #include "core/paint/FilterPainter.h"
 #include "core/paint/LayerClipRecorder.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
@@ -20,7 +21,6 @@
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/CompositingRecorder.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintChunkProperties.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 #include "platform/graphics/paint/SubsequenceRecorder.h"
@@ -254,16 +254,13 @@ static bool ShouldRepaintSubsequence(
   return needs_repaint;
 }
 
-void PaintLayerPainter::AdjustForPaintOffsetTranslation(
+bool PaintLayerPainter::AdjustForPaintOffsetTranslation(
     PaintLayerPaintingInfo& painting_info) {
   if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
-    return;
-  // Paint offset translation for transforms or composited layers is already
-  // taken care of.
-  if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()) ||
-      paint_layer_.PaintsComposited(painting_info.GetGlobalPaintFlags()))
-    return;
-
+    return false;
+  // Paint offset translation for transforms is already taken care of.
+  if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()))
+    return false;
   if (const auto* properties =
           paint_layer_.GetLayoutObject().FirstFragment()->PaintProperties()) {
     if (properties->PaintOffsetTranslation()) {
@@ -274,8 +271,10 @@ void PaintLayerPainter::AdjustForPaintOffsetTranslation(
 
       painting_info.sub_pixel_accumulation =
           ToLayoutSize(paint_layer_.GetLayoutObject().PaintOffset());
+      return true;
     }
   }
+  return false;
 }
 
 PaintResult PaintLayerPainter::PaintLayerContents(
@@ -539,6 +538,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
         fragment.pagination_offset.Move(negative_offset);
       }
     } else if (should_paint_content) {
+      // TODO(wangxianzhu): This is for old slow scrolling. Implement similar
+      // optimization for slimming paint v2.
       should_paint_content = AtLeastOneFragmentIntersectsDamageRect(
           layer_fragments, local_painting_info, paint_flags, offset_from_root);
       if (!should_paint_content)
@@ -1007,13 +1008,13 @@ void PaintLayerPainter::PaintFragmentWithPhase(
         DisplayItem::PaintPhaseToClipLayerFragmentType(phase);
     LayerClipRecorder::BorderRadiusClippingRule clipping_rule;
     switch (phase) {
-      case PaintPhase::kSelfBlockBackgroundOnly:  // Background painting will
-                                                  // handle clipping to self.
-      case PaintPhase::kSelfOutlineOnly:
-      case PaintPhase::kMask:  // Mask painting will handle clipping to self.
+      case kPaintPhaseSelfBlockBackgroundOnly:  // Background painting will
+                                                // handle clipping to self.
+      case kPaintPhaseSelfOutlineOnly:
+      case kPaintPhaseMask:  // Mask painting will handle clipping to self.
         clipping_rule = LayerClipRecorder::kDoNotIncludeSelfForBorderRadius;
         break;
-      case PaintPhase::kClippingMask:
+      case kPaintPhaseClippingMask:
         if (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase) {
           // The ancestor is the thing that needs to clip, so do not include
           // this layer's clips.
@@ -1038,7 +1039,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   // clips, there is no need to go through the remaining painting pipeline.
   // We know that the mask just needs the area bounded by the clip rects to be
   // filled with black.
-  if (clip_recorder && phase == PaintPhase::kClippingMask) {
+  if (clip_recorder && phase == kPaintPhaseClippingMask) {
     FillMaskingFragment(context, clip_rect, *client);
     return;
   }
@@ -1047,8 +1048,8 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   Optional<ScrollRecorder> scroll_recorder;
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    new_cull_rect.Move(painting_info.scroll_offset_accumulation);
     paint_offset += paint_layer_.GetLayoutObject().PaintOffset();
+    new_cull_rect.Move(painting_info.scroll_offset_accumulation);
   } else {
     paint_offset += ToSize(fragment.layer_bounds.Location());
     if (!painting_info.scroll_offset_accumulation.IsZero()) {
@@ -1082,7 +1083,7 @@ void PaintLayerPainter::PaintBackgroundForFragments(
     cache_skipper.emplace(context);
 
   for (auto& fragment : layer_fragments)
-    PaintFragmentWithPhase(PaintPhase::kSelfBlockBackgroundOnly, fragment,
+    PaintFragmentWithPhase(kPaintPhaseSelfBlockBackgroundOnly, fragment,
                            context, fragment.background_rect,
                            local_painting_info, paint_flags, kHasNotClipped);
 }
@@ -1115,16 +1116,16 @@ void PaintLayerPainter::PaintForegroundForFragments(
   // issue paint invalidations in each specific phase in order for interleaving
   // of the fragments to work properly.
   if (selection_only) {
-    PaintForegroundForFragmentsWithPhase(
-        PaintPhase::kSelection, layer_fragments, context, local_painting_info,
-        paint_flags, clip_state);
+    PaintForegroundForFragmentsWithPhase(kPaintPhaseSelection, layer_fragments,
+                                         context, local_painting_info,
+                                         paint_flags, clip_state);
   } else {
     if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
         paint_layer_.NeedsPaintPhaseDescendantBlockBackgrounds()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
       PaintForegroundForFragmentsWithPhase(
-          PaintPhase::kDescendantBlockBackgroundsOnly, layer_fragments, context,
+          kPaintPhaseDescendantBlockBackgroundsOnly, layer_fragments, context,
           local_painting_info, paint_flags, clip_state);
       // Don't set the empty flag if we are not painting the whole background.
       if (!(paint_flags & kPaintLayerPaintingSkipRootBackground)) {
@@ -1142,7 +1143,7 @@ void PaintLayerPainter::PaintForegroundForFragments(
         paint_layer_.NeedsPaintPhaseFloat()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
-      PaintForegroundForFragmentsWithPhase(PaintPhase::kFloat, layer_fragments,
+      PaintForegroundForFragmentsWithPhase(kPaintPhaseFloat, layer_fragments,
                                            context, local_painting_info,
                                            paint_flags, clip_state);
       bool phase_is_empty =
@@ -1152,16 +1153,16 @@ void PaintLayerPainter::PaintForegroundForFragments(
       paint_layer_.SetPreviousPaintPhaseFloatEmpty(phase_is_empty);
     }
 
-    PaintForegroundForFragmentsWithPhase(
-        PaintPhase::kForeground, layer_fragments, context, local_painting_info,
-        paint_flags, clip_state);
+    PaintForegroundForFragmentsWithPhase(kPaintPhaseForeground, layer_fragments,
+                                         context, local_painting_info,
+                                         paint_flags, clip_state);
 
     if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
         paint_layer_.NeedsPaintPhaseDescendantOutlines()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
       PaintForegroundForFragmentsWithPhase(
-          PaintPhase::kDescendantOutlinesOnly, layer_fragments, context,
+          kPaintPhaseDescendantOutlinesOnly, layer_fragments, context,
           local_painting_info, paint_flags, clip_state);
       bool phase_is_empty =
           context.GetPaintController().NewDisplayItemList().size() ==
@@ -1202,7 +1203,7 @@ void PaintLayerPainter::PaintSelfOutlineForFragments(
 
   for (auto& fragment : layer_fragments) {
     if (!fragment.background_rect.IsEmpty())
-      PaintFragmentWithPhase(PaintPhase::kSelfOutlineOnly, fragment, context,
+      PaintFragmentWithPhase(kPaintPhaseSelfOutlineOnly, fragment, context,
                              fragment.background_rect, local_painting_info,
                              paint_flags, kHasNotClipped);
   }
@@ -1230,7 +1231,7 @@ void PaintLayerPainter::PaintMaskForFragments(
   }
 
   for (auto& fragment : layer_fragments)
-    PaintFragmentWithPhase(PaintPhase::kMask, fragment, context,
+    PaintFragmentWithPhase(kPaintPhaseMask, fragment, context,
                            fragment.background_rect, local_painting_info,
                            paint_flags, kHasNotClipped);
 }
@@ -1245,7 +1246,7 @@ void PaintLayerPainter::PaintChildClippingMaskForFragments(
     cache_skipper.emplace(context);
 
   for (auto& fragment : layer_fragments)
-    PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
+    PaintFragmentWithPhase(kPaintPhaseClippingMask, fragment, context,
                            fragment.foreground_rect, local_painting_info,
                            paint_flags, kHasNotClipped);
 }
@@ -1269,12 +1270,12 @@ void PaintLayerPainter::FillMaskingFragment(GraphicsContext& context,
                                             const ClipRect& clip_rect,
                                             const DisplayItemClient& client) {
   DisplayItem::Type type =
-      DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask);
+      DisplayItem::PaintPhaseToDrawingType(kPaintPhaseClippingMask);
   if (DrawingRecorder::UseCachedDrawingIfPossible(context, client, type))
     return;
 
   IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
-  DrawingRecorder recorder(context, client, type, snapped_clip_rect);
+  DrawingRecorder drawing_recorder(context, client, type, snapped_clip_rect);
   context.FillRect(snapped_clip_rect, Color::kBlack);
 }
 

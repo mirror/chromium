@@ -340,7 +340,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   int GetRoutingID() const override;
   gfx::Size GetSize() const override;
   float GetDeviceScaleFactor() const override;
-  float GetZoomLevel() const override;
   const WebPreferences& GetWebkitPreferences() override;
   void SetWebkitPreferences(const WebPreferences& preferences) override;
   blink::WebView* GetWebView() override;
@@ -375,8 +374,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                         const ui::LatencyInfo& latency_info,
                         HandledEventCallback callback) override;
   void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect);
-
-  void UpdateWebViewWithDeviceScaleFactor();
 
  protected:
   // RenderWidget overrides:
@@ -440,7 +437,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   FRIEND_TEST_ALL_PREFIXES(RenderViewImplTest,
                            GetCompositionCharacterBoundsTest);
   FRIEND_TEST_ALL_PREFIXES(RenderViewImplTest, OnNavigationHttpPost);
-  FRIEND_TEST_ALL_PREFIXES(RenderViewImplTest, UpdateDSFAfterSwapIn);
   FRIEND_TEST_ALL_PREFIXES(RenderViewImplScaleFactorTest,
                            ScreenMetricsEmulationWithOriginalDSF1);
   FRIEND_TEST_ALL_PREFIXES(RenderViewImplScaleFactorTest,
@@ -606,6 +602,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
 #else
   void UpdateThemePrefs() {}
 #endif
+
+  void UpdateWebViewWithDeviceScaleFactor();
 
   // Send the appropriate ack to be able discard this input event message.
   void OnDiscardInputEvent(

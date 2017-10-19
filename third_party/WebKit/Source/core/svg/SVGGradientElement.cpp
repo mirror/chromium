@@ -64,7 +64,7 @@ SVGGradientElement::SVGGradientElement(const QualifiedName& tag_name,
   AddToPropertyMap(gradient_units_);
 }
 
-void SVGGradientElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGGradientElement) {
   visitor->Trace(gradient_transform_);
   visitor->Trace(spread_method_);
   visitor->Trace(gradient_units_);

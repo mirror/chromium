@@ -112,7 +112,7 @@ WebStateImpl::~WebStateImpl() {
   ClearWebUI();
 
   for (auto& observer : observers_)
-    observer.WebStateDestroyed(this);
+    observer.WebStateDestroyed();
   for (auto& observer : observers_)
     observer.ResetWebState();
   for (auto& observer : policy_deciders_)
@@ -179,23 +179,23 @@ void WebStateImpl::SetWebController(CRWWebController* web_controller) {
 
 void WebStateImpl::OnTitleChanged() {
   for (auto& observer : observers_)
-    observer.TitleWasSet(this);
+    observer.TitleWasSet();
 }
 
 void WebStateImpl::OnVisibleSecurityStateChange() {
   for (auto& observer : observers_)
-    observer.DidChangeVisibleSecurityState(this);
+    observer.DidChangeVisibleSecurityState();
 }
 
 void WebStateImpl::OnDialogSuppressed() {
   DCHECK(ShouldSuppressDialogs());
   for (auto& observer : observers_)
-    observer.DidSuppressDialog(this);
+    observer.DidSuppressDialog();
 }
 
 void WebStateImpl::OnRenderProcessGone() {
   for (auto& observer : observers_)
-    observer.RenderProcessGone(this);
+    observer.RenderProcessGone();
 }
 
 bool WebStateImpl::OnScriptCommandReceived(const std::string& command,
@@ -222,10 +222,10 @@ void WebStateImpl::SetIsLoading(bool is_loading) {
 
   if (is_loading) {
     for (auto& observer : observers_)
-      observer.DidStartLoading(this);
+      observer.DidStartLoading();
   } else {
     for (auto& observer : observers_)
-      observer.DidStopLoading(this);
+      observer.DidStopLoading();
   }
 }
 
@@ -258,7 +258,7 @@ void WebStateImpl::OnPageLoaded(const GURL& url, bool load_success) {
       load_success ? PageLoadCompletionStatus::SUCCESS
                    : PageLoadCompletionStatus::FAILURE;
   for (auto& observer : observers_)
-    observer.PageLoaded(this, load_completion_status);
+    observer.PageLoaded(load_completion_status);
 }
 
 void WebStateImpl::OnFormActivityRegistered(const std::string& form_name,
@@ -267,7 +267,7 @@ void WebStateImpl::OnFormActivityRegistered(const std::string& form_name,
                                             const std::string& value,
                                             bool input_missing) {
   for (auto& observer : observers_) {
-    observer.FormActivityRegistered(this, form_name, field_name, type, value,
+    observer.FormActivityRegistered(form_name, field_name, type, value,
                                     input_missing);
   }
 }
@@ -275,13 +275,13 @@ void WebStateImpl::OnFormActivityRegistered(const std::string& form_name,
 void WebStateImpl::OnFaviconUrlUpdated(
     const std::vector<FaviconURL>& candidates) {
   for (auto& observer : observers_)
-    observer.FaviconUrlUpdated(this, candidates);
+    observer.FaviconUrlUpdated(candidates);
 }
 
 void WebStateImpl::OnDocumentSubmitted(const std::string& form_name,
                                        bool user_initiated) {
   for (auto& observer : observers_)
-    observer.DocumentSubmitted(this, form_name, user_initiated);
+    observer.DocumentSubmitted(form_name, user_initiated);
 }
 
 NavigationManagerImpl& WebStateImpl::GetNavigationManagerImpl() {
@@ -405,7 +405,7 @@ void WebStateImpl::ShowWebInterstitial(WebInterstitialImpl* interstitial) {
 
 void WebStateImpl::SendChangeLoadProgress(double progress) {
   for (auto& observer : observers_)
-    observer.LoadProgressChanged(this, progress);
+    observer.LoadProgressChanged(progress);
 }
 
 void WebStateImpl::HandleContextMenu(const web::ContextMenuParams& params) {
@@ -579,13 +579,13 @@ UIView* WebStateImpl::GetView() {
 void WebStateImpl::WasShown() {
   [web_controller_ wasShown];
   for (auto& observer : observers_)
-    observer.WasShown(this);
+    observer.WasShown();
 }
 
 void WebStateImpl::WasHidden() {
   [web_controller_ wasHidden];
   for (auto& observer : observers_)
-    observer.WasHidden(this);
+    observer.WasHidden();
 }
 
 BrowserState* WebStateImpl::GetBrowserState() const {
@@ -726,12 +726,12 @@ void WebStateImpl::TakeSnapshot(const SnapshotCallback& callback,
 
 void WebStateImpl::OnNavigationStarted(web::NavigationContext* context) {
   for (auto& observer : observers_)
-    observer.DidStartNavigation(this, context);
+    observer.DidStartNavigation(context);
 }
 
 void WebStateImpl::OnNavigationFinished(web::NavigationContext* context) {
   for (auto& observer : observers_)
-    observer.DidFinishNavigation(this, context);
+    observer.DidFinishNavigation(context);
 }
 
 #pragma mark - NavigationManagerDelegate implementation
@@ -747,7 +747,7 @@ void WebStateImpl::ClearTransientContent() {
     // Don't access |interstitial| after calling |DontProceed()|, as it triggers
     // deletion.
     for (auto& observer : observers_)
-      observer.InterstitialDismissed(this);
+      observer.InterstitialDismissed();
   }
   [web_controller_ clearTransientContentView];
 }
@@ -785,18 +785,18 @@ void WebStateImpl::Reload() {
 
 void WebStateImpl::OnNavigationItemsPruned(size_t pruned_item_count) {
   for (auto& observer : observers_)
-    observer.NavigationItemsPruned(this, pruned_item_count);
+    observer.NavigationItemsPruned(pruned_item_count);
 }
 
 void WebStateImpl::OnNavigationItemChanged() {
   for (auto& observer : observers_)
-    observer.NavigationItemChanged(this);
+    observer.NavigationItemChanged();
 }
 
 void WebStateImpl::OnNavigationItemCommitted(
     const LoadCommittedDetails& load_details) {
   for (auto& observer : observers_)
-    observer.NavigationItemCommitted(this, load_details);
+    observer.NavigationItemCommitted(load_details);
 }
 
 WebState* WebStateImpl::GetWebState() {

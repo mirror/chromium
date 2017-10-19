@@ -4,7 +4,7 @@
 
 #include "core/events/EventUtil.h"
 
-#include "core/event_type_names.h"
+#include "core/EventTypeNames.h"
 
 namespace blink {
 

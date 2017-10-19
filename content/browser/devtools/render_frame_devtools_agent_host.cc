@@ -55,18 +55,16 @@
 
 namespace content {
 
-typedef std::vector<RenderFrameDevToolsAgentHost*> RenderFrameDevToolsArray;
+typedef std::vector<RenderFrameDevToolsAgentHost*> Instances;
 
 namespace {
-base::LazyInstance<RenderFrameDevToolsArray>::Leaky g_agent_host_instances =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<Instances>::Leaky g_instances = LAZY_INSTANCE_INITIALIZER;
 
 RenderFrameDevToolsAgentHost* FindAgentHost(FrameTreeNode* frame_tree_node) {
-  if (g_agent_host_instances == NULL)
+  if (g_instances == NULL)
     return NULL;
-  for (RenderFrameDevToolsArray::iterator it =
-           g_agent_host_instances.Get().begin();
-       it != g_agent_host_instances.Get().end(); ++it) {
+  for (Instances::iterator it = g_instances.Get().begin();
+       it != g_instances.Get().end(); ++it) {
     if ((*it)->frame_tree_node() == frame_tree_node)
       return *it;
   }
@@ -407,12 +405,27 @@ bool RenderFrameDevToolsAgentHost::IsNetworkHandlerEnabled(
 void RenderFrameDevToolsAgentHost::AppendDevToolsHeaders(
     FrameTreeNode* frame_tree_node,
     net::HttpRequestHeaders* headers) {
+  static const char kDevToolsEmulateNetworkConditionsClientId[] =
+      "X-DevTools-Emulate-Network-Conditions-Client-Id";
+
   frame_tree_node = GetFrameTreeNodeAncestor(frame_tree_node);
   RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(frame_tree_node);
   if (!agent_host)
     return;
-  for (auto* network : protocol::NetworkHandler::ForAgentHost(agent_host))
-    network->AppendDevToolsHeaders(headers);
+  std::string ua_override;
+  bool enabled = false;
+  for (auto* network : protocol::NetworkHandler::ForAgentHost(agent_host)) {
+    enabled = enabled || network->enabled();
+    ua_override = network->UserAgentOverride();
+    if (!ua_override.empty())
+      break;
+  }
+  if (!enabled)
+    return;
+  headers->SetHeader(kDevToolsEmulateNetworkConditionsClientId,
+                     agent_host->GetId());
+  if (!ua_override.empty())
+    headers->SetHeader(net::HttpRequestHeaders::kUserAgent, ua_override);
 }
 
 // static
@@ -448,7 +461,7 @@ RenderFrameDevToolsAgentHost::RenderFrameDevToolsAgentHost(
     current_frame_crashed_ = true;
   }
 
-  g_agent_host_instances.Get().push_back(this);
+  g_instances.Get().push_back(this);
   AddRef();  // Balanced in RenderFrameHostDestroyed.
 
   NotifyCreated();
@@ -633,11 +646,11 @@ void RenderFrameDevToolsAgentHost::OnClientsDetached() {
 }
 
 RenderFrameDevToolsAgentHost::~RenderFrameDevToolsAgentHost() {
-  RenderFrameDevToolsArray::iterator it =
-      std::find(g_agent_host_instances.Get().begin(),
-                g_agent_host_instances.Get().end(), this);
-  if (it != g_agent_host_instances.Get().end())
-    g_agent_host_instances.Get().erase(it);
+  Instances::iterator it = std::find(g_instances.Get().begin(),
+                                     g_instances.Get().end(),
+                                     this);
+  if (it != g_instances.Get().end())
+    g_instances.Get().erase(it);
 }
 
 void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
@@ -657,7 +670,6 @@ void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
 
 void RenderFrameDevToolsAgentHost::DidFinishNavigation(
     NavigationHandle* navigation_handle) {
-  NotifyNavigated();
   if (!IsBrowserSideNavigationEnabled()) {
     // CommitPending may destruct |this|.
     scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
@@ -773,7 +785,7 @@ void RenderFrameDevToolsAgentHost::RevokePolicy(RenderFrameHostImpl* host) {
 
   bool process_has_agents = false;
   RenderProcessHost* process_host = host->GetProcess();
-  for (RenderFrameDevToolsAgentHost* agent : g_agent_host_instances.Get()) {
+  for (RenderFrameDevToolsAgentHost* agent : g_instances.Get()) {
     if (!agent->IsAttached())
       continue;
     if (IsBrowserSideNavigationEnabled()) {
@@ -1159,11 +1171,6 @@ std::string RenderFrameDevToolsAgentHost::GetParentId() {
   if (contents)
     return DevToolsAgentHost::GetOrCreateFor(contents)->GetId();
   return "";
-}
-
-std::string RenderFrameDevToolsAgentHost::GetOpenerId() {
-  FrameTreeNode* opener = frame_tree_node_->original_opener();
-  return opener ? opener->devtools_frame_token().ToString() : std::string();
 }
 
 std::string RenderFrameDevToolsAgentHost::GetType() {

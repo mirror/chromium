@@ -15,7 +15,6 @@
 #include <robuffer.h>
 #include <windows.devices.enumeration.h>
 #include <windows.devices.midi.h>
-#include <wrl/client.h>
 #include <wrl/event.h>
 
 #include <iomanip>
@@ -31,6 +30,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "base/win/core_winrt_util.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_hstring.h"
 #include "media/midi/midi_scheduler.h"
 
@@ -44,8 +44,8 @@ using namespace ABI::Windows::Devices::Midi;
 using namespace ABI::Windows::Foundation;
 using namespace ABI::Windows::Storage::Streams;
 
+using base::win::ScopedComPtr;
 using base::win::ScopedHString;
-using base::win::GetActivationFactory;
 using mojom::PortState;
 using mojom::Result;
 
@@ -61,6 +61,28 @@ std::ostream& operator<<(std::ostream& os, const PrintHr& phr) {
      << std::uppercase << std::setfill('0') << std::setw(8) << phr.hr << ")";
   os.flags(ff);
   return os;
+}
+
+// Factory functions that activate and create WinRT components. The caller takes
+// ownership of the returning ComPtr.
+template <typename InterfaceType, base::char16 const* runtime_class_id>
+ScopedComPtr<InterfaceType> WrlStaticsFactory() {
+  ScopedComPtr<InterfaceType> com_ptr;
+
+  ScopedHString class_id_hstring = ScopedHString::Create(runtime_class_id);
+  if (!class_id_hstring.is_valid()) {
+    com_ptr = nullptr;
+    return com_ptr;
+  }
+
+  HRESULT hr = base::win::RoGetActivationFactory(class_id_hstring.get(),
+                                                 IID_PPV_ARGS(&com_ptr));
+  if (FAILED(hr)) {
+    VLOG(1) << "RoGetActivationFactory failed: " << PrintHr(hr);
+    com_ptr = nullptr;
+  }
+
+  return com_ptr;
 }
 
 template <typename T>
@@ -95,20 +117,33 @@ std::string GetNameString(IDeviceInformation* info) {
   return ScopedHString(result).GetAsUTF8();
 }
 
+HRESULT GetPointerToBufferData(IBuffer* buffer, uint8_t** out) {
+  ScopedComPtr<Windows::Storage::Streams::IBufferByteAccess> buffer_byte_access;
+
+  HRESULT hr = buffer->QueryInterface(IID_PPV_ARGS(&buffer_byte_access));
+  if (FAILED(hr)) {
+    VLOG(1) << "QueryInterface failed: " << PrintHr(hr);
+    return hr;
+  }
+
+  // Lifetime of the pointing buffer is controlled by the buffer object.
+  hr = buffer_byte_access->Buffer(out);
+  if (FAILED(hr)) {
+    VLOG(1) << "Buffer failed: " << PrintHr(hr);
+    return hr;
+  }
+
+  return S_OK;
+}
+
 // Checks if given DeviceInformation represent a Microsoft GS Wavetable Synth
 // instance.
 bool IsMicrosoftSynthesizer(IDeviceInformation* info) {
-  WRL::ComPtr<IMidiSynthesizerStatics> midi_synthesizer_statics;
-  HRESULT hr =
-      GetActivationFactory<IMidiSynthesizerStatics,
-                           RuntimeClass_Windows_Devices_Midi_MidiSynthesizer>(
-          &midi_synthesizer_statics);
-  if (FAILED(hr)) {
-    VLOG(1) << "IMidiSynthesizerStatics factory failed: " << PrintHr(hr);
-    return false;
-  }
+  auto midi_synthesizer_statics =
+      WrlStaticsFactory<IMidiSynthesizerStatics,
+                        RuntimeClass_Windows_Devices_Midi_MidiSynthesizer>();
   boolean result = FALSE;
-  hr = midi_synthesizer_statics->IsSynthesizer(info, &result);
+  HRESULT hr = midi_synthesizer_statics->IsSynthesizer(info, &result);
   VLOG_IF(1, FAILED(hr)) << "IsSynthesizer failed: " << PrintHr(hr);
   return result != FALSE;
 }
@@ -196,7 +231,7 @@ struct MidiPort {
   MidiPort() = default;
 
   uint32_t index;
-  WRL::ComPtr<InterfaceType> handle;
+  ScopedComPtr<InterfaceType> handle;
   EventRegistrationToken token_MessageReceived;
 
  private:
@@ -221,12 +256,12 @@ class MidiManagerWinrt::MidiPortManager {
   bool StartWatcher() {
     DCHECK(thread_checker_.CalledOnValidThread());
 
-    HRESULT hr = GetActivationFactory<StaticsInterfaceType, runtime_class_id>(
-        &midi_port_statics_);
-    if (FAILED(hr)) {
-      VLOG(1) << "StaticsInterfaceType factory failed: " << PrintHr(hr);
+    HRESULT hr;
+
+    midi_port_statics_ =
+        WrlStaticsFactory<StaticsInterfaceType, runtime_class_id>();
+    if (!midi_port_statics_)
       return false;
-    }
 
     HSTRING device_selector = nullptr;
     hr = midi_port_statics_->GetDeviceSelector(&device_selector);
@@ -235,15 +270,11 @@ class MidiManagerWinrt::MidiPortManager {
       return false;
     }
 
-    WRL::ComPtr<IDeviceInformationStatics> dev_info_statics;
-    hr = GetActivationFactory<
+    auto dev_info_statics = WrlStaticsFactory<
         IDeviceInformationStatics,
-        RuntimeClass_Windows_Devices_Enumeration_DeviceInformation>(
-        &dev_info_statics);
-    if (FAILED(hr)) {
-      VLOG(1) << "IDeviceInformationStatics failed: " << PrintHr(hr);
+        RuntimeClass_Windows_Devices_Enumeration_DeviceInformation>();
+    if (!dev_info_statics)
       return false;
-    }
 
     hr = dev_info_statics->CreateWatcherAqsFilter(device_selector,
                                                   watcher_.GetAddressOf());
@@ -593,11 +624,11 @@ class MidiManagerWinrt::MidiPortManager {
   virtual base::WeakPtr<MidiPortManager> GetWeakPtrFromFactory() = 0;
 
   // Midi{In,Out}PortStatics instance.
-  WRL::ComPtr<StaticsInterfaceType> midi_port_statics_;
+  ScopedComPtr<StaticsInterfaceType> midi_port_statics_;
 
   // DeviceWatcher instance and event registration tokens for unsubscribing
   // events in destructor.
-  WRL::ComPtr<IDeviceWatcher> watcher_;
+  ScopedComPtr<IDeviceWatcher> watcher_;
   EventRegistrationToken token_Added_ = {kInvalidTokenValue},
                          token_EnumerationCompleted_ = {kInvalidTokenValue},
                          token_Removed_ = {kInvalidTokenValue},
@@ -653,14 +684,14 @@ class MidiManagerWinrt::MidiInPortManager final
 
               std::string dev_id = GetDeviceIdString(handle);
 
-              WRL::ComPtr<IMidiMessage> message;
+              ScopedComPtr<IMidiMessage> message;
               HRESULT hr = args->get_Message(message.GetAddressOf());
               if (FAILED(hr)) {
                 VLOG(1) << "get_Message failed: " << PrintHr(hr);
                 return hr;
               }
 
-              WRL::ComPtr<IBuffer> buffer;
+              ScopedComPtr<IBuffer> buffer;
               hr = message->get_RawData(buffer.GetAddressOf());
               if (FAILED(hr)) {
                 VLOG(1) << "get_RawData failed: " << PrintHr(hr);
@@ -668,8 +699,7 @@ class MidiManagerWinrt::MidiInPortManager final
               }
 
               uint8_t* p_buffer_data = nullptr;
-              hr = base::win::GetPointerToBufferData(buffer.Get(),
-                                                     &p_buffer_data);
+              hr = GetPointerToBufferData(buffer.Get(), &p_buffer_data);
               if (FAILED(hr))
                 return hr;
 
@@ -867,13 +897,32 @@ void MidiManagerWinrt::SendOnComThread(uint32_t port_index,
     return;
   }
 
-  WRL::ComPtr<IBuffer> buffer;
-  HRESULT hr = base::win::CreateIBufferFromData(
-      data.data(), static_cast<UINT32>(data.size()), buffer.GetAddressOf());
+  auto buffer_factory =
+      WrlStaticsFactory<IBufferFactory,
+                        RuntimeClass_Windows_Storage_Streams_Buffer>();
+  if (!buffer_factory)
+    return;
+
+  ScopedComPtr<IBuffer> buffer;
+  HRESULT hr = buffer_factory->Create(static_cast<UINT32>(data.size()),
+                                      buffer.GetAddressOf());
   if (FAILED(hr)) {
-    VLOG(1) << "CreateIBufferFromData failed: " << PrintHr(hr);
+    VLOG(1) << "Create failed: " << PrintHr(hr);
     return;
   }
+
+  hr = buffer->put_Length(static_cast<UINT32>(data.size()));
+  if (FAILED(hr)) {
+    VLOG(1) << "put_Length failed: " << PrintHr(hr);
+    return;
+  }
+
+  uint8_t* p_buffer_data = nullptr;
+  hr = GetPointerToBufferData(buffer.Get(), &p_buffer_data);
+  if (FAILED(hr))
+    return;
+
+  std::copy(data.begin(), data.end(), p_buffer_data);
 
   hr = port->handle->SendBuffer(buffer.Get());
   if (FAILED(hr)) {

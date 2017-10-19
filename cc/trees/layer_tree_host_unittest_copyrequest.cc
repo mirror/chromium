@@ -1026,8 +1026,7 @@ class LayerTreeHostCopyRequestTestProvideTexture
  protected:
   void BeginTest() override {
     external_context_provider_ = TestContextProvider::Create();
-    EXPECT_EQ(external_context_provider_->BindToCurrentThread(),
-              gpu::ContextResult::kSuccess);
+    EXPECT_TRUE(external_context_provider_->BindToCurrentThread());
     LayerTreeHostCopyRequestTestCountTextures::BeginTest();
   }
 

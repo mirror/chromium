@@ -150,24 +150,6 @@ class MHTMLTest : public ::testing::Test {
     AddResource("http://www.test.com/ol-dot.png", "image/png", "ol-dot.png");
   }
 
-  static std::map<std::string, std::string> ExtractMHTMLHeaders(
-      RefPtr<RawData> mhtml_data) {
-    // Read the MHTML data per line until reaching the empty line.
-    std::map<std::string, std::string> mhtml_headers;
-    LineReader line_reader(
-        std::string(mhtml_data->data(), mhtml_data->length()));
-    std::string line;
-    while (line_reader.GetNextLine(&line) && line.length()) {
-      std::string::size_type pos = line.find(':');
-      if (pos == std::string::npos)
-        continue;
-      std::string key = line.substr(0, pos);
-      std::string value = line.substr(pos + 2);
-      mhtml_headers.emplace(key, value);
-    }
-    return mhtml_headers;
-  }
-
   static RefPtr<RawData> GenerateMHTMLData(
       const Vector<SerializedResource>& resources,
       MHTMLArchive::EncodingPolicy encoding_policy,
@@ -198,8 +180,8 @@ class MHTMLTest : public ::testing::Test {
   }
 
   RefPtr<RawData> Serialize(const KURL& url,
-                            const String& title,
-                            const String& mime,
+                            const char* title,
+                            const char* mime,
                             MHTMLArchive::EncodingPolicy encoding_policy) {
     return GenerateMHTMLData(resources_, encoding_policy, url, title, mime);
   }
@@ -238,39 +220,35 @@ TEST_F(MHTMLTest, CheckDomain) {
   EXPECT_STRNE("localhost", origin->Domain().Ascii().data());
 }
 
-TEST_F(MHTMLTest, TestMHTMLHeadersWithTitleContainingAllPrintableCharacters) {
-  const char kURL[] = "http://www.example.com/";
-  const char kTitle[] = "abc";
-  AddTestResources();
-  RefPtr<RawData> data =
-      Serialize(ToKURL(kURL), String::FromUTF8(kTitle), "text/html",
-                MHTMLArchive::kUseDefaultEncoding);
-
-  std::map<std::string, std::string> mhtml_headers = ExtractMHTMLHeaders(data);
-
-  EXPECT_EQ("<Saved by Blink>", mhtml_headers["From"]);
-  EXPECT_FALSE(mhtml_headers["Date"].empty());
-  EXPECT_EQ("multipart/related;", mhtml_headers["Content-Type"]);
-  EXPECT_EQ("abc", mhtml_headers["Subject"]);
-  EXPECT_EQ(kURL, mhtml_headers["Snapshot-Content-Location"]);
-}
-
-TEST_F(MHTMLTest, TestMHTMLHeadersWithTitleContainingNonPrintableCharacters) {
+TEST_F(MHTMLTest, TestMHTMLHeaders) {
   const char kURL[] = "http://www.example.com/";
   const char kTitle[] = u8"abc=\u261D\U0001F3FB";
   AddTestResources();
-  RefPtr<RawData> data =
-      Serialize(ToKURL(kURL), String::FromUTF8(kTitle), "text/html",
-                MHTMLArchive::kUseDefaultEncoding);
+  RefPtr<RawData> data = Serialize(ToKURL(kURL), kTitle, "text/html",
+                                   MHTMLArchive::kUseDefaultEncoding);
 
-  std::map<std::string, std::string> mhtml_headers = ExtractMHTMLHeaders(data);
+  // Read the MHTML data per line until reaching the empty line.
+  std::map<std::string, std::string> mhtml_headers;
+  LineReader line_reader(std::string(data->data(), data->length()));
+  std::string line;
+  while (line_reader.GetNextLine(&line) && line.length()) {
+    std::string::size_type pos = line.find(':');
+    if (pos == std::string::npos)
+      continue;
+    std::string key = line.substr(0, pos);
+    std::string value = line.substr(pos + 2);
+    mhtml_headers.emplace(key, value);
+  }
 
   EXPECT_EQ("<Saved by Blink>", mhtml_headers["From"]);
+  EXPECT_EQ("abc=???????", mhtml_headers["Subject"]);
   EXPECT_FALSE(mhtml_headers["Date"].empty());
   EXPECT_EQ("multipart/related;", mhtml_headers["Content-Type"]);
-  EXPECT_EQ("=?utf-8?Q?abc=3D=E2=98=9D=F0=9F=8F=BB?=",
-            mhtml_headers["Subject"]);
-  EXPECT_EQ(kURL, mhtml_headers["Snapshot-Content-Location"]);
+
+  EXPECT_EQ("1.0", mhtml_headers["X-Snapshot-Version"]);
+  EXPECT_EQ("=?utf-8?Q?abc=3D=C3=A2=C2=98=C2=9D=C3=B0=C2=9F=C2=8F=C2=BB?=",
+            mhtml_headers["X-Snapshot-Title"]);
+  EXPECT_EQ(kURL, mhtml_headers["X-Snapshot-Content-Location"]);
 }
 
 TEST_F(MHTMLTest, TestMHTMLEncoding) {
@@ -284,7 +262,7 @@ TEST_F(MHTMLTest, TestMHTMLEncoding) {
   // the right encoding is used for the different sections.
   LineReader line_reader(std::string(data->data(), data->length()));
   int section_checked_count = 0;
-  const char* expected_encoding = nullptr;
+  const char* expected_encoding = 0;
   std::string line;
   while (line_reader.GetNextLine(&line)) {
     if (line.compare(0, 13, "Content-Type:") == 0) {
@@ -304,7 +282,7 @@ TEST_F(MHTMLTest, TestMHTMLEncoding) {
     if (line.compare(0, 26, "Content-Transfer-Encoding:") == 0) {
       ASSERT_TRUE(expected_encoding);
       EXPECT_NE(line.find(expected_encoding), std::string::npos);
-      expected_encoding = nullptr;
+      expected_encoding = 0;
       section_checked_count++;
     }
   }

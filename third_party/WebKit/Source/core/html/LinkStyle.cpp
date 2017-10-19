@@ -98,19 +98,22 @@ void LinkStyle::SetCSSStyleSheet(
   CSSParserContext* parser_context = CSSParserContext::Create(
       GetDocument(), base_url, referrer_policy, charset);
 
-  if (StyleSheetContents* parsed_sheet =
+  if (StyleSheetContents* restored_sheet =
           const_cast<CSSStyleSheetResource*>(cached_style_sheet)
-              ->CreateParsedStyleSheetFromCache(parser_context)) {
+              ->RestoreParsedStyleSheet(parser_context)) {
+    DCHECK(restored_sheet->IsCacheableForResource());
+    DCHECK(!restored_sheet->IsLoading());
+
     if (sheet_)
       ClearSheet();
-    sheet_ = CSSStyleSheet::Create(parsed_sheet, *owner_);
+    sheet_ = CSSStyleSheet::Create(restored_sheet, *owner_);
     sheet_->SetMediaQueries(MediaQuerySet::Create(owner_->Media()));
     if (owner_->IsInDocumentTree())
       SetSheetTitle(owner_->title());
     SetCrossOriginStylesheetStatus(sheet_.Get());
 
     loading_ = false;
-    parsed_sheet->CheckLoaded();
+    restored_sheet->CheckLoaded();
 
     return;
   }
@@ -406,7 +409,7 @@ void LinkStyle::OwnerRemoved() {
     ClearSheet();
 }
 
-void LinkStyle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LinkStyle) {
   visitor->Trace(sheet_);
   LinkResource::Trace(visitor);
   ResourceOwner<StyleSheetResource>::Trace(visitor);

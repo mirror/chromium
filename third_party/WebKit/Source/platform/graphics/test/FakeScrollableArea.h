@@ -54,9 +54,7 @@ class FakeScrollableArea : public GarbageCollectedFinalized<FakeScrollableArea>,
     return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ScrollableArea::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ScrollableArea::Trace(visitor); }
 
  private:
   ScrollOffset scroll_offset_;

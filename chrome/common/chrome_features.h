@@ -11,7 +11,6 @@
 #include "base/feature_list.h"
 #include "build/build_config.h"
 #include "chrome/common/features.h"
-#include "device/vr/features/features.h"
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
@@ -20,8 +19,6 @@ namespace features {
 
 // All features in alphabetical order. The features should be documented
 // alongside the definition of their values in the .cc file.
-
-extern const base::Feature kAdsFeature;
 
 #if defined(OS_ANDROID)
 extern const base::Feature kAllowAutoplayUnmutedInWebappManifestScope;
@@ -105,10 +102,6 @@ extern const base::Feature kExpectCTReporting;
 extern const base::Feature kExperimentalAppBanners;
 extern const base::Feature kExperimentalKeyboardLockUI;
 
-#if BUILDFLAG(ENABLE_VR)
-extern const base::Feature kExperimentalVRFeatures;
-#endif
-
 #if defined(OS_MACOSX)
 extern const base::Feature kFullscreenToolbarReveal;
 #endif
@@ -167,10 +160,6 @@ extern const base::Feature kNativeNotifications;
 
 extern const base::Feature kNetworkPrediction;
 
-#if defined(OS_POSIX)
-extern const base::Feature kNtlmV2Enabled;
-#endif
-
 extern const base::Feature kOfflinePageDownloadSuggestionsFeature;
 
 #if !defined(OS_ANDROID)
@@ -180,8 +169,6 @@ extern const base::Feature kOneGoogleBarOnLocalNtp;
 extern const base::Feature kUseNewAcceptLanguageHeader;
 
 extern const base::Feature kPermissionsBlacklist;
-
-extern const base::Feature kPreconnectMore;
 
 #if defined(OS_WIN)
 extern const base::Feature kDisablePostScriptPrinting;
@@ -239,8 +226,6 @@ extern const base::Feature kSyzyasanDeferredFree;
 #endif
 
 extern const base::Feature kTabsInCbd;
-
-extern const base::Feature kTopSitesFromSiteEngagement;
 
 extern const base::Feature kUseGoogleLocalNtp;
 

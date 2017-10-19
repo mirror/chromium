@@ -85,7 +85,7 @@ class ShadowRootRareDataV0 : public GarbageCollected<ShadowRootRareDataV0> {
   ShadowRoot* YoungerShadowRoot() const { return younger_shadow_root_; }
   ShadowRoot* OlderShadowRoot() const { return older_shadow_root_; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(younger_shadow_root_);
     visitor->Trace(older_shadow_root_);
     visitor->Trace(shadow_insertion_point_of_younger_shadow_root_);

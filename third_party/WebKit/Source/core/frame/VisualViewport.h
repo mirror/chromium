@@ -92,7 +92,7 @@ class CORE_EXPORT VisualViewport final
   static VisualViewport* Create(Page& host) { return new VisualViewport(host); }
   ~VisualViewport() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void CreateLayerTree();
   void AttachLayerTree(GraphicsLayer*);

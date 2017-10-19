@@ -62,7 +62,7 @@ class CORE_EXPORT StaticRange final : public GarbageCollected<StaticRange>,
 
   Range* toRange(ExceptionState& = ASSERT_NO_EXCEPTION) const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit StaticRange(Document&);

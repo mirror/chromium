@@ -18,27 +18,33 @@
       <div class="start layout horizontal center">
         <cr-network-icon network-state="[[networkProperties_]]" is-list-item>
         </cr-network-icon>
-        <div class="title">[[getTitle_(networkProperties_.*)]]</div>
+        <div class="title">[[getTitle_(type_, name_)]]</div>
       </div>
       <div id="buttonDiv">
         <paper-button class="secondary-button" on-tap="onCancelTap_">
           $i18n{cancel}
         </paper-button>
-        <paper-button class="primary-button" on-tap="onSaveOrConnectTap_"
-            disabled="[[!getSaveOrConnectEnabled_(
-                guid_, networkProperties_, enableSave_, enableConnect_)]]">
-          [[getSaveOrConnectLabel_(guid_, networkProperties_)]]
-        </paper-button>
+        <template is="dom-if" if="[[guid_]]">
+          <paper-button class="primary-button" on-tap="onSaveTap_"
+              disabled="[[!enableSave_]]">
+            $i18n{save}
+          </paper-button>
+        </template>
+        <template is="dom-if" if="[[!guid_]]">
+          <paper-button class="primary-button" on-tap="onConnectTap_"
+              disabled="[[!enableConnect_]]">
+            $i18n{networkButtonConnect}
+          </paper-button>
+        </template>
       </div>
     </div>
 
     <div class="settings-box">
       <network-config id="networkConfig" class="flex"
           networking-private="[[networkingPrivate]]"
-          network-properties="{{networkProperties_}}"
+          guid="[[guid_]]" type="[[type_]]" name="{{name_}}"
+          network-properties="[[networkProperties_]]"
           enable-connect="{{enableConnect_}}" enable-save="{{enableSave_}}"
-          share-allow-enable="[[shareAllowEnable_]]"
-          share-default="[[shareDefault_]]"
           on-close="close_">
       </network-config>
     </div>

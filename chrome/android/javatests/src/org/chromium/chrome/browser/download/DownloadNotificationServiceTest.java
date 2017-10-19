@@ -183,7 +183,6 @@ public class DownloadNotificationServiceTest
     @Test
     @SmallTest
     @Feature({"Download"})
-    @RetryOnFailure(message = "crbug.com/773346")
     public void testResumptionScheduledWithoutDownloadOperationIntent() throws Exception {
         MockDownloadResumptionScheduler scheduler =
                 new MockDownloadResumptionScheduler(getSystemContext().getApplicationContext());
@@ -231,7 +230,6 @@ public class DownloadNotificationServiceTest
     @Test
     @SmallTest
     @Feature({"Download"})
-    @RetryOnFailure(message = "crbug.com/773346")
     public void testResumptionNotScheduledWithoutAutoResumableDownload() throws Exception {
         MockDownloadResumptionScheduler scheduler =
                 new MockDownloadResumptionScheduler(getSystemContext().getApplicationContext());
@@ -287,7 +285,6 @@ public class DownloadNotificationServiceTest
     @Test
     @SmallTest
     @Feature({"Download"})
-    @RetryOnFailure(message = "crbug.com/773346")
     public void testAddingAndCancelingNotifications() {
         setupService();
         Context mockContext = new AdvancedMockContext(getSystemContext());
@@ -423,7 +420,6 @@ public class DownloadNotificationServiceTest
     @Test
     @SmallTest
     @Feature({"Download"})
-    @RetryOnFailure(message = "crbug.com/773346")
     public void testIncognitoDownloadCanceledOnServiceShutdown() throws Exception {
         setupService();
         Context mockContext = new AdvancedMockContext(getSystemContext());
@@ -533,7 +529,6 @@ public class DownloadNotificationServiceTest
     @Test
     @SmallTest
     @Feature({"Download"})
-    @RetryOnFailure(message = "crbug.com/773346")
     public void testServiceWillNotStopOnPausedDownload() throws Exception {
         // On versions of Android that use a foreground service, the service will currently die with
         // the notifications.

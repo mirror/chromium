@@ -74,10 +74,10 @@
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/fullscreen/Fullscreen.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "core/html_names.h"
 #include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
@@ -222,19 +222,19 @@ const WebInputEvent* WebViewImpl::CurrentInputEvent() {
 // Used to defer all page activity in cases where the embedder wishes to run
 // a nested event loop. Using a stack enables nesting of message loop
 // invocations.
-static Vector<std::unique_ptr<ScopedPagePauser>>& PagePauserStack() {
-  DEFINE_STATIC_LOCAL(Vector<std::unique_ptr<ScopedPagePauser>>, pauser_stack,
-                      ());
-  return pauser_stack;
+static Vector<std::unique_ptr<ScopedPageSuspender>>& PageSuspenderStack() {
+  DEFINE_STATIC_LOCAL(Vector<std::unique_ptr<ScopedPageSuspender>>,
+                      suspender_stack, ());
+  return suspender_stack;
 }
 
 void WebView::WillEnterModalLoop() {
-  PagePauserStack().push_back(WTF::MakeUnique<ScopedPagePauser>());
+  PageSuspenderStack().push_back(WTF::MakeUnique<ScopedPageSuspender>());
 }
 
 void WebView::DidExitModalLoop() {
-  DCHECK(PagePauserStack().size());
-  PagePauserStack().pop_back();
+  DCHECK(PageSuspenderStack().size());
+  PageSuspenderStack().pop_back();
 }
 
 // static
@@ -281,8 +281,8 @@ class ColorOverlay final : public PageOverlay::Delegate {
             graphics_context, page_overlay, DisplayItem::kPageOverlay))
       return;
     FloatRect rect(0, 0, size.width, size.height);
-    DrawingRecorder recorder(graphics_context, page_overlay,
-                             DisplayItem::kPageOverlay, rect);
+    DrawingRecorder drawing_recorder(graphics_context, page_overlay,
+                                     DisplayItem::kPageOverlay, rect);
     graphics_context.FillRect(rect, color_);
   }
 

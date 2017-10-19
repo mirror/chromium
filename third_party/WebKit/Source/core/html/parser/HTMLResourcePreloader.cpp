@@ -43,7 +43,7 @@ HTMLResourcePreloader* HTMLResourcePreloader::Create(Document& document) {
   return new HTMLResourcePreloader(document);
 }
 
-void HTMLResourcePreloader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLResourcePreloader) {
   visitor->Trace(document_);
   visitor->Trace(css_preloaders_);
 }

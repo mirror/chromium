@@ -6,134 +6,15 @@
 
 #include "base/atomic_sequence_num.h"
 #include "base/callback.h"
-#include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/service_worker/controller_service_worker_connector.h"
 #include "content/common/service_worker/service_worker_loader_helpers.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "content/public/common/content_features.h"
-#include "mojo/public/cpp/bindings/binding.h"
-#include "net/url_request/redirect_info.h"
-#include "net/url_request/redirect_util.h"
 #include "ui/base/page_transition_types.h"
 
 namespace content {
-
-namespace {
-
-// Max number of http redirects to follow. The Fetch spec says: "If request’s
-// redirect count is twenty, return a network error."
-// https://fetch.spec.whatwg.org/#http-redirect-fetch
-const int kMaxRedirects = 20;
-
-ResourceResponseHead RewriteServiceWorkerTime(
-    base::TimeTicks service_worker_start_time,
-    base::TimeTicks service_worker_ready_time,
-    const ResourceResponseHead& response_head) {
-  ResourceResponseHead new_head = response_head;
-  new_head.service_worker_start_time = service_worker_start_time;
-  new_head.service_worker_ready_time = service_worker_ready_time;
-  return new_head;
-}
-
-// A wrapper URLLoaderClient that invokes given RewriteHeaderCallback whenever
-// response or redirect is received. It self-destruct itself when the Mojo
-// connection is closed.
-class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
- public:
-  using RewriteHeaderCallback =
-      base::Callback<ResourceResponseHead(const ResourceResponseHead&)>;
-
-  static mojom::URLLoaderClientPtr CreateAndBind(
-      mojom::URLLoaderClientPtr url_loader_client,
-      RewriteHeaderCallback rewrite_header_callback) {
-    return (new HeaderRewritingURLLoaderClient(std::move(url_loader_client),
-                                               rewrite_header_callback))
-        ->CreateInterfacePtrAndBind();
-  }
-
-  ~HeaderRewritingURLLoaderClient() override {}
-
- private:
-  HeaderRewritingURLLoaderClient(mojom::URLLoaderClientPtr url_loader_client,
-                                 RewriteHeaderCallback rewrite_header_callback)
-      : url_loader_client_(std::move(url_loader_client)),
-        binding_(this),
-        rewrite_header_callback_(rewrite_header_callback) {}
-
-  mojom::URLLoaderClientPtr CreateInterfacePtrAndBind() {
-    DCHECK(!binding_.is_bound());
-    mojom::URLLoaderClientPtr ptr;
-    binding_.Bind(mojo::MakeRequest(&ptr));
-    binding_.set_connection_error_handler(
-        base::Bind(&HeaderRewritingURLLoaderClient::OnClientConnectionError,
-                   base::Unretained(this)));
-    return ptr;
-  }
-
-  void OnClientConnectionError() {
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
-  }
-
-  // mojom::URLLoaderClient implementation:
-  void OnReceiveResponse(
-      const ResourceResponseHead& response_head,
-      const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnReceiveResponse(
-        rewrite_header_callback_.Run(response_head), ssl_info,
-        std::move(downloaded_file));
-  }
-
-  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
-                         const ResourceResponseHead& response_head) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnReceiveRedirect(
-        redirect_info, rewrite_header_callback_.Run(response_head));
-  }
-
-  void OnDataDownloaded(int64_t data_len, int64_t encoded_data_len) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnDataDownloaded(data_len, encoded_data_len);
-  }
-
-  void OnUploadProgress(int64_t current_position,
-                        int64_t total_size,
-                        OnUploadProgressCallback ack_callback) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnUploadProgress(current_position, total_size,
-                                         std::move(ack_callback));
-  }
-
-  void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnReceiveCachedMetadata(data);
-  }
-
-  void OnTransferSizeUpdated(int32_t transfer_size_diff) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnTransferSizeUpdated(transfer_size_diff);
-  }
-
-  void OnStartLoadingResponseBody(
-      mojo::ScopedDataPipeConsumerHandle body) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnStartLoadingResponseBody(std::move(body));
-  }
-
-  void OnComplete(const ResourceRequestCompletionStatus& status) override {
-    DCHECK(url_loader_client_.is_bound());
-    url_loader_client_->OnComplete(status);
-  }
-
-  mojom::URLLoaderClientPtr url_loader_client_;
-  mojo::Binding<mojom::URLLoaderClient> binding_;
-  RewriteHeaderCallback rewrite_header_callback_;
-};
-
-}  // namespace
 
 // ServiceWorkerSubresourceLoader -------------------------------------------
 
@@ -150,8 +31,7 @@ ServiceWorkerSubresourceLoader::ServiceWorkerSubresourceLoader(
     const GURL& controller_origin,
     scoped_refptr<base::RefCountedData<storage::mojom::BlobRegistryPtr>>
         blob_registry)
-    : redirect_limit_(kMaxRedirects),
-      url_loader_client_(std::move(client)),
+    : url_loader_client_(std::move(client)),
       url_loader_binding_(this, std::move(request)),
       response_callback_binding_(this),
       controller_connector_(std::move(controller_connector)),
@@ -166,9 +46,6 @@ ServiceWorkerSubresourceLoader::ServiceWorkerSubresourceLoader(
       default_loader_factory_getter_(std::move(default_loader_factory_getter)),
       weak_factory_(this) {
   DCHECK(controller_connector_);
-  response_head_.request_start = base::TimeTicks::Now();
-  response_head_.load_timing.request_start = base::TimeTicks::Now();
-  response_head_.load_timing.request_start_time = base::Time::Now();
   url_loader_binding_.set_connection_error_handler(base::BindOnce(
       &ServiceWorkerSubresourceLoader::DeleteSoon, weak_factory_.GetWeakPtr()));
   StartRequest(resource_request);
@@ -192,17 +69,9 @@ void ServiceWorkerSubresourceLoader::StartRequest(
   mojom::ServiceWorkerFetchResponseCallbackPtr response_callback_ptr;
   response_callback_binding_.Bind(mojo::MakeRequest(&response_callback_ptr));
 
-  response_head_.service_worker_start_time = base::TimeTicks::Now();
-  // TODO(horo): Reset |service_worker_ready_time| when the the connection to
-  // the service worker is revived.
-  response_head_.service_worker_ready_time = base::TimeTicks::Now();
-  response_head_.load_timing.send_start = base::TimeTicks::Now();
-  response_head_.load_timing.send_end = base::TimeTicks::Now();
   // At this point controller should be non-null.
   // TODO(kinuko): re-start the request if we get connection error before we
   // get response for this.
-  // TODO(kinuko): Implement request timeout and ask the browser to kill
-  // the controller if it takes too long. (crbug.com/774374)
   controller_connector_->GetControllerServiceWorker()->DispatchFetchEvent(
       *request, std::move(response_callback_ptr),
       base::BindOnce(&ServiceWorkerSubresourceLoader::OnFetchEventFinished,
@@ -278,15 +147,10 @@ void ServiceWorkerSubresourceLoader::OnFallback(
   // Per spec, redirects after this point are not intercepted by the service
   // worker again. (https://crbug.com/517364)
   default_loader_factory_getter_->GetNetworkLoaderFactory()
-      ->CreateLoaderAndStart(
-          url_loader_binding_.Unbind(), routing_id_, request_id_, options_,
-          resource_request_,
-          HeaderRewritingURLLoaderClient::CreateAndBind(
-              std::move(url_loader_client_),
-              base::Bind(&RewriteServiceWorkerTime,
-                         response_head_.service_worker_start_time,
-                         response_head_.service_worker_ready_time)),
-          traffic_annotation_);
+      ->CreateLoaderAndStart(url_loader_binding_.Unbind(), routing_id_,
+                             request_id_, options_, resource_request_,
+                             std::move(url_loader_client_),
+                             traffic_annotation_);
   DeleteSoon();
 }
 
@@ -305,23 +169,6 @@ void ServiceWorkerSubresourceLoader::StartResponse(
   ServiceWorkerLoaderHelpers::SaveResponseHeaders(
       response.status_code, response.status_text, response.headers,
       &response_head_);
-  response_head_.response_start = base::TimeTicks::Now();
-  response_head_.load_timing.receive_headers_end = base::TimeTicks::Now();
-
-  // Handle a redirect response. ComputeRedirectInfo returns non-null redirect
-  // info if the given response is a redirect.
-  redirect_info_ = ServiceWorkerLoaderHelpers::ComputeRedirectInfo(
-      resource_request_, response_head_, false /* token_binding_negotiated */);
-  if (redirect_info_) {
-    if (redirect_limit_-- == 0) {
-      CommitCompleted(net::ERR_TOO_MANY_REDIRECTS);
-      return;
-    }
-    response_head_.encoded_data_length = 0;
-    url_loader_client_->OnReceiveRedirect(*redirect_info_, response_head_);
-    status_ = Status::kCompleted;
-    return;
-  }
 
   // Handle a stream response body.
   if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
@@ -386,30 +233,9 @@ void ServiceWorkerSubresourceLoader::CommitCompleted(int error_code) {
 // ServiceWorkerSubresourceLoader: URLLoader implementation -----------------
 
 void ServiceWorkerSubresourceLoader::FollowRedirect() {
-  DCHECK(redirect_info_);
-
-  bool should_clear_upload = false;
-  net::RedirectUtil::UpdateHttpRequest(
-      resource_request_.url, resource_request_.method, *redirect_info_,
-      &resource_request_.headers, &should_clear_upload);
-  if (should_clear_upload)
-    resource_request_.request_body = nullptr;
-
-  resource_request_.url = redirect_info_->new_url;
-  resource_request_.method = redirect_info_->new_method;
-  resource_request_.site_for_cookies = redirect_info_->new_site_for_cookies;
-  resource_request_.referrer = GURL(redirect_info_->new_referrer);
-  resource_request_.referrer_policy =
-      Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
-          redirect_info_->new_referrer_policy);
-
-  // Restart the request.
-  status_ = Status::kNotStarted;
-  redirect_info_.reset();
-  response_callback_binding_.Close();
-  // We don't support the body of redirect responses.
-  DCHECK(!blob_loader_);
-  StartRequest(resource_request_);
+  // TODO(kinuko): Need to implement for the cases where a redirect is returned
+  // by a ServiceWorker and the page determined to follow the redirect.
+  NOTIMPLEMENTED();
 }
 
 void ServiceWorkerSubresourceLoader::SetPriority(net::RequestPriority priority,

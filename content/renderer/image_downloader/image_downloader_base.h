@@ -27,6 +27,9 @@ class ImageDownloaderBase : public RenderFrameObserver,
   explicit ImageDownloaderBase(RenderFrame* render_frame);
   ~ImageDownloaderBase() override;
 
+  // RenderThreadObserver implementation.
+  void OnRenderProcessShutdown() override;
+
   using DownloadCallback =
       base::Callback<void(int32_t, const std::vector<SkBitmap>&)>;
   // Request to aynchronously download an image. When done, |callback| will be

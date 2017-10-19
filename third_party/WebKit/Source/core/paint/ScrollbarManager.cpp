@@ -11,7 +11,7 @@ ScrollbarManager::ScrollbarManager(ScrollableArea& scrollable_area)
       h_bar_is_attached_(0),
       v_bar_is_attached_(0) {}
 
-void ScrollbarManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScrollbarManager) {
   visitor->Trace(scrollable_area_);
   visitor->Trace(h_bar_);
   visitor->Trace(v_bar_);

@@ -416,10 +416,9 @@ class BLINK_EXPORT WebFrameClient {
   // The frame's document has just been initialized.
   virtual void DidCreateNewDocument() {}
 
-  // The window object for the frame has been cleared of any extra properties
-  // that may have been set by script from the previously loaded document. This
-  // will get invoked multiple times when navigating from an initial empty
-  // document to the actual document.
+  // The window object for the frame has been cleared of any extra
+  // properties that may have been set by script from the previously
+  // loaded document.
   virtual void DidClearWindowObject() {}
 
   // The document element has been created.
@@ -487,10 +486,6 @@ class BLINK_EXPORT WebFrameClient {
     return WebEffectiveConnectionType::kTypeUnknown;
   }
 
-  // Overrides the effective connection type for testing.
-  virtual void SetEffectiveConnectionTypeForTesting(
-      WebEffectiveConnectionType) {}
-
   // Returns whether or not Client LoFi is enabled for the frame (and
   // so any image requests may be replaced with a placeholder).
   virtual bool IsClientLoFiActiveForFrame() { return false; }
@@ -508,7 +503,7 @@ class BLINK_EXPORT WebFrameClient {
   // Returns string to be used as a frame id in the devtools protocol.
   // It is derived from the content's devtools_frame_token, is
   // defined by the browser and passed into Blink upon frame creation.
-  virtual WebString GetInstrumentationToken() { return ""; }
+  virtual WebString GetDevToolsFrameToken() { return WebString(); }
 
   // PlzNavigate
   // Called to abort a navigation that is being handled by the browser process.

@@ -71,7 +71,7 @@ static void MakeInitialAsyncCopyRequest(
     aura::Window* window,
     const gfx::Rect& source_rect,
     viz::CopyOutputRequest::CopyOutputRequestCallback callback) {
-  auto tracker = std::make_unique<aura::WindowTracker>();
+  auto tracker = base::MakeUnique<aura::WindowTracker>();
   tracker->Add(window);
   MakeAsyncCopyRequest(
       window->layer(), source_rect,

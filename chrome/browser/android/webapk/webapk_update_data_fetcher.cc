@@ -102,11 +102,9 @@ void WebApkUpdateDataFetcher::FetchInstallableData() {
     return;
 
   InstallableParams params;
-  params.valid_manifest = true;
-  params.has_worker = true;
-  params.valid_primary_icon = true;
-  params.valid_badge_icon = true;
-  params.wait_for_worker = true;
+  params.check_installable = true;
+  params.fetch_valid_primary_icon = true;
+  params.fetch_valid_badge_icon = true;
   InstallableManager* installable_manager =
       InstallableManager::FromWebContents(web_contents());
   installable_manager->GetData(

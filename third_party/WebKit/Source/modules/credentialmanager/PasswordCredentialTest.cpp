@@ -68,7 +68,8 @@ TEST_F(PasswordCredentialTest, CreateFromMultipartForm) {
 
   EXPECT_EQ("musterman", credential->id());
   EXPECT_EQ("sekrit", credential->password());
-  EXPECT_EQ(KURL("https://example.com/photo"), credential->iconURL());
+  EXPECT_EQ(KURL(kParsedURLString, "https://example.com/photo"),
+            credential->iconURL());
   EXPECT_EQ("friendly name", credential->name());
   EXPECT_EQ("password", credential->type());
 
@@ -102,7 +103,8 @@ TEST_F(PasswordCredentialTest, CreateFromURLEncodedForm) {
 
   EXPECT_EQ("musterman", credential->id());
   EXPECT_EQ("sekrit", credential->password());
-  EXPECT_EQ(KURL("https://example.com/photo"), credential->iconURL());
+  EXPECT_EQ(KURL(kParsedURLString, "https://example.com/photo"),
+            credential->iconURL());
   EXPECT_EQ("friendly name", credential->name());
   EXPECT_EQ("password", credential->type());
 

@@ -6,13 +6,8 @@
 
 #include "ash/display/display_util.h"
 #include "ash/display/window_tree_host_manager.h"
-#include "ash/public/cpp/ash_pref_names.h"
-#include "ash/public/cpp/ash_switches.h"
-#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "base/command_line.h"
-#include "components/prefs/pref_service.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/cursor/cursor.h"
@@ -31,8 +26,6 @@ class CursorWindowControllerTest : public AshTestBase {
 
   // AshTestBase:
   void SetUp() override {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        ash::switches::kAshEnableNightLight);
     AshTestBase::SetUp();
     SetCursorCompositionEnabled(true);
   }
@@ -61,10 +54,6 @@ class CursorWindowControllerTest : public AshTestBase {
     cursor_window_controller_ =
         Shell::Get()->window_tree_host_manager()->cursor_window_controller();
     cursor_window_controller_->SetCursorCompositingEnabled(enabled);
-  }
-
-  CursorWindowController* cursor_window_controller() {
-    return cursor_window_controller_;
   }
 
  private:
@@ -125,6 +114,8 @@ TEST_F(CursorWindowControllerTest, MoveToDifferentDisplay) {
   EXPECT_EQ(50, cursor_bounds.y() + hot_point.y());
 }
 
+// Windows doesn't support compositor based cursor.
+#if !defined(OS_WIN)
 // Make sure that composition cursor inherits the visibility state.
 TEST_F(CursorWindowControllerTest, VisibilityTest) {
   ASSERT_TRUE(GetCursorWindow());
@@ -178,36 +169,6 @@ TEST_F(CursorWindowControllerTest, DSF) {
       display::Screen::GetScreen()->GetPrimaryDisplay().device_scale_factor());
   EXPECT_TRUE(GetCursorImage().HasRepresentation(2.0f));
 }
-
-// Test that cursor compositing is enabled if at least one of the features that
-// use it is enabled.
-TEST_F(CursorWindowControllerTest, ShouldEnableCursorCompositing) {
-  PrefService* prefs =
-      Shell::Get()->session_controller()->GetActivePrefService();
-
-  // Cursor compositing is disabled by default.
-  SetCursorCompositionEnabled(false);
-  EXPECT_FALSE(cursor_window_controller()->is_cursor_compositing_enabled());
-
-  // Enable large cursor, cursor compositing should be enabled.
-  prefs->SetBoolean(prefs::kAccessibilityLargeCursorEnabled, true);
-  Shell::Get()->UpdateCursorCompositingEnabled();
-  EXPECT_TRUE(cursor_window_controller()->is_cursor_compositing_enabled());
-
-  // Enable night light, cursor compositing should be enabled.
-  prefs->SetBoolean(prefs::kNightLightEnabled, true);
-  Shell::Get()->UpdateCursorCompositingEnabled();
-  EXPECT_TRUE(cursor_window_controller()->is_cursor_compositing_enabled());
-
-  // Disable large cursor, cursor compositing should be enabled.
-  prefs->SetBoolean(prefs::kAccessibilityLargeCursorEnabled, false);
-  Shell::Get()->UpdateCursorCompositingEnabled();
-  EXPECT_TRUE(cursor_window_controller()->is_cursor_compositing_enabled());
-
-  // Disable night light, cursor compositing should be disabled.
-  prefs->SetBoolean(prefs::kNightLightEnabled, false);
-  Shell::Get()->UpdateCursorCompositingEnabled();
-  EXPECT_FALSE(cursor_window_controller()->is_cursor_compositing_enabled());
-}
+#endif
 
 }  // namespace ash

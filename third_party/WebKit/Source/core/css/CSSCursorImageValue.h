@@ -46,7 +46,7 @@ class CSSCursorImageValue : public CSSValue {
 
   bool Equals(const CSSCursorImageValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSCursorImageValue(const CSSValue& image_value,

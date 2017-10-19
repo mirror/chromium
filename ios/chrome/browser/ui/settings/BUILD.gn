@@ -151,7 +151,6 @@ source_set("settings") {
     "//ios/chrome/browser/ui/settings/cells",
     "//ios/chrome/browser/ui/settings/sync_utils",
     "//ios/chrome/browser/ui/settings/utils",
-    "//ios/chrome/browser/ui/signin_interaction",
     "//ios/chrome/browser/voice",
     "//ios/chrome/browser/web:features",
     "//ios/chrome/browser/web:web",
@@ -322,7 +321,6 @@ source_set("eg_tests") {
     "clear_browsing_data_egtest.mm",
     "passwords_settings_egtest.mm",
     "settings_egtest.mm",
-    "signin_settings_egtest.mm",
     "translate_ui_egtest.mm",
   ]
 
@@ -361,7 +359,7 @@ source_set("eg_tests") {
     "//ios/public/provider/chrome/browser/signin:test_support",
     "//ios/testing:ios_test_support",
     "//ios/testing/earl_grey:earl_grey_support",
-    "//ios/third_party/earl_grey:earl_grey+link",
+    "//ios/third_party/earl_grey",
     "//ios/web",
     "//ios/web/public/test",
     "//ios/web/public/test/http_server",

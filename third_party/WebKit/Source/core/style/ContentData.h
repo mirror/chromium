@@ -61,7 +61,7 @@ class ContentData : public GarbageCollectedFinalized<ContentData> {
 
   virtual bool Equals(const ContentData&) const = 0;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   virtual ContentData* CloneInternal() const = 0;
@@ -95,7 +95,7 @@ class ImageContentData final : public ContentData {
            *GetImage();
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   ImageContentData(StyleImage* image) : image_(image) { DCHECK(image_); }

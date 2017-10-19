@@ -46,7 +46,7 @@ class CSSMediaRule final : public CSSConditionRule {
 
   MediaList* media() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CSSMediaRule(StyleRuleMedia*, CSSStyleSheet*);

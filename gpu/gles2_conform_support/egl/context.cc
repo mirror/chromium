@@ -270,7 +270,7 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
       &discardable_manager_));
 
   transfer_buffer_manager_ =
-      std::make_unique<gpu::TransferBufferManager>(nullptr);
+      base::MakeUnique<gpu::TransferBufferManager>(nullptr);
   std::unique_ptr<gpu::CommandBufferDirect> command_buffer(
       new gpu::CommandBufferDirect(transfer_buffer_manager_.get()));
 
@@ -303,16 +303,15 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
   helper.context_type = gpu::gles2::CONTEXT_TYPE_OPENGLES2;
   helper.offscreen_framebuffer_size = gl_surface->GetSize();
 
-  auto result = decoder->Initialize(gl_surface, gl_context.get(),
-                                    gl_surface->IsOffscreen(),
-                                    gpu::gles2::DisallowedFeatures(), helper);
-  if (result != gpu::ContextResult::kSuccess)
+  if (!decoder->Initialize(gl_surface, gl_context.get(),
+                           gl_surface->IsOffscreen(),
+                           gpu::gles2::DisallowedFeatures(), helper)) {
     return false;
+  }
 
-  auto gles2_cmd_helper =
-      std::make_unique<gpu::gles2::GLES2CmdHelper>(command_buffer.get());
-  result = gles2_cmd_helper->Initialize(limits.command_buffer_size);
-  if (result != gpu::ContextResult::kSuccess) {
+  std::unique_ptr<gpu::gles2::GLES2CmdHelper> gles2_cmd_helper(
+      new gpu::gles2::GLES2CmdHelper(command_buffer.get()));
+  if (!gles2_cmd_helper->Initialize(limits.command_buffer_size)) {
     decoder->Destroy(true);
     return false;
   }
@@ -320,29 +319,29 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
   // value. Here two sides are joined together.
   capabilities_ = decoder->GetCapabilities();
 
-  auto transfer_buffer =
-      std::make_unique<gpu::TransferBuffer>(gles2_cmd_helper.get());
+  std::unique_ptr<gpu::TransferBuffer> transfer_buffer(
+      new gpu::TransferBuffer(gles2_cmd_helper.get()));
 
-  gles2_cmd_helper_ = std::move(gles2_cmd_helper);
-  transfer_buffer_ = std::move(transfer_buffer);
-  command_buffer_ = std::move(command_buffer);
-  decoder_ = std::move(decoder);
+  gles2_cmd_helper_.reset(gles2_cmd_helper.release());
+  transfer_buffer_.reset(transfer_buffer.release());
+  command_buffer_.reset(command_buffer.release());
+  decoder_.reset(decoder.release());
   gl_context_ = gl_context.get();
 
-  auto context = std::make_unique<gpu::gles2::GLES2Implementation>(
-      gles2_cmd_helper_.get(), nullptr, transfer_buffer_.get(),
-      kBindGeneratesResources, kLoseContextWhenOutOfMemory,
-      kSupportClientSideArrays, this);
+  std::unique_ptr<gpu::gles2::GLES2Implementation> context(
+      new gpu::gles2::GLES2Implementation(
+          gles2_cmd_helper_.get(), nullptr, transfer_buffer_.get(),
+          kBindGeneratesResources, kLoseContextWhenOutOfMemory,
+          kSupportClientSideArrays, this));
 
-  result = context->Initialize(limits);
-  if (result != gpu::ContextResult::kSuccess) {
+  if (!context->Initialize(limits)) {
     DestroyService();
     return false;
   }
 
   context->EnableFeatureCHROMIUM("pepper3d_allow_buffers_on_multiple_targets");
   context->EnableFeatureCHROMIUM("pepper3d_support_fixed_attribs");
-  client_gl_context_ = std::move(context);
+  client_gl_context_.reset(context.release());
   return true;
 }
 

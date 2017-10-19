@@ -37,7 +37,7 @@
 #include "content/public/common/url_constants.h"
 #include "net/base/escape.h"
 
-static const char kTargetsDataFile[] = "targets-data.json";
+static const char kDataFile[] = "targets-data.json";
 
 static const char kProcessIdField[]  = "processId";
 static const char kRouteIdField[]  = "routeId";
@@ -118,7 +118,7 @@ std::unique_ptr<base::DictionaryValue> BuildTargetDescriptor(
 bool HandleRequestCallback(BrowserContext* current_context,
                            const std::string& path,
                            const WebUIDataSource::GotDataCallback& callback) {
-  if (path != kTargetsDataFile)
+  if (path != kDataFile)
     return false;
   std::unique_ptr<base::ListValue> rvh_list(new base::ListValue());
 
@@ -204,7 +204,7 @@ AccessibilityUI::AccessibilityUI(WebUI* web_ui) : WebUIController(web_ui) {
       base::Bind(&HandleRequestCallback,
                  web_ui->GetWebContents()->GetBrowserContext()));
 
-  html_source->UseGzip({kTargetsDataFile});
+  html_source->UseGzip({kDataFile});
 
   BrowserContext* browser_context =
       web_ui->GetWebContents()->GetBrowserContext();

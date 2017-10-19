@@ -248,7 +248,7 @@ bool SpinButtonElement::ShouldRespondToMouseEvents() {
          spin_button_owner_->ShouldSpinButtonRespondToMouseEvents();
 }
 
-void SpinButtonElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SpinButtonElement) {
   visitor->Trace(spin_button_owner_);
   HTMLDivElement::Trace(visitor);
 }

@@ -9,6 +9,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_util.h"
 
@@ -71,7 +72,7 @@ MockDiskMountManager::~MockDiskMountManager() {
 
 void MockDiskMountManager::NotifyDeviceInsertEvents() {
   std::unique_ptr<DiskMountManager::Disk> disk1_ptr =
-      std::make_unique<DiskMountManager::Disk>(
+      base::MakeUnique<DiskMountManager::Disk>(
           std::string(kTestDevicePath), std::string(),
           false,  // write_disabled_by_policy
           std::string(kTestSystemPath), std::string(kTestFilePath),
@@ -100,7 +101,7 @@ void MockDiskMountManager::NotifyDeviceInsertEvents() {
 
   // Disk Changed
   std::unique_ptr<DiskMountManager::Disk> disk2_ptr =
-      std::make_unique<DiskMountManager::Disk>(
+      base::MakeUnique<DiskMountManager::Disk>(
           std::string(kTestDevicePath), std::string(kTestMountPath),
           false,  // write_disabled_by_policy
           std::string(kTestSystemPath), std::string(kTestFilePath),
@@ -124,7 +125,7 @@ void MockDiskMountManager::NotifyDeviceInsertEvents() {
 
 void MockDiskMountManager::NotifyDeviceRemoveEvents() {
   std::unique_ptr<DiskMountManager::Disk> disk_ptr =
-      std::make_unique<DiskMountManager::Disk>(
+      base::MakeUnique<DiskMountManager::Disk>(
           std::string(kTestDevicePath), std::string(kTestMountPath),
           false,  // write_disabled_by_policy
           std::string(kTestSystemPath), std::string(kTestFilePath),
@@ -182,7 +183,7 @@ void MockDiskMountManager::CreateDiskEntryForMountDevice(
     bool on_removable_device,
     const std::string& file_system_type) {
   std::unique_ptr<DiskMountManager::Disk> disk_ptr =
-      std::make_unique<DiskMountManager::Disk>(
+      base::MakeUnique<DiskMountManager::Disk>(
           mount_info.source_path, mount_info.mount_path,
           false,          // write_disabled_by_policy
           std::string(),  // system_path

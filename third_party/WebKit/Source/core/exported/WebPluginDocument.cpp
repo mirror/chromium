@@ -39,7 +39,7 @@ namespace blink {
 
 WebPlugin* WebPluginDocument::Plugin() {
   if (!IsPluginDocument())
-    return nullptr;
+    return 0;
   PluginDocument* doc = Unwrap<PluginDocument>();
   WebPluginContainerImpl* container =
       ToWebPluginContainerImpl(doc->GetPluginView());

@@ -58,7 +58,7 @@ class CORE_EXPORT InputMethodController final
 
   static InputMethodController* Create(LocalFrame&);
   virtual ~InputMethodController();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // international text input composition
   bool HasComposition() const;

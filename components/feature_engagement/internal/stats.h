@@ -58,11 +58,8 @@ enum class TriggerHelpUIResult {
   // Availability precondition is not satisfied.
   FAILURE_AVAILABILITY_PRECONDITION_UNMET = 11,
 
-  // Same as |SUCCESS|, but feature configuration was set to tracking only.
-  SUCCESS_TRACKING_ONLY = 12,
-
   // Last entry for the enum.
-  COUNT = 13,
+  COUNT = 12,
 };
 
 // Used in the metrics to track the configuration parsing event.
@@ -109,11 +106,8 @@ enum class ConfigParsingEvent {
   // Fails to parse the session rate impact.
   FAILURE_SESSION_RATE_IMPACT_UNKNOWN_FEATURE = 12,
 
-  // Fails to parse the tracking only flag.
-  FAILURE_TRACKING_ONLY_PARSE = 13,
-
   // Last entry for the enum.
-  COUNT = 14,
+  COUNT = 13,
 };
 
 // Used in metrics to track database states. Each type will match to a suffix
@@ -138,7 +132,6 @@ void RecordNotifyEvent(const std::string& event,
 // Records user action and the result histogram when in-product help will be
 // shown to the user.
 void RecordShouldTriggerHelpUI(const base::Feature& feature,
-                               const FeatureConfig& feature_config,
                                const ConditionValidator::Result& result);
 
 // Records when the user dismisses the in-product help UI.

@@ -30,7 +30,7 @@ class VRCoordinateSystem : public GarbageCollectedFinalized<VRCoordinateSystem>,
   virtual std::unique_ptr<TransformationMatrix> TransformBasePose(
       const TransformationMatrix& base_pose) = 0;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   const Member<VRSession> session_;

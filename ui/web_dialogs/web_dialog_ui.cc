@@ -63,7 +63,7 @@ void WebDialogUI::SetDelegate(content::WebContents* web_contents,
                               WebDialogDelegate* delegate) {
   web_contents->SetUserData(
       &kWebDialogDelegateUserDataKey,
-      std::make_unique<WebDialogDelegateUserData>(delegate));
+      base::MakeUnique<WebDialogDelegateUserData>(delegate));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

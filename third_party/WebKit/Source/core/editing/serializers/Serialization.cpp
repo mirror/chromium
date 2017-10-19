@@ -86,7 +86,7 @@ class AttributeChange {
 
   void Apply() { element_->setAttribute(name_, AtomicString(value_)); }
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(element_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(element_); }
 
  private:
   Member<Element> element_;
@@ -103,7 +103,7 @@ namespace blink {
 static void CompleteURLs(DocumentFragment& fragment, const String& base_url) {
   HeapVector<AttributeChange> changes;
 
-  KURL parsed_base_url(base_url);
+  KURL parsed_base_url(kParsedURLString, base_url);
 
   for (Element& element : ElementTraversal::DescendantsOf(fragment)) {
     AttributeCollection attributes = element.Attributes();
@@ -128,7 +128,7 @@ static bool IsHTMLBlockElement(const Node* node) {
 static HTMLElement* AncestorToRetainStructureAndAppearanceForBlock(
     Element* common_ancestor_block) {
   if (!common_ancestor_block)
-    return nullptr;
+    return 0;
 
   if (common_ancestor_block->HasTagName(tbodyTag) ||
       IsHTMLTableRowElement(*common_ancestor_block))
@@ -137,7 +137,7 @@ static HTMLElement* AncestorToRetainStructureAndAppearanceForBlock(
   if (IsNonTableCellHTMLBlockElement(common_ancestor_block))
     return ToHTMLElement(common_ancestor_block);
 
-  return nullptr;
+  return 0;
 }
 
 static inline HTMLElement* AncestorToRetainStructureAndAppearance(
@@ -636,7 +636,7 @@ DocumentFragment* CreateFragmentForTransformToFragment(
   } else if (source_mime_type == "text/plain") {
     fragment->ParserAppendChild(Text::Create(output_doc, source_string));
   } else {
-    bool successful_parse = fragment->ParseXML(source_string, nullptr);
+    bool successful_parse = fragment->ParseXML(source_string, 0);
     if (!successful_parse)
       return nullptr;
   }

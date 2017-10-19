@@ -25,7 +25,6 @@
 @property(class, nonatomic, readonly) UIColor* hostListHeaderTitleColor;
 @property(class, nonatomic, readonly) UIColor* hostOfflineColor;
 @property(class, nonatomic, readonly) UIColor* hostOnlineColor;
-@property(class, nonatomic, readonly) UIColor* hostWarningColor;
 @property(class, nonatomic, readonly) UIColor* menuBlueColor;
 @property(class, nonatomic, readonly) UIColor* menuTextColor;
 @property(class, nonatomic, readonly) UIColor* refreshIndicatorColor;

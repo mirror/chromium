@@ -1258,6 +1258,12 @@ chrome_browser_net::Predictor* ProfileImpl::GetNetworkPredictor() {
   return predictor_;
 }
 
+void ProfileImpl::ClearNetworkingHistorySince(
+    base::Time time,
+    const base::Closure& completion) {
+  io_data_.ClearNetworkingHistorySince(time, completion);
+}
+
 GURL ProfileImpl::GetHomePage() {
   // --homepage overrides any preferences.
   const base::CommandLine& command_line =
@@ -1368,7 +1374,6 @@ ProfileImpl::CreateDomainReliabilityMonitor(PrefService* local_state) {
     return std::unique_ptr<domain_reliability::DomainReliabilityMonitor>();
 
   return service->CreateMonitor(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 

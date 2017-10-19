@@ -78,7 +78,6 @@ EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::
 void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
     const EmbeddedWorkerStartParams& params,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-    mojom::ControllerServiceWorkerRequest controller_request,
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
@@ -94,9 +93,8 @@ void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
 
   helper_->OnStartWorkerStub(params, std::move(dispatcher_request),
-                             std::move(controller_request),
-                             std::move(instance_host), std::move(provider_info),
-                             std::move(installed_scripts_info));
+                             std::move(instance_host),
+                             std::move(provider_info));
 }
 
 void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StopWorker() {
@@ -218,15 +216,16 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
   }
 
   void DispatchFetchEvent(
+      int fetch_event_id,
       const ServiceWorkerFetchRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
       DispatchFetchEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnFetchEventStub(thread_id_, request, std::move(preload_handle),
-                              std::move(response_callback),
-                              std::move(callback));
+    helper_->OnFetchEventStub(
+        thread_id_, fetch_event_id, request, std::move(preload_handle),
+        std::move(response_callback), std::move(callback));
   }
 
   void DispatchNotificationClickEvent(
@@ -505,35 +504,24 @@ void EmbeddedWorkerTestHelper::OnStartWorker(
     const GURL& scope,
     const GURL& script_url,
     bool pause_after_download,
-    mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-    mojom::ControllerServiceWorkerRequest controller_request,
+    mojom::ServiceWorkerEventDispatcherRequest request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-    mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info) {
+    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info) {
   EmbeddedWorkerInstance* worker = registry()->GetWorker(embedded_worker_id);
   ASSERT_TRUE(worker);
   MockServiceWorkerEventDispatcher::Create(AsWeakPtr(), worker->thread_id(),
-                                           std::move(dispatcher_request));
+                                           std::move(request));
+
   embedded_worker_id_service_worker_version_id_map_[embedded_worker_id] =
       service_worker_version_id;
   embedded_worker_id_instance_host_ptr_map_[embedded_worker_id].Bind(
       std::move(instance_host));
-  embedded_worker_id_installed_scripts_info_map_[embedded_worker_id] =
-      std::move(installed_scripts_info);
   ServiceWorkerRemoteProviderEndpoint* provider_endpoint =
       &embedded_worker_id_remote_provider_map_[embedded_worker_id];
   provider_endpoint->BindWithProviderInfo(std::move(provider_info));
 
   SimulateWorkerReadyForInspection(embedded_worker_id);
-  SimulateWorkerScriptCached(
-      embedded_worker_id,
-      base::BindOnce(&EmbeddedWorkerTestHelper::DidSimulateWorkerScriptCached,
-                     AsWeakPtr(), embedded_worker_id, pause_after_download));
-}
-
-void EmbeddedWorkerTestHelper::DidSimulateWorkerScriptCached(
-    int embedded_worker_id,
-    bool pause_after_download) {
+  SimulateWorkerScriptCached(embedded_worker_id);
   SimulateWorkerScriptLoaded(embedded_worker_id);
   if (!pause_after_download)
     OnResumeAfterDownload(embedded_worker_id);
@@ -613,6 +601,7 @@ void EmbeddedWorkerTestHelper::OnInstallEvent(
 
 void EmbeddedWorkerTestHelper::OnFetchEvent(
     int /* embedded_worker_id */,
+    int /* fetch_event_id */,
     const ServiceWorkerFetchRequest& /* request */,
     mojom::FetchEventPreloadHandlePtr /* preload_handle */,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
@@ -712,30 +701,23 @@ void EmbeddedWorkerTestHelper::SimulateWorkerReadyForInspection(
 }
 
 void EmbeddedWorkerTestHelper::SimulateWorkerScriptCached(
-    int embedded_worker_id,
-    base::OnceClosure callback) {
+    int embedded_worker_id) {
   int64_t version_id =
       embedded_worker_id_service_worker_version_id_map_[embedded_worker_id];
   ServiceWorkerVersion* version = context()->GetLiveVersion(version_id);
-  if (!version) {
-    std::move(callback).Run();
+  if (!version)
     return;
-  }
   if (!version->script_cache_map()->size()) {
     std::vector<ServiceWorkerDatabase::ResourceRecord> records;
     // Add a dummy ResourceRecord for the main script to the script cache map of
-    // the ServiceWorkerVersion.
-    records.push_back(WriteToDiskCacheAsync(
-        context()->storage(), version->script_url(),
-        context()->storage()->NewResourceId(), {} /* headers */, "I'm a body",
-        "I'm a meta data", std::move(callback)));
+    // the ServiceWorkerVersion. We use embedded_worker_id for resource_id to
+    // avoid ID collision.
+    records.push_back(ServiceWorkerDatabase::ResourceRecord(
+        embedded_worker_id, version->script_url(), 100));
     version->script_cache_map()->SetResources(records);
   }
   if (!version->GetMainScriptHttpResponseInfo())
     version->SetMainScriptHttpResponseInfo(CreateHttpResponseInfo());
-  // Call |callback| if |version| already has ResourceRecords.
-  if (!callback.is_null())
-    std::move(callback).Run();
 }
 
 void EmbeddedWorkerTestHelper::SimulateWorkerScriptLoaded(
@@ -796,24 +778,21 @@ void EmbeddedWorkerTestHelper::SimulateSend(IPC::Message* message) {
 
 void EmbeddedWorkerTestHelper::OnStartWorkerStub(
     const EmbeddedWorkerStartParams& params,
-    mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-    mojom::ControllerServiceWorkerRequest controller_request,
+    mojom::ServiceWorkerEventDispatcherRequest request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-    mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info) {
+    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info) {
   EmbeddedWorkerInstance* worker =
       registry()->GetWorker(params.embedded_worker_id);
   ASSERT_TRUE(worker);
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::BindOnce(
-          &EmbeddedWorkerTestHelper::OnStartWorker, AsWeakPtr(),
-          params.embedded_worker_id, params.service_worker_version_id,
-          params.scope, params.script_url, params.pause_after_download,
-          std::move(dispatcher_request), std::move(controller_request),
-          std::move(instance_host), std::move(provider_info),
-          std::move(installed_scripts_info)));
+      base::BindOnce(&EmbeddedWorkerTestHelper::OnStartWorker, AsWeakPtr(),
+                     params.embedded_worker_id,
+                     params.service_worker_version_id, params.scope,
+                     params.script_url, params.pause_after_download,
+                     base::Passed(&request), base::Passed(&instance_host),
+                     base::Passed(&provider_info)));
 }
 
 void EmbeddedWorkerTestHelper::OnResumeAfterDownloadStub(
@@ -919,6 +898,7 @@ void EmbeddedWorkerTestHelper::OnInstallEventStub(
 
 void EmbeddedWorkerTestHelper::OnFetchEventStub(
     int thread_id,
+    int fetch_event_id,
     const ServiceWorkerFetchRequest& request,
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
@@ -927,8 +907,8 @@ void EmbeddedWorkerTestHelper::OnFetchEventStub(
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerTestHelper::OnFetchEvent, AsWeakPtr(),
-                     thread_id_embedded_worker_id_map_[thread_id], request,
-                     base::Passed(&preload_handle),
+                     thread_id_embedded_worker_id_map_[thread_id],
+                     fetch_event_id, request, base::Passed(&preload_handle),
                      base::Passed(&response_callback),
                      base::Passed(&finish_callback)));
 }

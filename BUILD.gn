@@ -251,6 +251,14 @@ group("gn_all") {
     ]
   }
 
+  if (use_ash) {
+    deps += [
+      "//ash:ash_content_unittests",
+      "//ash:ash_shell_with_content",
+      "//ash:ash_unittests",
+    ]
+  }
+
   if (use_aura) {
     deps += [
       "//ui/aura:aura_unittests",
@@ -371,9 +379,6 @@ group("gn_all") {
 
   if (is_chromeos) {
     deps += [
-      "//ash:ash_content_unittests",
-      "//ash:ash_shell_with_content",
-      "//ash:ash_unittests",
       "//chromeos:chromeos_unittests",
       "//chromeos/components:chromeos_components_unittests",
       "//components/session_manager/core",
@@ -392,10 +397,8 @@ group("gn_all") {
     ]
   }
 
-  # Accessibility API debugging tools.
-  if (is_win) {
+  if (is_win || is_mac) {
     deps += [ "//tools/accessibility/inspect:ax_dump_events" ]
-    deps += [ "//tools/accessibility/inspect:ax_dump_tree" ]
   }
 
   if (is_linux) {
@@ -446,7 +449,6 @@ group("gn_all") {
       "//device:device_unittests",
       "//gin:gin_shell",
       "//gin:gin_unittests",
-      "//gpu:command_buffer_perftests",
       "//gpu:gl_tests",
       "//gpu:gpu_perftests",
       "//ipc:ipc_perftests",
@@ -686,8 +688,10 @@ group("gn_all") {
       if (!is_android) {
         deps += [ "//chrome/test:load_library_perf_tests" ]
       }
+      if (enable_nacl) {
+        deps += [ "//native_client/src/trusted/platform_qualify:vcpuid" ]
+      }
       deps += [
-        "//native_client/src/trusted/platform_qualify:vcpuid",
         "//third_party/libjpeg_turbo:simd_asm",
       ]
     }
@@ -718,10 +722,7 @@ group("gn_all") {
   }
 
   if (enable_vr) {
-    deps += [
-      "//chrome/browser/vr:vr_common_perftests",
-      "//chrome/browser/vr:vr_common_unittests",
-    ]
+    deps += [ "//chrome/browser/vr:vr_common_unittests" ]
     if (is_linux && use_ozone) {
       deps += [ "//chrome/browser/vr/testapp:vr_testapp" ]
     }
@@ -1039,7 +1040,6 @@ group("chromium_builder_perf") {
       "//chrome/test:load_library_perf_tests",
       "//chrome/test:telemetry_perf_tests",
       "//components/tracing:tracing_perftests",
-      "//gpu:command_buffer_perftests",
       "//gpu:gpu_perftests",
       "//media:media_perftests",
       "//tools/perf/chrome_telemetry_build:telemetry_chrome_test",

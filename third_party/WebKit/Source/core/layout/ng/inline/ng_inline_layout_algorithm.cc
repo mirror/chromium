@@ -33,8 +33,7 @@ inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
   DCHECK(item.Style());
   const ComputedStyle& style = *item.Style();
   // TODO(kojii): We might need more conditions to create box fragments.
-  return style.HasBoxDecorationBackground() || style.HasOutline() ||
-         item_result.needs_box_when_empty;
+  return style.HasBoxDecorationBackground() || item_result.needs_box_when_empty;
 }
 
 NGBfcOffset GetOriginPointForFloats(const NGBfcOffset& container_bfc_offset,
@@ -182,6 +181,10 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
       DCHECK(item.GetLayoutObject()->IsText() ||
              item.GetLayoutObject()->IsLayoutNGListItem());
       DCHECK(!box->text_metrics.IsEmpty());
+      DCHECK(item.Style());
+      text_builder.SetStyle(item.Style());
+      text_builder.SetSize(
+          {item_result.inline_size, box->text_metrics.LineHeight()});
       if (item_result.shape_result) {
         if (quirks_mode_)
           box->ActivateTextMetrics();
@@ -190,13 +193,14 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
           box->AccumulateUsedFonts(item_result.shape_result.get(),
                                    baseline_type_);
         }
+        text_builder.SetEndEffect(item_result.text_end_effect);
+        text_builder.SetShapeResult(std::move(item_result.shape_result));
+        text_builder.SetExpansion(item_result.expansion);
       } else {
         if (quirks_mode_ && line_box.Children().IsEmpty())
           box->ActivateTextMetrics();
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
       }
-
-      text_builder.SetItem(&item_result, box->text_metrics.LineHeight());
       RefPtr<NGPhysicalTextFragment> text_fragment =
           text_builder.ToTextFragment(item_result.item_index,
                                       item_result.start_offset,
@@ -339,8 +343,9 @@ void NGInlineLayoutAlgorithm::PlaceText(RefPtr<const ShapeResult> shape_result,
                                         NGTextFragmentBuilder* text_builder,
                                         NGLineBoxFragmentBuilder* line_box) {
   LayoutUnit inline_size = shape_result->SnappedWidth();
-  text_builder->SetText(std::move(style), std::move(shape_result), inline_size,
-                        box->text_metrics.LineHeight());
+  text_builder->SetStyle(std::move(style));
+  text_builder->SetSize({inline_size, box->text_metrics.LineHeight()});
+  text_builder->SetShapeResult(std::move(shape_result));
   RefPtr<NGPhysicalTextFragment> text_fragment =
       text_builder->ToTextFragment(std::numeric_limits<unsigned>::max(), 0, 0);
   line_box->AddChild(std::move(text_fragment), {*position, box->text_top});
@@ -391,9 +396,9 @@ void NGInlineLayoutAlgorithm::PlaceLayoutResult(
   if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
     // |CopyFragmentDataToLayoutBox| needs to know if a box fragment is an
     // atomic inline, and its item_index. Add a text fragment as a marker.
-    NGTextFragmentBuilder text_builder(Node(), ConstraintSpace().WritingMode());
-    text_builder.SetAtomicInline(&style, fragment.InlineSize(),
-                                 metrics.LineHeight());
+    NGTextFragmentBuilder text_builder(Node(), &style,
+                                       ConstraintSpace().WritingMode());
+    text_builder.SetSize({fragment.InlineSize(), metrics.LineHeight()});
     RefPtr<NGPhysicalTextFragment> text_fragment = text_builder.ToTextFragment(
         item_result->item_index, item_result->start_offset,
         item_result->end_offset);
@@ -627,20 +632,16 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     }
   }
 
-  RefPtr<NGInlineBreakToken> break_token = BreakToken();
+  NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
+                             &unpositioned_floats_, BreakToken());
+
   std::unique_ptr<NGExclusionSpace> exclusion_space(
       WTF::MakeUnique<NGExclusionSpace>(ConstraintSpace().ExclusionSpace()));
   NGLineInfo line_info;
-  while (!break_token || !break_token->IsFinished()) {
-    NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
-                               &unpositioned_floats_, break_token.get());
-    if (!line_breaker.NextLine({LayoutUnit(), content_size_}, *exclusion_space,
-                               &line_info))
-      break;
-
-    break_token = line_breaker.CreateBreakToken();
-    CreateLine(&line_info, line_breaker.ExclusionSpace(), break_token);
-
+  while (line_breaker.NextLine({LayoutUnit(), content_size_}, *exclusion_space,
+                               &line_info)) {
+    CreateLine(&line_info, line_breaker.ExclusionSpace(),
+               line_breaker.CreateBreakToken());
     exclusion_space =
         WTF::MakeUnique<NGExclusionSpace>(*line_breaker.ExclusionSpace());
   }
@@ -658,9 +659,8 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   }
 
   // TODO(kojii): Check if the line box width should be content or available.
-  container_builder_.SetInlineSize(max_inline_size_);
-  container_builder_.SetBlockSize(content_size_);
-  container_builder_.SetIntrinsicBlockSize(content_size_);
+  NGLogicalSize size(max_inline_size_, content_size_);
+  container_builder_.SetSize(size).SetIntrinsicBlockSize(content_size_);
 
   // TODO(crbug.com/716930): We may be an empty LayoutInline due to splitting.
   // Margin struts shouldn't need to be passed through like this once we've

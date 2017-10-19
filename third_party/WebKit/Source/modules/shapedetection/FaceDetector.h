@@ -25,7 +25,7 @@ class MODULES_EXPORT FaceDetector final : public ShapeDetector,
  public:
   static FaceDetector* Create(ExecutionContext*, const FaceDetectorOptions&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   FaceDetector(ExecutionContext*, const FaceDetectorOptions&);

@@ -32,7 +32,6 @@
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "ios/web/public/referrer.h"
-#import "ios/web/public/web_state/web_state.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -74,12 +73,8 @@ using bookmarks::BookmarkNode;
 // Builds a controller and brings it on screen.
 - (void)presentBookmarkForBookmarkedTab:(Tab*)tab;
 
-// Dismisses the bookmark browser.  If |urlsToOpen| is not empty, then the user
-// has selected to navigate to those URLs with specified tab mode.
-- (void)dismissBookmarkBrowserAnimated:(BOOL)animated
-                            urlsToOpen:(const std::vector<GURL>&)urlsToOpen
-                           inIncognito:(BOOL)inIncognito
-                                newTab:(BOOL)newTab;
+// Dismisses the bookmark browser.
+- (void)dismissBookmarkBrowserAnimated:(BOOL)animated;
 
 // Dismisses the bookmark editor.
 - (void)dismissBookmarkEditorAnimated:(BOOL)animated;
@@ -122,11 +117,11 @@ using bookmarks::BookmarkNode;
 
 - (void)presentBookmarkForBookmarkedTab:(Tab*)tab {
   DCHECK(!self.bookmarkBrowser && !self.bookmarkEditor);
-  DCHECK(tab && tab.webState);
+  DCHECK(tab);
 
   const BookmarkNode* bookmark =
       self.bookmarkModel->GetMostRecentlyAddedUserNodeForURL(
-          tab.webState->GetLastCommittedURL());
+          tab.lastCommittedURL);
   if (!bookmark)
     return;
 
@@ -148,7 +143,7 @@ using bookmarks::BookmarkNode;
 - (void)presentBookmarkForTab:(Tab*)tab currentlyBookmarked:(BOOL)bookmarked {
   if (!self.bookmarkModel->loaded())
     return;
-  if (!tab || !tab.webState)
+  if (!tab)
     return;
 
   if (bookmarked) {
@@ -158,12 +153,12 @@ using bookmarks::BookmarkNode;
     __weak Tab* weakTab = tab;
     void (^editAction)() = ^() {
       BookmarkInteractionController* strongSelf = weakSelf;
-      if (!strongSelf || !weakTab || !weakTab.webState)
+      if (!strongSelf || !weakTab)
         return;
       [strongSelf presentBookmarkForBookmarkedTab:weakTab];
     };
     [self.mediator addBookmarkWithTitle:tab.title
-                                    URL:tab.webState->GetLastCommittedURL()
+                                    URL:tab.lastCommittedURL
                              editAction:editAction];
   }
 }
@@ -199,45 +194,17 @@ using bookmarks::BookmarkNode;
   }
 }
 
-- (void)dismissBookmarkBrowserAnimated:(BOOL)animated
-                            urlsToOpen:(const std::vector<GURL>&)urlsToOpen
-                           inIncognito:(BOOL)inIncognito
-                                newTab:(BOOL)newTab {
+- (void)dismissBookmarkBrowserAnimated:(BOOL)animated {
   if (!self.bookmarkBrowser)
     return;
 
-  // If trying to open urls with tab mode changed, we need to postpone openUrls
-  // until the dismissal of Bookmarks is done.  This is to prevent the race
-  // condition between the dismissal of bookmarks and switch of BVC.
-  const BOOL openUrlsAfterDismissal =
-      !urlsToOpen.empty() &&
-      ((!!inIncognito) != _currentBrowserState->IsOffTheRecord());
-
-  // A copy of the urls vector for the completion block.
-  std::vector<GURL> urlsToOpenAfterDismissal;
-  if (openUrlsAfterDismissal) {
-    // open urls in the completion block after dismissal.
-    urlsToOpenAfterDismissal = urlsToOpen;
-  } else if (!urlsToOpen.empty()) {
-    // open urls now.
-    [self openUrls:urlsToOpen inIncognito:inIncognito newTab:newTab];
-  }
-
   [self.bookmarkBrowser dismissModals];
-
-  [_parentController
-      dismissViewControllerAnimated:animated
-                         completion:^{
-                           self.bookmarkBrowser.homeDelegate = nil;
-                           self.bookmarkBrowser = nil;
-
-                           if (!openUrlsAfterDismissal) {
-                             return;
-                           }
-                           [self openUrls:urlsToOpenAfterDismissal
-                               inIncognito:inIncognito
-                                    newTab:newTab];
-                         }];
+  [_parentController dismissViewControllerAnimated:animated
+                                        completion:^{
+                                          self.bookmarkBrowser.homeDelegate =
+                                              nil;
+                                          self.bookmarkBrowser = nil;
+                                        }];
 }
 
 - (void)dismissBookmarkEditorAnimated:(BOOL)animated {
@@ -252,11 +219,7 @@ using bookmarks::BookmarkNode;
 }
 
 - (void)dismissBookmarkModalControllerAnimated:(BOOL)animated {
-  // No urls to open.  So it does not care about inIncognito and newTab.
-  [self dismissBookmarkBrowserAnimated:animated
-                            urlsToOpen:std::vector<GURL>()
-                           inIncognito:NO
-                                newTab:NO];
+  [self dismissBookmarkBrowserAnimated:animated];
   [self dismissBookmarkEditorAnimated:animated];
 }
 
@@ -277,11 +240,6 @@ using bookmarks::BookmarkNode;
   [self dismissBookmarkEditorAnimated:YES];
 }
 
-- (void)bookmarkEditorWillCommitTitleOrUrlChange:
-    (BookmarkEditViewController*)controller {
-  // Do nothing.
-}
-
 #pragma mark - BookmarkHomeViewControllerDelegate
 
 - (void)
@@ -299,15 +257,11 @@ bookmarkHomeViewControllerWantsDismissal:(BookmarkHomeViewController*)controller
                                 navigationToUrls:(const std::vector<GURL>&)urls
                                      inIncognito:(BOOL)inIncognito
                                           newTab:(BOOL)newTab {
-  [self dismissBookmarkBrowserAnimated:YES
-                            urlsToOpen:urls
-                           inIncognito:inIncognito
-                                newTab:newTab];
-}
+  [self dismissBookmarkBrowserAnimated:YES];
 
-- (void)openUrls:(const std::vector<GURL>&)urls
-     inIncognito:(BOOL)inIncognito
-          newTab:(BOOL)newTab {
+  if (urls.empty())
+    return;
+
   BOOL openInForegroundTab = YES;
   for (const GURL& url : urls) {
     DCHECK(url.is_valid());

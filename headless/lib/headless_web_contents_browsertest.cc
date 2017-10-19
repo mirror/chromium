@@ -186,23 +186,21 @@ class HeadlessWindowOpenTabSocketTest : public HeadlessBrowserTest,
   // runtime::Observer implementation.
   void OnExecutionContextCreated(
       const runtime::ExecutionContextCreatedParams& params) override {
+    const base::DictionaryValue* dictionary;
     std::string frame_id;
-    if (!params.GetContext()->HasAuxData())
-      return;
+    if (params.GetContext()->HasAuxData() &&
+        params.GetContext()->GetAuxData()->GetAsDictionary(&dictionary) &&
+        dictionary->GetString("frameId", &frame_id) &&
+        frame_id == *child_frame_id_) {
+      child_frame_execution_context_id_ = params.GetContext()->GetId();
 
-    const base::Value* frame_id_value =
-        params.GetContext()->GetAuxData()->FindKey("frameId");
-    if (!frame_id_value || frame_id_value->GetString() != *child_frame_id_)
-      return;
-
-    child_frame_execution_context_id_ = params.GetContext()->GetId();
-
-    HeadlessTabSocket* tab_socket = child_->GetHeadlessTabSocket();
-    CHECK(tab_socket);
-    tab_socket->InstallHeadlessTabSocketBindings(
-        *child_frame_execution_context_id_,
-        base::Bind(&HeadlessWindowOpenTabSocketTest::OnTabSocketInstalled,
-                   base::Unretained(this)));
+      HeadlessTabSocket* tab_socket = child_->GetHeadlessTabSocket();
+      CHECK(tab_socket);
+      tab_socket->InstallHeadlessTabSocketBindings(
+          *child_frame_execution_context_id_,
+          base::Bind(&HeadlessWindowOpenTabSocketTest::OnTabSocketInstalled,
+                     base::Unretained(this)));
+    }
   }
 
   void OnTabSocketInstalled(bool success) {
@@ -330,9 +328,12 @@ IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, Focus) {
           .Build();
   EXPECT_TRUE(WaitForLoad(web_contents));
 
-  std::unique_ptr<runtime::EvaluateResult> has_focus =
-      EvaluateScript(web_contents, "document.hasFocus()");
-  EXPECT_TRUE(has_focus->GetResult()->GetValue()->GetBool());
+  bool result;
+  EXPECT_TRUE(EvaluateScript(web_contents, "document.hasFocus()")
+                  ->GetResult()
+                  ->GetValue()
+                  ->GetAsBoolean(&result));
+  EXPECT_TRUE(result);
 
   HeadlessWebContents* web_contents2 =
       browser_context->CreateWebContentsBuilder()
@@ -341,11 +342,16 @@ IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, Focus) {
   EXPECT_TRUE(WaitForLoad(web_contents2));
 
   // Focus of different WebContents is independent.
-  has_focus = EvaluateScript(web_contents, "document.hasFocus()");
-  EXPECT_TRUE(has_focus->GetResult()->GetValue()->GetBool());
-
-  has_focus = EvaluateScript(web_contents2, "document.hasFocus()");
-  EXPECT_TRUE(has_focus->GetResult()->GetValue()->GetBool());
+  EXPECT_TRUE(EvaluateScript(web_contents, "document.hasFocus()")
+                  ->GetResult()
+                  ->GetValue()
+                  ->GetAsBoolean(&result));
+  EXPECT_TRUE(result);
+  EXPECT_TRUE(EvaluateScript(web_contents2, "document.hasFocus()")
+                  ->GetResult()
+                  ->GetValue()
+                  ->GetAsBoolean(&result));
+  EXPECT_TRUE(result);
 }
 
 IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, HandleSSLError) {
@@ -1347,75 +1353,5 @@ HEADLESS_ASYNC_DEVTOOLED_TEST_F(
     HeadlessWebContentsBeginFrameControlViewportTest);
 
 #endif  // !defined(OS_MACOSX)
-
-class CookiesEnabled : public HeadlessAsyncDevTooledBrowserTest,
-                       page::Observer {
- public:
-  void RunDevTooledTest() override {
-    devtools_client_->GetPage()->AddObserver(this);
-    devtools_client_->GetPage()->Enable();
-
-    EXPECT_TRUE(embedded_test_server()->Start());
-    devtools_client_->GetPage()->Navigate(
-        embedded_test_server()->GetURL("/cookie.html").spec());
-  }
-
-  // page::Observer implementation:
-  void OnLoadEventFired(const page::LoadEventFiredParams& params) override {
-    devtools_client_->GetRuntime()->Evaluate(
-        "window.test_result",
-        base::Bind(&CookiesEnabled::OnResult, base::Unretained(this)));
-  }
-
-  void OnResult(std::unique_ptr<runtime::EvaluateResult> result) {
-    std::string value;
-    EXPECT_TRUE(result->GetResult()->HasValue());
-    EXPECT_TRUE(result->GetResult()->GetValue()->GetAsString(&value));
-    EXPECT_EQ("0", value);
-    FinishAsynchronousTest();
-  }
-
-  void CustomizeHeadlessBrowserContext(
-      HeadlessBrowserContext::Builder& builder) override {
-    builder.SetAllowCookies(true);
-  }
-};
-
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(CookiesEnabled);
-
-class CookiesDisabled : public HeadlessAsyncDevTooledBrowserTest,
-                        page::Observer {
- public:
-  void RunDevTooledTest() override {
-    devtools_client_->GetPage()->AddObserver(this);
-    devtools_client_->GetPage()->Enable();
-
-    EXPECT_TRUE(embedded_test_server()->Start());
-    devtools_client_->GetPage()->Navigate(
-        embedded_test_server()->GetURL("/cookie.html").spec());
-  }
-
-  // page::Observer implementation:
-  void OnLoadEventFired(const page::LoadEventFiredParams& params) override {
-    devtools_client_->GetRuntime()->Evaluate(
-        "window.test_result",
-        base::Bind(&CookiesDisabled::OnResult, base::Unretained(this)));
-  }
-
-  void OnResult(std::unique_ptr<runtime::EvaluateResult> result) {
-    std::string value;
-    EXPECT_TRUE(result->GetResult()->HasValue());
-    EXPECT_TRUE(result->GetResult()->GetValue()->GetAsString(&value));
-    EXPECT_EQ("-1", value);
-    FinishAsynchronousTest();
-  }
-
-  void CustomizeHeadlessBrowserContext(
-      HeadlessBrowserContext::Builder& builder) override {
-    builder.SetAllowCookies(false);
-  }
-};
-
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(CookiesDisabled);
 
 }  // namespace headless

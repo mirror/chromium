@@ -45,13 +45,6 @@ constexpr base::TimeDelta kShutdownWhenScreenOffTimeout =
 constexpr base::TimeDelta kIgnorePowerButtonAfterResumeDelay =
     base::TimeDelta::FromSeconds(2);
 
-// Returns true if device is a convertible/tablet device, otherwise false.
-bool IsTabletModeSupported() {
-  TabletModeController* tablet_mode_controller =
-      Shell::Get()->tablet_mode_controller();
-  return tablet_mode_controller && tablet_mode_controller->CanEnterTabletMode();
-}
-
 // Returns the value for the command-line switch identified by |name|. Returns 0
 // if the switch was unset or contained a non-float value.
 double GetNumSwitch(const base::CommandLine& command_line,
@@ -89,6 +82,41 @@ constexpr base::TimeDelta TabletPowerButtonController::kScreenStateChangeDelay;
 constexpr base::TimeDelta
     TabletPowerButtonController::kIgnoreRepeatedButtonUpDelay;
 
+TabletPowerButtonController::TestApi::TestApi(
+    TabletPowerButtonController* controller)
+    : controller_(controller) {}
+
+TabletPowerButtonController::TestApi::~TestApi() = default;
+
+bool TabletPowerButtonController::TestApi::ShutdownTimerIsRunning() const {
+  return controller_->shutdown_timer_.IsRunning();
+}
+
+void TabletPowerButtonController::TestApi::TriggerShutdownTimeout() {
+  DCHECK(ShutdownTimerIsRunning());
+  controller_->OnShutdownTimeout();
+  controller_->shutdown_timer_.Stop();
+}
+
+bool TabletPowerButtonController::TestApi::IsObservingAccelerometerReader(
+    chromeos::AccelerometerReader* reader) const {
+  DCHECK(reader);
+  return controller_->accelerometer_scoped_observer_.IsObserving(reader);
+}
+
+void TabletPowerButtonController::TestApi::ParseSpuriousPowerButtonSwitches(
+    const base::CommandLine& command_line) {
+  controller_->ParseSpuriousPowerButtonSwitches(command_line);
+}
+
+bool TabletPowerButtonController::TestApi::IsSpuriousPowerButtonEvent() const {
+  return controller_->IsSpuriousPowerButtonEvent();
+}
+
+void TabletPowerButtonController::TestApi::SendKeyEvent(ui::KeyEvent* event) {
+  controller_->display_controller_->OnKeyEvent(event);
+}
+
 TabletPowerButtonController::TabletPowerButtonController(
     PowerButtonDisplayController* display_controller,
     base::TickClock* tick_clock)
@@ -108,10 +136,6 @@ TabletPowerButtonController::~TabletPowerButtonController() {
     Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
       this);
-}
-
-bool TabletPowerButtonController::ShouldHandlePowerButtonEvents() const {
-  return IsTabletModeSupported();
 }
 
 void TabletPowerButtonController::OnPowerButtonEvent(
@@ -216,13 +240,6 @@ void TabletPowerButtonController::OnTabletModeEnded() {
   shutdown_timer_.Stop();
   if (lock_state_controller_->CanCancelShutdownAnimation())
     lock_state_controller_->CancelShutdownAnimation();
-}
-
-void TabletPowerButtonController::CancelTabletPowerButton() {
-  if (lock_state_controller_->CanCancelShutdownAnimation())
-    lock_state_controller_->CancelShutdownAnimation();
-  force_off_on_button_up_ = false;
-  shutdown_timer_.Stop();
 }
 
 void TabletPowerButtonController::ParseSpuriousPowerButtonSwitches(

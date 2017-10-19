@@ -59,7 +59,7 @@ class DirectoryReader : public DirectoryReaderBase, public ScriptWrappable {
     return static_cast<DOMFileSystem*>(file_system_.Get());
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   class EntriesCallbackHelper;

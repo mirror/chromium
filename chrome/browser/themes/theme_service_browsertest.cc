@@ -76,7 +76,7 @@ IN_PROC_BROWSER_TEST_F(ThemeServiceBrowserTest, PRE_ThemeDataPackInvalid) {
   // Add a vestigial .pak file that should be removed when the new one is
   // created.
   // TODO(estade): remove when vestigial .pak file deletion is removed.
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   EXPECT_EQ(
       1, base::WriteFile(profile->GetPrefs()
                              ->GetFilePath(prefs::kCurrentThemePackFilename)
@@ -108,7 +108,7 @@ IN_PROC_BROWSER_TEST_F(ThemeServiceBrowserTest, ThemeDataPackInvalid) {
           ->GetPrefs()
           ->GetFilePath(prefs::kCurrentThemePackFilename)
           .AppendASCII("Cached Theme Material Design.pak");
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   EXPECT_FALSE(base::PathExists(old_path)) << "File not deleted: "
                                            << old_path.value();
 }

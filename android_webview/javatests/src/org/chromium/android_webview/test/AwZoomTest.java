@@ -65,15 +65,17 @@ public class AwZoomTest {
     }
 
     private boolean isMultiTouchZoomSupportedOnUiThread() throws Throwable {
-        return ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.isMultiTouchZoomSupported());
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(
+                () -> mAwContents.isMultiTouchZoomSupported());
     }
 
     private int getVisibilityOnUiThread(final View view) throws Throwable {
-        return ThreadUtils.runOnUiThreadBlocking(() -> view.getVisibility());
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(() -> view.getVisibility());
     }
 
     private View getZoomControlsOnUiThread() throws Throwable {
-        return ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.getZoomControlsForTest());
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(
+                () -> mAwContents.getZoomControlsForTest());
     }
 
     private void invokeZoomPickerOnUiThread() throws Throwable {
@@ -82,14 +84,16 @@ public class AwZoomTest {
 
     private void zoomInOnUiThreadAndWait() throws Throwable {
         final float previousScale = mActivityTestRule.getPixelScaleOnUiThread(mAwContents);
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.zoomIn()));
+        Assert.assertTrue(mActivityTestRule.runTestOnUiThreadAndGetResult(
+                () -> mAwContents.zoomIn()));
         // The zoom level is updated asynchronously.
         waitForScaleChange(previousScale);
     }
 
     private void zoomOutOnUiThreadAndWait() throws Throwable {
         final float previousScale = mActivityTestRule.getPixelScaleOnUiThread(mAwContents);
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> mAwContents.zoomOut()));
+        Assert.assertTrue(mActivityTestRule.runTestOnUiThreadAndGetResult(
+                () -> mAwContents.zoomOut()));
         // The zoom level is updated asynchronously.
         waitForScaleChange(previousScale);
     }

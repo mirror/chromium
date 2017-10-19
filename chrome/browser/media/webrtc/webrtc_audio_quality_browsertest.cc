@@ -62,10 +62,12 @@ const int kMaxAgcSegmentDiffMs =
   200;
 #endif
 
-#if defined(OS_LINUX) || defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(OS_LINUX) || defined(OS_MACOSX)
 #define MAYBE_WebRtcAudioQualityBrowserTest WebRtcAudioQualityBrowserTest
 #else
 // Not implemented on Android, ChromeOS etc.
+// Also disabled on Windows due to
+// https://bugs.chromium.org/p/chromium/issues/detail?id=677256
 #define MAYBE_WebRtcAudioQualityBrowserTest DISABLED_WebRtcAudioQualityBrowserTest
 #endif
 
@@ -682,13 +684,13 @@ void MAYBE_WebRtcAudioQualityBrowserTest::TestWithFakeDeviceGetUserMedia(
 
 IN_PROC_BROWSER_TEST_F(MAYBE_WebRtcAudioQualityBrowserTest,
                        MANUAL_TestCallQualityWithAudioFromFakeDevice) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   TestWithFakeDeviceGetUserMedia(kAudioOnlyCallConstraints, "_getusermedia");
 }
 
 IN_PROC_BROWSER_TEST_F(MAYBE_WebRtcAudioQualityBrowserTest,
                        MANUAL_TestCallQualityWithAudioFromWebAudio) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   if (OnWin8OrHigher()) {
     // http://crbug.com/379798.
     LOG(ERROR) << "This test is not implemented for Win8 or higher.";
@@ -804,7 +806,7 @@ void MAYBE_WebRtcAudioQualityBrowserTest::TestAutoGainControl(
 // The AGC should apply non-zero gain here.
 IN_PROC_BROWSER_TEST_F(MAYBE_WebRtcAudioQualityBrowserTest,
                        MANUAL_TestAutoGainControlOnLowAudio) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   ASSERT_NO_FATAL_FAILURE(TestAutoGainControl(
       kReferenceFile, kAudioOnlyCallConstraints, "_with_agc"));
 }
@@ -812,7 +814,7 @@ IN_PROC_BROWSER_TEST_F(MAYBE_WebRtcAudioQualityBrowserTest,
 // Since the AGC is off here there should be no gain at all.
 IN_PROC_BROWSER_TEST_F(MAYBE_WebRtcAudioQualityBrowserTest,
                        MANUAL_TestAutoGainIsOffWithAudioProcessingOff) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   const char* kAudioCallWithoutAudioProcessing =
       "{audio: { mandatory: { echoCancellation: false } } }";
   ASSERT_NO_FATAL_FAILURE(TestAutoGainControl(

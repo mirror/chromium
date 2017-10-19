@@ -92,7 +92,7 @@ void SVGUseElement::Dispose() {
   SetDocumentResource(nullptr);
 }
 
-void SVGUseElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGUseElement) {
   visitor->Trace(x_);
   visitor->Trace(y_);
   visitor->Trace(width_);
@@ -565,7 +565,7 @@ bool SVGUseElement::HasCycleUseReferencing(SVGUseElement& use,
                                            const ContainerNode& target_instance,
                                            SVGElement*& new_target) const {
   Element* target_element = use.ResolveTargetElement(kDontAddObserver);
-  new_target = nullptr;
+  new_target = 0;
   if (target_element && target_element->IsSVGElement())
     new_target = ToSVGElement(target_element);
 

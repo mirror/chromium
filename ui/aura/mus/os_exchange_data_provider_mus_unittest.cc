@@ -53,7 +53,7 @@ class OSExchangeDataProviderMusTest
 
   // Overridden from ui::OSExchangeDataProviderFactory::Factory:
   std::unique_ptr<OSExchangeData::Provider> BuildProvider() override {
-    return std::make_unique<OSExchangeDataProviderMus>();
+    return base::MakeUnique<OSExchangeDataProviderMus>();
   }
 
  private:

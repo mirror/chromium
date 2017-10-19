@@ -270,7 +270,7 @@ AX_EXPORT AXSnapshotNodeAndroid::~AXSnapshotNodeAndroid() = default;
 AX_EXPORT std::unique_ptr<AXSnapshotNodeAndroid> AXSnapshotNodeAndroid::Create(
     const AXTreeUpdate& update,
     bool show_password) {
-  auto tree = std::make_unique<AXSerializableTree>();
+  auto tree = base::MakeUnique<AXSerializableTree>();
   if (!tree->Unserialize(update)) {
     LOG(FATAL) << tree->error();
   }

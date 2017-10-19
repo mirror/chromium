@@ -47,7 +47,7 @@ class MODULES_EXPORT BytesConsumerForDataConsumerHandle final
   // WebDataConsumerHandle::Client
   void DidGetReadable() override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   void Close();

@@ -49,17 +49,6 @@ struct ParsingTestcase {
   const std::vector<UrlComponent> components;
 };
 
-base::string16 FormatAndElideUrlSimple(const GURL& url,
-                                       const gfx::FontList& font_list,
-                                       float available_pixel_width,
-                                       url::Parsed* parsed) {
-  const base::string16 url_string = url_formatter::FormatUrl(
-      url, url_formatter::kFormatUrlOmitDefaults, net::UnescapeRule::SPACES,
-      parsed, nullptr, nullptr);
-  return url_formatter::ElideUrlSimple(url, url_string, font_list,
-                                       available_pixel_width, parsed);
-}
-
 base::string16 Elide(const GURL& url,
                      const gfx::FontList& font_list,
                      float available_width,
@@ -67,7 +56,8 @@ base::string16 Elide(const GURL& url,
   switch (method) {
     case kMethodSimple: {
       url::Parsed parsed;
-      return FormatAndElideUrlSimple(url, font_list, available_width, &parsed);
+      return url_formatter::ElideUrlSimple(url, font_list, available_width,
+                                           &parsed);
     }
 #if !defined(OS_ANDROID)
     case kMethodOriginal:
@@ -805,7 +795,7 @@ void RunElisionParsingTest(const std::vector<ParsingTestcase>& testcases) {
 
     url::Parsed parsed;
     auto elided =
-        FormatAndElideUrlSimple(url, font_list, available_width, &parsed);
+        url_formatter::ElideUrlSimple(url, font_list, available_width, &parsed);
     EXPECT_EQ(base::UTF8ToUTF16(testcase.output), elided);
 
     // Build an expected Parsed struct from the sparse test expectations.

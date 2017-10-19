@@ -41,7 +41,7 @@ class DeviceAcceleration final : public GarbageCollected<DeviceAcceleration>,
       DeviceMotionData::Acceleration* acceleration) {
     return new DeviceAcceleration(acceleration);
   }
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   double x(bool& is_null) const;
   double y(bool& is_null) const;

@@ -29,7 +29,7 @@ class SyncManager final : public GarbageCollectedFinalized<SyncManager>,
   ScriptPromise registerFunction(ScriptState*, const String& tag);
   ScriptPromise getTags(ScriptState*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   enum { kUnregisteredSyncID = -1 };
 

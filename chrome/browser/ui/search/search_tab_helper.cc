@@ -59,13 +59,16 @@ bool IsCacheableNTP(const content::WebContents* contents) {
 }
 
 // Returns true if |contents| are rendered inside an Instant process.
-bool InInstantProcess(const InstantService* instant_service,
+bool InInstantProcess(Profile* profile,
                       const content::WebContents* contents) {
-  if (!instant_service || !contents)
+  if (!profile || !contents)
     return false;
 
-  return instant_service->IsInstantProcess(
-      contents->GetMainFrame()->GetProcess()->GetID());
+  InstantService* instant_service =
+      InstantServiceFactory::GetForProfile(profile);
+  return instant_service &&
+         instant_service->IsInstantProcess(
+             contents->GetMainFrame()->GetProcess()->GetID());
 }
 
 // Called when an NTP finishes loading. If the load start time was noted,
@@ -107,15 +110,18 @@ bool IsHistorySyncEnabled(Profile* profile) {
 
 SearchTabHelper::SearchTabHelper(content::WebContents* web_contents)
     : WebContentsObserver(web_contents),
+      is_search_enabled_(search::IsInstantExtendedAPIEnabled()),
       web_contents_(web_contents),
       ipc_router_(web_contents,
                   this,
                   base::MakeUnique<SearchIPCRouterPolicyImpl>(web_contents)),
       instant_service_(nullptr) {
-  if (!search::IsInstantExtendedAPIEnabled())
+  if (!is_search_enabled_)
     return;
 
-  instant_service_ = InstantServiceFactory::GetForProfile(profile());
+  instant_service_ =
+      InstantServiceFactory::GetForProfile(
+          Profile::FromBrowserContext(web_contents_->GetBrowserContext()));
   if (instant_service_)
     instant_service_->AddObserver(this);
 }
@@ -126,7 +132,7 @@ SearchTabHelper::~SearchTabHelper() {
 }
 
 void SearchTabHelper::OmniboxInputStateChanged() {
-  if (!search::IsInstantExtendedAPIEnabled())
+  if (!is_search_enabled_)
     return;
 
   ipc_router_.SetInputInProgress(IsInputInProgress());
@@ -255,7 +261,7 @@ void SearchTabHelper::DidFinishLoad(content::RenderFrameHost* render_frame_host,
 
 void SearchTabHelper::NavigationEntryCommitted(
     const content::LoadCommittedDetails& load_details) {
-  if (!search::IsInstantExtendedAPIEnabled())
+  if (!is_search_enabled_)
     return;
 
   if (!load_details.is_main_frame)
@@ -264,7 +270,7 @@ void SearchTabHelper::NavigationEntryCommitted(
   if (search::IsInstantNTP(web_contents_))
     ipc_router_.SetInputInProgress(IsInputInProgress());
 
-  if (InInstantProcess(instant_service_, web_contents_))
+  if (InInstantProcess(profile(), web_contents_))
     ipc_router_.OnNavigationEntryCommitted();
 }
 

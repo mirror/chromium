@@ -40,6 +40,7 @@ class ChromeShellDelegate : public ash::ShellDelegate,
   ash::NetworkingConfigDelegate* GetNetworkingConfigDelegate() override;
   std::unique_ptr<ash::WallpaperDelegate> CreateWallpaperDelegate() override;
   ash::AccessibilityDelegate* CreateAccessibilityDelegate() override;
+  std::unique_ptr<ash::PaletteDelegate> CreatePaletteDelegate() override;
   ash::GPUSupport* CreateGPUSupport() override;
   base::string16 GetProductName() const override;
   void OpenKeyboardShortcutHelpPage() const override;

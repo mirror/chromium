@@ -33,7 +33,7 @@ class MODULES_EXPORT CredentialManagerClient final
  public:
   explicit CredentialManagerClient(WebCredentialManagerClient*);
   virtual ~CredentialManagerClient();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   static const char* SupplementName();
   static CredentialManagerClient* From(Page*);

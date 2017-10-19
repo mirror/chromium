@@ -36,7 +36,6 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
-#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/TextEncoding.h"
@@ -91,7 +90,7 @@ void CSSStyleSheetResource::SetParsedStyleSheetCache(
   UpdateDecodedSize();
 }
 
-void CSSStyleSheetResource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSStyleSheetResource) {
   visitor->Trace(parsed_style_sheet_cache_);
   StyleSheetResource::Trace(visitor);
 }
@@ -154,6 +153,8 @@ void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
 }
 
 void CSSStyleSheetResource::NotifyFinished() {
+  TriggerNotificationForFinishObservers();
+
   // Decode the data to find out the encoding and cache the decoded sheet text.
   if (Data())
     SetDecodedSheetText(DecodedText());
@@ -214,7 +215,7 @@ bool CSSStyleSheetResource::CanUseSheet(MIMETypeCheck mime_type_check) const {
                                      "application/x-unknown-content-type");
 }
 
-StyleSheetContents* CSSStyleSheetResource::CreateParsedStyleSheetFromCache(
+StyleSheetContents* CSSStyleSheetResource::RestoreParsedStyleSheet(
     const CSSParserContext* context) {
   if (!parsed_style_sheet_cache_)
     return nullptr;
@@ -230,15 +231,6 @@ StyleSheetContents* CSSStyleSheetResource::CreateParsedStyleSheetFromCache(
   // we parsed again.
   if (*parsed_style_sheet_cache_->ParserContext() != *context)
     return nullptr;
-
-  DCHECK(!parsed_style_sheet_cache_->IsLoading());
-
-  // If the stylesheet has a media query, we need to clone the cached sheet
-  // due to potential differences in the rule set.
-  if (RuntimeEnabledFeatures::CacheStyleSheetWithMediaQueriesEnabled() &&
-      parsed_style_sheet_cache_->HasMediaQueries()) {
-    return parsed_style_sheet_cache_->Copy();
-  }
 
   return parsed_style_sheet_cache_;
 }

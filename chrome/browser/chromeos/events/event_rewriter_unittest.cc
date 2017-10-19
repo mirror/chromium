@@ -146,14 +146,6 @@ class EventRewriterTest : public ash::AshTestBase {
 
   sync_preferences::TestingPrefServiceSyncable* prefs() { return &prefs_; }
 
-  void InitModifierKeyPref(IntegerPrefMember* int_pref,
-                           const std::string& pref_name,
-                           ui::chromeos::ModifierKey modifierKey) {
-    if (int_pref->GetPrefName() != pref_name)  // skip if already initialized.
-      int_pref->Init(pref_name, prefs());
-    int_pref->SetValue(static_cast<int>(modifierKey));
-  }
-
   FakeChromeUserManager* fake_user_manager_;  // Not owned.
   ScopedUserManagerEnabler user_manager_enabler_;
   input_method::MockInputMethodManagerImpl* input_method_manager_mock_;
@@ -258,8 +250,8 @@ TEST_F(EventRewriterTest, TestRewriteCommandToControlWithControlRemapped) {
   // Remap Control to Alt.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapControlKeyTo,
-                      ui::chromeos::ModifierKey::kAltKey);
+  control.Init(prefs::kLanguageRemapControlKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kAltKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
   rewriter_->set_last_keyboard_device_id_for_testing(kKeyboardDeviceId);
@@ -638,14 +630,14 @@ TEST_F(EventRewriterTest, TestRewriteModifiersDisableSome) {
   // Disable Search, Control and Escape keys.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember search;
-  InitModifierKeyPref(&search, prefs::kLanguageRemapSearchKeyTo,
-                      ui::chromeos::ModifierKey::kVoidKey);
+  search.Init(prefs::kLanguageRemapSearchKeyTo, prefs());
+  search.SetValue(ui::chromeos::ModifierKey::kVoidKey);
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapControlKeyTo,
-                      ui::chromeos::ModifierKey::kVoidKey);
+  control.Init(prefs::kLanguageRemapControlKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kVoidKey);
   IntegerPrefMember escape;
-  InitModifierKeyPref(&escape, prefs::kLanguageRemapEscapeKeyTo,
-                      ui::chromeos::ModifierKey::kVoidKey);
+  escape.Init(prefs::kLanguageRemapEscapeKeyTo, prefs());
+  escape.SetValue(ui::chromeos::ModifierKey::kVoidKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -707,8 +699,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersDisableSome) {
 
   // Remap Alt to Control.
   IntegerPrefMember alt;
-  InitModifierKeyPref(&alt, prefs::kLanguageRemapAltKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  alt.Init(prefs::kLanguageRemapAltKeyTo, prefs());
+  alt.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   KeyTestCase tests[] = {
       // Press left Alt. Confirm the event is now VKEY_CONTROL
@@ -735,8 +727,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapToControl) {
   // Remap Search to Control.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember search;
-  InitModifierKeyPref(&search, prefs::kLanguageRemapSearchKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  search.Init(prefs::kLanguageRemapSearchKeyTo, prefs());
+  search.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -754,8 +746,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapToControl) {
 
   // Remap Alt to Control too.
   IntegerPrefMember alt;
-  InitModifierKeyPref(&alt, prefs::kLanguageRemapAltKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  alt.Init(prefs::kLanguageRemapAltKeyTo, prefs());
+  alt.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   KeyTestCase sa_tests[] = {
       // Press Alt. Confirm the event is now VKEY_CONTROL.
@@ -808,8 +800,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapToEscape) {
   // Remap Search to Escape.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember search;
-  InitModifierKeyPref(&search, prefs::kLanguageRemapSearchKeyTo,
-                      ui::chromeos::ModifierKey::kEscapeKey);
+  search.Init(prefs::kLanguageRemapSearchKeyTo, prefs());
+  search.SetValue(ui::chromeos::ModifierKey::kEscapeKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -829,8 +821,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapMany) {
   // Remap Escape to Alt.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember escape;
-  InitModifierKeyPref(&escape, prefs::kLanguageRemapEscapeKeyTo,
-                      ui::chromeos::ModifierKey::kAltKey);
+  escape.Init(prefs::kLanguageRemapEscapeKeyTo, prefs());
+  escape.SetValue(ui::chromeos::ModifierKey::kAltKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -851,8 +843,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapMany) {
 
   // Remap Alt to Control.
   IntegerPrefMember alt;
-  InitModifierKeyPref(&alt, prefs::kLanguageRemapAltKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  alt.Init(prefs::kLanguageRemapAltKeyTo, prefs());
+  alt.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   KeyTestCase a2c_tests[] = {
       // Press left Alt. Confirm the event is now VKEY_CONTROL.
@@ -881,8 +873,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapMany) {
 
   // Remap Control to Search.
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapControlKeyTo,
-                      ui::chromeos::ModifierKey::kSearchKey);
+  control.Init(prefs::kLanguageRemapControlKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kSearchKey);
 
   KeyTestCase c2s_tests[] = {
       // Press left Control. Confirm the event is now VKEY_LWIN.
@@ -926,8 +918,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapMany) {
 
   // Remap Search to Backspace.
   IntegerPrefMember search;
-  InitModifierKeyPref(&search, prefs::kLanguageRemapSearchKeyTo,
-                      ui::chromeos::ModifierKey::kBackspaceKey);
+  search.Init(prefs::kLanguageRemapSearchKeyTo, prefs());
+  search.SetValue(ui::chromeos::ModifierKey::kBackspaceKey);
 
   KeyTestCase s2b_tests[] = {
       // Release Control and Escape, as Search and Alt would transform Backspace
@@ -953,8 +945,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapMany) {
 
   // Remap Backspace to Escape.
   IntegerPrefMember backspace;
-  InitModifierKeyPref(&backspace, prefs::kLanguageRemapBackspaceKeyTo,
-                      ui::chromeos::ModifierKey::kEscapeKey);
+  backspace.Init(prefs::kLanguageRemapBackspaceKeyTo, prefs());
+  backspace.SetValue(ui::chromeos::ModifierKey::kEscapeKey);
 
   KeyTestCase b2e_tests[] = {
       // Press Backspace. Confirm the event is now VKEY_ESCAPE.
@@ -972,8 +964,8 @@ TEST_F(EventRewriterTest, TestRewriteModifiersRemapToCapsLock) {
   // Remap Search to Caps Lock.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember search;
-  InitModifierKeyPref(&search, prefs::kLanguageRemapSearchKeyTo,
-                      ui::chromeos::ModifierKey::kCapsLockKey);
+  search.Init(prefs::kLanguageRemapSearchKeyTo, prefs());
+  search.SetValue(ui::chromeos::ModifierKey::kCapsLockKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -1119,8 +1111,8 @@ TEST_F(EventRewriterTest, TestRewriteDiamondKeyWithFlag) {
                                       ui::DomKey::Constant<'a'>::Character));
 
   IntegerPrefMember diamond;
-  InitModifierKeyPref(&diamond, prefs::kLanguageRemapDiamondKeyTo,
-                      ui::chromeos::ModifierKey::kVoidKey);
+  diamond.Init(prefs::kLanguageRemapDiamondKeyTo, prefs());
+  diamond.SetValue(ui::chromeos::ModifierKey::kVoidKey);
 
   EXPECT_EQ(GetExpectedResultAsString(ui::ET_KEY_PRESSED, ui::VKEY_UNKNOWN,
                                       ui::DomCode::NONE, ui::EF_NONE,
@@ -1136,8 +1128,7 @@ TEST_F(EventRewriterTest, TestRewriteDiamondKeyWithFlag) {
                                       ui::DomCode::US_A, ui::EF_NONE,
                                       ui::DomKey::Constant<'a'>::Character));
 
-  InitModifierKeyPref(&diamond, prefs::kLanguageRemapDiamondKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  diamond.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   EXPECT_EQ(GetExpectedResultAsString(ui::ET_KEY_PRESSED, ui::VKEY_CONTROL,
                                       ui::DomCode::CONTROL_LEFT,
@@ -1167,8 +1158,7 @@ TEST_F(EventRewriterTest, TestRewriteDiamondKeyWithFlag) {
                                       ui::DomCode::US_A, ui::EF_NONE,
                                       ui::DomKey::Constant<'a'>::Character));
 
-  InitModifierKeyPref(&diamond, prefs::kLanguageRemapDiamondKeyTo,
-                      ui::chromeos::ModifierKey::kAltKey);
+  diamond.SetValue(ui::chromeos::ModifierKey::kAltKey);
 
   EXPECT_EQ(GetExpectedResultAsString(ui::ET_KEY_PRESSED, ui::VKEY_MENU,
                                       ui::DomCode::ALT_LEFT, ui::EF_ALT_DOWN,
@@ -1198,8 +1188,7 @@ TEST_F(EventRewriterTest, TestRewriteDiamondKeyWithFlag) {
                                       ui::DomCode::US_A, ui::EF_NONE,
                                       ui::DomKey::Constant<'a'>::Character));
 
-  InitModifierKeyPref(&diamond, prefs::kLanguageRemapDiamondKeyTo,
-                      ui::chromeos::ModifierKey::kCapsLockKey);
+  diamond.SetValue(ui::chromeos::ModifierKey::kCapsLockKey);
 
   EXPECT_EQ(GetExpectedResultAsString(
                 ui::ET_KEY_PRESSED, ui::VKEY_CAPITAL, ui::DomCode::CAPS_LOCK,
@@ -1237,8 +1226,8 @@ TEST_F(EventRewriterTest, TestRewriteCapsLockToControl) {
   // Remap CapsLock to Control.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapCapsLockKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  control.Init(prefs::kLanguageRemapCapsLockKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -1276,8 +1265,8 @@ TEST_F(EventRewriterTest, TestRewriteCapsLockMod3InUse) {
   // Remap CapsLock to Control.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapCapsLockKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  control.Init(prefs::kLanguageRemapCapsLockKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
   input_method_manager_mock_->set_mod3_used(true);
@@ -1913,8 +1902,8 @@ TEST_F(EventRewriterTest, TestRewriteExtendedKeysWithSearchRemapped) {
   // Remap Search to Control.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember search;
-  InitModifierKeyPref(&search, prefs::kLanguageRemapSearchKeyTo,
-                      ui::chromeos::ModifierKey::kControlKey);
+  search.Init(prefs::kLanguageRemapSearchKeyTo, prefs());
+  search.SetValue(ui::chromeos::ModifierKey::kControlKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -1941,8 +1930,8 @@ TEST_F(EventRewriterTest, TestRewriteKeyEventSentByXSendEvent) {
   // Remap Control to Alt.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapControlKeyTo,
-                      ui::chromeos::ModifierKey::kAltKey);
+  control.Init(prefs::kLanguageRemapControlKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kAltKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -1963,8 +1952,8 @@ TEST_F(EventRewriterTest, TestRewriteNonNativeEvent) {
   // Remap Control to Alt.
   chromeos::Preferences::RegisterProfilePrefs(prefs()->registry());
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapControlKeyTo,
-                      ui::chromeos::ModifierKey::kAltKey);
+  control.Init(prefs::kLanguageRemapControlKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kAltKey);
 
   rewriter_->KeyboardDeviceAddedForTesting(kKeyboardDeviceId, "PC Keyboard");
 
@@ -2057,13 +2046,6 @@ class EventRewriterAshTest : public ash::AshTestBase {
 
  protected:
   sync_preferences::TestingPrefServiceSyncable* prefs() { return &prefs_; }
-
-  void InitModifierKeyPref(IntegerPrefMember* int_pref,
-                           const std::string& pref_name,
-                           ui::chromeos::ModifierKey modifierKey) {
-    int_pref->Init(pref_name, prefs());
-    int_pref->SetValue(static_cast<int>(modifierKey));
-  }
 
   void PopEvents(std::vector<std::unique_ptr<ui::Event>>* events) {
     buffer_.PopEvents(events);
@@ -2358,8 +2340,8 @@ TEST_F(EventRewriterAshTest, MouseWheelEventDispatchImpl) {
 TEST_F(EventRewriterAshTest, MouseWheelEventModifiersRewritten) {
   // Remap Control to Alt.
   IntegerPrefMember control;
-  InitModifierKeyPref(&control, prefs::kLanguageRemapControlKeyTo,
-                      ui::chromeos::ModifierKey::kAltKey);
+  control.Init(prefs::kLanguageRemapControlKeyTo, prefs());
+  control.SetValue(ui::chromeos::ModifierKey::kAltKey);
 
   // Generate a mouse wheel event that has a CONTROL_DOWN modifier flag and
   // expect that it will be rewritten to ALT_DOWN.

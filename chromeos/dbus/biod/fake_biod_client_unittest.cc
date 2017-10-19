@@ -270,7 +270,9 @@ TEST_F(FakeBiodClientTest, TestDestroyingRecords) {
   EnrollNTestFingerprints(kTestUserId, kTestLabel, GenerateTestFingerprint(2),
                           2);
   EXPECT_EQ(2u, GetRecordsForUser(kTestUserId).size());
-  fake_biod_client_.DestroyAllRecords(EmptyVoidDBusMethodCallback());
+  DBusMethodCallStatus returned_status;
+  fake_biod_client_.DestroyAllRecords(
+      base::Bind(&test_utils::CopyDBusMethodCallStatus, &returned_status));
   EXPECT_EQ(0u, GetRecordsForUser(kTestUserId).size());
 }
 
@@ -305,8 +307,10 @@ TEST_F(FakeBiodClientTest, TestGetAndSetRecordLabels) {
   // Verify that by setting a new label, getting the label will return the value
   // of the new label.
   const std::string kNewLabelTwo = "Finger 2 New";
-  fake_biod_client_.SetRecordLabel(enrollment_paths[1], kNewLabelTwo,
-                                   EmptyVoidDBusMethodCallback());
+  DBusMethodCallStatus returned_status;
+  fake_biod_client_.SetRecordLabel(
+      enrollment_paths[1], kNewLabelTwo,
+      base::Bind(&test_utils::CopyDBusMethodCallStatus, &returned_status));
   fake_biod_client_.RequestRecordLabel(
       enrollment_paths[1], base::Bind(&test_utils::CopyString, &returned_str));
   task_runner_->RunUntilIdle();
