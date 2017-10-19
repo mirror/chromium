@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "cc025455_bad041a3",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallback.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-19T05:01:08Z",
+      "side": 1,
+      "message": "Our code generator now supports callback functions. Can we use a callback function (not a callback interface) as the spac says?",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36fe1227_c0899151",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.cpp",
         "patchSetId": 2
@@ -64,6 +81,24 @@
       "writtenOn": "2017-10-19T04:16:30Z",
       "side": 1,
       "message": "Don\u0027t we need to add TRACE_WRAPPER for callback_collection_...?\n\n+bashi",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b14f882_9cff98ad",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-19T05:01:08Z",
+      "side": 1,
+      "message": "This CL uses \"callback interface\" for VRFrameRequestCallback. Since our code generator uses scoped persistent for callback interfaces we don\u0027t need TRACE_WRAPPER (for now).\n\nThat said, we should use \"callback function\" for VRFrameRequestCallback. TRACE_WRAPPER will be required for callback functions.",
+      "parentUuid": "43630f79_08ab3b50",
       "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
