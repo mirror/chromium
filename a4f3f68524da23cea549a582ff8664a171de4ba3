@@ -105,6 +105,29 @@
     },
     {
       "key": {
+        "uuid": "a92317f2_bcb63f49",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-19T20:17:37Z",
+      "side": 1,
+      "message": "I didn\u0027t notice that this had been changed. I\u0027m not sure it\u0027s a good idea to point directly at ANGLE\u0027s copy of these headers. Instead it seems to me that ANGLE\u0027s extensions should be landed upstream in Khronos\u0027 headers in https://github.com/KhronosGroup/EGL-Registry and that we should roll forward the copies in third_party/khronos. Two other patches have landed recently that needed new entry points in these headers, and they were both upstreamed into the EGL registry. +geofflang and jmadill for their feedback on this suggestion.",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68d4a9ad_bcf77523",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 19
