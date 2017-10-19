@@ -9,7 +9,9 @@
 #include "base/allocator/partition_allocator/partition_alloc.h"
 #include "base/debug/debugging_flags.h"
 #include "base/debug/stack_trace.h"
+#include "base/lazy_instance.h"
 #include "base/synchronization/lock.h"
+#include "base/threading/thread_local.h"
 #include "base/trace_event/heap_profiler_allocation_register.h"
 #include "build/build_config.h"
 #include "chrome/common/profiling/memlog_stream.h"
@@ -42,12 +44,23 @@ constexpr int kNumSendBuffers = 17;
 SetGCAllocHookFunction g_hook_gc_alloc = nullptr;
 SetGCFreeHookFunction g_hook_gc_free = nullptr;
 
+// In the very unlikely scenario where a thread has grabbed the SendBuffer lock,
+// and then performs a heap allocation/free, ignore the allocation. Failing to
+// do so will cause non-deterministic deadlock, depending on whether the
+// allocation is dispatched to the same SendBuffer.
+base::LazyInstance<base::ThreadLocalBoolean>::Leaky g_prevent_reentrancy =
+    LAZY_INSTANCE_INITIALIZER;
+
 class SendBuffer {
  public:
   SendBuffer() : buffer_(new char[kSendBufferSize]) {}
   ~SendBuffer() { delete[] buffer_; }
 
   void Send(const void* data, size_t sz) {
+    // Set the reentrancy bit *before* grabbing the lock, since even grabbing
+    // a lock can cause heap allocations.
+    g_prevent_reentrancy.Pointer()->Set(true);
+
     base::AutoLock lock(lock_);
 
     if (used_ + sz > kSendBufferSize)
@@ -55,6 +68,8 @@ class SendBuffer {
 
     memcpy(&buffer_[used_], data, sz);
     used_ += sz;
+
+    g_prevent_reentrancy.Pointer()->Set(false);
   }
 
   void Flush() {
@@ -244,6 +259,8 @@ void AllocatorShimLogAlloc(AllocatorType type,
                            const char* context) {
   if (!g_send_buffers)
     return;
+  if (g_prevent_reentrancy.Pointer()->Get())
+    return;
   if (address) {
     constexpr size_t max_message_size = sizeof(AllocPacket) +
                                         kMaxStackEntries * sizeof(uint64_t) +
@@ -296,6 +313,8 @@ void AllocatorShimLogAlloc(AllocatorType type,
 
 void AllocatorShimLogFree(void* address) {
   if (!g_send_buffers)
+    return;
+  if (g_prevent_reentrancy.Pointer()->Get())
     return;
   if (address) {
     FreePacket free_packet;
