@@ -269,7 +269,7 @@ TEST_F(PaymentRequestViewControllerTest, TestUpdateShippingSection) {
   CreateController();
   CheckController();
 
-  [GetPaymentRequestViewController() updateShippingSection];
+  [GetPaymentRequestViewController() reloadShippingSection];
 
   // There should be two items in the Shipping section.
   ASSERT_EQ(2U, static_cast<unsigned int>(NumberOfItemsInSection(1)));
@@ -289,7 +289,7 @@ TEST_F(PaymentRequestViewControllerTest, TestUpdatePaymentMethodSection) {
   CreateController();
   CheckController();
 
-  [GetPaymentRequestViewController() updatePaymentMethodSection];
+  [GetPaymentRequestViewController() reloadPaymentMethodSection];
 
   // The only item in the Payment Method section should be of type
   // PaymentMethodItem.
@@ -304,7 +304,7 @@ TEST_F(PaymentRequestViewControllerTest, TestUpdateContactInfoSection) {
   CreateController();
   CheckController();
 
-  [GetPaymentRequestViewController() updatePaymentMethodSection];
+  [GetPaymentRequestViewController() reloadPaymentMethodSection];
 
   // The only item in the Contact Info section should be of type
   // AutofillProfileItem.
