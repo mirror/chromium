@@ -24,7 +24,6 @@
 #include "components/sessions/core/session_types.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/sync_sessions/synced_session.h"
-#include "components/variations/variations_associated_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image.h"
 #include "url/gurl.h"
@@ -42,31 +41,16 @@ using DismissedFilter = base::Callback<bool(const std::string& id)>;
 namespace ntp_snippets {
 namespace {
 
-const int kMaxForeignTabsTotal = 10;
-const int kMaxForeignTabsPerDevice = 3;
-const int kMaxForeignTabAgeInMinutes = 180;
-
-const char* kMaxForeignTabsTotalParamName = "max_foreign_tabs_total";
-const char* kMaxForeignTabsPerDeviceParamName = "max_foreign_tabs_per_device";
-const char* kMaxForeignTabAgeInMinutesParamName =
-    "max_foreign_tabs_age_in_minutes";
-
-int GetMaxForeignTabsTotal() {
-  return variations::GetVariationParamByFeatureAsInt(
-      ntp_snippets::kForeignSessionsSuggestionsFeature,
-      kMaxForeignTabsTotalParamName, kMaxForeignTabsTotal);
-}
-
-int GetMaxForeignTabsPerDevice() {
-  return variations::GetVariationParamByFeatureAsInt(
-      ntp_snippets::kForeignSessionsSuggestionsFeature,
-      kMaxForeignTabsPerDeviceParamName, kMaxForeignTabsPerDevice);
-}
+const base::FeatureParam<int> kMaxForeignTabsTotalParam{
+    &kForeignSessionsSuggestionsFeature, "max_foreign_tabs_total", 10};
+const base::FeatureParam<int> kMaxForeignTabsPerDeviceParam{
+    &kForeignSessionsSuggestionsFeature, "max_foreign_tabs_per_device", 3};
+const base::FeatureParam<int> kMaxForeignTabAgeInMinutesParam{
+    &kForeignSessionsSuggestionsFeature, "max_foreign_tabs_age_in_minutes",
+    180};
 
 TimeDelta GetMaxForeignTabAge() {
-  return TimeDelta::FromMinutes(variations::GetVariationParamByFeatureAsInt(
-      ntp_snippets::kForeignSessionsSuggestionsFeature,
-      kMaxForeignTabAgeInMinutesParamName, kMaxForeignTabAgeInMinutes));
+  return TimeDelta::FromMinutes(kMaxForeignTabAgeInMinutesParam.Get());
 }
 
 // This filter does two things. Most importantly it lets through only ids that
@@ -320,8 +304,8 @@ void ForeignSessionsSuggestionsProvider::OnForeignTabChange() {
 
 std::vector<ContentSuggestion>
 ForeignSessionsSuggestionsProvider::BuildSuggestions() {
-  const int max_foreign_tabs_total = GetMaxForeignTabsTotal();
-  const int max_foreign_tabs_per_device = GetMaxForeignTabsPerDevice();
+  const int max_foreign_tabs_total = kMaxForeignTabsTotalParam.Get();
+  const int max_foreign_tabs_per_device = kMaxForeignTabsPerDeviceParam.Get();
 
   PrefsPruningDismissedItemFilter filter(pref_service_);
   std::vector<SessionData> suggestion_candidates =

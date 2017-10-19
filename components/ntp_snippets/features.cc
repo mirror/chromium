@@ -9,7 +9,6 @@
 #include "base/time/clock.h"
 #include "components/ntp_snippets/category_rankers/click_based_category_ranker.h"
 #include "components/ntp_snippets/category_rankers/constant_category_ranker.h"
-#include "components/variations/variations_associated_data.h"
 
 namespace ntp_snippets {
 
@@ -69,40 +68,30 @@ const base::Feature kRemoteSuggestionsEmulateM58FetchingSchedule{
     "RemoteSuggestionsEmulateM58FetchingSchedule",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-const char kCategoryRankerParameter[] = "category_ranker";
 const char kCategoryRankerConstantRanker[] = "constant";
 const char kCategoryRankerClickBasedRanker[] = "click_based";
-
-CategoryRankerChoice GetSelectedCategoryRanker(bool is_chrome_home_enabled) {
-  std::string category_ranker_value =
-      variations::GetVariationParamValueByFeature(kCategoryRanker,
-                                                  kCategoryRankerParameter);
-
-  if (category_ranker_value.empty()) {
-    // Default, Enabled or Disabled.
-    if (is_chrome_home_enabled) {
-      return CategoryRankerChoice::CONSTANT;
-    }
-    return CategoryRankerChoice::CLICK_BASED;
-  }
-  if (category_ranker_value == kCategoryRankerConstantRanker) {
-    return CategoryRankerChoice::CONSTANT;
-  }
-  if (category_ranker_value == kCategoryRankerClickBasedRanker) {
-    return CategoryRankerChoice::CLICK_BASED;
-  }
-
-  LOG(DFATAL) << "The " << kCategoryRankerParameter << " parameter value is '"
-              << category_ranker_value << "'";
-  return CategoryRankerChoice::CONSTANT;
-}
+const char kCategoryRankerDefault[] = "default";
+const base::FeatureParam<CategoryRankerChoice>::Option
+    kCategoryRankerParamOptions[] = {
+        {CategoryRankerChoice::DEFAULT, kCategoryRankerDefault},
+        {CategoryRankerChoice::CONSTANT, kCategoryRankerConstantRanker},
+        {CategoryRankerChoice::CLICK_BASED, kCategoryRankerClickBasedRanker}};
+const base::FeatureParam<CategoryRankerChoice> kCategoryRankerParam{
+    &kCategoryRanker, "category_ranker", CategoryRankerChoice::DEFAULT,
+    &kCategoryRankerParamOptions};
 
 std::unique_ptr<CategoryRanker> BuildSelectedCategoryRanker(
     PrefService* pref_service,
     std::unique_ptr<base::Clock> clock,
     bool is_chrome_home_enabled) {
-  CategoryRankerChoice choice =
-      ntp_snippets::GetSelectedCategoryRanker(is_chrome_home_enabled);
+  CategoryRankerChoice choice = kCategoryRankerParam.Get();
+  if (choice == CategoryRankerChoice::DEFAULT) {
+    if (is_chrome_home_enabled) {
+      choice = CategoryRankerChoice::CONSTANT;
+    } else {
+      choice = CategoryRankerChoice::CLICK_BASED;
+    }
+  }
 
   switch (choice) {
     case CategoryRankerChoice::CONSTANT:
@@ -110,6 +99,8 @@ std::unique_ptr<CategoryRanker> BuildSelectedCategoryRanker(
     case CategoryRankerChoice::CLICK_BASED:
       return base::MakeUnique<ClickBasedCategoryRanker>(pref_service,
                                                         std::move(clock));
+    case CategoryRankerChoice::DEFAULT:
+      NOTREACHED();
   }
   return nullptr;
 }
@@ -117,7 +108,16 @@ std::unique_ptr<CategoryRanker> BuildSelectedCategoryRanker(
 const base::Feature kCategoryOrder{"ContentSuggestionsCategoryOrder",
                                    base::FEATURE_DISABLED_BY_DEFAULT};
 
-const char kCategoryOrderParameter[] = "category_order";
+const base::FeatureParam<CategoryOrderChoice>::Option
+    kCategoryOrderParamOptions[] = {
+        {CategoryOrderChoice::GENERAL, kCategoryOrderGeneral},
+        {CategoryOrderChoice::EMERGING_MARKETS_ORIENTED,
+         kCategoryOrderEmergingMarketsOriented}};
+const base::FeatureParam<CategoryOrderChoice> kCategoryOrderParam{
+    &kCategoryOrder, "category_order",
+    CategoryOrderChoice::EMERGING_MARKETS_ORIENTED,
+    &kCategoryOrderParamOptions};
+
 const char kCategoryOrderGeneral[] = "general";
 const char kCategoryOrderEmergingMarketsOriented[] =
     "emerging_markets_oriented";
@@ -126,25 +126,7 @@ CategoryOrderChoice GetSelectedCategoryOrder() {
   if (!base::FeatureList::IsEnabled(kCategoryOrder)) {
     return CategoryOrderChoice::GENERAL;
   }
-
-  std::string category_order_value =
-      variations::GetVariationParamValueByFeature(kCategoryOrder,
-                                                  kCategoryOrderParameter);
-
-  if (category_order_value.empty()) {
-    // Enabled with no parameters.
-    return CategoryOrderChoice::EMERGING_MARKETS_ORIENTED;
-  }
-  if (category_order_value == kCategoryOrderGeneral) {
-    return CategoryOrderChoice::GENERAL;
-  }
-  if (category_order_value == kCategoryOrderEmergingMarketsOriented) {
-    return CategoryOrderChoice::EMERGING_MARKETS_ORIENTED;
-  }
-
-  LOG(DFATAL) << "The " << kCategoryOrderParameter << " parameter value is '"
-              << category_order_value << "'";
-  return CategoryOrderChoice::GENERAL;
+  return kCategoryOrderParam.Get();
 }
 
 const base::Feature kNotificationsFeature = {"ContentSuggestionsNotifications",

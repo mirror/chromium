@@ -25,32 +25,31 @@ namespace {
 // The discount rate for computing the discounted-average metrics. Must be
 // strictly larger than 0 and strictly smaller than 1!
 const double kDiscountRatePerDay = 0.25;
-const char kDiscountRatePerDayParam[] = "user_classifier_discount_rate_per_day";
+const base::FeatureParam<double> kDiscountRatePerDayParam{
+    &kArticleSuggestionsFeature, "user_classifier_discount_rate_per_day", 0.25};
 
 // Never consider any larger interval than this (so that extreme situations such
 // as losing your phone or going for a long offline vacation do not skew the
 // average too much).
 // When everriding via variation parameters, it is better to use smaller values
 // than |kMaxHours| as this it the maximum value reported in the histograms.
-const double kMaxHours = 7 * 24;
-const char kMaxHoursParam[] = "user_classifier_max_hours";
+const base::FeatureParam<double> kMaxHoursParam{
+    &kArticleSuggestionsFeature, "user_classifier_max_hours", 7 * 24};
 
 // Ignore events within |kMinHours| hours since the last event (|kMinHours| is
 // the length of the browsing session where subsequent events of the same type
 // do not count again).
-const double kMinHours = 0.5;
-const char kMinHoursParam[] = "user_classifier_min_hours";
+const base::FeatureParam<double> kMinHoursParam{
+    &kArticleSuggestionsFeature, "user_classifier_min_hours", 0.5};
 
 // Classification constants.
-const double kActiveConsumerClicksAtLeastOncePerHours = 96;
-const char kActiveConsumerClicksAtLeastOncePerHoursParam[] =
-    "user_classifier_active_consumer_clicks_at_least_once_per_hours";
+const base::FeatureParam<double> kActiveConsumerClicksAtLeastOncePerHoursParam{
+    &kArticleSuggestionsFeature,
+    "user_classifier_active_consumer_clicks_at_least_once_per_hours", 96};
 
-// The previous value in production was 72, i.e. 3 days. The new value is a
-// cautios shift in the direction we want (having slightly more rare users).
-const double kRareUserOpensNTPAtMostOncePerHours = 66;
-const char kRareUserOpensNTPAtMostOncePerHoursParam[] =
-    "user_classifier_rare_user_opens_ntp_at_most_once_per_hours";
+const base::FeatureParam<double> kRareUserOpensNTPAtMostOncePerHoursParam{
+    &kArticleSuggestionsFeature,
+    "user_classifier_rare_user_opens_ntp_at_most_once_per_hours", 66};
 
 // Histograms for logging the estimated average hours to next event.
 const char kHistogramAverageHoursToOpenNTP[] =
@@ -76,11 +75,13 @@ const char* kLastTimeKeys[] = {prefs::kUserClassifierLastTimeToOpenNTP,
                                prefs::kUserClassifierLastTimeToUseSuggestions};
 
 // Default lengths of the intervals for new users for the metrics.
-const double kInitialHoursBetweenEvents[] = {24, 48, 120};
-const char* kInitialHoursBetweenEventsParams[] = {
-    "user_classifier_default_interval_ntp_opened",
-    "user_classifier_default_interval_suggestions_shown",
-    "user_classifier_default_interval_suggestions_used"};
+const base::FeatureParam<double> kInitialHoursBetweenEventsParams[] = {
+    {&kArticleSuggestionsFeature, "user_classifier_default_interval_ntp_opened",
+     24},
+    {&kArticleSuggestionsFeature,
+     "user_classifier_default_interval_suggestions_shown", 48},
+    {&kArticleSuggestionsFeature,
+     "user_classifier_default_interval_suggestions_used", 120}};
 
 static_assert(arraysize(kMetrics) ==
                       static_cast<int>(UserClassifier::Metric::COUNT) &&
@@ -88,21 +89,17 @@ static_assert(arraysize(kMetrics) ==
                       static_cast<int>(UserClassifier::Metric::COUNT) &&
                   arraysize(kLastTimeKeys) ==
                       static_cast<int>(UserClassifier::Metric::COUNT) &&
-                  arraysize(kInitialHoursBetweenEvents) ==
-                      static_cast<int>(UserClassifier::Metric::COUNT) &&
                   arraysize(kInitialHoursBetweenEventsParams) ==
                       static_cast<int>(UserClassifier::Metric::COUNT),
               "Fill in info for all metrics.");
 
 // Computes the discount rate.
 double GetDiscountRatePerHour() {
-  double discount_rate_per_day = variations::GetVariationParamByFeatureAsDouble(
-      kArticleSuggestionsFeature, kDiscountRatePerDayParam,
-      kDiscountRatePerDay);
+  double discount_rate_per_day = kDiscountRatePerDayParam.Get();
   // Check for illegal values.
   if (discount_rate_per_day <= 0 || discount_rate_per_day >= 1) {
     DLOG(WARNING) << "Illegal value " << discount_rate_per_day
-                  << " for the parameter " << kDiscountRatePerDayParam
+                  << " for the parameter " << kDiscountRatePerDayParam.name
                   << " (must be strictly between 0 and 1; the default "
                   << kDiscountRatePerDay << " is used, instead).";
     discount_rate_per_day = kDiscountRatePerDay;
@@ -113,20 +110,7 @@ double GetDiscountRatePerHour() {
 }
 
 double GetInitialHoursBetweenEvents(UserClassifier::Metric metric) {
-  return variations::GetVariationParamByFeatureAsDouble(
-      kArticleSuggestionsFeature,
-      kInitialHoursBetweenEventsParams[static_cast<int>(metric)],
-      kInitialHoursBetweenEvents[static_cast<int>(metric)]);
-}
-
-double GetMinHours() {
-  return variations::GetVariationParamByFeatureAsDouble(
-      kArticleSuggestionsFeature, kMinHoursParam, kMinHours);
-}
-
-double GetMaxHours() {
-  return variations::GetVariationParamByFeatureAsDouble(
-      kArticleSuggestionsFeature, kMaxHoursParam, kMaxHours);
+  return kInitialHoursBetweenEventsParams[static_cast<int>(metric)].Get();
 }
 
 // Returns the new value of the metric using its |old_value|, assuming
@@ -189,18 +173,12 @@ UserClassifier::UserClassifier(PrefService* pref_service,
     : pref_service_(pref_service),
       clock_(std::move(clock)),
       discount_rate_per_hour_(GetDiscountRatePerHour()),
-      min_hours_(GetMinHours()),
-      max_hours_(GetMaxHours()),
+      min_hours_(kMinHoursParam.Get()),
+      max_hours_(kMaxHoursParam.Get()),
       active_consumer_clicks_at_least_once_per_hours_(
-          variations::GetVariationParamByFeatureAsDouble(
-              kArticleSuggestionsFeature,
-              kActiveConsumerClicksAtLeastOncePerHoursParam,
-              kActiveConsumerClicksAtLeastOncePerHours)),
+          kActiveConsumerClicksAtLeastOncePerHoursParam.Get()),
       rare_user_opens_ntp_at_most_once_per_hours_(
-          variations::GetVariationParamByFeatureAsDouble(
-              kArticleSuggestionsFeature,
-              kRareUserOpensNTPAtMostOncePerHoursParam,
-              kRareUserOpensNTPAtMostOncePerHours)) {
+          kRareUserOpensNTPAtMostOncePerHoursParam.Get()) {
   // The pref_service_ can be null in tests.
   if (!pref_service_) {
     return;
@@ -223,8 +201,8 @@ UserClassifier::~UserClassifier() = default;
 // static
 void UserClassifier::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   double discount_rate = GetDiscountRatePerHour();
-  double min_hours = GetMinHours();
-  double max_hours = GetMaxHours();
+  double min_hours = kMinHoursParam.Get();
+  double max_hours = kMaxHoursParam.Get();
 
   for (Metric metric : kMetrics) {
     double default_metric_value = GetMetricValueForEstimateHoursBetweenEvents(
@@ -247,15 +225,15 @@ void UserClassifier::OnEvent(Metric metric) {
   switch (metric) {
     case Metric::NTP_OPENED:
       UMA_HISTOGRAM_CUSTOM_COUNTS(kHistogramAverageHoursToOpenNTP, avg, 1,
-                                  kMaxHours, 50);
+                                  kMaxHoursParam.default_value, 50);
       break;
     case Metric::SUGGESTIONS_SHOWN:
       UMA_HISTOGRAM_CUSTOM_COUNTS(kHistogramAverageHoursToShowSuggestions, avg,
-                                  1, kMaxHours, 50);
+                                  1, kMaxHoursParam.default_value, 50);
       break;
     case Metric::SUGGESTIONS_USED:
       UMA_HISTOGRAM_CUSTOM_COUNTS(kHistogramAverageHoursToUseSuggestions, avg,
-                                  1, kMaxHours, 50);
+                                  1, kMaxHoursParam.default_value, 50);
       break;
     case Metric::COUNT:
       NOTREACHED();

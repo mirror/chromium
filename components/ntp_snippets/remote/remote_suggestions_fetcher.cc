@@ -15,13 +15,13 @@ namespace ntp_snippets {
 namespace {
 
 // Variation parameter for chrome-content-suggestions backend.
-const char kContentSuggestionsBackend[] = "content_suggestions_backend";
+const base::FeatureParam<std::string> kContentSuggestionsBackend{
+    &kArticleSuggestionsFeature, "content_suggestions_backend", ""};
 
 }  // namespace
 
 GURL GetFetchEndpoint(version_info::Channel channel) {
-  std::string endpoint = variations::GetVariationParamValueByFeature(
-      ntp_snippets::kArticleSuggestionsFeature, kContentSuggestionsBackend);
+  std::string endpoint = kContentSuggestionsBackend.Get();
   if (!endpoint.empty()) {
     return GURL{endpoint};
   }
