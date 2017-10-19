@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5698f29a_1f43c3af",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-19T08:15:31Z",
+      "side": 1,
+      "message": "Please start the next line with //",
+      "range": {
+        "startLine": 1203,
+        "startChar": 36,
+        "endLine": 1203,
+        "endChar": 37
+      },
+      "revId": "6abd3202a9ad02ad8e39524a6a6b0a2594c3e1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3309e3c5_29c48f60",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 9
