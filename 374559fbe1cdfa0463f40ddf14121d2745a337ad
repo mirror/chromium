@@ -25,6 +25,81 @@
     },
     {
       "key": {
+        "uuid": "aef879b7_913b1678",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T01:19:10Z",
+      "side": 1,
+      "message": "And update the comment; this is no longer resetting the stream position directly, just forcing things to be reset by the loop, below.",
+      "parentUuid": "6d8fe8f8_925eee54",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 33
+      },
+      "revId": "374559fbe1cdfa0463f40ddf14121d2745a337ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b94658_7352981b",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T01:19:10Z",
+      "side": 1,
+      "message": "This calculation needs a comment, IMO, to explain why this calculation is valid in the null started_time_ case, from the PoV of OnMoreData() - started_time_ will be null at startup or if PumpSamples was called late; in the latter case the |delay| we pass to OnMoreData() will jump backward relative to the preceding call, which seems not-obviously-correct.",
+      "revId": "374559fbe1cdfa0463f40ddf14121d2745a337ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4afef98_a1888999",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T01:19:10Z",
+      "side": 1,
+      "message": "nit: I think we need to clarify that this ends up executing in three situations:\n1. The first iteration after stream start.\n2. After MISSED_DEADLINE, below.\n3. If PumpSamples was called late (the case handled above).",
+      "revId": "374559fbe1cdfa0463f40ddf14121d2745a337ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d59b659_f0e98af1",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T01:19:10Z",
+      "side": 1,
+      "message": "nit: It would be clearer to use base::TimeDelta here, IMO, rather than auto.",
+      "revId": "374559fbe1cdfa0463f40ddf14121d2745a337ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e16e2c58_cf9a4eb5",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
