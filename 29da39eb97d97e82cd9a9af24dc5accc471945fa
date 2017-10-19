@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3188e21_0e6250f3",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T21:43:45Z",
+      "side": 0,
+      "message": "Remove the header decl in chrome/browser/renderer_context_menu/render_view_context_menu.h.",
+      "revId": "29da39eb97d97e82cd9a9af24dc5accc471945fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef76591_de9484e6",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T21:43:45Z",
+      "side": 1,
+      "message": "Test is failing on a bot.",
+      "revId": "b21e7f09bb7aaf151c987c94ad3dc7d7fcdba89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61984719_bb700319",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T21:43:45Z",
+      "side": 1,
+      "message": "Why isn\u0027t |url| a GURL?",
+      "revId": "b21e7f09bb7aaf151c987c94ad3dc7d7fcdba89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a01bb4_559f05cd",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T21:43:45Z",
+      "side": 1,
+      "message": "No new \"new\" keywords?\n\nauto context_menu_filter \u003d base::MakeRefCounted\u003ccontent::ContextMenuFilter\u003e();",
+      "revId": "b21e7f09bb7aaf151c987c94ad3dc7d7fcdba89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
