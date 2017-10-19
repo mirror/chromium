@@ -5,6 +5,7 @@
 #ifndef UI_BASE_UI_BASE_TYPES_H_
 #define UI_BASE_UI_BASE_TYPES_H_
 
+#include "ui/base/menu_source_type.h"
 #include "ui/base/ui_base_export.h"
 
 namespace ui {
@@ -37,22 +38,6 @@ enum ModalType {
   MODAL_TYPE_WINDOW = 1,  // Window is modal to its transient parent.
   MODAL_TYPE_CHILD  = 2,  // Window is modal to a child of its transient parent.
   MODAL_TYPE_SYSTEM = 3   // Window is modal to all other windows.
-};
-
-// TODO(varunjain): Remove MENU_SOURCE_NONE (crbug.com/250964)
-enum MenuSourceType {
-  MENU_SOURCE_NONE = 0,
-  MENU_SOURCE_MOUSE = 1,
-  MENU_SOURCE_KEYBOARD = 2,
-  MENU_SOURCE_TOUCH = 3,
-  MENU_SOURCE_TOUCH_EDIT_MENU = 4,
-  MENU_SOURCE_LONG_PRESS = 5,
-  MENU_SOURCE_LONG_TAP = 6,
-  MENU_SOURCE_TOUCH_HANDLE = 7,
-  MENU_SOURCE_STYLUS = 8,
-  MENU_SOURCE_ADJUST_SELECTION = 9,
-  MENU_SOURCE_ADJUST_SELECTION_RESET = 10,
-  MENU_SOURCE_TYPE_LAST = MENU_SOURCE_ADJUST_SELECTION_RESET
 };
 
 UI_BASE_EXPORT MenuSourceType GetMenuSourceTypeForEvent(const ui::Event& event);

@@ -30,6 +30,7 @@ import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
 import java.util.concurrent.Callable;
@@ -62,6 +63,7 @@ public class ContentViewCoreSelectionTest {
     private static class TestSelectionClient implements SelectionClient {
         private SelectionClient.Result mResult;
         private SelectionClient.ResultCallback mResultCallback;
+        private SmartSelectionMetricsLogger mSmartSelectionMetricLogger;
 
         @Override
         public void onSelectionChanged(String selection) {}
@@ -91,12 +93,25 @@ public class ContentViewCoreSelectionTest {
         @Override
         public void cancelAllRequests() {}
 
+        @Override
+        public SelectionMetricsLogger getSelectionMetricsLogger() {
+            return mSmartSelectionMetricLogger;
+        }
+
         public void setResult(SelectionClient.Result result) {
             mResult = result;
         }
 
         public void setResultCallback(SelectionClient.ResultCallback callback) {
             mResultCallback = callback;
+        }
+
+        public void setSmartSelectionMetricsLogger(SmartSelectionMetricsLogger logger) {
+            mSmartSelectionMetricLogger = logger;
+        }
+
+        public SmartSelectionMetricsLogger getSmartSelectionMetricsLogger() {
+            return mSmartSelectionMetricLogger;
         }
     }
 
@@ -387,6 +402,54 @@ public class ContentViewCoreSelectionTest {
         CriteriaHelper.pollUiThread(Criteria.equals(
                 0, () -> mSelectionPopupController.getClassificationResult().startAdjust));
         Assert.assertEquals("Amphitheatre", mSelectionPopupController.getSelectedText());
+    }
+
+    @Test
+    @MediumTest
+    @Feature({"TextInput", "SmartSelection"})
+    public void testSmartSelectionMetricsLogger() throws Throwable {
+        SelectionClient.Result result = new SelectionClient.Result();
+        result.startAdjust = -5;
+        result.endAdjust = 8;
+        result.label = "Maps";
+
+        TestSelectionClient client = new TestSelectionClient();
+        client.setResult(result);
+        client.setResultCallback(mSelectionPopupController.getResultCallback());
+        client.setSmartSelectionMetricsLogger(
+                SmartSelectionMetricsLogger.createForTesting(mContentViewCore.getWebContents()));
+
+        mSelectionPopupController.setSelectionClient(client);
+
+        DOMUtils.longPressNode(mContentViewCore, "smart_selection");
+        waitForSelectActionBarVisible(true);
+
+        SmartSelectionMetricsLogger logger = client.getSmartSelectionMetricsLogger();
+        // Before expansion.
+        Assert.assertEquals(15, logger.getOriginalSelectionStartOffset());
+        // After expansion.
+        Assert.assertEquals("1600 Amphitheatre Parkway", logger.getSelectionText());
+        Assert.assertEquals(10, logger.getSelectionStartOffset());
+
+        int[] indices = logger.getLastIndices();
+        Assert.assertEquals(-1, indices[0]);
+        Assert.assertEquals(2, indices[1]);
+
+        DOMUtils.clickNode(mContentViewCore, "smart_selection");
+
+        CriteriaHelper.pollUiThread(Criteria.equals(
+                0, () -> mSelectionPopupController.getClassificationResult().startAdjust));
+
+        // Should not change after reset.
+        Assert.assertEquals(15, logger.getOriginalSelectionStartOffset());
+        Assert.assertEquals("1600 Amphitheatre Parkway", logger.getSelectionText());
+        Assert.assertEquals(10, logger.getSelectionStartOffset());
+
+        // Indices should changed back to [0, 1).
+        indices = logger.getLastIndices();
+        Assert.assertNotNull(indices);
+        Assert.assertEquals(0, indices[0]);
+        Assert.assertEquals(1, indices[1]);
     }
 
     @Test

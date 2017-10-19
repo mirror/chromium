@@ -30,12 +30,14 @@ import org.robolectric.shadows.ShadowLog;
 
 import org.chromium.base.test.util.Feature;
 import org.chromium.content_public.browser.SelectionClient;
+import org.chromium.content_public.browser.SelectionMetricsLogger;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
+import org.chromium.ui.base.MenuSourceType;
 import org.chromium.ui.base.WindowAndroid;
 
 /**
- * Unit tests for {@SelectionPopupController}.
+ * Unit tests for {@link SelectionPopupController}.
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
@@ -78,6 +80,11 @@ public class SelectionPopupControllerTest {
 
         @Override
         public void cancelAllRequests() {}
+
+        @Override
+        public SelectionMetricsLogger getSelectionMetricsLogger() {
+            return null;
+        }
 
         public void setResult(SelectionClient.Result result) {
             mResult = result;
@@ -128,9 +135,10 @@ public class SelectionPopupControllerTest {
 
         // Long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, AMPHITHEATRE, /* canSelectAll = */ true,
+                /* isPasswordType = */ false, AMPHITHEATRE, /* selectionOffset = */ 5,
+                /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ false);
+                MenuSourceType.MENU_SOURCE_LONG_PRESS);
 
         // adjustSelectionByCharacterOffset() should be called.
         order.verify(mWebContents)
@@ -142,10 +150,10 @@ public class SelectionPopupControllerTest {
 
         // Call showSelectionMenu again, which is adjustSelectionByCharacterOffset triggered.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, AMPHITHEATRE_FULL,
+                /* isPasswordType = */ false, AMPHITHEATRE_FULL, /* selectionOffset = */ 0,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ true);
+                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
 
         order.verify(mView).startActionMode(
                 isA(FloatingActionModeCallback.class), eq(ActionMode.TYPE_FLOATING));
@@ -173,9 +181,10 @@ public class SelectionPopupControllerTest {
 
         // Long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, AMPHITHEATRE, /* canSelectAll = */ true,
+                /* isPasswordType = */ false, AMPHITHEATRE, /* selectionOffset = */ 5,
+                /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ false);
+                MenuSourceType.MENU_SOURCE_LONG_PRESS);
 
         // adjustSelectionByCharacterOffset() should be called.
         order.verify(mWebContents)
@@ -185,9 +194,11 @@ public class SelectionPopupControllerTest {
         // Another long press triggered showSelectionMenu() call.
         client.setResult(newResult);
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, MOUNTAIN, /* canSelectAll = */ true,
+                /* isPasswordType = */ false, MOUNTAIN, /* selectionOffset = */ 21,
+                /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ false);
+                MenuSourceType.MENU_SOURCE_LONG_PRESS);
+
         order.verify(mWebContents)
                 .adjustSelectionByCharacterOffset(newResult.startAdjust, newResult.endAdjust, true);
         assertFalse(mController.isActionModeValid());
@@ -197,10 +208,10 @@ public class SelectionPopupControllerTest {
 
         // First adjustSelectionByCharacterOffset() triggered.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, AMPHITHEATRE_FULL,
+                /* isPasswordType = */ false, AMPHITHEATRE_FULL, /* selectionOffset = */ 0,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ true);
+                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
 
         SelectionClient.Result returnResult = mController.getClassificationResult();
         assertEquals(-21, returnResult.startAdjust);
@@ -209,10 +220,10 @@ public class SelectionPopupControllerTest {
 
         // Second adjustSelectionByCharacterOffset() triggered.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, MOUNTAIN_FULL,
+                /* isPasswordType = */ false, MOUNTAIN_FULL, /* selectionOffset = */ 0,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ true);
+                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
 
         order.verify(mView).startActionMode(
                 isA(FloatingActionModeCallback.class), eq(ActionMode.TYPE_FLOATING));
@@ -232,15 +243,17 @@ public class SelectionPopupControllerTest {
 
         // Long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, AMPHITHEATRE, /* canSelectAll = */ true,
+                /* isPasswordType = */ false, AMPHITHEATRE, /* selectionOffset = */ 5,
+                /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ false);
+                MenuSourceType.MENU_SOURCE_LONG_PRESS);
 
         // Another long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, MOUNTAIN, /* canSelectAll = */ true,
+                /* isPasswordType = */ false, MOUNTAIN, /* selectionOffset = */ 21,
+                /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ false);
+                MenuSourceType.MENU_SOURCE_LONG_PRESS);
 
         // Then we done with the first classification.
         mController.getResultCallback().onClassified(result);
@@ -260,10 +273,10 @@ public class SelectionPopupControllerTest {
 
         // First adjustSelectionByCharacterOffset() triggered.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, AMPHITHEATRE_FULL,
+                /* isPasswordType = */ false, AMPHITHEATRE_FULL, /* selectionOffset = */ 0,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ true);
+                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
 
         SelectionClient.Result returnResult = mController.getClassificationResult();
         assertEquals(-21, returnResult.startAdjust);
@@ -272,10 +285,10 @@ public class SelectionPopupControllerTest {
 
         // Second adjustSelectionByCharacterOffset() triggered.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
-                /* isPasswordType = */ false, MOUNTAIN_FULL,
+                /* isPasswordType = */ false, MOUNTAIN_FULL, /* selectionOffset = */ 0,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                /* fromSelectionAdjustment = */ true);
+                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
 
         order.verify(mView).startActionMode(
                 isA(FloatingActionModeCallback.class), eq(ActionMode.TYPE_FLOATING));
