@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "326ac818_799966ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T04:37:30Z",
+      "side": 1,
+      "message": "nit: s/ASEnd/AsEnd/",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 26
+      },
+      "revId": "69f12fb6e6fe216e69b6ea8499a066e0e82d7d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e1d0fd_6fabd489",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T04:37:30Z",
+      "side": 1,
+      "message": "nit: s/ASStart/AsStart/",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "69f12fb6e6fe216e69b6ea8499a066e0e82d7d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16724c39_23287eff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T04:37:30Z",
+      "side": 1,
+      "message": "nit: s/ASEnd/AsEnd/",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "69f12fb6e6fe216e69b6ea8499a066e0e82d7d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b949c24f_98e5795a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T04:37:30Z",
+      "side": 1,
+      "message": "nit: remove a leading whitespace.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "69f12fb6e6fe216e69b6ea8499a066e0e82d7d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7898ee75_8e626701",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T04:37:30Z",
+      "side": 1,
+      "message": "We don\u0027t need to introduce an alias function. It is redundant.",
+      "revId": "69f12fb6e6fe216e69b6ea8499a066e0e82d7d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599b6779_df09c5f5",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T04:37:30Z",
+      "side": 1,
+      "message": "nit: s\" /\u003e\"\u003e\"\nWe should not use XML syntax in HTML.",
+      "range": {
+        "startLine": 655,
+        "startChar": 45,
+        "endLine": 655,
+        "endChar": 48
+      },
+      "revId": "69f12fb6e6fe216e69b6ea8499a066e0e82d7d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a65acd_f43e6710",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T04:37:30Z",
+      "side": 1,
+      "message": "We should use GetSelectionTextFromBody() to verify where selection is.",
+      "revId": "69f12fb6e6fe216e69b6ea8499a066e0e82d7d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
