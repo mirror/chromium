@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Cookie Store Tests (testNoNameEqualsInValue) promise_test: Unhandled rejection with value: object "TypeError: Failed to execute 'getAll' on 'CookieStore': parameter 1 ('options') is not an object."
+Harness: the test ran to completion.
+
