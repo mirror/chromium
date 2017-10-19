@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "1390f250_ec7b9ca5",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-19T22:27:23Z",
+      "side": 1,
+      "message": "OK. But if you don\u0027t ensure it runs on shutdown (BLOCK_SHUTDOWN or CONTINUE_ON_SHUTDOWN), do you not run into a risk of not destructing the mmap file properly?\n\nAre you relying on CONTINUE_ON_SHUTDOWN default behavior?\nIf so, can you explicitly specify it when you create |deleter_task_runner|? It\u0027s subtle enough to document the fact. Also, you have to be sure that you don\u0027t access any variable that might have already torn down during shutdown.\n\nIf not, then I\u0027d like to know :)",
+      "parentUuid": "f37c4301_7b8bf6a9",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d82854b_dc544d31",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
@@ -202,6 +226,30 @@
       "side": 1,
       "message": "Yeah that\u0027s a requirement for MemoryMappedFile.",
       "parentUuid": "6d82854b_dc544d31",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d4be0c7_3965aa30",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-19T22:27:23Z",
+      "side": 1,
+      "message": "SG, add a quick comment on top of line 51 then.",
+      "parentUuid": "15150ef2_ebf15003",
       "range": {
         "startLine": 51,
         "startChar": 6,
