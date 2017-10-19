@@ -151,7 +151,7 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
     DCHECK(layout_result->PhysicalFragment());
 
     // If this node has inline children, enable LayoutNGPaintFragmets.
-    if (block_flow && FirstChild().IsInline()) {
+    if (block_flow && FirstChild(/* prepare_inline */ false).IsInline()) {
       block_flow->SetPaintFragment(layout_result->PhysicalFragment());
     }
 
@@ -245,13 +245,20 @@ NGLayoutInputNode NGBlockNode::NextSibling() const {
   return nullptr;
 }
 
-NGLayoutInputNode NGBlockNode::FirstChild() {
+NGLayoutInputNode NGBlockNode::FirstChild(bool prepare_inline) {
   auto* block = ToLayoutNGBlockFlow(box_);
   auto* child = GetLayoutObjectForFirstChildNode(block);
   if (!child)
     return nullptr;
-  if (AreNGBlockFlowChildrenInline(block))
-    return NGInlineNode(block);
+  if (AreNGBlockFlowChildrenInline(block)) {
+    // TODO(kojii): Invalidate PrepareLayout() more efficiently.
+    NGInlineNode node(block);
+    if (prepare_inline) {
+      node.InvalidatePrepareLayout();
+      node.PrepareLayout();
+    }
+    return node;
+  }
   return NGBlockNode(ToLayoutBox(child));
 }
 

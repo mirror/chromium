@@ -43,7 +43,7 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
 
   NGBoxStrut GetScrollbarSizes() const;
 
-  NGLayoutInputNode FirstChild();
+  NGLayoutInputNode FirstChild(bool prepare_inline = true);
 
   // Layout an atomic inline; e.g., inline block.
   RefPtr<NGLayoutResult> LayoutAtomicInline(const NGConstraintSpace&,
