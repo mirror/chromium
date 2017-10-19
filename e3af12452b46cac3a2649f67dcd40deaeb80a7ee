@@ -16,6 +16,29 @@
       "revId": "e3af12452b46cac3a2649f67dcd40deaeb80a7ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72a009d2_0aa8ab54",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-19T00:43:20Z",
+      "side": 1,
+      "message": "nit: Do you really need 100 buckets, or would 50 suffice?",
+      "range": {
+        "startLine": 224,
+        "startChar": 61,
+        "endLine": 224,
+        "endChar": 64
+      },
+      "revId": "e3af12452b46cac3a2649f67dcd40deaeb80a7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
