@@ -16,6 +16,24 @@
       "revId": "0ad0d0517ee1cb9ee6fe8ad57d4f5997cb27eb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea98e62_c2aa78f6",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-19T16:59:26Z",
+      "side": 1,
+      "message": "Ah, thanks for pointing this out.",
+      "parentUuid": "3d999f53_422ff75b",
+      "revId": "0ad0d0517ee1cb9ee6fe8ad57d4f5997cb27eb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
