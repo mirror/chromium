@@ -14,6 +14,8 @@
 #include "content/browser/webauth/cbor/cbor_values.h"
 #include "content/common/content_export.h"
 
+#include "base/gtest_prod_util.h"
+
 // A basic Concise Binary Object Representation (CBOR) encoder as defined by
 // https://tools.ietf.org/html/rfc7049.
 // This is a non-canonical, generic encoder that supplies well-formed
@@ -44,6 +46,9 @@ enum class CborMajorType {
 namespace content {
 
 namespace {
+// Maximum nesting layer of CBOR that must be met for canonical CBOR
+constexpr uint8_t maxNestingLayerSize = 4;
+
 // Mask selecting the last 5 bits  of the "initial byte" where
 // 'additional information is encoded.
 constexpr uint8_t kAdditionalInformationDataMask = 0x1F;
@@ -83,6 +88,24 @@ class CONTENT_EXPORT CBORWriter {
 
   // Get the number of bytes needed to store the unsigned integer.
   size_t GetNumUintBytes(uint64_t value);
+
+  // Returns whether input CBOR value has at most 4 nested layers.
+  // The canonical CBOR ensures that the
+  // depths of nested CBOR structure is limited to at most 4.
+  //
+  // See section 6 of https://fidoalliance.org/specs/fido-v2.0-rd-20170927/
+  // fido-client-to-authenticator-protocol-v2.0-rd-20170927.html
+  static bool IsAtMostFourLayers(const CBORValue& node);
+
+  // Static function to get maximum depth of nested CBOR.
+  static uint8_t GetMaxDepth(const CBORValue& node, uint8_t current_layer);
+
+  // Added to test private member function GetMaxDepth().
+  FRIEND_TEST_ALL_PREFIXES(CBORWriterTest,
+                           TestWriterGetMaxDepthMultilayerDepth);
+  FRIEND_TEST_ALL_PREFIXES(CBORWriterTest,
+                           TestWriterGetMaxDepthSingleLayerDepth);
+  FRIEND_TEST_ALL_PREFIXES(CBORWriterTest, TestWriterGetMaxDepthUnbalancedCbor);
 
   // Holds the encoded CBOR data.
   std::vector<uint8_t>* encoded_cbor_;
