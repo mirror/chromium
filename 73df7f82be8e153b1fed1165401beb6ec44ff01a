@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec43c537_a33eb383",
+        "filename": "media/blink/cdm_session_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-19T23:04:07Z",
+      "side": 1,
+      "message": "Optional nit: IMO \"!!cdm\" is more idiomatic and less error-prone, but I defer to your teams\u0027 preference if you disagree.",
+      "range": {
+        "startLine": 169,
+        "startChar": 28,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f157000d_7bf27093",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32491,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-19T23:04:07Z",
+      "side": 1,
+      "message": "It would be nice to clean up all of these Media.EME histograms to use histogram_suffixes, rather than duplicating the metadata for each.  Doesn\u0027t necessarily need to part of this CL, though.",
+      "range": {
+        "startLine": 32484,
+        "startChar": 0,
+        "endLine": 32491,
+        "endChar": 12
+      },
+      "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
