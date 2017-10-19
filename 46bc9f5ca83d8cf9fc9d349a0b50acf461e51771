@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1bd67e86_60c12979",
+        "filename": "components/offline_pages/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-19T21:32:52Z",
+      "side": 1,
+      "message": "The buildbot is enforced by the various PRESUBMIT.py files.  But good catch, I did not add a PRESUBMIT.py to webui/resources!",
+      "parentUuid": "92a7288e_b5c33711",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4db2c34_b7750e7a",
         "filename": "components/offline_pages/webui/BUILD.gn",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93646095_5a3fe122",
+        "filename": "components/offline_pages/webui/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-19T21:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4db2c34_b7750e7a",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "150d81f0_c564abc4",
+        "filename": "components/offline_pages/webui/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-19T21:32:52Z",
+      "side": 1,
+      "message": "You are both right! moved the content-dependent part into its own folder.",
+      "parentUuid": "49399c25_99d1942c",
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bff3592_8ea08b39",
         "filename": "third_party/closure_compiler/compiled_resources2.gyp",
         "patchSetId": 9
@@ -103,6 +169,30 @@
       "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7509c2c_286b0e20",
+        "filename": "third_party/closure_compiler/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-19T21:32:52Z",
+      "side": 1,
+      "message": "There are only 2 other compiled_resources2.gyp files in //components:\n\nhttps://cs.chromium.org/search/?q\u003df:compiled_resources2.gyp+f:src/components\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nThey are both included transitively in other compiled_resources2.gyp files in ui/.  I think it\u0027s okay for us to be in here like this.",
+      "parentUuid": "6bff3592_8ea08b39",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "46bc9f5ca83d8cf9fc9d349a0b50acf461e51771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
