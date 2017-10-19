@@ -2196,6 +2196,33 @@ void WindowTree::StackAtTop(uint32_t change_id, Id window_id) {
       wm_change_id, wm_tree->TransportIdForWindow(window));
 }
 
+void WindowTree::PerformWindowManagementAction(Id window_id,
+                                               const std::string& action) {
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
+  if (!window) {
+    DVLOG(1) << "PerformWindowManagementAction(" << action
+             << ") failed (invalid id)";
+    return;
+  }
+
+  if (!access_policy_->CanPerformWindowManagementAction(window)) {
+    DVLOG(1) << "PerformWindowManagementAction(" << action
+             << ") failed (access denied)";
+    return;
+  }
+
+  WindowManagerDisplayRoot* display_root = GetWindowManagerDisplayRoot(window);
+  if (!display_root) {
+    DVLOG(1) << "PerformWindowManagementAction(" << action
+             << ") failed (no display root)";
+    return;
+  }
+
+  WindowTree* wm_tree = display_root->window_manager_state()->window_tree();
+  wm_tree->window_manager_internal_->WmPerformWindowManagementAction(
+      wm_tree->TransportIdForWindow(window), action);
+}
+
 void WindowTree::GetWindowManagerClient(
     mojo::AssociatedInterfaceRequest<mojom::WindowManagerClient> internal) {
   if (!access_policy_->CanSetWindowManager() || !window_manager_internal_ ||

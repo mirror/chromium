@@ -430,6 +430,8 @@ class TestWindowManager : public mojom::WindowManager {
   void WmStackAbove(uint32_t change_id, uint32_t above_id,
                     uint32_t below_id) override;
   void WmStackAtTop(uint32_t change_id, uint32_t window_id) override;
+  void WmPerformWindowManagementAction(uint32_t window_id,
+                                       const std::string& action) override;
   void OnAccelerator(uint32_t ack_id,
                      uint32_t accelerator_id,
                      std::unique_ptr<ui::Event> event) override;

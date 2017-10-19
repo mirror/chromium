@@ -9,8 +9,9 @@
 
 #include "ash/multi_profile_uma.h"
 #include "ash/public/cpp/shell_window_ids.h"
-#include "ash/shell.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/public/interfaces/window_actions.mojom.h"
+#include "ash/shell.h"                                  // mash-ok
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"  // mash-ok
 #include "ash/wm/window_state.h"
 #include "base/auto_reset.h"
 #include "base/macros.h"
@@ -33,6 +34,8 @@
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
 #include "ui/aura/client/aura_constants.h"
+#include "ui/aura/env.h"
+#include "ui/aura/mus/window_tree_host_mus.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_tree_host.h"
@@ -710,8 +713,16 @@ void MultiUserWindowManagerChromeOS::SetWindowVisible(
   // are not user activatable. Since invisible windows are not being tracked,
   // we tell it to maximize / track this window now before it gets shown, to
   // reduce animation jank from multiple resizes.
-  if (visible)
-    ash::Shell::Get()->tablet_mode_controller()->AddWindow(window);
+  if (visible) {
+    // TODO(erg): When we get rid of the classic ash, get rid of the direct
+    // linkage on tablet_mode_controller() here.
+    if (aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS) {
+      aura::WindowTreeHostMus::ForWindow(window)->PerformWindowManagementAction(
+          ash::mojom::kAddWindowToTabletMode);
+    } else {
+      ash::Shell::Get()->tablet_mode_controller()->AddWindow(window);
+    }
+  }
 
   AnimationSetter animation_setter(
       window, GetAdjustedAnimationTimeInMS(animation_time_in_ms));

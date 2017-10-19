@@ -67,6 +67,8 @@ class AccessPolicy {
   virtual bool CanStackAbove(const ServerWindow* above,
                              const ServerWindow* below) const = 0;
   virtual bool CanStackAtTop(const ServerWindow* window) const = 0;
+  virtual bool CanPerformWindowManagementAction(
+      const ServerWindow* window) const = 0;
   // Used for all client controllable cursor properties; which cursor should be
   // displayed, visibility, locking, etc.
   virtual bool CanSetCursorProperties(const ServerWindow* window) const = 0;

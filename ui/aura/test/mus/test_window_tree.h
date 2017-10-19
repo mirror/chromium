@@ -206,6 +206,8 @@ class TestWindowTree : public ui::mojom::WindowTree {
   void StackAbove(uint32_t change_id, uint32_t above_id,
                   uint32_t below_id) override;
   void StackAtTop(uint32_t change_id, uint32_t window_id) override;
+  void PerformWindowManagementAction(uint32_t window_id,
+                                     const std::string& action) override;
   void GetWindowManagerClient(
       mojo::AssociatedInterfaceRequest<ui::mojom::WindowManagerClient> internal)
       override;
