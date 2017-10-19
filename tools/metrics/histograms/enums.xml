@@ -41478,6 +41478,10 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="1" label="Supports DMS"/>
 </enum>
 
+<enum name="WiFiApChSwitch">
+  <int value="0" label="Channel switch"/>
+</enum>
+
 <enum name="WiFiApMode">
   <int value="0" label="Unknown"/>
   <int value="1" label="Managed"/>
