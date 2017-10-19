@@ -59,7 +59,8 @@ class WebRTCPeerConnectionHandler {
   virtual ~WebRTCPeerConnectionHandler() {}
 
   virtual bool Initialize(const WebRTCConfiguration&,
-                          const WebMediaConstraints&) = 0;
+                          const WebMediaConstraints&,
+                          bool) = 0;
 
   virtual void CreateOffer(const WebRTCSessionDescriptionRequest&,
                            const WebMediaConstraints&) = 0;

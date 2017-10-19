@@ -520,7 +520,7 @@ RTCPeerConnection::RTCPeerConnection(ExecutionContext* context,
   document->GetFrame()->Client()->DispatchWillStartUsingPeerConnectionHandler(
       peer_handler_.get());
 
-  if (!peer_handler_->Initialize(configuration, constraints)) {
+  if (!peer_handler_->Initialize(configuration, constraints, true)) {
     closed_ = true;
     stopped_ = true;
     exception_state.ThrowDOMException(

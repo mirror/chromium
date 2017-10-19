@@ -65,6 +65,7 @@ class CONTENT_EXPORT WebRTCEventLogHost {
   static int number_active_log_files_;
 
   // Track if the RTC event log is currently active.
+  // TODO(eladalon): !!! Is this really still useful?
   bool rtc_event_logging_enabled_;
 
   base::WeakPtrFactory<WebRTCEventLogHost> weak_ptr_factory_;
