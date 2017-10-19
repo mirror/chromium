@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65fb405d_e404ad2a",
+        "filename": "ios/web_view/public/cwv_autofill_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but we could expand this to let the client ask for the current focused form if any. But I think this is still a good encapsulation for autofill features, and consistent with our other features like translate. What do you think the API should look like if we don\u0027t have this class?",
+      "parentUuid": "0fc4161b_e96f6f87",
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d68bc62_01e997ef",
         "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4c098f_57784ff5",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "Oops",
+      "parentUuid": "2d68bc62_01e997ef",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 19
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d139c82b_404c3ef8",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep this since writing out blocks without typedefs is kind of a pain and can occur multiple times whereas reading and understanding this block just needs to happen once.",
+      "parentUuid": "68a59615_16e006ce",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89049f25_b0b1529e",
         "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73aaa147_6042a6d8",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "Reworded slightly",
+      "parentUuid": "89049f25_b0b1529e",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "e9d8e115_bff56297",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "Reworded a little",
+      "parentUuid": "e9e0e2ae_b6905983",
+      "range": {
+        "startLine": 28,
+        "startChar": 43,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "170ba09c_e27556d7",
         "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
         "patchSetId": 5
@@ -131,6 +245,30 @@
       "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73838d0c_d9e4e033",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "I think we should leave it since the client can display whatever UI they want.",
+      "parentUuid": "170ba09c_e27556d7",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "7e5620d2_00339bbc",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "Yeah that works for me.",
+      "parentUuid": "84b6ac9d_2cb27154",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef1ef6cf_b3ed97cc",
         "filename": "ios/web_view/public/cwv_autofill_form_suggestion.h",
         "patchSetId": 5
@@ -177,6 +339,30 @@
       "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ded3e04_00613586",
+        "filename": "ios/web_view/public/cwv_autofill_form_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "We don\u0027t support every possible value in the enum autofill::PopupItemId (a property in the wrapped object \"FormSuggestion\"). I don\u0027t think bling supports all of them either.\n\nI\u0027ll rename this to \"unsupported\" and comment that using this type will result in no ops. Let me know what you prefer though.",
+      "parentUuid": "ef1ef6cf_b3ed97cc",
+      "range": {
+        "startLine": 15,
+        "startChar": 25,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "33ad90ed_4d993044",
+        "filename": "ios/web_view/public/cwv_autofill_form_suggestion.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "If the type is \"clear\", then the |value| will be something like \"Clear Form\". This is all passed up from //components/autofill. This type is used to understand will happen if this suggestion is used.",
+      "parentUuid": "1b3e63ef_bdecbe6c",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f4248aa_0234c8fc",
         "filename": "ios/web_view/public/cwv_preferences.h",
         "patchSetId": 5
@@ -223,6 +433,30 @@
       "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1c6bdb_ac17a743",
+        "filename": "ios/web_view/public/cwv_preferences.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T18:26:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f4248aa_0234c8fc",
+      "range": {
+        "startLine": 22,
+        "startChar": 60,
+        "endLine": 22,
+        "endChar": 75
+      },
+      "revId": "f56c758ea8917fb6766f8a550a2bbd9efb7f4eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
