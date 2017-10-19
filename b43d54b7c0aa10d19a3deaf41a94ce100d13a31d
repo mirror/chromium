@@ -33,6 +33,23 @@
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb69ab47_bc6a65fa",
+        "filename": "ash/metrics/user_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-19T23:17:40Z",
+      "side": 1,
+      "message": "nit: Document what it does.\n  // Record interesting user clicks on lock screen.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
