@@ -16,6 +16,24 @@
       "revId": "30c61c6471959b20db94fdfd46e5ebe4cf590e87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03faf149_3eccf9f7",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T23:38:33Z",
+      "side": 1,
+      "message": "it\u0027s destroyed before we create the response body data pipe (line 329)",
+      "parentUuid": "193c8d69_3c542d50",
+      "revId": "30c61c6471959b20db94fdfd46e5ebe4cf590e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

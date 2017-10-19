@@ -16,6 +16,24 @@
       "revId": "0ffd0bb18932f2d2002218c939c3e34e13cde04e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ba1fd8_0396e7d0",
+        "filename": "content/browser/loader/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T23:38:33Z",
+      "side": 0,
+      "message": "yeah, I had to edit the rule here, and while doing so I realized there isn\u0027t much point of having this anymore.",
+      "parentUuid": "e1fd2183_92931bdd",
+      "revId": "0ffd0bb18932f2d2002218c939c3e34e13cde04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
