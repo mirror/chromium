@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc15ff67_5a327335",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T23:10:03Z",
+      "side": 1,
+      "message": "nit: not strictly necessary in the descructor?",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d168fb24_86fa8f05",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T23:10:03Z",
+      "side": 1,
+      "message": "nit: this could be in the if above.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
