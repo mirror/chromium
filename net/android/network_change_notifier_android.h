@@ -46,6 +46,7 @@ class NET_EXPORT_PRIVATE NetworkChangeNotifierAndroid
     : public NetworkChangeNotifier,
       public NetworkChangeNotifierDelegateAndroid::Observer {
  public:
+  NetworkChangeNotifierAndroid(const DnsConfig* dns_config_for_testing);
   ~NetworkChangeNotifierAndroid() override;
 
   // NetworkChangeNotifier:
@@ -88,12 +89,9 @@ class NET_EXPORT_PRIVATE NetworkChangeNotifierAndroid
   // Enable NetworkHandles support for tests.
   void ForceNetworkHandlesSupportedForTesting();
 
-  NetworkChangeNotifierAndroid(NetworkChangeNotifierDelegateAndroid* delegate,
-                               const DnsConfig* dns_config_for_testing);
-
   static NetworkChangeCalculatorParams NetworkChangeCalculatorParamsAndroid();
 
-  NetworkChangeNotifierDelegateAndroid* const delegate_;
+  NetworkChangeNotifierDelegateAndroid delegate_;
   std::unique_ptr<DnsConfigServiceThread> dns_config_service_thread_;
   bool force_network_handles_supported_for_testing_;
 

@@ -296,7 +296,7 @@ class NetworkChangeNotifierAndroidTest
   void SetUp() override {
     dns_config_.nameservers.push_back(
         IPEndPoint(IPAddress(8, 8, 8, 8), dns_protocol::kDefaultPort));
-    notifier_.reset(new NetworkChangeNotifierAndroid(&delegate_, &dns_config_));
+    notifier_.reset(new NetworkChangeNotifierAndroid(&dns_config_));
     NetworkChangeNotifier::AddConnectionTypeObserver(
         &connection_type_observer_);
     NetworkChangeNotifier::AddConnectionTypeObserver(
