@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd3aa71_7312cfe9",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T20:55:43Z",
+      "side": 1,
+      "message": "The style guide disallows rvalue references except for a few instances where it\u0027s required (implementing move constructors / move assignment operators and perfecting forwarding)",
+      "range": {
+        "startLine": 118,
+        "startChar": 18,
+        "endLine": 118,
+        "endChar": 50
+      },
+      "revId": "549ab09e8ce21eb674d83468de48086b2b365ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
