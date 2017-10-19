@@ -8,8 +8,10 @@
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/test/gtest_util.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/platform_util.h"
+#include "chrome/common/chrome_features.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/test/material_design_controller_test_api.h"
 #include "ui/base/test/user_interactive_test_case.h"
@@ -104,6 +106,9 @@ void TestBrowserDialog::RunDialog() {
   ui::test::MaterialDesignControllerTestAPI md_test_api(
       ui::MaterialDesignController::GetMode());
   md_test_api.SetSecondaryUiMaterial(true);
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      features::kShowAllDialogsWithViewsToolkit);
 #endif
 
   views::Widget::Widgets widgets_before =

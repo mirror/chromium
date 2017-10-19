@@ -20,6 +20,7 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_icon_views.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/test/base/interactive_test_utils.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_view_host.h"
@@ -69,14 +70,20 @@ class ManagePasswordsBubbleViewTest : public ManagePasswordsTest {
   ManagePasswordsBubbleViewTest() {}
   ~ManagePasswordsBubbleViewTest() override {}
 
-  // content::BrowserTestBase:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
 #if defined(OS_MACOSX)
-    command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
-#endif
+  // content::BrowserTestBase:
+  void SetUp() override {
+    scoped_feature_list_.InitAndEnableFeature(
+        features::kShowAllDialogsWithViewsToolkit);
   }
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
+  }
+#endif
 
  private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordsBubbleViewTest);
 };
 
