@@ -6,9 +6,14 @@
 
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
+#include "chrome/browser/profiles/profile.h"
 #import "chrome/browser/ui/cocoa/applescript/bookmark_applescript_utils_test.h"
 #import "chrome/browser/ui/cocoa/applescript/bookmark_item_applescript.h"
 #import "chrome/browser/ui/cocoa/applescript/error_applescript.h"
+#include "chrome/common/chrome_features.h"
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #import "testing/gtest_mac.h"
 #include "testing/platform_test.h"
@@ -40,6 +45,34 @@ IN_PROC_BROWSER_TEST_F(BookmarkItemAppleScriptTest, GetAndSetURL) {
   [item1 setURL:@"invalid-url.org"];
   EXPECT_EQ((int)AppleScript::errInvalidURL,
             [fakeScriptCommand.get() scriptErrorNumber]);
+
+  // If the scripter enters a URL with a Javscript scheme.
+  [item1 setURL:@"javascript:alert('hi');"];
+  EXPECT_EQ((int)AppleScript::errInvalidURL,
+            [fakeScriptCommand.get() scriptErrorNumber]);
+}
+
+// Set and get a Javascript URL.
+IN_PROC_BROWSER_TEST_F(BookmarkItemAppleScriptTest, GetAndSetJavascriptURL) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(
+      features::kAppleScriptExecuteJavaScriptMenuItem);
+
+  PrefService* prefs = profile()->GetPrefs();
+  prefs->SetBoolean(prefs::kAllowJavascriptAppleEvents, false);
+  NSArray* bookmarkItems = [bookmarkBar_.get() bookmarkItems];
+  BookmarkItemAppleScript* item1 = [bookmarkItems objectAtIndex:0];
+
+  base::scoped_nsobject<FakeScriptCommand> fakeScriptCommand(
+      [[FakeScriptCommand alloc] init]);
+  [item1 setURL:@"javascript:alert('hi');"];
+  EXPECT_EQ(AppleScript::ErrorCode::errJavaScriptUnsupported,
+            [fakeScriptCommand.get() scriptErrorNumber]);
+
+  prefs->SetBoolean(prefs::kAllowJavascriptAppleEvents, true);
+  [item1 setURL:@"javascript:alert('hi');"];
+  EXPECT_EQ(GURL("javascript:alert('hi');"),
+            GURL(base::SysNSStringToUTF8([item1 URL])));
 }
 
 }  // namespace
