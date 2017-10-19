@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df740671_263a011a",
+        "filename": "chromeos/components/tether/host_scan_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-19T17:38:34Z",
+      "side": 1,
+      "message": "It feels odd to specify 1) and 2) when the methods that listen for these events are no longer present in this file. WDYT?",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "dffae6535c39256871397cf2f9f94f4d8b5ce9dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
