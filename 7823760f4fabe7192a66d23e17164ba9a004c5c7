@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5474b3e_706e6564",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T19:55:16Z",
+      "side": 1,
+      "message": "Hmm... we\u0027ve been recommending people use the appropriate Time types where possible, so it would be nice to do the same in the base version \u003d)\n\nThis is a surprising amount of overhead to me. I would have expected simple structs like this to use InlinedStructPtr (and be flattened into the same stream of bytes) so we don\u0027t pay a pointer for indirection. I /would/ have also expected that sizeof(InlinedStructPtr\u003cmojo::common::mojom::Time\u003e) \u003d\u003d sizeof(mojo::common::mojom::Time), but it looks like we store a state bit in InlinedStructPtr as well...",
+      "parentUuid": "041e83d7_75a811e5",
+      "revId": "7823760f4fabe7192a66d23e17164ba9a004c5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3725fc_2067061d",
         "filename": "mojo/common/time_struct_traits.h",
         "patchSetId": 4
