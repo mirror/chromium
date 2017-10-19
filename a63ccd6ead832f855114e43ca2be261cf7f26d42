@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d419ab3e_d94e0fea",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T20:27:37Z",
+      "side": 1,
+      "message": "Nit: proxy",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "a63ccd6ead832f855114e43ca2be261cf7f26d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac6f28b_ba3a2972",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T20:27:37Z",
+      "side": 1,
+      "message": "nit: proxy",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "a63ccd6ead832f855114e43ca2be261cf7f26d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edef6823_975a8f34",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T20:27:37Z",
+      "side": 1,
+      "message": "Nit: extra space",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "a63ccd6ead832f855114e43ca2be261cf7f26d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeeaaa9e_94550fc3",
+        "filename": "content/public/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T20:27:37Z",
+      "side": 1,
+      "message": "What happens if :CreateProxyService is called again? Won\u0027t mojo_proxy_resolver_factory_ be null?",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 45
+      },
+      "revId": "a63ccd6ead832f855114e43ca2be261cf7f26d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592dbd2c_e5b01acf",
+        "filename": "content/public/network/url_request_context_builder_mojo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T20:27:37Z",
+      "side": 1,
+      "message": "Does this still make sense now that it is a ProxyResolverFactoryPtr that this class now owns?",
+      "range": {
+        "startLine": 45,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 66
+      },
+      "revId": "a63ccd6ead832f855114e43ca2be261cf7f26d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

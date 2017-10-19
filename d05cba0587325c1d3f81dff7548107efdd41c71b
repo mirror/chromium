@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f608c44_20d453cf",
+        "filename": "net/url_request/url_request_context_builder_mojo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-19T20:27:37Z",
+      "side": 1,
+      "message": "Nit: should be updated to interfaces::ProxyResolverFactoryPtr?",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "d05cba0587325c1d3f81dff7548107efdd41c71b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
