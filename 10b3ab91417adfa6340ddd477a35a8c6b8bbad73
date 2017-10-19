@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f05d317a_cfa59349",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T19:42:10Z",
+      "side": 1,
+      "message": "invitation: iiuc, we allow \u0027let\u0027 now in JS. Feel free to use let here or stick with var. (just offering a tip, either is fine).",
+      "revId": "10b3ab91417adfa6340ddd477a35a8c6b8bbad73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808a784c_67044483",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T19:42:10Z",
+      "side": 1,
+      "message": "nit: It\u0027s more common to put the constant in the first parameter position: I believe that\u0027s due to how the error message is printed out.",
+      "revId": "10b3ab91417adfa6340ddd477a35a8c6b8bbad73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
