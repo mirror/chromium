@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28a5229_3a30c0bd",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T18:18:33Z",
+      "side": 1,
+      "message": "nit: This sounds like you are going to disable something. Rename to IsScriptDisabledForPreview or something like that?",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 28
+      },
+      "revId": "e25fe0e11625c5f434dfc578da9b6d3ef7b63394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff80b8cb_2dcc7bfd",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T18:18:33Z",
+      "side": 1,
+      "message": "const content::RenderFrame*",
+      "range": {
+        "startLine": 98,
+        "startChar": 29,
+        "endLine": 98,
+        "endChar": 50
+      },
+      "revId": "e25fe0e11625c5f434dfc578da9b6d3ef7b63394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
