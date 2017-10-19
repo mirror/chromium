@@ -22,6 +22,30 @@
       "revId": "dffae6535c39256871397cf2f9f94f4d8b5ce9dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12df4a69_b9aadb08",
+        "filename": "chromeos/components/tether/host_scan_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-19T17:55:59Z",
+      "side": 1,
+      "message": "Moved this documentation to the implementation header file instead.",
+      "parentUuid": "df740671_263a011a",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "dffae6535c39256871397cf2f9f94f4d8b5ce9dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
