@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "899bce6a_78d17ff4",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-19T13:32:07Z",
+      "side": 1,
+      "message": "nit: Technically for a Masked card it\u0027s ShowBubbleForUpload. If you\u0027d like to simply like to test the appearance of the dialog and keep the simple ShowBubbleForLocalSave, I would change line 30 for test::GetCreditCard().",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "4f986ca948e867dea2287708f6a38ce4acf96a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf2e30b_31c719bb",
+        "filename": "chrome/browser/ui/cocoa/autofill/save_card_bubble_view_views.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-19T13:32:07Z",
+      "side": 1,
+      "message": "Would you consider removing this line as discussed on email in thread \"Payments Dialogs on Harmony\"? I still have a task to update save_card_bubble_views.cc to make it harmony compliant, but the non-Harmony version still seems like a win because the Views flow actually has more functionality in the dialog as of M62.",
+      "revId": "4f986ca948e867dea2287708f6a38ce4acf96a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
