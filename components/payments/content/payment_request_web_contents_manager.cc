@@ -42,6 +42,8 @@ void PaymentRequestWebContentsManager::CreatePaymentRequest(
 
 void PaymentRequestWebContentsManager::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
+  if (!navigation_handle->IsInMainFrame())
+    return;
   for (auto& it : payment_requests_) {
     // Since the PaymentRequest dialog blocks the content of the page, the user
     // cannot click on a link to navigate away. Therefore, if the navigation
