@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "b07cdd4a_ffca3733",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-19T21:54:38Z",
+      "side": 1,
+      "message": "Agree with Geoff, duplication has precedence. It would be nice to not include ANGLE headers here to give us flexibility to change them if required.",
+      "parentUuid": "8c4dd1e0_76079b84",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68d4a9ad_bcf77523",
         "filename": "ui/gl/gl_image_dxgi.h",
         "patchSetId": 19
