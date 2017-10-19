@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67378d7d_a18de5ac",
+        "filename": "device/bluetooth/bluetooth_discovery_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-19T17:59:03Z",
+      "side": 1,
+      "message": "I think it would be better to wait until either OnDiscoverySessionRemoved() or OnDiscoverySessionRemovalFailed() is called, then call the appropriate callback. Otherwise, we can have a case like this:\n\n(1) Call Stop().\n(2) Call Stop() again.\n(3) Stop() completes successfully.\n\nThe first Stop() will have a success callback, but the second Stop() will have an error callback, even though the operation was successful.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "76fcf1872db7673d352e3990fe8ae6722ddcc041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
