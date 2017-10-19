@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "82eabc73_c8483740",
+        "filename": "chromecast/media/cma/backend/fuchsia/fuchsia_volume_control.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1234161
+      },
+      "writtenOn": "2017-10-19T18:00:41Z",
+      "side": 1,
+      "message": "Got it, thanks.\n\nWhat I\u0027m talking about wouldn\u0027t be overall system volume either. It would be the individual renderer volume (which here corresponds to a per-stream volume). \n\nAt this point we don\u0027t intend to expose system-wide volume to applications (or rephrased, we intend to provide that privilege to almost no apps; perhaps just a system UI process).\n\nUseful guidance, appreciated.",
+      "parentUuid": "f3d7f505_8d18739b",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 51
+      },
+      "revId": "701fe99ea89b3e8142548ff84996268dd2feaa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a64a9eaa_9bca90e1",
         "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
         "patchSetId": 9
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "ok. I don\u0027t think we need it right now, but it may become useful in the future.",
       "parentUuid": "a64a9eaa_9bca90e1",
+      "range": {
+        "startLine": 175,
+        "startChar": 15,
+        "endLine": 175,
+        "endChar": 56
+      },
+      "revId": "701fe99ea89b3e8142548ff84996268dd2feaa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba79acd1_fa71d7b2",
+        "filename": "chromecast/media/cma/backend/fuchsia/mixer_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1234161
+      },
+      "writtenOn": "2017-10-19T18:00:41Z",
+      "side": 1,
+      "message": "That\u0027s fine Sergey, thanks for the guidance.\nThe CL is ready when you need it.",
+      "parentUuid": "9ce394ed_234d7988",
       "range": {
         "startLine": 175,
         "startChar": 15,
