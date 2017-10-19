@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4f831a8_cd076ec1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-19T19:05:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f66738b4_ec8169a9",
+      "revId": "67868e44a4ee10436a8ce4394a9c3f556ef642e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05e6a8e8_f3ba2c37",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
         "patchSetId": 3
