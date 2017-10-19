@@ -45,6 +45,30 @@
       "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123c65b5_2c838618",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-19T01:00:46Z",
+      "side": 1,
+      "message": "The reason I did this was because destructor semantics are much easier to reason about with heap-allocated unique ptrs. Since the class has a non-trivial destructor, and we want it to be called multiple times before the parent class is destructed.\n\nLMK if you don\u0027t agree with this reasoning.",
+      "parentUuid": "8eb6ea3d_a7bc9e31",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "8680e9564785bb8f2e9f949c2acf7be0b72c0939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
