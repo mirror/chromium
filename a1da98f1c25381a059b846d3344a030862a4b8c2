@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9ea92d8_9a386122",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-19T21:50:38Z",
+      "side": 1,
+      "message": "This is a fine approximation, but not technically true. You could have an animation in a steady state between this and the last frame.",
+      "revId": "a1da98f1c25381a059b846d3344a030862a4b8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
