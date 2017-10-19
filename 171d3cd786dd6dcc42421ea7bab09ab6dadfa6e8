@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26b4f2a1_b97c27a5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 99161,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T23:53:48Z",
+      "side": 0,
+      "message": "Leave this here please.",
+      "revId": "171d3cd786dd6dcc42421ea7bab09ab6dadfa6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
