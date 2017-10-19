@@ -50,6 +50,40 @@
       "revId": "b21e7f09bb7aaf151c987c94ad3dc7d7fcdba89f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e663fb5_fb4cab3d",
+        "filename": "content/public/browser/render_widget_host_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:52:12Z",
+      "side": 1,
+      "message": "nit: Add comments similar to above.",
+      "revId": "b21e7f09bb7aaf151c987c94ad3dc7d7fcdba89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f234f2e_11263986",
+        "filename": "content/public/test/browser_test_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:52:12Z",
+      "side": 1,
+      "message": "nit: Add class level comment, since this is content/public.",
+      "revId": "b21e7f09bb7aaf151c987c94ad3dc7d7fcdba89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
