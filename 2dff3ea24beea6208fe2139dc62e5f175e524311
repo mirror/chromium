@@ -22,6 +22,30 @@
       "revId": "2dff3ea24beea6208fe2139dc62e5f175e524311",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378e0000_8b525831",
+        "filename": "ui/display/manager/display_layout_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T21:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ab97c7_accc2f80",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 54
+      },
+      "revId": "2dff3ea24beea6208fe2139dc62e5f175e524311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
