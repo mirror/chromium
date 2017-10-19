@@ -282,6 +282,9 @@ public class BottomSheet
     /** The token used to enable browser controls persistence. */
     private int mPersistentControlsToken;
 
+    /** A help bubble that points to the bottom sheet, helping users find bookmarks, et. al. */
+    private ViewAnchoredTextBubble mHelpBubble;
+
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
      * Home.
@@ -1753,10 +1756,10 @@ public class BottomSheet
                 ? R.string.bottom_sheet_accessibility_expand_button_help_bubble_message
                 : stringId;
 
-        ViewAnchoredTextBubble helpBubble = new ViewAnchoredTextBubble(
+        mHelpBubble = new ViewAnchoredTextBubble(
                 getContext(), anchorView, stringId, accessibilityStringId);
-        helpBubble.setDismissOnTouchInteraction(true);
-        helpBubble.addOnDismissListener(new OnDismissListener() {
+        mHelpBubble.setDismissOnTouchInteraction(true);
+        mHelpBubble.addOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
                 if (fromMenu) {
@@ -1766,6 +1769,8 @@ public class BottomSheet
                 }
 
                 ViewHighlighter.turnOffHighlight(anchorView);
+
+                mHelpBubble = null;
             }
         });
 
@@ -1775,8 +1780,8 @@ public class BottomSheet
 
         int inset = getContext().getResources().getDimensionPixelSize(
                 R.dimen.bottom_sheet_help_bubble_inset);
-        helpBubble.setInsetPx(0, inset, 0, inset);
-        helpBubble.show();
+        mHelpBubble.setInsetPx(0, inset, 0, inset);
+        mHelpBubble.show();
     }
 
     /**
@@ -1826,5 +1831,13 @@ public class BottomSheet
      */
     public boolean isUsingExpandButton() {
         return mDefaultToolbarView.isUsingExpandButton();
+    }
+
+    /**
+     * @return The bottom sheet's help bubble if it exists.
+     */
+    @VisibleForTesting
+    public @Nullable ViewAnchoredTextBubble getHelpBubbleForTests() {
+        return mHelpBubble;
     }
 }
