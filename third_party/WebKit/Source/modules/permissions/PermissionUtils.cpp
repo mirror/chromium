@@ -4,6 +4,8 @@
 
 #include "modules/permissions/PermissionUtils.h"
 
+#include <utility>
+
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalFrame.h"
@@ -49,6 +51,28 @@ PermissionDescriptorPtr CreateMidiPermissionDescriptor(bool sysex) {
   midi_extension->sysex = sysex;
   descriptor->extension = mojom::blink::PermissionDescriptorExtension::New();
   descriptor->extension->set_midi(std::move(midi_extension));
+  return descriptor;
+}
+
+PermissionDescriptorPtr CreateClipboardReadPermissionDescriptor(
+    bool allowWithoutGesture) {
+  auto descriptor =
+      CreatePermissionDescriptor(mojom::blink::PermissionName::CLIPBOARD_READ);
+  auto clipboard_extension = mojom::blink::ClipboardPermissionDescriptor::New();
+  clipboard_extension->allowWithoutGesture = allowWithoutGesture;
+  descriptor->extension = mojom::blink::PermissionDescriptorExtension::New();
+  descriptor->extension->set_clipboard(std::move(clipboard_extension));
+  return descriptor;
+}
+
+PermissionDescriptorPtr CreateClipboardWritePermissionDescriptor(
+    bool allowWithoutGesture) {
+  auto descriptor =
+      CreatePermissionDescriptor(mojom::blink::PermissionName::CLIPBOARD_WRITE);
+  auto clipboard_extension = mojom::blink::ClipboardPermissionDescriptor::New();
+  clipboard_extension->allowWithoutGesture = allowWithoutGesture;
+  descriptor->extension = mojom::blink::PermissionDescriptorExtension::New();
+  descriptor->extension->set_clipboard(std::move(clipboard_extension));
   return descriptor;
 }
 
