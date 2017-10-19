@@ -23,7 +23,7 @@ namespace content {
 
 class PepperInProcessRouter::Channel : public IPC::Sender {
  public:
-  Channel(const base::Callback<bool(IPC::Message*)>& callback)
+  explicit Channel(const base::Callback<bool(IPC::Message*)>& callback)
       : callback_(callback) {}
 
   ~Channel() override {}

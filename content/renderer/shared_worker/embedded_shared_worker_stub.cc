@@ -42,7 +42,7 @@ namespace {
 class SharedWorkerWebApplicationCacheHostImpl
     : public WebApplicationCacheHostImpl {
  public:
-  SharedWorkerWebApplicationCacheHostImpl(
+  explicit SharedWorkerWebApplicationCacheHostImpl(
       blink::WebApplicationCacheHostClient* client)
       : WebApplicationCacheHostImpl(
             client,

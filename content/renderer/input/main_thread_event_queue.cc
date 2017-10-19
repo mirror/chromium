@@ -22,7 +22,8 @@ constexpr base::TimeDelta kMaxRafDelay =
 
 class QueuedClosure : public MainThreadEventQueueTask {
  public:
-  QueuedClosure(base::OnceClosure closure) : closure_(std::move(closure)) {}
+  explicit QueuedClosure(base::OnceClosure closure)
+      : closure_(std::move(closure)) {}
 
   ~QueuedClosure() override {}
 

@@ -15,7 +15,7 @@ namespace content {
 
 class CONTENT_EXPORT RTCStatsReport : public blink::WebRTCStatsReport {
  public:
-  RTCStatsReport(
+  explicit RTCStatsReport(
       const scoped_refptr<const webrtc::RTCStatsReport>& stats_report);
   ~RTCStatsReport() override;
   std::unique_ptr<blink::WebRTCStatsReport> CopyHandle() const override;

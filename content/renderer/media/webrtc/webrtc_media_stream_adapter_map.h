@@ -32,7 +32,7 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapterMap
   // all |AdapterRef|s referencing an entry are destroyed.
   // Private section needed here due to |AdapterRef|'s usage of |AdapterEntry|.
   struct AdapterEntry {
-    AdapterEntry(std::unique_ptr<WebRtcMediaStreamAdapter> adapter);
+    explicit AdapterEntry(std::unique_ptr<WebRtcMediaStreamAdapter> adapter);
     AdapterEntry(AdapterEntry&& other);
     ~AdapterEntry();
 

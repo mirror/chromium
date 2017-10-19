@@ -40,7 +40,7 @@ class MockWebRtcAudioTrack : public webrtc::AudioTrackInterface {
   void SetEnded();
 
  protected:
-  MockWebRtcAudioTrack(const std::string& id);
+  explicit MockWebRtcAudioTrack(const std::string& id);
   ~MockWebRtcAudioTrack() override;
 
  private:

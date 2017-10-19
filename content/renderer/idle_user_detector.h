@@ -25,7 +25,7 @@ namespace content {
 // idle notifications if the user is active.
 class IdleUserDetector : public RenderViewObserver {
  public:
-  IdleUserDetector(RenderView* render_view);
+  explicit IdleUserDetector(RenderView* render_view);
   ~IdleUserDetector() override;
 
   void ActivityDetected();

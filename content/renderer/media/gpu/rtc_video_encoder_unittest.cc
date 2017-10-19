@@ -44,7 +44,7 @@ class EncodedImageCallbackWrapper : public webrtc::EncodedImageCallback {
                           const webrtc::CodecSpecificInfo* codec_specific_info,
                           const webrtc::RTPFragmentationHeader* fragmentation)>;
 
-  EncodedImageCallbackWrapper(const EncodedCallback& encoded_callback)
+  explicit EncodedImageCallbackWrapper(const EncodedCallback& encoded_callback)
       : encoded_callback_(encoded_callback) {}
 
   Result OnEncodedImage(

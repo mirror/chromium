@@ -71,7 +71,8 @@ void AddIntListAttributeFromWebObjects(ui::AXIntListAttribute attr,
 class AXContentNodeDataSparseAttributeAdapter
     : public blink::WebAXSparseAttributeClient {
  public:
-  AXContentNodeDataSparseAttributeAdapter(AXContentNodeData* dst) : dst_(dst) {
+  explicit AXContentNodeDataSparseAttributeAdapter(AXContentNodeData* dst)
+      : dst_(dst) {
     DCHECK(dst_);
   }
   ~AXContentNodeDataSparseAttributeAdapter() override {}

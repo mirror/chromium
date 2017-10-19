@@ -56,7 +56,7 @@ class RendererPpapiHostImpl;
 class PepperInProcessRouter {
  public:
   // The given host parameter owns this class and must outlive us.
-  PepperInProcessRouter(RendererPpapiHostImpl* host_impl);
+  explicit PepperInProcessRouter(RendererPpapiHostImpl* host_impl);
   ~PepperInProcessRouter();
 
   // Returns the dummy sender for the cooresponding end of the in-process

@@ -48,7 +48,7 @@ class WebRtcAudioDeviceImpl;
 class CONTENT_EXPORT PeerConnectionDependencyFactory
     : base::MessageLoop::DestructionObserver {
  public:
-  PeerConnectionDependencyFactory(
+  explicit PeerConnectionDependencyFactory(
       P2PSocketDispatcher* p2p_socket_dispatcher);
   ~PeerConnectionDependencyFactory() override;
 

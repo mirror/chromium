@@ -33,8 +33,8 @@ class RenderProcessImpl : public RenderProcess {
   int GetEnabledBindings() const override;
 
  private:
-  RenderProcessImpl(std::unique_ptr<base::TaskScheduler::InitParams>
-                        task_scheduler_init_params);
+  explicit RenderProcessImpl(std::unique_ptr<base::TaskScheduler::InitParams>
+                                 task_scheduler_init_params);
 
   // Bitwise-ORed set of extra bindings that have been enabled anywhere in this
   // process.  See BindingsPolicy for details.

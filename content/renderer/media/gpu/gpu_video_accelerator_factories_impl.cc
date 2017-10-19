@@ -320,7 +320,7 @@ namespace {
 class ScopedGLContextLockImpl
     : public media::GpuVideoAcceleratorFactories::ScopedGLContextLock {
  public:
-  ScopedGLContextLockImpl(viz::ContextProvider* context_provider)
+  explicit ScopedGLContextLockImpl(viz::ContextProvider* context_provider)
       : lock_(context_provider) {}
   gpu::gles2::GLES2Interface* ContextGL() override { return lock_.ContextGL(); }
 

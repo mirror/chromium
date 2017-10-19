@@ -32,7 +32,7 @@ class CONTENT_EXPORT ApplyConstraintsProcessor {
  public:
   using MediaDevicesDispatcherCallback =
       base::RepeatingCallback<const ::mojom::MediaDevicesDispatcherHostPtr&()>;
-  ApplyConstraintsProcessor(
+  explicit ApplyConstraintsProcessor(
       MediaDevicesDispatcherCallback media_devices_dispatcher_cb);
   ~ApplyConstraintsProcessor();
 

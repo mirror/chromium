@@ -74,7 +74,7 @@ class CONTENT_EXPORT HistoryEntry {
     DISALLOW_COPY_AND_ASSIGN(HistoryNode);
   };
 
-  HistoryEntry(const blink::WebHistoryItem& root);
+  explicit HistoryEntry(const blink::WebHistoryItem& root);
   HistoryEntry();
   ~HistoryEntry();
 

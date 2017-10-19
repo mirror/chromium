@@ -42,7 +42,8 @@ class CONTENT_EXPORT CompositorForwardingMessageFilter
 
   // This filter will intercept messages defined in OnMessageReceived() and run
   // them by ProcessMessageOnCompositorThread on compositor thread.
-  CompositorForwardingMessageFilter(base::TaskRunner* compositor_task_runner);
+  explicit CompositorForwardingMessageFilter(
+      base::TaskRunner* compositor_task_runner);
 
   void AddHandlerOnCompositorThread(int routing_id, const Handler& handler);
   void RemoveHandlerOnCompositorThread(int routing_id, const Handler& handler);

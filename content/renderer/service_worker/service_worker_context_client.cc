@@ -145,7 +145,7 @@ class WebServiceWorkerNetworkProviderImpl
 class StreamHandleListener
     : public blink::WebServiceWorkerStreamHandle::Listener {
  public:
-  StreamHandleListener(
+  explicit StreamHandleListener(
       blink::mojom::ServiceWorkerStreamCallbackPtr callback_ptr)
       : callback_ptr_(std::move(callback_ptr)) {}
 

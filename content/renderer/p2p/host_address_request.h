@@ -31,7 +31,7 @@ class P2PAsyncAddressResolver
  public:
   typedef base::Callback<void(const net::IPAddressList&)> DoneCallback;
 
-  P2PAsyncAddressResolver(P2PSocketDispatcher* dispatcher);
+  explicit P2PAsyncAddressResolver(P2PSocketDispatcher* dispatcher);
   // Start address resolve process.
   void Start(const rtc::SocketAddress& addr,
              const DoneCallback& done_callback);

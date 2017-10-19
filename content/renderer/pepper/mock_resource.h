@@ -14,7 +14,7 @@ namespace content {
 // static_cast to get its own implementation.
 class MockResource : public ppapi::Resource {
  public:
-  MockResource(PP_Instance instance)
+  explicit MockResource(PP_Instance instance)
       : Resource(ppapi::OBJECT_IS_IMPL, instance) {}
 
  private:
