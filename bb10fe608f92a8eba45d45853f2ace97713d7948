@@ -175,6 +175,24 @@
       "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3999ca79_0e476f69",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-19T15:09:51Z",
+      "side": 1,
+      "message": "\u003e OK, will do. Should I put the code for the whole step 5 (so, applying the code for all events) or should it be specifically just for Events with the type beforeunload and BeforeUnloadEvents?\n\nEither will do.  It\u0027s great to fix things around, but it\u0027s also okay to focus on beforeunload.",
+      "parentUuid": "2c2ef8f8_e8c5a4b9",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
