@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4a9cff0f_b86f5ced",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-19T20:49:31Z",
+      "side": 1,
+      "message": "Voice interaction is used to refer to \"Assistant\" so StartVoiceInteraction \u003d\u003d StartAssistant. So I\u0027d prefer preserving the naming as it is.",
+      "parentUuid": "90e9b700_de502cea",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3f59387_4fa4c6b6",
         "filename": "ash/accelerators/accelerator_table.h",
         "patchSetId": 9
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "ed747ba9_35aa8f3e",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-19T20:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f59387_4fa4c6b6",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d974736_8c16edd1",
         "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
         "patchSetId": 9
@@ -64,6 +100,24 @@
       "writtenOn": "2017-10-19T02:01:32Z",
       "side": 1,
       "message": "Why is this called SPEECH_INPUT_TOGGLE? It looks like it should really be VOICE_COMMAND, based on the naming in the USB specification addendum?\n\nSince we\u0027re actually adding a DOMCode string name for this, we need to make sure that it is reflected in the W3C specification; the spec doesn\u0027t appear to contain either SpeechInputToggle, nor VoiceCommand, yet - since this is a standard USB Usage, it should be straightforward to add - let\u0027s ask garykac@ to help get the spec updated. :)",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1161c485_f6653799",
+        "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
+        "patchSetId": 9
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-19T20:49:31Z",
+      "side": 1,
+      "message": "I think it was using the naming in DomCode spec for the USB code. The SpeechInputToggle is defined already in W3C spec: https://www.w3.org/TR/uievents-key/#keys-speech",
+      "parentUuid": "2d974736_8c16edd1",
       "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "8874d76d_ce57f554",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-19T20:49:31Z",
+      "side": 1,
+      "message": "This line is necessary but L425 is not.",
+      "parentUuid": "6a66b10f_c8c043c8",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "802a3776_97af4101",
         "filename": "ui/events/keycodes/dom_us_layout_data.h",
         "patchSetId": 9
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "562d1c23_1d3a0edc",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-19T20:49:31Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "802a3776_97af4101",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4bc2939_20c1bfba",
         "filename": "ui/events/keycodes/dom_us_layout_data.h",
         "patchSetId": 9
@@ -115,6 +205,24 @@
       "writtenOn": "2017-10-19T02:01:32Z",
       "side": 1,
       "message": "This is weird... did git cl format mess up the alignment here?",
+      "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d8b608_749a0863",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-19T20:49:31Z",
+      "side": 1,
+      "message": "I could fix this line.. but I cannot run git cl format on this file as it messes everything up.. (See my initial patchset..)",
+      "parentUuid": "c4bc2939_20c1bfba",
       "revId": "cd3f16a62acb732a4f75b66579847a3d4c67ef96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
