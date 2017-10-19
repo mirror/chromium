@@ -31,9 +31,11 @@
 
 #include "core/loader/LinkLoader.h"
 
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/css/MediaList.h"
 #include "core/css/MediaQueryEvaluator.h"
 #include "core/dom/Document.h"
+#include "core/dom/ModuleScript.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -44,6 +46,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/NetworkHintsInterface.h"
+#include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/loader/private/PrerenderHandle.h"
 #include "core/loader/resource/LinkFetchResource.h"
 #include "platform/Prerender.h"
@@ -130,6 +133,13 @@ void LinkLoader::NotifyFinished() {
   DCHECK(finish_observer_);
   Resource* resource = finish_observer_->GetResource();
   if (resource->ErrorOccurred())
+    client_->LinkLoadingErrored();
+  else
+    client_->LinkLoaded();
+}
+
+void LinkLoader::NotifyModuleLoadFinished(ModuleScript* module) {
+  if (!module || module->IsErrored())
     client_->LinkLoadingErrored();
   else
     client_->LinkLoaded();
@@ -287,6 +297,24 @@ static bool IsSupportedType(Resource::Type resource_type,
   return false;
 }
 
+static bool MediaMatches(Document& document,
+                         const String& media,
+                         ViewportDescription* viewport_description) {
+  if (media.IsEmpty())
+    return true;
+  MediaValues* media_values =
+      MediaValues::CreateDynamicIfFrameExists(document.GetFrame());
+  if (viewport_description) {
+    media_values->OverrideViewportDimensions(
+        viewport_description->max_width.GetFloatValue(),
+        viewport_description->max_height.GetFloatValue());
+  }
+
+  RefPtr<MediaQuerySet> media_queries = MediaQuerySet::Create(media);
+  MediaQueryEvaluator evaluator(*media_values);
+  return evaluator.Eval(*media_queries);
+}
+
 static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
                                  const KURL& href,
                                  Document& document,
@@ -309,21 +337,10 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
     return nullptr;
   }
 
-  if (!media.IsEmpty()) {
-    MediaValues* media_values =
-        MediaValues::CreateDynamicIfFrameExists(document.GetFrame());
-    if (viewport_description) {
-      media_values->OverrideViewportDimensions(
-          viewport_description->max_width.GetFloatValue(),
-          viewport_description->max_height.GetFloatValue());
-    }
+  // Preload only if media matches
+  if (!MediaMatches(document, media, viewport_description))
+    return nullptr;
 
-    // Preload only if media matches
-    RefPtr<MediaQuerySet> media_queries = MediaQuerySet::Create(media);
-    MediaQueryEvaluator evaluator(*media_values);
-    if (!evaluator.Eval(*media_queries))
-      return nullptr;
-  }
   if (caller == kLinkCalledFromHeader)
     UseCounter::Count(document, WebFeature::kLinkHeaderPreload);
   Optional<Resource::Type> resource_type =
@@ -369,6 +386,64 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
   link_fetch_params.SetLinkPreload(true);
   return document.Loader()->StartPreload(resource_type.value(),
                                          link_fetch_params);
+}
+
+static void ModulePreloadIfNeeded(const LinkRelAttribute& rel_attribute,
+                                  const KURL& href,
+                                  Document& document,
+                                  const String& media,
+                                  CrossOriginAttributeValue cross_origin,
+                                  ViewportDescription* viewport_description,
+                                  ReferrerPolicy referrer_policy,
+                                  SingleModuleClient* client) {
+  if (!document.Loader() || !rel_attribute.IsModulePreload())
+    return;
+
+  // TODO(ksakamoto): add UseCounter
+  if (!href.IsValid() || href.IsEmpty()) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kWarningMessageLevel,
+        String("<link rel=modulepreload> has an invalid `href` value")));
+    return;
+  }
+
+  // Preload only if media matches
+  if (!MediaMatches(document, media, viewport_description))
+    return;
+
+  Modulator* modulator =
+      Modulator::From(ToScriptStateForMainWorld(document.GetFrame()));
+  DCHECK(modulator);
+  if (!modulator)
+    return;
+
+  WebURLRequest::FetchCredentialsMode credentials_mode =
+      WebURLRequest::kFetchCredentialsModeOmit;
+  switch (cross_origin) {
+    case kCrossOriginAttributeNotSet:
+      credentials_mode = WebURLRequest::kFetchCredentialsModeOmit;
+      break;
+    case kCrossOriginAttributeAnonymous:
+      credentials_mode = WebURLRequest::kFetchCredentialsModeSameOrigin;
+      break;
+    case kCrossOriginAttributeUseCredentials:
+      credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
+      break;
+  }
+
+  // TODO(ksakamoto): respect referrer_policy
+
+  ModuleScriptFetchRequest request(
+      href, ScriptFetchOptions(String(), kParserInserted, credentials_mode));
+  modulator->FetchSingle(request, ModuleGraphLevel::kDependentModuleFetch,
+                         client);
+
+  Settings* settings = document.GetSettings();
+  if (settings && settings->GetLogPreload()) {
+    document.AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kVerboseMessageLevel,
+        String("Preload triggered for " + href.Host() + href.GetPath())));
+  }
 }
 
 static Resource* PrefetchIfNeeded(Document& document,
@@ -447,6 +522,9 @@ void LinkLoader::LoadLinksFromHeader(
                       kReferrerPolicyDefault);
       PrefetchIfNeeded(*document, url, rel_attribute, cross_origin,
                        kReferrerPolicyDefault);
+      ModulePreloadIfNeeded(rel_attribute, url, *document, header.Media(),
+                            cross_origin, viewport_description,
+                            kReferrerPolicyDefault, nullptr);
     }
     if (rel_attribute.IsServiceWorker()) {
       UseCounter::Count(&frame, WebFeature::kLinkHeaderServiceWorker);
@@ -489,6 +567,9 @@ bool LinkLoader::LoadLink(
   if (resource)
     finish_observer_ = new FinishObserver(this, resource);
 
+  ModulePreloadIfNeeded(rel_attribute, href, document, media, cross_origin,
+                        nullptr, referrer_policy, this);
+
   if (const unsigned prerender_rel_types =
           PrerenderRelTypesFromRelAttribute(rel_attribute, document)) {
     if (!prerender_) {
@@ -522,6 +603,7 @@ DEFINE_TRACE(LinkLoader) {
   visitor->Trace(finish_observer_);
   visitor->Trace(client_);
   visitor->Trace(prerender_);
+  SingleModuleClient::Trace(visitor);
   PrerenderClient::Trace(visitor);
 }
 
