@@ -178,8 +178,13 @@ cr.define('offlineInternals', function() {
         {offlinePages: offlinePages, savePageRequests: savePageRequests}, null,
         2);
 
-    window.open(
-        'data:application/json,' + encodeURIComponent(json), 'dump.json');
+    $('dump-box').value = json;
+    $('dump').style.display = 'block';
+  }
+
+  function closeDownload() {
+    $('dump').style.display = 'none';
+    $('dump-box').value = '';
   }
 
   /**
@@ -276,6 +281,10 @@ cr.define('offlineInternals', function() {
     $('delete-selected-requests').onclick = deleteSelectedRequests;
     $('refresh').onclick = refreshAll;
     $('download').onclick = download;
+    $('close-download').onclick = closeDownload;
+    $('dump-box').onclick = function() {
+      this.select();
+    };
     $('log-model-on').onclick = togglePageModelLog.bind(this, true);
     $('log-model-off').onclick = togglePageModelLog.bind(this, false);
     $('log-request-on').onclick = toggleRequestQueueLog.bind(this, true);

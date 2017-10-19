@@ -55,3 +55,18 @@ li:nth-child(2n) {
   font-family: monospace;
   white-space: pre-wrap;
 }
+
+#dump {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: none;
+  margin: auto;
+  width: 80%;
+  z-index: 2;
+}
+
+#dump-box {
+  box-sizing: border-box;
+  display: block;
+  resize: none;
+  width: 100%;
+}
