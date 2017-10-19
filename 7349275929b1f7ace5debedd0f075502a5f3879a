@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "93695322_61f54e35",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-19T03:29:36Z",
+      "side": 1,
+      "message": "It\u0027s probably safe to move this to InitializeMediaRouteProviders() since this only need to be called once. Then we no longer need to override this method.\n\nOnce we move Cast MRP into the browser, StartDiscovery() will move into the Cast MRP\u0027s initialization step.",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d65f0c90_84cca143",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 16
@@ -19,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "68d53568_29970370",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-19T03:29:36Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "238daa92_96255a3c",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 16
@@ -30,6 +64,23 @@
       "writtenOn": "2017-10-18T22:32:48Z",
       "side": 1,
       "message": "Is this equivalent to \"no sinks found\" for the code that is passing this callback?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242fc5ba_80628cbd",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-19T03:29:36Z",
+      "side": 1,
+      "message": "Note: ProvideSinks is no longer part of MediaRouterMojoImpl.  Thus GetCanonicalProvider no longer need to exist in this class as well.",
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
