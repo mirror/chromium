@@ -31,6 +31,7 @@ BulkObjectFileAnalyzer:
   alias for _BulkObjectFileAnalyzerWorker.
   * AnalyzePaths: Run "nm" on all .o files to collect symbol names that exist
     within each.
+  * SortPaths: Sort results of AnalyzePaths().
   * AnalyzeStringLiterals: Must be run after AnalyzePaths() has completed.
     Extracts string literals from .o files, and then locates them within the
     "** merge strings" sections within an ELF's .rodata section.
@@ -58,9 +59,10 @@ import threading
 import concurrent
 
 _MSG_ANALYZE_PATHS = 1
-_MSG_ANALYZE_STRINGS = 2
-_MSG_GET_SYMBOL_NAMES = 3
-_MSG_GET_STRINGS = 4
+_MSG_SORT_PATHS = 2
+_MSG_ANALYZE_STRINGS = 3
+_MSG_GET_SYMBOL_NAMES = 4
+_MSG_GET_STRINGS = 5
 
 _active_pids = None
 
@@ -160,6 +162,9 @@ def CollectAliasesByAddress(elf_path, tool_prefix):
   # only aliased symbols.
   names_by_address = {k: v for k, v in names_by_address.iteritems()
                       if len(v) > 1}
+  # Sort to ensure stable ordering.
+  for name_list in names_by_address.itervalues():
+    name_list.sort()
 
   return names_by_address
 
@@ -530,6 +535,10 @@ class _BulkObjectFileAnalyzerWorker(object):
         self._encoded_string_addresses_by_path_chunks.append(encoded_strs)
     logging.debug('worker: AnalyzePaths() completed.')
 
+  def SortPaths(self):
+    for paths in self._paths_by_name.itervalues():
+      paths.sort()
+
   def AnalyzeStringLiterals(self, elf_path, elf_string_positions):
     logging.debug('worker: AnalyzeStringLiterals() started.')
     # Read string_data from elf_path, to be shared by forked processes.
@@ -612,6 +621,9 @@ class _BulkObjectFileAnalyzerMaster(object):
     payload = '\x01'.join(paths)
     self._pipe.send((_MSG_ANALYZE_PATHS, payload))
 
+  def SortPaths(self):
+    self._pipe.send((_MSG_SORT_PATHS,))
+
   def AnalyzeStringLiterals(self, elf_path, string_positions):
     self._pipe.send((_MSG_ANALYZE_STRINGS, elf_path, string_positions))
 
@@ -669,6 +681,10 @@ class _BulkObjectFileAnalyzerSlave(object):
               'Cannot call AnalyzePaths() after AnalyzeStringLiterals()s.')
           paths = message[1].split('\x01')
           self._job_queue.put(lambda: self._worker_analyzer.AnalyzePaths(paths))
+        elif message[0] == _MSG_SORT_PATHS:
+          assert self._allow_analyze_paths, (
+              'Cannot call SortPaths() after AnalyzeStringLiterals()s.')
+          self._job_queue.put(self._worker_analyzer.SortPaths)
         elif message[0] == _MSG_ANALYZE_STRINGS:
           self._WaitForAnalyzePathJobs()
           elf_path, string_positions = message[1:]
@@ -726,6 +742,7 @@ def main():
   # Pass individually to test multiple calls.
   for path in args.objects:
     bulk_analyzer.AnalyzePaths([path])
+  bulk_analyzer.SortPaths()
 
   names_to_paths = bulk_analyzer.GetSymbolNames()
   print('Found {} names'.format(len(names_to_paths)))
