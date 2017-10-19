@@ -16,6 +16,24 @@
       "revId": "895d7d55855792b0847aa3f7349ce98a80b9626b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68d6d52_90a3b7d1",
+        "filename": "components/machine_intelligence/ranker_example_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T17:58:38Z",
+      "side": 1,
+      "message": "I think it may be eventually be useful outside of the helper functions (e.g. maybe for logging), so I would rather keep it public.",
+      "parentUuid": "430ebed7_7eb7d961",
+      "revId": "895d7d55855792b0847aa3f7349ce98a80b9626b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "26082f8d_0f96cc9d",
+        "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T17:58:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "727644bd_2a408f02",
+      "revId": "f7160026dcb5ff70f9fbdd92c8d4aec73a20a7f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1a33ba_a021ab3a",
         "filename": "components/machine_intelligence/proto/generic_logistic_regression_model.proto",
         "patchSetId": 3
