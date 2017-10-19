@@ -52,6 +52,24 @@
       "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a4ff118_ed76c070",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T17:16:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure what issue there is to raise. Every one of Max\u0027s screenshots - something like 8 of them - show a visible selection. This is why I made the Views version display the selection, and why I wanted to support it in the color ID table.",
+      "parentUuid": "662b0f3b_64f1b891",
+      "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
