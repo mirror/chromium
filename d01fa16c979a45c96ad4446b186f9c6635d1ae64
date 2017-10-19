@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76db5f92_85b24ade",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-19T19:53:08Z",
+      "side": 1,
+      "message": "Is the reason why we use it for Alt+Tab but not for overview worth explaining in a comment somewhere?",
+      "range": {
+        "startLine": 537,
+        "startChar": 64,
+        "endLine": 537,
+        "endChar": 69
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655897f3_97d0baa1",
+        "filename": "ash/wm/window_mirror_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-19T19:53:08Z",
+      "side": 1,
+      "message": "Should we cache GetMirrorLayer() above line 87?",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79159c70_74b1b275",
+        "filename": "ash/wm/window_mirror_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-19T19:53:08Z",
+      "side": 1,
+      "message": "optional nit: while here: maybe s/insets/inset since this is just one integer inset?",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 12
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b6eebc_58ae4940",
+        "filename": "ash/wm/window_mirror_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-19T19:53:08Z",
+      "side": 1,
+      "message": "nit: Either \u0027?\u0027 at the end of the sentence or \"True if trilinear filtering should be performed on the layer\". Slight preference to the latter for not using \"we\".",
+      "range": {
+        "startLine": 56,
+        "startChar": 56,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "d01fa16c979a45c96ad4446b186f9c6635d1ae64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
