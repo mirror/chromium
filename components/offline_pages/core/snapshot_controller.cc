@@ -12,6 +12,7 @@
 
 namespace {
 const bool kDocumentAvailableTriggersSnapshot = true;
+const float kSnapshotTriggerPercentage = 0.97;
 
 // Default delay, in milliseconds, between the main document parsed event and
 // snapshot. Note: this snapshot might not occur if the OnLoad event and
@@ -138,13 +139,21 @@ void SnapshotController::DocumentOnLoadCompletedInMainFrame() {
     // triggered after a delay.
     client_->RunRenovations();
   } else {
-    // Post a delayed task to snapshot and then stop this controller.
-    task_runner_->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&SnapshotController::MaybeStartSnapshotThenStop,
-                   weak_ptr_factory_.GetWeakPtr()),
-        base::TimeDelta::FromMilliseconds(
-            delay_after_document_on_load_completed_ms_));
+    // Mark the "high bar" set.
+    current_page_quality_ = PageQuality::GOOD;
+
+    // If we are using the resource percentage signal, wait for resource
+    // percentage to reach full instead of just snapshotting when we get the
+    // event.  If not, start the snapshot now.
+    if (!IsOfflinePagesResourceBasedSnapshotEnabled()) {
+      // Post a delayed task to snapshot and then stop this controller.
+      task_runner_->PostDelayedTask(
+          FROM_HERE,
+          base::Bind(&SnapshotController::MaybeStartSnapshotThenStop,
+                     weak_ptr_factory_.GetWeakPtr()),
+          base::TimeDelta::FromMilliseconds(
+              delay_after_document_on_load_completed_ms_));
+    }
   }
 }
 
@@ -172,6 +181,33 @@ int64_t SnapshotController::GetDelayAfterDocumentOnLoadCompletedForTest() {
 
 int64_t SnapshotController::GetDelayAfterRenovationsCompletedForTest() {
   return delay_after_renovations_completed_ms_;
+}
+
+void SnapshotController::UpdateLoadingSignals(int images_requested,
+                                              int images_completed,
+                                              int css_requested,
+                                              int css_completed) {
+  // If we have met the low bar, and the resource percentage looks good, start a
+  // snapshot.
+  if (current_page_quality_ < PageQuality::FAIR_AND_IMPROVING) {
+    return;
+  }
+
+  // We want all CSS to have arrived.
+  if (css_requested > css_completed)
+    return;
+
+  // We want a high percentage of images.
+  if (kSnapshotTriggerPercentage >
+      (float)images_completed / (float)images_requested)
+    return;
+
+  // If all the conditions are met, take a snapshot.  Page quality is now as
+  // good as we think it will get.  Post a delayed task to snapshot and then
+  // stop this controller.
+  task_runner_->PostTask(
+      FROM_HERE, base::Bind(&SnapshotController::MaybeStartSnapshotThenStop,
+                            weak_ptr_factory_.GetWeakPtr()));
 }
 
 }  // namespace offline_pages

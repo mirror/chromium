@@ -40,6 +40,9 @@ class SnapshotController {
     // could be taken at this stage as later ones are expected to have higher
     // quality.
     FAIR_AND_IMPROVING,
+    // A higher level of quality, but we still might be able to improve.
+    // Typically set after we get the OnLoadCompleteInMainFrame event.
+    GOOD,
     // The page is loaded enough and has attained its peak expected quality.
     // Snapshots taken at this point are not expected to increase in quality
     // after the first one.
@@ -113,6 +116,11 @@ class SnapshotController {
   int64_t GetDelayAfterRenovationsCompletedForTest();
 
   PageQuality current_page_quality() const { return current_page_quality_; }
+
+  void UpdateLoadingSignals(int images_requested,
+                            int images_comleted,
+                            int css_requested,
+                            int css_completed);
 
  private:
   void MaybeStartSnapshot(PageQuality updated_page_quality);

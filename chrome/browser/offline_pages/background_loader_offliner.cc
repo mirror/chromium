@@ -388,6 +388,16 @@ void BackgroundLoaderOffliner::ObserveResourceLoading(
     ++found_stats.requested;
   else
     ++found_stats.completed;
+
+  UpdateLoadingSignals();
+}
+
+void BackgroundLoaderOffliner::UpdateLoadingSignals() {
+  snapshot_controller_->UpdateLoadingSignals(
+      stats_[ResourceDataType::IMAGE].requested,
+      stats_[ResourceDataType::IMAGE].completed,
+      stats_[ResourceDataType::TEXT_CSS].requested,
+      stats_[ResourceDataType::TEXT_CSS].completed);
 }
 
 void BackgroundLoaderOffliner::OnNetworkBytesChanged(int64_t bytes) {
@@ -427,6 +437,11 @@ void BackgroundLoaderOffliner::StartSnapshot() {
     ResetState();
     return;
   }
+
+  // If we already started a snapshot, let it go ahead instead of trying
+  // another.
+  if (save_state_ == SAVING)
+    return;
 
   save_state_ = SAVING;
   content::WebContents* web_contents(
