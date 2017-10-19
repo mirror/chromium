@@ -154,4 +154,58 @@ IN_PROC_BROWSER_TEST_F(ThumbnailTest, ShouldCaptureOnNavigatingAway) {
       .WillOnce(Return(false));
 }
 
+IN_PROC_BROWSER_TEST_F(ThumbnailTest, ShouldCaptureOnSwitchingTab) {
+#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMus)) {
+    LOG(ERROR) << "This test fails in MUS mode, aborting.";
+    return;
+  }
+#endif
+
+  InSequence sequence;
+
+  // The test framework opens an about:blank tab by default.
+  content::WebContents* active_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ASSERT_EQ(GURL("about:blank"), active_tab->GetLastCommittedURL());
+
+  // Open a new tab. When the first tab gets hidden, we should check whether to
+  // take a thumbnail.
+  EXPECT_CALL(*thumbnail_service(),
+              ShouldAcquirePageThumbnail(GURL("about:blank"), _))
+      .WillOnce(Return(false));
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GetURL("/simple.html"),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_TAB |
+          ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  active_tab = browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Before the second tab gets hidden, we should take a thumbnail of the page.
+  base::RunLoop run_loop;
+  EXPECT_CALL(*thumbnail_service(),
+              ShouldAcquirePageThumbnail(GetURL("/simple.html"), _))
+      .WillOnce(Return(true));
+  EXPECT_CALL(*thumbnail_service(),
+              SetPageThumbnail(
+                  Field(&ThumbnailingContext::url, GetURL("/simple.html")), _))
+      .WillOnce(DoAll(RunClosure(run_loop.QuitClosure()), Return(true)));
+  // Switch back to the about:blank tab.
+  ASSERT_EQ(1, browser()->tab_strip_model()->active_index());
+  ASSERT_EQ(GetURL("/simple.html"), active_tab->GetLastCommittedURL());
+  browser()->tab_strip_model()->ActivateTabAt(0, /*user_gesture=*/true);
+  active_tab = browser()->tab_strip_model()->GetActiveWebContents();
+  ASSERT_EQ(GURL("about:blank"), active_tab->GetLastCommittedURL());
+  // Wait for the thumbnailing process to finish.
+  run_loop.Run();
+
+  // When the active tab gets destroyed during shutdown, we may get another
+  // check whether to take a thumbnail.
+  EXPECT_CALL(*thumbnail_service(),
+              ShouldAcquirePageThumbnail(GURL("about:blank"), _))
+      .Times(AtMost(1))
+      .WillOnce(Return(false));
+}
+
 }  // namespace thumbnails
