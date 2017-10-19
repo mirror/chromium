@@ -76,6 +76,9 @@ appear in each object is unimportant.
 | `seconds_since_epoch` | float | **Required.** The start time of the test run expressed as a floating-point offset in seconds from the UNIX epoch. |
 | `tests` | dict | **Required.** The actual trie of test results. Each directory or module component in the test name is a node in the trie, and the leaf contains the dict of per-test fields as described below. |
 | `version` | integer | **Required.** Version of the file format. Current version is 3. |
+| `artifact_types_info` | dict | **Optional.** If any test specifies artifacts,
+this dict should have type information for each artifact in tests. All artifacts
+with the same name must share the same data type. |
 | `build_number` | string | **Optional.** If this test run was produced on a bot, this should be the build number of the run, e.g., "1234". |
 | `builder_name` | string | **Optional.** If this test run was produced on a bot, this should be the builder name of the bot, e.g., "Linux Tests". |
 | `chromium_revision` | string | **Optional.** The revision of the current Chromium checkout, if relevant, e.g. "356123". |
