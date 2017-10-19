@@ -18,6 +18,8 @@
 <script>
     var event;
 
+    var floatPrecision = 0.00001;
+
     function sendDblClick()
     {
         if (window.eventSender) {
@@ -53,10 +55,10 @@
     {
         event = e;
         debug("\nZoomed");
-        shouldBe("event.clientX", "166");
-        shouldBe("event.clientY", "83");
-        shouldBe("event.pageX", "166");
-        shouldBe("event.pageY", "83");
+        shouldBeCloseTo("event.clientX", 166.66667, floatPrecision);
+        shouldBeCloseTo("event.clientY", 83.33333, floatPrecision);
+        shouldBeCloseTo("event.pageX", 166.66667, floatPrecision);
+        shouldBeCloseTo("event.pageY", 83.33333, floatPrecision);
     }
     window.addEventListener("dblclick", zoomed, false);
     zoomPageIn();

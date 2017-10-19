@@ -64,8 +64,8 @@ PASS new MouseEvent('eventType', { screenX: 1 }).screenX is 1
 PASS new MouseEvent('eventType', { screenX: -1 }).screenX is -1
 PASS new MouseEvent('eventType', { screenX: 2147483647 }).screenX is 2147483647
 PASS new MouseEvent('eventType', { screenX: -2147483648 }).screenX is -2147483648
-PASS new MouseEvent('eventType', { screenX: 123.45 }).screenX is 123
-PASS new MouseEvent('eventType', { screenX: -123.45 }).screenX is -123
+PASS new MouseEvent('eventType', { screenX: 123.45 }).screenX is within 0.00001 of 123.45
+PASS new MouseEvent('eventType', { screenX: -123.45 }).screenX is within 0.00001 of -123.45
 PASS new MouseEvent('eventType', { screenX: NaN }).screenX threw exception TypeError: Failed to construct 'MouseEvent': The provided double value is non-finite..
 PASS new MouseEvent('eventType', { screenX: undefined }).screenX is 0
 PASS new MouseEvent('eventType', { screenX: null }).screenX is 0
@@ -84,8 +84,8 @@ PASS new MouseEvent('eventType', { screenY: 1 }).screenY is 1
 PASS new MouseEvent('eventType', { screenY: -1 }).screenY is -1
 PASS new MouseEvent('eventType', { screenY: 2147483647 }).screenY is 2147483647
 PASS new MouseEvent('eventType', { screenY: -2147483648 }).screenY is -2147483648
-PASS new MouseEvent('eventType', { screenY: 123.45 }).screenY is 123
-PASS new MouseEvent('eventType', { screenY: -123.45 }).screenY is -123
+PASS new MouseEvent('eventType', { screenY: 123.45 }).screenY is within 0.00001 of 123.45
+PASS new MouseEvent('eventType', { screenY: -123.45 }).screenY is within 0.00001 of -123.45
 PASS new MouseEvent('eventType', { screenY: NaN }).screenY threw exception TypeError: Failed to construct 'MouseEvent': The provided double value is non-finite..
 PASS new MouseEvent('eventType', { screenY: undefined }).screenY is 0
 PASS new MouseEvent('eventType', { screenY: null }).screenY is 0
@@ -104,8 +104,8 @@ PASS new MouseEvent('eventType', { clientX: 1 }).clientX is 1
 PASS new MouseEvent('eventType', { clientX: -1 }).clientX is -1
 PASS new MouseEvent('eventType', { clientX: 2147483647 }).clientX is 2147483647
 PASS new MouseEvent('eventType', { clientX: -2147483648 }).clientX is -2147483648
-PASS new MouseEvent('eventType', { clientX: 123.45 }).clientX is 123
-PASS new MouseEvent('eventType', { clientX: -123.45 }).clientX is -123
+PASS new MouseEvent('eventType', { clientX: 123.45 }).clientX is within 0.00001 of 123.45
+PASS new MouseEvent('eventType', { clientX: -123.45 }).clientX is within 0.00001 of -123.45
 PASS new MouseEvent('eventType', { clientX: NaN }).clientX threw exception TypeError: Failed to construct 'MouseEvent': The provided double value is non-finite..
 PASS new MouseEvent('eventType', { clientX: undefined }).clientX is 0
 PASS new MouseEvent('eventType', { clientX: null }).clientX is 0
@@ -124,8 +124,8 @@ PASS new MouseEvent('eventType', { clientY: 1 }).clientY is 1
 PASS new MouseEvent('eventType', { clientY: -1 }).clientY is -1
 PASS new MouseEvent('eventType', { clientY: 2147483647 }).clientY is 2147483647
 PASS new MouseEvent('eventType', { clientY: -2147483648 }).clientY is -2147483648
-PASS new MouseEvent('eventType', { clientY: 123.45 }).clientY is 123
-PASS new MouseEvent('eventType', { clientY: -123.45 }).clientY is -123
+PASS new MouseEvent('eventType', { clientY: 123.45 }).clientY is within 0.00001 of 123.45
+PASS new MouseEvent('eventType', { clientY: -123.45 }).clientY is within 0.00001 of -123.45
 PASS new MouseEvent('eventType', { clientY: NaN }).clientY threw exception TypeError: Failed to construct 'MouseEvent': The provided double value is non-finite..
 PASS new MouseEvent('eventType', { clientY: undefined }).clientY is 0
 PASS new MouseEvent('eventType', { clientY: null }).clientY is 0
