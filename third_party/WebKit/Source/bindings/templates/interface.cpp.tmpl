@@ -962,7 +962,17 @@ v8::NamedPropertyHandlerConfiguration namedPropertyHandlerConfig({{named_propert
 {% if not is_array_buffer_or_view %}
 v8::Local<v8::FunctionTemplate> {{v8_class}}::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
   {% set installTemplateFunction = '%s::install%sTemplateFunction' % (v8_class, v8_class) if has_partial_interface else 'install%sTemplate' % v8_class %}
-  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), {{installTemplateFunction}});
+  v8::Local<v8::FunctionTemplate> templ = V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), {{installTemplateFunction}});
+{% if v8_class == 'V8Node' %}
+  auto* per_isolate_data = V8PerIsolateData::From(isolate);
+  if (per_isolate_data->GetV8ContextSnapshotMode() != V8PerIsolateData::V8ContextSnapshotMode::kTakeSnapshot) {
+    v8::Eternal<v8::FunctionTemplate>& eternal =
+        world.IsMainWorld() ? per_isolate_data->node_template_for_main_world_
+                            : per_isolate_data->node_template_for_non_main_world_;
+    eternal.Set(isolate, templ);
+  }
+{% endif %}
+  return templ;
 }
 
 {% endif %}
@@ -998,7 +1008,13 @@ v8::Local<v8::FunctionTemplate> {{v8_class}}::domTemplateForNamedPropertiesObjec
 {% if not is_array_buffer_or_view %}
 
 bool {{v8_class}}::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
+{% if v8_class == 'V8Node' %}
+  auto* per_isolate_data = V8PerIsolateData::From(isolate);
+  return per_isolate_data->node_template_for_main_world_.Get(isolate)->HasInstance(v8Value) ||
+         per_isolate_data->node_template_for_non_main_world_.Get(isolate)->HasInstance(v8Value);
+{% else %}
   return V8PerIsolateData::From(isolate)->HasInstance(&wrapperTypeInfo, v8Value);
+{% endif %}
 }
 
 v8::Local<v8::Object> {{v8_class}}::findInstanceInPrototypeChain(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {

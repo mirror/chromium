@@ -233,7 +233,8 @@ void V8TestConstants::installFeatureName2(ScriptState* scriptState) {
 }
 
 v8::Local<v8::FunctionTemplate> V8TestConstants::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
-  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestConstantsTemplate);
+  v8::Local<v8::FunctionTemplate> templ = V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestConstantsTemplate);
+  return templ;
 }
 
 bool V8TestConstants::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {

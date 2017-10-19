@@ -170,7 +170,8 @@ void V8TestNotEnumerableNamedGetter::InstallRuntimeEnabledFeaturesOnTemplate(
 }
 
 v8::Local<v8::FunctionTemplate> V8TestNotEnumerableNamedGetter::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
-  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestNotEnumerableNamedGetterTemplate);
+  v8::Local<v8::FunctionTemplate> templ = V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestNotEnumerableNamedGetterTemplate);
+  return templ;
 }
 
 bool V8TestNotEnumerableNamedGetter::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {

@@ -279,6 +279,12 @@ class PLATFORM_EXPORT V8PerIsolateData {
   V8FunctionTemplateMap interface_template_map_for_main_world_;
   V8FunctionTemplateMap interface_template_map_for_non_main_world_;
 
+  // The same, but faster!
+  // TODO(jbroman): less snarky comment
+  v8::Eternal<v8::FunctionTemplate> node_template_for_main_world_;
+  v8::Eternal<v8::FunctionTemplate> node_template_for_non_main_world_;
+  friend class V8Node;
+
   // m_operationTemplateMapFor{,Non}MainWorld holds function templates for
   // the cross-origin accessible DOM operations.
   V8FunctionTemplateMap operation_template_map_for_main_world_;

@@ -195,7 +195,8 @@ void V8TestSubObject::InstallRuntimeEnabledFeaturesOnTemplate(
 }
 
 v8::Local<v8::FunctionTemplate> V8TestSubObject::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
-  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestSubObjectTemplate);
+  v8::Local<v8::FunctionTemplate> templ = V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestSubObjectTemplate);
+  return templ;
 }
 
 bool V8TestSubObject::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {

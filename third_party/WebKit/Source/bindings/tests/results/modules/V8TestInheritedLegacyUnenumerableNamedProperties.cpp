@@ -246,7 +246,8 @@ void V8TestInheritedLegacyUnenumerableNamedProperties::InstallRuntimeEnabledFeat
 }
 
 v8::Local<v8::FunctionTemplate> V8TestInheritedLegacyUnenumerableNamedProperties::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
-  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestInheritedLegacyUnenumerableNamedPropertiesTemplate);
+  v8::Local<v8::FunctionTemplate> templ = V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestInheritedLegacyUnenumerableNamedPropertiesTemplate);
+  return templ;
 }
 
 bool V8TestInheritedLegacyUnenumerableNamedProperties::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
