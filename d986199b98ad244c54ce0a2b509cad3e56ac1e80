@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d41777a_bd4c6c8b",
+        "filename": "third_party/breakpad/minidump_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-19T20:26:35Z",
+      "side": 1,
+      "message": "I\u0027d prefer if you use a byte array here rather than a cast like this. something like char[]..?\n\nalso this means you can avoid the +\u003d8 but use the size of the array. Also it means you can use characters like \u0027P\u0027 \u0027M\u0027 \u0027D\u0027 \u0027M\u0027 etc. etc.",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 54
+      },
+      "revId": "d986199b98ad244c54ce0a2b509cad3e56ac1e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
