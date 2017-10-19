@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66f89f6_cbc9a6bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-19T23:03:55Z",
+      "side": 1,
+      "message": "This ensures that the group expand triangle comes before the repeat bubble.",
+      "range": {
+        "startLine": 1349,
+        "startChar": 61,
+        "endLine": 1349,
+        "endChar": 76
+      },
+      "revId": "9ec2faaa1de0751bf5fd68f0c363ddda785d144b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
