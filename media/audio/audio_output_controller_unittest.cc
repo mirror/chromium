@@ -53,7 +53,7 @@ class MockAudioOutputControllerEventHandler
   MOCK_METHOD0(OnControllerPlaying, void());
   MOCK_METHOD0(OnControllerPaused, void());
   MOCK_METHOD0(OnControllerError, void());
-  MOCK_METHOD1(OnLog, void(const std::string&));
+  MOCK_METHOD1(OnLog, void(base::StringPiece));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockAudioOutputControllerEventHandler);
