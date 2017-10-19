@@ -24,6 +24,19 @@ struct CONTENT_EXPORT StoredRelatedApplication {
   std::string id;
 };
 
+// This class represents the stored capabilities.
+struct CONTENT_EXPORT StoredCapabilities {
+  StoredCapabilities();
+  StoredCapabilities(const StoredCapabilities&);
+  ~StoredCapabilities();
+
+  // A list of payments::mojom::BasicCardNetwork.
+  std::vector<int32_t> supported_card_networks;
+
+  // A list of payments::mojom::BasicCardType.
+  std::vector<int32_t> supported_card_types;
+};
+
 // This class represents the stored payment app.
 struct CONTENT_EXPORT StoredPaymentApp {
   StoredPaymentApp();
@@ -43,6 +56,9 @@ struct CONTENT_EXPORT StoredPaymentApp {
 
   // A list of one or more enabled payment methods in this payment app.
   std::vector<std::string> enabled_methods;
+
+  // A list of capabilities of this payment app.
+  std::vector<StoredCapabilities> capabilities;
 
   // A flag indicates whether the app prefers the related applications.
   bool prefer_related_applications = false;
