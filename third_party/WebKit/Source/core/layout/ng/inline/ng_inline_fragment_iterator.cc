@@ -37,7 +37,7 @@ const NGInlineFragmentIterator::Results* EmptyResults() {
 // when instantiated, and moved back to the cache when destructed, assuming
 // there are no use cases to nest the iterator.
 struct CacheEntry {
-  RefPtr<const NGPhysicalBoxFragment> box;
+  scoped_refptr<const NGPhysicalBoxFragment> box;
   NGInlineFragmentIterator::LayoutObjectMap map;
 };
 
