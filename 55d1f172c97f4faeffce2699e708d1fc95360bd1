@@ -16,6 +16,24 @@
       "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e4af7d_100e3a0c",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T16:50:15Z",
+      "side": 1,
+      "message": "The selected row looks horrible invisible, and you have to look in two places to put together the suggestion that Chrome will search on. It gets worse the further down the pop-up you go, obviously.",
+      "parentUuid": "34b446a4_27fcf25b",
+      "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
