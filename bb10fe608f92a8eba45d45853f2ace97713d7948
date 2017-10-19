@@ -157,6 +157,24 @@
       "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2ef8f8_e8c5a4b9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-19T13:34:58Z",
+      "side": 1,
+      "message": "OK, will do. Should I put the code for the whole step 5 (so, applying the code for all events) or should it be specifically just for Events with the type beforeunload and BeforeUnloadEvents?\n\nAlso, yeah, I understand the spec the same way as you (the second interpretation you mentioned).\n\nWhat I meant by the \"step 5 check for BeforeUnloadEvent or events with type beforeunload\" that I mentioned in the previous comment was the first case and the last (\"otherwise\") case of the step 5. The first case will take BeforeUnloadEvent that has the type beforeunload, the last case will take events that are of the type beforeunload but isn\u0027t a BeforeUnloadEvent :D. Sorry for the bad wording!",
+      "parentUuid": "96cb03a1_e7b8b32b",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
