@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcb78053_f1a28bbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-19T19:10:15Z",
+      "side": 1,
+      "message": "ship -\u003e shim",
+      "revId": "e2af309bf11dc4373ad783b7fc7f0920d35e7b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
