@@ -4159,6 +4159,25 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         }
+      },
+      {
+        "args": [
+          "memory.leak_detection",
+          "-v",
+          "--use-live-sites",
+          "--upload-results",
+          "--output-format=histograms",
+          "--output-format=json-test-results",
+          "--browser=default"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "memory.leak_detection",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        }
       }
     ],
     "scripts": [
