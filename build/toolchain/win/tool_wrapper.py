@@ -165,8 +165,13 @@ class WinTool(object):
     """Filter logo banner from invocations of rc.exe. Older versions of RC
     don't support the /nologo flag."""
     env = self._GetEnv(arch)
-    popen = subprocess.Popen(args, shell=True, env=env,
-                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    #popen = subprocess.Popen(args, shell=True, env=env,
+                             #stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # FIXME: abs path to rc.py
+    print [sys.executable, 'build/toolchain/win/rc/rc.py'] + list(args[1:])
+    popen = subprocess.Popen(
+        [sys.executable, 'build/toolchain/win/rc/rc.py'] + list(args[1:]),
+        shell=True, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     out, _ = popen.communicate()
     for line in out.splitlines():
       if (not line.startswith('Microsoft (R) Windows (R) Resource Compiler') and
@@ -188,6 +193,12 @@ class WinTool(object):
     args = open(rspfile).read()
     dirname = dirname[0] if dirname else None
     return subprocess.call(args, shell=True, env=env, cwd=dirname)
+
+  def ExecArchWrapper(self, arch, *args):
+    """Runs an action command line from a response file using the environment
+    for |arch|. If |dirname| is supplied, use that as the working directory."""
+    env = self._GetEnv(arch)
+    return subprocess.call(args, env=env)
 
 
 if __name__ == '__main__':
