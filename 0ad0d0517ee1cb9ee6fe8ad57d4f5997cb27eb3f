@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d999f53_422ff75b",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-19T16:00:47Z",
+      "side": 1,
+      "message": "I don\u0027t think this works, buildflags are supposed to be tested with #if BUILDFLAG(). They don\u0027t actually define anything with that exact given name, e.g. gen/base/debug/debugging_flags.h includes the line `#define BUILDFLAG_INTERNAL_UNSAFE_DEVELOPER_BUILD() (1)`",
+      "revId": "0ad0d0517ee1cb9ee6fe8ad57d4f5997cb27eb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
