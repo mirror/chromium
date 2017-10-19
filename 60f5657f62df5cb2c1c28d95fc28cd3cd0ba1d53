@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c4f9c9f_adeb0acf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-19T21:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed7e7a99_c2147a86",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "60f5657f62df5cb2c1c28d95fc28cd3cd0ba1d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08d0f81f_956da238",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadResumptionBackgroundTask.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "60f5657f62df5cb2c1c28d95fc28cd3cd0ba1d53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcc485d_42890066",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadResumptionBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-19T21:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d0f81f_956da238",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 90
+      },
+      "revId": "60f5657f62df5cb2c1c28d95fc28cd3cd0ba1d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9d9dc9ec_d963b8c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadResumptionBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-19T21:17:42Z",
+      "side": 1,
+      "message": "Ah yeah much better!",
+      "parentUuid": "3fea7854_6b558676",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 69
+      },
+      "revId": "60f5657f62df5cb2c1c28d95fc28cd3cd0ba1d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9742dab_1b7db1e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadResumptionBackgroundTask.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-17T16:59:41Z",
       "side": 1,
       "message": "I\u0027m a little confused about the splitting of logic between this class and DownloadResumptionScheduler -- wondering if it would make sense to put the DNS/DNS2 related logic as a public \"resume\" function in DRS that gets called here (just as reschedule is a call to DRS).",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "60f5657f62df5cb2c1c28d95fc28cd3cd0ba1d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd6ae63_6042464a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadResumptionBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-19T21:17:42Z",
+      "side": 1,
+      "message": "Yeah I don\u0027t feel too strongly about either place.  I had the same thoughts I just ended up putting it here.  Felt like the DRS was mostly focused on talking to BackgroundTaskScheduler, and I didn\u0027t want to add any more public methods that others could (but shouldn\u0027t) call (technically nobody should be calling resume() except this class ATM).",
+      "parentUuid": "b9742dab_1b7db1e7",
       "range": {
         "startLine": 31,
         "startChar": 8,
