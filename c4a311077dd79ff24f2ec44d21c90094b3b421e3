@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65688b0c_087527c1",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T03:57:37Z",
+      "side": 1,
+      "message": "Since |original_range| is used once at L894, can we move this before\nL894?\n\nHow about to handle |start \u003c end| case like below if layout test passed?\n\nconst EphemeralRange range \u003d start \u003c\u003d end \n  ? EphemeralRange(start, end)\n  : EphemeralRange(end, start);",
+      "revId": "c4a311077dd79ff24f2ec44d21c90094b3b421e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
