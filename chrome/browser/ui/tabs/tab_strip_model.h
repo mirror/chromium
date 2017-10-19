@@ -135,7 +135,9 @@ class TabStripModel {
   // Retrieve the Profile associated with this TabStripModel.
   Profile* profile() const { return profile_; }
 
-  // Retrieve the index of the currently active WebContents.
+  // Retrieve the index of the currently active WebContents. This will be
+  // ui::ListSelectionModel::kUnselectedIndex if no tab is currently selected
+  // (this happens while the tab strip is being initialized or is empty).
   int active_index() const { return selection_model_.active(); }
 
   // Returns true if the tabstrip is currently closing all open tabs (via a
@@ -168,9 +170,12 @@ class TabStripModel {
   // the |index| is changed is if using the index would result in breaking the
   // constraint that all pinned tabs occur before non-pinned tabs.
   // See also AddWebContents.
+  //
+  // FIXME(brettw) clean up this persistent group flag.
   void InsertWebContentsAt(int index,
                            content::WebContents* contents,
-                           int add_types);
+                           int add_types,
+                           bool inherit_persistent_group = false);
 
   // Closes the WebContents at the specified index. This causes the
   // WebContents to be destroyed, but it may not happen immediately.
@@ -263,6 +268,13 @@ class TabStripModel {
   // there is no opener on record.
   content::WebContents* GetOpenerOfWebContentsAt(int index);
 
+  content::WebContents* GetGroupAt(int index);
+
+  // The persistent group ID is an identifier for the group. Unlike the pointer
+  // returned by GetGroupAt(), this is not reset and will live even if the
+  // original tab that created the group is destroyed.
+  int64_t GetPersistentGroupIdAt(int index);
+
   // Changes the |opener| of the WebContents at |index|.
   // Note: |opener| must be in this tab strip.
   void SetOpenerOfWebContentsAt(int index, content::WebContents* opener);
@@ -347,7 +359,7 @@ class TabStripModel {
   bool IsTabSelected(int index) const;
 
   // Sets the selection to match that of |source|.
-  void SetSelectionFromModel(const ui::ListSelectionModel& source);
+  void SetSelectionFromModel(ui::ListSelectionModel source);
 
   const ui::ListSelectionModel& selection_model() const {
     return selection_model_;
@@ -512,8 +524,7 @@ class TabStripModel {
   // Sets the selection to |new_model| and notifies any observers.
   // Note: This function might end up sending 0 to 3 notifications in the
   // following order: TabDeactivated, ActiveTabChanged, TabSelectionChanged.
-  void SetSelection(const ui::ListSelectionModel& new_model,
-                    NotifyTypes notify_types);
+  void SetSelection(ui::ListSelectionModel new_model, NotifyTypes notify_types);
 
   // Selects either the next tab (|forward| is true), or the previous tab
   // (|forward| is false).
