@@ -47,6 +47,10 @@ std::string MetricsReportingService::GetUploadUrl() const {
   return client()->GetMetricsServerUrl();
 }
 
+std::string MetricsReportingService::GetInsecureUploadUrl() const {
+  return client()->GetInsecureMetricsServerUrl();
+}
+
 base::StringPiece MetricsReportingService::upload_mime_type() const {
   return kDefaultMetricsMimeType;
 }
@@ -68,6 +72,10 @@ void MetricsReportingService::LogCellularConstraint(bool upload_canceled) {
                         upload_canceled);
 }
 
+// TODO(carlosil): Make this method public, then add a boolean that specifies
+// if the fetch was over HTTP or HTTPS so that it can be logged to separate
+// histograms. This will involve changing the UKM method too, since it
+// overrides from the same base class.
 void MetricsReportingService::LogResponseOrErrorCode(int response_code,
                                                      int error_code) {
   UMA_HISTOGRAM_SPARSE_SLOWLY("UMA.LogUpload.ResponseOrErrorCode",

@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
 #include "components/metrics/metrics_log_uploader.h"
+#include "components/metrics/proto/reporting_info.pb.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "url/gurl.h"
 
@@ -37,6 +38,18 @@ class NetMetricsLogUploader : public MetricsLogUploader,
       base::StringPiece mime_type,
       MetricsLogUploader::MetricServiceType service_type,
       const MetricsLogUploader::UploadCallback& on_upload_complete);
+
+  // This constructor allows a secondary non-HTTPS URL to be passed in as
+  // |insecure_server_url|. That URL is used as a fallback if a connection
+  // to |server_url| fails, requests are encrypted when sent to an HTTP URL.
+  NetMetricsLogUploader(
+      net::URLRequestContextGetter* request_context_getter,
+      base::StringPiece server_url,
+      base::StringPiece insecure_server_url,
+      base::StringPiece mime_type,
+      MetricsLogUploader::MetricServiceType service_type,
+      const MetricsLogUploader::UploadCallback& on_upload_complete);
+
   ~NetMetricsLogUploader() override;
 
   // MetricsLogUploader:
@@ -59,10 +72,13 @@ class NetMetricsLogUploader : public MetricsLogUploader,
   net::URLRequestContextGetter* const request_context_getter_;
 
   const GURL server_url_;
+  const GURL insecure_server_url_;
   const std::string mime_type_;
   const MetricsLogUploader ::MetricServiceType service_type_;
   const MetricsLogUploader::UploadCallback on_upload_complete_;
-
+  std::string last_attempted_log_;
+  std::string last_attempted_hash_;
+  ReportingInfo last_attempted_info_;
   // The outstanding transmission appears as a URL Fetch operation.
   std::unique_ptr<net::URLFetcher> current_fetch_;
 
