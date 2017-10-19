@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3750734d_5280b4ac",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T15:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab8f7415_2d05da7d",
+      "revId": "f18a3f640b453ec97ddc5b8a3cc388a44d0d2bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3538cbe4_e5769e8c",
         "filename": "ui/display/test/display_manager_test_api.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "f18a3f640b453ec97ddc5b8a3cc388a44d0d2bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0b56bb_383ba8ad",
+        "filename": "ui/display/test/display_manager_test_api.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T15:32:23Z",
+      "side": 1,
+      "message": "Since it\u0027s an internal function of a test file I thought it\nunnecessary to change it as well. Changing it now.",
+      "parentUuid": "3538cbe4_e5769e8c",
+      "revId": "f18a3f640b453ec97ddc5b8a3cc388a44d0d2bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
