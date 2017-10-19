@@ -70,6 +70,24 @@
       "revId": "a2d6b116a33b6e2940ab6a1ed8b38da05579c0b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63964888_5a282d60",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-19T02:29:58Z",
+      "side": 1,
+      "message": "Add tests for comment syntax of selection text[1].\n\n[1] http://crrev.com/c/722464: Add test cases for comment syntax of SelectionSample::SetSelectionText()",
+      "parentUuid": "a1a2bf12_803ac7f6",
+      "revId": "a2d6b116a33b6e2940ab6a1ed8b38da05579c0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
