@@ -69,6 +69,24 @@
       "revId": "fcb5da3e7dc109d577bd60f3a32b080047839e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7ae451_79bcfa8e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioContext.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T18:07:48Z",
+      "side": 1,
+      "message": "\u003e Our expectations is that the number of conflicts is small because if they were, then the value setter isn\u0027t currently have the expected effect in some application and the developer would fix them.  On the other hand, the developer may not even notice that it\u0027s not having an effect.\n\u003e \n\u003e I guess we just don\u0027t really know.  Would it be better to use some other histogram?  We don\u0027t have any idea of the range of possible values either.\n\nSparse histograms have unbounded memory growth, and that makes me nervous if different web pages may end up with different numbers of calls to value setters and thus different conflict counts (which it sounds like are likely to be 0 or be exactly the same number of calls to value setter).\n\nCould you consider using something like UMA_HISTOGRAM_COUNTS_100 or UMA_HISTOGRAM_COUNTS_1000 or something in that vein?  (When do you expect developers to call this function?  In a loop?)",
+      "parentUuid": "d6b3e229_c044daa7",
+      "revId": "fcb5da3e7dc109d577bd60f3a32b080047839e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
