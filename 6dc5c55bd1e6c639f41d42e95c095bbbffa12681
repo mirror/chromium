@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d8bdeea_cb01451e",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:12:58Z",
+      "side": 1,
+      "message": "The command line switch is an implementation detail. Just:\n// True if the device should observe accelerometer events to enter tablet mode.",
+      "revId": "6dc5c55bd1e6c639f41d42e95c095bbbffa12681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
