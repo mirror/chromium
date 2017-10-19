@@ -52,6 +52,24 @@
       "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5680bd_885eb4a8",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-19T05:34:29Z",
+      "side": 1,
+      "message": "tracked apps must be present in system and this is goal of this check to validate this.\nIf this condition is not met that means some app in system in wrong state which may lead to crash in another place or system behaves wrongly.\nI see only 23 crashes https://crash.corp.google.com/browse?q\u003dcustom_data.ChromeCrashProto.magic_signature_1.name%3D%27ArcAppListPrefs%3A%3AAddAppAndShortcut%27\u0026sql_dialect\u003ddremelsql\u0026ignore_case\u003dfalse\u0026enable_rewrite\u003dtrue\u0026omit_field_name\u003d\u0026omit_field_value\u003d\u0026omit_field_opt\u003d%3D#-property-selector,+productversion\n57-62 version.\nThis looks not release blocker and it deserves to understand better.\ntracking set is not covered directly by unittest. However whole behavior is covered more-less, which also includes tracked set interaction. Xiyuan mentioned in bug his finding. Probably this might be the root of the problem.",
+      "parentUuid": "5678a418_bd71301e",
+      "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
