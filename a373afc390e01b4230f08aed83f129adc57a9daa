@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "85b1fbeb_610cae7a",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-19T16:36:26Z",
+      "side": 1,
+      "message": "Now that you\u0027re modifying this line, can you change this to \"consult auth.mojom\"?",
+      "range": {
+        "startLine": 104,
+        "startChar": 55,
+        "endLine": 104,
+        "endChar": 77
+      },
+      "revId": "a373afc390e01b4230f08aed83f129adc57a9daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef8df47_1bfdd1fe",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-19T16:36:26Z",
+      "side": 1,
+      "message": "nit: to be",
+      "range": {
+        "startLine": 263,
+        "startChar": 47,
+        "endLine": 263,
+        "endChar": 49
+      },
+      "revId": "a373afc390e01b4230f08aed83f129adc57a9daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4dcc920_b4481f5a",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-19T16:36:26Z",
+      "side": 1,
+      "message": "can this be called SUCCESS_ALREADY_PROVISIONED to make it clearer that this is also a success case?",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 37
+      },
+      "revId": "a373afc390e01b4230f08aed83f129adc57a9daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1326b1d_cf61de18",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 4
