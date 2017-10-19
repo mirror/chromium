@@ -52,6 +52,24 @@
       "revId": "b19910cb75829d971640a05deeef6c286766f674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a479d83d_a67c66f4",
+        "filename": "content/renderer/media/rtc_event_log_output_sink_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-10-19T13:23:32Z",
+      "side": 1,
+      "message": "(Excluding InitializeForTest from discussion; it\u0027s equivalent to Initialize for our purposes.)\n\n1. peer_connection_observer_ is created in RTCPeerConnectionHandler::Initialize, then never reset/deleted/etc., meaning it\u0027s guaranteed to live as long as RTCPeerConnectionHandler, with the exception being if Initialize is ever called more than once. I have therefore created https://chromium-review.googlesource.com/c/chromium/src/+/727206, which makes explicit the guarantee that Initialize() is only called once.\n\n2. I don\u0027t think it would be possible to let sink_ point to a ref-counted object of a different type (RtcEventLogOutputSink vs. Observer), and I wouldn\u0027t want to hard-code this class to make sink_ an Observer.\n\n3. I have commented the code, as suggested.",
+      "parentUuid": "50db6de9_f03cbda6",
+      "revId": "b19910cb75829d971640a05deeef6c286766f674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
