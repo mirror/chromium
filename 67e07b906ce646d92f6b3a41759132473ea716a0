@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c69ff5e_5f464c45",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-19T13:40:46Z",
+      "side": 1,
+      "message": "Please add a comment explaining what this means.",
+      "range": {
+        "startLine": 217,
+        "startChar": 7,
+        "endLine": 217,
+        "endChar": 30
+      },
+      "revId": "67e07b906ce646d92f6b3a41759132473ea716a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42858731_1d6fade2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-19T13:40:46Z",
+      "side": 1,
+      "message": "I think we can simplify this code.\n\n\nfor (auto it \u003d active_queues_.begin(); it !\u003d active_queues_.end(); ) {\n    internal::TaskQueueImpl* queue\u003d *it;\n    if (queue-\u003esupports_async_deletion()) {\n        selector_.RemoveQueue(queue);\n        queue-\u003eUnregisterTaskQueue();\n        it \u003d active_queues_.erase(it);\n    } else {\n        ++it;\n    }\n}\n\nfor (internal::TaskQueueImpl* queue : active_queues_) {\n   selector_.RemoveQueue(queue);\n   queue-\u003eUnregisterTaskQueue();\n}\n\nactive_queues_.clear();",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 57
+      },
+      "revId": "67e07b906ce646d92f6b3a41759132473ea716a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0bc2b6_5f2d0467",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-19T13:40:46Z",
+      "side": 1,
+      "message": "why do we need to call this here and on line 321?",
+      "range": {
+        "startLine": 388,
+        "startChar": 7,
+        "endLine": 388,
+        "endChar": 16
+      },
+      "revId": "67e07b906ce646d92f6b3a41759132473ea716a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db7247f_40dc9b7e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-19T13:40:46Z",
+      "side": 1,
+      "message": "I wonder if we should rename this now.  ForceShutDownTaskQueue?",
+      "range": {
+        "startLine": 161,
+        "startChar": 7,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "67e07b906ce646d92f6b3a41759132473ea716a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b4fab1_cf3e0771",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-19T13:40:46Z",
+      "side": 1,
+      "message": "should we move over to base::flat_map / base::flat_set? (maybe in a follow up patch)",
+      "range": {
+        "startLine": 349,
+        "startChar": 7,
+        "endLine": 349,
+        "endChar": 10
+      },
+      "revId": "67e07b906ce646d92f6b3a41759132473ea716a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
