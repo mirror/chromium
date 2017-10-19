@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "f73290e6_8aac09b8",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-19T20:42:21Z",
+      "side": 1,
+      "message": "Oh, we\u0027re not in float yet.\n\n(width + 1) / 2 would work then - but I\u0027m not sure it\u0027s much of an improvement now.  Up to you.\n\n(TBH, since we\u0027re drawing these without AA, I\u0027m not sure it matters all that much to align in ints - as long as the float biases are consistent, they should snap the same way at raster time)",
+      "parentUuid": "e998fb47_4639f56a",
+      "range": {
+        "startLine": 594,
+        "startChar": 57,
+        "endLine": 594,
+        "endChar": 76
+      },
+      "revId": "186adde781ae0bee12ed82b8f00a61854e78d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff052158_417fb7cf",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 13
