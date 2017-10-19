@@ -106,6 +106,24 @@
       "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f7b367_8483df9e",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-19T21:52:02Z",
+      "side": 1,
+      "message": "Done. Rolled back to using ScopedAllowBlocking directly, i.e. without creating a separate CronetScopedAllowBlocking layer.",
+      "parentUuid": "a72b6c47_29c7742d",
+      "revId": "b3f0c1daa139584106b7c70d68409911aa1a8959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
