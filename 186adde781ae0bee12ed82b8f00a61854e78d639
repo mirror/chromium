@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5cb0ef3_d6e392a7",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T20:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "487fa541_81e2a874",
+      "revId": "186adde781ae0bee12ed82b8f00a61854e78d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f838a5_625d1f84",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
         "patchSetId": 13
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-19T20:21:16Z",
       "side": 1,
       "message": "nit: + width / 2 ?",
+      "range": {
+        "startLine": 594,
+        "startChar": 57,
+        "endLine": 594,
+        "endChar": 76
+      },
+      "revId": "186adde781ae0bee12ed82b8f00a61854e78d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e998fb47_4639f56a",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-19T20:27:28Z",
+      "side": 1,
+      "message": "For odd integers, width / 2 !\u003d width - width / 2.",
+      "parentUuid": "86f838a5_625d1f84",
       "range": {
         "startLine": 594,
         "startChar": 57,
