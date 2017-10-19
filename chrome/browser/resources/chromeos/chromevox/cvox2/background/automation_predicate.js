@@ -316,6 +316,15 @@ AutomationPredicate.root = function(node) {
     case Role.TOOLBAR:
       return node.root.role == Role.DESKTOP;
     case Role.ROOT_WEB_AREA:
+      var nextParent = node;
+      while (nextParent && !nextParent.crossRootWebArea) {
+        // If current node's ancestor sets attribute |crossRootWebArea| to true,
+        // the ancestor requires current node to be crossable when performing
+        // traversals up the ancestry chain.
+        nextParent = nextParent.parent;
+      }
+      if (nextParent)
+        return false;
       return !node.parent || node.parent.root.role == Role.DESKTOP;
     default:
       return false;

@@ -91,6 +91,11 @@ class SearchAnswerWebView : public views::WebView {
 
   const char* GetClassName() const override { return "SearchAnswerWebView"; }
 
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
+    WebView::GetAccessibleNodeData(node_data);
+    node_data->AddBoolAttribute(ui::AX_ATTR_CROSS_ROOT_WEB_AREA, true);
+  }
+
  private:
   // Time when the answer became visible to the user.
   base::TimeTicks shown_time_;

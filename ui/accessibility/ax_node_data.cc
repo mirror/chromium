@@ -943,6 +943,9 @@ std::string AXNodeData::ToString() const {
       case AX_ATTR_SCROLLABLE:
         result += " scrollable=" + value;
         break;
+      case AX_ATTR_CROSS_ROOT_WEB_AREA:
+        result += " cross_root_web_area=" + value;
+        break;
       case AX_BOOL_ATTRIBUTE_NONE:
         break;
     }
