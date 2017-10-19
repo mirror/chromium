@@ -7,7 +7,6 @@
 #include "base/command_line.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/context_group.h"
-#include "gpu/command_buffer/service/gpu_switches.h"
 #include "ui/gl/gl_switches.h"
 
 #if defined(USE_EGL)
@@ -58,17 +57,14 @@ gl::GLContextAttribs GenerateGLContextAttribs(
   return attribs;
 }
 
-bool UsePassthroughCommandDecoder(const base::CommandLine* command_line) {
-  return command_line->HasSwitch(switches::kUsePassthroughCmdDecoder);
-}
-
 bool PassthroughCommandDecoderSupported() {
 #if defined(USE_EGL)
   // Using the passthrough command buffer requires that specific ANGLE
   // extensions are exposed
   return gl::GLSurfaceEGL::IsCreateContextBindGeneratesResourceSupported() &&
          gl::GLSurfaceEGL::IsCreateContextWebGLCompatabilitySupported() &&
-         gl::GLSurfaceEGL::IsRobustResourceInitSupported() &&
+         (gl::GLSurfaceEGL::IsRobustResourceInitSupported() ||
+          gl::GLSurfaceEGL::IsDisplayRobustResourceInitSupported()) &&
          gl::GLSurfaceEGL::IsDisplayTextureShareGroupSupported() &&
          gl::GLSurfaceEGL::IsCreateContextClientArraysSupported();
 #else

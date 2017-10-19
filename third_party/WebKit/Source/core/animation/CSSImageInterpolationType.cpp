@@ -5,32 +5,14 @@
 #include "core/animation/CSSImageInterpolationType.h"
 
 #include <memory>
-#include "core/CSSPropertyNames.h"
+#include "core/animation/ImagePropertyFunctions.h"
 #include "core/css/CSSCrossfadeValue.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/resolver/StyleResolverState.h"
-#include "core/style/ComputedStyle.h"
 #include "core/style/StyleImage.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
-
-namespace {
-const StyleImage* GetStyleImage(CSSPropertyID property,
-                                const ComputedStyle& style) {
-  switch (property) {
-    case CSSPropertyBorderImageSource:
-      return style.BorderImageSource();
-    case CSSPropertyListStyleImage:
-      return style.ListStyleImage();
-    case CSSPropertyWebkitMaskBoxImageSource:
-      return style.MaskBoxImageSource();
-    default:
-      NOTREACHED();
-      return nullptr;
-  }
-}
-}  // namespace
 
 class CSSImageNonInterpolableValue : public NonInterpolableValue {
  public:
@@ -195,7 +177,8 @@ InterpolationValue CSSImageInterpolationType::MaybeConvertNeutral(
 InterpolationValue CSSImageInterpolationType::MaybeConvertInitial(
     const StyleResolverState&,
     ConversionCheckers& conversion_checkers) const {
-  return nullptr;
+  return MaybeConvertStyleImage(
+      ImagePropertyFunctions::GetInitialStyleImage(CssProperty()), true);
 }
 
 class InheritedImageChecker
@@ -217,7 +200,7 @@ class InheritedImageChecker
   bool IsValid(const StyleResolverState& state,
                const InterpolationValue& underlying) const final {
     const StyleImage* inherited_image =
-        GetStyleImage(property_, *state.ParentStyle());
+        ImagePropertyFunctions::GetStyleImage(property_, *state.ParentStyle());
     if (!inherited_image_ && !inherited_image)
       return true;
     if (!inherited_image_ || !inherited_image)
@@ -235,8 +218,8 @@ InterpolationValue CSSImageInterpolationType::MaybeConvertInherit(
   if (!state.ParentStyle())
     return nullptr;
 
-  const StyleImage* inherited_image =
-      GetStyleImage(CssProperty(), *state.ParentStyle());
+  const StyleImage* inherited_image = ImagePropertyFunctions::GetStyleImage(
+      CssProperty(), *state.ParentStyle());
   StyleImage* refable_image = const_cast<StyleImage*>(inherited_image);
   conversion_checkers.push_back(
       InheritedImageChecker::Create(CssProperty(), refable_image));
@@ -253,7 +236,8 @@ InterpolationValue CSSImageInterpolationType::MaybeConvertValue(
 InterpolationValue
 CSSImageInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
     const ComputedStyle& style) const {
-  return MaybeConvertStyleImage(GetStyleImage(CssProperty(), style), true);
+  return MaybeConvertStyleImage(
+      ImagePropertyFunctions::GetStyleImage(CssProperty(), style), true);
 }
 
 void CSSImageInterpolationType::Composite(
@@ -268,21 +252,10 @@ void CSSImageInterpolationType::ApplyStandardPropertyValue(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue* non_interpolable_value,
     StyleResolverState& state) const {
-  StyleImage* image = ResolveStyleImage(CssProperty(), interpolable_value,
-                                        non_interpolable_value, state);
-  switch (CssProperty()) {
-    case CSSPropertyBorderImageSource:
-      state.Style()->SetBorderImageSource(image);
-      break;
-    case CSSPropertyListStyleImage:
-      state.Style()->SetListStyleImage(image);
-      break;
-    case CSSPropertyWebkitMaskBoxImageSource:
-      state.Style()->SetMaskBoxImageSource(image);
-      break;
-    default:
-      NOTREACHED();
-  }
+  ImagePropertyFunctions::SetStyleImage(
+      CssProperty(), *state.Style(),
+      ResolveStyleImage(CssProperty(), interpolable_value,
+                        non_interpolable_value, state));
 }
 
 }  // namespace blink

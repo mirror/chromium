@@ -37,7 +37,6 @@
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
-#include "ui/base/win/hidden_window.h"
 #endif
 
 namespace system_logs {
@@ -283,8 +282,7 @@ void ChromeInternalLogSource::PopulateLocalStateSettings(
 void ChromeInternalLogSource::PopulateUsbKeyboardDetected(
     SystemLogsResponse* response) {
   std::string reason;
-  bool result =
-      base::win::IsKeyboardPresentOnSlate(&reason, ui::GetHiddenWindow());
+  bool result = base::win::IsKeyboardPresentOnSlate(&reason);
   reason.insert(0, result ? "Keyboard Detected:\n" : "No Keyboard:\n");
   response->emplace(kUsbKeyboardDetected, reason);
 }

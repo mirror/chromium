@@ -13,7 +13,6 @@
 #include "content/common/frame_messages.h"
 #include "content/public/common/content_features.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 
 namespace content {
 
@@ -45,9 +44,14 @@ void WorkerFetchContextImpl::InitializeOnWorkerThread(
 std::unique_ptr<blink::WebURLLoader> WorkerFetchContextImpl::CreateURLLoader(
     const blink::WebURLRequest& request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  if (request.Url().ProtocolIs(url::kBlobScheme)) {
+    return base::MakeUnique<content::WebURLLoaderImpl>(
+        resource_dispatcher_.get(), std::move(task_runner),
+        url_loader_factory_getter_->GetBlobLoaderFactory());
+  }
   return base::MakeUnique<content::WebURLLoaderImpl>(
       resource_dispatcher_.get(), std::move(task_runner),
-      url_loader_factory_getter_->GetFactoryForURL(request.Url()));
+      url_loader_factory_getter_->GetNetworkLoaderFactory());
 }
 
 void WorkerFetchContextImpl::WillSendRequest(blink::WebURLRequest& request) {
@@ -68,8 +72,7 @@ void WorkerFetchContextImpl::WillSendRequest(blink::WebURLRequest& request) {
 
 bool WorkerFetchContextImpl::IsControlledByServiceWorker() const {
   return is_controlled_by_service_worker_ ||
-         (controller_version_id_ !=
-          blink::mojom::kInvalidServiceWorkerVersionId);
+         (controller_version_id_ != kInvalidServiceWorkerVersionId);
 }
 
 void WorkerFetchContextImpl::SetDataSaverEnabled(bool enabled) {

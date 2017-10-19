@@ -29,7 +29,7 @@ ScreenOrientationControllerTestApi::UserLockedOrientation() const {
 
 blink::WebScreenOrientationLockType
 ScreenOrientationControllerTestApi::GetCurrentOrientation() const {
-  return controller_->GetCurrentOrientation();
+  return controller_->GetCurrentOrientationForTest();
 }
 
 }  // namespace ash

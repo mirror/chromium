@@ -49,12 +49,13 @@ class CORE_EXPORT SelectionController final
  public:
   static SelectionController* Create(LocalFrame&);
   virtual ~SelectionController();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   bool HandleMousePressEvent(const MouseEventWithHitTestResults&);
   void HandleMouseDraggedEvent(const MouseEventWithHitTestResults&,
                                const IntPoint&,
                                const LayoutPoint&,
+                               Node*,
                                const IntPoint&);
   bool HandleMouseReleaseEvent(const MouseEventWithHitTestResults&,
                                const LayoutPoint&);
@@ -63,8 +64,9 @@ class CORE_EXPORT SelectionController final
   void HandleGestureTwoFingerTap(const GestureEventWithHitTestResults&);
   void HandleGestureLongTap(const GestureEventWithHitTestResults&);
 
-  void UpdateSelectionForMouseDrag(const LayoutPoint&, const IntPoint&);
+  void UpdateSelectionForMouseDrag(Node*, const LayoutPoint&, const IntPoint&);
   void UpdateSelectionForMouseDrag(const HitTestResult&,
+                                   Node*,
                                    const LayoutPoint&,
                                    const IntPoint&);
   void SendContextMenuEvent(const MouseEventWithHitTestResults&,

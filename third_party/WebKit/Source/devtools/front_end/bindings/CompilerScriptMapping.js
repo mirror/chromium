@@ -89,7 +89,6 @@ Bindings.CompilerScriptMapping = class {
     var uiSourceCode = this._stubUISourceCodes.get(script);
     this._stubUISourceCodes.delete(script);
     this._stubProject.removeFile(uiSourceCode.url());
-    this._debuggerWorkspaceBinding.updateLocations(script);
   }
 
   /**
@@ -134,11 +133,8 @@ Bindings.CompilerScriptMapping = class {
     if (!script)
       return null;
 
-    var lineNumber = rawLocation.lineNumber - script.lineOffset;
-    var columnNumber = rawLocation.columnNumber;
-    if (!lineNumber)
-      columnNumber -= script.columnOffset;
-
+    var lineNumber = rawLocation.lineNumber;
+    var columnNumber = rawLocation.columnNumber || 0;
     var stubUISourceCode = this._stubUISourceCodes.get(script);
     if (stubUISourceCode)
       return new Workspace.UILocation(stubUISourceCode, lineNumber, columnNumber);
@@ -172,12 +168,10 @@ Bindings.CompilerScriptMapping = class {
     var script = scripts.length ? scripts[0] : null;
     if (!script)
       return null;
-    var entry = sourceMap.sourceLineMapping(uiSourceCode.url(), lineNumber, columnNumber);
+    var entry = sourceMap.firstSourceLineMapping(uiSourceCode.url(), lineNumber);
     if (!entry)
       return null;
-    return this._debuggerModel.createRawLocation(
-        script, entry.lineNumber + script.lineOffset,
-        !entry.lineNumber ? entry.columnNumber + script.columnOffset : entry.columnNumber);
+    return this._debuggerModel.createRawLocation(script, entry.lineNumber, entry.columnNumber);
   }
 
   /**
@@ -296,7 +290,7 @@ Bindings.CompilerScriptMapping = class {
     var sourceMap = uiSourceCode[Bindings.CompilerScriptMapping._sourceMapSymbol];
     if (!sourceMap)
       return true;
-    return !!sourceMap.sourceLineMapping(uiSourceCode.url(), lineNumber, 0);
+    return !!sourceMap.firstSourceLineMapping(uiSourceCode.url(), lineNumber);
   }
 
   dispose() {

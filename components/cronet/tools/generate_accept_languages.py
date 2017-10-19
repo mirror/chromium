@@ -31,7 +31,7 @@ def gen_accept_langs_table():
   return dict(accept_langs for accept_langs in accept_langs_list
     if accept_langs)
 
-HEADER = "static NSDictionary* const acceptLangs = @{"
+HEADER = "NSDictionary* acceptLangs = @{"
 def LINE(locale, accept_langs):
   return '  @"' + locale + '" : @"' + accept_langs + '",'
 FOOTER = "};"

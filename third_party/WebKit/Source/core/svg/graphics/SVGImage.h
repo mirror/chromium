@@ -112,10 +112,6 @@ class CORE_EXPORT SVGImage final : public Image {
 
   PaintImage PaintImageForCurrentFrame() override;
 
- protected:
-  // Whether or not size is available yet.
-  bool IsSizeAvailable() override { return !!page_; }
-
  private:
   // Accesses m_page.
   friend class SVGImageChromeClient;
@@ -148,8 +144,7 @@ class CORE_EXPORT SVGImage final : public Image {
             const FloatRect& from_rect,
             const FloatRect& to_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            ImageDecodingMode) override;
+            ImageClampingMode) override;
   void DrawForContainer(PaintCanvas*,
                         const PaintFlags&,
                         const FloatSize&,

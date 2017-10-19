@@ -72,7 +72,7 @@ class CORE_EXPORT HitTestResult {
   HitTestResult(const HitTestResult&);
   ~HitTestResult();
   HitTestResult& operator=(const HitTestResult&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   bool EqualForCacheability(const HitTestResult&) const;
   void CacheValues(const HitTestResult&);

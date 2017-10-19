@@ -17,15 +17,15 @@
 namespace {
 std::unique_ptr<ui::Event> MapEvent(const ui::Event& event) {
   if (event.IsScrollEvent()) {
-    return std::make_unique<ui::PointerEvent>(
+    return base::MakeUnique<ui::PointerEvent>(
         ui::MouseWheelEvent(*event.AsScrollEvent()));
   }
 
   if (event.IsMouseEvent())
-    return std::make_unique<ui::PointerEvent>(*event.AsMouseEvent());
+    return base::MakeUnique<ui::PointerEvent>(*event.AsMouseEvent());
 
   if (event.IsTouchEvent())
-    return std::make_unique<ui::PointerEvent>(*event.AsTouchEvent());
+    return base::MakeUnique<ui::PointerEvent>(*event.AsTouchEvent());
 
   return ui::Event::Clone(event);
 }

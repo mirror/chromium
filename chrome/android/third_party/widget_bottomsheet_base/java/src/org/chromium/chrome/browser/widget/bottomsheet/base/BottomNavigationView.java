@@ -18,11 +18,13 @@ package org.chromium.chrome.browser.widget.bottomsheet.base;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.R;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
@@ -100,10 +102,6 @@ public class BottomNavigationView extends FrameLayout {
         this(context, attrs, 0);
     }
 
-    protected BottomNavigationMenuView getBottomNavigationMenuViewInstance(Context context) {
-        return new BottomNavigationMenuView(context);
-    }
-
     public BottomNavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -112,10 +110,10 @@ public class BottomNavigationView extends FrameLayout {
         // Create the menu
         mMenu = new BottomNavigationMenu(context);
 
-        mMenuView = getBottomNavigationMenuViewInstance(context);
+        mMenuView = new BottomNavigationMenuView(context);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.BOTTOM;
+        params.gravity = Gravity.CENTER;
         mMenuView.setLayoutParams(params);
 
         mPresenter.setBottomNavigationMenuView(mMenuView);

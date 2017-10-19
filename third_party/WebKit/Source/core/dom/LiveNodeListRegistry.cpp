@@ -30,7 +30,7 @@ void LiveNodeListRegistry::Remove(const LiveNodeListBase* list,
   RecomputeMask();
 }
 
-void LiveNodeListRegistry::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LiveNodeListRegistry) {
   visitor->RegisterWeakMembers<LiveNodeListRegistry,
                                &LiveNodeListRegistry::ClearWeakMembers>(this);
 }

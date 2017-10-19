@@ -69,7 +69,7 @@ class MockCastMediaSinkServiceImpl : public CastMediaSinkServiceImpl {
   MOCK_METHOD0(Start, void());
   MOCK_METHOD0(Stop, void());
   MOCK_METHOD2(OpenChannels,
-               void(const std::vector<MediaSinkInternal>& cast_sinks,
+               void(std::vector<MediaSinkInternal> cast_sinks,
                     CastMediaSinkServiceImpl::SinkSource sink_source));
 };
 
@@ -164,15 +164,15 @@ TEST_F(CastMediaSinkServiceTest, TestMultipleStartAndStop) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_F(CastMediaSinkServiceTest, OnUserGesture) {
+TEST_F(CastMediaSinkServiceTest, TestForceDiscovery) {
   EXPECT_CALL(test_dns_sd_registry_, ForceDiscovery()).Times(0);
-  media_sink_service_->OnUserGesture();
+  media_sink_service_->ForceDiscovery();
 
   EXPECT_CALL(test_dns_sd_registry_, AddObserver(media_sink_service_.get()));
   EXPECT_CALL(test_dns_sd_registry_, RegisterDnsSdListener(_));
   EXPECT_CALL(test_dns_sd_registry_, ForceDiscovery());
   media_sink_service_->SetDnsSdRegistryForTest(&test_dns_sd_registry_);
-  media_sink_service_->OnUserGesture();
+  media_sink_service_->ForceDiscovery();
 }
 
 TEST_F(CastMediaSinkServiceTest, TestOnDnsSdEvent) {
@@ -200,13 +200,6 @@ TEST_F(CastMediaSinkServiceTest, TestOnDnsSdEvent) {
 
   media_sink_service_->OnSinksDiscoveredOnIOThread(sinks);
   base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(CastMediaSinkServiceTest, TestForceSinkDiscoveryCallback) {
-  EXPECT_CALL(mock_sink_discovered_io_cb_, Run(_));
-
-  media_sink_service_->ForceSinkDiscoveryCallback();
-  task_runner_->RunUntilIdle();
 }
 
 }  // namespace media_router

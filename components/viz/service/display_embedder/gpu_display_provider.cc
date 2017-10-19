@@ -69,9 +69,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
                                    nullptr /* shared_context */);
 
   // TODO(rjkroege): If there is something better to do than CHECK, add it.
-  // TODO(danakj): Should retry if the result is kTransientFailure.
-  auto result = context_provider->BindToCurrentThread();
-  CHECK_EQ(result, gpu::ContextResult::kSuccess);
+  CHECK(context_provider->BindToCurrentThread());
 
   std::unique_ptr<OutputSurface> display_output_surface;
   if (context_provider->ContextCapabilities().surfaceless) {

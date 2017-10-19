@@ -29,7 +29,7 @@
 
 #include "core/html/track/TextTrackContainer.h"
 
-#include "core/html/media/HTMLVideoElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/track/CueTimeline.h"
 #include "core/html/track/TextTrack.h"
 #include "core/layout/LayoutBlockFlow.h"
@@ -54,7 +54,7 @@ class VideoElementResizeDelegate final : public ResizeObserver::Delegate {
         entries[0]->target()->GetLayoutObject());
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(text_track_container_);
     ResizeObserver::Delegate::Trace(visitor);
   }
@@ -68,7 +68,7 @@ class VideoElementResizeDelegate final : public ResizeObserver::Delegate {
 TextTrackContainer::TextTrackContainer(Document& document)
     : HTMLDivElement(document), default_font_size_(0) {}
 
-void TextTrackContainer::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrackContainer) {
   visitor->Trace(video_size_observer_);
   HTMLDivElement::Trace(visitor);
 }

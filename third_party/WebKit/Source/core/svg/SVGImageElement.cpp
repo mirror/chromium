@@ -62,7 +62,7 @@ inline SVGImageElement::SVGImageElement(Document& document)
 
 DEFINE_NODE_FACTORY(SVGImageElement)
 
-void SVGImageElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGImageElement) {
   visitor->Trace(x_);
   visitor->Trace(y_);
   visitor->Trace(width_);
@@ -150,16 +150,6 @@ void SVGImageElement::SvgAttributeChanged(const QualifiedName& attr_name) {
   SVGGraphicsElement::SvgAttributeChanged(attr_name);
 }
 
-void SVGImageElement::ParseAttribute(
-    const AttributeModificationParams& params) {
-  if (params.name == SVGNames::asyncAttr &&
-      RuntimeEnabledFeatures::ImageAsyncAttributeEnabled()) {
-    decoding_mode_ = ParseImageDecodingMode(params.new_value);
-  } else {
-    SVGElement::ParseAttribute(params);
-  }
-}
-
 bool SVGImageElement::SelfHasRelativeLengths() const {
   return x_->CurrentValue()->IsRelative() || y_->CurrentValue()->IsRelative() ||
          width_->CurrentValue()->IsRelative() ||
@@ -181,7 +171,7 @@ void SVGImageElement::AttachLayoutTree(AttachContext& context) {
     LayoutImageResource* layout_image_resource = image_obj->ImageResource();
     if (layout_image_resource->HasImage())
       return;
-    layout_image_resource->SetImageResource(GetImageLoader().GetContent());
+    layout_image_resource->SetImageResource(GetImageLoader().GetImage());
   }
 }
 
@@ -190,7 +180,7 @@ Node::InsertionNotificationRequest SVGImageElement::InsertedInto(
   // A previous loader update may have failed to actually fetch the image if
   // the document was inactive. In that case, force a re-update (but don't
   // clear previous errors).
-  if (root_parent->isConnected() && !GetImageLoader().GetContent())
+  if (root_parent->isConnected() && !GetImageLoader().GetImage())
     GetImageLoader().UpdateFromElement(ImageLoader::kUpdateNormal);
 
   return SVGGraphicsElement::InsertedInto(root_parent);

@@ -120,7 +120,7 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
 
   Element* GetElementByAccessKey(const String& key) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   ScopedStyleResolver* GetScopedStyleResolver() const {
     return scoped_style_resolver_.Get();

@@ -215,8 +215,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // of the root RenderWidgetHostView.
   gfx::Point GetViewOriginInRoot() const;
 
-  RenderWidgetHostViewBase* GetRootRenderWidgetHostView() const;
-
  protected:
   friend class RenderWidgetHostView;
   friend class RenderWidgetHostViewChildFrameTest;

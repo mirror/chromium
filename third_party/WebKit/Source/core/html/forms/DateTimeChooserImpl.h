@@ -54,7 +54,7 @@ class CORE_EXPORT DateTimeChooserImpl final : public DateTimeChooser,
   void EndChooser() override;
   AXObject* RootAXObject() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   DateTimeChooserImpl(ChromeClient*,

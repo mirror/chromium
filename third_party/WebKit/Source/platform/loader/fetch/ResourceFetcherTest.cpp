@@ -105,7 +105,7 @@ class ResourceFetcherTest : public ::testing::Test {
 };
 
 TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
-  KURL secure_url("https://secureorigin.test/image.png");
+  KURL secure_url(kParsedURLString, "https://secureorigin.test/image.png");
   // Try to request a url. The request should fail, and a resource in an error
   // state should be returned, and no resource should be present in the cache.
   ResourceFetcher* fetcher =
@@ -128,7 +128,7 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
 TEST_F(ResourceFetcherTest, UseExistingResource) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.html");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
@@ -147,7 +147,7 @@ TEST_F(ResourceFetcherTest, UseExistingResource) {
 }
 
 TEST_F(ResourceFetcherTest, Vary) {
-  KURL url("http://127.0.0.1:8000/foo.html");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
@@ -156,7 +156,7 @@ TEST_F(ResourceFetcherTest, Vary) {
   response.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=3600");
   response.SetHTTPHeaderField(HTTPNames::Vary, "*");
   resource->ResponseReceived(response, nullptr);
-  resource->FinishForTest();
+  resource->Finish();
   ASSERT_TRUE(resource->MustReloadDueToVaryHeader(ResourceRequest(url)));
 
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
@@ -170,7 +170,7 @@ TEST_F(ResourceFetcherTest, Vary) {
 }
 
 TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
-  KURL url("http://127.0.0.1:8000/foo.html");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
@@ -194,7 +194,7 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
   EXPECT_EQ(navigation_timing_info->TransferSize(), encoded_data_length);
 
   // When there are redirects.
-  KURL redirect_url("http://127.0.0.1:8000/redirect.html");
+  KURL redirect_url(kParsedURLString, "http://127.0.0.1:8000/redirect.html");
   ResourceResponse redirect_response;
   redirect_response.SetURL(redirect_url);
   redirect_response.SetHTTPStatusCode(200);
@@ -209,7 +209,7 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
 TEST_F(ResourceFetcherTest, VaryOnBack) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.html");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
@@ -218,7 +218,7 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
   response.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=3600");
   response.SetHTTPHeaderField(HTTPNames::Vary, "*");
   resource->ResponseReceived(response, nullptr);
-  resource->FinishForTest();
+  resource->Finish();
   ASSERT_TRUE(resource->MustReloadDueToVaryHeader(ResourceRequest(url)));
 
   ResourceRequest resource_request(url);
@@ -232,7 +232,7 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
 TEST_F(ResourceFetcherTest, VaryResource) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.html");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
@@ -274,7 +274,7 @@ class RequestSameResourceOnComplete
   }
   bool NotifyFinishedCalled() const { return notify_finished_called_; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(resource_);
     RawResourceClient::Trace(visitor);
   }
@@ -287,7 +287,7 @@ class RequestSameResourceOnComplete
 };
 
 TEST_F(ResourceFetcherTest, RevalidateWhileFinishingLoading) {
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
@@ -309,7 +309,7 @@ TEST_F(ResourceFetcherTest, RevalidateWhileFinishingLoading) {
 
 TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
-  ResourceRequest request(KURL("data:text/html,foo"));
+  ResourceRequest request(KURL(kParsedURLString, "data:text/html,foo"));
   request.SetRequestContext(WebURLRequest::kRequestContextVideo);
   request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
   ResourceLoaderOptions options;
@@ -358,7 +358,7 @@ class ServeRequestsOnCompleteClient final
     ASSERT_TRUE(false);
   }
 
-  void Trace(blink::Visitor* visitor) { RawResourceClient::Trace(visitor); }
+  DEFINE_INLINE_TRACE() { RawResourceClient::Trace(visitor); }
 
   String DebugName() const override { return "ServeRequestsOnCompleteClient"; }
 };
@@ -369,7 +369,7 @@ class ServeRequestsOnCompleteClient final
 // WebURLLoader before notifying its clients, a nested run loop  may send a
 // network response, leading to an invalid state transition in ResourceLoader.
 TEST_F(ResourceFetcherTest, ResponseOnCancel) {
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
@@ -393,7 +393,7 @@ class ScopedMockRedirectRequester {
       : context_(context) {}
 
   void RegisterRedirect(const WebString& from_url, const WebString& to_url) {
-    KURL redirect_url(from_url);
+    KURL redirect_url(kParsedURLString, from_url);
     WebURLResponse redirect_response;
     redirect_response.SetURL(redirect_url);
     redirect_response.SetHTTPStatusCode(301);
@@ -404,7 +404,7 @@ class ScopedMockRedirectRequester {
   }
 
   void RegisterFinalResource(const WebString& url) {
-    KURL final_url(url);
+    KURL final_url(kParsedURLString, url);
     RegisterMockedURLLoad(final_url);
   }
 
@@ -460,7 +460,7 @@ TEST_F(ResourceFetcherTest, ComplexCrossOriginRedirect) {
 }
 
 TEST_F(ResourceFetcherTest, SynchronousRequest) {
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
@@ -477,7 +477,7 @@ TEST_F(ResourceFetcherTest, SynchronousRequest) {
 TEST_F(ResourceFetcherTest, PreloadResourceTwice) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   FetchParameters fetch_params_original{ResourceRequest(url)};
@@ -503,7 +503,7 @@ TEST_F(ResourceFetcherTest, PreloadResourceTwice) {
 TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   // Link preload preload scanner
@@ -536,7 +536,7 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
 
 TEST_F(ResourceFetcherTest, PreloadMatchWithBypassingCache) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   FetchParameters fetch_params_original{ResourceRequest(url)};
@@ -558,7 +558,7 @@ TEST_F(ResourceFetcherTest, CrossFramePreloadMatchIsNotAllowed) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceFetcher* fetcher2 = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   FetchParameters fetch_params_original{ResourceRequest(url)};
@@ -581,7 +581,7 @@ TEST_F(ResourceFetcherTest, CrossFramePreloadMatchIsNotAllowed) {
 TEST_F(ResourceFetcherTest, RepetitiveLinkPreloadShouldBeMerged) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   FetchParameters fetch_params_for_request{ResourceRequest(url)};
@@ -610,7 +610,7 @@ TEST_F(ResourceFetcherTest, RepetitiveLinkPreloadShouldBeMerged) {
 TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   FetchParameters fetch_params_for_request{ResourceRequest(url)};
@@ -640,7 +640,7 @@ TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
 TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   FetchParameters fetch_params_for_request{ResourceRequest(url)};
@@ -675,7 +675,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
 }
 
 TEST_F(ResourceFetcherTest, Revalidate304) {
-  KURL url("http://127.0.0.1:8000/foo.html");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
@@ -683,7 +683,7 @@ TEST_F(ResourceFetcherTest, Revalidate304) {
   response.SetHTTPStatusCode(304);
   response.SetHTTPHeaderField("etag", "1234567890");
   resource->ResponseReceived(response, nullptr);
-  resource->FinishForTest();
+  resource->Finish();
 
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceRequest resource_request(url);
@@ -700,7 +700,7 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceMultipleFetchersAndMove) {
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceFetcher* fetcher2 = ResourceFetcher::Create(Context());
 
-  KURL url("http://127.0.0.1:8000/foo.png");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
   FetchParameters fetch_params_original{ResourceRequest(url)};
@@ -736,7 +736,7 @@ TEST_F(ResourceFetcherTest, ContentTypeDataURL) {
 // Android WebView that are intercepting Content-ID URLs and serve their own
 // resources. Please see https://crbug.com/739658.
 TEST_F(ResourceFetcherTest, ContentIdURL) {
-  KURL url("cid:0123456789@example.com");
+  KURL url(kParsedURLString, "cid:0123456789@example.com");
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(200);

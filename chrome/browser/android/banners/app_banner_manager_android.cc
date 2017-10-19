@@ -161,7 +161,7 @@ bool AppBannerManagerAndroid::IsWebAppInstalled(
 InstallableParams AppBannerManagerAndroid::ParamsToPerformInstallableCheck() {
   InstallableParams params =
       AppBannerManager::ParamsToPerformInstallableCheck();
-  params.valid_badge_icon = can_install_webapk_;
+  params.fetch_valid_badge_icon = can_install_webapk_;
 
   return params;
 }
@@ -182,12 +182,12 @@ void AppBannerManagerAndroid::PerformInstallableCheck() {
     }
 
     // We must have some error in |code| if we reached this point, so report it.
-    Stop(code);
+    StopWithCode(code);
     return;
   }
 
   if (can_install_webapk_ && !AreWebManifestUrlsWebApkCompatible(manifest_)) {
-    Stop(URL_NOT_SUPPORTED_FOR_WEBAPK);
+    StopWithCode(URL_NOT_SUPPORTED_FOR_WEBAPK);
     return;
   }
 
@@ -209,7 +209,7 @@ void AppBannerManagerAndroid::OnDidPerformInstallableCheck(
 
 void AppBannerManagerAndroid::OnAppIconFetched(const SkBitmap& bitmap) {
   if (bitmap.drawsNothing()) {
-    Stop(NO_ICON_AVAILABLE);
+    StopWithCode(NO_ICON_AVAILABLE);
     return;
   }
 

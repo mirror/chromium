@@ -140,6 +140,25 @@ static const double kMinimumCursorScale = 0.001;
 // This is roughly 9 frames, which should be long enough to be noticeable.
 constexpr TimeDelta kMinimumActiveInterval = TimeDelta::FromSecondsD(0.15);
 
+enum NoCursorChangeType { kNoCursorChange };
+
+class OptionalCursor {
+ public:
+  OptionalCursor(NoCursorChangeType) : is_cursor_change_(false) {}
+  OptionalCursor(const Cursor& cursor)
+      : is_cursor_change_(true), cursor_(cursor) {}
+
+  bool IsCursorChange() const { return is_cursor_change_; }
+  const Cursor& GetCursor() const {
+    DCHECK(is_cursor_change_);
+    return cursor_;
+  }
+
+ private:
+  bool is_cursor_change_;
+  Cursor cursor_;
+};
+
 EventHandler::EventHandler(LocalFrame& frame)
     : frame_(frame),
       selection_controller_(SelectionController::Create(frame)),
@@ -169,7 +188,7 @@ EventHandler::EventHandler(LocalFrame& frame)
           this,
           &EventHandler::ActiveIntervalTimerFired) {}
 
-void EventHandler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventHandler) {
   visitor->Trace(frame_);
   visitor->Trace(selection_controller_);
   visitor->Trace(capturing_mouse_events_node_);
@@ -344,7 +363,7 @@ void EventHandler::UpdateCursor() {
   layout_view_item.HitTest(result);
 
   if (LocalFrame* frame = result.InnerNodeFrame()) {
-    EventHandler::OptionalCursor optional_cursor =
+    OptionalCursor optional_cursor =
         frame->GetEventHandler().SelectCursor(result);
     if (optional_cursor.IsCursorChange()) {
       view->SetCursor(optional_cursor.GetCursor());
@@ -391,8 +410,7 @@ bool EventHandler::ShouldShowIBeamForNode(const Node* node,
   return HasEditableStyle(*node);
 }
 
-EventHandler::OptionalCursor EventHandler::SelectCursor(
-    const HitTestResult& result) {
+OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
   if (scroll_manager_->InResizeMode())
     return kNoCursorChange;
 
@@ -541,10 +559,9 @@ EventHandler::OptionalCursor EventHandler::SelectCursor(
   return PointerCursor();
 }
 
-EventHandler::OptionalCursor EventHandler::SelectAutoCursor(
-    const HitTestResult& result,
-    Node* node,
-    const Cursor& i_beam) {
+OptionalCursor EventHandler::SelectAutoCursor(const HitTestResult& result,
+                                              Node* node,
+                                              const Cursor& i_beam) {
   if (ShouldShowIBeamForNode(node, result))
     return i_beam;
 
@@ -757,8 +774,7 @@ void EventHandler::HandleMouseLeaveEvent(const WebMouseEvent& event) {
   Page* page = frame_->GetPage();
   if (page)
     page->GetChromeClient().ClearToolTip(*frame_);
-  HandleMouseMoveOrLeaveEvent(event, Vector<WebMouseEvent>(), nullptr, false,
-                              true);
+  HandleMouseMoveOrLeaveEvent(event, Vector<WebMouseEvent>(), 0, false, true);
 }
 
 WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
@@ -899,8 +915,7 @@ WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
       scrollbar->MouseMoved(mev.Event());
     }
     if (LocalFrameView* view = frame_->View()) {
-      EventHandler::OptionalCursor optional_cursor =
-          SelectCursor(mev.GetHitTestResult());
+      OptionalCursor optional_cursor = SelectCursor(mev.GetHitTestResult());
       if (optional_cursor.IsCursorChange()) {
         view->SetCursor(optional_cursor.GetCursor());
       }
@@ -1246,8 +1261,6 @@ void EventHandler::ProcessPendingPointerCaptureForPointerLock(
 
 void EventHandler::ElementRemoved(EventTarget* target) {
   pointer_event_manager_->ElementRemoved(target);
-  if (target)
-    mouse_wheel_event_manager_->ElementRemoved(target->ToNode());
 }
 
 WebInputEventResult EventHandler::UpdatePointerTargetAndDispatchEvents(
@@ -1377,7 +1390,7 @@ bool EventHandler::BestClickableNodeForHitTestResult(
   // will be adjusted towards nearby nodes. This leads to things like textarea
   // scrollbars being untouchable.
   if (result.GetScrollbar()) {
-    target_node = nullptr;
+    target_node = 0;
     return false;
   }
 
@@ -1764,7 +1777,7 @@ WebInputEventResult EventHandler::SendContextMenuEvent(
       override_target_node ? override_target_node : mev.InnerNode();
   return mouse_event_manager_->DispatchMouseEvent(
       UpdateMouseEventTargetNode(target_node), EventTypeNames::contextmenu,
-      event, mev.GetHitTestResult().CanvasRegionId(), nullptr);
+      event, mev.GetHitTestResult().CanvasRegionId(), 0);
 }
 
 static bool ShouldShowContextMenuAtSelection(const FrameSelection& selection) {

@@ -29,7 +29,6 @@
 #include "content/public/common/resource_type.h"
 #include "content/public/common/service_worker_modes.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace blink {
@@ -47,6 +46,7 @@ class ServiceWorkerContextCore;
 class ServiceWorkerDispatcherHost;
 class ServiceWorkerRequestHandler;
 class ServiceWorkerVersion;
+class BrowserSideControllerServiceWorker;
 class WebContents;
 
 // This class is the browser-process representation of a service worker
@@ -82,8 +82,7 @@ class WebContents;
 class CONTENT_EXPORT ServiceWorkerProviderHost
     : public ServiceWorkerRegistration::Listener,
       public base::SupportsWeakPtr<ServiceWorkerProviderHost>,
-      public mojom::ServiceWorkerContainerHost,
-      public service_manager::mojom::InterfaceProvider {
+      public mojom::ServiceWorkerContainerHost {
  public:
   using WebContentsGetter = base::Callback<WebContents*(void)>;
 
@@ -234,9 +233,9 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // Used to get a ServiceWorkerObjectInfo to send to the renderer. Finds an
   // existing ServiceWorkerHandle, and increments its reference count, or else
   // creates a new one (initialized to ref count 1). Returns the
-  // ServiceWorkerObjectInfo from the handle. The renderer is expected to use
+  // ServiceWorkerInfo from the handle. The renderer is expected to use
   // ServiceWorkerHandleReference::Adopt to balance out the ref count.
-  blink::mojom::ServiceWorkerObjectInfo GetOrCreateServiceWorkerHandle(
+  ServiceWorkerObjectInfo GetOrCreateServiceWorkerHandle(
       ServiceWorkerVersion* version);
 
   // Returns true if |registration| can be associated with this provider.
@@ -432,11 +431,6 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   bool IsValidGetRegistrationsMessage(std::string* out_error) const;
   bool IsValidGetRegistrationForReadyMessage(std::string* out_error) const;
 
-  // service_manager::mojom::InterfaceProvider:
-  // For provider hosts that are hosting a running service worker.
-  void GetInterface(const std::string& interface_name,
-                    mojo::ScopedMessagePipeHandle interface_pipe) override;
-
   const std::string client_uuid_;
   const base::TimeTicks create_time_;
   int render_process_id_;
@@ -477,8 +471,10 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // 3. |*get_ready_callback_| is a null OnceCallback after the callback has
   //    been run.
   std::unique_ptr<GetRegistrationForReadyCallback> get_ready_callback_;
-
   scoped_refptr<ServiceWorkerVersion> controller_;
+  std::unique_ptr<BrowserSideControllerServiceWorker>
+      controller_service_worker_;
+
   scoped_refptr<ServiceWorkerVersion> running_hosted_version_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
 
@@ -506,10 +502,6 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   mojo::AssociatedBinding<mojom::ServiceWorkerContainerHost> binding_;
 
   std::vector<base::Closure> queued_events_;
-
-  // For provider hosts that are hosting a running service worker.
-  mojo::Binding<service_manager::mojom::InterfaceProvider>
-      interface_provider_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderHost);
 };

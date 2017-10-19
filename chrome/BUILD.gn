@@ -113,9 +113,6 @@ if (!is_android && !is_mac) {
     if (use_aura && (is_win || is_linux)) {
       data_deps += [ "//chrome/app:service_manifests" ]
     }
-    if (is_chromeos) {
-      data_deps += [ "//sandbox/linux:chrome_sandbox" ]
-    }
   }
 
   template("chrome_binary") {
@@ -329,9 +326,6 @@ if (!is_android && !is_mac) {
       # what telemetry test-runner expects.
       output_name = "test_chrome"
       sources = []
-      data = [
-        "$root_out_dir/chrome_200_percent.pak",
-      ]
       if (!is_win && use_aura) {
         sources += [ "app/chrome_exe_main_aura.cc" ]
       }

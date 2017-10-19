@@ -24,7 +24,8 @@ using media::ChannelLayout;
 namespace content {
 
 WebRtcAudioDeviceImpl::WebRtcAudioDeviceImpl()
-    : audio_transport_callback_(NULL),
+    : ref_count_(0),
+      audio_transport_callback_(NULL),
       output_delay_ms_(0),
       initialized_(false),
       playing_(false),
@@ -44,6 +45,22 @@ WebRtcAudioDeviceImpl::~WebRtcAudioDeviceImpl() {
   DVLOG(1) << "WebRtcAudioDeviceImpl::~WebRtcAudioDeviceImpl()";
   DCHECK(main_thread_checker_.CalledOnValidThread());
   DCHECK(!initialized_) << "Terminate must have been called.";
+}
+
+int32_t WebRtcAudioDeviceImpl::AddRef() const {
+  // We can be AddRefed and released on both the UI thread as well as
+  // libjingle's signaling thread.
+  return base::subtle::Barrier_AtomicIncrement(&ref_count_, 1);
+}
+
+int32_t WebRtcAudioDeviceImpl::Release() const {
+  // We can be AddRefed and released on both the UI thread as well as
+  // libjingle's signaling thread.
+  int ret = base::subtle::Barrier_AtomicIncrement(&ref_count_, -1);
+  if (ret == 0) {
+    delete this;
+  }
+  return ret;
 }
 
 void WebRtcAudioDeviceImpl::RenderData(media::AudioBus* audio_bus,
@@ -349,6 +366,15 @@ int32_t WebRtcAudioDeviceImpl::PlayoutDelay(uint16_t* delay_ms) const {
   base::AutoLock auto_lock(lock_);
   *delay_ms = static_cast<uint16_t>(output_delay_ms_);
   return 0;
+}
+
+int32_t WebRtcAudioDeviceImpl::RecordingDelay(uint16_t* delay_ms) const {
+  DCHECK(signaling_thread_checker_.CalledOnValidThread());
+
+  // There is no way to report a correct delay value to WebRTC since there
+  // might be multiple ProcessedLocalAudioSource instances.
+  NOTREACHED();
+  return -1;
 }
 
 int32_t WebRtcAudioDeviceImpl::RecordingSampleRate(

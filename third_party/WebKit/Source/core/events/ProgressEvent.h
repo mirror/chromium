@@ -54,7 +54,7 @@ class CORE_EXPORT ProgressEvent : public Event {
 
   const AtomicString& InterfaceName() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   ProgressEvent();

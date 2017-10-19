@@ -9,19 +9,12 @@
 #include <string>
 #include <vector>
 
-#include "base/callback_forward.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
+#include "services/service_manager/background/background_service_manager.h"
 #include "services/service_manager/embedder/process_type.h"
-
-namespace base {
-class CommandLine;
-}
-
-namespace service_manager {
-class BackgroundServiceManager;
-class Identity;
-}  // namespace service_manager
+#include "services/service_manager/public/cpp/identity.h"
+#include "services/service_manager/public/cpp/service.h"
 
 namespace content {
 
@@ -101,6 +94,13 @@ class CONTENT_EXPORT ContentMainDelegate {
   virtual void AdjustServiceProcessCommandLine(
       const service_manager::Identity& identity,
       base::CommandLine* command_line);
+
+  // Indicates if the Service Manager should be terminated in response to a
+  // specific service instance quitting. If this returns |true|, the value in
+  // |*exit_code| will be returned from the Service Manager's process on exit.
+  virtual bool ShouldTerminateServiceManagerOnInstanceQuit(
+      const service_manager::Identity& identity,
+      int* exit_code);
 
   // Allows the embedder to perform arbitrary initialization within the Service
   // Manager process immediately before the Service Manager runs its main loop.

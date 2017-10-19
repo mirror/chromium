@@ -11,6 +11,7 @@
 
 #include "base/strings/string_split.h"
 #include "content/browser/cache_storage/cache_storage_context_impl.h"
+#include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
@@ -239,7 +240,7 @@ class StorageHandler::IndexedDBObserver : IndexedDBContextImpl::Observer {
 
 StorageHandler::StorageHandler()
     : DevToolsDomainHandler(Storage::Metainfo::domainName),
-      process_(nullptr),
+      host_(nullptr),
       weak_ptr_factory_(this) {}
 
 StorageHandler::~StorageHandler() {
@@ -252,9 +253,8 @@ void StorageHandler::Wire(UberDispatcher* dispatcher) {
   Storage::Dispatcher::wire(dispatcher, this);
 }
 
-void StorageHandler::SetRenderer(RenderProcessHost* process_host,
-                                 RenderFrameHostImpl* frame_host) {
-  process_ = process_host;
+void StorageHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
+  host_ = host;
 }
 
 Response StorageHandler::Disable() {
@@ -273,10 +273,10 @@ Response StorageHandler::Disable() {
 Response StorageHandler::ClearDataForOrigin(
     const std::string& origin,
     const std::string& storage_types) {
-  if (!process_)
+  if (!host_)
     return Response::InternalError();
 
-  StoragePartition* partition = process_->GetStoragePartition();
+  StoragePartition* partition = host_->GetProcess()->GetStoragePartition();
   std::vector<std::string> types = base::SplitString(
       storage_types, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
   std::unordered_set<std::string> set(types.begin(), types.end());
@@ -317,7 +317,7 @@ Response StorageHandler::ClearDataForOrigin(
 void StorageHandler::GetUsageAndQuota(
     const String& origin,
     std::unique_ptr<GetUsageAndQuotaCallback> callback) {
-  if (!process_)
+  if (!host_)
     return callback->sendFailure(Response::InternalError());
 
   GURL origin_url(origin);
@@ -327,7 +327,7 @@ void StorageHandler::GetUsageAndQuota(
   }
 
   storage::QuotaManager* manager =
-      process_->GetStoragePartition()->GetQuotaManager();
+      host_->GetProcess()->GetStoragePartition()->GetQuotaManager();
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&GetUsageAndQuotaOnIOThread, base::RetainedRef(manager),
@@ -335,7 +335,7 @@ void StorageHandler::GetUsageAndQuota(
 }
 
 Response StorageHandler::TrackCacheStorageForOrigin(const std::string& origin) {
-  if (!process_)
+  if (!host_)
     return Response::InternalError();
 
   GURL origin_url(origin);
@@ -352,7 +352,7 @@ Response StorageHandler::TrackCacheStorageForOrigin(const std::string& origin) {
 
 Response StorageHandler::UntrackCacheStorageForOrigin(
     const std::string& origin) {
-  if (!process_)
+  if (!host_)
     return Response::InternalError();
 
   GURL origin_url(origin);
@@ -368,7 +368,7 @@ Response StorageHandler::UntrackCacheStorageForOrigin(
 }
 
 Response StorageHandler::TrackIndexedDBForOrigin(const std::string& origin) {
-  if (!process_)
+  if (!host_)
     return Response::InternalError();
 
   GURL origin_url(origin);
@@ -383,7 +383,7 @@ Response StorageHandler::TrackIndexedDBForOrigin(const std::string& origin) {
 }
 
 Response StorageHandler::UntrackIndexedDBForOrigin(const std::string& origin) {
-  if (!process_)
+  if (!host_)
     return Response::InternalError();
 
   GURL origin_url(origin);
@@ -403,8 +403,9 @@ StorageHandler::GetCacheStorageObserver() {
   if (!cache_storage_observer_) {
     cache_storage_observer_ = std::make_unique<CacheStorageObserver>(
         weak_ptr_factory_.GetWeakPtr(),
-        static_cast<CacheStorageContextImpl*>(
-            process_->GetStoragePartition()->GetCacheStorageContext()));
+        static_cast<CacheStorageContextImpl*>(host_->GetProcess()
+                                                  ->GetStoragePartition()
+                                                  ->GetCacheStorageContext()));
   }
   return cache_storage_observer_.get();
 }
@@ -415,7 +416,7 @@ StorageHandler::IndexedDBObserver* StorageHandler::GetIndexedDBObserver() {
     indexed_db_observer_ = std::make_unique<IndexedDBObserver>(
         weak_ptr_factory_.GetWeakPtr(),
         static_cast<IndexedDBContextImpl*>(
-            process_->GetStoragePartition()->GetIndexedDBContext()));
+            host_->GetProcess()->GetStoragePartition()->GetIndexedDBContext()));
   }
   return indexed_db_observer_.get();
 }

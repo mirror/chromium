@@ -5,7 +5,7 @@
 #include "chrome/browser/vr/elements/exit_warning_texture.h"
 
 #include "cc/paint/skia_paint_canvas.h"
-#include "chrome/grit/generated_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
@@ -20,9 +20,9 @@ namespace vr {
 
 namespace {
 
-constexpr float kBorderFactor = 0.045f;
-constexpr float kFontSizeFactor = 0.048f;
-constexpr float kTextWidthFactor = 1.0f - 3 * kBorderFactor;
+constexpr float kBorderFactor = 0.045;
+constexpr float kFontSizeFactor = 0.048;
+constexpr float kTextWidthFactor = 1.0 - 3 * kBorderFactor;
 
 }  // namespace
 

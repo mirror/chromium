@@ -109,6 +109,9 @@ const char kEnableDirectCompositionLayers[] =
 const char kDisableDirectCompositionLayers[] =
     "disable-direct-composition-layers";
 
+// Use the Pass-through command decoder, skipping all validation and state
+// tracking.
+const char kUsePassthroughCmdDecoder[] = "use-passthrough-cmd-decoder";
 
 // This is the list of switches passed from this file that are passed from the
 // GpuProcessHost to the GPU Process. Add your switch to this list if you need
@@ -127,6 +130,7 @@ const char* const kGLSwitchesCopiedFromGpuProcessHost[] = {
     kEnableSwapBuffersWithBounds,
     kEnableDirectCompositionLayers,
     kDisableDirectCompositionLayers,
+    kUsePassthroughCmdDecoder,
 };
 const int kGLSwitchesCopiedFromGpuProcessHostNumSwitches =
     arraysize(kGLSwitchesCopiedFromGpuProcessHost);

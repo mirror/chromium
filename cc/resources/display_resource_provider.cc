@@ -18,11 +18,12 @@ DisplayResourceProvider::DisplayResourceProvider(
     viz::ContextProvider* compositor_context_provider,
     viz::SharedBitmapManager* shared_bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    bool delegated_sync_points_required,
     const viz::ResourceSettings& resource_settings)
     : ResourceProvider(compositor_context_provider,
                        shared_bitmap_manager,
                        gpu_memory_buffer_manager,
-                       false,
+                       delegated_sync_points_required,
                        resource_settings) {}
 
 DisplayResourceProvider::~DisplayResourceProvider() {

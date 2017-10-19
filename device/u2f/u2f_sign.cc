@@ -4,9 +4,7 @@
 
 #include "device/u2f/u2f_sign.h"
 
-#include <utility>
-
-#include "device/u2f/u2f_discovery.h"
+#include "base/memory/ptr_util.h"
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace device {
@@ -14,9 +12,9 @@ namespace device {
 U2fSign::U2fSign(const std::vector<std::vector<uint8_t>>& registered_keys,
                  const std::vector<uint8_t>& challenge_hash,
                  const std::vector<uint8_t>& app_param,
-                 std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
-                 const ResponseCallback& cb)
-    : U2fRequest(std::move(discoveries), cb),
+                 const ResponseCallback& cb,
+                 service_manager::Connector* connector)
+    : U2fRequest(cb, connector),
       registered_keys_(registered_keys),
       challenge_hash_(challenge_hash),
       app_param_(app_param),
@@ -29,12 +27,11 @@ std::unique_ptr<U2fRequest> U2fSign::TrySign(
     const std::vector<std::vector<uint8_t>>& registered_keys,
     const std::vector<uint8_t>& challenge_hash,
     const std::vector<uint8_t>& app_param,
-    std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
-    const ResponseCallback& cb) {
+    const ResponseCallback& cb,
+    service_manager::Connector* connector) {
   std::unique_ptr<U2fRequest> request = std::make_unique<U2fSign>(
-      registered_keys, challenge_hash, app_param, std::move(discoveries), cb);
+      registered_keys, challenge_hash, app_param, cb, connector);
   request->Start();
-
   return request;
 }
 

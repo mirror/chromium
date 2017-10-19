@@ -109,9 +109,3 @@ std::unique_ptr<GaiaAuthFetcher> TestSigninClient::CreateGaiaAuthFetcher(
     net::URLRequestContextGetter* getter) {
   return base::MakeUnique<GaiaAuthFetcher>(consumer, source, getter);
 }
-
-void TestSigninClient::PreGaiaLogout(base::OnceClosure callback) {
-  if (!callback.is_null()) {
-    std::move(callback).Run();
-  }
-}

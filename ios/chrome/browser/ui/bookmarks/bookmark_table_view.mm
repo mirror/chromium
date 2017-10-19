@@ -181,7 +181,6 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
           UIScrollViewContentInsetAdjustmentNever;
     }
     self.tableView.estimatedRowHeight = kCellHeightPt;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Remove extra rows.
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.autoresizingMask =
@@ -246,7 +245,8 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 }
 
 - (void)addNewFolder {
-  [self.editingFolderCell stopEdit];
+  // TODO(crbug.com/695749): Check if we need to disable the 'New Folder' button
+  // when _currentRootNode is NULL.
   if (!_currentRootNode) {
     return;
   }
@@ -264,7 +264,6 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   if (!_editing && self.tableView.editing) {
     self.tableView.editing = NO;
   }
-  [self.editingFolderCell stopEdit];
   _editing = editing;
   [self resetEditNodes];
   [self.tableView setEditing:editing animated:YES];
@@ -311,10 +310,6 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   [self.tableView setContentOffset:CGPointMake(0, position * kCellHeightPt)];
 }
 
-- (void)navigateAway {
-  [self.editingFolderCell stopEdit];
-}
-
 #pragma mark - UIView
 
 - (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
@@ -344,6 +339,8 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
         cellForRowAtIndexPath:(NSIndexPath*)indexPath {
+  // TODO(crbug.com/695749): Introduce a custom separator for bookmarks
+  // section, so that we don't show a separator after promo section.
   if (indexPath.section == self.promoSection) {
     BookmarkTableSigninPromoCell* signinPromoCell = [self.tableView
         dequeueReusableCellWithIdentifier:[BookmarkTableSigninPromoCell
@@ -356,7 +353,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
     [[_signinPromoViewMediator createConfigurator]
         configureSigninPromoView:signinPromoCell.signinPromoView];
     __weak BookmarkTableView* weakSelf = self;
-    signinPromoCell.signinPromoView.closeButtonAction = ^() {
+    signinPromoCell.closeButtonAction = ^() {
       [weakSelf signinPromoCloseButtonAction];
     };
     signinPromoCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -395,7 +392,8 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   // We enable the swipe-to-delete gesture and reordering control for nodes of
   // type URL or Folder, and not the permanent ones.
   const BookmarkNode* node = [self nodeAtIndexPath:indexPath];
-  return [self isUrlOrFolder:node];
+  return node->type() == BookmarkNode::URL ||
+         node->type() == BookmarkNode::FOLDER;
 }
 
 - (void)tableView:(UITableView*)tableView
@@ -468,8 +466,14 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
       [self.delegate bookmarkTableView:self selectedEditNodes:_editNodes];
       return;
     }
-    [self.editingFolderCell stopEdit];
     if (node->is_folder()) {
+      // if editing folder name, cancel it.
+      if (_editingFolderNode) {
+        _editingFolderNode = NULL;
+        self.editingFolderCell = nil;
+        self.addingNewFolder = NO;
+        [self refreshContents];
+      }
       [self.delegate bookmarkTableView:self selectedFolderForNavigation:node];
     } else {
       // Open URL. Pass this to the delegate.
@@ -635,9 +639,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   }
 
   const BookmarkNode* node = [self nodeAtIndexPath:indexPath];
-  // Disable the long press gesture if it is a permanent node (not an URL or
-  // Folder).
-  if (!node || ![self isUrlOrFolder:node]) {
+  if (!node) {
     return;
   }
 
@@ -697,7 +699,6 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
   [self cancelAllFaviconLoads];
   [self.delegate bookmarkTableViewRefreshContextBar:self];
-  [self.editingFolderCell stopEdit];
   [self.tableView reloadData];
   if (self.editing && !_editNodes.empty()) {
     [self restoreRowSelection];
@@ -937,11 +938,6 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
                                         base::BindBlockArc(faviconBlock),
                                         &_faviconTaskTracker);
   _faviconLoadTasks[IntegerPair(indexPath.section, indexPath.item)] = taskId;
-}
-
-- (BOOL)isUrlOrFolder:(const BookmarkNode*)node {
-  return node->type() == BookmarkNode::URL ||
-         node->type() == BookmarkNode::FOLDER;
 }
 
 #pragma mark - Keyboard

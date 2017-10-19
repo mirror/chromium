@@ -36,7 +36,6 @@ namespace blink {
 
 class AbstractInlineTextBox;
 class InlineTextBox;
-class NGOffsetMappingResult;
 
 // LayoutText is the root class for anything that represents
 // a text node (see core/dom/Text.h).
@@ -187,6 +186,7 @@ class CORE_EXPORT LayoutText : public LayoutObject {
 
   virtual void TransformText();
 
+  bool CanBeSelectionLeaf() const override { return true; }
   void SetSelectionState(SelectionState) final;
   LayoutRect LocalSelectionRect() const final;
   LayoutRect LocalCaretRect(
@@ -201,19 +201,9 @@ class CORE_EXPORT LayoutText : public LayoutObject {
   // whitespace) output.
   bool HasTextBoxes() const { return FirstTextBox(); }
 
-  // Returns true if the offset (0-based in the |text_| string) is next to a
-  // non-collapsed non-linebreak character, or before a forced linebreak (<br>,
-  // or segment break in node with style white-space: pre/pre-line/pre-wrap).
-  // TODO(editing-dev): The behavior is introduced by crrev.com/e3eb4e in
-  // InlineTextBox::ContainsCaretOffset(). Try to understand it.
-  bool ContainsCaretOffset(int) const;
-
   int CaretMinOffset() const override;
   int CaretMaxOffset() const override;
-  virtual unsigned ResolvedTextLength() const;
-
-  // True if any character remains after CSS white-space collapsing.
-  bool HasNonCollapsedText() const;
+  unsigned ResolvedTextLength() const;
 
   bool ContainsReversedText() const { return contains_reversed_text_; }
 
@@ -258,11 +248,6 @@ class CORE_EXPORT LayoutText : public LayoutObject {
       unsigned short length);  // Subclassed by SVG.
 
   void InvalidateDisplayItemClients(PaintInvalidationReason) const override;
-
-  bool ShouldUseNGAlternatives() const;
-  const NGOffsetMappingResult& GetNGOffsetMapping() const;
-
-  bool CanBeSelectionLeafInternal() const final { return true; }
 
  private:
   void ComputePreferredLogicalWidths(float lead_width);

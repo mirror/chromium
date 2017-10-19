@@ -238,11 +238,9 @@ bool V8ScriptValueSerializer::WriteDOMObject(ScriptWrappable* wrappable,
     WriteUint32Enum(color_params.GetSerializedColorSpace());
     WriteUint32Enum(ImageSerializationTag::kCanvasPixelFormatTag);
     WriteUint32Enum(color_params.GetSerializedPixelFormat());
-    WriteUint32Enum(ImageSerializationTag::kCanvasOpacityModeTag);
-    WriteUint32Enum(color_params.GetSerializedOpacityMode());
-    WriteUint32Enum(ImageSerializationTag::kOriginCleanTag);
+    WriteUint32Enum(ImageSerializationTag::kOriginClean);
     WriteUint32(image_bitmap->OriginClean());
-    WriteUint32Enum(ImageSerializationTag::kIsPremultipliedTag);
+    WriteUint32Enum(ImageSerializationTag::kIsPremultiplied);
     WriteUint32(image_bitmap->IsPremultiplied());
     WriteUint32Enum(ImageSerializationTag::kEndTag);
     WriteUint32(image_bitmap->width());

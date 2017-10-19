@@ -94,7 +94,7 @@ class FormSubmission : public GarbageCollectedFinalized<FormSubmission> {
                                 const Attributes&,
                                 Event*,
                                 HTMLFormControlElement* submit_button);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   FrameLoadRequest CreateFrameLoadRequest(Document* origin_document);
 

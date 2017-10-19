@@ -218,7 +218,7 @@ void ScrollbarTheme::PaintScrollCorner(
 #else
   Platform::Current()->ThemeEngine()->Paint(
       context.Canvas(), WebThemeEngine::kPartScrollbarCorner,
-      WebThemeEngine::kStateNormal, WebRect(corner_rect), nullptr);
+      WebThemeEngine::kStateNormal, WebRect(corner_rect), 0);
 #endif
 }
 

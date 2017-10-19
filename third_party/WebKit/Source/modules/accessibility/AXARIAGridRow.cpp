@@ -108,7 +108,7 @@ AXObject* AXARIAGridRow::ParentTable() const {
   return ancestor;
 }
 
-void AXARIAGridRow::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AXARIAGridRow) {
   visitor->Trace(cells_);
   AXTableRow::Trace(visitor);
 }

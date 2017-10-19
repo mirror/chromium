@@ -22,7 +22,7 @@ void Resource::SetUIResource(std::unique_ptr<cc::ScopedUIResource> ui_resource,
 }
 
 std::unique_ptr<Resource> Resource::CreateForCopy() {
-  return std::make_unique<Resource>();
+  return base::MakeUnique<Resource>();
 }
 
 size_t Resource::EstimateMemoryUsage() const {

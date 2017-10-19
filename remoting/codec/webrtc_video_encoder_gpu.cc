@@ -57,14 +57,8 @@ void WebrtcVideoEncoderGpu::Encode(std::unique_ptr<webrtc::DesktopFrame> frame,
   DCHECK_GT(params.duration, base::TimeDelta::FromMilliseconds(0));
 
   if (state_ == INITIALIZATION_ERROR) {
-    // TODO(zijiehe): The screen resolution limitation of H264 encoder is much
-    // smaller (3840x2176) than VP8 (16k x 16k) or VP9 (65k x 65k). It's more
-    // likely the initialization may fail by using H264 encoder. We should
-    // provide a way to tell the WebrtcVideoStream to stop the video stream.
     DLOG(ERROR) << "Encoder failed to initialize; dropping encode request";
-    // Initialization fails only when the input frame size exceeds the
-    // limitation.
-    std::move(done).Run(EncodeResult::FRAME_SIZE_EXCEEDS_CAPABILITY, nullptr);
+    std::move(done).Run(nullptr);
     return;
   }
 
@@ -104,17 +98,11 @@ void WebrtcVideoEncoderGpu::Encode(std::unique_ptr<webrtc::DesktopFrame> frame,
   video_frame->set_timestamp(new_timestamp);
   previous_timestamp_ = new_timestamp;
 
-  // H264 encoder on Windows supports only I420.
   ArgbToI420(*frame, video_frame);
 
   callbacks_[video_frame->timestamp()] = std::move(done);
 
-  if (params.bitrate_kbps > 0) {
-    // TODO(zijiehe): Forward frame_rate from FrameParams.
-    video_encode_accelerator_->RequestEncodingParametersChange(
-        params.bitrate_kbps * 1024, 30);
-  }
-  video_encode_accelerator_->Encode(video_frame, params.key_frame);
+  video_encode_accelerator_->Encode(video_frame, /*force_keyframe=*/false);
 }
 
 void WebrtcVideoEncoderGpu::RequireBitstreamBuffers(
@@ -138,7 +126,8 @@ void WebrtcVideoEncoderGpu::RequireBitstreamBuffers(
   for (unsigned int i = 0; i < kWebrtcVideoEncoderGpuOutputBufferCount; ++i) {
     auto shm = base::MakeUnique<base::SharedMemory>();
     // TODO(gusss): Do we need to handle mapping failure more gracefully?
-    CHECK(shm->CreateAndMapAnonymous(output_buffer_size_));
+    // LOG_ASSERT will simply cause a crash.
+    LOG_ASSERT(shm->CreateAndMapAnonymous(output_buffer_size_));
     output_buffers_.push_back(std::move(shm));
   }
 
@@ -147,7 +136,9 @@ void WebrtcVideoEncoderGpu::RequireBitstreamBuffers(
   }
 
   state_ = INITIALIZED;
-  RunAnyPendingEncode();
+
+  if (pending_encode_)
+    std::move(pending_encode_).Run();
 }
 
 void WebrtcVideoEncoderGpu::BitstreamBufferReady(int32_t bitstream_buffer_id,
@@ -164,21 +155,18 @@ void WebrtcVideoEncoderGpu::BitstreamBufferReady(int32_t bitstream_buffer_id,
       base::MakeUnique<EncodedFrame>();
   base::SharedMemory* output_buffer =
       output_buffers_[bitstream_buffer_id].get();
-  DCHECK(output_buffer->memory());
   encoded_frame->data.assign(reinterpret_cast<char*>(output_buffer->memory()),
                              payload_size);
   encoded_frame->key_frame = key_frame;
   encoded_frame->size = webrtc::DesktopSize(input_coded_size_.width(),
                                             input_coded_size_.height());
-  encoded_frame->quantizer = 0;
 
   UseOutputBitstreamBufferId(bitstream_buffer_id);
 
   auto callback_it = callbacks_.find(timestamp);
   DCHECK(callback_it != callbacks_.end())
       << "Callback not found for timestamp " << timestamp;
-  std::move(std::get<1>(*callback_it)).Run(
-      EncodeResult::SUCCEEDED, std::move(encoded_frame));
+  std::move(std::get<1>(*callback_it)).Run(std::move(encoded_frame));
   callbacks_.erase(timestamp);
 }
 
@@ -192,10 +180,8 @@ void WebrtcVideoEncoderGpu::BeginInitialization() {
 
   media::VideoPixelFormat input_format =
       media::VideoPixelFormat::PIXEL_FORMAT_I420;
-  // TODO(zijiehe): implement some logical way to set an initial bitrate.
-  // Currently we set the bitrate to 8M bits / 1M bytes per frame, and 30 frames
-  // per second.
-  uint32_t initial_bitrate = 30 * 1024 * 1024 * 8;
+  // TODO(gusss): implement some logical way to set an initial bitrate.
+  uint32_t initial_bitrate = 8 * 1024 * 8;
   gpu::GpuPreferences gpu_preferences;
 
   video_encode_accelerator_ =
@@ -206,7 +192,6 @@ void WebrtcVideoEncoderGpu::BeginInitialization() {
   if (!video_encode_accelerator_) {
     LOG(ERROR) << "Could not create VideoEncodeAccelerator";
     state_ = INITIALIZATION_ERROR;
-    RunAnyPendingEncode();
     return;
   }
 
@@ -217,24 +202,18 @@ void WebrtcVideoEncoderGpu::UseOutputBitstreamBufferId(
     int32_t bitstream_buffer_id) {
   DVLOG(3) << __func__ << " id=" << bitstream_buffer_id;
   video_encode_accelerator_->UseOutputBitstreamBuffer(media::BitstreamBuffer(
-      bitstream_buffer_id,
-      output_buffers_[bitstream_buffer_id]->handle().Duplicate(),
+      bitstream_buffer_id, output_buffers_[bitstream_buffer_id]->handle(),
       output_buffer_size_));
-}
-
-void WebrtcVideoEncoderGpu::RunAnyPendingEncode() {
-  if (pending_encode_)
-    std::move(pending_encode_).Run();
 }
 
 // static
 std::unique_ptr<WebrtcVideoEncoderGpu> WebrtcVideoEncoderGpu::CreateForH264() {
   DVLOG(3) << __func__;
 
-  // HIGH profile requires Windows 8 or upper. Considering encoding latency,
-  // frame size and image quality, MAIN should be fine for us.
+  // TODO(gusss): what profile should be picked here? Currently, baseline was
+  // chosen arbitrarily.
   return base::WrapUnique(new WebrtcVideoEncoderGpu(
-      media::VideoCodecProfile::H264PROFILE_MAIN));
+      media::VideoCodecProfile::H264PROFILE_BASELINE));
 }
 
 }  // namespace remoting

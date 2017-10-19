@@ -457,7 +457,7 @@ TestRunner.deprecatedRunAfterPendingDispatches = function(callback) {
  * @return {!Promise<undefined>}
  */
 TestRunner.loadHTML = function(html) {
-  var testPath = TestRunner.url();
+  var testPath = TestRunner.url('');
   if (!html.includes('<base'))
     html = `<base href="${testPath}">` + html;
   html = html.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
@@ -503,18 +503,16 @@ TestRunner.addStylesheetTag = function(path) {
     })();
   `);
 };
+
 /**
  * @param {string} path
- * @param {!Object|undefined} options
  * @return {!Promise<!SDK.RemoteObject|undefined>}
  */
-TestRunner.addIframe = function(path, options = {}) {
-  options.id = options.id || '';
+TestRunner.addIframe = function(path) {
   return TestRunner.evaluateInPageAsync(`
     (function(){
       var iframe = document.createElement('iframe');
       iframe.src = '${path}';
-      iframe.id = '${options.id}';
       document.body.appendChild(iframe);
       return new Promise(f => iframe.onload = f);
     })();
@@ -569,16 +567,6 @@ TestRunner.formatters = {};
  */
 TestRunner.formatters.formatAsTypeName = function(value) {
   return '<' + typeof value + '>';
-};
-
-/**
- * @param {*} value
- * @return {string}
- */
-TestRunner.formatters.formatAsTypeNameOrNull = function(value) {
-  if (value === null)
-    return 'null';
-  return TestRunner.formatters.formatAsTypeName(value);
 };
 
 /**
@@ -909,22 +897,15 @@ TestRunner.runWhenPageLoads = function(callback) {
 /**
  * @param {!Array<function(function():void)>} testSuite
  */
-TestRunner.runTestSuite = function(testSuite) {
-  var testSuiteTests = testSuite.slice();
-
-  function runner() {
-    if (!testSuiteTests.length) {
-      TestRunner.completeTest();
-      return;
-    }
-    var nextTest = testSuiteTests.shift();
+TestRunner.runTestSuite = async function(testSuite) {
+  for (var test of testSuite) {
     TestRunner.addResult('');
     TestRunner.addResult(
         'Running: ' +
-        /function\s([^(]*)/.exec(nextTest)[1]);
-    TestRunner.safeWrap(nextTest)(runner);
+        /function\s([^(]*)/.exec(test)[1]);
+    await new Promise(fulfill => TestRunner.safeWrap(test)(fulfill));
   }
-  runner();
+  TestRunner.completeTest();
 };
 
 /**
@@ -1064,8 +1045,7 @@ TestRunner.MockSetting = class {
  * @return {!Array<!Runtime.Module>}
  */
 TestRunner.loadedModules = function() {
-  return self.runtime._modules.filter(module => module._loadedForTest)
-      .filter(module => module.name().indexOf('test_runner') === -1);
+  return self.runtime._modules.filter(module => module._loadedForTest);
 };
 
 /**
@@ -1155,18 +1135,12 @@ TestRunner.waitForUISourceCodeRemoved = function(callback) {
 };
 
 /**
- * @param {string=} url
+ * @param {string} relativeURL
  * @return {string}
  */
-TestRunner.url = function(url = '') {
-  // TODO(chenwilliam): only new-style tests will have a test queryParam;
-  // remove inspectedURL() after all tests have been migrated to new test framework.
-  var testScriptURL =
-      /** @type {string} */ (Runtime.queryParam('test')) || SDK.targetManager.mainTarget().inspectedURL();
-
-  // This handles relative (e.g. "../file"), root (e.g. "/resource"),
-  // absolute (e.g. "http://", "data:") and empty (e.g. "") paths
-  return new URL(url, testScriptURL + '/../').href;
+TestRunner.url = function(relativeURL) {
+  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
+  return new URL(testScriptURL + '/../' + relativeURL).href;
 };
 
 /**
@@ -1223,7 +1197,7 @@ TestRunner.TestObserver = class {
 };
 
 TestRunner.runTest = async function() {
-  var testPath = TestRunner.url();
+  var testPath = TestRunner.url('');
   await TestRunner.loadHTML(`
     <head>
       <base href="${testPath}">
@@ -1234,9 +1208,7 @@ TestRunner.runTest = async function() {
   TestRunner.executeTestScript();
 };
 
-// Old-style tests start test using inspector-test.js
-if (Runtime.queryParam('test'))
-  SDK.targetManager.observeTargets(new TestRunner.TestObserver());
+SDK.targetManager.observeTargets(new TestRunner.TestObserver());
 
 (function() {
 /**

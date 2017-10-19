@@ -31,7 +31,7 @@
 #include "platform/weborigin/SecurityOrigin.h"
 
 #include "platform/blob/BlobURL.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/weborigin/Suborigin.h"
@@ -202,7 +202,8 @@ TEST_F(SecurityOriginTest, IsSecure) {
   };
 
   for (auto test : inputs)
-    EXPECT_EQ(test.is_secure, SecurityOrigin::IsSecure(KURL(test.url)))
+    EXPECT_EQ(test.is_secure,
+              SecurityOrigin::IsSecure(KURL(kParsedURLString, test.url)))
         << "URL: '" << test.url << "'";
 
   EXPECT_FALSE(SecurityOrigin::IsSecure(NullURL()));
@@ -214,7 +215,7 @@ TEST_F(SecurityOriginTest, IsSecureViaTrustworthy) {
                         "http://[::1]/"};
 
   for (const char* test : urls) {
-    KURL url(test);
+    KURL url(kParsedURLString, test);
     EXPECT_FALSE(SecurityOrigin::IsSecure(url));
     SecurityPolicy::AddOriginTrustworthyWhiteList(*SecurityOrigin::Create(url));
     EXPECT_TRUE(SecurityOrigin::IsSecure(url));
@@ -222,7 +223,7 @@ TEST_F(SecurityOriginTest, IsSecureViaTrustworthy) {
 }
 
 TEST_F(SecurityOriginTest, Suborigins) {
-  ScopedSuboriginsForTest suborigins(true);
+  RuntimeEnabledFeatures::SetSuboriginsEnabled(true);
 
   RefPtr<SecurityOrigin> origin =
       SecurityOrigin::CreateFromString("https://test.com");
@@ -267,7 +268,7 @@ TEST_F(SecurityOriginTest, Suborigins) {
 }
 
 TEST_F(SecurityOriginTest, SuboriginsParsing) {
-  ScopedSuboriginsForTest suborigins(true);
+  RuntimeEnabledFeatures::SetSuboriginsEnabled(true);
   String protocol, real_protocol, host, real_host, suborigin;
   protocol = "https";
   host = "test.com";
@@ -309,7 +310,7 @@ TEST_F(SecurityOriginTest, SuboriginsParsing) {
 }
 
 TEST_F(SecurityOriginTest, SuboriginsIsSameSchemeHostPortAndSuborigin) {
-  ScopedSuboriginsForTest suborigins(true);
+  blink::RuntimeEnabledFeatures::SetSuboriginsEnabled(true);
   RefPtr<SecurityOrigin> origin =
       SecurityOrigin::CreateFromString("https-so://foobar.test.com");
   RefPtr<SecurityOrigin> other1 =
@@ -329,7 +330,7 @@ TEST_F(SecurityOriginTest, SuboriginsIsSameSchemeHostPortAndSuborigin) {
 }
 
 TEST_F(SecurityOriginTest, CanAccess) {
-  ScopedSuboriginsForTest suborigins(true);
+  RuntimeEnabledFeatures::SetSuboriginsEnabled(true);
 
   struct TestCase {
     bool can_access;
@@ -355,7 +356,7 @@ TEST_F(SecurityOriginTest, CanAccess) {
 }
 
 TEST_F(SecurityOriginTest, CanRequest) {
-  ScopedSuboriginsForTest suborigins(true);
+  RuntimeEnabledFeatures::SetSuboriginsEnabled(true);
 
   struct TestCase {
     bool can_request;
@@ -374,7 +375,7 @@ TEST_F(SecurityOriginTest, CanRequest) {
   for (size_t i = 0; i < WTF_ARRAY_LENGTH(tests); ++i) {
     RefPtr<SecurityOrigin> origin =
         SecurityOrigin::CreateFromString(tests[i].origin);
-    blink::KURL url(tests[i].url);
+    blink::KURL url(blink::kParsedURLString, tests[i].url);
     EXPECT_EQ(tests[i].can_request, origin->CanRequest(url));
     EXPECT_EQ(tests[i].can_request_no_suborigin,
               origin->CanRequestNoSuborigin(url));

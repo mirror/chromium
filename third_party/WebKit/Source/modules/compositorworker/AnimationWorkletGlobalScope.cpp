@@ -27,8 +27,7 @@ class ScopedAnimatorsSweeper {
 
  public:
   using AnimatorMap = HeapHashMap<int, TraceWrapperMember<Animator>>;
-  explicit ScopedAnimatorsSweeper(AnimatorMap& animators)
-      : animators_(animators) {
+  explicit ScopedAnimatorsSweeper(AnimatorMap& animators) : animators_(animators) {
     for (const auto& entry : animators_) {
       Animator* animator = entry.value;
       animator->clear_did_animate();
@@ -57,25 +56,25 @@ class ScopedAnimatorsSweeper {
 AnimationWorkletGlobalScope* AnimationWorkletGlobalScope::Create(
     const KURL& url,
     const String& user_agent,
-    RefPtr<SecurityOrigin> document_security_origin,
+    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerThread* thread,
     WorkerClients* worker_clients) {
   return new AnimationWorkletGlobalScope(url, user_agent,
-                                         std::move(document_security_origin),
-                                         isolate, thread, worker_clients);
+                                         std::move(security_origin), isolate,
+                                         thread, worker_clients);
 }
 
 AnimationWorkletGlobalScope::AnimationWorkletGlobalScope(
     const KURL& url,
     const String& user_agent,
-    RefPtr<SecurityOrigin> document_security_origin,
+    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerThread* thread,
     WorkerClients* worker_clients)
     : ThreadedWorkletGlobalScope(url,
                                  user_agent,
-                                 std::move(document_security_origin),
+                                 std::move(security_origin),
                                  isolate,
                                  thread,
                                  worker_clients) {
@@ -86,7 +85,7 @@ AnimationWorkletGlobalScope::AnimationWorkletGlobalScope(
 
 AnimationWorkletGlobalScope::~AnimationWorkletGlobalScope() {}
 
-void AnimationWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationWorkletGlobalScope) {
   visitor->Trace(animator_definitions_);
   visitor->Trace(animators_);
   ThreadedWorkletGlobalScope::Trace(visitor);

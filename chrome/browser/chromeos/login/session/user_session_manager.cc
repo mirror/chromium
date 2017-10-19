@@ -69,6 +69,7 @@
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/google/google_brand_chromeos.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
+#include "chrome/browser/net/crl_set_fetcher.h"
 #include "chrome/browser/net/nss_context.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/profiles/profile.h"
@@ -97,7 +98,6 @@
 #include "chromeos/network/portal_detector/network_portal_detector_strategy.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/component_updater/component_updater_service.h"
-#include "components/component_updater/crl_set_component_installer.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/prefs/pref_member.h"
@@ -405,7 +405,6 @@ UserSessionManager::UserSessionManager()
       weak_factory_(this) {
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
   user_manager::UserManager::Get()->AddSessionStateObserver(this);
-  user_manager::UserManager::Get()->AddObserver(this);
 }
 
 UserSessionManager::~UserSessionManager() {
@@ -413,10 +412,8 @@ UserSessionManager::~UserSessionManager() {
   // still exists.
   // TODO(nkostylev): fix order of destruction of UserManager
   // / UserSessionManager objects.
-  if (user_manager::UserManager::IsInitialized()) {
+  if (user_manager::UserManager::IsInitialized())
     user_manager::UserManager::Get()->RemoveSessionStateObserver(this);
-    user_manager::UserManager::Get()->RemoveObserver(this);
-  }
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
 }
 
@@ -572,8 +569,7 @@ void UserSessionManager::RestoreAuthenticationSession(Profile* user_profile) {
 void UserSessionManager::RestoreActiveSessions() {
   user_sessions_restore_in_progress_ = true;
   DBusThreadManager::Get()->GetSessionManagerClient()->RetrieveActiveSessions(
-      base::BindOnce(&UserSessionManager::OnRestoreActiveSessions,
-                     AsWeakPtr()));
+      base::Bind(&UserSessionManager::OnRestoreActiveSessions, AsWeakPtr()));
 }
 
 bool UserSessionManager::UserSessionsRestored() const {
@@ -945,25 +941,6 @@ void UserSessionManager::OnProfilePrepared(Profile* profile,
   RestorePendingUserSessions();
 }
 
-void UserSessionManager::OnUsersSignInConstraintsChanged() {
-  const user_manager::UserManager* user_manager =
-      user_manager::UserManager::Get();
-  const user_manager::UserList& logged_in_users =
-      user_manager->GetLoggedInUsers();
-  for (auto* user : logged_in_users) {
-    if (user->GetType() != user_manager::USER_TYPE_REGULAR &&
-        user->GetType() != user_manager::USER_TYPE_GUEST &&
-        user->GetType() != user_manager::USER_TYPE_SUPERVISED &&
-        user->GetType() != user_manager::USER_TYPE_CHILD) {
-      continue;
-    }
-    if (!user_manager->IsUserAllowed(*user)) {
-      LOG(ERROR) << "The current user is not allowed, terminating the session.";
-      chrome::AttemptUserExit();
-    }
-  }
-}
-
 void UserSessionManager::ChildAccountStatusReceivedCallback(Profile* profile) {
   StopChildStatusObserving(profile);
 }
@@ -1218,22 +1195,13 @@ void UserSessionManager::CompleteProfileCreateAfterAuthTransfer(
 void UserSessionManager::PrepareTpmDeviceAndFinalizeProfile(Profile* profile) {
   BootTimesRecorder::Get()->AddLoginTimeMarker("TPMOwn-Start", false);
 
+  // Own TPM device if, for any reason, it has not been done in EULA screen.
   if (!cryptohome_util::TpmIsEnabled() || cryptohome_util::TpmIsBeingOwned()) {
     FinalizePrepareProfile(profile);
     return;
   }
 
-  // Make sure TPM ownership gets established and the owner password cleared
-  // (if no longer needed) whenever a user logs in. This is so the TPM is in
-  // locked down state after initial setup, which ensures that some decisions
-  // (e.g. NVRAM spaces) are unchangeable until next hardware reset (powerwash,
-  // recovery, etc.).
-  //
-  // Ownership is normally taken when showing the EULA screen, but in case
-  // this gets interrupted TPM ownership might not be established yet. The code
-  // here runs on every login and ensures that the TPM gets into the desired
-  // state eventually.
-  auto callback =
+  VoidDBusMethodCallback callback =
       base::BindOnce(&UserSessionManager::OnCryptohomeOperationCompleted,
                      AsWeakPtr(), profile);
   CryptohomeClient* client = DBusThreadManager::Get()->GetCryptohomeClient();
@@ -1243,9 +1211,10 @@ void UserSessionManager::PrepareTpmDeviceAndFinalizeProfile(Profile* profile) {
     client->TpmCanAttemptOwnership(std::move(callback));
 }
 
-void UserSessionManager::OnCryptohomeOperationCompleted(Profile* profile,
-                                                        bool result) {
-  DCHECK(result);
+void UserSessionManager::OnCryptohomeOperationCompleted(
+    Profile* profile,
+    DBusMethodCallStatus call_status) {
+  DCHECK_EQ(DBUS_METHOD_CALL_SUCCESS, call_status);
   FinalizePrepareProfile(profile);
 }
 
@@ -1538,8 +1507,9 @@ void UserSessionManager::InitializeCRLSetFetcher(
     path = ProfileHelper::GetProfilePathByUserIdHash(username_hash);
     component_updater::ComponentUpdateService* cus =
         g_browser_process->component_updater();
-    if (cus)
-      component_updater::RegisterCRLSetComponent(cus, path);
+    CRLSetFetcher* crl_set = g_browser_process->crl_set_fetcher();
+    if (crl_set && cus)
+      crl_set->StartInitialLoad(cus, path);
   }
 }
 
@@ -1557,8 +1527,9 @@ void UserSessionManager::InitializeCertificateTransparencyComponents(
 }
 
 void UserSessionManager::OnRestoreActiveSessions(
-    base::Optional<SessionManagerClient::ActiveSessionsMap> sessions) {
-  if (!sessions.has_value()) {
+    const SessionManagerClient::ActiveSessionsMap& sessions,
+    bool success) {
+  if (!success) {
     LOG(ERROR) << "Could not get list of active user sessions after crash.";
     // If we could not get list of active user sessions it is safer to just
     // sign out so that we don't get in the inconsistent state.
@@ -1570,13 +1541,14 @@ void UserSessionManager::OnRestoreActiveSessions(
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
   DCHECK_EQ(1u, user_manager->GetLoggedInUsers().size());
   DCHECK(user_manager->GetActiveUser());
-  const cryptohome::Identification active_cryptohome_id(
-      user_manager->GetActiveUser()->GetAccountId());
+  const cryptohome::Identification active_cryptohome_id =
+      cryptohome::Identification(user_manager->GetActiveUser()->GetAccountId());
 
-  for (auto& item : sessions.value()) {
-    if (active_cryptohome_id == item.first)
+  SessionManagerClient::ActiveSessionsMap::const_iterator it;
+  for (it = sessions.begin(); it != sessions.end(); ++it) {
+    if (active_cryptohome_id == it->first)
       continue;
-    pending_user_sessions_[item.first.GetAccountId()] = std::move(item.second);
+    pending_user_sessions_[(it->first).GetAccountId()] = it->second;
   }
   RestorePendingUserSessions();
 }

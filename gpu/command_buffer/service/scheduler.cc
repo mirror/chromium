@@ -8,7 +8,6 @@
 
 #include "base/callback.h"
 #include "base/containers/circular_deque.h"
-#include "base/containers/flat_set.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
@@ -85,10 +84,6 @@ class Scheduler::Sequence {
   // Remove a release sync token fence.
   void RemoveReleaseFence(const SyncToken& sync_token, uint32_t order_num);
 
-  void AddClientWait(CommandBufferId command_buffer_id);
-
-  void RemoveClientWait(CommandBufferId command_buffer_id);
-
  private:
   enum RunningState { IDLE, SCHEDULED, RUNNING };
 
@@ -140,8 +135,6 @@ class Scheduler::Sequence {
   // non-empty, the priority of the sequence is raised.
   std::vector<Fence> release_fences_;
 
-  base::flat_set<CommandBufferId> client_waits_;
-
   DISALLOW_COPY_AND_ASSIGN(Sequence);
 };
 
@@ -182,10 +175,9 @@ Scheduler::Sequence::~Sequence() {
 }
 
 SchedulingPriority Scheduler::Sequence::GetSchedulingPriority() const {
-  SchedulingPriority priority = priority_;
-  if (!release_fences_.empty() || !client_waits_.empty())
-    priority = std::min(priority, SchedulingPriority::kHigh);
-  return priority;
+  if (!release_fences_.empty())
+    return std::min(priority_, SchedulingPriority::kHigh);
+  return priority_;
 }
 
 bool Scheduler::Sequence::NeedsRescheduling() const {
@@ -210,13 +202,6 @@ void Scheduler::Sequence::SetEnabled(bool enabled) {
     return;
   DCHECK_EQ(running_state_, enabled ? IDLE : RUNNING);
   enabled_ = enabled;
-  if (enabled) {
-    TRACE_EVENT_ASYNC_BEGIN1("gpu", "SequenceEnabled", this, "sequence_id",
-                             sequence_id_.GetUnsafeValue());
-  } else {
-    TRACE_EVENT_ASYNC_END1("gpu", "SequenceEnabled", this, "sequence_id",
-                           sequence_id_.GetUnsafeValue());
-  }
 }
 
 Scheduler::SchedulingState Scheduler::Sequence::SetScheduled() {
@@ -289,14 +274,6 @@ void Scheduler::Sequence::RemoveReleaseFence(const SyncToken& sync_token,
   base::Erase(release_fences_, Fence{sync_token, order_num});
 }
 
-void Scheduler::Sequence::AddClientWait(CommandBufferId command_buffer_id) {
-  client_waits_.insert(command_buffer_id);
-}
-
-void Scheduler::Sequence::RemoveClientWait(CommandBufferId command_buffer_id) {
-  client_waits_.erase(command_buffer_id);
-}
-
 Scheduler::Scheduler(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                      SyncPointManager* sync_point_manager)
     : task_runner_(std::move(task_runner)),
@@ -316,7 +293,7 @@ SequenceId Scheduler::CreateSequence(SchedulingPriority priority) {
       sync_point_manager_->CreateSyncPointOrderData();
   SequenceId sequence_id = order_data->sequence_id();
   auto sequence =
-      std::make_unique<Sequence>(sequence_id, priority, std::move(order_data));
+      base::MakeUnique<Sequence>(sequence_id, priority, std::move(order_data));
   sequences_.emplace(sequence_id, std::move(sequence));
   return sequence_id;
 }
@@ -356,26 +333,6 @@ void Scheduler::DisableSequence(SequenceId sequence_id) {
   Sequence* sequence = GetSequence(sequence_id);
   DCHECK(sequence);
   sequence->SetEnabled(false);
-}
-
-void Scheduler::RaisePriorityForClientWait(SequenceId sequence_id,
-                                           CommandBufferId command_buffer_id) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  base::AutoLock auto_lock(lock_);
-  Sequence* sequence = GetSequence(sequence_id);
-  DCHECK(sequence);
-  sequence->AddClientWait(command_buffer_id);
-  TryScheduleSequence(sequence);
-}
-
-void Scheduler::ResetPriorityForClientWait(SequenceId sequence_id,
-                                           CommandBufferId command_buffer_id) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  base::AutoLock auto_lock(lock_);
-  Sequence* sequence = GetSequence(sequence_id);
-  DCHECK(sequence);
-  sequence->RemoveClientWait(command_buffer_id);
-  TryScheduleSequence(sequence);
 }
 
 void Scheduler::ScheduleTask(Task task) {

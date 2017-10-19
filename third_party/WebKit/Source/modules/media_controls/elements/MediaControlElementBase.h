@@ -51,7 +51,7 @@ class MODULES_EXPORT MediaControlElementBase : public GarbageCollectedMixin {
   // function and return true.
   virtual bool HasOverflowButton() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   MediaControlElementBase(MediaControlsImpl&,

@@ -140,7 +140,6 @@ inline bool DocumentMarkerController::PossiblyHasMarkers(
     // but that operation is more performance-sensitive than anywhere
     // PossiblyHasMarkers() is used.
     possibly_existing_marker_types_ = 0;
-    SetContext(nullptr);
     return false;
   }
 
@@ -149,12 +148,12 @@ inline bool DocumentMarkerController::PossiblyHasMarkers(
 
 DocumentMarkerController::DocumentMarkerController(Document& document)
     : possibly_existing_marker_types_(0), document_(&document) {
+  SetContext(&document);
 }
 
 void DocumentMarkerController::Clear() {
   markers_.clear();
   possibly_existing_marker_types_ = 0;
-  SetContext(nullptr);
 }
 
 void DocumentMarkerController::AddSpellingMarker(const EphemeralRange& range,
@@ -280,7 +279,6 @@ void DocumentMarkerController::AddMarkerInternal(
 void DocumentMarkerController::AddMarkerToNode(Node* node,
                                                DocumentMarker* new_marker) {
   possibly_existing_marker_types_.Add(new_marker->GetType());
-  SetContext(document_);
 
   Member<MarkerLists>& markers =
       markers_.insert(node, nullptr).stored_value->value;
@@ -381,10 +379,8 @@ void DocumentMarkerController::RemoveMarkersInternal(
 
   if (empty_lists_count == DocumentMarker::kMarkerTypeIndexesCount) {
     markers_.erase(node);
-    if (markers_.IsEmpty()) {
+    if (markers_.IsEmpty())
       possibly_existing_marker_types_ = 0;
-      SetContext(nullptr);
-    }
   }
 
   if (!doc_dirty)
@@ -580,7 +576,7 @@ void DocumentMarkerController::InvalidateRectsForAllTextMatchMarkers() {
   }
 }
 
-void DocumentMarkerController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentMarkerController) {
   visitor->Trace(markers_);
   visitor->Trace(document_);
   SynchronousMutationObserver::Trace(visitor);
@@ -642,9 +638,6 @@ void DocumentMarkerController::RemoveMarkersOfTypes(
   }
 
   possibly_existing_marker_types_.Remove(marker_types);
-  if (PossiblyHasMarkers(DocumentMarker::AllMarkers()))
-    return;
-  SetContext(nullptr);
 }
 
 void DocumentMarkerController::RemoveMarkersFromList(
@@ -688,10 +681,8 @@ void DocumentMarkerController::RemoveMarkersFromList(
 
   if (node_can_be_removed) {
     markers_.erase(iterator);
-    if (markers_.IsEmpty()) {
+    if (markers_.IsEmpty())
       possibly_existing_marker_types_ = 0;
-      SetContext(nullptr);
-    }
   }
 }
 

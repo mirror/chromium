@@ -58,7 +58,7 @@ class CORE_EXPORT TouchList final : public GarbageCollected<TouchList>,
 
   void Append(Touch* touch) { values_.push_back(touch); }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   TouchList() {}

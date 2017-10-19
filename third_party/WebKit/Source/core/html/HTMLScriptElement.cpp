@@ -233,7 +233,7 @@ Element* HTMLScriptElement::CloneElementWithoutAttributesAndChildren() {
                                false);
 }
 
-void HTMLScriptElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLScriptElement) {
   visitor->Trace(loader_);
   HTMLElement::Trace(visitor);
   ScriptElementBase::Trace(visitor);

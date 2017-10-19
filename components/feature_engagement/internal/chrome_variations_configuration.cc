@@ -41,7 +41,6 @@ const char kEventConfigKeyPrefix[] = "event_";
 const char kSessionRateKey[] = "session_rate";
 const char kSessionRateImpactKey[] = "session_rate_impact";
 const char kAvailabilityKey[] = "availability";
-const char kTrackingOnlyKey[] = "tracking_only";
 const char kIgnoredKeyPrefix[] = "x_";
 
 const char kEventConfigDataNameKey[] = "name";
@@ -49,8 +48,6 @@ const char kEventConfigDataComparatorKey[] = "comparator";
 const char kEventConfigDataWindowKey[] = "window";
 const char kEventConfigDataStorageKey[] = "storage";
 
-const char kTrackingOnlyTrue[] = "true";
-const char kTrackingOnlyFalse[] = "false";
 }  // namespace
 
 namespace feature_engagement {
@@ -264,21 +261,6 @@ bool ParseSessionRateImpact(const base::StringPiece& definition,
   return true;
 }
 
-bool ParseTrackingOnly(const base::StringPiece& definition,
-                       bool* tracking_only) {
-  // Since |tracking_only| is a primitive, ensure it set.
-  *tracking_only = false;
-
-  base::StringPiece trimmed_def =
-      base::TrimWhitespaceASCII(definition, base::TRIM_ALL);
-
-  if (base::LowerCaseEqualsASCII(trimmed_def, kTrackingOnlyTrue)) {
-    *tracking_only = true;
-    return true;
-  }
-
-  return base::LowerCaseEqualsASCII(trimmed_def, kTrackingOnlyFalse);
-}
 }  // namespace
 
 ChromeVariationsConfiguration::ChromeVariationsConfiguration() = default;
@@ -355,15 +337,6 @@ void ChromeVariationsConfiguration::ParseFeatureConfig(
         continue;
       }
       config.session_rate_impact = impact;
-    } else if (key == kTrackingOnlyKey) {
-      bool tracking_only;
-      if (!ParseTrackingOnly(params[key], &tracking_only)) {
-        stats::RecordConfigParsingEvent(
-            stats::ConfigParsingEvent::FAILURE_TRACKING_ONLY_PARSE);
-        ++parse_errors;
-        continue;
-      }
-      config.tracking_only = tracking_only;
     } else if (key == kAvailabilityKey) {
       Comparator comparator;
       if (!ParseComparator(params[key], &comparator)) {

@@ -22,12 +22,12 @@ ApiResourceManager<LogSourceResource>::GetFactoryInstance() {
 
 LogSourceResource::LogSourceResource(
     const std::string& extension_id,
-    std::unique_ptr<system_logs::SystemLogsSource> source)
-    : ApiResource(extension_id), source_(source.release()) {}
+    std::unique_ptr<system_logs::SystemLogsSource> source,
+    base::Closure unregister_callback)
+    : ApiResource(extension_id),
+      source_(source.release()),
+      unregister_runner_(unregister_callback) {}
 
-LogSourceResource::~LogSourceResource() {
-  if (!unregister_callback_.is_null())
-    unregister_callback_.Run();
-}
+LogSourceResource::~LogSourceResource() {}
 
 }  // namespace extensions

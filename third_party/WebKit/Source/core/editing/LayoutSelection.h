@@ -67,24 +67,24 @@ class SelectionPaintRange {
 
   SelectionPaintRange() = default;
   SelectionPaintRange(LayoutObject* start_layout_object,
-                      base::Optional<int> start_offset,
+                      int start_offset,
                       LayoutObject* end_layout_object,
-                      base::Optional<int> end_offset);
+                      int end_offset);
 
   bool operator==(const SelectionPaintRange& other) const;
 
   LayoutObject* StartLayoutObject() const;
-  base::Optional<int> StartOffset() const;
+  int StartOffset() const;
   LayoutObject* EndLayoutObject() const;
-  base::Optional<int> EndOffset() const;
+  int EndOffset() const;
 
   bool IsNull() const { return !start_layout_object_; }
 
  private:
   LayoutObject* start_layout_object_ = nullptr;
-  base::Optional<int> start_offset_ = base::nullopt;
+  int start_offset_ = -1;
   LayoutObject* end_layout_object_ = nullptr;
-  base::Optional<int> end_offset_ = base::nullopt;
+  int end_offset_ = -1;
 };
 
 class LayoutSelection final : public GarbageCollected<LayoutSelection> {
@@ -105,7 +105,7 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   base::Optional<int> SelectionEnd() const;
   void OnDocumentShutdown();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   LayoutSelection(FrameSelection&);

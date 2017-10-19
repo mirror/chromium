@@ -66,7 +66,7 @@ class CORE_EXPORT CSSRule : public GarbageCollectedFinalized<CSSRule>,
 
   void SetParentRule(CSSRule*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   CSSStyleSheet* parentStyleSheet() const {

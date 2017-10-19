@@ -108,7 +108,7 @@ class InspectorRevalidateDOMTask final
   void ScheduleStyleAttrRevalidationFor(Element*);
   void Reset() { timer_.Stop(); }
   void OnTimer(TimerBase*);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   Member<InspectorDOMAgent> dom_agent_;
@@ -138,7 +138,7 @@ void InspectorRevalidateDOMTask::OnTimer(TimerBase*) {
   style_attr_invalidated_elements_.clear();
 }
 
-void InspectorRevalidateDOMTask::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorRevalidateDOMTask) {
   visitor->Trace(dom_agent_);
   visitor->Trace(style_attr_invalidated_elements_);
 }
@@ -755,7 +755,7 @@ Response InspectorDOMAgent::setAttributesAsText(int element_id,
     fragment->ParseHTML(markup, element->GetDocument().body(),
                         kAllowScriptingContent);
   else
-    fragment->ParseXML(markup, nullptr, kAllowScriptingContent);
+    fragment->ParseXML(markup, 0, kAllowScriptingContent);
 
   Element* parsed_element =
       fragment->firstChild() && fragment->firstChild()->IsElementNode()
@@ -838,7 +838,7 @@ Response InspectorDOMAgent::setNodeName(int node_id,
   // Copy over the original node's children.
   for (Node* child = old_element->firstChild(); child;
        child = old_element->firstChild()) {
-    response = dom_editor_->InsertBefore(new_elem, child, nullptr);
+    response = dom_editor_->InsertBefore(new_elem, child, 0);
     if (!response.isSuccess())
       return response;
   }
@@ -1516,10 +1516,8 @@ std::unique_ptr<protocol::DOM::Node> InspectorDOMAgent::BuildObjectForNode(
       force_push_children = true;
     }
     if (auto* slot = ToHTMLSlotElementOrNull(*element)) {
-      if (node->IsInShadowTree()) {
-        value->setDistributedNodes(BuildDistributedNodesForSlot(slot));
-        force_push_children = true;
-      }
+      value->setDistributedNodes(BuildDistributedNodesForSlot(slot));
+      force_push_children = true;
     }
   } else if (node->IsDocumentNode()) {
     Document* document = ToDocument(node);
@@ -2200,7 +2198,7 @@ Response InspectorDOMAgent::PushDocumentUponHandlelessOperation() {
   return Response::OK();
 }
 
-void InspectorDOMAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorDOMAgent) {
   visitor->Trace(dom_listener_);
   visitor->Trace(inspected_frames_);
   visitor->Trace(document_node_to_id_map_);

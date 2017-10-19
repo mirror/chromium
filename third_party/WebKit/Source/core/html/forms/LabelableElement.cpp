@@ -42,7 +42,7 @@ LabelsNodeList* LabelableElement::labels() {
   return EnsureCachedCollection<LabelsNodeList>(kLabelsNodeListType);
 }
 
-void LabelableElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LabelableElement) {
   HTMLElement::Trace(visitor);
 }
 

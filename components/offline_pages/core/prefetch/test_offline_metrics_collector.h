@@ -20,10 +20,6 @@ class TestOfflineMetricsCollector : public OfflineMetricsCollector {
   void OnAppStartupOrResume() override {}
   void OnSuccessfulNavigationOnline() override {}
   void OnSuccessfulNavigationOffline() override {}
-  void OnPrefetchEnabled() override {}
-  void OnHasPrefetchedPagesDetected() override {}
-  void OnSuccessfulPagePrefetch() override {}
-  void OnPrefetchedPageOpened() override {}
   void ReportAccumulatedStats() override {}
 };
 

@@ -83,8 +83,8 @@ TEST_F('CrExtensionsSidebarTest', 'LayoutAndClickHandlers', function() {
       .run();
 });
 
-TEST_F('CrExtensionsSidebarTest', 'SetSelected', function() {
-  mocha.grep(assert(extension_sidebar_tests.TestNames.SetSelected)).run();
+TEST_F('CrExtensionsSidebarTest', 'UpdateSelected', function() {
+  mocha.grep(assert(extension_sidebar_tests.TestNames.UpdateSelected)).run();
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -348,15 +348,22 @@ TEST_F(
     });
 
 TEST_F(
-    'CrExtensionsManagerTestWithMultipleExtensionTypesInstalled', 'SplitItems',
+    'CrExtensionsManagerTestWithMultipleExtensionTypesInstalled', 'ShowItems',
     function() {
-      mocha.grep(assert(extension_manager_tests.TestNames.SplitItems)).run();
+      mocha.grep(assert(extension_manager_tests.TestNames.ShowItems)).run();
     });
 
 TEST_F(
     'CrExtensionsManagerTestWithMultipleExtensionTypesInstalled', 'ChangePages',
     function() {
       mocha.grep(assert(extension_manager_tests.TestNames.ChangePages)).run();
+    });
+
+TEST_F(
+    'CrExtensionsManagerTestWithMultipleExtensionTypesInstalled',
+    'SidebarHighlighting', function() {
+      mocha.grep(assert(extension_manager_tests.TestNames.SidebarHighlighting))
+          .run();
     });
 
 TEST_F(
@@ -376,11 +383,6 @@ TEST_F('CrExtensionsManagerTest', 'UpdateItemData', function() {
 // Extension Keyboard Shortcuts Tests
 
 var CrExtensionsShortcutTest = class extends CrExtensionsBrowserTest {
-  /** @override */
-  get browsePreload() {
-    return 'chrome://extensions/keyboard_shortcuts.html';
-  }
-
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
@@ -453,11 +455,6 @@ TEST_F('CrExtensionsOptionsDialogTest', 'Layout', function() {
 
 var CrExtensionsErrorPageTest = class extends CrExtensionsBrowserTest {
   /** @override */
-  get browsePreload() {
-    return 'chrome://extensions/error_page.html';
-  }
-
-  /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
       'extension_error_page_test.js',
@@ -528,12 +525,6 @@ TEST_F('CrExtensionsNavigationHelperTest', 'PushAndReplaceState', function() {
   mocha
       .grep(assert(
           extension_navigation_helper_tests.TestNames.PushAndReplaceState))
-      .run();
-});
-
-TEST_F('CrExtensionsNavigationHelperTest', 'SupportedRoutes', function() {
-  mocha
-      .grep(assert(extension_navigation_helper_tests.TestNames.SupportedRoutes))
       .run();
 });
 

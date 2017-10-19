@@ -74,10 +74,6 @@ bool HeadlessBrowserContextOptions::incognito_mode() const {
                                browser_options_->incognito_mode);
 }
 
-bool HeadlessBrowserContextOptions::allow_cookies() const {
-  return ReturnOverriddenValue(allow_cookies_, browser_options_->allow_cookies);
-}
-
 const base::Callback<void(WebPreferences*)>&
 HeadlessBrowserContextOptions::override_web_preferences_callback() const {
   return ReturnOverriddenValue(

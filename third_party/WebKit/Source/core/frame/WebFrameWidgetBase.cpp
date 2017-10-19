@@ -268,7 +268,7 @@ void WebFrameWidgetBase::RequestDecode(const PaintImage& image,
   View()->RequestDecode(image, std::move(callback));
 }
 
-void WebFrameWidgetBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebFrameWidgetBase) {
   visitor->Trace(current_drag_data_);
 }
 

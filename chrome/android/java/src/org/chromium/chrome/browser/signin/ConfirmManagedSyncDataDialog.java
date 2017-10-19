@@ -30,12 +30,12 @@ public class ConfirmManagedSyncDataDialog extends DialogFragment
         /**
          * The user has accepted the dialog.
          */
-        void onConfirm();
+        public void onConfirm();
 
         /**
          * The user has cancelled the dialog either through a negative response or by dismissing it.
          */
-        void onCancel();
+        public void onCancel();
     }
 
     @VisibleForTesting

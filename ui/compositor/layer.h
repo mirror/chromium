@@ -276,7 +276,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // tree.
   static void ConvertPointToLayer(const Layer* source,
                                   const Layer* target,
-                                  gfx::PointF* point);
+                                  gfx::Point* point);
 
   // Converts a transform to be relative to the given |ancestor|. Returns
   // whether success (that is, whether the given ancestor was really an
@@ -314,13 +314,13 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
 
   // In the event that the primary surface is not yet available in the
   // display compositor, the fallback surface will be used.
-  void SetFallbackSurfaceId(const viz::SurfaceId& surface_id);
+  void SetFallbackSurface(const viz::SurfaceInfo& surface_info);
 
   // Returns the primary SurfaceInfo set by SetShowPrimarySurface.
   const viz::SurfaceInfo* GetPrimarySurfaceInfo() const;
 
-  // Returns the fallback SurfaceId set by SetFallbackSurfaceId.
-  const viz::SurfaceId* GetFallbackSurfaceId() const;
+  // Returns the fallback SurfaceInfo set by SetFallbackSurface.
+  const viz::SurfaceInfo* GetFallbackSurfaceInfo() const;
 
   bool has_external_content() {
     return texture_layer_.get() || surface_layer_.get();
@@ -438,8 +438,7 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   bool IsPaintDeferredForTesting() const { return deferred_paint_requests_; }
 
   // Request trilinear filtering for layer.
-  void AddTrilinearFilteringRequest();
-  void RemoveTrilinearFilteringRequest();
+  void SetTrilinearFiltering(bool trilinear_filtering);
 
   // The back link from the mask layer to it's associated masked layer.
   // We keep this reference for the case that if the mask layer gets deleted
@@ -456,9 +455,8 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // StackBelow().
   void StackRelativeTo(Layer* child, Layer* other, bool above);
 
-  bool ConvertPointForAncestor(const Layer* ancestor, gfx::PointF* point) const;
-  bool ConvertPointFromAncestor(const Layer* ancestor,
-                                gfx::PointF* point) const;
+  bool ConvertPointForAncestor(const Layer* ancestor, gfx::Point* point) const;
+  bool ConvertPointFromAncestor(const Layer* ancestor, gfx::Point* point) const;
 
   // Implementation of LayerAnimatorDelegate
   void SetBoundsFromAnimation(const gfx::Rect& bounds) override;
@@ -622,12 +620,6 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // value > 0, means we need to defer painting the layer. If the value == 0,
   // means we should paint the layer.
   unsigned deferred_paint_requests_;
-
-  // The counter to maintain how many trilinear filtering requests we have. If
-  // the value > 0, means we need to perform trilinear filtering on the layer.
-  // If the value == 0, means we should not perform trilinear filtering on the
-  // layer.
-  unsigned trilinear_filtering_request_;
 
   DISALLOW_COPY_AND_ASSIGN(Layer);
 };

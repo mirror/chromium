@@ -164,9 +164,9 @@ Bindings.ContentProviderBasedProject = class extends Workspace.ProjectStore {
    * @param {string} path
    * @param {?string} name
    * @param {string} content
-   * @return {!Promise<?Workspace.UISourceCode>}
+   * @param {function(?Workspace.UISourceCode)} callback
    */
-  createFile(path, name, content) {
+  createFile(path, name, content, callback) {
   }
 
   /**

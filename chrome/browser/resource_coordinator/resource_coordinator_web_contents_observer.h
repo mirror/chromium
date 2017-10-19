@@ -45,7 +45,6 @@ class ResourceCoordinatorWebContentsObserver
   void EnsureUkmRecorderInterface();
   void MaybeSetUkmRecorderInterface(bool ukm_recorder_already_initialized);
   void UpdateUkmRecorder(int64_t navigation_id);
-  ukm::SourceId ukm_source_id() const { return ukm_source_id_; }
 
  private:
   explicit ResourceCoordinatorWebContentsObserver(
@@ -60,7 +59,7 @@ class ResourceCoordinatorWebContentsObserver
 
   std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
       page_resource_coordinator_;
-  ukm::SourceId ukm_source_id_ = ukm::kInvalidSourceId;
+  ukm::SourceId ukm_source_id_;
 
   // Favicon and title are set when a page is loaded, we only want to send
   // signals to GRC about title and favicon update from the previous title and

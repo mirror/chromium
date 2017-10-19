@@ -12,7 +12,6 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/gpu/content_gpu_client.h"
-#include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/config/gpu_info_collector.h"
 #include "gpu/config/gpu_util.h"
 #include "gpu/ipc/service/gpu_init.h"
@@ -28,13 +27,10 @@
 
 namespace content {
 
-InProcessGpuThread::InProcessGpuThread(
-    const InProcessChildThreadParams& params,
-    const gpu::GpuPreferences& gpu_preferences)
+InProcessGpuThread::InProcessGpuThread(const InProcessChildThreadParams& params)
     : base::Thread("Chrome_InProcGpuThread"),
       params_(params),
-      gpu_process_(NULL),
-      gpu_preferences_(gpu_preferences) {}
+      gpu_process_(NULL) {}
 
 InProcessGpuThread::~InProcessGpuThread() {
   Stop();
@@ -58,7 +54,6 @@ void InProcessGpuThread::Init() {
   auto gpu_init = std::make_unique<gpu::GpuInit>();
   auto* client = GetContentClient()->gpu();
   gpu_init->InitializeInProcess(base::CommandLine::ForCurrentProcess(),
-                                gpu_preferences_,
                                 client ? client->GetGPUInfo() : nullptr,
                                 client ? client->GetGpuFeatureInfo() : nullptr);
 
@@ -82,9 +77,8 @@ void InProcessGpuThread::CleanUp() {
 }
 
 base::Thread* CreateInProcessGpuThread(
-    const InProcessChildThreadParams& params,
-    const gpu::GpuPreferences& gpu_preferences) {
-  return new InProcessGpuThread(params, gpu_preferences);
+    const InProcessChildThreadParams& params) {
+  return new InProcessGpuThread(params);
 }
 
 }  // namespace content

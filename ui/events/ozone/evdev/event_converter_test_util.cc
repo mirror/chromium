@@ -123,11 +123,11 @@ class TestEventFactoryEvdev : public EventFactoryEvdev {
 
 std::unique_ptr<DeviceEventDispatcherEvdev>
 CreateDeviceEventDispatcherEvdevForTest(EventFactoryEvdev* event_factory) {
-  return std::make_unique<TestDeviceEventDispatcherEvdev>(event_factory);
+  return base::MakeUnique<TestDeviceEventDispatcherEvdev>(event_factory);
 }
 
 std::unique_ptr<DeviceManager> CreateDeviceManagerForTest() {
-  return std::make_unique<TestDeviceManager>();
+  return base::MakeUnique<TestDeviceManager>();
 }
 
 std::unique_ptr<EventFactoryEvdev> CreateEventFactoryEvdevForTest(
@@ -135,7 +135,7 @@ std::unique_ptr<EventFactoryEvdev> CreateEventFactoryEvdevForTest(
     DeviceManager* device_manager,
     KeyboardLayoutEngine* keyboard_layout_engine,
     const EventDispatchCallback& callback) {
-  return std::make_unique<TestEventFactoryEvdev>(
+  return base::MakeUnique<TestEventFactoryEvdev>(
       cursor, device_manager, keyboard_layout_engine, callback);
 }
 

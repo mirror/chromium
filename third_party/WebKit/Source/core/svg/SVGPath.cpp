@@ -181,7 +181,7 @@ float SVGPath::CalculateDistance(SVGPropertyBase* to, SVGElement*) {
   return -1;
 }
 
-void SVGPath::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGPath) {
   visitor->Trace(path_value_);
   SVGPropertyBase::Trace(visitor);
 }

@@ -9,7 +9,6 @@
 #include <set>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "components/safe_browsing/db/test_database_manager.h"
 #include "content/public/common/resource_type.h"
 
@@ -64,8 +63,6 @@ class FakeSafeBrowsingDatabaseManager
       url_to_threat_type_;
   bool simulate_timeout_ = false;
   bool synchronous_failure_ = false;
-
-  base::WeakPtrFactory<FakeSafeBrowsingDatabaseManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeSafeBrowsingDatabaseManager);
 };

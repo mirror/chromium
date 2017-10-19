@@ -72,7 +72,7 @@ class CORE_EXPORT CSSCrossfadeValue final : public CSSImageGeneratorValue {
 
   CSSCrossfadeValue* ValueWithURLsMadeAbsolute();
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSCrossfadeValue(CSSValue* from_value,
@@ -89,7 +89,7 @@ class CORE_EXPORT CSSCrossfadeValue final : public CSSImageGeneratorValue {
         : owner_value_(owner_value), ready_(false) {}
 
     ~CrossfadeSubimageObserverProxy() override {}
-    void Trace(blink::Visitor* visitor) { visitor->Trace(owner_value_); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(owner_value_); }
 
     void ImageChanged(ImageResourceContent*, const IntRect* = nullptr) override;
     bool WillRenderImage() override;

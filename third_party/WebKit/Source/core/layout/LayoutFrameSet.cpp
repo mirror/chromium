@@ -508,10 +508,8 @@ void LayoutFrameSet::SetIsResizing(bool is_resizing) {
     if (ancestor->IsFrameSet())
       ToLayoutFrameSet(ancestor)->is_child_resizing_ = is_resizing;
   }
-  if (LocalFrame* frame = this->GetFrame()) {
-    frame->GetEventHandler().SetResizingFrameSet(is_resizing ? FrameSet()
-                                                             : nullptr);
-  }
+  if (LocalFrame* frame = this->GetFrame())
+    frame->GetEventHandler().SetResizingFrameSet(is_resizing ? FrameSet() : 0);
 }
 
 bool LayoutFrameSet::CanResizeRow(const IntPoint& p) const {

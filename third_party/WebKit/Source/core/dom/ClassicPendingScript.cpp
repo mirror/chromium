@@ -160,7 +160,7 @@ void ClassicPendingScript::NotifyAppendData(ScriptResource* resource) {
     streamer_->NotifyAppendData(resource);
 }
 
-void ClassicPendingScript::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ClassicPendingScript) {
   visitor->Trace(streamer_);
   ResourceOwner<ScriptResource>::Trace(visitor);
   MemoryCoordinatorClient::Trace(visitor);
@@ -180,20 +180,18 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
   const ParserDisposition parser_state = (loader && loader->IsParserInserted())
                                              ? kParserInserted
                                              : kNotParserInserted;
-  ScriptFetchOptions fetch_options(nonce, parser_state,
-                                   WebURLRequest::kFetchCredentialsModeOmit);
   if (!GetResource()) {
-    ScriptSourceCode source_code(GetElement()->TextFromChildren(), document_url,
-                                 StartingPosition());
-    return ClassicScript::Create(source_code, fetch_options);
+    return ClassicScript::Create(
+        ScriptSourceCode(GetElement()->TextFromChildren(), document_url, nonce,
+                         parser_state, StartingPosition()));
   }
 
   DCHECK(GetResource()->IsLoaded());
   bool streamer_ready = (ready_state_ == kReady) && streamer_ &&
                         !streamer_->StreamingSuppressed();
-  ScriptSourceCode source_code(streamer_ready ? streamer_ : nullptr,
-                               GetResource());
-  return ClassicScript::Create(source_code, fetch_options);
+  return ClassicScript::Create(
+      ScriptSourceCode(streamer_ready ? streamer_ : nullptr, GetResource(),
+                       nonce, parser_state));
 }
 
 void ClassicPendingScript::SetStreamer(ScriptStreamer* streamer) {

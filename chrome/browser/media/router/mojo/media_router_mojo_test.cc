@@ -26,6 +26,7 @@ const char kRouteId[] = "routeId";
 const char kSource[] = "source1";
 const char kSinkId[] = "sink";
 const char kSinkId2[] = "sink2";
+const char kSinkName[] = "sinkName";
 const int kInvalidTabId = -1;
 const char kOrigin[] = "http://origin/";
 const char kPresentationId[] = "presentationId";
@@ -395,6 +396,25 @@ void MediaRouterMojoTest::TestSearchSinks() {
   base::RunLoop().RunUntilIdle();
 }
 
+void MediaRouterMojoTest::TestProvideSinks() {
+  std::vector<MediaSinkInternal> sinks;
+  MediaSink sink(kSinkId, kSinkName, SinkIconType::CAST);
+  CastSinkExtraData extra_data;
+  net::IPAddress ip_address;
+  EXPECT_TRUE(ip_address.AssignFromIPLiteral("192.168.1.3"));
+  extra_data.ip_endpoint = net::IPEndPoint(ip_address, 0);
+  extra_data.capabilities = 2;
+  extra_data.cast_channel_id = 3;
+  MediaSinkInternal expected_sink(sink, extra_data);
+  sinks.push_back(expected_sink);
+  std::string provider_name = "cast";
+
+  EXPECT_CALL(mock_media_route_provider_, ProvideSinks(provider_name, sinks));
+
+  router()->ProvideSinks(provider_name, sinks);
+  base::RunLoop().RunUntilIdle();
+}
+
 void MediaRouterMojoTest::TestCreateMediaRouteController() {
   MockMediaController media_controller;
   mojom::MediaStatusObserverPtr route_controller_as_observer;
@@ -436,45 +456,6 @@ void MediaRouterMojoTest::TestCreateMediaRouteController() {
   // as a MediaStatusObserver, and should also notify its own observers.
   EXPECT_CALL(controller_observer, OnMediaStatusUpdated(media_status));
   route_controller_as_observer->OnMediaStatusUpdated(media_status);
-
-  base::RunLoop().RunUntilIdle();
-}
-
-void MediaRouterMojoTest::TestCreateHangoutsMediaRouteController() {
-  MockMediaController mock_media_controller;
-  mojom::MediaStatusObserverPtr route_controller_as_observer;
-
-  MediaRoute route = CreateMediaRoute();
-  route.set_controller_type(RouteControllerType::kHangouts);
-  router()->OnRoutesUpdated({route}, std::string(), std::vector<std::string>());
-
-  EXPECT_CALL(mock_media_route_provider_,
-              CreateMediaRouteControllerInternal(kRouteId, _, _, _))
-      .WillOnce(Invoke(
-          [&mock_media_controller, &route_controller_as_observer](
-              const std::string& route_id,
-              mojom::MediaControllerRequest& request,
-              mojom::MediaStatusObserverPtr& observer,
-              mojom::MediaRouteProvider::CreateMediaRouteControllerCallback&
-                  cb) {
-            mock_media_controller.Bind(std::move(request));
-            route_controller_as_observer = std::move(observer);
-            std::move(cb).Run(true);
-          }));
-  EXPECT_CALL(mock_media_controller, ConnectHangoutsMediaRouteController());
-
-  // Since the route is a Hangouts route, the Hangouts-specific Mojo ptr should
-  // also be initialized.
-  scoped_refptr<MediaRouteController> route_controller =
-      router()->GetRouteController(kRouteId);
-  HangoutsMediaRouteController* hangouts_controller =
-      HangoutsMediaRouteController::From(route_controller.get());
-  ASSERT_TRUE(hangouts_controller);
-
-  // Media commands sent to the MediaRouteController should be forwarded to the
-  // MediaController created by the MediaRouteProvider.
-  EXPECT_CALL(mock_media_controller, SetLocalPresent(true));
-  hangouts_controller->SetLocalPresent(true);
 
   base::RunLoop().RunUntilIdle();
 }

@@ -33,12 +33,6 @@ class VRDeviceManagerForTesting : public VRDeviceManager {
   }
 };
 
-class VRDisplayImplForTesting : public VRServiceImpl {
- public:
-  VRDisplayImplForTesting() : VRServiceImpl() {}
-  ~VRDisplayImplForTesting() override = default;
-};
-
 }  // namespace
 
 class VRDeviceManagerTest : public testing::Test {
@@ -62,7 +56,7 @@ class VRDeviceManagerTest : public testing::Test {
   std::unique_ptr<VRServiceImpl> BindService() {
     device::mojom::VRServiceClientPtr proxy;
     device::FakeVRServiceClient client(mojo::MakeRequest(&proxy));
-    auto service = base::WrapUnique(new VRDisplayImplForTesting());
+    auto service = base::WrapUnique(new VRServiceImpl(-1, -1));
     service->SetClient(std::move(proxy),
                        base::Bind(&VRDeviceManagerTest::onDisplaySynced,
                                   base::Unretained(this)));
@@ -118,14 +112,14 @@ TEST_F(VRDeviceManagerTest, GetDevicesTest) {
   // VRDeviceManager will query devices as a side effect.
   auto service_1 = BindService();
   // Should have successfully returned one device.
-  EXPECT_EQ(device1, DeviceManager()->GetDevice(device1->GetId()));
+  EXPECT_EQ(device1, DeviceManager()->GetDevice(device1->id()));
 
   device::FakeVRDevice* device2 = new device::FakeVRDevice();
   Provider()->AddDevice(base::WrapUnique(device2));
   auto service_2 = BindService();
   // Querying the WebVRDevice index should return the correct device.
-  EXPECT_EQ(device1, DeviceManager()->GetDevice(device1->GetId()));
-  EXPECT_EQ(device2, DeviceManager()->GetDevice(device2->GetId()));
+  EXPECT_EQ(device1, DeviceManager()->GetDevice(device1->id()));
+  EXPECT_EQ(device2, DeviceManager()->GetDevice(device2->id()));
 }
 
 // Ensure that services are registered with the device manager as they are

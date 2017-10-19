@@ -14,7 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
@@ -140,7 +139,8 @@ public class AwContentsClientOnUnhandledKeyEventTest {
     }
 
     private boolean dispatchKeyEvent(final KeyEvent event) throws Throwable {
-        return ThreadUtils.runOnUiThreadBlocking(() -> mTestContainerView.dispatchKeyEvent(event));
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(
+                () -> mTestContainerView.dispatchKeyEvent(event));
     }
 
     private void dispatchDownAndUpKeyEvents(final int code) throws Throwable {

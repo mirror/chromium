@@ -74,7 +74,7 @@ VisualViewport::~VisualViewport() {
   SendUMAMetrics();
 }
 
-void VisualViewport::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VisualViewport) {
   visitor->Trace(page_);
   ScrollableArea::Trace(visitor);
 }

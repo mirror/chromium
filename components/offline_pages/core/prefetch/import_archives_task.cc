@@ -9,7 +9,6 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "components/offline_pages/core/offline_store_utils.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "sql/connection.h"
@@ -42,7 +41,7 @@ std::unique_ptr<std::vector<PrefetchArchiveInfo>> GetArchivesSync(
     archive.final_archived_url = GURL(statement.ColumnString(4));
     archive.title = statement.ColumnString16(5);
     archive.file_path =
-        store_utils::FromDatabaseFilePath(statement.ColumnString(6));
+        base::FilePath::FromUTF8Unsafe(statement.ColumnString(6));
     archive.file_size = statement.ColumnInt64(7);
     if (!archives)
       archives = base::MakeUnique<std::vector<PrefetchArchiveInfo>>();

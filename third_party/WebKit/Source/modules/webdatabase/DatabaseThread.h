@@ -46,7 +46,7 @@ class DatabaseThread : public GarbageCollectedFinalized<DatabaseThread> {
  public:
   static DatabaseThread* Create() { return new DatabaseThread; }
   ~DatabaseThread();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Callable only from the main thread.
   void Start();

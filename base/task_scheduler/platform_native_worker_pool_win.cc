@@ -72,13 +72,13 @@ void CALLBACK PlatformNativeWorkerPoolWin::RunNextSequence(
   scoped_refptr<Sequence> sequence = worker_pool->GetWork();
   DCHECK(sequence);
 
-  sequence = worker_pool->task_tracker_->RunNextTask(std::move(sequence.get()),
-                                                     worker_pool);
+  const bool sequence_became_empty =
+      worker_pool->task_tracker_->RunNextTask(sequence.get());
 
   // Re-enqueue sequence and then submit another task to the Windows thread
   // pool.
-  if (sequence)
-    worker_pool->OnCanScheduleSequence(std::move(sequence));
+  if (!sequence_became_empty)
+    worker_pool->ScheduleSequence(std::move(sequence));
 
   worker_pool->UnbindFromCurrentThread();
 }
@@ -92,7 +92,7 @@ scoped_refptr<Sequence> PlatformNativeWorkerPoolWin::GetWork() {
   return transaction->PopSequence();
 }
 
-void PlatformNativeWorkerPoolWin::OnCanScheduleSequence(
+void PlatformNativeWorkerPoolWin::ScheduleSequence(
     scoped_refptr<Sequence> sequence) {
   const SequenceSortKey sequence_sort_key = sequence->GetSortKey();
   auto transaction(priority_queue_.BeginTransaction());

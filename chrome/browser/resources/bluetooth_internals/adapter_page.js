@@ -43,7 +43,7 @@ cr.define('adapter_page', function() {
 
     /**
      * Sets the information to display in fieldset.
-     * @param {!bluetooth.mojom.AdapterInfo} info
+     * @param {!interfaces.BluetoothAdapter.AdapterInfo} info
      */
     setAdapterInfo: function(info) {
       this.adapterFieldSet.setObject(info);

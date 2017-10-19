@@ -56,7 +56,7 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
   bool IsScriptElement() const override { return true; }
   Document& GetDocument() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:

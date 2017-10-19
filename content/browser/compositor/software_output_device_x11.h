@@ -8,27 +8,28 @@
 #include <X11/Xlib.h>
 
 #include "base/macros.h"
-#include "base/threading/thread_checker.h"
 #include "components/viz/service/display/software_output_device.h"
-#include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/x/x11_types.h"
+
+namespace ui {
+class Compositor;
+}
 
 namespace content {
 
 class SoftwareOutputDeviceX11 : public viz::SoftwareOutputDevice {
  public:
-  explicit SoftwareOutputDeviceX11(gfx::AcceleratedWidget widget);
+  explicit SoftwareOutputDeviceX11(ui::Compositor* compositor);
 
   ~SoftwareOutputDeviceX11() override;
 
   void EndPaint() override;
 
  private:
-  gfx::AcceleratedWidget widget_;
+  ui::Compositor* compositor_;
   XDisplay* display_;
   GC gc_;
   XWindowAttributes attributes_;
-  THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(SoftwareOutputDeviceX11);
 };

@@ -46,7 +46,6 @@ DomainReliabilityContext::DomainReliabilityContext(
     const DomainReliabilityScheduler::Params& scheduler_params,
     const std::string& upload_reporter_string,
     const base::TimeTicks* last_network_change_time,
-    const UploadAllowedCallback& upload_allowed_callback,
     DomainReliabilityDispatcher* dispatcher,
     DomainReliabilityUploader* uploader,
     std::unique_ptr<const DomainReliabilityConfig> config)
@@ -62,7 +61,6 @@ DomainReliabilityContext::DomainReliabilityContext(
       uploader_(uploader),
       uploading_beacons_size_(0),
       last_network_change_time_(last_network_change_time),
-      upload_allowed_callback_(upload_allowed_callback),
       weak_factory_(this) {}
 
 DomainReliabilityContext::~DomainReliabilityContext() {
@@ -148,25 +146,11 @@ void DomainReliabilityContext::ScheduleUpload(
     base::TimeDelta min_delay,
     base::TimeDelta max_delay) {
   dispatcher_->ScheduleTask(
-      base::Bind(&DomainReliabilityContext::CallUploadAllowedCallback,
-                 weak_factory_.GetWeakPtr()),
-      min_delay, max_delay);
-}
-
-void DomainReliabilityContext::CallUploadAllowedCallback() {
-  RemoveExpiredBeacons();
-  if (beacons_.empty())
-    return;
-
-  upload_allowed_callback_.Run(
-      config().origin,
-      base::Bind(&DomainReliabilityContext::OnUploadAllowedCallbackComplete,
-                 weak_factory_.GetWeakPtr()));
-}
-
-void DomainReliabilityContext::OnUploadAllowedCallbackComplete(bool allowed) {
-  if (allowed)
-    StartUpload();
+      base::Bind(
+          &DomainReliabilityContext::StartUpload,
+          weak_factory_.GetWeakPtr()),
+      min_delay,
+      max_delay);
 }
 
 void DomainReliabilityContext::StartUpload() {

@@ -828,7 +828,7 @@ bool ExtensionService::UninstallExtension(
   extensions::DataDeleter::StartDeleting(
       profile_, extension.get(), deletion_done_callback);
 
-  extension_registrar_.UntrackTerminatedExtension(extension->id());
+  UntrackTerminatedExtension(extension->id());
 
   // Notify interested parties that we've uninstalled this extension.
   ExtensionRegistry::Get(profile_)
@@ -1240,7 +1240,24 @@ void ExtensionService::OnAllExternalProvidersReady() {
 
 void ExtensionService::UnloadExtension(const std::string& extension_id,
                                        UnloadedExtensionReason reason) {
-  UpdateForUnloadingExtension(extension_id);
+  int include_mask =
+      ExtensionRegistry::EVERYTHING & ~ExtensionRegistry::TERMINATED;
+  scoped_refptr<const Extension> extension(
+      registry_->GetExtensionById(extension_id, include_mask));
+
+  // This method can be called via PostTask, so the extension may have been
+  // unloaded by the time this runs.
+  // TODO(michaelpg): Move this block to ExtensionRegistrar once it learns to
+  // reload extensions.
+  if (extension) {
+    // Keep information about the extension so that we can reload it later
+    // even if it's not permanently installed.
+    unloaded_extension_paths_[extension->id()] = extension->path();
+
+    // Clean up if the extension is meant to be enabled after a reload.
+    reloading_extensions_.erase(extension->id());
+  }
+
   extension_registrar_.RemoveExtension(extension_id, reason);
 }
 
@@ -1339,7 +1356,7 @@ void ExtensionService::AddExtension(const Extension* extension) {
   unloaded_extension_paths_.erase(extension->id());
 
   // If a terminated extension is loaded, remove it from the terminated list.
-  extension_registrar_.UntrackTerminatedExtension(extension->id());
+  UntrackTerminatedExtension(extension->id());
 
   // Check if the extension's privileges have changed and mark the
   // extension disabled if necessary.
@@ -1387,11 +1404,11 @@ void ExtensionService::AddComponentExtension(const Extension* extension) {
         << extension->id() << ") installing/upgrading from '"
         << old_version_string << "' to " << extension->version()->GetString();
 
-    // TODO(crbug.com/696822): If needed, add support for Declarative Net
-    // Request to component extensions and pass the ruleset checksum here.
-    AddNewOrUpdatedExtension(
-        extension, Extension::ENABLED, extensions::kInstallFlagNone,
-        syncer::StringOrdinal(), std::string(), base::nullopt);
+    AddNewOrUpdatedExtension(extension,
+                             Extension::ENABLED,
+                             extensions::kInstallFlagNone,
+                             syncer::StringOrdinal(),
+                             std::string());
     return;
   }
 
@@ -1557,8 +1574,7 @@ void ExtensionService::UpdateActiveExtensionsInCrashReporter() {
 void ExtensionService::OnExtensionInstalled(
     const Extension* extension,
     const syncer::StringOrdinal& page_ordinal,
-    int install_flags,
-    const base::Optional<int>& dnr_ruleset_checksum) {
+    int install_flags) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
 
   const std::string& id = extension->id();
@@ -1666,13 +1682,12 @@ void ExtensionService::OnExtensionInstalled(
   switch (action) {
     case extensions::InstallGate::INSTALL:
       AddNewOrUpdatedExtension(extension, initial_state, install_flags,
-                               page_ordinal, install_parameter,
-                               dnr_ruleset_checksum);
+                               page_ordinal, install_parameter);
       return;
     case extensions::InstallGate::DELAY:
-      extension_prefs_->SetDelayedInstallInfo(
-          extension, initial_state, install_flags, delay_reason, page_ordinal,
-          install_parameter, dnr_ruleset_checksum);
+      extension_prefs_->SetDelayedInstallInfo(extension, initial_state,
+                                              install_flags, delay_reason,
+                                              page_ordinal, install_parameter);
 
       // Transfer ownership of |extension|.
       delayed_installs_.Insert(extension);
@@ -1721,12 +1736,10 @@ void ExtensionService::AddNewOrUpdatedExtension(
     Extension::State initial_state,
     int install_flags,
     const syncer::StringOrdinal& page_ordinal,
-    const std::string& install_parameter,
-    const base::Optional<int>& dnr_ruleset_checksum) {
+    const std::string& install_parameter) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
-  extension_prefs_->OnExtensionInstalled(extension, initial_state, page_ordinal,
-                                         install_flags, install_parameter,
-                                         dnr_ruleset_checksum);
+  extension_prefs_->OnExtensionInstalled(
+      extension, initial_state, page_ordinal, install_flags, install_parameter);
   delayed_installs_.Remove(extension->id());
   if (InstallVerifier::NeedsVerification(*extension))
     InstallVerifier::Get(GetBrowserContext())->VerifyExtension(extension->id());
@@ -1843,9 +1856,38 @@ void ExtensionService::RegisterContentSettings(
               false)));
 }
 
+void ExtensionService::TrackTerminatedExtension(
+    const std::string& extension_id) {
+  extensions_being_terminated_.erase(extension_id);
+
+  const Extension* extension = GetInstalledExtension(extension_id);
+  if (!extension) {
+    return;
+  }
+
+  // No need to check for duplicates; inserting a duplicate is a no-op.
+  registry_->AddTerminated(extension);
+  UnloadExtension(extension->id(), UnloadedExtensionReason::TERMINATE);
+}
+
 void ExtensionService::TerminateExtension(const std::string& extension_id) {
-  UpdateForUnloadingExtension(extension_id);
-  extension_registrar_.TerminateExtension(extension_id);
+  TrackTerminatedExtension(extension_id);
+}
+
+void ExtensionService::UntrackTerminatedExtension(const std::string& id) {
+  std::string lowercase_id = base::ToLowerASCII(id);
+  const Extension* extension =
+      registry_->terminated_extensions().GetByID(lowercase_id);
+  registry_->RemoveTerminated(lowercase_id);
+  if (extension) {
+    // TODO: This notification was already sent when the extension was
+    // unloaded as part of being terminated. But we send it again as observers
+    // may be tracking the terminated extension. See crbug.com/708230.
+    content::NotificationService::current()->Notify(
+        extensions::NOTIFICATION_EXTENSION_REMOVED,
+        content::Source<Profile>(profile_),
+        content::Details<const Extension>(extension));
+  }
 }
 
 const Extension* ExtensionService::GetInstalledExtension(
@@ -1954,16 +1996,22 @@ void ExtensionService::Observe(int type,
         break;
       }
 
-      // Mark the extension as terminated and deactivated. We want it to
+      extensions::ExtensionHost* host =
+          content::Details<extensions::ExtensionHost>(details).ptr();
+
+      // If the extension is already being terminated, there is nothing left to
+      // do.
+      if (!extensions_being_terminated_.insert(host->extension_id()).second)
+        break;
+
+      // Mark the extension as terminated and Unload it. We want it to
       // be in a consistent state: either fully working or not loaded
       // at all, but never half-crashed.  We do it in a PostTask so
       // that other handlers of this notification will still have
       // access to the Extension and ExtensionHost.
-      extensions::ExtensionHost* host =
-          content::Details<extensions::ExtensionHost>(details).ptr();
       base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::BindOnce(&ExtensionService::TerminateExtension,
-                                    AsWeakPtr(), host->extension_id()));
+          FROM_HERE, base::BindOnce(&ExtensionService::TrackTerminatedExtension,
+                                    AsWeakPtr(), host->extension()->id()));
       break;
     }
     case content::NOTIFICATION_RENDERER_PROCESS_TERMINATED: {
@@ -2393,7 +2441,7 @@ void ExtensionService::MaybeSpinUpLazyBackgroundPage(
   extensions::LazyBackgroundTaskQueue* queue =
       extensions::LazyBackgroundTaskQueue::Get(profile_);
   queue->AddPendingTask(profile_, extension->id(),
-                        base::BindOnce(&DoNothingWithExtensionHost));
+                        base::Bind(&DoNothingWithExtensionHost));
 }
 
 void ExtensionService::UninstallMigratedExtensions() {
@@ -2406,22 +2454,4 @@ void ExtensionService::UninstallMigratedExtensions() {
                          base::Bind(&base::DoNothing), nullptr);
     }
   }
-}
-
-void ExtensionService::UpdateForUnloadingExtension(
-    const extensions::ExtensionId& extension_id) {
-  int include_mask =
-      ExtensionRegistry::EVERYTHING & ~ExtensionRegistry::TERMINATED;
-  const Extension* extension =
-      registry_->GetExtensionById(extension_id, include_mask);
-  // The extension may have been unloaded already.
-  if (!extension)
-    return;
-
-  // Keep information about the extension so that we can reload it later
-  // even if it's not permanently installed.
-  unloaded_extension_paths_[extension->id()] = extension->path();
-
-  // Clean up if the extension is meant to be enabled after a reload.
-  reloading_extensions_.erase(extension->id());
 }

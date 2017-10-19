@@ -6,7 +6,7 @@
 #define TrackListBase_h
 
 #include "core/dom/events/EventTarget.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/track/TrackEvent.h"
 #include "core/html/track/TrackEventInit.h"
 #include "platform/bindings/TraceWrapperMember.h"
@@ -79,7 +79,7 @@ class TrackListBase : public EventTargetWithInlineData {
     ScheduleEvent(Event::Create(EventTypeNames::change));
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(tracks_);
     visitor->Trace(media_element_);
     EventTargetWithInlineData::Trace(visitor);

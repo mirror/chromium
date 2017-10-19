@@ -45,22 +45,18 @@ syncer::ModelType SyncSetupService::GetModelType(SyncableDatatype datatype) {
   return kDataTypes[datatype];
 }
 
-syncer::ModelTypeSet SyncSetupService::GetPreferredDataTypes() const {
+syncer::ModelTypeSet SyncSetupService::GetDataTypes() const {
   return sync_service_->GetPreferredDataTypes();
 }
 
-bool SyncSetupService::IsDataTypeActive(syncer::ModelType datatype) const {
+bool SyncSetupService::IsDataTypeEnabled(syncer::ModelType datatype) const {
   return sync_service_->GetActiveDataTypes().Has(datatype);
-}
-
-bool SyncSetupService::IsDataTypePreferred(syncer::ModelType datatype) const {
-  return GetPreferredDataTypes().Has(datatype);
 }
 
 void SyncSetupService::SetDataTypeEnabled(syncer::ModelType datatype,
                                           bool enabled) {
   sync_blocker_ = sync_service_->GetSetupInProgressHandle();
-  syncer::ModelTypeSet types = GetPreferredDataTypes();
+  syncer::ModelTypeSet types = GetDataTypes();
   if (enabled)
     types.Put(datatype);
   else
@@ -69,12 +65,12 @@ void SyncSetupService::SetDataTypeEnabled(syncer::ModelType datatype,
   if (enabled && !IsSyncEnabled())
     SetSyncEnabledWithoutChangingDatatypes(true);
   sync_service_->OnUserChoseDatatypes(IsSyncingAllDataTypes(), types);
-  if (GetPreferredDataTypes().Empty())
+  if (GetDataTypes().Empty())
     SetSyncEnabled(false);
 }
 
 bool SyncSetupService::UserActionIsRequiredToHaveSyncWork() {
-  if (!IsSyncEnabled() || !IsDataTypePreferred(syncer::PROXY_TABS)) {
+  if (!IsSyncEnabled() || !IsDataTypeEnabled(syncer::PROXY_TABS)) {
     return true;
   }
   switch (this->GetSyncServiceState()) {
@@ -105,8 +101,7 @@ void SyncSetupService::SetSyncingAllDataTypes(bool sync_all) {
   if (sync_all && !IsSyncEnabled())
     SetSyncEnabled(true);
   sync_service_->OnUserChoseDatatypes(
-      sync_all,
-      Intersection(GetPreferredDataTypes(), syncer::UserSelectableTypes()));
+      sync_all, Intersection(GetDataTypes(), syncer::UserSelectableTypes()));
 }
 
 bool SyncSetupService::IsSyncEnabled() const {
@@ -115,7 +110,7 @@ bool SyncSetupService::IsSyncEnabled() const {
 
 void SyncSetupService::SetSyncEnabled(bool sync_enabled) {
   SetSyncEnabledWithoutChangingDatatypes(sync_enabled);
-  if (sync_enabled && GetPreferredDataTypes().Empty())
+  if (sync_enabled && GetDataTypes().Empty())
     SetSyncingAllDataTypes(true);
 }
 

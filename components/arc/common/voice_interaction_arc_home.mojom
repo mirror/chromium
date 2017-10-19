@@ -6,8 +6,15 @@
 
 module arc.mojom;
 
-import "gfx.mojom";
 import "mojo/common/string16.mojom";
+import "screen_rect.mojom";
+
+// Represents the start and end unicode char indices of the selected
+// portion of the text [start, end).
+struct TextSelection {
+  int32 start_selection;
+  int32 end_selection;
+};
 
 // Represents view structure to be passed to ARC. The view
 // structure is synthesized from the AXStructure, which
@@ -17,7 +24,7 @@ import "mojo/common/string16.mojom";
 // AccessibilitySnapshotNode.java used in Android Chromium.
 struct VoiceInteractionStructure {
   // Geometry of the view in pixels
-  Rect rect;
+  ScreenRect rect;
 
   // Text of the view.
   mojo.common.mojom.String16 text;
@@ -32,7 +39,7 @@ struct VoiceInteractionStructure {
   bool line_through;
 
   // Selected portion of the text.
-  Range? selection;
+  TextSelection? selection;
 
   // Fake Android view class name of the element.  Each node is assigned
   // a closest approximation of Android's views.

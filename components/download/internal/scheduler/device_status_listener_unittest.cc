@@ -13,7 +13,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using testing::_;
 using testing::InSequence;
 using ConnectionTypeObserver =
     net::NetworkChangeNotifier::ConnectionTypeObserver;
@@ -21,14 +20,6 @@ using ConnectionType = net::NetworkChangeNotifier::ConnectionType;
 
 namespace download {
 namespace {
-
-MATCHER_P(NetworkStatusEqual, value, "") {
-  return arg.network_status == value;
-}
-
-MATCHER_P(BatteryStatusEqual, value, "") {
-  return arg.battery_status == value;
-}
 
 // NetworkChangeNotifier that can change network type in tests.
 class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
@@ -62,8 +53,8 @@ class MockObserver : public DeviceStatusListener::Observer {
 // Test target that only loads default implementation of NetworkStatusListener.
 class TestDeviceStatusListener : public DeviceStatusListener {
  public:
-  explicit TestDeviceStatusListener()
-      : DeviceStatusListener(base::TimeDelta(), base::TimeDelta()) {}
+  explicit TestDeviceStatusListener(const base::TimeDelta& delay)
+      : DeviceStatusListener(delay) {}
 
   void BuildNetworkStatusListener() override {
     network_listener_ = base::MakeUnique<NetworkStatusListenerImpl>();
@@ -73,12 +64,11 @@ class TestDeviceStatusListener : public DeviceStatusListener {
 class DeviceStatusListenerTest : public testing::Test {
  public:
   void SetUp() override {
-    auto power_source = base::MakeUnique<base::PowerMonitorTestSource>();
-    power_source_ = power_source.get();
-    power_monitor_ =
-        base::MakeUnique<base::PowerMonitor>(std::move(power_source));
+    power_monitor_ = base::MakeUnique<base::PowerMonitor>(
+        base::MakeUnique<base::PowerMonitorTestSource>());
 
-    listener_ = base::MakeUnique<TestDeviceStatusListener>();
+    listener_ = base::MakeUnique<TestDeviceStatusListener>(
+        base::TimeDelta::FromSeconds(0));
   }
 
   void TearDown() override { listener_.reset(); }
@@ -90,7 +80,8 @@ class DeviceStatusListenerTest : public testing::Test {
 
   // Simulates a battery change call.
   void SimulateBatteryChange(bool on_battery_power) {
-    power_source_->GeneratePowerStateEvent(on_battery_power);
+    static_cast<base::PowerObserver*>(listener_.get())
+        ->OnPowerStateChange(on_battery_power);
   }
 
  protected:
@@ -101,33 +92,23 @@ class DeviceStatusListenerTest : public testing::Test {
   base::MessageLoop message_loop_;
   TestNetworkChangeNotifier test_network_notifier_;
   std::unique_ptr<base::PowerMonitor> power_monitor_;
-  base::PowerMonitorTestSource* power_source_;
 };
-
-// Verifies the initial state that the observer should not be notified.
-TEST_F(DeviceStatusListenerTest, InitialNoOptState) {
-  ChangeNetworkType(ConnectionType::CONNECTION_NONE);
-  SimulateBatteryChange(true); /* Not charging. */
-  EXPECT_EQ(DeviceStatus(), listener_->CurrentDeviceStatus());
-
-  listener_->Start(&mock_observer_);
-
-  // We are in no opt state, don't notify the observer.
-  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(_)).Times(0);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(DeviceStatus(), listener_->CurrentDeviceStatus());
-}
 
 // Ensures the observer is notified when network condition changes.
 TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
   listener_->Start(&mock_observer_);
 
   // Initial states check.
-  EXPECT_EQ(NetworkStatus::DISCONNECTED,
-            listener_->CurrentDeviceStatus().network_status);
+  DeviceStatus status = listener_->CurrentDeviceStatus();
+  EXPECT_EQ(NetworkStatus::DISCONNECTED, status.network_status);
 
   // Network switch between mobile networks, the observer should be notified
   // only once.
+  status.network_status = NetworkStatus::METERED;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
+      .Times(1)
+      .RetiresOnSaturation();
+
   ChangeNetworkType(ConnectionType::CONNECTION_4G);
   ChangeNetworkType(ConnectionType::CONNECTION_3G);
   ChangeNetworkType(ConnectionType::CONNECTION_2G);
@@ -135,23 +116,20 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
   // Verifies the online signal is sent in a post task after a delay.
   EXPECT_EQ(NetworkStatus::DISCONNECTED,
             listener_->CurrentDeviceStatus().network_status);
-  EXPECT_CALL(mock_observer_,
-              OnDeviceStatusChanged(NetworkStatusEqual(NetworkStatus::METERED)))
-      .Times(1)
-      .RetiresOnSaturation();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(NetworkStatus::METERED,
             listener_->CurrentDeviceStatus().network_status);
 
   // Network is switched between wifi and ethernet, the observer should be
   // notified only once.
+  status.network_status = NetworkStatus::UNMETERED;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
+      .Times(1)
+      .RetiresOnSaturation();
+
   ChangeNetworkType(ConnectionType::CONNECTION_WIFI);
   ChangeNetworkType(ConnectionType::CONNECTION_ETHERNET);
 
-  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(
-                                  NetworkStatusEqual(NetworkStatus::UNMETERED)))
-      .Times(1)
-      .RetiresOnSaturation();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(NetworkStatus::UNMETERED,
             listener_->CurrentDeviceStatus().network_status);
@@ -160,29 +138,17 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
 // Ensures the observer is notified when battery condition changes.
 TEST_F(DeviceStatusListenerTest, NotifyObserverBatteryChange) {
   InSequence s;
-  SimulateBatteryChange(false); /* Charging. */
-  EXPECT_EQ(DeviceStatus(), listener_->CurrentDeviceStatus());
-
   listener_->Start(&mock_observer_);
-
-  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(
-                                  BatteryStatusEqual(BatteryStatus::CHARGING)))
-      .Times(1)
+  DeviceStatus status = listener_->CurrentDeviceStatus();
+  status.battery_status = BatteryStatus::NOT_CHARGING;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
       .RetiresOnSaturation();
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(BatteryStatus::CHARGING,
-            listener_->CurrentDeviceStatus().battery_status);
+  SimulateBatteryChange(true);
 
-  EXPECT_CALL(
-      mock_observer_,
-      OnDeviceStatusChanged(BatteryStatusEqual(BatteryStatus::NOT_CHARGING)))
-      .Times(1)
+  status.battery_status = BatteryStatus::CHARGING;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
       .RetiresOnSaturation();
-  SimulateBatteryChange(true); /* Not charging. */
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(BatteryStatus::NOT_CHARGING,
-            listener_->CurrentDeviceStatus().battery_status);
-
+  SimulateBatteryChange(false);
   listener_->Stop();
 };
 

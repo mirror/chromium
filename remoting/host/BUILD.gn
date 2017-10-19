@@ -365,10 +365,11 @@ static_library("host") {
       "me2me_desktop_environment.cc",
       "me2me_desktop_environment.h",
     ]
-    deps += [
-      "//ash",
-      "//remoting/host/chromeos",
-    ]
+    deps += [ "//remoting/host/chromeos" ]
+
+    if (use_ash) {
+      deps += [ "//ash" ]
+    }
 
     if (use_ozone) {
       deps += [ "//ui/ozone" ]
@@ -398,9 +399,6 @@ static_library("host") {
 
   if (is_win) {
     deps += [
-      # On Windows, we use //media/gpu/MediaFoundationVideoEncodeAcceleratorWin
-      # to detect whether HW encoder is supported by the system.
-      "//media",
       "//remoting/host/win",
       "//remoting/host/win:messages",
       "//remoting/host/win:remoting_lib_idl",
@@ -547,9 +545,7 @@ source_set("unit_tests") {
 
   if (enable_me2me_host) {
     sources += [ "evaluate_capability_unittest.cc" ]
-    data_deps = [
-      "//remoting/test:capability_test_stub",
-    ]
+    data_deps = [ "//remoting/test:capability_test_stub" ]
   }
 }
 

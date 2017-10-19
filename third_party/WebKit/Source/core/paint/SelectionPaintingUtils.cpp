@@ -128,7 +128,7 @@ TextPaintStyle SelectionPaintingUtils::SelectionPaintingStyle(
     const TextPaintStyle& text_style,
     const PaintInfo& paint_info) {
   TextPaintStyle selection_style = text_style;
-  bool uses_text_as_clip = paint_info.phase == PaintPhase::kTextClip;
+  bool uses_text_as_clip = paint_info.phase == kPaintPhaseTextClip;
   bool is_printing = paint_info.IsPrinting();
   const GlobalPaintFlags global_paint_flags = paint_info.GetGlobalPaintFlags();
 
@@ -147,12 +147,12 @@ TextPaintStyle SelectionPaintingUtils::SelectionPaintingStyle(
                                   CSSPropertyWebkitTextStrokeColor);
       selection_style.stroke_width = pseudo_style->TextStrokeWidth();
       selection_style.shadow =
-          uses_text_as_clip ? nullptr : pseudo_style->TextShadow();
+          uses_text_as_clip ? 0 : pseudo_style->TextShadow();
     }
 
     // Text shadows are disabled when printing. http://crbug.com/258321
     if (is_printing)
-      selection_style.shadow = nullptr;
+      selection_style.shadow = 0;
   }
 
   return selection_style;

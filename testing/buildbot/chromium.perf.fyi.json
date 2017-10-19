@@ -60,13 +60,12 @@
       {
         "args": [
           "--bot",
-          "swarm823-c4",
+          "build13-b1--device2",
           "--builder",
-          "One Buildbot Step Test Builder",
+          "Android Nexus5 Perf",
           "-v",
           "--output-format=histograms",
           "--output-format=json-test-results",
-          "--xvfb",
           "--browser=release"
         ],
         "isolate_name": "telemetry_perf_tests_new",
@@ -512,7 +511,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -574,7 +573,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -1505,7 +1504,7 @@
           "hard_timeout": 14400,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -2006,6 +2005,68 @@
       },
       {
         "args": [
+          "oortonline",
+          "-v",
+          "--upload-results",
+          "--browser=release_x64",
+          "--output-format=chartjson"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "oortonline",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "8086:22b1",
+              "id": "build151-b1",
+              "os": "Windows-10-10586",
+              "pool": "Chrome-perf-fyi"
+            }
+          ],
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 600,
+          "upload_test_results": false
+        }
+      },
+      {
+        "args": [
+          "oortonline",
+          "-v",
+          "--upload-results",
+          "--browser=reference",
+          "--output-format=chartjson",
+          "--max-failures=5",
+          "--output-trace-tag=_ref"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "oortonline.reference",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "8086:22b1",
+              "id": "build151-b1",
+              "os": "Windows-10-10586",
+              "pool": "Chrome-perf-fyi"
+            }
+          ],
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": true,
+          "io_timeout": 600,
+          "upload_test_results": false
+        }
+      },
+      {
+        "args": [
           "oortonline_tbmv2",
           "-v",
           "--upload-results",
@@ -2084,7 +2145,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -2826,7 +2887,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -4679,7 +4740,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -4741,7 +4802,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -5609,7 +5670,7 @@
           "hard_timeout": 14400,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {
@@ -6088,6 +6149,68 @@
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "octane.reference",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "1002:9874",
+              "id": "build215-b4",
+              "os": "Windows-10-10586",
+              "pool": "Chrome-perf-fyi"
+            }
+          ],
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": true,
+          "io_timeout": 600,
+          "upload_test_results": false
+        }
+      },
+      {
+        "args": [
+          "oortonline",
+          "-v",
+          "--upload-results",
+          "--browser=release_x64",
+          "--output-format=chartjson"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "oortonline",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "1002:9874",
+              "id": "build215-b4",
+              "os": "Windows-10-10586",
+              "pool": "Chrome-perf-fyi"
+            }
+          ],
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 600,
+          "upload_test_results": false
+        }
+      },
+      {
+        "args": [
+          "oortonline",
+          "-v",
+          "--upload-results",
+          "--browser=reference",
+          "--output-format=chartjson",
+          "--max-failures=5",
+          "--output-trace-tag=_ref"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "oortonline.reference",
         "override_compile_targets": [
           "telemetry_perf_tests"
         ],
@@ -6909,7 +7032,7 @@
           "hard_timeout": 10800,
           "ignore_task_failure": false,
           "io_timeout": 600,
-          "upload_test_results": true
+          "upload_test_results": false
         }
       },
       {

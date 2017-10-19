@@ -36,7 +36,6 @@
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/GraphicsContext.h"
-#include "platform/graphics/Image.h"
 #include "platform/graphics/paint/CullRect.h"
 #include "platform/graphics/paint/DisplayItem.h"
 #include "platform/transforms/AffineTransform.h"
@@ -80,10 +79,10 @@ struct CORE_EXPORT PaintInfo {
   // phases in PaintPhase.h for details.
   PaintInfo ForDescendants() const {
     PaintInfo result(*this);
-    if (phase == PaintPhase::kDescendantOutlinesOnly)
-      result.phase = PaintPhase::kOutline;
-    else if (phase == PaintPhase::kDescendantBlockBackgroundsOnly)
-      result.phase = PaintPhase::kBlockBackground;
+    if (phase == kPaintPhaseDescendantOutlinesOnly)
+      result.phase = kPaintPhaseOutline;
+    else if (phase == kPaintPhaseDescendantBlockBackgroundsOnly)
+      result.phase = kPaintPhaseBlockBackground;
     return result;
   }
 
@@ -146,8 +145,6 @@ struct CORE_EXPORT PaintInfo {
   friend class SVGPaintContext;
   friend class SVGShapePainter;
 };
-
-Image::ImageDecodingMode GetImageDecodingMode(Node*);
 
 }  // namespace blink
 

@@ -550,7 +550,7 @@ class TabStripModel {
   Profile* profile_;
 
   // True if all tabs are currently being closed via CloseAllTabs.
-  bool closing_all_ = false;
+  bool closing_all_;
 
   // An object that determines where new Tabs should be inserted and where
   // selection should move when a Tab is closed.
@@ -561,9 +561,8 @@ class TabStripModel {
 
   ui::ListSelectionModel selection_model_;
 
-  // Indicates if observers are currently being notified to catch reentrancy
-  // bugs. See for example http://crbug.com/529407
-  bool in_notify_ = false;
+  // TODO(sky): remove this; used for debugging 291265.
+  bool in_notify_;
 
   base::WeakPtrFactory<TabStripModel> weak_factory_;
 

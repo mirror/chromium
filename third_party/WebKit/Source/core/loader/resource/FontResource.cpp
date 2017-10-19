@@ -42,8 +42,8 @@ namespace blink {
 // https://tabatkins.github.io/specs/css-font-display/#font-display-desc
 // TODO(toyoshim): Revisit short limit value once cache-aware font display is
 // launched. crbug.com/570205
-constexpr TimeDelta kFontLoadWaitShort = TimeDelta::FromMilliseconds(100);
-constexpr TimeDelta kFontLoadWaitLong = TimeDelta::FromMilliseconds(3000);
+static const double kFontLoadWaitShortLimitSec = 0.1;
+static const double kFontLoadWaitLongLimitSec = 3.0;
 
 enum FontPackageFormat {
   kPackageFormatUnknown,
@@ -87,7 +87,11 @@ FontResource::FontResource(const ResourceRequest& resource_request,
                            const ResourceLoaderOptions& options)
     : Resource(resource_request, kFont, options),
       load_limit_state_(kLoadNotStarted),
-      cors_failed_(false) {}
+      cors_failed_(false),
+      font_load_short_limit_timer_(this,
+                                   &FontResource::FontLoadShortLimitCallback),
+      font_load_long_limit_timer_(this,
+                                  &FontResource::FontLoadLongLimitCallback) {}
 
 FontResource::~FontResource() {}
 
@@ -111,27 +115,20 @@ void FontResource::SetRevalidatingRequest(const ResourceRequest& request) {
   // Reload will use the same object, and needs to reset |m_loadLimitState|
   // before any didAddClient() is called again.
   DCHECK(IsLoaded());
-  DCHECK(!font_load_short_limit_.IsActive());
-  DCHECK(!font_load_long_limit_.IsActive());
+  DCHECK(!font_load_short_limit_timer_.IsActive());
+  DCHECK(!font_load_long_limit_timer_.IsActive());
   load_limit_state_ = kLoadNotStarted;
   Resource::SetRevalidatingRequest(request);
 }
 
-void FontResource::StartLoadLimitTimers(WebTaskRunner* task_runner) {
+void FontResource::StartLoadLimitTimers() {
   DCHECK(IsLoading());
   DCHECK_EQ(load_limit_state_, kLoadNotStarted);
   load_limit_state_ = kUnderLimit;
-
-  font_load_short_limit_ = task_runner->PostDelayedCancellableTask(
-      BLINK_FROM_HERE,
-      WTF::Bind(&FontResource::FontLoadShortLimitCallback,
-                WrapWeakPersistent(this)),
-      kFontLoadWaitShort);
-  font_load_long_limit_ = task_runner->PostDelayedCancellableTask(
-      BLINK_FROM_HERE,
-      WTF::Bind(&FontResource::FontLoadLongLimitCallback,
-                WrapWeakPersistent(this)),
-      kFontLoadWaitLong);
+  font_load_short_limit_timer_.StartOneShot(kFontLoadWaitShortLimitSec,
+                                            BLINK_FROM_HERE);
+  font_load_long_limit_timer_.StartOneShot(kFontLoadWaitLongLimitSec,
+                                           BLINK_FROM_HERE);
 }
 
 RefPtr<FontCustomPlatformData> FontResource::GetCustomFontData() {
@@ -165,7 +162,7 @@ void FontResource::WillReloadAfterDiskCacheMiss() {
   load_limit_histogram.Count(load_limit_state_);
 }
 
-void FontResource::FontLoadShortLimitCallback() {
+void FontResource::FontLoadShortLimitCallback(TimerBase*) {
   DCHECK(IsLoading());
   DCHECK_EQ(load_limit_state_, kUnderLimit);
   load_limit_state_ = kShortLimitExceeded;
@@ -176,7 +173,7 @@ void FontResource::FontLoadShortLimitCallback() {
   NotifyClientsShortLimitExceeded();
 }
 
-void FontResource::FontLoadLongLimitCallback() {
+void FontResource::FontLoadLongLimitCallback(TimerBase*) {
   DCHECK(IsLoading());
   DCHECK_EQ(load_limit_state_, kShortLimitExceeded);
   load_limit_state_ = kLongLimitExceeded;
@@ -207,8 +204,8 @@ void FontResource::AllClientsAndObserversRemoved() {
 }
 
 void FontResource::NotifyFinished() {
-  font_load_short_limit_.Cancel();
-  font_load_long_limit_.Cancel();
+  font_load_short_limit_timer_.Stop();
+  font_load_long_limit_timer_.Stop();
 
   Resource::NotifyFinished();
 }

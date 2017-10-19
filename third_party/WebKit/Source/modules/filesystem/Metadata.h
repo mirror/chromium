@@ -58,7 +58,7 @@ class Metadata final : public GarbageCollectedFinalized<Metadata>,
     return static_cast<unsigned long long>(platform_metadata_.length);
   }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit Metadata(const FileMetadata& platform_metadata)

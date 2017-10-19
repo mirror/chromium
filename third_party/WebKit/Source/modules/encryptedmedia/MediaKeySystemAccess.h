@@ -28,7 +28,7 @@ class MediaKeySystemAccess final
   void getConfiguration(MediaKeySystemConfiguration& result);
   ScriptPromise createMediaKeys(ScriptState*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   const String key_system_;

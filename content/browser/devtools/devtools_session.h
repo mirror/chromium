@@ -29,9 +29,7 @@ class DevToolsSession : public protocol::FrontendChannel {
   int session_id() const { return session_id_; }
   DevToolsAgentHostClient* client() const { return client_; }
   void AddHandler(std::unique_ptr<protocol::DevToolsDomainHandler> handler);
-  void SetRenderFrameHost(RenderFrameHostImpl* frame_host);
-  void SetRenderer(RenderProcessHost* process_host,
-                   RenderFrameHostImpl* frame_host);
+  void SetRenderFrameHost(RenderFrameHostImpl* host);
   void SetFallThroughForNotFound(bool value);
 
   struct Message {
@@ -81,7 +79,6 @@ class DevToolsSession : public protocol::FrontendChannel {
   int session_id_;
   base::flat_map<std::string, std::unique_ptr<protocol::DevToolsDomainHandler>>
       handlers_;
-  RenderProcessHost* process_;
   RenderFrameHostImpl* host_;
   std::unique_ptr<protocol::UberDispatcher> dispatcher_;
   // Chunk processor's state cookie always corresponds to a state before

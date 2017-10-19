@@ -59,7 +59,7 @@ class MODULES_EXPORT Geolocation final
  public:
   static Geolocation* Create(ExecutionContext*);
   ~Geolocation();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   // Inherited from ContextLifecycleObserver and PageVisibilityObserver.

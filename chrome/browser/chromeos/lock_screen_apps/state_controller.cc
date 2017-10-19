@@ -20,7 +20,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/lock_screen_apps/app_manager_impl.h"
 #include "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.h"
-#include "chrome/browser/chromeos/lock_screen_apps/first_app_run_toast_manager.h"
 #include "chrome/browser/chromeos/lock_screen_apps/focus_cycler_delegate.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -168,7 +167,6 @@ void StateController::Shutdown() {
         true /*close_window*/, CloseLockScreenNoteReason::kShutdown);
     app_manager_.reset();
   }
-  first_app_run_toast_manager_.reset();
   focus_cycler_delegate_ = nullptr;
   power_manager_client_observer_.RemoveAll();
   input_devices_observer_.RemoveAll();
@@ -251,9 +249,6 @@ void StateController::InitializeWithCryptoKey(Profile* profile,
   if (!app_manager_)
     app_manager_ = base::MakeUnique<AppManagerImpl>(tick_clock_.get());
   app_manager_->Initialize(profile, lock_screen_profile_->GetOriginalProfile());
-
-  first_app_run_toast_manager_ =
-      std::make_unique<FirstAppRunToastManager>(profile);
 
   input_devices_observer_.Add(ui::InputDeviceManager::GetInstance());
 
@@ -360,7 +355,6 @@ void StateController::OnSessionStateChanged() {
 void StateController::OnAppWindowAdded(extensions::AppWindow* app_window) {
   if (note_app_window_ != app_window)
     return;
-  first_app_run_toast_manager_->RunForAppWindow(note_app_window_);
   note_app_window_metrics_->AppWindowCreated(app_window);
 }
 
@@ -470,8 +464,6 @@ void StateController::ResetNoteTakingWindowAndMoveToNextState(
     bool close_window,
     CloseLockScreenNoteReason reason) {
   app_window_observer_.RemoveAll();
-  if (first_app_run_toast_manager_)
-    first_app_run_toast_manager_->Reset();
 
   if (note_app_window_metrics_)
     note_app_window_metrics_->Reset();

@@ -198,7 +198,7 @@ size_t FontFaceCache::GetNumSegmentedFacesForTesting() {
   return count;
 }
 
-void FontFaceCache::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FontFaceCache) {
   visitor->Trace(segmented_faces_);
   visitor->Trace(font_selection_query_cache_);
   visitor->Trace(style_rule_to_font_face_);

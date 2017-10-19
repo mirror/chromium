@@ -58,7 +58,7 @@ HTMLTableRowElement* HTMLTableRowsCollection::RowAfter(
 
   // If still looking at head sections, find the first row in the next head
   // section.
-  HTMLElement* child = nullptr;
+  HTMLElement* child = 0;
   if (!previous)
     child = Traversal<HTMLElement>::FirstChild(table);
   else if (IsInSection(*previous, theadTag))

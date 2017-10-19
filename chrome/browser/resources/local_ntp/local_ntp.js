@@ -89,7 +89,7 @@ var IDS = {
   LOGO_DEFAULT: 'logo-default',
   LOGO_DOODLE: 'logo-doodle',
   LOGO_DOODLE_IMAGE: 'logo-doodle-image',
-  LOGO_DOODLE_BUTTON: 'logo-doodle-button',
+  LOGO_DOODLE_LINK: 'logo-doodle-link',
   LOGO_DOODLE_NOTIFIER: 'logo-doodle-notifier',
   NOTIFICATION: 'mv-notice',
   NOTIFICATION_CLOSE_BUTTON: 'mv-notice-x',
@@ -532,13 +532,12 @@ function handlePostMessage(event) {
   var cmd = event.data.cmd;
   var args = event.data;
   if (cmd == 'loaded') {
-    if (configData.isGooglePage && !$('one-google-loader')) {
+    if (configData.isGooglePage) {
       // Load the OneGoogleBar script. It'll create a global variable name "og"
       // which is a dict corresponding to the native OneGoogleBarData type.
       // We do this only after all the tiles have loaded, to avoid slowing down
       // the main page load.
       var ogScript = document.createElement('script');
-      ogScript.id = 'one-google-loader';
       ogScript.src = 'chrome-search://local-ntp/one-google.js';
       document.body.appendChild(ogScript);
       ogScript.onload = function() {
@@ -675,9 +674,6 @@ function init() {
       state.notheme = true;
       window.history.replaceState(state, document.title);
       onThemeChange();
-      if (e.detail === 0) {  // Activated by keyboard.
-        $(IDS.LOGO_DOODLE_BUTTON).focus();
-      }
     });
   } else {
     document.body.classList.add(CLASSES.NON_GOOGLE_PAGE);
@@ -705,6 +701,7 @@ function init() {
   // Create the most visited iframe.
   var iframe = document.createElement('iframe');
   iframe.id = IDS.TILES_IFRAME;
+  iframe.tabIndex = 1;
   iframe.src = 'chrome-search://most-visited/single.html?' + args.join('&');
   $(IDS.TILES).appendChild(iframe);
 
@@ -912,25 +909,26 @@ var onDoodleTransitionEnd = function(e) {
 
 
 var applyDoodleMetadata = function(metadata) {
-  var logoDoodleButton = $(IDS.LOGO_DOODLE_BUTTON);
+  var logoDoodleLink = $(IDS.LOGO_DOODLE_LINK);
   var logoDoodleImage = $(IDS.LOGO_DOODLE_IMAGE);
 
   logoDoodleImage.title = metadata.altText;
 
   if (metadata.animatedUrl) {
-    logoDoodleButton.onclick = function(e) {
+    logoDoodleLink.removeAttribute('href');
+    logoDoodleLink.onclick = function(e) {
       ntpApiHandle.logEvent(LOG_TYPE.NTP_CTA_LOGO_CLICKED);
       e.preventDefault();
       logoDoodleImage.src = metadata.animatedUrl;
-      logoDoodleButton.onclick = function() {
+      logoDoodleLink.href = metadata.onClickUrl;
+      logoDoodleLink.onclick = function() {
         ntpApiHandle.logEvent(LOG_TYPE.NTP_ANIMATED_LOGO_CLICKED);
-        window.location = metadata.onClickUrl;
       };
     };
   } else {
-    logoDoodleButton.onclick = function() {
+    logoDoodleLink.href = metadata.onClickUrl;
+    logoDoodleLink.onclick = function() {
       ntpApiHandle.logEvent(LOG_TYPE.NTP_STATIC_LOGO_CLICKED);
-      window.location = metadata.onClickUrl;
     };
   }
 };

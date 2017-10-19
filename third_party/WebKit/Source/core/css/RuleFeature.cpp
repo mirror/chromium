@@ -207,35 +207,14 @@ bool RequiresSubtreeInvalidation(const CSSSelector& selector) {
   }
 }
 
-}  // anonymous namespace
-
-InvalidationSet& RuleFeatureSet::StoredInvalidationSet(
+InvalidationSet& StoredInvalidationSet(
     RefPtr<InvalidationSet>& invalidation_set,
-    InvalidationType type,
-    PositionType position) {
-  if (invalidation_set && invalidation_set->IsSelfInvalidationSet()) {
-    if (type == kInvalidateDescendants && position == kSubject)
-      return *invalidation_set;
-    // If we are retrieving the invalidation set for a simple selector in a non-
-    // rightmost compound, it means we plan to add features to the set. If so,
-    // create a DescendantInvalidationSet we are allowed to modify.
-    //
-    // Note that we also construct a DescendantInvalidationSet instead of using
-    // the SelfInvalidationSet() when we create a SiblingInvalidationSet. We may
-    // be able to let SiblingInvalidationSets reference the singleton set for
-    // descendants as well. TODO(rune@opera.com)
-    invalidation_set = DescendantInvalidationSet::Create();
-    invalidation_set->SetInvalidatesSelf();
-  }
+    InvalidationType type) {
   if (!invalidation_set) {
-    if (type == kInvalidateDescendants) {
-      if (position == kSubject)
-        invalidation_set = InvalidationSet::SelfInvalidationSet();
-      else
-        invalidation_set = DescendantInvalidationSet::Create();
-    } else {
+    if (type == kInvalidateDescendants)
+      invalidation_set = DescendantInvalidationSet::Create();
+    else
       invalidation_set = SiblingInvalidationSet::Create(nullptr);
-    }
     return *invalidation_set;
   }
   if (invalidation_set->GetType() == type)
@@ -250,27 +229,25 @@ InvalidationSet& RuleFeatureSet::StoredInvalidationSet(
   return *invalidation_set;
 }
 
-InvalidationSet& RuleFeatureSet::EnsureInvalidationSet(
+InvalidationSet& EnsureInvalidationSet(
     HashMap<AtomicString, RefPtr<InvalidationSet>>& map,
     const AtomicString& key,
-    InvalidationType type,
-    PositionType position) {
+    InvalidationType type) {
   RefPtr<InvalidationSet>& invalidation_set =
       map.insert(key, nullptr).stored_value->value;
-  return StoredInvalidationSet(invalidation_set, type, position);
+  return StoredInvalidationSet(invalidation_set, type);
 }
 
-InvalidationSet& RuleFeatureSet::EnsureInvalidationSet(
+InvalidationSet& EnsureInvalidationSet(
     HashMap<CSSSelector::PseudoType,
             RefPtr<InvalidationSet>,
             WTF::IntHash<unsigned>,
             WTF::UnsignedWithZeroKeyHashTraits<unsigned>>& map,
     CSSSelector::PseudoType key,
-    InvalidationType type,
-    PositionType position) {
+    InvalidationType type) {
   RefPtr<InvalidationSet>& invalidation_set =
       map.insert(key, nullptr).stored_value->value;
-  return StoredInvalidationSet(invalidation_set, type, position);
+  return StoredInvalidationSet(invalidation_set, type);
 }
 
 void ExtractInvalidationSets(InvalidationSet* invalidation_set,
@@ -286,6 +263,8 @@ void ExtractInvalidationSets(InvalidationSet* invalidation_set,
   siblings = ToSiblingInvalidationSet(invalidation_set);
   descendants = siblings->Descendants();
 }
+
+}  // anonymous namespace
 
 RuleFeatureSet::RuleFeatureSet() : is_alive_(true) {}
 
@@ -305,37 +284,31 @@ RuleFeatureSet::~RuleFeatureSet() {
 
 ALWAYS_INLINE InvalidationSet& RuleFeatureSet::EnsureClassInvalidationSet(
     const AtomicString& class_name,
-    InvalidationType type,
-    PositionType position) {
+    InvalidationType type) {
   CHECK(!class_name.IsEmpty());
-  return EnsureInvalidationSet(class_invalidation_sets_, class_name, type,
-                               position);
+  return EnsureInvalidationSet(class_invalidation_sets_, class_name, type);
 }
 
 ALWAYS_INLINE InvalidationSet& RuleFeatureSet::EnsureAttributeInvalidationSet(
     const AtomicString& attribute_name,
-    InvalidationType type,
-    PositionType position) {
+    InvalidationType type) {
   CHECK(!attribute_name.IsEmpty());
   return EnsureInvalidationSet(attribute_invalidation_sets_, attribute_name,
-                               type, position);
+                               type);
 }
 
 ALWAYS_INLINE InvalidationSet& RuleFeatureSet::EnsureIdInvalidationSet(
     const AtomicString& id,
-    InvalidationType type,
-    PositionType position) {
+    InvalidationType type) {
   CHECK(!id.IsEmpty());
-  return EnsureInvalidationSet(id_invalidation_sets_, id, type, position);
+  return EnsureInvalidationSet(id_invalidation_sets_, id, type);
 }
 
 ALWAYS_INLINE InvalidationSet& RuleFeatureSet::EnsurePseudoInvalidationSet(
     CSSSelector::PseudoType pseudo_type,
-    InvalidationType type,
-    PositionType position) {
+    InvalidationType type) {
   CHECK_NE(pseudo_type, CSSSelector::kPseudoUnknown);
-  return EnsureInvalidationSet(pseudo_invalidation_sets_, pseudo_type, type,
-                               position);
+  return EnsureInvalidationSet(pseudo_invalidation_sets_, pseudo_type, type);
 }
 
 void RuleFeatureSet::UpdateFeaturesFromCombinator(
@@ -418,16 +391,14 @@ void RuleFeatureSet::ExtractInvalidationSetFeaturesFromSimpleSelector(
 
 InvalidationSet* RuleFeatureSet::InvalidationSetForSimpleSelector(
     const CSSSelector& selector,
-    InvalidationType type,
-    PositionType position) {
+    InvalidationType type) {
   if (selector.Match() == CSSSelector::kClass)
-    return &EnsureClassInvalidationSet(selector.Value(), type, position);
-  if (selector.IsAttributeSelector()) {
+    return &EnsureClassInvalidationSet(selector.Value(), type);
+  if (selector.IsAttributeSelector())
     return &EnsureAttributeInvalidationSet(selector.Attribute().LocalName(),
-                                           type, position);
-  }
+                                           type);
   if (selector.Match() == CSSSelector::kId)
-    return &EnsureIdInvalidationSet(selector.Value(), type, position);
+    return &EnsureIdInvalidationSet(selector.Value(), type);
   if (selector.Match() == CSSSelector::kPseudoClass) {
     switch (selector.GetPseudoType()) {
       case CSSSelector::kPseudoEmpty:
@@ -466,8 +437,7 @@ InvalidationSet* RuleFeatureSet::InvalidationSetForSimpleSelector(
       case CSSSelector::kPseudoDefined:
       case CSSSelector::kPseudoVideoPersistent:
       case CSSSelector::kPseudoVideoPersistentAncestor:
-        return &EnsurePseudoInvalidationSet(selector.GetPseudoType(), type,
-                                            position);
+        return &EnsurePseudoInvalidationSet(selector.GetPseudoType(), type);
       case CSSSelector::kPseudoFirstOfType:
       case CSSSelector::kPseudoLastOfType:
       case CSSSelector::kPseudoOnlyOfType:
@@ -576,7 +546,7 @@ void RuleFeatureSet::UpdateInvalidationSetsForContentAttribute(
       continue;
     EnsureAttributeInvalidationSet(
         AtomicString(ToCSSCustomIdentValue(function_value->Item(0)).Value()),
-        kInvalidateDescendants, kSubject)
+        kInvalidateDescendants)
         .SetInvalidatesSelf();
   }
 }
@@ -658,7 +628,7 @@ const CSSSelector* RuleFeatureSet::ExtractInvalidationSetFeaturesFromCompound(
     // Initialize the entry in the invalidation set map for self-
     // invalidation, if supported.
     if (InvalidationSet* invalidation_set = InvalidationSetForSimpleSelector(
-            *simple_selector, kInvalidateDescendants, position)) {
+            *simple_selector, kInvalidateDescendants)) {
       if (invalidation_set == nth_invalidation_set_)
         features.has_nth_pseudo = true;
       else if (position == kSubject)
@@ -756,8 +726,7 @@ void RuleFeatureSet::AddFeaturesToInvalidationSetsForSimpleSelector(
     InvalidationSetFeatures& descendant_features) {
   if (InvalidationSet* invalidation_set = InvalidationSetForSimpleSelector(
           simple_selector,
-          sibling_features ? kInvalidateSiblings : kInvalidateDescendants,
-          kAncestor)) {
+          sibling_features ? kInvalidateSiblings : kInvalidateDescendants)) {
     if (!sibling_features || invalidation_set == nth_invalidation_set_) {
       AddFeaturesToInvalidationSet(*invalidation_set, descendant_features);
       return;
@@ -930,35 +899,26 @@ void RuleFeatureSet::Add(const RuleFeatureSet& other) {
   CHECK(is_alive_);
   CHECK(other.is_alive_);
   CHECK_NE(&other, this);
-  for (const auto& entry : other.class_invalidation_sets_) {
-    EnsureInvalidationSet(
-        class_invalidation_sets_, entry.key, entry.value->GetType(),
-        entry.value->IsSelfInvalidationSet() ? kSubject : kAncestor)
+  for (const auto& entry : other.class_invalidation_sets_)
+    EnsureInvalidationSet(class_invalidation_sets_, entry.key,
+                          entry.value->GetType())
         .Combine(*entry.value);
-  }
-  for (const auto& entry : other.attribute_invalidation_sets_) {
-    EnsureInvalidationSet(
-        attribute_invalidation_sets_, entry.key, entry.value->GetType(),
-        entry.value->IsSelfInvalidationSet() ? kSubject : kAncestor)
+  for (const auto& entry : other.attribute_invalidation_sets_)
+    EnsureInvalidationSet(attribute_invalidation_sets_, entry.key,
+                          entry.value->GetType())
         .Combine(*entry.value);
-  }
-  for (const auto& entry : other.id_invalidation_sets_) {
-    EnsureInvalidationSet(
-        id_invalidation_sets_, entry.key, entry.value->GetType(),
-        entry.value->IsSelfInvalidationSet() ? kSubject : kAncestor)
+  for (const auto& entry : other.id_invalidation_sets_)
+    EnsureInvalidationSet(id_invalidation_sets_, entry.key,
+                          entry.value->GetType())
         .Combine(*entry.value);
-  }
-  for (const auto& entry : other.pseudo_invalidation_sets_) {
-    EnsureInvalidationSet(
-        pseudo_invalidation_sets_,
-        static_cast<CSSSelector::PseudoType>(entry.key), entry.value->GetType(),
-        entry.value->IsSelfInvalidationSet() ? kSubject : kAncestor)
+  for (const auto& entry : other.pseudo_invalidation_sets_)
+    EnsureInvalidationSet(pseudo_invalidation_sets_,
+                          static_cast<CSSSelector::PseudoType>(entry.key),
+                          entry.value->GetType())
         .Combine(*entry.value);
-  }
-  if (other.universal_sibling_invalidation_set_) {
+  if (other.universal_sibling_invalidation_set_)
     EnsureUniversalSiblingInvalidationSet().Combine(
         *other.universal_sibling_invalidation_set_);
-  }
   if (other.nth_invalidation_set_)
     EnsureNthInvalidationSet().Combine(*other.nth_invalidation_set_);
 

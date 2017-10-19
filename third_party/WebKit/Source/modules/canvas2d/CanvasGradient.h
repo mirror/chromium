@@ -59,7 +59,7 @@ class MODULES_EXPORT CanvasGradient final
 
   bool IsZeroSize() const { return is_zero_size_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   CanvasGradient(const FloatPoint& p0, const FloatPoint& p1);

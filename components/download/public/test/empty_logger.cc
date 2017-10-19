@@ -17,9 +17,5 @@ base::Value EmptyLogger::GetServiceStatus() {
   return base::Value();
 }
 
-base::Value EmptyLogger::GetServiceDownloads() {
-  return base::Value();
-}
-
 }  // namespace test
 }  // namespace download

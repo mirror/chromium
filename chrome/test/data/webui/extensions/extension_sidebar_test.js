@@ -7,7 +7,7 @@ cr.define('extension_sidebar_tests', function() {
   /** @enum {string} */
   var TestNames = {
     LayoutAndClickHandlers: 'layout and click handlers',
-    SetSelected: 'set selected',
+    UpdateSelected: 'update selected',
   };
 
   suite('ExtensionSidebarTest', function() {
@@ -20,22 +20,19 @@ cr.define('extension_sidebar_tests', function() {
       document.body.appendChild(sidebar);
     });
 
-    test(assert(TestNames.SetSelected), function() {
+    test(assert(TestNames.UpdateSelected), function() {
       const selector = 'paper-item.iron-selected';
       expectFalse(!!sidebar.$$(selector));
 
-      window.history.replaceState(undefined, '', '/shortcuts');
-      PolymerTest.clearBody();
-      sidebar = new extensions.Sidebar();
-      document.body.appendChild(sidebar);
-      Polymer.dom.flush();
+      sidebar.updateSelected({page: Page.SHORTCUTS});
       expectEquals(sidebar.$$(selector).id, 'sections-shortcuts');
 
-      window.history.replaceState(undefined, '', '/');
-      PolymerTest.clearBody();
-      sidebar = new extensions.Sidebar();
-      document.body.appendChild(sidebar);
-      Polymer.dom.flush();
+      sidebar.updateSelected(
+          {page: Page.LIST, type: extensions.ShowingType.APPS});
+      expectEquals(sidebar.$$(selector).id, 'sections-apps');
+
+      sidebar.updateSelected(
+          {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS});
       expectEquals(sidebar.$$(selector).id, 'sections-extensions');
     });
 
@@ -44,6 +41,7 @@ cr.define('extension_sidebar_tests', function() {
 
       var testVisible = extension_test_util.testVisible.bind(null, sidebar);
       testVisible('#sections-extensions', true);
+      testVisible('#sections-apps', true);
       testVisible('#sections-shortcuts', true);
       testVisible('#more-extensions', true);
 
@@ -52,11 +50,17 @@ cr.define('extension_sidebar_tests', function() {
         currentPage = newPage;
       });
 
-      MockInteractions.tap(sidebar.$$('#sections-shortcuts'));
-      expectDeepEquals(currentPage, {page: Page.SHORTCUTS});
+      MockInteractions.tap(sidebar.$$('#sections-apps'));
+      expectDeepEquals(
+          currentPage, {page: Page.LIST, type: extensions.ShowingType.APPS});
 
       MockInteractions.tap(sidebar.$$('#sections-extensions'));
-      expectDeepEquals(currentPage, {page: Page.LIST});
+      expectDeepEquals(
+          currentPage,
+          {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS});
+
+      MockInteractions.tap(sidebar.$$('#sections-shortcuts'));
+      expectDeepEquals(currentPage, {page: Page.SHORTCUTS});
     });
   });
 

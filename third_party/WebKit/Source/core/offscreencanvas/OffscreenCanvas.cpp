@@ -260,6 +260,8 @@ ImageBuffer* OffscreenCanvas::GetOrCreateImageBuffer() {
     }
 
     IntSize surface_size(width(), height());
+    OpacityMode opacity_mode =
+        context_->CreationAttributes().hasAlpha() ? kNonOpaque : kOpaque;
     std::unique_ptr<ImageBufferSurface> surface;
     // TODO(zakerinasab): crbug.com/761424
     // Remove the check for canvas color extensions to allow OffscreenCanvas
@@ -267,13 +269,14 @@ ImageBuffer* OffscreenCanvas::GetOrCreateImageBuffer() {
     if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() &&
         RuntimeEnabledFeatures::Accelerated2dCanvasEnabled() &&
         !is_accelerated_2d_canvas_blacklisted) {
-      surface.reset(new AcceleratedImageBufferSurface(surface_size,
-                                                      context_->ColorParams()));
+      surface.reset(
+          new AcceleratedImageBufferSurface(surface_size, opacity_mode));
     }
 
     if (!surface || !surface->IsValid()) {
       surface.reset(new UnacceleratedImageBufferSurface(
-          surface_size, kInitializeImagePixels, context_->ColorParams()));
+          surface_size, opacity_mode, kInitializeImagePixels,
+          context_->ColorParams()));
     }
 
     image_buffer_ = ImageBuffer::Create(std::move(surface));
@@ -423,7 +426,7 @@ FontSelector* OffscreenCanvas::GetFontSelector() {
   return ToWorkerGlobalScope(execution_context_)->GetFontSelector();
 }
 
-void OffscreenCanvas::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(OffscreenCanvas) {
   visitor->Trace(context_);
   visitor->Trace(execution_context_);
   visitor->Trace(commit_promise_resolver_);

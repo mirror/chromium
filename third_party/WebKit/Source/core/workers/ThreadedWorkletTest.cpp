@@ -76,17 +76,6 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
     WorkletThreadHolder<ThreadedWorkletThreadForTest>::ClearInstance();
   }
 
-  void TestSecurityOrigin() {
-    WorkletGlobalScope* global_scope = ToWorkletGlobalScope(GlobalScope());
-    // The SecurityOrigin for a worklet should be a unique opaque origin, while
-    // the owner Document's SecurityOrigin shouldn't.
-    EXPECT_TRUE(global_scope->GetSecurityOrigin()->IsUnique());
-    EXPECT_FALSE(global_scope->DocumentSecurityOrigin()->IsUnique());
-    GetParentFrameTaskRunners()
-        ->Get(TaskType::kUnspecedTimer)
-        ->PostTask(BLINK_FROM_HERE, CrossThreadBind(&testing::ExitRunLoop));
-  }
-
   // Emulates API use on ThreadedWorkletGlobalScope.
   void CountFeature(WebFeature feature) {
     EXPECT_TRUE(IsCurrentThread());
@@ -148,7 +137,7 @@ class ThreadedWorkletMessagingProxyForTest
   ~ThreadedWorkletMessagingProxyForTest() override {}
 
   void Start() {
-    KURL script_url("http://fake.url/");
+    KURL script_url(kParsedURLString, "http://fake.url/");
     std::unique_ptr<Vector<char>> cached_meta_data = nullptr;
     Vector<CSPHeaderAndType> content_security_policy_headers;
     String referrer_policy = "";
@@ -209,17 +198,6 @@ class ThreadedWorkletTest : public ::testing::Test {
   std::unique_ptr<DummyPageHolder> page_;
   Persistent<ThreadedWorkletMessagingProxyForTest> messaging_proxy_;
 };
-
-TEST_F(ThreadedWorkletTest, SecurityOrigin) {
-  MessagingProxy()->Start();
-
-  TaskRunnerHelper::Get(TaskType::kUnspecedTimer, GetWorkerThread())
-      ->PostTask(
-          BLINK_FROM_HERE,
-          CrossThreadBind(&ThreadedWorkletThreadForTest::TestSecurityOrigin,
-                          CrossThreadUnretained(GetWorkerThread())));
-  testing::EnterRunLoop();
-}
 
 TEST_F(ThreadedWorkletTest, UseCounter) {
   MessagingProxy()->Start();

@@ -161,7 +161,6 @@ struct CustomContextMenuContext;
 struct FileChooserFileInfo;
 struct FileChooserParams;
 struct FrameOwnerProperties;
-struct FramePolicy;
 struct FrameReplicationState;
 struct NavigationParams;
 struct RequestNavigationParams;
@@ -614,12 +613,10 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeThemeColor() override;
   void DispatchLoad() override;
   blink::WebEffectiveConnectionType GetEffectiveConnectionType() override;
-  void SetEffectiveConnectionTypeForTesting(
-      blink::WebEffectiveConnectionType) override;
   bool IsClientLoFiActiveForFrame() override;
   bool ShouldUseClientLoFiForRequest(const blink::WebURLRequest&) override;
   void DidBlockFramebust(const blink::WebURL& url) override;
-  blink::WebString GetInstrumentationToken() override;
+  blink::WebString GetDevToolsFrameToken() override;
   void AbortClientNavigation() override;
   void DidChangeSelection(bool is_empty_selection) override;
   bool HandleCurrentKeyboardEvent() override;
@@ -985,7 +982,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnSnapshotAccessibilityTree(int callback_id);
   void OnExtractSmartClipData(uint32_t callback_id, const gfx::Rect& rect);
   void OnUpdateOpener(int opener_routing_id);
-  void OnDidUpdateFramePolicy(const FramePolicy& frame_policy);
+  void OnDidUpdateFramePolicy(
+      blink::WebSandboxFlags flags,
+      const ParsedFeaturePolicyHeader& container_policy);
   void OnSetFrameOwnerProperties(
       const FrameOwnerProperties& frame_owner_properties);
   void OnAdvanceFocus(blink::WebFocusType type, int32_t source_routing_id);

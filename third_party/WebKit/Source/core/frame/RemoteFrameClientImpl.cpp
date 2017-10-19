@@ -46,7 +46,7 @@ RemoteFrameClientImpl* RemoteFrameClientImpl::Create(
   return new RemoteFrameClientImpl(web_frame);
 }
 
-void RemoteFrameClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemoteFrameClientImpl) {
   visitor->Trace(web_frame_);
   RemoteFrameClient::Trace(visitor);
 }

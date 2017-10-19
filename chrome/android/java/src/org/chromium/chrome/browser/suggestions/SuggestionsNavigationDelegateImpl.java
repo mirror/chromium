@@ -215,11 +215,11 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
     private void saveUrlForOffline(String url) {
         if (mHost.getActiveTab() != null) {
             OfflinePageBridge.getForProfile(mProfile).scheduleDownload(
-                    mHost.getActiveTab().getWebContents(),
-                    OfflinePageBridge.NTP_SUGGESTIONS_NAMESPACE, url, DownloadUiActionFlags.ALL);
+                    mHost.getActiveTab().getWebContents(), "ntp_suggestions", url,
+                    DownloadUiActionFlags.ALL);
         } else {
             OfflinePageBridge.getForProfile(mProfile).savePageLater(
-                    url, OfflinePageBridge.NTP_SUGGESTIONS_NAMESPACE, true /* userRequested */);
+                    url, "ntp_suggestions", true /* userRequested */);
         }
     }
 }

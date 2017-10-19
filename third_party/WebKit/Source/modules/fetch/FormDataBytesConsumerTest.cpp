@@ -53,7 +53,6 @@ class NoopClient final : public GarbageCollectedFinalized<NoopClient>,
 
  public:
   void OnStateChange() override {}
-  String DebugName() const override { return "NoopClient"; }
 };
 
 class FormDataBytesConsumerTest : public ::testing::Test {

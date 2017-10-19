@@ -181,20 +181,32 @@ TEST_F(RootWindowControllerTest, MoveWindows_Basic) {
   EXPECT_EQ(root_windows[1], panel->GetRootWindow());
   EXPECT_EQ(kShellWindowId_PanelContainer, panel->parent()->id());
 
-  // Make sure a window that will delete itself when losing focus
-  // will not crash.
-  aura::WindowTracker tracker;
-  DeleteOnBlurDelegate delete_on_blur_delegate;
-  aura::Window* d2 = CreateTestWindowInShellWithDelegate(
-      &delete_on_blur_delegate, 0, gfx::Rect(50, 50, 100, 100));
-  delete_on_blur_delegate.SetWindow(d2);
-  aura::client::GetFocusClient(root_windows[0])->FocusWindow(d2);
-  tracker.Add(d2);
+  if (Shell::GetAshConfig() == Config::MASH) {
+    // TODO(erg): Ignore this one part of the test when running mash. We would
+    // crash because the aura::Window |d2| created in the other block doesn't
+    // get deleted, and thus continues to contain a reference to its delegate,
+    // |delete_on_blur_delegate|, which is declared on the stack.
+    //
+    // Making this work requires building out enough of the display management
+    // system; notably the part where updating the display may cause focus
+    // changes. http://crbug.com/695632.
+    UpdateDisplay("600x600");
+  } else {
+    // Make sure a window that will delete itself when losing focus
+    // will not crash.
+    aura::WindowTracker tracker;
+    DeleteOnBlurDelegate delete_on_blur_delegate;
+    aura::Window* d2 = CreateTestWindowInShellWithDelegate(
+        &delete_on_blur_delegate, 0, gfx::Rect(50, 50, 100, 100));
+    delete_on_blur_delegate.SetWindow(d2);
+    aura::client::GetFocusClient(root_windows[0])->FocusWindow(d2);
+    tracker.Add(d2);
 
-  UpdateDisplay("600x600");
+    UpdateDisplay("600x600");
 
-  // d2 must have been deleted.
-  EXPECT_FALSE(tracker.Contains(d2));
+    // d2 must have been deleted.
+    EXPECT_FALSE(tracker.Contains(d2));
+  }
 
   EXPECT_EQ(root_windows[0], normal->GetNativeView()->GetRootWindow());
   EXPECT_EQ("100,20 100x100", normal->GetWindowBoundsInScreen().ToString());
@@ -284,6 +296,10 @@ TEST_F(RootWindowControllerTest, MoveWindows_Modal) {
 
 // Make sure lock related windows moves.
 TEST_F(RootWindowControllerTest, MoveWindows_LockWindowsInUnified) {
+  // TODO: requires unified desktop mode. http://crbug.com/581462.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   display_manager()->SetUnifiedDesktopEnabled(true);
 
   UpdateDisplay("500x500");

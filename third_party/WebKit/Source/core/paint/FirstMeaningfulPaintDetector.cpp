@@ -321,7 +321,7 @@ void FirstMeaningfulPaintDetector::SetFirstMeaningfulPaint(double stamp,
       had_user_input_before_provisional_first_meaningful_paint_);
 }
 
-void FirstMeaningfulPaintDetector::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FirstMeaningfulPaintDetector) {
   visitor->Trace(paint_timing_);
 }
 

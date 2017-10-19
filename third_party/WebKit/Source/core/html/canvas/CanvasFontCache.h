@@ -33,7 +33,7 @@ class CORE_EXPORT CanvasFontCache final
   void PruneAll();
   unsigned size();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   static unsigned MaxFonts();
   unsigned HardMaxFonts();

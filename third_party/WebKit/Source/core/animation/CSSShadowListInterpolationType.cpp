@@ -5,33 +5,17 @@
 #include "core/animation/CSSShadowListInterpolationType.h"
 
 #include <memory>
-#include "core/CSSPropertyNames.h"
 #include "core/animation/ListInterpolationFunctions.h"
 #include "core/animation/ShadowInterpolationFunctions.h"
+#include "core/animation/ShadowListPropertyFunctions.h"
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/resolver/StyleBuilder.h"
 #include "core/css/resolver/StyleResolverState.h"
-#include "core/style/ComputedStyle.h"
 #include "core/style/ShadowList.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
-
-namespace {
-const ShadowList* GetShadowList(CSSPropertyID property,
-                                const ComputedStyle& style) {
-  switch (property) {
-    case CSSPropertyBoxShadow:
-      return style.BoxShadow();
-    case CSSPropertyTextShadow:
-      return style.TextShadow();
-    default:
-      NOTREACHED();
-      return nullptr;
-  }
-}
-}  // namespace
 
 InterpolationValue CSSShadowListInterpolationType::ConvertShadowList(
     const ShadowList* shadow_list,
@@ -59,7 +43,8 @@ InterpolationValue CSSShadowListInterpolationType::MaybeConvertNeutral(
 InterpolationValue CSSShadowListInterpolationType::MaybeConvertInitial(
     const StyleResolverState&,
     ConversionCheckers&) const {
-  return CreateNeutralValue();
+  return ConvertShadowList(
+      ShadowListPropertyFunctions::GetInitialShadowList(CssProperty()), 1);
 }
 
 class InheritedShadowListChecker
@@ -80,7 +65,8 @@ class InheritedShadowListChecker
   bool IsValid(const StyleResolverState& state,
                const InterpolationValue& underlying) const final {
     const ShadowList* inherited_shadow_list =
-        GetShadowList(property_, *state.ParentStyle());
+        ShadowListPropertyFunctions::GetShadowList(property_,
+                                                   *state.ParentStyle());
     if (!inherited_shadow_list && !shadow_list_)
       return true;
     if (!inherited_shadow_list || !shadow_list_)
@@ -98,7 +84,8 @@ InterpolationValue CSSShadowListInterpolationType::MaybeConvertInherit(
   if (!state.ParentStyle())
     return nullptr;
   const ShadowList* inherited_shadow_list =
-      GetShadowList(CssProperty(), *state.ParentStyle());
+      ShadowListPropertyFunctions::GetShadowList(CssProperty(),
+                                                 *state.ParentStyle());
   conversion_checkers.push_back(InheritedShadowListChecker::Create(
       CssProperty(),
       const_cast<ShadowList*>(inherited_shadow_list)));  // Take ref.
@@ -137,8 +124,9 @@ PairwiseInterpolationValue CSSShadowListInterpolationType::MaybeMergeSingles(
 InterpolationValue
 CSSShadowListInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
     const ComputedStyle& style) const {
-  return ConvertShadowList(GetShadowList(CssProperty(), style),
-                           style.EffectiveZoom());
+  return ConvertShadowList(
+      ShadowListPropertyFunctions::GetShadowList(CssProperty(), style),
+      style.EffectiveZoom());
 }
 
 void CSSShadowListInterpolationType::Composite(
@@ -175,18 +163,9 @@ void CSSShadowListInterpolationType::ApplyStandardPropertyValue(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue* non_interpolable_value,
     StyleResolverState& state) const {
-  RefPtr<ShadowList> shadow_list =
-      CreateShadowList(interpolable_value, non_interpolable_value, state);
-  switch (CssProperty()) {
-    case CSSPropertyBoxShadow:
-      state.Style()->SetBoxShadow(std::move(shadow_list));
-      return;
-    case CSSPropertyTextShadow:
-      state.Style()->SetTextShadow(std::move(shadow_list));
-      return;
-    default:
-      NOTREACHED();
-  }
+  ShadowListPropertyFunctions::SetShadowList(
+      CssProperty(), *state.Style(),
+      CreateShadowList(interpolable_value, non_interpolable_value, state));
 }
 
 }  // namespace blink

@@ -5,9 +5,10 @@
 #ifndef CHROME_BROWSER_CHROMEOS_ARC_VOICE_INTERACTION_HIGHLIGHTER_CONTROLLER_CLIENT_H_
 #define CHROME_BROWSER_CHROMEOS_ARC_VOICE_INTERACTION_HIGHLIGHTER_CONTROLLER_CLIENT_H_
 
-#include "ash/public/interfaces/highlighter_controller.mojom.h"
+#include <memory>
+
+#include "ash/highlighter/highlighter_selection_observer.h"
 #include "base/macros.h"
-#include "mojo/public/cpp/bindings/binding.h"
 
 namespace gfx {
 class Rect;
@@ -17,54 +18,26 @@ namespace base {
 class Timer;
 }  // namespace base
 
-namespace service_manager {
-class Connector;
-}  // namespace service_manager
-
 namespace arc {
 
 class ArcVoiceInteractionFrameworkService;
 
-class HighlighterControllerClient
-    : public ash::mojom::HighlighterControllerClient {
+// TODO(kaznacheev) Convert observer to a mojo connection (crbug/769996)
+class HighlighterControllerClient : public ash::HighlighterSelectionObserver {
  public:
   explicit HighlighterControllerClient(
       ArcVoiceInteractionFrameworkService* service);
   ~HighlighterControllerClient() override;
 
-  // Attaches the client to the controller.
-  void Attach();
-
-  // Detaches the client from the controller.
-  void Detach();
-
-  void SetConnectorForTesting(service_manager::Connector* connector) {
-    connector_ = connector;
-  }
-
-  void SimulateSelectionTimeoutForTesting();
-
-  void FlushMojoForTesting();
-
  private:
-  void ConnectToHighlighterController();
-
-  // ash::mojom::HighlighterControllerClient:
+  // ash::HighlighterSelectionObserver:
   void HandleSelection(const gfx::Rect& rect) override;
+  void HandleFailedSelection() override;
   void HandleEnabledStateChange(bool enabled) override;
 
   void ReportSelection(const gfx::Rect& rect);
 
   bool start_session_pending() const { return delay_timer_.get(); }
-
-  // Unowned pointer to a mojo connector.
-  service_manager::Connector* connector_ = nullptr;
-
-  // Binds to the client interface.
-  mojo::Binding<ash::mojom::HighlighterControllerClient> binding_;
-
-  // HighlighterController interface in ash.
-  ash::mojom::HighlighterControllerPtr highlighter_controller_;
 
   ArcVoiceInteractionFrameworkService* service_;
 

@@ -192,7 +192,7 @@ public class MediaCaptureNotificationService extends Service {
                         mContext.getResources().getString(R.string.accessibility_stop),
                         buildStopCapturePendingIntent(notificationId));
             } else {
-                contentText.append(" ").append(mContext.getResources().getString(
+                contentText.append(mContext.getResources().getString(
                         R.string.media_notification_link_text, url));
             }
         } else {

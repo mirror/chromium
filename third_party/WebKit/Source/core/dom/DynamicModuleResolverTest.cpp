@@ -25,10 +25,10 @@ constexpr const char* kTestReferrerURL = "https://example.com/referrer.js";
 constexpr const char* kTestDependencyURL = "https://example.com/dependency.js";
 
 const KURL TestReferrerURL() {
-  return KURL(kTestReferrerURL);
+  return KURL(kParsedURLString, kTestReferrerURL);
 }
 const KURL TestDependencyURL() {
-  return KURL(kTestDependencyURL);
+  return KURL(kParsedURLString, kTestDependencyURL);
 }
 
 class DynamicModuleResolverTestModulator final : public DummyModulator {
@@ -43,7 +43,7 @@ class DynamicModuleResolverTestModulator final : public DummyModulator {
     pending_client_ = nullptr;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // Implements Modulator:
@@ -51,8 +51,9 @@ class DynamicModuleResolverTestModulator final : public DummyModulator {
 
   ModuleScript* GetFetchedModuleScript(const KURL& url) final {
     EXPECT_EQ(TestReferrerURL(), url);
-    ModuleScript* module_script =
-        ModuleScript::CreateForTest(this, ScriptModule(), url);
+    ModuleScript* module_script = ModuleScript::CreateForTest(
+        this, ScriptModule(), url, "nonce", kParserInserted,
+        WebURLRequest::kFetchCredentialsModeOmit);
     return module_script;
   }
 
@@ -89,7 +90,7 @@ class DynamicModuleResolverTestModulator final : public DummyModulator {
   Member<ModuleTreeClient> pending_client_;
 };
 
-void DynamicModuleResolverTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DynamicModuleResolverTestModulator) {
   visitor->Trace(pending_client_);
   DummyModulator::Trace(visitor);
 }
@@ -211,8 +212,9 @@ TEST(DynamicModuleResolverTest, ResolveSuccess) {
       scope.GetIsolate(), "export const foo = 'hello';", TestReferrerURL(),
       kSharableCrossOrigin, WebURLRequest::kFetchCredentialsModeOmit, "",
       kParserInserted, TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
-  ModuleScript* module_script =
-      ModuleScript::CreateForTest(modulator, record, TestDependencyURL());
+  ModuleScript* module_script = ModuleScript::CreateForTest(
+      modulator, record, TestDependencyURL(), "nonce", kNotParserInserted,
+      WebURLRequest::kFetchCredentialsModeOmit);
   EXPECT_TRUE(record.Instantiate(scope.GetScriptState()).IsEmpty());
   modulator->ResolveTreeFetch(module_script);
 
@@ -291,8 +293,9 @@ TEST(DynamicModuleResolverTest, ExceptionThrown) {
       scope.GetIsolate(), "throw Error('bar')", TestReferrerURL(),
       kSharableCrossOrigin, WebURLRequest::kFetchCredentialsModeOmit, "",
       kParserInserted, TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
-  ModuleScript* module_script =
-      ModuleScript::CreateForTest(modulator, record, TestDependencyURL());
+  ModuleScript* module_script = ModuleScript::CreateForTest(
+      modulator, record, TestDependencyURL(), "nonce", kNotParserInserted,
+      WebURLRequest::kFetchCredentialsModeOmit);
   EXPECT_TRUE(record.Instantiate(scope.GetScriptState()).IsEmpty());
   modulator->ResolveTreeFetch(module_script);
 
@@ -304,7 +307,7 @@ TEST(DynamicModuleResolverTest, ExceptionThrown) {
 
 TEST(DynamicModuleResolverTest, ResolveWithNullReferrerScriptSuccess) {
   V8TestingScope scope;
-  scope.GetDocument().SetURL(KURL("https://example.com"));
+  scope.GetDocument().SetURL(KURL(kParsedURLString, "https://example.com"));
 
   auto modulator =
       new DynamicModuleResolverTestModulator(scope.GetScriptState());
@@ -328,8 +331,9 @@ TEST(DynamicModuleResolverTest, ResolveWithNullReferrerScriptSuccess) {
       scope.GetIsolate(), "export const foo = 'hello';", TestDependencyURL(),
       kSharableCrossOrigin, WebURLRequest::kFetchCredentialsModeOmit, "",
       kParserInserted, TextPosition::MinimumPosition(), ASSERT_NO_EXCEPTION);
-  ModuleScript* module_script =
-      ModuleScript::CreateForTest(modulator, record, TestDependencyURL());
+  ModuleScript* module_script = ModuleScript::CreateForTest(
+      modulator, record, TestDependencyURL(), "nonce", kNotParserInserted,
+      WebURLRequest::kFetchCredentialsModeOmit);
   EXPECT_TRUE(record.Instantiate(scope.GetScriptState()).IsEmpty());
   modulator->ResolveTreeFetch(module_script);
 

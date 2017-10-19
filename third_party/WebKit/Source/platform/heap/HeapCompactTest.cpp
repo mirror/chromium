@@ -31,7 +31,7 @@ class IntWrapper : public blink::GarbageCollectedFinalized<IntWrapper> {
 
   virtual ~IntWrapper() {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     // Verify if compaction is indeed activated.
     //
     // What arenas end up being compacted is dependent on residency,

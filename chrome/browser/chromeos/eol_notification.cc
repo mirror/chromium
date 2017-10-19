@@ -6,6 +6,7 @@
 
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
@@ -22,7 +23,6 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
 
@@ -142,18 +142,17 @@ void EolNotification::Update() {
   data.buttons.push_back(learn_more);
   data.buttons.push_back(dismiss);
 
-  message_center::Notification notification(
+  Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, kEolNotificationId,
       GetStringUTF16(IDS_EOL_NOTIFICATION_TITLE),
       GetStringUTF16(IDS_EOL_NOTIFICATION_EOL),
       message_center::IsNewStyleNotificationEnabled()
           ? gfx::Image()
           : gfx::Image(CreateVectorIcon(kEolIcon, kNotificationIconColor)),
-      GetStringUTF16(IDS_EOL_NOTIFICATION_DISPLAY_SOURCE),
-      GURL(kEolNotificationId),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kEolNotificationId),
-      data, nullptr);
+      GetStringUTF16(IDS_EOL_NOTIFICATION_DISPLAY_SOURCE),
+      GURL(kEolNotificationId), kEolNotificationId, data, nullptr);
 
   if (message_center::IsNewStyleNotificationEnabled()) {
     notification.set_accent_color(

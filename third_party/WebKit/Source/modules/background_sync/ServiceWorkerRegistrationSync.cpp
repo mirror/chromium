@@ -43,7 +43,7 @@ SyncManager* ServiceWorkerRegistrationSync::sync() {
   return sync_manager_.Get();
 }
 
-void ServiceWorkerRegistrationSync::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ServiceWorkerRegistrationSync) {
   visitor->Trace(registration_);
   visitor->Trace(sync_manager_);
   Supplement<ServiceWorkerRegistration>::Trace(visitor);

@@ -22,7 +22,6 @@
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "components/offline_pages/core/offline_pages_ukm_reporter.h"
-#include "components/offline_pages/core/offline_store_utils.h"
 
 namespace offline_pages {
 
@@ -177,6 +176,12 @@ void RecordNetworkQualityAtRequestStartForFailedRequest(
   histogram->Add(effective_connection);
 }
 
+// This should use the same algorithm as we use for OfflinePageItem, so the IDs
+// are similar.
+int64_t GenerateOfflineId() {
+  return base::RandGenerator(std::numeric_limits<int64_t>::max()) + 1;
+}
+
 // In case we start processing from SavePageLater, we need a callback, but there
 // is nothing for it to do.
 void EmptySchedulerCallback(bool started) {}
@@ -257,7 +262,7 @@ int64_t RequestCoordinator::SavePageLater(
     return 0L;
   }
 
-  int64_t id = store_utils::GenerateOfflineId();
+  int64_t id = GenerateOfflineId();
 
   // Build a SavePageRequest.
   offline_pages::SavePageRequest request(

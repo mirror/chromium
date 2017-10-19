@@ -90,8 +90,7 @@ void PageOverlay::Update() {
   if (size != layer_->Size())
     layer_->SetSize(size);
 
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    layer_->SetNeedsDisplay();
+  layer_->SetNeedsDisplay();
 }
 
 LayoutRect PageOverlay::VisualRect() const {

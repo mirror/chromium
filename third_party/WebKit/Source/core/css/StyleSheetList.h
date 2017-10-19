@@ -54,7 +54,7 @@ class CORE_EXPORT StyleSheetList final
 
   CSSStyleSheet* AnonymousNamedGetter(const AtomicString&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit StyleSheetList(TreeScope*);

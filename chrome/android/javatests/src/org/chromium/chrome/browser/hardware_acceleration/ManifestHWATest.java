@@ -26,7 +26,7 @@ public class ManifestHWATest {
     @Test
     @SmallTest
     public void testAccelerationDisabled() throws Exception {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         PackageInfo info = context.getPackageManager().getPackageInfo(
                 context.getApplicationInfo().packageName,
                 PackageManager.GET_ACTIVITIES);

@@ -10,7 +10,6 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/mac/mac_logging.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/macros.h"
@@ -893,8 +892,7 @@ AudioParameters AudioManagerMac::GetPreferredOutputStreamParameters(
 
 void AudioManagerMac::InitializeOnAudioThread() {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
-  if (base::FeatureList::IsEnabled(kSerializeCoreAudioPauseResume))
-    InitializeCoreAudioDispatchOverride();
+  InitializeCoreAudioDispatchOverride();
   power_observer_.reset(new AudioPowerObserver());
 }
 

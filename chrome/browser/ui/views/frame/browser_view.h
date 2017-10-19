@@ -45,10 +45,6 @@
 #include "ui/views/widget/widget_observer.h"
 #include "ui/views/window/client_view.h"
 
-#if defined(OS_CHROMEOS)
-#include "chrome/browser/ui/views/intent_picker_bubble_view.h"
-#endif  // defined(OS_CHROMEOS)
-
 // NOTE: For more information about the objects and files in this directory,
 // view: http://dev.chromium.org/developers/design-documents/browser-window
 
@@ -321,12 +317,6 @@ class BrowserView : public BrowserWindow,
   bool IsToolbarVisible() const override;
   bool IsToolbarShowing() const override;
   void ShowUpdateChromeDialog() override;
-#if defined(OS_CHROMEOS)
-  void ShowIntentPickerBubble(
-      std::vector<IntentPickerBubbleView::AppInfo> app_info,
-      IntentPickerResponse callback) override;
-  void SetIntentPickerViewVisibility(bool visible) override;
-#endif  //  defined(OS_CHROMEOS)
   void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) override;
   autofill::SaveCardBubbleView* ShowSaveCreditCardBubble(
       content::WebContents* contents,

@@ -39,7 +39,7 @@ class MODULES_EXPORT PaymentInstruments final
                     ExceptionState&);
   ScriptPromise clear(ScriptState*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   void onDeletePaymentInstrument(ScriptPromiseResolver*,

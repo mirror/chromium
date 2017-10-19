@@ -6,7 +6,6 @@
 #define ASH_SHELF_LOGIN_SHELF_VIEW_H_
 
 #include "ash/ash_export.h"
-#include "ash/lock_screen_action/lock_screen_action_background_observer.h"
 #include "ash/shutdown_controller.h"
 #include "ash/tray_action/tray_action_observer.h"
 #include "base/scoped_observer.h"
@@ -22,9 +21,6 @@ enum class SessionState;
 }
 
 namespace ash {
-
-class LockScreenActionBackgroundController;
-enum class LockScreenActionBackgroundState;
 class TrayAction;
 
 // LoginShelfView contains the shelf buttons visible outside of an active user
@@ -32,7 +28,6 @@ class TrayAction;
 class ASH_EXPORT LoginShelfView : public views::View,
                                   public views::ButtonListener,
                                   public TrayActionObserver,
-                                  public LockScreenActionBackgroundObserver,
                                   public ShutdownController::Observer {
  public:
   enum ButtonId {
@@ -43,8 +38,7 @@ class ASH_EXPORT LoginShelfView : public views::View,
     kCancel,        // Cancel multiple user sign-in.
   };
 
-  explicit LoginShelfView(
-      LockScreenActionBackgroundController* lock_screen_action_background);
+  LoginShelfView();
   ~LoginShelfView() override;
 
   // ShelfWidget observes SessionController for higher-level UI changes and
@@ -62,27 +56,15 @@ class ASH_EXPORT LoginShelfView : public views::View,
   // TrayActionObserver:
   void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
 
-  // LockScreenActionBackgroundObserver:
-  void OnLockScreenActionBackgroundStateChanged(
-      LockScreenActionBackgroundState state) override;
-
   // ShutdownController::Observer:
   void OnShutdownPolicyChanged(bool reboot_on_shutdown) override;
 
  private:
-  bool LockScreenActionBackgroundAnimating() const;
-
   // Updates the visibility of buttons based on state changes, e.g. shutdown
   // policy updates, session state changes etc.
   void UpdateUi();
 
-  LockScreenActionBackgroundController* lock_screen_action_background_;
-
   ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
-
-  ScopedObserver<LockScreenActionBackgroundController,
-                 LockScreenActionBackgroundObserver>
-      lock_screen_action_background_observer_;
 
   ScopedObserver<ShutdownController, ShutdownController::Observer>
       shutdown_controller_observer_;

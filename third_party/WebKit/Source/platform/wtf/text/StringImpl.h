@@ -26,7 +26,6 @@
 
 #include <limits.h>
 #include <string.h>
-#include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "platform/wtf/ASCIICType.h"
 #include "platform/wtf/Forward.h"

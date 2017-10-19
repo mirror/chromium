@@ -38,7 +38,6 @@ namespace blink {
 class NormalPageArena;
 class BasePage;
 class ThreadState;
-class ThreadHeap;
 
 class PLATFORM_EXPORT HeapCompact final {
  public:
@@ -51,7 +50,7 @@ class PLATFORM_EXPORT HeapCompact final {
   // Determine if a GC for the given type and reason should also perform
   // additional heap compaction.
   //
-  bool ShouldCompact(ThreadHeap*,
+  bool ShouldCompact(ThreadState*,
                      BlinkGC::StackState,
                      BlinkGC::GCType,
                      BlinkGC::GCReason);
@@ -135,7 +134,7 @@ class PLATFORM_EXPORT HeapCompact final {
   // on the freelists of the arenas we're able to compact. The computed
   // numbers will be subsequently used to determine if a heap compaction
   // is on order (shouldCompact().)
-  void UpdateHeapResidency(ThreadHeap*);
+  void UpdateHeapResidency(ThreadState*);
 
   // Parameters controlling when compaction should be done:
 

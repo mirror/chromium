@@ -66,8 +66,6 @@ GPUTestConfig::OS GetCurrentOS() {
         return GPUTestConfig::kOsMacElCapitan;
       case 12:
         return GPUTestConfig::kOsMacSierra;
-      case 13:
-        return GPUTestConfig::kOsMacHighSierra;
     }
   }
 #elif defined(OS_ANDROID)
@@ -194,7 +192,6 @@ bool GPUTestBotConfig::IsValid() const {
     case kOsMacYosemite:
     case kOsMacElCapitan:
     case kOsMacSierra:
-    case kOsMacHighSierra:
     case kOsLinux:
     case kOsChromeOS:
     case kOsAndroid:

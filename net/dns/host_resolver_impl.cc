@@ -685,13 +685,11 @@ class HostResolverImpl::ProcTask
   ProcTask(const Key& key,
            const ProcTaskParams& params,
            const Callback& callback,
-           scoped_refptr<base::TaskRunner> proc_task_runner,
            const NetLogWithSource& job_net_log)
       : key_(key),
         params_(params),
         callback_(callback),
         network_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-        proc_task_runner_(std::move(proc_task_runner)),
         attempt_number_(0),
         completed_attempt_number_(0),
         completed_attempt_error_(ERR_UNEXPECTED),
@@ -741,8 +739,9 @@ class HostResolverImpl::ProcTask
     base::TimeTicks start_time = base::TimeTicks::Now();
     ++attempt_number_;
     // Dispatch the lookup attempt to a worker thread.
-    proc_task_runner_->PostTask(
+    base::PostTaskWithTraits(
         FROM_HERE,
+        {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
         base::Bind(&ProcTask::DoLookup, this, start_time, attempt_number_));
 
     net_log_.AddEvent(NetLogEventType::HOST_RESOLVER_IMPL_ATTEMPT_STARTED,
@@ -939,8 +938,6 @@ class HostResolverImpl::ProcTask
 
   // Used to post events onto the network thread.
   scoped_refptr<base::SingleThreadTaskRunner> network_task_runner_;
-  // Used to post blocking HostResolverProc tasks.
-  scoped_refptr<base::TaskRunner> proc_task_runner_;
 
   // Keeps track of the number of attempts we have made so far to resolve the
   // host. Whenever we start an attempt to resolve the host, we increase this
@@ -1202,12 +1199,10 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
   Job(const base::WeakPtr<HostResolverImpl>& resolver,
       const Key& key,
       RequestPriority priority,
-      scoped_refptr<base::TaskRunner> proc_task_runner,
       const NetLogWithSource& source_net_log)
       : resolver_(resolver),
         key_(key),
         priority_tracker_(priority),
-        proc_task_runner_(std::move(proc_task_runner)),
         had_non_speculative_request_(false),
         had_dns_config_(false),
         num_occupied_job_slots_(0),
@@ -1496,7 +1491,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
         new ProcTask(key_, resolver_->proc_params_,
                      base::Bind(&Job::OnProcTaskComplete,
                                 base::Unretained(this), base::TimeTicks::Now()),
-                     proc_task_runner_, net_log_);
+                     net_log_);
 
     // Start() could be called from within Resolve(), hence it must NOT directly
     // call OnProcTaskComplete, for example, on synchronous failure.
@@ -1796,9 +1791,6 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
   // Tracks the highest priority across |requests_|.
   PriorityTracker priority_tracker_;
 
-  // Task runner used for HostResolverProc.
-  scoped_refptr<base::TaskRunner> proc_task_runner_;
-
   bool had_non_speculative_request_;
 
   // Distinguishes measurements taken while DnsClient was fully configured.
@@ -1896,8 +1888,8 @@ int HostResolverImpl::Resolve(const RequestInfo& info,
   auto jobit = jobs_.find(key);
   Job* job;
   if (jobit == jobs_.end()) {
-    job = new Job(weak_ptr_factory_.GetWeakPtr(), key, priority,
-                  proc_task_runner_, source_net_log);
+    job =
+        new Job(weak_ptr_factory_.GetWeakPtr(), key, priority, source_net_log);
     job->Schedule(false);
 
     // Check for queue overflow.
@@ -1949,9 +1941,6 @@ HostResolverImpl::HostResolverImpl(const Options& options, NetLog* net_log)
 
   DCHECK_GE(dispatcher_->num_priorities(), static_cast<size_t>(NUM_PRIORITIES));
 
-  proc_task_runner_ = base::CreateTaskRunnerWithTraits(
-      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
-
 #if defined(OS_WIN)
   EnsureWinsockInit();
 #endif
@@ -1985,11 +1974,6 @@ void HostResolverImpl::SetHaveOnlyLoopbackAddresses(bool result) {
   } else {
     additional_resolver_flags_ &= ~HOST_RESOLVER_LOOPBACK_ONLY;
   }
-}
-
-void HostResolverImpl::SetTaskRunnerForTesting(
-    scoped_refptr<base::TaskRunner> task_runner) {
-  proc_task_runner_ = std::move(task_runner);
 }
 
 int HostResolverImpl::ResolveHelper(const RequestInfo& info,
@@ -2489,12 +2473,13 @@ void HostResolverImpl::UpdateDNSConfig(bool config_changed) {
   // We want a new DnsSession in place, before we Abort running Jobs, so that
   // the newly started jobs use the new config.
   if (dns_client_.get()) {
-    // Make sure that if the update is an initial read, not a change, there
-    // wasn't already a DnsConfig.
-    DCHECK(config_changed || !dns_client_->GetConfig());
     dns_client_->SetConfig(dns_config);
-    if (dns_client_->GetConfig())
+    if (dns_client_->GetConfig()) {
       UMA_HISTOGRAM_BOOLEAN("AsyncDNS.DnsClientEnabled", true);
+      // If we just switched DnsClients, restart jobs using new resolver.
+      // TODO(pauljensen): Is this necessary?
+      config_changed = true;
+    }
   }
 
   if (config_changed) {

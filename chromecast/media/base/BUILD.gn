@@ -34,8 +34,6 @@ source_set("base") {
     "media_caps.h",
     "media_resource_tracker.cc",
     "media_resource_tracker.h",
-    "slew_volume.cc",
-    "slew_volume.h",
     "supported_codec_profile_levels_memo.cc",
     "supported_codec_profile_levels_memo.h",
     "video_mode_switcher.cc",
@@ -64,7 +62,6 @@ source_set("base") {
     "//crypto",
     "//crypto:platform",
     "//media",
-    "//media:shared_memory_support",
     "//ui/gfx/geometry",
   ]
 }

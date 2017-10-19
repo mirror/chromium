@@ -93,7 +93,11 @@ cr.define('extensions', function() {
 
     /** @private */
     onCloseButtonTap_: function() {
-      extensions.navigation.navigateTo({page: Page.LIST});
+      extensions.navigation.navigateTo({
+        page: Page.LIST,
+        type: extensions.getItemListType(
+            /** @type {!chrome.developerPrivate.ExtensionInfo} */ (this.data))
+      });
     },
 
     /**
@@ -101,20 +105,20 @@ cr.define('extensions', function() {
      * @return {string}
      * @private
      */
-    computeErrorIcon_: function(error) {
+    computeErrorIconClass_: function(error) {
       if (error.type == chrome.developerPrivate.ErrorType.RUNTIME) {
         switch (error.severity) {
           case chrome.developerPrivate.ErrorLevel.LOG:
-            return 'info';
+            return 'icon-severity-info';
           case chrome.developerPrivate.ErrorLevel.WARN:
-            return 'warning';
+            return 'icon-severity-warning';
           case chrome.developerPrivate.ErrorLevel.ERROR:
-            return 'error';
+            return 'icon-severity-fatal';
         }
         assertNotReached();
       }
       assert(error.type == chrome.developerPrivate.ErrorType.MANIFEST);
-      return 'warning';
+      return 'icon-severity-warning';
     },
 
     /**

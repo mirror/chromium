@@ -7,6 +7,8 @@
 #include <memory>
 #include <utility>
 
+#include "base/format_macros.h"
+#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "base/trace_event/blame_context.h"
 #include "platform/scheduler/base/task_queue_manager.h"
@@ -318,11 +320,7 @@ TaskQueueImpl::TaskDeque TaskQueueImpl::TakeImmediateIncomingQueue() {
   TaskQueueImpl::TaskDeque queue;
   queue.Swap(immediate_incoming_queue());
 
-  // Activate delayed fence if necessary. This is ideologically similar to
-  // ActivateDelayedFenceIfNeeded, but due to immediate tasks being posted
-  // from any thread we can't generate an enqueue order for the fence there,
-  // so we have to check all immediate tasks and use their enqueue order for
-  // a fence.
+  // Activate delayed fence if necessary.
   if (main_thread_only().delayed_fence) {
     for (const Task& task : queue) {
       if (task.delayed_run_time >= main_thread_only().delayed_fence.value()) {
@@ -337,6 +335,22 @@ TaskQueueImpl::TaskDeque TaskQueueImpl::TakeImmediateIncomingQueue() {
     }
   }
 
+  // Temporary check for crbug.com/752914. Ideally we'd check the entire queue
+  // but that would be too expensive.
+  // TODO(skyostil): Remove this.
+  if (!queue.empty()) {
+    if (!queue.front().task) {
+      static const char kBlinkSchedulerTaskFunctionNameKey[] =
+          "blink_scheduler_task_function_name";
+      static const char kBlinkSchedulerTaskFileNameKey[] =
+          "blink_scheduler_task_file_name";
+      base::debug::SetCrashKeyValue(kBlinkSchedulerTaskFunctionNameKey,
+                                    queue.front().posted_from.function_name());
+      base::debug::SetCrashKeyValue(kBlinkSchedulerTaskFileNameKey,
+                                    queue.front().posted_from.file_name());
+    }
+    CHECK(queue.front().task);
+  }
   return queue;
 }
 
@@ -457,16 +471,10 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
   base::AutoLock immediate_incoming_queue_lock(immediate_incoming_queue_lock_);
   state->BeginDictionary();
   state->SetString("name", GetName());
-  if (!main_thread_only().task_queue_manager) {
-    state->SetBoolean("unregistered", true);
-    state->EndDictionary();
-    return;
-  }
-  DCHECK(main_thread_only().time_domain);
-  DCHECK(main_thread_only().delayed_work_queue);
-  DCHECK(main_thread_only().immediate_work_queue);
-
-  state->SetString("task_queue_id", PointerToString(this));
+  state->SetString(
+      "task_queue_id",
+      base::StringPrintf("%" PRIx64, static_cast<uint64_t>(
+                                         reinterpret_cast<uintptr_t>(this))));
   state->SetBoolean("enabled", IsQueueEnabled());
   state->SetString("time_domain_name",
                    main_thread_only().time_domain->GetName());
@@ -664,12 +672,7 @@ bool TaskQueueImpl::BlockedByFence() const {
          main_thread_only().current_fence;
 }
 
-bool TaskQueueImpl::HasActiveFence() {
-  if (main_thread_only().delayed_fence &&
-      main_thread_only().time_domain->Now() >
-          main_thread_only().delayed_fence.value()) {
-    return true;
-  }
+bool TaskQueueImpl::HasFence() const {
   return !!main_thread_only().current_fence;
 }
 

@@ -485,18 +485,12 @@ void PasswordManager::ShowManualFallbackForSaving(
   }
   ProvisionallySaveManager(password_form, matched_manager, nullptr);
 
-  // Show the fallback if a prompt or a confirmation bubble should be available.
+  DCHECK(provisional_save_manager_);
+  bool is_update = IsPasswordUpdate(*provisional_save_manager_);
   bool has_generated_password =
       provisional_save_manager_->has_generated_password();
-  if (ShouldPromptUserToSavePassword() || has_generated_password) {
-    DCHECK(provisional_save_manager_);
-    bool is_update = IsPasswordUpdate(*provisional_save_manager_);
-    client_->ShowManualFallbackForSaving(std::move(provisional_save_manager_),
-                                         has_generated_password, is_update);
-  } else {
-    provisional_save_manager_.reset();
-    HideManualFallbackForSaving();
-  }
+  client_->ShowManualFallbackForSaving(std::move(provisional_save_manager_),
+                                       has_generated_password, is_update);
 }
 
 void PasswordManager::HideManualFallbackForSaving() {
@@ -789,14 +783,8 @@ void PasswordManager::OnLoginSuccessful() {
         password_manager::PasswordStore* store = client_->GetPasswordStore();
         // May be null in tests.
         if (store) {
-          bool is_sync_password_change =
-              !provisional_save_manager_->submitted_form()
-                   ->new_password_element.empty();
           metrics_util::LogSyncPasswordHashChange(
-              is_sync_password_change ? metrics_util::SyncPasswordHashChange::
-                                            CHANGED_IN_CONTENT_AREA
-                                      : metrics_util::SyncPasswordHashChange::
-                                            SAVED_IN_CONTENT_AREA);
+              metrics_util::SyncPasswordHashChange::SAVED_IN_CONTENT_AREA);
           store->SaveSyncPasswordHash(
               provisional_save_manager_->submitted_form()->password_value);
         }

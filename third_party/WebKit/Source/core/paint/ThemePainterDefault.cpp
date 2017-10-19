@@ -474,7 +474,7 @@ bool ThemePainterDefault::PaintSearchFieldCancelButton(
       LayoutTheme::IsPressed(cancel_button_object.GetNode())
           ? cancel_pressed_image
           : cancel_image,
-      Image::kSyncDecode, painting_rect);
+      painting_rect);
   return false;
 }
 

@@ -142,6 +142,8 @@ class CORE_EXPORT OffscreenCanvas final
   }
   bool IsOpaque() const final;
   bool IsAccelerated() const final;
+  int SourceWidth() final { return width(); }
+  int SourceHeight() final { return height(); }
 
   DispatchEventResult HostDispatchEvent(Event* event) {
     return DispatchEvent(event);
@@ -153,7 +155,7 @@ class CORE_EXPORT OffscreenCanvas final
 
   FontSelector* GetFontSelector() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class OffscreenCanvasTest;

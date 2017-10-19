@@ -43,7 +43,6 @@
 #include "public/web/WebEmbeddedWorker.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
 
 namespace blink {
 
@@ -62,8 +61,7 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   WebEmbeddedWorkerImpl(
       std::unique_ptr<WebServiceWorkerContextClient>,
       std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
-      std::unique_ptr<ServiceWorkerContentSettingsProxy>,
-      service_manager::mojom::blink::InterfaceProviderPtrInfo);
+      std::unique_ptr<ServiceWorkerContentSettingsProxy>);
   ~WebEmbeddedWorkerImpl() override;
 
   // WebEmbeddedWorker overrides.
@@ -137,9 +135,6 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   } pause_after_download_state_;
 
   WaitingForDebuggerState waiting_for_debugger_state_;
-
-  service_manager::mojom::blink::InterfaceProviderPtrInfo
-      interface_provider_info_;
 };
 
 }  // namespace blink

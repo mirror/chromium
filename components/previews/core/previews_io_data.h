@@ -15,10 +15,9 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
-#include "components/previews/core/previews_black_list.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
-#include "components/previews/core/previews_logger.h"
+#include "components/previews/core/previews_log.h"
 #include "net/nqe/effective_connection_type.h"
 
 class GURL;
@@ -28,6 +27,7 @@ class URLRequest;
 }
 
 namespace previews {
+class PreviewsBlackList;
 class PreviewsOptOutStore;
 class PreviewsUIService;
 
@@ -54,13 +54,7 @@ class PreviewsIOData : public PreviewsDecider {
   void LogPreviewNavigation(const GURL& url,
                             bool opt_out,
                             PreviewsType type,
-                            base::Time time) const;
-
-  // Adds log message of preview decision made asynchronously.
-  void LogPreviewDecisionMade(PreviewsEligibilityReason reason,
-                              const GURL& url,
-                              base::Time time,
-                              PreviewsType type) const;
+                            base::Time time);
 
   // Adds a navigation to |url| to the black list with result |opt_out|.
   void AddPreviewNavigation(const GURL& url, bool opt_out, PreviewsType type);
@@ -87,10 +81,6 @@ class PreviewsIOData : public PreviewsDecider {
   // a weak pointer to |this|. Virtualized for testing.
   virtual void InitializeOnIOThread(
       std::unique_ptr<PreviewsOptOutStore> previews_opt_out_store);
-
-  // Sets a blacklist for testing.
-  void SetTestingPreviewsBlacklistForTesting(
-      std::unique_ptr<PreviewsBlackList> previews_back_list);
 
  private:
   // The UI thread portion of the inter-thread communication for previews.

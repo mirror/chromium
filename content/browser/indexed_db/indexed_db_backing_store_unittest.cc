@@ -20,7 +20,6 @@
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_factory_impl.h"
 #include "content/browser/indexed_db/indexed_db_leveldb_coding.h"
-#include "content/browser/indexed_db/indexed_db_metadata_coding.h"
 #include "content/browser/indexed_db/indexed_db_value.h"
 #include "content/browser/indexed_db/leveldb/leveldb_factory.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -1212,32 +1211,23 @@ TEST_F(IndexedDBBackingStoreTest, CreateDatabase) {
             const bool multi_entry = true;
             const IndexedDBKeyPath index_key_path(ASCIIToUTF16("index_key"));
 
-            IndexedDBMetadataCoding metadata_coding;
-
             {
-              IndexedDBDatabaseMetadata database;
-              leveldb::Status s = metadata_coding.CreateDatabase(
-                  backing_store->db(), backing_store->origin_identifier(),
-                  database_name, version, &database);
+              leveldb::Status s = backing_store->CreateIDBDatabaseMetaData(
+                  database_name, version, &database_id);
               EXPECT_TRUE(s.ok());
-              EXPECT_GT(database.id, 0);
-              database_id = database.id;
+              EXPECT_GT(database_id, 0);
 
               IndexedDBBackingStore::Transaction transaction(backing_store);
               transaction.Begin();
 
-              IndexedDBObjectStoreMetadata object_store;
-              s = metadata_coding.CreateObjectStore(
-                  transaction.transaction(), database.id, object_store_id,
-                  object_store_name, object_store_key_path, auto_increment,
-                  &object_store);
+              s = backing_store->CreateObjectStore(
+                  &transaction, database_id, object_store_id, object_store_name,
+                  object_store_key_path, auto_increment);
               EXPECT_TRUE(s.ok());
 
-              IndexedDBIndexMetadata index;
-              s = metadata_coding.CreateIndex(
-                  transaction.transaction(), database.id, object_store.id,
-                  index_id, index_name, index_key_path, unique, multi_entry,
-                  &index);
+              s = backing_store->CreateIndex(
+                  &transaction, database_id, object_store_id, index_id,
+                  index_name, index_key_path, unique, multi_entry);
               EXPECT_TRUE(s.ok());
 
               scoped_refptr<TestCallback> callback(
@@ -1251,8 +1241,7 @@ TEST_F(IndexedDBBackingStoreTest, CreateDatabase) {
             {
               IndexedDBDatabaseMetadata database;
               bool found;
-              leveldb::Status s = metadata_coding.ReadMetadataForDatabaseName(
-                  backing_store->db(), backing_store->origin_identifier(),
+              leveldb::Status s = backing_store->GetIDBDatabaseMetaData(
                   database_name, &database, &found);
               EXPECT_TRUE(s.ok());
               EXPECT_TRUE(found);
@@ -1260,6 +1249,10 @@ TEST_F(IndexedDBBackingStoreTest, CreateDatabase) {
               // database.name is not filled in by the implementation.
               EXPECT_EQ(version, database.version);
               EXPECT_EQ(database_id, database.id);
+
+              s = backing_store->GetObjectStores(database.id,
+                                                 &database.object_stores);
+              EXPECT_TRUE(s.ok());
 
               EXPECT_EQ(1UL, database.object_stores.size());
               IndexedDBObjectStoreMetadata object_store =
@@ -1286,34 +1279,28 @@ TEST_F(IndexedDBBackingStoreTest, GetDatabaseNames) {
                      [](IndexedDBBackingStore* backing_store) {
                        const base::string16 db1_name(ASCIIToUTF16("db1"));
                        const int64_t db1_version = 1LL;
+                       int64_t db1_id;
 
                        // Database records with DEFAULT_VERSION represent
                        // stale data, and should not be enumerated.
                        const base::string16 db2_name(ASCIIToUTF16("db2"));
                        const int64_t db2_version =
                            IndexedDBDatabaseMetadata::DEFAULT_VERSION;
-                       IndexedDBMetadataCoding metadata_coding;
+                       int64_t db2_id;
 
-                       IndexedDBDatabaseMetadata db1;
-                       leveldb::Status s = metadata_coding.CreateDatabase(
-                           backing_store->db(),
-                           backing_store->origin_identifier(), db1_name,
-                           db1_version, &db1);
+                       leveldb::Status s =
+                           backing_store->CreateIDBDatabaseMetaData(
+                               db1_name, db1_version, &db1_id);
                        EXPECT_TRUE(s.ok());
-                       EXPECT_GT(db1.id, 0LL);
+                       EXPECT_GT(db1_id, 0LL);
 
-                       IndexedDBDatabaseMetadata db2;
-                       s = metadata_coding.CreateDatabase(
-                           backing_store->db(),
-                           backing_store->origin_identifier(), db2_name,
-                           db2_version, &db2);
+                       s = backing_store->CreateIDBDatabaseMetaData(
+                           db2_name, db2_version, &db2_id);
                        EXPECT_TRUE(s.ok());
-                       EXPECT_GT(db2.id, db1.id);
+                       EXPECT_GT(db2_id, db1_id);
 
-                       std::vector<base::string16> names;
-                       s = metadata_coding.ReadDatabaseNames(
-                           backing_store->db(),
-                           backing_store->origin_identifier(), &names);
+                       std::vector<base::string16> names =
+                           backing_store->GetDatabaseNames(&s);
                        EXPECT_TRUE(s.ok());
                        ASSERT_EQ(1U, names.size());
                        EXPECT_EQ(db1_name, names[0]);

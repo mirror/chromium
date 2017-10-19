@@ -116,7 +116,6 @@ class BlobBytesConsumerTestClient final
 
  public:
   void OnStateChange() override { ++num_on_state_change_called_; }
-  String DebugName() const override { return "BlobBytesConsumerTestClient"; }
   int NumOnStateChangeCalled() const { return num_on_state_change_called_; }
 
  private:

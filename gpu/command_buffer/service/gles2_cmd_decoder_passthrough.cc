@@ -204,10 +204,11 @@ GLES2DecoderPassthroughImpl::EmulatedColorBuffer::EmulatedColorBuffer(
 GLES2DecoderPassthroughImpl::EmulatedColorBuffer::~EmulatedColorBuffer() =
     default;
 
-void GLES2DecoderPassthroughImpl::EmulatedColorBuffer::Resize(
+bool GLES2DecoderPassthroughImpl::EmulatedColorBuffer::Resize(
     const gfx::Size& new_size) {
-  if (size == new_size)
-    return;
+  if (size == new_size) {
+    return true;
+  }
   size = new_size;
 
   ScopedTexture2DBindingReset scoped_texture_reset;
@@ -219,6 +220,8 @@ void GLES2DecoderPassthroughImpl::EmulatedColorBuffer::Resize(
   glTexImage2D(texture->target(), 0, format.color_texture_internal_format,
                size.width(), size.height(), 0, format.color_texture_format,
                format.color_texture_type, nullptr);
+
+  return true;
 }
 
 void GLES2DecoderPassthroughImpl::EmulatedColorBuffer::Destroy(
@@ -341,8 +344,11 @@ bool GLES2DecoderPassthroughImpl::EmulatedDefaultFramebuffer::Resize(
     ResizeRenderbuffer(color_buffer_service_id, size, format.samples,
                        format.color_renderbuffer_internal_format, feature_info);
   }
-  if (color_texture)
-    color_texture->Resize(size);
+  if (color_texture) {
+    if (!color_texture->Resize(size)) {
+      return false;
+    }
+  }
   if (depth_stencil_buffer_service_id != 0) {
     ResizeRenderbuffer(depth_stencil_buffer_service_id, size, format.samples,
                        format.depth_stencil_internal_format, feature_info);
@@ -541,7 +547,7 @@ base::WeakPtr<GLES2Decoder> GLES2DecoderPassthroughImpl::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
+bool GLES2DecoderPassthroughImpl::Initialize(
     const scoped_refptr<gl::GLSurface>& surface,
     const scoped_refptr<gl::GLContext>& context,
     bool offscreen,
@@ -556,13 +562,11 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   // Create GPU Tracer for timing values.
   gpu_tracer_.reset(new GPUTracer(this));
 
-  auto result =
-      group_->Initialize(this, attrib_helper.context_type, disallowed_features);
-  if (result != gpu::ContextResult::kSuccess) {
-    // Must not destroy ContextGroup if it is not initialized.
-    group_ = nullptr;
+  if (!group_->Initialize(this, attrib_helper.context_type,
+                          disallowed_features)) {
+    group_ = NULL;  // Must not destroy ContextGroup if it is not initialized.
     Destroy(true);
-    return result;
+    return false;
   }
 
   // Extensions that are enabled via emulation on the client side or needed for
@@ -623,7 +627,11 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   // Each context initializes its own feature info because some extensions may
   // be enabled dynamically.  Don't disallow any features, leave it up to ANGLE
   // to dynamically enable extensions.
-  feature_info_->Initialize(attrib_helper.context_type, DisallowedFeatures());
+  if (!feature_info_->Initialize(attrib_helper.context_type,
+                                 DisallowedFeatures())) {
+    Destroy(true);
+    return false;
+  }
 
   // Check for required extensions
   // TODO(geofflang): verify
@@ -638,12 +646,12 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
           IsWebGLContextType(attrib_helper.context_type) ||
       !feature_info_->feature_flags().angle_request_extension) {
     Destroy(true);
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
   if (attrib_helper.enable_oop_rasterization) {
     Destroy(true);
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
   bind_generates_resource_ = group_->bind_generates_resource();
@@ -669,9 +677,6 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   if (feature_info_->feature_flags().oes_egl_image_external ||
       feature_info_->feature_flags().nv_egl_stream_consumer_external) {
     bound_textures_[GL_TEXTURE_EXTERNAL_OES].resize(num_texture_units);
-  }
-  if (feature_info_->feature_flags().arb_texture_rectangle) {
-    bound_textures_[GL_TEXTURE_RECTANGLE_ARB].resize(num_texture_units);
   }
 
   // Initialize the tracked buffer bindings
@@ -764,22 +769,19 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
     }
 
     FlushErrors();
-    emulated_back_buffer_ = std::make_unique<EmulatedDefaultFramebuffer>(
-        emulated_default_framebuffer_format_, feature_info_.get());
+    emulated_back_buffer_.reset(new EmulatedDefaultFramebuffer(
+        emulated_default_framebuffer_format_, feature_info_.get()));
     if (!emulated_back_buffer_->Resize(attrib_helper.offscreen_framebuffer_size,
                                        feature_info_.get())) {
-      bool was_lost = CheckResetStatus();
       Destroy(true);
-      return was_lost ? gpu::ContextResult::kTransientFailure
-                      : gpu::ContextResult::kFatalFailure;
+      return false;
     }
 
     if (FlushErrors()) {
       LOG(ERROR) << "Creation of the offscreen framebuffer failed because "
                     "errors were generated.";
       Destroy(true);
-      // Errors are considered fatal, including OOM.
-      return gpu::ContextResult::kFatalFailure;
+      return false;
     }
 
     framebuffer_id_map_.SetIDMapping(
@@ -793,7 +795,7 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   }
 
   set_initialized();
-  return gpu::ContextResult::kSuccess;
+  return true;
 }
 
 void GLES2DecoderPassthroughImpl::Destroy(bool have_context) {
@@ -907,7 +909,7 @@ void GLES2DecoderPassthroughImpl::TakeFrontBuffer(const Mailbox& mailbox) {
     return;
   }
 
-  if (!emulated_front_buffer_) {
+  if (!emulated_front_buffer_.get()) {
     DLOG(ERROR) << "Called TakeFrontBuffer on a non-offscreen context";
     return;
   }
@@ -919,9 +921,12 @@ void GLES2DecoderPassthroughImpl::TakeFrontBuffer(const Mailbox& mailbox) {
 
   if (available_color_textures_.empty()) {
     // Create a new color texture to use as the front buffer
-    emulated_front_buffer_ = std::make_unique<EmulatedColorBuffer>(
-        emulated_default_framebuffer_format_);
-    emulated_front_buffer_->Resize(emulated_back_buffer_->size);
+    emulated_front_buffer_.reset(
+        new EmulatedColorBuffer(emulated_default_framebuffer_format_));
+    if (!emulated_front_buffer_->Resize(emulated_back_buffer_->size)) {
+      DLOG(ERROR) << "Failed to create a new emulated front buffer texture.";
+      return;
+    }
     create_color_buffer_count_for_test_++;
   } else {
     emulated_front_buffer_ = std::move(available_color_textures_.back());

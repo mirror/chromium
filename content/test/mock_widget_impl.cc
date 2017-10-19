@@ -13,9 +13,6 @@ MockWidgetImpl::~MockWidgetImpl() {}
 
 void MockWidgetImpl::SetupWidgetInputHandler(
     mojom::WidgetInputHandlerRequest request,
-    mojom::WidgetInputHandlerHostPtr host) {
-  input_handler_ = base::MakeUnique<MockWidgetInputHandler>(std::move(request),
-                                                            std::move(host));
-}
+    mojom::WidgetInputHandlerHostPtr host) {}
 
 }  // namespace content

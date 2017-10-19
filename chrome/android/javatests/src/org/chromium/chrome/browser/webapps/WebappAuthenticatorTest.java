@@ -37,7 +37,7 @@ public class WebappAuthenticatorTest {
     @SmallTest
     @Feature({"Webapps"})
     public void testAuthentication() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         String url = "http://www.example.org/hello.html";
         byte[] mac = WebappAuthenticator.getMacForUrl(context, url);
         Assert.assertNotNull(mac);

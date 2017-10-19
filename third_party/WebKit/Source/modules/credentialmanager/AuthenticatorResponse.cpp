@@ -16,7 +16,7 @@ AuthenticatorResponse::AuthenticatorResponse(DOMArrayBuffer* client_data_json)
 
 AuthenticatorResponse::~AuthenticatorResponse() {}
 
-void AuthenticatorResponse::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AuthenticatorResponse) {
   visitor->Trace(client_data_json_);
 }
 

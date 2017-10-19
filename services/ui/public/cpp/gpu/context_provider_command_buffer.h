@@ -67,7 +67,7 @@ class ContextProviderCommandBuffer
   uint32_t GetCopyTextureInternalFormat();
 
   // viz::ContextProvider implementation.
-  gpu::ContextResult BindToCurrentThread() override;
+  bool BindToCurrentThread() override;
   void DetachFromThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
   gpu::ContextSupport* ContextSupport() override;
@@ -76,13 +76,15 @@ class ContextProviderCommandBuffer
   void InvalidateGrContext(uint32_t state) override;
   base::Lock* GetLock() override;
   const gpu::Capabilities& ContextCapabilities() const override;
-  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
   void SetLostContextCallback(
       const LostContextCallback& lost_context_callback) override;
 
   // base::trace_event::MemoryDumpProvider implementation.
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
+
+  // TODO(zmo): Declare it in parent class ContextProvider if needs arise.
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const;
 
   // Set the default task runner for command buffers to use for handling IPCs.
   // If not specified, this will be the ThreadTaskRunner for the thread on
@@ -110,8 +112,8 @@ class ContextProviderCommandBuffer
   base::ThreadChecker main_thread_checker_;
   base::ThreadChecker context_thread_checker_;
 
-  bool bind_tried_ = false;
-  gpu::ContextResult bind_result_;
+  bool bind_succeeded_ = false;
+  bool bind_failed_ = false;
 
   const int32_t stream_id_;
   const gpu::SchedulingPriority stream_priority_;

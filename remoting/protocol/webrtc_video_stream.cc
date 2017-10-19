@@ -8,7 +8,6 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "build/build_config.h"
 #include "remoting/base/constants.h"
 #include "remoting/codec/webrtc_video_encoder_proxy.h"
 #include "remoting/codec/webrtc_video_encoder_vpx.h"
@@ -22,34 +21,11 @@
 #include "third_party/webrtc/api/test/fakeconstraints.h"
 #include "third_party/webrtc/media/base/videocapturer.h"
 
-#if defined(USE_H264_ENCODER)
-#include "remoting/codec/webrtc_video_encoder_gpu.h"
-#endif
-
 namespace remoting {
 namespace protocol {
 
-namespace {
-
 const char kStreamLabel[] = "screen_stream";
 const char kVideoLabel[] = "screen_video";
-
-std::string EncodeResultToString(WebrtcVideoEncoder::EncodeResult result) {
-  using EncodeResult = WebrtcVideoEncoder::EncodeResult;
-
-  switch (result) {
-    case EncodeResult::SUCCEEDED:
-      return "Succeeded";
-    case EncodeResult::FRAME_SIZE_EXCEEDS_CAPABILITY:
-      return "Frame size exceeds capability";
-    case EncodeResult::UNKNOWN_ERROR:
-      return "Unknown error";
-  }
-  NOTREACHED();
-  return "";
-}
-
-}  // namespace
 
 struct WebrtcVideoStream::FrameStats {
   // The following fields is not null only for one frame after each incoming
@@ -218,7 +194,6 @@ void WebrtcVideoStream::CaptureNextFrame() {
 }
 
 void WebrtcVideoStream::OnFrameEncoded(
-    WebrtcVideoEncoder::EncodeResult encode_result,
     std::unique_ptr<WebrtcVideoEncoder::EncodedFrame> frame) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -226,14 +201,6 @@ void WebrtcVideoStream::OnFrameEncoded(
 
   HostFrameStats stats;
   scheduler_->OnFrameEncoded(frame.get(), &stats);
-
-  if (encode_result != WebrtcVideoEncoder::EncodeResult::SUCCEEDED) {
-    // TODO(zijiehe): If |encode_result| is an unrecoverable error, we should
-    // restart the stream and select a different encoder.
-    LOG(ERROR) << "Video encoder returns error "
-               << EncodeResultToString(encode_result);
-    return;
-  }
 
   if (!frame) {
     return;
@@ -291,13 +258,12 @@ void WebrtcVideoStream::OnEncoderCreated(webrtc::VideoCodecType codec_type) {
     encoder_ = base::MakeUnique<WebrtcVideoEncoderProxy>(
         WebrtcVideoEncoderVpx::CreateForVP9(), encode_task_runner_);
   } else if (codec_type == webrtc::kVideoCodecH264) {
-#if defined(USE_H264_ENCODER)
     LOG(ERROR) << "Using H264 video codec.";
-    encoder_ = base::MakeUnique<WebrtcVideoEncoderProxy>(
-        WebrtcVideoEncoderGpu::CreateForH264(), encode_task_runner_);
-#else
+    // TODO(gusss): Whenever the H264 encoder is ready, this is how it will be
+    // initialized.
+    // encoder_ = base::MakeUnique<WebrtcVideoEncoderProxy>(
+    //     WebrtcVideoEncoderGpu::CreateForH264(), encode_task_runner_);
     NOTIMPLEMENTED();
-#endif
   } else {
     LOG(FATAL) << "Unknown codec type: " << codec_type;
   }

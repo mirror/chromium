@@ -253,7 +253,7 @@ std::unique_ptr<Shape> Shape::CreateRasterShape(Image* image,
     // TODO(ccameron): No color conversion is required here.
     image->Draw(image_buffer->Canvas(), flags, image_dest_rect,
                 image_source_rect, kDoNotRespectImageOrientation,
-                Image::kDoNotClampImageToSourceRect, Image::kSyncDecode);
+                Image::kDoNotClampImageToSourceRect);
 
     WTF::ArrayBufferContents contents;
     image_buffer->GetImageData(

@@ -18,7 +18,7 @@ PublicKeyCredential::PublicKeyCredential(const String& id,
                                          AuthenticatorResponse* response)
     : Credential(id), raw_id_(raw_id), response_(response) {}
 
-void PublicKeyCredential::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PublicKeyCredential) {
   visitor->Trace(raw_id_);
   visitor->Trace(response_);
   Credential::Trace(visitor);

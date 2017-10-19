@@ -197,7 +197,7 @@ class MediaKeySession::PendingAction final
 
   ~PendingAction() {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(result_);
     visitor->Trace(data_);
   }
@@ -248,7 +248,7 @@ class NewSessionResultPromise : public ContentDecryptionModuleResultPromise {
     Resolve();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(session_);
     ContentDecryptionModuleResultPromise::Trace(visitor);
   }
@@ -294,7 +294,7 @@ class LoadSessionResultPromise : public ContentDecryptionModuleResultPromise {
     NOTREACHED();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(session_);
     ContentDecryptionModuleResultPromise::Trace(visitor);
   }
@@ -322,7 +322,7 @@ class SimpleResultPromise : public ContentDecryptionModuleResultPromise {
     Resolve();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(session_);
     ContentDecryptionModuleResultPromise::Trace(visitor);
   }
@@ -1017,7 +1017,7 @@ void MediaKeySession::ContextDestroyed(ExecutionContext*) {
   async_event_queue_->Close();
 }
 
-void MediaKeySession::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaKeySession) {
   visitor->Trace(async_event_queue_);
   visitor->Trace(pending_actions_);
   visitor->Trace(media_keys_);

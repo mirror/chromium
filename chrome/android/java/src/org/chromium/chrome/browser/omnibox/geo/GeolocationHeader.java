@@ -26,6 +26,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.omnibox.geo.VisibleNetworks.VisibleCell;
 import org.chromium.chrome.browser.omnibox.geo.VisibleNetworks.VisibleWifi;
@@ -207,6 +208,9 @@ public class GeolocationHeader {
     /** The location descriptor prefix used in the X-Geo header to specify a proto wire encoding */
     private static final String LOCATION_PROTO_PREFIX = "w";
 
+    /** The location descriptor prefix used in the X-Geo header to specify an ASCII encoding */
+    private static final String LOCATION_ASCII_PREFIX = "a";
+
     /** The time of the first location refresh. Contains Long.MAX_VALUE if not set. */
     private static long sFirstLocationTime = Long.MAX_VALUE;
 
@@ -234,7 +238,11 @@ public class GeolocationHeader {
         }
         GeolocationTracker.refreshLastKnownLocation(
                 ContextUtils.getApplicationContext(), REFRESH_LOCATION_AGE);
-        VisibleNetworksTracker.refreshVisibleNetworks(ContextUtils.getApplicationContext());
+
+        // Only refresh visible networks if enabled.
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.XGEO_VISIBLE_NETWORKS)) {
+            VisibleNetworksTracker.refreshVisibleNetworks(ContextUtils.getApplicationContext());
+        }
     }
 
     @HeaderState
@@ -282,9 +290,19 @@ public class GeolocationHeader {
         VisibleNetworks visibleNetworksToAttach = null;
         long locationAge = Long.MAX_VALUE;
         @HeaderState int headerState = geoHeaderStateForUrl(url, isIncognito, true);
+        // XGEO_VISIBLE_NETWORKS
+        // When this feature is enabled, we will send visible WiFi and Cell Access Points as part of
+        // the X-GEO HTTP Header so that we can better position the client server side in the case
+        // where there is no lat/long or it's too old.
+        boolean isXGeoVisibleNetworksEnabled =
+                ChromeFeatureList.isEnabled(ChromeFeatureList.XGEO_VISIBLE_NETWORKS);
         if (headerState == HEADER_ENABLED) {
-            locationToAttach =
-                    GeolocationTracker.getLastKnownLocation(ContextUtils.getApplicationContext());
+            // Only send X-Geo header if there's a fresh location available.
+            // Use flag controlling visible network changes to decide whether GPS location should be
+            // included as a fallback.
+            // TODO(lbargu): Measure timing here and to get visible networks.
+            locationToAttach = GeolocationTracker.getLastKnownLocation(
+                    ContextUtils.getApplicationContext(), isXGeoVisibleNetworksEnabled);
             if (locationToAttach == null) {
                 recordHistogram(UMA_LOCATION_NOT_AVAILABLE);
             } else {
@@ -301,7 +319,8 @@ public class GeolocationHeader {
             // The header state is enabled, so this means we have app permissions, and the url is
             // allowed to receive location. Before attempting to attach visible networks, check if
             // network-based location is enabled.
-            if (isNetworkLocationEnabled() && !isLocationFresh(locationToAttach)) {
+            if (isXGeoVisibleNetworksEnabled && isNetworkLocationEnabled()
+                    && !isLocationFresh(locationToAttach)) {
                 visibleNetworksToAttach = VisibleNetworksTracker.getLastKnownVisibleNetworks(
                         ContextUtils.getApplicationContext());
             }
@@ -324,6 +343,14 @@ public class GeolocationHeader {
                     : SystemClock.elapsedRealtime() - sFirstLocationTime;
             // Record the Time Listening with a histogram.
             recordTimeListeningHistogram(locationSource, locationToAttach != null, duration);
+        }
+
+
+        if (!isXGeoVisibleNetworksEnabled) {
+            String locationAsciiEncoding = encodeAsciiLocation(locationToAttach);
+            if (locationAsciiEncoding == null) return null;
+            return XGEO_HEADER_PREFIX + LOCATION_SEPARATOR + LOCATION_ASCII_PREFIX
+                    + LOCATION_SEPARATOR + locationAsciiEncoding;
         }
 
         // Proto encoding
@@ -688,6 +715,32 @@ public class GeolocationHeader {
                                                                    : (int) durationSeconds;
         RecordHistogram.recordCustomCountHistogram(
                 name, duration, 1, LOCATION_AGE_HISTOGRAM_MAX_SECONDS, 50);
+    }
+
+    /**
+     * Encodes location into ascii encoding.
+     */
+    @Nullable
+    @VisibleForTesting
+    static String encodeAsciiLocation(@Nullable Location location) {
+        if (location == null) return null;
+
+        // Timestamp in microseconds since the UNIX epoch.
+        long timestamp = location.getTime() * 1000;
+        // Latitude times 1e7.
+        int latitudeE7 = (int) (location.getLatitude() * 10000000);
+        // Longitude times 1e7.
+        int longitudeE7 = (int) (location.getLongitude() * 10000000);
+        // Radius of 68% accuracy in mm.
+        int radius = (int) (location.getAccuracy() * 1000);
+
+        // Encode location using ascii protobuf format followed by base64 encoding.
+        // https://goto.google.com/partner_location_proto
+        String locationAscii = String.format(Locale.US,
+                "role:1 producer:12 timestamp:%d latlng{latitude_e7:%d longitude_e7:%d}"
+                        + " radius:%d",
+                timestamp, latitudeE7, longitudeE7, radius);
+        return new String(Base64.encode(locationAscii.getBytes(), Base64.NO_WRAP));
     }
 
     /**

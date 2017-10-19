@@ -64,7 +64,7 @@ class V0CustomElementCallbackQueue
   }
   bool InCreatedCallback() const { return in_created_callback_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit V0CustomElementCallbackQueue(Element*);

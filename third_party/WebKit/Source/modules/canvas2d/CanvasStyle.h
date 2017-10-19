@@ -61,7 +61,7 @@ class CanvasStyle final : public GarbageCollected<CanvasStyle> {
     return type_ == kColorRGBA && rgba_ == rgba;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum Type { kColorRGBA, kGradient, kImagePattern };

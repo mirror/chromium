@@ -142,20 +142,8 @@ Polymer({
         if (this._showing)
           return;
 
-        if (Polymer.dom(this).textContent.trim() === ''){
-          // Check if effective children are also empty
-          var allChildrenEmpty = true;
-          var effectiveChildren = Polymer.dom(this).getEffectiveChildNodes();
-          for (var i = 0; i < effectiveChildren.length; i++) {
-            if (effectiveChildren[i].textContent.trim() !== '') {
-              allChildrenEmpty = false;
-              break;
-            }
-          }
-          if (allChildrenEmpty) {
-            return;
-          }
-        }
+        if (Polymer.dom(this).textContent.trim() === '')
+          return;
 
 
         this.cancelAnimation();
@@ -231,8 +219,8 @@ Polymer({
 
         // TODO(noms): This should use IronFitBehavior if possible.
         if (this.fitToVisibleBounds) {
-          // Clip the left/right side
-          if (parentRect.left + tooltipLeft + thisRect.width > window.innerWidth) {
+          // Clip the left/right side.
+          if (tooltipLeft + thisRect.width > window.innerWidth) {
             this.style.right = '0px';
             this.style.left = 'auto';
           } else {
@@ -241,11 +229,11 @@ Polymer({
           }
 
           // Clip the top/bottom side.
-          if (parentRect.top + tooltipTop + thisRect.height > window.innerHeight) {
-            this.style.bottom = parentRect.height + 'px';
+          if (tooltipTop + thisRect.height > window.innerHeight) {
+            this.style.bottom = '0px';
             this.style.top = 'auto';
           } else {
-            this.style.top = Math.max(-parentRect.top, tooltipTop) + 'px';
+            this.style.top = Math.max(0, tooltipTop) + 'px';
             this.style.bottom = 'auto';
           }
         } else {

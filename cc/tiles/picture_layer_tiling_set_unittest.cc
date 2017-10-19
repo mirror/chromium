@@ -247,11 +247,10 @@ class PictureLayerTilingSetTestWithResources : public testing::Test {
                float expected_scale) {
     scoped_refptr<TestContextProvider> context_provider =
         TestContextProvider::Create();
-    ASSERT_EQ(context_provider->BindToCurrentThread(),
-              gpu::ContextResult::kSuccess);
+    ASSERT_TRUE(context_provider->BindToCurrentThread());
     auto shared_bitmap_manager = std::make_unique<TestSharedBitmapManager>();
     std::unique_ptr<ResourceProvider> resource_provider =
-        FakeResourceProvider::CreateLayerTreeResourceProvider(
+        FakeResourceProvider::Create<LayerTreeResourceProvider>(
             context_provider.get(), shared_bitmap_manager.get());
 
     FakePictureLayerTilingClient client(resource_provider.get());

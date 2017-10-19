@@ -514,8 +514,6 @@ public class SingleCategoryPreferences extends PreferenceFragment
             } else if (mCategory.showProtectedMediaSites()) {
                 PrefServiceBridge.getInstance().setProtectedMediaIdentifierEnabled(
                         (boolean) newValue);
-            } else if (mCategory.showSoundSites()) {
-                PrefServiceBridge.getInstance().setSoundEnabled((boolean) newValue);
             }
 
             // Categories that support adding exceptions also manage the 'Add site' preference.
@@ -556,9 +554,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
         } else if (mCategory.showJavaScriptSites()) {
             resource = R.string.website_settings_add_site_description_javascript;
         } else if (mCategory.showSoundSites()) {
-            resource = PrefServiceBridge.getInstance().isSoundEnabled()
-                    ? R.string.website_settings_add_site_description_sound_block
-                    : R.string.website_settings_add_site_description_sound_allow;
+            resource = R.string.website_settings_add_site_description_sound;
         }
         assert resource > 0;
         return getResources().getString(resource);
@@ -586,12 +582,9 @@ public class SingleCategoryPreferences extends PreferenceFragment
     // AddExceptionPreference.SiteAddedCallback:
     @Override
     public void onAddSite(String hostname) {
-        // The Sound content setting has exception lists for both BLOCK and ALLOW (others just
-        // have exceptions to ALLOW).
-        int setting =
-                (mCategory.showSoundSites() && PrefServiceBridge.getInstance().isSoundEnabled())
-                ? ContentSetting.BLOCK.toInt()
-                : ContentSetting.ALLOW.toInt();
+        // The Sound content setting has exceptions to BLOCK (others have exceptions to ALLOW).
+        int setting = mCategory.showSoundSites() ? ContentSetting.BLOCK.toInt()
+                                                 : ContentSetting.ALLOW.toInt();
         PrefServiceBridge.getInstance().nativeSetContentSettingForPattern(
                 mCategory.toContentSettingsType(), hostname, setting);
 
@@ -755,7 +748,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
                     globalToggle.setChecked(
                             PrefServiceBridge.getInstance().isProtectedMediaIdentifierEnabled());
                 } else if (mCategory.showSoundSites()) {
-                    globalToggle.setChecked(PrefServiceBridge.getInstance().isSoundEnabled());
+                    // Sound cannot be disabled by default.
+                    getPreferenceScreen().removePreference(globalToggle);
                 }
             }
         }

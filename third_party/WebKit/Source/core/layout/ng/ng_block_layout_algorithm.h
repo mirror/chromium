@@ -9,7 +9,6 @@
 #include "core/layout/ng/geometry/ng_margin_strut.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
-#include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_layout_algorithm.h"
 #include "platform/wtf/RefPtr.h"
 
@@ -53,9 +52,7 @@ void PositionPendingFloats(
 // A class for general block layout (e.g. a <div> with no special style).
 // Lays out the children in sequence.
 class CORE_EXPORT NGBlockLayoutAlgorithm
-    : public NGLayoutAlgorithm<NGBlockNode,
-                               NGFragmentBuilder,
-                               NGBlockBreakToken> {
+    : public NGLayoutAlgorithm<NGBlockNode, NGBlockBreakToken> {
  public:
   // Default constructor.
   // @param node The input node to perform layout upon.
@@ -77,8 +74,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   RefPtr<NGConstraintSpace> CreateConstraintSpaceForChild(
       const NGLayoutInputNode child,
       const NGInflowChildData& child_data,
-      const WTF::Optional<NGBfcOffset> floats_bfc_offset = WTF::nullopt,
-      const WTF::Optional<LayoutUnit> fixed_inline_size = WTF::nullopt);
+      const WTF::Optional<NGBfcOffset> floats_bfc_offset = WTF::nullopt);
 
   // @return Estimated BFC offset for the "to be layout" child.
   NGInflowChildData ComputeChildData(const NGPreviousInflowPosition&,
@@ -94,6 +90,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
       const NGLayoutResult& layout_result,
       const NGFragment& fragment,
       bool empty_block_affected_by_clearance);
+
 
   // Positions the fragment that knows its BFC offset.
   WTF::Optional<NGBfcOffset> PositionWithBfcOffset(
@@ -139,15 +136,6 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   bool HandleNewFormattingContext(NGLayoutInputNode child,
                                   NGBreakToken* child_break_token,
                                   NGPreviousInflowPosition*);
-
-  // Performs the actual layout of a new formatting context. This may be called
-  // multiple times from HandleNewFormattingContext.
-  std::pair<RefPtr<NGLayoutResult>, NGLayoutOpportunity>
-  LayoutNewFormattingContext(NGLayoutInputNode child,
-                             NGBreakToken* child_break_token,
-                             bool is_auto_inline_size,
-                             const NGInflowChildData&,
-                             LayoutUnit child_origin_block_offset);
 
   // Handle an in-flow child.
   // Returns false if we need to abort layout, because a previously unknown BFC

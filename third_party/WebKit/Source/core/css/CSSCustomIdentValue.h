@@ -40,7 +40,7 @@ class CSSCustomIdentValue : public CSSValue {
                                : string_ == other.string_;
   }
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   explicit CSSCustomIdentValue(const AtomicString&);

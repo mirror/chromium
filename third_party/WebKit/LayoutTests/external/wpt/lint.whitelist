@@ -14,6 +14,7 @@ INDENT TABS: app-uri/*
 INDENT TABS: conformance-checkers/*
 INDENT TABS: content-security-policy/*
 INDENT TABS: custom-elements/*
+INDENT TABS: html/editing/dnd/*
 INDENT TABS: old-tests/*
 INDENT TABS: pointerlock/*
 INDENT TABS: shadow-dom/*
@@ -161,11 +162,6 @@ SET TIMEOUT: cookies/resources/testharness-helpers.js
 SET TIMEOUT: common/reftest-wait.js
 SET TIMEOUT: conformance-checkers/*
 SET TIMEOUT: content-security-policy/*
-SET TIMEOUT: css/selectors4/selector-placeholder-shown-type-change-001.html
-SET TIMEOUT: css/selectors4/selector-placeholder-shown-type-change-002.html
-SET TIMEOUT: css/selectors4/selector-placeholder-shown-type-change-003.html
-SET TIMEOUT: css/selectors4/selector-read-write-type-change-002.html
-SET TIMEOUT: css/selectors4/selector-required-type-change-002.html
 SET TIMEOUT: css-fonts/font-display/font-display.html
 SET TIMEOUT: encrypted-media/Google/migrated_to_root_disabled/encrypted-media-utils.js
 SET TIMEOUT: encrypted-media/polyfill/chrome-polyfill.js
@@ -226,7 +222,6 @@ SET TIMEOUT: service-workers/service-worker/activation.https.html
 SET TIMEOUT: service-workers/service-worker/fetch-frame-resource.https.html
 SET TIMEOUT: service-workers/service-worker/fetch-request-redirect.https.html
 SET TIMEOUT: service-workers/service-worker/fetch-waits-for-activate.https.html
-SET TIMEOUT: service-workers/service-worker/ready.https.html
 SET TIMEOUT: service-workers/service-worker/update-recovery.https.html
 SET TIMEOUT: service-workers/service-worker/resources/extendable-event-async-waituntil.js
 SET TIMEOUT: service-workers/service-worker/resources/fetch-event-async-respond-with-worker.js
@@ -234,7 +229,6 @@ SET TIMEOUT: service-workers/service-worker/resources/fetch-event-test-worker.js
 SET TIMEOUT: service-workers/service-worker/resources/opaque-response-being-preloaded-xhr.html
 SET TIMEOUT: service-workers/service-worker/resources/opaque-response-preloaded-xhr.html
 SET TIMEOUT: service-workers/service-worker/resources/performance-timeline-worker.js
-SET TIMEOUT: service-workers/service-worker/resources/resource-timing-worker.js
 SET TIMEOUT: service-workers/service-worker/resources/register-foreign-fetch-errors-worker.js
 SET TIMEOUT: shadow-dom/Document-prototype-currentScript.html
 SET TIMEOUT: shadow-dom/scroll-to-the-fragment-in-shadow-tree.html
@@ -257,9 +251,6 @@ SET TIMEOUT: websockets/*
 SET TIMEOUT: webstorage/eventTestHarness.js
 SET TIMEOUT: webvtt/*
 SET TIMEOUT: workers/*
-SET TIMEOUT: XMLHttpRequest/abort-during-done.htm
-SET TIMEOUT: XMLHttpRequest/abort-during-headers-received.htm
-SET TIMEOUT: XMLHttpRequest/abort-during-loading.htm
 SET TIMEOUT: XMLHttpRequest/open-url-multi-window-6.htm
 SET TIMEOUT: XMLHttpRequest/xmlhttprequest-timeout-reused.html
 SET TIMEOUT: XMLHttpRequest/resources/init.htm
@@ -876,6 +867,8 @@ WEBIDL2.JS:.gitmodules
 CONSOLE:payment-request/payment-request-response-id.html
 
 # Tests that use WebKit/Blink testing APIs
+LAYOUTTESTS APIS: content-security-policy/blink-contrib/*
 LAYOUTTESTS APIS: css/css-regions-1/interactivity/*
+LAYOUTTESTS APIS: css/css-ruby-1/line-break-around-ruby-001.html
 LAYOUTTESTS APIS: css/work-in-progress/opera/css-device-adapt/template.blink.html
 LAYOUTTESTS APIS: webgl/conformance-1.0.3/*

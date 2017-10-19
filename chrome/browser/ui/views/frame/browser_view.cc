@@ -147,8 +147,9 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/ui/ash/ash_util.h"
-#include "chrome/browser/ui/views/location_bar/intent_picker_view.h"
-#else
+#endif  // defined(OS_CHROMEOS)
+
+#if !defined(OS_CHROMEOS)
 #include "chrome/browser/ui/signin_view_controller.h"
 #include "chrome/browser/ui/views/profiles/profile_chooser_view.h"
 #endif  // !defined(OS_CHROMEOS)
@@ -1166,26 +1167,6 @@ void BrowserView::ShowUpdateChromeDialog() {
   UpdateRecommendedMessageBox::Show(GetNativeWindow());
 }
 
-#if defined(OS_CHROMEOS)
-void BrowserView::ShowIntentPickerBubble(
-    std::vector<IntentPickerBubbleView::AppInfo> app_info,
-    IntentPickerResponse callback) {
-  toolbar_->ShowIntentPickerBubble(app_info, callback);
-}
-
-void BrowserView::SetIntentPickerViewVisibility(bool visible) {
-  LocationBarView* location_bar = GetLocationBarView();
-
-  if (!location_bar->intent_picker_view())
-    return;
-
-  if (location_bar->intent_picker_view()->visible() != visible) {
-    location_bar->intent_picker_view()->SetVisible(visible);
-    location_bar->Layout();
-  }
-}
-#endif  //  defined(OS_CHROMEOS)
-
 void BrowserView::ShowBookmarkBubble(const GURL& url, bool already_bookmarked) {
   toolbar_->ShowBookmarkBubble(url, already_bookmarked,
                                bookmark_bar_view_.get());
@@ -2118,8 +2099,7 @@ void BrowserView::InitViews() {
   // TabStrip takes ownership of the controller.
   BrowserTabStripController* tabstrip_controller =
       new BrowserTabStripController(browser_->tab_strip_model(), this);
-  tabstrip_ =
-      new TabStrip(std::unique_ptr<TabStripController>(tabstrip_controller));
+  tabstrip_ = new TabStrip(tabstrip_controller);
   top_container_->AddChildView(tabstrip_);
   tabstrip_controller->InitFromModel(tabstrip_);
 

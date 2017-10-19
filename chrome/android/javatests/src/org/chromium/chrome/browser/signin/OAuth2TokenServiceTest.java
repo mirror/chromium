@@ -33,7 +33,8 @@ public class OAuth2TokenServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        mContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
+        mContext = new AdvancedMockContext(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
         mAccountManager = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.DISABLE_PROFILE_DATA_SOURCE);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManager);

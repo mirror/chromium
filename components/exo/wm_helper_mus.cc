@@ -100,10 +100,6 @@ double WMHelperMus::GetDefaultDeviceScaleFactor() const {
   return 1.0;
 }
 
-bool WMHelperMus::AreVerifiedSyncTokensNeeded() const {
-  return true;
-}
-
 void WMHelperMus::OnActiveFocusClientChanged(
     aura::client::FocusClient* focus_client,
     aura::Window* focus_client_root) {

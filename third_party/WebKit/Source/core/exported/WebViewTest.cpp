@@ -66,7 +66,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/page/PrintContext.h"
-#include "core/page/ScopedPagePauser.h"
+#include "core/page/ScopedPageSuspender.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerPainter.h"
 #include "core/timing/DOMWindowPerformance.h"
@@ -98,7 +98,6 @@
 #include "public/platform/WebThread.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebAutofillClient.h"
-#include "public/web/WebConsoleMessage.h"
 #include "public/web/WebDateTimeChooserCompletion.h"
 #include "public/web/WebDeviceEmulationParams.h"
 #include "public/web/WebDocument.h"
@@ -217,7 +216,7 @@ class DateTimeChooserWebViewClient
     return chooser_completion_;
   }
 
-  void ClearChooserCompletion() { chooser_completion_ = nullptr; }
+  void ClearChooserCompletion() { chooser_completion_ = 0; }
 
   // WebViewClient methods
   bool OpenDateTimeChooser(
@@ -3102,7 +3101,7 @@ class MiddleClickAutoscrollWebWidgetClient
 
 TEST_P(WebViewTest, MiddleClickAutoscrollCursor) {
   MiddleClickAutoscrollWebWidgetClient client;
-  ScopedMiddleClickAutoscrollForTest middle_click_autoscroll(true);
+  RuntimeEnabledFeatures::SetMiddleClickAutoscrollEnabled(true);
   RegisterMockedHttpURLLoad("content-width-1000.html");
 
   WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
@@ -3234,7 +3233,7 @@ TEST_P(WebViewTest, LosingFocusDoesNotTriggerAutofillTextChange) {
   web_view->SetFocus(false);
   EXPECT_EQ(0, client.TextChanges());
 
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
 static void VerifySelectionAndComposition(WebViewImpl* web_view,
@@ -3294,7 +3293,7 @@ TEST_P(WebViewTest, CompositionNotCancelledByBackspace) {
     web_view->AdvanceFocus(false);
   }
 
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
 TEST_P(WebViewTest, FinishComposingTextDoesntTriggerAutofillTextChange) {
@@ -3335,7 +3334,7 @@ TEST_P(WebViewTest, FinishComposingTextDoesntTriggerAutofillTextChange) {
 
   EXPECT_TRUE(form->IsAutofilled());
 
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
 TEST_P(WebViewTest,
@@ -3365,7 +3364,7 @@ TEST_P(WebViewTest,
   EXPECT_EQ(WebString::FromUTF8("none"),
             document.GetElementById("inputEvent").FirstChild().NodeValue());
 
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
 class ViewCreatingWebViewClient : public FrameTestHelpers::TestWebViewClient {
@@ -3427,8 +3426,7 @@ TEST_P(WebViewTest, FocusExistingFrameOnNavigate) {
 
   // Make a request that will open a new window
   WebURLRequest web_url_request;
-  FrameLoadRequest request(nullptr, web_url_request.ToResourceRequest(),
-                           "_blank");
+  FrameLoadRequest request(0, web_url_request.ToResourceRequest(), "_blank");
   ToLocalFrame(web_view_impl->GetPage()->MainFrame())->Loader().Load(request);
   ASSERT_TRUE(client.CreatedWebView());
   EXPECT_FALSE(client.DidFocusCalled());
@@ -3437,7 +3435,7 @@ TEST_P(WebViewTest, FocusExistingFrameOnNavigate) {
   // The original window should be focused.
   WebURLRequest web_url_request_with_target_start;
   FrameLoadRequest request_with_target_start(
-      nullptr, web_url_request_with_target_start.ToResourceRequest(), "_start");
+      0, web_url_request_with_target_start.ToResourceRequest(), "_start");
   ToLocalFrame(static_cast<WebViewImpl*>(client.CreatedWebView())
                    ->GetPage()
                    ->MainFrame())
@@ -3497,7 +3495,9 @@ TEST_P(WebViewTest, DISABLED_ChooseValueFromDateTimeChooser) {
 #else
 TEST_P(WebViewTest, ChooseValueFromDateTimeChooser) {
 #endif
-  ScopedInputMultipleFieldsUIForTest input_multiple_fields_ui(false);
+  bool original_multiple_fields_flag =
+      RuntimeEnabledFeatures::InputMultipleFieldsUIEnabled();
+  RuntimeEnabledFeatures::SetInputMultipleFieldsUIEnabled(false);
   DateTimeChooserWebViewClient client;
   std::string url = RegisterMockedHttpURLLoad("date_time_chooser.html");
   WebViewImpl* web_view_impl =
@@ -3571,6 +3571,8 @@ TEST_P(WebViewTest, ChooseValueFromDateTimeChooser) {
   // Clear the WebViewClient from the webViewHelper to avoid use-after-free in
   // the WebViewHelper destructor.
   web_view_helper_.Reset();
+  RuntimeEnabledFeatures::SetInputMultipleFieldsUIEnabled(
+      original_multiple_fields_flag);
 }
 
 TEST_P(WebViewTest, DispatchesFocusBlurOnViewToggle) {
@@ -4046,7 +4048,7 @@ TEST_P(WebViewTest, FirstUserGestureObservedKeyEvent) {
   web_view->HandleInputEvent(WebCoalescedInputEvent(key_event));
 
   EXPECT_EQ(2, client.GetUserGestureNotificationsCount());
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
 TEST_P(WebViewTest, FirstUserGestureObservedMouseEvent) {
@@ -4071,7 +4073,7 @@ TEST_P(WebViewTest, FirstUserGestureObservedMouseEvent) {
   web_view->HandleInputEvent(WebCoalescedInputEvent(mouse_event));
 
   EXPECT_EQ(1, client.GetUserGestureNotificationsCount());
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
 TEST_P(WebViewTest, CompositionIsUserGesture) {
@@ -4091,7 +4093,7 @@ TEST_P(WebViewTest, CompositionIsUserGesture) {
   EXPECT_FALSE(UserGestureIndicator::ProcessingUserGesture());
   EXPECT_TRUE(frame->HasMarkedText());
 
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
 TEST_P(WebViewTest, CompareSelectAllToContentAsText) {
@@ -4495,19 +4497,19 @@ TEST_P(WebViewTest, PasswordFieldEditingIsUserGesture) {
           empty_ime_text_spans, WebRange(), 0));
   EXPECT_EQ(1, client.TextChangesFromUserGesture());
   EXPECT_FALSE(UserGestureIndicator::ProcessingUserGesture());
-  frame->SetAutofillClient(nullptr);
+  frame->SetAutofillClient(0);
 }
 
-// Verify that a WebView created with a ScopedPagePauser already on the
+// Verify that a WebView created with a ScopedPageSuspender already on the
 // stack defers its loads.
-TEST_P(WebViewTest, CreatedDuringPagePause) {
+TEST_P(WebViewTest, CreatedDuringPageSuspension) {
   {
     WebViewImpl* web_view = web_view_helper_.Initialize();
     EXPECT_FALSE(web_view->GetPage()->Paused());
   }
 
   {
-    ScopedPagePauser pauser;
+    ScopedPageSuspender suspender;
     WebViewImpl* web_view = web_view_helper_.Initialize();
     EXPECT_TRUE(web_view->GetPage()->Paused());
   }
@@ -4560,16 +4562,16 @@ TEST_P(WebViewTest, SubframeBeforeUnloadUseCounter) {
 
 // Verify that page loads are deferred until all ScopedPageLoadDeferrers are
 // destroyed.
-TEST_P(WebViewTest, NestedPagePauses) {
+TEST_P(WebViewTest, NestedPageSuspensions) {
   WebViewImpl* web_view = web_view_helper_.Initialize();
   EXPECT_FALSE(web_view->GetPage()->Paused());
 
   {
-    ScopedPagePauser pauser;
+    ScopedPageSuspender suspender;
     EXPECT_TRUE(web_view->GetPage()->Paused());
 
     {
-      ScopedPagePauser pauser2;
+      ScopedPageSuspender suspender2;
       EXPECT_TRUE(web_view->GetPage()->Paused());
     }
 
@@ -4579,7 +4581,7 @@ TEST_P(WebViewTest, NestedPagePauses) {
   EXPECT_FALSE(web_view->GetPage()->Paused());
 }
 
-TEST_P(WebViewTest, ClosingPageIsPaused) {
+TEST_P(WebViewTest, ClosingPageIsSuspended) {
   WebViewImpl* web_view = web_view_helper_.Initialize();
   Page* page = web_view_helper_.WebView()->GetPage();
   EXPECT_FALSE(page->Paused());
@@ -4597,7 +4599,7 @@ TEST_P(WebViewTest, ClosingPageIsPaused) {
   EXPECT_TRUE(main_frame->GetPage());
 
   {
-    ScopedPagePauser pauser;
+    ScopedPageSuspender suspender;
     EXPECT_TRUE(page->Paused());
   }
 }
@@ -4931,69 +4933,6 @@ TEST_P(WebViewTest, SetZoomLevelWhilePluginFocused) {
   // Even though the plugin is focused, the entire frame's zoom factor should
   // still be updated.
   EXPECT_FLOAT_EQ(5.0f / 6.0f, main_frame->PageZoomFactor());
-  web_view_helper_.Reset();  // Remove dependency on locally scoped client.
-}
-
-// Tests that a layout update that detaches a plugin doesn't crash if the
-// plugin tries to execute script while being destroyed.
-TEST_P(WebViewTest, DetachPluginInLayout) {
-  class ScriptInDestroyPlugin : public FakeWebPlugin {
-   public:
-    ScriptInDestroyPlugin(WebLocalFrame* frame, const WebPluginParams& params)
-        : FakeWebPlugin(params), frame_(frame) {}
-
-    // WebPlugin overrides:
-    void Destroy() override {
-      frame_->ExecuteScript(WebScriptSource("console.log('done')"));
-      // Deletes this.
-      FakeWebPlugin::Destroy();
-    }
-
-   private:
-    WebLocalFrame* frame_;  // Unowned
-  };
-
-  class PluginCreatingWebFrameClient
-      : public FrameTestHelpers::TestWebFrameClient {
-   public:
-    // WebFrameClient overrides:
-    WebPlugin* CreatePlugin(const WebPluginParams& params) override {
-      return new ScriptInDestroyPlugin(Frame(), params);
-    }
-
-    void DidAddMessageToConsole(const WebConsoleMessage& message,
-                                const WebString& source_name,
-                                unsigned source_line,
-                                const WebString& stack_trace) {
-      message_ = message.text;
-    }
-
-    const String& Message() const { return message_; }
-
-   private:
-    String message_;
-  };
-
-  PluginCreatingWebFrameClient frame_client;
-  WebViewImpl* web_view = web_view_helper_.Initialize(&frame_client);
-  WebURL base_url = URLTestHelpers::ToKURL("https://example.com/");
-  FrameTestHelpers::LoadHTMLString(
-      web_view->MainFrameImpl(),
-      "<!DOCTYPE html><html><body>"
-      "<object type='application/x-webkit-test-plugin'></object>"
-      "</body></html>",
-      base_url);
-  // Verify the plugin is loaded.
-  LocalFrame* main_frame = web_view->MainFrameImpl()->GetFrame();
-  HTMLObjectElement* plugin_element =
-      ToHTMLObjectElement(main_frame->GetDocument()->body()->firstChild());
-  EXPECT_TRUE(plugin_element->OwnedPlugin());
-
-  plugin_element->style()->setCSSText("display: none", ASSERT_NO_EXCEPTION);
-  EXPECT_TRUE(plugin_element->OwnedPlugin());
-  web_view->UpdateAllLifecyclePhases();
-  EXPECT_FALSE(plugin_element->OwnedPlugin());
-  EXPECT_EQ("done", frame_client.Message());
   web_view_helper_.Reset();  // Remove dependency on locally scoped client.
 }
 

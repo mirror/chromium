@@ -36,6 +36,7 @@
 #include "base/containers/flat_map.h"
 #include "base/containers/span.h"
 #include "base/macros.h"
+#include "base/memory/manual_constructor.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
 #include "base/value_iterators.h"
@@ -344,10 +345,10 @@ class BASE_EXPORT Value {
     bool bool_value_;
     int int_value_;
     double double_value_;
-    std::string string_value_;
-    BlobStorage binary_value_;
-    DictStorage dict_;
-    ListStorage list_;
+    ManualConstructor<std::string> string_value_;
+    ManualConstructor<BlobStorage> binary_value_;
+    ManualConstructor<DictStorage> dict_;
+    ManualConstructor<ListStorage> list_;
   };
 
  private:
@@ -377,10 +378,10 @@ class BASE_EXPORT DictionaryValue : public Value {
   bool HasKey(StringPiece key) const;
 
   // Returns the number of Values in this dictionary.
-  size_t size() const { return dict_.size(); }
+  size_t size() const { return dict_->size(); }
 
   // Returns whether the dictionary is empty.
-  bool empty() const { return dict_.empty(); }
+  bool empty() const { return dict_->empty(); }
 
   // Clears any current contents of this dictionary.
   void Clear();
@@ -550,7 +551,7 @@ class BASE_EXPORT DictionaryValue : public Value {
     Iterator(const Iterator& other);
     ~Iterator();
 
-    bool IsAtEnd() const { return it_ == target_.dict_.end(); }
+    bool IsAtEnd() const { return it_ == target_.dict_->end(); }
     void Advance() { ++it_; }
 
     const std::string& key() const { return it_->first; }
@@ -563,12 +564,12 @@ class BASE_EXPORT DictionaryValue : public Value {
 
   // Iteration.
   // DEPRECATED, use Value::DictItems() instead.
-  iterator begin() { return dict_.begin(); }
-  iterator end() { return dict_.end(); }
+  iterator begin() { return dict_->begin(); }
+  iterator end() { return dict_->end(); }
 
   // DEPRECATED, use Value::DictItems() instead.
-  const_iterator begin() const { return dict_.begin(); }
-  const_iterator end() const { return dict_.end(); }
+  const_iterator begin() const { return dict_->begin(); }
+  const_iterator end() const { return dict_->end(); }
 
   // DEPRECATED, use Value::Clone() instead.
   // TODO(crbug.com/646113): Delete this and migrate callsites.
@@ -597,15 +598,15 @@ class BASE_EXPORT ListValue : public Value {
 
   // Returns the number of Values in this list.
   // DEPRECATED, use GetList()::size() instead.
-  size_t GetSize() const { return list_.size(); }
+  size_t GetSize() const { return list_->size(); }
 
   // Returns the capacity of storage for Values in this list.
   // DEPRECATED, use GetList()::capacity() instead.
-  size_t capacity() const { return list_.capacity(); }
+  size_t capacity() const { return list_->capacity(); }
 
   // Returns whether the list is empty.
   // DEPRECATED, use GetList()::empty() instead.
-  bool empty() const { return list_.empty(); }
+  bool empty() const { return list_->empty(); }
 
   // Reserves storage for at least |n| values.
   // DEPRECATED, use GetList()::reserve() instead.
@@ -712,14 +713,14 @@ class BASE_EXPORT ListValue : public Value {
 
   // Iteration.
   // DEPRECATED, use GetList()::begin() instead.
-  iterator begin() { return list_.begin(); }
+  iterator begin() { return list_->begin(); }
   // DEPRECATED, use GetList()::end() instead.
-  iterator end() { return list_.end(); }
+  iterator end() { return list_->end(); }
 
   // DEPRECATED, use GetList()::begin() instead.
-  const_iterator begin() const { return list_.begin(); }
+  const_iterator begin() const { return list_->begin(); }
   // DEPRECATED, use GetList()::end() instead.
-  const_iterator end() const { return list_.end(); }
+  const_iterator end() const { return list_->end(); }
 
   // DEPRECATED, use Value::Clone() instead.
   // TODO(crbug.com/646113): Delete this and migrate callsites.

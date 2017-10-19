@@ -20,7 +20,7 @@ WebGLSync::~WebGLSync() {
 
 void WebGLSync::DeleteObjectImpl(gpu::gles2::GLES2Interface* gl) {
   gl->DeleteSync(object_);
-  object_ = nullptr;
+  object_ = 0;
 }
 
 }  // namespace blink

@@ -146,41 +146,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance2/glsl3/' +
         'vector-dynamic-indexing-swizzled-lvalue.html',
         ['win', 'nvidia', 'opengl'], bug=709874)
-    self.Fail('conformance2/state/gl-object-get-calls.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('conformance2/transform_feedback/transform_feedback.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('conformance2/transform_feedback/two-unreferenced-varyings.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('conformance2/transform_feedback/' +
-        'unwritten-output-defaults-to-zero.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/booleanstatequery.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/lifetime.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/negativeshaderapi.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/negativevertexarrayapi.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/shaderbuiltinvar.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/shadercommonfunction.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/shaderpackingfunction.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/shaderstatequery.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/transformfeedback/basic_types_*.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/transformfeedback/interpolation_*.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/transformfeedback/point_size.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/transformfeedback/position.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
-    self.Fail('deqp/functional/gles3/transformfeedback/random_*.html',
-        ['win', 'nvidia', 'opengl'], bug=773823)
 
     # Win / AMD
     self.Fail('conformance2/rendering/blitframebuffer-stencil-only.html',
@@ -334,16 +299,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
 
     # Passthrough command decoder / Linux / OpenGL / NVIDIA
     self.Fail('conformance/textures/image_bitmap_from_video/' +
-        'tex-2d-luminance_alpha-luminance_alpha-unsigned_byte.html',
-        ['linux', 'passthrough', 'opengl', 'nvidia'], bug=773861)
-    self.Fail('conformance/textures/image_bitmap_from_video/' +
-        'tex-2d-luminance-luminance-unsigned_byte.html',
-        ['linux', 'passthrough', 'opengl', 'nvidia'], bug=773861)
-    self.Fail('conformance/textures/image_bitmap_from_video/' +
         'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-        ['linux', 'passthrough', 'opengl', 'nvidia'], bug=766918)
-    self.Fail('conformance/textures/image_bitmap_from_video/' +
-        'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
         ['linux', 'passthrough', 'opengl', 'nvidia'], bug=766918)
 
     # Regressions in 10.12.4.
@@ -351,26 +307,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['sierra'], bug=705865)
     self.Fail('conformance2/textures/misc/tex-mipmap-levels.html',
         ['sierra'], bug=705865)
-
-    # Regressions in 10.13
-    self.Fail('deqp/functional/gles3/fbocolorbuffer/tex2d_00.html',
-        ['highsierra', ('intel', 0xa2e)], bug=774826)
-    self.Fail('deqp/functional/gles3/fboinvalidate/format_00.html',
-        ['highsierra', ('intel', 0xa2e)], bug=774826)
-    self.Fail('deqp/functional/gles3/framebufferblit/' +
-        'default_framebuffer_05.html',
-        ['highsierra', ('intel', 0xa2e)], bug=774826)
-    self.Fail('conformance2/glsl3/array-assign.html',
-        ['highsierra', ('nvidia', 0xfe9)], bug=774827)
-    self.Fail('deqp/functional/gles3/fborender/resize_03.html',
-        ['highsierra', ('nvidia', 0xfe9)], bug=774827)
-    self.Fail('deqp/functional/gles3/shaderindexing/mat_00.html',
-        ['highsierra', ('nvidia', 0xfe9)], bug=774827)
-    self.Fail('deqp/functional/gles3/shaderindexing/mat_02.html',
-        ['highsierra', ('nvidia', 0xfe9)], bug=774827)
-    self.Fail('deqp/functional/gles3/texturespecification/' +
-        'teximage2d_pbo_cube_00.html',
-        ['highsierra', ('nvidia', 0xfe9)], bug=774827)
 
     # Fails on multiple GPU types.
     self.Fail('conformance2/glsl3/vector-dynamic-indexing-swizzled-lvalue.html',

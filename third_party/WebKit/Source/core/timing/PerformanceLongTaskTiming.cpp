@@ -57,7 +57,7 @@ TaskAttributionVector PerformanceLongTaskTiming::attribution() const {
   return attribution_;
 }
 
-void PerformanceLongTaskTiming::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PerformanceLongTaskTiming) {
   visitor->Trace(attribution_);
   PerformanceEntry::Trace(visitor);
 }

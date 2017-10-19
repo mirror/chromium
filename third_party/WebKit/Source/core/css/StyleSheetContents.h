@@ -186,7 +186,7 @@ class CORE_EXPORT StyleSheetContents
 
   String SourceMapURL() const { return source_map_url_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   StyleSheetContents(StyleRuleImport* owner_rule,

@@ -55,7 +55,7 @@ class SearchCardView : public views::View {
  public:
   explicit SearchCardView(views::View* content_view) {
     if (!features::IsFullscreenAppListEnabled()) {
-      SetBorder(std::make_unique<views::ShadowBorder>(
+      SetBorder(base::MakeUnique<views::ShadowBorder>(
           GetShadowForZHeight(kSearchResultZHeight)));
       content_view->SetBackground(
           views::CreateSolidBackground(kCardBackgroundColor));
@@ -165,7 +165,7 @@ SearchResultPageView::SearchResultPageView()
     // Hides this view behind the search box by using the same color and
     // background border corner radius. All child views' background should be
     // set transparent so that the rounded corner is not overwritten.
-    SetBackground(std::make_unique<SearchResultPageBackground>(
+    SetBackground(base::MakeUnique<SearchResultPageBackground>(
         kCardBackgroundColorFullscreen,
         kSearchBoxBorderCornerRadiusFullscreen));
   } else {
@@ -187,7 +187,6 @@ SearchResultPageView::SearchResultPageView()
     // Leaves a placeholder area for the search box and the separator below it.
     scroller->SetBorder(views::CreateEmptyBorder(
         gfx::Insets(kSearchBoxHeight + kSeparatorThickness, 0, 0, 0)));
-    scroller->set_draw_overflow_indicator(false);
   }
   scroller->SetContents(contents_view_);
   // Setting clip height is necessary to make ScrollView take into account its
@@ -475,7 +474,7 @@ void SearchResultPageView::OnAnimationUpdated(double progress,
 
     // Grows this view in the same pace as the search box to make them look
     // like a single view.
-    SetBackground(std::make_unique<SearchResultPageBackground>(
+    SetBackground(base::MakeUnique<SearchResultPageBackground>(
         color,
         gfx::Tween::LinearIntValueBetween(
             progress,

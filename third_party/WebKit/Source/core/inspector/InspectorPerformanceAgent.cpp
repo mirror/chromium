@@ -26,7 +26,7 @@ constexpr bool isPlural(const char* str, int len) {
   return len > 1 && str[len - 2] == 's';
 }
 
-static constexpr const char* kInstanceCounterNames[] = {
+static const char* kInstanceCounterNames[] = {
 #define INSTANCE_COUNTER_NAME(name) \
   (isPlural(#name, sizeof(#name)) ? #name : #name "s"),
     INSTANCE_COUNTERS_LIST(INSTANCE_COUNTER_NAME)
@@ -201,7 +201,7 @@ void InspectorPerformanceAgent::DidProcessTask(double start_time,
   task_start_time_ = 0;
 }
 
-void InspectorPerformanceAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorPerformanceAgent) {
   visitor->Trace(inspected_frames_);
   InspectorBaseAgent<protocol::Performance::Metainfo>::Trace(visitor);
 }

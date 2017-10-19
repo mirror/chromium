@@ -34,7 +34,7 @@ class AnimationPlaybackEvent final : public Event {
 
   const AtomicString& InterfaceName() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   AnimationPlaybackEvent(const AtomicString& type,

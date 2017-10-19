@@ -226,7 +226,7 @@ This file contains the strings for ash.
         Sign in another user...
       </message>
       <message name="IDS_ASH_STATUS_TRAY_MESSAGE_CANNOT_ADD_USER" desc="The error message when the user has reached the limit of multi profile users.">
-        You can only have up to <ph name="multi_profile_user_limit">$1<ex>5</ex></ph> accounts in multiple sign-in.
+        You can only have up to three accounts in multiple sign-in.
       </message>
       <message name="IDS_ASH_STATUS_TRAY_MESSAGE_NOT_ALLOWED_PRIMARY_USER" desc="The error message when the primary user forbids multiple signin because of not-allowed policy or because of usage policy-pushed certificates.">
         The administrator for this account has disallowed multiple sign-in.
@@ -462,12 +462,6 @@ This file contains the strings for ash.
       </message>
       <message name="IDS_ASH_STYLUS_TOOLS_TITLE" desc="The title of the stylus tools dialog in the ash shelf.">
         Stylus tools
-      </message>
-      <message name="IDS_ASH_STYLUS_WARM_WELCOME_BUBBLE_TITLE" desc="The title of the bubble that pops up the first time a user uses a stylus.">
-        These are your stylus tools
-      </message>
-      <message name="IDS_ASH_STYLUS_WARM_WELCOME_BUBBLE_DESCRIPTION" desc="The description of the bubble that pops up the first time a user uses a stylus. Describes what tools exist in the palette tray.">
-        Tap the stylus button on the shelf to take a note, screenshot, use the assistant, laser pointer, or magnifying glass.
       </message>
       <message name="IDS_ASH_PALETTE_SETTINGS" desc="The label on the setting button used to open palette setting page.">
         Stylus settings
@@ -1095,9 +1089,6 @@ This file contains the strings for ash.
       <message name="IDS_ASH_LOGIN_POD_PASSWORD_PIN_PLACEHOLDER" desc="Text to display as placeholder in the password field when both password and pin are allowed.">
         PIN or password
       </message>
-      <message name="IDS_ASH_LOGIN_POD_PASSWORD_TAP_PLACEHOLDER" desc="Text to display as placeholder in the password field when the user can click/tap their profile picture to unlock.">
-        Click your photo
-      </message>
       <message name="IDS_ASH_LOGIN_ERROR_AUTHENTICATING" desc="Couldn't sign in because password is invalid">
         Sorry, your password could not be verified. Please try again.
       </message>
@@ -1187,9 +1178,6 @@ Subsequent notifications, windows and dialogs may be split between desktops.
       </message>
       <message name="IDS_ASH_MESSAGE_CENTER_NO_MESSAGES" desc="The message displayed in the message center when there are no notifications.">
         All done
-      </message>
-      <message name="IDS_ASH_MESSAGE_CENTER_NO_NOTIFIERS" desc="The message displayed in the message center when there are no notification sources.">
-        Nothing to see just yet
       </message>
     </messages>
   </release>

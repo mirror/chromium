@@ -179,7 +179,7 @@ class HTMLStackItem : public GarbageCollectedFinalized<HTMLStackItem> {
            tag_name == HTMLNames::xmpTag;
   }
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(node_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(node_); }
 
  private:
   HTMLStackItem(ContainerNode* node, ItemType type) : node_(node) {

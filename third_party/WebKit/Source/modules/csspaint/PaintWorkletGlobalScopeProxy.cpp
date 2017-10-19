@@ -26,8 +26,9 @@ PaintWorkletGlobalScopeProxy::PaintWorkletGlobalScopeProxy(
   Document* document = frame->GetDocument();
   reporting_proxy_ = WTF::MakeUnique<MainThreadWorkletReportingProxy>(document);
   global_scope_ = PaintWorkletGlobalScope::Create(
-      frame, document->Url(), document->UserAgent(), ToIsolate(document),
-      *reporting_proxy_, pending_generator_registry, global_scope_number);
+      frame, document->Url(), document->UserAgent(),
+      document->GetSecurityOrigin(), ToIsolate(document), *reporting_proxy_,
+      pending_generator_registry, global_scope_number);
 }
 
 void PaintWorkletGlobalScopeProxy::FetchAndInvokeScript(
@@ -61,7 +62,7 @@ CSSPaintDefinition* PaintWorkletGlobalScopeProxy::FindDefinition(
   return global_scope_->FindDefinition(name);
 }
 
-void PaintWorkletGlobalScopeProxy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PaintWorkletGlobalScopeProxy) {
   visitor->Trace(global_scope_);
 }
 

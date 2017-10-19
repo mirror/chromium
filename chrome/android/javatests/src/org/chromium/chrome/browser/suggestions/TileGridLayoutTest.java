@@ -11,12 +11,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-import static org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedSites.createSiteSuggestion;
-
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.annotation.Nullable;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.view.View;
@@ -30,7 +29,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
@@ -44,7 +42,7 @@ import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.cards.NodeParent;
 import org.chromium.chrome.browser.ntp.cards.TreeNode;
-import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ViewUtils;
@@ -56,7 +54,6 @@ import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.RenderTestRule;
 import org.chromium.chrome.test.util.browser.ChromeHome;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
-import org.chromium.chrome.test.util.browser.offlinepages.FakeOfflinePageBridge;
 import org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedSites;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
@@ -67,10 +64,7 @@ import org.chromium.ui.test.util.UiRestriction;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Instrumentation tests for the {@link TileGridLayout} on the New Tab Page.
@@ -113,8 +107,6 @@ public class TileGridLayoutTest {
 
     private static final String[] FAKE_MOST_VISITED_TITLES =
             new String[] {"ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE"};
-
-    private final CallbackHelper mLoadCompleteHelper = new CallbackHelper();
 
     @Test
     @SmallTest
@@ -231,38 +223,6 @@ public class TileGridLayoutTest {
         mRenderTestRule.render(tileGridLayout, "two_tiles_grid_landscape");
     }
 
-    @Test
-    @MediumTest
-    @Feature({"NewTabPage", "RenderTest"})
-    @ChromeHome
-    public void testTileAppearanceModern()
-            throws IOException, InterruptedException, TimeoutException {
-        List<SiteSuggestion> suggestions = makeSuggestions(2);
-        List<String> offlineAvailableUrls = Collections.singletonList(suggestions.get(0).url);
-        ViewGroup tiles = renderTiles(suggestions, offlineAvailableUrls);
-
-        mLoadCompleteHelper.waitForCallback(0);
-
-        mRenderTestRule.render(tiles.getChildAt(0), "tile_modern_offline");
-        mRenderTestRule.render(tiles.getChildAt(1), "tile_modern");
-    }
-
-    @Test
-    @MediumTest
-    @Feature({"NewTabPage", "RenderTest"})
-    @ChromeHome(false)
-    public void testTileAppearanceClassic()
-            throws IOException, InterruptedException, TimeoutException {
-        List<SiteSuggestion> suggestions = makeSuggestions(2);
-        List<String> offlineAvailableUrls = Collections.singletonList(suggestions.get(0).url);
-        ViewGroup tiles = renderTiles(suggestions, offlineAvailableUrls);
-
-        mLoadCompleteHelper.waitForCallback(0);
-
-        mRenderTestRule.render(tiles.getChildAt(0), "tile_classic_offline");
-        mRenderTestRule.render(tiles.getChildAt(1), "tile_classic");
-    }
-
     private List<SiteSuggestion> makeSuggestions(int count) {
         List<SiteSuggestion> siteSuggestions = new ArrayList<>(count);
 
@@ -270,8 +230,10 @@ public class TileGridLayoutTest {
         assertTrue(count <= FAKE_MOST_VISITED_URLS.length);
 
         for (int i = 0; i < count; i++) {
-            String url = mTestServerRule.getServer().getURL(FAKE_MOST_VISITED_URLS[i]);
-            siteSuggestions.add(createSiteSuggestion(FAKE_MOST_VISITED_TITLES[i], url));
+            String url = FAKE_MOST_VISITED_URLS[i];
+            String title = FAKE_MOST_VISITED_TITLES[i];
+            siteSuggestions.add(FakeMostVisitedSites.createSiteSuggestion(
+                    title, mTestServerRule.getServer().getURL(url)));
         }
 
         return siteSuggestions;
@@ -281,7 +243,7 @@ public class TileGridLayoutTest {
         List<SiteSuggestion> siteSuggestions = makeSuggestions(FAKE_MOST_VISITED_URLS.length);
         siteSuggestions.add(homePagePosition,
                 new SiteSuggestion("HOMEPAGE", HOME_PAGE_URL, "", TileTitleSource.TITLE_TAG,
-                        TileSource.HOMEPAGE, TileSectionType.PERSONALIZED, new Date()));
+                        TileSource.HOMEPAGE, TileSectionType.PERSONALIZED));
 
         FakeMostVisitedSites mMostVisitedSites = new FakeMostVisitedSites();
         mMostVisitedSites.setTileSuggestions(siteSuggestions);
@@ -354,8 +316,8 @@ public class TileGridLayoutTest {
      * Starts and sets up an activity to render the provided site suggestions in the activity.
      * @return the layout in which the suggestions are rendered.
      */
-    private TileGridLayout renderTiles(List<SiteSuggestion> siteSuggestions,
-            List<String> offlineUrls) throws IOException, InterruptedException {
+    private TileGridLayout renderTiles(List<SiteSuggestion> siteSuggestions)
+            throws IOException, InterruptedException {
         // Launching the activity, that should now use the right UI.
         mActivityTestRule.startMainActivityOnBlankPage();
         ChromeActivity activity = mActivityTestRule.getActivity();
@@ -369,7 +331,7 @@ public class TileGridLayoutTest {
         FrameLayout contentView = new FrameLayout(activity);
         UiConfig uiConfig = new UiConfig(contentView);
 
-        return ThreadUtils.runOnUiThreadBlockingNoException(() -> {
+        ThreadUtils.runOnUiThreadBlocking(() -> {
             activity.setContentView(contentView);
 
             SiteSectionViewHolder viewHolder = SiteSection.createViewHolder(
@@ -377,29 +339,21 @@ public class TileGridLayoutTest {
 
             uiConfig.updateDisplayStyle();
 
-            SiteSection siteSection = createSiteSection(viewHolder, uiConfig, offlineUrls);
+            SiteSection siteSection = createSiteSection(viewHolder, uiConfig);
             siteSection.getTileGroup().onSwitchToForeground(false);
             assertTrue("Tile Data should be visible.", siteSection.isVisible());
 
             siteSection.onBindViewHolder(viewHolder, 0);
             contentView.addView(viewHolder.itemView);
-
-            return (TileGridLayout) viewHolder.itemView;
         });
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+
+        assertEquals(1, contentView.getChildCount());
+        return (TileGridLayout) contentView.getChildAt(0);
     }
 
-    private TileGridLayout renderTiles(List<SiteSuggestion> siteSuggestions)
-            throws IOException, InterruptedException {
-        return renderTiles(siteSuggestions, Collections.emptyList());
-    }
-
-    private SiteSuggestion makeSuggestionFromDataIndex(int dataIndex) {
-        return createSiteSuggestion(FAKE_MOST_VISITED_TITLES[dataIndex],
-                mTestServerRule.getServer().getURL(FAKE_MOST_VISITED_URLS[dataIndex]));
-    }
-
-    private SiteSection createSiteSection(
-            SiteSectionViewHolder viewHolder, UiConfig uiConfig, List<String> offlineUrls) {
+    private SiteSection createSiteSection(SiteSectionViewHolder viewHolder, UiConfig uiConfig) {
         ThreadUtils.assertOnUiThread();
 
         ChromeActivity activity = mActivityTestRule.getActivity();
@@ -410,23 +364,8 @@ public class TileGridLayoutTest {
                 mSuggestionsDeps.getFactory().createEventReporter(), null, profile, null,
                 activity.getChromeApplication().getReferencePool(), activity.getSnackbarManager());
 
-        FakeOfflinePageBridge opb = new FakeOfflinePageBridge();
-        List<OfflinePageItem> offlinePageItems = new ArrayList<>();
-        for (int i = 0; i < offlineUrls.size(); i++) {
-            offlinePageItems.add(
-                    FakeOfflinePageBridge.createOfflinePageItem(offlineUrls.get(i), i + 1L));
-        }
-        opb.setItems(offlinePageItems);
-        opb.setIsOfflinePageModelLoaded(true);
-
-        TileGroup.Delegate delegate = new TileGroupDelegateImpl(activity, profile, null, null) {
-            @Override
-            public void onLoadingComplete(List<Tile> tiles) {
-                super.onLoadingComplete(tiles);
-                mLoadCompleteHelper.notifyCalled();
-            }
-        };
-
+        OfflinePageBridge opb = OfflinePageBridge.getForProfile(profile);
+        TileGroup.Delegate delegate = new TileGroupDelegateImpl(activity, profile, null, null);
         SiteSection siteSection = new SiteSection(uiDelegate, null, delegate, opb, uiConfig);
 
         siteSection.setParent(new NodeParent() {

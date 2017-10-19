@@ -97,21 +97,6 @@ void NGOffsetMappingBuilder::Annotate(const LayoutText* layout_object) {
   std::fill(annotation_.begin(), annotation_.end(), layout_object);
 }
 
-void NGOffsetMappingBuilder::AnnotateRange(unsigned start,
-                                           unsigned end,
-                                           const LayoutText* layout_object) {
-  DCHECK_LE(start, end);
-  DCHECK_LE(end, annotation_.size());
-  std::fill(annotation_.begin() + start, annotation_.begin() + end,
-            layout_object);
-}
-
-void NGOffsetMappingBuilder::AnnotateSuffix(unsigned length,
-                                            const LayoutText* layout_object) {
-  DCHECK_LE(length, annotation_.size());
-  AnnotateRange(annotation_.size() - length, annotation_.size(), layout_object);
-}
-
 void NGOffsetMappingBuilder::Concatenate(const NGOffsetMappingBuilder& other) {
   DCHECK(!mapping_.IsEmpty());
   DCHECK(!other.mapping_.IsEmpty());
@@ -126,13 +111,6 @@ void NGOffsetMappingBuilder::Composite(const NGOffsetMappingBuilder& other) {
   DCHECK_EQ(mapping_.back() + 1, other.mapping_.size());
   for (unsigned i = 0; i < mapping_.size(); ++i)
     mapping_[i] = other.mapping_[mapping_[i]];
-}
-
-void NGOffsetMappingBuilder::SetDestinationString(String string) {
-  // TODO(xiaochengh): Add the check below when we stop writing back to
-  // LayoutText for inline painting.
-  // DCHECK_EQ(mapping_.back(), string.length());
-  destination_string_ = string;
 }
 
 NGOffsetMappingResult NGOffsetMappingBuilder::Build() const {
@@ -178,8 +156,7 @@ NGOffsetMappingResult NGOffsetMappingBuilder::Build() const {
   if (current_node) {
     ranges.insert(current_node, std::make_pair(unit_range_start, units.size()));
   }
-  return NGOffsetMappingResult(std::move(units), std::move(ranges),
-                               destination_string_);
+  return NGOffsetMappingResult(std::move(units), std::move(ranges));
 }
 
 Vector<unsigned> NGOffsetMappingBuilder::DumpOffsetMappingForTesting() const {

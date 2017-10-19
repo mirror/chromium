@@ -49,7 +49,7 @@ class RTCStatsRequest : public GarbageCollectedFinalized<RTCStatsRequest> {
   virtual MediaStreamComponent* Component() = 0;
   virtual void RequestSucceeded(RTCStatsResponseBase*) = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   RTCStatsRequest() {}

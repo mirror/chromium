@@ -5,6 +5,12 @@
 #ifndef CHROME_BROWSER_SEARCH_SEARCH_H_
 #define CHROME_BROWSER_SEARCH_SEARCH_H_
 
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "base/strings/string16.h"
+
 class GURL;
 class Profile;
 class TemplateURLService;
@@ -43,13 +49,17 @@ bool DefaultSearchProviderIsGoogle(Profile* profile);
 bool DefaultSearchProviderIsGoogle(
     const TemplateURLService* template_url_service);
 
-// Returns true if |url| corresponds to a New Tab page.
+// Returns true if |url| corresponds to a New Tab page (it can be either an
+// Instant Extended NTP or a non-extended NTP). A page that matches the search
+// or Instant URL of the default search provider but does not have any search
+// terms is considered an Instant NTP.
 // TODO(treib): This is confusingly named, as it includes URLs that are related
-// to an NTP, but aren't an NTP themselves (such as the NTP's service worker).
+// to an NTP, but aren't an NTP themselves (such as the Instant URL, e.g.
+// https://www.google.com/webhp?espv=2).
 bool IsNTPURL(const GURL& url, Profile* profile);
 
-// Returns true if the visible entry of |contents| is a New Tab page rendered
-// in an Instant process.
+// Returns true if the visible entry of |contents| is a New Tab Page rendered
+// by Instant.
 bool IsInstantNTP(const content::WebContents* contents);
 
 // Same as IsInstantNTP but uses |nav_entry| to determine the URL for the page
@@ -58,7 +68,7 @@ bool NavEntryIsInstantNTP(const content::WebContents* contents,
                           const content::NavigationEntry* nav_entry);
 
 // Returns true if |url| corresponds to a New Tab page that would get rendered
-// in an Instant process.
+// by Instant.
 bool IsInstantNTPURL(const GURL& url, Profile* profile);
 
 
@@ -92,7 +102,7 @@ bool HandleNewTabURLRewrite(GURL* url,
 bool HandleNewTabURLReverseRewrite(GURL* url,
                                    content::BrowserContext* browser_context);
 
-// Returns the New Tab page URL for the given |profile|.
+// Returns the Cacheable New Tab Page URL for the given |profile|.
 GURL GetNewTabPageURL(Profile* profile);
 
 }  // namespace search

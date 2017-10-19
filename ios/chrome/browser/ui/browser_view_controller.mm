@@ -207,7 +207,7 @@
 #import "ios/web/public/web_state/context_menu_params.h"
 #import "ios/web/public/web_state/ui/crw_native_content_provider.h"
 #import "ios/web/public/web_state/ui/crw_web_view_proxy.h"
-#import "ios/web/public/web_state/web_state.h"
+#include "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 #include "ios/web/public/web_thread.h"
 #import "ios/web/web_state/ui/crw_web_controller.h"
@@ -1171,7 +1171,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 // Whether the sharing menu should be shown.
 - (BOOL)canShowShareMenu {
-  const GURL& URL = [_model currentTab].webState->GetLastCommittedURL();
+  const GURL& URL = [_model currentTab].lastCommittedURL;
   return URL.is_valid() && !web::GetWebClient()->IsAppSpecificURL(URL);
 }
 
@@ -1682,8 +1682,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     // Create the new page image, and load with the new tab page snapshot.
     CGFloat newPageOffset = 0;
     UIImageView* newPage;
-    if (tab.webState->GetLastCommittedURL() == kChromeUINewTabURL &&
-        !_isOffTheRecord && !IsIPadIdiom()) {
+    if (tab.lastCommittedURL == GURL(kChromeUINewTabURL) && !_isOffTheRecord &&
+        !IsIPadIdiom()) {
       animationParentView = self.view;
       newPage = [self pageFullScreenOpenCloseAnimationView];
     } else {
@@ -2831,6 +2831,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   DCHECK(_browserState);
+  DCHECK([_model currentTab]);
 
   _contextMenuCoordinator =
       [[ContextMenuCoordinator alloc] initWithBaseViewController:self
@@ -2844,7 +2845,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   bool isLink = link.is_valid();
   GURL imageUrl = params.src_url;
   bool isImage = imageUrl.is_valid();
-  const GURL& lastCommittedURL = webState->GetLastCommittedURL();
+  const GURL& committedURL = [_model currentTab].lastCommittedURL;
 
   if (isLink) {
     if (link.SchemeIs(url::kJavaScriptScheme)) {
@@ -2858,7 +2859,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
 
     if (web::UrlHasWebScheme(link)) {
-      web::Referrer referrer(lastCommittedURL, params.referrer_policy);
+      web::Referrer referrer(committedURL, params.referrer_policy);
 
       // Open in New Tab.
       title = l10n_util::GetNSStringWithFixup(
@@ -2912,7 +2913,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     [_contextMenuCoordinator addItemWithTitle:title action:action];
   }
   if (isImage) {
-    web::Referrer referrer(lastCommittedURL, params.referrer_policy);
+    web::Referrer referrer(committedURL, params.referrer_policy);
     // Save Image.
     title = l10n_util::GetNSStringWithFixup(IDS_IOS_CONTENT_CONTEXT_SAVEIMAGE);
     action = ^{
@@ -3430,8 +3431,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   // TODO(crbug.com/498568): To reduce complexity here, refactor the flow so
   // that native controllers vended here always correspond to the current tab.
   Tab* currentTab = [_model currentTab];
-  if (!currentTab.webState ||
-      currentTab.webState->GetLastCommittedURL() != url ||
+  if (!currentTab || currentTab.lastCommittedURL != url ||
       [currentTab.webController.nativeController
           isKindOfClass:[nativeController class]]) {
     _temporaryNativeController = nativeController;
@@ -4306,7 +4306,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     std::string base64HTML;
     base::Base64Encode(base::SysNSStringToUTF8(result), &base64HTML);
     GURL URL(std::string("data:text/plain;charset=utf-8;base64,") + base64HTML);
-    web::Referrer referrer(strongTab.webState->GetLastCommittedURL(),
+    web::Referrer referrer([strongTab lastCommittedURL],
                            web::ReferrerPolicyDefault);
 
     [[weakSelf tabModel]
@@ -4668,8 +4668,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   ToolbarController* relinquishedToolbarController = nil;
   if ([_toolbarCoordinator view].hidden) {
     Tab* currentTab = [_model currentTab];
-    if (currentTab.webState &&
-        UrlHasChromeScheme(currentTab.webState->GetLastCommittedURL())) {
+    if (currentTab && UrlHasChromeScheme(currentTab.lastCommittedURL)) {
       // Use the native content controller's toolbar when the BVC's is hidden.
       id nativeController = [self nativeControllerForTab:currentTab];
       if ([nativeController conformsToProtocol:@protocol(ToolbarOwner)]) {
@@ -4976,8 +4975,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // If an added or removed bookmark is the same as the current url, update the
 // toolbar so the star highlight is kept in sync.
 - (void)bookmarkNodeModified:(const BookmarkNode*)node {
-  if ([_model currentTab].webState &&
-      node->url() == [_model currentTab].webState->GetLastCommittedURL()) {
+  if ([_model currentTab] &&
+      node->url() == [_model currentTab].lastCommittedURL) {
     [self updateToolbar];
   }
 }

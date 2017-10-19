@@ -80,7 +80,7 @@ class WebViewTranslateClient
   void ShowReportLanguageDetectionErrorUI(const GURL& report_url) override;
 
   // web::WebStateObserver implementation.
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   std::unique_ptr<translate::TranslateManager> translate_manager_;
   translate::IOSTranslateDriver translate_driver_;

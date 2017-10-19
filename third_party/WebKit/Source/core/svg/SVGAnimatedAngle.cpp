@@ -45,7 +45,7 @@ SVGAnimatedAngle::SVGAnimatedAngle(SVGElement* context_element)
 
 SVGAnimatedAngle::~SVGAnimatedAngle() {}
 
-void SVGAnimatedAngle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGAnimatedAngle) {
   visitor->Trace(orient_type_);
   SVGAnimatedProperty<SVGAngle>::Trace(visitor);
 }

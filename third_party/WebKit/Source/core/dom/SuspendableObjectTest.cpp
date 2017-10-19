@@ -47,9 +47,7 @@ class MockSuspendableObject final
   explicit MockSuspendableObject(ExecutionContext* context)
       : SuspendableObject(context) {}
 
-  virtual void Trace(blink::Visitor* visitor) {
-    SuspendableObject::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { SuspendableObject::Trace(visitor); }
 
   MOCK_METHOD0(Suspend, void());
   MOCK_METHOD0(Resume, void());

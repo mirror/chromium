@@ -43,7 +43,7 @@ class CSSLazyParsingState
 
   void CountRuleParsed();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Exposed for tests. This enum is used to back a histogram, so new values
   // must be appended to the end, before UsageLastValue.

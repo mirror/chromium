@@ -14,7 +14,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_io_data.h"
-#include "components/previews/core/previews_logger.h"
+#include "components/previews/core/previews_log.h"
 #include "components/previews/core/previews_opt_out_store.h"
 #include "components/previews/core/previews_opt_out_store_sql.h"
 #include "components/previews/core/previews_ui_service.h"
@@ -39,8 +39,6 @@ bool IsPreviewsTypeEnabled(previews::PreviewsType type) {
               data_reduction_proxy::params::AreLitePagesEnabledViaFlags());
     case previews::PreviewsType::AMP_REDIRECTION:
       return previews::params::IsAMPRedirectionPreviewEnabled();
-    case previews::PreviewsType::NOSCRIPT:
-      return previews::params::IsNoScriptPreviewsEnabled();
     case previews::PreviewsType::NONE:
     case previews::PreviewsType::LAST:
       break;
@@ -61,8 +59,6 @@ int GetPreviewsTypeVersion(previews::PreviewsType type) {
       return data_reduction_proxy::params::LitePageVersion();
     case previews::PreviewsType::AMP_REDIRECTION:
       return previews::params::AMPRedirectionPreviewsVersion();
-    case previews::PreviewsType::NOSCRIPT:
-      return previews::params::NoScriptPreviewsVersion();
     case previews::PreviewsType::NONE:
     case previews::PreviewsType::LAST:
       break;

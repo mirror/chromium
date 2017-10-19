@@ -51,8 +51,8 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLFrameElementBase.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -101,10 +101,6 @@ namespace blink {
 
 namespace {
 
-// Print up to |kMaxCertificateWarningMessages| console messages per frame
-// about certificates that will be distrusted in future.
-const uint32_t kMaxCertificateWarningMessages = 10;
-
 // Convenience helper for frame tree helpers in FrameClient to reduce the amount
 // of null-checking boilerplate code. Since the frame tree is maintained in the
 // web/ layer, the frame tree helpers often have to deal with null WebFrames:
@@ -143,7 +139,7 @@ bool IsBackForwardNavigationInProgress(LocalFrame* local_frame) {
 }  // namespace
 
 LocalFrameClientImpl::LocalFrameClientImpl(WebLocalFrameImpl* frame)
-    : web_frame_(frame), num_certificate_warning_messages_(0) {}
+    : web_frame_(frame) {}
 
 LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameImpl* frame) {
   return new LocalFrameClientImpl(frame);
@@ -151,7 +147,7 @@ LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameImpl* frame) {
 
 LocalFrameClientImpl::~LocalFrameClientImpl() {}
 
-void LocalFrameClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrameClientImpl) {
   visitor->Trace(web_frame_);
   LocalFrameClient::Trace(visitor);
 }
@@ -335,7 +331,7 @@ void LocalFrameClientImpl::Detached(FrameDetachType type) {
 
   // Signal that no further communication with WebFrameClient should take
   // place at this point since we are no longer associated with the Page.
-  web_frame_->SetClient(nullptr);
+  web_frame_->SetClient(0);
 
   client->FrameDetached(static_cast<WebFrameClient::DetachType>(type));
 
@@ -450,10 +446,6 @@ void LocalFrameClientImpl::DispatchDidCommitLoad(
   }
   if (WebDevToolsAgentImpl* dev_tools = DevToolsAgent())
     dev_tools->DidCommitLoadForLocalFrame(web_frame_->GetFrame());
-
-  // Reset certificate warning state that prevents log spam.
-  num_certificate_warning_messages_ = 0;
-  certificate_warning_hosts_.clear();
 }
 
 void LocalFrameClientImpl::DispatchDidFailProvisionalLoad(
@@ -709,52 +701,21 @@ void LocalFrameClientImpl::DidRunContentWithCertificateErrors(const KURL& url) {
 
 void LocalFrameClientImpl::ReportLegacySymantecCert(const KURL& url,
                                                     Time cert_validity_start) {
-  // To prevent log spam, only log the message once per hostname.
-  if (certificate_warning_hosts_.Contains(url.Host()))
-    return;
-
-  // After |kMaxCertificateWarningMessages| warnings, stop printing messages to
-  // the console. At exactly |kMaxCertificateWarningMessages| warnings, print a
-  // message that additional resources on the page use legacy certificates
-  // without specifying which exact resources. Before
-  // |kMaxCertificateWarningMessages| messages, print the exact resource URL in
-  // the message to help the developer pinpoint the problematic resources.
-
-  if (num_certificate_warning_messages_ > kMaxCertificateWarningMessages)
-    return;
-
   WebString console_message;
-
-  if (num_certificate_warning_messages_ == kMaxCertificateWarningMessages) {
+  if (!web_frame_->Client()->OverrideLegacySymantecCertConsoleMessage(
+          url, cert_validity_start, &console_message)) {
     console_message =
-        WebString(String("Additional resources on this page were loaded with "
-                         "SSL certificates that will be "
+        WebString(String("The SSL certificate used to load " + url.GetString() +
+                         " will be "
                          "distrusted in the future. "
                          "Once distrusted, users will be prevented from "
-                         "loading these resources. See"
+                         "loading this resource. See "
                          "https://g.co/chrome/symantecpkicerts for "
                          "more information."));
-  } else if (!web_frame_->Client()->OverrideLegacySymantecCertConsoleMessage(
-                 url, cert_validity_start, &console_message)) {
-    console_message = WebString(
-        String::Format("The SSL certificate used to load resources from %s"
-                       " will be "
-                       "distrusted in the future. "
-                       "Once distrusted, users will be prevented from "
-                       "loading these resources. See "
-                       "https://g.co/chrome/symantecpkicerts for "
-                       "more information.",
-                       SecurityOrigin::Create(url)->ToString().Utf8().data()));
   }
-  num_certificate_warning_messages_++;
-  certificate_warning_hosts_.insert(url.Host());
-  // To avoid spamming the console, use Verbose message level for subframe
-  // resources and only use the warning level for main-frame resources.
   web_frame_->GetFrame()->GetDocument()->AddConsoleMessage(
-      ConsoleMessage::Create(
-          kSecurityMessageSource,
-          web_frame_->Parent() ? kVerboseMessageLevel : kWarningMessageLevel,
-          console_message));
+      ConsoleMessage::Create(kSecurityMessageSource, kWarningMessageLevel,
+                             console_message));
 }
 
 void LocalFrameClientImpl::DidChangePerformanceTiming() {
@@ -893,7 +854,7 @@ WebRemotePlaybackClient* LocalFrameClientImpl::CreateWebRemotePlaybackClient(
 
 WebCookieJar* LocalFrameClientImpl::CookieJar() const {
   if (!web_frame_->Client())
-    return nullptr;
+    return 0;
   return web_frame_->Client()->CookieJar();
 }
 
@@ -1033,12 +994,6 @@ WebEffectiveConnectionType LocalFrameClientImpl::GetEffectiveConnectionType() {
   return WebEffectiveConnectionType::kTypeUnknown;
 }
 
-void LocalFrameClientImpl::SetEffectiveConnectionTypeForTesting(
-    WebEffectiveConnectionType type) {
-  if (web_frame_->Client())
-    return web_frame_->Client()->SetEffectiveConnectionTypeForTesting(type);
-}
-
 bool LocalFrameClientImpl::IsClientLoFiActiveForFrame() {
   if (web_frame_->Client())
     return web_frame_->Client()->IsClientLoFiActiveForFrame();
@@ -1091,7 +1046,7 @@ TextCheckerClient& LocalFrameClientImpl::GetTextCheckerClient() const {
 
 std::unique_ptr<blink::WebURLLoader> LocalFrameClientImpl::CreateURLLoader(
     const ResourceRequest& request,
-    RefPtr<WebTaskRunner> task_runner) {
+    WebTaskRunner* task_runner) {
   WrappedResourceRequest wrapped(request);
   return web_frame_->CreateURLLoader(wrapped,
                                      task_runner->ToSingleThreadTaskRunner());
@@ -1110,8 +1065,8 @@ void LocalFrameClientImpl::DidBlockFramebust(const KURL& url) {
   web_frame_->Client()->DidBlockFramebust(url);
 }
 
-String LocalFrameClientImpl::GetInstrumentationToken() {
-  return web_frame_->Client()->GetInstrumentationToken();
+String LocalFrameClientImpl::GetDevToolsFrameToken() {
+  return web_frame_->Client()->GetDevToolsFrameToken();
 }
 
 }  // namespace blink

@@ -2009,7 +2009,7 @@ void TextureManager::RemoveFramebufferManager(
   NOTREACHED();
 }
 
-void TextureManager::Initialize() {
+bool TextureManager::Initialize() {
   // Reset PIXEL_UNPACK_BUFFER to avoid unrelated GL error on some GL drivers.
   if (feature_info_->gl_version_info().is_es3_capable) {
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
@@ -2048,6 +2048,8 @@ void TextureManager::Initialize() {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         this, "gpu::TextureManager", base::ThreadTaskRunnerHandle::Get());
   }
+
+  return true;
 }
 
 scoped_refptr<TextureRef>

@@ -103,7 +103,7 @@ public class DexLoaderTest {
 
     @Before
     public void setUp() {
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mRemoteContext = getRemoteContext(mContext);
         mDexLoader = new DexLoader();
 

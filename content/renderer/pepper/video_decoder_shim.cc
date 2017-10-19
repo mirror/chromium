@@ -31,6 +31,7 @@
 #include "media/base/video_decoder.h"
 #include "media/filters/ffmpeg_video_decoder.h"
 #include "media/filters/vpx_video_decoder.h"
+#include "media/renderers/skcanvas_video_renderer.h"
 #include "media/video/picture.h"
 #include "media/video/video_decode_accelerator.h"
 #include "ppapi/c/pp_errors.h"
@@ -896,7 +897,7 @@ bool VideoDecoderShim::Initialize(const Config& vda_config, Client* client) {
 
   media::VideoDecoderConfig video_decoder_config(
       codec, vda_config.profile, media::PIXEL_FORMAT_YV12,
-      media::COLOR_SPACE_UNSPECIFIED, media::VIDEO_ROTATION_0,
+      media::COLOR_SPACE_UNSPECIFIED,
       gfx::Size(32, 24),  // Small sizes that won't fail.
       gfx::Rect(32, 24), gfx::Size(32, 24),
       // TODO(bbudge): Verify extra data isn't needed.

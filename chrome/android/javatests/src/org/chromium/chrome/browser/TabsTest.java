@@ -49,12 +49,10 @@ import org.chromium.chrome.browser.compositor.layouts.eventfilter.ScrollDirectio
 import org.chromium.chrome.browser.compositor.layouts.phone.StackLayout;
 import org.chromium.chrome.browser.compositor.layouts.phone.stack.Stack;
 import org.chromium.chrome.browser.compositor.layouts.phone.stack.StackTab;
-import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
-import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
 import org.chromium.chrome.browser.tabmodel.TabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
@@ -183,7 +181,8 @@ public class TabsTest {
     @CommandLineFlags.Add(ContentSwitches.DISABLE_POPUP_BLOCKING)
     @RetryOnFailure
     public void testSpawnPopupOnBackgroundTab() throws InterruptedException, TimeoutException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.loadUrl(mTestServer.getURL(TEST_FILE_PATH));
         final Tab tab = mActivityTestRule.getActivity().getActivityTab();
 
@@ -206,7 +205,8 @@ public class TabsTest {
     @MediumTest
     @RetryOnFailure
     public void testAlertDialogDoesNotChangeActiveModel() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.newIncognitoTabFromMenu();
         mActivityTestRule.loadUrl(mTestServer.getURL(TEST_FILE_PATH));
         final Tab tab = mActivityTestRule.getActivity().getActivityTab();
@@ -256,7 +256,8 @@ public class TabsTest {
     @Test
     @DisabledTest
     public void testOpenAndCloseNewTabButton() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.startMainActivityWithURL(mTestServer.getURL(TEST_FILE_PATH));
         InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
             String title =
@@ -322,7 +323,8 @@ public class TabsTest {
     @Feature({"Android-TabSwitcher"})
     @RetryOnFailure
     public void testHideKeyboard() throws Exception {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
 
         // Open a new tab(The 1st tab) and click node.
         ChromeTabUtils.fullyLoadUrlInNewTab(InstrumentationRegistry.getInstrumentation(),
@@ -367,7 +369,8 @@ public class TabsTest {
     @Feature({"Android-TabSwitcher"})
     @RetryOnFailure
     public void testHideKeyboardWhenOpeningWindow() throws Exception {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         // Open a new tab and click an editable node.
         ChromeTabUtils.fullyLoadUrlInNewTab(InstrumentationRegistry.getInstrumentation(),
                 mActivityTestRule.getActivity(), mTestServer.getURL(TEST_FILE_PATH), false);
@@ -432,7 +435,8 @@ public class TabsTest {
     @Feature({"Android-TabSwitcher"})
     @RetryOnFailure
     public void testTabSwitcherCollapseSelection() throws Exception {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         ChromeTabUtils.fullyLoadUrlInNewTab(InstrumentationRegistry.getInstrumentation(),
                 mActivityTestRule.getActivity(), mTestServer.getURL(TEST_FILE_PATH), false);
         DOMUtils.longPressNode(
@@ -655,12 +659,13 @@ public class TabsTest {
     @Test
     @FlakyTest
     public void testOpenManyTabsInBursts() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         final int burstSize = 5;
         final String url = mTestServer.getURL(TEST_PAGE_FILE_PATH);
         final int startCount = mActivityTestRule.getActivity().getCurrentTabModel().getCount();
         for (int tabCount = startCount; tabCount < STRESSFUL_TAB_COUNT; tabCount += burstSize)  {
-            loadUrlInManyNewTabs(url, burstSize);
+            mActivityTestRule.loadUrlInManyNewTabs(url, burstSize);
             Assert.assertEquals(tabCount + burstSize,
                     mActivityTestRule.getActivity().getCurrentTabModel().getCount());
         }
@@ -685,10 +690,11 @@ public class TabsTest {
      * tab loads when selected.
      */
     private void openAndVerifyManyTestTabs(final int num) throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         final String url = mTestServer.getURL(TEST_PAGE_FILE_PATH);
         int startCount = mActivityTestRule.getActivity().getCurrentTabModel().getCount();
-        loadUrlInManyNewTabs(url, num);
+        mActivityTestRule.loadUrlInManyNewTabs(url, num);
         Assert.assertEquals(
                 startCount + num, mActivityTestRule.getActivity().getCurrentTabModel().getCount());
     }
@@ -1148,7 +1154,8 @@ public class TabsTest {
     @Feature({"Android-TabSwitcher", "Main"})
     @RetryOnFailure
     public void testCloseTabPortrait() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.startMainActivityWithURL(
                 mTestServer.getURL("/chrome/test/data/android/test.html"));
 
@@ -1177,7 +1184,8 @@ public class TabsTest {
     @Restriction({UiRestriction.RESTRICTION_TYPE_PHONE, RESTRICTION_TYPE_NON_LOW_END_DEVICE})
     @RetryOnFailure
     public void testCloseTabLandscape() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.startMainActivityWithURL(
                 mTestServer.getURL("/chrome/test/data/android/test.html"));
 
@@ -1380,7 +1388,8 @@ public class TabsTest {
     @Feature({"Android-TabSwitcher"})
     @RetryOnFailure
     public void testCloseTabDuringFling() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.loadUrlInNewTab(
                 mTestServer.getURL("/chrome/test/data/android/tabstest/text_page.html"));
         InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
@@ -1401,7 +1410,8 @@ public class TabsTest {
     @Test
     @FlakyTest
     public void testQuickSwitchBetweenTabAndSwitcherMode() throws InterruptedException {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         final String[] urls = {
                 mTestServer.getURL("/chrome/test/data/android/navigate/one.html"),
                 mTestServer.getURL("/chrome/test/data/android/navigate/two.html"),
@@ -1903,7 +1913,8 @@ public class TabsTest {
     //    @MediumTest
     //    @Feature({"Android-TabSwitcher"})
     public void testIncognitoTabsNotRestoredAfterSwipe() throws Exception {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mActivityTestRule.startMainActivityWithURL(mTestServer.getURL(TEST_PAGE_FILE_PATH));
 
         mActivityTestRule.newIncognitoTabFromMenu();
@@ -1939,56 +1950,5 @@ public class TabsTest {
             throws InterruptedException {
         CriteriaHelper.pollInstrumentationThread(
                 Criteria.equals(expected, () -> fileToCheck.exists()));
-    }
-
-    /**
-     * Load a url in multiple new tabs in parallel. Each {@link Tab} will pretend to be
-     * created from a link.
-     *
-     * @param url The url of the page to load.
-     * @param numTabs The number of tabs to open.
-     */
-    private void loadUrlInManyNewTabs(final String url, final int numTabs)
-            throws InterruptedException {
-        final CallbackHelper[] pageLoadedCallbacks = new CallbackHelper[numTabs];
-        final int[] tabIds = new int[numTabs];
-        for (int i = 0; i < numTabs; ++i) {
-            final int index = i;
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    Tab currentTab =
-                            mActivityTestRule.getActivity().getCurrentTabCreator().launchUrl(
-                                    url, TabLaunchType.FROM_LINK);
-                    final CallbackHelper pageLoadCallback = new CallbackHelper();
-                    pageLoadedCallbacks[index] = pageLoadCallback;
-                    currentTab.addObserver(new EmptyTabObserver() {
-                        @Override
-                        public void onPageLoadFinished(Tab tab) {
-                            pageLoadCallback.notifyCalled();
-                            tab.removeObserver(this);
-                        }
-                    });
-                    tabIds[index] = currentTab.getId();
-                }
-            });
-        }
-        //  When opening many tabs some may be frozen due to memory pressure and won't send
-        //  PAGE_LOAD_FINISHED events. Iterate over the newly opened tabs and wait for each to load.
-        for (int i = 0; i < numTabs; ++i) {
-            final TabModel tabModel = mActivityTestRule.getActivity().getCurrentTabModel();
-            final Tab tab = TabModelUtils.getTabById(tabModel, tabIds[i]);
-            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    TabModelUtils.setIndex(tabModel, tabModel.indexOf(tab));
-                }
-            });
-            try {
-                pageLoadedCallbacks[i].waitForCallback(0);
-            } catch (TimeoutException e) {
-                Assert.fail("PAGE_LOAD_FINISHED was not received for tabId=" + tabIds[i]);
-            }
-        }
     }
 }

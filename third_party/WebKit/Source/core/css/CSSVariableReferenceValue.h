@@ -29,7 +29,7 @@ class CSSVariableReferenceValue : public CSSValue {
   }
   String CustomCSSText() const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSVariableReferenceValue(RefPtr<CSSVariableData> data,

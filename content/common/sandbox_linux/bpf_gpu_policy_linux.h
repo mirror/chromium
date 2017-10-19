@@ -5,12 +5,19 @@
 #ifndef CONTENT_COMMON_SANDBOX_LINUX_BPF_GPU_POLICY_LINUX_H_
 #define CONTENT_COMMON_SANDBOX_LINUX_BPF_GPU_POLICY_LINUX_H_
 
-#include <memory>
+#include <string>
+#include <vector>
 
-#include "base/logging.h"
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
-#include "sandbox/linux/syscall_broker/broker_process.h"
+
+namespace sandbox {
+namespace syscall_broker {
+class BrokerFilePermission;
+class BrokerProcess;
+}
+}
 
 namespace content {
 
@@ -22,14 +29,22 @@ class GpuProcessPolicy : public SandboxBPFBasePolicy {
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
 
-  sandbox::syscall_broker::BrokerProcess* broker_process() const {
-    return broker_process_;
-  }
+  bool PreSandboxHook() override;
 
-  void set_broker_process(
-      std::unique_ptr<sandbox::syscall_broker::BrokerProcess> broker_process) {
-    DCHECK(!broker_process_);
-    broker_process_ = broker_process.release();
+ protected:
+  // Start a broker process to handle open() inside the sandbox.
+  // |broker_sandboxer_allocator| is a function pointer which can allocate a
+  // suitable sandbox policy for the broker process itself.
+  // |permissions_extra| is a list of file permissions
+  // that should be whitelisted by the broker process, in addition to
+  // the basic ones.
+  void InitGpuBrokerProcess(
+      sandbox::bpf_dsl::Policy* (*broker_sandboxer_allocator)(void),
+      const std::vector<sandbox::syscall_broker::BrokerFilePermission>&
+          permissions_extra);
+
+  sandbox::syscall_broker::BrokerProcess* broker_process() {
+    return broker_process_;
   }
 
  private:
@@ -38,21 +53,11 @@ class GpuProcessPolicy : public SandboxBPFBasePolicy {
   // this runs from a SIGSYS handler triggered by the seccomp-bpf sandbox.
   // This should never be destroyed, as after the sandbox is started it is
   // vital to the process.
-  sandbox::syscall_broker::BrokerProcess* broker_process_;  // Leaked as global.
+  // This is allocated by InitGpuBrokerProcess, called from PreSandboxHook(),
+  // which executes iff the sandbox is going to be enabled afterwards.
+  sandbox::syscall_broker::BrokerProcess* broker_process_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuProcessPolicy);
-};
-
-class GpuBrokerProcessPolicy : public GpuProcessPolicy {
- public:
-  GpuBrokerProcessPolicy();
-  ~GpuBrokerProcessPolicy() override;
-
-  sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
-      int system_call_number) const override;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(GpuBrokerProcessPolicy);
 };
 
 }  // namespace content

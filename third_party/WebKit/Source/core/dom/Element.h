@@ -801,7 +801,7 @@ class CORE_EXPORT Element : public ContainerNode {
       const char element[],
       const AttributeModificationParams&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 

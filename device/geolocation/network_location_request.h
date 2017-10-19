@@ -19,8 +19,6 @@
 namespace net {
 class URLFetcher;
 class URLRequestContextGetter;
-
-struct PartialNetworkTrafficAnnotationTag;
 }
 
 namespace device {
@@ -48,10 +46,7 @@ class NetworkLocationRequest : private net::URLFetcherDelegate {
 
   // Makes a new request. Returns true if the new request was successfully
   // started. In all cases, any currently pending request will be canceled.
-  bool MakeRequest(const WifiData& wifi_data,
-                   const base::Time& wifi_timestamp,
-                   const net::PartialNetworkTrafficAnnotationTag&
-                       partial_traffic_annotation);
+  bool MakeRequest(const WifiData& wifi_data, const base::Time& wifi_timestamp);
 
   bool is_request_pending() const { return url_fetcher_ != NULL; }
 

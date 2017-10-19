@@ -71,12 +71,6 @@ const base::FilePath kClangLibraryPath =
         .Append(FILE_PATH_LITERAL("lib"))
         .Append(FILE_PATH_LITERAL("clang"));
 
-const base::FilePath kRunToolScript =
-    base::FilePath(FILE_PATH_LITERAL("tools"))
-        .Append(FILE_PATH_LITERAL("clang"))
-        .Append(FILE_PATH_LITERAL("scripts"))
-        .Append(FILE_PATH_LITERAL("run_tool.py"));
-
 }  // namespace
 
 TrafficAnnotationAuditor::TrafficAnnotationAuditor(
@@ -121,7 +115,7 @@ bool TrafficAnnotationAuditor::RunClangTool(
   }
   FILE* options_file = base::OpenFile(options_filepath, "wt");
   if (!options_file) {
-    LOG(ERROR) << "Could not open temporary options file.";
+    LOG(ERROR) << "Could not create temporary options file.";
     return false;
   }
 
@@ -163,7 +157,6 @@ bool TrafficAnnotationAuditor::RunClangTool(
     if (!file_paths.size()) {
       base::CloseFile(options_file);
       base::DeleteFile(options_filepath, false);
-      LOG(ERROR) << "No file is specified for annotation tests.";
       return false;
     }
     for (const auto& file_path : file_paths)
@@ -171,8 +164,8 @@ bool TrafficAnnotationAuditor::RunClangTool(
   }
   base::CloseFile(options_file);
 
-  base::CommandLine cmdline(
-      base::MakeAbsoluteFilePath(source_path_.Append(kRunToolScript)));
+  base::CommandLine cmdline(source_path_.Append(
+      FILE_PATH_LITERAL("tools/clang/scripts/run_tool.py")));
 
 #if defined(OS_WIN)
   cmdline.PrependWrapper(L"python");
@@ -181,34 +174,9 @@ bool TrafficAnnotationAuditor::RunClangTool(
   cmdline.AppendArg(base::StringPrintf(
       "--options-file=%s", options_filepath.MaybeAsASCII().c_str()));
 
-  // Change current folder to source before running run_tool.py as it expects to
-  // be run from there.
-  base::FilePath original_path;
-  base::GetCurrentDirectory(&original_path);
-  base::SetCurrentDirectory(source_path_);
+  // Run, and clean after.
   bool result = base::GetAppOutput(cmdline, &clang_tool_raw_output_);
 
-  if (!result) {
-    std::string tool_errors;
-    std::string options_file_text;
-
-    base::GetAppOutputAndError(cmdline, &tool_errors);
-    if (!base::ReadFileToString(options_filepath, &options_file_text))
-      options_file_text = "Could not read options file.";
-
-    LOG(ERROR) << base::StringPrintf(
-        "Calling clang tool from %s returned false.\nCommand line: %s\n\n"
-        "Returned error text: %s\n\nPartial options file: %s\n",
-        source_path_.MaybeAsASCII().c_str(),
-#if defined(OS_WIN)
-        base::UTF16ToASCII(cmdline.GetCommandLineString()).c_str(),
-#else
-        cmdline.GetCommandLineString().c_str(),
-#endif
-        tool_errors.c_str(), options_file_text.substr(0, 1024).c_str());
-  }
-
-  base::SetCurrentDirectory(original_path);
   base::DeleteFile(options_filepath, false);
 
   return result;

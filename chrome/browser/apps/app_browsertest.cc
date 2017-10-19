@@ -603,7 +603,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
 // a handler accepts "".
 IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
                        LaunchWithFileEmptyExtension) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath test_file;
@@ -618,7 +618,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
 // a handler accepts *.
 IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
                        LaunchWithFileEmptyExtensionAcceptAny) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath test_file;
@@ -727,7 +727,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest, GetDisplayPath) {
 // Tests that the file is created if the file does not exist and the app has the
 // fileSystem.write permission.
 IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest, LaunchNewFile) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   ASSERT_TRUE(RunPlatformAppTestWithFile(
@@ -1223,15 +1223,7 @@ class PlatformAppIncognitoBrowserTest : public PlatformAppBrowserTest,
   std::set<std::string> opener_app_ids_;
 };
 
-// Seen to fail repeatedly on CrOS; crbug.com/774011.
-#ifndef OS_CHROMEOS
-#define MAYBE_IncognitoComponentApp IncognitoComponentApp
-#else
-#define MAYBE_IncognitoComponentApp DISABLED_IncognitoComponentApp
-#endif
-
-IN_PROC_BROWSER_TEST_F(PlatformAppIncognitoBrowserTest,
-                       MAYBE_IncognitoComponentApp) {
+IN_PROC_BROWSER_TEST_F(PlatformAppIncognitoBrowserTest, IncognitoComponentApp) {
   // Get the file manager app.
   const Extension* file_manager = extension_service()->GetExtensionById(
       "hhaomjibdihmijegdhdafkllkbggdgoj", false);

@@ -439,11 +439,11 @@ class RenderTextTest : public testing::Test,
   std::unique_ptr<RenderText> CreateRenderTextInstance() const {
     switch (GetParam()) {
       case RENDER_TEXT_HARFBUZZ:
-        return std::make_unique<RenderTextHarfBuzz>();
+        return base::MakeUnique<RenderTextHarfBuzz>();
 
       case RENDER_TEXT_MAC:
 #if defined(OS_MACOSX)
-        return std::make_unique<RenderTextMac>();
+        return base::MakeUnique<RenderTextMac>();
 #else
         break;
 #endif
@@ -2258,120 +2258,6 @@ TEST_P(RenderTextHarfBuzzTest, MoveLeftRightByWordInChineseText) {
   EXPECT_EQ(6U, render_text->cursor_position());
   render_text->MoveCursor(WORD_BREAK, CURSOR_RIGHT, SELECTION_NONE);
   EXPECT_EQ(6U, render_text->cursor_position());
-}
-
-// Test the correct behavior of undirected selections: selections where the
-// "end" of the selection that holds the cursor is only determined after the
-// first cursor movement.
-TEST_P(RenderTextHarfBuzzTest, DirectedSelections) {
-  RenderText* render_text = GetRenderText();
-
-  auto ResultAfter = [&](VisualCursorDirection direction) -> base::string16 {
-    render_text->MoveCursor(CHARACTER_BREAK, direction, SELECTION_RETAIN);
-    return GetSelectedText(render_text);
-  };
-
-  render_text->SetText(UTF8ToUTF16("01234"));
-
-  // Test Right, then Left. LTR.
-  // Undirected, or forward when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({2, 4});
-  EXPECT_EQ(UTF8ToUTF16("23"), GetSelectedText(render_text));
-  EXPECT_EQ(UTF8ToUTF16("234"), ResultAfter(CURSOR_RIGHT));
-  EXPECT_EQ(UTF8ToUTF16("23"), ResultAfter(CURSOR_LEFT));
-
-  // Test collapsing the selection. This always ignores any existing direction.
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
-  EXPECT_EQ(Range(2, 2), render_text->selection());  // Collapse left.
-
-  // Undirected, or backward when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({4, 2});
-  EXPECT_EQ(UTF8ToUTF16("23"), GetSelectedText(render_text));
-  if (RenderText::kSelectionIsAlwaysDirected)
-    EXPECT_EQ(UTF8ToUTF16("3"), ResultAfter(CURSOR_RIGHT));  // Keep left.
-  else
-    EXPECT_EQ(UTF8ToUTF16("234"), ResultAfter(CURSOR_RIGHT));  // Pick right.
-  EXPECT_EQ(UTF8ToUTF16("23"), ResultAfter(CURSOR_LEFT));
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
-  EXPECT_EQ(Range(2, 2), render_text->selection());  // Collapse left.
-
-  // Test Left, then Right. LTR.
-  // Undirected, or forward when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({2, 4});
-  EXPECT_EQ(UTF8ToUTF16("23"), GetSelectedText(render_text));  // Sanity check,
-
-  if (RenderText::kSelectionIsAlwaysDirected)
-    EXPECT_EQ(UTF8ToUTF16("2"), ResultAfter(CURSOR_LEFT));  // Keep right.
-  else
-    EXPECT_EQ(UTF8ToUTF16("123"), ResultAfter(CURSOR_LEFT));  // Pick left.
-  EXPECT_EQ(UTF8ToUTF16("23"), ResultAfter(CURSOR_RIGHT));
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
-  EXPECT_EQ(Range(4, 4), render_text->selection());  // Collapse right.
-
-  // Undirected, or backward when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({4, 2});
-  EXPECT_EQ(UTF8ToUTF16("23"), GetSelectedText(render_text));
-  EXPECT_EQ(UTF8ToUTF16("123"), ResultAfter(CURSOR_LEFT));
-  EXPECT_EQ(UTF8ToUTF16("23"), ResultAfter(CURSOR_RIGHT));
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
-  EXPECT_EQ(Range(4, 4), render_text->selection());  // Collapse right.
-
-  auto ToHebrew = [](const char* digits) -> base::string16 {
-    const base::string16 hebrew = UTF8ToUTF16("אבגדח");  // Roughly "abcde".
-    DCHECK_EQ(5u, hebrew.size());
-    base::string16 result;
-    for (const char* d = digits; *d; d++)
-      result += hebrew[*d - '0'];
-    return result;
-  };
-  render_text->SetText(ToHebrew("01234"));
-
-  // Test Left, then Right. RTL.
-  // Undirected, or forward (to the left) when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({2, 4});
-  EXPECT_EQ(ToHebrew("23"), GetSelectedText(render_text));
-  EXPECT_EQ(ToHebrew("234"), ResultAfter(CURSOR_LEFT));
-  EXPECT_EQ(ToHebrew("23"), ResultAfter(CURSOR_RIGHT));
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
-  EXPECT_EQ(Range(4, 4), render_text->selection());  // Collapse left.
-
-  // Undirected, or backward (to the right) when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({4, 2});
-  EXPECT_EQ(ToHebrew("23"), GetSelectedText(render_text));
-  if (RenderText::kSelectionIsAlwaysDirected)
-    EXPECT_EQ(ToHebrew("3"), ResultAfter(CURSOR_LEFT));  // Keep right.
-  else
-    EXPECT_EQ(ToHebrew("234"), ResultAfter(CURSOR_LEFT));  // Pick left.
-  EXPECT_EQ(ToHebrew("23"), ResultAfter(CURSOR_RIGHT));
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_NONE);
-  EXPECT_EQ(Range(4, 4), render_text->selection());  // Collapse left.
-
-  // Test Right, then Left. RTL.
-  // Undirected, or forward (to the left) when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({2, 4});
-  EXPECT_EQ(ToHebrew("23"), GetSelectedText(render_text));
-  if (RenderText::kSelectionIsAlwaysDirected)
-    EXPECT_EQ(ToHebrew("2"), ResultAfter(CURSOR_RIGHT));  // Keep left.
-  else
-    EXPECT_EQ(ToHebrew("123"), ResultAfter(CURSOR_RIGHT));  // Pick right.
-  EXPECT_EQ(ToHebrew("23"), ResultAfter(CURSOR_LEFT));
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
-  EXPECT_EQ(Range(2, 2), render_text->selection());  // Collapse right.
-
-  // Undirected, or backward (to the right) when kSelectionIsAlwaysDirected.
-  render_text->SelectRange({4, 2});
-  EXPECT_EQ(ToHebrew("23"), GetSelectedText(render_text));
-  EXPECT_EQ(ToHebrew("123"), ResultAfter(CURSOR_RIGHT));
-  EXPECT_EQ(ToHebrew("23"), ResultAfter(CURSOR_LEFT));
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
-  EXPECT_EQ(Range(2, 2), render_text->selection());  // Collapse right.
 }
 
 TEST_P(RenderTextTest, StringSizeSanity) {
@@ -4815,49 +4701,6 @@ TEST_P(RenderTextHarfBuzzTest, BaselineWithLineHeight) {
   EXPECT_EQ(font_height + kDelta, current_selection_bounds.height());
   EXPECT_EQ(normal_selection_bounds.width(), current_selection_bounds.width());
   EXPECT_EQ(gfx::Vector2d(), current_selection_bounds.OffsetFromOrigin());
-}
-
-TEST_P(RenderTextHarfBuzzTest, TeluguGraphemeBoundaries) {
-  RenderText* render_text = GetRenderText();
-  render_text->SetDisplayRect(Rect(50, 1000));
-  // This is first syllable of the Telugu word for "New" in Chrome. It's a
-  // string of 4 UTF-8 characters: [క,్,ర,ొ]. When typeset with a supporting
-  // font, the second and fourth characters become diacritical marks for the
-  // first and third characters to form two graphemes. Then, these graphemes
-  // combine into a ligature "cluster". But, unlike ligatures in English (e.g.
-  // the "ffl" in "waffle"), this Telugu ligature is laid out vertically, with
-  // both graphemes occupying the same horizontal space.
-  render_text->SetText(UTF8ToUTF16("క్రొ"));
-
-  const int whole_width = render_text->GetStringSize().width();
-  const int half_width = whole_width / 2;
-  // Sanity check. A typical width is 8 pixels. Anything less than 6 could screw
-  // up the checks below with rounding.
-  EXPECT_LE(6, whole_width);
-
-  // Go to the end and perform Shift+Left. The selection should jump to a
-  // grapheme boundary and enclose the second grapheme in the ligature.
-  render_text->SetCursorPosition(4);
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_RETAIN);
-  EXPECT_EQ(Range(4, 2), render_text->selection());
-  test_api()->EnsureLayout();
-
-  // The selection should start before the string end, and cover about half the
-  // width. Note this requires the RenderText implementation to return a
-  // sensible selection bounds for the diacritical at the end of the ligature.
-  Rect selection_bounds = GetSelectionBoundsUnion();
-  // The selection width rounds up, and half_width may already be rounded down.
-  EXPECT_GE(1, selection_bounds.width() - half_width);
-  EXPECT_GE(1, selection_bounds.x() - half_width);
-
-  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_LEFT, SELECTION_RETAIN);
-  EXPECT_EQ(Range(4, 0), render_text->selection());
-  test_api()->EnsureLayout();
-
-  // The selection should cover the entire width.
-  selection_bounds = GetSelectionBoundsUnion();
-  EXPECT_EQ(0, selection_bounds.x());
-  EXPECT_EQ(whole_width, selection_bounds.width());
 }
 
 // Prefix for test instantiations intentionally left blank since each test

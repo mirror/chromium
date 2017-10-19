@@ -34,8 +34,6 @@ const base::Feature kAutofillScanCardholderName{
     "AutofillScanCardholderName", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardBankNameDisplay{
     "AutofillCreditCardBankNameDisplay", base::FEATURE_DISABLED_BY_DEFAULT};
-const base::Feature kAutofillCreditCardAblationExperiment{
-    "AutofillCreditCardAblationExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardPopupLayout{
     "AutofillCreditCardPopupLayout", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardLastUsedDateDisplay{
@@ -50,8 +48,6 @@ const base::Feature kAutofillOfferLocalSaveIfServerCardManuallyEntered{
 const base::Feature kAutofillRationalizeFieldTypePredictions{
     "AutofillRationalizeFieldTypePredictions",
     base::FEATURE_ENABLED_BY_DEFAULT};
-const base::Feature kAutofillSendBillingCustomerNumber{
-    "AutofillSendBillingCustomerNumber", base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kAutofillSuppressDisusedAddresses{
     "AutofillSuppressDisusedAddresses", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillSuppressDisusedCreditCards{
@@ -274,10 +270,6 @@ bool IsCreditCardUploadEnabled(const PrefService* pref_service,
 bool IsAutofillOfferLocalSaveIfServerCardManuallyEnteredExperimentEnabled() {
   return base::FeatureList::IsEnabled(
       kAutofillOfferLocalSaveIfServerCardManuallyEntered);
-}
-
-bool IsAutofillSendBillingCustomerNumberExperimentEnabled() {
-  return base::FeatureList::IsEnabled(kAutofillSendBillingCustomerNumber);
 }
 
 bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled() {

@@ -84,12 +84,21 @@ bool PasswordGenerationManager::IsGenerationEnabled() const {
     return false;
   }
 
-  if (client_->GetPasswordSyncState() != NOT_SYNCING_PASSWORDS)
-    return true;
-  if (logger)
-    logger->LogMessage(Logger::STRING_GENERATION_DISABLED_NO_SYNC);
+  // Don't consider sync enabled if the user has a custom passphrase. See
+  // http://crbug.com/358998 for more details.
+  if (client_->GetPasswordSyncState() != SYNCING_NORMAL_ENCRYPTION) {
+    if (logger) {
+      if (client_->GetPasswordSyncState() == NOT_SYNCING_PASSWORDS)
+        logger->LogMessage(Logger::STRING_GENERATION_DISABLED_NO_SYNC);
+      else if (client_->GetPasswordSyncState() ==
+               SYNCING_WITH_CUSTOM_PASSPHRASE)
+        logger->LogMessage(
+            Logger::STRING_GENERATION_DISABLED_CUSTOM_PASSPHRASE);
+    }
+    return false;
+  }
 
-  return false;
+  return true;
 }
 
 void PasswordGenerationManager::CheckIfFormClassifierShouldRun() {

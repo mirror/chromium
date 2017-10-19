@@ -195,10 +195,6 @@ class WebGLConformanceExpectations(GpuTestExpectations):
     # Win / AMD / Passthrough command decoder / D3D11
     self.Flaky('conformance/textures/misc/copytexsubimage2d-subrects.html',
         ['win', 'amd', 'passthrough', 'd3d11'], bug=685232)
-    self.Flaky('conformance/textures/misc/texture-sub-image-cube-maps.html',
-        ['win7', 'amd', 'passthrough', 'd3d11', 'debug'], bug=772037)
-    self.Flaky('conformance/extensions/oes-texture-half-float.html',
-        ['win7', 'amd', 'passthrough', 'd3d11', 'release'], bug=772037)
 
     # Win / NVIDIA / Passthrough command decoder / D3D11
     self.Flaky('conformance/extensions/oes-texture-half-float-with-video.html',
@@ -420,8 +416,6 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         ['mac', ('nvidia', 0xfe9), 'no_passthrough'], bug=635081)
     self.Fail('conformance/textures/misc/tex-input-validation.html',
         ['mac', ('nvidia', 0xfe9)], bug=635081)
-    self.Fail('conformance/canvas/drawingbuffer-static-canvas-test.html',
-        ['highsierra', ('nvidia', 0xfe9)], bug=775202)
 
     # Linux failures
     self.Fail('conformance/extensions/webgl-compressed-texture-astc.html',

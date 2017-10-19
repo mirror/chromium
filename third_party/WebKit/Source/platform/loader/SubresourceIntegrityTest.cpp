@@ -14,7 +14,7 @@
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/testing/CryptoTestingPlatformSupport.h"
 #include "platform/loader/testing/MockFetchContext.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/RefPtr.h"
@@ -82,8 +82,8 @@ static const char kUnsupportedHashFunctionIntegrity[] =
 class SubresourceIntegrityTest : public ::testing::Test {
  public:
   SubresourceIntegrityTest()
-      : sec_url("https://example.test:443"),
-        insec_url("http://example.test:80") {}
+      : sec_url(kParsedURLString, "https://example.test:443"),
+        insec_url(kParsedURLString, "http://example.test:80") {}
 
  protected:
   virtual void SetUp() {
@@ -326,11 +326,9 @@ TEST_F(SubresourceIntegrityTest, ParseAlgorithm) {
   ExpectAlgorithm("sha-384-", IntegrityAlgorithm::kSha384);
   ExpectAlgorithm("sha-512-", IntegrityAlgorithm::kSha512);
 
-  {
-    ScopedSignatureBasedIntegrityForTest signature_based_integrity(true);
-    ExpectAlgorithm("ed25519-", IntegrityAlgorithm::kEd25519);
-  }
-  ScopedSignatureBasedIntegrityForTest signature_based_integrity(false);
+  RuntimeEnabledFeatures::SetSignatureBasedIntegrityEnabled(true);
+  ExpectAlgorithm("ed25519-", IntegrityAlgorithm::kEd25519);
+  RuntimeEnabledFeatures::SetSignatureBasedIntegrityEnabled(false);
   ExpectAlgorithmFailure("ed25519-", SubresourceIntegrity::kAlgorithmUnknown);
 
   ExpectAlgorithmFailure("sha1-", SubresourceIntegrity::kAlgorithmUnknown);
@@ -445,8 +443,8 @@ TEST_F(SubresourceIntegrityTest, Parsing) {
       "07yMK81ytlg0MPaIrPAjcHqba5csorDWtKg==",
       IntegrityAlgorithm::kSha512);
 
-  ExpectParseMultipleHashes("", nullptr, 0);
-  ExpectParseMultipleHashes("    ", nullptr, 0);
+  ExpectParseMultipleHashes("", 0, 0);
+  ExpectParseMultipleHashes("    ", 0, 0);
 
   const IntegrityMetadata valid_sha384_and_sha512[] = {
       IntegrityMetadata(
@@ -518,14 +516,12 @@ TEST_F(SubresourceIntegrityTest, Parsing) {
               "BpfBw7ivV8q2jLiT13fxDYAe2tJllusRSZ273h2nFSE=",
               IntegrityAlgorithm::kSha256);
 
-  {
-    ScopedSignatureBasedIntegrityForTest signature_based_integrity(false);
-    ExpectEmptyParseResult("ed25519-xxxx");
-    ExpectEmptyParseResult(
-        "ed25519-qGFmwTxlocg707D1cX4w60iTwtfwbMLf8ITDyfko7s0=");
-  }
+  RuntimeEnabledFeatures::SetSignatureBasedIntegrityEnabled(false);
+  ExpectEmptyParseResult("ed25519-xxxx");
+  ExpectEmptyParseResult(
+      "ed25519-qGFmwTxlocg707D1cX4w60iTwtfwbMLf8ITDyfko7s0=");
 
-  ScopedSignatureBasedIntegrityForTest signature_based_integrity(true);
+  RuntimeEnabledFeatures::SetSignatureBasedIntegrityEnabled(true);
   ExpectParse("ed25519-xxxx", "xxxx", IntegrityAlgorithm::kEd25519);
   ExpectParse("ed25519-qGFmwTxlocg707D1cX4w60iTwtfwbMLf8ITDyfko7s0=",
               "qGFmwTxlocg707D1cX4w60iTwtfwbMLf8ITDyfko7s0=",

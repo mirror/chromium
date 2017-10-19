@@ -46,16 +46,17 @@ const char kNotificationActionPlaceholder[] = "Placeholder...";
 const unsigned kNotificationVibrationUnnormalized[] = {10, 1000000, 50, 42};
 const int kNotificationVibrationNormalized[] = {10, 10000, 50};
 
-// Execution context that implements the CompleteURL method to complete
+// Execution context that implements the VirtualCompleteURL method to complete
 // URLs that are assumed to be relative against a given base URL.
 class CompleteUrlExecutionContext final : public NullExecutionContext {
  public:
-  explicit CompleteUrlExecutionContext(const String& base) : base_(base) {}
+  explicit CompleteUrlExecutionContext(const String& base)
+      : base_(kParsedURLString, base) {}
 
  protected:
   ~CompleteUrlExecutionContext() final = default;
 
-  KURL CompleteURL(const String& url) const override {
+  KURL VirtualCompleteURL(const String& url) const override {
     return KURL(base_, url);
   }
 
@@ -125,7 +126,7 @@ TEST_F(NotificationDataTest, ReflectProperties) {
   EXPECT_EQ(kNotificationBody, notification_data.body);
   EXPECT_EQ(kNotificationTag, notification_data.tag);
 
-  KURL base(kNotificationBaseUrl);
+  KURL base(kParsedURLString, kNotificationBaseUrl);
 
   // URLs should be resolved against the base URL of the execution context.
   EXPECT_EQ(WebURL(KURL(base, kNotificationImage)), notification_data.image);

@@ -4,8 +4,6 @@
 
 package org.chromium.android_webview.test;
 
-import android.support.test.InstrumentationRegistry;
-
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
@@ -86,7 +84,7 @@ public class WebViewFindApisTestRule extends AwActivityTestRule {
                 mContents.findAllAsync(searchString);
             }
         };
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(future);
+        getInstrumentation().runOnMainSync(future);
         return future.get(10, TimeUnit.SECONDS);
     }
 
@@ -109,7 +107,7 @@ public class WebViewFindApisTestRule extends AwActivityTestRule {
                 mContents.findNext(forwards);
             }
         };
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(future);
+        getInstrumentation().runOnMainSync(future);
         return future.get(10, TimeUnit.SECONDS);
     }
 
@@ -119,7 +117,7 @@ public class WebViewFindApisTestRule extends AwActivityTestRule {
      * @throws Throwable
      */
     public void clearMatchesOnUiThread() throws Throwable {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> mContents.clearMatches());
+        getInstrumentation().runOnMainSync(() -> mContents.clearMatches());
     }
 
     // Similar to java.util.concurrent.Future, but without the ability to cancel.

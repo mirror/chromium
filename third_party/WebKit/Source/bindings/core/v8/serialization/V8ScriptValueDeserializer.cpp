@@ -268,8 +268,6 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
     case kImageBitmapTag: {
       SerializedColorSpace canvas_color_space = SerializedColorSpace::kLegacy;
       SerializedPixelFormat canvas_pixel_format = SerializedPixelFormat::kRGBA8;
-      SerializedOpacityMode canvas_opacity_mode =
-          SerializedOpacityMode::kOpaque;
       uint32_t origin_clean = 0, is_premultiplied = 0, width = 0, height = 0,
                byte_length = 0;
       const void* pixels = nullptr;
@@ -292,15 +290,11 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
               if (!ReadUint32Enum<SerializedPixelFormat>(&canvas_pixel_format))
                 return nullptr;
               break;
-            case ImageSerializationTag::kCanvasOpacityModeTag:
-              if (!ReadUint32Enum<SerializedOpacityMode>(&canvas_opacity_mode))
-                return nullptr;
-              break;
-            case ImageSerializationTag::kOriginCleanTag:
+            case ImageSerializationTag::kOriginClean:
               if (!ReadUint32(&origin_clean) || origin_clean > 1)
                 return nullptr;
               break;
-            case ImageSerializationTag::kIsPremultipliedTag:
+            case ImageSerializationTag::kIsPremultiplied:
               if (!ReadUint32(&is_premultiplied) || is_premultiplied > 1)
                 return nullptr;
               break;
@@ -317,7 +311,6 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
         return nullptr;
       CanvasColorParams color_params =
           SerializedColorParams(canvas_color_space, canvas_pixel_format,
-                                canvas_opacity_mode,
                                 SerializedImageDataStorageFormat::kUint8Clamped)
               .GetCanvasColorParams();
       CheckedNumeric<uint32_t> computed_byte_length = width;
@@ -371,9 +364,9 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
       if (!ReadUint32(&width) || !ReadUint32(&height) ||
           !ReadUint32(&byte_length) || !ReadRawBytes(byte_length, &pixels))
         return nullptr;
-      SerializedColorParams color_params(
-          canvas_color_space, SerializedPixelFormat::kRGBA8,
-          SerializedOpacityMode::kNonOpaque, image_data_storage_format);
+      SerializedColorParams color_params(canvas_color_space,
+                                         SerializedPixelFormat::kRGBA8,
+                                         image_data_storage_format);
       ImageDataStorageFormat storage_format = color_params.GetStorageFormat();
       CheckedNumeric<uint32_t> computed_byte_length = width;
       computed_byte_length *= height;

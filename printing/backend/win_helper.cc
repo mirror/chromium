@@ -5,7 +5,6 @@
 #include "printing/backend/win_helper.h"
 
 #include <stddef.h>
-#include <wrl/client.h>
 
 #include <algorithm>
 #include <memory>
@@ -19,6 +18,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/windows_version.h"
 #include "printing/backend/print_backend.h"
 #include "printing/backend/print_backend_consts.h"
@@ -404,7 +404,7 @@ std::unique_ptr<DEVMODE, base::FreeDeleter> XpsTicketToDevMode(
   if (!printer.OpenPrinter(printer_name.c_str()))
     return dev_mode;
 
-  Microsoft::WRL::ComPtr<IStream> pt_stream;
+  base::win::ScopedComPtr<IStream> pt_stream;
   HRESULT hr = StreamFromPrintTicket(print_ticket, pt_stream.GetAddressOf());
   if (FAILED(hr))
     return dev_mode;

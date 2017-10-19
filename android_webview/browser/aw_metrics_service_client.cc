@@ -6,6 +6,7 @@
 
 #include "android_webview/browser/aw_metrics_log_uploader.h"
 #include "android_webview/common/aw_switches.h"
+#include "android_webview/common/aw_version_info_values.h"
 #include "android_webview/jni/AwMetricsServiceClient_jni.h"
 #include "base/android/build_info.h"
 #include "base/android/jni_string.h"
@@ -251,7 +252,7 @@ metrics::SystemProfileProto::Channel AwMetricsServiceClient::GetChannel() {
 }
 
 std::string AwMetricsServiceClient::GetVersionString() {
-  return version_info::GetVersionNumber();
+  return PRODUCT_VERSION;
 }
 
 void AwMetricsServiceClient::CollectFinalMetricsForLog(

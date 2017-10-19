@@ -47,7 +47,7 @@ const AtomicString& MediaKeyMessageEvent::InterfaceName() const {
   return EventNames::MediaKeyMessageEvent;
 }
 
-void MediaKeyMessageEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaKeyMessageEvent) {
   visitor->Trace(message_);
   Event::Trace(visitor);
 }

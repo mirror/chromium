@@ -84,7 +84,6 @@ HeadlessBrowserContextImpl::HeadlessBrowserContextImpl(
     : browser_(browser),
       context_options_(std::move(context_options)),
       resource_context_(new HeadlessResourceContext),
-      should_remove_headers_(true),
       permission_manager_(new HeadlessPermissionManager()),
       id_(base::GenerateGUID()) {
   InitWhileIOAllowed();
@@ -358,14 +357,6 @@ const HeadlessBrowserContextOptions* HeadlessBrowserContextImpl::options()
   return context_options_.get();
 }
 
-void HeadlessBrowserContextImpl::SetRemoveHeaders(bool should_remove_headers) {
-  should_remove_headers_ = should_remove_headers;
-}
-
-bool HeadlessBrowserContextImpl::ShouldRemoveHeaders() const {
-  return should_remove_headers_;
-}
-
 const std::string& HeadlessBrowserContextImpl::Id() const {
   return id_;
 }
@@ -472,12 +463,6 @@ HeadlessBrowserContext::Builder::SetUserDataDir(
 HeadlessBrowserContext::Builder&
 HeadlessBrowserContext::Builder::SetIncognitoMode(bool incognito_mode) {
   options_->incognito_mode_ = incognito_mode;
-  return *this;
-}
-
-HeadlessBrowserContext::Builder&
-HeadlessBrowserContext::Builder::SetAllowCookies(bool allow_cookies) {
-  options_->allow_cookies_ = allow_cookies;
   return *this;
 }
 

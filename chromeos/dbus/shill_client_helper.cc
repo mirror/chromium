@@ -96,7 +96,8 @@ void OnStringMethodWithErrorCallback(
 void OnVoidMethod(ShillClientHelper::RefHolder* ref_holder,
                   VoidDBusMethodCallback callback,
                   dbus::Response* response) {
-  std::move(callback).Run(response != nullptr);
+  std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
+                                   : DBUS_METHOD_CALL_FAILURE);
 }
 
 // Handles responses for methods with ObjectPath results and no status.

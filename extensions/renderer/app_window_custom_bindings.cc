@@ -48,8 +48,8 @@ void AppWindowCustomBindings::GetFrame(
     return;
 
   if (notify_browser) {
-    app_frame->Send(
-        new ExtensionHostMsg_AppWindowReady(app_frame->GetRoutingID()));
+    content::RenderThread::Get()->Send(new ExtensionHostMsg_AppWindowReady(
+        app_frame->GetRenderView()->GetRoutingID()));
   }
 
   v8::Local<v8::Value> window =

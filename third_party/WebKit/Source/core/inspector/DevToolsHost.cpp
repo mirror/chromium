@@ -49,8 +49,8 @@
 #include "platform/ContextMenu.h"
 #include "platform/ContextMenuItem.h"
 #include "platform/PlatformChromeClient.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/SharedBuffer.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -71,7 +71,7 @@ class FrontendMenuProvider final : public ContextMenuProvider {
     DCHECK(!devtools_host_);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(devtools_host_);
     ContextMenuProvider::Trace(visitor);
   }
@@ -119,7 +119,7 @@ DevToolsHost::~DevToolsHost() {
   DCHECK(!client_);
 }
 
-void DevToolsHost::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DevToolsHost) {
   visitor->Trace(frontend_frame_);
   visitor->Trace(menu_provider_);
 }
@@ -145,7 +145,7 @@ void DevToolsHost::EvaluateScript(const String& expression) {
 }
 
 void DevToolsHost::DisconnectClient() {
-  client_ = nullptr;
+  client_ = 0;
   if (menu_provider_) {
     menu_provider_->Disconnect();
     menu_provider_ = nullptr;

@@ -30,7 +30,7 @@ cr.define('bluetooth_internals', function() {
   /** @type {devices_page.DevicesPage} */
   var devicesPage = null;
 
-  /** @type {bluetooth.mojom.DiscoverySession.ptrClass} */
+  /** @type {interfaces.BluetoothAdapter.DiscoverySession.ptrClass} */
   var discoverySession = null;
 
   /** @type {boolean} */
@@ -87,7 +87,7 @@ cr.define('bluetooth_internals', function() {
    * '#page-container', and adds a sidebar item to show the new page. If a
    * page exists that matches |deviceInfo.address|, nothing is created and the
    * existing page is returned.
-   * @param {!bluetooth.mojom.Device} deviceInfo
+   * @param {!interfaces.BluetoothDevice.Device} deviceInfo
    * @return {!device_details_page.DeviceDetailsPage}
    */
   function makeDeviceDetailsPage(deviceInfo) {
@@ -125,7 +125,7 @@ cr.define('bluetooth_internals', function() {
 
     sidebarObj.addItem({
       pageName: deviceDetailsPageId,
-      text: deviceInfo.nameForDisplay,
+      text: deviceInfo.name_for_display,
     });
 
     deviceDetailsPage.connect();
@@ -275,13 +275,9 @@ cr.define('bluetooth_internals', function() {
   }
 
   function initializeViews() {
-    // window.setupFn() provides a hook for the test suite to perform setup
-    // actions after the page is loaded but before any script is run.
-    window.setupFn()
-        .then(function() {
-          setupPages();
-          return adapter_broker.getAdapterBroker();
-        })
+    setupPages();
+
+    adapter_broker.getAdapterBroker()
         .then(function(broker) {
           adapterBroker = broker;
         })
@@ -303,10 +299,6 @@ cr.define('bluetooth_internals', function() {
     initializeViews: initializeViews,
   };
 });
-
-window.setupFn = window.setupFn || function() {
-  return Promise.resolve();
-};
 
 document.addEventListener(
     'DOMContentLoaded', bluetooth_internals.initializeViews);

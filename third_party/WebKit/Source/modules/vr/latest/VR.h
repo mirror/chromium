@@ -48,7 +48,7 @@ class VR final : public EventTargetWithInlineData,
 
   void Dispose();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit VR(LocalFrame& frame);

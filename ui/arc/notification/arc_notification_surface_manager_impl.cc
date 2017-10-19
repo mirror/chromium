@@ -45,7 +45,7 @@ void ArcNotificationSurfaceManagerImpl::AddSurface(
   auto result = notification_surface_map_.insert(
       std::pair<std::string, std::unique_ptr<ArcNotificationSurfaceImpl>>(
           surface->notification_key(),
-          std::make_unique<ArcNotificationSurfaceImpl>(surface)));
+          base::MakeUnique<ArcNotificationSurfaceImpl>(surface)));
   if (!result.second) {
     NOTREACHED();
     return;

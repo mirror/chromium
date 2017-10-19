@@ -49,10 +49,13 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
       base::BindOnce(&DefaultGpuHost::InitializeGpuMain, base::Unretained(this),
                      base::Passed(MakeRequest(&gpu_main_))));
 
-  viz::mojom::GpuHostPtr gpu_host_proxy;
+  // TODO(sad): Correctly initialize gpu::GpuPreferences (like it is initialized
+  // in GpuProcessHost::Init()).
+  gpu::GpuPreferences preferences;
+  mojom::GpuHostPtr gpu_host_proxy;
   gpu_host_binding_.Bind(mojo::MakeRequest(&gpu_host_proxy));
   gpu_main_->CreateGpuService(MakeRequest(&gpu_service_),
-                              std::move(gpu_host_proxy),
+                              std::move(gpu_host_proxy), preferences,
                               mojo::ScopedSharedBufferHandle());
   gpu_memory_buffer_manager_ =
       base::MakeUnique<viz::ServerGpuMemoryBufferManager>(gpu_service_.get(),
@@ -108,10 +111,7 @@ void DefaultGpuHost::OnBadMessageFromGpu() {
 }
 
 void DefaultGpuHost::InitializeGpuMain(mojom::GpuMainRequest request) {
-  GpuMain::ExternalDependencies deps;
-  deps.create_display_compositor = true;
-  gpu_main_impl_ = std::make_unique<GpuMain>(nullptr, std::move(deps));
-  gpu_main_impl_->Bind(std::move(request));
+  gpu_main_impl_ = std::make_unique<GpuMain>(std::move(request));
   gpu_main_wait_.Signal();
 }
 

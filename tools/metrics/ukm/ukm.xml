@@ -390,24 +390,6 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
-<event name="Document.OutliveTimeAfterShutdown">
-  <owner>hajimehoshi@chromium.org</owner>
-  <owner>keishi@chromium.org</owner>
-  <summary>
-    Recorded when a Document object survives certain number of garbage
-    collections after detached. It is expected that regular Document objects are
-    destroyed soon after detached, and if a document outlives longer, probably
-    this can be leaked.
-  </summary>
-  <metric name="GCCount">
-    <summary>
-      Measures the numbers of garbarge collection after the document is
-      detached. This is recorded when the number reached certain numbers like 5
-      or 10.
-    </summary>
-  </metric>
-</event>
-
 <event name="Event.ScrollUpdate.Touch">
   <owner>nzolghadr@chromium.org</owner>
   <summary>
@@ -528,64 +510,6 @@ be describing additional metrics about the same event.
       resources within a different reserved IP space than the loaded private
       page, 8 for resources requested by public pages that are suspected to be
       routers, and 16 for localhost resources.
-    </summary>
-  </metric>
-</event>
-
-<event name="Media.Autoplay.Attempt">
-  <owner>mlamouri@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Event recorded when there is an attempt to autoplay (ie. no user gesture).
-    It will be recorded regardless of the result of this attempt.
-  </summary>
-  <metric name="AudioTrack">
-    <summary>
-      Whether the element had an audio track when autoplay was attempted.
-    </summary>
-  </metric>
-  <metric name="Muted">
-    <summary>
-      Whether the element was muted when autoplay was attempted.
-    </summary>
-  </metric>
-  <metric name="Source">
-    <summary>
-      Source of the autoplay attempt: 0 for attribute; 1 for play().
-    </summary>
-  </metric>
-  <metric name="UserGestureRequirement">
-    <summary>
-      Whether a user gesture was required per autoplay rules at the time of
-      attempt. By definition there is no user gesture on the stack when the
-      attempt is registered.
-    </summary>
-  </metric>
-  <metric name="VideoTrack">
-    <summary>
-      Whether the element had a video track when autoplay was attempted.
-    </summary>
-  </metric>
-</event>
-
-<event name="Media.Autoplay.Muted.UnmuteAction">
-  <owner>mlamouri@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Event recorded when there is an attempt to unmute an media that was
-    autoplaying following the rules of autoplay muted.
-  </summary>
-  <metric name="Result">
-    <summary>
-      0 means that the unmute failed because it happened without a user gesture.
-      1 means that it succeeded because it had a user gesture.
-    </summary>
-  </metric>
-  <metric name="Source">
-    <summary>
-      Similar to &quot;Source&quot; in &quot;Media.Autoplay.Attempt&quot; with
-      the addition of a value for both sources being used: 0 for attribute; 1
-      for play(); 2 for both attempted.
     </summary>
   </metric>
 </event>
@@ -800,12 +724,6 @@ be describing additional metrics about the same event.
       Measure of memory consumed by GL command buffer.
     </summary>
   </metric>
-  <metric name="IsVisible">
-    <summary>
-      Indicates whether the tab is visible or not at the time of metric
-      collection.
-    </summary>
-  </metric>
   <metric name="Malloc">
     <summary>
       Measure of memory allocated by malloc.
@@ -837,18 +755,6 @@ be describing additional metrics about the same event.
   <metric name="Resident">
     <summary>
       Size of process' working set.
-    </summary>
-  </metric>
-  <metric name="TimeSinceLastNavigation">
-    <summary>
-      The time in seconds since the Tab navigated. Only emitted for tabs that
-      are not sharing a process.
-    </summary>
-  </metric>
-  <metric name="TimeSinceLastVisibilityChange">
-    <summary>
-      The time in seconds since the Tab changed visibility. Only emitted for
-      tabs that are not sharing a process.
     </summary>
   </metric>
   <metric name="Total2.PrivateMemoryFootprint">
@@ -1454,106 +1360,6 @@ be describing additional metrics about the same event.
     <summary>
       Duration in MS from when the tab is backgrounded to when it is brought to
       foreground or closed.
-    </summary>
-  </metric>
-</event>
-
-<event
-    name="TabManager.BackgroundTabOpening.ForegroundTab.ExpectedTaskQueueingDurationInfo">
-  <owner>zhenw@chromium.org</owner>
-  <summary>
-    Collects the expected queueing duration of tasks and metadata for the
-    foreground tab during a background tab opening session (the duration of time
-    from when the browser starts to open background tabs until the time the
-    browser has finished loading those tabs or otherwise decided to stop loading
-    them). The event is not recorded when the session overlaps with session
-    restore. This event is sampled when there are 2 or more backgrounded loading
-    or pending tabs. Therefore, aggregated tab counts over multiple events are
-    invalid.
-  </summary>
-  <metric name="BackgroundTabLoadingCount">
-    <summary>
-      Number of background tabs that are loading.
-    </summary>
-  </metric>
-  <metric name="BackgroundTabOpeningSessionId">
-    <summary>
-      The ID of this background tab opening session.
-    </summary>
-  </metric>
-  <metric name="BackgroundTabPendingCount">
-    <summary>
-      Number of background tabs that are pending.
-    </summary>
-  </metric>
-  <metric name="ExpectedTaskQueueingDuration">
-    <summary>
-      Duration in MS for expected task queueing duration. The metric reflects
-      the responsiveness of a tab. A lower value means the tab will respond to
-      inputs faster. This metric is equal to
-      RendererScheduler.ExpectedTaskQueueingDuration. It is emitted once for all
-      tasks in each 1000-ms window.
-    </summary>
-  </metric>
-  <metric name="SequenceId">
-    <summary>
-      The ID of this event's sequence in current background tab opening session.
-    </summary>
-  </metric>
-  <metric name="SystemTabCount">
-    <summary>
-      Number of all tabs of the system, which includes all browser windows.
-    </summary>
-  </metric>
-</event>
-
-<event name="TabManager.Experimental.BackgroundTabOpening.TabSwitchLoadStopped"
-    singular="True">
-  <owner>zhenw@chromium.org</owner>
-  <summary>
-    Collects data when a tab is switched to from another tab and then finishes
-    loading in the foreground during a background tab opening session (the
-    duration of time from when the browser starts to open background tabs until
-    the time the browser has finished loading those tabs or otherwise decided to
-    stop loading them). The event is only recorded when a tab is switched to
-    from another tab within the same tabstrip. As a result, the initial
-    foreground tab is not included in this event since it was not switched to
-    from another tab. The event is not recorded when the session overlaps with
-    session restore.
-  </summary>
-  <metric name="BackgroundTabLoadingCount">
-    <summary>
-      Number of background tabs that are loading.
-    </summary>
-  </metric>
-  <metric name="BackgroundTabOpeningSessionId">
-    <summary>
-      The ID of this background tab opening session.
-    </summary>
-  </metric>
-  <metric name="BackgroundTabPendingCount">
-    <summary>
-      Number of background tabs that are pending.
-    </summary>
-  </metric>
-  <metric name="SequenceId">
-    <summary>
-      The ID of this event's sequence in current background tab opening session.
-    </summary>
-  </metric>
-  <metric name="SystemTabCount">
-    <summary>
-      Number of all tabs of the system, which includes all browser windows.
-    </summary>
-  </metric>
-  <metric name="TabSwitchLoadTime">
-    <summary>
-      Tab switch load time in MS. It is defined as the time between when the
-      user switches to a backround tab, and the time when that tab finishes
-      loading in the foreground. If the user switches away before the tab
-      finishes loading, a metric will not be recorded unless the user switches
-      back, in which case the tab switch load time is measured from that point
-      in time.
     </summary>
   </metric>
 </event>

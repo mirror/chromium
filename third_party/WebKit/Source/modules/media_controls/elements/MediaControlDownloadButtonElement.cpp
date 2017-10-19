@@ -7,7 +7,7 @@
 #include "core/dom/events/Event.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLAnchorElement.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/media/HTMLMediaElementControlsList.h"
 #include "core/html/media/HTMLMediaSource.h"
 #include "core/input_type_names.h"
@@ -85,7 +85,7 @@ bool MediaControlDownloadButtonElement::HasOverflowButton() const {
   return true;
 }
 
-void MediaControlDownloadButtonElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlDownloadButtonElement) {
   visitor->Trace(anchor_);
   MediaControlInputElement::Trace(visitor);
 }

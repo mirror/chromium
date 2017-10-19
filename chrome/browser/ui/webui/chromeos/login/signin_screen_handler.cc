@@ -131,6 +131,7 @@ const char kSourceAccountPicker[] = "account-picker";
 
 // Constants for lock screen apps activity state values:
 const char kNoLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.NONE";
+const char kBackgroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.BACKGROUND";
 const char kForegroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.FOREGROUND";
 const char kAvailableLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.AVAILABLE";
 
@@ -282,10 +283,7 @@ SigninScreenHandler::SigninScreenHandler(
           base::Bind(&SigninScreenHandler::OnAllowedInputMethodsChanged,
                      base::Unretained(this)));
 
-  TabletModeClient* tablet_mode_client = TabletModeClient::Get();
-  tablet_mode_client->AddObserver(this);
-  OnTabletModeToggled(tablet_mode_client->tablet_mode_enabled());
-
+  TabletModeClient::Get()->AddObserver(this);
   if (lock_screen_apps::StateController::IsEnabled())
     lock_screen_apps_observer_.Add(lock_screen_apps::StateController::Get());
   // TODO(wzang): Make this work under mash.
@@ -1105,6 +1103,9 @@ void SigninScreenHandler::OnLockScreenNoteStateChanged(
     case ash::mojom::TrayActionState::kLaunching:
     case ash::mojom::TrayActionState::kActive:
       lock_screen_apps_state = kForegroundLockScreenApps;
+      break;
+    case ash::mojom::TrayActionState::kBackground:
+      lock_screen_apps_state = kBackgroundLockScreenApps;
       break;
     case ash::mojom::TrayActionState::kAvailable:
       lock_screen_apps_state = kAvailableLockScreenApps;

@@ -346,7 +346,7 @@ bool NotificationHeaderView::IsExpandButtonEnabled() {
 }
 
 std::unique_ptr<views::InkDrop> NotificationHeaderView::CreateInkDrop() {
-  return std::make_unique<views::InkDropStub>();
+  return base::MakeUnique<views::InkDropStub>();
 }
 
 void NotificationHeaderView::UpdateSummaryTextVisibility() {

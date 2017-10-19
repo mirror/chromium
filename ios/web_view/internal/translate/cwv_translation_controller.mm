@@ -165,8 +165,7 @@ const NSInteger CWVTranslationErrorScriptLoadError =
       break;
     }
     case CWVTranslationPolicyNever: {
-      _translatePrefs->AddToLanguageList(languageCode,
-                                         /*force_blocked=*/true);
+      _translatePrefs->BlockLanguage(languageCode);
       break;
     }
     case CWVTranslationPolicyAuto: {

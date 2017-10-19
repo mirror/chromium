@@ -79,10 +79,8 @@
 #include "chrome/browser/renderer_host/chrome_render_message_filter.h"
 #include "chrome/browser/renderer_host/pepper/chrome_browser_pepper_host_factory.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
-#include "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service_factory.h"
-#include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "chrome/browser/safe_browsing/url_checker_delegate_impl.h"
@@ -167,7 +165,6 @@
 #include "components/safe_browsing/browser/url_checker_delegate.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/db/database_manager.h"
-#include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h"
@@ -321,6 +318,13 @@
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
 #include "chrome/browser/ui/views/chrome_browser_main_extra_parts_views_linux.h"
+#endif
+
+#if defined(USE_AURA)
+#include "services/service_manager/runner/common/client_util.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
+#include "ui/aura/mus/window_tree_client.h"
+#include "ui/views/mus/mus_client.h"
 #endif
 
 #if defined(USE_X11)
@@ -918,8 +922,6 @@ content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
 #if defined(USE_X11)
   main_parts->AddParts(new ChromeBrowserMainExtraPartsX11());
 #endif
-
-  main_parts->AddParts(new ChromeBrowserMainExtraPartsResourceCoordinator);
 
   main_parts->AddParts(new ChromeBrowserMainExtraPartsProfiling);
 
@@ -1850,7 +1852,7 @@ void ChromeContentBrowserClient::AdjustUtilityServiceProcessCommandLine(
     base::CommandLine* command_line) {
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
   // Mash services do their own resource loading.
-  if (mash_service_registry::IsMashServiceName(identity.name())) {
+  if (IsMashServiceName(identity.name())) {
     // This switch is used purely for debugging to make it easier to know what
     // service a process is running.
     command_line->AppendSwitchASCII("mash-service-name", identity.name());
@@ -2684,6 +2686,15 @@ content::BrowserPpapiHost*
   return NULL;
 }
 
+gpu::GpuChannelEstablishFactory*
+ChromeContentBrowserClient::GetGpuChannelEstablishFactory() {
+#if defined(USE_AURA)
+  if (views::MusClient::Exists())
+    return views::MusClient::Get()->window_tree_client()->gpu();
+#endif
+  return nullptr;
+}
+
 bool ChromeContentBrowserClient::AllowPepperSocketAPI(
     content::BrowserContext* browser_context,
     const GURL& url,
@@ -2935,7 +2946,7 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
                  g_browser_process->rappor_service()),
       ui_task_runner);
   registry->AddInterface(
-      base::Bind(&ukm::UkmInterface::Create, ukm::UkmRecorder::Get()),
+      base::Bind(&ukm::UkmInterface::Create, g_browser_process->ukm_recorder()),
       ui_task_runner);
   if (NetBenchmarking::CheckBenchmarkingEnabled()) {
     Profile* profile =
@@ -3102,16 +3113,8 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMash))
-    mash_service_registry::RegisterOutOfProcessServices(services);
+    RegisterOutOfProcessServicesForMash(services);
 #endif
-}
-
-bool ChromeContentBrowserClient::ShouldTerminateOnServiceQuit(
-    const service_manager::Identity& id) {
-#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
-  return mash_service_registry::ShouldTerminateOnServiceQuit(id.name());
-#endif
-  return false;
 }
 
 std::unique_ptr<base::Value>
@@ -3300,8 +3303,9 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
           prerender::PrerenderContents::FromWebContents(
               handle->GetWebContents());
       if (!prerender_contents) {
-        auto url_to_arc_throttle =
-            base::MakeUnique<arc::ArcNavigationThrottle>(handle);
+        auto intent_picker_cb = base::Bind(ShowIntentPickerBubble());
+        auto url_to_arc_throttle = base::MakeUnique<arc::ArcNavigationThrottle>(
+            handle, intent_picker_cb);
         throttles.push_back(std::move(url_to_arc_throttle));
       }
     }
@@ -3340,17 +3344,6 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
           BackgroundTabNavigationThrottle::MaybeCreateThrottleFor(handle);
   if (background_tab_navigation_throttle)
     throttles.push_back(std::move(background_tab_navigation_throttle));
-#endif
-
-// TODO(764520): Remove the OS_CHROMEOS part of the condition once Gaia password
-// reuse feature is enabled on Chrome OS.
-#if defined(SAFE_BROWSING_DB_LOCAL) && !defined(OS_CHROMEOS)
-  std::unique_ptr<content::NavigationThrottle>
-      password_protection_navigation_throttle =
-          safe_browsing::MaybeCreateNavigationThrottle(handle);
-  if (password_protection_navigation_throttle) {
-    throttles.push_back(std::move(password_protection_navigation_throttle));
-  }
 #endif
 
   std::unique_ptr<content::NavigationThrottle> pdf_iframe_throttle =

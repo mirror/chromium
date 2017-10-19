@@ -40,8 +40,8 @@ class ASH_EXPORT ShelfButton : public views::Button {
     STATE_FOCUSED = 1 << 4,
     // Hide the status (temporarily for some animations).
     STATE_HIDDEN = 1 << 5,
-    // Button is being dragged.
-    STATE_DRAGGING = 1 << 6,
+    // Button is being dragged by scroll gestures.
+    STATE_TOUCH_DRAGGING = 1 << 6,
   };
 
   ShelfButton(InkDropButtonListener* listener, ShelfView* shelf_view);
@@ -60,8 +60,6 @@ class ASH_EXPORT ShelfButton : public views::Button {
 
   // Returns the bounds of the icon.
   gfx::Rect GetIconBounds() const;
-
-  views::InkDrop* GetInkDropForTesting();
 
   // Called when user started dragging the shelf button.
   void OnDragStarted(const ui::LocatedEvent* event);
@@ -132,8 +130,8 @@ class ASH_EXPORT ShelfButton : public views::Button {
   // showing and used to detect if the menu was deleted while running.
   bool* destroyed_flag_;
 
-  // A timer to defer showing drag UI when the shelf button is pressed.
-  base::OneShotTimer drag_timer_;
+  // A timer to defer showing drag UI when the shelf button is touch pressed.
+  base::OneShotTimer touch_drag_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfButton);
 };

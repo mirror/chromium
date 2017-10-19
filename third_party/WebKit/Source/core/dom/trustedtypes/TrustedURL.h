@@ -28,7 +28,7 @@ class CORE_EXPORT TrustedURL final
   static TrustedURL* create(ScriptState*, const String& url);
   static TrustedURL* unsafelyCreate(ScriptState*, const String& url);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   TrustedURL(const KURL&);

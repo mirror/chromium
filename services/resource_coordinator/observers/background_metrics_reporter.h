@@ -9,7 +9,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
-#include "services/metrics/public/cpp/ukm_source_id.h"
 
 // Pages can be kept in the background for a long time, metrics show 75th
 // percentile of time spent in background is 2.5 hours, and the 95th is 24 hour.
@@ -70,7 +69,7 @@ template <class UKMBuilderClass,
 class BackgroundMetricsReporter {
  public:
   BackgroundMetricsReporter()
-      : ukm_source_id_(ukm::kInvalidSourceId),
+      : ukm_source_id_(-1),
         uma_reported_(false),
         ukm_reported_(false),
         child_frame_ukm_reported_(false) {}
@@ -98,7 +97,7 @@ class BackgroundMetricsReporter {
   void ReportUKMIfNeeded(bool is_main_frame,
                          base::TimeDelta duration,
                          ukm::MojoUkmRecorder* ukm_recorder) {
-    if (ukm_source_id_ == ukm::kInvalidSourceId ||
+    if (ukm_source_id_ == -1 ||
         (!kShouldReportChildFrameUkm && ukm_reported_) ||
         (kShouldReportChildFrameUkm &&
          !ShouldReportMainFrameUKM(is_main_frame) &&

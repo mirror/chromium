@@ -32,7 +32,7 @@
 
 #include "base/trace_event/process_memory_dump.h"
 #include "platform/MemoryCoordinator.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/heap/BlinkGCMemoryDumpProvider.h"
 #include "platform/heap/CallbackStack.h"
 #include "platform/heap/HeapCompact.h"
@@ -61,7 +61,7 @@
     BasePage* page = PageFromObject(object);                          \
     DCHECK(page);                                                     \
     bool is_container =                                               \
-        ThreadHeap::IsVectorArenaIndex(page->Arena()->ArenaIndex());  \
+        ThreadState::IsVectorArenaIndex(page->Arena()->ArenaIndex()); \
     if (!is_container && page->IsLargeObjectPage())                   \
       is_container =                                                  \
           static_cast<LargeObjectPage*>(page)->IsVectorBackingPage(); \
@@ -73,7 +73,7 @@
 // so that when it is finalized, its ASan annotation will be
 // correctly retired.
 #define ASAN_MARK_LARGE_VECTOR_CONTAINER(arena, large_object)            \
-  if (ThreadHeap::IsVectorArenaIndex(arena->ArenaIndex())) {             \
+  if (ThreadState::IsVectorArenaIndex(arena->ArenaIndex())) {            \
     BasePage* large_page = PageFromObject(large_object);                 \
     DCHECK(large_page->IsLargeObjectPage());                             \
     static_cast<LargeObjectPage*>(large_page)->SetIsVectorBackingPage(); \
@@ -343,7 +343,7 @@ Address BaseArena::AllocateLargeObject(size_t allocation_size,
   // TODO(sof): should need arise, support eagerly finalized large objects.
   CHECK(ArenaIndex() != BlinkGC::kEagerSweepArenaIndex);
   LargeObjectArena* large_object_arena = static_cast<LargeObjectArena*>(
-      GetThreadState()->Heap().Arena(BlinkGC::kLargeObjectArenaIndex));
+      GetThreadState()->Arena(BlinkGC::kLargeObjectArenaIndex));
   Address large_object = large_object_arena->AllocateLargeObjectPage(
       allocation_size, gc_info_index);
   ASAN_MARK_LARGE_VECTOR_CONTAINER(this, large_object);
@@ -608,7 +608,7 @@ void NormalPageArena::TakeFreelistSnapshot(const String& dump_name) {
 }
 
 void NormalPageArena::AllocatePage() {
-  GetThreadState()->Heap().ShouldFlushHeapDoesNotContainCache();
+  GetThreadState()->ShouldFlushHeapDoesNotContainCache();
   PageMemory* page_memory =
       GetThreadState()->Heap().GetFreePagePool()->Take(ArenaIndex());
 
@@ -629,11 +629,9 @@ void NormalPageArena::AllocatePage() {
       // gets a page and add the rest to the page pool.
       if (!page_memory) {
         bool result = memory->Commit();
-        // If you hit the ASSERT, it will mean that you're hitting the limit
-        // of the number of mmapped regions OS can support
-        // (e.g., /proc/sys/vm/max_map_count in Linux) or on that Windows you
-        // have exceeded the max commit charge across all processes for the
-        // system.
+        // If you hit the ASSERT, it will mean that you're hitting
+        // the limit of the number of mmapped regions OS can support
+        // (e.g., /proc/sys/vm/max_map_count in Linux).
         CHECK(result);
         page_memory = memory;
       } else {
@@ -1001,7 +999,7 @@ Address LargeObjectArena::DoAllocateLargeObjectPage(size_t allocation_size,
   large_object_size += kAllocationGranularity;
 #endif
 
-  GetThreadState()->Heap().ShouldFlushHeapDoesNotContainCache();
+  GetThreadState()->ShouldFlushHeapDoesNotContainCache();
   PageMemory* page_memory = PageMemory::Allocate(
       large_object_size, GetThreadState()->Heap().GetRegionTree());
   Address large_object_address = page_memory->WritableStart();
@@ -1386,7 +1384,7 @@ void NormalPage::SweepAndCompact(CompactionContext& context) {
   NormalPageArena* page_arena = ArenaForNormalPage();
 #if defined(ADDRESS_SANITIZER)
   bool is_vector_arena =
-      ThreadHeap::IsVectorArenaIndex(page_arena->ArenaIndex());
+      ThreadState::IsVectorArenaIndex(page_arena->ArenaIndex());
 #endif
   HeapCompact* compact = page_arena->GetThreadState()->Heap().Compaction();
   for (Address header_address = Payload(); header_address < PayloadEnd();) {

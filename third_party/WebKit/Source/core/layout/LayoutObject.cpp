@@ -565,7 +565,7 @@ PaintLayer* LayoutObject::FindNextLayer(PaintLayer* parent_layer,
   // Error check the parent layer passed in. If it's null, we can't find
   // anything.
   if (!parent_layer)
-    return nullptr;
+    return 0;
 
   // Step 1: If our layer is a child of the desired parent, then return our
   // layer.
@@ -1371,7 +1371,7 @@ StyleDifference LayoutObject::AdjustStyleDifference(
       diff.SetNeedsFullLayout();
   }
 
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     // If transform changed, and the layer does not paint into its own separate
     // backing, then we need to invalidate paints.
     if (diff.TransformChanged()) {
@@ -1533,16 +1533,8 @@ void LayoutObject::SetNeedsOverflowRecalcAfterStyleChange() {
 DISABLE_CFI_PERF
 void LayoutObject::SetStyle(RefPtr<ComputedStyle> style) {
   DCHECK(style);
-
-  if (style_ == style) {
-    // We need to run through adjustStyleDifference() for iframes, plugins, and
-    // canvas so style sharing is disabled for them. That should ensure that we
-    // never hit this code path.
-    DCHECK(!IsLayoutIFrame());
-    DCHECK(!IsEmbeddedObject());
-    DCHECK(!IsCanvas());
+  if (style_ == style)
     return;
-  }
 
   StyleDifference diff;
   if (style_)
@@ -1652,11 +1644,11 @@ void LayoutObject::SetStyle(RefPtr<ComputedStyle> style) {
                     diff.BackdropFilterChanged() || diff.CssClipChanged())) {
     SetNeedsPaintPropertyUpdate();
 
-    // We don't need to invalidate paint of objects on SPv175 when only paint
+    // We don't need to invalidate paint of objects on SPv2 when only paint
     // property or paint order change. Mark the painting layer needing repaint
     // for changed paint property or paint order. Raster invalidation will be
     // issued if needed during paint.
-    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
         !ShouldDoFullPaintInvalidation())
       ObjectPaintInvalidator(*this).SlowSetPaintingLayerNeedsRepaint();
   }
@@ -1969,10 +1961,9 @@ void LayoutObject::UpdateImage(StyleImage* old_image, StyleImage* new_image) {
 
 void LayoutObject::UpdateShapeImage(const ShapeValue* old_shape_value,
                                     const ShapeValue* new_shape_value) {
-  if (old_shape_value || new_shape_value) {
-    UpdateImage(old_shape_value ? old_shape_value->GetImage() : nullptr,
-                new_shape_value ? new_shape_value->GetImage() : nullptr);
-  }
+  if (old_shape_value || new_shape_value)
+    UpdateImage(old_shape_value ? old_shape_value->GetImage() : 0,
+                new_shape_value ? new_shape_value->GetImage() : 0);
 }
 
 void LayoutObject::CheckCounterChanges(const ComputedStyle* old_style,
@@ -1997,7 +1988,7 @@ FloatPoint LayoutObject::LocalToAbsolute(const FloatPoint& local_point,
                                          MapCoordinatesFlags mode) const {
   TransformState transform_state(TransformState::kApplyTransformDirection,
                                  local_point);
-  MapLocalToAncestor(nullptr, transform_state, mode | kApplyContainerFlip);
+  MapLocalToAncestor(0, transform_state, mode | kApplyContainerFlip);
   transform_state.Flatten();
 
   return transform_state.LastPlanarPoint();
@@ -2199,8 +2190,7 @@ void LayoutObject::GetTransformFromContainer(
     const LayoutSize& offset_in_container,
     TransformationMatrix& transform) const {
   transform.MakeIdentity();
-  PaintLayer* layer =
-      HasLayer() ? ToLayoutBoxModelObject(this)->Layer() : nullptr;
+  PaintLayer* layer = HasLayer() ? ToLayoutBoxModelObject(this)->Layer() : 0;
   if (layer && layer->Transform())
     transform.Multiply(layer->CurrentTransform());
 
@@ -3431,7 +3421,7 @@ void LayoutObject::ClearPaintInvalidationFlags() {
 #if DCHECK_IS_ON()
   DCHECK(!ShouldCheckForPaintInvalidation() || PaintInvalidationStateIsDirty());
 #endif
-  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
     rare_paint_data_->SetPartialInvalidationRect(LayoutRect());
   ClearShouldDoFullPaintInvalidation();
   bitfields_.SetMayNeedPaintInvalidation(false);
@@ -3569,8 +3559,7 @@ void LayoutObject::InvalidateIfControlStateChanged(ControlState control_state) {
 //  Punctuation characters are considered as first-letter. For "(1)ab",
 //  "(1)" are first-letter part and "ab" are remaining part.
 const LayoutObject* AssociatedLayoutObjectOf(const Node& node,
-                                             int offset_in_node,
-                                             LayoutObjectSide object_side) {
+                                             int offset_in_node) {
   DCHECK_GE(offset_in_node, 0);
   LayoutObject* layout_object = node.GetLayoutObject();
   if (!node.IsTextNode() || !layout_object ||
@@ -3584,14 +3573,9 @@ const LayoutObject* AssociatedLayoutObjectOf(const Node& node,
         layout_text_fragment->Start() + layout_text_fragment->FragmentLength());
     return layout_text_fragment;
   }
-  if (layout_text_fragment->FragmentLength()) {
-    const unsigned threshold =
-        object_side == LayoutObjectSide::kRemainingTextIfOnBoundary
-            ? layout_text_fragment->Start()
-            : layout_text_fragment->Start() + 1;
-    if (static_cast<unsigned>(offset_in_node) >= threshold)
-      return layout_object;
-  }
+  if (layout_text_fragment->FragmentLength() &&
+      static_cast<unsigned>(offset_in_node) >= layout_text_fragment->Start())
+    return layout_object;
   LayoutObject* first_letter_layout_object =
       layout_text_fragment->GetFirstLetterPseudoElement()->GetLayoutObject();
   // TODO(yosin): We're not sure when |firstLetterLayoutObject| has
@@ -3600,12 +3584,6 @@ const LayoutObject* AssociatedLayoutObjectOf(const Node& node,
   CHECK(child && child->IsText());
   DCHECK_EQ(child, first_letter_layout_object->SlowLastChild());
   return child;
-}
-
-bool LayoutObject::CanBeSelectionLeaf() const {
-  if (SlowFirstChild() || Style()->Visibility() != EVisibility::kVisible)
-    return false;
-  return CanBeSelectionLeafInternal();
 }
 
 }  // namespace blink

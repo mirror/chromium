@@ -40,7 +40,8 @@ public class LocaleManagerReferralTest {
         mDefaultLocale = Locale.getDefault();
         Locale.setDefault(new Locale("ru", "RU"));
 
-        ApplicationData.clearAppData(InstrumentationRegistry.getTargetContext());
+        ApplicationData.clearAppData(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
 
         LocaleManager.setInstanceForTest(new LocaleManager() {
             @Override
@@ -53,7 +54,9 @@ public class LocaleManagerReferralTest {
             @Override
             public void run() {
                 try {
-                    ChromeBrowserInitializer.getInstance(InstrumentationRegistry.getTargetContext())
+                    ChromeBrowserInitializer
+                            .getInstance(
+                                    InstrumentationRegistry.getInstrumentation().getTargetContext())
                             .handleSynchronousStartup();
                 } catch (ProcessInitException e) {
                     Assert.fail("Failed to load browser");

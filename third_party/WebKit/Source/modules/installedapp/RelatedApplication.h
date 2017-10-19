@@ -29,7 +29,7 @@ class RelatedApplication final
   String url() const { return url_; }
   String id() const { return id_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   RelatedApplication(const String& platform,

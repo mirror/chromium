@@ -227,7 +227,7 @@ SkBitmap ImageFrameGenerator::TryToResumeDecode(
   TRACE_EVENT1("blink", "ImageFrameGenerator::tryToResumeDecode", "frame index",
                static_cast<int>(index));
 
-  ImageDecoder* decoder = nullptr;
+  ImageDecoder* decoder = 0;
 
   // Lock the mutex, so only one thread can use the decoder at once.
   MutexLocker lock(decode_mutex_);

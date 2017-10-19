@@ -9,11 +9,8 @@ cr.define('extensions', function() {
     behaviors: [CrContainerShadowBehavior],
 
     properties: {
-      /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
-      apps: Array,
-
-      /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
-      extensions: Array,
+      /** @type {Array<!chrome.developerPrivate.ExtensionInfo>} */
+      items: Array,
 
       /** @type {extensions.ItemDelegate} */
       delegate: Object,
@@ -27,41 +24,35 @@ cr.define('extensions', function() {
 
       filter: String,
 
-      /** @private {!Array<!chrome.developerPrivate.ExtensionInfo>} */
-      shownApps_: {
+      /** @private {Array<!chrome.developerPrivate.ExtensionInfo>} */
+      shownItems_: {
         type: Array,
-        computed: 'computeShownItems_(apps, apps.*, filter)',
-      },
-
-      /** @private {!Array<!chrome.developerPrivate.ExtensionInfo>} */
-      shownExtensions_: {
-        type: Array,
-        computed: 'computeShownItems_(extensions, extensions.*, filter)',
+        computed: 'computeShownItems_(items.*, filter)',
       }
     },
 
     /**
      * Computes the list of items to be shown.
-     * @param {!Array<!chrome.developerPrivate.ExtensionInfo>} items
-     * @return {!Array<!chrome.developerPrivate.ExtensionInfo>}
+     * @param {Object} changeRecord The changeRecord for |items|.
+     * @param {string} filter The updated filter string.
+     * @return {Array<!chrome.developerPrivate.ExtensionInfo>}
      * @private
      */
-    computeShownItems_: function(items) {
+    computeShownItems_: function(changeRecord, filter) {
       const formattedFilter = this.filter.trim().toLowerCase();
-      return items.filter(
+      return this.items.filter(
           item => item.name.toLowerCase().includes(formattedFilter));
     },
 
     /** @private */
     shouldShowEmptyItemsMessage_: function() {
-      return !this.isGuest && this.apps.length === 0 &&
-          this.extensions.length === 0;
+      return !this.isGuest && this.items.length === 0;
     },
 
     /** @private */
     shouldShowEmptySearchMessage_: function() {
       return !this.isGuest && !this.shouldShowEmptyItemsMessage_() &&
-          this.shownApps_.length === 0 && this.shownExtensions_.length === 0;
+          this.shownItems_.length === 0;
     },
   });
 

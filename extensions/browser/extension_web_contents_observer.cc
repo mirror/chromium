@@ -118,8 +118,14 @@ void ExtensionWebContentsObserver::RenderFrameCreated(
   //
   // Plus, we can delete the concept of activating an extension once site
   // isolation is turned on.
-  RendererStartupHelperFactory::GetForBrowserContext(browser_context_)
-      ->ActivateExtensionInProcess(*extension, render_frame_host->GetProcess());
+  //
+  // TODO(devlin,alexmos): Do this for subframes as well. See
+  // https://crbug.com/760341.
+  if (!render_frame_host->GetParent()) {
+    RendererStartupHelperFactory::GetForBrowserContext(browser_context_)
+        ->ActivateExtensionInProcess(*extension,
+                                     render_frame_host->GetProcess());
+  }
 
   InitializeRenderFrame(render_frame_host);
 

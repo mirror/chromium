@@ -50,7 +50,7 @@ class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
   // streaming finishes.
   virtual void PendingScriptFinished(PendingScript*) = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 // A container for an external script which may be loaded and executed.
@@ -80,7 +80,7 @@ class CORE_EXPORT PendingScript
 
   virtual ScriptType GetScriptType() const = 0;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   virtual Script* GetSource(const KURL& document_url,
                             bool& error_occurred) const = 0;

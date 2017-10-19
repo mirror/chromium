@@ -24,8 +24,7 @@ class SharedWorkerFactoryImpl : public mojom::SharedWorkerFactory {
       int32_t route_id,
       blink::mojom::WorkerContentSettingsProxyPtr content_settings,
       mojom::SharedWorkerHostPtr host,
-      mojom::SharedWorkerRequest request,
-      service_manager::mojom::InterfaceProviderPtr interface_provider) override;
+      mojom::SharedWorkerRequest request) override;
 
   DISALLOW_COPY_AND_ASSIGN(SharedWorkerFactoryImpl);
 };

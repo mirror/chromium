@@ -174,32 +174,6 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   virtual RefPtr<Image> ImageForDefaultFrame();
 
-  enum ImageDecodingMode {
-    // No preference specified.
-    kUnspecifiedDecode,
-    // Prefer to display the image synchronously with the rest of the content
-    // updates.
-    kSyncDecode,
-    // Prefer to display the image asynchronously with the rest of the content
-    // updates.
-    kAsyncDecode
-  };
-
-  static PaintImage::DecodingMode ToPaintImageDecodingMode(
-      ImageDecodingMode mode) {
-    switch (mode) {
-      case kUnspecifiedDecode:
-        return PaintImage::DecodingMode::kUnspecified;
-      case kSyncDecode:
-        return PaintImage::DecodingMode::kSync;
-      case kAsyncDecode:
-        return PaintImage::DecodingMode::kAsync;
-    }
-
-    NOTREACHED();
-    return PaintImage::DecodingMode::kUnspecified;
-  }
-
   virtual PaintImage PaintImageForCurrentFrame() = 0;
 
   enum ImageClampingMode {
@@ -212,8 +186,7 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                     const FloatRect& dst_rect,
                     const FloatRect& src_rect,
                     RespectImageOrientationEnum,
-                    ImageClampingMode,
-                    ImageDecodingMode) = 0;
+                    ImageClampingMode) = 0;
 
   virtual bool ApplyShader(PaintFlags&, const SkMatrix& local_matrix);
 
@@ -243,9 +216,6 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                                         const FloatRect& dest,
                                         const FloatSize& image_size);
 
-  enum class ImageType { kImg, kSvg, kCss };
-  static void RecordCheckerableImageUMA(Image&, ImageType);
-
   virtual sk_sp<PaintRecord> PaintRecordForContainer(
       const KURL& url,
       const IntSize& container_size,
@@ -265,8 +235,6 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
       const HighContrastClassification high_contrast_classification) {
     high_contrast_classification_ = high_contrast_classification;
   }
-
-  PaintImage::Id paint_image_id() const { return stable_image_id_; }
 
  protected:
   Image(ImageObserver* = 0, bool is_multipart = false);
@@ -296,9 +264,6 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   // Creates and initializes a PaintImageBuilder with the metadata flags for the
   // PaintImage.
   PaintImageBuilder CreatePaintImageBuilder();
-
-  // Whether or not size is available yet.
-  virtual bool IsSizeAvailable() { return true; }
 
  private:
   bool image_observer_disabled_;

@@ -261,18 +261,6 @@ bool FakeUserManager::AreSupervisedUsersAllowed() const {
   return true;
 }
 
-bool FakeUserManager::IsGuestSessionAllowed() const {
-  return true;
-}
-
-bool FakeUserManager::IsGaiaUserAllowed(const user_manager::User& user) const {
-  return true;
-}
-
-bool FakeUserManager::IsUserAllowed(const user_manager::User& user) const {
-  return true;
-}
-
 bool FakeUserManager::AreEphemeralUsersEnabled() const {
   return GetEphemeralUsersEnabled();
 }

@@ -25,7 +25,7 @@ class FakePdfPrinterHandler;
 bool GetOpenFileNameImpl(OPENFILENAME* ofn);
 bool GetSaveFileNameImpl(FakePdfPrinterHandler* handler, OPENFILENAME* ofn);
 
-void EmptyPrintCallback(const base::Value& error) {}
+void EmptyPrintCallback(bool success, const base::Value& error) {}
 
 class FakePdfPrinterHandler : public PdfPrinterHandler {
  public:

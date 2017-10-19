@@ -4,7 +4,6 @@
 
 #include "chromeos/dbus/fake_auth_policy_client.h"
 
-#include <memory>
 #include <vector>
 
 #include "base/bind.h"
@@ -17,10 +16,10 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/cryptohome_client.h"
-#include "components/policy/proto/chrome_device_policy.pb.h"
 #include "components/policy/proto/cloud_policy.pb.h"
 #include "components/policy/proto/device_management_backend.pb.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -76,7 +75,7 @@ void RunSignalCallback(const std::string& interface_name,
                        const std::string& method_name,
                        dbus::ObjectProxy::SignalCallback signal_callback) {
   signal_callback.Run(
-      std::make_unique<dbus::Signal>(interface_name, method_name).get());
+      base::MakeUnique<dbus::Signal>(interface_name, method_name).get());
 }
 
 }  // namespace

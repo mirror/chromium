@@ -107,7 +107,7 @@ bool ConstantSourceHandler::PropagatesSilence() const {
 // ----------------------------------------------------------------
 ConstantSourceNode::ConstantSourceNode(BaseAudioContext& context)
     : AudioScheduledSourceNode(context),
-      offset_(AudioParam::Create(context, kParamTypeConstantSourceOffset, 1)) {
+      offset_(AudioParam::Create(context, kParamTypeConstantSourceValue, 1)) {
   SetHandler(ConstantSourceHandler::Create(*this, context.sampleRate(),
                                            offset_->Handler()));
 }
@@ -141,7 +141,7 @@ ConstantSourceNode* ConstantSourceNode::Create(
   return node;
 }
 
-void ConstantSourceNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ConstantSourceNode) {
   visitor->Trace(offset_);
   AudioScheduledSourceNode::Trace(visitor);
 }

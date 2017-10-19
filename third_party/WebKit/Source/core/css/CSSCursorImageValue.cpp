@@ -59,7 +59,7 @@ bool CSSCursorImageValue::Equals(const CSSCursorImageValue& other) const {
          DataEquivalent(image_value_, other.image_value_);
 }
 
-void CSSCursorImageValue::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSCursorImageValue) {
   visitor->Trace(image_value_);
   CSSValue::TraceAfterDispatch(visitor);
 }

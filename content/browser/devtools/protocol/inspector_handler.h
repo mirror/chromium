@@ -26,8 +26,7 @@ class InspectorHandler : public DevToolsDomainHandler,
       DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(RenderProcessHost* process_host,
-                   RenderFrameHostImpl* frame_host) override;
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
 
   void TargetCrashed();
   void TargetDetached(const std::string& reason);

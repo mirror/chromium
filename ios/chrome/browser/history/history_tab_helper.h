@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "components/history/core/browser/history_types.h"
+#include "ios/web/public/web_state/web_state_observer.h"
 #include "ios/web/public/web_state/web_state_user_data.h"
 
 namespace history {
@@ -20,7 +21,8 @@ class NavigationItem;
 
 // HistoryTabHelper updates the history database based on navigation events from
 // its parent WebState.
-class HistoryTabHelper : public web::WebStateUserData<HistoryTabHelper> {
+class HistoryTabHelper : public web::WebStateObserver,
+                         public web::WebStateUserData<HistoryTabHelper> {
  public:
   ~HistoryTabHelper() override;
 
@@ -40,8 +42,6 @@ class HistoryTabHelper : public web::WebStateUserData<HistoryTabHelper> {
   // Helper function to return the history service. May return NULL, in which
   // case no history entries should be added.
   history::HistoryService* GetHistoryService();
-
-  web::WebState* web_state_;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryTabHelper);
 };

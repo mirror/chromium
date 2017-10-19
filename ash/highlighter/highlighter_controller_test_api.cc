@@ -12,34 +12,19 @@ namespace ash {
 
 HighlighterControllerTestApi::HighlighterControllerTestApi(
     HighlighterController* instance)
-    : binding_(this), instance_(instance) {
-  AttachClient();
+    : instance_(instance) {
+  instance_->SetObserver(this);
 }
 
 HighlighterControllerTestApi::~HighlighterControllerTestApi() {
-  if (binding_.is_bound())
-    DetachClient();
-  if (instance_->enabled())
+  instance_->SetObserver(nullptr);
+  if (enabled_)
     instance_->SetEnabled(false);
   instance_->DestroyPointerView();
 }
 
-void HighlighterControllerTestApi::AttachClient() {
-  DCHECK(!binding_.is_bound());
-  DCHECK(!highlighter_controller_);
-  instance_->BindRequest(mojo::MakeRequest(&highlighter_controller_));
-  ash::mojom::HighlighterControllerClientPtr client;
-  binding_.Bind(mojo::MakeRequest(&client));
-  highlighter_controller_->SetClient(std::move(client));
-  highlighter_controller_.FlushForTesting();
-}
-
-void HighlighterControllerTestApi::DetachClient() {
-  DCHECK(binding_.is_bound());
-  DCHECK(highlighter_controller_);
-  highlighter_controller_ = nullptr;
-  binding_.Close();
-  instance_->FlushMojoForTesting();
+void HighlighterControllerTestApi::CallMetalayerDone() {
+  instance_->CallExitCallback();
 }
 
 void HighlighterControllerTestApi::SetEnabled(bool enabled) {
@@ -82,19 +67,13 @@ const FastInkPoints& HighlighterControllerTestApi::predicted_points() const {
   return instance_->highlighter_view_->predicted_points_;
 }
 
-bool HighlighterControllerTestApi::HandleEnabledStateChangedCalled() {
-  instance_->FlushMojoForTesting();
-  return handle_enabled_state_changed_called_;
-}
-
-bool HighlighterControllerTestApi::HandleSelectionCalled() {
-  instance_->FlushMojoForTesting();
-  return handle_selection_called_;
-}
-
 void HighlighterControllerTestApi::HandleSelection(const gfx::Rect& rect) {
   handle_selection_called_ = true;
   selection_ = rect;
+}
+
+void HighlighterControllerTestApi::HandleFailedSelection() {
+  handle_failed_selection_called_ = true;
 }
 
 void HighlighterControllerTestApi::HandleEnabledStateChange(bool enabled) {

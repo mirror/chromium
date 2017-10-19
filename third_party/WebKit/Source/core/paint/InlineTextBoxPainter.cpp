@@ -141,33 +141,34 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
 
   // Determine whether or not we're selected.
   bool have_selection =
-      !is_printing && paint_info.phase != PaintPhase::kTextClip &&
+      !is_printing && paint_info.phase != kPaintPhaseTextClip &&
       inline_text_box_.GetSelectionState() != SelectionState::kNone;
-  if (!have_selection && paint_info.phase == PaintPhase::kSelection) {
+  if (!have_selection && paint_info.phase == kPaintPhaseSelection) {
     // When only painting the selection, don't bother to paint if there is none.
     return;
   }
 
-  // The text clip phase already has a DrawingRecorder. Text clips are initiated
-  // only in BoxPainter::PaintFillLayer, which is already within a
-  // DrawingRecorder.
-  Optional<DrawingRecorder> recorder;
-  if (paint_info.phase != PaintPhase::kTextClip) {
+  // The text clip phase already has a LayoutObjectDrawingRecorder. Text clips
+  // are initiated only in BoxPainter::paintFillLayer, which is already within a
+  // LayoutObjectDrawingRecorder.
+  Optional<DrawingRecorder> drawing_recorder;
+  if (paint_info.phase != kPaintPhaseTextClip) {
     if (DrawingRecorder::UseCachedDrawingIfPossible(
             paint_info.context, inline_text_box_,
             DisplayItem::PaintPhaseToDrawingType(paint_info.phase)))
       return;
     LayoutRect paint_rect(logical_visual_overflow);
     inline_text_box_.LogicalRectToPhysicalRect(paint_rect);
-    if (paint_info.phase != PaintPhase::kSelection &&
+    if (paint_info.phase != kPaintPhaseSelection &&
         (have_selection || PaintsMarkerHighlights(InlineLayoutObject())))
       paint_rect.Unite(inline_text_box_.LocalSelectionRect(
           inline_text_box_.Start(),
           inline_text_box_.Start() + inline_text_box_.Len()));
     paint_rect.MoveBy(adjusted_paint_offset);
-    recorder.emplace(paint_info.context, inline_text_box_,
-                     DisplayItem::PaintPhaseToDrawingType(paint_info.phase),
-                     FloatRect(paint_rect));
+    drawing_recorder.emplace(
+        paint_info.context, inline_text_box_,
+        DisplayItem::PaintPhaseToDrawingType(paint_info.phase),
+        FloatRect(paint_rect));
   }
 
   GraphicsContext& context = paint_info.context;
@@ -210,7 +211,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
   StringBuilder characters_with_hyphen;
   TextRun text_run = inline_text_box_.ConstructTextRun(
       style_to_use, string, maximum_length,
-      inline_text_box_.HasHyphen() ? &characters_with_hyphen : nullptr);
+      inline_text_box_.HasHyphen() ? &characters_with_hyphen : 0);
   if (inline_text_box_.HasHyphen())
     length = text_run.length();
 
@@ -255,7 +256,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
       inline_text_box_.GetLineLayoutItem().GetDocument(), style_to_use,
       inline_text_box_.GetLineLayoutItem().GetNode(), have_selection,
       paint_info, text_style);
-  bool paint_selected_text_only = (paint_info.phase == PaintPhase::kSelection);
+  bool paint_selected_text_only = (paint_info.phase == kPaintPhaseSelection);
   bool paint_selected_text_separately =
       !paint_selected_text_only && text_style != selection_style;
 
@@ -271,8 +272,8 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
 
   // 1. Paint backgrounds behind text if needed. Examples of such backgrounds
   // include selection and composition highlights.
-  if (paint_info.phase != PaintPhase::kSelection &&
-      paint_info.phase != PaintPhase::kTextClip && !is_printing) {
+  if (paint_info.phase != kPaintPhaseSelection &&
+      paint_info.phase != kPaintPhaseTextClip && !is_printing) {
     PaintDocumentMarkers(markers_to_paint, paint_info, box_origin, style_to_use,
                          font, DocumentMarkerPaintPhase::kBackground);
     if (have_selection) {
@@ -385,7 +386,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
     text_painter.Paint(selection_start, selection_end, length, selection_style);
   }
 
-  if (paint_info.phase == PaintPhase::kForeground) {
+  if (paint_info.phase == kPaintPhaseForeground) {
     PaintDocumentMarkers(markers_to_paint, paint_info, box_origin, style_to_use,
                          font, DocumentMarkerPaintPhase::kForeground);
   }
@@ -929,7 +930,7 @@ void InlineTextBoxPainter::PaintSelection(GraphicsContext& context,
       style, string,
       inline_text_box_.GetLineLayoutItem().TextLength() -
           inline_text_box_.Start(),
-      respect_hyphen ? &characters_with_hyphen : nullptr);
+      respect_hyphen ? &characters_with_hyphen : 0);
   if (respect_hyphen)
     e_pos = text_run.length();
 
@@ -1076,7 +1077,7 @@ void InlineTextBoxPainter::PaintTextMatchMarkerForeground(
   text_style.current_color = text_style.fill_color = text_style.stroke_color =
       text_style.emphasis_mark_color = text_color;
   text_style.stroke_width = style.TextStrokeWidth();
-  text_style.shadow = nullptr;
+  text_style.shadow = 0;
 
   LayoutRect box_rect(box_origin, LayoutSize(inline_text_box_.LogicalWidth(),
                                              inline_text_box_.LogicalHeight()));

@@ -63,7 +63,7 @@ class MODULES_EXPORT NavigatorVR final
   void DidRemoveEventListener(LocalDOMWindow*, const AtomicString&) override;
   void DidRemoveAllEventListeners(LocalDOMWindow*) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class VRDisplay;

@@ -25,7 +25,7 @@ class CORE_EXPORT PlatformEventController : public PageVisibilityObserver {
   // This is called when new data becomes available.
   virtual void DidUpdateData() = 0;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit PlatformEventController(Document*);

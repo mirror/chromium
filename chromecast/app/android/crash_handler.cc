@@ -90,22 +90,8 @@ void CrashHandler::InitializeUploader() {
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jstring> crash_dump_path_java =
       base::android::ConvertUTF8ToJavaString(env, crash_dump_path_.value());
-  base::android::ScopedJavaLocalRef<jstring> uuid_java =
-      base::android::ConvertUTF8ToJavaString(env, "");
-  Java_CastCrashHandler_initializeUploader(env, crash_dump_path_java, uuid_java,
-                                           UploadCrashToStaging(), true);
-}
-
-// static
-void CrashHandler::UploadDumps(const base::FilePath& crash_dump_path,
-                               std::string uuid) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  base::android::ScopedJavaLocalRef<jstring> crash_dump_path_java =
-      base::android::ConvertUTF8ToJavaString(env, crash_dump_path.value());
-  base::android::ScopedJavaLocalRef<jstring> uuid_java =
-      base::android::ConvertUTF8ToJavaString(env, uuid);
-  Java_CastCrashHandler_initializeUploader(env, crash_dump_path_java, uuid_java,
-                                           UploadCrashToStaging(), false);
+  Java_CastCrashHandler_initializeUploader(env, crash_dump_path_java,
+                                           UploadCrashToStaging());
 }
 
 }  // namespace chromecast

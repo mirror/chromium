@@ -30,7 +30,7 @@ class TestIntersectionObserverDelegate : public IntersectionObserverDelegate {
   ExecutionContext* GetExecutionContext() const override { return document_; }
   int CallCount() const { return call_count_; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     IntersectionObserverDelegate::Trace(visitor);
     visitor->Trace(document_);
   }

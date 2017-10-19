@@ -150,14 +150,9 @@ void CommandBufferHelper::FreeRingBuffer() {
   }
 }
 
-gpu::ContextResult CommandBufferHelper::Initialize(int32_t ring_buffer_size) {
+bool CommandBufferHelper::Initialize(int32_t ring_buffer_size) {
   ring_buffer_size_ = ring_buffer_size;
-  if (!AllocateRingBuffer()) {
-    // This would fail if CreateTransferBuffer fails, which will not fail for
-    // transient reasons such as context loss. See http://crrev.com/c/720269
-    return gpu::ContextResult::kFatalFailure;
-  }
-  return gpu::ContextResult::kSuccess;
+  return AllocateRingBuffer();
 }
 
 CommandBufferHelper::~CommandBufferHelper() {

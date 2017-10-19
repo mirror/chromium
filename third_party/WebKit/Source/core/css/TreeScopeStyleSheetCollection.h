@@ -56,7 +56,7 @@ class CORE_EXPORT TreeScopeStyleSheetCollection : public StyleSheetCollection {
   virtual bool IsShadowTreeStyleSheetCollection() const { return false; }
   void UpdateStyleSheetList();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit TreeScopeStyleSheetCollection(TreeScope&);

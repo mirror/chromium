@@ -27,7 +27,6 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
                                                  RefPtr<StaticBitmapImage>);
   void SetTransferableResourceToStaticBitmapImage(viz::TransferableResource&,
                                                   RefPtr<StaticBitmapImage>);
-
   void ReclaimResource(unsigned resource_id);
   void ReclaimResources(const WTF::Vector<viz::ReturnedResource>& resources);
   void IncNextResourceId() { next_resource_id_++; }
@@ -59,7 +58,7 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
     ~FrameResource();
   };
 
-  std::unique_ptr<FrameResource> recyclable_resource_;
+  std::unique_ptr<FrameResource> recycleable_resource_;
   std::unique_ptr<FrameResource> CreateOrRecycleFrameResource();
 
   void SetNeedsBeginFrameInternal();

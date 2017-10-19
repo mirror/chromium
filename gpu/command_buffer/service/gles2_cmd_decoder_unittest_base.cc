@@ -18,7 +18,6 @@
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/context_group.h"
-#include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/logger.h"
 #include "gpu/command_buffer/service/mailbox_manager.h"
 #include "gpu/command_buffer/service/program_manager.h"
@@ -246,9 +245,8 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
   mock_decoder_.reset(
       new MockGLES2Decoder(command_buffer_service_.get(), &outputter_));
 
-  EXPECT_EQ(group_->Initialize(mock_decoder_.get(), init.context_type,
-                               DisallowedFeatures()),
-            gpu::ContextResult::kSuccess);
+  EXPECT_TRUE(group_->Initialize(mock_decoder_.get(), init.context_type,
+                                 DisallowedFeatures()));
 
   if (init.context_type == CONTEXT_TYPE_WEBGL2 ||
       init.context_type == CONTEXT_TYPE_OPENGLES3) {
@@ -491,9 +489,8 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
                                       &outputter_, group_.get()));
   decoder_->SetIgnoreCachedStateForTest(ignore_cached_state_for_test_);
   decoder_->GetLogger()->set_log_synthesized_gl_errors(false);
-  ASSERT_EQ(decoder_->Initialize(surface_, context_, false,
-                                 DisallowedFeatures(), attribs),
-            gpu::ContextResult::kSuccess);
+  ASSERT_TRUE(decoder_->Initialize(surface_, context_, false,
+                                   DisallowedFeatures(), attribs));
 
   EXPECT_CALL(*context_, MakeCurrent(surface_.get())).WillOnce(Return(true));
   if (context_->WasAllocatedUsingRobustnessExtension()) {
@@ -2275,14 +2272,12 @@ void GLES2DecoderPassthroughTestBase::SetUp() {
 
   decoder_.reset(new GLES2DecoderPassthroughImpl(
       this, command_buffer_service_.get(), &outputter_, group_.get()));
-  ASSERT_EQ(
-      group_->Initialize(decoder_.get(), context_creation_attribs_.context_type,
-                         DisallowedFeatures()),
-      gpu::ContextResult::kSuccess);
-  ASSERT_EQ(
-      decoder_->Initialize(surface_, context_, false, DisallowedFeatures(),
-                           context_creation_attribs_),
-      gpu::ContextResult::kSuccess);
+  ASSERT_TRUE(group_->Initialize(decoder_.get(),
+                                 context_creation_attribs_.context_type,
+                                 DisallowedFeatures()));
+  ASSERT_TRUE(decoder_->Initialize(surface_, context_, false,
+                                   DisallowedFeatures(),
+                                   context_creation_attribs_));
 
   scoped_refptr<gpu::Buffer> buffer =
       command_buffer_service_->CreateTransferBufferHelper(kSharedBufferSize,
@@ -2309,25 +2304,6 @@ void GLES2DecoderPassthroughTestBase::TearDown() {
   gl::init::ShutdownGL();
 }
 
-void GLES2DecoderPassthroughTestBase::SetBucketData(uint32_t bucket_id,
-                                                    const void* data,
-                                                    size_t data_size) {
-  DCHECK(data || data_size == 0);
-  {
-    cmd::SetBucketSize cmd;
-    cmd.Init(bucket_id, static_cast<uint32_t>(data_size));
-    EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
-  }
-  if (data) {
-    memcpy(shared_memory_address_, data, data_size);
-    cmd::SetBucketData cmd;
-    cmd.Init(bucket_id, 0, static_cast<uint32_t>(data_size), shared_memory_id_,
-             kSharedMemoryOffset);
-    EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
-    memset(shared_memory_address_, 0, data_size);
-  }
-}
-
 GLint GLES2DecoderPassthroughTestBase::GetGLError() {
   cmds::GetError cmd;
   cmd.Init(shared_memory_id_, shared_memory_offset_);
@@ -2337,18 +2313,6 @@ GLint GLES2DecoderPassthroughTestBase::GetGLError() {
 
 void GLES2DecoderPassthroughTestBase::InjectGLError(GLenum error) {
   decoder_->InjectDriverError(error);
-}
-
-void GLES2DecoderPassthroughTestBase::DoRequestExtension(
-    const char* extension) {
-  DCHECK(extension != nullptr);
-
-  uint32_t bucket_id = 0;
-  SetBucketData(bucket_id, extension, strlen(extension) + 1);
-
-  cmds::RequestExtensionCHROMIUM cmd;
-  cmd.Init(bucket_id);
-  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
 void GLES2DecoderPassthroughTestBase::DoBindBuffer(GLenum target,

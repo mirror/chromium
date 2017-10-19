@@ -9,7 +9,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 
 using ::testing::Mock;
-using ::testing::Return;
 using ::testing::_;
 
 namespace cc {
@@ -77,7 +76,7 @@ TEST_F(WorkletAnimationPlayerTest,
   MockLayerTreeMutator* mock_mutator = new MockLayerTreeMutator();
   host_impl_->SetLayerTreeMutator(
       base::WrapUnique<LayerTreeMutator>(mock_mutator));
-  ON_CALL(*mock_mutator, HasAnimators()).WillByDefault(Return(true));
+  host_impl_->SetNeedsMutate();
 
   client_.RegisterElement(element_id_, ElementListType::ACTIVE);
   client_impl_.RegisterElement(element_id_, ElementListType::PENDING);

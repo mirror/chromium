@@ -10,9 +10,9 @@
 #include <algorithm>  // for min/max()
 #include <cmath>      // for log() and pow()
 #include <list>
-#include <memory>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -404,7 +404,7 @@ bool OutOfProcessInstance::Init(uint32_t argc,
   // Allow the plugin to handle find requests.
   SetPluginToHandleFindRequests();
 
-  text_input_ = std::make_unique<pp::TextInput_Dev>(this);
+  text_input_ = base::MakeUnique<pp::TextInput_Dev>(this);
 
   const char* stream_url = nullptr;
   const char* original_url = nullptr;
@@ -1096,7 +1096,7 @@ void OutOfProcessInstance::DidOpen(int32_t result) {
 
 void OutOfProcessInstance::DidOpenPreview(int32_t result) {
   if (result == PP_OK) {
-    preview_client_ = std::make_unique<PreviewModeClient>(this);
+    preview_client_ = base::MakeUnique<PreviewModeClient>(this);
     preview_engine_ = PDFEngine::Create(preview_client_.get());
     preview_engine_->HandleDocumentLoad(embed_preview_loader_);
   } else {
@@ -1294,7 +1294,7 @@ void OutOfProcessInstance::GetDocumentPassword(
   }
 
   password_callback_ =
-      std::make_unique<pp::CompletionCallbackWithOutput<pp::Var>>(callback);
+      base::MakeUnique<pp::CompletionCallbackWithOutput<pp::Var>>(callback);
   pp::VarDictionary message;
   message.Set(pp::Var(kType), pp::Var(kJSGetPasswordType));
   PostMessage(message);
@@ -1377,6 +1377,13 @@ void OutOfProcessInstance::FormDidOpen(int32_t result) {
   }
 }
 
+std::string OutOfProcessInstance::ShowFileSelectionDialog() {
+  // Seems like very low priority to implement, since the pdf has no way to get
+  // the file data anyways.  Javascript doesn't let you do this synchronously.
+  NOTREACHED();
+  return std::string();
+}
+
 pp::URLLoader OutOfProcessInstance::CreateURLLoader() {
   if (full_) {
     if (!did_call_start_loading_) {
@@ -1429,8 +1436,7 @@ void OutOfProcessInstance::SearchString(
 
 void OutOfProcessInstance::DocumentPaintOccurred() {}
 
-void OutOfProcessInstance::DocumentLoadComplete(
-    const PDFEngine::DocumentFeatures& document_features) {
+void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   // Clear focus state for OSK.
   FormTextFieldFocusChange(false);
 
@@ -1495,12 +1501,7 @@ void OutOfProcessInstance::DocumentLoadComplete(
   }
 
   pp::PDF::SetContentRestriction(this, content_restrictions);
-  HistogramCustomCounts("PDF.PageCount", document_features.page_count, 1,
-                        1000000, 50);
-  HistogramEnumeration("PDF.HasAttachment",
-                       document_features.has_attachments ? 1 : 0, 2);
-  HistogramEnumeration("PDF.IsLinearized",
-                       document_features.is_linearized ? 1 : 0, 2);
+  HistogramCustomCounts("PDF.PageCount", page_count, 1, 1000000, 50);
 }
 
 void OutOfProcessInstance::RotateClockwise() {

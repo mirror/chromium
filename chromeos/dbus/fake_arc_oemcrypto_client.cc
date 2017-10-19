@@ -22,7 +22,7 @@ void FakeArcOemCryptoClient::BootstrapMojoConnection(
     base::ScopedFD fd,
     VoidDBusMethodCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), false));
+      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_FAILURE));
 }
 
 }  // namespace chromeos

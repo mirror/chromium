@@ -322,6 +322,7 @@ class MockQuicConnectionHelper : public QuicConnectionHelperInterface {
   ~MockQuicConnectionHelper() override;
   const QuicClock* GetClock() const override;
   QuicRandom* GetRandomGenerator() override;
+  QuicBufferAllocator* GetStreamFrameBufferAllocator() override;
   QuicBufferAllocator* GetStreamSendBufferAllocator() override;
   void AdvanceTime(QuicTime::Delta delta);
 

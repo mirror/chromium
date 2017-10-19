@@ -192,7 +192,7 @@ IN_PROC_BROWSER_TEST_F(CustomizationLocaleTest, CheckAvailableLocales) {
     waiter.Wait();
     {
       std::string resolved_locale;
-      base::ScopedAllowBlockingForTesting allow_blocking;
+      base::ThreadRestrictions::ScopedAllowIO allow_io;
       l10n_util::CheckAndResolveLocale(languages_available[i],
                                        &resolved_locale);
       EXPECT_EQ(GetExpectedLanguage(languages_available[i]), resolved_locale)

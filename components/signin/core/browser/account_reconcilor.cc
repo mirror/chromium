@@ -113,27 +113,16 @@ void AccountReconcilor::Initialize(bool start_reconcile_if_tokens_available) {
 void AccountReconcilor::Shutdown() {
   VLOG(1) << "AccountReconcilor::Shutdown";
   UnregisterWithCookieManagerService();
+  UnregisterWithSigninManager();
   UnregisterWithTokenService();
   UnregisterWithContentSettings();
-  UnregisterWithSigninManager();
 }
 
 void AccountReconcilor::RegisterWithSigninManager() {
-  if (signin::IsAccountConsistencyDiceEnabled()) {
-    // Reconcilor is always turned on when DICE is enabled. It does not need to
-    // observe the SigninManager events.
-    return;
-  }
-
-  VLOG(1) << "AccountReconcilor::RegisterWithSigninManager";
   signin_manager_->AddObserver(this);
 }
 
 void AccountReconcilor::UnregisterWithSigninManager() {
-  if (signin::IsAccountConsistencyDiceEnabled())
-    return;
-
-  VLOG(1) << "AccountReconcilor::UnregisterWithSigninManager";
   signin_manager_->RemoveObserver(this);
 }
 
@@ -190,7 +179,6 @@ void AccountReconcilor::RegisterWithCookieManagerService() {
   cookie_manager_service_->AddObserver(this);
   registered_with_cookie_manager_service_ = true;
 }
-
 void AccountReconcilor::UnregisterWithCookieManagerService() {
   VLOG(1) << "AccountReconcilor::UnregisterWithCookieManagerService";
   if (!registered_with_cookie_manager_service_)
@@ -258,7 +246,6 @@ void AccountReconcilor::OnRefreshTokensLoaded() {
 
 void AccountReconcilor::GoogleSigninSucceeded(const std::string& account_id,
                                               const std::string& username) {
-  DCHECK(!signin::IsAccountConsistencyDiceEnabled());
   VLOG(1) << "AccountReconcilor::GoogleSigninSucceeded: signed in";
   RegisterWithCookieManagerService();
   RegisterWithContentSettings();
@@ -267,7 +254,6 @@ void AccountReconcilor::GoogleSigninSucceeded(const std::string& account_id,
 
 void AccountReconcilor::GoogleSignedOut(const std::string& account_id,
                                         const std::string& username) {
-  DCHECK(!signin::IsAccountConsistencyDiceEnabled());
   VLOG(1) << "AccountReconcilor::GoogleSignedOut: signed out";
   AbortReconcile();
   UnregisterWithCookieManagerService();

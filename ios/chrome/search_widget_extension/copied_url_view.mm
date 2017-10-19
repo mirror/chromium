@@ -72,13 +72,10 @@ const CGFloat kURLButtonMargin = 10;
     if (@available(iOS 10, *)) {
       primaryEffect = [UIVibrancyEffect widgetPrimaryVibrancyEffect];
       secondaryEffect = [UIVibrancyEffect widgetSecondaryVibrancyEffect];
-    }
-#if !defined(__IPHONE_10_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_10_0
-    else {
+    } else {
       primaryEffect = [UIVibrancyEffect notificationCenterVibrancyEffect];
       secondaryEffect = [UIVibrancyEffect notificationCenterVibrancyEffect];
     }
-#endif
 
     UIVisualEffectView* primaryEffectView =
         [[UIVisualEffectView alloc] initWithEffect:primaryEffect];

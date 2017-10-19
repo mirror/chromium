@@ -55,6 +55,7 @@ class PreviewModeClient : public PDFEngine::Client {
   void SubmitForm(const std::string& url,
                   const void* data,
                   int length) override;
+  std::string ShowFileSelectionDialog() override;
   pp::URLLoader CreateURLLoader() override;
   void ScheduleCallback(int id, int delay_in_ms) override;
   void ScheduleTouchTimerCallback(int id, int delay_in_ms) override;
@@ -63,8 +64,7 @@ class PreviewModeClient : public PDFEngine::Client {
                     bool case_sensitive,
                     std::vector<SearchStringResult>* results) override;
   void DocumentPaintOccurred() override;
-  void DocumentLoadComplete(
-      const PDFEngine::DocumentFeatures& document_features) override;
+  void DocumentLoadComplete(int page_count) override;
   void DocumentLoadFailed() override;
   void FontSubstituted() override;
   pp::Instance* GetPluginInstance() override;

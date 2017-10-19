@@ -596,19 +596,16 @@ void HandleLock() {
   Shell::Get()->session_controller()->LockScreen();
 }
 
-PaletteTray* GetPaletteTray() {
-  return Shelf::ForWindow(Shell::GetRootWindowForNewWindows())
-      ->GetStatusAreaWidget()
-      ->palette_tray();
-}
-
 void HandleShowStylusTools() {
   base::RecordAction(UserMetricsAction("Accel_Show_Stylus_Tools"));
-  GetPaletteTray()->ShowBubble(false /* show_by_click */);
+  Shelf::ForWindow(Shell::GetRootWindowForNewWindows())
+      ->GetStatusAreaWidget()
+      ->palette_tray()
+      ->ShowBubble(false /* show_by_click */);
 }
 
 bool CanHandleShowStylusTools() {
-  return GetPaletteTray()->ShouldShowPalette();
+  return palette_utils::ShouldShowPalette();
 }
 
 bool CanHandleStartVoiceInteraction() {

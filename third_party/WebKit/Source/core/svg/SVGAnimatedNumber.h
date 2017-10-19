@@ -60,7 +60,7 @@ class SVGAnimatedNumber : public SVGAnimatedProperty<SVGNumber>,
     parent_number_optional_number_ = number_optional_number;
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 

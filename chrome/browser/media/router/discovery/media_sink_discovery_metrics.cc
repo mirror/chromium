@@ -54,8 +54,8 @@ const char CastDeviceCountMetrics::kHistogramCastConnectedDeviceCount[] =
     "MediaRouter.Cast.Discovery.ConnectedDevicesCount";
 const char CastDeviceCountMetrics::kHistogramCastCachedSinksAvailableCount[] =
     "MediaRouter.Cast.Discovery.CachedSinksAvailableCount";
-const char CastDeviceCountMetrics::kHistogramCastDiscoverySinkSource[] =
-    "MediaRouter.Cast.Discovery.SinkSource";
+const char CastDeviceCountMetrics::kHistogramCastCachedSinkResolved[] =
+    "MediaRouter.Cast.Discovery.CachedSinkResolved";
 
 void CastDeviceCountMetrics::RecordDeviceCounts(size_t available_device_count,
                                                 size_t known_device_count) {
@@ -70,10 +70,9 @@ void CastDeviceCountMetrics::RecordCachedSinksAvailableCount(
                            cached_sink_count);
 }
 
-void CastDeviceCountMetrics::RecordCastSinkDiscoverySource(
-    SinkSource sink_source) {
+void CastDeviceCountMetrics::RecordResolvedFromSource(SinkSource sink_source) {
   DCHECK_LT(sink_source, kTotalCount);
-  UMA_HISTOGRAM_ENUMERATION(kHistogramCastDiscoverySinkSource, sink_source,
+  UMA_HISTOGRAM_ENUMERATION(kHistogramCastCachedSinkResolved, sink_source,
                             kTotalCount);
 }
 

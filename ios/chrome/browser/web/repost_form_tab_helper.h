@@ -36,9 +36,8 @@ class RepostFormTabHelper : public web::WebStateUserData<RepostFormTabHelper>,
                       id<RepostFormTabHelperDelegate> delegate);
 
   // web::WebStateObserver overrides:
-  void DidStartNavigation(web::WebState* web_state,
-                          web::NavigationContext* navigation_context) override;
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void DidStartNavigation(web::NavigationContext* navigation_context) override;
+  void WebStateDestroyed() override;
 
   __weak id<RepostFormTabHelperDelegate> delegate_ = nil;
 

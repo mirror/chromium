@@ -45,7 +45,6 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBRElement.h"
-#include "core/html/HTMLDivElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/html_names.h"
@@ -160,8 +159,8 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 }
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
-  return SupportsPlaceholder() && InnerEditorValue().IsEmpty() &&
-         (!IsPlaceholderEmpty() || !IsEmptySuggestedValue());
+  return SupportsPlaceholder() && IsEmptyValue() && IsEmptySuggestedValue() &&
+         !IsPlaceholderEmpty();
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
@@ -634,8 +633,8 @@ SelectionInDOMTree TextControlElement::Selection() const {
   }
 
   int offset = 0;
-  Node* start_node = nullptr;
-  Node* end_node = nullptr;
+  Node* start_node = 0;
+  Node* end_node = 0;
   for (Node& node : NodeTraversal::DescendantsOf(*inner_text)) {
     DCHECK(!node.hasChildren());
     DCHECK(node.IsTextNode() || IsHTMLBRElement(node));
@@ -879,7 +878,7 @@ static void GetNextSoftBreak(RootInlineBox*& line,
       return;
     }
   }
-  break_node = nullptr;
+  break_node = 0;
   break_offset = 0;
 }
 
@@ -947,7 +946,7 @@ TextControlElement* EnclosingTextControl(const Node* container) {
                  container->ContainingShadowRoot()->GetType() ==
                      ShadowRootType::kUserAgent
              ? ToTextControlElement(ancestor)
-             : nullptr;
+             : 0;
 }
 
 String TextControlElement::DirectionForFormData() const {
@@ -971,39 +970,6 @@ String TextControlElement::DirectionForFormData() const {
   }
 
   return "ltr";
-}
-
-// TODO(crbug.com/772433): Create and use a new suggested-value element instead.
-void TextControlElement::SetSuggestedValue(const String& value) {
-  suggested_value_ = value;
-  if (!suggested_value_.IsEmpty() && !InnerEditorValue().IsEmpty()) {
-    // Save the value that is in the editor and set the editor value to an empty
-    // string. This will allow the suggestion placeholder to be shown to the
-    // user.
-    value_before_set_suggested_value_ = InnerEditorValue();
-    SetInnerEditorValue("");
-  } else if (suggested_value_.IsEmpty() &&
-             !value_before_set_suggested_value_.IsEmpty()) {
-    // Reset the value that was in the editor before showing the suggestion.
-    SetInnerEditorValue(value_before_set_suggested_value_);
-    value_before_set_suggested_value_ = "";
-  }
-
-  UpdatePlaceholderText();
-
-  HTMLElement* placeholder = PlaceholderElement();
-  if (!placeholder)
-    return;
-
-  // Change the pseudo-id to set the style for suggested values or reset the
-  // placeholder style depending on if there is a suggested value.
-  placeholder->SetShadowPseudoId(AtomicString(suggested_value_.IsEmpty()
-                                                  ? "-webkit-input-placeholder"
-                                                  : "-webkit-input-suggested"));
-}
-
-const String& TextControlElement::SuggestedValue() const {
-  return suggested_value_;
 }
 
 HTMLElement* TextControlElement::InnerEditorElement() const {

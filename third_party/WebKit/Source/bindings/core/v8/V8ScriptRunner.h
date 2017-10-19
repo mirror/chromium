@@ -35,7 +35,6 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
-#include "platform/loader/fetch/ScriptFetchOptions.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/TextPosition.h"
 #include "platform/wtf/text/WTFString.h"
@@ -57,7 +56,6 @@ class CORE_EXPORT V8ScriptRunner final {
   // a HandleScope and a ContextScope.
   static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,
                                                   const ScriptSourceCode&,
-                                                  const ScriptFetchOptions&,
                                                   AccessControlStatus,
                                                   V8CacheOptions);
   static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,

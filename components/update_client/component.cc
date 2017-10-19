@@ -116,7 +116,17 @@ void InstallOnBlockingTaskRunner(
     return;
   }
 
-  installer->Install(unpack_path,
+  std::unique_ptr<base::DictionaryValue> manifest = ReadManifest(unpack_path);
+  if (!manifest) {
+    const CrxInstaller::Result result(InstallError::BAD_MANIFEST);
+    main_task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(callback, static_cast<int>(ErrorCategory::kInstallError),
+                       static_cast<int>(result.error), result.extended_error));
+    return;
+  }
+
+  installer->Install(std::move(manifest), unpack_path,
                      base::Bind(&InstallComplete, main_task_runner, callback,
                                 unpack_path_owner.Take()));
 }

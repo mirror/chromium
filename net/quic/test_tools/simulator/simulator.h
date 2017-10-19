@@ -41,6 +41,7 @@ class Simulator : public QuicConnectionHelperInterface {
   // Begin QuicConnectionHelperInterface implementation.
   const QuicClock* GetClock() const override;
   QuicRandom* GetRandomGenerator() override;
+  QuicBufferAllocator* GetStreamFrameBufferAllocator() override;
   QuicBufferAllocator* GetStreamSendBufferAllocator() override;
   // End QuicConnectionHelperInterface implementation.
 

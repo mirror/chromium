@@ -50,7 +50,7 @@ struct PaintPropertyTreeBuilderFragmentContext {
     // fragmentation offsets. See FragmentContext for the fragmented version.
     LayoutPoint paint_offset;
     // The PaintLayer corresponding to the origin of |paint_offset|.
-    const LayoutBoxModelObject* paint_offset_root = nullptr;
+    PaintLayer* paint_offset_root = nullptr;
     // Whether newly created children should flatten their inherited transform
     // (equivalently, draw into the plane of their parent). Should generally
     // be updated whenever |transform| is; flattening only needs to happen
@@ -70,10 +70,6 @@ struct PaintPropertyTreeBuilderFragmentContext {
     // reference a scroll offset transform, scroll nodes should be updated if
     // the transform tree changes.
     const ScrollPaintPropertyNode* scroll = nullptr;
-
-    // True if any fixed-position children within this context are fixed to the
-    // root of the FrameView (and hence above its scroll).
-    bool fixed_position_children_fixed_to_root = false;
   };
 
   ContainingBlockContext current;

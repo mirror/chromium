@@ -16,6 +16,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/message_center_notification_manager.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -24,12 +25,9 @@
 #include "components/keep_alive_registry/keep_alive_types.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/message_center_types.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
-
-using message_center::Notification;
 
 class TestAddObserver : public message_center::MessageCenterObserver {
  public:
@@ -108,12 +106,13 @@ class MessageCenterNotificationsTest : public InProcessBrowserTest {
       new_delegate->AddRef();
     }
 
-    return Notification(
-        message_center::NOTIFICATION_TYPE_SIMPLE, id,
-        base::ASCIIToUTF16("title"), base::ASCIIToUTF16("message"),
-        gfx::Image(), base::UTF8ToUTF16("chrome-test://testing/"),
-        GURL("chrome-test://testing/"), message_center::NotifierId(),
-        message_center::RichNotificationData(), new_delegate);
+    return Notification(message_center::NOTIFICATION_TYPE_SIMPLE, id,
+                        base::ASCIIToUTF16("title"),
+                        base::ASCIIToUTF16("message"), gfx::Image(),
+                        message_center::NotifierId(),
+                        base::UTF8ToUTF16("chrome-test://testing/"),
+                        GURL("chrome-test://testing/"), "REPLACE-ME",
+                        message_center::RichNotificationData(), new_delegate);
   }
 
   Notification CreateRichTestNotification(const std::string& id,
@@ -129,11 +128,11 @@ class MessageCenterNotificationsTest : public InProcessBrowserTest {
     return Notification(
         message_center::NOTIFICATION_TYPE_BASE_FORMAT, id,
         base::ASCIIToUTF16("title"), base::ASCIIToUTF16("message"),
-        gfx::Image(), base::UTF8ToUTF16("chrome-test://testing/"),
-        GURL("chrome-test://testing/"),
+        gfx::Image(),
         message_center::NotifierId(message_center::NotifierId::APPLICATION,
                                    "extension_id"),
-        data, new_delegate);
+        base::UTF8ToUTF16("chrome-test://testing/"),
+        GURL("chrome-test://testing/"), "REPLACE-ME", data, new_delegate);
   }
 
   void RunLoopUntilIdle() {

@@ -23,11 +23,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStructure;
+import android.view.ViewStructure.HtmlInfo;
 import android.view.ViewStructure.HtmlInfo.Builder;
 import android.view.autofill.AutofillId;
 import android.view.autofill.AutofillValue;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,8 +36,7 @@ import org.junit.runner.RunWith;
 import org.chromium.android_webview.AwAutofillManager;
 import org.chromium.android_webview.AwAutofillProvider;
 import org.chromium.android_webview.AwContents;
-import org.chromium.android_webview.test.AwActivityTestRule.TestDependencyFactory;
-import org.chromium.base.ThreadUtils;
+import org.chromium.android_webview.test.AwTestBase.TestDependencyFactory;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
@@ -46,11 +45,8 @@ import org.chromium.net.test.util.TestWebServer;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Tests for WebView Autofill.
@@ -62,7 +58,7 @@ public class AwAutofillTest {
     /**
      * This class only implements the necessary methods of ViewStructure for testing.
      */
-    private static class TestViewStructure extends ViewStructure {
+    public static class TestViewStructure extends ViewStructure {
         /**
          * Implementation of HtmlInfo.
          */
@@ -396,21 +392,48 @@ public class AwAutofillTest {
         private boolean mChecked;
     }
 
-    private class TestAwAutofillManager extends AwAutofillManager {
-        public TestAwAutofillManager(Context context) {
+    private static class AwAutofillManagerHelper extends AwAutofillManager {
+        private CallbackHelper mVirtualViewEntered = new CallbackHelper();
+        private CallbackHelper mVirtualValueChanged = new CallbackHelper();
+        private CallbackHelper mCommitCallbackHelper = new CallbackHelper();
+        private CallbackHelper mCancelCallbackHelper = new CallbackHelper();
+        private AwContents mAwContents;
+        private TestViewStructure mTestViewStructure;
+        private ArrayList<Pair<Integer, AutofillValue>> mChangedValues;
+
+        public AwAutofillManagerHelper(Context context) {
             super(context);
         }
 
         @Override
         public void notifyVirtualViewEntered(View parent, int childId, Rect absBounds) {
-            mEventQueue.add(AUTOFILL_VIEW_ENTERED);
-            mCallbackHelper.notifyCalled();
+            mVirtualViewEntered.notifyCalled();
         }
 
-        @Override
-        public void notifyVirtualViewExited(View parent, int childId) {
-            mEventQueue.add(AUTOFILL_VIEW_EXITED);
-            mCallbackHelper.notifyCalled();
+        public void waitForNotifyVirtualViewEnteredCalled() throws Throwable {
+            int count = mVirtualViewEntered.getCallCount();
+            mVirtualViewEntered.waitForCallback(count);
+        }
+
+        public CallbackHelper getVirtualValueChangedCallbackHelper() {
+            return mVirtualValueChanged;
+        }
+
+        public void setAwContents(AwContents awContents) {
+            mAwContents = awContents;
+        }
+
+        public void invokeOnProvideAutoFillVirtualStructure() {
+            mTestViewStructure = new TestViewStructure();
+            mAwContents.onProvideAutoFillVirtualStructure(mTestViewStructure, 1);
+        }
+
+        public void invokeAutofill(SparseArray<AutofillValue> values) {
+            mAwContents.autofill(values);
+        }
+
+        public TestViewStructure getTestViewStructure() {
+            return mTestViewStructure;
         }
 
         @Override
@@ -419,57 +442,59 @@ public class AwAutofillTest {
                 mChangedValues = new ArrayList<Pair<Integer, AutofillValue>>();
             }
             mChangedValues.add(new Pair<Integer, AutofillValue>(childId, value));
-            mEventQueue.add(AUTOFILL_VALUE_CHANGED);
-            mCallbackHelper.notifyCalled();
+            mVirtualValueChanged.notifyCalled();
+        }
+
+        public ArrayList<Pair<Integer, AutofillValue>> getChangedValues() {
+            return mChangedValues;
+        }
+
+        public void clearChangedValues() {
+            if (mChangedValues != null) mChangedValues.clear();
         }
 
         @Override
         public void commit() {
-            mEventQueue.add(AUTOFILL_COMMIT);
-            mCallbackHelper.notifyCalled();
+            mCommitCallbackHelper.notifyCalled();
+        }
+
+        public CallbackHelper getCommitCallbackHelper() {
+            return mCommitCallbackHelper;
         }
 
         @Override
         public void cancel() {
-            mEventQueue.add(AUTOFILL_CANCEL);
-            mCallbackHelper.notifyCalled();
+            mCancelCallbackHelper.notifyCalled();
+        }
+
+        public CallbackHelper getCancelCallbackHelper() {
+            return mCancelCallbackHelper;
         }
     }
 
     public static final String FILE = "/login.html";
     public static final String FILE_URL = "file:///android_asset/autofill.html";
-
-    public final static int AUTOFILL_VIEW_ENTERED = 1;
-    public final static int AUTOFILL_VIEW_EXITED = 2;
-    public final static int AUTOFILL_VALUE_CHANGED = 3;
-    public final static int AUTOFILL_COMMIT = 4;
-    public final static int AUTOFILL_CANCEL = 5;
-
     @Rule
-    public AwActivityTestRule mRule = new AwActivityTestRule();
+    public AwActivityTestRule mActivityTestRule = new AwActivityTestRule();
 
     private AwTestContainerView mTestContainerView;
     private TestAwContentsClient mContentsClient;
-    private CallbackHelper mCallbackHelper = new CallbackHelper();
-    private AwContents mAwContents;
-    private TestViewStructure mTestViewStructure;
-    private ArrayList<Pair<Integer, AutofillValue>> mChangedValues;
-    private ConcurrentLinkedQueue<Integer> mEventQueue = new ConcurrentLinkedQueue<>();
+    private AwAutofillManagerHelper mHelper;
 
     @Before
     public void setUp() throws Exception {
         mContentsClient = new TestAwContentsClient();
-        mTestContainerView = mRule.createAwTestContainerViewOnMainSync(
+        mTestContainerView = mActivityTestRule.createAwTestContainerViewOnMainSync(
                 mContentsClient, false, new TestDependencyFactory() {
                     @Override
                     public AutofillProvider createAutofillProvider(
                             Context context, ViewGroup containerView) {
-                        return new AwAutofillProvider(
-                                containerView, new TestAwAutofillManager(context));
+                        mHelper = new AwAutofillManagerHelper(context);
+                        return new AwAutofillProvider(containerView, mHelper);
                     }
                 });
-        mAwContents = mTestContainerView.getAwContents();
-        mRule.enableJavaScriptOnUiThread(mAwContents);
+        mHelper.setAwContents(mTestContainerView.getAwContents());
+        mActivityTestRule.enableJavaScriptOnUiThread(mTestContainerView.getAwContents());
     }
 
     @Test
@@ -489,20 +514,17 @@ public class AwAutofillTest {
                 + "</form></body></html>";
         final int totalControls = 3;
         try {
-            int cnt = 0;
             final String url = webServer.setResponse(FILE, data, null);
-            loadUrlSync(url);
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
             executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
-            // Note that we cancel autofill in loading as a precautious measure.
-            cnt += waitForCallbackAndVerifyTypes(
-                    cnt, new Integer[] {AUTOFILL_CANCEL, AUTOFILL_CANCEL});
+            CallbackHelper callbackHelper = mHelper.getVirtualValueChangedCallbackHelper();
+            int count = callbackHelper.getCallCount();
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
-            // Note that we currently call ENTER/EXIT one more time.
-            cnt += waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
-                            AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
-            invokeOnProvideAutoFillVirtualStructure();
-            TestViewStructure viewStructure = mTestViewStructure;
+            mHelper.waitForNotifyVirtualViewEnteredCalled();
+            callbackHelper.waitForCallback(count);
+            mHelper.invokeOnProvideAutoFillVirtualStructure();
+            TestViewStructure viewStructure = mHelper.getTestViewStructure();
             assertNotNull(viewStructure);
             assertEquals(totalControls, viewStructure.getChildCount());
 
@@ -553,11 +575,9 @@ public class AwAutofillTest {
             values.append(child0.getId(), AutofillValue.forText("example@example.com"));
             values.append(child1.getId(), AutofillValue.forToggle(true));
             values.append(child2.getId(), AutofillValue.forList(1));
-            cnt = getCallbackCount();
-            invokeAutofill(values);
-            waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_VALUE_CHANGED, AUTOFILL_VALUE_CHANGED,
-                            AUTOFILL_VALUE_CHANGED});
+            count = callbackHelper.getCallCount();
+            mHelper.invokeAutofill(values);
+            callbackHelper.waitForCallback(count, totalControls);
 
             // Verify form filled by Javascript
             String value0 =
@@ -585,32 +605,23 @@ public class AwAutofillTest {
                 + "</form></body></html>";
         try {
             final String url = webServer.setResponse(FILE, data, null);
-            loadUrlSync(url);
-            int cnt = 0;
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
             executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
-            // Note that we cancel autofill in loading as a precautious measure.
-            cnt += waitForCallbackAndVerifyTypes(
-                    cnt, new Integer[] {AUTOFILL_CANCEL, AUTOFILL_CANCEL});
-
+            CallbackHelper callbackHelper = mHelper.getVirtualValueChangedCallbackHelper();
+            int count = callbackHelper.getCallCount();
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
-
-            // Note that we currently call ENTER/EXIT one more time.
-            cnt += waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
-                            AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
-            ArrayList<Pair<Integer, AutofillValue>> values = getChangedValues();
+            callbackHelper.waitForCallback(count);
+            ArrayList<Pair<Integer, AutofillValue>> values = mHelper.getChangedValues();
             // Check if NotifyVirtualValueChanged() called and value is 'a'.
             assertEquals(1, values.size());
             assertEquals("a", values.get(0).second.getTextValue());
-
+            count = callbackHelper.getCallCount();
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_B);
-
-            // Check if NotifyVirtualValueChanged() called again, first value is 'a',
+            // Check if NotifyVirtualValueChanged() called 2 times, first value is 'a',
             // second value is 'ab', and both time has the same id.
-            waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {
-                            AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
-            values = getChangedValues();
+            callbackHelper.waitForCallback(count);
+            values = mHelper.getChangedValues();
             assertEquals(2, values.size());
             assertEquals("a", values.get(0).second.getTextValue());
             assertEquals("ab", values.get(1).second.getTextValue());
@@ -631,30 +642,24 @@ public class AwAutofillTest {
                 + "</form></body></html>";
         try {
             final String url = webServer.setResponse(FILE, data, null);
-            loadUrlSync(url);
-            int cnt = 0;
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
             executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
-            // Note that we cancel autofill in loading as a precautious measure.
-            cnt += waitForCallbackAndVerifyTypes(
-                    cnt, new Integer[] {AUTOFILL_CANCEL, AUTOFILL_CANCEL});
+            CallbackHelper callbackHelper = mHelper.getVirtualValueChangedCallbackHelper();
+            int count = callbackHelper.getCallCount();
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
-            // Note that we currently call ENTER/EXIT one more time.
-            cnt += waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
-                            AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
-            ArrayList<Pair<Integer, AutofillValue>> values = getChangedValues();
+            callbackHelper.waitForCallback(count);
+            ArrayList<Pair<Integer, AutofillValue>> values = mHelper.getChangedValues();
             // Check if NotifyVirtualValueChanged() called and value is 'a'.
             assertEquals(1, values.size());
             assertEquals("a", values.get(0).second.getTextValue());
+            count = callbackHelper.getCallCount();
             executeJavaScriptAndWaitForResult("document.getElementById('text1').value='c';");
-            assertEquals(7, getCallbackCount());
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_B);
             // Check if NotifyVirtualValueChanged() called one more time and value is 'cb', this
             // means javascript change didn't trigger the NotifyVirtualValueChanged().
-            waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {
-                            AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
-            values = getChangedValues();
+            callbackHelper.waitForCallback(count);
+            values = mHelper.getChangedValues();
             assertEquals(2, values.size());
             assertEquals("a", values.get(0).second.getTextValue());
             assertEquals("cb", values.get(1).second.getTextValue());
@@ -678,34 +683,30 @@ public class AwAutofillTest {
                 + "</form></body></html>";
         try {
             final String url = webServer.setResponse(FILE, data, null);
-            loadUrlSync(url);
-            int cnt = 0;
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
             executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
-            // Note that we cancel autofill in loading as a precautious measure.
-            cnt += waitForCallbackAndVerifyTypes(
-                    cnt, new Integer[] {AUTOFILL_CANCEL, AUTOFILL_CANCEL});
+            CallbackHelper valueChangedCallback = mHelper.getVirtualValueChangedCallbackHelper();
+            int count = valueChangedCallback.getCallCount();
+            // Commit() hasn't been called.
+            assertEquals(0, count);
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
-            // Note that we currently call ENTER/EXIT one more time.
-            cnt += waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
-                            AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
-            invokeOnProvideAutoFillVirtualStructure();
+            valueChangedCallback.waitForCallback(count);
+            mHelper.invokeOnProvideAutoFillVirtualStructure();
             // Fill the password.
             executeJavaScriptAndWaitForResult("document.getElementById('passwordid').select();");
-            cnt += waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {
-                            AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+            count = valueChangedCallback.getCallCount();
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_B);
-            cnt += waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {
-                            AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
-            clearChangedValues();
+            valueChangedCallback.waitForCallback(count);
+            CallbackHelper commitCallbackHelper = mHelper.getCommitCallbackHelper();
+            count = commitCallbackHelper.getCallCount();
+            // Commit() hasn't been called.
+            assertEquals(0, count);
+            mHelper.clearChangedValues();
             // Submit form.
             executeJavaScriptAndWaitForResult("document.getElementById('formid').submit();");
-            waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_VALUE_CHANGED, AUTOFILL_VALUE_CHANGED, AUTOFILL_COMMIT,
-                            AUTOFILL_CANCEL});
-            ArrayList<Pair<Integer, AutofillValue>> values = getChangedValues();
+            commitCallbackHelper.waitForCallback(count);
+            ArrayList<Pair<Integer, AutofillValue>> values = mHelper.getChangedValues();
             assertEquals(2, values.size());
             assertEquals("a", values.get(0).second.getTextValue());
             assertEquals("b", values.get(1).second.getTextValue());
@@ -718,23 +719,32 @@ public class AwAutofillTest {
     @SmallTest
     @Feature({"AndroidWebView"})
     public void testLoadFileURL() throws Throwable {
-        int cnt = 0;
-        loadUrlSync(FILE_URL);
+        CallbackHelper valueChangedCallback = mHelper.getVirtualValueChangedCallbackHelper();
+        int count = valueChangedCallback.getCallCount();
+        mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                mContentsClient.getOnPageFinishedHelper(), FILE_URL);
         executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
-        // Note that we cancel autofill in loading as a precautious measure.
-        cnt += waitForCallbackAndVerifyTypes(cnt, new Integer[] {AUTOFILL_CANCEL, AUTOFILL_CANCEL});
         dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
-        // Cancel called for the first query.
-        // Note that we currently call ENTER/EXIT one more time.
-        waitForCallbackAndVerifyTypes(cnt,
-                new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
-                        AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+        valueChangedCallback.waitForCallback(count);
     }
 
     @Test
     @SmallTest
     @Feature({"AndroidWebView"})
-    public void testMovingToOtherForm() throws Throwable {
+    public void testCancelCalledForFirstQuery() throws Throwable {
+        mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                mContentsClient.getOnPageFinishedHelper(), FILE_URL);
+        executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
+        CallbackHelper cacelCallback = mHelper.getCancelCallbackHelper();
+        int count = cacelCallback.getCallCount();
+        dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
+        cacelCallback.waitForCallback(count);
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testCancelCalledWhenMovingToOtherForm() throws Throwable {
         TestWebServer webServer = TestWebServer.start();
         final String data =
                 "<html><head></head><body><form action='a.html' name='formname' id='formid'>"
@@ -747,81 +757,27 @@ public class AwAutofillTest {
                 + "<input type='submit'>"
                 + "</form></body></html>";
         try {
-            int cnt = 0;
             final String url = webServer.setResponse(FILE, data, null);
-            loadUrlSync(url);
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
             executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
-            // Note that we cancel autofill in loading as a precautious measure.
-            cnt += waitForCallbackAndVerifyTypes(
-                    cnt, new Integer[] {AUTOFILL_CANCEL, AUTOFILL_CANCEL});
+            CallbackHelper cancelCallback = mHelper.getCancelCallbackHelper();
+            int count = cancelCallback.getCallCount();
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
-            // Note that we currently call ENTER/EXIT one more time.
-            cnt += waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
-                            AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+            cancelCallback.waitForCallback(count);
             // Move to form2, cancel() should be called again.
             executeJavaScriptAndWaitForResult("document.getElementById('text2').select();");
-            cnt += waitForCallbackAndVerifyTypes(cnt, new Integer[] {AUTOFILL_VIEW_EXITED});
+            count = cancelCallback.getCallCount();
             dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
-            waitForCallbackAndVerifyTypes(cnt,
-                    new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
-                            AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+            cancelCallback.waitForCallback(count);
         } finally {
             webServer.shutdown();
         }
     }
 
-    private void loadUrlSync(String url) throws Exception {
-        mRule.loadUrlSync(
-                mTestContainerView.getAwContents(), mContentsClient.getOnPageFinishedHelper(), url);
-    }
-
     private String executeJavaScriptAndWaitForResult(String code) throws Throwable {
-        return mRule.executeJavaScriptAndWaitForResult(
+        return mActivityTestRule.executeJavaScriptAndWaitForResult(
                 mTestContainerView.getAwContents(), mContentsClient, code);
-    }
-
-    private ArrayList<Pair<Integer, AutofillValue>> getChangedValues() {
-        return mChangedValues;
-    }
-
-    private void clearChangedValues() {
-        if (mChangedValues != null) mChangedValues.clear();
-    }
-
-    private void invokeOnProvideAutoFillVirtualStructure() {
-        mTestViewStructure = new TestViewStructure();
-        mAwContents.onProvideAutoFillVirtualStructure(mTestViewStructure, 1);
-    }
-
-    private void invokeAutofill(SparseArray<AutofillValue> values) {
-        mAwContents.autofill(values);
-    }
-
-    private int getCallbackCount() {
-        return mCallbackHelper.getCallCount();
-    }
-
-    /**
-     * Wait for expected callbacks to be called, and verify the types.
-     *
-     * @param currentCallCount The current call count to start from.
-     * @param expectedEventArray The callback types that need to be verified.
-     * @return The number of new callbacks since currentCallCount. This should be same as the length
-     *         of expectedEventArray.
-     * @throws InterruptedException
-     * @throws TimeoutException
-     */
-    private int waitForCallbackAndVerifyTypes(int currentCallCount, Integer[] expectedEventArray)
-            throws InterruptedException, TimeoutException {
-        // Check against the call count to avoid missing out a callback in between waits, while
-        // exposing it so that the test can control where the call count starts.
-        mCallbackHelper.waitForCallback(currentCallCount, expectedEventArray.length);
-        Object[] objectArray = mEventQueue.toArray();
-        mEventQueue.clear();
-        Integer[] resultArray = Arrays.copyOf(objectArray, objectArray.length, Integer[].class);
-        Assert.assertArrayEquals(Arrays.toString(resultArray), expectedEventArray, resultArray);
-        return expectedEventArray.length;
     }
 
     private void dispatchDownAndUpKeyEvents(final int code) throws Throwable {
@@ -830,7 +786,7 @@ public class AwAutofillTest {
     }
 
     private boolean dispatchKeyEvent(final KeyEvent event) throws Throwable {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
+        return mActivityTestRule.runTestOnUiThreadAndGetResult(new Callable<Boolean>() {
             @Override
             public Boolean call() {
                 return mTestContainerView.dispatchKeyEvent(event);

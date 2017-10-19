@@ -46,7 +46,7 @@ class CSSBorderImageSliceValue : public CSSValue {
 
   bool Equals(const CSSBorderImageSliceValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSBorderImageSliceValue(CSSQuadValue* slices, bool fill);

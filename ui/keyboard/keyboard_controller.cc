@@ -26,7 +26,6 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/path.h"
-#include "ui/keyboard/container_full_width_behavior.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
 #include "ui/keyboard/keyboard_layout_manager.h"
 #include "ui/keyboard/keyboard_ui.h"
@@ -42,9 +41,18 @@ namespace {
 
 constexpr int kHideKeyboardDelayMs = 100;
 
+// The virtual keyboard show/hide animation duration.
+constexpr int kAnimationDurationMs = 100;
+
 // Reports an error histogram if the keyboard state is lingering in an
 // intermediate state for more than 5 seconds.
 constexpr int kReportLingeringStateDelayMs = 5000;
+
+// The opacity of virtual keyboard container when show animation starts or
+// hide animation finishes. This cannot be zero because we call Show() on the
+// keyboard window before setting the opacity back to 1.0. Since windows are not
+// allowed to be shown with zero opacity, we always animate to 0.01 instead.
+constexpr float kAnimationStartOrAfterHideOpacity = 0.01f;
 
 // State transition diagram (document linked from crbug.com/719905)
 bool isAllowedStateTransition(keyboard::KeyboardControllerState from,
@@ -218,7 +226,6 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
       weak_factory_will_hide_(this) {
   ui_->GetInputMethod()->AddObserver(this);
   ui_->SetController(this);
-  container_behavior_ = std::make_unique<ContainerFullWidthBehavior>();
   ChangeState(KeyboardControllerState::INITIAL);
 }
 
@@ -360,13 +367,19 @@ void KeyboardController::HideKeyboard(HideReason reason) {
 
       aura::Window* window = container_.get();
 
+      // Scoped settings go into effect when scope ends.
       {
-        // Scoped settings go into effect when scope ends.
         ::wm::ScopedHidingAnimationSettings hiding_settings(window);
-        container_behavior_->DoHidingAnimation(window, &hiding_settings);
+
+        hiding_settings.layer_animation_settings()->SetTransitionDuration(
+            base::TimeDelta::FromMilliseconds(kAnimationDurationMs));
+        gfx::Transform transform;
+        transform.Translate(0, kAnimationDistance);
+        window->SetTransform(transform);
+        window->layer()->SetOpacity(0.f);
       }
 
-      ui_->HideKeyboardContainer(window);
+      ui_->HideKeyboardContainer(container_.get());
       ChangeState(KeyboardControllerState::HIDDEN);
 
       for (KeyboardControllerObserver& observer : observer_list_)
@@ -573,8 +586,10 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
     case KeyboardControllerState::HIDDEN: {
       // If the container is not animating, makes sure the position and opacity
       // are at begin states for animation.
-      container_behavior_->InitializeShowAnimationStartingState(
-          container_.get());
+      gfx::Transform transform;
+      transform.Translate(0, kAnimationDistance);
+      container_->SetTransform(transform);
+      container_->layer()->SetOpacity(kAnimationStartOrAfterHideOpacity);
       break;
     }
     default:
@@ -597,8 +612,12 @@ void KeyboardController::PopulateKeyboardContent(int64_t display_id,
   ui_->ShowKeyboardContainer(container_.get());
 
   ui::ScopedLayerAnimationSettings settings(container_animator);
+  settings.SetTweenType(gfx::Tween::LINEAR_OUT_SLOW_IN);
+  settings.SetTransitionDuration(
+      base::TimeDelta::FromMilliseconds(kAnimationDurationMs));
 
-  container_behavior_->DoShowingAnimation(container_.get(), &settings);
+  container_->SetTransform(gfx::Transform());
+  container_->layer()->SetOpacity(1.0);
 
   ChangeState(KeyboardControllerState::SHOWN);
   NotifyKeyboardBoundsChangingAndEnsureCaretInWorkArea();

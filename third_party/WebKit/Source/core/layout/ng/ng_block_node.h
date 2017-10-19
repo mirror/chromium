@@ -70,8 +70,7 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   void CopyFragmentDataToLayoutBox(const NGConstraintSpace&,
                                    const NGLayoutResult&);
   void PlaceChildrenInLayoutBox(const NGConstraintSpace&,
-                                const NGPhysicalBoxFragment&,
-                                const NGPhysicalOffset& offset_from_start);
+                                const NGPhysicalBoxFragment&);
   void PlaceChildrenInFlowThread(const NGConstraintSpace&,
                                  const NGPhysicalBoxFragment&);
   void CopyChildFragmentPosition(

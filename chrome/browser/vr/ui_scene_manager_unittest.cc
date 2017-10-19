@@ -20,9 +20,12 @@
 #include "chrome/browser/vr/ui_scene_constants.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/WebKit/public/platform/WebGestureEvent.h"
 
 namespace vr {
+
+using TargetProperty::BOUNDS;
+using TargetProperty::TRANSFORM;
+using TargetProperty::OPACITY;
 
 namespace {
 const std::set<UiElementName> kFloorCeilingBackgroundElements = {
@@ -57,8 +60,8 @@ const std::set<UiElementName> kElementsVisibleWithExitWarning = {
     kScreenDimmer, kExitWarning,
 };
 
-static constexpr float kTolerance = 1e-5f;
-static constexpr float kSmallDelaySeconds = 0.1f;
+static constexpr float kTolerance = 1e-5;
+static constexpr float kSmallDelaySeconds = 0.1;
 
 MATCHER_P2(SizeFsAreApproximatelyEqual, other, tolerance, "") {
   return base::IsApproximatelyEqual(arg.width(), other.width(), tolerance) &&
@@ -498,14 +501,14 @@ TEST_F(UiSceneManagerTest, PropagateContentBoundsOnStart) {
               OnContentScreenBoundsChanged(
                   SizeFsAreApproximatelyEqual(expected_bounds, kTolerance)));
 
-  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
+  manager_->OnProjMatrixChanged(kProjMatrix);
 }
 
 TEST_F(UiSceneManagerTest, PropagateContentBoundsOnFullscreen) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   AnimateBy(MsToDelta(0));
-  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
+  manager_->OnProjMatrixChanged(kProjMatrix);
   manager_->SetFullscreen(true);
   AnimateBy(MsToDelta(0));
 
@@ -514,7 +517,7 @@ TEST_F(UiSceneManagerTest, PropagateContentBoundsOnFullscreen) {
               OnContentScreenBoundsChanged(
                   SizeFsAreApproximatelyEqual(expected_bounds, kTolerance)));
 
-  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
+  manager_->OnProjMatrixChanged(kProjMatrix);
 }
 
 TEST_F(UiSceneManagerTest, HitTestableElements) {
@@ -527,7 +530,7 @@ TEST_F(UiSceneManagerTest, DontPropagateContentBoundsOnNegligibleChange) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   AnimateBy(MsToDelta(0));
-  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
+  manager_->OnProjMatrixChanged(kProjMatrix);
 
   UiElement* content_quad = scene_->GetUiElementByName(kContentQuad);
   gfx::SizeF content_quad_size = content_quad->size();
@@ -537,7 +540,7 @@ TEST_F(UiSceneManagerTest, DontPropagateContentBoundsOnNegligibleChange) {
 
   EXPECT_CALL(*browser_, OnContentScreenBoundsChanged(testing::_)).Times(0);
 
-  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
+  manager_->OnProjMatrixChanged(kProjMatrix);
 }
 
 TEST_F(UiSceneManagerTest, RendererUsesCorrectOpacity) {

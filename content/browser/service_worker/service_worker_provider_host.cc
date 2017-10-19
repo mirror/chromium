@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "content/browser/bad_message.h"
+#include "content/browser/service_worker/browser_side_controller_service_worker.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_request_handler.h"
@@ -28,7 +29,6 @@
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
-#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
@@ -38,7 +38,6 @@
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "net/base/url_util.h"
 #include "storage/browser/blob/blob_storage_context.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -125,18 +124,6 @@ WebContents* GetWebContents(int render_process_id, int render_frame_id) {
   return WebContents::FromRenderFrameHost(rfh);
 }
 
-void GetInterfaceImpl(const std::string& interface_name,
-                      mojo::ScopedMessagePipeHandle interface_pipe,
-                      const url::Origin& origin,
-                      int process_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* process = RenderProcessHost::FromID(process_id);
-  if (!process)
-    return;
-
-  // TODO(sammc): Dispatch interface requests.
-}
-
 }  // anonymous namespace
 
 // static
@@ -193,8 +180,7 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
       context_(context),
       dispatcher_host_(dispatcher_host),
       allow_association_(true),
-      binding_(this),
-      interface_provider_binding_(this) {
+      binding_(this) {
   DCHECK_NE(SERVICE_WORKER_PROVIDER_UNKNOWN, info_.type);
 
   if (info_.type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER) {
@@ -333,9 +319,14 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
   scoped_refptr<ServiceWorkerVersion> previous_version = controller_;
   controller_ = version;
 
-  if (version)
-    version->AddControllee(this);
+  // This will drop the message pipes to the client pages as well.
+  controller_service_worker_.reset();
 
+  if (version) {
+    version->AddControllee(this);
+    controller_service_worker_ =
+        base::MakeUnique<BrowserSideControllerServiceWorker>(version);
+  }
   if (previous_version.get())
     previous_version->RemoveControllee(this);
 
@@ -484,12 +475,12 @@ ServiceWorkerProviderHost::CreateRequestHandler(
   return std::unique_ptr<ServiceWorkerRequestHandler>();
 }
 
-blink::mojom::ServiceWorkerObjectInfo
+ServiceWorkerObjectInfo
 ServiceWorkerProviderHost::GetOrCreateServiceWorkerHandle(
     ServiceWorkerVersion* version) {
   DCHECK(dispatcher_host_);
   if (!context_ || !version)
-    return blink::mojom::ServiceWorkerObjectInfo();
+    return ServiceWorkerObjectInfo();
   ServiceWorkerHandle* handle = dispatcher_host_->FindServiceWorkerHandle(
       provider_id(), version->version_id());
   if (handle) {
@@ -720,9 +711,6 @@ ServiceWorkerProviderHost::CompleteStartWorkerPreparation(
   binding_.Bind(mojo::MakeRequest(&provider_info->host_ptr_info));
   binding_.set_connection_error_handler(
       base::BindOnce(&RemoveProviderHost, context_, process_id, provider_id()));
-
-  interface_provider_binding_.Bind(
-      mojo::MakeRequest(&provider_info->interface_provider));
 
   // Set the document URL to the script url in order to allow
   // register/unregister/getRegistration on ServiceWorkerGlobalScope.
@@ -1221,15 +1209,15 @@ void ServiceWorkerProviderHost::GetRegistrationForReady(
 void ServiceWorkerProviderHost::GetControllerServiceWorker(
     mojom::ControllerServiceWorkerRequest controller_request) {
   // TODO(kinuko): Log the reasons we drop the request.
-  if (!dispatcher_host_ || !IsContextAlive() || !controller_)
+  if (!dispatcher_host_ || !IsContextAlive() || !controller_service_worker_)
     return;
 
-  // TODO(kinuko): Call version_->StartWorker() here if the service
-  // is stopped. Currently it should be starting or running at this point.
+  // TODO(kinuko): Call version_->StartWorker() here and pass the
+  // controller_request to the ServiceWorker.
+  // (Note that this could get called multiple times before the service
+  // worker is started)
   DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
-  DCHECK(controller_->running_status() == EmbeddedWorkerStatus::STARTING ||
-         controller_->running_status() == EmbeddedWorkerStatus::RUNNING);
-  controller_->controller()->Clone(std::move(controller_request));
+  controller_service_worker_->AddBinding(std::move(controller_request));
 }
 
 bool ServiceWorkerProviderHost::IsValidRegisterMessage(
@@ -1304,19 +1292,6 @@ bool ServiceWorkerProviderHost::IsValidGetRegistrationForReadyMessage(
   }
 
   return true;
-}
-
-void ServiceWorkerProviderHost::GetInterface(
-    const std::string& interface_name,
-    mojo::ScopedMessagePipeHandle interface_pipe) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK_NE(kDocumentMainThreadId, render_thread_id_);
-  DCHECK(IsHostToRunningServiceWorker());
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &GetInterfaceImpl, interface_name, std::move(interface_pipe),
-          running_hosted_version_->script_origin(), render_process_id_));
 }
 
 }  // namespace content

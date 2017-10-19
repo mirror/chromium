@@ -51,7 +51,7 @@ class RTCLegacyStatsReport final
 
   void AddStatistic(const String& name, const String& value);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   RTCLegacyStatsReport(const String& id, const String& type, double timestamp);

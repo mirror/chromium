@@ -67,7 +67,7 @@ class MODULES_EXPORT Cache final : public GarbageCollectedFinalized<Cache>,
   static WebServiceWorkerCache::QueryParams ToWebQueryParams(
       const CacheQueryOptions&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   class BarrierCallbackForPut;

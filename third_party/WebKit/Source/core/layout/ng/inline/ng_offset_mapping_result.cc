@@ -6,7 +6,6 @@
 
 #include "core/dom/Node.h"
 #include "core/dom/Text.h"
-#include "core/layout/ng/inline/ng_inline_node.h"
 
 namespace blink {
 
@@ -42,23 +41,13 @@ unsigned NGOffsetMappingUnit::ConvertDOMOffsetToTextContent(
   return offset - dom_start_ + text_content_start_;
 }
 
-const NGOffsetMappingResult* GetNGOffsetMappingFor(const Node& node,
-                                                   unsigned offset) {
-  Optional<NGInlineNode> inline_node = GetNGInlineNodeFor(node, offset);
-  if (!inline_node)
-    return nullptr;
-  return &inline_node->ComputeOffsetMappingIfNeeded();
+NGOffsetMappingResult::NGOffsetMappingResult(NGOffsetMappingResult&& other)
+    : NGOffsetMappingResult(std::move(other.units_), std::move(other.ranges_)) {
 }
 
-NGOffsetMappingResult::NGOffsetMappingResult(NGOffsetMappingResult&& other)
-    : NGOffsetMappingResult(std::move(other.units_),
-                            std::move(other.ranges_),
-                            other.text_) {}
-
 NGOffsetMappingResult::NGOffsetMappingResult(UnitVector&& units,
-                                             RangeMap&& ranges,
-                                             String text)
-    : units_(units), ranges_(ranges), text_(text) {}
+                                             RangeMap&& ranges)
+    : units_(units), ranges_(ranges) {}
 
 NGOffsetMappingResult::~NGOffsetMappingResult() = default;
 
@@ -163,26 +152,6 @@ unsigned NGOffsetMappingResult::EndOfLastNonCollapsedCharacter(
     --unit;
   }
   return fallback;
-}
-
-bool NGOffsetMappingResult::IsNonCollapsedCharacter(const Node& node,
-                                                    unsigned offset) const {
-  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
-  return unit && offset < unit->DOMEnd() &&
-         unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
-}
-
-bool NGOffsetMappingResult::IsAfterNonCollapsedCharacter(
-    const Node& node,
-    unsigned offset) const {
-  if (!offset)
-    return false;
-  // In case we have one unit ending at |offset| and another starting at
-  // |offset|, we need to find the former. Hence, search with |offset - 1|.
-  const NGOffsetMappingUnit* unit =
-      GetMappingUnitForDOMOffset(node, offset - 1);
-  return unit && offset > unit->DOMStart() &&
-         unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
 }
 
 }  // namespace blink

@@ -8,11 +8,6 @@
           "content::mojom::MojoLayoutTestHelper",
           "bluetooth::mojom::FakeBluetooth"
         ]
-      },
-      "requires": {
-        "echo": [
-          "echo"
-        ]
       }
     },
     "navigation:frame": {

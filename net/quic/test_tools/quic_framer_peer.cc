@@ -29,6 +29,12 @@ void QuicFramerPeer::SetLastSerializedConnectionId(
 }
 
 // static
+void QuicFramerPeer::SetLastPacketNumber(QuicFramer* framer,
+                                         QuicPacketNumber packet_number) {
+  framer->last_packet_number_ = packet_number;
+}
+
+// static
 void QuicFramerPeer::SetLargestPacketNumber(QuicFramer* framer,
                                             QuicPacketNumber packet_number) {
   framer->largest_packet_number_ = packet_number;
@@ -64,6 +70,11 @@ void QuicFramerPeer::SwapCrypters(QuicFramer* framer1, QuicFramer* framer2) {
 QuicEncrypter* QuicFramerPeer::GetEncrypter(QuicFramer* framer,
                                             EncryptionLevel level) {
   return framer->encrypter_[level].get();
+}
+
+// static
+QuicPacketNumber QuicFramerPeer::GetLastPacketNumber(QuicFramer* framer) {
+  return framer->last_packet_number_;
 }
 
 }  // namespace test

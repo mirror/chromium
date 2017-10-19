@@ -60,11 +60,7 @@ TEST_F(TaskSchedulerTaskTrackerPosixTest, RunTask) {
 
   EXPECT_TRUE(tracker_.WillPostTask(task.get()));
 
-  auto sequence = test::CreateSequenceWithTask(std::move(task));
-  EXPECT_EQ(sequence, tracker_.WillScheduleSequence(sequence, nullptr));
-  // Expect RunNextTask to return nullptr since |sequence| is empty after
-  // popping a task from it.
-  EXPECT_FALSE(tracker_.RunNextTask(sequence, nullptr));
+  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
 
   EXPECT_TRUE(did_run);
 }
@@ -84,11 +80,7 @@ TEST_F(TaskSchedulerTaskTrackerPosixTest, FileDescriptorWatcher) {
 
   EXPECT_TRUE(tracker_.WillPostTask(task.get()));
 
-  auto sequence = test::CreateSequenceWithTask(std::move(task));
-  EXPECT_EQ(sequence, tracker_.WillScheduleSequence(sequence, nullptr));
-  // Expect RunNextTask to return nullptr since |sequence| is empty after
-  // popping a task from it.
-  EXPECT_FALSE(tracker_.RunNextTask(sequence, nullptr));
+  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
 
   // Join the service thread to make sure that the read watch is registered and
   // unregistered before file descriptors are closed.

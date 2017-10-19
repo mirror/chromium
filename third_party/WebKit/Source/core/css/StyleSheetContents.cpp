@@ -125,8 +125,12 @@ bool StyleSheetContents::IsCacheableForResource() const {
   // This would require dealing with multiple clients for load callbacks.
   if (!LoadCompleted())
     return false;
-  if (has_media_queries_ &&
-      !RuntimeEnabledFeatures::CacheStyleSheetWithMediaQueriesEnabled())
+  // FIXME: StyleSheets with media queries can't be cached because their RuleSet
+  // is processed differently based off the media queries, which might resolve
+  // differently depending on the context of the parent CSSStyleSheet (e.g.
+  // if they are in differently sized iframes). Once RuleSets are media query
+  // agnostic, we can restore sharing of StyleSheetContents with medea queries.
+  if (has_media_queries_)
     return false;
   // FIXME: Support copying import rules.
   if (!import_rules_.IsEmpty())
@@ -694,7 +698,7 @@ void StyleSheetContents::FindFontFaceRules(
   FindFontFaceRulesFromRules(ChildRules(), font_face_rules);
 }
 
-void StyleSheetContents::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleSheetContents) {
   visitor->Trace(owner_rule_);
   visitor->Trace(import_rules_);
   visitor->Trace(namespace_rules_);

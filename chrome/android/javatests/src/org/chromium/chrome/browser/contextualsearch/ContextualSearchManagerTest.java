@@ -172,7 +172,8 @@ public class ContextualSearchManagerTest {
     @Before
     public void setUp() throws Exception {
         // We have to set up the test server before starting the activity.
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
 
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override

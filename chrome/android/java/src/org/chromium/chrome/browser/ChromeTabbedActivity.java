@@ -62,7 +62,6 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChromeTablet;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.phone.StackLayout;
 import org.chromium.chrome.browser.cookies.CookiesFetcher;
-import org.chromium.chrome.browser.crash.PureJavaExceptionHandler;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.document.DocumentUtils;
 import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
@@ -104,7 +103,6 @@ import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabStateBrowserControlsVisibilityDelegate;
-import org.chromium.chrome.browser.tabmodel.AsyncTabParamsManager;
 import org.chromium.chrome.browser.tabmodel.ChromeTabCreator;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
@@ -222,7 +220,7 @@ public class ChromeTabbedActivity
     private static final long TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS = 10800000L;
 
     // Name of the ChromeTabbedActivity alias that handles MAIN intents.
-    public static final String MAIN_LAUNCHER_ACTIVITY_NAME = "com.google.android.apps.chrome.Main";
+    private static final String MAIN_LAUNCHER_ACTIVITY_NAME = "com.google.android.apps.chrome.Main";
 
     private final ActivityStopMetrics mActivityStopMetrics;
     private final MainIntentBehaviorMetrics mMainIntentMetrics;
@@ -383,17 +381,11 @@ public class ChromeTabbedActivity
 
     @Override
     protected @LaunchIntentDispatcher.Action int maybeDispatchLaunchIntent(Intent intent) {
-        if (getClass().equals(ChromeTabbedActivity.class)
-                && Intent.ACTION_MAIN.equals(intent.getAction())) {
-            // Since Chrome can be launched by ChromeTabbedActivity in addition to
-            // ChromeLauncherActivity, we need to install the handler here too.
-            PureJavaExceptionHandler.installHandler();
-
-            // Call dispatchToTabbedActivity() for MAIN intents to activate proper multi-window
-            // TabbedActivity (i.e. if CTA2 is currently running and Chrome is started, CTA2
-            // should be brought to front). Don't call dispatchToTabbedActivity() for non-MAIN
-            // intents to avoid breaking cases where CTA is started explicitly (e.g. to handle
-            // 'Move to other window' command from CTA2).
+        if (getClass().equals(ChromeTabbedActivity.class)) {
+            // ChromeTabbedActivity can be started via an explicit intent from inside of Chrome,
+            // via an implicit MAIN intent, or via a MAIN/LAUNCHER intent. In either case call
+            // dispatchToTabbedActivity(), which will either do nothing, or will start a different
+            // multiwindow-related TabbedActivity.
             return LaunchIntentDispatcher.dispatchToTabbedActivity(this, intent);
         }
         return super.maybeDispatchLaunchIntent(intent);
@@ -502,18 +494,18 @@ public class ChromeTabbedActivity
             //                promos.
             if (!mLocaleManager.hasShownSearchEnginePromoThisSession() && !mIntentWithEffect
                     && FirstRunStatus.getFirstRunFlowComplete()
-                    && preferenceManager.getPromosSkippedOnFirstStart()
-                    && !VrShellDelegate.isInVr()) {
+                    && preferenceManager.getPromosSkippedOnFirstStart()) {
                 // Data reduction promo should be temporarily suppressed if the sign in promo is
                 // shown to avoid nagging users too much.
                 TabModel currentModel = mTabModelSelectorImpl.getCurrentModel();
                 if (!SigninPromoUtil.launchSigninPromoIfNeeded(this)) {
                     if (!DataReductionPromoScreen.launchDataReductionPromo(
                                 this, currentModel.isIncognito())) {
-                        if (FeatureUtilities.shouldShowChromeHomePromoForStartup()) {
-                            new ChromeHomePromoDialog(
-                                    this, ChromeHomePromoDialog.ShowReason.STARTUP)
-                                    .show();
+                        // TODO(mdjones): Refine this triggering logic when promo is complete:
+                        // crbug.com/767738
+                        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+                            ChromeHomePromoDialog chDialog = new ChromeHomePromoDialog(this);
+                            chDialog.show();
                         } else if (getBottomSheet() != null) {
                             getBottomSheet().showHelpBubbleIfNecessary();
                         }
@@ -817,7 +809,7 @@ public class ChromeTabbedActivity
         int accessibilityStringId = R.string.iph_download_home_accessibility_text;
         if (FeatureUtilities.isChromeHomeEnabled()) {
             accessibilityStringId = R.string.iph_download_home_accessibility_text_chrome_home;
-            if (getBottomSheet().isUsingExpandButton()) {
+            if (FeatureUtilities.isChromeHomeExpandButtonEnabled()) {
                 accessibilityStringId =
                         R.string.iph_download_home_accessibility_text_chrome_home_expand;
             }
@@ -834,9 +826,8 @@ public class ChromeTabbedActivity
 
         turnOnHighlightForDownloadHomeTextBubble();
 
-        boolean isChromeHomeExpandButtonEnabled =
-                FeatureUtilities.isChromeHomeEnabled() && getBottomSheet().isUsingExpandButton();
-
+        boolean isChromeHomeExpandButtonEnabled = FeatureUtilities.isChromeHomeEnabled()
+                && FeatureUtilities.isChromeHomeExpandButtonEnabled();
         int yInsetPx =
                 getResources().getDimensionPixelOffset(R.dimen.text_bubble_menu_anchor_y_inset);
         textBubble.setInsetPx(0, isChromeHomeExpandButtonEnabled ? yInsetPx : 0, 0,
@@ -846,7 +837,7 @@ public class ChromeTabbedActivity
 
     private View getToolbarAnchorViewForDownloadHomeTextBubble() {
         if (FeatureUtilities.isChromeHomeEnabled()) {
-            return getBottomSheet().isUsingExpandButton()
+            return FeatureUtilities.isChromeHomeExpandButtonEnabled()
                     ? mControlContainer.findViewById(R.id.expand_sheet_button)
                     : mControlContainer.findViewById(R.id.toolbar_handle);
         } else {
@@ -857,7 +848,7 @@ public class ChromeTabbedActivity
     private void turnOnHighlightForDownloadHomeTextBubble() {
         if (FeatureUtilities.isChromeHomeEnabled()) {
             getBottomSheetContentController().setHighlightItemId(R.id.action_downloads);
-            if (getBottomSheet().isUsingExpandButton()) {
+            if (FeatureUtilities.isChromeHomeExpandButtonEnabled()) {
                 ViewHighlighter.turnOnHighlight(findViewById(R.id.expand_sheet_button), true);
             }
         } else {
@@ -869,7 +860,7 @@ public class ChromeTabbedActivity
         if (FeatureUtilities.isChromeHomeEnabled()) {
             if (getBottomSheetContentController() == null) return;
             getBottomSheetContentController().setHighlightItemId(null);
-            if (getBottomSheet().isUsingExpandButton()) {
+            if (FeatureUtilities.isChromeHomeExpandButtonEnabled()) {
                 ViewHighlighter.turnOffHighlight(findViewById(R.id.expand_sheet_button));
             }
         } else {
@@ -1071,14 +1062,11 @@ public class ChromeTabbedActivity
                 }
             }
 
-            boolean hasTabWaitingForReparenting =
-                    AsyncTabParamsManager.hasParamsWithTabToReparent();
             boolean hasBrowserActionTabs = BrowserActionsTabModelSelector.isInitialized()
                     && BrowserActionsTabModelSelector.getInstance().getTotalTabCount() != 0;
             mCreatedTabOnStartup = getCurrentTabModel().getCount() > 0
                     || mTabModelSelectorImpl.getRestoredTabCount() > 0 || mIntentWithEffect
-                    || mDelayedInitialTabBehaviorDuringUiInit != null || hasBrowserActionTabs
-                    || hasTabWaitingForReparenting;
+                    || mDelayedInitialTabBehaviorDuringUiInit != null || hasBrowserActionTabs;
 
             // We always need to try to restore tabs. The set of tabs might be empty, but at least
             // it will trigger the notification that tab restore is complete which is needed by
@@ -1088,8 +1076,7 @@ public class ChromeTabbedActivity
             mMainIntentMetrics.setIgnoreEvents(true);
             mTabModelSelectorImpl.restoreTabs(activeTabBeingRestored);
             if (hasBrowserActionTabs) {
-                BrowserActionsTabModelSelector.getInstance().mergeBrowserActionsTabModel(
-                        this, !mIntentWithEffect);
+                mergeBrowserActionsTabModel(!mIntentWithEffect);
             }
             mMainIntentMetrics.setIgnoreEvents(false);
 
@@ -1098,8 +1085,7 @@ public class ChromeTabbedActivity
             // tab count is now non zero.  If this is not the case, tab restore failed and we need
             // to create a new tab as well.
             if (!mCreatedTabOnStartup
-                    || (!hasTabWaitingForReparenting && activeTabBeingRestored
-                               && getTabModelSelector().getTotalTabCount() == 0
+                    || (activeTabBeingRestored && getTabModelSelector().getTotalTabCount() == 0
                                && mDelayedInitialTabBehaviorDuringUiInit == null)) {
                 // If homepage URI is not determined, due to PartnerBrowserCustomizations provider
                 // async reading, then create a tab at the async reading finished. If it takes
@@ -1116,6 +1102,21 @@ public class ChromeTabbedActivity
                     "MobileStartup.ColdStartupIntent", mIntentWithEffect);
         } finally {
             TraceEvent.end("ChromeTabbedActivity.initializeState");
+        }
+    }
+
+    private void mergeBrowserActionsTabModel(boolean shouldSelectTab) {
+        TabModel browserActionsNormlTabModel =
+                BrowserActionsTabModelSelector.getInstance().getModel(false);
+        TabModel chromeNormalTabModel = getTabModelSelector().getModel(false);
+        while (browserActionsNormlTabModel.getCount() > 0) {
+            Tab tab = browserActionsNormlTabModel.getTabAt(0);
+            browserActionsNormlTabModel.removeTab(tab);
+            tab.attach(this, new TabDelegateFactory());
+            chromeNormalTabModel.addTab(tab, -1, TabLaunchType.FROM_BROWSER_ACTIONS);
+        }
+        if (shouldSelectTab) {
+            TabModelUtils.setIndex(chromeNormalTabModel, chromeNormalTabModel.getCount() - 1);
         }
     }
 
@@ -1571,16 +1572,13 @@ public class ChromeTabbedActivity
 
             @Override
             public int getHeaderResourceId() {
-                if (getBottomSheet() == null
-                        || !getAppMenuPropertiesDelegate().shouldShowPageMenu()) {
-                    return 0;
-                }
-
-                if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+                if (getBottomSheet() != null
+                        && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
                     return R.layout.chrome_home_promo_header;
                 }
 
-                if (mControlContainer.getVisibility() == View.VISIBLE
+                if (getBottomSheet() != null && mControlContainer.getVisibility() == View.VISIBLE
+                        && getAppMenuPropertiesDelegate().shouldShowPageMenu()
                         && !getBottomSheet().isSheetOpen()) {
                     Tracker tracker =
                             TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
@@ -1602,9 +1600,9 @@ public class ChromeTabbedActivity
                         if (getBottomSheet() != null
                                 && ChromeFeatureList.isEnabled(
                                            ChromeFeatureList.CHROME_HOME_PROMO)) {
-                            new ChromeHomePromoDialog(ChromeTabbedActivity.this,
-                                    ChromeHomePromoDialog.ShowReason.MENU)
-                                    .show();
+                            ChromeHomePromoDialog chDialog =
+                                    new ChromeHomePromoDialog(ChromeTabbedActivity.this);
+                            chDialog.show();
                             return;
                         }
 
@@ -2043,8 +2041,6 @@ public class ChromeTabbedActivity
         }
 
         super.onDestroyInternal();
-
-        FeatureUtilities.finalizePendingFeatures();
     }
 
     @Override

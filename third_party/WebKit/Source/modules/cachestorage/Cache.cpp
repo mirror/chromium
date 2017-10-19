@@ -263,7 +263,7 @@ class Cache::FetchResolvedForAdd final : public ScriptFunction {
     return ScriptValue(GetScriptState(), put_promise.V8Value());
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(cache_);
     visitor->Trace(requests_);
     ScriptFunction::Trace(visitor);
@@ -322,7 +322,7 @@ class Cache::BarrierCallbackForPut final
         V8ThrowException::CreateTypeError(state->GetIsolate(), error_message));
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(cache_);
     visitor->Trace(resolver_);
   }
@@ -364,7 +364,7 @@ class Cache::BlobHandleCallbackForPut final
     barrier_callback_->OnError("network error");
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(barrier_callback_);
     FetchDataLoader::Client::Trace(visitor);
   }
@@ -514,7 +514,7 @@ Cache::Cache(GlobalFetch::ScopedFetcher* fetcher,
              std::unique_ptr<WebServiceWorkerCache> web_cache)
     : scoped_fetcher_(fetcher), web_cache_(std::move(web_cache)) {}
 
-void Cache::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Cache) {
   visitor->Trace(scoped_fetcher_);
 }
 

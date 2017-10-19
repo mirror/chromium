@@ -34,13 +34,6 @@ const char kWidevineCdmPluginMimeType[] = "application/x-ppapi-widevine-cdm";
 const char kWidevineCdmPluginMimeTypeDescription[] =
     "Widevine Content Decryption Module";
 
-// Identifier used by the PluginPrivateFileSystem to identify the files stored
-// for the Widevine CDM. This is used to store persistent files. As the files
-// were initially used by the CDM running as a pepper plugin, this ID is based
-// on the pepper plugin MIME type. Changing this will result in any existing
-// saved files becoming inaccesssible.
-const char kWidevineCdmFileSystemId[] = "application_x-ppapi-widevine-cdm";
-
 // Name of the CDM library.
 const char kWidevineCdmLibraryName[] = "widevinecdm";
 
@@ -56,7 +49,6 @@ const char kWidevineCdmAdapterFileName[] =
 
 // The following strings are used to communicate supported codecs (from the
 // component manifest) via WebPluginInfo::WebPluginMimeType's additional params.
-// TODO(crbug.com/772160): Remove after pepper CDM is deprecated.
 const char kCdmSupportedCodecsParamName[] = "codecs";
 const char kCdmSupportedCodecsValueDelimiter = ',';
 const char kCdmSupportedCodecVp8[] = "vp8";
@@ -64,10 +56,6 @@ const char kCdmSupportedCodecVp9[] = "vp9.0";
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
 const char kCdmSupportedCodecAvc1[] = "avc1";
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
-const char kCdmPersistentLicenseSupportedParamName[] =
-    "persistent_license_supported";
-const char kCdmFeatureSupported[] = "true";
-const char kCdmFeatureNotSupported[] = "false";
 
 #if defined(OS_MACOSX) || defined(OS_WIN)
 // CDM is installed by the component installer instead of the Chrome installer.

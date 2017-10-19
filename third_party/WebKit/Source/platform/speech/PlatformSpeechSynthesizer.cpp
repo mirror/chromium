@@ -85,7 +85,7 @@ void PlatformSpeechSynthesizer::InitializeVoiceList() {
     web_speech_synthesizer_->UpdateVoiceList();
 }
 
-void PlatformSpeechSynthesizer::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PlatformSpeechSynthesizer) {
   visitor->Trace(speech_synthesizer_client_);
   visitor->Trace(web_speech_synthesizer_client_);
 }

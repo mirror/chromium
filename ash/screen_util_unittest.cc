@@ -4,6 +4,7 @@
 
 #include "ash/screen_util.h"
 
+#include "ash/public/cpp/config.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/window_util.h"
@@ -101,6 +102,10 @@ TEST_F(ScreenUtilTest, ConvertRect) {
 }
 
 TEST_F(ScreenUtilTest, ShelfDisplayBoundsInUnifiedDesktop) {
+  // TODO: requires unified desktop mode. http://crbug.com/581462.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   display_manager()->SetUnifiedDesktopEnabled(true);
 
   views::Widget* widget = views::Widget::CreateWindowWithContextAndBounds(

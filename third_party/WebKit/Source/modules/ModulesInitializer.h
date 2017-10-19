@@ -14,10 +14,8 @@ class MODULES_EXPORT ModulesInitializer : public CoreInitializer {
  public:
   void Initialize() override;
 
- protected:
-  void InitLocalFrame(LocalFrame&) const override;
-
  private:
+  void InitLocalFrame(LocalFrame&) const override;
   void InstallSupplements(LocalFrame&) const override;
   void ProvideLocalFileSystemToWorker(WorkerClients&) const override;
   void ProvideIndexedDBClientToWorker(WorkerClients&) const override;

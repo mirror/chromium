@@ -15,7 +15,7 @@ void V0CustomElementMicrotaskQueueBase::Dispatch() {
   in_dispatch_ = false;
 }
 
-void V0CustomElementMicrotaskQueueBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V0CustomElementMicrotaskQueueBase) {
   visitor->Trace(queue_);
 }
 

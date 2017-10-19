@@ -58,12 +58,9 @@ base::string16 ElideHost(const GURL& host_url,
 // https://www.chromium.org/Home/chromium-security/enamel
 //
 // This method differs from ElideUrl in that:
-// - The method accepts a pre-formatted URL string, allowing arbitrary
-//   formatting of the URL.
-// - |parsed| is accepted and modified, allowing regions of the elided URL to be
+// - A Parsed structure is returned, allowing regions of the elided URL to be
 //   colored or styled. For example, if a path is completely elided to an
-//   ellipsis, the path component will describe the ellipsis. The input must be
-//   the Parsed structure originally generated during formatting.
+//   ellipsis, the path component will describe the ellipsis.
 // - When necessary, the host portion is elided from the left, to preserve the
 //   TLD as long as possible. Subdomain is not treated specially.
 // - The path is elided from the right, with no special handling of the last
@@ -72,7 +69,6 @@ base::string16 ElideHost(const GURL& host_url,
 // This function should be merged with ElideUrl to have a single elision method.
 // See http://crbug.com/772476.
 base::string16 ElideUrlSimple(const GURL& url,
-                              const base::string16& url_string,
                               const gfx::FontList& font_list,
                               float available_pixel_width,
                               url::Parsed* parsed);

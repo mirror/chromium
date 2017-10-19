@@ -32,7 +32,8 @@ GlobalScopeCreationParams::GlobalScopeCreationParams(
       cached_meta_data(std::move(cached_meta_data)),
       start_mode(start_mode),
       referrer_policy(referrer_policy.IsolatedCopy()),
-      starter_origin(starter_origin ? starter_origin->IsolatedCopy() : nullptr),
+      starter_origin_privilege_data(
+          starter_origin ? starter_origin->CreatePrivilegeData() : nullptr),
       worker_clients(worker_clients),
       address_space(address_space),
       worker_settings(std::move(worker_settings)),

@@ -93,7 +93,7 @@ class StylePendingImage final : public StyleImage {
     return false;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(value_);
     StyleImage::Trace(visitor);
   }

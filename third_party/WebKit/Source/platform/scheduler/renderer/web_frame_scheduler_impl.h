@@ -9,13 +9,12 @@
 #include <set>
 
 #include "base/macros.h"
-#include "base/memory/scoped_refptr.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/trace_event/trace_event.h"
 #include "platform/PlatformExport.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/scheduler/base/task_queue.h"
-#include "platform/scheduler/util/tracing_helper.h"
 
 namespace base {
 namespace trace_event {
@@ -78,8 +77,6 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
 
   bool has_active_connection() const { return active_connection_count_; }
 
-  void OnTraceLogEnabled();
-
  private:
   friend class WebViewSchedulerImpl;
 
@@ -131,13 +128,11 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   base::trace_event::BlameContext* blame_context_;   // NOT OWNED
   std::set<Observer*> loader_observers_;             // NOT OWNED
   WebFrameScheduler::ThrottlingState throttling_state_;
-  // TODO(kraynov): Find a way to distinguish different frames
-  // (probably by grouping on TraceViewer side).
-  TraceableState<bool, kTracingCategoryNameInfo> frame_visible_;
-  TraceableState<bool, kTracingCategoryNameInfo> page_visible_;
-  TraceableState<bool, kTracingCategoryNameInfo> page_stopped_;
-  TraceableState<bool, kTracingCategoryNameInfo> frame_paused_;
-  TraceableState<bool, kTracingCategoryNameInfo> cross_origin_;
+  bool frame_visible_;
+  bool page_visible_;
+  bool page_stopped_;
+  bool frame_paused_;
+  bool cross_origin_;
   WebFrameScheduler::FrameType frame_type_;
   int active_connection_count_;
 

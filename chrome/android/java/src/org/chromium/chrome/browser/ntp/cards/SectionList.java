@@ -16,7 +16,6 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
-import org.chromium.net.NetworkChangeNotifier;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -51,14 +50,6 @@ public class SectionList
     }
 
     /**
-     * Returns whether prefetched suggestions metrics should be reported for a given category.
-     * @param category given category to check.
-     */
-    static public boolean shouldReportPrefetchedSuggestionsMetrics(@CategoryInt int category) {
-        return category == KnownCategories.ARTICLES && !NetworkChangeNotifier.isOnline();
-    }
-
-    /**
      * Resets the sections, reloading the whole new tab page content.
      * @param alwaysAllowEmptySections Whether sections are always allowed to be displayed when
      *     they are empty, even when they are normally not.
@@ -71,8 +62,7 @@ public class SectionList
         for (int category : categories) {
             int categoryStatus = suggestionsSource.getCategoryStatus(category);
             if (SnippetsBridge.isCategoryEnabled(categoryStatus)) {
-                resetSection(category, categoryStatus, alwaysAllowEmptySections,
-                        shouldReportPrefetchedSuggestionsMetrics(category));
+                resetSection(category, categoryStatus, alwaysAllowEmptySections);
             }
         }
 
@@ -88,11 +78,9 @@ public class SectionList
      * @param categoryStatus The category status.
      * @param alwaysAllowEmptySections Whether sections are always allowed to be displayed when
      *     they are empty, even when they are normally not.
-     * @param reportPrefetchedSuggestionsCount Whether to report number of prefetched article
-     *     suggestions.
      */
     private void resetSection(@CategoryInt int category, @CategoryStatus int categoryStatus,
-            boolean alwaysAllowEmptySections, boolean reportPrefetchedSuggestionsCount) {
+            boolean alwaysAllowEmptySections) {
         SuggestionsSource suggestionsSource = mUiDelegate.getSuggestionsSource();
         List<SnippetArticle> suggestions = suggestionsSource.getSuggestionsForCategory(category);
         SuggestionsCategoryInfo info = suggestionsSource.getCategoryInfo(category);
@@ -123,8 +111,7 @@ public class SectionList
         // Set the new suggestions.
         section.setStatus(categoryStatus);
         if (!section.isLoading()) {
-            section.appendSuggestions(
-                    suggestions, /* keepSectionSize = */ true, reportPrefetchedSuggestionsCount);
+            section.appendSuggestions(suggestions, /* keepSectionSize = */ true);
         }
     }
 
@@ -298,8 +285,7 @@ public class SectionList
             int category = sectionsEntry.getKey();
             Log.d(TAG, "The section for category %d is stale - Resetting.", category);
             resetSection(category, mUiDelegate.getSuggestionsSource().getCategoryStatus(category),
-                    /* alwaysAllowEmptySections = */ false,
-                    shouldReportPrefetchedSuggestionsMetrics(category));
+                    /* alwaysAllowEmptySections = */ false);
         }
 
         // We may have updated (or not) the visible suggestions, so we still record the new state,
@@ -377,16 +363,19 @@ public class SectionList
      */
     private void recordDisplayedSuggestions(int[] categories) {
         int[] suggestionsPerCategory = new int[categories.length];
+        int[] prefetchedSuggestionsPerCategory = new int[categories.length];
         boolean[] isCategoryVisible = new boolean[categories.length];
 
         for (int i = 0; i < categories.length; ++i) {
             SuggestionsSection section = mSections.get(categories[i]);
             suggestionsPerCategory[i] = section != null ? section.getSuggestionsCount() : 0;
+            prefetchedSuggestionsPerCategory[i] =
+                    section != null ? section.getPrefetchedSuggestionsCount() : 0;
             isCategoryVisible[i] = section != null;
         }
 
-        mUiDelegate.getEventReporter().onPageShown(
-                categories, suggestionsPerCategory, isCategoryVisible);
+        mUiDelegate.getEventReporter().onPageShown(categories, suggestionsPerCategory,
+                prefetchedSuggestionsPerCategory, isCategoryVisible);
     }
 
     /**

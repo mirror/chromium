@@ -21,15 +21,13 @@ SensorErrorEvent::SensorErrorEvent(const AtomicString& event_type,
 
 SensorErrorEvent::SensorErrorEvent(const AtomicString& event_type,
                                    const SensorErrorEventInit& initializer)
-    : Event(event_type, initializer), error_(initializer.error()) {
-  DCHECK(error_);
-}
+    : Event(event_type, initializer) {}
 
 const AtomicString& SensorErrorEvent::InterfaceName() const {
   return EventNames::SensorErrorEvent;
 }
 
-void SensorErrorEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SensorErrorEvent) {
   visitor->Trace(error_);
   Event::Trace(visitor);
 }

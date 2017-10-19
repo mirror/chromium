@@ -56,7 +56,7 @@ Filter* Filter::Create(float scale) {
   return new Filter(FloatRect(), FloatRect(), scale, kUserSpace);
 }
 
-void Filter::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Filter) {
   visitor->Trace(source_graphic_);
   visitor->Trace(last_effect_);
 }

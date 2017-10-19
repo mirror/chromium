@@ -279,13 +279,12 @@ void TestWindowTree::SetCursor(uint32_t change_id,
   OnChangeReceived(change_id);
 }
 
-void TestWindowTree::SetWindowTextInputState(
-    uint32_t window_id,
-    ui::mojom::TextInputStatePtr state) {}
+void TestWindowTree::SetWindowTextInputState(uint32_t window_id,
+                                             mojo::TextInputStatePtr state) {}
 
 void TestWindowTree::SetImeVisibility(uint32_t window_id,
                                       bool visible,
-                                      ui::mojom::TextInputStatePtr state) {}
+                                      mojo::TextInputStatePtr state) {}
 
 void TestWindowTree::OnWindowInputEventAck(uint32_t event_id,
                                            ui::mojom::EventResult result) {

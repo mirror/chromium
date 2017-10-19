@@ -88,7 +88,7 @@ class CORE_EXPORT FrameCaret final
   bool ShouldPaintCaretForTesting() const { return should_paint_caret_; }
   void RecreateCaretBlinkTimerForTesting(RefPtr<WebTaskRunner>);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   friend class FrameCaretTest;

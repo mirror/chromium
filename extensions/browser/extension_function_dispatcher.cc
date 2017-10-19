@@ -23,6 +23,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_process_host_observer.h"
+#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/service_worker_context.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -47,6 +48,7 @@
 #include "ipc/ipc_message_macros.h"
 
 using content::BrowserThread;
+using content::RenderViewHost;
 
 namespace extensions {
 namespace {

@@ -74,7 +74,7 @@ class SVGPath final : public SVGPropertyBase {
   static AnimatedPropertyType ClassType() { return kAnimatedPath; }
   AnimatedPropertyType GetType() const override { return ClassType(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   SVGPath();

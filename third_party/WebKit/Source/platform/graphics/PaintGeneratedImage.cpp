@@ -15,8 +15,7 @@ void PaintGeneratedImage::Draw(PaintCanvas* canvas,
                                const FloatRect& dest_rect,
                                const FloatRect& src_rect,
                                RespectImageOrientationEnum,
-                               ImageClampingMode,
-                               ImageDecodingMode) {
+                               ImageClampingMode) {
   PaintCanvasAutoRestore ar(canvas, true);
   canvas->clipRect(dest_rect);
   canvas->translate(dest_rect.X(), dest_rect.Y());

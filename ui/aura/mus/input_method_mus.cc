@@ -115,9 +115,7 @@ void InputMethodMus::OnInputLocaleChanged() {
 }
 
 bool InputMethodMus::IsCandidatePopupOpen() const {
-  // TODO(moshayedi): crbug.com/637416. Implement this properly when we have a
-  // mean for displaying candidate list popup.
-  return false;
+  return text_input_client_->is_candidate_window_visible();
 }
 
 ui::EventDispatchDetails InputMethodMus::SendKeyEventToInputMethod(
@@ -152,7 +150,7 @@ void InputMethodMus::OnDidChangeFocusedClient(
     return;
 
   text_input_client_ =
-      std::make_unique<TextInputClientImpl>(focused, delegate());
+      base::MakeUnique<TextInputClientImpl>(focused, delegate());
 
   // We are about to close the pipe with pending callbacks. Closing the pipe
   // results in none of the callbacks being run. We have to run the callbacks
@@ -176,8 +174,8 @@ void InputMethodMus::OnDidChangeFocusedClient(
 
 void InputMethodMus::UpdateTextInputType() {
   ui::TextInputType type = GetTextInputType();
-  ui::mojom::TextInputStatePtr state = ui::mojom::TextInputState::New();
-  state->type = mojo::ConvertTo<ui::mojom::TextInputType>(type);
+  mojo::TextInputStatePtr state = mojo::TextInputState::New();
+  state->type = mojo::ConvertTo<mojo::TextInputType>(type);
   if (window_) {
     WindowPortMus* window_impl_mus = WindowPortMus::Get(window_);
     if (type != ui::TEXT_INPUT_TYPE_NONE)

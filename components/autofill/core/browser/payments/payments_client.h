@@ -12,7 +12,6 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/card_unmask_delegate.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "components/prefs/pref_service.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 #include "net/url_request/url_fetcher_delegate.h"
 
@@ -29,16 +28,16 @@ namespace payments {
 
 class PaymentsRequest;
 
-class PaymentsClientUnmaskDelegate {
+class PaymentsClientDelegate {
  public:
+  // The identity provider used to get OAuth2 tokens.
+  virtual IdentityProvider* GetIdentityProvider() = 0;
+
   // Returns the real PAN retrieved from Payments. |real_pan| will be empty
   // on failure.
   virtual void OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
                                const std::string& real_pan) = 0;
-};
 
-class PaymentsClientSaveDelegate {
- public:
   // Returns the legal message retrieved from Payments. On failure or not
   // meeting Payments's conditions for upload, |legal_message| will contain
   // nullptr.
@@ -72,10 +71,8 @@ class PaymentsClient : public net::URLFetcherDelegate,
   // request.
   struct UnmaskRequestDetails {
     UnmaskRequestDetails();
-    UnmaskRequestDetails(const UnmaskRequestDetails& other);
     ~UnmaskRequestDetails();
 
-    int64_t billing_customer_number = 0;
     CreditCard card;
     std::string risk_data;
     CardUnmaskDelegate::UnmaskResponse user_response;
@@ -88,7 +85,6 @@ class PaymentsClient : public net::URLFetcherDelegate,
     UploadRequestDetails(const UploadRequestDetails& other);
     ~UploadRequestDetails();
 
-    int64_t billing_customer_number = 0;
     CreditCard card;
     base::string16 cvc;
     std::vector<AutofillProfile> profiles;
@@ -99,14 +95,10 @@ class PaymentsClient : public net::URLFetcherDelegate,
   };
 
   // |context_getter| is reference counted so it has no lifetime or ownership
-  // requirements. |pref_service| is used to get the registered preference
-  // value, |identity_provider|, |unmask_delegate| and |save_delegate| must all
-  // outlive |this|. Either delegate might be nullptr.
+  // requirements. |delegate| must outlive |this|. |source_url| is the url
+  // of the merchant page.
   PaymentsClient(net::URLRequestContextGetter* context_getter,
-                 PrefService* pref_service,
-                 IdentityProvider* identity_provider,
-                 PaymentsClientUnmaskDelegate* unmask_delegate,
-                 PaymentsClientSaveDelegate* save_delegate);
+                 PaymentsClientDelegate* delegate);
 
   ~PaymentsClient() override;
 
@@ -116,8 +108,6 @@ class PaymentsClient : public net::URLFetcherDelegate,
   // identifying information should not be sent until the user has explicitly
   // accepted an upload prompt.
   void Prepare();
-
-  PrefService* GetPrefService() const;
 
   // The user has attempted to unmask a card with the given cvc.
   void UnmaskCard(const UnmaskRequestDetails& request_details);
@@ -170,15 +160,9 @@ class PaymentsClient : public net::URLFetcherDelegate,
   // The context for the request.
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
 
-  // The pref service for this client.
-  PrefService* const pref_service_;
-
-  IdentityProvider* const identity_provider_;
-
-  // Delegates for the results of the various requests to Payments. Both must
-  // outlive |this|.
-  PaymentsClientUnmaskDelegate* const unmask_delegate_;
-  PaymentsClientSaveDelegate* const save_delegate_;
+  // Observer class that has its various On* methods called based on the results
+  // of a Payments request.
+  PaymentsClientDelegate* const delegate_;  // must outlive |this|.
 
   // The current request.
   std::unique_ptr<PaymentsRequest> request_;

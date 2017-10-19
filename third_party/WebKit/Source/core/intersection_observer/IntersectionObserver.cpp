@@ -49,7 +49,7 @@ class IntersectionObserverDelegateImpl final
 
   ExecutionContext* GetExecutionContext() const override { return context_; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     IntersectionObserverDelegate::Trace(visitor);
     visitor->Trace(context_);
   }
@@ -282,7 +282,7 @@ void IntersectionObserver::ComputeIntersectionObservations() {
   if (!RootIsValid())
     return;
   Document* delegate_document = ToDocument(delegate_->GetExecutionContext());
-  if (!delegate_document || delegate_document->IsStopped())
+  if (!delegate_document)
     return;
   LocalDOMWindow* delegate_dom_window = delegate_document->domWindow();
   if (!delegate_dom_window)
@@ -351,7 +351,7 @@ void IntersectionObserver::Deliver() {
   delegate_->Deliver(entries, *this);
 }
 
-void IntersectionObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IntersectionObserver) {
   visitor->template RegisterWeakMembers<
       IntersectionObserver, &IntersectionObserver::ClearWeakMembers>(this);
   visitor->Trace(delegate_);

@@ -32,9 +32,9 @@
 #include "core/html/HTMLAreaElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLMapElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html_names.h"
 #include "core/input_type_names.h"
@@ -146,7 +146,7 @@ void HitTestResult::PopulateFromCachedResult(const HitTestResult& other) {
                                 : nullptr;
 }
 
-void HitTestResult::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HitTestResult) {
   visitor->Trace(inner_node_);
   visitor->Trace(inner_possibly_pseudo_node_);
   visitor->Trace(inner_url_element_);
@@ -168,7 +168,7 @@ PositionWithAffinity HitTestResult::GetPosition() const {
 }
 
 LayoutObject* HitTestResult::GetLayoutObject() const {
-  return inner_node_ ? inner_node_->GetLayoutObject() : nullptr;
+  return inner_node_ ? inner_node_->GetLayoutObject() : 0;
 }
 
 void HitTestResult::SetToShadowHostIfInRestrictedShadowRoot() {

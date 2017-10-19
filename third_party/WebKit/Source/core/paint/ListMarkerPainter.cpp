@@ -9,12 +9,12 @@
 #include "core/layout/ListMarkerText.h"
 #include "core/layout/api/SelectionState.h"
 #include "core/paint/BoxModelObjectPainter.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/SelectionPaintingUtils.h"
 #include "core/paint/TextPainter.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
@@ -43,13 +43,13 @@ static inline void PaintSymbol(GraphicsContext& context,
 
 void ListMarkerPainter::Paint(const PaintInfo& paint_info,
                               const LayoutPoint& paint_offset) {
-  if (paint_info.phase != PaintPhase::kForeground)
+  if (paint_info.phase != kPaintPhaseForeground)
     return;
 
   if (layout_list_marker_.Style()->Visibility() != EVisibility::kVisible)
     return;
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_list_marker_, paint_info.phase))
     return;
 
@@ -61,8 +61,9 @@ void ListMarkerPainter::Paint(const PaintInfo& paint_info,
   if (!paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
     return;
 
-  DrawingRecorder recorder(paint_info.context, layout_list_marker_,
-                           paint_info.phase, pixel_snapped_overflow_rect);
+  LayoutObjectDrawingRecorder recorder(paint_info.context, layout_list_marker_,
+                                       paint_info.phase,
+                                       pixel_snapped_overflow_rect);
 
   LayoutRect box(box_origin, layout_list_marker_.Size());
 
@@ -72,14 +73,12 @@ void ListMarkerPainter::Paint(const PaintInfo& paint_info,
   GraphicsContext& context = paint_info.context;
 
   if (layout_list_marker_.IsImage()) {
-    // Since there is no way for the developer to specify decode behavior, use
-    // kSync by default.
     context.DrawImage(
         layout_list_marker_.GetImage()
             ->GetImage(layout_list_marker_, layout_list_marker_.GetDocument(),
                        layout_list_marker_.StyleRef(), marker.Size(), nullptr)
             .get(),
-        Image::kSyncDecode, marker);
+        marker);
     if (layout_list_marker_.GetSelectionState() != SelectionState::kNone) {
       LayoutRect sel_rect = layout_list_marker_.LocalSelectionRect();
       sel_rect.MoveBy(box_origin);

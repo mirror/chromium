@@ -8,7 +8,6 @@
 #include <memory>
 #include <set>
 
-#include "base/memory/weak_ptr.h"
 #include "chrome/browser/media/router/discovery/dial/device_description_service.h"
 #include "chrome/browser/media/router/discovery/dial/dial_registry.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
@@ -33,10 +32,8 @@ class DialMediaSinkServiceObserver {
 // A service which can be used to start background discovery and resolution of
 // DIAL devices (Smart TVs, Game Consoles, etc.).
 // This class is not thread safe. All methods must be called from the IO thread.
-class DialMediaSinkServiceImpl
-    : public MediaSinkServiceBase,
-      public DialRegistry::Observer,
-      public base::SupportsWeakPtr<DialMediaSinkServiceImpl> {
+class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
+                                 public DialRegistry::Observer {
  public:
   DialMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
                            net::URLRequestContextGetter* request_context);
@@ -47,12 +44,11 @@ class DialMediaSinkServiceImpl
   void SetObserver(DialMediaSinkServiceObserver* observer);
 
   // Sets |observer_| to nullptr.
-  void ClearObserver();
+  void ClearObserver(DialMediaSinkServiceObserver* observer);
 
   // MediaSinkService implementation
   void Start() override;
   void Stop() override;
-  void OnUserGesture() override;
 
  protected:
   // Returns instance of device description service. Create a new one if none
@@ -71,11 +67,8 @@ class DialMediaSinkServiceImpl
   FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
                            TestOnDeviceDescriptionAvailable);
   FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest, TestRestartAfterStop);
-  FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
-                           OnDialSinkAddedCalledOnUserGesture);
-  FRIEND_TEST_ALL_PREFIXES(DialMediaSinkServiceImplTest,
-                           DialMediaSinkServiceObserver);
-  // DialRegistry::Observer implementation
+
+  // api::dial::DialRegistry::Observer implementation
   void OnDialDeviceEvent(const DialRegistry::DeviceList& devices) override;
   void OnDialError(DialRegistry::DialErrorCode type) override;
 

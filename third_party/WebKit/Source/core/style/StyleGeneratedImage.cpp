@@ -82,7 +82,7 @@ bool StyleGeneratedImage::KnownToBeOpaque(const Document& document,
   return image_generator_value_->KnownToBeOpaque(document, style);
 }
 
-void StyleGeneratedImage::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleGeneratedImage) {
   visitor->Trace(image_generator_value_);
   StyleImage::Trace(visitor);
 }

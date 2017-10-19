@@ -62,10 +62,6 @@ PaintImage CreateDiscardablePaintImage(const gfx::Size& size,
       .set_paint_image_generator(sk_make_sp<FakePaintImageGenerator>(
           SkImageInfo::MakeN32Premul(size.width(), size.height(), color_space),
           std::vector<FrameMetadata>{FrameMetadata()}, allocate_encoded_data))
-      // For simplicity, assume that any paint image created for testing is
-      // unspecified decode mode as would be the case with most img tags on the
-      // web.
-      .set_decoding_mode(PaintImage::DecodingMode::kUnspecified)
       .TakePaintImage();
 }
 
@@ -84,10 +80,9 @@ DrawImage CreateDiscardableDrawImage(const gfx::Size& size,
 PaintImage CreateAnimatedImage(const gfx::Size& size,
                                std::vector<FrameMetadata> frames,
                                int repetition_count,
-                               size_t frame_index,
-                               PaintImage::Id id) {
+                               size_t frame_index) {
   return PaintImageBuilder::WithDefault()
-      .set_id(id)
+      .set_id(PaintImage::GetNextId())
       .set_paint_image_generator(sk_make_sp<FakePaintImageGenerator>(
           SkImageInfo::MakeN32Premul(size.width(), size.height()),
           std::move(frames)))

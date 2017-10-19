@@ -7,7 +7,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/html/HTMLImageElement.h"
-#include "core/html/media/HTMLVideoElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/media/MediaRemotingElements.h"
 #include "platform/text/PlatformLocale.h"
 #include "public/platform/WebLocalizedString.h"
@@ -107,7 +107,7 @@ void MediaRemotingInterstitial::OnPosterImageChanged() {
       GetVideoElement().getAttribute(HTMLNames::posterAttr));
 }
 
-void MediaRemotingInterstitial::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaRemotingInterstitial) {
   visitor->Trace(video_element_);
   visitor->Trace(background_image_);
   visitor->Trace(exit_button_);

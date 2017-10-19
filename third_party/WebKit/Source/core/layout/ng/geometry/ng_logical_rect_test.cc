@@ -11,11 +11,11 @@ namespace blink {
 
 namespace {
 
-struct LogicalRectUniteTestData {
+struct UniteTestData {
   NGLogicalRect a;
   NGLogicalRect b;
   NGLogicalRect expected;
-} logical_rect_unite_test_data[] = {
+} unite_test_data[] = {
     {{}, {}, {}},
     {{},
      {{LayoutUnit(1), LayoutUnit(2)}, {LayoutUnit(3), LayoutUnit(4)}},
@@ -31,19 +31,18 @@ struct LogicalRectUniteTestData {
      {{LayoutUnit(100), LayoutUnit(50)}, {LayoutUnit(300), LayoutUnit(200)}}},
 };
 
-std::ostream& operator<<(std::ostream& os,
-                         const LogicalRectUniteTestData& data) {
+std::ostream& operator<<(std::ostream& os, const UniteTestData& data) {
   WTF::Partitions::Initialize(nullptr);
   return os << "Unite " << data.a << " and " << data.b;
 }
 
 class NGLogicalRectUniteTest
     : public ::testing::Test,
-      public ::testing::WithParamInterface<LogicalRectUniteTestData> {};
+      public ::testing::WithParamInterface<UniteTestData> {};
 
 INSTANTIATE_TEST_CASE_P(NGGeometryUnitsTest,
                         NGLogicalRectUniteTest,
-                        ::testing::ValuesIn(logical_rect_unite_test_data));
+                        ::testing::ValuesIn(unite_test_data));
 
 TEST_P(NGLogicalRectUniteTest, Data) {
   const auto& data = GetParam();

@@ -44,7 +44,7 @@ void LayoutButton::AddChild(LayoutObject* new_child,
 void LayoutButton::RemoveChild(LayoutObject* old_child) {
   if (old_child == inner_ || !inner_) {
     LayoutFlexibleBox::RemoveChild(old_child);
-    inner_ = nullptr;
+    inner_ = 0;
 
   } else if (old_child->Parent() == this) {
     // We aren't the inner node, but we're getting removed from the button, this

@@ -149,6 +149,10 @@ class TestShard(object):
 
     self._LogTestExit(test, exit_code, end_time - start_time)
 
+    actual_exit_code = exit_code
+    if (self._test_instance.flaky_steps
+        and test in self._test_instance.flaky_steps):
+      exit_code = 0
     archive_bytes = (self._ArchiveOutputDir()
                      if self._tests[test].get('archive_output_dir')
                      else None)
@@ -158,6 +162,7 @@ class TestShard(object):
         'chartjson': chart_json_output,
         'archive_bytes': archive_bytes,
         'exit_code': exit_code,
+        'actual_exit_code': actual_exit_code,
         'result_type': result_type,
         'start_time': start_time,
         'end_time': end_time,

@@ -35,19 +35,18 @@ source_set("fuchsia_cma_backend") {
   deps = [
     "//base",
     "//chromecast/base",
-    "//chromecast/media/cma/backend:audio",
+    "//chromecast/media/cma/backend:null",
     "//media",
   ]
 }
 
-source_set("unit_tests") {
-  testonly = true
+test("cast_fuchsia_cma_backend_unittests") {
   sources = [
     "media_pipeline_backend_fuchsia_unittest.cc",
   ]
   deps = [
     ":fuchsia_cma_backend",
-    "//chromecast/media/cma/backend:test_support",
+    "//base/test:run_all_unittests",
     "//testing/gtest",
   ]
 }

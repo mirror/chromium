@@ -224,6 +224,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_SUPPORT_LEGACY_TILED_BITMAPS
 #endif
 
+#ifndef SK_SUPPORT_LEGACY_SAFESIZE64
+#define SK_SUPPORT_LEGACY_SAFESIZE64
+#endif
+
 #ifndef SK_COLOR_SPACE_XFORM_LEGACY_PIPELINE
 #define SK_COLOR_SPACE_XFORM_LEGACY_PIPELINE
 #endif
@@ -234,6 +238,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
  *  or fall back to lazy runtime initialization. Chrome always wants the latter.
  */
 #define SK_ALLOW_STATIC_GLOBAL_INITIALIZERS 0
+
+/* This flag forces Skia not to use typographic metrics with GDI.
+ */
+#define SK_GDI_ALWAYS_USE_TEXTMETRICS_FOR_FONT_METRICS
 
 /* Restrict formats for Skia font matching to SFNT type fonts. */
 #define SK_FONT_CONFIG_INTERFACE_ONLY_ALLOW_SFNT_FONTS

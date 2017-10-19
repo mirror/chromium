@@ -46,7 +46,7 @@ class AXImageMapLink final : public AXNodeObject {
  public:
   static AXImageMapLink* Create(HTMLAreaElement*, AXObjectCacheImpl&);
   ~AXImageMapLink() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   HTMLAreaElement* AreaElement() const { return ToHTMLAreaElement(GetNode()); }
 

@@ -118,7 +118,7 @@ bool HTMLElementStack::ElementRecord::IsAbove(ElementRecord* other) const {
   return false;
 }
 
-void HTMLElementStack::ElementRecord::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLElementStack::ElementRecord) {
   visitor->Trace(item_);
   visitor->Trace(next_);
 }
@@ -524,7 +524,7 @@ void HTMLElementStack::RemoveNonTopCommon(Element* element) {
 HTMLElementStack::ElementRecord*
 HTMLElementStack::FurthestBlockForFormattingElement(
     Element* formatting_element) const {
-  ElementRecord* furthest_block = nullptr;
+  ElementRecord* furthest_block = 0;
   for (ElementRecord* pos = top_.Get(); pos; pos = pos->Next()) {
     if (pos->GetElement() == formatting_element)
       return furthest_block;
@@ -535,7 +535,7 @@ HTMLElementStack::FurthestBlockForFormattingElement(
   return nullptr;
 }
 
-void HTMLElementStack::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLElementStack) {
   visitor->Trace(top_);
   visitor->Trace(root_node_);
   visitor->Trace(head_element_);

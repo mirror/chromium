@@ -68,14 +68,14 @@ WorkletGlobalScopeProxy* AudioWorklet::CreateGlobalScope() {
     // TODO(hongchan): Currently all BaseAudioContexts shares a single
     // AudioWorkletMessagingProxy. Fix this to support one messaging proxy for
     // each BaseAudioContext.
-    if (!context->HasWorkletMessagingProxy())
+    if (!context->WorkletMessagingProxy())
       context->SetWorkletMessagingProxy(proxy);
   }
 
   return proxy;
 }
 
-void AudioWorklet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AudioWorklet) {
   visitor->Trace(contexts_);
   Worklet::Trace(visitor);
 }

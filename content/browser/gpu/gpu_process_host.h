@@ -31,8 +31,8 @@
 #include "ipc/ipc_sender.h"
 #include "ipc/message_filter.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/ui/gpu/interfaces/gpu_host.mojom.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
-#include "services/viz/privileged/interfaces/gl/gpu_host.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -56,7 +56,7 @@ class BrowserChildProcessHostImpl;
 
 class GpuProcessHost : public BrowserChildProcessHostDelegate,
                        public IPC::Sender,
-                       public viz::mojom::GpuHost {
+                       public ui::mojom::GpuHost {
  public:
   enum GpuProcessKind {
     GPU_PROCESS_KIND_UNSANDBOXED,
@@ -87,7 +87,6 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
                           BufferCreationStatus status)>;
 
   using RequestGPUInfoCallback = base::Callback<void(const gpu::GPUInfo&)>;
-  using RequestHDRStatusCallback = base::Callback<void(bool)>;
 
   static bool gpu_enabled() { return gpu_enabled_; }
   static int gpu_crash_count() { return gpu_crash_count_; }
@@ -150,7 +149,6 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
                               const gpu::SyncToken& sync_token);
 
   void RequestGPUInfo(RequestGPUInfoCallback request_cb);
-  void RequestHDRStatus(RequestHDRStatusCallback request_cb);
 
 #if defined(OS_ANDROID)
   // Tells the GPU process that the given surface is being destroyed so that it
@@ -191,7 +189,7 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   void OnProcessLaunchFailed(int error_code) override;
   void OnProcessCrashed(int exit_code) override;
 
-  // viz::mojom::GpuHost:
+  // ui::mojom::GpuHost:
   void DidInitialize(const gpu::GPUInfo& gpu_info,
                      const gpu::GpuFeatureInfo& gpu_feature_info) override;
   void DidFailInitialize() override;
@@ -309,7 +307,7 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
 
   ui::mojom::GpuMainAssociatedPtr gpu_main_ptr_;
   viz::mojom::GpuServicePtr gpu_service_ptr_;
-  mojo::Binding<viz::mojom::GpuHost> gpu_host_binding_;
+  mojo::Binding<ui::mojom::GpuHost> gpu_host_binding_;
   gpu::GpuProcessHostActivityFlags activity_flags_;
 
   SEQUENCE_CHECKER(sequence_checker_);

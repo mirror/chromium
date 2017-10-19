@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/browser.h"
@@ -16,7 +17,6 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/infobars/core/infobar.h"
 #include "components/infobars/core/infobars_switches.h"
-#include "content/public/test/test_utils.h"
 
 namespace {
 
@@ -147,8 +147,14 @@ IN_PROC_BROWSER_TEST_F(GlobalConfirmInfoBarTest, UserInteraction) {
     EXPECT_EQ(0u, GetInfoBarServiceFromTabIndex(i)->infobar_count());
 }
 
+// https://crbug.com/764079
+#if defined(OS_LINUX) || defined(OS_MACOSX)
+#define MAYBE_InfoBarsDisabled DISABLED_InfoBarsDisabled
+#else
+#define MAYBE_InfoBarsDisabled InfoBarsDisabled
+#endif
 IN_PROC_BROWSER_TEST_F(GlobalConfirmInfoBarWithInfoBarDisabledTest,
-                       InfoBarsDisabled) {
+                       MAYBE_InfoBarsDisabled) {
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
 
   auto delegate = base::MakeUnique<TestConfirmInfoBarDelegate>();
@@ -156,7 +162,7 @@ IN_PROC_BROWSER_TEST_F(GlobalConfirmInfoBarWithInfoBarDisabledTest,
       GlobalConfirmInfoBar::Show(std::move(delegate));
 
   // In this case, the deletion is done asynchronously.
-  content::RunAllPendingInMessageLoop();
+  base::RunLoop().RunUntilIdle();
 
   ASSERT_FALSE(global_confirm_info_bar);
 }

@@ -44,7 +44,7 @@
 #include "core/page/EditorClient.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "core/page/PageWidgetDelegate.h"
-#include "core/page/ScopedPagePauser.h"
+#include "core/page/ScopedPageSuspender.h"
 #include "platform/animation/CompositorAnimationTimeline.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
@@ -212,9 +212,6 @@ class CORE_EXPORT WebViewImpl final
 
   void SetDeviceScaleFactor(float) override;
   void SetZoomFactorForDeviceScaleFactor(float) override;
-  float ZoomFactorForDeviceScaleFactor() override {
-    return zoom_factor_for_device_scale_factor_;
-  };
 
   void EnableAutoResizeMode(const WebSize& min_size,
                             const WebSize& max_size) override;

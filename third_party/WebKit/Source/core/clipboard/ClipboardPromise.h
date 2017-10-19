@@ -29,12 +29,12 @@ class ClipboardPromise final
   static ScriptPromise CreateForWrite(ScriptState*, DataTransfer*);
   static ScriptPromise CreateForWriteText(ScriptState*, const String&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   ClipboardPromise(ScriptState*);
 
-  RefPtr<WebTaskRunner> GetTaskRunner();
+  WebTaskRunner* GetTaskRunner();
 
   void HandleRead();
   void HandleReadText();

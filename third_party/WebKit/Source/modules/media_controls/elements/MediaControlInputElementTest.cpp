@@ -4,11 +4,11 @@
 
 #include "modules/media_controls/elements/MediaControlInputElement.h"
 
-#include "core/html/media/HTMLMediaElement.h"
-#include "core/html/media/HTMLVideoElement.h"
+#include "core/html/HTMLMediaElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html_names.h"
 #include "core/input_type_names.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "platform/testing/HistogramTester.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -34,9 +34,7 @@ class MediaControlInputElementImpl final : public MediaControlInputElement {
     SetIsWanted(false);
   }
 
-  void Trace(blink::Visitor* visitor) {
-    MediaControlInputElement::Trace(visitor);
-  }
+  DEFINE_INLINE_TRACE() { MediaControlInputElement::Trace(visitor); }
 
  protected:
   const char* GetNameForHistograms() const final {
@@ -51,14 +49,15 @@ class MediaControlInputElementImpl final : public MediaControlInputElement {
 
 }  // anonymous namespace
 
-class MediaControlInputElementTest : public PageTestBase {
+class MediaControlInputElementTest : public ::testing::Test {
  public:
   void SetUp() final {
     // Create page and add a video element with controls.
-    PageTestBase::SetUp();
-    media_element_ = HTMLVideoElement::Create(GetDocument());
+    dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+    media_element_ =
+        HTMLVideoElement::Create(dummy_page_holder_->GetDocument());
     media_element_->SetBooleanAttribute(HTMLNames::controlsAttr, true);
-    GetDocument().body()->AppendChild(media_element_);
+    dummy_page_holder_->GetDocument().body()->AppendChild(media_element_);
 
     // Create instance of MediaControlInputElement to run tests on.
     media_controls_ =
@@ -85,6 +84,7 @@ class MediaControlInputElementTest : public PageTestBase {
   HTMLMediaElement& MediaElement() { return *media_element_; }
 
  private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
   Persistent<HTMLMediaElement> media_element_;
   Persistent<MediaControlsImpl> media_controls_;
   Persistent<MediaControlInputElementImpl> control_input_element_;

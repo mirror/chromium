@@ -13,7 +13,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
-#include "build/build_config.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/texture_definition.h"
 #include "gpu/config/gpu_switches.h"
@@ -49,7 +48,7 @@ class ScopedPixelUnpackBufferOverride {
       GLuint binding_override)
       : orig_binding_(-1) {
     if (enable_es3) {
-      GLint orig_binding = 0;
+      GLint orig_binding;
       glGetIntegerv(GL_PIXEL_UNPACK_BUFFER_BINDING, &orig_binding);
       if (static_cast<GLuint>(orig_binding) != binding_override) {
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, binding_override);
@@ -248,26 +247,34 @@ void FeatureInfo::InitializeBasicState(const base::CommandLine* command_line) {
   // The flag here is for testing only.
   disable_shader_translator_ =
       command_line->HasSwitch(switches::kDisableGLSLTranslator);
+
+  // Default context_type_ to a GLES2 Context.
+  context_type_ = CONTEXT_TYPE_OPENGLES2;
+
+  ext_color_buffer_float_available_ = false;
+  oes_texture_float_linear_available_ = false;
+  oes_texture_half_float_linear_available_ = false;
 }
 
-void FeatureInfo::Initialize(ContextType context_type,
+bool FeatureInfo::Initialize(ContextType context_type,
                              const DisallowedFeatures& disallowed_features) {
   disallowed_features_ = disallowed_features;
   context_type_ = context_type;
   InitializeFeatures();
+  return true;
 }
 
-void FeatureInfo::InitializeForTesting(
+bool FeatureInfo::InitializeForTesting(
     const DisallowedFeatures& disallowed_features) {
-  Initialize(CONTEXT_TYPE_OPENGLES2, disallowed_features);
+  return Initialize(CONTEXT_TYPE_OPENGLES2, disallowed_features);
 }
 
-void FeatureInfo::InitializeForTesting() {
-  Initialize(CONTEXT_TYPE_OPENGLES2, DisallowedFeatures());
+bool FeatureInfo::InitializeForTesting() {
+  return Initialize(CONTEXT_TYPE_OPENGLES2, DisallowedFeatures());
 }
 
-void FeatureInfo::InitializeForTesting(ContextType context_type) {
-  Initialize(context_type, DisallowedFeatures());
+bool FeatureInfo::InitializeForTesting(ContextType context_type) {
+  return Initialize(context_type, DisallowedFeatures());
 }
 
 bool IsGL_REDSupportedOnFBOs() {
@@ -428,12 +435,6 @@ void FeatureInfo::InitializeFeatures() {
   // so the extension string is always exposed.
   AddExtensionString("GL_OES_vertex_array_object");
 
-// Texture storage image is only usable with native gpu memory buffer support.
-#if defined(OS_MACOSX) || (defined(OS_LINUX) && defined(USE_OZONE))
-  feature_flags_.chromium_texture_storage_image = true;
-  AddExtensionString("GL_CHROMIUM_texture_storage_image");
-#endif
-
   if (!disallowed_features_.gpu_memory_manager)
     AddExtensionString("GL_CHROMIUM_gpu_memory_manager");
 
@@ -547,8 +548,10 @@ void FeatureInfo::InitializeFeatures() {
   // Check if we should enable GL_EXT_texture_filter_anisotropic.
   if (gl::HasExtension(extensions, "GL_EXT_texture_filter_anisotropic")) {
     AddExtensionString("GL_EXT_texture_filter_anisotropic");
-    validators_.texture_parameter.AddValue(GL_TEXTURE_MAX_ANISOTROPY_EXT);
-    validators_.g_l_state.AddValue(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+    validators_.texture_parameter.AddValue(
+        GL_TEXTURE_MAX_ANISOTROPY_EXT);
+    validators_.g_l_state.AddValue(
+        GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT);
   }
 
   // Check if we should support GL_OES_packed_depth_stencil and/or
@@ -796,6 +799,13 @@ void FeatureInfo::InitializeFeatures() {
     feature_flags_.ext_texture_storage = true;
     AddExtensionString("GL_EXT_texture_storage");
     validators_.texture_parameter.AddValue(GL_TEXTURE_IMMUTABLE_FORMAT_EXT);
+    if (enable_texture_format_bgra8888) {
+      validators_.texture_internal_format_storage.AddValue(GL_BGRA8_EXT);
+      validators_.texture_sized_color_renderable_internal_format.AddValue(
+          GL_BGRA8_EXT);
+      validators_.texture_sized_texture_filterable_internal_format.AddValue(
+          GL_BGRA8_EXT);
+    }
   }
 
   if (enable_texture_format_bgra8888) {
@@ -804,11 +814,6 @@ void FeatureInfo::InitializeFeatures() {
     validators_.texture_internal_format.AddValue(GL_BGRA_EXT);
     validators_.texture_format.AddValue(GL_BGRA_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_BGRA_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_BGRA8_EXT);
-    validators_.texture_sized_color_renderable_internal_format.AddValue(
-        GL_BGRA8_EXT);
-    validators_.texture_sized_texture_filterable_internal_format.AddValue(
-        GL_BGRA8_EXT);
   }
 
   // On desktop, all devices support BGRA render buffers (note that on desktop
@@ -906,7 +911,8 @@ void FeatureInfo::InitializeFeatures() {
     feature_flags_.use_img_for_multisampled_render_to_texture = true;
   }
   if (feature_flags_.multisampled_render_to_texture) {
-    validators_.render_buffer_parameter.AddValue(GL_RENDERBUFFER_SAMPLES_EXT);
+    validators_.render_buffer_parameter.AddValue(
+        GL_RENDERBUFFER_SAMPLES_EXT);
     validators_.g_l_state.AddValue(GL_MAX_SAMPLES_EXT);
     validators_.framebuffer_parameter.AddValue(
         GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_SAMPLES_EXT);
@@ -995,13 +1001,15 @@ void FeatureInfo::InitializeFeatures() {
 
   if (gl::HasExtension(extensions, "GL_AMD_compressed_ATC_texture")) {
     AddExtensionString("GL_AMD_compressed_ATC_texture");
-    validators_.compressed_texture_format.AddValue(GL_ATC_RGB_AMD);
+    validators_.compressed_texture_format.AddValue(
+        GL_ATC_RGB_AMD);
     validators_.compressed_texture_format.AddValue(
         GL_ATC_RGBA_EXPLICIT_ALPHA_AMD);
     validators_.compressed_texture_format.AddValue(
         GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD);
 
-    validators_.texture_internal_format_storage.AddValue(GL_ATC_RGB_AMD);
+    validators_.texture_internal_format_storage.AddValue(
+        GL_ATC_RGB_AMD);
     validators_.texture_internal_format_storage.AddValue(
         GL_ATC_RGBA_EXPLICIT_ALPHA_AMD);
     validators_.texture_internal_format_storage.AddValue(
@@ -1070,8 +1078,9 @@ void FeatureInfo::InitializeFeatures() {
     validators_.texture_parameter.AddValue(GL_TEXTURE_USAGE_ANGLE);
   }
 
-  bool have_occlusion_query = gl_version_info_->IsAtLeastGLES(3, 0) ||
-                              gl_version_info_->IsAtLeastGL(3, 3);
+  bool have_occlusion_query =
+      gl_version_info_->IsAtLeastGLES(3, 0) ||
+      gl_version_info_->IsAtLeastGL(3, 3);
   bool have_ext_occlusion_query_boolean =
       gl::HasExtension(extensions, "GL_EXT_occlusion_query_boolean");
   bool have_arb_occlusion_query2 =
@@ -1081,17 +1090,19 @@ void FeatureInfo::InitializeFeatures() {
        gl_version_info_->IsAtLeastGL(1, 5)) ||
       gl::HasExtension(extensions, "GL_ARB_occlusion_query");
 
-  if (have_occlusion_query || have_ext_occlusion_query_boolean ||
-      have_arb_occlusion_query2 || have_arb_occlusion_query) {
+  if (have_occlusion_query ||
+      have_ext_occlusion_query_boolean ||
+      have_arb_occlusion_query2 ||
+      have_arb_occlusion_query) {
     feature_flags_.occlusion_query = have_arb_occlusion_query;
     if (context_type_ == CONTEXT_TYPE_OPENGLES2) {
       AddExtensionString("GL_EXT_occlusion_query_boolean");
     }
     feature_flags_.occlusion_query_boolean = true;
     feature_flags_.use_arb_occlusion_query2_for_occlusion_query_boolean =
-        !have_ext_occlusion_query_boolean &&
-        (have_arb_occlusion_query2 || (gl_version_info_->IsAtLeastGL(3, 3) &&
-                                       gl_version_info_->IsLowerThanGL(4, 3)));
+        !have_ext_occlusion_query_boolean && (have_arb_occlusion_query2 ||
+        (gl_version_info_->IsAtLeastGL(3, 3) &&
+         gl_version_info_->IsLowerThanGL(4, 3)));
     feature_flags_.use_arb_occlusion_query_for_occlusion_query_boolean =
         !have_ext_occlusion_query_boolean && have_arb_occlusion_query &&
         !have_arb_occlusion_query2;
@@ -1158,7 +1169,8 @@ void FeatureInfo::InitializeFeatures() {
     GLint max_draw_buffers = 0;
     glGetIntegerv(GL_MAX_DRAW_BUFFERS_ARB, &max_draw_buffers);
     for (GLenum i = GL_DRAW_BUFFER0_ARB;
-         i < static_cast<GLenum>(GL_DRAW_BUFFER0_ARB + max_draw_buffers); ++i) {
+         i < static_cast<GLenum>(GL_DRAW_BUFFER0_ARB + max_draw_buffers);
+         ++i) {
       validators_.g_l_state.AddValue(i);
     }
   }
@@ -1236,12 +1248,21 @@ void FeatureInfo::InitializeFeatures() {
     if (blend_equation_advanced_coherent ||
         gl::HasExtension(extensions, "GL_NV_blend_equation_advanced") ||
         gl::HasExtension(extensions, "GL_KHR_blend_equation_advanced")) {
-      const GLenum equations[] = {
-          GL_MULTIPLY_KHR,       GL_SCREEN_KHR,    GL_OVERLAY_KHR,
-          GL_DARKEN_KHR,         GL_LIGHTEN_KHR,   GL_COLORDODGE_KHR,
-          GL_COLORBURN_KHR,      GL_HARDLIGHT_KHR, GL_SOFTLIGHT_KHR,
-          GL_DIFFERENCE_KHR,     GL_EXCLUSION_KHR, GL_HSL_HUE_KHR,
-          GL_HSL_SATURATION_KHR, GL_HSL_COLOR_KHR, GL_HSL_LUMINOSITY_KHR};
+      const GLenum equations[] = {GL_MULTIPLY_KHR,
+                                  GL_SCREEN_KHR,
+                                  GL_OVERLAY_KHR,
+                                  GL_DARKEN_KHR,
+                                  GL_LIGHTEN_KHR,
+                                  GL_COLORDODGE_KHR,
+                                  GL_COLORBURN_KHR,
+                                  GL_HARDLIGHT_KHR,
+                                  GL_SOFTLIGHT_KHR,
+                                  GL_DIFFERENCE_KHR,
+                                  GL_EXCLUSION_KHR,
+                                  GL_HSL_HUE_KHR,
+                                  GL_HSL_SATURATION_KHR,
+                                  GL_HSL_COLOR_KHR,
+                                  GL_HSL_LUMINOSITY_KHR};
 
       for (GLenum equation : equations)
         validators_.equation.AddValue(equation);
@@ -1290,23 +1311,16 @@ void FeatureInfo::InitializeFeatures() {
 
     validators_.texture_format.AddValue(GL_RED_EXT);
     validators_.texture_format.AddValue(GL_RG_EXT);
-
     validators_.texture_internal_format.AddValue(GL_RED_EXT);
     validators_.texture_internal_format.AddValue(GL_R8_EXT);
     validators_.texture_internal_format.AddValue(GL_RG_EXT);
     validators_.texture_internal_format.AddValue(GL_RG8_EXT);
-
     validators_.read_pixel_format.AddValue(GL_RED_EXT);
     validators_.read_pixel_format.AddValue(GL_RG_EXT);
-
     validators_.render_buffer_format.AddValue(GL_R8_EXT);
     validators_.render_buffer_format.AddValue(GL_RG8_EXT);
-
     validators_.texture_unsized_internal_format.AddValue(GL_RED_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_RG_EXT);
-
-    validators_.texture_internal_format_storage.AddValue(GL_R8_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_RG8_EXT);
   }
   UMA_HISTOGRAM_BOOLEAN("GPU.TextureRG", feature_flags_.ext_texture_rg);
 
@@ -1623,22 +1637,23 @@ void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
     EnableEXTColorBufferHalfFloat();
   }
 
-  if (enable_texture_float) {
-    validators_.texture_internal_format_storage.AddValue(GL_RGBA32F_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_RGB32F_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_ALPHA32F_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_LUMINANCE32F_EXT);
-    validators_.texture_internal_format_storage.AddValue(
-        GL_LUMINANCE_ALPHA32F_EXT);
-  }
-
-  if (enable_texture_half_float) {
-    validators_.texture_internal_format_storage.AddValue(GL_RGBA16F_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_RGB16F_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_ALPHA16F_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_LUMINANCE16F_EXT);
-    validators_.texture_internal_format_storage.AddValue(
-        GL_LUMINANCE_ALPHA16F_EXT);
+  if (feature_flags_.ext_texture_storage) {
+    if (enable_texture_float) {
+      validators_.texture_internal_format_storage.AddValue(GL_RGBA32F_EXT);
+      validators_.texture_internal_format_storage.AddValue(GL_RGB32F_EXT);
+      validators_.texture_internal_format_storage.AddValue(GL_ALPHA32F_EXT);
+      validators_.texture_internal_format_storage.AddValue(GL_LUMINANCE32F_EXT);
+      validators_.texture_internal_format_storage.AddValue(
+          GL_LUMINANCE_ALPHA32F_EXT);
+    }
+    if (enable_texture_half_float) {
+      validators_.texture_internal_format_storage.AddValue(GL_RGBA16F_EXT);
+      validators_.texture_internal_format_storage.AddValue(GL_RGB16F_EXT);
+      validators_.texture_internal_format_storage.AddValue(GL_ALPHA16F_EXT);
+      validators_.texture_internal_format_storage.AddValue(GL_LUMINANCE16F_EXT);
+      validators_.texture_internal_format_storage.AddValue(
+          GL_LUMINANCE_ALPHA16F_EXT);
+    }
   }
 
   g_l16_is_present =

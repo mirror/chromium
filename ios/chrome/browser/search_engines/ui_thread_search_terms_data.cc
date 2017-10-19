@@ -9,6 +9,7 @@
 #include "components/google/core/browser/google_url_tracker.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
+#include "components/search/search.h"
 #include "components/version_info/version_info.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/experimental_flags.h"
@@ -83,7 +84,7 @@ std::string UIThreadSearchTermsData::GetSearchClient() const {
 
 std::string UIThreadSearchTermsData::GetSuggestClient() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return "chrome";
+  return search::IsInstantExtendedAPIEnabled() ? "chrome-omni" : "chrome";
 }
 
 std::string UIThreadSearchTermsData::GetSuggestRequestIdentifier() const {

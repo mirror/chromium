@@ -65,7 +65,7 @@ class ChildNodeList final : public NodeList {
                                  Node& current_node,
                                  unsigned& current_offset) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit ChildNodeList(ContainerNode& root_node);

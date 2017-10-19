@@ -43,7 +43,7 @@ cr.define('device_table', function() {
       this.body_ = this.tBodies[0];
       /** @private */
       this.headers_ = this.tHead.rows[0].cells;
-      /** @private {!Map<!bluetooth.mojom.DeviceInfo, boolean>} */
+      /** @private {!Map<!interfaces.BluetoothDevice.DeviceInfo, boolean>} */
       this.inspectionMap_ = new Map();
     },
 
@@ -66,7 +66,7 @@ cr.define('device_table', function() {
      * Updates the inspect status of the row matching the given |deviceInfo|.
      * If |isInspecting| is true, the forget link is enabled otherwise it's
      * disabled.
-     * @param {!bluetooth.mojom.DeviceInfo} deviceInfo
+     * @param {!interfaces.BluetoothDevice.DeviceInfo} deviceInfo
      * @param {boolean} isInspecting
      */
     setInspecting: function(deviceInfo, isInspecting) {
@@ -130,7 +130,7 @@ cr.define('device_table', function() {
 
     /**
      * Inserts a new row at |index| and updates it with info from |device|.
-     * @param {!bluetooth.mojom.DeviceInfo} device
+     * @param {!interfaces.BluetoothDevice.DeviceInfo} device
      * @param {?number} index
      * @private
      */
@@ -182,7 +182,7 @@ cr.define('device_table', function() {
 
     /**
      * Updates the row at |index| with the info from |device|.
-     * @param {!bluetooth.mojom.DeviceInfo} device
+     * @param {!interfaces.BluetoothDevice.DeviceInfo} device
      * @param {number} index
      * @private
      */
@@ -215,7 +215,7 @@ cr.define('device_table', function() {
           obj = obj[part];
         }
 
-        if (propName == 'isGattConnected') {
+        if (propName == 'is_gatt_connected') {
           obj = obj ? 'Connected' : 'Not Connected';
         }
 

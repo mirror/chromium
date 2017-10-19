@@ -96,9 +96,7 @@ class FetchDataLoaderAsBlobHandle final : public FetchDataLoader,
     }
   }
 
-  String DebugName() const override { return "FetchDataLoaderAsBlobHandle"; }
-
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -169,9 +167,7 @@ class FetchDataLoaderAsArrayBuffer final : public FetchDataLoader,
     }
   }
 
-  String DebugName() const override { return "FetchDataLoaderAsArrayBuffer"; }
-
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -223,11 +219,9 @@ class FetchDataLoaderAsFailure final : public FetchDataLoader,
     }
   }
 
-  String DebugName() const override { return "FetchDataLoaderAsFailure"; }
-
   void Cancel() override { consumer_->Cancel(); }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -305,14 +299,12 @@ class FetchDataLoaderAsFormData final : public FetchDataLoader,
     }
   }
 
-  String DebugName() const override { return "FetchDataLoaderAsFormData"; }
-
   void Cancel() override {
     consumer_->Cancel();
     multipart_parser_->Cancel();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     visitor->Trace(form_data_);
@@ -461,11 +453,9 @@ class FetchDataLoaderAsString final : public FetchDataLoader,
     }
   }
 
-  String DebugName() const override { return "FetchDataLoaderAsString"; }
-
   void Cancel() override { consumer_->Cancel(); }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);
@@ -553,11 +543,9 @@ class FetchDataLoaderAsDataPipe final : public FetchDataLoader,
     }
   }
 
-  String DebugName() const override { return "FetchDataLoaderAsDataPipe"; }
-
   void Cancel() override { StopInternal(); }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);

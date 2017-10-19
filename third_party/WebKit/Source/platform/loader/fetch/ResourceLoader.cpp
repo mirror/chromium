@@ -55,10 +55,10 @@
 
 namespace blink {
 
-static RefPtr<WebTaskRunner> GetTaskRunnerFor(const ResourceRequest& request,
-                                              FetchContext& context) {
+static WebTaskRunner* GetTaskRunnerFor(const ResourceRequest& request,
+                                       FetchContext& context) {
   if (!request.GetKeepalive())
-    return context.GetLoadingTaskRunner();
+    return context.GetLoadingTaskRunner().get();
   // The loader should be able to work after the frame destruction, so we
   // cannot use the task runner associated with the frame.
   return Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
@@ -90,7 +90,7 @@ ResourceLoader::ResourceLoader(ResourceFetcher* fetcher,
 
 ResourceLoader::~ResourceLoader() {}
 
-void ResourceLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ResourceLoader) {
   visitor->Trace(fetcher_);
   visitor->Trace(scheduler_);
   visitor->Trace(resource_);
@@ -740,10 +740,6 @@ void ResourceLoader::ActivateCacheAwareLoadingIfNeeded(
 
   // Don't activate if cache policy is explicitly set.
   if (request.GetCachePolicy() != WebCachePolicy::kUseProtocolCachePolicy)
-    return;
-
-  // Don't activate if the page is controlled by service worker.
-  if (fetcher_->IsControlledByServiceWorker())
     return;
 
   is_cache_aware_loading_activated_ = true;

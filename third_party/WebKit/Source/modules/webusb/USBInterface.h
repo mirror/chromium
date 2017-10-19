@@ -37,7 +37,7 @@ class USBInterface : public GarbageCollected<USBInterface>,
   HeapVector<Member<USBAlternateInterface>> alternates() const;
   bool claimed() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   Member<const USBDevice> device_;

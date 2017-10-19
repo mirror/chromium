@@ -12,9 +12,13 @@
       var message_id = 1;
       var ts = Date.now();
       while (!terminated) {
-        if (Date.now() - ts > 1000) {
-          ts = Date.now();
-          console.error('Message #' + message_id++);
+        // Without this try/catch v8 will optimize the function and break will not work.
+        try {
+          if (Date.now() - ts > 1000) {
+            ts = Date.now();
+            console.error('Message #' + message_id++);
+          }
+        } catch (e) {
         }
       }
     }

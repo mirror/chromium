@@ -42,7 +42,7 @@ class BaseButtonInputType : public InputType,
   USING_GARBAGE_COLLECTED_MIXIN(BaseButtonInputType);
 
  public:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   using InputType::GetElement;
 
  protected:

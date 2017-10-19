@@ -83,7 +83,6 @@ void CenterVertically(NSView* view) {
       checkboxWithTitle:l10n_util::GetNSString(
                             IDS_FIRSTRUN_DLG_MAC_SET_DEFAULT_BROWSER_LABEL)];
   [defaultBrowserCheckbox_ setFrame:NSMakeRect(45, 107, 528, 18)];
-  [defaultBrowserCheckbox_ setState:NSOnState];
   if (!defaultBrowserCheckboxVisible_)
     [defaultBrowserCheckbox_ setHidden:YES];
 
@@ -93,7 +92,7 @@ void CenterVertically(NSView* view) {
               IDS_FIRSTRUN_DLG_MAC_OPTIONS_SEND_USAGE_STATS_LABEL)];
   [statsCheckbox_ setFrame:NSMakeRect(45, 82, 389, 19)];
   if (statsCheckboxInitiallyChecked_)
-    [statsCheckbox_ setState:NSOnState];
+    [statsCheckbox_ setNextState];
 
   NSButton* startChromeButton =
       [ButtonUtils buttonWithTitle:NSStringWithProductName(

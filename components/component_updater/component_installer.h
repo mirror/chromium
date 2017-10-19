@@ -116,7 +116,8 @@ class ComponentInstaller final : public update_client::CrxInstaller {
   // Overrides from update_client::CrxInstaller.
   void OnUpdateError(int error) override;
 
-  void Install(const base::FilePath& unpack_path,
+  void Install(std::unique_ptr<base::DictionaryValue> manifest,
+               const base::FilePath& unpack_path,
                const Callback& callback) override;
 
   bool GetInstalledFile(const std::string& file,
@@ -151,8 +152,8 @@ class ComponentInstaller final : public update_client::CrxInstaller {
       const base::FilePath& root,
       const scoped_refptr<RegistrationInfo>& registration_info);
   update_client::CrxInstaller::Result InstallHelper(
+      const base::DictionaryValue& manifest,
       const base::FilePath& unpack_path,
-      std::unique_ptr<base::DictionaryValue>* manifest,
       base::Version* version,
       base::FilePath* install_path);
   void StartRegistration(

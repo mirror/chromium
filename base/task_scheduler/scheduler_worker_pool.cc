@@ -205,14 +205,12 @@ void SchedulerWorkerPool::PostTaskWithSequenceNow(
 
   const bool sequence_was_empty = sequence->PushTask(std::move(task));
   if (sequence_was_empty) {
-    // Try to schedule |sequence| if it was empty before |task| was inserted
-    // into it. Otherwise, one of these must be true:
-    // - |sequence| is already scheduled, or,
+    // Submit |sequence| to the worker pool if the sequence was empty before
+    // |task| was inserted into it. Otherwise, one of these must be true:
+    // - |sequence| is already pending execution in the worker pool, or,
     // - The pool is running a Task from |sequence|. The pool is expected to
-    //   reschedule |sequence| once it's done running the Task.
-    sequence = task_tracker_->WillScheduleSequence(std::move(sequence), this);
-    if (sequence)
-      OnCanScheduleSequence(std::move(sequence));
+    // resubmit |sequence| once it's done running the Task.
+    ScheduleSequence(sequence);
   }
 }
 

@@ -21,7 +21,8 @@ import org.junit.runner.RunWith;
 
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwScrollOffsetManager;
-import org.chromium.android_webview.test.AwActivityTestRule.PopupInfo;
+import org.chromium.android_webview.test.AwTestBase.PopupInfo;
+import org.chromium.android_webview.test.AwTestBase.TestDependencyFactory;
 import org.chromium.android_webview.test.util.AwTestTouchUtils;
 import org.chromium.android_webview.test.util.CommonResources;
 import org.chromium.android_webview.test.util.JavascriptEventObserver;
@@ -642,9 +643,9 @@ public class AndroidScrollIntegrationTest {
 
         assertScrollOnMainSync(testContainerView, 0, 0);
 
-        final int maxScrollYPix = ThreadUtils.runOnUiThreadBlocking(
-                ()
-                        -> (testContainerView.getAwContents().computeVerticalScrollRange()
+        final int maxScrollYPix =
+                mActivityTestRule.runTestOnUiThreadAndGetResult(
+                        () -> (testContainerView.getAwContents().computeVerticalScrollRange()
                                 - testContainerView.getHeight()));
 
         final CallbackHelper onScrollToCallbackHelper =
@@ -844,7 +845,8 @@ public class AndroidScrollIntegrationTest {
         scrollToOnMainSync(testContainerView, 0, targetScrollYPix);
 
         final int scrolledYPix =
-                ThreadUtils.runOnUiThreadBlocking(() -> testContainerView.getScrollY());
+                mActivityTestRule.runTestOnUiThreadAndGetResult(
+                        () -> testContainerView.getScrollY());
 
         Assert.assertTrue(scrolledYPix > 0);
 

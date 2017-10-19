@@ -192,8 +192,7 @@ GLES2Implementation::GLES2Implementation(
   memset(&reserved_ids_, 0, sizeof(reserved_ids_));
 }
 
-gpu::ContextResult GLES2Implementation::Initialize(
-    const SharedMemoryLimits& limits) {
+bool GLES2Implementation::Initialize(const SharedMemoryLimits& limits) {
   TRACE_EVENT0("gpu", "GLES2Implementation::Initialize");
   DCHECK_GE(limits.start_transfer_buffer_size, limits.min_transfer_buffer_size);
   DCHECK_LE(limits.start_transfer_buffer_size, limits.max_transfer_buffer_size);
@@ -205,14 +204,12 @@ gpu::ContextResult GLES2Implementation::Initialize(
           limits.start_transfer_buffer_size, kStartingOffset,
           limits.min_transfer_buffer_size, limits.max_transfer_buffer_size,
           kAlignment, kSizeToFlush)) {
-    // TransferBuffer::Initialize doesn't fail for transient reasons such as if
-    // the context was lost. See http://crrev.com/c/720269
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
   max_extra_transfer_buffer_size_ = limits.max_mapped_memory_for_texture_upload;
-  mapped_memory_ = std::make_unique<MappedMemoryManager>(
-      helper_, limits.mapped_memory_reclaim_limit);
+  mapped_memory_.reset(
+      new MappedMemoryManager(helper_, limits.mapped_memory_reclaim_limit));
   mapped_memory_->set_chunk_size_multiple(limits.mapped_memory_chunk_size);
 
   GLStaticState::ShaderPrecisionMap* shader_precisions =
@@ -229,11 +226,11 @@ gpu::ContextResult GLES2Implementation::Initialize(
       capabilities_.num_compressed_texture_formats);
   util_.set_num_shader_binary_formats(capabilities_.num_shader_binary_formats);
 
-  texture_units_ = std::make_unique<TextureUnit[]>(
-      capabilities_.max_combined_texture_image_units);
+  texture_units_.reset(
+      new TextureUnit[capabilities_.max_combined_texture_image_units]);
 
-  query_tracker_ = std::make_unique<QueryTracker>(mapped_memory_.get());
-  buffer_tracker_ = std::make_unique<BufferTracker>(mapped_memory_.get());
+  query_tracker_.reset(new QueryTracker(mapped_memory_.get()));
+  buffer_tracker_.reset(new BufferTracker(mapped_memory_.get()));
 
   for (int i = 0; i < static_cast<int>(IdNamespaces::kNumIdNamespaces); ++i)
     id_allocators_[i].reset(new IdAllocator());
@@ -255,10 +252,10 @@ gpu::ContextResult GLES2Implementation::Initialize(
     SetGLError(GL_INVALID_OPERATION,
                "Initialize",
                "Service bind_generates_resource mismatch.");
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
-  return gpu::ContextResult::kSuccess;
+  return true;
 }
 
 GLES2Implementation::~GLES2Implementation() {

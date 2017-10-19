@@ -392,10 +392,10 @@ bool ComputedStyle::HasUniquePseudoStyle() const {
 
 ComputedStyle* ComputedStyle::GetCachedPseudoStyle(PseudoId pid) const {
   if (!cached_pseudo_styles_ || !cached_pseudo_styles_->size())
-    return nullptr;
+    return 0;
 
   if (StyleType() != kPseudoIdNone)
-    return nullptr;
+    return 0;
 
   for (size_t i = 0; i < cached_pseudo_styles_->size(); ++i) {
     ComputedStyle* pseudo_style = cached_pseudo_styles_->at(i).get();
@@ -403,13 +403,13 @@ ComputedStyle* ComputedStyle::GetCachedPseudoStyle(PseudoId pid) const {
       return pseudo_style;
   }
 
-  return nullptr;
+  return 0;
 }
 
 ComputedStyle* ComputedStyle::AddCachedPseudoStyle(
     RefPtr<ComputedStyle> pseudo) {
   if (!pseudo)
-    return nullptr;
+    return 0;
 
   DCHECK_GT(pseudo->StyleType(), kPseudoIdNone);
 

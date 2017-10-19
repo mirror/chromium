@@ -270,8 +270,7 @@ public class SafeBrowsingTest {
         }
     }
 
-    private static class SafeBrowsingDependencyFactory
-            extends AwActivityTestRule.TestDependencyFactory {
+    private static class SafeBrowsingDependencyFactory extends AwTestBase.TestDependencyFactory {
         @Override
         public AwContents createAwContents(AwBrowserContext browserContext, ViewGroup containerView,
                 Context context, InternalAccessDelegate internalAccessAdapter,

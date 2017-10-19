@@ -37,7 +37,7 @@ class DISPLAY_EXPORT Display final {
  public:
   // Screen Rotation in clock-wise degrees.
   // This enum corresponds to DisplayRotationDefaultProto::Rotation in
-  // components/policy/proto/chrome_device_policy.proto.
+  // chrome/browser/chromeos/policy/proto/chrome_device_policy.proto.
   enum Rotation {
     ROTATE_0 = 0,
     ROTATE_90,

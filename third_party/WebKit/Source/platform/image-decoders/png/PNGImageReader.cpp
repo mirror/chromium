@@ -92,16 +92,14 @@ PNGImageReader::PNGImageReader(PNGImageDecoder* decoder, size_t initial_offset)
       next_sequence_number_(0),
       fctl_needs_dat_chunk_(false),
       ignore_animation_(false) {
-  png_ = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, pngFailed,
-                                nullptr);
+  png_ = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, pngFailed, 0);
   info_ = png_create_info_struct(png_);
   png_set_progressive_read_fn(png_, decoder_, nullptr, pngRowAvailable,
                               pngFrameComplete);
 }
 
 PNGImageReader::~PNGImageReader() {
-  png_destroy_read_struct(png_ ? &png_ : nullptr, info_ ? &info_ : nullptr,
-                          nullptr);
+  png_destroy_read_struct(png_ ? &png_ : 0, info_ ? &info_ : 0, 0);
   DCHECK(!png_ && !info_);
 }
 
@@ -162,8 +160,7 @@ bool PNGImageReader::Decode(SegmentReader& data, size_t index) {
   const bool decode_with_new_png = ShouldDecodeWithNewPNG(index);
   if (decode_with_new_png) {
     ClearDecodeState(0);
-    png_ = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, pngFailed,
-                                  nullptr);
+    png_ = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, pngFailed, 0);
     info_ = png_create_info_struct(png_);
     png_set_progressive_read_fn(png_, decoder_, pngHeaderAvailable,
                                 pngRowAvailable, pngFrameComplete);
@@ -186,7 +183,7 @@ bool PNGImageReader::Decode(SegmentReader& data, size_t index) {
 
   static png_byte iend[12] = {0, 0, 0, 0, 'I', 'E', 'N', 'D', 174, 66, 96, 130};
   png_process_data(png_, info_, iend, 12);
-  png_destroy_read_struct(&png_, &info_, nullptr);
+  png_destroy_read_struct(&png_, &info_, 0);
   DCHECK(!png_ && !info_);
 
   return true;
@@ -608,8 +605,7 @@ bool PNGImageReader::ParseSize(const FastSharedBufferReader& reader) {
 void PNGImageReader::ClearDecodeState(size_t index) {
   if (index)
     return;
-  png_destroy_read_struct(png_ ? &png_ : nullptr, info_ ? &info_ : nullptr,
-                          nullptr);
+  png_destroy_read_struct(png_ ? &png_ : nullptr, info_ ? &info_ : nullptr, 0);
   DCHECK(!png_ && !info_);
   progressive_decode_offset_ = 0;
 }

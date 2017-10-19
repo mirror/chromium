@@ -80,15 +80,15 @@
 #include "core/xml/parser/XMLDocumentParser.h"
 #include "platform/Histogram.h"
 #include "platform/InstanceCounters.h"
+#include "platform/PluginScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/DOMWrapperWorld.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkUtils.h"
-#include "platform/plugins/PluginScriptForbiddenScope.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -263,7 +263,7 @@ FrameLoader::~FrameLoader() {
   DCHECK(detached_);
 }
 
-void FrameLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FrameLoader) {
   visitor->Trace(frame_);
   visitor->Trace(progress_tracker_);
   visitor->Trace(document_loader_);
@@ -273,7 +273,7 @@ void FrameLoader::Trace(blink::Visitor* visitor) {
 void FrameLoader::Init() {
   ScriptForbiddenScope forbid_scripts;
 
-  ResourceRequest initial_request{KURL(g_empty_string)};
+  ResourceRequest initial_request(KURL(kParsedURLString, g_empty_string));
   initial_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   initial_request.SetFrameType(frame_->IsMainFrame()
                                    ? WebURLRequest::kFrameTypeTopLevel
@@ -476,7 +476,7 @@ void FrameLoader::DidFinishNavigation() {
 }
 
 Frame* FrameLoader::Opener() {
-  return Client() ? Client()->Opener() : nullptr;
+  return Client() ? Client()->Opener() : 0;
 }
 
 void FrameLoader::SetOpener(LocalFrame* opener) {
@@ -1233,7 +1233,7 @@ void FrameLoader::ProcessFragment(const KURL& url,
   Frame* boundary_frame =
       url.HasFragmentIdentifier()
           ? frame_->FindUnsafeParentScrollPropagationBoundary()
-          : nullptr;
+          : 0;
 
   // FIXME: Handle RemoteFrames
   if (boundary_frame && boundary_frame->IsLocalFrame()) {
@@ -1707,11 +1707,11 @@ std::unique_ptr<TracedValue> FrameLoader::ToTracedValue() const {
   traced_value->SetString("stateMachine", state_machine_.ToString());
   traced_value->SetString("provisionalDocumentLoaderURL",
                           provisional_document_loader_
-                              ? provisional_document_loader_->Url().GetString()
+                              ? provisional_document_loader_->Url()
                               : String());
-  traced_value->SetString(
-      "documentLoaderURL",
-      document_loader_ ? document_loader_->Url().GetString() : String());
+  traced_value->SetString("documentLoaderURL", document_loader_
+                                                   ? document_loader_->Url()
+                                                   : String());
   return traced_value;
 }
 

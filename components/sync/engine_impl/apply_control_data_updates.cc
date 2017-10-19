@@ -68,9 +68,9 @@ void ApplyControlDataUpdates(syncable::Directory* dir) {
   for (std::vector<int64_t>::const_iterator iter = handles.begin();
        iter != handles.end(); ++iter) {
     syncable::MutableEntry entry(&trans, syncable::GET_BY_HANDLE, *iter);
-    DCHECK(entry.good());
+    CHECK(entry.good());
     ModelType type = entry.GetServerModelType();
-    DCHECK(ControlTypes().Has(type));
+    CHECK(ControlTypes().Has(type));
     if (!entry.GetUniqueServerTag().empty()) {
       // We should have already applied all top level control nodes.
       DCHECK(!entry.GetIsUnappliedUpdate());

@@ -46,8 +46,6 @@ class CC_PAINT_EXPORT PaintImage {
   // images, this would imply the first frame of the animation.
   static const size_t kDefaultFrameIndex;
 
-  static const Id kInvalidId;
-
   class CC_PAINT_EXPORT FrameKey {
    public:
     FrameKey(ContentId content_id, size_t frame_index, gfx::Rect subset_rect);
@@ -75,24 +73,6 @@ class CC_PAINT_EXPORT PaintImage {
 
   enum class AnimationType { ANIMATED, VIDEO, STATIC };
   enum class CompletionState { DONE, PARTIALLY_DONE };
-  enum class DecodingMode {
-    // No preference has been specified. The compositor may choose to use sync
-    // or async decoding. See CheckerImageTracker for the default behaviour.
-    kUnspecified,
-
-    // It's preferred to display this image synchronously with the rest of the
-    // content updates, skipping any heuristics.
-    kSync,
-
-    // Async is preferred. The compositor may decode async if it meets the
-    // heuristics used to avoid flickering (for instance vetoing of multipart
-    // response, animated, partially loaded images) and would be performant. See
-    // CheckerImageTracker for all heuristics used.
-    kAsync
-  };
-
-  // Returns the more conservative mode out of the two given ones.
-  static DecodingMode GetConservative(DecodingMode one, DecodingMode two);
 
   static Id GetNextId();
   static ContentId GetNextContentId();
@@ -140,11 +120,6 @@ class CC_PAINT_EXPORT PaintImage {
   bool is_multipart() const { return is_multipart_; }
   int repetition_count() const { return repetition_count_; }
   bool ShouldAnimate() const;
-  size_t frame_index() const { return frame_index_; }
-  AnimationSequenceId reset_animation_sequence_id() const {
-    return reset_animation_sequence_id_;
-  }
-  DecodingMode decoding_mode() const { return decoding_mode_; }
 
   // TODO(vmpstr): Don't get the SkImage here if you don't need to.
   uint32_t unique_id() const { return GetSkImage()->uniqueID(); }
@@ -153,6 +128,10 @@ class CC_PAINT_EXPORT PaintImage {
   int width() const { return GetSkImage()->width(); }
   int height() const { return GetSkImage()->height(); }
   SkColorSpace* color_space() const { return GetSkImage()->colorSpace(); }
+  size_t frame_index() const { return frame_index_; }
+  AnimationSequenceId reset_animation_sequence_id() const {
+    return reset_animation_sequence_id_;
+  }
 
   // Returns a unique id for the pixel data for the frame at |frame_index|. Used
   // only for lazy-generated images.
@@ -214,8 +193,6 @@ class CC_PAINT_EXPORT PaintImage {
   // will reset this animation in the compositor for the first frame which has a
   // recording with a PaintImage storing the updated sequence id.
   AnimationSequenceId reset_animation_sequence_id_ = 0u;
-
-  DecodingMode decoding_mode_ = DecodingMode::kSync;
 
   // The |cached_sk_image_| can be derived/created from other inputs present in
   // the PaintImage but we always construct it at creation time for 2 reasons:

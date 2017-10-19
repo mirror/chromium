@@ -14,6 +14,10 @@ class PrefRegistrySimple;
 class PrefService;
 
 namespace prefs {
+// Boolean that is true when Chrome settings page should show change password
+// warning.
+extern const char kSafeBrowsingChangePasswordInSettingsEnabled[];
+
 // Boolean that is true when SafeBrowsing is enabled.
 extern const char kSafeBrowsingEnabled[];
 
@@ -48,10 +52,6 @@ extern const char kSafeBrowsingScoutGroupSelected[];
 // Boolean indicating whether Safe Browsing Scout reporting is enabled, which
 // collects data for malware detection.
 extern const char kSafeBrowsingScoutReportingEnabled[];
-
-// Dictionary that records the origin and navigation ID pairs of unhandled sync
-// password reuses.
-extern const char kSafeBrowsingUnhandledSyncPasswordReuses[];
 }
 
 namespace safe_browsing {

@@ -122,7 +122,6 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool oes_rgb8_rgba8 = false;
     bool angle_robust_resource_initialization = false;
     bool nv_fence = false;
-    bool chromium_texture_storage_image = false;
   };
 
   FeatureInfo();
@@ -132,15 +131,15 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
       const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds);
 
   // Initializes the feature information. Needs a current GL context.
-  void Initialize(ContextType context_type,
+  bool Initialize(ContextType context_type,
                   const DisallowedFeatures& disallowed_features);
 
   // Helper that defaults to no disallowed features and a GLES2 context.
-  void InitializeForTesting();
+  bool InitializeForTesting();
   // Helper that defaults to no disallowed Features.
-  void InitializeForTesting(ContextType context_type);
+  bool InitializeForTesting(ContextType context_type);
   // Helper that defaults to a GLES2 context.
-  void InitializeForTesting(const DisallowedFeatures& disallowed_features);
+  bool InitializeForTesting(const DisallowedFeatures& disallowed_features);
 
   const Validators* validators() const {
     return &validators_;
@@ -206,7 +205,7 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
 
   DisallowedFeatures disallowed_features_;
 
-  ContextType context_type_ = CONTEXT_TYPE_OPENGLES2;
+  ContextType context_type_;
 
   // The extensions string returned by glGetString(GL_EXTENSIONS);
   std::string extensions_;
@@ -217,9 +216,9 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
   // Flags for Workarounds.
   const GpuDriverBugWorkarounds workarounds_;
 
-  bool ext_color_buffer_float_available_ = false;
-  bool oes_texture_float_linear_available_ = false;
-  bool oes_texture_half_float_linear_available_ = false;
+  bool ext_color_buffer_float_available_;
+  bool oes_texture_float_linear_available_;
+  bool oes_texture_half_float_linear_available_;
 
   bool disable_shader_translator_;
   std::unique_ptr<gl::GLVersionInfo> gl_version_info_;

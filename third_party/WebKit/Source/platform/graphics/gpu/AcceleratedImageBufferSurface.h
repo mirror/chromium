@@ -50,6 +50,7 @@ class PLATFORM_EXPORT AcceleratedImageBufferSurface
 
  public:
   AcceleratedImageBufferSurface(const IntSize&,
+                                OpacityMode = kNonOpaque,
                                 const CanvasColorParams& = CanvasColorParams());
   ~AcceleratedImageBufferSurface() override {}
 

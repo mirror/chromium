@@ -228,13 +228,13 @@ std::unique_ptr<ui::Renderer> RendererFactory::CreateRenderer(
       if (!surface->SupportsAsyncSwap())
         LOG(FATAL) << "GL surface must support SwapBuffersAsync";
       if (surface->IsSurfaceless())
-        return std::make_unique<ui::SurfacelessGlRenderer>(widget, surface,
+        return base::MakeUnique<ui::SurfacelessGlRenderer>(widget, surface,
                                                            size);
       else
-        return std::make_unique<ui::GlRenderer>(widget, surface, size);
+        return base::MakeUnique<ui::GlRenderer>(widget, surface, size);
     }
     case SOFTWARE:
-      return std::make_unique<ui::SoftwareRenderer>(widget, size);
+      return base::MakeUnique<ui::SoftwareRenderer>(widget, size);
   }
 
   return nullptr;

@@ -68,7 +68,7 @@ IDBKeyRange::IDBKeyRange(IDBKey* lower,
       lower_type_(lower_type),
       upper_type_(upper_type) {}
 
-void IDBKeyRange::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBKeyRange) {
   visitor->Trace(lower_);
   visitor->Trace(upper_);
 }

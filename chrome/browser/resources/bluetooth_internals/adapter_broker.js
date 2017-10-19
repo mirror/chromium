@@ -7,11 +7,11 @@
  *     chrome://bluetooth-internals/.
  */
 cr.define('adapter_broker', function() {
-  /** @typedef {bluetooth.mojom.Adapter.ptrClass} */
+  /** @typedef {interfaces.BluetoothAdapter.Adapter.ptrClass} */
   var AdapterPtr;
-  /** @typedef {bluetooth.mojom.Device.ptrClass} */
+  /** @typedef {interfaces.BluetoothDevice.Device.ptrClass} */
   var DevicePtr;
-  /** @typedef {bluetooth.mojom.DiscoverySession.ptrClass} */
+  /** @typedef {interfaces.BluetoothAdapter.DiscoverySession.ptrClass} */
   var DiscoverySessionPtr;
 
   /**
@@ -51,10 +51,11 @@ cr.define('adapter_broker', function() {
      */
     connectToDevice: function(address) {
       return this.adapter_.connectToDevice(address).then(function(response) {
-        if (response.result != bluetooth.mojom.ConnectResult.SUCCESS) {
+        if (response.result !=
+            interfaces.BluetoothAdapter.ConnectResult.SUCCESS) {
           // TODO(crbug.com/663394): Replace with more descriptive error
           // messages.
-          var ConnectResult = bluetooth.mojom.ConnectResult;
+          var ConnectResult = interfaces.BluetoothAdapter.ConnectResult;
           var errorString = Object.keys(ConnectResult).find(function(key) {
             return ConnectResult[key] === response.result;
           });
@@ -68,7 +69,7 @@ cr.define('adapter_broker', function() {
 
     /**
      * Gets an array of currently detectable devices from the Adapter service.
-     * @return {!Array<!bluetooth.mojom.DeviceInfo>}
+     * @return {!Array<!interfaces.BluetoothDevice.DeviceInfo>}
      */
     getDevices: function() {
       return this.adapter_.getDevices();
@@ -76,7 +77,7 @@ cr.define('adapter_broker', function() {
 
     /**
      * Gets the current state of the Adapter.
-     * @return {!bluetooth.mojom.AdapterInfo}
+     * @return {!interfaces.BluetoothAdapter.AdapterInfo}
      */
     getInfo: function() {
       return this.adapter_.getInfo();
@@ -84,11 +85,11 @@ cr.define('adapter_broker', function() {
 
     /**
      * Sets client of Adapter service.
-     * @param {!bluetooth.mojom.AdapterClient} adapterClient
+     * @param {!interfaces.BluetoothAdapter.AdapterClient} adapterClient
      */
     setClient: function(adapterClient) {
-      adapterClient.binding =
-          new mojo.Binding(bluetooth.mojom.AdapterClient, adapterClient);
+      adapterClient.binding = new interfaces.Bindings.Binding(
+          interfaces.BluetoothAdapter.AdapterClient, adapterClient);
 
       this.adapter_.setClient(
           adapterClient.binding.createInterfacePtrAndBind());
@@ -180,7 +181,7 @@ cr.define('adapter_broker', function() {
 
     /**
      * Fires deviceadded event.
-     * @param {!bluetooth.mojom.DeviceInfo} deviceInfo
+     * @param {!interfaces.BluetoothDevice.DeviceInfo} deviceInfo
      */
     deviceAdded: function(deviceInfo) {
       var event =
@@ -190,7 +191,7 @@ cr.define('adapter_broker', function() {
 
     /**
      * Fires devicechanged event.
-     * @param {!bluetooth.mojom.DeviceInfo} deviceInfo
+     * @param {!interfaces.BluetoothDevice.DeviceInfo} deviceInfo
      */
     deviceChanged: function(deviceInfo) {
       var event =
@@ -200,7 +201,7 @@ cr.define('adapter_broker', function() {
 
     /**
      * Fires deviceremoved event.
-     * @param {!bluetooth.mojom.DeviceInfo} deviceInfo
+     * @param {!interfaces.BluetoothDevice.DeviceInfo} deviceInfo
      */
     deviceRemoved: function(deviceInfo) {
       var event =
@@ -220,20 +221,24 @@ cr.define('adapter_broker', function() {
     if (adapterBroker)
       return Promise.resolve(adapterBroker);
 
-    var adapterFactory = new bluetooth.mojom.AdapterFactoryPtr;
-    Mojo.bindInterface(
-        bluetooth.mojom.AdapterFactory.name,
-        mojo.makeRequest(adapterFactory).handle);
+    return interfaces.setupInterfaces()
+        .then(function(adapter) {
+          var adapterFactory =
+              new interfaces.BluetoothAdapter.AdapterFactoryPtr(
+                  interfaces.FrameInterfaces.getInterface(
+                      interfaces.BluetoothAdapter.AdapterFactory.name));
 
-    // Get an Adapter service.
-    return adapterFactory.getAdapter().then(function(response) {
-      if (!response.adapter.ptr.isBound()) {
-        throw new Error('Bluetooth Not Supported on this platform.');
-      }
+          // Get an Adapter service.
+          return adapterFactory.getAdapter();
+        })
+        .then(function(response) {
+          if (!response.adapter.ptr.isBound()) {
+            throw new Error('Bluetooth Not Supported on this platform.');
+          }
 
-      adapterBroker = new AdapterBroker(response.adapter);
-      return adapterBroker;
-    });
+          adapterBroker = new AdapterBroker(response.adapter);
+          return adapterBroker;
+        });
   }
 
   return {

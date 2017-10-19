@@ -37,7 +37,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
     shared_bitmap_manager_ = base::MakeUnique<cc::TestSharedBitmapManager>();
 
     resource_provider_ =
-        cc::FakeResourceProvider::CreateDisplayResourceProvider(
+        cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             context_provider_.get(), shared_bitmap_manager_.get());
   }
 
@@ -96,7 +96,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
         surface_quad->SetNew(
             sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
             SurfaceId(FrameSinkId(1, i), LocalSurfaceId(i, kArbitraryToken)),
-            base::nullopt, SK_ColorWHITE);
+            SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
       }
 
       frame.render_pass_list.push_back(std::move(pass));
@@ -118,7 +118,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
           sqs, gfx::Rect(0, 0, 100, 100), gfx::Rect(0, 0, 100, 100),
           SurfaceId(FrameSinkId(1, num_surfaces),
                     LocalSurfaceId(num_surfaces, kArbitraryToken)),
-          base::nullopt, SK_ColorWHITE);
+          SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
 
       pass->output_rect = gfx::Rect(0, 0, 100, 100);
 

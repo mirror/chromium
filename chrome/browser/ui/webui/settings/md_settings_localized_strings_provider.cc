@@ -1612,7 +1612,6 @@ void AddSearchStrings(content::WebUIDataSource* html_source, Profile* profile) {
      IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_ENABLED},
     {"searchGoogleAssistantDisabled",
      IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_DISABLED},
-    {"assistantTurnOn", IDS_SETTINGS_SEARCH_GOOGLE_ASSISTANT_TURN_ON},
 #endif
     {"searchOkGoogleSubtextAlwaysOn",
      IDS_SETTINGS_SEARCH_OK_GOOGLE_SUBTEXT_ALWAYS_ON},
@@ -1705,6 +1704,7 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"cookieMediaLicense", IDS_SETTINGS_COOKIES_MEDIA_LICENSE},
     {"cookiePlural", IDS_SETTINGS_COOKIES_PLURAL_COOKIES},
     {"cookieServiceWorker", IDS_SETTINGS_COOKIES_SERVICE_WORKER},
+    {"cookieSingular", IDS_SETTINGS_COOKIES_SINGLE_COOKIE},
     {"embeddedOnAnyHost", IDS_SETTINGS_EXCEPTIONS_EMBEDDED_ON_ANY_HOST},
     {"embeddedOnHost", IDS_SETTINGS_EXCEPTIONS_EMBEDDED_ON_HOST},
     {"editSiteTitle", IDS_SETTINGS_EDIT_SITE_TITLE},
@@ -1778,10 +1778,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"siteSettingsImages", IDS_SETTINGS_SITE_SETTINGS_IMAGES},
     {"siteSettingsJavascript", IDS_SETTINGS_SITE_SETTINGS_JAVASCRIPT},
     {"siteSettingsSound", IDS_SETTINGS_SITE_SETTINGS_SOUND},
-    {"siteSettingsSoundAllow", IDS_SETTINGS_SITE_SETTINGS_SOUND_ALLOW},
-    {"siteSettingsSoundAllowRecommended",
-     IDS_SETTINGS_SITE_SETTINGS_SOUND_ALLOW_RECOMMENDED},
-    {"siteSettingsSoundBlock", IDS_SETTINGS_SITE_SETTINGS_SOUND_BLOCK},
     {"siteSettingsFlash", IDS_SETTINGS_SITE_SETTINGS_FLASH},
     {"siteSettingsPdfDocuments", IDS_SETTINGS_SITE_SETTINGS_PDF_DOCUMENTS},
     {"siteSettingsPdfDownloadPdfs",
@@ -1925,7 +1921,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
      IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_CONFIRMATION},
     {"siteSettingsSiteResetDialogTitle",
      IDS_SETTINGS_SITE_SETTINGS_SITE_RESET_DIALOG_TITLE},
-    {"loadingLocalDataList", IDS_SETTINGS_LOADING_LOCAL_DATA_LIST},
     {"thirdPartyCookie", IDS_SETTINGS_SITE_SETTINGS_THIRD_PARTY_COOKIE},
     {"thirdPartyCookieSublabel",
      IDS_SETTINGS_SITE_SETTINGS_THIRD_PARTY_COOKIE_SUBLABEL},
@@ -2124,7 +2119,6 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source,
   chromeos::network_element::AddOncLocalizedStrings(html_source);
   chromeos::network_element::AddDetailsLocalizedStrings(html_source);
   chromeos::network_element::AddConfigLocalizedStrings(html_source);
-  chromeos::network_element::AddErrorLocalizedStrings(html_source);
 #endif
   policy_indicator::AddLocalizedStrings(html_source);
 

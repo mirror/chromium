@@ -44,7 +44,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
   void RequestLockScreen() override;
   void NotifyLockScreenShown() override;
   void NotifyLockScreenDismissed() override;
-  void RetrieveActiveSessions(ActiveSessionsCallback callback) override;
+  void RetrieveActiveSessions(const ActiveSessionsCallback& callback) override;
   void RetrieveDevicePolicy(const RetrievePolicyCallback& callback) override;
   RetrievePolicyResponseType BlockingRetrieveDevicePolicy(
       std::string* policy_out) override;
@@ -82,19 +82,16 @@ class FakeSessionManagerClient : public SessionManagerClient {
                         bool enable_vendor_privileged,
                         bool native_bridge_experiment,
                         const StartArcInstanceCallback& callback) override;
-  void StopArcInstance(VoidDBusMethodCallback callback) override;
+  void StopArcInstance(const ArcCallback& callback) override;
   void SetArcCpuRestriction(
       login_manager::ContainerCpuRestrictionState restriction_state,
-      VoidDBusMethodCallback callback) override;
+      const ArcCallback& callback) override;
   void EmitArcBooted(const cryptohome::Identification& cryptohome_id,
-                     VoidDBusMethodCallback callback) override;
+                     const ArcCallback& callback) override;
   void GetArcStartTime(DBusMethodCallback<base::TimeTicks> callback) override;
   void RemoveArcData(const cryptohome::Identification& cryptohome_id,
-                     VoidDBusMethodCallback callback) override;
+                     const ArcCallback& callback) override;
 
-  void set_store_device_policy_success(bool success) {
-    store_device_policy_success_ = success;
-  }
   const std::string& device_policy() const;
   void set_device_policy(const std::string& policy_blob);
 
@@ -145,7 +142,6 @@ class FakeSessionManagerClient : public SessionManagerClient {
   void set_arc_available(bool available) { arc_available_ = available; }
 
  private:
-  bool store_device_policy_success_ = true;
   std::string device_policy_;
   std::map<cryptohome::Identification, std::string> user_policies_;
   std::map<cryptohome::Identification, std::string>

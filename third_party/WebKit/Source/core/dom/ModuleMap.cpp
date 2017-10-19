@@ -23,7 +23,7 @@ class ModuleMap::Entry final : public GarbageCollectedFinalized<Entry>,
   static Entry* Create(ModuleMap* map) { return new Entry(map); }
   ~Entry() override {}
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
   // Notify fetched |m_moduleScript| to the client asynchronously.
@@ -53,7 +53,7 @@ ModuleMap::Entry::Entry(ModuleMap* map) : map_(map) {
   DCHECK(map_);
 }
 
-void ModuleMap::Entry::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleMap::Entry) {
   visitor->Trace(module_script_);
   visitor->Trace(map_);
   visitor->Trace(clients_);
@@ -102,7 +102,7 @@ ModuleMap::ModuleMap(Modulator* modulator) : modulator_(modulator) {
   DCHECK(modulator);
 }
 
-void ModuleMap::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleMap) {
   visitor->Trace(map_);
   visitor->Trace(modulator_);
 }
@@ -117,13 +117,12 @@ void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
                                         SingleModuleClient* client) {
   // https://html.spec.whatwg.org/#fetch-a-single-module-script
 
-  // Step 1. "Let moduleMap be module map settings object's module map."
-  // [spec text]
-  // Note: |this| is the ModuleMap.
+  // Step 1. Let moduleMap be module map settings object's module map.
+  // Note: This is the ModuleMap.
 
-  // Step 2. "If moduleMap[url] is "fetching", wait in parallel until that
+  // Step 2. If moduleMap[url] is "fetching", wait in parallel until that
   // entry's value changes, then queue a task on the networking task source to
-  // proceed with running the following steps." [spec text]
+  // proceed with running the following steps.
   MapImpl::AddResult result = map_.insert(request.Url(), nullptr);
   TraceWrapperMember<Entry>& entry = result.stored_value->value;
   if (result.is_new_entry) {
@@ -135,10 +134,10 @@ void ModuleMap::FetchSingleModuleScript(const ModuleScriptFetchRequest& request,
   }
   DCHECK(entry);
 
-  // Step 3. "If moduleMap[url] exists, asynchronously complete this algorithm
-  // with moduleMap[url], and abort these steps." [spec text]
-  // Step 11. "Set moduleMap[url] to module script, and asynchronously complete
-  // this algorithm with module script." [spec text]
+  // Step 3. If moduleMap[url] exists, asynchronously complete this algorithm
+  // with moduleMap[url], and abort these steps.
+  // Step 10. Set moduleMap[url] to module script, and asynchronously complete
+  // this algorithm with module script.
   entry->AddClient(client);
 }
 

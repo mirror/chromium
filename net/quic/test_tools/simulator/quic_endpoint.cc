@@ -7,7 +7,6 @@
 #include "base/sha1.h"
 #include "net/quic/core/crypto/crypto_handshake_message.h"
 #include "net/quic/core/crypto/crypto_protocol.h"
-#include "net/quic/core/quic_data_writer.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/quic/platform/api/quic_str_cat.h"
 #include "net/quic/test_tools/quic_test_utils.h"
@@ -77,7 +76,8 @@ QuicEndpoint::QuicEndpoint(Simulator* simulator,
       bytes_to_transfer_(0),
       bytes_transferred_(0),
       write_blocked_count_(0),
-      wrong_data_received_(false) {
+      wrong_data_received_(false),
+      transmission_buffer_(new char[kWriteChunkSize]) {
   nic_tx_queue_.set_listener_interface(this);
 
   connection_.SetSelfAddress(GetAddressFromName(name));
@@ -87,7 +87,6 @@ QuicEndpoint::QuicEndpoint(Simulator* simulator,
   connection_.SetDecrypter(ENCRYPTION_FORWARD_SECURE,
                            new NullDecrypter(perspective));
   connection_.SetDefaultEncryptionLevel(ENCRYPTION_FORWARD_SECURE);
-  connection_.SetDataProducer(&producer_);
 
   // Configure the connection as if it received a handshake.  This is important
   // primarily because
@@ -217,14 +216,6 @@ QuicByteCount QuicEndpoint::Writer::GetMaxPacketSize(
   return kMaxPacketSize;
 }
 
-bool QuicEndpoint::DataProducer::WriteStreamData(QuicStreamId id,
-                                                 QuicStreamOffset offset,
-                                                 QuicByteCount data_length,
-                                                 QuicDataWriter* writer) {
-  writer->WriteRepeatedByte(kStreamDataContents, data_length);
-  return true;
-}
-
 void QuicEndpoint::WriteStreamData() {
   // Instantiate a bundler which would normally be here due to QuicSession.
   QuicConnection::ScopedPacketBundler packet_bundler(
@@ -234,10 +225,12 @@ void QuicEndpoint::WriteStreamData() {
     // Transfer data in chunks of size at most |kWriteChunkSize|.
     const size_t transmission_size =
         std::min(kWriteChunkSize, bytes_to_transfer_);
+    memset(transmission_buffer_.get(), kStreamDataContents, transmission_size);
 
     iovec iov;
-    iov.iov_base = nullptr;
+    iov.iov_base = transmission_buffer_.get();
     iov.iov_len = transmission_size;
+
     QuicIOVector io_vector(&iov, 1, transmission_size);
     QuicConsumedData consumed_data = connection_.SendStreamData(
         kDataStream, io_vector, bytes_transferred_, NO_FIN, nullptr);

@@ -20,11 +20,7 @@ ValueStore::Status::Status(StatusCode code,
                            const std::string& message)
     : code(code), restore_status(restore_status), message(message) {}
 
-ValueStore::Status::Status(Status&& other) = default;
-
-ValueStore::Status::~Status() = default;
-
-ValueStore::Status& ValueStore::Status::operator=(Status&& rhs) = default;
+ValueStore::Status::~Status() {}
 
 void ValueStore::Status::Merge(const Status& status) {
   if (code == OK)
@@ -35,40 +31,30 @@ void ValueStore::Status::Merge(const Status& status) {
     restore_status = status.restore_status;
 }
 
-// Implementation of ReadResult.
+// Implementation of ReadResultType.
 
-ValueStore::ReadResult::ReadResult(
+ValueStore::ReadResultType::ReadResultType(
     std::unique_ptr<base::DictionaryValue> settings,
-    Status status)
-    : settings_(std::move(settings)), status_(std::move(status)) {
+    const Status& status)
+    : settings_(std::move(settings)), status_(status) {
   CHECK(settings_);
 }
 
-ValueStore::ReadResult::ReadResult(Status status)
-    : status_(std::move(status)) {}
+ValueStore::ReadResultType::ReadResultType(const Status& status)
+    : status_(status) {}
 
-ValueStore::ReadResult::ReadResult(ReadResult&& other) = default;
+ValueStore::ReadResultType::~ReadResultType() {}
 
-ValueStore::ReadResult::~ReadResult() = default;
+// Implementation of WriteResultType.
 
-ValueStore::ReadResult& ValueStore::ReadResult::operator=(ReadResult&& rhs) =
-    default;
-
-// Implementation of WriteResult.
-
-ValueStore::WriteResult::WriteResult(
+ValueStore::WriteResultType::WriteResultType(
     std::unique_ptr<ValueStoreChangeList> changes,
-    Status status)
-    : changes_(std::move(changes)), status_(std::move(status)) {
+    const Status& status)
+    : changes_(std::move(changes)), status_(status) {
   CHECK(changes_);
 }
 
-ValueStore::WriteResult::WriteResult(Status status)
-    : status_(std::move(status)) {}
+ValueStore::WriteResultType::WriteResultType(const Status& status)
+    : status_(status) {}
 
-ValueStore::WriteResult::WriteResult(WriteResult&& other) = default;
-
-ValueStore::WriteResult::~WriteResult() = default;
-
-ValueStore::WriteResult& ValueStore::WriteResult::operator=(WriteResult&& rhs) =
-    default;
+ValueStore::WriteResultType::~WriteResultType() {}

@@ -51,7 +51,7 @@ class PseudoStyleRequest {
         scrollbar_part(kNoPart),
         scrollbar(nullptr) {}
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(scrollbar); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(scrollbar); }
 
   // The spec disallows inheritance for ::backdrop.
   bool AllowsInheritance(const ComputedStyle* parent_style) const {

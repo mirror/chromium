@@ -51,7 +51,7 @@ class CORE_EXPORT ContextMenuController final
  public:
   static ContextMenuController* Create(Page*, ContextMenuClient*);
   ~ContextMenuController();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   ContextMenu* GetContextMenu() const { return context_menu_.get(); }
   void ClearContextMenu();

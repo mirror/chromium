@@ -45,9 +45,7 @@ enum CSSParserMode {
   kCSSFontFaceRuleMode,
   // User agent stylesheets are parsed in standards mode but also allows
   // internal properties and values.
-  kUASheetMode,
-  // This should always be the last entry.
-  kNumCSSParserModes
+  kUASheetMode
 };
 
 inline bool IsQuirksModeBehavior(CSSParserMode mode) {

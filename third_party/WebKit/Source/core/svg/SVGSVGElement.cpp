@@ -756,7 +756,7 @@ void SVGSVGElement::FinishParsingChildren() {
   SendSVGLoadEventIfPossible();
 }
 
-void SVGSVGElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGSVGElement) {
   visitor->Trace(x_);
   visitor->Trace(y_);
   visitor->Trace(width_);

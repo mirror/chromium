@@ -46,7 +46,7 @@ inline HTMLIFrameElement::HTMLIFrameElement(Document& document)
 
 DEFINE_NODE_FACTORY(HTMLIFrameElement)
 
-void HTMLIFrameElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLIFrameElement) {
   visitor->Trace(sandbox_);
   HTMLFrameElementBase::Trace(visitor);
   Supplementable<HTMLIFrameElement>::Trace(visitor);
@@ -186,15 +186,14 @@ void HTMLIFrameElement::ParseAttribute(
               kOtherMessageSource, kWarningMessageLevel, message));
         }
       }
-      if (!value.IsEmpty()) {
-        if (old_syntax) {
-          UseCounter::Count(
-              GetDocument(),
-              WebFeature::kFeaturePolicyAllowAttributeDeprecatedSyntax);
-        } else {
-          UseCounter::Count(GetDocument(),
-                            WebFeature::kFeaturePolicyAllowAttribute);
-        }
+
+      if (old_syntax) {
+        UseCounter::Count(
+            GetDocument(),
+            WebFeature::kFeaturePolicyAllowAttributeDeprecatedSyntax);
+      } else {
+        UseCounter::Count(GetDocument(),
+                          WebFeature::kFeaturePolicyAllowAttribute);
       }
     }
   } else {

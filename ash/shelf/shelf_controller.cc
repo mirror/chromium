@@ -123,9 +123,10 @@ ShelfController::~ShelfController() {
 
 // static
 void ShelfController::RegisterProfilePrefs(PrefRegistrySimple* registry) {
-  // These prefs are public for ChromeLauncherController's OnIsSyncingChanged
-  // and ShelfBoundsChangesProbablyWithUser. See the pref names definitions for
-  // explanations of the synced, local, and per-display behaviors.
+  // These prefs are marked PUBLIC for use by Chrome, they're currently only
+  // needed for ChromeLauncherController::ShelfBoundsChangesProbablyWithUser
+  // and ChromeLauncherPrefsObserver. See the pref names definitions for an
+  // explanation of the synced, local, and per-display behavior of these prefs.
   registry->RegisterStringPref(
       prefs::kShelfAutoHideBehavior, kShelfAutoHideBehaviorNever,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
@@ -296,10 +297,6 @@ void ShelfController::ShelfItemDelegateChanged(const ShelfID& id,
         id, delegate ? delegate->CreateInterfacePtrAndBind()
                      : mojom::ShelfItemDelegatePtr());
   });
-}
-
-void ShelfController::FlushForTesting() {
-  bindings_.FlushForTesting();
 }
 
 void ShelfController::OnActiveUserPrefServiceChanged(

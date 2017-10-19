@@ -19,9 +19,7 @@ namespace metrics {
 
 namespace {
 
-// Keep in sync with MAX_SUGGESTIONS_PER_SECTION in NewTabPageUma.java.
 const int kMaxSuggestionsPerCategory = 20;
-
 const int kMaxSuggestionsTotal = 50;
 const int kMaxCategories = 10;
 
@@ -66,12 +64,13 @@ const char kHistogramTimeSinceSuggestionFetched[] =
     "NewTabPage.ContentSuggestions.TimeSinceSuggestionFetched";
 
 // Histograms related to prefetching.
+const char kHistogramPrefetchedArticlesCountOnNtpOpenedIfVisibleAndOffline[] =
+    "NewTabPage.ContentSuggestions.CountOnNtpOpenedIfVisible.Articles."
+    "Prefetched.Offline";
 const char kHistogramPrefetchedArticleOpenedWhenOffline[] =
     "NewTabPage.ContentSuggestions.Opened.Articles.Prefetched.Offline";
-// NewTabPage.ContentSuggestions.CountOnNtpOpenedIfVisible.Articles.\
-// Prefetched.Offline2 and
-// NewTabPage.ContentSuggestions.Shown.Articles.Prefetched.Offline2 are recorded
-// in Java to avoid race condition.
+const char kHistogramPrefetchedArticleShownWhenOffline[] =
+    "NewTabPage.ContentSuggestions.Shown.Articles.Prefetched.Offline";
 
 const char kPerCategoryHistogramFormat[] = "%s.%s";
 
@@ -230,18 +229,29 @@ void RecordContentSuggestionsUsage() {
 
 void OnPageShown(const std::vector<Category>& categories,
                  const std::vector<int>& suggestions_per_category,
-                 const std::vector<bool>& is_category_visible) {
+                 const std::vector<int>& prefetched_suggestions_per_category,
+                 const std::vector<bool>& is_category_visible,
+                 bool is_offline) {
   DCHECK_EQ(categories.size(), suggestions_per_category.size());
+  DCHECK_EQ(categories.size(), prefetched_suggestions_per_category.size());
   DCHECK_EQ(categories.size(), is_category_visible.size());
   int suggestions_total = 0;
   int visible_categories_count = 0;
   for (size_t i = 0; i < categories.size(); ++i) {
+    DCHECK_GE(suggestions_per_category[i],
+              prefetched_suggestions_per_category[i]);
     if (is_category_visible[i]) {
       LogCategoryHistogramPosition(kHistogramCountOnNtpOpenedIfVisible,
                                    categories[i], suggestions_per_category[i],
                                    kMaxSuggestionsPerCategory);
       suggestions_total += suggestions_per_category[i];
       ++visible_categories_count;
+      if (categories[i].IsKnownCategory(KnownCategories::ARTICLES) &&
+          is_offline) {
+        UMA_HISTOGRAM_EXACT_LINEAR(
+            kHistogramPrefetchedArticlesCountOnNtpOpenedIfVisibleAndOffline,
+            prefetched_suggestions_per_category[i], kMaxSuggestionsPerCategory);
+      }
     }
   }
   UMA_HISTOGRAM_EXACT_LINEAR(kHistogramCountOnNtpOpenedIfVisible,
@@ -255,7 +265,9 @@ void OnSuggestionShown(int global_position,
                        int position_in_category,
                        base::Time publish_date,
                        float score,
-                       base::Time fetch_date) {
+                       base::Time fetch_date,
+                       bool is_prefetched,
+                       bool is_offline) {
   UMA_HISTOGRAM_EXACT_LINEAR(kHistogramShown, global_position,
                              kMaxSuggestionsTotal);
   LogCategoryHistogramPosition(kHistogramShown, category, position_in_category,
@@ -272,6 +284,11 @@ void OnSuggestionShown(int global_position,
         kHistogramTimeSinceSuggestionFetched, base::Time::Now() - fetch_date,
         base::TimeDelta::FromSeconds(1), base::TimeDelta::FromDays(7),
         /*bucket_count=*/100);
+    if (is_offline && is_prefetched) {
+      UMA_HISTOGRAM_EXACT_LINEAR(kHistogramPrefetchedArticleShownWhenOffline,
+                                 position_in_category,
+                                 kMaxSuggestionsPerCategory);
+    }
   }
 
   // TODO(markusheintz): Discuss whether the code below should be moved into a

@@ -23,16 +23,12 @@ cr.define('extension_item_list_tests', function() {
       testVisible = extension_test_util.testVisible.bind(null, itemList);
 
       var createExt = extension_test_util.createExtensionInfo;
-      var extensionItems = [
+      var items = [
         createExt({name: 'Alpha', id: 'a'.repeat(32)}),
         createExt({name: 'Bravo', id: 'b'.repeat(32)}),
         createExt({name: 'Charlie', id: 'c'.repeat(32)})
       ];
-      var appItems = [
-        createExt({name: 'QQ', id: 'q'.repeat(32)}),
-      ];
-      itemList.extensions = extensionItems;
-      itemList.apps = appItems;
+      itemList.items = items;
       itemList.filter = '';
       document.body.appendChild(itemList);
     });
@@ -46,12 +42,12 @@ cr.define('extension_item_list_tests', function() {
       }
 
       // We should initially show all the items.
-      itemLengthEquals(4);
+      itemLengthEquals(3);
 
-      // All extension items have an 'a'.
+      // All items have an 'a'.
       itemList.filter = 'a';
       itemLengthEquals(3);
-      // Filtering is case-insensitive, so all extension items should be shown.
+      // Filtering is case-insensitive, so every item should be shown.
       itemList.filter = 'A';
       itemLengthEquals(3);
       // Only 'Bravo' has a 'b'.
@@ -71,18 +67,14 @@ cr.define('extension_item_list_tests', function() {
       itemLengthEquals(0);
       // A filter of '' should reset to show all items.
       itemList.filter = '';
-      itemLengthEquals(4);
-      // A filter of 'q' should should show just the apps item.
-      itemList.filter = 'q';
-      itemLengthEquals(1);
+      itemLengthEquals(3);
     });
 
     test(assert(TestNames.NoItemsMsg), function() {
       testVisible('#no-items', false);
       testVisible('#no-search-results', false);
 
-      itemList.extensions = [];
-      itemList.apps = [];
+      itemList.items = [];
       testVisible('#no-items', true);
       testVisible('#no-search-results', false);
     });

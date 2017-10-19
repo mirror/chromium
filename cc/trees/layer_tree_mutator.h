@@ -58,20 +58,25 @@ class LayerTreeMutatorClient {
   // |output_state|: Most recent output of the mutator.
   virtual void SetMutationUpdate(
       std::unique_ptr<MutatorOutputState> output_state) = 0;
+
+  // Called when mutator needs to request another frame. We couldn't, for
+  // example, just assume that we will "always mutate" and early- out in the
+  // mutator if there was nothing to do because we won't always be producing
+  // impl frames.
+  // TODO(majidvp): This is only needed for CompositorWorker and should be
+  // removed one that is cleaned up. http://crbug.com/746212
+  virtual void SetNeedsMutate() = 0;
 };
 
 class CC_EXPORT LayerTreeMutator {
  public:
   virtual ~LayerTreeMutator() {}
 
-  virtual void SetClient(LayerTreeMutatorClient* client) = 0;
-
   // TODO(petermayo): get rid of |now| since each animator now receives its own
   // current time. http://crbug.com/746212
   virtual void Mutate(base::TimeTicks now,
                       std::unique_ptr<MutatorInputState> input_state) = 0;
-  // TODO(majidvp): Remove when timeline inputs are known.
-  virtual bool HasAnimators() = 0;
+  virtual void SetClient(LayerTreeMutatorClient* client) = 0;
 };
 
 }  // namespace cc

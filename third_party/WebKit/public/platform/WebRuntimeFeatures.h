@@ -133,6 +133,7 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableScrollAnchoring(bool);
   BLINK_PLATFORM_EXPORT static void EnableServiceWorkerNavigationPreload(bool);
   BLINK_PLATFORM_EXPORT static void EnableServiceWorkerScriptStreaming(bool);
+  BLINK_PLATFORM_EXPORT static void EnableSharedArrayBuffer(bool);
   BLINK_PLATFORM_EXPORT static void EnableSharedWorker(bool);
   BLINK_PLATFORM_EXPORT static void EnableSkipCompositingSmallScrollers(bool);
   BLINK_PLATFORM_EXPORT static void EnableSlimmingPaintV2(bool);
@@ -144,6 +145,11 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableWebAssemblyStreaming(bool);
   BLINK_PLATFORM_EXPORT static void EnableWebAuth(bool);
   BLINK_PLATFORM_EXPORT static void EnableWebBluetooth(bool);
+  BLINK_PLATFORM_EXPORT static void EnableWebFontsInterventionV2With2G(bool);
+  BLINK_PLATFORM_EXPORT static void EnableWebFontsInterventionV2With3G(bool);
+  BLINK_PLATFORM_EXPORT static void EnableWebFontsInterventionV2WithSlow2G(
+      bool);
+  BLINK_PLATFORM_EXPORT static void EnableWebFontsInterventionTrigger(bool);
   BLINK_PLATFORM_EXPORT static void EnableWebGLDraftExtensions(bool);
   BLINK_PLATFORM_EXPORT static void EnableWebGLImageChromium(bool);
   BLINK_PLATFORM_EXPORT static void EnableWebNfc(bool);

@@ -32,6 +32,13 @@ public:
     T* operator->() { return 0; }
 };
 
+template<typename T> class OwnPtr {
+public:
+    ~OwnPtr() { }
+    operator T*() const { return 0; }
+    T* operator->() { return 0; }
+};
+
 class DefaultAllocator {
 public:
     static const bool isGarbageCollected = false;
@@ -172,10 +179,10 @@ using namespace WTF;
     void* operator new(size_t) = delete;                    \
     void* operator new(size_t, void*) = delete;
 
-#define DISALLOW_NEW_EXCEPT_PLACEMENT_NEW() \
-    public:                                 \
-    void* operator new(size_t, void*);      \
-    private:                                \
+#define ALLOW_ONLY_INLINE_ALLOCATION()    \
+    public:                               \
+    void* operator new(size_t, void*);    \
+    private:                              \
     void* operator new(size_t) = delete;
 
 #define GC_PLUGIN_IGNORE(bug)                           \

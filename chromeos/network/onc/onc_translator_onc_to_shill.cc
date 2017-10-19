@@ -8,7 +8,6 @@
 // - The local translation of an object depending on the associated signature
 //     see LocalTranslator::TranslateFields
 
-#include <memory>
 #include <string>
 #include <utility>
 
@@ -37,7 +36,7 @@ std::unique_ptr<base::Value> ConvertValueToString(const base::Value& value) {
   std::string str;
   if (!value.GetAsString(&str))
     base::JSONWriter::Write(value, &str);
-  return std::make_unique<base::Value>(str);
+  return base::MakeUnique<base::Value>(str);
 }
 
 // Sets any client cert properties when ClientCertType is PKCS11Id.
@@ -208,8 +207,7 @@ void LocalTranslator::TranslateOpenVPN() {
     std::string key = it.key();
     std::unique_ptr<base::Value> translated;
     if (key == ::onc::openvpn::kRemoteCertKU ||
-        key == ::onc::openvpn::kServerCAPEMs ||
-        key == ::onc::openvpn::kExtraHosts) {
+        key == ::onc::openvpn::kServerCAPEMs) {
       translated.reset(it.value().DeepCopy());
     } else {
       // Shill wants all Provider/VPN fields to be strings.
@@ -346,7 +344,7 @@ void LocalTranslator::TranslateNetworkConfiguration() {
     // the other type defaults to DHCP if not specified.
     shill_dictionary_->SetWithoutPathExpansion(
         shill::kStaticIPConfigProperty,
-        std::make_unique<base::DictionaryValue>());
+        base::MakeUnique<base::DictionaryValue>());
   }
 
   const base::DictionaryValue* proxy_settings = nullptr;
@@ -445,7 +443,7 @@ void TranslateONCHierarchy(const OncValueSignature& signature,
             *it, &nested_shill_dict)) {
       nested_shill_dict =
           target_shill_dictionary->SetDictionaryWithoutPathExpansion(
-              *it, std::make_unique<base::DictionaryValue>());
+              *it, base::MakeUnique<base::DictionaryValue>());
     }
     target_shill_dictionary = nested_shill_dict;
   }

@@ -177,6 +177,7 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
   // LayerTreeMutatorClient.
   void SetMutationUpdate(
       std::unique_ptr<MutatorOutputState> output_state) override;
+  void SetNeedsMutate() override;
 
  private:
   explicit AnimationHost(ThreadInstance thread_instance);
@@ -211,6 +212,7 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
 
   bool supports_scroll_animations_;
   bool needs_push_properties_;
+  bool mutator_needs_mutate_;
 
   std::unique_ptr<LayerTreeMutator> mutator_;
 

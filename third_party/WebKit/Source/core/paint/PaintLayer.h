@@ -599,7 +599,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   bool CompositesWithOpacity() const;
 
   bool PaintsWithTransform(GlobalPaintFlags) const;
-  bool PaintsComposited(GlobalPaintFlags) const;
 
   bool SupportsSubsequenceCaching() const;
 

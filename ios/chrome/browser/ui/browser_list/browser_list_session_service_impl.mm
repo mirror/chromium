@@ -44,7 +44,6 @@ class BrowserListSessionServiceWebStateObserver : public web::WebStateObserver {
 
   // web::WebStateObserver implementation.
   void NavigationItemCommitted(
-      web::WebState* web_state,
       const web::LoadCommittedDetails& load_details) override;
 
  private:
@@ -69,7 +68,6 @@ void BrowserListSessionServiceWebStateObserver::ObserveWebState(
 }
 
 void BrowserListSessionServiceWebStateObserver::NavigationItemCommitted(
-    web::WebState* web_state,
     const web::LoadCommittedDetails& load_details) {
   closure_.Run();
 }
@@ -258,7 +256,7 @@ bool BrowserListSessionServiceImpl::RestoreSession() {
     if (navigation_item->GetURL() != kChromeUINewTabURL)
       continue;
 
-    web_state_list.CloseWebStateAt(0, WebStateList::CLOSE_USER_ACTION);
+    web_state_list.CloseWebStateAt(0);
   }
 
   return true;

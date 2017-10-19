@@ -128,7 +128,7 @@ ApplyStyleCommand::ApplyStyleCommand(Document& document,
       use_ending_selection_(true),
       styled_inline_element_(nullptr),
       remove_only_(false),
-      is_inline_element_to_remove_function_(nullptr) {}
+      is_inline_element_to_remove_function_(0) {}
 
 ApplyStyleCommand::ApplyStyleCommand(Document& document,
                                      const EditingStyle* style,
@@ -143,7 +143,7 @@ ApplyStyleCommand::ApplyStyleCommand(Document& document,
       use_ending_selection_(false),
       styled_inline_element_(nullptr),
       remove_only_(false),
-      is_inline_element_to_remove_function_(nullptr) {}
+      is_inline_element_to_remove_function_(0) {}
 
 ApplyStyleCommand::ApplyStyleCommand(Element* element, bool remove_only)
     : CompositeEditCommand(element->GetDocument()),
@@ -155,7 +155,7 @@ ApplyStyleCommand::ApplyStyleCommand(Element* element, bool remove_only)
       use_ending_selection_(true),
       styled_inline_element_(element),
       remove_only_(remove_only),
-      is_inline_element_to_remove_function_(nullptr) {}
+      is_inline_element_to_remove_function_(0) {}
 
 ApplyStyleCommand::ApplyStyleCommand(
     Document& document,
@@ -529,7 +529,7 @@ static ContainerNode* DummySpanAncestorForNode(const Node* node) {
                   !IsStyleSpanOrSpanWithOnlyStyleAttribute(ToElement(node))))
     node = node->parentNode();
 
-  return node ? node->parentNode() : nullptr;
+  return node ? node->parentNode() : 0;
 }
 
 void ApplyStyleCommand::CleanupUnstyledAppleStyleSpans(
@@ -562,7 +562,7 @@ HTMLElement* ApplyStyleCommand::SplitAncestorsWithUnicodeBidi(
   // return the unsplit ancestor. Otherwise, we return 0.
   Element* block = EnclosingBlock(node);
   if (!block)
-    return nullptr;
+    return 0;
 
   ContainerNode* highest_ancestor_with_unicode_bidi = nullptr;
   ContainerNode* next_highest_ancestor_with_unicode_bidi = nullptr;
@@ -581,9 +581,9 @@ HTMLElement* ApplyStyleCommand::SplitAncestorsWithUnicodeBidi(
   }
 
   if (!highest_ancestor_with_unicode_bidi)
-    return nullptr;
+    return 0;
 
-  HTMLElement* unsplit_ancestor = nullptr;
+  HTMLElement* unsplit_ancestor = 0;
 
   WritingDirection highest_ancestor_direction;
   if (allowed_direction != NaturalWritingDirection &&
@@ -670,7 +670,7 @@ static HTMLElement* HighestEmbeddingAncestor(Node* start_node,
     }
   }
 
-  return nullptr;
+  return 0;
 }
 
 void ApplyStyleCommand::ApplyInlineStyle(EditingStyle* style,
@@ -929,7 +929,7 @@ class InlineRunToApplyStyle {
     return start && end && start->isConnected() && end->isConnected();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(start);
     visitor->Trace(end);
     visitor->Trace(past_end_node);
@@ -1269,7 +1269,7 @@ HTMLElement* ApplyStyleCommand::HighestAncestorWithConflictingInlineStyle(
     EditingStyle* style,
     Node* node) {
   if (!node)
-    return nullptr;
+    return 0;
 
   HTMLElement* result = nullptr;
   Node* unsplittable_element =
@@ -2055,7 +2055,7 @@ void ApplyStyleCommand::JoinChildTextNodes(ContainerNode* node,
   UpdateStartEnd(new_start, new_end);
 }
 
-void ApplyStyleCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ApplyStyleCommand) {
   visitor->Trace(style_);
   visitor->Trace(start_);
   visitor->Trace(end_);

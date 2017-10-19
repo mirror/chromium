@@ -35,7 +35,6 @@
 #include "net/quic/test_tools/quic_packet_generator_peer.h"
 #include "net/quic/test_tools/quic_sent_packet_manager_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
-#include "net/quic/test_tools/simple_data_producer.h"
 #include "net/quic/test_tools/simple_quic_framer.h"
 #include "net/test/gtest_util.h"
 #include "testing/gmock_mutant.h"
@@ -232,6 +231,10 @@ class TestConnectionHelper : public QuicConnectionHelperInterface {
   const QuicClock* GetClock() const override { return clock_; }
 
   QuicRandom* GetRandomGenerator() override { return random_generator_; }
+
+  QuicBufferAllocator* GetStreamFrameBufferAllocator() override {
+    return &buffer_allocator_;
+  }
 
   QuicBufferAllocator* GetStreamSendBufferAllocator() override {
     return &buffer_allocator_;
@@ -489,7 +492,6 @@ class TestConnection : public QuicConnection {
                        SupportedTransportVersions(version)) {
     writer->set_perspective(perspective);
     SetEncrypter(ENCRYPTION_FORWARD_SECURE, new NullEncrypter(perspective));
-    SetDataProducer(&producer_);
   }
 
   void SendAck() { QuicConnectionPeer::SendAck(this); }
@@ -523,18 +525,6 @@ class TestConnection : public QuicConnection {
     OnSerializedPacket(&serialized_packet);
   }
 
-  QuicConsumedData SendStreamData(
-      QuicStreamId id,
-      QuicIOVector iov,
-      QuicStreamOffset offset,
-      StreamSendingState state,
-      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener)
-      override {
-    producer_.SaveStreamData(id, iov, 0u, offset, iov.total_length);
-    return QuicConnection::SendStreamData(id, iov, offset, state,
-                                          std::move(ack_listener));
-  }
-
   QuicConsumedData SendStreamDataWithString(
       QuicStreamId id,
       QuicStringPiece data,
@@ -546,7 +536,8 @@ class TestConnection : public QuicConnection {
     }
     struct iovec iov;
     QuicIOVector data_iov(MakeIOVector(data, &iov));
-    return SendStreamData(id, data_iov, offset, state, std::move(ack_listener));
+    return QuicConnection::SendStreamData(id, data_iov, offset, state,
+                                          std::move(ack_listener));
   }
 
   QuicConsumedData SendStreamData3() {
@@ -663,8 +654,6 @@ class TestConnection : public QuicConnection {
     return static_cast<TestPacketWriter*>(QuicConnection::writer());
   }
 
-  SimpleDataProducer producer_;
-
   DISALLOW_COPY_AND_ASSIGN(TestConnection);
 };
 
@@ -725,6 +714,7 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
                      Perspective::IS_SERVER),
         peer_creator_(connection_id_,
                       &peer_framer_,
+                      &buffer_allocator_,
                       /*delegate=*/nullptr),
         writer_(new TestPacketWriter(transport_version(), &clock_)),
         connection_(connection_id_,
@@ -1622,7 +1612,7 @@ TEST_P(QuicConnectionTest, AckNeedsRetransmittableFrames) {
     ProcessDataPacket(i);
   }
   // Send a packet containing stream frame.
-  SendStreamDataToPeer(1, "bar", 0, NO_FIN, nullptr);
+  SendStreamDataToPeer(1, "bar", 3, NO_FIN, nullptr);
 
   // Session will not be informed until receiving another 20 packets.
   EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(19);
@@ -3127,8 +3117,7 @@ TEST_P(QuicConnectionTest, MtuDiscoveryEnabled) {
   }
 
   // Trigger the probe.
-  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase - 1, NO_FIN,
-                       nullptr);
+  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase, NO_FIN, nullptr);
   ASSERT_TRUE(connection_.GetMtuDiscoveryAlarm()->IsSet());
   QuicByteCount probe_size;
   EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _))
@@ -3149,7 +3138,7 @@ TEST_P(QuicConnectionTest, MtuDiscoveryEnabled) {
 
   // Send more packets, and ensure that none of them sets the alarm.
   for (QuicPacketCount i = 0; i < 4 * kPacketsBetweenMtuProbesBase; i++) {
-    SendStreamDataToPeer(3, ".", kPacketsBetweenMtuProbesBase + i, NO_FIN,
+    SendStreamDataToPeer(3, ".", kPacketsBetweenMtuProbesBase + 1 + i, NO_FIN,
                          nullptr);
     ASSERT_FALSE(connection_.GetMtuDiscoveryAlarm()->IsSet());
   }
@@ -3256,8 +3245,7 @@ TEST_P(QuicConnectionTest, MtuDiscoveryWriterLimited) {
   }
 
   // Trigger the probe.
-  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase - 1, NO_FIN,
-                       nullptr);
+  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase, NO_FIN, nullptr);
   ASSERT_TRUE(connection_.GetMtuDiscoveryAlarm()->IsSet());
   QuicByteCount probe_size;
   EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _))
@@ -3279,7 +3267,7 @@ TEST_P(QuicConnectionTest, MtuDiscoveryWriterLimited) {
 
   // Send more packets, and ensure that none of them sets the alarm.
   for (QuicPacketCount i = 0; i < 4 * kPacketsBetweenMtuProbesBase; i++) {
-    SendStreamDataToPeer(3, ".", kPacketsBetweenMtuProbesBase + i, NO_FIN,
+    SendStreamDataToPeer(3, ".", kPacketsBetweenMtuProbesBase + 1 + i, NO_FIN,
                          nullptr);
     ASSERT_FALSE(connection_.GetMtuDiscoveryAlarm()->IsSet());
   }
@@ -3305,8 +3293,7 @@ TEST_P(QuicConnectionTest, MtuDiscoveryWriterFailed) {
   }
 
   // Trigger the probe.
-  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase - 1, NO_FIN,
-                       nullptr);
+  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase, NO_FIN, nullptr);
   ASSERT_TRUE(connection_.GetMtuDiscoveryAlarm()->IsSet());
   writer_->SimulateNextPacketTooLarge();
   connection_.GetMtuDiscoveryAlarm()->Fire();
@@ -3349,8 +3336,7 @@ TEST_P(QuicConnectionTest, NoMtuDiscoveryAfterConnectionClosed) {
     ASSERT_FALSE(connection_.GetMtuDiscoveryAlarm()->IsSet());
   }
 
-  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase - 1, NO_FIN,
-                       nullptr);
+  SendStreamDataToPeer(3, "!", kPacketsBetweenMtuProbesBase, NO_FIN, nullptr);
   EXPECT_TRUE(connection_.GetMtuDiscoveryAlarm()->IsSet());
 
   EXPECT_CALL(visitor_, OnConnectionClosed(_, _, _));

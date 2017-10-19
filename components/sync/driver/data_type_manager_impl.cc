@@ -434,7 +434,7 @@ void DataTypeManagerImpl::DownloadReady(
     return;
   }
 
-  DCHECK(!download_types_queue_.empty());
+  CHECK(!download_types_queue_.empty());
   download_types_queue_.pop();
 
   // Those types that were already downloaded (non first sync/error types)
@@ -610,7 +610,7 @@ ModelTypeSet DataTypeManagerImpl::PrepareConfigureParams(
 }
 
 void DataTypeManagerImpl::StartNextAssociation(AssociationGroup group) {
-  DCHECK(!association_types_queue_.empty());
+  CHECK(!association_types_queue_.empty());
 
   // If the model association manager is already associating, let it finish.
   // The model association done event will result in associating any remaining
@@ -736,7 +736,8 @@ void DataTypeManagerImpl::OnModelAssociationDone(
   }
 
   DCHECK(result.status == OK);
-  DCHECK(!association_types_queue_.empty());
+
+  CHECK(!association_types_queue_.empty());
 
   // If this model association was for the full set of types, then this priority
   // set is done. Otherwise it was just the ready types and the unready types

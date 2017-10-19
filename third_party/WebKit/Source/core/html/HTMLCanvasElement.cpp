@@ -614,8 +614,7 @@ void HTMLCanvasElement::Paint(GraphicsContext& context, const LayoutRect& r) {
 
   if (PlaceholderFrame()) {
     DCHECK(GetDocument().Printing());
-    context.DrawImage(PlaceholderFrame().get(), Image::kSyncDecode,
-                      PixelSnappedIntRect(r));
+    context.DrawImage(PlaceholderFrame().get(), PixelSnappedIntRect(r));
     return;
   }
 
@@ -632,7 +631,7 @@ void HTMLCanvasElement::Paint(GraphicsContext& context, const LayoutRect& r) {
           !context_ || context_->CreationAttributes().alpha()
               ? SkBlendMode::kSrcOver
               : SkBlendMode::kSrc;
-      GetImageBuffer()->Draw(context, PixelSnappedIntRect(r), nullptr,
+      GetImageBuffer()->Draw(context, PixelSnappedIntRect(r), 0,
                              composite_operator);
     }
   } else {
@@ -942,7 +941,7 @@ bool HTMLCanvasElement::ShouldUseDisplayList() {
   // Rasterization of web contents will blend in the output space. Only embed
   // the canvas as a display list if it intended to do output space blending as
   // well.
-  if (!ColorParams().NeedsSkColorSpaceXformCanvas())
+  if (ColorParams().LinearPixelMath())
     return false;
 
   if (RuntimeEnabledFeatures::ForceDisplayList2dCanvasEnabled())
@@ -966,28 +965,29 @@ bool HTMLCanvasElement::ShouldUseDisplayList() {
 }
 
 std::unique_ptr<ImageBufferSurface>
-HTMLCanvasElement::CreateWebGLImageBufferSurface() {
+HTMLCanvasElement::CreateWebGLImageBufferSurface(OpacityMode opacity_mode) {
   DCHECK(Is3d());
   // If 3d, but the use of the canvas will be for non-accelerated content
   // then make a non-accelerated ImageBuffer. This means copying the internal
   // Image will require a pixel readback, but that is unavoidable in this case.
-  auto surface =
-      WTF::MakeUnique<AcceleratedImageBufferSurface>(Size(), ColorParams());
+  auto surface = WTF::MakeUnique<AcceleratedImageBufferSurface>(
+      Size(), opacity_mode, ColorParams());
   if (surface->IsValid())
     return std::move(surface);
   return nullptr;
 }
 
 std::unique_ptr<ImageBufferSurface>
-HTMLCanvasElement::CreateAcceleratedImageBufferSurface(int* msaa_sample_count) {
+HTMLCanvasElement::CreateAcceleratedImageBufferSurface(OpacityMode opacity_mode,
+                                                       int* msaa_sample_count) {
   if (GetDocument().GetSettings()) {
     *msaa_sample_count =
         GetDocument().GetSettings()->GetAccelerated2dCanvasMSAASampleCount();
   }
 
   auto surface = WTF::MakeUnique<Canvas2DLayerBridge>(
-      Size(), *msaa_sample_count, Canvas2DLayerBridge::kEnableAcceleration,
-      ColorParams());
+      Size(), *msaa_sample_count, opacity_mode,
+      Canvas2DLayerBridge::kEnableAcceleration, ColorParams());
   if (!surface->IsValid()) {
     CanvasMetrics::CountCanvasContextUsage(
         CanvasMetrics::kGPUAccelerated2DCanvasImageBufferCreationFailed);
@@ -1003,10 +1003,12 @@ HTMLCanvasElement::CreateAcceleratedImageBufferSurface(int* msaa_sample_count) {
 }
 
 std::unique_ptr<ImageBufferSurface>
-HTMLCanvasElement::CreateUnacceleratedImageBufferSurface() {
+HTMLCanvasElement::CreateUnacceleratedImageBufferSurface(
+    OpacityMode opacity_mode) {
   if (ShouldUseDisplayList()) {
     auto surface = WTF::MakeUnique<RecordingImageBufferSurface>(
-        Size(), RecordingImageBufferSurface::kAllowFallback, ColorParams());
+        Size(), RecordingImageBufferSurface::kAllowFallback, opacity_mode,
+        ColorParams());
     if (surface->IsValid()) {
       CanvasMetrics::CountCanvasContextUsage(
           CanvasMetrics::kDisplayList2DCanvasImageBufferCreated);
@@ -1017,7 +1019,8 @@ HTMLCanvasElement::CreateUnacceleratedImageBufferSurface() {
   }
 
   auto surface = WTF::MakeUnique<Canvas2DLayerBridge>(
-      Size(), 0, Canvas2DLayerBridge::kDisableAcceleration, ColorParams());
+      Size(), 0, opacity_mode, Canvas2DLayerBridge::kDisableAcceleration,
+      ColorParams());
   if (surface->IsValid()) {
     CanvasMetrics::CountCanvasContextUsage(
         CanvasMetrics::kUnaccelerated2DCanvasImageBufferCreated);
@@ -1045,19 +1048,23 @@ void HTMLCanvasElement::CreateImageBufferInternal(
   if (!ImageBuffer::CanCreateImageBuffer(Size()))
     return;
 
+  OpacityMode opacity_mode = !context_ || context_->CreationAttributes().alpha()
+                                 ? kNonOpaque
+                                 : kOpaque;
   int msaa_sample_count = 0;
   std::unique_ptr<ImageBufferSurface> surface;
   if (external_surface) {
     if (external_surface->IsValid())
       surface = std::move(external_surface);
   } else if (Is3d()) {
-    surface = CreateWebGLImageBufferSurface();
+    surface = CreateWebGLImageBufferSurface(opacity_mode);
   } else {
     if (ShouldAccelerate(kNormalAccelerationCriteria)) {
-      surface = CreateAcceleratedImageBufferSurface(&msaa_sample_count);
+      surface =
+          CreateAcceleratedImageBufferSurface(opacity_mode, &msaa_sample_count);
     }
     if (!surface) {
-      surface = CreateUnacceleratedImageBufferSurface();
+      surface = CreateUnacceleratedImageBufferSurface(opacity_mode);
     }
   }
   if (!surface)
@@ -1093,7 +1100,7 @@ void HTMLCanvasElement::NotifySurfaceInvalid() {
     context_->LoseContext(CanvasRenderingContext::kRealLostContext);
 }
 
-void HTMLCanvasElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLCanvasElement) {
   visitor->Trace(listeners_);
   visitor->Trace(context_);
   ContextLifecycleObserver::Trace(visitor);
@@ -1181,8 +1188,9 @@ void HTMLCanvasElement::EnsureUnacceleratedImageBuffer() {
       did_fail_to_create_image_buffer_)
     return;
   DiscardImageBuffer();
-  image_buffer_ = ImageBuffer::Create(Size(), kInitializeImagePixels,
-                                      context_->ColorParams());
+  OpacityMode opacity_mode =
+      context_->CreationAttributes().alpha() ? kNonOpaque : kOpaque;
+  image_buffer_ = ImageBuffer::Create(Size(), opacity_mode);
   did_fail_to_create_image_buffer_ = !image_buffer_;
 }
 
@@ -1274,9 +1282,11 @@ void HTMLCanvasElement::WillDrawImageTo2DContext(CanvasImageSource* source) {
       source->IsAccelerated() && GetOrCreateImageBuffer() &&
       !GetImageBuffer()->IsAccelerated() &&
       ShouldAccelerate(kIgnoreResourceLimitCriteria)) {
+    OpacityMode opacity_mode =
+        context_->CreationAttributes().alpha() ? kNonOpaque : kOpaque;
     int msaa_sample_count = 0;
     std::unique_ptr<ImageBufferSurface> surface =
-        CreateAcceleratedImageBufferSurface(&msaa_sample_count);
+        CreateAcceleratedImageBufferSurface(opacity_mode, &msaa_sample_count);
     if (surface) {
       GetOrCreateImageBuffer()->SetSurface(std::move(surface));
       SetNeedsCompositingUpdate();

@@ -9,7 +9,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +40,6 @@ import org.chromium.chrome.browser.suggestions.TileSource;
 import org.chromium.chrome.browser.suggestions.TileTitleSource;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
-import org.chromium.chrome.browser.tabmodel.TabModel;
-import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
@@ -66,12 +62,10 @@ import org.chromium.ui.base.PageTransition;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Tests for the native android New Tab Page.
@@ -107,15 +101,15 @@ public class NewTabPageTest {
         // Disable peeking card animation.
         ChromePreferenceManager.getInstance().setNewTabPageFirstCardAnimationRunCount(100);
 
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
 
         mSiteSuggestions = new ArrayList<>();
         mSiteSuggestions.add(new SiteSuggestion("TOP_SITES", mTestServer.getURL(TEST_PAGE) + "#1",
-                "", TileTitleSource.TITLE_TAG, TileSource.TOP_SITES, TileSectionType.PERSONALIZED,
-                new Date()));
+                "", TileTitleSource.TITLE_TAG, TileSource.TOP_SITES, TileSectionType.PERSONALIZED));
         mSiteSuggestions.add(new SiteSuggestion("WHITELIST", mTestServer.getURL(TEST_PAGE) + "#2",
                 "/test.png", TileTitleSource.UNKNOWN, TileSource.WHITELIST,
-                TileSectionType.PERSONALIZED, new Date()));
+                TileSectionType.PERSONALIZED));
 
         mMostVisitedSites = new FakeMostVisitedSites();
         mMostVisitedSites.setTileSuggestions(mSiteSuggestions.get(0), mSiteSuggestions.get(1));
@@ -142,7 +136,7 @@ public class NewTabPageTest {
     @Feature({"NewTabPage", "RenderTest"})
     @CommandLineFlags.Add("disable-features=NTPCondensedLayout")
     public void testRender() throws IOException {
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        mActivityTestRule.getInstrumentation().waitForIdleSync();
         mRenderTestRule.render(mTileGridLayout, "most_visited");
         mRenderTestRule.render(mFakebox, "fakebox");
         mRenderTestRule.render(mNtp.getView().getRootView(), "new_tab_page");
@@ -282,7 +276,7 @@ public class NewTabPageTest {
     @SmallTest
     @Feature({"NewTabPage"})
     public void testOpenMostVisitedItemInNewTab() throws InterruptedException {
-        invokeContextMenuAndOpenInANewTab(mTileGridLayout.getChildAt(0),
+        mActivityTestRule.invokeContextMenuAndOpenInANewTab(mTileGridLayout.getChildAt(0),
                 ContextMenuManager.ID_OPEN_IN_NEW_TAB, false, mSiteSuggestions.get(0).url);
     }
 
@@ -293,7 +287,7 @@ public class NewTabPageTest {
     @SmallTest
     @Feature({"NewTabPage"})
     public void testOpenMostVisitedItemInIncognitoTab() throws InterruptedException {
-        invokeContextMenuAndOpenInANewTab(mTileGridLayout.getChildAt(0),
+        mActivityTestRule.invokeContextMenuAndOpenInANewTab(mTileGridLayout.getChildAt(0),
                 ContextMenuManager.ID_OPEN_IN_INCOGNITO_TAB, true, mSiteSuggestions.get(0).url);
     }
 
@@ -609,47 +603,5 @@ public class NewTabPageTest {
                 return getFakeboxTop(ntp);
             }
         }));
-    }
-
-    /**
-     * Long presses the view, selects an item from the context menu, and
-     * asserts that a new tab is opened and is incognito if expectIncognito is true.
-     * @param view The View to long press.
-     * @param contextMenuItemId The context menu item to select on the view.
-     * @param expectIncognito Whether the opened tab is expected to be incognito.
-     * @param expectedUrl The expected url for the new tab.
-     */
-    private void invokeContextMenuAndOpenInANewTab(View view, int contextMenuItemId,
-            boolean expectIncognito, final String expectedUrl) throws InterruptedException {
-        final CallbackHelper createdCallback = new CallbackHelper();
-        final TabModel tabModel =
-                mActivityTestRule.getActivity().getTabModelSelector().getModel(expectIncognito);
-        tabModel.addObserver(new EmptyTabModelObserver() {
-            @Override
-            public void didAddTab(Tab tab, TabLaunchType type) {
-                if (TextUtils.equals(expectedUrl, tab.getUrl())) {
-                    createdCallback.notifyCalled();
-                    tabModel.removeObserver(this);
-                }
-            }
-        });
-
-        TestTouchUtils.longClickView(InstrumentationRegistry.getInstrumentation(), view);
-        Assert.assertTrue(InstrumentationRegistry.getInstrumentation().invokeContextMenuAction(
-                mActivityTestRule.getActivity(), contextMenuItemId, 0));
-
-        try {
-            createdCallback.waitForCallback(0);
-        } catch (TimeoutException e) {
-            Assert.fail("Never received tab creation event");
-        }
-
-        if (expectIncognito) {
-            Assert.assertTrue(
-                    mActivityTestRule.getActivity().getTabModelSelector().isIncognitoSelected());
-        } else {
-            Assert.assertFalse(
-                    mActivityTestRule.getActivity().getTabModelSelector().isIncognitoSelected());
-        }
     }
 }

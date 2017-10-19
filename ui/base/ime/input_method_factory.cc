@@ -47,21 +47,21 @@ std::unique_ptr<InputMethod> CreateInputMethod(
   }
 
   if (g_input_method_set_for_testing)
-    return std::make_unique<MockInputMethod>(delegate);
+    return base::MakeUnique<MockInputMethod>(delegate);
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kHeadless))
     return base::WrapUnique(new MockInputMethod(delegate));
 
 #if defined(OS_CHROMEOS)
-  return std::make_unique<InputMethodChromeOS>(delegate);
+  return base::MakeUnique<InputMethodChromeOS>(delegate);
 #elif defined(OS_WIN)
-  return std::make_unique<InputMethodWin>(delegate, widget);
+  return base::MakeUnique<InputMethodWin>(delegate, widget);
 #elif defined(OS_MACOSX)
-  return std::make_unique<InputMethodMac>(delegate);
+  return base::MakeUnique<InputMethodMac>(delegate);
 #elif defined(USE_AURA) && defined(OS_LINUX) && defined(USE_X11)
-  return std::make_unique<InputMethodAuraLinux>(delegate);
+  return base::MakeUnique<InputMethodAuraLinux>(delegate);
 #else
-  return std::make_unique<InputMethodMinimal>(delegate);
+  return base::MakeUnique<InputMethodMinimal>(delegate);
 #endif
 }
 

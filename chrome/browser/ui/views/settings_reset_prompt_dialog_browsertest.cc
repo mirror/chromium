@@ -150,25 +150,18 @@ class SettingsResetPromptDialogTest : public DialogBrowserTest {
  public:
   void ShowDialog(const std::string& name) override {
     const std::map<std::string, ModelParams> name_to_model_params = {
-        {"DefaultSearchEngineChanged",
-         {SettingType::DEFAULT_SEARCH_ENGINE, 0, 0}},
-        {"SingleStartupPageChanged", {SettingType::STARTUP_PAGE, 1, 0}},
-        {"MultipleStartupPagesChanged", {SettingType::STARTUP_PAGE, 2, 0}},
-        {"HomePageChanged", {SettingType::HOMEPAGE, 0, 0}},
-        {"DefaultSearchEngineChangedByExtension",
-         {SettingType::DEFAULT_SEARCH_ENGINE, 0, 1}},
-        {"SingleStartupPageChangedByExtension",
-         {SettingType::STARTUP_PAGE, 1, 1}},
-        {"MultipleStartupPagesChangedByExtension",
-         {SettingType::STARTUP_PAGE, 2, 1}},
-        {"HomePageChangedByExtension", {SettingType::HOMEPAGE, 0, 1}},
-        {"DefaultSearchEngineChangedByMultipleExtensions",
-         {SettingType::DEFAULT_SEARCH_ENGINE, 0, 2}},
-        {"SingleStartupPageChangedByMultipleExtensions",
-         {SettingType::STARTUP_PAGE, 1, 2}},
-        {"MultipleStartupPagesChangedByMultipleExtensions",
-         {SettingType::STARTUP_PAGE, 2, 2}},
-        {"HomePageChangedByMultipleExtensions", {SettingType::HOMEPAGE, 0, 2}},
+        {"dse", {SettingType::DEFAULT_SEARCH_ENGINE, 0, 0}},
+        {"sp1", {SettingType::STARTUP_PAGE, 1, 0}},
+        {"sp2", {SettingType::STARTUP_PAGE, 2, 0}},
+        {"hp", {SettingType::HOMEPAGE, 0, 0}},
+        {"dse_ext1", {SettingType::DEFAULT_SEARCH_ENGINE, 0, 1}},
+        {"sp1_ext1", {SettingType::STARTUP_PAGE, 1, 1}},
+        {"sp2_ext1", {SettingType::STARTUP_PAGE, 2, 1}},
+        {"hp_ext1", {SettingType::HOMEPAGE, 0, 1}},
+        {"dse_ext2", {SettingType::DEFAULT_SEARCH_ENGINE, 0, 2}},
+        {"sp1_ext2", {SettingType::STARTUP_PAGE, 1, 2}},
+        {"sp2_ext2", {SettingType::STARTUP_PAGE, 2, 2}},
+        {"hp_ext2", {SettingType::HOMEPAGE, 0, 2}},
     };
 
     ASSERT_NE(name_to_model_params.find(name), name_to_model_params.end());
@@ -182,55 +175,40 @@ class SettingsResetPromptDialogTest : public DialogBrowserTest {
   }
 };
 
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_DefaultSearchEngineChanged) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_dse) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_SingleStartupPageChanged) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_sp1) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_MultipleStartupPagesChanged) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_sp2) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_HomePageChanged) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_hp) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_DefaultSearchEngineChangedByExtension) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_dse_ext1) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_SingleStartupPageChangedByExtension) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_sp1_ext1) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_MultipleStartupPagesChangedByExtension) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_sp2_ext1) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_HomePageChangedByExtension) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_hp_ext1) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(
-    SettingsResetPromptDialogTest,
-    InvokeDialog_DefaultSearchEngineChangedByMultipleExtensions) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_dse_ext2) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(
-    SettingsResetPromptDialogTest,
-    InvokeDialog_SingleStartupPageChangedByMultipleExtensions) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_sp1_ext2) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(
-    SettingsResetPromptDialogTest,
-    InvokeDialog_MultipleStartupPagesChangedByMultipleExtensions) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_sp2_ext2) {
   RunDialog();
 }
-IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_HomePageChangedByMultipleExtensions) {
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest, InvokeDialog_hp_ext2) {
   RunDialog();
 }
 

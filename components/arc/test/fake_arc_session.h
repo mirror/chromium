@@ -8,8 +8,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/optional.h"
-#include "components/arc/arc_instance_mode.h"
 #include "components/arc/arc_session.h"
 #include "components/arc/arc_stop_reason.h"
 
@@ -22,9 +20,11 @@ class FakeArcSession : public ArcSession {
   ~FakeArcSession() override;
 
   // ArcSession overrides:
-  void Start(ArcInstanceMode request_mode) override;
+  void StartForLoginScreen() override;
+  bool IsForLoginScreen() override;
+  void Start() override;
+  bool IsRunning() override;
   void Stop() override;
-  base::Optional<ArcInstanceMode> GetTargetMode() override;
   bool IsStopRequested() override;
   void OnShutdown() override;
 
@@ -40,9 +40,6 @@ class FakeArcSession : public ArcSession {
   // Emulate Start() is suspended at some phase.
   void SuspendBoot();
 
-  // Returns true if the session is considered as running.
-  bool is_running() const { return running_; }
-
   // Returns FakeArcSession instance. This can be used for a factory
   // in ArcBridgeServiceImpl.
   static std::unique_ptr<ArcSession> Create();
@@ -52,7 +49,7 @@ class FakeArcSession : public ArcSession {
   ArcStopReason boot_failure_reason_;
 
   bool boot_suspended_ = false;
-  base::Optional<ArcInstanceMode> target_mode_;
+  bool is_for_login_screen_ = false;
   bool running_ = false;
   bool stop_requested_ = false;
 

@@ -287,7 +287,7 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   return ResourceRequestBlockedReason::kNone;
 }
 
-void BaseFetchContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BaseFetchContext) {
   FetchContext::Trace(visitor);
 }
 

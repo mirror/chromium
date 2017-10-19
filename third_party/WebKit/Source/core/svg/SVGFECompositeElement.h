@@ -50,7 +50,7 @@ class SVGFECompositeElement final
     return svg_operator_.Get();
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGFECompositeElement(Document&);

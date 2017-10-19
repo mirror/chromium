@@ -216,7 +216,7 @@ void MediaList::Reattach(RefPtr<MediaQuerySet> media_queries) {
   media_queries_ = media_queries;
 }
 
-void MediaList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaList) {
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(parent_rule_);
 }

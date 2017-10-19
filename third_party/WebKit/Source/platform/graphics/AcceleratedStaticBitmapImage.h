@@ -45,8 +45,7 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
             const FloatRect& dst_rect,
             const FloatRect& src_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            ImageDecodingMode) override;
+            ImageClampingMode) override;
 
   bool IsValid() const final;
   WebGraphicsContext3DProvider* ContextProvider() const final;

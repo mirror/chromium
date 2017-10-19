@@ -413,8 +413,6 @@ class TestCompositorObserver : public CompositorObserver {
 
   void OnCompositingLockStateChanged(Compositor* compositor) override {}
 
-  void OnCompositingChildResizing(Compositor* compositor) override {}
-
   void OnCompositingShuttingDown(Compositor* compositor) override {}
 
   bool committed_ = false;
@@ -593,14 +591,14 @@ TEST_F(LayerWithDelegateTest, ConvertPointToLayer_Simple) {
   l1->Add(l2.get());
   DrawTree(l1.get());
 
-  gfx::PointF point1_in_l2_coords(5, 5);
+  gfx::Point point1_in_l2_coords(5, 5);
   Layer::ConvertPointToLayer(l2.get(), l1.get(), &point1_in_l2_coords);
-  gfx::PointF point1_in_l1_coords(15, 15);
+  gfx::Point point1_in_l1_coords(15, 15);
   EXPECT_EQ(point1_in_l1_coords, point1_in_l2_coords);
 
-  gfx::PointF point2_in_l1_coords(5, 5);
+  gfx::Point point2_in_l1_coords(5, 5);
   Layer::ConvertPointToLayer(l1.get(), l2.get(), &point2_in_l1_coords);
-  gfx::PointF point2_in_l2_coords(-5, -5);
+  gfx::Point point2_in_l2_coords(-5, -5);
   EXPECT_EQ(point2_in_l2_coords, point2_in_l1_coords);
 }
 
@@ -618,14 +616,14 @@ TEST_F(LayerWithDelegateTest, ConvertPointToLayer_Medium) {
   l2->Add(l3.get());
   DrawTree(l1.get());
 
-  gfx::PointF point1_in_l3_coords(5, 5);
+  gfx::Point point1_in_l3_coords(5, 5);
   Layer::ConvertPointToLayer(l3.get(), l1.get(), &point1_in_l3_coords);
-  gfx::PointF point1_in_l1_coords(25, 25);
+  gfx::Point point1_in_l1_coords(25, 25);
   EXPECT_EQ(point1_in_l1_coords, point1_in_l3_coords);
 
-  gfx::PointF point2_in_l1_coords(5, 5);
+  gfx::Point point2_in_l1_coords(5, 5);
   Layer::ConvertPointToLayer(l1.get(), l3.get(), &point2_in_l1_coords);
-  gfx::PointF point2_in_l3_coords(-15, -15);
+  gfx::Point point2_in_l3_coords(-15, -15);
   EXPECT_EQ(point2_in_l3_coords, point2_in_l1_coords);
 }
 
@@ -761,7 +759,6 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   const float temperature = 0.8f;
   layer->SetLayerTemperature(temperature);
   layer->AddCacheRenderSurfaceRequest();
-  layer->AddTrilinearFilteringRequest();
 
   auto clone = layer->Clone();
 
@@ -774,9 +771,6 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   // Cloning should not preserve cache_render_surface flag.
   EXPECT_NE(layer->cc_layer_for_testing()->cache_render_surface(),
             clone->cc_layer_for_testing()->cache_render_surface());
-  // Cloning should not preserve trilinear_filtering flag.
-  EXPECT_NE(layer->cc_layer_for_testing()->trilinear_filtering(),
-            clone->cc_layer_for_testing()->trilinear_filtering());
 
   layer->SetTransform(gfx::Transform());
   layer->SetColor(SK_ColorGREEN);
@@ -1344,7 +1338,7 @@ TEST_F(LayerWithRealCompositorTest, DrawAlphaThresholdFilterPixels) {
       CreateColorLayer(blue_with_alpha, gfx::Rect(viewport_size)));
 
   // Add a shape to restrict the visible part of the layer.
-  auto shape = std::make_unique<Layer::ShapeRects>();
+  auto shape = base::MakeUnique<Layer::ShapeRects>();
   shape->emplace_back(0, 0, viewport_size.width(), blue_height);
   foreground_layer->SetAlphaShape(std::move(shape));
 
@@ -2097,23 +2091,6 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerCacheRenderSurface) {
 
   // Ensure that the cache_render_surface flag is maintained.
   EXPECT_TRUE(l1->cc_layer_for_testing()->cache_render_surface());
-}
-
-// Tests that when a layer with trilinear_filtering flag has its CC layer
-// switched, that the trilinear_filtering flag is maintained.
-TEST_F(LayerWithRealCompositorTest, SwitchCCLayerTrilinearFiltering) {
-  std::unique_ptr<Layer> root(CreateLayer(LAYER_TEXTURED));
-  std::unique_ptr<Layer> l1(CreateLayer(LAYER_TEXTURED));
-  GetCompositor()->SetRootLayer(root.get());
-  root->Add(l1.get());
-
-  l1->AddTrilinearFilteringRequest();
-
-  // Change l1's cc::Layer.
-  l1->SwitchCCLayerForTest();
-
-  // Ensure that the trilinear_filtering flag is maintained.
-  EXPECT_TRUE(l1->cc_layer_for_testing()->trilinear_filtering());
 }
 
 // Tests that the animators in the layer tree is added to the

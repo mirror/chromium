@@ -45,7 +45,8 @@ void PrinterQuery::GetSettingsDone(const PrintSettings& new_settings,
 
   if (!callback_.is_null()) {
     // This may cause reentrancy like to call StopWorker().
-    std::move(callback_).Run();
+    callback_.Run();
+    callback_.Reset();
   }
 }
 
@@ -72,11 +73,11 @@ void PrinterQuery::GetSettings(GetSettingsAskParam ask_user_for_settings,
                                MarginType margin_type,
                                bool is_scripted,
                                bool is_modifiable,
-                               base::OnceClosure callback) {
+                               const base::Closure& callback) {
   DCHECK(RunsTasksInCurrentSequence());
   DCHECK(!is_print_dialog_box_shown_ || !is_scripted);
 
-  StartWorker(std::move(callback));
+  StartWorker(callback);
 
   // Real work is done in PrintJobWorker::GetSettings().
   is_print_dialog_box_shown_ =
@@ -90,8 +91,8 @@ void PrinterQuery::GetSettings(GetSettingsAskParam ask_user_for_settings,
 
 void PrinterQuery::SetSettings(
     std::unique_ptr<base::DictionaryValue> new_settings,
-    base::OnceClosure callback) {
-  StartWorker(std::move(callback));
+    const base::Closure& callback) {
+  StartWorker(callback);
 
   worker_->PostTask(FROM_HERE,
                     base::Bind(&PrintJobWorker::SetSettings,
@@ -99,7 +100,7 @@ void PrinterQuery::SetSettings(
                                base::Passed(&new_settings)));
 }
 
-void PrinterQuery::StartWorker(base::OnceClosure callback) {
+void PrinterQuery::StartWorker(const base::Closure& callback) {
   DCHECK(callback_.is_null());
   DCHECK(worker_);
 
@@ -107,7 +108,7 @@ void PrinterQuery::StartWorker(base::OnceClosure callback) {
   if (!worker_->IsRunning())
     worker_->Start();
 
-  callback_ = std::move(callback);
+  callback_ = callback;
 }
 
 void PrinterQuery::StopWorker() {

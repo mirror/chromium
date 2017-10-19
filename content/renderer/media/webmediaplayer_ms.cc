@@ -821,11 +821,11 @@ bool WebMediaPlayerMS::TexImageImpl(TexImageFunctionID functionID,
     // GPU Process crashed.
     if (!provider)
       return false;
-    return media::PaintCanvasVideoRenderer::TexImage2D(
+    return media::SkCanvasVideoRenderer::TexImage2D(
         target, texture, gl, provider->ContextCapabilities(), video_frame.get(),
         level, internalformat, format, type, flip_y, premultiply_alpha);
   } else if (functionID == kTexSubImage2D) {
-    return media::PaintCanvasVideoRenderer::TexSubImage2D(
+    return media::SkCanvasVideoRenderer::TexSubImage2D(
         target, gl, video_frame.get(), level, format, type, xoffset, yoffset,
         flip_y, premultiply_alpha);
   }
@@ -892,8 +892,7 @@ void WebMediaPlayerMS::SetReadyState(WebMediaPlayer::ReadyState state) {
   get_client()->ReadyStateChanged();
 }
 
-media::PaintCanvasVideoRenderer*
-WebMediaPlayerMS::GetPaintCanvasVideoRenderer() {
+media::SkCanvasVideoRenderer* WebMediaPlayerMS::GetSkCanvasVideoRenderer() {
   return &video_renderer_;
 }
 

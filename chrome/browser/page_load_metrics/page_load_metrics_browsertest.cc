@@ -345,6 +345,11 @@ class PageLoadMetricsBrowserTest : public InProcessBrowserTest {
   void PreRunTestOnMainThread() override {
     InProcessBrowserTest::PreRunTestOnMainThread();
 
+    // UKM DCHECKs if the active UkmRecorder is changed from one instance
+    // to another, rather than being changed from a nullptr; browser_tests
+    // need to circumvent that to be able to intercept UKM calls with its
+    // own TestUkmRecorder instance rather than the default UkmRecorder.
+    ukm::UkmRecorder::Set(nullptr);
     test_ukm_recorder_ = base::MakeUnique<ukm::TestAutoSetUkmRecorder>();
   }
 
@@ -679,7 +684,7 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, Ignore204Pages) {
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, IgnoreDownloads) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir downloads_directory;
   ASSERT_TRUE(downloads_directory.CreateUniqueTempDir());
   browser()->profile()->GetPrefs()->SetFilePath(

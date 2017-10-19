@@ -13,10 +13,10 @@
 #include "base/macros.h"
 #include "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h"
 #include "chrome/browser/ui/browser_dialogs.h"
-#include "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/gfx/image/image.h"
+#include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/button/button.h"
 
 namespace content {
@@ -24,7 +24,6 @@ class WebContents;
 }  // namespace content
 
 namespace views {
-class Checkbox;
 class Widget;
 }  // namespace views
 
@@ -34,61 +33,46 @@ class Event;
 
 class IntentPickerLabelButton;
 
-// A bubble that displays a list of applications (icons and names), after the
-// list the UI displays a checkbox to allow the user remember the selection and
-// after that a couple of buttons for either using the selected app or just
-// staying in Chrome. The top right close button and clicking somewhere else
-// outside of the bubble allows the user to dismiss the bubble (and stay in
-// Chrome) without remembering any decision.
-//
-// This class comunicates the user's selection with a callback used by
+// A bubble that displays a list of aplications (icons and names), after the
+// list we show a pair of buttons which allow the user to remember the selection
+// or not. This class comunicates the user's selection with a callback used by
 // ArcNavigationThrottle.
 //   +--------------------------------+
-//   | Open with                  [x] |
+//   | Open with                      |
 //   |                                |
 //   | Icon1  Name1                   |
 //   | Icon2  Name2                   |
 //   |  ...                           |
 //   | Icon(N) Name(N)                |
 //   |                                |
-//   | [_] Remember my choice         |
-//   |                                |
-//   |     [Use app] [Stay in Chrome] |
+//   |           [Just once] [Always] |
 //   +--------------------------------+
 
-class IntentPickerBubbleView : public LocationBarBubbleDelegateView,
+class IntentPickerBubbleView : public views::BubbleDialogDelegateView,
                                public views::ButtonListener,
                                public content::WebContentsObserver {
  public:
   using AppInfo = arc::ArcNavigationThrottle::AppInfo;
 
   ~IntentPickerBubbleView() override;
-  static views::Widget* ShowBubble(
-      views::View* anchor_view,
-      content::WebContents* web_contents,
-      const std::vector<AppInfo>& app_info,
-      const IntentPickerResponse& intent_picker_cb);
+  static void ShowBubble(content::WebContents* web_contents,
+                         const std::vector<AppInfo>& app_info,
+                         const IntentPickerResponse& intent_picker_cb);
   static std::unique_ptr<IntentPickerBubbleView> CreateBubbleView(
       const std::vector<AppInfo>& app_info,
       const IntentPickerResponse& intent_picker_cb,
       content::WebContents* web_contents);
-  static IntentPickerBubbleView* intent_picker_bubble() {
-    return intent_picker_bubble_;
-  }
-  static void CloseCurrentBubble();
 
-  // LocationBarBubbleDelegateView overrides:
+  // views::BubbleDialogDelegateView overrides:
   bool Accept() override;
   bool Cancel() override;
   bool Close() override;
-  bool ShouldShowCloseButton() const override;
 
  protected:
-  // LocationBarBubbleDelegateView overrides:
+  // views::BubbleDialogDelegateView overrides:
   void Init() override;
   base::string16 GetWindowTitle() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
-  void CloseBubble() override;
 
  private:
   friend class IntentPickerBubbleViewTest;
@@ -98,7 +82,6 @@ class IntentPickerBubbleView : public LocationBarBubbleDelegateView,
   FRIEND_TEST_ALL_PREFIXES(IntentPickerBubbleViewTest, VerifyStartingInkDrop);
   FRIEND_TEST_ALL_PREFIXES(IntentPickerBubbleViewTest, InkDropStateTransition);
   FRIEND_TEST_ALL_PREFIXES(IntentPickerBubbleViewTest, PressButtonTwice);
-  FRIEND_TEST_ALL_PREFIXES(IntentPickerBubbleViewTest, ChromeNotInCandidates);
   IntentPickerBubbleView(const std::vector<AppInfo>& app_info,
                          IntentPickerResponse intent_picker_cb,
                          content::WebContents* web_contents);
@@ -141,10 +124,6 @@ class IntentPickerBubbleView : public LocationBarBubbleDelegateView,
   gfx::ImageSkia GetAppImageForTesting(size_t index);
   views::InkDropState GetInkDropStateForTesting(size_t);
   void PressButtonForTesting(size_t index, const ui::Event& event);
-  size_t GetScrollViewSizeForTesting() const;
-  std::string GetPackageNameForTesting(size_t index) const;
-
-  static IntentPickerBubbleView* intent_picker_bubble_;
 
   // Callback used to respond to ArcNavigationThrottle.
   IntentPickerResponse intent_picker_cb_;
@@ -155,8 +134,6 @@ class IntentPickerBubbleView : public LocationBarBubbleDelegateView,
   views::ScrollView* scroll_view_;
 
   std::vector<AppInfo> app_info_;
-
-  views::Checkbox* remember_selection_checkbox_;
 
   DISALLOW_COPY_AND_ASSIGN(IntentPickerBubbleView);
 };

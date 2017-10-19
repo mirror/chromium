@@ -106,12 +106,24 @@ bool Path::StrokeContains(const FloatPoint& point,
                 WebCoreFloatToSkScalar(point.Y()));
 }
 
-FloatRect Path::BoundingRect() const {
-  return path_.computeTightBounds();
+namespace {
+
+FloatRect PathBounds(const SkPath& path, Path::BoundsType bounds_type) {
+  return bounds_type == Path::BoundsType::kConservative
+             ? path.getBounds()
+             : path.computeTightBounds();
 }
 
-FloatRect Path::StrokeBoundingRect(const StrokeData& stroke_data) const {
-  return StrokePath(stroke_data).computeTightBounds();
+}  // anonymous ns
+
+// TODO(fmalita): evaluate returning exact bounds in all cases.
+FloatRect Path::BoundingRect(BoundsType bounds_type) const {
+  return PathBounds(path_, bounds_type);
+}
+
+FloatRect Path::StrokeBoundingRect(const StrokeData& stroke_data,
+                                   BoundsType bounds_type) const {
+  return PathBounds(StrokePath(stroke_data), bounds_type);
 }
 
 static FloatPoint* ConvertPathPoints(FloatPoint dst[],
@@ -167,7 +179,7 @@ void Path::Apply(void* info, PathApplierFunction function) const {
       }
       case SkPath::kClose_Verb:
         path_element.type = kPathElementCloseSubpath;
-        path_element.points = ConvertPathPoints(path_points, nullptr, 0);
+        path_element.points = ConvertPathPoints(path_points, 0, 0);
         break;
       case SkPath::kDone_Verb:
         return;
@@ -198,12 +210,11 @@ FloatPoint Path::PointAtLength(float length) const {
   return point;
 }
 
-static bool CalculatePointAndNormalOnPath(
-    SkPathMeasure& measure,
-    SkScalar length,
-    FloatPoint& point,
-    float& normal_angle,
-    SkScalar* accumulated_length = nullptr) {
+static bool CalculatePointAndNormalOnPath(SkPathMeasure& measure,
+                                          SkScalar length,
+                                          FloatPoint& point,
+                                          float& normal_angle,
+                                          SkScalar* accumulated_length = 0) {
   do {
     SkScalar contour_length = measure.getLength();
     if (length <= contour_length) {
@@ -286,7 +297,7 @@ void Path::SetIsVolatile(bool is_volatile) {
 }
 
 bool Path::HasCurrentPoint() const {
-  return path_.getPoints(nullptr, 0);
+  return path_.getPoints(0, 0);
 }
 
 FloatPoint Path::CurrentPoint() const {

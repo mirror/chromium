@@ -7,7 +7,6 @@
 #include "core/page/Page.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/testing/HistogramTester.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/weborigin/KURL.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -478,12 +477,15 @@ TEST_F(DeprecationTest, InspectorDisablesDeprecation) {
   EXPECT_TRUE(use_counter_.HasRecordedMeasurement(feature));
 }
 
-class FeaturePolicyDisabledDeprecationTest
-    : public ::testing::Test,
-      private ScopedFeaturePolicyForTest {
+class FeaturePolicyDisabledDeprecationTest : public ::testing::Test {
  public:
-  FeaturePolicyDisabledDeprecationTest() : ScopedFeaturePolicyForTest(false) {
+  FeaturePolicyDisabledDeprecationTest() {
+    feature_policy_was_enabled = RuntimeEnabledFeatures::FeaturePolicyEnabled();
+    RuntimeEnabledFeatures::SetFeaturePolicyEnabled(false);
     dummy_ = DummyPageHolder::Create();
+  }
+  ~FeaturePolicyDisabledDeprecationTest() {
+    RuntimeEnabledFeatures::SetFeaturePolicyEnabled(feature_policy_was_enabled);
   }
 
  protected:
@@ -491,6 +493,9 @@ class FeaturePolicyDisabledDeprecationTest
   UseCounter& GetUseCounter() { return dummy_->GetPage().GetUseCounter(); }
 
   std::unique_ptr<DummyPageHolder> dummy_;
+
+ private:
+  bool feature_policy_was_enabled;
 };
 
 TEST_F(FeaturePolicyDisabledDeprecationTest,

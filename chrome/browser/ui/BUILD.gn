@@ -9,7 +9,6 @@ import("//build/config/ui.gni")
 import("//build/split_static_library.gni")
 import("//chrome/common/features.gni")
 import("//components/nacl/features.gni")
-import("//components/offline_pages/features/features.gni")
 import("//components/signin/features.gni")
 import("//extensions/features/features.gni")
 import("//media/media_options.gni")
@@ -74,16 +73,12 @@ split_static_library("ui") {
     "autofill/popup_view_common.h",
     "blocked_content/blocked_window_params.cc",
     "blocked_content/blocked_window_params.h",
-    "blocked_content/console_logger.cc",
-    "blocked_content/console_logger.h",
     "blocked_content/popup_blocker_tab_helper.cc",
     "blocked_content/popup_blocker_tab_helper.h",
     "blocked_content/popup_opener_tab_helper.cc",
     "blocked_content/popup_opener_tab_helper.h",
     "blocked_content/popup_tracker.cc",
     "blocked_content/popup_tracker.h",
-    "blocked_content/safe_browsing_triggered_popup_blocker.cc",
-    "blocked_content/safe_browsing_triggered_popup_blocker.h",
     "blocked_content/scoped_visibility_tracker.cc",
     "blocked_content/scoped_visibility_tracker.h",
     "blocked_content/tab_under_navigation_throttle.cc",
@@ -122,9 +117,6 @@ split_static_library("ui") {
     "interventions/framebust_block_message_delegate.cc",
     "interventions/framebust_block_message_delegate.h",
     "javascript_dialogs/chrome_javascript_native_dialog_factory.h",
-    "javascript_dialogs/javascript_dialog.h",
-    "javascript_dialogs/javascript_dialog_tab_helper.cc",
-    "javascript_dialogs/javascript_dialog_tab_helper.h",
     "login/login_handler.cc",
     "login/login_handler.h",
     "login/login_interstitial_delegate.cc",
@@ -413,6 +405,9 @@ split_static_library("ui") {
     "//components/net_log",
     "//components/ntp_snippets",
     "//components/ntp_tiles",
+    "//components/offline_pages/core",
+    "//components/offline_pages/core/background:background_offliner",
+    "//components/offline_pages/core/prefetch",
     "//components/offline_pages/features:features",
     "//components/omnibox/browser",
     "//components/onc",
@@ -433,9 +428,9 @@ split_static_library("ui") {
     "//components/resources",
     "//components/safe_browsing/common:safe_browsing_prefs",
     "//components/safe_browsing/db:database_manager",
-    "//components/safe_browsing/db:util",
     "//components/safe_browsing/password_protection",
     "//components/safe_browsing/web_ui",
+    "//components/safe_json",
     "//components/search",
     "//components/search_engines",
     "//components/security_interstitials/core",
@@ -616,8 +611,6 @@ split_static_library("ui") {
       "android/interventions/framebust_block_message_delegate_bridge.h",
       "android/javascript_app_modal_dialog_android.cc",
       "android/javascript_app_modal_dialog_android.h",
-      "android/javascript_dialog_android.cc",
-      "android/javascript_dialog_android.h",
       "android/login_handler_android.cc",
       "android/omnibox/omnibox_url_emphasizer.cc",
       "android/omnibox/omnibox_url_emphasizer.h",
@@ -798,6 +791,9 @@ split_static_library("ui") {
       "global_error/global_error_service_factory.h",
       "infobar_container_delegate.cc",
       "infobar_container_delegate.h",
+      "javascript_dialogs/javascript_dialog.h",
+      "javascript_dialogs/javascript_dialog_tab_helper.cc",
+      "javascript_dialogs/javascript_dialog_tab_helper.h",
       "javascript_dialogs/javascript_dialog_views.cc",
       "javascript_dialogs/javascript_dialog_views.h",
       "layout_constants.cc",
@@ -1249,6 +1245,8 @@ split_static_library("ui") {
       "ash/multi_user/user_switch_animator_chromeos.h",
       "ash/networking_config_delegate_chromeos.cc",
       "ash/networking_config_delegate_chromeos.h",
+      "ash/palette_delegate_chromeos.cc",
+      "ash/palette_delegate_chromeos.h",
       "ash/session_controller_client.cc",
       "ash/session_controller_client.h",
       "ash/session_util.cc",
@@ -1300,8 +1298,6 @@ split_static_library("ui") {
       "views/ime_driver/input_method_bridge_chromeos.h",
       "views/intent_picker_bubble_view.cc",
       "views/intent_picker_bubble_view.h",
-      "views/location_bar/intent_picker_view.cc",
-      "views/location_bar/intent_picker_view.h",
       "views/platform_keys_certificate_selector_chromeos.cc",
       "views/platform_keys_certificate_selector_chromeos.h",
 
@@ -3566,14 +3562,6 @@ split_static_library("ui") {
 
   if (use_udev) {
     deps += [ "//device/udev_linux" ]
-  }
-
-  if (enable_offline_pages) {
-    deps += [
-      "//components/offline_pages/core",
-      "//components/offline_pages/core/background:background_offliner",
-      "//components/offline_pages/core/prefetch",
-    ]
   }
 }
 

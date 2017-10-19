@@ -68,7 +68,7 @@ class CORE_EXPORT FontFaceCache final {
   unsigned Version() const { return version_; }
   void IncrementVersion();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // Two lookup accelerating cashes are needed: For the font selection

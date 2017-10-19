@@ -117,7 +117,7 @@ class MediaKeySystemAccessInitializer final : public EncryptedMediaRequest {
 
   ScriptPromise Promise() { return resolver_->Promise(); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(resolver_);
     EncryptedMediaRequest::Trace(visitor);
   }

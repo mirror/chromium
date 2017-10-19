@@ -789,7 +789,7 @@ TEST_P(CompositedLayerMappingTest,
 }
 
 TEST_P(CompositedLayerMappingTest, InterestRectOfIframeInScrolledDiv) {
-  GetDocument().SetBaseURLOverride(KURL("http://test.com"));
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<div style='width: 200; height: 8000px'></div>"
@@ -815,7 +815,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectOfIframeInScrolledDiv) {
 }
 
 TEST_P(CompositedLayerMappingTest, InterestRectOfScrolledIframe) {
-  GetDocument().SetBaseURLOverride(KURL("http://test.com"));
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
   GetDocument().GetFrame()->GetSettings()->SetPreferCompositingToLCDTextEnabled(
       true);
   SetBodyInnerHTML(
@@ -845,7 +845,7 @@ TEST_P(CompositedLayerMappingTest, InterestRectOfScrolledIframe) {
 }
 
 TEST_P(CompositedLayerMappingTest, InterestRectOfIframeWithContentBoxOffset) {
-  GetDocument().SetBaseURLOverride(KURL("http://test.com"));
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
   GetDocument().GetFrame()->GetSettings()->SetPreferCompositingToLCDTextEnabled(
       true);
   // Set a 10px border in order to have a contentBoxOffset for the iframe
@@ -908,8 +908,7 @@ TEST_P(CompositedLayerMappingTest,
       mapping->ForegroundLayer()->PaintingPhase());
   // Regression test for crbug.com/767908: a foreground layer should also
   // participates hit testing.
-  EXPECT_TRUE(mapping->ForegroundLayer()
-                  ->GetHitTestableWithoutDrawsContentForTesting());
+  EXPECT_TRUE(mapping->ForegroundLayer()->GetShouldHitTestForTesting());
 
   Element* negative_composited_child =
       GetDocument().getElementById("negative-composited-child");
@@ -2017,70 +2016,6 @@ TEST_P(CompositedLayerMappingTest,
   ASSERT_TRUE(child_mapping->AncestorClippingMaskLayer());
 }
 
-TEST_P(CompositedLayerMappingTest,
-       BorderRadiusPreventsSquashingWithInlineTransform) {
-  // When a node with inline transform has siblings with border radius and
-  // composited children, those siblings must not be squashed because it
-  // prevents application of a border radius clip mask.
-  SetBodyInnerHTML(
-      "<style>"
-      "  .precursor {"
-      "    width: 100px;"
-      "    height: 40px;"
-      "  }"
-      "  .container {"
-      "    position: relative;"
-      "    top: 20px;"
-      "    width: 100px;"
-      "    height: 40px;"
-      "    border: 1px solid black;"
-      "    border-radius: 10px;"
-      "    overflow: hidden;"
-      "  }"
-      "  .contents {"
-      "    height: 200px;"
-      "    width: 200px;"
-      "    position: relative;"
-      "    top: -10px;"
-      "    left: -10px;"
-      "  }"
-      "</style>"
-      "<div id='precursor' class='precursor'"
-      " style='transform: translateZ(0);'>"
-      "</div>"
-      "<div id='container1' class='container'>"
-      "  <div id='contents1' class='contents'></div>"
-      "</div>"
-      "<div id='container2' class='container'>"
-      "  <div id='contents2' class='contents'></div>"
-      "</div>");
-  GetDocument().View()->UpdateAllLifecyclePhases();
-
-  Element* first_child = GetDocument().getElementById("contents1");
-  ASSERT_TRUE(first_child);
-  PaintLayer* first_child_paint_layer =
-      ToLayoutBoxModelObject(first_child->GetLayoutObject())->Layer();
-  ASSERT_TRUE(first_child_paint_layer);
-  CompositedLayerMapping* first_child_mapping =
-      first_child_paint_layer->GetCompositedLayerMapping();
-  ASSERT_TRUE(first_child_mapping);
-  ASSERT_TRUE(first_child_mapping->AncestorClippingLayer());
-  EXPECT_TRUE(first_child_mapping->AncestorClippingLayer()->MaskLayer());
-  ASSERT_TRUE(first_child_mapping->AncestorClippingMaskLayer());
-
-  Element* second_child = GetDocument().getElementById("contents2");
-  ASSERT_TRUE(second_child);
-  PaintLayer* second_child_paint_layer =
-      ToLayoutBoxModelObject(second_child->GetLayoutObject())->Layer();
-  ASSERT_TRUE(second_child_paint_layer);
-  CompositedLayerMapping* second_child_mapping =
-      second_child_paint_layer->GetCompositedLayerMapping();
-  ASSERT_TRUE(second_child_mapping);
-  ASSERT_TRUE(second_child_mapping->AncestorClippingLayer());
-  EXPECT_TRUE(second_child_mapping->AncestorClippingLayer()->MaskLayer());
-  ASSERT_TRUE(second_child_mapping->AncestorClippingMaskLayer());
-}
-
 TEST_P(CompositedLayerMappingTest, StickyPositionMainThreadOffset) {
   SetBodyInnerHTML(
       "<style>.composited { backface-visibility: hidden; }"
@@ -2436,42 +2371,6 @@ TEST_P(CompositedLayerMappingTest, ScrollingLayerBackgroundColor) {
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(Color(0, 0, 255), graphics_layer->BackgroundColor());
   EXPECT_EQ(Color(0, 0, 255), scrolling_contents_layer->BackgroundColor());
-}
-
-TEST_P(CompositedLayerMappingTest, ClipPathNoChildContainmentLayer) {
-  // This test verifies only the presence of clip path does not induce child
-  // containment layer.
-  SetBodyInnerHTML(
-      "<div id='target' style='width:100px; height:100px; clip-path:circle();'>"
-      "  <div style='will-change:transform; width:200px; height:200px;'></div>"
-      "</div>");
-  auto* mapping = ToLayoutBoxModelObject(GetLayoutObjectByElementId("target"))
-                      ->Layer()
-                      ->GetCompositedLayerMapping();
-  ASSERT_TRUE(mapping);
-  ASSERT_FALSE(mapping->ClippingLayer());
-}
-
-TEST_P(CompositedLayerMappingTest, ForegroundLayerSizing) {
-  // This test verifies the foreground layer is sized to the clip rect.
-  SetBodyInnerHTML(
-      "<div id='target' style='position:relative; z-index:0; width:100px; "
-      "height:100px; border:10px solid black; overflow:hidden;'>"
-      "  <div style='width:200px; height:200px; background:green;'></div>"
-      "  <div style='position:relative; z-index:-1; "
-      "will-change:transform;'></div>"
-      "</div>");
-  auto* mapping = ToLayoutBoxModelObject(GetLayoutObjectByElementId("target"))
-                      ->Layer()
-                      ->GetCompositedLayerMapping();
-  ASSERT_TRUE(mapping);
-  EXPECT_EQ(FloatSize(120, 120), mapping->MainGraphicsLayer()->Size());
-  ASSERT_TRUE(mapping->ClippingLayer());
-  EXPECT_EQ(FloatPoint(10, 10), mapping->ClippingLayer()->GetPosition());
-  EXPECT_EQ(FloatSize(100, 100), mapping->ClippingLayer()->Size());
-  ASSERT_TRUE(mapping->ForegroundLayer());
-  EXPECT_EQ(FloatPoint(0, 0), mapping->ForegroundLayer()->GetPosition());
-  EXPECT_EQ(FloatSize(100, 100), mapping->ForegroundLayer()->Size());
 }
 
 }  // namespace blink

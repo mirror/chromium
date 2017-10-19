@@ -214,34 +214,34 @@ bool X11EventHasNonStandardState(const base::NativeEvent& event) {
 // static
 std::unique_ptr<Event> Event::Clone(const Event& event) {
   if (event.IsKeyEvent()) {
-    return std::make_unique<KeyEvent>(static_cast<const KeyEvent&>(event));
+    return base::MakeUnique<KeyEvent>(static_cast<const KeyEvent&>(event));
   }
 
   if (event.IsMouseEvent()) {
     if (event.IsMouseWheelEvent()) {
-      return std::make_unique<MouseWheelEvent>(
+      return base::MakeUnique<MouseWheelEvent>(
           static_cast<const MouseWheelEvent&>(event));
     }
 
-    return std::make_unique<MouseEvent>(static_cast<const MouseEvent&>(event));
+    return base::MakeUnique<MouseEvent>(static_cast<const MouseEvent&>(event));
   }
 
   if (event.IsTouchEvent()) {
-    return std::make_unique<TouchEvent>(static_cast<const TouchEvent&>(event));
+    return base::MakeUnique<TouchEvent>(static_cast<const TouchEvent&>(event));
   }
 
   if (event.IsGestureEvent()) {
-    return std::make_unique<GestureEvent>(
+    return base::MakeUnique<GestureEvent>(
         static_cast<const GestureEvent&>(event));
   }
 
   if (event.IsPointerEvent()) {
-    return std::make_unique<PointerEvent>(
+    return base::MakeUnique<PointerEvent>(
         static_cast<const PointerEvent&>(event));
   }
 
   if (event.IsScrollEvent()) {
-    return std::make_unique<ScrollEvent>(
+    return base::MakeUnique<ScrollEvent>(
         static_cast<const ScrollEvent&>(event));
   }
 
@@ -1211,7 +1211,7 @@ KeyEvent::KeyEvent(const KeyEvent& rhs)
       is_char_(rhs.is_char_),
       key_(rhs.key_),
       properties_(rhs.properties_
-                      ? std::make_unique<Properties>(*rhs.properties_)
+                      ? base::MakeUnique<Properties>(*rhs.properties_)
                       : nullptr) {}
 
 KeyEvent& KeyEvent::operator=(const KeyEvent& rhs) {
@@ -1222,7 +1222,7 @@ KeyEvent& KeyEvent::operator=(const KeyEvent& rhs) {
     key_ = rhs.key_;
     is_char_ = rhs.is_char_;
     if (rhs.properties_)
-      properties_ = std::make_unique<Properties>(*rhs.properties_);
+      properties_ = base::MakeUnique<Properties>(*rhs.properties_);
     else
       properties_.reset();
   }
@@ -1361,7 +1361,7 @@ void KeyEvent::NormalizeFlags() {
 }
 
 void KeyEvent::SetProperties(const Properties& properties) {
-  properties_ = std::make_unique<Properties>(properties);
+  properties_ = base::MakeUnique<Properties>(properties);
 }
 
 KeyboardCode KeyEvent::GetLocatedWindowsKeyboardCode() const {

@@ -66,7 +66,7 @@ HTMLObjectElement* HTMLObjectElement::Create(Document& document,
   return element;
 }
 
-void HTMLObjectElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLObjectElement) {
   ListedElement::Trace(visitor);
   HTMLPlugInElement::Trace(visitor);
 }
@@ -366,10 +366,10 @@ void HTMLObjectElement::RenderFallbackContent() {
 
   // Before we give up and use fallback content, check to see if this is a MIME
   // type issue.
-  if (image_loader_ && image_loader_->GetContent() &&
-      image_loader_->GetContent()->GetContentStatus() !=
+  if (image_loader_ && image_loader_->GetImage() &&
+      image_loader_->GetImage()->GetContentStatus() !=
           ResourceStatus::kLoadError) {
-    service_type_ = image_loader_->GetContent()->GetResponse().MimeType();
+    service_type_ = image_loader_->GetImage()->GetResponse().MimeType();
     if (!IsImageType()) {
       // If we don't think we have an image type anymore, then clear the image
       // from the loader.

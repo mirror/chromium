@@ -116,41 +116,42 @@ class MockDtmfSender : public DtmfSenderInterface {
   int inter_tone_gap_;
 };
 
-FakeRtpReceiver::FakeRtpReceiver(
-    rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track)
-    : track_(track) {}
+class FakeRtpReceiver : public webrtc::RtpReceiverInterface {
+ public:
+  FakeRtpReceiver(rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track)
+      : track_(track) {}
 
-FakeRtpReceiver::~FakeRtpReceiver() {}
+  rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track() const override {
+    return track_;
+  }
 
-rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> FakeRtpReceiver::track()
-    const {
-  return track_;
-}
+  cricket::MediaType media_type() const override {
+    NOTIMPLEMENTED();
+    return cricket::MEDIA_TYPE_AUDIO;
+  }
 
-cricket::MediaType FakeRtpReceiver::media_type() const {
-  NOTIMPLEMENTED();
-  return cricket::MEDIA_TYPE_AUDIO;
-}
+  std::string id() const override {
+    NOTIMPLEMENTED();
+    return "";
+  }
 
-std::string FakeRtpReceiver::id() const {
-  NOTIMPLEMENTED();
-  return "";
-}
+  webrtc::RtpParameters GetParameters() const override {
+    NOTIMPLEMENTED();
+    return webrtc::RtpParameters();
+  }
 
-webrtc::RtpParameters FakeRtpReceiver::GetParameters() const {
-  NOTIMPLEMENTED();
-  return webrtc::RtpParameters();
-}
+  bool SetParameters(const webrtc::RtpParameters& parameters) override {
+    NOTIMPLEMENTED();
+    return false;
+  }
 
-bool FakeRtpReceiver::SetParameters(const webrtc::RtpParameters& parameters) {
-  NOTIMPLEMENTED();
-  return false;
-}
+  void SetObserver(webrtc::RtpReceiverObserverInterface* observer) override {
+    NOTIMPLEMENTED();
+  }
 
-void FakeRtpReceiver::SetObserver(
-    webrtc::RtpReceiverObserverInterface* observer) {
-  NOTIMPLEMENTED();
-}
+ private:
+  rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track_;
+};
 
 const char MockPeerConnectionImpl::kDummyOffer[] = "dummy offer";
 const char MockPeerConnectionImpl::kDummyAnswer[] = "dummy answer";

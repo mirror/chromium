@@ -27,7 +27,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/events/MediaElementEventQueue.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/track/InbandTextTrack.h"
 #include "core/html/track/LoadableTextTrack.h"
 #include "core/html/track/TextTrack.h"
@@ -124,7 +124,7 @@ TextTrack* TextTrackList::AnonymousIndexedGetter(unsigned index) {
   if (index < inband_tracks_.size())
     return inband_tracks_[index];
 
-  return nullptr;
+  return 0;
 }
 
 TextTrack* TextTrackList::getTrackById(const AtomicString& id) {
@@ -139,7 +139,7 @@ TextTrack* TextTrackList::getTrackById(const AtomicString& id) {
   }
 
   // When no tracks match the given argument, the method must return null.
-  return nullptr;
+  return 0;
 }
 
 void TextTrackList::InvalidateTrackIndexesAfterTrack(TextTrack* track) {
@@ -210,7 +210,7 @@ void TextTrackList::Remove(TextTrack* track) {
   InvalidateTrackIndexesAfterTrack(track);
 
   DCHECK_EQ(track->TrackList(), this);
-  track->SetTrackList(nullptr);
+  track->SetTrackList(0);
 
   tracks->EraseAt(index);
 
@@ -219,7 +219,7 @@ void TextTrackList::Remove(TextTrack* track) {
 
 void TextTrackList::RemoveAllInbandTracks() {
   for (const auto& track : inband_tracks_) {
-    track->SetTrackList(nullptr);
+    track->SetTrackList(0);
   }
   inband_tracks_.clear();
 }
@@ -244,7 +244,7 @@ const AtomicString& TextTrackList::InterfaceName() const {
 }
 
 ExecutionContext* TextTrackList::GetExecutionContext() const {
-  return owner_ ? owner_->GetExecutionContext() : nullptr;
+  return owner_ ? owner_->GetExecutionContext() : 0;
 }
 
 void TextTrackList::ScheduleTrackEvent(const AtomicString& event_name,
@@ -301,7 +301,7 @@ HTMLMediaElement* TextTrackList::Owner() const {
   return owner_;
 }
 
-void TextTrackList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrackList) {
   visitor->Trace(owner_);
   visitor->Trace(async_event_queue_);
   visitor->Trace(add_track_tracks_);

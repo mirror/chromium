@@ -31,7 +31,7 @@ class CORE_EXPORT ComputedStylePropertyMap : public StylePropertyMapReadonly {
 
   Vector<String> getProperties() override;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(node_);
     StylePropertyMapReadonly::Trace(visitor);
   }

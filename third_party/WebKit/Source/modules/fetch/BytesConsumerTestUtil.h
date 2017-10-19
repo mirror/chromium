@@ -53,9 +53,7 @@ class BytesConsumerTestUtil {
       return new ::testing::StrictMock<MockFetchDataLoaderClient>;
     }
 
-    virtual void Trace(blink::Visitor* visitor) {
-      FetchDataLoader::Client::Trace(visitor);
-    }
+    DEFINE_INLINE_VIRTUAL_TRACE() { FetchDataLoader::Client::Trace(visitor); }
 
     MOCK_METHOD1(DidFetchDataLoadedBlobHandleMock,
                  void(RefPtr<BlobDataHandle>));
@@ -127,7 +125,7 @@ class BytesConsumerTestUtil {
 
     bool IsCancelled() const { return is_cancelled_; }
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
 
    private:
     void NotifyAsReadable(int notification_token);
@@ -153,10 +151,9 @@ class BytesConsumerTestUtil {
     explicit TwoPhaseReader(BytesConsumer* /* consumer */);
 
     void OnStateChange() override;
-    String DebugName() const override { return "TwoPhaseReader"; }
     std::pair<BytesConsumer::Result, Vector<char>> Run();
 
-    void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_TRACE() {
       visitor->Trace(consumer_);
       BytesConsumer::Client::Trace(visitor);
     }

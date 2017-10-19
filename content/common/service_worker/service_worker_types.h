@@ -23,7 +23,6 @@
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientType.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_state.mojom.h"
 #include "url/gurl.h"
@@ -50,6 +49,8 @@ extern const char kServiceWorkerGetRegistrationsErrorPrefix[];
 extern const char kFetchScriptError[];
 
 // Constants for invalid identifiers.
+static const int kInvalidServiceWorkerHandleId = -1;
+static const int64_t kInvalidServiceWorkerVersionId = -1;
 static const int64_t kInvalidServiceWorkerResourceId = -1;
 static const int kInvalidEmbeddedWorkerThreadId = -1;
 
@@ -169,10 +170,24 @@ struct CONTENT_EXPORT ServiceWorkerResponse {
   ServiceWorkerHeaderList cors_exposed_header_names;
 };
 
+// Represents initialization info for a WebServiceWorker object.
+struct CONTENT_EXPORT ServiceWorkerObjectInfo {
+  ServiceWorkerObjectInfo();
+
+  // Returns whether the instance is valid. A valid instance has valid
+  // |handle_id| and |version_id|.
+  bool IsValid() const;
+
+  int handle_id;
+  GURL url;
+  blink::mojom::ServiceWorkerState state;
+  int64_t version_id;
+};
+
 struct CONTENT_EXPORT ServiceWorkerVersionAttributes {
-  blink::mojom::ServiceWorkerObjectInfo installing;
-  blink::mojom::ServiceWorkerObjectInfo waiting;
-  blink::mojom::ServiceWorkerObjectInfo active;
+  ServiceWorkerObjectInfo installing;
+  ServiceWorkerObjectInfo waiting;
+  ServiceWorkerObjectInfo active;
 };
 
 class ChangedVersionAttributesMask {
@@ -210,11 +225,11 @@ struct ExtendableMessageEventSource {
   explicit ExtendableMessageEventSource(
       const ServiceWorkerClientInfo& client_info);
   explicit ExtendableMessageEventSource(
-      const blink::mojom::ServiceWorkerObjectInfo& service_worker_info);
+      const ServiceWorkerObjectInfo& service_worker_info);
 
   // Exactly one of these infos should be valid.
   ServiceWorkerClientInfo client_info;
-  blink::mojom::ServiceWorkerObjectInfo service_worker_info;
+  ServiceWorkerObjectInfo service_worker_info;
 };
 
 struct CONTENT_EXPORT NavigationPreloadState {

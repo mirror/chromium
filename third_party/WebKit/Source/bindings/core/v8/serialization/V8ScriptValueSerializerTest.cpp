@@ -43,7 +43,7 @@
 #include "core/html/ImageData.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "platform/graphics/StaticBitmapImage.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/DateMath.h"
 #include "public/platform/WebBlobInfo.h"
@@ -767,11 +767,31 @@ TEST(V8ScriptValueSerializerTest, RoundTripImageData) {
   EXPECT_EQ(200, new_image_data->data()->Data()[0]);
 }
 
+class ScopedEnableColorCanvasExtensions {
+ public:
+  ScopedEnableColorCanvasExtensions()
+      : experimental_canvas_features_(
+            RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()),
+        color_canvas_extensions_(
+            RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
+    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  }
+  ~ScopedEnableColorCanvasExtensions() {
+    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+        experimental_canvas_features_);
+    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
+        color_canvas_extensions_);
+  }
+
+ private:
+  bool experimental_canvas_features_;
+  bool color_canvas_extensions_;
+};
+
 TEST(V8ScriptValueSerializerTest, RoundTripImageDataWithColorSpaceInfo) {
-  // enable experimental canvas features and color canvas extensions for this
-  // test
-  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
-  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
+  // enable color canvas extensions for this test
+  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
   // ImageData objects with color space information should serialize and
   // deserialize correctly.
   V8TestingScope scope;
@@ -987,10 +1007,8 @@ TEST(V8ScriptValueSerializerTest, RoundTripImageBitmap) {
 }
 
 TEST(V8ScriptValueSerializerTest, RoundTripImageBitmapWithColorSpaceInfo) {
-  // enable experimental canvas features and color canvas extensions for this
-  // test
-  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
-  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
+  // enable color canvas extensions for this test
+  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
   V8TestingScope scope;
   // Make a 10x7 red ImageBitmap in P3 color space.
   SkImageInfo info = SkImageInfo::Make(
@@ -1420,7 +1438,8 @@ TEST(V8ScriptValueSerializerTest, RoundTripFileNativeSnapshot) {
 TEST(V8ScriptValueSerializerTest, RoundTripFileNonNativeSnapshot) {
   // Preserving behavior, filesystem URL is not preserved across cloning.
   V8TestingScope scope;
-  KURL url("filesystem:http://example.com/isolated/hash/non-native-file");
+  KURL url(kParsedURLString,
+           "filesystem:http://example.com/isolated/hash/non-native-file");
   File* file =
       File::CreateForFileSystemFile(url, FileMetadata(), File::kIsUserVisible);
   v8::Local<v8::Value> wrapper = ToV8(file, scope.GetScriptState());

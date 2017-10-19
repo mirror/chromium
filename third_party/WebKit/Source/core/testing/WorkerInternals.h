@@ -28,7 +28,7 @@ class WorkerInternals final : public GarbageCollectedFinalized<WorkerInternals>,
 
   void collectGarbage(ScriptState*);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit WorkerInternals();

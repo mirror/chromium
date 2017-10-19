@@ -7,9 +7,9 @@
 
 #include <memory>
 
-#include "ash/system/power/power_button_controller.h"
 #include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wm/power_button_controller.h"
 #include "ui/events/keycodes/keyboard_codes_posix.h"
 
 namespace base {
@@ -29,8 +29,6 @@ namespace ash {
 
 class LockStateController;
 class LockStateControllerTestApi;
-class PowerButtonScreenshotController;
-class TabletPowerButtonControllerTestApi;
 enum class LoginStatus;
 
 // Base test fixture and utils for testing power button related functions.
@@ -63,8 +61,7 @@ class PowerButtonTestBase : public AshTestBase {
 
   // Initializes |power_button_controller_| and other members that point at
   // objects owned by it. If |send_accelerometer_update| is true, an
-  // accelerometer update is sent to create TabletPowerButtonController and
-  // PowerButtonScreenshotController.
+  // accelerometer update is sent to create TabletPowerButtonController.
   void InitPowerButtonControllerMembers(bool send_accelerometer_update);
 
   // Sends an update with screen and keyboard accelerometer readings to
@@ -84,10 +81,10 @@ class PowerButtonTestBase : public AshTestBase {
   void ReleasePowerButton();
 
   // Simulates a key press based on the given |key_code|.
-  virtual void PressKey(ui::KeyboardCode key_code);
+  void PressKey(ui::KeyboardCode key_code);
 
   // Simulates a key release based on the given |key_code|.
-  virtual void ReleaseKey(ui::KeyboardCode key_code);
+  void ReleaseKey(ui::KeyboardCode key_code);
 
   // Simulates a mouse move event.
   void GenerateMouseMoveEvent();
@@ -104,10 +101,6 @@ class PowerButtonTestBase : public AshTestBase {
   // Enables or disables tablet mode based on |enable|.
   void EnableTabletMode(bool enable);
 
-  void set_has_tablet_mode_switch(bool has_tablet_mode_switch) {
-    has_tablet_mode_switch_ = has_tablet_mode_switch;
-  }
-
   // Ownership is passed on to chromeos::DBusThreadManager.
   chromeos::FakePowerManagerClient* power_manager_client_ = nullptr;
   chromeos::FakeSessionManagerClient* session_manager_client_ = nullptr;
@@ -115,27 +108,11 @@ class PowerButtonTestBase : public AshTestBase {
   PowerButtonController* power_button_controller_ = nullptr;  // Not owned.
   LockStateController* lock_state_controller_ = nullptr;      // Not owned.
   TabletPowerButtonController* tablet_controller_ = nullptr;  // Not owned.
-  PowerButtonScreenshotController* screenshot_controller_ =
-      nullptr;  // Not owned.
+  std::unique_ptr<TabletPowerButtonController::TestApi> tablet_test_api_;
   std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
-  std::unique_ptr<TabletPowerButtonControllerTestApi> tablet_test_api_;
   base::SimpleTestTickClock* tick_clock_ = nullptr;  // Not owned.
 
-  // Indicates whether switches::kAshEnableTabletMode is appended.
-  bool has_tablet_mode_switch_ = true;
-
   DISALLOW_COPY_AND_ASSIGN(PowerButtonTestBase);
-};
-
-// Base test fixture same as PowerButtonTestBase excepts that tablet mode swtich
-// is not set.
-class NoTabletModePowerButtonTestBase : public PowerButtonTestBase {
- public:
-  NoTabletModePowerButtonTestBase() { set_has_tablet_mode_switch(false); }
-  ~NoTabletModePowerButtonTestBase() override {}
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(NoTabletModePowerButtonTestBase);
 };
 
 }  // namespace ash

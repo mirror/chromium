@@ -13,6 +13,7 @@
 #include "base/files/file_path.h"
 #include "base/unguessable_token.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_context.h"
 #include "headless/lib/browser/headless_browser_context_options.h"
 #include "headless/lib/browser/headless_network_conditions.h"
@@ -107,9 +108,6 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   const base::UnguessableToken* GetDevToolsFrameTokenForFrameTreeNodeId(
       int frame_tree_node_id) const;
 
-  void SetRemoveHeaders(bool should_remove_headers);
-  bool ShouldRemoveHeaders() const;
-
   void NotifyChildContentsCreated(HeadlessWebContentsImpl* parent,
                                   HeadlessWebContentsImpl* child);
 
@@ -136,7 +134,6 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   base::FilePath path_;
   base::Lock observers_lock_;
   base::ObserverList<Observer> observers_;
-  bool should_remove_headers_;
 
   std::unordered_map<std::string, std::unique_ptr<HeadlessWebContents>>
       web_contents_map_;

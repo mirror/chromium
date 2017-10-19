@@ -188,15 +188,15 @@ String AXMenuListOption::TextAlternative(bool recursive,
 
 HTMLSelectElement* AXMenuListOption::ParentSelectNode() const {
   if (!GetNode())
-    return nullptr;
+    return 0;
 
   if (auto* option = ToHTMLOptionElementOrNull(GetNode()))
     return option->OwnerSelectElement();
 
-  return nullptr;
+  return 0;
 }
 
-void AXMenuListOption::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AXMenuListOption) {
   visitor->Trace(element_);
   AXMockObject::Trace(visitor);
 }

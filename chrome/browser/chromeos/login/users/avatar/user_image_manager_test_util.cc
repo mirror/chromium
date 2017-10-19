@@ -33,8 +33,8 @@ bool AreImagesEqual(const gfx::ImageSkia& first, const gfx::ImageSkia& second) {
   if (!first_bitmap || !second_bitmap)
     return false;
 
-  const size_t size = first_bitmap->computeByteSize();
-  if (second_bitmap->computeByteSize() != size)
+  const size_t size = first_bitmap->getSize();
+  if (second_bitmap->getSize() != size)
     return false;
 
   uint8_t* first_data = reinterpret_cast<uint8_t*>(first_bitmap->getPixels());

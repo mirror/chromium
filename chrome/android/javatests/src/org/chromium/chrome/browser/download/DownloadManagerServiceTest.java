@@ -302,7 +302,8 @@ public class DownloadManagerServiceTest {
     }
 
     private Context getTestContext() {
-        return new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
+        return new AdvancedMockContext(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
 
     @Test

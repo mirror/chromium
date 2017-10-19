@@ -85,10 +85,6 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void HandleViewCacheRequest(const GURL& url,
                               mojom::URLLoaderClientPtr client) override;
   void GetCookieManager(network::mojom::CookieManagerRequest request) override;
-  void GetRestrictedCookieManager(
-      network::mojom::RestrictedCookieManagerRequest request,
-      int32_t render_process_id,
-      int32_t render_frame_id) override;
   void ClearNetworkingHistorySince(
       base::Time time,
       base::OnceClosure completion_callback) override;
@@ -99,9 +95,6 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   // Disables use of QUIC by the NetworkContext.
   void DisableQuic();
-
-  void SetNetworkConditions(const std::string& profile_id,
-                            mojom::NetworkConditionsPtr conditions) override;
 
  private:
   NetworkContext();

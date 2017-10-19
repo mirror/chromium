@@ -16,7 +16,6 @@
 #include "base/files/file_util.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/leveldatabase/leveldb_chrome.h"
 
 using storage::FilePathToString;
 
@@ -35,8 +34,8 @@ void CorruptDatabase(const base::FilePath& db_path,
   while (!(file_path = file_enum.Next()).empty()) {
     uint64_t number = std::numeric_limits<uint64_t>::max();
     leveldb::FileType file_type;
-    EXPECT_TRUE(leveldb_chrome::ParseFileName(
-        FilePathToString(file_path.BaseName()), &number, &file_type));
+    EXPECT_TRUE(leveldb::ParseFileName(FilePathToString(file_path.BaseName()),
+                                       &number, &file_type));
     if (file_type == type &&
         (picked_file_number == std::numeric_limits<uint64_t>::max() ||
          picked_file_number < number)) {
@@ -85,8 +84,8 @@ void DeleteDatabaseFile(const base::FilePath& db_path,
   while (!(file_path = file_enum.Next()).empty()) {
     uint64_t number = std::numeric_limits<uint64_t>::max();
     leveldb::FileType file_type;
-    EXPECT_TRUE(leveldb_chrome::ParseFileName(
-        FilePathToString(file_path.BaseName()), &number, &file_type));
+    EXPECT_TRUE(leveldb::ParseFileName(FilePathToString(file_path.BaseName()),
+                                       &number, &file_type));
     if (file_type == type) {
       base::DeleteFile(file_path, false);
       // We may have multiple files for the same type, so don't break here.

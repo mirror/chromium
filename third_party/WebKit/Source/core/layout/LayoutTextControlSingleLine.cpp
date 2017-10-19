@@ -34,11 +34,11 @@
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/ThemePainter.h"
 #include "platform/fonts/SimpleFontData.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
 
@@ -72,8 +72,8 @@ void LayoutTextControlSingleLine::Paint(const PaintInfo& paint_info,
 
   if (ShouldPaintSelfBlockBackground(paint_info.phase) &&
       should_draw_caps_lock_indicator_) {
-    if (DrawingRecorder::UseCachedDrawingIfPossible(paint_info.context, *this,
-                                                    paint_info.phase))
+    if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+            paint_info.context, *this, paint_info.phase))
       return;
 
     LayoutRect contents_rect = ContentBoxRect();
@@ -87,8 +87,8 @@ void LayoutTextControlSingleLine::Paint(const PaintInfo& paint_info,
     // Convert the rect into the coords used for painting the content
     contents_rect.MoveBy(paint_offset + Location());
     IntRect snapped_rect = PixelSnappedIntRect(contents_rect);
-    DrawingRecorder recorder(paint_info.context, *this, paint_info.phase,
-                             snapped_rect);
+    LayoutObjectDrawingRecorder recorder(paint_info.context, *this,
+                                         paint_info.phase, snapped_rect);
     LayoutTheme::GetTheme().Painter().PaintCapsLockIndicator(*this, paint_info,
                                                              snapped_rect);
   }
@@ -124,7 +124,7 @@ void LayoutTextControlSingleLine::UpdateLayout() {
 
   HTMLElement* placeholder_element = InputElement()->PlaceholderElement();
   if (LayoutBox* placeholder_box =
-          placeholder_element ? placeholder_element->GetLayoutBox() : nullptr) {
+          placeholder_element ? placeholder_element->GetLayoutBox() : 0) {
     LayoutSize inner_editor_size;
 
     if (inner_editor_layout_object)
@@ -280,7 +280,7 @@ LayoutUnit LayoutTextControlSingleLine::PreferredContentLogicalWidth(
   if (includes_decoration) {
     HTMLElement* spin_button = InnerSpinButtonElement();
     if (LayoutBox* spin_layout_object =
-            spin_button ? spin_button->GetLayoutBox() : nullptr) {
+            spin_button ? spin_button->GetLayoutBox() : 0) {
       result += spin_layout_object->BorderAndPaddingLogicalWidth();
       // Since the width of spinLayoutObject is not calculated yet,
       // spinLayoutObject->logicalWidth() returns 0.
@@ -362,9 +362,8 @@ void LayoutTextControlSingleLine::Autoscroll(const IntPoint& position) {
 }
 
 LayoutUnit LayoutTextControlSingleLine::ScrollWidth() const {
-  if (LayoutBox* inner = InnerEditorElement()
-                             ? InnerEditorElement()->GetLayoutBox()
-                             : nullptr) {
+  if (LayoutBox* inner =
+          InnerEditorElement() ? InnerEditorElement()->GetLayoutBox() : 0) {
     // Adjust scrollWidth to inculde input element horizontal paddings and
     // decoration width
     LayoutUnit adjustment = ClientWidth() - inner->ClientWidth();
@@ -374,9 +373,8 @@ LayoutUnit LayoutTextControlSingleLine::ScrollWidth() const {
 }
 
 LayoutUnit LayoutTextControlSingleLine::ScrollHeight() const {
-  if (LayoutBox* inner = InnerEditorElement()
-                             ? InnerEditorElement()->GetLayoutBox()
-                             : nullptr) {
+  if (LayoutBox* inner =
+          InnerEditorElement() ? InnerEditorElement()->GetLayoutBox() : 0) {
     // Adjust scrollHeight to include input element vertical paddings and
     // decoration height
     LayoutUnit adjustment = ClientHeight() - inner->ClientHeight();

@@ -51,7 +51,7 @@ class CSSCubicBezierTimingFunctionValue : public CSSValue {
 
   bool Equals(const CSSCubicBezierTimingFunctionValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 
@@ -89,7 +89,7 @@ class CSSStepsTimingFunctionValue : public CSSValue {
 
   bool Equals(const CSSStepsTimingFunctionValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 
@@ -119,7 +119,7 @@ class CSSFramesTimingFunctionValue : public CSSValue {
 
   bool Equals(const CSSFramesTimingFunctionValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 

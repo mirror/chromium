@@ -19,12 +19,6 @@ var GNUBBY_DEV_EXTENSION_ID = 'dlfcjilkjfhdnfiecknlnddkmmiofjbg';
 /** @const {string} */
 var GNUBBY_STABLE_EXTENSION_ID = 'beknehfpfkghjoafdifaflglpjkojoco';
 
-/** @private @const {string} */
-var GNUBBY_DEV_CORP_EXTENSION_ID = 'klnjmillfildbbimkincljmfoepfhjjj';
-
-/** @private @const {string} */
-var GNUBBY_STABLE_CORP_EXTENSION_ID = 'lkjlajklkdhaneeelolkfgbpikkgnkpk';
-
 /** @type {sinon.TestStub} */
 var sendMessageStub = null;
 
@@ -123,52 +117,6 @@ QUnit.test(
     );
 });
 
-QUnit.test(
-  'isGnubbyExtensionInstalled() with Dev corp gnubby extensions installed',
-  function(assert) {
-    assert.expect(1);
-    var done = assert.async();
-
-    sendMessageHandler = function(extensionId, message, responseCallback) {
-      var response = null;
-      if (extensionId === GNUBBY_DEV_CORP_EXTENSION_ID) {
-        response = { data: "W00t!" };
-      }
-      Promise.resolve().then(function() { responseCallback(response); });
-    };
-
-    gnubbyAuthHandler = new remoting.GnubbyAuthHandler();
-    gnubbyAuthHandler.isGnubbyExtensionInstalled().then(
-      function(isInstalled) {
-        assert.ok(isInstalled);
-        done();
-      }
-    );
-});
-
-QUnit.test(
-  'isGnubbyExtensionInstalled() with Stable corp gnubby extensions installed',
-  function(assert) {
-    assert.expect(1);
-    var done = assert.async();
-
-    sendMessageHandler = function(extensionId, message, responseCallback) {
-      var response = null;
-      if (extensionId === GNUBBY_STABLE_CORP_EXTENSION_ID) {
-        response = { data: "W00t!" };
-      }
-      Promise.resolve().then(function() { responseCallback(response); });
-    };
-
-    gnubbyAuthHandler = new remoting.GnubbyAuthHandler();
-    gnubbyAuthHandler.isGnubbyExtensionInstalled().then(
-      function(isInstalled) {
-        assert.ok(isInstalled);
-        done();
-      }
-    );
-});
-
 QUnit.test('startExtension() sends message to host.',
   function(assert) {
     assert.expect(3);
@@ -194,11 +142,11 @@ QUnit.test(
 
     var isGnubbyExtensionInstalledHandler =
         function(extensionId, message, responseCallback) {
-          var response = null;
           if (extensionId === GNUBBY_STABLE_EXTENSION_ID) {
-            response = { data: "W00t!" };
+            Promise.resolve().then(function() {
+              responseCallback({ data: "W00t!" });
+            });
           }
-          Promise.resolve().then(function() { responseCallback(response); });
         };
 
     var onExtensionMessageHandler =

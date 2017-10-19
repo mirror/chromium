@@ -5,7 +5,6 @@
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 
 #include "ash/multi_profile_uma.h"
-#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/remote_shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_item.h"
@@ -290,6 +289,8 @@ void ChromeLauncherController::Init() {
   // TODO(sky): update unit test so that this test isn't necessary.
   if (ash::Shell::HasInstance())
     SetVirtualKeyboardBehaviorFromPrefs();
+
+  prefs_observer_ = ChromeLauncherPrefsObserver::CreateIfNecessary(profile());
 }
 
 ash::ShelfID ChromeLauncherController::CreateAppLauncherItem(
@@ -733,10 +734,6 @@ void ChromeLauncherController::SetProfileForTest(Profile* profile) {
   profile_ = profile;
 }
 
-void ChromeLauncherController::FlushForTesting() {
-  observer_binding_.FlushForTesting();
-}
-
 void ChromeLauncherController::PinAppWithID(const std::string& app_id) {
   model_->PinAppWithID(app_id);
 }
@@ -945,14 +942,6 @@ void ChromeLauncherController::OnSyncModelUpdated() {
 
 void ChromeLauncherController::OnIsSyncingChanged() {
   UpdateAppLaunchersFromPref();
-
-  // Initialize the local prefs if this is the first time sync has occurred.
-  if (!PrefServiceSyncableFromProfile(profile())->IsSyncing())
-    return;
-  InitLocalPref(profile()->GetPrefs(), ash::prefs::kShelfAlignmentLocal,
-                ash::prefs::kShelfAlignment);
-  InitLocalPref(profile()->GetPrefs(), ash::prefs::kShelfAutoHideBehaviorLocal,
-                ash::prefs::kShelfAutoHideBehavior);
 }
 
 void ChromeLauncherController::ScheduleUpdateAppLaunchersFromPref() {

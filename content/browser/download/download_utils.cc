@@ -172,10 +172,14 @@ std::unique_ptr<ResourceRequest> CreateResourceRequest(
   request->referrer_policy = params->referrer().policy;
   request->download_to_file = true;
   request->allow_download = true;
-  request->is_main_frame = true;
 
-  if (params->render_process_host_id() >= 0) {
+  if (params->render_process_host_id()) {
     request->origin_pid = params->render_process_host_id();
+    RenderFrameHost* render_frame_host =
+        RenderFrameHost::FromID(params->render_process_host_id(),
+                                params->render_frame_host_routing_id());
+    request->is_main_frame = !render_frame_host->GetParent();
+
     request->render_frame_id = params->render_frame_host_routing_id();
   }
 
@@ -375,6 +379,11 @@ void HandleResponseHeaders(const net::HttpResponseHeaders* headers,
                            DownloadCreateInfo* create_info) {
   if (!headers)
     return;
+
+  // Parse the "Content-Length" header. Adjust to 0 if no valid content_length
+  // presents.
+  int64_t content_length = headers->GetContentLength();
+  create_info->total_bytes = (content_length == -1) ? 0 : content_length;
 
   if (headers->HasStrongValidators()) {
     // If we don't have strong validators as per RFC 7232 section 2, then

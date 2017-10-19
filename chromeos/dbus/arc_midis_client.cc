@@ -3,12 +3,12 @@
 // found in the LICENSE file.
 #include "chromeos/dbus/arc_midis_client.h"
 
-#include <memory>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/memory/ptr_util.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_proxy.h"
@@ -50,7 +50,8 @@ class ArcMidisClientImpl : public ArcMidisClient {
  private:
   void OnVoidDBusMethod(VoidDBusMethodCallback callback,
                         dbus::Response* response) {
-    std::move(callback).Run(response != nullptr);
+    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
+                                     : DBUS_METHOD_CALL_FAILURE);
   }
 
   dbus::ObjectProxy* proxy_ = nullptr;
@@ -69,7 +70,7 @@ class ArcMidisClientImpl : public ArcMidisClient {
 
 // static
 std::unique_ptr<ArcMidisClient> ArcMidisClient::Create() {
-  return std::make_unique<ArcMidisClientImpl>();
+  return base::MakeUnique<ArcMidisClientImpl>();
 }
 
 }  // namespace chromeos

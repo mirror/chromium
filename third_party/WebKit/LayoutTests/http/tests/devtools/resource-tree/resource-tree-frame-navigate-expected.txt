@@ -10,7 +10,6 @@ document http://127.0.0.1:8000/devtools/resource-tree/resources/resource-tree-fr
 script http://127.0.0.1:8000/devtools/resource-tree/resources/script-initial.js
 stylesheet http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial-2.css
 stylesheet http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial.css
-script http://127.0.0.1:8000/inspector/debugger-test.js
 script http://127.0.0.1:8000/inspector/inspector-test.js
 script http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js
 script http://127.0.0.1:8000/inspector/resources-test.js
@@ -21,7 +20,6 @@ http://127.0.0.1:8000/devtools/resource-tree/resources/resource-tree-frame-navig
 http://127.0.0.1:8000/devtools/resource-tree/resources/script-initial.js == http://127.0.0.1:8000/devtools/resource-tree/resources/script-initial.js
 http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial-2.css == http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial-2.css
 http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial.css == http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial.css
-http://127.0.0.1:8000/inspector/debugger-test.js == http://127.0.0.1:8000/inspector/debugger-test.js
 http://127.0.0.1:8000/inspector/inspector-test.js == http://127.0.0.1:8000/inspector/inspector-test.js
 http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js == http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js
 http://127.0.0.1:8000/inspector/resources-test.js == http://127.0.0.1:8000/inspector/resources-test.js
@@ -36,7 +34,6 @@ Frames
                 styles-initial-2.css
             resource-tree-frame-navigate-iframe-before.html
         Scripts
-            debugger-test.js
             inspector-test.js
             resource-tree-test.js
             resources-test.js
@@ -47,7 +44,6 @@ Sources:
 -------- Setting mode: [frame]
 top
   resource-tree-frame-navigate.html
-  debugger-test.js
   inspector-test.js
   resource-tree-test.js
   resources-test.js
@@ -61,7 +57,6 @@ Sources:
 top
   127.0.0.1:8000
     resource-tree-frame-navigate.html
-    debugger-test.js
     inspector-test.js
     resource-tree-test.js
     resources-test.js
@@ -82,7 +77,6 @@ top
     inspector
       resource-tree
         resource-tree-test.js
-      debugger-test.js
       inspector-test.js
       resources-test.js
   iframe (resource-tree-frame-navigate-iframe-before.html)
@@ -96,7 +90,6 @@ Sources:
 127.0.0.1:8000
   resource-tree-frame-navigate-iframe-before.html
   resource-tree-frame-navigate.html
-  debugger-test.js
   inspector-test.js
   resource-tree-test.js
   resources-test.js
@@ -116,7 +109,6 @@ Sources:
   inspector
     resource-tree
       resource-tree-test.js
-    debugger-test.js
     inspector-test.js
     resources-test.js
 
@@ -128,7 +120,6 @@ document http://127.0.0.1:8000/devtools/resource-tree/resources/resource-tree-fr
 script http://127.0.0.1:8000/devtools/resource-tree/resources/script-navigated.js
 stylesheet http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial.css
 stylesheet http://127.0.0.1:8000/devtools/resource-tree/resources/styles-navigated.css
-script http://127.0.0.1:8000/inspector/debugger-test.js
 script http://127.0.0.1:8000/inspector/inspector-test.js
 script http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js
 script http://127.0.0.1:8000/inspector/resources-test.js
@@ -139,7 +130,6 @@ http://127.0.0.1:8000/devtools/resource-tree/resources/resource-tree-frame-navig
 http://127.0.0.1:8000/devtools/resource-tree/resources/script-navigated.js == http://127.0.0.1:8000/devtools/resource-tree/resources/script-navigated.js
 http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial.css == http://127.0.0.1:8000/devtools/resource-tree/resources/styles-initial.css
 http://127.0.0.1:8000/devtools/resource-tree/resources/styles-navigated.css == http://127.0.0.1:8000/devtools/resource-tree/resources/styles-navigated.css
-http://127.0.0.1:8000/inspector/debugger-test.js == http://127.0.0.1:8000/inspector/debugger-test.js
 http://127.0.0.1:8000/inspector/inspector-test.js == http://127.0.0.1:8000/inspector/inspector-test.js
 http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js == http://127.0.0.1:8000/inspector/resource-tree/resource-tree-test.js
 http://127.0.0.1:8000/inspector/resources-test.js == http://127.0.0.1:8000/inspector/resources-test.js
@@ -154,7 +144,6 @@ Frames
                 styles-navigated.css
             resource-tree-frame-navigate-iframe-after.html
         Scripts
-            debugger-test.js
             inspector-test.js
             resource-tree-test.js
             resources-test.js
@@ -165,7 +154,6 @@ Sources:
 -------- Setting mode: [frame]
 top
   resource-tree-frame-navigate.html
-  debugger-test.js
   inspector-test.js
   resource-tree-test.js
   resources-test.js
@@ -179,7 +167,6 @@ Sources:
 top
   127.0.0.1:8000
     resource-tree-frame-navigate.html
-    debugger-test.js
     inspector-test.js
     resource-tree-test.js
     resources-test.js
@@ -200,7 +187,6 @@ top
     inspector
       resource-tree
         resource-tree-test.js
-      debugger-test.js
       inspector-test.js
       resources-test.js
   iframe (resource-tree-frame-navigate-iframe-after.html)
@@ -214,7 +200,6 @@ Sources:
 127.0.0.1:8000
   resource-tree-frame-navigate-iframe-after.html
   resource-tree-frame-navigate.html
-  debugger-test.js
   inspector-test.js
   resource-tree-test.js
   resources-test.js
@@ -234,7 +219,6 @@ Sources:
   inspector
     resource-tree
       resource-tree-test.js
-    debugger-test.js
     inspector-test.js
     resources-test.js
 

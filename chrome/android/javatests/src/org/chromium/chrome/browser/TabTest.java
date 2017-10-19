@@ -105,7 +105,8 @@ public class TabTest {
         Assert.assertFalse(mTab.isShowingSadTab());
 
         // Stop the activity and simulate a killed renderer.
-        ApplicationTestUtils.fireHomeScreenIntent(InstrumentationRegistry.getTargetContext());
+        ApplicationTestUtils.fireHomeScreenIntent(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
         ThreadUtils.runOnUiThreadBlocking(() -> mTab.simulateRendererKilledForTesting(false));
 
         CriteriaHelper.pollUiThread(new Criteria() {
@@ -117,7 +118,8 @@ public class TabTest {
         Assert.assertTrue(mTab.needsReload());
         Assert.assertFalse(mTab.isShowingSadTab());
 
-        ApplicationTestUtils.launchChrome(InstrumentationRegistry.getTargetContext());
+        ApplicationTestUtils.launchChrome(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
 
         // The tab should be restored and visible.
         CriteriaHelper.pollUiThread(new Criteria() {

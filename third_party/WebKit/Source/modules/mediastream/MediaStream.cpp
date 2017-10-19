@@ -97,14 +97,6 @@ MediaStream* MediaStream::Create(ExecutionContext* context,
   return new MediaStream(context, stream_descriptor);
 }
 
-MediaStream* MediaStream::Create(ExecutionContext* context,
-                                 MediaStreamDescriptor* stream_descriptor,
-                                 const MediaStreamTrackVector& audio_tracks,
-                                 const MediaStreamTrackVector& video_tracks) {
-  return new MediaStream(context, stream_descriptor, audio_tracks,
-                         video_tracks);
-}
-
 MediaStream::MediaStream(ExecutionContext* context,
                          MediaStreamDescriptor* stream_descriptor)
     : ContextClient(context),
@@ -132,39 +124,6 @@ MediaStream::MediaStream(ExecutionContext* context,
     new_track->RegisterMediaStream(this);
     video_tracks_.push_back(new_track);
   }
-
-  if (EmptyOrOnlyEndedTracks()) {
-    descriptor_->SetActive(false);
-  }
-}
-
-MediaStream::MediaStream(ExecutionContext* context,
-                         MediaStreamDescriptor* stream_descriptor,
-                         const MediaStreamTrackVector& audio_tracks,
-                         const MediaStreamTrackVector& video_tracks)
-    : ContextClient(context),
-      descriptor_(stream_descriptor),
-      scheduled_event_timer_(
-          TaskRunnerHelper::Get(TaskType::kMediaElementEvent, context),
-          this,
-          &MediaStream::ScheduledEventTimerFired) {
-  descriptor_->SetClient(this);
-
-  audio_tracks_.ReserveCapacity(audio_tracks.size());
-  for (size_t i = 0; i < audio_tracks.size(); ++i) {
-    MediaStreamTrack* audio_track = audio_tracks[i];
-    DCHECK_EQ("audio", audio_track->kind());
-    audio_track->RegisterMediaStream(this);
-    audio_tracks_.push_back(audio_track);
-  }
-  video_tracks_.ReserveCapacity(video_tracks.size());
-  for (size_t i = 0; i < video_tracks.size(); ++i) {
-    MediaStreamTrack* video_track = video_tracks[i];
-    DCHECK_EQ("video", video_track->kind());
-    video_track->RegisterMediaStream(this);
-    video_tracks_.push_back(video_track);
-  }
-  DCHECK(TracksMatchDescriptor());
 
   if (EmptyOrOnlyEndedTracks()) {
     descriptor_->SetActive(false);
@@ -217,22 +176,6 @@ bool MediaStream::EmptyOrOnlyEndedTracks() {
   for (MediaStreamTrackVector::iterator iter = video_tracks_.begin();
        iter != video_tracks_.end(); ++iter) {
     if (!iter->Get()->Ended())
-      return false;
-  }
-  return true;
-}
-
-bool MediaStream::TracksMatchDescriptor() {
-  if (audio_tracks_.size() != descriptor_->NumberOfAudioComponents())
-    return false;
-  for (size_t i = 0; i < audio_tracks_.size(); i++) {
-    if (audio_tracks_[i]->Component() != descriptor_->AudioComponent(i))
-      return false;
-  }
-  if (video_tracks_.size() != descriptor_->NumberOfVideoComponents())
-    return false;
-  for (size_t i = 0; i < video_tracks_.size(); i++) {
-    if (video_tracks_[i]->Component() != descriptor_->VideoComponent(i))
       return false;
   }
   return true;
@@ -329,7 +272,7 @@ MediaStreamTrack* MediaStream::getTrackById(String id) {
       return iter->Get();
   }
 
-  return nullptr;
+  return 0;
 }
 
 MediaStream* MediaStream::clone(ScriptState* script_state) {
@@ -430,7 +373,7 @@ void MediaStream::RemoveTrackByComponent(MediaStreamComponent* component) {
   if (!GetExecutionContext())
     return;
 
-  MediaStreamTrackVector* tracks = nullptr;
+  MediaStreamTrackVector* tracks = 0;
   switch (component->Source()->GetType()) {
     case MediaStreamSource::kTypeAudio:
       tracks = &audio_tracks_;
@@ -489,7 +432,7 @@ URLRegistry& MediaStream::Registry() const {
   return MediaStreamRegistry::Registry();
 }
 
-void MediaStream::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaStream) {
   visitor->Trace(audio_tracks_);
   visitor->Trace(video_tracks_);
   visitor->Trace(descriptor_);

@@ -565,7 +565,6 @@ void V4LocalDatabaseManager::DatabaseReadyForUpdates(
     const std::vector<ListIdentifier>& stores_to_reset) {
   if (enabled_) {
     v4_database_->ResetStores(stores_to_reset);
-    UpdateListClientStates(v4_database_->GetStoreStateMap());
 
     // The database is ready to process updates. Schedule them now.
     v4_update_protocol_manager_->ScheduleNextUpdate(
@@ -575,29 +574,15 @@ void V4LocalDatabaseManager::DatabaseReadyForUpdates(
 
 void V4LocalDatabaseManager::DatabaseUpdated() {
   if (enabled_) {
+    v4_database_->RecordFileSizeHistograms();
     v4_update_protocol_manager_->ScheduleNextUpdate(
         v4_database_->GetStoreStateMap());
 
-    v4_database_->RecordFileSizeHistograms();
-    UpdateListClientStates(v4_database_->GetStoreStateMap());
-
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(&V4LocalDatabaseManager::PostUpdateNotificationOnUIThread,
-                   content::Source<SafeBrowsingDatabaseManager>(this)));
+    content::NotificationService::current()->Notify(
+        NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE,
+        content::Source<SafeBrowsingDatabaseManager>(this),
+        content::NotificationService::NoDetails());
   }
-}
-
-// static
-void V4LocalDatabaseManager::PostUpdateNotificationOnUIThread(
-    const content::NotificationSource& source) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  // The notification needs to be posted on the UI thread because the extension
-  // checker is observing UI thread's notification service.
-  content::NotificationService::current()->Notify(
-      NOTIFICATION_SAFE_BROWSING_UPDATE_COMPLETE, source,
-      content::NotificationService::NoDetails());
 }
 
 void V4LocalDatabaseManager::DeletePVer3StoreFiles() {
@@ -849,7 +834,7 @@ void V4LocalDatabaseManager::PerformFullHashCheck(
   DCHECK(!full_hash_to_store_and_hash_prefixes.empty());
 
   v4_get_hash_protocol_manager_->GetFullHashes(
-      full_hash_to_store_and_hash_prefixes, list_client_states_,
+      full_hash_to_store_and_hash_prefixes,
       base::Bind(&V4LocalDatabaseManager::OnFullHashResponse,
                  weak_factory_.GetWeakPtr(), base::Passed(std::move(check))));
 }
@@ -978,17 +963,6 @@ bool V4LocalDatabaseManager::AreAnyStoresAvailableNow(
     const StoresToCheck& stores_to_check) const {
   return enabled_ && v4_database_ &&
          v4_database_->AreAnyStoresAvailable(stores_to_check);
-}
-
-void V4LocalDatabaseManager::UpdateListClientStates(
-    const std::unique_ptr<StoreStateMap>& store_state_map) {
-  list_client_states_.clear();
-  std::transform(
-      store_state_map->begin(), store_state_map->end(),
-      std::back_inserter(list_client_states_),
-      [](const std::map<ListIdentifier, std::string>::value_type& pair) {
-        return pair.second;
-      });
 }
 
 }  // namespace safe_browsing

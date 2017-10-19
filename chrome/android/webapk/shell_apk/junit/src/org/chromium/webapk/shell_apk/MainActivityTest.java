@@ -6,7 +6,6 @@ package org.chromium.webapk.shell_apk;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -161,8 +160,6 @@ public final class MainActivityTest {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://"));
         RuntimeEnvironment.getRobolectricPackageManager().addResolveInfoForIntent(
                 intent, newResolveInfo(browserPackageName));
-        RuntimeEnvironment.getRobolectricPackageManager().addPackage(
-                newPackageInfo(browserPackageName));
     }
 
     private static ResolveInfo newResolveInfo(String packageName) {
@@ -171,12 +168,5 @@ public final class MainActivityTest {
         ResolveInfo resolveInfo = new ResolveInfo();
         resolveInfo.activityInfo = activityInfo;
         return resolveInfo;
-    }
-
-    private static PackageInfo newPackageInfo(String packageName) {
-        PackageInfo packageInfo = new PackageInfo();
-        packageInfo.packageName = packageName;
-        packageInfo.versionName = "Developer Build";
-        return packageInfo;
     }
 }

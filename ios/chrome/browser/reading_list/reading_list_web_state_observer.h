@@ -68,10 +68,9 @@ class ReadingListWebStateObserver : public web::WebStateObserver,
 
   // WebContentsObserver implementation.
   void PageLoaded(
-      web::WebState* web_state,
       web::PageLoadCompletionStatus load_completion_status) override;
-  void WebStateDestroyed(web::WebState* web_state) override;
-  void DidStartLoading(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
+  void DidStartLoading() override;
 
   ReadingListModel* reading_list_model_;
   std::unique_ptr<base::Timer> timer_;

@@ -42,7 +42,7 @@ class TouchEventContext : public GarbageCollected<TouchEventContext> {
   TouchList& TargetTouches() { return *target_touches_; }
   TouchList& ChangedTouches() { return *changed_touches_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   TouchEventContext();

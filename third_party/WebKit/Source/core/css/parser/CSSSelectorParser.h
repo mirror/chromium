@@ -13,8 +13,6 @@
 namespace blink {
 
 class CSSParserContext;
-class CSSParserTokenStream;
-class CSSParserObserverWrapper;
 class CSSSelectorList;
 class StyleSheetContents;
 
@@ -27,10 +25,6 @@ class CORE_EXPORT CSSSelectorParser {
   static CSSSelectorList ParseSelector(CSSParserTokenRange,
                                        const CSSParserContext*,
                                        StyleSheetContents*);
-  static CSSSelectorList ConsumeSelector(CSSParserTokenStream&,
-                                         const CSSParserContext*,
-                                         StyleSheetContents*,
-                                         CSSParserObserverWrapper*);
 
   static bool ConsumeANPlusB(CSSParserTokenRange&, std::pair<int, int>&);
 
@@ -40,8 +34,6 @@ class CORE_EXPORT CSSSelectorParser {
   // These will all consume trailing comments if successful
 
   CSSSelectorList ConsumeComplexSelectorList(CSSParserTokenRange&);
-  CSSSelectorList ConsumeComplexSelectorList(CSSParserTokenStream&,
-                                             CSSParserObserverWrapper*);
   CSSSelectorList ConsumeCompoundSelectorList(CSSParserTokenRange&);
 
   std::unique_ptr<CSSParserSelector> ConsumeComplexSelector(

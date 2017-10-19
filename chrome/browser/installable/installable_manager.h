@@ -180,7 +180,7 @@ class InstallableManager
   void OnDidGetManifest(const GURL& manifest_url,
                         const content::Manifest& manifest);
 
-  void CheckManifestValid();
+  void CheckInstallable();
   bool IsManifestValidForWebApp(const content::Manifest& manifest);
   void CheckServiceWorker();
   void OnDidCheckHasServiceWorker(content::ServiceWorkerCapability capability);
@@ -201,8 +201,7 @@ class InstallableManager
 
   const GURL& manifest_url() const;
   const content::Manifest& manifest() const;
-  bool valid_manifest();
-  bool has_worker();
+  bool is_installable() const;
 
   InstallableTaskQueue task_queue_;
   std::unique_ptr<InstallableMetrics> metrics_;

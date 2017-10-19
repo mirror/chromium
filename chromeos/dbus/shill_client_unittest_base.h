@@ -146,7 +146,7 @@ class ShillClientUnittestBase : public testing::Test {
   static base::DictionaryValue* CreateExampleServiceProperties();
 
   // Expects the call status to be SUCCESS.
-  static void ExpectNoResultValue(bool result);
+  static void ExpectNoResultValue(DBusMethodCallStatus call_status);
 
   // Checks the result and expects the call status to be SUCCESS.
   static void ExpectObjectPathResult(const dbus::ObjectPath& expected_result,

@@ -40,6 +40,8 @@ class PolicyToolUITest : public InProcessBrowserTest {
 
   void LoadSession(const std::string& session_name);
 
+  void LoadSessionAndWaitForAlert(const std::string& session_name);
+
   std::unique_ptr<base::DictionaryValue> ExtractPolicyValues(bool need_status);
 
   bool IsInvalidSessionNameErrorMessageDisplayed();
@@ -52,8 +54,8 @@ class PolicyToolUITest : public InProcessBrowserTest {
   // Returns 1 if error message is shown, -1 if the error message is not shown,
   // and 0 if the displaying is incorrect (e.g. both error message and the
   // element are shown).
-  int GetElementDisabledState(const std::string& element_id,
-                              const std::string& error_message_id);
+  int ElementDisabledState(const std::string& element_id,
+                           const std::string& error_message_id);
 
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
@@ -147,6 +149,19 @@ std::unique_ptr<base::ListValue> PolicyToolUITest::ExtractSessionsList() {
   return base::ListValue::From(base::JSONReader::Read(json));
 }
 
+void PolicyToolUITest::LoadSessionAndWaitForAlert(
+    const std::string& session_name) {
+  content::WebContents* contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  JavaScriptDialogTabHelper* js_helper =
+      JavaScriptDialogTabHelper::FromWebContents(contents);
+  base::RunLoop dialog_wait;
+  js_helper->SetDialogShownCallbackForTesting(dialog_wait.QuitClosure());
+  LoadSession(session_name);
+  dialog_wait.Run();
+  EXPECT_TRUE(js_helper->IsShowingDialogForTesting());
+}
+
 bool PolicyToolUITest::IsInvalidSessionNameErrorMessageDisplayed() {
   const std::string javascript =
       "domAutomationController.send($('invalid-session-name-error')."
@@ -179,7 +194,7 @@ void PolicyToolUITest::CreateMultipleSessionFiles(int count) {
   }
 }
 
-int PolicyToolUITest::GetElementDisabledState(
+int PolicyToolUITest::ElementDisabledState(
     const std::string& element_id,
     const std::string& error_message_id) {
   const std::string javascript =
@@ -307,26 +322,22 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidSessionName) {
 
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidJson) {
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
-  EXPECT_EQ(GetElementDisabledState("main-section", "disable-editing-error"),
-            -1);
+  EXPECT_EQ(ElementDisabledState("main-section", "disable-editing-error"), -1);
   base::ScopedAllowBlockingForTesting allow_blocking;
   base::WriteFile(
       GetSessionsDir().Append(FILE_PATH_LITERAL("test_session.json")), "{", 1);
   LoadSession("test_session");
-  EXPECT_EQ(GetElementDisabledState("main-section", "disable-editing-error"),
-            1);
+  EXPECT_EQ(ElementDisabledState("main-section", "disable-editing-error"), 1);
 }
 
-IN_PROC_BROWSER_TEST_F(PolicyToolUITest, SavingToDiskError) {
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, UnableToCreateDirectoryOrFile) {
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
-  EXPECT_EQ(GetElementDisabledState("session-choice", "saving"), -1);
   base::ScopedAllowBlockingForTesting allow_blocking;
   base::DeleteFile(GetSessionsDir(), true);
   base::File not_directory(GetSessionsDir(), base::File::Flags::FLAG_CREATE |
                                                  base::File::Flags::FLAG_WRITE);
   not_directory.Close();
-  LoadSession("policy");
-  EXPECT_EQ(GetElementDisabledState("session-choice", "saving"), 1);
+  LoadSessionAndWaitForAlert("test_session");
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, DefaultSession) {

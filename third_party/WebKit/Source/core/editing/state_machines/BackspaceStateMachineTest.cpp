@@ -9,12 +9,12 @@
 
 namespace blink {
 
-namespace backspace_state_machine_test {
-
+namespace {
 const TextSegmentationMachineState kNeedMoreCodeUnit =
     TextSegmentationMachineState::kNeedMoreCodeUnit;
 const TextSegmentationMachineState kFinished =
     TextSegmentationMachineState::kFinished;
+}  // namespace
 
 TEST(BackspaceStateMachineTest, DoNothingCase) {
   BackspaceStateMachine machine;
@@ -987,7 +987,4 @@ TEST(BackspaceStateMachineTest, ZWJSequence) {
   EXPECT_EQ(kFinished, machine.FeedPrecedingCodeUnit(kZwj));
   EXPECT_EQ(-1, machine.FinalizeAndGetBoundaryOffset());
 }
-
-}  // namespace backspace_state_machine_test
-
 }  // namespace blink

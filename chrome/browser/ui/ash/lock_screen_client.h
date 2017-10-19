@@ -69,7 +69,7 @@ class LockScreenClient : public ash::mojom::LockScreenClient {
                         int32_t help_topic_id);
   void ClearErrors();
   void ShowUserPodCustomIcon(const AccountId& account_id,
-                             ash::mojom::EasyUnlockIconOptionsPtr icon);
+                             ash::mojom::UserPodCustomIconOptionsPtr icon);
   void HideUserPodCustomIcon(const AccountId& account_id);
   void SetAuthType(const AccountId& account_id,
                    proximity_auth::mojom::AuthType auth_type,

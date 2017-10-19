@@ -75,7 +75,7 @@ class ImageResource::ImageResourceInfoImpl final
   ImageResourceInfoImpl(ImageResource* resource) : resource_(resource) {
     DCHECK(resource_);
   }
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(resource_);
     ImageResourceInfo::Trace(visitor);
   }
@@ -240,7 +240,7 @@ ImageResource::~ImageResource() {
   RESOURCE_LOADING_DVLOG(1) << "~ImageResource " << this;
 }
 
-void ImageResource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageResource) {
   visitor->Trace(multipart_parser_);
   visitor->Trace(content_);
   Resource::Trace(visitor);
@@ -394,8 +394,7 @@ void ImageResource::NotifyStartLoad() {
   GetContent()->NotifyStartLoad();
 }
 
-void ImageResource::Finish(double load_finish_time,
-                           WebTaskRunner* task_runner) {
+void ImageResource::Finish(double load_finish_time) {
   if (multipart_parser_) {
     multipart_parser_->Finish();
     if (Data())
@@ -409,18 +408,17 @@ void ImageResource::Finish(double load_finish_time,
     // https://docs.google.com/document/d/1v0yTAZ6wkqX2U_M6BNIGUJpM1s0TIw1VsqpxoL7aciY/edit?usp=sharing
     ClearData();
   }
-  Resource::Finish(load_finish_time, task_runner);
+  Resource::Finish(load_finish_time);
 }
 
-void ImageResource::FinishAsError(const ResourceError& error,
-                                  WebTaskRunner* task_runner) {
+void ImageResource::FinishAsError(const ResourceError& error) {
   if (multipart_parser_)
     multipart_parser_->Cancel();
   // TODO(hiroshige): Move setEncodedSize() call to Resource::error() if it
   // is really needed, or remove it otherwise.
   SetEncodedSize(0);
   is_during_finish_as_error_ = true;
-  Resource::FinishAsError(error, task_runner);
+  Resource::FinishAsError(error);
   is_during_finish_as_error_ = false;
   UpdateImage(nullptr, ImageResourceContent::kClearImageAndNotifyObservers,
               true);

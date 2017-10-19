@@ -100,7 +100,7 @@ class DummyClient final : public GarbageCollectedFinalized<DummyClient>,
     return number_of_redirects_received_;
   }
   const Vector<char>& Data() { return data_; }
-  void Trace(blink::Visitor* visitor) { RawResourceClient::Trace(visitor); }
+  DEFINE_INLINE_TRACE() { RawResourceClient::Trace(visitor); }
 
  private:
   bool called_;
@@ -136,7 +136,7 @@ class AddingClient final : public GarbageCollectedFinalized<AddingClient>,
 
   void RemoveClient() { resource_->RemoveClient(dummy_client_); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(dummy_client_);
     visitor->Trace(resource_);
     RawResourceClient::Trace(visitor);
@@ -152,9 +152,9 @@ TEST_F(RawResourceTest, AddClientDuringCallback) {
 
   // Create a non-null response.
   ResourceResponse response = raw->GetResponse();
-  response.SetURL(KURL("http://600.613/"));
+  response.SetURL(KURL(kParsedURLString, "http://600.613/"));
   raw->SetResponse(response);
-  raw->FinishForTest();
+  raw->Finish();
   EXPECT_FALSE(raw->GetResponse().IsNull());
 
   Persistent<DummyClient> dummy_client = new DummyClient();
@@ -183,7 +183,7 @@ class RemovingClient : public GarbageCollectedFinalized<RemovingClient>,
     resource->RemoveClient(this);
   }
   String DebugName() const override { return "RemovingClient"; }
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(dummy_client_);
     RawResourceClient::Trace(visitor);
   }
@@ -197,9 +197,9 @@ TEST_F(RawResourceTest, RemoveClientDuringCallback) {
 
   // Create a non-null response.
   ResourceResponse response = raw->GetResponse();
-  response.SetURL(KURL("http://600.613/"));
+  response.SetURL(KURL(kParsedURLString, "http://600.613/"));
   raw->SetResponse(response);
-  raw->FinishForTest();
+  raw->Finish();
   EXPECT_FALSE(raw->GetResponse().IsNull());
 
   Persistent<DummyClient> dummy_client = new DummyClient();

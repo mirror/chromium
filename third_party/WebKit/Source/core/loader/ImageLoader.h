@@ -52,7 +52,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   explicit ImageLoader(Element*);
   ~ImageLoader() override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   enum UpdateFromElementBehavior {
     // This should be the update behavior when the element is attached to a
@@ -85,7 +85,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   Element* GetElement() const { return element_; }
   bool ImageComplete() const { return image_complete_ && !pending_task_; }
 
-  ImageResourceContent* GetContent() const { return image_content_.Get(); }
+  ImageResourceContent* GetImage() const { return image_.Get(); }
 
   // Cancels pending load events, and doesn't dispatch new ones.
   // Note: ClearImage/SetImage.*() are not a simple setter.
@@ -100,8 +100,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   //   |image_resource_for_image_document_| points to a ImageResource that is
   //   not associated with a ResourceLoader.
   //   The corresponding ImageDocument is responsible for supplying the response
-  //   and data to |image_resource_for_image_document_| and thus
-  //   |image_content_|.
+  //   and data to |image_resource_for_image_document_| and thus |image_|.
   // Otherwise:
   //   Normal loading via ResourceFetcher/ResourceLoader.
   //   |image_resource_for_image_document_| is null.
@@ -178,7 +177,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   void DecodeRequestFinished(uint64_t request_id, bool success);
 
   Member<Element> element_;
-  Member<ImageResourceContent> image_content_;
+  Member<ImageResourceContent> image_;
   Member<ImageResource> image_resource_for_image_document_;
 
   AtomicString failed_load_url_;
@@ -236,7 +235,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
     DecodeRequest(DecodeRequest&&) = default;
     ~DecodeRequest() = default;
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
 
     DecodeRequest& operator=(DecodeRequest&&) = default;
 

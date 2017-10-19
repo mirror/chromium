@@ -52,40 +52,25 @@ Polymer({
   /** @private {?Function} */
   boundPointerMove_: null,
 
-  /**
-   * Number of pixels required to move to consider the pointermove event as
-   * intentional.
-   * @type {number}
-   */
-  MOVE_THRESHOLD_PX: 5,
-
-  /**
-   * Whether the state of the toggle has already taken into account by
-   * |pointeremove| handlers. Used in the 'tap' handler.
-   * @private {boolean}
-   */
-  handledInPointerMove_: false,
-
-  /** @private {number} */
-  lastPointerUpTime_: 0,
+  /** @private {boolean} */
+  pointerMoveFired_: false,
 
   /** @override */
   attached: function() {
-    let direction = getComputedStyle(this).direction == 'rtl' ? -1 : 1;
+    // Note: Doing the same in ready instead of attached produces incorrect
+    // transient values for RTL.
+    var direction = getComputedStyle(this).direction == 'rtl' ? -1 : 1;
 
     this.boundPointerMove_ = (e) => {
       // Prevent unwanted text selection to occur while moving the pointer, this
       // is important.
       e.preventDefault();
+      this.pointerMoveFired_ = true;
 
-      let diff = e.clientX - this.pointerDownX_;
-      if (Math.abs(diff) < this.MOVE_THRESHOLD_PX)
-        return;
-
-      this.handledInPointerMove_ = true;
-
-      let shouldToggle = (diff * direction < 0 && this.checked) ||
-          (diff * direction > 0 && !this.checked);
+      var diff = e.clientX - this.pointerDownX_;
+      var shouldToggle = Math.abs(diff) > 4 &&
+          ((diff * direction < 0 && this.checked) ||
+           (diff * direction > 0 && !this.checked));
       if (shouldToggle)
         this.toggleState_(false);
     };
@@ -116,8 +101,7 @@ Polymer({
   },
 
   /** @private */
-  onPointerUp_: function(e) {
-    this.lastPointerUpTime_ = e.timeStamp;
+  onPointerUp_: function() {
     this.removeEventListener('pointermove', this.boundPointerMove_);
   },
 
@@ -130,43 +114,25 @@ Polymer({
     if (e.button != 0)
       return;
 
-    // This is necessary to have follow up pointer events fire on |this|, even
+    // This is necessary to have follow up events fire on |this|, even
     // if they occur outside of its bounds.
     this.setPointerCapture(e.pointerId);
     this.pointerDownX_ = e.clientX;
-    this.handledInPointerMove_ = false;
+    this.pointerMoveFired_ = false;
     this.addEventListener('pointermove', this.boundPointerMove_);
   },
 
   /** @private */
-  onTap_: function(e) {
-    // Prevent |tap| event from bubbling. It can cause parents of this elements
-    // to erroneously re-toggle this control.
-    e.stopPropagation();
-
-    // User gesture has already been taken care of inside |pointermove|
-    // handlers, Do nothing here.
-    if (this.handledInPointerMove_)
+  onTap_: function() {
+    // If pointermove fired it means that user tried to drag the toggle button,
+    // and therefore its state has already been handled within the pointermove
+    // handler. Do nothing here.
+    if (this.pointerMoveFired_)
       return;
 
     // If no pointermove event fired, then user just tapped on the
     // toggle button and therefore it should be toggled.
     this.toggleState_(false);
-  },
-
-  /**
-   * Whether the host of this element should handle a 'tap' event it received,
-   * to be used when tapping on the parent is supposed to toggle the cr-toggle.
-   *
-   * This is necessary to avoid a corner case when pointerdown is initiated
-   * in cr-toggle, but pointerup happens outside the bounds of cr-toggle, which
-   * ends up firing a 'tap' event on the parent (see context at crbug.com/689158
-   * and crbug.com/768555).
-   * @param {!Event} e
-   * @return {boolean}
-   */
-  shouldIgnoreHostTap: function(e) {
-    return e.detail.sourceEvent.timeStamp == this.lastPointerUpTime_;
   },
 
   /**
@@ -196,7 +162,7 @@ Polymer({
   // customize the element's ripple
   _createRipple: function() {
     this._rippleContainer = this.$.button;
-    let ripple = Polymer.PaperRippleBehavior._createRipple();
+    var ripple = Polymer.PaperRippleBehavior._createRipple();
     ripple.id = 'ink';
     ripple.setAttribute('recenters', '');
     ripple.classList.add('circle', 'toggle-ink');

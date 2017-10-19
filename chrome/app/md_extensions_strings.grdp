@@ -7,9 +7,6 @@
   <message name="IDS_MD_EXTENSIONS_DISABLED_UPDATE_REQUIRED_BY_POLICY" desc="Text shown in the extensions settings for extensions disabled due to minimum version requirement from enterprise policy">
     This extension is outdated and disabled by enterprise policy. It might become enabled automatically when a newer version is available.
   </message>
-  <message name="IDS_MD_EXTENSIONS_MENU_BUTTON_LABEL" desc="Tooltips for the sidebar menu button.">
-    Main menu
-  </message>
   <message name="IDS_MD_EXTENSIONS_ERROR_PAGE_HEADING" desc="The heading of the page displaying an extension's errors.">
     Errors
   </message>
@@ -22,9 +19,6 @@
   <message name="IDS_MD_EXTENSIONS_ERROR_STACK_TRACE" desc="The label for the stack trace of an extension's error.">
     Stack Trace
   </message>
-  <message name="IDS_MD_EXTENSIONS_LEARN_MORE" desc="Learn more text">
-    Learn more
-  </message>
   <message name="IDS_MD_EXTENSIONS_ITEM_ERRORS" desc="The label of the button to bring the user to the page showing an extension's errors.">
     Errors
   </message>
@@ -35,7 +29,7 @@
     &lt;span&gt;ID:&lt;/span&gt;<ph name="EXTENSION_ID">$1<ex>cfhdojbkjhnklbpkdaibdccddilifddb</ex></ph>
   </message>
   <message name="IDS_MD_EXTENSIONS_ITEM_INSPECT_VIEWS" desc="The text next to any inspectable views for an extension.">
-    Inspect views
+    Inspect views:
   </message>
   <message name="IDS_MD_EXTENSIONS_ITEM_INSPECT_VIEWS_EXTRA" desc="The text to indicate there are additional inspectable views that aren't listed.">
     <ph name="NUMBER_OF_VIEWS">$1<ex>2</ex></ph> more...
@@ -149,7 +143,7 @@
     Cancel
   </message>
   <message name="IDS_MD_EXTENSIONS_TOOLBAR_TITLE" desc="The text displayed in the toolbar of the chrome://extensions page.">
-    Extensions
+    Extensions &amp; Apps
   </message>
   <message name="IDS_MD_EXTENSIONS_SEARCH" desc="The text displayed in the search box on the chrome://extensions page.">
     Search extensions
@@ -163,7 +157,7 @@
   <message name="IDS_MD_EXTENSIONS_SHORTCUT_SCOPE_GLOBAL" desc="The label to indicate that a shortcut will be triggerable globally (including outside of the Chrome application).">
     Global
   </message>
-  <message name="IDS_MD_EXTENSIONS_APPS_TITLE" desc="The text displayed in the sidebar to go to the apps section of the page.">
+  <message name="IDS_MD_EXTENSIONS_SIDEBAR_APPS" desc="The text displayed in the sidebar to go to the apps section of the page.">
     Chrome Apps
   </message>
   <message name="IDS_MD_EXTENSIONS_SIDEBAR_EXTENSIONS" desc="The text displayed in the sidebar to go to the extensions section of the page.">

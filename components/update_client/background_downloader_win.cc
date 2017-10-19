@@ -35,8 +35,8 @@
 #include "components/update_client/utils.h"
 #include "url/gurl.h"
 
-using Microsoft::WRL::ComPtr;
 using base::win::ScopedCoMem;
+using Microsoft::WRL::ComPtr;
 
 // The class BackgroundDownloader in this module is an adapter between
 // the CrxDownloader interface and the BITS service interfaces.
@@ -684,21 +684,19 @@ HRESULT BackgroundDownloader::QueueBitsJob(const GURL& url,
                                            ComPtr<IBackgroundCopyJob>* job) {
   DCHECK(com_task_runner_->RunsTasksInCurrentSequence());
 
-  size_t num_jobs = std::numeric_limits<size_t>::max();
-  HRESULT hr = GetBackgroundDownloaderJobCount(&num_jobs);
-
-  // The metric records a large number if the job count can't be read.
+  size_t num_jobs = 0;
+  GetBackgroundDownloaderJobCount(&num_jobs);
   UMA_HISTOGRAM_COUNTS_100("UpdateClient.BackgroundDownloaderJobs", num_jobs);
 
   // Remove some old jobs from the BITS queue before creating new jobs.
   CleanupStaleJobs();
 
-  if (FAILED(hr) || num_jobs >= kMaxQueuedJobs)
+  if (num_jobs >= kMaxQueuedJobs)
     return MAKE_HRESULT(SEVERITY_ERROR, FACILITY_ITF,
                         CrxDownloaderError::BITS_TOO_MANY_JOBS);
 
   ComPtr<IBackgroundCopyJob> local_job;
-  hr = CreateOrOpenJob(url, &local_job);
+  HRESULT hr = CreateOrOpenJob(url, &local_job);
   if (FAILED(hr)) {
     CleanupJob(local_job);
     return hr;

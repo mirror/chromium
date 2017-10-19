@@ -48,7 +48,7 @@ FileWriterSync* FileEntrySync::createWriter(ExceptionState& exception_state) {
   return filesystem()->CreateWriter(this, exception_state);
 }
 
-void FileEntrySync::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FileEntrySync) {
   EntrySync::Trace(visitor);
 }
 

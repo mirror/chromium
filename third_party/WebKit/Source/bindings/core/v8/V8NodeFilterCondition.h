@@ -58,7 +58,7 @@ class V8NodeFilterCondition final
   }
 
   ~V8NodeFilterCondition();
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   DECLARE_TRACE_WRAPPERS();
 
   unsigned acceptNode(Node*, ExceptionState&) const;

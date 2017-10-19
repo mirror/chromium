@@ -86,7 +86,8 @@ public class AutoplayMutedNotificationTest {
 
     @Before
     public void setUp() throws Exception {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mAudioFocusChangeListener = new MockAudioFocusChangeListener();
         mActivityTestRule.startMainActivityWithURL(mTestServer.getURL(TEST_PATH));
     }

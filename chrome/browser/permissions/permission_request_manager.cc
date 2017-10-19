@@ -11,10 +11,8 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "build/build_config.h"
-#include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
-#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
@@ -33,9 +31,7 @@ class CancelledRequest : public PermissionRequest {
 #endif
         message_fragment_(cancelled->GetMessageTextFragment()),
         origin_(cancelled->GetOrigin()),
-        request_type_(cancelled->GetPermissionRequestType()),
-        gesture_type_(cancelled->GetGestureType()),
-        content_settings_type_(cancelled->GetContentSettingsType()) {
+        request_type_(cancelled->GetPermissionRequestType()) {
   }
   ~CancelledRequest() override {}
 
@@ -59,14 +55,6 @@ class CancelledRequest : public PermissionRequest {
     return request_type_;
   }
 
-  PermissionRequestGestureType GetGestureType() const override {
-    return gesture_type_;
-  }
-
-  ContentSettingsType GetContentSettingsType() const override {
-    return content_settings_type_;
-  }
-
  private:
   IconId icon_;
 #if defined(OS_ANDROID)
@@ -75,8 +63,6 @@ class CancelledRequest : public PermissionRequest {
   base::string16 message_fragment_;
   GURL origin_;
   PermissionRequestType request_type_;
-  PermissionRequestGestureType gesture_type_;
-  ContentSettingsType content_settings_type_;
 };
 
 bool IsMessageTextEqual(PermissionRequest* a,
@@ -310,7 +296,7 @@ void PermissionRequestManager::WasShown() {
 #if defined(OS_ANDROID)
     DCHECK(view_);
 #else
-    ShowBubble(/*is_reshow=*/true);
+    ShowBubble();
 #endif
   }
 }
@@ -404,18 +390,17 @@ void PermissionRequestManager::DequeueRequestsAndShowBubble() {
     queued_requests_.pop_front();
   }
 
-  ShowBubble(/*is_reshow=*/false);
+  ShowBubble();
 }
 
-void PermissionRequestManager::ShowBubble(bool is_reshow) {
+void PermissionRequestManager::ShowBubble() {
   DCHECK(!view_);
   DCHECK(!requests_.empty());
   DCHECK(main_frame_has_fully_loaded_);
   DCHECK(tab_is_visible_);
 
   view_ = view_factory_.Run(web_contents(), this);
-  if (!is_reshow)
-    PermissionUmaUtil::PermissionPromptShown(requests_);
+  PermissionUmaUtil::PermissionPromptShown(requests_);
   NotifyBubbleAdded();
 
   // If in testing mode, automatically respond to the bubble that was shown.
@@ -437,29 +422,6 @@ void PermissionRequestManager::FinalizeBubble(
 
   PermissionUmaUtil::PermissionPromptResolved(requests_, web_contents(),
                                               permission_action);
-
-  if (permission_action == PermissionAction::IGNORED) {
-    Profile* profile =
-        Profile::FromBrowserContext(web_contents()->GetBrowserContext());
-    PermissionDecisionAutoBlocker* autoblocker =
-        PermissionDecisionAutoBlocker::GetForProfile(profile);
-
-    for (PermissionRequest* request : requests_) {
-      // TODO(timloh): We only support ignore embargo for permissions which use
-      // PermissionRequestImpl as the other subclasses don't support
-      // GetContentSettingsType.
-      if (request->GetContentSettingsType() == CONTENT_SETTINGS_TYPE_DEFAULT)
-        continue;
-
-      PermissionEmbargoStatus embargo_status =
-          PermissionEmbargoStatus::NOT_EMBARGOED;
-      if (autoblocker->RecordIgnoreAndEmbargo(
-              request->GetOrigin(), request->GetContentSettingsType())) {
-        embargo_status = PermissionEmbargoStatus::REPEATED_IGNORES;
-      }
-      PermissionUmaUtil::RecordEmbargoStatus(embargo_status);
-    }
-  }
 
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();

@@ -159,9 +159,9 @@ void ImageLoader::Dispose() {
       << "; has pending load event=" << pending_load_event_.IsActive()
       << ", has pending error event=" << pending_error_event_.IsActive();
 
-  if (image_content_) {
-    image_content_->RemoveObserver(this);
-    image_content_ = nullptr;
+  if (image_) {
+    image_->RemoveObserver(this);
+    image_ = nullptr;
     image_resource_for_image_document_ = nullptr;
     delay_until_image_notify_finished_ = nullptr;
   }
@@ -177,7 +177,7 @@ void ImageLoader::DispatchDecodeRequestsIfComplete() {
   // If any of the following conditions hold, we either have an inactive
   // document or a broken/non-existent image. In those cases, we reject any
   // pending decodes.
-  if (!is_active || !GetContent() || GetContent()->ErrorOccurred()) {
+  if (!is_active || !GetImage() || GetImage()->ErrorOccurred()) {
     RejectPendingDecodes();
     return;
   }
@@ -189,7 +189,7 @@ void ImageLoader::DispatchDecodeRequestsIfComplete() {
     // is if we're in kPendingLoad state.
     if (request->state() != DecodeRequest::kPendingLoad)
       continue;
-    Image* image = GetContent()->GetImage();
+    Image* image = GetImage()->GetImage();
     frame->GetChromeClient().RequestDecode(
         frame, image->PaintImageForCurrentFrame(),
         WTF::Bind(&ImageLoader::DecodeRequestFinished, WrapWeakPersistent(this),
@@ -236,8 +236,8 @@ void ImageLoader::RejectPendingDecodes(UpdateType update_type) {
   }
 }
 
-void ImageLoader::Trace(blink::Visitor* visitor) {
-  visitor->Trace(image_content_);
+DEFINE_TRACE(ImageLoader) {
+  visitor->Trace(image_);
   visitor->Trace(image_resource_for_image_document_);
   visitor->Trace(element_);
   visitor->Trace(decode_requests_);
@@ -267,20 +267,20 @@ void ImageLoader::SetImageForImageDocument(ImageResource* new_image_resource) {
 }
 
 void ImageLoader::SetImageWithoutConsideringPendingLoadEvent(
-    ImageResourceContent* new_image_content) {
+    ImageResourceContent* new_image) {
   DCHECK(failed_load_url_.IsEmpty());
-  ImageResourceContent* old_image_content = image_content_.Get();
-  if (new_image_content != old_image_content) {
+  ImageResourceContent* old_image = image_.Get();
+  if (new_image != old_image) {
     if (pending_load_event_.IsActive())
       pending_load_event_.Cancel();
     if (pending_error_event_.IsActive())
       pending_error_event_.Cancel();
-    UpdateImageState(new_image_content);
-    if (new_image_content) {
-      new_image_content->AddObserver(this);
+    UpdateImageState(new_image);
+    if (new_image) {
+      new_image->AddObserver(this);
     }
-    if (old_image_content) {
-      old_image_content->RemoveObserver(this);
+    if (old_image) {
+      old_image->RemoveObserver(this);
     }
   }
 
@@ -347,9 +347,9 @@ inline void ImageLoader::EnqueueImageLoadingMicroTask(
       IncrementLoadEventDelayCount::Create(element_->GetDocument());
 }
 
-void ImageLoader::UpdateImageState(ImageResourceContent* new_image_content) {
-  image_content_ = new_image_content;
-  if (!new_image_content) {
+void ImageLoader::UpdateImageState(ImageResourceContent* new_image) {
+  image_ = new_image;
+  if (!new_image) {
     image_resource_for_image_document_ = nullptr;
     image_complete_ = true;
   } else {
@@ -381,7 +381,7 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     return;
 
   AtomicString image_source_url = element_->ImageSourceURL();
-  ImageResourceContent* new_image_content = nullptr;
+  ImageResourceContent* new_image = nullptr;
   if (!url.IsNull() && !url.IsEmpty()) {
     // Unlike raw <img>, we block mixed content inside of <picture> or
     // <img srcset>.
@@ -409,9 +409,9 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     if (update_behavior != kUpdateForcedReload && document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
-    new_image_content = ImageResourceContent::Fetch(params, document.Fetcher());
+    new_image = ImageResourceContent::Fetch(params, document.Fetcher());
 
-    if (!new_image_content && !PageIsBeingDismissed(&document)) {
+    if (!new_image && !PageIsBeingDismissed(&document)) {
       CrossSiteOrCSPViolationOccurred(image_source_url);
       DispatchErrorEvent();
     } else {
@@ -425,13 +425,12 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     NoImageResourceToLoad();
   }
 
-  ImageResourceContent* old_image_content = image_content_.Get();
-  if (old_image_content != new_image_content)
+  ImageResourceContent* old_image = image_.Get();
+  if (old_image != new_image)
     RejectPendingDecodes(update_type);
 
   if (update_behavior == kUpdateSizeChanged && element_->GetLayoutObject() &&
-      element_->GetLayoutObject()->IsImage() &&
-      new_image_content == old_image_content) {
+      element_->GetLayoutObject()->IsImage() && new_image == old_image) {
     ToLayoutImage(element_->GetLayoutObject())->IntrinsicSizeChanged();
   } else {
     if (pending_load_event_.IsActive())
@@ -443,20 +442,20 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     // posted by this load and we should not cancel the event.
     // FIXME: If both previous load and this one got blocked with an error, we
     // can receive one error event instead of two.
-    if (pending_error_event_.IsActive() && new_image_content)
+    if (pending_error_event_.IsActive() && new_image)
       pending_error_event_.Cancel();
 
-    UpdateImageState(new_image_content);
+    UpdateImageState(new_image);
 
     UpdateLayoutObject();
     // If newImage exists and is cached, addObserver() will result in the load
     // event being queued to fire. Ensure this happens after beforeload is
     // dispatched.
-    if (new_image_content) {
-      new_image_content->AddObserver(this);
+    if (new_image) {
+      new_image->AddObserver(this);
     }
-    if (old_image_content) {
-      old_image_content->RemoveObserver(this);
+    if (old_image) {
+      old_image->RemoveObserver(this);
     }
   }
 
@@ -487,7 +486,7 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   // Prevent the creation of a ResourceLoader (and therefore a network request)
   // for ImageDocument loads. In this case, the image contents have already been
   // requested as a main resource and ImageDocumentParser will take care of
-  // funneling the main resource bytes into |image_content_|, so just create an
+  // funneling the main resource bytes into image_, so just create an
   // ImageResource to be populated later.
   if (loading_image_document_) {
     ResourceRequest request(ImageSourceToKURL(element_->ImageSourceURL()));
@@ -504,9 +503,6 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   if (pending_task_) {
     pending_task_->ClearLoader();
     pending_task_.reset();
-    // Here we need to clear delay_until_do_update_from_element to avoid causing
-    // a memory leak in case it's already created.
-    delay_until_do_update_from_element_ = nullptr;
   }
 
   KURL url = ImageSourceToKURL(image_source_url);
@@ -518,11 +514,11 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   // Allow the idiom "img.src=''; img.src='.." to clear down the image before an
   // asynchronous load completes.
   if (image_source_url.IsEmpty()) {
-    ImageResourceContent* image = image_content_.Get();
+    ImageResourceContent* image = image_.Get();
     if (image) {
       image->RemoveObserver(this);
     }
-    image_content_ = nullptr;
+    image_ = nullptr;
     image_resource_for_image_document_ = nullptr;
     delay_until_image_notify_finished_ = nullptr;
   }
@@ -568,7 +564,7 @@ bool ImageLoader::ShouldLoadImmediately(const KURL& url) const {
 }
 
 void ImageLoader::ImageChanged(ImageResourceContent* content, const IntRect*) {
-  DCHECK_EQ(content, image_content_.Get());
+  DCHECK_EQ(content, image_.Get());
   if (image_complete_ || !content->IsLoading() ||
       delay_until_image_notify_finished_)
     return;
@@ -587,17 +583,7 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
       << "; has pending load event=" << pending_load_event_.IsActive();
 
   DCHECK(failed_load_url_.IsEmpty());
-  DCHECK_EQ(resource, image_content_.Get());
-
-  if (image_content_ && image_content_->GetImage()) {
-    if (IsHTMLImageElement(element_)) {
-      Image::RecordCheckerableImageUMA(*image_content_->GetImage(),
-                                       Image::ImageType::kImg);
-    } else if (IsSVGImageElement(element_)) {
-      Image::RecordCheckerableImageUMA(*image_content_->GetImage(),
-                                       Image::ImageType::kSvg);
-    }
-  }
+  DCHECK_EQ(resource, image_.Get());
 
   // |image_complete_| is always true for entire ImageDocument loading for
   // historical reason.
@@ -612,22 +598,21 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
   image_complete_ = true;
   delay_until_image_notify_finished_ = nullptr;
 
-  // Update ImageAnimationPolicy for image_content_.
-  if (image_content_)
-    image_content_->UpdateImageAnimationPolicy();
+  // Update ImageAnimationPolicy for image_.
+  if (image_)
+    image_->UpdateImageAnimationPolicy();
 
   UpdateLayoutObject();
 
-  if (image_content_ && image_content_->GetImage() &&
-      image_content_->GetImage()->IsSVGImage()) {
+  if (image_ && image_->GetImage() && image_->GetImage()->IsSVGImage()) {
     // SVG's document should be completely loaded before access control
     // checks, which can occur anytime after ImageNotifyFinished()
     // (See SVGImage::CurrentFrameHasSingleSecurityOrigin()).
     // We check the document is loaded here to catch violation of the
     // assumption reliably.
-    ToSVGImage(image_content_->GetImage())->CheckLoaded();
+    ToSVGImage(image_->GetImage())->CheckLoaded();
 
-    ToSVGImage(image_content_->GetImage())
+    ToSVGImage(image_->GetImage())
         ->UpdateUseCounters(GetElement()->GetDocument());
   }
 
@@ -670,7 +655,7 @@ LayoutImageResource* ImageLoader::GetLayoutImageResource() {
   LayoutObject* layout_object = element_->GetLayoutObject();
 
   if (!layout_object)
-    return nullptr;
+    return 0;
 
   // We don't return style generated image because it doesn't belong to the
   // ImageLoader. See <https://bugs.webkit.org/show_bug.cgi?id=42840>
@@ -684,7 +669,7 @@ LayoutImageResource* ImageLoader::GetLayoutImageResource() {
   if (layout_object->IsVideo())
     return ToLayoutVideo(layout_object)->ImageResource();
 
-  return nullptr;
+  return 0;
 }
 
 void ImageLoader::UpdateLayoutObject() {
@@ -696,15 +681,14 @@ void ImageLoader::UpdateLayoutObject() {
   // Only update the layoutObject if it doesn't have an image or if what we have
   // is a complete image.  This prevents flickering in the case where a dynamic
   // change is happening between two images.
-  ImageResourceContent* cached_image_content = image_resource->CachedImage();
-  if (image_content_ != cached_image_content &&
-      (image_complete_ || !cached_image_content))
-    image_resource->SetImageResource(image_content_.Get());
+  ImageResourceContent* cached_image = image_resource->CachedImage();
+  if (image_ != cached_image && (image_complete_ || !cached_image))
+    image_resource->SetImageResource(image_.Get());
 }
 
 bool ImageLoader::HasPendingEvent() const {
   // Regular image loading is in progress.
-  if (image_content_ && !image_complete_ && !loading_image_document_)
+  if (image_ && !image_complete_ && !loading_image_document_)
     return true;
 
   if (pending_load_event_.IsActive() || pending_error_event_.IsActive())
@@ -715,7 +699,7 @@ bool ImageLoader::HasPendingEvent() const {
 
 void ImageLoader::DispatchPendingLoadEvent(
     std::unique_ptr<IncrementLoadEventDelayCount> count) {
-  if (!image_content_)
+  if (!image_)
     return;
   CHECK(image_complete_);
   if (GetElement()->GetDocument().GetFrame())
@@ -813,7 +797,7 @@ void ImageLoader::DecodeRequest::NotifyDecodeDispatched() {
   state_ = kDispatched;
 }
 
-void ImageLoader::DecodeRequest::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageLoader::DecodeRequest) {
   visitor->Trace(resolver_);
   visitor->Trace(loader_);
 }

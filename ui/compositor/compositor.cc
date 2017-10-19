@@ -208,7 +208,7 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   host_->SetVisible(true);
 
   if (command_line->HasSwitch(switches::kUISlowAnimations)) {
-    slow_animations_ = std::make_unique<ScopedAnimationDurationScaleMode>(
+    slow_animations_ = base::MakeUnique<ScopedAnimationDurationScaleMode>(
         ScopedAnimationDurationScaleMode::SLOW_DURATION);
   }
 }
@@ -254,7 +254,6 @@ void Compositor::AddFrameSink(const viz::FrameSinkId& frame_sink_id) {
     return;
   context_factory_private_->GetHostFrameSinkManager()
       ->RegisterFrameSinkHierarchy(frame_sink_id_, frame_sink_id);
-
   child_frame_sinks_.insert(frame_sink_id);
 }
 
@@ -285,11 +284,6 @@ void Compositor::SetLayerTreeFrameSink(
     context_factory_private_->SetDisplayColorSpace(this, blending_color_space_,
                                                    output_color_space_);
   }
-}
-
-void Compositor::OnChildResizing() {
-  for (auto& observer : observer_list_)
-    observer.OnCompositingChildResizing(this);
 }
 
 void Compositor::ScheduleDraw() {
@@ -597,7 +591,7 @@ std::unique_ptr<CompositorLock> Compositor::GetCompositorLock(
   // This uses the main WeakPtrFactory to break the connection from the lock to
   // the Compositor when the Compositor is destroyed.
   auto lock =
-      std::make_unique<CompositorLock>(client, weak_ptr_factory_.GetWeakPtr());
+      base::MakeUnique<CompositorLock>(client, weak_ptr_factory_.GetWeakPtr());
   bool was_empty = active_locks_.empty();
   active_locks_.push_back(lock.get());
 

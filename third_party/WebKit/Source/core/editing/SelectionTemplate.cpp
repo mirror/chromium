@@ -51,7 +51,7 @@ bool SelectionTemplate<Strategy>::operator!=(
 }
 
 template <typename Strategy>
-void SelectionTemplate<Strategy>::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SelectionTemplate<Strategy>) {
   visitor->Trace(base_);
   visitor->Trace(extent_);
 }
@@ -430,8 +430,7 @@ SelectionInFlatTree ConvertToSelectionInFlatTree(
 }
 
 template <typename Strategy>
-void SelectionTemplate<Strategy>::InvalidSelectionResetter::Trace(
-    blink::Visitor* visitor) {
+DEFINE_TRACE(SelectionTemplate<Strategy>::InvalidSelectionResetter) {
   visitor->Trace(document_);
 }
 

@@ -102,12 +102,8 @@ void MockUploader::UploadReport(const std::string& report_json,
   callback_.Run(report_json, max_upload_depth, upload_url, callback);
 }
 
-void MockUploader::SetDiscardUploads(bool discard_uploads) {
+void MockUploader::set_discard_uploads(bool discard_uploads) {
   discard_uploads_ = discard_uploads;
-}
-
-int MockUploader::GetDiscardedUploadCount() const {
-  return 0;
 }
 
 MockTime::MockTime()

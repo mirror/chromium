@@ -28,7 +28,7 @@ class VRPose final : public GarbageCollected<VRPose>, public ScriptWrappable {
 
   void SetPose(const device::mojom::blink::VRPosePtr&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   VRPose();

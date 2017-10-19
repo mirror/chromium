@@ -42,7 +42,7 @@
 #include "ui/views/views_export.h"
 
 #if defined(OS_WIN)
-#include <wrl/client.h>
+#include "base/win/scoped_comptr.h"
 #endif
 
 using ui::OSExchangeData;
@@ -1385,8 +1385,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   friend class internal::ScopedChildrenLock;
   friend class FocusManager;
   friend class ViewLayerTest;
-  friend class ViewLayerPixelCanvasTest;
   friend class Widget;
+
   FRIEND_TEST_ALL_PREFIXES(ViewTest, PaintWithMovedViewUsesCache);
   FRIEND_TEST_ALL_PREFIXES(ViewTest, PaintWithMovedViewUsesCacheInRTL);
   FRIEND_TEST_ALL_PREFIXES(ViewTest, PaintWithUnknownInvalidation);
@@ -1413,6 +1413,10 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // check ancestors recursively; rather, it's used to prune subtrees of views
   // during painting.
   bool ShouldPaint() const;
+
+  // Returns the bounds that should be used when constructing the |PaintInfo|
+  // for this view.
+  gfx::Rect GetPaintRecordingBounds() const;
 
   // Adjusts the transform of |recorder| in advance of painting.
   void SetupTransformRecorderForPainting(

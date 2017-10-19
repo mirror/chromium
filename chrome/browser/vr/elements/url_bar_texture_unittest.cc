@@ -152,9 +152,8 @@ class UrlEmphasisTest : public testing::Test {
   MockRenderText mock_;
 };
 
-#if !defined(OS_LINUX) && !defined(OS_WIN)
+#if !defined(OS_LINUX)
 // TODO(crbug/731894): This test does not work on Linux.
-// TODO(crbug/770893): This test does not work on Windows.
 TEST(UrlBarTextureTest, WillNotFailOnNonAsciiURLs) {
   TestUrlBarTexture texture;
   EXPECT_EQ(3lu, texture.GetNumberOfFontFallbacksForURL(
@@ -269,9 +268,29 @@ TEST(UrlBarTextureTest, MaliciousRTLIsRenderedLTR) {
   }
 }
 
+TEST(UrlBarTexture, ElisionIsAnUnsupportedMode) {
+  TestUrlBarTexture texture;
+  texture.DrawURL(GURL(
+      "https://"
+      "thereisnopossiblewaythatthishostnamecouldbecontainedinthelimitedspacetha"
+      "tweareaffordedtousitsreallynotsomethingweshouldconsiderorplanfororpinour"
+      "hopesonlestwegetdisappointedor.sad.com"));
+  EXPECT_EQ(UiUnsupportedMode::kCouldNotElideURL, texture.unsupported_mode());
+}
+
 TEST(UrlBarTexture, ShortURLAreIndeedSupported) {
   TestUrlBarTexture texture;
   texture.DrawURL(GURL("https://short.com/"));
+  EXPECT_EQ(UiUnsupportedMode::kCount, texture.unsupported_mode());
+}
+
+TEST(UrlBarTexture, LongPathsDoNotRequireElisionAndAreSupported) {
+  TestUrlBarTexture texture;
+  texture.DrawURL(GURL(
+      "https://something.com/"
+      "thereisnopossiblewaythatthishostnamecouldbecontainedinthelimitedspacetha"
+      "tweareaffordedtousitsreallynotsomethingweshouldconsiderorplanfororpinour"
+      "hopesonlestwegetdisappointedorsad.com"));
   EXPECT_EQ(UiUnsupportedMode::kCount, texture.unsupported_mode());
 }
 

@@ -6,8 +6,8 @@
 
 #include <memory>
 #include "core/html/HTMLCanvasElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/graphics/CanvasColorParams.h"
@@ -428,9 +428,13 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   sk_sp<SkImage> sk_image = image_->PaintImageForCurrentFrame().GetSkImage();
   SkPixmap pixmap;
   if (!sk_image->isTextureBacked() && !sk_image->peekPixels(&pixmap)) {
-    sk_sp<SkColorSpace> dst_color_space =
-        parsed_options.color_params.GetSkColorSpace();
-    SkColorType dst_color_type = parsed_options.color_params.GetSkColorType();
+    sk_sp<SkColorSpace> dst_color_space = nullptr;
+    SkColorType dst_color_type = kN32_SkColorType;
+    if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() ||
+        !parsed_options.color_params.LinearPixelMath()) {
+      dst_color_space = parsed_options.color_params.GetSkColorSpace();
+      dst_color_type = parsed_options.color_params.GetSkColorType();
+    }
     SkImageInfo image_info =
         SkImageInfo::Make(sk_image->width(), sk_image->height(), dst_color_type,
                           kPremul_SkAlphaType, dst_color_space);
@@ -459,7 +463,7 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
 
   std::unique_ptr<ImageBuffer> buffer =
       ImageBuffer::Create(IntSize(video->videoWidth(), video->videoHeight()),
-                          kDoNotInitializeImagePixels);
+                          kNonOpaque, kDoNotInitializeImagePixels);
   if (!buffer)
     return;
 
@@ -957,6 +961,6 @@ FloatSize ImageBitmap::ElementSize(const FloatSize&) const {
   return FloatSize(width(), height());
 }
 
-void ImageBitmap::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(ImageBitmap) {}
 
 }  // namespace blink

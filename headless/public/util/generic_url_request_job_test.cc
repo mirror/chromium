@@ -28,7 +28,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using testing::NotNull;
 using testing::_;
 
 std::ostream& operator<<(std::ostream& os, const base::DictionaryValue& value) {
@@ -98,6 +97,9 @@ class MockFetcher : public URLFetcher {
 
     base::DictionaryValue* reply_dictionary;
     ASSERT_TRUE(fetch_reply->GetAsDictionary(&reply_dictionary));
+    std::string final_url;
+    ASSERT_TRUE(reply_dictionary->GetString("url", &final_url));
+    ASSERT_TRUE(reply_dictionary->GetString("data", &response_data_));
     base::DictionaryValue* reply_headers_dictionary;
     ASSERT_TRUE(
         reply_dictionary->GetDictionary("headers", &reply_headers_dictionary));
@@ -105,8 +107,10 @@ class MockFetcher : public URLFetcher {
         new net::HttpResponseHeaders(""));
     for (base::DictionaryValue::Iterator it(*reply_headers_dictionary);
          !it.IsAtEnd(); it.Advance()) {
-      response_headers->AddHeader(base::StringPrintf(
-          "%s: %s", it.key().c_str(), it.value().GetString().c_str()));
+      std::string value;
+      ASSERT_TRUE(it.value().GetAsString(&value));
+      response_headers->AddHeader(
+          base::StringPrintf("%s: %s", it.key().c_str(), value.c_str()));
     }
 
     // Set the fields needed for tracing, so that we can check
@@ -114,14 +118,9 @@ class MockFetcher : public URLFetcher {
     net::LoadTimingInfo load_timing_info;
     load_timing_info.send_start = base::TimeTicks::Max();
     load_timing_info.receive_headers_end = base::TimeTicks::Max();
-    const base::Value* final_url_value = reply_dictionary->FindKey("url");
-    ASSERT_THAT(final_url_value, NotNull());
-    const base::Value* response_data_value = reply_dictionary->FindKey("data");
-    ASSERT_THAT(response_data_value, NotNull());
-    response_data_ = response_data_value->GetString();
     result_listener->OnFetchComplete(
-        GURL(final_url_value->GetString()), std::move(response_headers),
-        response_data_.c_str(), response_data_.size(), load_timing_info);
+        GURL(final_url), std::move(response_headers), response_data_.c_str(),
+        response_data_.size(), load_timing_info);
   }
 
  private:

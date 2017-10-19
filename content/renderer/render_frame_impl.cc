@@ -62,7 +62,6 @@
 #include "content/common/edit_command.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
-#include "content/common/frame_policy.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/input_messages.h"
 #include "content/common/navigation_params.h"
@@ -130,6 +129,7 @@
 #include "content/renderer/mojo/blink_connector_js_wrapper.h"
 #include "content/renderer/mojo/blink_interface_registry_impl.h"
 #include "content/renderer/mojo/interface_provider_js_wrapper.h"
+#include "content/renderer/mojo_bindings_controller.h"
 #include "content/renderer/navigation_state_impl.h"
 #include "content/renderer/pepper/pepper_audio_controller.h"
 #include "content/renderer/pepper/plugin_instance_throttler_impl.h"
@@ -191,7 +191,6 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/public/web/WebColorSuggestion.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
-#include "third_party/WebKit/public/web/WebContextFeatures.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
@@ -1010,7 +1009,7 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
       // This conversion is a little sad, as this often comes from a
       // WebString...
       WebString::FromUTF8(replicated_state.name),
-      replicated_state.frame_policy.sandbox_flags);
+      replicated_state.sandbox_flags);
   render_frame->render_widget_ = RenderWidget::CreateForFrame(
       widget_routing_id, hidden, screen_info, compositor_deps, web_frame);
   // TODO(avi): This DCHECK is to track cleanup for https://crbug.com/545684
@@ -1064,11 +1063,10 @@ void RenderFrameImpl::CreateFrame(
         replicated_state.unique_name);
     web_frame = parent_web_frame->CreateLocalChild(
         replicated_state.scope, WebString::FromUTF8(replicated_state.name),
-        replicated_state.frame_policy.sandbox_flags, render_frame,
+        replicated_state.sandbox_flags, render_frame,
         render_frame->blink_interface_registry_.get(),
         previous_sibling_web_frame,
-        FeaturePolicyHeaderToWeb(
-            replicated_state.frame_policy.container_policy),
+        FeaturePolicyHeaderToWeb(replicated_state.container_policy),
         ConvertFrameOwnerPropertiesToWebFrameOwnerProperties(
             frame_owner_properties),
         ResolveOpener(opener_routing_id));
@@ -1093,9 +1091,8 @@ void RenderFrameImpl::CreateFrame(
     proxy->set_provisional_frame_routing_id(routing_id);
     web_frame = blink::WebLocalFrame::CreateProvisional(
         render_frame, render_frame->blink_interface_registry_.get(),
-        proxy->web_frame(), replicated_state.frame_policy.sandbox_flags,
-        FeaturePolicyHeaderToWeb(
-            replicated_state.frame_policy.container_policy));
+        proxy->web_frame(), replicated_state.sandbox_flags,
+        FeaturePolicyHeaderToWeb(replicated_state.container_policy));
   }
   CHECK(parent_routing_id != MSG_ROUTING_NONE || !web_frame->Parent());
 
@@ -2313,10 +2310,11 @@ void RenderFrameImpl::OnUpdateOpener(int opener_routing_id) {
   frame_->SetOpener(opener);
 }
 
-void RenderFrameImpl::OnDidUpdateFramePolicy(const FramePolicy& frame_policy) {
-  frame_->SetFrameOwnerPolicy(
-      frame_policy.sandbox_flags,
-      FeaturePolicyHeaderToWeb(frame_policy.container_policy));
+void RenderFrameImpl::OnDidUpdateFramePolicy(
+    blink::WebSandboxFlags flags,
+    const ParsedFeaturePolicyHeader& container_policy) {
+  frame_->SetFrameOwnerPolicy(flags,
+                              FeaturePolicyHeaderToWeb(container_policy));
 }
 
 void RenderFrameImpl::OnSetFrameOwnerProperties(
@@ -2932,6 +2930,8 @@ void RenderFrameImpl::AllowBindings(int32_t enabled_bindings_flags) {
 
   // Keep track of the total bindings accumulated in this process.
   RenderProcess::current()->AddBindings(enabled_bindings_flags);
+
+  MaybeEnableMojoBindings();
 }
 
 // mojom::HostZoom implementation ----------------------------------------------
@@ -3179,8 +3179,8 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // browsing context name, only unique name generation.
   params.frame_unique_name = unique_name_helper_.GenerateNameForNewChildFrame(
       params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name);
-  params.frame_policy = {sandbox_flags,
-                         FeaturePolicyHeaderFromWeb(container_policy)};
+  params.sandbox_flags = sandbox_flags;
+  params.container_policy = FeaturePolicyHeaderFromWeb(container_policy);
   params.frame_owner_properties =
       ConvertWebFrameOwnerPropertiesToFrameOwnerProperties(
           frame_owner_properties);
@@ -3319,8 +3319,8 @@ void RenderFrameImpl::DidChangeFramePolicy(
     blink::WebSandboxFlags flags,
     const blink::WebParsedFeaturePolicy& container_policy) {
   Send(new FrameHostMsg_DidChangeFramePolicy(
-      routing_id_, RenderFrame::GetRoutingIdForWebFrame(child_frame),
-      {flags, FeaturePolicyHeaderFromWeb(container_policy)}));
+      routing_id_, RenderFrame::GetRoutingIdForWebFrame(child_frame), flags,
+      FeaturePolicyHeaderFromWeb(container_policy)));
 }
 
 void RenderFrameImpl::DidSetFeaturePolicyHeader(
@@ -3877,6 +3877,16 @@ void RenderFrameImpl::DidCreateDocumentElement() {
 }
 
 void RenderFrameImpl::RunScriptsAtDocumentElementAvailable() {
+  base::WeakPtr<RenderFrameImpl> weak_self = weak_factory_.GetWeakPtr();
+
+  MojoBindingsController* mojo_bindings_controller =
+      MojoBindingsController::Get(this);
+  if (mojo_bindings_controller)
+    mojo_bindings_controller->RunScriptsAtDocumentStart();
+
+  if (!weak_self.get())
+    return;
+
   GetContentClient()->renderer()->RunScriptsAtDocumentStart(this);
   // Do not use |this|! ContentClient might have deleted them by now!
 }
@@ -3937,6 +3947,14 @@ void RenderFrameImpl::DidFinishDocumentLoad() {
 
 void RenderFrameImpl::RunScriptsAtDocumentReady(bool document_is_empty) {
   base::WeakPtr<RenderFrameImpl> weak_self = weak_factory_.GetWeakPtr();
+
+  MojoBindingsController* mojo_bindings_controller =
+      MojoBindingsController::Get(this);
+  if (mojo_bindings_controller)
+    mojo_bindings_controller->RunScriptsAtDocumentReady();
+
+  if (!weak_self.get())
+    return;
 
   GetContentClient()->renderer()->RunScriptsAtDocumentEnd(this);
 
@@ -4128,11 +4146,6 @@ RenderFrameImpl::GetEffectiveConnectionType() {
   return effective_connection_type_;
 }
 
-void RenderFrameImpl::SetEffectiveConnectionTypeForTesting(
-    blink::WebEffectiveConnectionType type) {
-  effective_connection_type_ = type;
-}
-
 bool RenderFrameImpl::ShouldUseClientLoFiForRequest(
     const WebURLRequest& request) {
   if (request.GetPreviewsState() != WebURLRequest::kPreviewsUnspecified)
@@ -4162,7 +4175,7 @@ void RenderFrameImpl::DidBlockFramebust(const WebURL& url) {
   Send(new FrameHostMsg_DidBlockFramebust(GetRoutingID(), url));
 }
 
-blink::WebString RenderFrameImpl::GetInstrumentationToken() {
+blink::WebString RenderFrameImpl::GetDevToolsFrameToken() {
   return devtools_frame_token_;
 }
 
@@ -4621,13 +4634,6 @@ void RenderFrameImpl::DidObserveNewFeatureUsage(
 
 void RenderFrameImpl::DidCreateScriptContext(v8::Local<v8::Context> context,
                                              int world_id) {
-  if ((enabled_bindings_ & BINDINGS_POLICY_WEB_UI) && IsMainFrame() &&
-      world_id == ISOLATED_WORLD_ID_GLOBAL) {
-    // We only allow these bindings to be installed when creating the main
-    // world context of the main frame.
-    blink::WebContextFeatures::EnableMojoJS(context, true);
-  }
-
   for (auto& observer : observers_)
     observer.DidCreateScriptContext(context, world_id);
 }
@@ -5178,7 +5184,6 @@ bool RenderFrameImpl::SwapIn() {
     render_view_->main_render_frame_ = this;
     if (render_view_->is_swapped_out())
       render_view_->SetSwappedOut(false);
-    render_view_->UpdateWebViewWithDeviceScaleFactor();
   }
 
   return true;
@@ -5385,26 +5390,23 @@ void RenderFrameImpl::OnFailedNavigation(
   if (request_params.page_state.IsValid())
     history_entry = PageStateToHistoryEntry(request_params.page_state);
 
-  // The load of the error page can result in this frame being removed.
-  // Use a WeakPtr as an easy way to detect whether this has occured. If so,
-  // this method should return immediately and not touch any part of the object,
-  // otherwise it will result in a use-after-free bug.
-  base::WeakPtr<RenderFrameImpl> weak_this = weak_factory_.GetWeakPtr();
-
   // For renderer initiated navigations, we send out a didFailProvisionalLoad()
   // notification.
   bool had_provisional_document_loader = frame_->GetProvisionalDocumentLoader();
   if (request_params.nav_entry_id == 0) {
     DidFailProvisionalLoad(error, replace ? blink::kWebHistoryInertCommit
                                           : blink::kWebStandardCommit);
-    if (!weak_this)
-      return;
   }
 
   // If we didn't call didFailProvisionalLoad or there wasn't a
   // GetProvisionalDocumentLoader(), LoadNavigationErrorPage wasn't called, so
   // do it now.
+  // Note: the load of the error page can result in this frame being removed.
+  // Use a WeakPtr as an easy way to detect whether this has occured. If so,
+  // this method should return immediately and not touch any part of the object,
+  // otherwise it will result in a use-after-free bug.
   if (request_params.nav_entry_id != 0 || !had_provisional_document_loader) {
+    base::WeakPtr<RenderFrameImpl> weak_this = weak_factory_.GetWeakPtr();
     LoadNavigationErrorPage(failed_request, error, replace,
                             history_entry.get());
     if (!weak_this)
@@ -6562,24 +6564,31 @@ void RenderFrameImpl::LoadDataURL(
     blink::WebHistoryLoadType history_load_type,
     bool is_client_redirect) {
   // A loadData request with a specified base URL.
-  GURL data_url = params.url;
+  DCHECK(params.url.is_valid());
 #if defined(OS_ANDROID)
+  base::StringPiece data_url = params.url.spec();
   if (!request_params.data_url_as_string.empty()) {
 #if DCHECK_IS_ON()
     {
       std::string mime_type, charset, data;
-      DCHECK(net::DataURL::Parse(data_url, &mime_type, &charset, &data));
+      DCHECK(net::DataURL::Parse(params.url, &mime_type, &charset, &data));
       DCHECK(data.empty());
     }
-#endif
-    data_url = GURL(request_params.data_url_as_string);
-    if (!data_url.is_valid() || !data_url.SchemeIs(url::kDataScheme)) {
-      data_url = params.url;
+#endif  // DCHECK_IS_ON()
+    if (base::StartsWith(request_params.data_url_as_string,
+                         "data:", base::CompareCase::SENSITIVE)) {
+      data_url = request_params.data_url_as_string;
     }
   }
-#endif
+#else   // defined(OS_ANDROID)
+  const GURL& data_url = params.url;
+#endif  // defined(OS_ANDROID)
   std::string mime_type, charset, data;
+#if defined(OS_ANDROID)
+  if (net::DataURL::ParseCanonicalized(data_url, &mime_type, &charset, &data)) {
+#else
   if (net::DataURL::Parse(data_url, &mime_type, &charset, &data)) {
+#endif
     const GURL base_url = params.base_url_for_data_url.is_empty() ?
         params.url : params.base_url_for_data_url;
     bool replace = load_type == WebFrameLoadType::kReloadBypassingCache ||
@@ -6603,6 +6612,42 @@ void RenderFrameImpl::SendUpdateState() {
 
   Send(new FrameHostMsg_UpdateState(
       routing_id_, SingleHistoryItemToPageState(current_history_item_)));
+}
+
+void RenderFrameImpl::MaybeEnableMojoBindings() {
+  // BINDINGS_POLICY_WEB_UI and BINDINGS_POLICY_MOJO are mutually exclusive.
+  // They provide access to Mojo bindings, but do so in incompatible ways.
+  const int kAllBindingsTypes = BINDINGS_POLICY_WEB_UI | BINDINGS_POLICY_MOJO;
+
+  // Make sure that at most one of BINDINGS_POLICY_WEB_UI and
+  // BINDINGS_POLICY_MOJO have been set.
+  // NOTE x & (x - 1) == 0 is true iff x is zero or a power of two.
+  DCHECK_EQ((enabled_bindings_ & kAllBindingsTypes) &
+                ((enabled_bindings_ & kAllBindingsTypes) - 1),
+            0);
+
+  // In single process, multiple RenderFrames share a RenderProcess. The
+  // RenderProcess's bindings may not be the same as an individual RenderFrame's
+  // bindings. In multiprocess, such RenderFrames are enforced to be in
+  // different RenderProcesses.
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  if (!command_line.HasSwitch(switches::kSingleProcess)) {
+    DCHECK_EQ(RenderProcess::current()->GetEnabledBindings(),
+              enabled_bindings_);
+  }
+
+  // If an MojoBindingsController already exists for this RenderFrameImpl, avoid
+  // creating another one. It is not kept as a member, as it deletes itself when
+  // the frame is destroyed.
+  if (RenderFrameObserverTracker<MojoBindingsController>::Get(this))
+    return;
+
+  if (IsMainFrame() && enabled_bindings_ & BINDINGS_POLICY_WEB_UI) {
+    new MojoBindingsController(this, MojoBindingsType::FOR_WEB_UI);
+  } else if (enabled_bindings_ & BINDINGS_POLICY_MOJO) {
+    new MojoBindingsController(this, MojoBindingsType::FOR_LAYOUT_TESTS);
+  }
 }
 
 void RenderFrameImpl::SendFailedProvisionalLoad(
@@ -6846,16 +6891,26 @@ blink::WebPageVisibilityState RenderFrameImpl::VisibilityState() const {
 std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     const blink::WebURLRequest& request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  // Currently the tests (RenderViewTests) that need URLLoader but do not
-  // have ChildThread use the Platform::Current()->CreateURLLoader().
-  DCHECK(ChildThreadImpl::current());
-
   UpdatePeakMemoryStats();
 
-  mojom::URLLoaderFactory* factory =
-      GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
-          request.Url(), custom_url_loader_factory_.get());
-  DCHECK(factory);
+  ChildThreadImpl* child_thread = ChildThreadImpl::current();
+  if (!child_thread) {
+    return RenderThreadImpl::current()->blink_platform_impl()->CreateURLLoader(
+        request, std::move(task_runner));
+  }
+
+  mojom::URLLoaderFactory* factory = custom_url_loader_factory_.get();
+
+  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
+      request.Url().ProtocolIs(url::kBlobScheme)) {
+    factory = GetDefaultURLLoaderFactoryGetter()->GetBlobLoaderFactory();
+    DCHECK(factory);
+  }
+
+  if (!factory) {
+    factory = GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory();
+    DCHECK(factory);
+  }
 
   mojom::KeepAliveHandlePtr keep_alive_handle;
   if (base::FeatureList::IsEnabled(
@@ -6863,9 +6918,9 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
       request.GetKeepalive()) {
     GetFrameHost()->IssueKeepAliveHandle(mojo::MakeRequest(&keep_alive_handle));
   }
-  return base::MakeUnique<WebURLLoaderImpl>(
-      ChildThreadImpl::current()->resource_dispatcher(), std::move(task_runner),
-      factory, std::move(keep_alive_handle));
+  return base::MakeUnique<WebURLLoaderImpl>(child_thread->resource_dispatcher(),
+                                            std::move(task_runner), factory,
+                                            std::move(keep_alive_handle));
 }
 
 void RenderFrameImpl::DraggableRegionsChanged() {

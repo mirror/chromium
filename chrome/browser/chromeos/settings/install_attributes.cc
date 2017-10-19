@@ -113,10 +113,8 @@ void InstallAttributes::Init(const base::FilePath& cache_file) {
       base::Bind(&InstallAttributes::OnCryptohomeServiceInitiallyAvailable,
                  weak_ptr_factory_.GetWeakPtr()));
 
-  if (!base::PathExists(cache_file)) {
-    LOG(WARNING) << "Install attributes missing, first sign in";
+  if (!base::PathExists(cache_file))
     return;
-  }
 
   device_locked_ = true;
 
@@ -225,9 +223,7 @@ void InstallAttributes::LockDevice(policy::DeviceMode device_mode,
   // Check for existing lock first.
   if (device_locked_) {
     if (device_mode != registration_mode_) {
-      LOG(ERROR) << "Trying to re-lock with wrong mode: device_mode: "
-                 << device_mode
-                 << ", registration_mode: " << registration_mode_;
+      LOG(ERROR) << "Trying to re-lock with wrong mode.";
       callback.Run(LOCK_WRONG_MODE);
       return;
     }

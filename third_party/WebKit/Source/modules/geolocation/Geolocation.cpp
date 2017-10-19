@@ -105,7 +105,7 @@ Geolocation::Geolocation(ExecutionContext* context)
 Geolocation::~Geolocation() {
 }
 
-void Geolocation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Geolocation) {
   visitor->Trace(one_shots_);
   visitor->Trace(watchers_);
   visitor->Trace(last_position_);
@@ -125,7 +125,7 @@ Document* Geolocation::GetDocument() const {
 }
 
 LocalFrame* Geolocation::GetFrame() const {
-  return GetDocument() ? GetDocument()->GetFrame() : nullptr;
+  return GetDocument() ? GetDocument()->GetFrame() : 0;
 }
 
 void Geolocation::ContextDestroyed(ExecutionContext*) {
@@ -382,7 +382,7 @@ void Geolocation::HandleError(PositionError* error) {
     // position.
     ExtractNotifiersWithCachedPosition(one_shots_copy,
                                        &one_shots_with_cached_position);
-    ExtractNotifiersWithCachedPosition(watchers_copy, nullptr);
+    ExtractNotifiersWithCachedPosition(watchers_copy, 0);
   }
 
   SendError(one_shots_copy, error);

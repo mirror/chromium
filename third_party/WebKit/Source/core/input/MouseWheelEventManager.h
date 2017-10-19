@@ -23,13 +23,11 @@ class MouseWheelEventManager final
 
  public:
   explicit MouseWheelEventManager(LocalFrame&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void Clear();
 
   WebInputEventResult HandleWheelEvent(const WebMouseWheelEvent&);
-
-  void ElementRemoved(Node* target);
 
  private:
   Node* FindTargetNode(const WebMouseWheelEvent&,

@@ -100,7 +100,7 @@ class CORE_TEMPLATE_CLASS_EXPORT VisiblePositionTemplate final {
   static VisiblePositionTemplate<Strategy> InParentBeforeNode(const Node&);
   static VisiblePositionTemplate<Strategy> LastPositionInNode(const Node&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
 #ifndef NDEBUG
   void ShowTreeForThis() const;

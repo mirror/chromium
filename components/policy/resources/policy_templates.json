@@ -2327,25 +2327,6 @@
 
           Typically this is disabled as a phishing defense. If this policy is not set, this is disabled and third-party sub-content will not be allowed to pop up a HTTP Basic Auth dialog box.''',
         },
-        {
-          'name': 'NtlmV2Enabled',
-          'type': 'main',
-          'schema': { 'type': 'boolean' },
-          'supported_on': ['chrome.linux:63-','chrome.mac:63-','chrome_os:63-','android:63-','webview_android:63-'],
-          'features': {
-            'dynamic_refresh': True,
-            'per_profile': False,
-          },
-          'example_value': True,
-          'id': 393,
-          'caption': '''Whether NTLMv2 authentication is enabled.''',
-          'tags': ['website-sharing'],
-          'desc': '''Controls whether NTLMv2 is enabled.
-
-          All recent versions of Samba and Windows servers support NTLMv2. This should only be disabled for backwards compatability and reduces the security of authentication.
-
-          The default value when this policy is not defined is currently false for backwards compatability, but will change to true in the future.''',
-        },
       ],
     },
     {
@@ -9250,15 +9231,14 @@
         'dynamic_refresh': True,
         'per_profile': True,
       },
-      'example_value': 'managedchrome.com,example.com',
+      'example_value': 'managedchrome.com,gmail.com',
       'id': 331,
       'caption': '''Define domains allowed to access Google Apps''',
       'tags': ['filtering'],
       'desc': '''Enables <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>'s restricted log in feature in Google Apps and prevents users from changing this setting.
 
-      If you define this setting, the user will only be able to access Google
-      Apps using accounts from the specified domains (note that this does not
-      work for gmail.com/googlemail.com).
+      If you define this setting, the user will only be able to access
+      Google Apps (such as Gmail) using accounts from the specified domains.
 
       This setting will NOT prevent the user from loging in on a managed device
       that requires Google authentication. The user will still be allowed to
@@ -9813,7 +9793,37 @@
 
       If the policy is not set, TPM firmware update functionality will not be available.''',
     },
+    {
+      'name': 'DeviceUserAvatarSettings',
+      'supported_on': ['chrome_os:63-'],
+      'device_only': True,
+      'type': 'dict',
+      'schema': {
+        'type': 'object',
+        'properties': {
+          'allow-videos': {
+            'type': 'boolean',
+          },
+        },
+      },
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': False,
+      },
+      'example_value': {
+        'allow-videos': True
+      },
+      'id': 393,
+      'caption': '''Configure user avatar behavior''',
+      'tags': [],
+      'desc': '''Configures behavior of user avatars that represent the users on the login screen.
 
+      Individual settings can be specified in JSON properties:
+
+      <ph name="USER_AVATAR_SETTINGS_ALLOW_VIDEOS">allow-videos</ph>: If set to <ph name="USER_AVATAR_SETTINGS_ALLOW_VIDEOS_TRUE">true</ph>, users will be allowed to use videos for avatar images.
+
+      If this policy is not set, videos for avatar image is allowed.''',
+    },
     {
       'name': 'QuickUnlock',
       'type': 'group',
@@ -10485,12 +10495,10 @@
     'doc_intro': {
       'desc': '''Introduction text for the generated policy documentation''',
       'text': '''Both Chromium and Google Chrome support the same set of
-      policies. Please note that this document may include unreleased policies
-      (i.e. their 'Supported on' entry refers to a not-yet released version of
-      <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>) which are subject
-      to change or removal without notice and for which no guarantees of any
-      kind are provided, including no guarantees with respect to their security
-      and privacy properties.
+      policies. Please note that this document may include policies that are
+      targeted for unreleased software versions (i.e. their 'Supported on' entry
+      refers to an unreleased version) and that such policies are subject to
+      change or removal without prior notice.
 
       These policies are strictly intended to be used to configure instances of
       <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> internal to your
@@ -10498,15 +10506,14 @@
       example, in a publicly distributed program) is considered malware and will
       likely be labeled as malware by Google and anti-virus vendors.
 
-      These settings don't need to be configured manually! Easy-to-use
+      These settings don't need to be configured manually!  Easy-to-use
       templates for Windows, Mac and Linux are available for download from <ph
       name="POLICY_TEMPLATE_DOWNLOAD_URL">https://www.chromium.org/administrators/policy-templates<ex>
       https://www.chromium.org/administrators/policy-templates</ex></ph>.
 
       The recommended way to configure policy on Windows is via GPO, although
       provisioning policy via registry is still supported for Windows instances
-      that are joined to a <ph name="MS_AD_NAME">Microsoft® Active
-      Directory®</ph> domain.'''
+      that are joined to a <ph name="MS_AD_NAME">Microsoft® Active Directory®</ph> domain.'''
     },
     'doc_back_to_top': {
       'desc': '''Text of a link in the generated policy documentation, that takes the user to the top of the page''',

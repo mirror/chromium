@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/layout/MinMaxSize.h"
 #include "core/layout/ng/ng_constraint_space.h"
+#include "core/layout/ng/ng_fragment_builder.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Optional.h"
 
@@ -17,9 +18,7 @@ class ComputedStyle;
 class NGLayoutResult;
 
 // Base class for all LayoutNG algorithms.
-template <typename NGInputNodeType,
-          typename NGFragmentBuilderType,
-          typename NGBreakTokenType>
+template <typename NGInputNodeType, typename NGBreakTokenType>
 class CORE_EXPORT NGLayoutAlgorithm {
   STACK_ALLOCATED();
  public:
@@ -79,7 +78,7 @@ class CORE_EXPORT NGLayoutAlgorithm {
   // The break token from which we are currently resuming layout.
   NGBreakTokenType* break_token_;
 
-  NGFragmentBuilderType container_builder_;
+  NGFragmentBuilder container_builder_;
 };
 
 }  // namespace blink

@@ -55,11 +55,11 @@ IOSSecurityStateTabHelper::GetVisibleSecurityState() const {
   state->displayed_mixed_content =
       (ssl.content_status & web::SSLStatus::DISPLAYED_INSECURE_CONTENT) ? true
                                                                         : false;
-  state->insecure_input_events.password_field_shown =
+  state->displayed_password_field_on_http =
       (ssl.content_status & web::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP)
           ? true
           : false;
-  state->insecure_input_events.credit_card_field_edited =
+  state->displayed_credit_card_field_on_http =
       (ssl.content_status & web::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP)
           ? true
           : false;

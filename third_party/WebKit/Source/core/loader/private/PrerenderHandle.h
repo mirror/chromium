@@ -62,7 +62,7 @@ class PrerenderHandle final : public GarbageCollectedFinalized<PrerenderHandle>,
   // ContextLifecycleObserver:
   void ContextDestroyed(ExecutionContext*) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   EAGERLY_FINALIZE();
 
  private:

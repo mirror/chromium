@@ -19,7 +19,6 @@
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -29,11 +28,7 @@ namespace {
 class MockServiceWorkerRegistrationObjectHost
     : public blink::mojom::ServiceWorkerRegistrationObjectHost {
  public:
-  MockServiceWorkerRegistrationObjectHost() {
-    bindings_.set_connection_error_handler(
-        base::Bind(&MockServiceWorkerRegistrationObjectHost::OnConnectionError,
-                   base::Unretained(this)));
-  }
+  MockServiceWorkerRegistrationObjectHost() = default;
   ~MockServiceWorkerRegistrationObjectHost() override = default;
 
   void AddBinding(
@@ -42,34 +37,11 @@ class MockServiceWorkerRegistrationObjectHost
     bindings_.AddBinding(this, std::move(request));
   }
 
-  blink::mojom::ServiceWorkerRegistrationObjectAssociatedRequest
-  CreateRegistrationObjectRequest() {
-    if (!remote_registration_)
-      return mojo::MakeRequest(&remote_registration_);
-    return nullptr;
-  }
-
   int GetBindingCount() const { return bindings_.size(); }
 
  private:
-  void Update(UpdateCallback callback) override {
-    std::move(callback).Run(blink::mojom::ServiceWorkerErrorType::kNone,
-                            base::nullopt);
-  }
-
-  void OnConnectionError() {
-    // If there are still bindings, |this| is still being used.
-    if (!bindings_.empty())
-      return;
-    // Will destroy corresponding remote WebServiceWorkerRegistrationImpl
-    // instance.
-    remote_registration_.reset();
-  }
-
   mojo::AssociatedBindingSet<blink::mojom::ServiceWorkerRegistrationObjectHost>
       bindings_;
-  blink::mojom::ServiceWorkerRegistrationObjectAssociatedPtr
-      remote_registration_;
 };
 
 class ServiceWorkerTestSender : public ThreadSafeSender {
@@ -109,8 +81,6 @@ class ServiceWorkerDispatcherTest : public testing::Test {
     (*info)->registration_id = 20;
     remote_registration_object_host_.AddBinding(
         mojo::MakeRequest(&(*info)->host_ptr_info));
-    (*info)->request =
-        remote_registration_object_host_.CreateRegistrationObjectRequest();
 
     attrs->active.handle_id = 100;
     attrs->active.version_id = 200;
@@ -128,12 +98,11 @@ class ServiceWorkerDispatcherTest : public testing::Test {
     return ContainsKey(dispatcher_->registrations_, registration_handle_id);
   }
 
-  void OnSetControllerServiceWorker(
-      int thread_id,
-      int provider_id,
-      const blink::mojom::ServiceWorkerObjectInfo& info,
-      bool should_notify_controllerchange,
-      const std::set<uint32_t>& used_features) {
+  void OnSetControllerServiceWorker(int thread_id,
+                                    int provider_id,
+                                    const ServiceWorkerObjectInfo& info,
+                                    bool should_notify_controllerchange,
+                                    const std::set<uint32_t>& used_features) {
     ServiceWorkerMsg_SetControllerServiceWorker_Params params;
     params.thread_id = thread_id;
     params.provider_id = provider_id;
@@ -148,7 +117,7 @@ class ServiceWorkerDispatcherTest : public testing::Test {
   }
 
   std::unique_ptr<ServiceWorkerHandleReference> Adopt(
-      const blink::mojom::ServiceWorkerObjectInfo& info) {
+      const ServiceWorkerObjectInfo& info) {
     return dispatcher_->Adopt(info);
   }
 
@@ -324,10 +293,9 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker_Null) {
       nullptr /* loader_factory_getter */);
 
   // Set the controller to kInvalidServiceWorkerHandle.
-  OnSetControllerServiceWorker(kDocumentMainThreadId, kProviderId,
-                               blink::mojom::ServiceWorkerObjectInfo(),
-                               should_notify_controllerchange,
-                               std::set<uint32_t>());
+  OnSetControllerServiceWorker(
+      kDocumentMainThreadId, kProviderId, ServiceWorkerObjectInfo(),
+      should_notify_controllerchange, std::set<uint32_t>());
 
   // Check that it became null.
   EXPECT_EQ(nullptr, provider_context->controller());
@@ -393,8 +361,7 @@ TEST_F(ServiceWorkerDispatcherTest, GetServiceWorker) {
 
   // Should return nullptr when a given object is invalid.
   scoped_refptr<WebServiceWorkerImpl> invalid_worker =
-      dispatcher()->GetOrCreateServiceWorker(
-          Adopt(blink::mojom::ServiceWorkerObjectInfo()));
+      dispatcher()->GetOrCreateServiceWorker(Adopt(ServiceWorkerObjectInfo()));
   EXPECT_FALSE(invalid_worker);
   EXPECT_EQ(0UL, ipc_sink()->message_count());
 }
@@ -416,8 +383,7 @@ TEST_F(ServiceWorkerDispatcherTest, GetOrCreateRegistration) {
     // Should return a registration object newly created with incrementing
     // the refcounts.
     registration1 =
-        dispatcher()->GetOrCreateRegistrationForServiceWorkerGlobalScope(
-            std::move(info), attrs, base::ThreadTaskRunnerHandle::Get());
+        dispatcher()->GetOrCreateRegistration(std::move(info), attrs);
     EXPECT_TRUE(registration1);
     EXPECT_TRUE(ContainsRegistration(handle_id));
     EXPECT_EQ(registration_id, registration1->RegistrationId());
@@ -442,8 +408,7 @@ TEST_F(ServiceWorkerDispatcherTest, GetOrCreateRegistration) {
     // Should return the same registration object without incrementing the
     // refcounts.
     registration2 =
-        dispatcher()->GetOrCreateRegistrationForServiceWorkerGlobalScope(
-            std::move(info), attrs, base::ThreadTaskRunnerHandle::Get());
+        dispatcher()->GetOrCreateRegistration(std::move(info), attrs);
     EXPECT_TRUE(registration2);
     EXPECT_EQ(registration1, registration2);
     // The 2nd Mojo connection has been dropped.
@@ -485,8 +450,8 @@ TEST_F(ServiceWorkerDispatcherTest, GetOrAdoptRegistration) {
 
     // Should return a registration object newly created with adopting the
     // refcounts.
-    registration1 = dispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
-        std::move(info), attrs);
+    registration1 =
+        dispatcher()->GetOrAdoptRegistration(std::move(info), attrs);
     EXPECT_TRUE(registration1);
     EXPECT_TRUE(ContainsRegistration(handle_id));
     EXPECT_EQ(registration_id, registration1->RegistrationId());
@@ -504,8 +469,8 @@ TEST_F(ServiceWorkerDispatcherTest, GetOrAdoptRegistration) {
     ASSERT_EQ(2, remote_registration_object_host().GetBindingCount());
     // Should return the same registration object without incrementing the
     // refcounts.
-    registration2 = dispatcher()->GetOrCreateRegistrationForServiceWorkerClient(
-        std::move(info), attrs);
+    registration2 =
+        dispatcher()->GetOrAdoptRegistration(std::move(info), attrs);
     EXPECT_TRUE(registration2);
     EXPECT_EQ(registration1, registration2);
     // The 2nd Mojo connection has been dropped.

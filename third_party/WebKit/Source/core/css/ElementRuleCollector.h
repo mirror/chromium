@@ -74,7 +74,7 @@ class MatchedRule {
     return GetRuleData()->Specificity() + specificity_;
   }
   const CSSStyleSheet* ParentStyleSheet() const { return parent_style_sheet_; }
-  void Trace(blink::Visitor* visitor) { visitor->Trace(parent_style_sheet_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(parent_style_sheet_); }
 
  private:
   // TODO(Oilpan): RuleData is in the oilpan heap and this pointer
@@ -133,9 +133,6 @@ class ElementRuleCollector {
   void AddElementStyleProperties(const StylePropertySet*,
                                  bool is_cacheable = true);
   void FinishAddingUARules() { result_.FinishAddingUARules(); }
-  void FinishAddingUserRules() {
-    result_.FinishAddingUserRules();
-  }
   void FinishAddingAuthorRulesForTreeScope() {
     result_.FinishAddingAuthorRulesForTreeScope();
   }

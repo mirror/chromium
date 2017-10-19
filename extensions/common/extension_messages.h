@@ -353,7 +353,7 @@ struct ExtensionMsg_Loaded_Params {
 };
 
 struct ExtensionHostMsg_AutomationQuerySelector_Error {
-  enum Value { kNone, kNoDocument, kNodeDestroyed };
+  enum Value { kNone, kNoMainFrame, kNoDocument, kNodeDestroyed };
 
   ExtensionHostMsg_AutomationQuerySelector_Error() : value(kNone) {}
 
@@ -870,7 +870,7 @@ IPC_SYNC_MESSAGE_CONTROL0_1(ExtensionHostMsg_GenerateUniqueID,
 
 // Notify the browser that an app window is ready and can resume resource
 // requests.
-IPC_MESSAGE_ROUTED0(ExtensionHostMsg_AppWindowReady)
+IPC_MESSAGE_CONTROL1(ExtensionHostMsg_AppWindowReady, int /* route_id */)
 
 // Sent by the renderer when the draggable regions are updated.
 IPC_MESSAGE_ROUTED1(ExtensionHostMsg_UpdateDraggableRegions,

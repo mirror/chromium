@@ -35,7 +35,7 @@
 
 namespace blink {
 
-class ExecutionContext;
+class Document;
 
 class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
  public:
@@ -68,11 +68,11 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
 
   bool HasFailedOrCanceledSubresources() const;
 
-  FontResource* Fetch(ExecutionContext*) const;
+  FontResource* Fetch(Document*) const;
 
   bool Equals(const CSSFontFaceSrcValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     visitor->Trace(fetched_);
     CSSValue::TraceAfterDispatch(visitor);
   }
@@ -92,7 +92,7 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
         should_check_content_security_policy_(
             should_check_content_security_policy) {}
 
-  void RestoreCachedResourceIfNeeded(ExecutionContext*) const;
+  void RestoreCachedResourceIfNeeded(Document*) const;
 
   String absolute_resource_;
   String specified_resource_;
@@ -111,7 +111,7 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
       return new FontResourceHelper(resource);
     }
 
-    virtual void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_VIRTUAL_TRACE() {
       ResourceOwner<FontResource>::Trace(visitor);
     }
 

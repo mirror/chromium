@@ -898,8 +898,8 @@ public class LocationBarLayout extends FrameLayout
         // This will only be called once at least one tab exists, and the tab model is told to
         // update its state. During Chrome initialization the tab model update happens after the
         // call to onNativeLibraryReady, so this assert will not fire.
-        assert mNativeInitialized
-                : "Setting Autocomplete Profile before native side initialized";
+        assert mNativeInitialized :
+                "Setting Autocomplete Profile before native side initialized";
         mAutocomplete.setProfile(profile);
         mOmniboxPrerender.initializeForProfile(profile);
     }
@@ -1346,9 +1346,7 @@ public class LocationBarLayout extends FrameLayout
         if (provider.isIncognito() || needLightIcon) {
             // For a dark theme color, use light icons.
             list = ApiCompatibilityUtils.getColorStateList(resources, R.color.light_mode_tint);
-        } else if (!ColorUtils.isUsingDefaultToolbarColor(resources,
-                           FeatureUtilities.isChromeHomeEnabled(), provider.isIncognito(), color)
-                && !isOmniboxOpaque) {
+        } else if (!ColorUtils.isUsingDefaultToolbarColor(resources, color) && !isOmniboxOpaque) {
             // For theme colors which are not dark and are also not
             // light enough to warrant an opaque URL bar, use dark
             // icons.
@@ -1601,8 +1599,7 @@ public class LocationBarLayout extends FrameLayout
     private void initSuggestionList() {
         // Only called from onSuggestionsReceived(), which is a callback from a listener set up by
         // onNativeLibraryReady(), so this assert is safe.
-        assert mNativeInitialized || mShowCachedZeroSuggestResults
-                : "Trying to initialize native suggestions list before native init";
+        assert mNativeInitialized : "Trying to initialize suggestions list before native init";
         if (mSuggestionList != null) return;
         mSuggestionListAdapter.setUseModernDesign(mBottomSheet != null);
 
@@ -1973,10 +1970,8 @@ public class LocationBarLayout extends FrameLayout
     public void onSuggestionsReceived(List<OmniboxSuggestion> newSuggestions,
             String inlineAutocompleteText) {
         // This is a callback from a listener that is set up by onNativeLibraryReady,
-        // so can only be called once the native side is set up unless we are showing
-        // cached java-only suggestions.
-        assert mNativeInitialized || mShowCachedZeroSuggestResults
-                : "Native suggestions received before native side intialialized";
+        // so can only be called once the native side is set up.
+        assert mNativeInitialized : "Suggestions received before native side intialialized";
 
         if (mDeferredOnSelection != null) {
             mDeferredOnSelection.setShouldLog(newSuggestions.size() > mDeferredOnSelection.mPosition

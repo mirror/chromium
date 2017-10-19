@@ -1613,15 +1613,13 @@ void ShelfView::ShelfItemAdded(int model_index) {
 void ShelfView::ShelfItemRemoved(int model_index, const ShelfItem& old_item) {
   if (old_item.id == context_menu_id_)
     launcher_menu_runner_->Cancel();
-
-  views::View* view = view_model_->view_at(model_index);
-  view_model_->Remove(model_index);
-
   {
     base::AutoReset<bool> cancelling_drag(&cancelling_drag_model_changed_,
                                           true);
-    CancelDrag(-1);
+    model_index = CancelDrag(model_index);
   }
+  views::View* view = view_model_->view_at(model_index);
+  view_model_->Remove(model_index);
 
   // When the overflow bubble is visible, the overflow range needs to be set
   // before CalculateIdealBounds() gets called. Otherwise CalculateIdealBounds()
@@ -1823,10 +1821,12 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
     run_types |=
         views::MenuRunner::CONTEXT_MENU | views::MenuRunner::FIXED_ANCHOR;
 
-  // Only selected shelf items with context menu opened can be dragged.
+  // Selected shelf items with context menu opened can only be dragged if the
+  // shelf is not in auto-hide.
   const ShelfItem* item = ShelfItemForView(source);
   if (context_menu && item && item->type != TYPE_APP_LIST &&
-      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) {
+      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH &&
+      shelf()->auto_hide_behavior() == SHELF_AUTO_HIDE_BEHAVIOR_NEVER) {
     run_types |= views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
   }
 

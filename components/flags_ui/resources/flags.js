@@ -48,6 +48,14 @@ function renderTemplate(experimentalFeaturesData) {
     elements[i].onclick = restartBrowser;
   }
 
+  // Toggling of experiment description overflow content.
+  elements = document.querySelectorAll('.experiment .flex:first-child');
+  for (var i = 0; i < elements.length; ++i) {
+    elements[i].addEventListener('click', function(e) {
+      this.classList.toggle('expand');
+    });
+  }
+
   // Tab panel selection.
   var tabEls = document.getElementsByClassName('tab');
   for (var i = 0; i < tabEls.length; ++i) {
@@ -59,21 +67,10 @@ function renderTemplate(experimentalFeaturesData) {
     });
   }
 
-  var smallScreenCheck = window.matchMedia('(max-width: 480px)');
-  // Toggling of experiment description overflow content on smaller screens.
-  elements = document.querySelectorAll('.experiment .flex:first-child');
-  for (var i = 0; i < elements.length; ++i) {
-    elements[i].onclick = function(e) {
-      if (smallScreenCheck.matches) {
-        this.classList.toggle('expand');
-      }
-    };
-  }
-
   $('experiment-reset-all').onclick = resetAllFlags;
 
   highlightReferencedFlag();
-  var search = FlagSearch.getInstance();
+  var search = new FlagSearch();
   search.init();
 }
 
@@ -211,82 +208,33 @@ function handleSelectExperimentalFeatureChoice(node, index) {
  * Handles in page searching. Matches against the experiment flag name.
  */
 var FlagSearch = function() {
-  FlagSearch.instance_ = this;
-
-  this.experiments_ = Object.assign({}, FlagSearch.SearchContent);
-  this.unavailableExperiments_ = Object.assign({}, FlagSearch.SearchContent);
+  this.experiments_ = [];
+  this.unavailableExperiments_ = [];
 
   this.searchBox_ = $('search');
   this.noMatchMsg_ = document.querySelectorAll('.no-match');
 
   this.searchIntervalId_ = null;
-  this.initialized = false;
 };
 
 // Delay in ms following a keypress, before a search is made.
 FlagSearch.SEARCH_DEBOUNCE_TIME_MS = 150;
 
-/**
- * Object definition for storing the elements which are searched on.
- * @typedef {Object<string, HTMLElement[]>}
- */
-FlagSearch.SearchContent = {
-  link: [],
-  title: [],
-  description: []
-};
-
-/**
- * Get the singleton instance of FlagSearch.
- * @return {Object} Instance of FlagSearch.
- */
-FlagSearch.getInstance = function() {
-  if (FlagSearch.instance_) {
-    return FlagSearch.instance_;
-  } else {
-    return new FlagSearch();
-  }
-};
-
 FlagSearch.prototype = {
   /**
-   * Initialises the in page search. Adding searchbox listeners and
-   * collates the text elements used for string matching.
+   * Initialises the in page search. Addings searchbox listeners and
+   * collates the permalinks used for string matching.
    */
   init: function() {
-    this.experiments_.link =
+    this.experiments_ =
         document.querySelectorAll('#tab-content-available .permalink');
-    this.experiments_.title =
-        document.querySelectorAll('#tab-content-available .experiment-name');
-    this.experiments_.description =
-        document.querySelectorAll('#tab-content-available p');
-
-    this.unavailableExperiments_.link =
+    this.unavailableExperiments_ =
         document.querySelectorAll('#tab-content-unavailable .permalink');
-    this.unavailableExperiments_.title =
-        document.querySelectorAll('#tab-content-unavailable .experiment-name');
-    this.unavailableExperiments_.description =
-        document.querySelectorAll('#tab-content-unavailable p');
 
-    if (!this.initialized) {
-      this.searchBox_.addEventListener('keyup', this.debounceSearch.bind(this));
-      document.querySelector('.clear-search').addEventListener('click',
-          this.clearSearch.bind(this));
-
-      window.addEventListener('keyup', function(e) {
-          switch(e.key) {
-            case '/':
-              this.searchBox_.focus();
-              break;
-            case 'Escape':
-            case 'Enter':
-              this.searchBox_.blur();
-              break;
-          }
-      }.bind(this));
-      this.searchBox_.focus();
-      this.initialized = true;
-    }
+    this.searchBox_.addEventListener('keyup', this.debounceSearch.bind(this));
+    document.querySelector('.clear-search').addEventListener('click',
+        this.clearSearch.bind(this));
+    this.searchBox_.focus();
   },
 
   /**
@@ -300,30 +248,30 @@ FlagSearch.prototype = {
   /**
    * Reset existing highlights on an element.
    * @param {HTMLElement} el The element to remove all highlighted mark up on.
-   * @param {string} text Text to reset the element's textContent to.
+   * @param {string} flag The flag name to reset the element's textContent to.
    */
-  resetHighlights: function(el, text) {
+  resetHighlights: function(el, flag) {
     if (el.children) {
-      el.textContent = text;
+      el.textContent = flag;
     }
   },
 
   /**
-   * Highlights the search term within a given element.
+   * Highlights the search term within the permalink flag name.
    * @param {string} searchTerm Search term user entered.
-   * @param {HTMLElement} el The node containing the text to match against.
+   * @param {HTMLElement} el The permalink node where the search tern occurs.
    * @return {boolean} Whether there was a match.
    */
-  highlightMatchInElement: function(searchTerm, el) {
+  highlightMatches: function(searchTerm, el) {
     // Experiment container.
     var parentEl = el.parentNode.parentNode.parentNode;
-    var text = el.textContent;
-    var match = text.toLowerCase().indexOf(searchTerm);
+    var flag = el.textContent.toLowerCase();
+    var match = flag.indexOf(searchTerm);
 
     parentEl.classList.toggle('hidden', match == -1);
 
     if (match == -1) {
-      this.resetHighlights(el, text);
+      this.resetHighlights(el, flag);
       return false;
     }
 
@@ -333,85 +281,54 @@ FlagSearch.prototype = {
 
       if (match > 0) {
         var textNodePrefix =
-            document.createTextNode(text.substring(0, match));
+            document.createTextNode(flag.substring(0, match));
         el.appendChild(textNodePrefix);
       }
 
       var matchEl = document.createElement('mark');
-      matchEl.textContent = text.substr(match, searchTerm.length);
+      matchEl.textContent = flag.substr(match, searchTerm.length);
       el.appendChild(matchEl);
 
-      var matchSuffix = text.substring(match + searchTerm.length);
+      var matchSuffix = flag.substring(match + searchTerm.length);
       if (matchSuffix) {
         var textNodeSuffix = document.createTextNode(matchSuffix);
         el.appendChild(textNodeSuffix);
       }
     } else {
-      this.resetHighlights(el, text);
+      this.resetHighlights(el, flag);
     }
     return true;
   },
 
   /**
-   * Goes through all experiment text and highlights the relevant matches.
-   * Only the first instance of a match in each experiment text block is
-   * highlighted. This prevents the sea of yellow that happens using the global
-   * find in page search.
-   * @param {FlagSearch.SearchContent} searchContent Object containing the
-   *     experiment text elements to search against.
-   * @param {string} searchTerm
-   * @return {number} The number of matches found.
-   */
-  highlightAllMatches: function(searchContent, searchTerm) {
-    var matches = 0;
-    for (var i = 0, j = searchContent.link.length; i < j; i++) {
-      if (this.highlightMatchInElement(searchTerm, searchContent.title[i])) {
-        this.resetHighlights(searchContent.description[i],
-            searchContent.description[i].textContent);
-        this.resetHighlights(searchContent.link[i],
-            searchContent.link[i].textContent);
-        matches++;
-        continue;
-      }
-      if (this.highlightMatchInElement(searchTerm,
-          searchContent.description[i])) {
-        this.resetHighlights(searchContent.title[i],
-            searchContent.title[i].textContent);
-        this.resetHighlights(searchContent.link[i],
-            searchContent.link[i].textContent);
-        matches++;
-        continue;
-      }
-      // Match links, replace spaces with hyphens as flag names don't
-      // have spaces.
-      if (this.highlightMatchInElement(searchTerm.replace(/\s/, '-'),
-          searchContent.link[i])) {
-        this.resetHighlights(searchContent.title[i],
-            searchContent.title[i].textContent);
-        this.resetHighlights(searchContent.description[i],
-            searchContent.description[i].textContent);
-        matches++;
-      }
-    }
-    return matches;
-  },
-
-  /**
-   * Performs a search against the experiment title, description, permalink.
+   * Performs a search against the permalinks.
    * @param {Event} e
    */
   doSearch: function(e) {
+    // Replace spaces with hyphens as flag names don't have spaces.
     var searchTerm =
-        this.searchBox_.value.trim().toLowerCase();
+        this.searchBox_.value.trim().toLowerCase().replace(/\s/, '-');
+    var matches = 0;
+    var unavailableMatches = 0;
 
     if (searchTerm || searchTerm == '') {
-      document.body.classList.toggle('searching', searchTerm);
+      document.body.classList.add('searching');
       // Available experiments
-      this.noMatchMsg_[0].classList.toggle('hidden',
-          this.highlightAllMatches(this.experiments_, searchTerm));
+      for (var i = 0, j = this.experiments_.length; i < j; i++) {
+        if (this.highlightMatches(searchTerm, this.experiments_[i])) {
+          matches++;
+        }
+      }
+      this.noMatchMsg_[0].classList.toggle('hidden', matches);
+
       // Unavailable experiments
-      this.noMatchMsg_[1].classList.toggle('hidden',
-          this.highlightAllMatches(this.unavailableExperiments_, searchTerm));
+      for (var i = 0, j = this.unavailableExperiments_.length; i < j; i++) {
+        if (this.highlightMatches(searchTerm,
+            this.unavailableExperiments_[i])) {
+          unavailableMatches++;
+        }
+      }
+      this.noMatchMsg_[1].classList.toggle('hidden', unavailableMatches);
     }
 
     this.searchIntervalId_ = null;

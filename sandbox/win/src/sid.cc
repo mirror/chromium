@@ -4,48 +4,58 @@
 
 #include "sandbox/win/src/sid.h"
 
-#include <memory>
-
 #include <sddl.h>
 
 #include "base/logging.h"
 #include "base/win/windows_version.h"
-#include "sandbox/win/src/win_utils.h"
 
 namespace sandbox {
 
 namespace {
 
-DWORD WellKnownCapabilityToRid(WellKnownCapabilities capability) {
+typedef decltype(
+    ::DeriveCapabilitySidsFromName) DeriveCapabilitySidsFromNameFunc;
+
+class SidArray {
+ public:
+  SidArray() : count_(0), sids_(nullptr) {}
+
+  ~SidArray() {
+    if (sids_) {
+      for (size_t index = 0; index < count_; ++index) {
+        ::LocalFree(sids_[index]);
+      }
+      ::LocalFree(sids_);
+    }
+  }
+
+  DWORD count() { return count_; }
+  PSID* sids() { return sids_; }
+  PDWORD count_ptr() { return &count_; }
+  PSID** sids_ptr() { return &sids_; }
+
+ private:
+  DWORD count_;
+  PSID* sids_;
+};
+
+const wchar_t* WellKnownCapabilityToName(WellKnownCapabilities capability) {
   switch (capability) {
     case kInternetClient:
-      return SECURITY_CAPABILITY_INTERNET_CLIENT;
+      return L"internetClient";
     case kInternetClientServer:
-      return SECURITY_CAPABILITY_INTERNET_CLIENT_SERVER;
-    case kPrivateNetworkClientServer:
-      return SECURITY_CAPABILITY_PRIVATE_NETWORK_CLIENT_SERVER;
-    case kPicturesLibrary:
-      return SECURITY_CAPABILITY_PICTURES_LIBRARY;
-    case kVideosLibrary:
-      return SECURITY_CAPABILITY_VIDEOS_LIBRARY;
-    case kMusicLibrary:
-      return SECURITY_CAPABILITY_MUSIC_LIBRARY;
-    case kDocumentsLibrary:
-      return SECURITY_CAPABILITY_DOCUMENTS_LIBRARY;
+      return L"internetClientServer";
+    case kRegistryRead:
+      return L"registryRead";
+    case kLpacCryptoServices:
+      return L"lpacCryptoServices";
     case kEnterpriseAuthentication:
-      return SECURITY_CAPABILITY_ENTERPRISE_AUTHENTICATION;
-    case kSharedUserCertificates:
-      return SECURITY_CAPABILITY_SHARED_USER_CERTIFICATES;
-    case kRemovableStorage:
-      return SECURITY_CAPABILITY_REMOVABLE_STORAGE;
-    case kAppointments:
-      return SECURITY_CAPABILITY_APPOINTMENTS;
-    case kContacts:
-      return SECURITY_CAPABILITY_CONTACTS;
+      return L"enterpriseAuthentication";
+    case kPrivateNetworkClientServer:
+      return L"privateNetworkClientServer";
     default:
-      break;
+      return nullptr;
   }
-  return 0;
 }
 
 }  // namespace
@@ -68,39 +78,33 @@ Sid::Sid(WELL_KNOWN_SID_TYPE type) {
 }
 
 Sid Sid::FromKnownCapability(WellKnownCapabilities capability) {
-  DWORD capability_rid = WellKnownCapabilityToRid(capability);
-  if (!capability_rid)
-    return Sid();
-  SID_IDENTIFIER_AUTHORITY capability_authority = {
-      SECURITY_APP_PACKAGE_AUTHORITY};
-  DWORD sub_authorities[] = {SECURITY_CAPABILITY_BASE_RID, capability_rid};
-  return FromSubAuthorities(&capability_authority, 2, sub_authorities);
+  return Sid::FromNamedCapability(WellKnownCapabilityToName(capability));
 }
 
 Sid Sid::FromNamedCapability(const wchar_t* capability_name) {
-  RtlDeriveCapabilitySidsFromNameFunction derive_capability_sids = nullptr;
-  ResolveNTFunctionPtr("RtlDeriveCapabilitySidsFromName",
-                       &derive_capability_sids);
-  RtlInitUnicodeStringFunction init_unicode_string = nullptr;
-  ResolveNTFunctionPtr("RtlInitUnicodeString", &init_unicode_string);
-
-  if (!derive_capability_sids || !init_unicode_string)
+  DeriveCapabilitySidsFromNameFunc* derive_capablity_sids =
+      (DeriveCapabilitySidsFromNameFunc*)GetProcAddress(
+          GetModuleHandle(L"kernelbase"), "DeriveCapabilitySidsFromName");
+  if (!derive_capablity_sids)
     return Sid();
 
   if (!capability_name || ::wcslen(capability_name) == 0)
     return Sid();
 
-  UNICODE_STRING name = {};
-  init_unicode_string(&name, capability_name);
-  Sid capability_sid;
-  Sid group_sid;
+  SidArray capability_group_sids;
+  SidArray capability_sids;
 
-  NTSTATUS status =
-      derive_capability_sids(&name, group_sid.sid_, capability_sid.sid_);
-  if (!NT_SUCCESS(status))
+  if (!derive_capablity_sids(capability_name, capability_group_sids.sids_ptr(),
+                             capability_group_sids.count_ptr(),
+                             capability_sids.sids_ptr(),
+                             capability_sids.count_ptr())) {
+    return Sid();
+  }
+
+  if (capability_sids.count() < 1)
     return Sid();
 
-  return capability_sid;
+  return Sid(capability_sids.sids()[0]);
 }
 
 Sid Sid::FromSddlString(const wchar_t* sddl_sid) {
@@ -111,43 +115,12 @@ Sid Sid::FromSddlString(const wchar_t* sddl_sid) {
   return Sid(converted_sid);
 }
 
-Sid Sid::FromSubAuthorities(PSID_IDENTIFIER_AUTHORITY identifier_authority,
-                            BYTE sub_authority_count,
-                            PDWORD sub_authorities) {
-  Sid sid;
-  if (!::InitializeSid(sid.sid_, identifier_authority, sub_authority_count))
-    return Sid();
-
-  for (DWORD index = 0; index < sub_authority_count; ++index) {
-    PDWORD sub_authority = GetSidSubAuthority(sid.sid_, index);
-    *sub_authority = sub_authorities[index];
-  }
-  return sid;
-}
-
-Sid Sid::AllRestrictedApplicationPackages() {
-  SID_IDENTIFIER_AUTHORITY package_authority = {SECURITY_APP_PACKAGE_AUTHORITY};
-  DWORD sub_authorities[] = {SECURITY_APP_PACKAGE_BASE_RID,
-                             SECURITY_BUILTIN_PACKAGE_ANY_RESTRICTED_PACKAGE};
-  return FromSubAuthorities(&package_authority, 2, sub_authorities);
-}
-
 PSID Sid::GetPSID() const {
   return const_cast<BYTE*>(sid_);
 }
 
 bool Sid::IsValid() const {
   return !!::IsValidSid(GetPSID());
-}
-
-// Converts the SID to an SDDL format string.
-bool Sid::ToSddlString(base::string16* sddl_string) const {
-  LPWSTR sid = nullptr;
-  if (!::ConvertSidToStringSid(GetPSID(), &sid))
-    return false;
-  std::unique_ptr<void, LocalFreeDeleter> sid_ptr(sid);
-  *sddl_string = sid;
-  return true;
 }
 
 }  // namespace sandbox

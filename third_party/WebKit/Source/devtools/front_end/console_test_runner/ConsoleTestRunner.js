@@ -197,7 +197,6 @@ ConsoleTestRunner.addConsoleViewSniffer = function(override, opt_sticky) {
  * @param {boolean=} dontForceMainContext
  */
 ConsoleTestRunner.evaluateInConsoleAndDump = function(code, callback, dontForceMainContext) {
-  callback = TestRunner.safeWrap(callback);
   /**
    * @param {string} text
    */
@@ -296,10 +295,8 @@ ConsoleTestRunner.dumpConsoleMessagesWithClasses = function(sortMessages) {
 
 ConsoleTestRunner.dumpConsoleClassesBrief = function() {
   var messageViews = Console.ConsoleView.instance()._visibleViewMessages;
-  for (var i = 0; i < messageViews.length; ++i) {
-    var repeatText = messageViews[i].repeatCount() > 1 ? (' x' + messageViews[i].repeatCount()) : '';
-    TestRunner.addResult(messageViews[i].toMessageElement().className + repeatText);
-  }
+  for (var i = 0; i < messageViews.length; ++i)
+    TestRunner.addResult(messageViews[i].toMessageElement().className);
 };
 
 ConsoleTestRunner.dumpConsoleCounters = async function() {

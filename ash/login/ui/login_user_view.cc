@@ -8,7 +8,6 @@
 
 #include "ash/ash_constants.h"
 #include "ash/login/ui/animated_rounded_image_view.h"
-#include "ash/login/ui/hover_notifier.h"
 #include "ash/login/ui/image_parser.h"
 #include "ash/login/ui/login_bubble.h"
 #include "ash/login/ui/login_constants.h"
@@ -99,7 +98,7 @@ class LoginUserView::UserImage : public NonAccessibleView {
     // TODO(jdufault): We need to render a black border. We will probably have
     // to add support directly to AnimatedRoundedImageView, since the existing
     // views::Border renders based on bounds (ie, a rectangle).
-    image_ = new AnimatedRoundedImageView(gfx::Size(size_, size_), size_ / 2);
+    image_ = new AnimatedRoundedImageView(size_ / 2);
     AddChildView(image_);
   }
   ~UserImage() override = default;
@@ -109,7 +108,7 @@ class LoginUserView::UserImage : public NonAccessibleView {
     // Then, decode the bytes via blink's PNG decoder and play any animated
     // frames if they are available.
     if (!user->basic_user_info->avatar.isNull())
-      image_->SetImage(user->basic_user_info->avatar);
+      image_->SetImage(user->basic_user_info->avatar, gfx::Size(size_, size_));
 
     // Decode the avatar using blink, as blink's PNG decoder supports APNG,
     // which is the format used for the animated avators.
@@ -130,7 +129,7 @@ class LoginUserView::UserImage : public NonAccessibleView {
       return;
     }
 
-    image_->SetAnimation(animation);
+    image_->SetAnimation(animation, gfx::Size(size_, size_));
   }
 
   AnimatedRoundedImageView* image_ = nullptr;
@@ -215,6 +214,25 @@ bool LoginUserView::TestApi::is_opaque() const {
   return view_->is_opaque_;
 }
 
+// Opacity updates are dispatched via a PreTarget event handler to ensure that
+// LoginUserView receives an opacity update for every event, even if the event
+// is handled elsewhere.
+class LoginUserView::OpacityInputHandler : public ui::EventHandler {
+ public:
+  explicit OpacityInputHandler(LoginUserView* user_view)
+      : user_view_(user_view) {}
+
+  // ui::EventHandler:
+  void OnMouseEvent(ui::MouseEvent* event) override {
+    user_view_->UpdateOpacity();
+  }
+
+ private:
+  LoginUserView* user_view_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(OpacityInputHandler);
+};
+
 // static
 int LoginUserView::WidthForLayoutStyle(LoginDisplayStyle style) {
   switch (style) {
@@ -233,7 +251,10 @@ int LoginUserView::WidthForLayoutStyle(LoginDisplayStyle style) {
 LoginUserView::LoginUserView(LoginDisplayStyle style,
                              bool show_dropdown,
                              const OnTap& on_tap)
-    : views::Button(this), on_tap_(on_tap), display_style_(style) {
+    : views::Button(this),
+      on_tap_(on_tap),
+      opacity_input_handler_(std::make_unique<OpacityInputHandler>(this)),
+      display_style_(style) {
   // show_dropdown can only be true when the user view is rendering in large
   // mode.
   DCHECK(!show_dropdown || style == LoginDisplayStyle::kLarge);
@@ -277,13 +298,13 @@ LoginUserView::LoginUserView(LoginDisplayStyle style,
   if (user_dropdown_)
     setup_layer(user_dropdown_);
 
+  AddPreTargetHandler(opacity_input_handler_.get());
   SetFocusBehavior(FocusBehavior::ALWAYS);
-
-  hover_notifier_ = std::make_unique<HoverNotifier>(
-      this, base::Bind(&LoginUserView::OnHover, base::Unretained(this)));
 }
 
-LoginUserView::~LoginUserView() = default;
+LoginUserView::~LoginUserView() {
+  RemovePreTargetHandler(opacity_input_handler_.get());
+}
 
 void LoginUserView::UpdateForUser(const mojom::LoginUserInfoPtr& user,
                                   bool animate) {
@@ -373,9 +394,8 @@ void LoginUserView::OnBlur() {
 }
 
 void LoginUserView::ButtonPressed(Button* sender, const ui::Event& event) {
-  // Handle click on the dropdown arrow.
-  if (sender == user_dropdown_) {
-    DCHECK(user_dropdown_);
+  on_tap_.Run();
+  if (user_dropdown_ && sender == user_dropdown_) {
     if (!user_menu_ || !user_menu_->IsVisible()) {
       user_menu_ = std::make_unique<LoginBubble>();
       base::string16 display_name =
@@ -392,16 +412,7 @@ void LoginUserView::ButtonPressed(Button* sender, const ui::Event& event) {
     } else {
       user_menu_->Close();
     }
-
-    return;
   }
-
-  // Run generic on_tap handler for any other click.
-  on_tap_.Run();
-}
-
-void LoginUserView::OnHover(bool has_hover) {
-  UpdateOpacity();
 }
 
 void LoginUserView::UpdateCurrentUserState() {

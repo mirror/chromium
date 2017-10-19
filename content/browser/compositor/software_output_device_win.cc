@@ -7,9 +7,11 @@
 #include "base/debug/alias.h"
 #include "base/memory/shared_memory.h"
 #include "components/viz/common/quads/shared_bitmap.h"
+#include "content/public/browser/browser_thread.h"
 #include "skia/ext/platform_canvas.h"
 #include "skia/ext/skia_utils_win.h"
 #include "ui/base/win/internal_constants.h"
+#include "ui/compositor/compositor.h"
 #include "ui/gfx/gdi_util.h"
 #include "ui/gfx/skia_util.h"
 
@@ -85,11 +87,13 @@ size_t OutputDeviceBacking::GetMaxByteSize() {
 }
 
 SoftwareOutputDeviceWin::SoftwareOutputDeviceWin(OutputDeviceBacking* backing,
-                                                 gfx::AcceleratedWidget widget)
-    : hwnd_(widget),
+                                                 ui::Compositor* compositor)
+    : hwnd_(compositor->widget()),
       is_hwnd_composited_(false),
       backing_(backing),
       in_paint_(false) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   is_hwnd_composited_ = !!::GetProp(hwnd_, ui::kWindowTranslucent);
   // Layered windows must be completely updated every time, so they can't
   // share contents with other windows.
@@ -100,7 +104,7 @@ SoftwareOutputDeviceWin::SoftwareOutputDeviceWin(OutputDeviceBacking* backing,
 }
 
 SoftwareOutputDeviceWin::~SoftwareOutputDeviceWin() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!in_paint_);
   if (backing_)
     backing_->UnregisterOutputDevice(this);
@@ -108,7 +112,7 @@ SoftwareOutputDeviceWin::~SoftwareOutputDeviceWin() {
 
 void SoftwareOutputDeviceWin::Resize(const gfx::Size& viewport_pixel_size,
                                      float scale_factor) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!in_paint_);
 
   if (viewport_pixel_size_ == viewport_pixel_size)
@@ -121,7 +125,7 @@ void SoftwareOutputDeviceWin::Resize(const gfx::Size& viewport_pixel_size,
 }
 
 SkCanvas* SoftwareOutputDeviceWin::BeginPaint(const gfx::Rect& damage_rect) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!in_paint_);
   if (!contents_) {
     HANDLE shared_section = NULL;
@@ -148,7 +152,7 @@ SkCanvas* SoftwareOutputDeviceWin::BeginPaint(const gfx::Rect& damage_rect) {
 }
 
 void SoftwareOutputDeviceWin::EndPaint() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(in_paint_);
 
   in_paint_ = false;

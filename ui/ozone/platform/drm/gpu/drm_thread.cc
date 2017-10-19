@@ -96,7 +96,7 @@ void DrmThread::Init() {
       switches::kEnableDrmAtomic);
 
   device_manager_.reset(
-      new DrmDeviceManager(std::make_unique<GbmDeviceGenerator>(use_atomic)));
+      new DrmDeviceManager(base::MakeUnique<GbmDeviceGenerator>(use_atomic)));
   buffer_generator_.reset(new GbmBufferGenerator());
   screen_manager_.reset(new ScreenManager(buffer_generator_.get()));
 
@@ -253,7 +253,9 @@ void DrmThread::CheckOverlayCapabilities(
 
 void DrmThread::RefreshNativeDisplays(
     base::OnceCallback<void(MovableDisplaySnapshots)> callback) {
-  std::move(callback).Run(display_manager_->GetDisplays());
+  auto snapshots =
+      CreateMovableDisplaySnapshotsFromParams(display_manager_->GetDisplays());
+  std::move(callback).Run(std::move(snapshots));
 }
 
 void DrmThread::ConfigureNativeDisplay(

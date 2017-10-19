@@ -30,6 +30,7 @@
 #ifndef Document_h
 #define Document_h
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -74,15 +75,11 @@
 #include "public/platform/WebFocusType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 
-namespace ukm {
-class UkmRecorder;
-}  // namespace ukm
-
 namespace blink {
 
 namespace mojom {
 enum class EngagementLevel : int32_t;
-}  // namespace mojom
+}
 
 class AnimationClock;
 class AXObjectCache;
@@ -558,7 +555,7 @@ class CORE_EXPORT Document : public ContainerNode,
                                   int& margin_bottom,
                                   int& margin_left);
 
-  ResourceFetcher* Fetcher() const override { return fetcher_.Get(); }
+  ResourceFetcher* Fetcher() const { return fetcher_.Get(); }
 
   void Initialize();
   virtual void Shutdown();
@@ -638,7 +635,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   // Return the document URL, or an empty URL if it's unavailable.
   // This is not an implementation of web-exposed Document.prototype.URL.
-  const KURL& Url() const final { return url_; }
+  const KURL& Url() const { return url_; }
   void SetURL(const KURL&);
 
   // Bind the url to document.url, if unavailable bind to about:blank.
@@ -649,7 +646,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   // Document base URL.
   // https://html.spec.whatwg.org/multipage/urls-and-fetching.html#document-base-url
-  const KURL& BaseURL() const final;
+  const KURL& BaseURL() const;
   void SetBaseURLOverride(const KURL&);
   const KURL& BaseURLOverride() const { return base_url_override_; }
   KURL ValidBaseElementURL() const;
@@ -663,7 +660,7 @@ class CORE_EXPORT Document : public ContainerNode,
   // Creates URL based on passed relative url and this documents base URL.
   // Depending on base URL value it is possible that parent document
   // base URL will be used instead. Uses CompleteURLWithOverride internally.
-  KURL CompleteURL(const String&) const final;
+  KURL CompleteURL(const String&) const;
   // Creates URL based on passed relative url and passed base URL override.
   KURL CompleteURLWithOverride(const String&,
                                const KURL& base_url_override) const;
@@ -1291,7 +1288,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void UpdateActiveStyle();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
@@ -1372,27 +1369,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void SetFeaturePolicy(const String& feature_policy_header);
 
-  const AtomicString& bgColor() const;
-  void setBgColor(const AtomicString&);
-  const AtomicString& fgColor() const;
-  void setFgColor(const AtomicString&);
-  const AtomicString& alinkColor() const;
-  void setAlinkColor(const AtomicString&);
-  const AtomicString& linkColor() const;
-  void setLinkColor(const AtomicString&);
-  const AtomicString& vlinkColor() const;
-  void setVlinkColor(const AtomicString&);
-
-  void clear() {}
-
-  void captureEvents() {}
-  void releaseEvents() {}
-
-  ukm::UkmRecorder* UkmRecorder();
-  int64_t UkmSourceID() const;
-
-  void RecordUkmOutliveTimeAfterShutdown(int outlive_time_count);
-
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1438,7 +1414,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   bool NeedsFullLayoutTreeUpdate() const;
 
-  void PropagateStyleToViewport();
+  void PropagateStyleToViewport(StyleRecalcChange);
 
   void UpdateUseShadowTreesIfNeeded();
   void EvaluateMediaQueryListIfNeeded();
@@ -1467,6 +1443,12 @@ class CORE_EXPORT Document : public ContainerNode,
   bool IsSecureContextImpl() const;
 
   ShadowCascadeOrder shadow_cascade_order_ = kShadowCascadeNone;
+
+  // Same as url(), but needed for ExecutionContext to implement it without a
+  // performance loss for direct calls.
+  const KURL& VirtualURL() const final;
+  // Same as completeURL() for the same reason as above.
+  KURL VirtualCompleteURL(const String&) const final;
 
   void UpdateTitle(const String&);
   void UpdateFocusAppearanceTimerFired(TimerBase*);
@@ -1512,9 +1494,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void UpdateActiveState(const HitTestRequest&, Element*);
   void UpdateHoverState(const HitTestRequest&, Element*);
-
-  const AtomicString& BodyAttributeValue(const QualifiedName&) const;
-  void SetBodyAttribute(const QualifiedName&, const AtomicString&);
 
   DocumentLifecycle lifecycle_;
 
@@ -1765,12 +1744,6 @@ class CORE_EXPORT Document : public ContainerNode,
   bool has_high_media_engagement_;
 
   std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
-
-  // |mojo_ukm_recorder_| and |source_id_| will allow objects that are part of
-  // the |ukm_recorder_| and |source_id_| will allow objects that are part of
-  // the document to recorde UKM.
-  std::unique_ptr<ukm::UkmRecorder> ukm_recorder_;
-  int64_t ukm_source_id_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

@@ -60,8 +60,7 @@ class TestImage : public Image {
             const FloatRect&,
             const FloatRect&,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            ImageDecodingMode) override {
+            ImageClampingMode) override {
     // Image pure virtual stub.
   }
 
@@ -70,7 +69,7 @@ class TestImage : public Image {
   }
 
  private:
-  TestImage(IntSize size, bool opaque) : Image(nullptr), size_(size) {
+  TestImage(IntSize size, bool opaque) : Image(0), size_(size) {
     sk_sp<SkSurface> surface = CreateSkSurface(size, opaque);
     if (!surface)
       return;
@@ -104,11 +103,11 @@ TEST(ImageLayerChromiumTest, imageLayerContentReset) {
   RefPtr<Image> image = TestImage::Create(IntSize(100, 100), opaque);
   ASSERT_TRUE(image.get());
 
-  graphics_layer->SetContentsToImage(image.get(), Image::kUnspecifiedDecode);
+  graphics_layer->SetContentsToImage(image.get());
   ASSERT_TRUE(graphics_layer->HasContentsLayer());
   ASSERT_TRUE(graphics_layer->ContentsLayer());
 
-  graphics_layer->SetContentsToImage(nullptr, Image::kUnspecifiedDecode);
+  graphics_layer->SetContentsToImage(0);
   ASSERT_FALSE(graphics_layer->HasContentsLayer());
   ASSERT_FALSE(graphics_layer->ContentsLayer());
 }
@@ -128,12 +127,10 @@ TEST(ImageLayerChromiumTest, opaqueImages) {
 
   ASSERT_FALSE(graphics_layer->ContentsLayer());
 
-  graphics_layer->SetContentsToImage(opaque_image.get(),
-                                     Image::kUnspecifiedDecode);
+  graphics_layer->SetContentsToImage(opaque_image.get());
   ASSERT_TRUE(graphics_layer->ContentsLayer()->Opaque());
 
-  graphics_layer->SetContentsToImage(non_opaque_image.get(),
-                                     Image::kUnspecifiedDecode);
+  graphics_layer->SetContentsToImage(non_opaque_image.get());
   ASSERT_FALSE(graphics_layer->ContentsLayer()->Opaque());
 }
 

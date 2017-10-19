@@ -179,6 +179,14 @@ ContentSecurityPolicy* ExecutionContext::GetContentSecurityPolicy() {
   return GetSecurityContext().GetContentSecurityPolicy();
 }
 
+const KURL& ExecutionContext::Url() const {
+  return VirtualURL();
+}
+
+KURL ExecutionContext::CompleteURL(const String& url) const {
+  return VirtualCompleteURL(url);
+}
+
 void ExecutionContext::AllowWindowInteraction() {
   ++window_interaction_tokens_;
 }
@@ -243,7 +251,7 @@ void ExecutionContext::RemoveURLFromMemoryCache(const KURL& url) {
   GetMemoryCache()->RemoveURLFromCache(url);
 }
 
-void ExecutionContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ExecutionContext) {
   visitor->Trace(public_url_manager_);
   visitor->Trace(pending_exceptions_);
   ContextLifecycleNotifier::Trace(visitor);

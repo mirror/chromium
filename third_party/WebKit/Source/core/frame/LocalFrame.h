@@ -107,7 +107,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   // Frame overrides:
   ~LocalFrame() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   void Navigate(Document& origin_document,
                 const KURL&,
                 bool replace_current_item,
@@ -230,8 +230,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   service_manager::InterfaceProvider& GetInterfaceProvider();
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }
 
-  String GetInstrumentationToken() { return instrumentation_token_; }
-
   LocalFrameClient* Client() const;
 
   ContentSettingsClient* GetContentSettingsClient();
@@ -251,7 +249,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void MaybeAllowImagePlaceholder(FetchParameters&) const;
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                RefPtr<WebTaskRunner>);
+                                                WebTaskRunner*);
 
   bool IsInert() const { return is_inert_; }
 
@@ -336,7 +334,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   Member<IdlenessDetector> idleness_detector_;
 
   InterfaceRegistry* const interface_registry_;
-  String instrumentation_token_;
 
   IntRect remote_viewport_intersection_;
   std::unique_ptr<FrameResourceCoordinator> frame_resource_coordinator_;

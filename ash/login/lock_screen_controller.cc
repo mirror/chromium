@@ -73,26 +73,19 @@ void LockScreenController::ClearErrors() {
 
 void LockScreenController::ShowUserPodCustomIcon(
     const AccountId& account_id,
-    mojom::EasyUnlockIconOptionsPtr icon) {
-  DataDispatcher()->ShowEasyUnlockIcon(account_id, icon);
+    mojom::UserPodCustomIconOptionsPtr icon) {
+  NOTIMPLEMENTED();
 }
 
 void LockScreenController::HideUserPodCustomIcon(const AccountId& account_id) {
-  auto icon_options = mojom::EasyUnlockIconOptions::New();
-  icon_options->icon = mojom::EasyUnlockIconId::NONE;
-  DataDispatcher()->ShowEasyUnlockIcon(account_id, icon_options);
+  NOTIMPLEMENTED();
 }
 
 void LockScreenController::SetAuthType(
     const AccountId& account_id,
     proximity_auth::mojom::AuthType auth_type,
     const base::string16& initial_value) {
-  if (auth_type == proximity_auth::mojom::AuthType::USER_CLICK) {
-    DataDispatcher()->SetClickToUnlockEnabledForUser(account_id,
-                                                     true /*enabled*/);
-  } else {
-    NOTIMPLEMENTED();
-  }
+  NOTIMPLEMENTED();
 }
 
 void LockScreenController::LoadUsers(std::vector<mojom::LoginUserInfoPtr> users,
@@ -117,13 +110,6 @@ void LockScreenController::AuthenticateUser(
     mojom::LockScreenClient::AuthenticateUserCallback callback) {
   if (!lock_screen_client_)
     return;
-
-  // If auth is disabled by the debug overlay bypass the mojo call entirely, as
-  // it will dismiss the lock screen if the password is correct.
-  if (force_fail_auth_for_debug_overlay_) {
-    std::move(callback).Run(false);
-    return;
-  }
 
   // We cannot execute auth requests directly via GetSystemSalt because it
   // expects a base::Callback instance, but |callback| is a base::OnceCallback.

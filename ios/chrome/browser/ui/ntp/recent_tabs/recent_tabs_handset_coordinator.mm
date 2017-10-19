@@ -20,7 +20,7 @@
     RecentTabsHandsetViewController* recentTabsViewController;
 @property(nonatomic, strong) RecentTabsTableCoordinator* tableCoordinator;
 // Completion block called once the recentTabsViewController is dismissed.
-@property(nonatomic, copy) ProceduralBlock completion;
+@property(nonatomic, assign) ProceduralBlock completion;
 
 @end
 

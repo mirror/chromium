@@ -6,7 +6,7 @@
 
 namespace blink {
 
-void ModuleScriptFetcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleScriptFetcher) {
   visitor->Trace(client_);
 }
 

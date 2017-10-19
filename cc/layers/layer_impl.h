@@ -164,17 +164,8 @@ class CC_EXPORT LayerImpl {
   void SetDrawsContent(bool draws_content);
   bool DrawsContent() const { return draws_content_; }
 
-  // Make the layer hit test (see: |should_hit_test|) even if !draws_content_.
-  void SetHitTestableWithoutDrawsContent(bool should_hit_test);
-  bool hit_testable_without_draws_content() const {
-    return hit_testable_without_draws_content_;
-  }
-
-  // True if either the layer draws content or has been marked as hit testable
-  // without draws_content.
-  bool should_hit_test() const {
-    return draws_content_ || hit_testable_without_draws_content_;
-  }
+  void SetShouldHitTest(bool should_hit_test);
+  bool should_hit_test() const { return should_hit_test_; }
 
   LayerImplTestProperties* test_properties() {
     if (!test_properties_)
@@ -342,10 +333,7 @@ class CC_EXPORT LayerImpl {
   void AddDamageRect(const gfx::Rect& damage_rect);
   const gfx::Rect& damage_rect() const { return damage_rect_; }
 
-  virtual std::unique_ptr<base::DictionaryValue> LayerAsJson();
-  // TODO(pdr): This should be removed because there is no longer a tree
-  // of layers, only a list.
-  std::unique_ptr<base::DictionaryValue> LayerTreeAsJson();
+  virtual std::unique_ptr<base::DictionaryValue> LayerTreeAsJson();
 
   // This includes |layer_property_changed_not_from_property_trees_| and
   // property_trees changes.
@@ -515,11 +503,7 @@ class CC_EXPORT LayerImpl {
   bool should_check_backface_visibility_ : 1;
   bool draws_content_ : 1;
   bool contributes_to_drawn_render_surface_ : 1;
-
-  // Hit testing depends on draws_content (see: |LayerImpl::should_hit_test|)
-  // and this bit can be set to cause the layer to be hit testable without
-  // draws_content.
-  bool hit_testable_without_draws_content_ : 1;
+  bool should_hit_test_ : 1;
   bool is_resized_by_browser_controls_ : 1;
 
   static_assert(LAST_VIEWPORT_LAYER_TYPE < (1u << 3),

@@ -129,8 +129,9 @@ class CHROMEOS_EXPORT FakeShillDeviceClient
   void PassStubDeviceProperties(const dbus::ObjectPath& device_path,
                                 const DictionaryValueCallback& callback) const;
 
-  // Posts a task to run a void callback with status code |result|.
-  void PostVoidCallback(VoidDBusMethodCallback callback, bool result);
+  // Posts a task to run a void callback with status code |status|.
+  void PostVoidCallback(VoidDBusMethodCallback callback,
+                        DBusMethodCallStatus status);
 
   void SetPropertyInternal(const dbus::ObjectPath& device_path,
                            const std::string& name,

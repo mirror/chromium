@@ -218,8 +218,7 @@ class TestURLLoaderThrottle : public URLLoaderThrottle {
       will_redirect_request_callback_.Run(delegate_, defer);
   }
 
-  void WillProcessResponse(const ResourceResponseHead& response_head,
-                           bool* defer) override {
+  void WillProcessResponse(bool* defer) override {
     will_process_response_called_++;
     if (will_process_response_callback_)
       will_process_response_callback_.Run(delegate_, defer);

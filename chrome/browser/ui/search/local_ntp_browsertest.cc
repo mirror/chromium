@@ -89,7 +89,7 @@ content::WebContents* OpenNewTab(Browser* browser, const GURL& url) {
 
 // Switches the browser language to French, and returns true iff successful.
 bool SwitchToFrench() {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   // Make sure the default language is not French.
   std::string default_locale = g_browser_process->GetApplicationLocale();
   EXPECT_NE("fr", default_locale);
@@ -111,45 +111,9 @@ class LocalNTPTest : public InProcessBrowserTest {
  public:
   LocalNTPTest() {}
 
-  // Navigates the active tab to chrome://newtab and waits until the NTP is
-  // fully loaded. Note that simply waiting for a navigation is not enough,
-  // since the MV iframe receives the tiles asynchronously.
-  void NavigateToNTPAndWaitUntilLoaded() {
-    content::WebContents* active_tab =
-        browser()->tab_strip_model()->GetActiveWebContents();
-
-    // Attach a message queue *before* navigating to the NTP, to make sure we
-    // don't miss the 'loaded' message.
-    content::DOMMessageQueue msg_queue(active_tab);
-
-    // Navigate to the NTP.
-    ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
-    ASSERT_TRUE(search::IsInstantNTP(active_tab));
-    ASSERT_EQ(GURL(chrome::kChromeSearchLocalNtpUrl),
-              active_tab->GetController().GetVisibleEntry()->GetURL());
-
-    // When the iframe has loaded all the tiles, it sends a 'loaded' postMessage
-    // to the page. Wait for that message to arrive.
-    ASSERT_TRUE(content::ExecuteScript(active_tab, R"js(
-      window.addEventListener('message', function(event) {
-        if (event.data.cmd == 'loaded') {
-          domAutomationController.send('NavigateToNTPAndWaitUntilLoaded');
-        }
-      });
-    )js"));
-    std::string message;
-    // First get rid of a message produced by the ExecuteScript call above.
-    ASSERT_TRUE(msg_queue.PopMessage(&message));
-    // Now wait for the "NavigateToNTPAndWaitUntilLoaded" message.
-    ASSERT_TRUE(msg_queue.WaitForMessage(&message));
-    ASSERT_EQ("\"NavigateToNTPAndWaitUntilLoaded\"", message);
-    // There shouldn't be any other messages.
-    ASSERT_FALSE(msg_queue.PopMessage(&message));
-  }
-
   void SetUserSelectedDefaultSearchProvider(const std::string& base_url,
                                             const std::string& ntp_url) {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     TemplateURLData data;
     data.SetShortName(base::UTF8ToUTF16(base_url));
     data.SetKeyword(base::UTF8ToUTF16(base_url));
@@ -259,10 +223,11 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, GoogleNTPLoadsWithoutError) {
   content::ConsoleObserverDelegate console_observer(active_tab, "*");
   active_tab->SetDelegate(&console_observer);
 
-  base::HistogramTester histograms;
-
   // Navigate to the NTP.
-  NavigateToNTPAndWaitUntilLoaded();
+  ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+  ASSERT_EQ(GURL(chrome::kChromeSearchLocalNtpUrl),
+            active_tab->GetController().GetVisibleEntry()->GetURL());
 
   bool is_google = false;
   ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
@@ -272,29 +237,6 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, GoogleNTPLoadsWithoutError) {
 
   // We shouldn't have gotten any console error messages.
   EXPECT_TRUE(console_observer.message().empty()) << console_observer.message();
-
-  // Make sure load time metrics were recorded.
-  histograms.ExpectTotalCount("NewTabPage.LoadTime", 1);
-  histograms.ExpectTotalCount("NewTabPage.LoadTime.LocalNTP", 1);
-  histograms.ExpectTotalCount("NewTabPage.LoadTime.LocalNTP.Google", 1);
-  histograms.ExpectTotalCount("NewTabPage.LoadTime.MostVisited", 1);
-  histograms.ExpectTotalCount("NewTabPage.TilesReceivedTime", 1);
-  histograms.ExpectTotalCount("NewTabPage.TilesReceivedTime.LocalNTP", 1);
-  histograms.ExpectTotalCount("NewTabPage.TilesReceivedTime.MostVisited", 1);
-
-  // Make sure impression metrics were recorded. There should be 2 tiles, the
-  // default prepopulated TopSites (see history::PrepopulatedPage).
-  histograms.ExpectTotalCount("NewTabPage.NumberOfTiles", 1);
-  histograms.ExpectBucketCount("NewTabPage.NumberOfTiles", 2, 1);
-  histograms.ExpectTotalCount("NewTabPage.SuggestionsImpression", 2);
-  histograms.ExpectBucketCount("NewTabPage.SuggestionsImpression", 0, 1);
-  histograms.ExpectBucketCount("NewTabPage.SuggestionsImpression", 1, 1);
-  histograms.ExpectTotalCount("NewTabPage.SuggestionsImpression.client", 2);
-  histograms.ExpectTotalCount("NewTabPage.SuggestionsImpression.Thumbnail", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileTitle", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileTitle.client", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileType", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileType.client", 2);
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPTest, NonGoogleNTPLoadsWithoutError) {
@@ -309,10 +251,11 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, NonGoogleNTPLoadsWithoutError) {
   content::ConsoleObserverDelegate console_observer(active_tab, "*");
   active_tab->SetDelegate(&console_observer);
 
-  base::HistogramTester histograms;
-
   // Navigate to the NTP.
-  NavigateToNTPAndWaitUntilLoaded();
+  ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+  ASSERT_EQ(GURL(chrome::kChromeSearchLocalNtpUrl),
+            active_tab->GetController().GetVisibleEntry()->GetURL());
 
   bool is_google = false;
   ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
@@ -322,29 +265,6 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, NonGoogleNTPLoadsWithoutError) {
 
   // We shouldn't have gotten any console error messages.
   EXPECT_TRUE(console_observer.message().empty()) << console_observer.message();
-
-  // Make sure load time metrics were recorded.
-  histograms.ExpectTotalCount("NewTabPage.LoadTime", 1);
-  histograms.ExpectTotalCount("NewTabPage.LoadTime.LocalNTP", 1);
-  histograms.ExpectTotalCount("NewTabPage.LoadTime.LocalNTP.Other", 1);
-  histograms.ExpectTotalCount("NewTabPage.LoadTime.MostVisited", 1);
-  histograms.ExpectTotalCount("NewTabPage.TilesReceivedTime", 1);
-  histograms.ExpectTotalCount("NewTabPage.TilesReceivedTime.LocalNTP", 1);
-  histograms.ExpectTotalCount("NewTabPage.TilesReceivedTime.MostVisited", 1);
-
-  // Make sure impression metrics were recorded. There should be 2 tiles, the
-  // default prepopulated TopSites (see history::PrepopulatedPage).
-  histograms.ExpectTotalCount("NewTabPage.NumberOfTiles", 1);
-  histograms.ExpectBucketCount("NewTabPage.NumberOfTiles", 2, 1);
-  histograms.ExpectTotalCount("NewTabPage.SuggestionsImpression", 2);
-  histograms.ExpectBucketCount("NewTabPage.SuggestionsImpression", 0, 1);
-  histograms.ExpectBucketCount("NewTabPage.SuggestionsImpression", 1, 1);
-  histograms.ExpectTotalCount("NewTabPage.SuggestionsImpression.client", 2);
-  histograms.ExpectTotalCount("NewTabPage.SuggestionsImpression.Thumbnail", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileTitle", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileTitle.client", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileType", 2);
-  histograms.ExpectTotalCount("NewTabPage.TileType.client", 2);
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPTest, FrenchGoogleNTPLoadsWithoutError) {
@@ -428,6 +348,12 @@ class LocalNTPJavascriptTest : public CustomNTPUrlTest {
 // This runs a bunch of pure JS-side tests, i.e. those that don't require any
 // interaction from the native side.
 IN_PROC_BROWSER_TEST_F(LocalNTPJavascriptTest, SimpleJavascriptTests) {
+  if (content::AreAllSitesIsolatedForTesting()) {
+    LOG(ERROR) << "LocalNTPJavascriptTest.SimpleJavascriptTests doesn't work "
+                  "in --site-per-process mode yet, see crbug.com/695221.";
+    return;
+  }
+
   content::WebContents* active_tab =
       OpenNewTab(browser(), GURL(chrome::kChromeUINewTabURL));
   ASSERT_TRUE(search::IsInstantNTP(active_tab));
@@ -508,6 +434,12 @@ content::RenderFrameHost* GetMostVisitedIframe(content::WebContents* tab) {
 }  // namespace
 
 IN_PROC_BROWSER_TEST_F(LocalNTPJavascriptTest, LoadsIframe) {
+  if (content::AreAllSitesIsolatedForTesting()) {
+    LOG(ERROR) << "LocalNTPJavascriptTest.LoadsIframe doesn't work in "
+                  "--site-per-process mode yet, see crbug.com/695221.";
+    return;
+  }
+
   content::WebContents* active_tab =
       OpenNewTab(browser(), GURL(chrome::kChromeUINewTabURL));
   ASSERT_TRUE(search::IsInstantNTP(active_tab));
@@ -993,7 +925,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowDoodleWhenCached) {
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("Chromium"));
-  // TODO(sfiera): check href by clicking on button.
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
+              Eq<std::string>("https://www.chromium.org/"));
   EXPECT_THAT(console_observer.message(), IsEmpty());
 
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
@@ -1067,7 +1000,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("Chromium"));
-  // TODO(sfiera): check href by clicking on button.
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
+              Eq<std::string>("https://www.chromium.org/"));
 
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
   histograms.ExpectBucketCount("NewTabPage.LogoShown", kLogoImpressionStatic,
@@ -1113,7 +1047,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
               Eq<std::string>("data:image/png;base64,fresh+++"));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("fresh alt text"));
-  // TODO(sfiera): check href by clicking on button.
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
+              Eq<std::string>("https://www.chromium.org/fresh"));
 
   // LogoShown is recorded for both cached and fresh Doodle, but LogoShownTime2
   // is only recorded once per NTP.
@@ -1160,7 +1095,8 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldUpdateMetadataWhenChanged) {
 
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("fresh alt text"));
-  // TODO(sfiera): check href by clicking on button.
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
+              Eq<std::string>("https://www.chromium.org/fresh"));
 
   // Metadata update does not count as a new impression.
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
@@ -1200,13 +1136,17 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldAnimateLogoWhenClicked) {
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("alt text"));
 
+  ASSERT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
+              Eq<std::string>(""));  // No href, just onclick handler.
+
   // Click image, swapping out for animated URL.
   ASSERT_TRUE(content::ExecuteScript(
-      active_tab, "document.getElementById('logo-doodle-button').click();"));
+      active_tab, "document.getElementById('logo-doodle-link').click();"));
 
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "src"),
               Eq(cached_logo.metadata.animated_url.spec()));
-  // TODO(sfiera): check href by clicking on button.
+  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
+              Eq<std::string>("https://www.chromium.org/"));
 
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
   histograms.ExpectBucketCount("NewTabPage.LogoShown", kLogoImpressionCta, 1);

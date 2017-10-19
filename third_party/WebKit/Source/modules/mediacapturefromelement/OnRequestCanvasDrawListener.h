@@ -24,7 +24,7 @@ class OnRequestCanvasDrawListener final
       std::unique_ptr<WebCanvasCaptureHandler>);
   void SendNewFrame(sk_sp<SkImage>) override;
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   OnRequestCanvasDrawListener(std::unique_ptr<WebCanvasCaptureHandler>);

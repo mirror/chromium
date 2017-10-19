@@ -34,9 +34,9 @@ class LocationApiAdapterAndroid {
  public:
   using OnGeopositionCB = base::Callback<void(const Geoposition&)>;
 
-  // Starts the underlying location provider.
+  // Starts the underlying location provider, returns true if successful.
   // Called on |task_runner_|.
-  void Start(OnGeopositionCB on_geoposition_callback, bool high_accuracy);
+  bool Start(OnGeopositionCB on_geoposition_callback, bool high_accuracy);
 
   // Stops the underlying location provider. Called on |task_runner_|.
   void Stop();

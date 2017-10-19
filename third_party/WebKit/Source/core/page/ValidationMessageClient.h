@@ -63,7 +63,7 @@ class ValidationMessageClient : public GarbageCollectedMixin {
   virtual void LayoutOverlay() {}
   virtual void PaintOverlay() {}
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

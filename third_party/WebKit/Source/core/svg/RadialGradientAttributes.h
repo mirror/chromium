@@ -85,7 +85,7 @@ struct RadialGradientAttributes final : GradientAttributes {
   bool HasFy() const { return fy_set_; }
   bool HasFr() const { return fr_set_; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(cx_);
     visitor->Trace(cy_);
     visitor->Trace(r_);
@@ -124,7 +124,7 @@ class RadialGradientAttributesWrapper
   void Set(const RadialGradientAttributes& attributes) {
     attributes_ = attributes;
   }
-  void Trace(blink::Visitor* visitor) { visitor->Trace(attributes_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(attributes_); }
 
  private:
   RadialGradientAttributesWrapper() {}

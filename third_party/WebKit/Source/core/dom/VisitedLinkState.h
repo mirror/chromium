@@ -55,7 +55,7 @@ class VisitedLinkState : public GarbageCollectedFinalized<VisitedLinkState> {
     return EInsideLink::kNotInsideLink;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit VisitedLinkState(const Document&);

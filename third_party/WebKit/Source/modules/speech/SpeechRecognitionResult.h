@@ -47,7 +47,7 @@ class MODULES_EXPORT SpeechRecognitionResult final
   SpeechRecognitionAlternative* item(unsigned index);
   bool isFinal() { return final_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   SpeechRecognitionResult(

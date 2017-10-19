@@ -27,6 +27,7 @@ class CastContentWindowAndroid : public CastContentWindow {
   ~CastContentWindowAndroid() override;
 
   // CastContentWindow implementation:
+  void SetTransparent() override;
   void ShowWebContents(content::WebContents* web_contents,
                        CastWindowManager* window_manager) override;
 

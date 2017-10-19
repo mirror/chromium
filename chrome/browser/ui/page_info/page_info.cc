@@ -136,8 +136,7 @@ bool IsPermissionFactoryDefault(HostContentSettingsMap* content_settings,
 // applies to permissions listed in |kPermissionType|.
 bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
                           const GURL& site_url,
-                          HostContentSettingsMap* content_settings,
-                          content::WebContents* web_contents) {
+                          HostContentSettingsMap* content_settings) {
   // Note |CONTENT_SETTINGS_TYPE_ADS| will show up regardless of its default
   // value when it has been activated on the current origin.
   if (info.type == CONTENT_SETTINGS_TYPE_ADS) {
@@ -151,16 +150,6 @@ bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
     return content_settings->GetWebsiteSetting(
                site_url, GURL(), CONTENT_SETTINGS_TYPE_ADS_DATA, std::string(),
                nullptr) != nullptr;
-  }
-
-  if (info.type == CONTENT_SETTINGS_TYPE_SOUND) {
-    if (!base::FeatureList::IsEnabled(features::kSoundContentSetting))
-      return false;
-
-    // The sound content setting should show always show up when the tab is
-    // playing audio or has recently played audio.
-    if (web_contents && web_contents->WasRecentlyAudible())
-      return true;
   }
 
 #if defined(OS_ANDROID)
@@ -183,6 +172,9 @@ bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
   if (info.type == CONTENT_SETTINGS_TYPE_AUTOPLAY)
     return false;
 #endif
+
+  if (info.type == CONTENT_SETTINGS_TYPE_SOUND)
+    return base::FeatureList::IsEnabled(features::kSoundContentSetting);
 
   return true;
 }
@@ -829,10 +821,8 @@ void PageInfo::PresentSitePermissions() {
         permission_info.setting = permission_result.content_setting;
     }
 
-    if (ShouldShowPermission(permission_info, site_url_, content_settings_,
-                             web_contents())) {
+    if (ShouldShowPermission(permission_info, site_url_, content_settings_))
       permission_info_list.push_back(permission_info);
-    }
   }
 
   for (const ChooserUIInfo& ui_info : kChooserUIInfo) {

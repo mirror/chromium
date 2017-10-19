@@ -6,7 +6,8 @@
 
 namespace media {
 
-PipelineMetadata::PipelineMetadata() : has_audio(false), has_video(false) {}
+PipelineMetadata::PipelineMetadata()
+    : has_audio(false), has_video(false), video_rotation(VIDEO_ROTATION_0) {}
 
 PipelineMetadata::~PipelineMetadata() {}
 

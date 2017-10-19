@@ -102,14 +102,13 @@ Request* Request::CreateRequestWithRequestOrString(
   // We don't use fallback values. We set these flags directly in below.
   // - "Let |fallbackMode| be null."
   // - "Let |fallbackCredentials| be null."
-
-  // "Let |baseURL| be entry settings object's API base URL."
-  const KURL base_url = ExecutionContext::From(script_state)->BaseURL();
+  // - "Let |baseURL| be entry settings object's API base URL."
 
   // "If |input| is a string, run these substeps:"
   if (!input_request) {
     // "Let |parsedURL| be the result of parsing |input| with |baseURL|."
-    KURL parsed_url = KURL(base_url, input_string);
+    KURL parsed_url =
+        ExecutionContext::From(script_state)->CompleteURL(input_string);
     // "If |parsedURL| is failure, throw a TypeError."
     if (!parsed_url.IsValid()) {
       exception_state.ThrowTypeError("Failed to parse URL from " +
@@ -134,7 +133,7 @@ Request* Request::CreateRequestWithRequestOrString(
   }
 
   // "If any of |init|'s members are present, run these substeps:"
-  if (init.AreAnyMembersSet()) {
+  if (init.are_any_members_set) {
     // "If |request|'s |mode| is "navigate", throw a TypeError."
     if (request->Mode() == WebURLRequest::kFetchRequestModeNavigate) {
       exception_state.ThrowTypeError(
@@ -167,22 +166,22 @@ Request* Request::CreateRequestWithRequestOrString(
   // (areAnyMembersSet) is used for the if-clause instead of conditions
   // indicating presence of each member as specified in the spec. This is to
   // perform the substeps in the previous step together here.
-  if (init.AreAnyMembersSet()) {
+  if (init.are_any_members_set) {
     // Nothing to do for the step "Let |referrer| be |init|'s referrer
     // member."
 
-    if (init.GetReferrer().referrer.IsEmpty()) {
+    if (init.referrer.referrer.IsEmpty()) {
       // "If |referrer| is the empty string, set |request|'s referrer to
       // "no-referrer" and terminate these substeps."
       request->SetReferrerString(AtomicString(Referrer::NoReferrer()));
     } else {
       // "Let |parsedReferrer| be the result of parsing |referrer| with
       // |baseURL|."
-      KURL parsed_referrer(base_url, init.GetReferrer().referrer);
+      KURL parsed_referrer = ExecutionContext::From(script_state)
+                                 ->CompleteURL(init.referrer.referrer);
       if (!parsed_referrer.IsValid()) {
         // "If |parsedReferrer| is failure, throw a TypeError."
-        exception_state.ThrowTypeError("Referrer '" +
-                                       init.GetReferrer().referrer +
+        exception_state.ThrowTypeError("Referrer '" + init.referrer.referrer +
                                        "' is not a valid URL.");
         return nullptr;
       }
@@ -199,7 +198,7 @@ Request* Request::CreateRequestWithRequestOrString(
         // "If |parsedReferrer|'s origin is not same origin with
         // |origin|, throw a TypeError."
         exception_state.ThrowTypeError(
-            "The origin of '" + init.GetReferrer().referrer +
+            "The origin of '" + init.referrer.referrer +
             "' should be same as '" + origin->ToString() + "'");
         return nullptr;
       } else {
@@ -207,7 +206,7 @@ Request* Request::CreateRequestWithRequestOrString(
         request->SetReferrerString(AtomicString(parsed_referrer.GetString()));
       }
     }
-    request->SetReferrerPolicy(init.GetReferrer().referrer_policy);
+    request->SetReferrerPolicy(init.referrer.referrer_policy);
   }
 
   // The following code performs the following steps:
@@ -215,17 +214,17 @@ Request* Request::CreateRequestWithRequestOrString(
   //   |fallbackMode| otherwise."
   // - "If |mode| is "navigate", throw a TypeError."
   // - "If |mode| is non-null, set |request|'s mode to |mode|."
-  if (init.Mode() == "navigate") {
+  if (init.mode == "navigate") {
     exception_state.ThrowTypeError(
         "Cannot construct a Request with a RequestInit whose mode member is "
         "set as 'navigate'.");
     return nullptr;
   }
-  if (init.Mode() == "same-origin") {
+  if (init.mode == "same-origin") {
     request->SetMode(WebURLRequest::kFetchRequestModeSameOrigin);
-  } else if (init.Mode() == "no-cors") {
+  } else if (init.mode == "no-cors") {
     request->SetMode(WebURLRequest::kFetchRequestModeNoCORS);
-  } else if (init.Mode() == "cors") {
+  } else if (init.mode == "cors") {
     request->SetMode(WebURLRequest::kFetchRequestModeCORS);
   } else {
     // |inputRequest| is directly checked here instead of setting and
@@ -238,21 +237,21 @@ Request* Request::CreateRequestWithRequestOrString(
   // |fallbackCredentials| otherwise."
   // "If |credentials| is non-null, set |request|'s credentials mode to
   // |credentials|."
-  if (init.Credentials() == "omit") {
+  if (init.credentials == "omit") {
     request->SetCredentials(WebURLRequest::kFetchCredentialsModeOmit);
-  } else if (init.Credentials() == "same-origin") {
+  } else if (init.credentials == "same-origin") {
     request->SetCredentials(WebURLRequest::kFetchCredentialsModeSameOrigin);
-  } else if (init.Credentials() == "include") {
+  } else if (init.credentials == "include") {
     request->SetCredentials(WebURLRequest::kFetchCredentialsModeInclude);
-  } else if (init.Credentials() == "password") {
-    if (!init.AttachedCredential().get()) {
+  } else if (init.credentials == "password") {
+    if (!init.attached_credential.get()) {
       exception_state.ThrowTypeError(
           "Cannot construct a Request with a credential mode of 'password' "
           "without a PasswordCredential.");
       return nullptr;
     }
     request->SetCredentials(WebURLRequest::kFetchCredentialsModePassword);
-    request->SetAttachedCredential(init.AttachedCredential());
+    request->SetAttachedCredential(init.attached_credential);
     request->SetRedirect(WebURLRequest::kFetchRedirectModeManual);
   } else {
     if (!input_request)
@@ -260,54 +259,53 @@ Request* Request::CreateRequestWithRequestOrString(
   }
 
   // "If |init|'s cache member is present, set |request|'s cache mode to it."
-  if (init.CacheMode() == "default") {
+  if (init.cache == "default") {
     request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeDefault);
-  } else if (init.CacheMode() == "no-store") {
+  } else if (init.cache == "no-store") {
     request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeNoStore);
-  } else if (init.CacheMode() == "reload") {
+  } else if (init.cache == "reload") {
     request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeReload);
-  } else if (init.CacheMode() == "no-cache") {
+  } else if (init.cache == "no-cache") {
     request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeNoCache);
-  } else if (init.CacheMode() == "force-cache") {
+  } else if (init.cache == "force-cache") {
     request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeForceCache);
-  } else if (init.CacheMode() == "only-if-cached") {
+  } else if (init.cache == "only-if-cached") {
     request->SetCacheMode(WebURLRequest::kFetchRequestCacheModeOnlyIfCached);
   }
 
   // "If |init|'s redirect member is present, set |request|'s redirect mode
   // to it."
-  if (init.Redirect() == "follow") {
+  if (init.redirect == "follow") {
     request->SetRedirect(WebURLRequest::kFetchRedirectModeFollow);
-  } else if (init.Redirect() == "error") {
+  } else if (init.redirect == "error") {
     request->SetRedirect(WebURLRequest::kFetchRedirectModeError);
-  } else if (init.Redirect() == "manual") {
+  } else if (init.redirect == "manual") {
     request->SetRedirect(WebURLRequest::kFetchRedirectModeManual);
   }
 
   // "If |init|'s integrity member is present, set |request|'s
   // integrity metadata to it."
-  if (!init.Integrity().IsNull())
-    request->SetIntegrity(init.Integrity());
+  if (!init.integrity.IsNull())
+    request->SetIntegrity(init.integrity);
 
   // "If |init|'s method member is present, let |method| be it and run these
   // substeps:"
-  if (!init.Method().IsNull()) {
+  if (!init.method.IsNull()) {
     // "If |method| is not a method or method is a forbidden method, throw
     // a TypeError."
-    if (!IsValidHTTPToken(init.Method())) {
-      exception_state.ThrowTypeError("'" + init.Method() +
+    if (!IsValidHTTPToken(init.method)) {
+      exception_state.ThrowTypeError("'" + init.method +
                                      "' is not a valid HTTP method.");
       return nullptr;
     }
-    if (FetchUtils::IsForbiddenMethod(init.Method())) {
-      exception_state.ThrowTypeError("'" + init.Method() +
+    if (FetchUtils::IsForbiddenMethod(init.method)) {
+      exception_state.ThrowTypeError("'" + init.method +
                                      "' HTTP method is unsupported.");
       return nullptr;
     }
     // "Normalize |method|."
     // "Set |request|'s method to |method|."
-    request->SetMethod(
-        FetchUtils::NormalizeMethod(AtomicString(init.Method())));
+    request->SetMethod(FetchUtils::NormalizeMethod(AtomicString(init.method)));
   }
   // "Let |r| be a new Request object associated with |request| and a new
   // Headers object whose guard is "request"."
@@ -320,7 +318,7 @@ Request* Request::CreateRequestWithRequestOrString(
   // We don't create a copy of r's Headers object when init's headers member
   // is present.
   Headers* headers = nullptr;
-  if (init.GetHeaders().IsNull()) {
+  if (init.headers.IsNull()) {
     headers = r->getHeaders()->Clone();
   }
   // "Empty |r|'s request's header list."
@@ -338,8 +336,8 @@ Request* Request::CreateRequestWithRequestOrString(
     r->getHeaders()->SetGuard(Headers::kRequestNoCORSGuard);
   }
   // "Fill |r|'s Headers object with |headers|. Rethrow any exceptions."
-  if (!init.GetHeaders().IsNull()) {
-    r->getHeaders()->FillWith(init.GetHeaders(), exception_state);
+  if (!init.headers.IsNull()) {
+    r->getHeaders()->FillWith(init.headers, exception_state);
   } else {
     DCHECK(headers);
     r->getHeaders()->FillWith(headers, exception_state);
@@ -349,7 +347,7 @@ Request* Request::CreateRequestWithRequestOrString(
 
   // "If either |init|'s body member is present or |temporaryBody| is
   // non-null, and |request|'s method is `GET` or `HEAD`, throw a TypeError.
-  if (init.GetBody() || temporary_body ||
+  if (init.body || temporary_body ||
       request->Credentials() == WebURLRequest::kFetchCredentialsModePassword) {
     if (request->Method() == HTTPNames::GET ||
         request->Method() == HTTPNames::HEAD) {
@@ -362,7 +360,7 @@ Request* Request::CreateRequestWithRequestOrString(
   // TODO(mkwst): See the comment in RequestInit about serializing the attached
   // credential prior to hitting the Service Worker machinery.
   if (request->Credentials() == WebURLRequest::kFetchCredentialsModePassword) {
-    r->getHeaders()->append(HTTPNames::Content_Type, init.ContentType(),
+    r->getHeaders()->append(HTTPNames::Content_Type, init.content_type,
                             exception_state);
 
     const OriginAccessEntry access_entry =
@@ -378,7 +376,7 @@ Request* Request::CreateRequestWithRequestOrString(
   }
 
   // "If |init|'s body member is present, run these substeps:"
-  if (init.GetBody()) {
+  if (init.body) {
     // Perform the following steps:
     // - "Let |stream| and |Content-Type| be the result of extracting
     //   |init|'s body member."
@@ -387,11 +385,10 @@ Request* Request::CreateRequestWithRequestOrString(
     //   contains no header named `Content-Type`, append
     //   `Content-Type`/|Content-Type| to |r|'s Headers object. Rethrow any
     //   exception."
-    temporary_body =
-        new BodyStreamBuffer(script_state, std::move(init.GetBody()));
-    if (!init.ContentType().IsEmpty() &&
+    temporary_body = new BodyStreamBuffer(script_state, std::move(init.body));
+    if (!init.content_type.IsEmpty() &&
         !r->getHeaders()->has(HTTPNames::Content_Type, exception_state)) {
-      r->getHeaders()->append(HTTPNames::Content_Type, init.ContentType(),
+      r->getHeaders()->append(HTTPNames::Content_Type, init.content_type,
                               exception_state);
     }
     if (exception_state.HadException())
@@ -771,7 +768,7 @@ void Request::RefreshBody(ScriptState* script_state) {
       .Set(request.As<v8::Object>(), body_buffer);
 }
 
-void Request::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Request) {
   Body::Trace(visitor);
   visitor->Trace(request_);
   visitor->Trace(headers_);

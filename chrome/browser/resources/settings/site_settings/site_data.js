@@ -8,24 +8,6 @@
  */
 
 /**
- * @typedef {{
- *   site: string,
- *   id: string,
- *   localData: string,
- * }}
- */
-var CookieDataSummaryItem;
-
-/**
- * @typedef {{
- *   id: string,
- *   start: number,
- *   count: number,
- * }}
- */
-var CookieRemovePacket;
-
-/**
  * TODO(dbeam): upstream to polymer externs?
  * @constructor
  * @extends {Event}
@@ -39,9 +21,9 @@ Polymer({
   is: 'site-data',
 
   behaviors: [
+    CookieTreeBehavior,
     I18nBehavior,
-    settings.GlobalScrollTargetBehavior,
-    WebUIListenerBehavior,
+    settings.RouteObserverBehavior,
   ],
 
   properties: {
@@ -49,9 +31,10 @@ Polymer({
      * The current filter applied to the cookie data list.
      */
     filter: {
-      observer: 'updateSiteList_',
+      observer: 'onSearchChanged_',
       notify: true,
       type: String,
+      value: '',
     },
 
     /** @type {!Map<string, string>} */
@@ -59,35 +42,6 @@ Polymer({
       type: Object,
       observer: 'focusConfigChanged_',
     },
-
-    isLoading_: Boolean,
-
-    /** @type {!Array<!LocalDataItem>} */
-    sites: {
-      type: Array,
-      value: function() {
-        return [];
-      },
-    },
-
-    /**
-     * settings.GlobalScrollTargetBehavior
-     * @override
-     */
-    subpageRoute: {
-      type: Object,
-      value: settings.routes.SITE_SETTINGS_SITE_DATA,
-    },
-  },
-
-  /** @private {settings.LocalDataBrowserProxy} */
-  browserProxy_: null,
-
-  /** @override */
-  ready: function() {
-    this.browserProxy_ = settings.LocalDataBrowserProxyImpl.getInstance();
-    this.addWebUIListener(
-        'on-tree-item-removed', this.updateSiteList_.bind(this));
   },
 
   /**
@@ -98,11 +52,8 @@ Polymer({
    * @protected
    */
   currentRouteChanged: function(currentRoute) {
-    settings.GlobalScrollTargetBehaviorImpl.currentRouteChanged.call(
-        this, currentRoute);
     if (currentRoute == settings.routes.SITE_SETTINGS_SITE_DATA) {
-      this.isLoading_ = true;
-      this.browserProxy_.reloadCookies().then(this.updateSiteList_.bind(this));
+      this.loadCookies();
     }
   },
 
@@ -137,22 +88,33 @@ Polymer({
   },
 
   /**
-   * Gather all the site data.
+   * A filter function for the list.
+   * @param {!CookieDataSummaryItem} item The item to possibly filter out.
+   * @return {boolean} Whether to show the item.
    * @private
    */
-  updateSiteList_: function() {
-    this.isLoading_ = true;
-    this.browserProxy_.getDisplayList(this.filter).then((listInfo) => {
-      this.sites = listInfo.items;
-      this.isLoading_ = false;
-      this.fire('site-data-list-complete');
-    });
+  showItem_: function(item) {
+    if (this.filter.length == 0)
+      return true;
+    return item.site.indexOf(this.filter) > -1;
+  },
+
+  /** @private */
+  onSearchChanged_: function() {
+    this.$.list.render();
+  },
+
+  /**
+   * @return {boolean} Whether to show the multiple site remove button.
+   * @private
+   */
+  isRemoveButtonVisible_: function(sites, renderedItemCount) {
+    return renderedItemCount != 0;
   },
 
   /**
    * Returns the string to use for the Remove label.
-   * @param {string} filter The current filter string.
-   * @return {string}
+   * @return {string} filter The current filter string.
    * @private
    */
   computeRemoveLabel_: function(filter) {
@@ -187,12 +149,15 @@ Polymer({
    */
   onConfirmDelete_: function() {
     this.$.confirmDeleteDialog.close();
+
     if (this.filter.length == 0) {
-      this.browserProxy_.removeAll().then(() => {
-        this.sites = [];
-      });
+      this.removeAllCookies();
     } else {
-      this.browserProxy_.removeShownItems();
+      var items = this.$.list.items;
+      for (var i = 0; i < items.length; ++i) {
+        if (this.showItem_(items[i]))
+          this.browserProxy_.removeCookie(items[i].id);
+      }
       // We just deleted all items found by the filter, let's reset the filter.
       this.fire('clear-subpage-search');
     }
@@ -205,7 +170,7 @@ Polymer({
    */
   onRemoveSiteTap_: function(e) {
     e.stopPropagation();
-    this.browserProxy_.removeItem(e.model.item.site);
+    this.browserProxy_.removeCookie(e.model.item.id);
   },
 
   /**

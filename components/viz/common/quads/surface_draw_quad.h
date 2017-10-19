@@ -7,7 +7,6 @@
 
 #include <memory>
 
-#include "base/optional.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/viz_common_export.h"
@@ -15,32 +14,33 @@
 
 namespace viz {
 
+enum class SurfaceDrawQuadType { PRIMARY, FALLBACK, LAST = FALLBACK };
+
 class VIZ_COMMON_EXPORT SurfaceDrawQuad : public DrawQuad {
  public:
   SurfaceDrawQuad();
-  SurfaceDrawQuad(const SurfaceDrawQuad& other);
-  ~SurfaceDrawQuad() override;
-
-  SurfaceDrawQuad& operator=(const SurfaceDrawQuad& other);
 
   void SetNew(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
               const gfx::Rect& visible_rect,
-              const SurfaceId& primary_surface_id,
-              const base::Optional<SurfaceId>& fallback_surface_id,
-              SkColor default_background_color);
+              const SurfaceId& surface_id,
+              SurfaceDrawQuadType surface_draw_quad_type,
+              SkColor default_background_color,
+              SurfaceDrawQuad* fallback_quad);
 
   void SetAll(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
               const gfx::Rect& visible_rect,
               bool needs_blending,
-              const SurfaceId& primary_surface_id,
-              const base::Optional<SurfaceId>& fallback_surface_id,
-              SkColor default_background_color);
+              const SurfaceId& surface_id,
+              SurfaceDrawQuadType surface_draw_quad_type,
+              SkColor default_background_color,
+              SurfaceDrawQuad* fallback_quad);
 
-  SurfaceId primary_surface_id;
-  base::Optional<SurfaceId> fallback_surface_id;
+  SurfaceId surface_id;
+  SurfaceDrawQuadType surface_draw_quad_type;
   SkColor default_background_color = SK_ColorWHITE;
+  const SurfaceDrawQuad* fallback_quad = nullptr;
 
   static const SurfaceDrawQuad* MaterialCast(const DrawQuad* quad);
 

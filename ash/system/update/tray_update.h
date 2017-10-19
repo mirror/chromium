@@ -55,7 +55,6 @@ class ASH_EXPORT TrayUpdate : public TrayImageItem {
 
   // Overridden from TrayImageItem.
   bool GetInitialVisibility() override;
-  views::View* CreateTrayView(LoginStatus status) override;
   views::View* CreateDefaultView(LoginStatus status) override;
   void OnDefaultViewDestroyed() override;
 

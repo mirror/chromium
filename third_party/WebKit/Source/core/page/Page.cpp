@@ -41,7 +41,7 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/geometry/DOMRectList.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/page/AutoscrollController.h"
@@ -51,7 +51,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/PluginsChangedObserver.h"
 #include "core/page/PointerLockController.h"
-#include "core/page/ScopedPagePauser.h"
+#include "core/page/ScopedPageSuspender.h"
 #include "core/page/ValidationMessageClient.h"
 #include "core/page/scrolling/OverscrollController.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
@@ -99,7 +99,7 @@ float DeviceScaleFactorDeprecated(LocalFrame* frame) {
 Page* Page::CreateOrdinary(PageClients& page_clients) {
   Page* page = Create(page_clients);
   OrdinaryPages().insert(page);
-  if (ScopedPagePauser::IsActive())
+  if (ScopedPageSuspender::IsActive())
     page->SetPaused(true);
   return page;
 }
@@ -643,7 +643,7 @@ void Page::AcceptLanguagesChanged() {
     frames[i]->DomWindow()->AcceptLanguagesChanged();
 }
 
-void Page::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Page) {
   visitor->Trace(animator_);
   visitor->Trace(autoscroll_controller_);
   visitor->Trace(chrome_client_);

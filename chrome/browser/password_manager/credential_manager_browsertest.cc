@@ -7,7 +7,6 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/password_manager/password_manager_test_base.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
@@ -31,9 +30,7 @@ namespace {
 
 class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
  public:
-  CredentialManagerBrowserTest() {
-    scoped_feature_list_.InitAndEnableFeature(features::kWebAuth);
-  }
+  CredentialManagerBrowserTest() = default;
 
   void SetUpOnMainThread() override {
     PasswordManagerBrowserTestBase::SetUpOnMainThread();
@@ -50,6 +47,8 @@ class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
     // To permit using webauthentication features.
     command_line->AppendSwitch(
         switches::kEnableExperimentalWebPlatformFeatures);
+    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                    features::kWebAuth.name);
   }
 
   // Similarly to PasswordManagerBrowserTestBase::NavigateToFile this is a
@@ -287,8 +286,6 @@ class CredentialManagerBrowserTest : public PasswordManagerBrowserTestBase {
   }
 
  private:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   DISALLOW_COPY_AND_ASSIGN(CredentialManagerBrowserTest);
 };
 

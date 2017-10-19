@@ -40,6 +40,14 @@ const char kAllowInsecureLocalhost[] = "allow-insecure-localhost";
 const char kAllowLoopbackInPeerConnection[] =
     "allow-loopback-in-peer-connection";
 
+// Enables the sandboxed processes to run without a job object assigned to them.
+// This flag is required to allow Chrome to run in RemoteApps or Citrix. This
+// flag can reduce the security of the sandboxed processes and allow them to do
+// certain API calls like shut down Windows or access the clipboard. Also we
+// lose the chance to kill some processes until the outer job that owns them
+// finishes.
+const char kAllowNoSandboxJob[]             = "allow-no-sandbox-job";
+
 // Allows debugging of sandboxed processes (see zygote_main_linux.cc).
 const char kAllowSandboxDebugging[]         = "allow-sandbox-debugging";
 
@@ -207,11 +215,6 @@ const char kDisableMojoLocalStorage[] = "disable-mojo-local-storage";
 
 // Disables usage of the namespace sandbox.
 const char kDisableNamespaceSandbox[]       = "disable-namespace-sandbox";
-
-// Disables clearing the rendering output of a renderer when it didn't commit
-// new output for a while after a top-frame navigation.
-const char kDisableNewContentRenderingTimeout[] =
-    "disable-new-content-rendering-timeout";
 
 // Disables the Web Notification and the Push APIs.
 const char kDisableNotifications[]          = "disable-notifications";
@@ -382,6 +385,16 @@ const char kDisableOriginTrialControlledBlinkFeatures[] =
 // Comma-separated list of feature names to enable. See also kDisableFeatures.
 const char kEnableFeatures[] = "enable-features";
 
+// WebFonts intervention v2 flag and values.
+const char kEnableWebFontsInterventionV2[] = "enable-webfonts-intervention-v2";
+const char kEnableWebFontsInterventionV2SwitchValueEnabledWith2G[] =
+    "enabled-2g";
+const char kEnableWebFontsInterventionV2SwitchValueEnabledWith3G[] =
+    "enabled-3g";
+const char kEnableWebFontsInterventionV2SwitchValueEnabledWithSlow2G[] =
+    "enabled-slow2g";
+const char kEnableWebFontsInterventionV2SwitchValueDisabled[] = "disabled";
+
 // Makes the GL worker context run asynchronously by using a separate stream.
 const char kEnableGpuAsyncWorkerContext[] = "enable-gpu-async-worker-context";
 
@@ -495,6 +508,10 @@ const char kEnableVtune[]                   = "enable-vtune-support";
 
 // Enable Vulkan support, must also have ENABLE_VULKAN defined.
 const char kEnableVulkan[] = "enable-vulkan";
+
+// Enable WebFonts intervention and trigger the signal always.
+const char kEnableWebFontsInterventionTrigger[] =
+    "enable-webfonts-intervention-trigger";
 
 // Enables WebGL extensions not yet approved by the community.
 const char kEnableWebGLDraftExtensions[] = "enable-webgl-draft-extensions";
@@ -665,6 +682,10 @@ const char kNoSandbox[]                     = "no-sandbox";
 // zygote to work.
 const char kNoZygote[] = "no-zygote";
 
+// Enable or disable appcontainer/lowbox for renderer on Win8+ platforms.
+const char kEnableAppContainer[]           = "enable-appcontainer";
+const char kDisableAppContainer[]          = "disable-appcontainer";
+
 // Number of worker threads used to rasterize content.
 const char kNumRasterThreads[]              = "num-raster-threads";
 
@@ -759,6 +780,10 @@ const char kProxyServer[] = "proxy-server";
 // Set the value to '1' to enable the feature, and set to '0' to disable.
 // Defaults to disabled.
 const char kPullToRefresh[] = "pull-to-refresh";
+
+// Enables more web features over insecure connections. Designed to be used
+// for testing purposes only.
+const char kReduceSecurityForTesting[]      = "reduce-security-for-testing";
 
 // Register Pepper plugins (see pepper_plugin_list.cc for its format).
 const char kRegisterPepperPlugins[]         = "register-pepper-plugins";
@@ -1059,6 +1084,9 @@ const char kDeviceScaleFactor[]     = "device-scale-factor";
 
 // Disable the Legacy Window which corresponds to the size of the WebContents.
 const char kDisableLegacyIntermediateWindow[] = "disable-legacy-window";
+
+// Disables the Win32K process mitigation policy for child processes.
+const char kDisableWin32kLockDown[] = "disable-win32k-lockdown";
 
 // Enables experimental hardware acceleration for VP8/VP9 video decoding.
 // Bitmask - 0x1=Microsoft, 0x2=AMD, 0x03=Try all.

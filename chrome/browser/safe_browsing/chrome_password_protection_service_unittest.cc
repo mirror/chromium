@@ -25,7 +25,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/features.h"
-#include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 #include "components/safe_browsing/password_protection/password_protection_request.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_account_fetcher_service.h"
@@ -34,17 +33,13 @@
 #include "components/sync/user_events/fake_user_event_service.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/variations/variations_params_manager.h"
-#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "net/http/http_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using sync_pb::UserEventSpecifics;
 using GaiaPasswordReuse = UserEventSpecifics::GaiaPasswordReuse;
-using PasswordReuseDialogInteraction =
-    GaiaPasswordReuse::PasswordReuseDialogInteraction;
 using PasswordReuseLookup = GaiaPasswordReuse::PasswordReuseLookup;
 
 namespace safe_browsing {
@@ -54,42 +49,11 @@ namespace {
 const char kPhishingURL[] = "http://phishing.com";
 const char kTestAccountID[] = "account_id";
 const char kTestEmail[] = "foo@example.com";
-const char kBasicResponseHeaders[] = "HTTP/1.1 200 OK";
-const char kRedirectURL[] = "http://redirect.com";
 
 std::unique_ptr<KeyedService> BuildFakeUserEventService(
     content::BrowserContext* context) {
   return base::MakeUnique<syncer::FakeUserEventService>();
 }
-
-constexpr struct {
-  // The response from the password protection service.
-  PasswordProtectionService::RequestOutcome request_outcome;
-  // The enum to log in the user event for that response.
-  PasswordReuseLookup::LookupResult lookup_result;
-} kTestCasesWithoutVerdict[]{
-    {PasswordProtectionService::MATCHED_WHITELIST,
-     PasswordReuseLookup::WHITELIST_HIT},
-    {PasswordProtectionService::URL_NOT_VALID_FOR_REPUTATION_COMPUTING,
-     PasswordReuseLookup::URL_UNSUPPORTED},
-    {PasswordProtectionService::CANCELED, PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::TIMEDOUT, PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::DISABLED_DUE_TO_INCOGNITO,
-     PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::REQUEST_MALFORMED,
-     PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::FETCH_FAILED,
-     PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::RESPONSE_MALFORMED,
-     PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::SERVICE_DESTROYED,
-     PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::DISABLED_DUE_TO_FEATURE_DISABLED,
-     PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::DISABLED_DUE_TO_USER_POPULATION,
-     PasswordReuseLookup::REQUEST_FAILURE},
-    {PasswordProtectionService::MAX_OUTCOME,
-     PasswordReuseLookup::REQUEST_FAILURE}};
 
 }  // namespace
 
@@ -195,12 +159,10 @@ class ChromePasswordProtectionServiceTest
     verdict_->set_verdict_type(type);
   }
 
-  void SimulateRequestFinished(
-      LoginReputationClientResponse::VerdictType verdict_type) {
-    std::unique_ptr<LoginReputationClientResponse> verdict =
-        base::MakeUnique<LoginReputationClientResponse>();
-    verdict->set_verdict_type(verdict_type);
-    service_->RequestFinished(request_.get(), false, std::move(verdict));
+  void RequestFinished(
+      PasswordProtectionRequest* request,
+      std::unique_ptr<LoginReputationClientResponse> response) {
+    service_->RequestFinished(request, false, std::move(response));
   }
 
   void SetUpSyncAccount(const std::string& hosted_domain,
@@ -215,25 +177,6 @@ class ChromePasswordProtectionServiceTest
         account_tracker_service->PickAccountIdForAccount(account_id, email),
         email, account_id, hosted_domain, "full_name", "given_name", "locale",
         "http://picture.example.com/picture.jpg");
-  }
-
-  void PrepareRequest(LoginReputationClientRequest::TriggerType trigger_type,
-                      bool is_warning_showing) {
-    InitializeRequest(trigger_type);
-    request_->set_is_modal_warning_showing(is_warning_showing);
-    service_->pending_requests_.insert(request_);
-  }
-
-  content::NavigationThrottle::ThrottleCheckResult SimulateWillStart(
-      content::NavigationHandle* test_handle) {
-    std::unique_ptr<PasswordProtectionNavigationThrottle> throttle =
-        service_->MaybeCreateNavigationThrottle(test_handle);
-    if (throttle)
-      test_handle->RegisterThrottleForTesting(std::move(throttle));
-
-    return test_handle->CallWillStartRequestForTesting(
-        /*is_post=*/false, content::Referrer(), /*has_user_gesture=*/false,
-        ui::PAGE_TRANSITION_LINK, /*is_external_protocol=*/false);
   }
 
  protected:
@@ -347,30 +290,20 @@ TEST_F(ChromePasswordProtectionServiceTest, VerifyUpdateSecurityState) {
 
 TEST_F(ChromePasswordProtectionServiceTest,
        VerifyPasswordReuseUserEventNotRecorded) {
-  // Feature not enabled so nothing should be logged.
-  NavigateAndCommit(GURL("https:www.example.com/"));
-
-  // PasswordReuseDetected
+  // Feature not enabled.
   service_->MaybeLogPasswordReuseDetectedEvent(web_contents());
   EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
   service_->MaybeLogPasswordReuseLookupEvent(
       web_contents(), PasswordProtectionService::MATCHED_WHITELIST, nullptr);
   EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
 
-  // PasswordReuseLookup
-  unsigned long t = 0;
-  for (const auto& it : kTestCasesWithoutVerdict) {
-    service_->MaybeLogPasswordReuseLookupEvent(web_contents(),
-                                               it.request_outcome, nullptr);
-    ASSERT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty()) << t;
-    t++;
-  }
-
-  // PasswordReuseDialogInteraction
-  service_->LogPasswordReuseDialogInteraction(
-      1000 /* navigation_id */,
-      PasswordReuseDialogInteraction::WARNING_ACTION_TAKEN);
-  ASSERT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
+  EnableGaiaPasswordReuseReporting();
+  // Feature enabled but no committed navigation entry.
+  service_->MaybeLogPasswordReuseDetectedEvent(web_contents());
+  EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
+  service_->MaybeLogPasswordReuseLookupEvent(
+      web_contents(), PasswordProtectionService::MATCHED_WHITELIST, nullptr);
+  EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
 }
 
 TEST_F(ChromePasswordProtectionServiceTest,
@@ -405,57 +338,83 @@ TEST_F(ChromePasswordProtectionServiceTest,
   EnableGaiaPasswordReuseReporting();
   NavigateAndCommit(GURL("https://www.example.com/"));
 
+  std::vector<std::pair<PasswordProtectionService::RequestOutcome,
+                        PasswordReuseLookup::LookupResult>>
+      test_cases_result_only = {
+          {PasswordProtectionService::MATCHED_WHITELIST,
+           PasswordReuseLookup::WHITELIST_HIT},
+          {PasswordProtectionService::URL_NOT_VALID_FOR_REPUTATION_COMPUTING,
+           PasswordReuseLookup::URL_UNSUPPORTED},
+          {PasswordProtectionService::CANCELED,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::TIMEDOUT,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::DISABLED_DUE_TO_INCOGNITO,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::REQUEST_MALFORMED,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::FETCH_FAILED,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::RESPONSE_MALFORMED,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::SERVICE_DESTROYED,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::DISABLED_DUE_TO_FEATURE_DISABLED,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::DISABLED_DUE_TO_USER_POPULATION,
+           PasswordReuseLookup::REQUEST_FAILURE},
+          {PasswordProtectionService::MAX_OUTCOME,
+           PasswordReuseLookup::REQUEST_FAILURE}};
+
   unsigned long t = 0;
-  for (const auto& it : kTestCasesWithoutVerdict) {
-    service_->MaybeLogPasswordReuseLookupEvent(web_contents(),
-                                               it.request_outcome, nullptr);
-    ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size())
-        << t;
+  for (const auto& it : test_cases_result_only) {
+    VLOG(1) << __FUNCTION__ << ": case: " << t;
+    service_->MaybeLogPasswordReuseLookupEvent(web_contents(), it.first,
+                                               nullptr);
+    ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size());
     PasswordReuseLookup reuse_lookup = GetUserEventService()
                                            ->GetRecordedUserEvents()[t]
                                            .gaia_password_reuse_event()
                                            .reuse_lookup();
-    EXPECT_EQ(it.lookup_result, reuse_lookup.lookup_result()) << t;
+    EXPECT_EQ(it.second, reuse_lookup.lookup_result());
     t++;
   }
 
   {
+    VLOG(1) << __FUNCTION__ << ": case: " << t;
     auto response = base::MakeUnique<LoginReputationClientResponse>();
     response->set_verdict_token("token1");
     response->set_verdict_type(LoginReputationClientResponse::LOW_REPUTATION);
     service_->MaybeLogPasswordReuseLookupEvent(
         web_contents(), PasswordProtectionService::RESPONSE_ALREADY_CACHED,
         response.get());
-    ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size())
-        << t;
+    ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size());
     PasswordReuseLookup reuse_lookup = GetUserEventService()
                                            ->GetRecordedUserEvents()[t]
                                            .gaia_password_reuse_event()
                                            .reuse_lookup();
-    EXPECT_EQ(PasswordReuseLookup::CACHE_HIT, reuse_lookup.lookup_result())
-        << t;
-    EXPECT_EQ(PasswordReuseLookup::LOW_REPUTATION, reuse_lookup.verdict()) << t;
-    EXPECT_EQ("token1", reuse_lookup.verdict_token()) << t;
+    EXPECT_EQ(PasswordReuseLookup::CACHE_HIT, reuse_lookup.lookup_result());
+    EXPECT_EQ(PasswordReuseLookup::LOW_REPUTATION, reuse_lookup.verdict());
+    EXPECT_EQ("token1", reuse_lookup.verdict_token());
     t++;
   }
 
   {
+    VLOG(1) << __FUNCTION__ << ": case: " << t;
     auto response = base::MakeUnique<LoginReputationClientResponse>();
     response->set_verdict_token("token2");
     response->set_verdict_type(LoginReputationClientResponse::SAFE);
     service_->MaybeLogPasswordReuseLookupEvent(
         web_contents(), PasswordProtectionService::SUCCEEDED, response.get());
-    ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size())
-        << t;
+    ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size());
     PasswordReuseLookup reuse_lookup = GetUserEventService()
                                            ->GetRecordedUserEvents()[t]
                                            .gaia_password_reuse_event()
                                            .reuse_lookup();
     EXPECT_EQ(PasswordReuseLookup::REQUEST_SUCCESS,
-              reuse_lookup.lookup_result())
-        << t;
-    EXPECT_EQ(PasswordReuseLookup::SAFE, reuse_lookup.verdict()) << t;
-    EXPECT_EQ("token2", reuse_lookup.verdict_token()) << t;
+              reuse_lookup.lookup_result());
+    EXPECT_EQ(PasswordReuseLookup::SAFE, reuse_lookup.verdict());
+    EXPECT_EQ("token2", reuse_lookup.verdict_token());
     t++;
   }
 }
@@ -471,78 +430,6 @@ TEST_F(ChromePasswordProtectionServiceTest, VerifyGetChangePasswordURL) {
                  "2Fmyaccount.google.com%2Fsigninoptions%2Fpassword%3Futm_"
                  "source%3DGoogle%26utm_campaign%3DPhishGuard&hl=en"),
             service_->GetChangePasswordURL());
-}
-
-TEST_F(ChromePasswordProtectionServiceTest,
-       VerifyNavigationDuringPasswordOnFocusPingNotBlocked) {
-  GURL trigger_url(kPhishingURL);
-  NavigateAndCommit(trigger_url);
-  PrepareRequest(LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE,
-                 /*is_warning_showing=*/false);
-  GURL redirect_url(kRedirectURL);
-  std::unique_ptr<content::NavigationHandle> test_handle =
-      content::NavigationHandle::CreateNavigationHandleForTesting(redirect_url,
-                                                                  main_rfh());
-  EXPECT_EQ(content::NavigationThrottle::PROCEED,
-            SimulateWillStart(test_handle.get()));
-}
-
-TEST_F(ChromePasswordProtectionServiceTest,
-       VerifyNavigationDuringPasswordReusePingDeferred) {
-  GURL trigger_url(kPhishingURL);
-  NavigateAndCommit(trigger_url);
-  // Simulate a on-going password reuse request that hasn't received
-  // verdict yet.
-  PrepareRequest(LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
-                 /*is_warning_showing=*/false);
-
-  GURL redirect_url(kRedirectURL);
-  std::unique_ptr<content::NavigationHandle> test_handle =
-      content::NavigationHandle::CreateNavigationHandleForTesting(redirect_url,
-                                                                  main_rfh());
-  // Verify navigation get deferred.
-  EXPECT_EQ(content::NavigationThrottle::DEFER,
-            SimulateWillStart(test_handle.get()));
-  EXPECT_FALSE(test_handle->HasCommitted());
-  base::RunLoop().RunUntilIdle();
-
-  // Simulate receiving a SAFE verdict.
-  SimulateRequestFinished(LoginReputationClientResponse::SAFE);
-  base::RunLoop().RunUntilIdle();
-
-  // Verify that navigation can be resumed.
-  EXPECT_EQ(content::NavigationThrottle::PROCEED,
-            test_handle->CallWillProcessResponseForTesting(
-                main_rfh(),
-                net::HttpUtil::AssembleRawHeaders(
-                    kBasicResponseHeaders, strlen(kBasicResponseHeaders))));
-  test_handle->CallDidCommitNavigationForTesting(redirect_url);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(test_handle->HasCommitted());
-}
-
-TEST_F(ChromePasswordProtectionServiceTest,
-       VerifyNavigationDuringModalWarningCanceled) {
-  GURL trigger_url(kPhishingURL);
-  NavigateAndCommit(trigger_url);
-  // Simulate a password reuse request, whose verdict is triggering a modal
-  // warning.
-  PrepareRequest(LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
-                 /*is_warning_showing=*/true);
-  base::RunLoop().RunUntilIdle();
-
-  // Simulate receiving a phishing verdict.
-  SimulateRequestFinished(LoginReputationClientResponse::PHISHING);
-  base::RunLoop().RunUntilIdle();
-
-  GURL redirect_url(kRedirectURL);
-  std::unique_ptr<content::NavigationHandle> test_handle =
-      content::NavigationHandle::CreateNavigationHandleForTesting(redirect_url,
-                                                                  main_rfh());
-  // Verify that navigation gets canceled.
-  EXPECT_EQ(content::NavigationThrottle::CANCEL,
-            SimulateWillStart(test_handle.get()));
-  EXPECT_FALSE(test_handle->HasCommitted());
 }
 
 }  // namespace safe_browsing

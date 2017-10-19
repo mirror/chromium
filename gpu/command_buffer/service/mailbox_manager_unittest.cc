@@ -34,14 +34,14 @@ class MailboxManagerTest : public GpuServiceTest {
   void SetUp() override {
     GpuServiceTest::SetUp();
     feature_info_ = new FeatureInfo;
-    manager_ = std::make_unique<MailboxManagerImpl>();
+    manager_ = base::MakeUnique<MailboxManagerImpl>();
     DCHECK(!manager_->UsesSync());
   }
 
   virtual void SetUpWithSynchronizer() {
     GpuServiceTest::SetUp();
     feature_info_ = new FeatureInfo;
-    manager_ = std::make_unique<MailboxManagerSync>();
+    manager_ = base::MakeUnique<MailboxManagerSync>();
     DCHECK(manager_->UsesSync());
   }
 
@@ -196,7 +196,7 @@ class MailboxManagerSyncTest : public MailboxManagerTest {
  protected:
   void SetUp() override {
     MailboxManagerTest::SetUpWithSynchronizer();
-    manager2_ = std::make_unique<MailboxManagerSync>();
+    manager2_ = base::MakeUnique<MailboxManagerSync>();
     context_ = new gl::GLContextStub();
     surface_ = new gl::GLSurfaceStub();
     context_->MakeCurrent(surface_.get());

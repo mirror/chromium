@@ -10,7 +10,6 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "base/time/time.h"
 #include "components/ntp_tiles/tile_source.h"
 #include "components/ntp_tiles/tile_title_source.h"
 #include "url/gurl.h"
@@ -34,10 +33,6 @@ struct NTPTile {
   GURL thumbnail_url;
   // This won't be empty, but might 404 etc.
   GURL favicon_url;
-
-  // Timestamp representing when the tile was originally generated (produced by
-  // a ranking algorithm).
-  base::Time data_generation_time;
 
   NTPTile();
   NTPTile(const NTPTile&);

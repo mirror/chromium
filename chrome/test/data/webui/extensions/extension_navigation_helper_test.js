@@ -8,7 +8,6 @@ cr.define('extension_navigation_helper_tests', function() {
     Basic: 'basic',
     Conversions: 'conversions',
     PushAndReplaceState: 'push and replace state',
-    SupportedRoutes: 'supported routes'
   };
 
   /**
@@ -43,7 +42,10 @@ cr.define('extension_navigation_helper_tests', function() {
 
       navigationHelper.addListener(changePage);
 
-      expectDeepEquals({page: Page.LIST}, navigationHelper.getCurrentPage());
+      expectEquals('chrome://extensions/navigation_helper.html', location.href);
+      expectDeepEquals(
+          {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS},
+          navigationHelper.getCurrentPage());
 
       var currentLength = history.length;
       navigationHelper.updateHistory(
@@ -60,7 +62,8 @@ cr.define('extension_navigation_helper_tests', function() {
           .then(() => {
             mock.verifyMock();
 
-            mock.addExpectation({page: Page.LIST});
+            mock.addExpectation(
+                {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS});
             var waitForNextPop = getOnPopState();
             history.back();
             return waitForNextPop;
@@ -75,7 +78,11 @@ cr.define('extension_navigation_helper_tests', function() {
       var stateUrlPairs = {
         extensions: {
           url: 'chrome://extensions/',
-          state: {page: Page.LIST},
+          state: {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS},
+        },
+        apps: {
+          url: 'chrome://extensions/apps',
+          state: {page: Page.LIST, type: extensions.ShowingType.APPS},
         },
         details: {
           url: 'chrome://extensions/?id=' + id,
@@ -120,7 +127,9 @@ cr.define('extension_navigation_helper_tests', function() {
       var id2 = 'b'.repeat(32);
 
       history.pushState({}, '', 'chrome://extensions/');
-      expectDeepEquals({page: Page.LIST}, navigationHelper.getCurrentPage());
+      expectDeepEquals(
+          {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS},
+          navigationHelper.getCurrentPage());
 
       var expectedLength = history.length;
 
@@ -155,26 +164,6 @@ cr.define('extension_navigation_helper_tests', function() {
       navigationHelper.updateHistory(
           {page: Page.DETAILS, extensionId: id2});
       expectEquals(++expectedLength, history.length);
-    });
-
-    test(assert(TestNames.SupportedRoutes), function() {
-      function testRedirect(url, redirected) {
-        history.pushState({}, '', url);
-        const testNavigationHelper = new extensions.NavigationHelper();
-        expectEquals(redirected, window.location.href !== url);
-      }
-
-      loadTimeData.overrideValues({isGuest: false});
-      testRedirect('chrome://extensions/', false);
-      testRedirect('chrome://extensions/shortcuts', false);
-      testRedirect('chrome://extensions/fake-route', true);
-      // Test trailing slash works.
-      testRedirect('chrome://extensions/shortcuts/', false);
-
-      loadTimeData.overrideValues({isGuest: true});
-      testRedirect('chrome://extensions/', false);
-      testRedirect('chrome://extensions/shortcuts', true);
-      testRedirect('chrome://extensions/fake-route', true);
     });
   });
 

@@ -15,7 +15,7 @@ AnimationWorkletMessagingProxy::AnimationWorkletMessagingProxy(
     WorkerClients* worker_clients)
     : ThreadedWorkletMessagingProxy(execution_context, worker_clients) {}
 
-void AnimationWorkletMessagingProxy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationWorkletMessagingProxy) {
   ThreadedWorkletMessagingProxy::Trace(visitor);
 }
 

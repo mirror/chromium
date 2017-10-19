@@ -53,7 +53,7 @@ const String& HistoryItem::UrlString() const {
 }
 
 KURL HistoryItem::Url() const {
-  return KURL(url_string_);
+  return KURL(kParsedURLString, url_string_);
 }
 
 const Referrer& HistoryItem::GetReferrer() const {
@@ -164,7 +164,7 @@ ResourceRequest HistoryItem::GenerateResourceRequest(
   return request;
 }
 
-void HistoryItem::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HistoryItem) {
   visitor->Trace(document_state_);
 }
 

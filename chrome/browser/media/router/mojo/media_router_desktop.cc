@@ -21,7 +21,8 @@ namespace media_router {
 MediaRouterDesktop::~MediaRouterDesktop() {
   if (dial_media_sink_service_proxy_) {
     dial_media_sink_service_proxy_->Stop();
-    dial_media_sink_service_proxy_->ClearObserver();
+    dial_media_sink_service_proxy_->ClearObserver(
+        cast_media_sink_service_.get());
   }
   if (cast_media_sink_service_)
     cast_media_sink_service_->Stop();
@@ -45,12 +46,8 @@ void MediaRouterDesktop::OnUserGesture() {
   // Allow MRPM to intelligently update sinks and observers by passing in a
   // media source.
   UpdateMediaSinks(MediaSourceForDesktop().id());
-
-  if (dial_media_sink_service_proxy_)
-    dial_media_sink_service_proxy_->OnUserGesture();
-
   if (cast_media_sink_service_)
-    cast_media_sink_service_->OnUserGesture();
+    cast_media_sink_service_->ForceDiscovery();
 
 #if defined(OS_WIN)
   EnsureMdnsDiscoveryEnabled();
@@ -117,9 +114,16 @@ void MediaRouterDesktop::RegisterMediaRouteProvider(
   // executes commands to the MRP and its route controllers. Commands to the
   // route controllers, once executed, will be queued in Mojo pipes until the
   // Mojo requests are bound to implementations.
-  for (const auto& pair : route_controllers_)
-    InitMediaRouteController(pair.second);
-
+  for (const auto& pair : route_controllers_) {
+    const MediaRoute::Id& route_id = pair.first;
+    MediaRouteController* route_controller = pair.second;
+    auto callback =
+        base::BindOnce(&MediaRouterDesktop::OnMediaControllerCreated,
+                       weak_factory_.GetWeakPtr(), route_id);
+    media_route_provider_->CreateMediaRouteController(
+        route_id, route_controller->CreateControllerRequest(),
+        route_controller->BindObserverPtr(), std::move(callback));
+  }
   extension_provider_.RegisterMediaRouteProvider(
       std::move(media_route_provider_ptr));
 }
@@ -143,39 +147,27 @@ void MediaRouterDesktop::StartDiscovery() {
   if (media_router::CastDiscoveryEnabled()) {
     if (!cast_media_sink_service_) {
       cast_media_sink_service_ = base::MakeRefCounted<CastMediaSinkService>(
-          base::BindRepeating(&MediaRouterDesktop::ProvideSinks,
+          base::BindRepeating(&MediaRouterMojoImpl::ProvideSinks,
                               weak_factory_.GetWeakPtr(), "cast"),
           context(),
           content::BrowserThread::GetTaskRunnerForThread(
               content::BrowserThread::IO));
-      cast_media_sink_service_->Start();
-    } else {
-      cast_media_sink_service_->ForceSinkDiscoveryCallback();
     }
+    cast_media_sink_service_->Start();
   }
 
   if (media_router::DialLocalDiscoveryEnabled()) {
     if (!dial_media_sink_service_proxy_) {
       dial_media_sink_service_proxy_ =
           base::MakeRefCounted<DialMediaSinkServiceProxy>(
-              base::BindRepeating(&MediaRouterDesktop::ProvideSinks,
+              base::BindRepeating(&MediaRouterMojoImpl::ProvideSinks,
                                   weak_factory_.GetWeakPtr(), "dial"),
               context());
       dial_media_sink_service_proxy_->SetObserver(
           cast_media_sink_service_.get());
-      dial_media_sink_service_proxy_->Start();
-    } else {
-      dial_media_sink_service_proxy_->ForceSinkDiscoveryCallback();
     }
+    dial_media_sink_service_proxy_->Start();
   }
-}
-
-void MediaRouterDesktop::ProvideSinks(const std::string& provider_name,
-                                      std::vector<MediaSinkInternal> sinks) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DVLOG(1) << "Provider [" << provider_name << "] found " << sinks.size()
-           << " devices...";
-  media_route_provider_->ProvideSinks(provider_name, std::move(sinks));
 }
 
 #if defined(OS_WIN)

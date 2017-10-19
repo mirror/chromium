@@ -23,6 +23,16 @@ class PowerTypical10Mobile(perf_benchmark.PerfBenchmark):
     options.full_performance_mode = False
 
   @classmethod
+  def ShouldDisable(cls, possible_browser):
+    # http://crbug.com/597656
+    if (possible_browser.browser_type == 'reference' and
+        possible_browser.platform.GetDeviceTypeName() == 'Nexus 5X'):
+      return True
+
+    # crbug.com/671631
+    return possible_browser.platform.GetDeviceTypeName() == 'Nexus 9'
+
+  @classmethod
   def Name(cls):
     return 'power.typical_10_mobile'
 
@@ -56,6 +66,10 @@ class IdlePlatformBenchmark(perf_benchmark.PerfBenchmark):
     ])
     return options
 
+  @classmethod
+  def ShouldDisable(cls, possible_browser):
+    return not possible_browser.platform.HasBattOrConnected()
+
   def CreateStorySet(self, options):
     return page_sets.IdleStorySet()
 
@@ -66,9 +80,5 @@ class IdlePlatformBenchmark(perf_benchmark.PerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        self.DisableBenchmark(
-            [story.expectations.ANDROID_NEXUS5,
-             story.expectations.ANDROID_NEXUS6,
-             story.expectations.ANDROID_NEXUS7,
-             story.expectations.ANDROID_ONE], 'crbug.com/773949')
+        pass # Nothing disabled.
     return StoryExpectations()

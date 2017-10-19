@@ -46,9 +46,8 @@ class InfoBarManagerImpl : public infobars::InfoBarManager,
 
   // web::WebStateObserver implementation.
   void NavigationItemCommitted(
-      web::WebState* web_state,
       const web::LoadCommittedDetails& load_details) override;
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   // Opens a URL according to the specified |disposition|.
   void OpenURL(const GURL& url, WindowOpenDisposition disposition) override;

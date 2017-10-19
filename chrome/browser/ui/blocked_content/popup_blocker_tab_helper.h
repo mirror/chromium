@@ -28,7 +28,6 @@ struct OpenURLParams;
 }
 
 class GURL;
-class SafeBrowsingTriggeredPopupBlocker;
 
 // Per-tab class to manage blocked popups.
 class PopupBlockerTabHelper
@@ -136,9 +135,6 @@ class PopupBlockerTabHelper
   base::ObserverList<Observer> observers_;
 
   int32_t next_id_ = 0;
-
-  std::unique_ptr<SafeBrowsingTriggeredPopupBlocker>
-      safe_browsing_triggered_popup_blocker_;
 
   DISALLOW_COPY_AND_ASSIGN(PopupBlockerTabHelper);
 };

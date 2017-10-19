@@ -394,7 +394,7 @@ TestingProfile::TestingProfile(
 }
 
 void TestingProfile::CreateTempProfileDir() {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   if (!temp_dir_.CreateUniqueTempDir()) {
     LOG(ERROR) << "Failed to create unique temporary directory.";
 
@@ -422,7 +422,7 @@ void TestingProfile::CreateTempProfileDir() {
 }
 
 void TestingProfile::Init() {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   // If threads have been initialized, we should be on the UI thread.
   DCHECK(!content::BrowserThread::IsThreadInitialized(
              content::BrowserThread::UI) ||
@@ -575,7 +575,7 @@ TestingProfile::~TestingProfile() {
     content::RunAllPendingInMessageLoop(BrowserThread::IO);
   }
 
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   ignore_result(temp_dir_.Delete());
 }
 
@@ -930,6 +930,14 @@ void TestingProfile::BlockUntilHistoryProcessesPendingRequests() {
 
 chrome_browser_net::Predictor* TestingProfile::GetNetworkPredictor() {
   return NULL;
+}
+
+void TestingProfile::ClearNetworkingHistorySince(
+    base::Time time,
+    const base::Closure& completion) {
+  if (!completion.is_null()) {
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, completion);
+  }
 }
 
 GURL TestingProfile::GetHomePage() {

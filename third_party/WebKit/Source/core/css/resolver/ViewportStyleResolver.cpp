@@ -347,7 +347,7 @@ void ViewportStyleResolver::UpdateViewport(
   needs_update_ = kNoUpdate;
 }
 
-void ViewportStyleResolver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ViewportStyleResolver) {
   visitor->Trace(document_);
   visitor->Trace(property_set_);
   visitor->Trace(initial_viewport_medium_);

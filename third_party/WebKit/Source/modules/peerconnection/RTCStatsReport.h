@@ -35,7 +35,7 @@ class RTCStatsReport final : public GarbageCollectedFinalized<RTCStatsReport>,
                    v8::Local<v8::Value>&,
                    ExceptionState&) override;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   std::unique_ptr<WebRTCStatsReport> report_;

@@ -113,9 +113,8 @@ void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
     return;
   }
 
-  coordinator_->RequestGlobalMemoryDumpAndAppendToTrace(
-      args,
-      mojom::Coordinator::RequestGlobalMemoryDumpAndAppendToTraceCallback());
+  coordinator_->RequestGlobalMemoryDump(
+      args, mojom::Coordinator::RequestGlobalMemoryDumpCallback());
 }
 
 void ClientProcessImpl::EnableHeapProfiling(

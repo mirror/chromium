@@ -10,7 +10,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
-#include "components/autofill/content/renderer/page_form_analyser_logger.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
@@ -29,6 +28,55 @@ const char* kTypeAttributes[] = {"text", "email", "tel", "password"};
 const char* kTypeTextAttributes[] = {"text", "email", "tel"};
 char kTextFieldSignature = 'T';
 char kPasswordFieldSignature = 'P';
+
+// ConsoleLogger provides a convenient interface for logging messages to the
+// DevTools console, both in terms of wrapping and formatting console messages
+// along with their parameters, and in ordering messages so that higher-priority
+// warnings are displayed first.
+class ConsoleLogger : public PagePasswordsAnalyserLogger {
+ public:
+  ConsoleLogger(blink::WebLocalFrame* frame)
+      : PagePasswordsAnalyserLogger(), frame_(frame) {}
+
+  void Send(const std::string& message,
+            ConsoleLevel level,
+            const blink::WebNode& node) override {
+    Send(message, level, std::vector<blink::WebNode>{node});
+  }
+
+  void Send(const std::string& message,
+            ConsoleLevel level,
+            const std::vector<blink::WebNode>& nodes) override {
+    node_buffer_[level].push_back(Entry{message, nodes});
+  }
+
+  void Flush() override {
+    for (ConsoleLevel level : {kError, kWarning, kVerbose}) {
+      for (Entry& entry : node_buffer_[level]) {
+        std::string parameter_string;
+        for (unsigned i = 0; i < entry.nodes.size(); ++i)
+          parameter_string += " %o";
+        frame_->AddMessageToConsole(blink::WebConsoleMessage(
+            level,
+            blink::WebString::FromUTF8("[DOM] " + entry.message +
+                                       parameter_string),
+            std::move(entry.nodes)));
+      }
+    }
+    node_buffer_.clear();
+  }
+
+ private:
+  struct Entry {
+    const std::string message;
+    const std::vector<blink::WebNode> nodes;
+  };
+
+  blink::WebLocalFrame* frame_;
+  // Though ConsoleLogger provides buffering, it is intended to be simply over
+  // the course of a single analysis, for ordering purposes.
+  std::map<ConsoleLevel, std::vector<Entry>> node_buffer_;
+};
 
 // Produce a relevant link to developer documentation regarding the warning or
 // error. If no particular reference is given, the default URL will be provided.
@@ -175,7 +223,7 @@ bool TrackElementIfUntracked(
 std::vector<FormInputCollection> ExtractFormsForAnalysis(
     const blink::WebDocument& document,
     std::set<blink::WebNode>* skip_nodes,
-    PageFormAnalyserLogger* logger) {
+    PagePasswordsAnalyserLogger* logger) {
   std::vector<FormInputCollection> form_input_collections;
 
   // Keep track of inputs that are inside <form> elements to find the complement
@@ -217,7 +265,7 @@ std::vector<FormInputCollection> ExtractFormsForAnalysis(
     // leaving just those without associated forms.
     logger->Send(
         LinkDocumentation("Password field is not contained in a form:"),
-        PageFormAnalyserLogger::kVerbose, password_inputs[i]);
+        PagePasswordsAnalyserLogger::kVerbose, password_inputs[i]);
   }
   // Check for input fields that are not contained inside forms, to make sure
   // their id attributes don't conflict with other fields also not contained
@@ -243,12 +291,12 @@ std::vector<FormInputCollection> ExtractFormsForAnalysis(
       logger->Send(LinkDocumentation(base::StringPrintf(
                        "Found %zu elements with non-unique id #%s:",
                        nodes.size(), id_attr.c_str())),
-                   PageFormAnalyserLogger::kError, nodes);
+                   PagePasswordsAnalyserLogger::kError, nodes);
     } else {
       logger->Send(LinkDocumentation(base::StringPrintf(
                        "Found %zu elements with non-unique id #%s:",
                        nodes.size(), id_attr.c_str())),
-                   PageFormAnalyserLogger::kError, nodes);
+                   PagePasswordsAnalyserLogger::kError, nodes);
     }
   }
 
@@ -337,7 +385,7 @@ void GuessAutocompleteAttributesForPasswordFields(
 // Error and warning messages specific to an individual form (for example,
 // autocomplete attributes, or missing username fields, etc.).
 void AnalyseForm(const FormInputCollection& form_input_collection,
-                 PageFormAnalyserLogger* logger) {
+                 PagePasswordsAnalyserLogger* logger) {
   const blink::WebFormElement& form = form_input_collection.form;
   const std::vector<blink::WebFormControlElement>& inputs =
       form_input_collection.inputs;
@@ -367,7 +415,7 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
       logger->Send(
           LinkDocumentation("Password forms should have (optionally hidden) "
                             "username fields for accessibility:"),
-          PageFormAnalyserLogger::kVerbose, form);
+          PagePasswordsAnalyserLogger::kVerbose, form);
     } else {
       // By default (if the other heuristics fail), the first text field
       // preceding a password field will be considered the username field.
@@ -385,7 +433,7 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
             "Multiple forms should be contained in their own "
             "form elements; break up complex forms into ones that represent a "
             "single action:"),
-        PageFormAnalyserLogger::kVerbose, form);
+        PagePasswordsAnalyserLogger::kVerbose, form);
     return;
   }
 
@@ -416,7 +464,7 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
       logger->Send(LinkDocumentation("Input elements should have autocomplete "
                                      "attributes (suggested: \"" +
                                      autocomplete_suggestions[i] + "\"):"),
-                   PageFormAnalyserLogger::kVerbose, inputs[i]);
+                   PagePasswordsAnalyserLogger::kVerbose, inputs[i]);
   }
 }
 
@@ -431,8 +479,9 @@ void PagePasswordsAnalyser::Reset() {
   skip_nodes_.clear();
 }
 
-void PagePasswordsAnalyser::AnalyseDocumentDOM(blink::WebLocalFrame* frame,
-                                               PageFormAnalyserLogger* logger) {
+void PagePasswordsAnalyser::AnalyseDocumentDOM(
+    blink::WebLocalFrame* frame,
+    PagePasswordsAnalyserLogger* logger) {
   DCHECK(frame);
 
   blink::WebDocument document(frame->GetDocument());
@@ -450,7 +499,7 @@ void PagePasswordsAnalyser::AnalyseDocumentDOM(blink::WebLocalFrame* frame,
 }
 
 void PagePasswordsAnalyser::AnalyseDocumentDOM(blink::WebLocalFrame* frame) {
-  PageFormAnalyserLogger logger(frame);
+  ConsoleLogger logger(frame);
   AnalyseDocumentDOM(frame, &logger);
 }
 

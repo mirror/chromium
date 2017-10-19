@@ -203,12 +203,11 @@ div.splitter {
 }
 
 #directory-tree .tree-item.accepts > .tree-row,
-#directory-tree .tree-row[selected] {
+#directory-tree .tree-row[lead][selected],
+#directory-tree .tree-row[lead],
+#directory-tree .tree-row[selected],
+#directory-tree .tree-row[anchor] {
   color: rgb(51, 103, 214);
-}
-
-#directory-tree:focus .tree-row[selected] {
-  background-color: rgb(216, 223, 240);
 }
 
 #directory-tree .tree-row > .root-eject {

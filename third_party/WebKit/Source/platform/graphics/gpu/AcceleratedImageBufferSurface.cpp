@@ -43,8 +43,9 @@ namespace blink {
 
 AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
     const IntSize& size,
+    OpacityMode opacity_mode,
     const CanvasColorParams& color_params)
-    : ImageBufferSurface(size, color_params) {
+    : ImageBufferSurface(size, opacity_mode, color_params) {
   context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
   if (!context_provider_wrapper_)
     return;
@@ -53,9 +54,10 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
 
   CHECK(gr_context);
 
-  SkImageInfo info = SkImageInfo::Make(size.Width(), size.Height(),
-                                       color_params.GetSkColorType(),
-                                       color_params.GetSkAlphaType());
+  SkAlphaType alpha_type =
+      (kOpaque == opacity_mode) ? kOpaque_SkAlphaType : kPremul_SkAlphaType;
+  SkImageInfo info = SkImageInfo::Make(
+      size.Width(), size.Height(), color_params.GetSkColorType(), alpha_type);
   // In legacy mode the backing SkSurface should not have any color space.
   // If color correct rendering is enabled only for SRGB, still the backing
   // surface should not have any color space and the treatment of legacy data
@@ -65,14 +67,18 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
   if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
     info = info.makeColorSpace(color_params.GetSkColorSpaceForSkSurfaces());
 
-  surface_ = SkSurface::MakeRenderTarget(gr_context, SkBudgeted::kYes, info,
-                                         0 /* sampleCount */,
-                                         color_params.GetSkSurfaceProps());
+  SkSurfaceProps disable_lcd_props(0, kUnknown_SkPixelGeometry);
+  surface_ = SkSurface::MakeRenderTarget(
+      gr_context, SkBudgeted::kYes, info, 0 /* sampleCount */,
+      kOpaque == opacity_mode ? nullptr : &disable_lcd_props);
   if (!surface_)
     return;
 
   sk_sp<SkColorSpace> xform_canvas_color_space = nullptr;
-  canvas_ = color_params.WrapCanvas(surface_->getCanvas());
+  if (!color_params.LinearPixelMath())
+    xform_canvas_color_space = color_params.GetSkColorSpace();
+  canvas_ = WTF::WrapUnique(
+      new SkiaPaintCanvas(surface_->getCanvas(), xform_canvas_color_space));
   Clear();
 
   // Always save an initial frame, to support resetting the top level matrix

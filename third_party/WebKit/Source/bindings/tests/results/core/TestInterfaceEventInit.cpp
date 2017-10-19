@@ -21,7 +21,7 @@ TestInterfaceEventInit::TestInterfaceEventInit(const TestInterfaceEventInit&) = 
 
 TestInterfaceEventInit& TestInterfaceEventInit::operator=(const TestInterfaceEventInit&) = default;
 
-void TestInterfaceEventInit::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TestInterfaceEventInit) {
   EventInit::Trace(visitor);
 }
 

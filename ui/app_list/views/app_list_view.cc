@@ -533,7 +533,7 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   app_list_overlay_view_params.layer_type = ui::LAYER_SOLID_COLOR;
   fullscreen_widget_->Init(app_list_overlay_view_params);
   fullscreen_widget_->GetNativeWindow()->SetEventTargeter(
-      std::make_unique<AppListEventTargeter>());
+      base::MakeUnique<AppListEventTargeter>());
 
   // The widget's initial position will be off the bottom of the display.
   // Set native view's bounds directly to avoid screen position controller
@@ -750,7 +750,7 @@ void AppListView::SetChildViewsForStateTransition(AppListState target_state) {
       app_list_main_view_->contents_view()->apps_container_view();
 
   if (apps_container_view->IsInFolderView())
-    apps_container_view->ResetForShowApps();
+    apps_container_view->app_list_folder_view()->CloseFolderPage();
 
   if (target_state == PEEKING) {
     app_list_main_view_->contents_view()->SetActiveState(
@@ -1348,8 +1348,8 @@ void AppListView::SetIsInDrag(bool is_in_drag) {
       ->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
-int AppListView::GetScreenBottom() {
-  return GetDisplayNearestView().bounds().bottom();
+int AppListView::GetWorkAreaBottom() {
+  return fullscreen_widget_->GetWorkAreaBoundsInScreen().bottom();
 }
 
 void AppListView::DraggingLayout() {
@@ -1453,8 +1453,7 @@ void AppListView::OnDisplayMetricsChanged(const display::Display& display,
 
 float AppListView::GetAppListBackgroundOpacityDuringDragging() {
   float top_of_applist = fullscreen_widget_->GetWindowBoundsInScreen().y();
-  float dragging_height =
-      std::max((GetScreenBottom() - kShelfSize - top_of_applist), 0.f);
+  float dragging_height = std::max((GetWorkAreaBottom() - top_of_applist), 0.f);
   float coefficient =
       std::min(dragging_height / (kNumOfShelfSize * kShelfSize), 1.0f);
   float shield_opacity =

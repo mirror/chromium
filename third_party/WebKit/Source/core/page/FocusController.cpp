@@ -122,7 +122,7 @@ class FocusNavigation : public GarbageCollected<FocusNavigation> {
     return FindOwner(*root_);
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(root_);
     visitor->Trace(slot_);
   }
@@ -393,7 +393,7 @@ inline void DispatchBlurEvent(const Document& document,
 
 inline void DispatchFocusEvent(const Document& document,
                                Element& focused_element) {
-  focused_element.DispatchFocusEvent(nullptr, kWebFocusTypePage);
+  focused_element.DispatchFocusEvent(0, kWebFocusTypePage);
   if (focused_element == document.FocusedElement()) {
     focused_element.DispatchFocusInEvent(EventTypeNames::focusin, nullptr,
                                          kWebFocusTypePage);
@@ -1522,7 +1522,7 @@ void FocusController::NotifyFocusChangedObservers() const {
     it->FocusedFrameChanged();
 }
 
-void FocusController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FocusController) {
   visitor->Trace(page_);
   visitor->Trace(focused_frame_);
   visitor->Trace(focus_changed_observers_);

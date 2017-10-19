@@ -39,7 +39,7 @@ class CORE_EXPORT SingleModuleClient
       public TraceWrapperBase {
  public:
   virtual ~SingleModuleClient() = default;
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual void NotifyModuleLoadFinished(ModuleScript*) = 0;
 };
@@ -51,7 +51,7 @@ class CORE_EXPORT ModuleTreeClient
       public TraceWrapperBase {
  public:
   virtual ~ModuleTreeClient() = default;
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual void NotifyModuleTreeLoadFinished(ModuleScript*) = 0;
 };
@@ -77,17 +77,12 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   static void SetModulator(ScriptState*, Modulator*);
   static void ClearModulator(ScriptState*);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual ScriptModuleResolver* GetScriptModuleResolver() = 0;
   virtual WebTaskRunner* TaskRunner() = 0;
   virtual ReferrerPolicy GetReferrerPolicy() = 0;
-
-  // Returns the security origin of the "fetch client settings object".
-  // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-worker-script-tree
-  // This should be called only from ModuleScriptLoader.
-  virtual SecurityOrigin* GetSecurityOriginForFetch() = 0;
-
+  virtual SecurityOrigin* GetSecurityOrigin() = 0;
   virtual ScriptState* GetScriptState() = 0;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-script-tree

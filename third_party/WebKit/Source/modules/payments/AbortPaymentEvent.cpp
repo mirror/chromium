@@ -46,7 +46,7 @@ void AbortPaymentEvent::respondWith(ScriptState* script_state,
   }
 }
 
-void AbortPaymentEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AbortPaymentEvent) {
   visitor->Trace(observer_);
   ExtendableEvent::Trace(visitor);
 }

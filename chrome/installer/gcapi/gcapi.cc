@@ -19,7 +19,6 @@
 #include <objbase.h>
 #include <strsafe.h>
 #include <tlhelp32.h>
-#include <wrl/client.h>
 
 #include <cstdlib>
 #include <iterator>
@@ -37,6 +36,7 @@
 #include "base/time/time.h"
 #include "base/win/registry.h"
 #include "base/win/scoped_com_initializer.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
 #include "chrome/installer/gcapi/gcapi_omaha_experiment.h"
 #include "chrome/installer/gcapi/gcapi_reactivation.h"
@@ -47,11 +47,11 @@
 #include "chrome/installer/util/wmi.h"
 #include "google_update/google_update_idl.h"
 
-using Microsoft::WRL::ComPtr;
 using base::Time;
 using base::TimeDelta;
 using base::win::RegKey;
 using base::win::ScopedCOMInitializer;
+using base::win::ScopedComPtr;
 using base::win::ScopedHandle;
 
 namespace {
@@ -487,7 +487,7 @@ BOOL __stdcall LaunchGoogleChrome() {
   base::CommandLine chrome_command(chrome_exe_path);
 
   bool ret = false;
-  ComPtr<IProcessLauncher> ipl;
+  ScopedComPtr<IProcessLauncher> ipl;
   if (SUCCEEDED(::CoCreateInstance(__uuidof(ProcessLauncherClass), NULL,
                                    CLSCTX_LOCAL_SERVER, IID_PPV_ARGS(&ipl)))) {
     if (SUCCEEDED(ipl->LaunchCmdLine(

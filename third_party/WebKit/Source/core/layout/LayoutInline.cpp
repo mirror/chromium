@@ -34,7 +34,6 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LineLayoutBoxModel.h"
 #include "core/layout/line/InlineTextBox.h"
-#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/paint/BoxPainter.h"
 #include "core/paint/InlinePainter.h"
 #include "core/paint/ObjectPainter.h"
@@ -238,7 +237,7 @@ void LayoutInline::UpdateAlwaysCreateLineBoxes(bool full_layout) {
 
   const ComputedStyle& parent_style = Parent()->StyleRef();
   LayoutInline* parent_layout_inline =
-      Parent()->IsLayoutInline() ? ToLayoutInline(Parent()) : nullptr;
+      Parent()->IsLayoutInline() ? ToLayoutInline(Parent()) : 0;
   bool check_fonts = GetDocument().InNoQuirksMode();
   bool always_create_line_boxes_new =
       (parent_layout_inline && parent_layout_inline->AlwaysCreateLineBoxes()) ||
@@ -788,7 +787,7 @@ class AbsoluteQuadsGeneratorContext {
                                 Vector<FloatQuad>& quads,
                                 MapCoordinatesFlags mode)
       : quads_(quads), geometry_map_(mode) {
-    geometry_map_.PushMappingsToAncestor(layout_object, nullptr);
+    geometry_map_.PushMappingsToAncestor(layout_object, 0);
   }
 
   void operator()(const FloatRect& rect) {
@@ -1158,12 +1157,6 @@ LayoutRect LayoutInline::AbsoluteVisualRect() const {
 }
 
 LayoutRect LayoutInline::LocalVisualRectIgnoringVisibility() const {
-  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
-    NGPhysicalOffsetRect visual_rect;
-    if (LayoutNGBlockFlow::LocalVisualRectFor(this, &visual_rect))
-      return visual_rect.ToLayoutRect();
-  }
-
   // If we don't create line boxes, we don't have any invalidations to do.
   if (!AlwaysCreateLineBoxes())
     return LayoutRect();

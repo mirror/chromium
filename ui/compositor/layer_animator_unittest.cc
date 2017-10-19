@@ -758,7 +758,7 @@ TEST(LayerAnimatorTest, ScheduleTogether) {
   double start_grayscale(0.0);
   double target_grayscale(1.0);
 
-  gfx::Rect start_bounds, target_bounds;
+  gfx::Rect start_bounds, target_bounds, middle_bounds;
   start_bounds = target_bounds = gfx::Rect(0, 0, 50, 50);
   start_bounds.set_x(-90);
   target_bounds.set_x(90);
@@ -1727,7 +1727,7 @@ TEST(LayerAnimatorTest, CacheRenderSurface) {
 // crash when the layer was destroyed.
 TEST(LayerAnimatorTest, CacheRenderSurfaceOnWillBeDestroyedLayer) {
   // Case 1: layer is a pointer.
-  auto layer1 = std::make_unique<Layer>();
+  auto layer1 = base::MakeUnique<Layer>();
   scoped_refptr<LayerAnimator> animator(layer1->GetAnimator());
   animator->set_disable_timer_for_test(true);
   TestImplicitAnimationObserver observer1(false);
@@ -2023,7 +2023,7 @@ TEST(LayerAnimatorTest, DeferredPaintInTwoAnimations) {
 // not crash when the layer was destroyed.
 TEST(LayerAnimatorTest, DeferredPaintOnWillBeDestroyedLayer) {
   // Case 1: layer is a pointer.
-  auto layer1 = std::make_unique<Layer>();
+  auto layer1 = base::MakeUnique<Layer>();
   scoped_refptr<LayerAnimator> animator(layer1->GetAnimator());
   animator->set_disable_timer_for_test(true);
   TestImplicitAnimationObserver observer1(false);
@@ -2080,177 +2080,6 @@ TEST(LayerAnimatorTest, DeferredPaintOnWillBeDestroyedLayer) {
   EXPECT_FALSE(observer3.animations_completed());
   animator->StopAnimatingProperty(LayerAnimationElement::GRAYSCALE);
   EXPECT_TRUE(observer3.animations_completed());
-}
-
-// Tests that trilinear filtering request added to a scoped settings object is
-// still reset when the object goes out of scope.
-TEST(LayerAnimatorTest, TrilinearFiltering) {
-  ui::Layer layer;
-  scoped_refptr<LayerAnimator> animator(layer.GetAnimator());
-  animator->set_disable_timer_for_test(true);
-  TestImplicitAnimationObserver observer(false);
-
-  EXPECT_FALSE(observer.animations_completed());
-  EXPECT_FALSE(layer.cc_layer_for_testing()->trilinear_filtering());
-  animator->SetOpacity(1.0f);
-
-  {
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    settings.AddObserver(&observer);
-    animator->SetOpacity(0.0f);
-  }
-
-  EXPECT_FALSE(observer.animations_completed());
-  EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-  animator->StopAnimatingProperty(LayerAnimationElement::OPACITY);
-  EXPECT_TRUE(observer.animations_completed());
-  EXPECT_TRUE(observer.WasAnimationCompletedForProperty(
-      LayerAnimationElement::OPACITY));
-  EXPECT_FLOAT_EQ(0.0f, layer.opacity());
-  EXPECT_FALSE(layer.cc_layer_for_testing()->trilinear_filtering());
-}
-
-// Tests that trilinear filtering request added to a scoped settings object will
-// not crash when the layer was destroyed.
-TEST(LayerAnimatorTest, TrilinearFilteringOnWillBeDestroyedLayer) {
-  // Case 1: layer is a pointer.
-  auto layer1 = std::make_unique<Layer>();
-  scoped_refptr<LayerAnimator> animator(layer1->GetAnimator());
-  animator->set_disable_timer_for_test(true);
-  TestImplicitAnimationObserver observer1(false);
-
-  EXPECT_FALSE(observer1.animations_completed());
-  animator->SetOpacity(1.0f);
-
-  {
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    settings.AddObserver(&observer1);
-    animator->SetOpacity(0.0f);
-  }
-
-  EXPECT_FALSE(observer1.animations_completed());
-  layer1.reset();
-  animator->StopAnimatingProperty(LayerAnimationElement::OPACITY);
-  EXPECT_TRUE(observer1.animations_completed());
-
-  // Case 2: layer is a local variable.
-  TestImplicitAnimationObserver observer2(false);
-  {
-    ui::Layer layer2;
-    animator = layer2.GetAnimator();
-
-    EXPECT_FALSE(observer2.animations_completed());
-    animator->SetBrightness(1.0f);
-
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    settings.AddObserver(&observer2);
-    animator->SetBrightness(0.0f);
-  }
-
-  EXPECT_FALSE(observer2.animations_completed());
-  animator->StopAnimatingProperty(LayerAnimationElement::BRIGHTNESS);
-  EXPECT_TRUE(observer2.animations_completed());
-
-  // Case 3: Animation finishes before layer is destroyed.
-  ui::Layer layer3;
-  animator = layer3.GetAnimator();
-  TestImplicitAnimationObserver observer3(false);
-
-  EXPECT_FALSE(observer3.animations_completed());
-  animator->SetGrayscale(1.0f);
-
-  {
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    settings.AddObserver(&observer3);
-    animator->SetGrayscale(0.0f);
-  }
-
-  EXPECT_FALSE(observer3.animations_completed());
-  animator->StopAnimatingProperty(LayerAnimationElement::GRAYSCALE);
-  EXPECT_TRUE(observer3.animations_completed());
-}
-
-// Tests that trilinear filtering request added to two scoped settings objects
-// is still reset when animation finishes.
-TEST(LayerAnimatorTest, TrilinearFilteringInTwoAnimations) {
-  ui::Layer layer;
-  scoped_refptr<LayerAnimator> animator(layer.GetAnimator());
-  animator->set_disable_timer_for_test(true);
-
-  // Case 1: the original trilinear filtering status if false.
-  EXPECT_FALSE(layer.cc_layer_for_testing()->trilinear_filtering());
-  animator->SetBrightness(1.0f);
-  animator->SetOpacity(1.0f);
-
-  // Start the brightness animation.
-  {
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    animator->SetBrightness(0.0f);
-  }
-  EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-
-  // Start the opacity animation.
-  {
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    animator->SetOpacity(0.0f);
-  }
-  EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-
-  // Finish the brightness animation.
-  {
-    animator->StopAnimatingProperty(LayerAnimationElement::BRIGHTNESS);
-    EXPECT_FLOAT_EQ(0.0f, layer.layer_brightness());
-    EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-  }
-
-  // Finish the opacity animation.
-  {
-    animator->StopAnimatingProperty(LayerAnimationElement::OPACITY);
-    EXPECT_FLOAT_EQ(0.0f, layer.opacity());
-    EXPECT_FALSE(layer.cc_layer_for_testing()->trilinear_filtering());
-  }
-
-  // Case 2: the original original trilinear status if true.
-  layer.AddTrilinearFilteringRequest();
-  EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-  animator->SetBrightness(1.0f);
-  animator->SetOpacity(1.0f);
-
-  // Start the brightness animation.
-  {
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    animator->SetBrightness(0.0f);
-  }
-  EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-
-  // Start the opacity animation.
-  {
-    ScopedLayerAnimationSettings settings(animator.get());
-    settings.TrilinearFiltering();
-    animator->SetOpacity(0.0f);
-  }
-  EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-
-  // Finish the brightness animation.
-  {
-    animator->StopAnimatingProperty(LayerAnimationElement::BRIGHTNESS);
-    EXPECT_FLOAT_EQ(0.0f, layer.layer_brightness());
-    EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-  }
-
-  // Finish the opacity animation.
-  {
-    animator->StopAnimatingProperty(LayerAnimationElement::OPACITY);
-    EXPECT_FLOAT_EQ(0.0f, layer.opacity());
-    EXPECT_TRUE(layer.cc_layer_for_testing()->trilinear_filtering());
-  }
 }
 
 // Tests that an observer added to a scoped settings object is still notified
@@ -2667,7 +2496,7 @@ TEST(LayerAnimatorTest, SettingPropertyDuringAnAnimation) {
   delegate.SetOpacityFromAnimation(start_opacity);
 
   std::unique_ptr<LayerAnimationSequence> sequence =
-      std::make_unique<LayerAnimationSequence>(
+      base::MakeUnique<LayerAnimationSequence>(
           LayerAnimationElement::CreateOpacityElement(target_opacity, delta));
 
   animator->StartAnimation(sequence.release());
@@ -2702,7 +2531,7 @@ TEST(LayerAnimatorTest, ImmediatelySettingNewTargetDoesNotLeak) {
   int num_live_instances = 0;
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
   std::unique_ptr<TestLayerAnimationSequence> sequence =
-      std::make_unique<TestLayerAnimationSequence>(
+      base::MakeUnique<TestLayerAnimationSequence>(
           LayerAnimationElement::CreateBoundsElement(target_bounds, delta),
           &num_live_instances);
 

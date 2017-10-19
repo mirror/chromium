@@ -76,12 +76,6 @@ class BackgroundFetchBridge final
   // completed.
   void GetDeveloperIds(GetDeveloperIdsCallback);
 
-  // Registers the |observer| to receive progress events for the background
-  // fetch registration identified by the |unique_id|.
-  void AddRegistrationObserver(
-      const String& unique_id,
-      mojom::blink::BackgroundFetchRegistrationObserverPtr);
-
  private:
   explicit BackgroundFetchBridge(ServiceWorkerRegistration&);
 

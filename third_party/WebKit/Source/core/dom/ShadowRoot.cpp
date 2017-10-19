@@ -57,7 +57,7 @@ static_assert(sizeof(ShadowRoot) == sizeof(SameSizeAsShadowRoot),
               "ShadowRoot should stay small");
 
 ShadowRoot::ShadowRoot(Document& document, ShadowRootType type)
-    : DocumentFragment(nullptr, kCreateShadowRoot),
+    : DocumentFragment(0, kCreateShadowRoot),
       TreeScope(*this, document),
       style_sheet_list_(nullptr),
       child_shadow_root_count_(0),
@@ -351,7 +351,7 @@ void ShadowRoot::DistributeV1() {
   EnsureSlotAssignment().ResolveDistribution();
 }
 
-void ShadowRoot::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ShadowRoot) {
   visitor->Trace(shadow_root_rare_data_v0_);
   visitor->Trace(slot_assignment_);
   visitor->Trace(style_sheet_list_);

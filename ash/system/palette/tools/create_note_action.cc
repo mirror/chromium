@@ -4,7 +4,7 @@
 
 #include "ash/system/palette/tools/create_note_action.h"
 
-#include "ash/note_taking_controller.h"
+#include "ash/palette_delegate.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -29,14 +29,14 @@ PaletteToolId CreateNoteAction::GetToolId() const {
 void CreateNoteAction::OnEnable() {
   CommonPaletteTool::OnEnable();
 
-  Shell::Get()->note_taking_controller()->CreateNote();
+  Shell::Get()->palette_delegate()->CreateNote();
 
   delegate()->DisableTool(GetToolId());
   delegate()->HidePalette();
 }
 
 views::View* CreateNoteAction::CreateView() {
-  if (!Shell::Get()->note_taking_controller()->CanCreateNote())
+  if (!Shell::Get()->palette_delegate()->HasNoteApp())
     return nullptr;
 
   return CreateDefaultView(

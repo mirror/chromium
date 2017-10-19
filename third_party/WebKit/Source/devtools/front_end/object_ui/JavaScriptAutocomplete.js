@@ -188,13 +188,12 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = async function(expres
           generatePreview: false
         },
         /* userGesture */ false, /* awaitPromise */ false);
-    var completionGroups = await completionsOnGlobal(result);
-    return receivedPropertyNames(completionGroups);
+    return completionsOnGlobal(result);
   }
 
   /**
    * @param {!SDK.RuntimeModel.EvaluationResult} result
-   * @return {!Promise<!Array<!ObjectUI.JavaScriptAutocomplete.CompletionGroup>>}
+   * @return {!Promise<!UI.SuggestBox.Suggestions>}
    */
   async function completionsOnGlobal(result) {
     if (result.error || !!result.exceptionDetails || !result.object)
@@ -229,16 +228,8 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = async function(expres
         completions = evaluateResult.object.value;
     }
     executionContext.runtimeModel.releaseObjectGroup('completion');
+    return receivedPropertyNames(completions);
 
-    if (!expressionString) {
-      var globalNames = await executionContext.globalLexicalScopeNames();
-      // Merge lexical scope names with first completion group on global object: var a and let b should be in the same group.
-      if (completions.length)
-        completions[0].items = completions[0].items.concat(globalNames);
-      else
-        completions.push({items: globalNames, title: Common.UIString('Lexical scope variables')});
-    }
-    return completions;
 
     /**
      * @param {string=} type

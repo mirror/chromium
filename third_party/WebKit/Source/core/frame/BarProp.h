@@ -59,7 +59,7 @@ class BarProp final : public GarbageCollected<BarProp>,
 
   bool visible() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   BarProp(LocalFrame*, Type);

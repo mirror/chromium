@@ -277,7 +277,7 @@ TEST_F(ScrollableAreaTest, PopupOverlayScrollbarShouldNotFadeOut) {
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform;
 
-  ScopedOverlayScrollbarsForTest overlay_scrollbars(true);
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(true);
   ScrollbarTheme::SetMockScrollbarsEnabled(true);
 
   MockScrollableArea* scrollable_area =

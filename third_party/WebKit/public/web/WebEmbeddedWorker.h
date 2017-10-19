@@ -56,8 +56,7 @@ class BLINK_EXPORT WebEmbeddedWorker {
   static std::unique_ptr<WebEmbeddedWorker> Create(
       std::unique_ptr<WebServiceWorkerContextClient>,
       std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
-      mojo::ScopedMessagePipeHandle content_settings_handle,
-      mojo::ScopedMessagePipeHandle interface_provider);
+      mojo::ScopedMessagePipeHandle content_settings_handle);
 
   virtual ~WebEmbeddedWorker() {}
 

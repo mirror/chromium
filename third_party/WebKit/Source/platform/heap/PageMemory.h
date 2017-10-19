@@ -5,7 +5,6 @@
 #ifndef PageMemory_h
 #define PageMemory_h
 
-#include "platform/heap/Heap.h"
 #include "platform/heap/HeapPage.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
@@ -176,7 +175,7 @@ class PageMemory {
     //
     // TODO(sof): consider removing check once bug has been diagnosed
     // and addressed.
-    CHECK(!ThreadState::Current()->Heap().IsAddressInHeapDoesNotContainCache(
+    CHECK(!ThreadState::Current()->IsAddressInHeapDoesNotContainCache(
         WritableStart()));
     return writable_.Commit();
   }

@@ -32,7 +32,7 @@ ReportingService::ReportingService(MetricsServiceClient* client,
       log_upload_in_progress_(false),
       data_use_tracker_(DataUseTracker::Create(local_state)),
       self_ptr_factory_(this) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(client_);
   DCHECK(local_state);
 }
@@ -42,7 +42,7 @@ ReportingService::~ReportingService() {
 }
 
 void ReportingService::Initialize() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!upload_scheduler_);
   log_store()->LoadPersistedUnsentLogs();
   base::Closure send_next_log_callback = base::Bind(
@@ -51,19 +51,19 @@ void ReportingService::Initialize() {
 }
 
 void ReportingService::Start() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   if (reporting_active_)
     upload_scheduler_->Start();
 }
 
 void ReportingService::Stop() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   if (upload_scheduler_)
     upload_scheduler_->Stop();
 }
 
 void ReportingService::EnableReporting() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   if (reporting_active_)
     return;
   reporting_active_ = true;
@@ -71,20 +71,20 @@ void ReportingService::EnableReporting() {
 }
 
 void ReportingService::DisableReporting() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   reporting_active_ = false;
   Stop();
 }
 
 bool ReportingService::reporting_active() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   return reporting_active_;
 }
 
 void ReportingService::UpdateMetricsUsagePrefs(const std::string& service_name,
                                                int message_size,
                                                bool is_cellular) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   if (data_use_tracker_) {
     data_use_tracker_->UpdateMetricsUsagePrefs(service_name, message_size,
                                                is_cellular);
@@ -97,7 +97,7 @@ void ReportingService::UpdateMetricsUsagePrefs(const std::string& service_name,
 
 void ReportingService::SendNextLog() {
   DVLOG(1) << "SendNextLog";
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   if (!last_upload_finish_time_.is_null()) {
     LogActualUploadInterval(base::TimeTicks::Now() - last_upload_finish_time_);
     last_upload_finish_time_ = base::TimeTicks();
@@ -113,10 +113,8 @@ void ReportingService::SendNextLog() {
     upload_scheduler_->UploadFinished(true);
     return;
   }
-  if (!log_store()->has_staged_log()) {
-    reporting_info_.set_attempt_count(0);
+  if (!log_store()->has_staged_log())
     log_store()->StageNextLog();
-  }
 
   // Proceed to stage the log for upload if log size satisfies cellular log
   // upload constrains.
@@ -136,7 +134,7 @@ void ReportingService::SendNextLog() {
 }
 
 void ReportingService::SendStagedLog() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(log_store()->has_staged_log());
   if (!log_store()->has_staged_log())
     return;
@@ -151,21 +149,17 @@ void ReportingService::SendStagedLog() {
                    self_ptr_factory_.GetWeakPtr()));
   }
 
-  reporting_info_.set_attempt_count(reporting_info_.attempt_count() + 1);
-
   const std::string hash =
       base::HexEncode(log_store()->staged_log_hash().data(),
                       log_store()->staged_log_hash().size());
-  log_uploader_->UploadLog(log_store()->staged_log(), hash, reporting_info_);
+  log_uploader_->UploadLog(log_store()->staged_log(), hash);
 }
 
 void ReportingService::OnLogUploadComplete(int response_code, int error_code) {
   DVLOG(1) << "OnLogUploadComplete:" << response_code;
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(log_upload_in_progress_);
   log_upload_in_progress_ = false;
-
-  reporting_info_.set_last_response_code(response_code);
 
   // Log a histogram to track response success vs. failure rates.
   LogResponseOrErrorCode(response_code, error_code);

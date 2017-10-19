@@ -12,7 +12,6 @@
 #include "chrome/browser/vr/ui.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
-#include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
 namespace vr {
@@ -140,7 +139,7 @@ void UiSceneManagerTest::CheckRendererOpacityRecursive(
 
   FakeUiElementRenderer renderer;
   if (element->draw_phase() != kPhaseNone) {
-    element->Render(&renderer, kPixelDaydreamProjMatrix);
+    element->Render(&renderer, kProjMatrix);
   }
 
   // It is expected that some elements doesn't render anything (such as root

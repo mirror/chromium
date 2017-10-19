@@ -32,7 +32,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_feature_list.h"
 #include "base/test/test_file_util.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
@@ -895,7 +894,7 @@ IN_PROC_BROWSER_TEST_F(LocalePolicyTest, ApplicationLocaleValue) {
   EXPECT_EQ(french_title, title);
 
   // Make sure this is really French and differs from the English title.
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   std::string loaded =
       ui::ResourceBundle::GetSharedInstance().ReloadLocaleResources("en-US");
   EXPECT_EQ("en-US", loaded);
@@ -1449,7 +1448,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, DownloadDirectory) {
   // Verifies that the download directory can be forced by policy.
 
   // Set the initial download directory.
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir initial_dir;
   ASSERT_TRUE(initial_dir.CreateUniqueTempDir());
   browser()->profile()->GetPrefs()->SetFilePath(
@@ -1851,7 +1850,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_ExtensionInstallSources) {
       URLRequestMockHTTPJob::GetMockUrl("extensions/*"));
   const GURL referrer_url(URLRequestMockHTTPJob::GetMockUrl("policy/*"));
 
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir download_directory;
   ASSERT_TRUE(download_directory.CreateUniqueTempDir());
   DownloadPrefs* download_prefs =
@@ -3888,9 +3887,18 @@ update_client::CrxComponent ComponentUpdaterPolicyTest::MakeCrxComponent(
    public:
     MockInstaller() {}
 
+    // gMock does not support mocking functions with parameters which have
+    // move semantics. This function is a shim to work around it.
+    void Install(std::unique_ptr<base::DictionaryValue> manifest,
+                 const base::FilePath& unpack_path,
+                 const Callback& callback) {
+      return Install_(manifest, unpack_path, callback);
+    }
+
     MOCK_METHOD1(OnUpdateError, void(int error));
-    MOCK_METHOD2(Install,
-                 void(const base::FilePath& unpack_path,
+    MOCK_METHOD3(Install_,
+                 void(const std::unique_ptr<base::DictionaryValue>& manifest,
+                      const base::FilePath& unpack_pat,
                       const Callback& callback));
     MOCK_METHOD2(GetInstalledFile,
                  bool(const std::string& file, base::FilePath* installed_file));
@@ -4381,15 +4389,10 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcLocationServiceEnabled) {
 
 class NetworkTimePolicyTest : public PolicyTest {
  public:
-  NetworkTimePolicyTest() : PolicyTest() {}
-  ~NetworkTimePolicyTest() override {}
-
-  void SetUpOnMainThread() override {
-    std::map<std::string, std::string> parameters;
-    parameters["FetchBehavior"] = "on-demand-only";
-    scoped_feature_list_.InitAndEnableFeatureWithParameters(
-        network_time::kNetworkTimeServiceQuerying, parameters);
-    PolicyTest::SetUpOnMainThread();
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    content::EnableFeatureWithParam(network_time::kNetworkTimeServiceQuerying,
+                                    "FetchBehavior", "on-demand-only",
+                                    command_line);
   }
 
   // A request handler that returns a dummy response and counts the number of
@@ -4411,10 +4414,7 @@ class NetworkTimePolicyTest : public PolicyTest {
   uint32_t num_requests() { return num_requests_; }
 
  private:
-  base::test::ScopedFeatureList scoped_feature_list_;
   uint32_t num_requests_ = 0;
-
-  DISALLOW_COPY_AND_ASSIGN(NetworkTimePolicyTest);
 };
 
 IN_PROC_BROWSER_TEST_F(NetworkTimePolicyTest, NetworkTimeQueriesDisabled) {

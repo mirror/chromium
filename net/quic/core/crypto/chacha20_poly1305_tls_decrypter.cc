@@ -14,7 +14,7 @@ namespace net {
 namespace {
 
 const size_t kKeySize = 32;
-const size_t kNonceSize = 12;
+const size_t kNoncePrefixSize = 4;
 
 }  // namespace
 
@@ -22,10 +22,11 @@ ChaCha20Poly1305TlsDecrypter::ChaCha20Poly1305TlsDecrypter()
     : AeadBaseDecrypter(EVP_aead_chacha20_poly1305(),
                         kKeySize,
                         kAuthTagSize,
-                        kNonceSize,
+                        kNoncePrefixSize,
                         /* use_ietf_nonce_construction */ true) {
   static_assert(kKeySize <= kMaxKeySize, "key size too big");
-  static_assert(kNonceSize <= kMaxNonceSize, "nonce size too big");
+  static_assert(kNoncePrefixSize <= kMaxNoncePrefixSize,
+                "nonce prefix size too big");
 }
 
 ChaCha20Poly1305TlsDecrypter::~ChaCha20Poly1305TlsDecrypter() {}

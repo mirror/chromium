@@ -9,18 +9,11 @@
 
 #include "content/public/browser/content_browser_client.h"
 
-namespace mash_service_registry {
-
 // Starts one of Mash's embedded services.
-void RegisterOutOfProcessServices(
+void RegisterOutOfProcessServicesForMash(
     content::ContentBrowserClient::OutOfProcessServiceMap* services);
 
 // Returns true if |name| identifies a mash related service.
 bool IsMashServiceName(const std::string& name);
-
-// Returns true if the browser should exit when service |name| quits.
-bool ShouldTerminateOnServiceQuit(const std::string& name);
-
-}  // namespace mash_service_registry
 
 #endif  // CHROME_BROWSER_MASH_SERVICE_REGISTRY_H_

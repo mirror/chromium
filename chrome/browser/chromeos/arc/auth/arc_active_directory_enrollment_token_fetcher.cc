@@ -200,7 +200,8 @@ void ArcActiveDirectoryEnrollmentTokenFetcher::CancelSamlFlow() {
       .Run(Status::FAILURE, std::string(), std::string());
 }
 
-void ArcActiveDirectoryEnrollmentTokenFetcher::OnAuthSucceeded() {
+void ArcActiveDirectoryEnrollmentTokenFetcher::OnAuthSucceeded(
+    const std::string& unused_auth_code) {
   VLOG(1) << "SAML auth succeeded.";
   DCHECK(!auth_session_id_.empty());
   DoFetchEnrollmentToken();

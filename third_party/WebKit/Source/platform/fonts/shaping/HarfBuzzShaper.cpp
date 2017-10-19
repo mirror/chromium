@@ -100,10 +100,6 @@ void CheckShapeResultRange(const ShapeResult* result,
                             result->EndIndexForResult()));
   for (unsigned i = start; i < end; ++i)
     log.Append(String::Format(" %02X", text[i]));
-
-  log.Append(", result=");
-  result->ToString(&log);
-
   NOTREACHED() << log.ToString();
 }
 #endif
@@ -310,7 +306,7 @@ void HarfBuzzShaper::ExtractShapeResults(
   // Find first notdef glyph in buffer.
   unsigned num_glyphs = hb_buffer_get_length(range_data->buffer);
   hb_glyph_info_t* glyph_info =
-      hb_buffer_get_glyph_infos(range_data->buffer, nullptr);
+      hb_buffer_get_glyph_infos(range_data->buffer, 0);
 
   unsigned last_change_glyph_index = 0;
   unsigned previous_cluster_start_glyph_index = 0;
@@ -840,7 +836,7 @@ void HarfBuzzShaper::ShapeSegment(RangeData* range_data,
 
     if (!ShapeRange(range_data->buffer,
                     range_data->font_features.IsEmpty()
-                        ? nullptr
+                        ? 0
                         : range_data->font_features.data(),
                     range_data->font_features.size(),
                     direction_and_small_caps_adjusted_font,

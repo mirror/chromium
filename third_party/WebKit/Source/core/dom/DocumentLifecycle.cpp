@@ -40,7 +40,7 @@
 namespace blink {
 
 static DocumentLifecycle::DeprecatedTransition* g_deprecated_transition_stack =
-    nullptr;
+    0;
 
 // TODO(skyostil): Come up with a better way to store cross-frame lifecycle
 // related data to avoid this being a global setting.

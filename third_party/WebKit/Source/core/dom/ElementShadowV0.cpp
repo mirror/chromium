@@ -64,10 +64,10 @@ inline void DistributionPool::Clear() {
 inline void DistributionPool::PopulateChildren(const ContainerNode& parent) {
   Clear();
   for (Node* child = parent.firstChild(); child; child = child->nextSibling()) {
-    // Re-distribution across v0 and v1 shadow trees is not supported
-    if (IsHTMLSlotElement(child))
+    if (IsHTMLSlotElement(child)) {
+      // TODO(hayato): Support re-distribution across v0 and v1 shadow trees
       continue;
-
+    }
     if (IsActiveV0InsertionPoint(*child)) {
       V0InsertionPoint* insertion_point = ToV0InsertionPoint(child);
       for (size_t i = 0; i < insertion_point->DistributedNodesSize(); ++i)
@@ -164,7 +164,7 @@ void ElementShadowV0::Distribute() {
 
   for (ShadowRoot* root = &YoungestShadowRoot(); root;
        root = root->OlderShadowRoot()) {
-    HTMLShadowElement* shadow_insertion_point = nullptr;
+    HTMLShadowElement* shadow_insertion_point = 0;
     for (const auto& point : root->DescendantInsertionPoints()) {
       if (!point->IsActive())
         continue;
@@ -255,7 +255,7 @@ void ElementShadowV0::ClearDistribution() {
     root->SetShadowInsertionPointOfYoungerShadowRoot(nullptr);
 }
 
-void ElementShadowV0::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ElementShadowV0) {
   visitor->Trace(element_shadow_);
   visitor->Trace(node_to_insertion_points_);
 }

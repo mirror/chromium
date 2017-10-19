@@ -220,10 +220,11 @@ extern const char kDisplayPowerState[];
 extern const char kDisplayProperties[];
 extern const char kSecondaryDisplays[];
 extern const char kDisplayRotationLock[];
+extern const char kEnableStylusTools[];
+extern const char kLaunchPaletteOnEjectEvent[];
 extern const char kNoteTakingAppId[];
 extern const char kNoteTakingAppEnabledOnLockScreen[];
 extern const char kNoteTakingAppsLockScreenWhitelist[];
-extern const char kNoteTakingAppsLockScreenToastShown[];
 extern const char kRestoreLastLockScreenNote[];
 extern const char kSessionUserActivitySeen[];
 extern const char kSessionStartTime[];
@@ -684,10 +685,6 @@ extern const char kGSSAPILibraryName[];
 extern const char kAuthAndroidNegotiateAccountType[];
 extern const char kAllowCrossOriginAuthPrompt[];
 
-#if defined(OS_POSIX)
-extern const char kNtlmV2Enabled[];
-#endif  // defined(OS_POSIX)
-
 extern const char kBuiltInDnsClientEnabled[];
 
 extern const char kRegisteredProtocolHandlers[];
@@ -875,21 +872,12 @@ extern const char kOfflinePrefetchBackoff[];
 extern const char kOfflineUsageStartObserved[];
 extern const char kOfflineUsageOnlineObserved[];
 extern const char kOfflineUsageOfflineObserved[];
-extern const char kPrefetchUsageEnabledObserved[];
-extern const char kPrefetchUsageHasPagesObserved[];
-extern const char kPrefetchUsageFetchObserved[];
-extern const char kPrefetchUsageOpenObserved[];
 extern const char kOfflineUsageTrackingDay[];
 extern const char kOfflineUsageUnusedCount[];
 extern const char kOfflineUsageStartedCount[];
 extern const char kOfflineUsageOfflineCount[];
 extern const char kOfflineUsageOnlineCount[];
 extern const char kOfflineUsageMixedCount[];
-extern const char kPrefetchUsageEnabledCount[];
-extern const char kPrefetchUsageHasPagesCount[];
-extern const char kPrefetchUsageFetchedCount[];
-extern const char kPrefetchUsageOpenedCount[];
-extern const char kPrefetchUsageMixedCount[];
 #endif
 
 extern const char kMediaEngagementSchemaVersion[];

@@ -71,22 +71,20 @@ class GPU_EXPORT GpuCommandBufferStub
   typedef base::Callback<void(const std::vector<ui::LatencyInfo>&)>
       LatencyInfoCallback;
 
-  GpuCommandBufferStub(GpuChannel* channel,
-                       const GPUCreateCommandBufferConfig& init_params,
-                       CommandBufferId command_buffer_id,
-                       SequenceId sequence_id,
-                       int32_t stream_id,
-                       int32_t route_id);
-
-  ~GpuCommandBufferStub() override;
-
   // This must leave the GL context associated with the newly-created
   // GpuCommandBufferStub current, so the GpuChannel can initialize
   // the gpu::Capabilities.
-  gpu::ContextResult Initialize(
+  static std::unique_ptr<GpuCommandBufferStub> Create(
+      GpuChannel* channel,
       GpuCommandBufferStub* share_group,
       const GPUCreateCommandBufferConfig& init_params,
+      CommandBufferId command_buffer_id,
+      SequenceId sequence_id,
+      int32_t stream_id,
+      int32_t route_id,
       std::unique_ptr<base::SharedMemory> shared_state_shm);
+
+  ~GpuCommandBufferStub() override;
 
   // IPC::Listener implementation:
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -148,6 +146,17 @@ class GPU_EXPORT GpuCommandBufferStub
   void MarkContextLost();
 
  private:
+  GpuCommandBufferStub(GpuChannel* channel,
+                       const GPUCreateCommandBufferConfig& init_params,
+                       CommandBufferId command_buffer_id,
+                       SequenceId sequence_id,
+                       int32_t stream_id,
+                       int32_t route_id);
+
+  bool Initialize(GpuCommandBufferStub* share_group,
+                  const GPUCreateCommandBufferConfig& init_params,
+                  std::unique_ptr<base::SharedMemory> shared_state_shm);
+
   GpuMemoryManager* GetMemoryManager() const;
 
   void Destroy();

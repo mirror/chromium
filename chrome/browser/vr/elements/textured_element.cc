@@ -18,7 +18,7 @@ static bool g_initialized_for_testing_ = false;
 }
 
 TexturedElement::TexturedElement(int maximum_width)
-    : texture_handle_(unsigned(-1)), maximum_width_(maximum_width) {}
+    : texture_handle_(-1), maximum_width_(maximum_width) {}
 
 TexturedElement::~TexturedElement() = default;
 
@@ -27,7 +27,6 @@ void TexturedElement::Initialize() {
   glGenTextures(1, &texture_handle_);
   DCHECK(GetTexture() != nullptr);
   texture_size_ = GetTexture()->GetPreferredTextureSize(maximum_width_);
-  GetTexture()->OnInitialized();
   initialized_ = true;
   UpdateTexture();
 }

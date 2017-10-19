@@ -6,7 +6,6 @@
 
 #include <objbase.h>
 #include <sddl.h>
-#include <wrl/client.h>
 
 #include <limits>
 #include <memory>
@@ -26,6 +25,7 @@
 #include "base/timer/timer.h"
 #include "base/win/registry.h"
 #include "base/win/scoped_bstr.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/windows_version.h"
 #include "ipc/ipc_message_macros.h"
@@ -206,7 +206,7 @@ class RdpSession : public DesktopSessionWin {
                                   DWORD* value);
 
   // Used to create an RDP desktop session.
-  Microsoft::WRL::ComPtr<IRdpDesktopSession> rdp_desktop_session_;
+  base::win::ScopedComPtr<IRdpDesktopSession> rdp_desktop_session_;
 
   // Used to match |rdp_desktop_session_| with the session it is attached to.
   std::string terminal_id_;
@@ -304,7 +304,7 @@ bool RdpSession::Initialize(const ScreenResolution& resolution) {
   }
 
   // Create an RDP session.
-  Microsoft::WRL::ComPtr<IRdpDesktopSessionEventHandler> event_handler(
+  base::win::ScopedComPtr<IRdpDesktopSessionEventHandler> event_handler(
       new EventHandler(weak_factory_.GetWeakPtr()));
   terminal_id_ = base::GenerateGUID();
   base::win::ScopedBstr terminal_id(base::UTF8ToUTF16(terminal_id_).c_str());

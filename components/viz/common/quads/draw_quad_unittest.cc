@@ -110,7 +110,6 @@ void CompareDrawQuad(DrawQuad* quad, DrawQuad* copy) {
 #define QUAD_DATA                              \
   gfx::Rect quad_rect(30, 40, 50, 60);         \
   gfx::Rect quad_visible_rect(40, 50, 30, 20); \
-  ALLOW_UNUSED_LOCAL(quad_visible_rect);       \
   bool needs_blending = true;                  \
   ALLOW_UNUSED_LOCAL(needs_blending);
 
@@ -275,26 +274,20 @@ TEST(DrawQuadTest, CopyStreamVideoDrawQuad) {
 
 TEST(DrawQuadTest, CopySurfaceDrawQuad) {
   gfx::Rect visible_rect(40, 50, 30, 20);
-  SurfaceId primary_surface_id(
-      kArbitraryFrameSinkId,
-      LocalSurfaceId(1234, base::UnguessableToken::Create()));
-  SurfaceId fallback_surface_id(
-      kArbitraryFrameSinkId,
-      LocalSurfaceId(5678, base::UnguessableToken::Create()));
+  SurfaceId surface_id(kArbitraryFrameSinkId,
+                       LocalSurfaceId(1234, base::UnguessableToken::Create()));
   CREATE_SHARED_STATE();
 
-  CREATE_QUAD_NEW(SurfaceDrawQuad, visible_rect, primary_surface_id,
-                  fallback_surface_id, SK_ColorWHITE);
+  CREATE_QUAD_NEW(SurfaceDrawQuad, visible_rect, surface_id,
+                  SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
   EXPECT_EQ(DrawQuad::SURFACE_CONTENT, copy_quad->material);
   EXPECT_EQ(visible_rect, copy_quad->visible_rect);
-  EXPECT_EQ(primary_surface_id, copy_quad->primary_surface_id);
-  EXPECT_EQ(fallback_surface_id, copy_quad->fallback_surface_id);
+  EXPECT_EQ(surface_id, copy_quad->surface_id);
 
-  CREATE_QUAD_ALL(SurfaceDrawQuad, primary_surface_id, fallback_surface_id,
-                  SK_ColorWHITE);
+  CREATE_QUAD_ALL(SurfaceDrawQuad, surface_id, SurfaceDrawQuadType::PRIMARY,
+                  SK_ColorWHITE, nullptr);
   EXPECT_EQ(DrawQuad::SURFACE_CONTENT, copy_quad->material);
-  EXPECT_EQ(primary_surface_id, copy_quad->primary_surface_id);
-  EXPECT_EQ(fallback_surface_id, copy_quad->fallback_surface_id);
+  EXPECT_EQ(surface_id, copy_quad->surface_id);
 }
 
 TEST(DrawQuadTest, CopyTextureDrawQuad) {
@@ -569,8 +562,8 @@ TEST_F(DrawQuadIteratorTest, SurfaceDrawQuad) {
                        LocalSurfaceId(4321, base::UnguessableToken::Create()));
 
   CREATE_SHARED_STATE();
-  CREATE_QUAD_NEW(SurfaceDrawQuad, visible_rect, surface_id, base::nullopt,
-                  SK_ColorWHITE);
+  CREATE_QUAD_NEW(SurfaceDrawQuad, visible_rect, surface_id,
+                  SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
   EXPECT_EQ(0, IterateAndCount(quad_new));
 }
 

@@ -31,8 +31,8 @@ namespace {
 const char kFeaturePolicyBlockedMessage[] =
     "Access to the feature \"vr\" is disallowed by feature policy.";
 
-const char kGetVRDisplaysCrossOriginBlockedMessage[] =
-    "Access to navigator.getVRDisplays requires a user gesture in cross-origin "
+const char kIframeBlockedOnUserGestureMessage[] =
+    "Access to the method is blocked on a user gesture in cross-origin "
     "embedded frames.";
 
 const char kNotAssociatedWithDocumentMessage[] =
@@ -128,9 +128,8 @@ ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state) {
     // cross-origin iframes. To be backward compatible, we changed to require a
     // user gesture for cross-origin iframes.
     return ScriptPromise::RejectWithDOMException(
-        script_state,
-        DOMException::Create(kSecurityError,
-                             kGetVRDisplaysCrossOriginBlockedMessage));
+        script_state, DOMException::Create(kSecurityError,
+                                           kIframeBlockedOnUserGestureMessage));
   }
 
   // Similar to the restriciton above, we're going to block developers from
@@ -176,7 +175,7 @@ Document* NavigatorVR::GetDocument() {
   return GetSupplementable()->GetFrame()->GetDocument();
 }
 
-void NavigatorVR::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorVR) {
   visitor->Trace(vr_);
   visitor->Trace(controller_);
   Supplement<Navigator>::Trace(visitor);

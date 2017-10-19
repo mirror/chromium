@@ -177,7 +177,9 @@ Output.ROLE_INFO_ = {
       {msgId: 'role_progress_indicator', inherits: 'abstractRange'},
   popUpButton: {msgId: 'role_button', earconId: 'POP_UP_BUTTON'},
   radioButton: {msgId: 'role_radio'},
-  radioGroup: {msgId: 'role_radiogroup', inherits: 'abstractContainer'},
+  radioGroup: {
+    msgId: 'role_radiogroup',
+  },
   rootWebArea: {outputContextFirst: true},
   row: {msgId: 'role_row', inherits: 'abstractContainer'},
   rowHeader: {msgId: 'role_rowheader', inherits: 'cell'},
@@ -381,8 +383,8 @@ Output.RULES = {
           $restriction $description`
     },
     listBoxOption: {
-      speak: `$state $name $role @describe_index($posInSet, $setSize)
-          $description $restriction`
+      speak: `$name $role @describe_index($posInSet, $setSize)
+          $description $state $restriction`
     },
     listItem: {enter: `$name= $role $state $description`},
     listMarker: {speak: `$name`},
@@ -423,6 +425,7 @@ Output.RULES = {
           @describe_radio_unselected($name)) $description $state
           $restriction`
     },
+    radioGroup: {enter: `$name $role $restriction $description`},
     rootWebArea: {enter: `$name`, speak: `$if($name, $name, $docUrl)`},
     region: {speak: `$state $nameOrTextContent $description`},
     row: {enter: `$node(tableRowHeader)`},

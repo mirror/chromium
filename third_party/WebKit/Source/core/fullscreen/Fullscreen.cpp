@@ -882,7 +882,7 @@ void Fullscreen::FullscreenElementChanged(Element* old_element,
 
     if (new_element != GetDocument()->documentElement()) {
       LayoutFullScreen::WrapLayoutObject(
-          layout_object, layout_object ? layout_object->Parent() : nullptr,
+          layout_object, layout_object ? layout_object->Parent() : 0,
           GetDocument());
     }
   }
@@ -905,7 +905,7 @@ void Fullscreen::FullscreenElementChanged(Element* old_element,
   GetDocument()->UpdateStyleAndLayoutTree();
 }
 
-void Fullscreen::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Fullscreen) {
   visitor->Trace(pending_requests_);
   visitor->Trace(fullscreen_element_stack_);
   Supplement<Document>::Trace(visitor);

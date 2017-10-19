@@ -103,7 +103,7 @@ TEST_F(TabCollectionMediatorTest, TestReplaceWebState) {
 // Tests that the consumer is notified that a web state has been deleted from
 // webStateList.
 TEST_F(TabCollectionMediatorTest, TestDetachWebState) {
-  web_state_list_->CloseWebStateAt(1, WebStateList::CLOSE_USER_ACTION);
+  web_state_list_->CloseWebStateAt(1);
   [[consumer_ verify] deleteItemAtIndex:1 selectedIndex:0];
 }
 

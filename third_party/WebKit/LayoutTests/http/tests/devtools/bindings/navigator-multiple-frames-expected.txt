@@ -9,7 +9,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
 
 Running: createIframes
@@ -20,7 +19,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
   frame1 (magic-frame.html)
     127.0.0.1:8000
@@ -43,7 +41,6 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
   frame2 (magic-frame.html)
     127.0.0.1:8000
@@ -60,6 +57,5 @@ top
     inspector
       bindings
         bindings-test.js
-      debugger-test.js
       inspector-test.js
 

@@ -73,9 +73,9 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/html/HTMLIFrameElement.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageDocument.h"
 #include "core/html/forms/HTMLFormElement.h"
-#include "core/html/media/HTMLVideoElement.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
@@ -88,7 +88,7 @@
 #include "core/loader/ThreadableLoader.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
-#include "core/page/ScopedPagePauser.h"
+#include "core/page/ScopedPageSuspender.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
@@ -108,6 +108,7 @@
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/scroll/Scrollbar.h"
 #include "platform/scroll/ScrollbarTestSuite.h"
 #include "platform/testing/HistogramTester.h"
@@ -4351,7 +4352,7 @@ TEST_P(ParameterizedWebFrameTest, ClearFocusedNodeTest) {
   web_view_helper.WebView()->ClearFocusedElement();
 
   // Now retrieve the FocusedNode and test it should be null.
-  EXPECT_EQ(nullptr, web_view_helper.WebView()->FocusedElement());
+  EXPECT_EQ(0, web_view_helper.WebView()->FocusedElement());
 }
 
 class ChangedSelectionCounter : public FrameTestHelpers::TestWebFrameClient {
@@ -4874,7 +4875,7 @@ TEST_P(ParameterizedWebFrameTest, FindInPageMatchRects) {
         static_cast<FloatRect>(web_match_rects[result_index]);
 
     // Select the match by the center of its rect.
-    EXPECT_EQ(main_frame->SelectNearestFindMatch(result_rect.Center(), nullptr),
+    EXPECT_EQ(main_frame->SelectNearestFindMatch(result_rect.Center(), 0),
               result_index + 1);
 
     // Check that the find result ordering matches with our expectations.
@@ -5927,14 +5928,12 @@ class CompositedSelectionBoundsTestWebViewClient
   CompositedSelectionBoundsTestLayerTreeView test_layer_tree_view_;
 };
 
-class CompositedSelectionBoundsTest
-    : public ParameterizedWebFrameTest,
-      private ScopedCompositedSelectionUpdateForTest {
+class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
  protected:
   CompositedSelectionBoundsTest()
-      : ScopedCompositedSelectionUpdateForTest(true),
-        fake_selection_layer_tree_view_(
+      : fake_selection_layer_tree_view_(
             fake_selection_web_view_client_.SelectionLayerTreeView()) {
+    RuntimeEnabledFeatures::SetCompositedSelectionUpdateEnabled(true);
     RegisterMockedHttpURLLoad("Ahem.ttf");
 
     web_view_helper_.Initialize(nullptr, &fake_selection_web_view_client_);
@@ -6775,7 +6774,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkersUnderWords) {
 
 class StubbornTextCheckClient : public WebTextCheckClient {
  public:
-  StubbornTextCheckClient() : completion_(nullptr) {}
+  StubbornTextCheckClient() : completion_(0) {}
   ~StubbornTextCheckClient() override {}
 
   // WebTextCheckClient:
@@ -6808,7 +6807,7 @@ class StubbornTextCheckClient : public WebTextCheckClient {
                                               misspelling_length));
     }
     completion_->DidFinishCheckingText(results);
-    completion_ = nullptr;
+    completion_ = 0;
   }
 
   WebTextCheckingCompletion* completion_;
@@ -6911,8 +6910,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultsSavedInDocument) {
 
   textcheck.Kick();
   ASSERT_EQ(1U, document->Markers().Markers().size());
-  ASSERT_NE(static_cast<DocumentMarker*>(nullptr),
-            document->Markers().Markers()[0]);
+  ASSERT_NE(static_cast<DocumentMarker*>(0), document->Markers().Markers()[0]);
   EXPECT_EQ(DocumentMarker::kSpelling,
             document->Markers().Markers()[0]->GetType());
 
@@ -6926,8 +6924,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultsSavedInDocument) {
 
   textcheck.KickGrammar();
   ASSERT_EQ(1U, document->Markers().Markers().size());
-  ASSERT_NE(static_cast<DocumentMarker*>(nullptr),
-            document->Markers().Markers()[0]);
+  ASSERT_NE(static_cast<DocumentMarker*>(0), document->Markers().Markers()[0]);
   EXPECT_EQ(DocumentMarker::kGrammar,
             document->Markers().Markers()[0]->GetType());
 }
@@ -7281,7 +7278,7 @@ class TestNewWindowWebViewClient : public FrameTestHelpers::TestWebViewClient {
                       bool,
                       WebSandboxFlags) override {
     EXPECT_TRUE(false);
-    return nullptr;
+    return 0;
   }
 };
 
@@ -7559,11 +7556,10 @@ TEST_P(ParameterizedWebFrameTest, NavigateToSame) {
   EXPECT_FALSE(client.FrameLoadTypeReloadSeen());
 
   FrameLoadRequest frame_request(
-      nullptr,
-      ResourceRequest(
-          ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
-              ->GetDocument()
-              ->Url()));
+      0, ResourceRequest(
+             ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+                 ->GetDocument()
+                 ->Url()));
   ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
       ->Loader()
       .Load(frame_request);
@@ -8563,7 +8559,7 @@ class TestFullscreenWebViewClient : public FrameTestHelpers::TestWebViewClient {
 }  // namespace
 
 TEST_P(ParameterizedWebFrameTest, OverlayFullscreenVideo) {
-  ScopedForceOverlayFullscreenVideoForTest force_overlay_fullscreen_video(true);
+  RuntimeEnabledFeatures::SetForceOverlayFullscreenVideoEnabled(true);
   RegisterMockedHttpURLLoad("fullscreen_video.html");
   TestFullscreenWebViewClient web_view_client;
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -8775,8 +8771,8 @@ static void NodeImageTestValidation(const IntSize& reference_bitmap_size,
   EXPECT_EQ(reference_bitmap_size.Width(), drag_image->Size().Width());
   EXPECT_EQ(reference_bitmap_size.Height(), drag_image->Size().Height());
   const SkBitmap& drag_bitmap = drag_image->Bitmap();
-  EXPECT_EQ(0, memcmp(bitmap.getPixels(), drag_bitmap.getPixels(),
-                      bitmap.computeByteSize()));
+  EXPECT_EQ(
+      0, memcmp(bitmap.getPixels(), drag_bitmap.getPixels(), bitmap.getSize()));
 }
 
 TEST_P(ParameterizedWebFrameTest, NodeImageTestCSSTransformDescendant) {
@@ -9711,7 +9707,7 @@ TEST_P(ParameterizedWebFrameTest, LoaderOriginAccess) {
   SchemeRegistry::RegisterURLSchemeAsDisplayIsolated("chrome");
 
   // Cross-origin request.
-  KURL resource_url("chrome://test.pdf");
+  KURL resource_url(kParsedURLString, "chrome://test.pdf");
   ResourceRequest request(resource_url);
   request.SetRequestContext(WebURLRequest::kRequestContextObject);
   request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
@@ -10009,17 +10005,17 @@ TEST_P(ParameterizedWebFrameTest,
 }
 
 // See https://crbug.com/628942.
-TEST_P(ParameterizedWebFrameTest, PausedPageLoadWithRemoteMainFrame) {
+TEST_P(ParameterizedWebFrameTest, SuspendedPageLoadWithRemoteMainFrame) {
   FrameTestHelpers::WebViewHelper helper;
   helper.InitializeRemote();
   WebRemoteFrameImpl* remote_root = helper.RemoteMainFrame();
 
-  // Check that ScopedPagePauser properly triggers deferred loading for
+  // Check that ScopedPageSuspender properly triggers deferred loading for
   // the current Page.
   Page* page = remote_root->GetFrame()->GetPage();
   EXPECT_FALSE(page->Paused());
   {
-    ScopedPagePauser pauser;
+    ScopedPageSuspender suspender;
     EXPECT_TRUE(page->Paused());
   }
   EXPECT_FALSE(page->Paused());
@@ -10035,7 +10031,7 @@ TEST_P(ParameterizedWebFrameTest, PausedPageLoadWithRemoteMainFrame) {
   EXPECT_FALSE(
       local_child->GetDocument()->Fetcher()->Context().DefersLoading());
   {
-    ScopedPagePauser pauser;
+    ScopedPageSuspender suspender;
     EXPECT_TRUE(page->Paused());
     EXPECT_TRUE(
         local_child->GetDocument()->Fetcher()->Context().DefersLoading());
@@ -10495,7 +10491,7 @@ TEST_P(WebFrameOverscrollTest, OnlyMainFrameScrollBoundaryBehaviorHasEffect) {
 }
 
 TEST_P(ParameterizedWebFrameTest, OrientationFrameDetach) {
-  ScopedOrientationEventForTest orientation_event(true);
+  RuntimeEnabledFeatures::SetOrientationEventEnabled(true);
   RegisterMockedHttpURLLoad("orientation-frame-detach.html");
   FrameTestHelpers::WebViewHelper web_view_helper;
   WebViewImpl* web_view_impl = web_view_helper.InitializeAndLoad(

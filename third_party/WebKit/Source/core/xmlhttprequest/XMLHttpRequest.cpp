@@ -42,7 +42,6 @@
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
 #include "core/frame/Deprecation.h"
-#include "core/frame/Frame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -67,7 +66,6 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/blob/BlobData.h"
 #include "platform/exported/WrappedResourceResponse.h"
-#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/http_names.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -86,7 +84,6 @@
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebCORS.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
 #include "public/platform/WebURLRequest.h"
 
 namespace blink {
@@ -250,7 +247,7 @@ class XMLHttpRequest::BlobLoader final
 
   void Cancel() { loader_->Cancel(); }
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(xhr_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(xhr_); }
 
  private:
   BlobLoader(XMLHttpRequest* xhr, RefPtr<BlobDataHandle> handle)
@@ -695,14 +692,6 @@ void XMLHttpRequest::open(const AtomicString& method,
   upload_complete_ = false;
 
   if (!async && GetExecutionContext()->IsDocument()) {
-    if (IsSupportedInFeaturePolicy(WebFeaturePolicyFeature::kSyncXHR) &&
-        !GetDocument()->GetFrame()->IsFeatureEnabled(
-            WebFeaturePolicyFeature::kSyncXHR)) {
-      exception_state.ThrowDOMException(
-          kInvalidAccessError,
-          "Synchronous requests are disabled by Feature Policy.");
-      return;
-    }
     if (GetDocument()->GetSettings() &&
         !GetDocument()->GetSettings()->GetSyncXHRInDocumentsEnabled()) {
       exception_state.ThrowDOMException(
@@ -1979,7 +1968,7 @@ void XMLHttpRequest::ReportMemoryUsageToV8() {
     isolate_->AdjustAmountOfExternalAllocatedMemory(diff);
 }
 
-void XMLHttpRequest::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XMLHttpRequest) {
   visitor->Trace(response_blob_);
   visitor->Trace(loader_);
   visitor->Trace(response_document_);

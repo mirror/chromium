@@ -32,7 +32,7 @@ class MODULES_EXPORT BlobEvent final : public Event {
   // Event
   const AtomicString& InterfaceName() const final;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   BlobEvent(const AtomicString& type, const BlobEventInit& initializer);

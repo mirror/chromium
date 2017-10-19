@@ -32,10 +32,7 @@
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
-
-class SkData;
-template <typename T>
-class sk_sp;
+#include "third_party/skia/include/core/SkData.h"
 
 namespace blink {
 

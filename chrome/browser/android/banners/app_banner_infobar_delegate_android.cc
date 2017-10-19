@@ -269,8 +269,8 @@ void AppBannerInfoBarDelegateAndroid::SendBannerAccepted() {
   // TODO(mgiuca): Fire the event *after* the installation is completed.
   weak_manager_->OnInstall(!native_app_data_.is_null() /* is_native */,
                            native_app_data_.is_null()
-                               ? shortcut_info_->display
-                               : blink::kWebDisplayModeUndefined);
+                               ? blink::kWebDisplayModeUndefined
+                               : shortcut_info_->display);
 }
 
 infobars::InfoBarDelegate::InfoBarIdentifier

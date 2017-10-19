@@ -132,7 +132,7 @@ IDBAny::IDBAny(IDBKey* key) : type_(kKeyType), idb_key_(key) {}
 
 IDBAny::IDBAny(int64_t value) : type_(kIntegerType), integer_(value) {}
 
-void IDBAny::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBAny) {
   visitor->Trace(dom_string_list_);
   visitor->Trace(idb_cursor_);
   visitor->Trace(idb_database_);

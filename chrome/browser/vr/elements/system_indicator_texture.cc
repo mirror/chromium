@@ -17,10 +17,10 @@ namespace vr {
 
 namespace {
 
-constexpr int kHeightWidthRatio = 8;
-constexpr float kBorderFactor = 0.1f;
-constexpr float kIconSizeFactor = 0.7f;
-constexpr float kFontSizeFactor = 0.40f;
+constexpr int kHeightWidthRatio = 8.0;
+constexpr float kBorderFactor = 0.1;
+constexpr float kIconSizeFactor = 0.7;
+constexpr float kFontSizeFactor = 0.40;
 
 }  // namespace
 
@@ -73,9 +73,8 @@ void SystemIndicatorTexture::Draw(SkCanvas* sk_canvas,
   gfx::PointF icon_location(
       (IsRTL() ? size_.width() - border_pixels - icon_pixels : border_pixels),
       (size_.height() - icon_pixels) / 2.0);
-  VectorIcon::DrawVectorIcon(canvas, icon_, size_.height() * kIconSizeFactor,
-                             icon_location,
-                             color_scheme().system_indicator_foreground);
+  DrawVectorIcon(canvas, icon_, size_.height() * kIconSizeFactor, icon_location,
+                 color_scheme().system_indicator_foreground);
 
   if (rendered_text) {
     canvas->Save();

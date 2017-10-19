@@ -44,7 +44,7 @@ class WebGLUniformLocation final
 
   GLint Location() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  protected:
   WebGLUniformLocation(WebGLProgram*, GLint location);

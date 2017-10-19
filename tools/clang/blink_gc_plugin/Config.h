@@ -64,6 +64,10 @@ class Config {
     return name == "RefPtr";
   }
 
+  static bool IsOwnPtr(const std::string& name) {
+    return name == "OwnPtr";
+  }
+
   static bool IsUniquePtr(const std::string& name) {
     return name == "unique_ptr";
   }

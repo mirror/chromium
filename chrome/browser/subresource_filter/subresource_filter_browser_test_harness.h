@@ -10,10 +10,8 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/subresource_filter/test_ruleset_publisher.h"
 #include "chrome/test/base/in_process_browser_test.h"
-#include "components/safe_browsing/db/util.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
 #include "components/url_pattern_index/proto/rules.pb.h"
@@ -43,21 +41,20 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
 
  protected:
   // InProcessBrowserTest:
+  void SetUpCommandLine(base::CommandLine* command_line) override;
   void SetUp() override;
   void TearDown() override;
   void SetUpOnMainThread() override;
 
   virtual std::unique_ptr<TestSafeBrowsingDatabaseHelper> CreateTestDatabase();
 
+  std::vector<base::StringPiece> RequiredFeatures() const;
+
   GURL GetTestUrl(const std::string& relative_url) const;
 
   void ConfigureAsPhishingURL(const GURL& url);
 
   void ConfigureAsSubresourceFilterOnlyURL(const GURL& url);
-
-  void ConfigureURLWithWarning(
-      const GURL& url,
-      std::vector<safe_browsing::SubresourceFilterType> filter_types);
 
   content::WebContents* web_contents() const;
 
@@ -99,8 +96,6 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
   }
 
  private:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   TestRulesetCreator ruleset_creator_;
   ScopedSubresourceFilterConfigurator scoped_configuration_;
   TestRulesetPublisher test_ruleset_publisher_;
@@ -111,13 +106,6 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
   SubresourceFilterContentSettingsManager* settings_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterBrowserTest);
-};
-
-// This class automatically syncs the SubresourceFilter SafeBrowsing list
-// without needing a chrome branded build.
-class SubresourceFilterListInsertingBrowserTest
-    : public SubresourceFilterBrowserTest {
-  std::unique_ptr<TestSafeBrowsingDatabaseHelper> CreateTestDatabase() override;
 };
 
 }  // namespace subresource_filter

@@ -61,7 +61,7 @@ class VoidCallback;
 class ErrorCallbackBase : public GarbageCollectedFinalized<ErrorCallbackBase> {
  public:
   virtual ~ErrorCallbackBase() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void Invoke(FileError::ErrorCode) = 0;
 };
 
@@ -103,7 +103,7 @@ class ScriptErrorCallback final : public ErrorCallbackBase {
  public:
   static ScriptErrorCallback* Wrap(ErrorCallback*);
   virtual ~ScriptErrorCallback() {}
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void Invoke(FileError::ErrorCode) override;
 

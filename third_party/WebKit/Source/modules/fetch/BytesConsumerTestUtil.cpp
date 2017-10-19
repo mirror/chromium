@@ -153,8 +153,7 @@ void BytesConsumerTestUtil::ReplayingBytesConsumer::GetError(const Error& e) {
   ++notification_token_;
 }
 
-void BytesConsumerTestUtil::ReplayingBytesConsumer::Trace(
-    blink::Visitor* visitor) {
+DEFINE_TRACE(BytesConsumerTestUtil::ReplayingBytesConsumer) {
   visitor->Trace(execution_context_);
   visitor->Trace(client_);
   BytesConsumer::Trace(visitor);

@@ -144,15 +144,15 @@ AXObject* AXObjectCacheImpl::FocusedImageMapUIElement(
   // Find the corresponding accessibility object for the HTMLAreaElement. This
   // should be in the list of children for its corresponding image.
   if (!area_element)
-    return nullptr;
+    return 0;
 
   HTMLImageElement* image_element = area_element->ImageElement();
   if (!image_element)
-    return nullptr;
+    return 0;
 
   AXObject* ax_layout_image = GetOrCreate(image_element);
   if (!ax_layout_image)
-    return nullptr;
+    return 0;
 
   const AXObject::AXObjectVector& image_children = ax_layout_image->Children();
   unsigned count = image_children.size();
@@ -165,7 +165,7 @@ AXObject* AXObjectCacheImpl::FocusedImageMapUIElement(
       return child;
   }
 
-  return nullptr;
+  return 0;
 }
 
 AXObject* AXObjectCacheImpl::FocusedObject() {
@@ -204,12 +204,12 @@ AXObject* AXObjectCacheImpl::FocusedObject() {
 
 AXObject* AXObjectCacheImpl::Get(LayoutObject* layout_object) {
   if (!layout_object)
-    return nullptr;
+    return 0;
 
   AXID ax_id = layout_object_mapping_.at(layout_object);
   DCHECK(!HashTraits<AXID>::IsDeletedValue(ax_id));
   if (!ax_id)
-    return nullptr;
+    return 0;
 
   return objects_.at(ax_id);
 }
@@ -229,7 +229,7 @@ static bool IsMenuListOption(const Node* node) {
 
 AXObject* AXObjectCacheImpl::Get(const Node* node) {
   if (!node)
-    return nullptr;
+    return 0;
 
   // Menu list option and HTML area elements are indexed by DOM node, never by
   // layout object.
@@ -248,38 +248,38 @@ AXObject* AXObjectCacheImpl::Get(const Node* node) {
     // laid out, but later something changes and it gets a layoutObject (like if
     // it's reparented).
     Remove(node_id);
-    return nullptr;
+    return 0;
   }
 
   if (layout_id)
     return objects_.at(layout_id);
 
   if (!node_id)
-    return nullptr;
+    return 0;
 
   return objects_.at(node_id);
 }
 
 AXObject* AXObjectCacheImpl::Get(AbstractInlineTextBox* inline_text_box) {
   if (!inline_text_box)
-    return nullptr;
+    return 0;
 
   AXID ax_id = inline_text_box_object_mapping_.at(inline_text_box);
   DCHECK(!HashTraits<AXID>::IsDeletedValue(ax_id));
   if (!ax_id)
-    return nullptr;
+    return 0;
 
   return objects_.at(ax_id);
 }
 
 AXObject* AXObjectCacheImpl::Get(AccessibleNode* accessible_node) {
   if (!accessible_node)
-    return nullptr;
+    return 0;
 
   AXID ax_id = accessible_node_mapping_.at(accessible_node);
   DCHECK(!HashTraits<AXID>::IsDeletedValue(ax_id));
   if (!ax_id)
-    return nullptr;
+    return 0;
 
   return objects_.at(ax_id);
 }
@@ -402,10 +402,10 @@ AXObject* AXObjectCacheImpl::GetOrCreate(AccessibleNode* accessible_node) {
 
 AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
   if (!node)
-    return nullptr;
+    return 0;
 
   if (!node->IsElementNode() && !node->IsTextNode() && !node->IsDocumentNode())
-    return nullptr;  // Only documents, elements and text nodes get a11y objects
+    return 0;  // Only documents, elements and text nodes get a11y objects
 
   if (AXObject* obj = Get(node))
     return obj;
@@ -417,10 +417,10 @@ AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
     return GetOrCreate(node->GetLayoutObject());
 
   if (!node->parentElement())
-    return nullptr;
+    return 0;
 
   if (IsHTMLHeadElement(node))
-    return nullptr;
+    return 0;
 
   AXObject* new_obj = CreateFromNode(node);
 
@@ -440,7 +440,7 @@ AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
 
 AXObject* AXObjectCacheImpl::GetOrCreate(LayoutObject* layout_object) {
   if (!layout_object)
-    return nullptr;
+    return 0;
 
   if (AXObject* obj = Get(layout_object))
     return obj;
@@ -462,7 +462,7 @@ AXObject* AXObjectCacheImpl::GetOrCreate(LayoutObject* layout_object) {
 AXObject* AXObjectCacheImpl::GetOrCreate(
     AbstractInlineTextBox* inline_text_box) {
   if (!inline_text_box)
-    return nullptr;
+    return 0;
 
   if (AXObject* obj = Get(inline_text_box))
     return obj;
@@ -509,7 +509,7 @@ AXObject* AXObjectCacheImpl::GetOrCreate(AccessibilityRole role) {
   }
 
   if (!obj)
-    return nullptr;
+    return 0;
 
   GetOrCreateAXID(obj);
 
@@ -965,7 +965,7 @@ const Element* AXObjectCacheImpl::RootAXEditableElement(const Node* node) {
 
 AXObject* AXObjectCacheImpl::FirstAccessibleObjectFromNode(const Node* node) {
   if (!node)
-    return nullptr;
+    return 0;
 
   AXObject* accessible_object = GetOrCreate(node->GetLayoutObject());
   while (accessible_object && accessible_object->AccessibilityIsIgnored()) {
@@ -975,7 +975,7 @@ AXObject* AXObjectCacheImpl::FirstAccessibleObjectFromNode(const Node* node) {
       node = NodeTraversal::NextSkippingChildren(*node);
 
     if (!node)
-      return nullptr;
+      return 0;
 
     accessible_object = GetOrCreate(node->GetLayoutObject());
   }
@@ -1240,7 +1240,7 @@ void AXObjectCacheImpl::ContextDestroyed(ExecutionContext*) {
   permission_observer_binding_.Close();
 }
 
-void AXObjectCacheImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AXObjectCacheImpl) {
   visitor->Trace(document_);
   visitor->Trace(accessible_node_mapping_);
   visitor->Trace(node_object_mapping_);

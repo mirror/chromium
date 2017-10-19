@@ -11,7 +11,6 @@
 #include <windows.h>
 #include <objbase.h>
 #include <shlobj.h>
-#include <wrl/client.h>
 #endif
 
 #include <stdint.h>
@@ -142,6 +141,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/scoped_com_initializer.h"
+#include "base/win/scoped_comptr.h"
 #endif
 
 #if BUILDFLAG(ENABLE_REPORTING)
@@ -1445,10 +1445,10 @@ TEST_F(URLRequestTest, ResolveShortcutTest) {
 
   // Temporarily create a shortcut for test
   {
-    Microsoft::WRL::ComPtr<IShellLink> shell;
+    base::win::ScopedComPtr<IShellLink> shell;
     ASSERT_TRUE(SUCCEEDED(::CoCreateInstance(
         CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&shell))));
-    Microsoft::WRL::ComPtr<IPersistFile> persist;
+    base::win::ScopedComPtr<IPersistFile> persist;
     ASSERT_TRUE(SUCCEEDED(shell.CopyTo(persist.GetAddressOf())));
     EXPECT_TRUE(SUCCEEDED(shell->SetPath(app_path.value().c_str())));
     EXPECT_TRUE(SUCCEEDED(shell->SetDescription(L"ResolveShortcutTest")));
@@ -7143,9 +7143,7 @@ TEST_F(URLRequestTestHTTP, DontProcessReportToHeaderInvalidHttps) {
   EXPECT_TRUE(IsCertStatusError(request->ssl_info().cert_status));
   EXPECT_TRUE(reporting_service.headers().empty());
 }
-
-// Network Error Logging is dependent on the Reporting API, so only run NEL
-// tests if Reporting is enabled in the build.
+#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 namespace {
 
@@ -7285,81 +7283,6 @@ TEST_F(URLRequestTestHTTP, DontProcessNelHeaderInvalidHttps) {
   EXPECT_TRUE(IsCertStatusError(request->ssl_info().cert_status));
   EXPECT_TRUE(nel_delegate.headers().empty());
 }
-
-TEST_F(URLRequestTestHTTP, DontForwardErrorToNelNoDelegate) {
-  URLRequestFailedJob::AddUrlHandler();
-
-  GURL request_url =
-      URLRequestFailedJob::GetMockHttpsUrl(ERR_CONNECTION_REFUSED);
-
-  TestNetworkDelegate network_delegate;
-  TestURLRequestContext context(true);
-  context.set_network_delegate(&network_delegate);
-  context.Init();
-
-  TestDelegate d;
-  std::unique_ptr<URLRequest> request(context.CreateRequest(
-      request_url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
-  request->Start();
-  base::RunLoop().Run();
-
-  URLRequestFilter::GetInstance()->ClearHandlers();
-}
-
-// TODO(juliatuttle): Figure out whether this restriction should be in place,
-// and either implement it or remove this test.
-TEST_F(URLRequestTestHTTP, DISABLED_DontForwardErrorToNelHttp) {
-  URLRequestFailedJob::AddUrlHandler();
-
-  GURL request_url =
-      URLRequestFailedJob::GetMockHttpUrl(ERR_CONNECTION_REFUSED);
-
-  TestNetworkDelegate network_delegate;
-  TestNetworkErrorLoggingDelegate nel_delegate;
-  TestURLRequestContext context(true);
-  context.set_network_delegate(&network_delegate);
-  context.set_network_error_logging_delegate(&nel_delegate);
-  context.Init();
-
-  TestDelegate d;
-  std::unique_ptr<URLRequest> request(context.CreateRequest(
-      request_url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
-  request->Start();
-  base::RunLoop().Run();
-
-  EXPECT_TRUE(nel_delegate.errors().empty());
-
-  URLRequestFilter::GetInstance()->ClearHandlers();
-}
-
-TEST_F(URLRequestTestHTTP, ForwardErrorToNelHttps) {
-  URLRequestFailedJob::AddUrlHandler();
-
-  GURL request_url =
-      URLRequestFailedJob::GetMockHttpsUrl(ERR_CONNECTION_REFUSED);
-
-  TestNetworkDelegate network_delegate;
-  TestNetworkErrorLoggingDelegate nel_delegate;
-  TestURLRequestContext context(true);
-  context.set_network_delegate(&network_delegate);
-  context.set_network_error_logging_delegate(&nel_delegate);
-  context.Init();
-
-  TestDelegate d;
-  std::unique_ptr<URLRequest> request(context.CreateRequest(
-      request_url, DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
-  request->Start();
-  base::RunLoop().Run();
-
-  ASSERT_EQ(1u, nel_delegate.errors().size());
-  EXPECT_EQ(request_url, nel_delegate.errors()[0].uri);
-  EXPECT_EQ(0, nel_delegate.errors()[0].status_code);
-  EXPECT_EQ(ERR_CONNECTION_REFUSED, nel_delegate.errors()[0].type);
-
-  URLRequestFilter::GetInstance()->ClearHandlers();
-}
-
-#endif  // BUILDFLAG(ENABLE_REPORTING)
 
 TEST_F(URLRequestTestHTTP, ContentTypeNormalizationTest) {
   ASSERT_TRUE(http_test_server()->Start());
@@ -10463,10 +10386,12 @@ static bool SystemSupportsHardFailRevocationChecking() {
 // several tests are effected because our testing EV certificate won't be
 // recognised as EV.
 static bool SystemUsesChromiumEVMetadata() {
-#if defined(PLATFORM_USES_CHROMIUM_EV_METADATA)
-  return true;
-#else
+#if defined(OS_ANDROID)
+  // On Android, we use the system to tell us whether a certificate is EV or not
+  // and the system won't recognise our testing root.
   return false;
+#else
+  return true;
 #endif
 }
 
@@ -11234,23 +11159,6 @@ class HTTPSEVCRLSetTest : public HTTPSOCSPTest {
   }
 };
 
-// Helper class to set the global CRLSet, and on destruction restore the
-// previously set one.
-class ScopedSetCRLSet {
- public:
-  ScopedSetCRLSet(scoped_refptr<CRLSet> crl_set) {
-    prev_crl_set_ = SSLConfigService::GetCRLSet();
-    SSLConfigService::SetCRLSetForTesting(std::move(crl_set));
-  }
-
-  ~ScopedSetCRLSet() {
-    SSLConfigService::SetCRLSetForTesting(std::move(prev_crl_set_));
-  }
-
- private:
-  scoped_refptr<CRLSet> prev_crl_set_;
-};
-
 TEST_F(HTTPSEVCRLSetTest, MissingCRLSetAndInvalidOCSP) {
   if (!SystemSupportsOCSP()) {
     LOG(WARNING) << "Skipping test because system doesn't support OCSP";
@@ -11261,7 +11169,7 @@ TEST_F(HTTPSEVCRLSetTest, MissingCRLSetAndInvalidOCSP) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  ScopedSetCRLSet set_crlset(nullptr);
+  SSLConfigService::SetCRLSet(scoped_refptr<CRLSet>());
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11283,7 +11191,7 @@ TEST_F(HTTPSEVCRLSetTest, MissingCRLSetAndRevokedOCSP) {
   SpawnedTestServer::SSLOptions ssl_options(
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_REVOKED;
-  ScopedSetCRLSet set_crlset(nullptr);
+  SSLConfigService::SetCRLSet(scoped_refptr<CRLSet>());
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11311,7 +11219,7 @@ TEST_F(HTTPSEVCRLSetTest, MissingCRLSetAndGoodOCSP) {
   SpawnedTestServer::SSLOptions ssl_options(
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_OK;
-  ScopedSetCRLSet set_crlset(nullptr);
+  SSLConfigService::SetCRLSet(scoped_refptr<CRLSet>());
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11334,7 +11242,8 @@ TEST_F(HTTPSEVCRLSetTest, ExpiredCRLSet) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  ScopedSetCRLSet set_crlset(CRLSet::ExpiredCRLSetForTesting());
+  SSLConfigService::SetCRLSet(
+      scoped_refptr<CRLSet>(CRLSet::ExpiredCRLSetForTesting()));
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11357,7 +11266,9 @@ TEST_F(HTTPSEVCRLSetTest, FreshCRLSetCovered) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  ScopedSetCRLSet set_crlset(CRLSet::ForTesting(false, &kOCSPTestCertSPKI, ""));
+  SSLConfigService::SetCRLSet(
+      scoped_refptr<CRLSet>(CRLSet::ForTesting(
+          false, &kOCSPTestCertSPKI, "")));
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11381,7 +11292,8 @@ TEST_F(HTTPSEVCRLSetTest, FreshCRLSetNotCovered) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  ScopedSetCRLSet set_crlset(CRLSet::EmptyCRLSetForTesting());
+  SSLConfigService::SetCRLSet(
+      scoped_refptr<CRLSet>(CRLSet::EmptyCRLSetForTesting()));
 
   CertStatus cert_status = 0;
   DoConnection(ssl_options, &cert_status);
@@ -11413,7 +11325,8 @@ TEST_F(HTTPSEVCRLSetTest, ExpiredCRLSetAndRevokedNonEVCert) {
   SpawnedTestServer::SSLOptions ssl_options(
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_REVOKED;
-  ScopedSetCRLSet set_crlset(CRLSet::ExpiredCRLSetForTesting());
+  SSLConfigService::SetCRLSet(
+      scoped_refptr<CRLSet>(CRLSet::ExpiredCRLSetForTesting()));
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11440,7 +11353,8 @@ TEST_F(HTTPSCRLSetTest, ExpiredCRLSet) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  ScopedSetCRLSet set_crlset(CRLSet::ExpiredCRLSetForTesting());
+  SSLConfigService::SetCRLSet(
+      scoped_refptr<CRLSet>(CRLSet::ExpiredCRLSetForTesting()));
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11462,8 +11376,9 @@ TEST_F(HTTPSCRLSetTest, CRLSetRevoked) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_OK;
   ssl_options.cert_serial = 10;
-  ScopedSetCRLSet set_crlset(
-      CRLSet::ForTesting(false, &kOCSPTestCertSPKI, "\x0a"));
+  SSLConfigService::SetCRLSet(
+      scoped_refptr<CRLSet>(CRLSet::ForTesting(
+          false, &kOCSPTestCertSPKI, "\x0a")));
 
   CertStatus cert_status = 0;
   DoConnection(ssl_options, &cert_status);

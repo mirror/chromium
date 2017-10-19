@@ -68,7 +68,7 @@ XHRReplayData::XHRReplayData(ExecutionContext* execution_context,
       form_data_(std::move(form_data)),
       include_credentials_(include_credentials) {}
 
-void XHRReplayData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XHRReplayData) {
   visitor->Trace(execution_context_);
 }
 
@@ -90,7 +90,7 @@ NetworkResourcesData::ResourceData::ResourceData(
       pending_encoded_data_length_(0),
       cached_resource_(nullptr) {}
 
-void NetworkResourcesData::ResourceData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NetworkResourcesData::ResourceData) {
   visitor->Trace(network_resources_data_);
   visitor->Trace(xhr_replay_data_);
   visitor->template RegisterWeakMembers<
@@ -190,7 +190,7 @@ NetworkResourcesData::NetworkResourcesData(size_t total_buffer_size,
 
 NetworkResourcesData::~NetworkResourcesData() {}
 
-void NetworkResourcesData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NetworkResourcesData) {
   visitor->Trace(request_id_to_resource_data_map_);
 }
 
@@ -347,7 +347,7 @@ XHRReplayData* NetworkResourcesData::XhrReplayData(const String& request_id) {
 
   ResourceData* resource_data = ResourceDataForRequestId(request_id);
   if (!resource_data)
-    return nullptr;
+    return 0;
   return resource_data->XhrReplayData();
 }
 
@@ -434,7 +434,7 @@ void NetworkResourcesData::SetResourcesDataSizeLimits(
 NetworkResourcesData::ResourceData*
 NetworkResourcesData::ResourceDataForRequestId(const String& request_id) {
   if (request_id.IsNull())
-    return nullptr;
+    return 0;
   return request_id_to_resource_data_map_.at(request_id);
 }
 

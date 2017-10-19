@@ -4,7 +4,6 @@
 
 #include "base/at_exit.h"
 #include "base/command_line.h"
-#include "base/message_loop/message_loop.h"
 #include "components/exo/wayland/clients/client_base.h"
 #include "components/exo/wayland/clients/client_helper.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -153,7 +152,6 @@ int main(int argc, char* argv[]) {
   if (!params.FromCommandLine(*command_line))
     return 1;
 
-  base::MessageLoopForUI message_loop;
   exo::wayland::clients::SubSurfaceClient client;
   client.Run(params);
   return 1;

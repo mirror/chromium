@@ -50,7 +50,7 @@ namespace ash {
 
 // static
 const SkColor MessageCenterView::kBackgroundColor =
-    SkColorSetARGB(0xF2, 0xf0, 0xf0, 0xf2);
+    SkColorSetRGB(0xee, 0xee, 0xee);
 
 // static
 const size_t MessageCenterView::kMaxVisibleNotifications = 100;
@@ -65,6 +65,10 @@ constexpr int kDefaultFrameRateHz = 60;
 constexpr int kMinScrollViewHeight = 77;
 constexpr int kEmptyViewHeight = 96;
 constexpr gfx::Insets kEmptyViewPadding(0, 0, 24, 0);
+constexpr SkColor kEmptyViewColor = SkColorSetARGB(0x8A, 0x0, 0x0, 0x0);
+constexpr gfx::Insets kAllDoneIconPadding(0, 0, 4, 0);
+constexpr int kAllDoneIconSize = 24;
+constexpr int kEmptyLabelSize = 12;
 
 void SetViewHierarchyEnabled(views::View* view, bool enabled) {
   for (int i = 0; i < view->child_count(); i++)
@@ -84,19 +88,17 @@ class EmptyNotificationView : public views::View {
     SetLayoutManager(layout);
 
     views::ImageView* icon = new views::ImageView();
-    icon->SetImage(gfx::CreateVectorIcon(
-        kNotificationCenterAllDoneIcon, message_center_style::kEmptyIconSize,
-        message_center_style::kEmptyViewColor));
-    icon->SetBorder(
-        views::CreateEmptyBorder(message_center_style::kEmptyIconPadding));
+    icon->SetImage(gfx::CreateVectorIcon(kNotificationCenterAllDoneIcon,
+                                         kAllDoneIconSize, kEmptyViewColor));
+    icon->SetBorder(views::CreateEmptyBorder(kAllDoneIconPadding));
     AddChildView(icon);
 
     views::Label* label = new views::Label(
         l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_NO_MESSAGES));
-    label->SetEnabledColor(message_center_style::kEmptyViewColor);
+    label->SetEnabledColor(kEmptyViewColor);
     // "Roboto-Medium, 12sp" is specified in the mock.
     label->SetFontList(message_center_style::GetFontListForSizeAndWeight(
-        message_center_style::kEmptyLabelSize, gfx::Font::Weight::MEDIUM));
+        kEmptyLabelSize, gfx::Font::Weight::MEDIUM));
     label->SetHorizontalAlignment(gfx::ALIGN_CENTER);
     AddChildView(label);
   }
@@ -242,6 +244,7 @@ void MessageCenterView::ClearAllClosableNotifications() {
 }
 
 void MessageCenterView::OnAllNotificationsCleared() {
+  is_clearing_all_notifications_ = false;
   SetViewHierarchyEnabled(scroller_, true);
   button_bar_->SetCloseAllButtonEnabled(false);
 
@@ -251,7 +254,6 @@ void MessageCenterView::OnAllNotificationsCleared() {
   message_center_->RemoveAllNotifications(
       true /* by_user */,
       message_center::MessageCenter::RemoveType::NON_PINNED);
-  is_clearing_all_notifications_ = false;
 }
 
 size_t MessageCenterView::NumMessageViewsForTest() const {
@@ -428,9 +430,7 @@ void MessageCenterView::OnNotificationRemoved(const std::string& id,
     return;
   size_t index = view_pair.first;
 
-  // We skip repositioning during clear-all anomation, since we don't need keep
-  // positions.
-  if (by_user && !is_clearing_all_notifications_) {
+  if (by_user) {
     message_list_view_->SetRepositionTarget(view->bounds());
     // Moves the keyboard focus to the next notification if the removed
     // notification is focused so that the user can dismiss notifications

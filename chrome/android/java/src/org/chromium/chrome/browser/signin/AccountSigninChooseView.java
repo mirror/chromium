@@ -75,14 +75,18 @@ public class AccountSigninChooseView extends FirstRunChooserView {
                             profileDataCache.getProfileDataOrDefault(accountName).getImage());
             ((TextView) view.findViewById(R.id.account_name)).setText(accountName);
 
-            view.setOnClickListener((View v) -> {
-                int indexOfClickedAccount = mRootChildView.indexOfChild(v) - mAccountViewStartIndex;
-                if (indexOfClickedAccount == mSelectedAccountPosition) return;
-                mRootChildView.getChildAt(mSelectedAccountPosition + mAccountViewStartIndex)
-                        .findViewById(R.id.account_selection_mark)
-                        .setVisibility(View.GONE);
-                v.findViewById(R.id.account_selection_mark).setVisibility(View.VISIBLE);
-                mSelectedAccountPosition = indexOfClickedAccount;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int indexOfClickedAccount =
+                            mRootChildView.indexOfChild(v) - mAccountViewStartIndex;
+                    if (indexOfClickedAccount == mSelectedAccountPosition) return;
+                    mRootChildView.getChildAt(mSelectedAccountPosition + mAccountViewStartIndex)
+                            .findViewById(R.id.account_selection_mark)
+                            .setVisibility(View.GONE);
+                    v.findViewById(R.id.account_selection_mark).setVisibility(View.VISIBLE);
+                    mSelectedAccountPosition = indexOfClickedAccount;
+                }
             });
 
             mRootChildView.addView(view);
@@ -94,8 +98,11 @@ public class AccountSigninChooseView extends FirstRunChooserView {
                 .setImageResource(R.drawable.add_circle_blue);
         ((TextView) view.findViewById(R.id.account_name))
                 .setText(getResources().getString(R.string.signin_add_account));
-        view.setOnClickListener((View v) -> {
-            if (mObserver != null) mObserver.onAddNewAccount();
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mObserver != null) mObserver.onAddNewAccount();
+            }
         });
         mRootChildView.addView(view);
 

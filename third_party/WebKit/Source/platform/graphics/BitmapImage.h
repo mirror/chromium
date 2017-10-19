@@ -108,9 +108,6 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
     return last_num_frames_skipped_;
   }
 
- protected:
-  bool IsSizeAvailable() override;
-
  private:
   enum RepetitionCountStatus : uint8_t {
     kUnknown,    // We haven't checked the source's repetition count.
@@ -128,8 +125,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
             const FloatRect& dst_rect,
             const FloatRect& src_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            ImageDecodingMode) override;
+            ImageClampingMode) override;
 
   PaintImage FrameAtIndex(size_t);
 
@@ -154,6 +150,9 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
 
   // Notifies observers that the memory footprint has changed.
   void NotifyMemoryChanged();
+
+  // Whether or not size is available yet.
+  bool IsSizeAvailable();
 
   // Animation.
   // We start and stop animating lazily.  Animation starts when the image is

@@ -172,7 +172,6 @@ devtools_domains = [
   "memory",
   "network",
   "page",
-  "performance",
   "profiler",
   "runtime",
   "security",

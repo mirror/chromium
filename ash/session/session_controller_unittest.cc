@@ -557,6 +557,7 @@ class CanSwitchUserTest : public AshTestBase {
 
   void SetUp() override {
     AshTestBase::SetUp();
+    TrayItemView::DisableAnimationsForTest();
     SystemTray* system_tray = GetPrimarySystemTray();
     share_item_ = system_tray->GetScreenShareItem();
     capture_item_ = system_tray->GetScreenCaptureItem();

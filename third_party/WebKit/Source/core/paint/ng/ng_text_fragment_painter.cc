@@ -14,6 +14,7 @@
 #include "core/style/AppliedTextDecoration.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
+#include "platform/text/Truncation.h"
 
 namespace blink {
 
@@ -48,7 +49,7 @@ void NGTextFragmentPainter::Paint(const Document& document,
 
   // Determine whether or not we're selected.
   bool have_selection = false;  // TODO(layout-dev): Implement.
-  if (!have_selection && paint_info.phase == PaintPhase::kSelection) {
+  if (!have_selection && paint_info.phase == kPaintPhaseSelection) {
     // When only painting the selection, don't bother to paint if there is none.
     return;
   }
@@ -59,7 +60,7 @@ void NGTextFragmentPainter::Paint(const Document& document,
   TextPaintStyle selection_style = TextPainterBase::SelectionPaintingStyle(
       document, style, fragment_.GetNode(), have_selection, paint_info,
       text_style);
-  bool paint_selected_text_only = (paint_info.phase == PaintPhase::kSelection);
+  bool paint_selected_text_only = (paint_info.phase == kPaintPhaseSelection);
   bool paint_selected_text_separately =
       !paint_selected_text_only && text_style != selection_style;
 
@@ -73,8 +74,8 @@ void NGTextFragmentPainter::Paint(const Document& document,
 
   // 1. Paint backgrounds behind text if needed. Examples of such backgrounds
   // include selection and composition highlights.
-  if (paint_info.phase != PaintPhase::kSelection &&
-      paint_info.phase != PaintPhase::kTextClip && !is_printing) {
+  if (paint_info.phase != kPaintPhaseSelection &&
+      paint_info.phase != kPaintPhaseTextClip && !is_printing) {
     // TODO(layout-dev): Implement.
   }
 
@@ -85,6 +86,25 @@ void NGTextFragmentPainter::Paint(const Document& document,
   const NGPhysicalTextFragment& text_fragment =
       ToNGPhysicalTextFragment(fragment_.PhysicalFragment());
 
+  // TODO(layout-dev): Truncation and hyphens are computed during layout.
+  // Remove the concept of truncation?
+  unsigned length = text_fragment.Text().length();
+  unsigned truncation = kCNoTruncation;
+
+  bool ltr = true;
+  bool flow_is_ltr = true;
+  if (truncation != kCNoTruncation) {
+    // In a mixed-direction flow the ellipsis is at the start of the text
+    // rather than at the end of it.
+    selection_start = ltr == flow_is_ltr
+                          ? std::min<int>(selection_start, truncation)
+                          : std::max<int>(selection_start, truncation);
+    selection_end = ltr == flow_is_ltr
+                        ? std::min<int>(selection_end, truncation)
+                        : std::max<int>(selection_end, truncation);
+    length = ltr == flow_is_ltr ? truncation : length;
+  }
+
   NGTextPainter text_painter(context, font, text_fragment, text_origin,
                              box_rect, text_fragment.IsHorizontal());
 
@@ -93,12 +113,15 @@ void NGTextFragmentPainter::Paint(const Document& document,
                                  style.GetTextEmphasisPosition());
   }
 
-  unsigned length = text_fragment.Text().length();
+  if (truncation != kCNoTruncation && ltr != flow_is_ltr)
+    text_painter.SetEllipsisOffset(truncation);
+
   if (!paint_selected_text_only) {
     // Paint text decorations except line-through.
     DecorationInfo decoration_info;
     bool has_line_through_decoration = false;
-    if (style.TextDecorationsInEffect() != TextDecoration::kNone) {
+    if (style.TextDecorationsInEffect() != TextDecoration::kNone &&
+        truncation != kCFullTruncation) {
       LayoutPoint local_origin = LayoutPoint(box_origin);
       LayoutUnit width = fragment_.Size().width;
       const NGPhysicalBoxFragment* decorating_box = nullptr;
@@ -122,6 +145,13 @@ void NGTextFragmentPainter::Paint(const Document& document,
 
     int start_offset = 0;
     int end_offset = length;
+    // Where the text and its flow have opposite directions then our offset into
+    // the text given by |truncation| is at the start of the part that will be
+    // visible.
+    if (truncation != kCNoTruncation && ltr != flow_is_ltr) {
+      start_offset = truncation;
+      end_offset = length;
+    }
 
     if (paint_selected_text_separately && selection_start < selection_end) {
       start_offset = selection_end;

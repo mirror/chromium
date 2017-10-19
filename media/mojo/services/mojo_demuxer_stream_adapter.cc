@@ -65,6 +65,11 @@ bool MojoDemuxerStreamAdapter::SupportsConfigChanges() {
   return true;
 }
 
+VideoRotation MojoDemuxerStreamAdapter::video_rotation() {
+  NOTIMPLEMENTED();
+  return VIDEO_ROTATION_0;
+}
+
 // TODO(xhwang): Pass liveness here.
 void MojoDemuxerStreamAdapter::OnStreamReady(
     Type type,

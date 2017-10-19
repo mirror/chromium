@@ -46,7 +46,7 @@ WebHelperPlugin* WebHelperPlugin::Create(const WebString& plugin_type,
   WebHelperPluginUniquePtr plugin(new WebHelperPluginImpl());
   if (!ToWebHelperPluginImpl(plugin.get())
            ->Initialize(plugin_type, ToWebLocalFrameImpl(frame)))
-    return nullptr;
+    return 0;
   return plugin.release();
 }
 

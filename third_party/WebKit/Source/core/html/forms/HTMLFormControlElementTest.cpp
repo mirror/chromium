@@ -10,7 +10,7 @@
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/loader/EmptyClients.h"
-#include "core/page/ScopedPagePauser.h"
+#include "core/page/ScopedPageSuspender.h"
 #include "core/page/ValidationMessageClient.h"
 #include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -45,7 +45,7 @@ class MockFormValidationMessageClient
 
   void DocumentDetached(const Document&) override {}
   void WillBeDestroyed() override {}
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(anchor_);
     ValidationMessageClient::Trace(visitor);
   }
@@ -139,7 +139,7 @@ TEST_F(HTMLFormControlElementTest, UpdateValidationMessageSkippedIfPrinting) {
 
   HTMLInputElement* input =
       ToHTMLInputElement(GetDocument().getElementById("input"));
-  ScopedPagePauser pauser;  // print() pauses the page.
+  ScopedPageSuspender suspender;  // print() suspends the page.
   input->reportValidity();
   EXPECT_FALSE(validation_message_client->IsValidationMessageVisible(*input));
 }

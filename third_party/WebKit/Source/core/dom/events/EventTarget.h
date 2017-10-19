@@ -34,12 +34,12 @@
 
 #include <memory>
 #include "core/CoreExport.h"
+#include "core/EventNames.h"
+#include "core/EventTargetNames.h"
+#include "core/EventTypeNames.h"
 #include "core/dom/events/AddEventListenerOptionsResolved.h"
 #include "core/dom/events/EventDispatchResult.h"
 #include "core/dom/events/EventListenerMap.h"
-#include "core/event_names.h"
-#include "core/event_target_names.h"
-#include "core/event_type_names.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
@@ -78,7 +78,7 @@ class CORE_EXPORT EventTargetData final
   EventTargetData();
   ~EventTargetData();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
   EventListenerMap event_listener_map;
@@ -175,7 +175,7 @@ class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
 
   static DispatchEventResult GetDispatchEventResult(const Event&);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
 
   virtual bool KeepEventInNode(Event*) { return false; }
@@ -227,7 +227,7 @@ class CORE_EXPORT EventTargetWithInlineData : public EventTarget {
  public:
   ~EventTargetWithInlineData() override {}
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(event_target_data_);
     EventTarget::Trace(visitor);
   }

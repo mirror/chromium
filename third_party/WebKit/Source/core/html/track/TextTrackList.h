@@ -28,7 +28,7 @@
 
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
@@ -73,7 +73,7 @@ class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
 
   bool HasShowingTracks();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 

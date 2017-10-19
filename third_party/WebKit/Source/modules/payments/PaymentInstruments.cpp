@@ -228,7 +228,7 @@ ScriptPromise PaymentInstruments::clear(ScriptState* script_state) {
   return promise;
 }
 
-void PaymentInstruments::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(PaymentInstruments) {}
 
 void PaymentInstruments::onDeletePaymentInstrument(
     ScriptPromiseResolver* resolver,

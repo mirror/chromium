@@ -148,11 +148,10 @@ TEST_F(LoadingStatsCollectorTest, TestPreconnectPrecisionRecallHistograms) {
     return base::StringPrintf("http://cdn%d.google.com/script.js", index);
   };
 
-  // Predicts 4 origins: 2 useful, 2 useless.
+  // Predicts 3 origins: 1 useful, 2 useless.
   PreconnectPrediction prediction = CreatePreconnectPrediction(
       GURL(main_frame_url).host(), false,
-      {GURL(main_frame_url).GetOrigin(), GURL(gen(1)).GetOrigin(),
-       GURL(gen(2)).GetOrigin()},
+      {GURL(gen(1)).GetOrigin(), GURL(gen(2)).GetOrigin()},
       {GURL(gen(3)).GetOrigin()});
   EXPECT_CALL(*mock_predictor_,
               PredictPreconnectOrigins(GURL(main_frame_url), _))
@@ -160,8 +159,7 @@ TEST_F(LoadingStatsCollectorTest, TestPreconnectPrecisionRecallHistograms) {
   EXPECT_CALL(*mock_predictor_, GetPrefetchData(GURL(main_frame_url), _))
       .WillOnce(Return(false));
 
-  // Simulate a page load with 2 resources, one we know, one we don't, plus we
-  // know the main frame origin.
+  // Simulate a page load with 2 resources, one we know, one we don't.
   URLRequestSummary script = CreateURLRequestSummary(
       1, main_frame_url, gen(1), content::RESOURCE_TYPE_SCRIPT);
   URLRequestSummary new_script = CreateURLRequestSummary(
@@ -172,11 +170,11 @@ TEST_F(LoadingStatsCollectorTest, TestPreconnectPrecisionRecallHistograms) {
   stats_collector_->RecordPageRequestSummary(summary);
 
   histogram_tester_->ExpectUniqueSample(
-      internal::kLoadingPredictorPreconnectLearningRecall, 66, 1);
+      internal::kLoadingPredictorPreconnectLearningRecall, 50, 1);
   histogram_tester_->ExpectUniqueSample(
-      internal::kLoadingPredictorPreconnectLearningPrecision, 50, 1);
+      internal::kLoadingPredictorPreconnectLearningPrecision, 33, 1);
   histogram_tester_->ExpectUniqueSample(
-      internal::kLoadingPredictorPreconnectLearningCount, 4, 1);
+      internal::kLoadingPredictorPreconnectLearningCount, 3, 1);
 }
 
 TEST_F(LoadingStatsCollectorTest, TestRedirectStatusNoRedirect) {

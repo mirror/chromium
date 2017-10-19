@@ -13,6 +13,7 @@
 #include "core/paint/BoxDecorationData.h"
 #include "core/paint/BoxModelObjectPainter.h"
 #include "core/paint/BoxPainterBase.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/NinePieceImagePainter.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
@@ -22,8 +23,6 @@
 #include "platform/LengthFunctions.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
-#include "platform/graphics/paint/DisplayItemCacheSkipper.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/wtf/Optional.h"
 
 namespace blink {
@@ -94,13 +93,15 @@ void BoxPainter::PaintBoxDecorationBackgroundWithRect(
   Optional<DisplayItemCacheSkipper> cache_skipper;
   // Disable cache in under-invalidation checking mode for MediaSliderPart
   // because we always paint using the latest data (buffered ranges, current
-  // time and duration) which may be different from the cached data, and for
-  // delayed-invalidation object because it may change before it's actually
-  // invalidated.
-  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
-      (style.Appearance() == kMediaSliderPart ||
-       layout_box_.FullPaintInvalidationReason() ==
-           PaintInvalidationReason::kDelayedFull)) {
+  // time and duration) which may be different from the cached data.
+  if ((RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
+       style.Appearance() == kMediaSliderPart)
+      // We may paint a delayed-invalidation object before it's actually
+      // invalidated. Note this would be handled for us by
+      // LayoutObjectDrawingRecorder but we have to use DrawingRecorder as we
+      // may use the scrolling contents layer as DisplayItemClient below.
+      || layout_box_.FullPaintInvalidationReason() ==
+             PaintInvalidationReason::kDelayedFull) {
     cache_skipper.emplace(paint_info.context);
   }
 
@@ -208,18 +209,18 @@ void BoxPainter::PaintBackground(const PaintInfo& paint_info,
 void BoxPainter::PaintMask(const PaintInfo& paint_info,
                            const LayoutPoint& paint_offset) {
   if (layout_box_.Style()->Visibility() != EVisibility::kVisible ||
-      paint_info.phase != PaintPhase::kMask)
+      paint_info.phase != kPaintPhaseMask)
     return;
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_box_, paint_info.phase))
     return;
 
   LayoutRect visual_overflow_rect(layout_box_.VisualOverflowRect());
   visual_overflow_rect.MoveBy(paint_offset);
 
-  DrawingRecorder recorder(paint_info.context, layout_box_, paint_info.phase,
-                           visual_overflow_rect);
+  LayoutObjectDrawingRecorder recorder(paint_info.context, layout_box_,
+                                       paint_info.phase, visual_overflow_rect);
   LayoutRect paint_rect = LayoutRect(paint_offset, layout_box_.Size());
   PaintMaskImages(paint_info, paint_rect);
 }
@@ -269,7 +270,7 @@ void BoxPainter::PaintMaskImages(const PaintInfo& paint_info,
 
 void BoxPainter::PaintClippingMask(const PaintInfo& paint_info,
                                    const LayoutPoint& paint_offset) {
-  DCHECK(paint_info.phase == PaintPhase::kClippingMask);
+  DCHECK(paint_info.phase == kPaintPhaseClippingMask);
 
   if (layout_box_.Style()->Visibility() != EVisibility::kVisible)
     return;
@@ -278,14 +279,14 @@ void BoxPainter::PaintClippingMask(const PaintInfo& paint_info,
       layout_box_.Layer()->GetCompositingState() != kPaintsIntoOwnBacking)
     return;
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_box_, paint_info.phase))
     return;
 
   IntRect paint_rect =
       PixelSnappedIntRect(LayoutRect(paint_offset, layout_box_.Size()));
-  DrawingRecorder recorder(paint_info.context, layout_box_, paint_info.phase,
-                           paint_rect);
+  LayoutObjectDrawingRecorder drawing_recorder(paint_info.context, layout_box_,
+                                               paint_info.phase, paint_rect);
   paint_info.context.FillRect(paint_rect, Color::kBlack);
 }
 

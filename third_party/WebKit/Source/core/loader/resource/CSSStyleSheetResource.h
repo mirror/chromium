@@ -50,13 +50,13 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
                                               const WTF::TextEncoding&);
 
   ~CSSStyleSheetResource() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   const String SheetText(MIMETypeCheck = MIMETypeCheck::kStrict) const;
 
   void DidAddClient(ResourceClient*) override;
 
-  StyleSheetContents* CreateParsedStyleSheetFromCache(const CSSParserContext*);
+  StyleSheetContents* RestoreParsedStyleSheet(const CSSParserContext*);
   void SaveParsedStyleSheet(StyleSheetContents*);
 
   void AppendData(const char* data, size_t length) override;

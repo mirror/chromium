@@ -38,6 +38,7 @@
 namespace blink {
 
 void CSSFontFace::AddSource(CSSFontFaceSource* source) {
+  source->SetFontFace(this);
   sources_.push_back(source);
 }
 
@@ -191,7 +192,7 @@ void CSSFontFace::SetLoadStatus(FontFace::LoadStatusType new_status) {
     FontFaceSetDocument::From(*document)->BeginFontLoading(font_face_);
 }
 
-void CSSFontFace::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSFontFace) {
   visitor->Trace(segmented_font_face_);
   visitor->Trace(sources_);
   visitor->Trace(font_face_);

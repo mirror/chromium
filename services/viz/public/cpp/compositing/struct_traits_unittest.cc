@@ -804,7 +804,7 @@ TEST_F(StructTraitsTest, RenderPass) {
       shared_state_2, surface_quad_rect, surface_quad_rect,
       SurfaceId(FrameSinkId(1337, 1234),
                 LocalSurfaceId(1234, base::UnguessableToken::Create())),
-      base::nullopt, SK_ColorYELLOW);
+      SurfaceDrawQuadType::PRIMARY, SK_ColorYELLOW, nullptr);
 
   std::unique_ptr<RenderPass> output;
   SerializeAndDeserialize<mojom::RenderPass>(input, &output);
@@ -871,10 +871,7 @@ TEST_F(StructTraitsTest, RenderPass) {
   EXPECT_EQ(out_surface_quad->shared_quad_state, out_sqs2);
   EXPECT_EQ(surface_quad->rect, out_surface_quad->rect);
   EXPECT_EQ(surface_quad->visible_rect, out_surface_quad->visible_rect);
-  EXPECT_EQ(surface_quad->primary_surface_id,
-            out_surface_quad->primary_surface_id);
-  EXPECT_EQ(surface_quad->fallback_surface_id,
-            out_surface_quad->fallback_surface_id);
+  EXPECT_EQ(surface_quad->surface_id, out_surface_quad->surface_id);
   EXPECT_EQ(surface_quad->default_background_color,
             out_surface_quad->default_background_color);
 }
@@ -943,9 +940,14 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       LocalSurfaceId(1234, base::UnguessableToken::Create()));
   SurfaceDrawQuad* primary_surface_quad =
       render_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
+  SurfaceDrawQuad* fallback_surface_quad =
+      render_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   primary_surface_quad->SetNew(sqs, rect3, rect3, primary_surface_id,
-                               base::Optional<SurfaceId>(fallback_surface_id),
-                               SK_ColorBLUE);
+                               SurfaceDrawQuadType::PRIMARY, SK_ColorBLUE,
+                               fallback_surface_quad);
+  fallback_surface_quad->SetNew(sqs, rect3, rect3, fallback_surface_id,
+                                SurfaceDrawQuadType::FALLBACK, SK_ColorGREEN,
+                                nullptr);
 
   const gfx::Rect rect4(1234, 5678, 9101112, 13141516);
   const ResourceId resource_id4(1337);
@@ -1021,17 +1023,31 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   EXPECT_EQ(rect3, out_primary_surface_draw_quad->rect);
   EXPECT_EQ(rect3, out_primary_surface_draw_quad->visible_rect);
   EXPECT_TRUE(out_primary_surface_draw_quad->needs_blending);
-  EXPECT_EQ(primary_surface_id,
-            out_primary_surface_draw_quad->primary_surface_id);
+  EXPECT_EQ(primary_surface_id, out_primary_surface_draw_quad->surface_id);
+  EXPECT_EQ(SurfaceDrawQuadType::PRIMARY,
+            out_primary_surface_draw_quad->surface_draw_quad_type);
   EXPECT_EQ(SK_ColorBLUE,
             out_primary_surface_draw_quad->default_background_color);
-  EXPECT_EQ(fallback_surface_id,
-            out_primary_surface_draw_quad->fallback_surface_id);
+
+  const SurfaceDrawQuad* out_fallback_surface_draw_quad =
+      SurfaceDrawQuad::MaterialCast(output->quad_list.ElementAt(3));
+  EXPECT_EQ(out_fallback_surface_draw_quad,
+            out_primary_surface_draw_quad->fallback_quad);
+  EXPECT_EQ(rect3, out_fallback_surface_draw_quad->rect);
+  EXPECT_EQ(rect3, out_fallback_surface_draw_quad->visible_rect);
+  EXPECT_TRUE(out_fallback_surface_draw_quad->needs_blending);
+  EXPECT_EQ(fallback_surface_id, out_fallback_surface_draw_quad->surface_id);
+  EXPECT_EQ(SurfaceDrawQuadType::FALLBACK,
+            out_fallback_surface_draw_quad->surface_draw_quad_type);
+  EXPECT_EQ(SK_ColorGREEN,
+            out_fallback_surface_draw_quad->default_background_color);
+  EXPECT_FALSE(out_fallback_surface_draw_quad->fallback_quad);
 
   const RenderPassDrawQuad* out_render_pass_draw_quad =
-      RenderPassDrawQuad::MaterialCast(output->quad_list.ElementAt(3));
+      RenderPassDrawQuad::MaterialCast(output->quad_list.ElementAt(4));
   EXPECT_EQ(rect4, out_render_pass_draw_quad->rect);
   EXPECT_EQ(rect4, out_render_pass_draw_quad->visible_rect);
+  EXPECT_TRUE(out_fallback_surface_draw_quad->needs_blending);
   EXPECT_EQ(render_pass_id, out_render_pass_draw_quad->render_pass_id);
   EXPECT_EQ(resource_id4, out_render_pass_draw_quad->mask_resource_id());
   EXPECT_EQ(mask_texture_size, out_render_pass_draw_quad->mask_texture_size);
@@ -1040,7 +1056,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
             out_render_pass_draw_quad->force_anti_aliasing_off);
 
   const TextureDrawQuad* out_texture_draw_quad =
-      TextureDrawQuad::MaterialCast(output->quad_list.ElementAt(4));
+      TextureDrawQuad::MaterialCast(output->quad_list.ElementAt(5));
   EXPECT_EQ(rect5, out_texture_draw_quad->rect);
   EXPECT_EQ(rect5, out_texture_draw_quad->visible_rect);
   EXPECT_EQ(needs_blending, out_texture_draw_quad->needs_blending);
@@ -1060,7 +1076,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   EXPECT_EQ(secure_output_only, out_texture_draw_quad->secure_output_only);
 
   const StreamVideoDrawQuad* out_stream_video_draw_quad =
-      StreamVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(5));
+      StreamVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(6));
   EXPECT_EQ(rect6, out_stream_video_draw_quad->rect);
   EXPECT_EQ(rect6, out_stream_video_draw_quad->visible_rect);
   EXPECT_EQ(needs_blending6, out_stream_video_draw_quad->needs_blending);
@@ -1140,6 +1156,7 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
 
   const DrawQuad::Material material = DrawQuad::YUV_VIDEO_CONTENT;
   const gfx::Rect rect(1234, 4321, 1357, 7531);
+  const gfx::Rect opaque_rect(1357, 8642, 432, 123);
   const gfx::Rect visible_rect(1337, 7331, 561, 293);
   const bool needs_blending = true;
   const gfx::RectF ya_tex_coord_rect(1234.1f, 5678.2f, 9101112.3f, 13141516.4f);
@@ -1233,9 +1250,9 @@ TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
   SkBitmap expected_bitmap;
   expected_bitmap.allocN32Pixels(7, 8, adobe_rgb);
   expected_bitmap.eraseARGB(123, 213, 77, 33);
-  EXPECT_EQ(expected_bitmap.computeByteSize(), out_bitmap.computeByteSize());
+  EXPECT_EQ(expected_bitmap.getSize(), out_bitmap.getSize());
   EXPECT_EQ(0, std::memcmp(expected_bitmap.getPixels(), out_bitmap.getPixels(),
-                           expected_bitmap.computeByteSize()));
+                           expected_bitmap.getSize()));
   EXPECT_TRUE(SkColorSpace::Equals(expected_bitmap.colorSpace(),
                                    out_bitmap.colorSpace()));
 }

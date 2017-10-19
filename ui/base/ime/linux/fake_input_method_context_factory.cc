@@ -15,7 +15,7 @@ std::unique_ptr<LinuxInputMethodContext>
 FakeInputMethodContextFactory::CreateInputMethodContext(
     LinuxInputMethodContextDelegate* /* delegate */,
     bool is_simple) const {
-  return std::make_unique<FakeInputMethodContext>();
+  return base::MakeUnique<FakeInputMethodContext>();
 }
 
 }  // namespace ui

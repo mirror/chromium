@@ -35,7 +35,6 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   void InspectElement(DevToolsAgentHostClient* client, int x, int y) override;
   std::string GetId() override;
   std::string GetParentId() override;
-  std::string GetOpenerId() override;
   std::string GetDescription() override;
   GURL GetFaviconURL() override;
   std::string GetFrontendURL() override;
@@ -63,7 +62,6 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   virtual void InspectElement(DevToolsSession* session, int x, int y);
 
   void NotifyCreated();
-  void NotifyNavigated();
   void ForceDetachAllClients(bool replaced);
   void ForceDetachSession(DevToolsSession* session);
   DevToolsIOContext* GetIOContext() { return &io_context_; }

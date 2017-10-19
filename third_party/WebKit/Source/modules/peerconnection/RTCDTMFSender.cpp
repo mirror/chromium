@@ -185,7 +185,7 @@ void RTCDTMFSender::ScheduledEventTimerFired(TimerBase*) {
     DispatchEvent((*it).Release());
 }
 
-void RTCDTMFSender::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCDTMFSender) {
   visitor->Trace(track_);
   visitor->Trace(scheduled_events_);
   EventTargetWithInlineData::Trace(visitor);

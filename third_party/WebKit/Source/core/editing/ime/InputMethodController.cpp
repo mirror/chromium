@@ -51,6 +51,7 @@
 #include "core/input_type_names.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 
@@ -169,7 +170,7 @@ void InsertTextDuringCompositionWithEvents(
       // TODO(chongz): Use TypingCommand::insertText after TextEvent was
       // removed. (Removed from spec since 2012)
       // See TextEvent.idl.
-      frame.GetEventHandler().HandleTextInputEvent(text, nullptr,
+      frame.GetEventHandler().HandleTextInputEvent(text, 0,
                                                    kTextEventInputComposition);
       break;
     default:
@@ -583,7 +584,7 @@ bool InputMethodController::InsertText(const String& text) {
   if (DispatchBeforeInputInsertText(GetDocument().FocusedElement(), text) !=
       DispatchEventResult::kNotCanceled)
     return false;
-  GetEditor().InsertText(text, nullptr);
+  GetEditor().InsertText(text, 0);
   return true;
 }
 
@@ -1351,7 +1352,7 @@ void InputMethodController::WillChangeFocus() {
   FinishComposingText(kKeepSelection);
 }
 
-void InputMethodController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InputMethodController) {
   visitor->Trace(frame_);
   visitor->Trace(composition_range_);
   DocumentShutdownObserver::Trace(visitor);

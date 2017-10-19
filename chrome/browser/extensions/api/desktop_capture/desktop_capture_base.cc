@@ -57,7 +57,7 @@ DesktopCaptureChooseDesktopMediaFunctionBase::
 
 DesktopCaptureChooseDesktopMediaFunctionBase::
     ~DesktopCaptureChooseDesktopMediaFunctionBase() {
-  // RenderFrameHost may be already destroyed.
+  // RenderViewHost may be already destroyed.
   if (render_frame_host()) {
     DesktopCaptureRequestsRegistry::GetInstance()->RemoveRequest(
         render_frame_host()->GetProcess()->GetID(), request_id_);

@@ -8,6 +8,9 @@
 #include "components/favicon/core/large_icon_service.h"
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/content_suggestions_service.h"
+#include "components/ntp_tiles/metrics.h"
+#include "components/ntp_tiles/ntp_tile_impression.h"
+#include "components/rappor/rappor_service_impl.h"
 #include "ios/chrome/browser/application_context.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
@@ -15,7 +18,6 @@
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestion_identifier.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestions_section_information.h"
 #import "ios/chrome/browser/ui/favicon/favicon_attributes_provider.h"
-#include "ios/chrome/browser/ui/ntp/metrics.h"
 #include "ui/gfx/image/image.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -179,9 +181,10 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
   for (size_t i = 0; i < _mostVisitedDataForLogging.size(); ++i) {
     ntp_tiles::NTPTile& ntpTile = _mostVisitedDataForLogging[i];
     if (ntpTile.url == item.URL) {
-      RecordNTPTileImpression(i, ntpTile.source, ntpTile.title_source,
-                              item.attributes, ntpTile.data_generation_time,
-                              ntpTile.url);
+      ntp_tiles::metrics::RecordTileImpression(
+          ntp_tiles::NTPTileImpression(i, ntpTile.source, ntpTile.title_source,
+                                       [item tileType], item.URL),
+          GetApplicationContext()->GetRapporServiceImpl());
       // Reset the URL to be sure to log the impression only once.
       ntpTile.url = GURL();
       break;

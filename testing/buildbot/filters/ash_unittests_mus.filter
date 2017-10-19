@@ -1,11 +1,5 @@
 # TODO: fix these. They fail because DeviceDataManager isn't created.
 # http://crbug.com/734812.
--PaletteTrayTestWithInternalStylus.PaletteBubbleShownOnEject
--PaletteTrayTestWithInternalStylus.WelcomeBubbleShownOnEject
--PaletteTrayTestWithInternalStylus.WelcomeBubbleNotShownIfShownBefore
--PaletteTrayTestWithInternalStylus.WelcomeBubbleNotShownIfAutoOpenPaletteTrue
--ScreenshotToolTest.EnablingCaptureRegionCallsDelegateAndDisablesTool
--ScreenshotToolTest.EnablingCaptureScreenCallsDelegateAndDisablesTool
 -TouchCalibratorControllerTest.CustomCalibration
 -TouchCalibratorControllerTest.CustomCalibrationInvalidTouchId
 -TouchCalibratorControllerTest.TouchDeviceIdIsSet
@@ -19,10 +13,6 @@
 -VirtualKeyboardControllerAutoTest.SuppressedIfExternalKeyboardPresent
 -VirtualKeyboardControllerAutoTest.SuppressedInMaximizedMode
 -VirtualKeyboardControllerTest.RestoreKeyboardDevices
-
-# TODO: fix this. It fails because GL_OES_texture_npot is not supported.
-# http://crbug.com/775067.
--WorkspaceLayoutManagerBackdropTest.BackdropTest
 
 # When adding new exclusions be sure to file bug with reason. Group with the
 # above if applicable.

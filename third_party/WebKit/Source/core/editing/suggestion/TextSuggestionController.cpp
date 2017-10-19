@@ -231,7 +231,7 @@ void TextSuggestionController::HandlePotentialSuggestionTap(
   text_suggestion_host_->StartSuggestionMenuTimer();
 }
 
-void TextSuggestionController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextSuggestionController) {
   visitor->Trace(frame_);
   DocumentShutdownObserver::Trace(visitor);
 }

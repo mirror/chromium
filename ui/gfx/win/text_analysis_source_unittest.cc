@@ -33,12 +33,12 @@ class TextAnalysisSourceTest : public testing::Test {
                                       kLocale, true /* ignoreUserOverride */,
                                       &number_substitution);
 
-    TextAnalysisSource::Create(&source_, kText, kLocale,
-                               number_substitution.Get(), kReadingDirection);
+    mswr::MakeAndInitialize<TextAnalysisSource>(
+        &source_, kText, kLocale, number_substitution.Get(), kReadingDirection);
   }
 
  protected:
-  mswr::ComPtr<IDWriteTextAnalysisSource> source_;
+  mswr::ComPtr<TextAnalysisSource> source_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TextAnalysisSourceTest);

@@ -6,7 +6,7 @@
 
 namespace blink {
 
-void CSSPendingSubstitutionValue::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSPendingSubstitutionValue) {
   CSSValue::TraceAfterDispatch(visitor);
   visitor->Trace(shorthand_value_);
 }

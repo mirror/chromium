@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"

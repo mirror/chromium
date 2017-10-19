@@ -107,12 +107,13 @@ void HeadlessExample::OnLoadEventFired(
 
 void HeadlessExample::OnDomFetched(
     std::unique_ptr<headless::runtime::EvaluateResult> result) {
+  std::string dom;
   // Make sure the evaluation succeeded before reading the result.
   if (result->HasExceptionDetails()) {
     LOG(ERROR) << "Failed to serialize document: "
                << result->GetExceptionDetails()->GetText();
-  } else {
-    printf("%s\n", result->GetResult()->GetValue()->GetString().c_str());
+  } else if (result->GetResult()->GetValue()->GetAsString(&dom)) {
+    printf("%s\n", dom.c_str());
   }
 
   // Shut down the browser (see ~HeadlessExample).

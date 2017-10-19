@@ -27,7 +27,7 @@ class CORE_EXPORT InspectorPerformanceAgent final
   WTF_MAKE_NONCOPYABLE(InspectorPerformanceAgent);
 
  public:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   static InspectorPerformanceAgent* Create(InspectedFrames* inspected_frames) {
     return new InspectorPerformanceAgent(inspected_frames);

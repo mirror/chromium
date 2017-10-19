@@ -70,7 +70,7 @@ class CORE_EXPORT CustomElementRegistry final
 
   void Entangle(V0CustomElementRegistrationContext*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:

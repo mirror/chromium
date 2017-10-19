@@ -195,7 +195,6 @@ test("components_unittests") {
       "//components/history/content/browser:unit_tests",
       "//components/invalidation/impl:unit_tests",
       "//components/keyed_service/content:unit_tests",
-      "//components/language:unit_tests",
       "//components/link_header_util:unit_tests",
       "//components/navigation_interception:unit_tests",
       "//components/network_error_logging:unit_tests",
@@ -214,6 +213,7 @@ test("components_unittests") {
       "//components/safe_browsing/common:unit_tests",
       "//components/safe_browsing/password_protection:password_protection_unittest",
       "//components/safe_browsing/triggers:unit_tests",
+      "//components/safe_json:unit_tests",
       "//components/security_state/content:unit_tests",
       "//components/spellcheck/browser:unit_tests",
       "//components/spellcheck/renderer:unit_tests",
@@ -253,6 +253,8 @@ test("components_unittests") {
       "//components/invalidation/impl",
       "//components/invalidation/impl:java",
       "//components/policy/android:policy_java",
+      "//components/safe_json",
+      "//components/safe_json/android:safe_json_java",
       "//components/signin/core/browser",
       "//components/signin/core/browser/android:java",
       "//components/spellcheck/browser/android:java",
@@ -327,7 +329,24 @@ test("components_unittests") {
   }
 
   # No components should depend on Chrome.
-  assert_no_deps = [ "//chrome/*" ]
+  if (is_chromeos) {
+    # TODO(bug 758767): //chromeos depends on a target in //chrome, and this
+    # target indirectly on //chromeos. The //chromeos -> //chrome dependency
+    # should be fixed and all of chrome added to the assert_no_deps.
+    #
+    # Until this case is fixed, we can blacklist the main Chrome targets which
+    # aren't actually used. This should prevent most major regressions.
+    assert_no_deps = [
+      "//chrome:*",  # Catches targets in this file and not subdirs.
+      "//chrome/browser",  # No * due to //chrome/browser/chromeos mess.
+      "//chrome/common/*",
+      "//chrome/renderer/*",
+      "//chrome/test/*",
+    ]
+  } else {
+    # Other platforms have clean dependencies.
+    assert_no_deps = [ "//chrome/*" ]
+  }
 
   if (is_ios) {
     assert_no_deps += ios_assert_no_deps
@@ -504,7 +523,22 @@ if (!is_ios) {
       deps += [ "//components/printing/test:test_support" ]
     }
 
-    assert_no_deps = [ "//chrome/*" ]
+    if (is_chromeos) {
+      # TODO(bug 758767): //chromeos depends on a target in //chrome, and this
+      # target indirectly on //chromeos. The //chromeos -> //chrome dependency
+      # should be fixed and all of chrome added to the assert_no_deps. For
+      # now, blacklist large parts of Chrome to prevent the most obvious
+      # regressions.
+      assert_no_deps = [
+        "//chrome:*",  # Catches targets in this file and not subdirs.
+        "//chrome/browser",  # No * due to //chrome/browser/chromeos problem.
+        "//chrome/common/*",
+        "//chrome/renderer/*",
+        "//chrome/test/*",
+      ]
+    } else {
+      assert_no_deps = [ "//chrome/*" ]
+    }
   }
 
   test("components_perftests") {

@@ -1067,22 +1067,32 @@ void GpuChannel::OnCreateCommandBuffer(
     const GPUCreateCommandBufferConfig& init_params,
     int32_t route_id,
     base::SharedMemoryHandle shared_state_handle,
-    ContextResult* result,
+    bool* result,
     gpu::Capabilities* capabilities) {
   TRACE_EVENT2("gpu", "GpuChannel::OnCreateCommandBuffer", "route_id", route_id,
                "offscreen", (init_params.surface_handle == kNullSurfaceHandle));
   std::unique_ptr<base::SharedMemory> shared_state_shm(
       new base::SharedMemory(shared_state_handle, false));
+  std::unique_ptr<GpuCommandBufferStub> stub =
+      CreateCommandBuffer(init_params, route_id, std::move(shared_state_shm));
+  if (stub) {
+    *result = true;
+    *capabilities = stub->decoder()->GetCapabilities();
+    stubs_[route_id] = std::move(stub);
+  } else {
+    *result = false;
+    *capabilities = gpu::Capabilities();
+  }
+}
 
-  // Default result on failure. Override with a more accurate failure if needed,
-  // or with success.
-  *result = ContextResult::kFatalFailure;
-  *capabilities = gpu::Capabilities();
-
+std::unique_ptr<GpuCommandBufferStub> GpuChannel::CreateCommandBuffer(
+    const GPUCreateCommandBufferConfig& init_params,
+    int32_t route_id,
+    std::unique_ptr<base::SharedMemory> shared_state_shm) {
   if (init_params.surface_handle != kNullSurfaceHandle && !is_gpu_host_) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): attempt to create a "
                    "view context on a non-privileged channel";
-    return;
+    return nullptr;
   }
 
   int32_t share_group_id = init_params.share_group_id;
@@ -1090,21 +1100,21 @@ void GpuChannel::OnCreateCommandBuffer(
 
   if (!share_group && share_group_id != MSG_ROUTING_NONE) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): invalid share group id";
-    return;
+    return nullptr;
   }
 
   int32_t stream_id = init_params.stream_id;
   if (share_group && stream_id != share_group->stream_id()) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): stream id does not "
                    "match share group stream id";
-    return;
+    return nullptr;
   }
 
   SchedulingPriority stream_priority = init_params.stream_priority;
   if (stream_priority <= SchedulingPriority::kHigh && !is_gpu_host_) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): high priority stream "
                    "not allowed on a non-privileged channel";
-    return;
+    return nullptr;
   }
 
   if (share_group && !share_group->decoder()) {
@@ -1112,15 +1122,13 @@ void GpuChannel::OnCreateCommandBuffer(
     // share_group's CommandBuffer.
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): shared context was "
                    "not initialized";
-    return;
+    return nullptr;
   }
 
   if (share_group && share_group->decoder()->WasContextLost()) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): shared context was "
                    "already lost";
-    // The caller should retry to get a context.
-    *result = gpu::ContextResult::kTransientFailure;
-    return;
+    return nullptr;
   }
 
   CommandBufferId command_buffer_id =
@@ -1137,25 +1145,16 @@ void GpuChannel::OnCreateCommandBuffer(
     sequence_id = message_queue_->sequence_id();
   }
 
-  auto stub = std::make_unique<GpuCommandBufferStub>(
-      this, init_params, command_buffer_id, sequence_id, stream_id, route_id);
-  auto stub_result =
-      stub->Initialize(share_group, init_params, std::move(shared_state_shm));
-  if (stub_result != gpu::ContextResult::kSuccess) {
-    DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): failed to initialize "
-                   "GpuCommandBufferStub";
-    *result = stub_result;
-    return;
-  }
+  std::unique_ptr<GpuCommandBufferStub> stub(GpuCommandBufferStub::Create(
+      this, share_group, init_params, command_buffer_id, sequence_id, stream_id,
+      route_id, std::move(shared_state_shm)));
 
   if (!AddRoute(route_id, sequence_id, stub.get())) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): failed to add route";
-    return;
+    return nullptr;
   }
 
-  *result = ContextResult::kSuccess;
-  *capabilities = stub->decoder()->GetCapabilities();
-  stubs_[route_id] = std::move(stub);
+  return stub;
 }
 
 void GpuChannel::OnDestroyCommandBuffer(int32_t route_id) {

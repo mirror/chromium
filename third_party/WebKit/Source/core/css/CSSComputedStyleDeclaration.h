@@ -73,7 +73,7 @@ class CORE_EXPORT CSSComputedStyleDeclaration final
   unsigned length() const override;
   String item(unsigned index) const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CSSComputedStyleDeclaration(Node*, bool allow_visited_style, const String&);

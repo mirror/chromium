@@ -5,7 +5,7 @@
 #include "modules/media_controls/elements/MediaControlMuteButtonElement.h"
 
 #include "core/dom/events/Event.h"
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/input_type_names.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "public/platform/Platform.h"
@@ -32,8 +32,6 @@ void MediaControlMuteButtonElement::UpdateDisplayType() {
   SetDisplayType(muted ? kMediaUnMuteButton : kMediaMuteButton);
   SetClass("muted", muted);
   UpdateOverflowString();
-
-  MediaControlInputElement::UpdateDisplayType();
 }
 
 WebLocalizedString::Name MediaControlMuteButtonElement::GetOverflowStringName()

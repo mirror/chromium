@@ -35,14 +35,13 @@
 #include "content/browser/service_worker/service_worker_metrics.h"
 #include "content/browser/service_worker/service_worker_script_cache_map.h"
 #include "content/common/content_export.h"
-#include "content/common/service_worker/controller_service_worker.mojom.h"
+#include "content/common/origin_trials/trial_token_validator.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "ipc/ipc_message.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 #include "ui/base/mojo/window_open_disposition.mojom.h"
 #include "url/gurl.h"
@@ -146,7 +145,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   int64_t version_id() const { return version_id_; }
   int64_t registration_id() const { return registration_id_; }
   const GURL& script_url() const { return script_url_; }
-  const url::Origin& script_origin() const { return script_origin_; }
   const GURL& scope() const { return scope_; }
   EmbeddedWorkerStatus running_status() const {
     return embedded_worker_->status();
@@ -297,13 +295,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
     return event_dispatcher_.get();
   }
 
-  // This must be called when the worker is running.
-  // Returns the 'controller' interface of this worker.
-  mojom::ControllerServiceWorker* controller() {
-    DCHECK(controller_ptr_.is_bound());
-    return controller_ptr_.get();
-  }
-
   // Adds and removes |provider_host| as a controllee of this ServiceWorker.
   void AddControllee(ServiceWorkerProviderHost* provider_host);
   void RemoveControllee(ServiceWorkerProviderHost* provider_host);
@@ -376,13 +367,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
   //  2) The worker is an existing one but the entry in ServiceWorkerDatabase
   //     was written by old version of Chrome (< M56), so |origin_trial_tokens|
   //     wasn't set in the entry.
-  const blink::TrialTokenValidator::FeatureToTokensMap* origin_trial_tokens()
-      const {
+  const TrialTokenValidator::FeatureToTokensMap* origin_trial_tokens() const {
     return origin_trial_tokens_.get();
   }
   // Set valid tokens in |tokens|. Invalid tokens in |tokens| are ignored.
   void SetValidOriginTrialTokens(
-      const blink::TrialTokenValidator::FeatureToTokensMap& tokens);
+      const TrialTokenValidator::FeatureToTokensMap& tokens);
 
   void SetDevToolsAttached(bool attached);
 
@@ -698,7 +688,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   const int64_t version_id_;
   const int64_t registration_id_;
   const GURL script_url_;
-  const url::Origin script_origin_;
   const GURL scope_;
   std::vector<GURL> foreign_fetch_scopes_;
   std::vector<url::Origin> foreign_fetch_origins_;
@@ -727,7 +716,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   // Connected to ServiceWorkerContextClient while the worker is running.
   mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_;
-  mojom::ControllerServiceWorkerPtr controller_ptr_;
 
   std::unique_ptr<ServiceWorkerInstalledScriptsSender>
       installed_scripts_sender_;
@@ -788,8 +776,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   std::unique_ptr<net::HttpResponseInfo> main_script_http_info_;
 
-  std::unique_ptr<blink::TrialTokenValidator::FeatureToTokensMap>
-      origin_trial_tokens_;
+  std::unique_ptr<TrialTokenValidator::FeatureToTokensMap> origin_trial_tokens_;
 
   // If not OK, the reason that StartWorker failed. Used for
   // running |start_callbacks_|.
@@ -818,8 +805,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // version completed, or used during the lifetime of |this|. The values must
   // be from blink::UseCounter::Feature enum.
   std::set<uint32_t> used_features_;
-
-  std::unique_ptr<blink::TrialTokenValidator> validator_;
 
   base::WeakPtrFactory<ServiceWorkerVersion> weak_factory_;
 

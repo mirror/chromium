@@ -5,7 +5,6 @@
 #include "content/public/common/quarantine.h"
 
 #include <windows.h>
-#include <wrl/client.h>
 
 #include <cguid.h>
 #include <objbase.h>
@@ -26,6 +25,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
 #include "url/gurl.h"
 
@@ -196,7 +196,7 @@ bool InvokeAttachmentServices(const base::FilePath& full_path,
                               const std::string& referrer_url,
                               const GUID& client_guid,
                               HRESULT* save_result) {
-  Microsoft::WRL::ComPtr<IAttachmentExecute> attachment_services;
+  base::win::ScopedComPtr<IAttachmentExecute> attachment_services;
   HRESULT hr = ::CoCreateInstance(CLSID_AttachmentServices, nullptr, CLSCTX_ALL,
                                   IID_PPV_ARGS(&attachment_services));
   *save_result = S_OK;

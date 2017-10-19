@@ -779,12 +779,6 @@ void RenderWidgetHostViewAura::FocusedNodeTouched(
       ui::OnScreenKeyboardDisplayManager::GetInstance();
   DCHECK(osk_display_manager);
   if (editable && host_->GetView() && host_->delegate()) {
-    if (keyboard_observer_) {
-      // It is possible to receive two consecutive calls to FocusedNodeTouched
-      // when the touched element is editable. Make sure to remove the current
-      // observer to avoid UaF (see https://crbug.com/775973).
-      osk_display_manager->RemoveObserver(keyboard_observer_.get());
-    }
     keyboard_observer_.reset(new WinScreenKeyboardObserver(
         this, location_dips_screen, device_scale_factor_, window_));
     virtual_keyboard_requested_ =
@@ -1535,9 +1529,10 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
   if (!window_->GetRootWindow())
     return;
 
-  host_->WasResized();
-  if (delegated_frame_host_)
-    delegated_frame_host_->WasResized();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
+  if (host && host->delegate())
+    host->delegate()->UpdateDeviceScaleFactor(new_device_scale_factor);
 
   device_scale_factor_ = new_device_scale_factor;
   const display::Display display =
@@ -1922,12 +1917,9 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
     return;
 
   // Embed the renderer into the Window.
-  // Use kEmbedFlagEmbedderControlsVisibility so that the renderer can't change
-  // the visibility of |window_|.
   aura::WindowPortMus::Get(window_)->Embed(
       GetWindowTreeClientFromRenderer(),
-      ui::mojom::kEmbedFlagEmbedderInterceptsEvents |
-          ui::mojom::kEmbedFlagEmbedderControlsVisibility,
+      ui::mojom::kEmbedFlagEmbedderInterceptsEvents,
       base::Bind(&EmbedCallback));
 }
 

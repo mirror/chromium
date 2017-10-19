@@ -118,13 +118,6 @@ public class ViewResourceAdapter implements DynamicResource, OnLayoutChangeListe
     }
 
     /**
-     * Drops the cached bitmap to free up memory.
-     */
-    public void dropCachedBitmap() {
-        mBitmap = null;
-    }
-
-    /**
      * @return Dirty rect that will be drawn on capture.
      */
     protected Rect getDirtyRect() {

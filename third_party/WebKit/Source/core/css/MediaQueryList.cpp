@@ -114,7 +114,7 @@ bool MediaQueryList::matches() {
   return matches_;
 }
 
-void MediaQueryList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaQueryList) {
   visitor->Trace(matcher_);
   visitor->Trace(listeners_);
   EventTargetWithInlineData::Trace(visitor);

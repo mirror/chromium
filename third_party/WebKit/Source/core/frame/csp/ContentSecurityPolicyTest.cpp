@@ -12,7 +12,7 @@
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -26,7 +26,7 @@ class ContentSecurityPolicyTest : public ::testing::Test {
  public:
   ContentSecurityPolicyTest()
       : csp(ContentSecurityPolicy::Create()),
-        secure_url("https://example.test/image.png"),
+        secure_url(kParsedURLString, "https://example.test/image.png"),
         secure_origin(SecurityOrigin::Create(secure_url)) {}
 
  protected:
@@ -98,7 +98,7 @@ TEST_F(ContentSecurityPolicyTest, ParseInsecureRequestPolicy) {
 }
 
 TEST_F(ContentSecurityPolicyTest, ParseEnforceTreatAsPublicAddressDisabled) {
-  ScopedCorsRFC1918ForTest cors_rfc1918(false);
+  RuntimeEnabledFeatures::SetCorsRFC1918Enabled(false);
   execution_context->SetAddressSpace(kWebAddressSpacePrivate);
   EXPECT_EQ(kWebAddressSpacePrivate, execution_context->AddressSpace());
 
@@ -110,7 +110,7 @@ TEST_F(ContentSecurityPolicyTest, ParseEnforceTreatAsPublicAddressDisabled) {
 }
 
 TEST_F(ContentSecurityPolicyTest, ParseEnforceTreatAsPublicAddressEnabled) {
-  ScopedCorsRFC1918ForTest cors_rfc1918(true);
+  RuntimeEnabledFeatures::SetCorsRFC1918Enabled(true);
   execution_context->SetAddressSpace(kWebAddressSpacePrivate);
   EXPECT_EQ(kWebAddressSpacePrivate, execution_context->AddressSpace());
 
@@ -940,7 +940,7 @@ TEST_F(ContentSecurityPolicyTest, ShouldEnforceEmbeddersPolicy) {
 
   for (const auto& test : cases) {
     ResourceResponse response;
-    response.SetURL(KURL(test.resource_url));
+    response.SetURL(KURL(kParsedURLString, test.resource_url));
     EXPECT_EQ(ContentSecurityPolicy::ShouldEnforceEmbeddersPolicy(
                   response, secure_origin.get()),
               test.inherits);

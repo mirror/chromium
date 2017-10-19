@@ -28,6 +28,7 @@
 #include "chrome/grit/locale_settings.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
+#include "components/search/search.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_ui.h"
@@ -204,10 +205,12 @@ MdHistoryUI::MdHistoryUI(content::WebUI* web_ui) : WebUIController(web_ui) {
   web_ui->AddMessageHandler(base::MakeUnique<BrowsingHistoryHandler>());
   web_ui->AddMessageHandler(base::MakeUnique<MetricsHandler>());
 
-  web_ui->AddMessageHandler(
-      base::MakeUnique<browser_sync::ForeignSessionHandler>());
-  web_ui->AddMessageHandler(base::MakeUnique<HistoryLoginHandler>(
-      base::Bind(&MdHistoryUI::UpdateDataSource, base::Unretained(this))));
+  if (search::IsInstantExtendedAPIEnabled()) {
+    web_ui->AddMessageHandler(
+        base::MakeUnique<browser_sync::ForeignSessionHandler>());
+    web_ui->AddMessageHandler(base::MakeUnique<HistoryLoginHandler>(
+        base::Bind(&MdHistoryUI::UpdateDataSource, base::Unretained(this))));
+  }
 
   web_ui->RegisterMessageCallback("menuPromoShown",
       base::Bind(&MdHistoryUI::HandleMenuPromoShown, base::Unretained(this)));

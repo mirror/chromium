@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "base/command_line.h"
-#include "base/debug/crash_logging.h"
 #include "base/debug/dump_without_crashing.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
@@ -269,8 +268,6 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
   void LockToOrigin(const GURL& gurl) {
     origin_lock_ = gurl;
   }
-
-  const GURL& origin_lock() { return origin_lock_; }
 
   ChildProcessSecurityPolicyImpl::CheckOriginLockResult CheckOriginLock(
       const GURL& gurl) {
@@ -1055,16 +1052,7 @@ bool ChildProcessSecurityPolicyImpl::CanAccessDataForOrigin(int child_id,
     // workaround for https://crbug.com/600441
     return true;
   }
-  bool can_access = state->second->CanAccessDataForOrigin(site_url);
-  if (!can_access) {
-    // Returning false here will result in a renderer kill.  Set some crash
-    // keys that will help understand the circumstances of that kill.
-    base::debug::SetCrashKeyValue("requested_site_url", site_url.spec());
-    base::debug::SetCrashKeyValue("requested_origin", url.GetOrigin().spec());
-    base::debug::SetCrashKeyValue("killed_process_origin_lock",
-                                  state->second->origin_lock().spec());
-  }
-  return can_access;
+  return state->second->CanAccessDataForOrigin(site_url);
 }
 
 bool ChildProcessSecurityPolicyImpl::HasSpecificPermissionForOrigin(
@@ -1095,14 +1083,6 @@ ChildProcessSecurityPolicyImpl::CheckOriginLock(int child_id,
   if (state == security_state_.end())
     return ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK;
   return state->second->CheckOriginLock(site_url);
-}
-
-GURL ChildProcessSecurityPolicyImpl::GetOriginLock(int child_id) {
-  base::AutoLock lock(lock_);
-  SecurityStateMap::iterator state = security_state_.find(child_id);
-  if (state == security_state_.end())
-    return GURL();
-  return state->second->origin_lock();
 }
 
 void ChildProcessSecurityPolicyImpl::GrantPermissionsForFileSystem(

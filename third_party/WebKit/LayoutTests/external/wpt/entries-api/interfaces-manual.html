@@ -10,16 +10,28 @@
 <script>
 'use strict';
 
+function getFileAsPromise(dirEntry, path) {
+  return new Promise((resolve, reject) => {
+    dirEntry.getFile(path, {}, resolve, reject);
+  });
+}
+
+function getDirectoryAsPromise(dirEntry, path) {
+  return new Promise((resolve, reject) => {
+    dirEntry.getDirectory(path, {}, resolve, reject);
+  });
+}
+
 entry_test((t, entry, item) => {
-  assert_true(entry.isDirectory);
   Promise.all([
-    getEntriesAsPromise(entry),
+    getFileAsPromise(entry, FILE_PATHS[0]),
+    getDirectoryAsPromise(entry, DIR_PATHS[0]),
     fetch('interfaces.idl').then(r => r.text())
-  ]).then(t.step_func(([entries, idls]) => {
+  ]).then(t.step_func(([fileEntry, dirEntry, idls]) => {
     window.samples = {
       item: item,
-      dirEntry: entries.filter(entry => entry.isDirectory)[0],
-      fileEntry: entries.filter(entry => entry.isFile)[0],
+      dirEntry: dirEntry,
+      fileEntry: fileEntry,
       fileSystem: entry.filesystem,
     };
 

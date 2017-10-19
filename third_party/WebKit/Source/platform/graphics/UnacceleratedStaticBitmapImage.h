@@ -25,8 +25,7 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
             const FloatRect& dst_rect,
             const FloatRect& src_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            ImageDecodingMode) override;
+            ImageClampingMode) override;
 
   PaintImage PaintImageForCurrentFrame() override;
 

@@ -78,7 +78,7 @@ class AutoplayPolicy final : public GarbageCollected<AutoplayPolicy> {
   // gesture is currently being processed.
   bool IsGestureNeededForPlayback() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class AutoplayUmaHelper;

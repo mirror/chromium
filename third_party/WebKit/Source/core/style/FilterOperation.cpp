@@ -41,10 +41,10 @@ FilterOperation* FilterOperation::Blend(const FilterOperation* from,
   DCHECK(from || to);
   if (to)
     return to->Blend(from, progress);
-  return from->Blend(nullptr, 1 - progress);
+  return from->Blend(0, 1 - progress);
 }
 
-void ReferenceFilterOperation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ReferenceFilterOperation) {
   visitor->Trace(element_proxy_);
   visitor->Trace(filter_);
   FilterOperation::Trace(visitor);

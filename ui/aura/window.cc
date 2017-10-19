@@ -143,7 +143,7 @@ void Window::Init(ui::LayerType layer_type) {
     port_owner_ = Env::GetInstance()->CreateWindowPort(this);
     port_ = port_owner_.get();
   }
-  SetLayer(std::make_unique<ui::Layer>(layer_type));
+  SetLayer(base::MakeUnique<ui::Layer>(layer_type));
   port_->OnPreInit(this);
   layer()->SetVisible(false);
   layer()->set_delegate(this);
@@ -428,7 +428,7 @@ const Window* Window::GetChildById(int id) const {
 // static
 void Window::ConvertPointToTarget(const Window* source,
                                   const Window* target,
-                                  gfx::PointF* point) {
+                                  gfx::Point* point) {
   if (!source)
     return;
   if (source->GetRootWindow() != target->GetRootWindow()) {
@@ -446,15 +446,6 @@ void Window::ConvertPointToTarget(const Window* source,
   } else {
     ui::Layer::ConvertPointToLayer(source->layer(), target->layer(), point);
   }
-}
-
-// static
-void Window::ConvertPointToTarget(const Window* source,
-                                  const Window* target,
-                                  gfx::Point* point) {
-  gfx::PointF point_float(*point);
-  ConvertPointToTarget(source, target, &point_float);
-  *point = gfx::ToFlooredPoint(point_float);
 }
 
 // static
@@ -1112,7 +1103,7 @@ ui::EventTarget* Window::GetParentTarget() {
 }
 
 std::unique_ptr<ui::EventTargetIterator> Window::GetChildIterator() const {
-  return std::make_unique<ui::EventTargetIteratorPtrImpl<Window>>(children());
+  return base::MakeUnique<ui::EventTargetIteratorPtrImpl<Window>>(children());
 }
 
 ui::EventTargeter* Window::GetEventTargeter() {

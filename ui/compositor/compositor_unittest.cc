@@ -103,8 +103,6 @@ class CompositorObserverForLocks : public CompositorObserver {
     changed_ = true;
     locked_ = compositor->IsLocked();
   }
-  void OnCompositingChildResizing(Compositor* compositor) override {}
-
   void OnCompositingShuttingDown(Compositor* compositor) override {}
 
   bool changed() const { return changed_; }

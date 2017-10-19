@@ -10,7 +10,7 @@ onload = function() {
 
     var result = "";
     result += "Should not have opaque composited scrolling contents layer: ";
-    if (elementSubtreeHasNotOpaqueCompositedScrollingContentsLayer(document.getElementById('scroller')))
+    if (hasNotOpaqueCompositedScrollingContentsLayer(JSON.parse(window.internals.layerTreeAsText(document))))
         result += "Pass.\n";
     else
         result += "Fail.\n";

@@ -20,9 +20,9 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/components/tether/fake_initializer.h"
 #include "chromeos/components/tether/fake_notification_presenter.h"
-#include "chromeos/components/tether/fake_tether_component.h"
-#include "chromeos/components/tether/tether_component_impl.h"
+#include "chromeos/components/tether/initializer_impl.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_power_manager_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
@@ -128,15 +128,15 @@ class TestTetherService : public TetherService {
   int updated_technology_state_count_ = 0;
 };
 
-class FakeTetherComponentWithDestructorCallback
-    : public chromeos::tether::FakeTetherComponent {
+class FakeInitializerWithDestructorCallback
+    : public chromeos::tether::FakeInitializer {
  public:
-  FakeTetherComponentWithDestructorCallback(
+  FakeInitializerWithDestructorCallback(
       const base::Closure& destructor_callback)
-      : FakeTetherComponent(false /* has_asynchronous_shutdown */),
+      : FakeInitializer(false /* has_asynchronous_shutdown */),
         destructor_callback_(destructor_callback) {}
 
-  ~FakeTetherComponentWithDestructorCallback() override {
+  ~FakeInitializerWithDestructorCallback() override {
     destructor_callback_.Run();
   }
 
@@ -144,19 +144,19 @@ class FakeTetherComponentWithDestructorCallback
   base::Closure destructor_callback_;
 };
 
-class TestTetherComponentFactory final
-    : public chromeos::tether::TetherComponentImpl::Factory {
+class TestInitializerFactory final
+    : public chromeos::tether::InitializerImpl::Factory {
  public:
-  TestTetherComponentFactory() {}
+  TestInitializerFactory() {}
 
-  // Returns nullptr if no TetherComponent has been created or if the last one
-  // that was created has already been deleted.
-  FakeTetherComponentWithDestructorCallback* active_tether_component() {
-    return active_tether_component_;
+  // Returns nullptr if no Initializer has been created or if the last one that
+  // was created has already been deleted.
+  FakeInitializerWithDestructorCallback* active_initializer() {
+    return active_initializer_;
   }
 
-  // chromeos::tether::TetherComponentImpl::Factory:
-  std::unique_ptr<chromeos::tether::TetherComponent> BuildInstance(
+  // chromeos::tether::InitializerImpl::Factory:
+  std::unique_ptr<chromeos::tether::Initializer> BuildInstance(
       cryptauth::CryptAuthService* cryptauth_service,
       chromeos::tether::NotificationPresenter* notification_presenter,
       PrefService* pref_service,
@@ -166,16 +166,16 @@ class TestTetherComponentFactory final
       chromeos::NetworkConnect* network_connect,
       chromeos::NetworkConnectionHandler* network_connection_handler,
       scoped_refptr<device::BluetoothAdapter> adapter) override {
-    active_tether_component_ = new FakeTetherComponentWithDestructorCallback(
-        base::Bind(&TestTetherComponentFactory::OnActiveTetherComponentDeleted,
+    active_initializer_ = new FakeInitializerWithDestructorCallback(
+        base::Bind(&TestInitializerFactory::OnActiveInitializerDeleted,
                    base::Unretained(this)));
-    return base::WrapUnique(active_tether_component_);
+    return base::WrapUnique(active_initializer_);
   }
 
  private:
-  void OnActiveTetherComponentDeleted() { active_tether_component_ = nullptr; }
+  void OnActiveInitializerDeleted() { active_initializer_ = nullptr; }
 
-  FakeTetherComponentWithDestructorCallback* active_tether_component_ = nullptr;
+  FakeInitializerWithDestructorCallback* active_initializer_ = nullptr;
 };
 
 }  // namespace
@@ -223,10 +223,9 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
         .WillByDefault(Invoke(this, &TetherServiceTest::IsBluetoothPowered));
     device::BluetoothAdapterFactory::SetAdapterForTesting(mock_adapter_);
 
-    test_tether_component_factory_ =
-        base::WrapUnique(new TestTetherComponentFactory());
-    chromeos::tether::TetherComponentImpl::Factory::SetInstanceForTesting(
-        test_tether_component_factory_.get());
+    test_initializer_factory_ = base::WrapUnique(new TestInitializerFactory());
+    chromeos::tether::InitializerImpl::Factory::SetInstanceForTesting(
+        test_initializer_factory_.get());
   }
 
   void TearDown() override {
@@ -331,9 +330,8 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   }
 
   void VerifyTetherActiveStatus(bool expected_active) {
-    EXPECT_EQ(
-        expected_active,
-        test_tether_component_factory_->active_tether_component() != nullptr);
+    EXPECT_EQ(expected_active,
+              test_initializer_factory_->active_initializer() != nullptr);
   }
 
   const content::TestBrowserThreadBundle thread_bundle_;
@@ -345,7 +343,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   std::unique_ptr<TestingPrefServiceSimple> test_pref_service_;
   std::unique_ptr<NiceMock<MockCryptAuthDeviceManager>>
       mock_cryptauth_device_manager_;
-  std::unique_ptr<TestTetherComponentFactory> test_tether_component_factory_;
+  std::unique_ptr<TestInitializerFactory> test_initializer_factory_;
   chromeos::tether::FakeNotificationPresenter* fake_notification_presenter_;
   base::MockTimer* mock_timer_;
   std::unique_ptr<cryptauth::FakeCryptAuthService> fake_cryptauth_service_;
@@ -387,7 +385,7 @@ TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
   VerifyTetherActiveStatus(true /* expected_active */);
 
   // Use an asynchronous shutdown.
-  test_tether_component_factory_->active_tether_component()
+  test_initializer_factory_->active_initializer()
       ->set_has_asynchronous_shutdown(true);
 
   // Disable the Tether preference. This should trigger the asynchrnous
@@ -396,9 +394,8 @@ TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
 
   // Tether should be active, but shutting down.
   VerifyTetherActiveStatus(true /* expected_active */);
-  EXPECT_EQ(
-      chromeos::tether::TetherComponent::Status::SHUTTING_DOWN,
-      test_tether_component_factory_->active_tether_component()->status());
+  EXPECT_EQ(chromeos::tether::Initializer::Status::SHUTTING_DOWN,
+            test_initializer_factory_->active_initializer()->status());
 
   // Tether should be AVAILABLE.
   EXPECT_EQ(
@@ -407,9 +404,8 @@ TEST_F(TetherServiceTest, TestAsyncTetherShutdown) {
           chromeos::NetworkTypePattern::Tether()));
 
   // Complete the shutdown process; TetherService should delete its
-  // TetherComponent instance.
-  test_tether_component_factory_->active_tether_component()
-      ->FinishAsynchronousShutdown();
+  // Initializer instance.
+  test_initializer_factory_->active_initializer()->FinishAsynchronousShutdown();
   VerifyTetherActiveStatus(false /* expected_active */);
 }
 
@@ -567,13 +563,13 @@ TEST_F(TetherServiceTest, TestScreenLock) {
 }
 
 TEST_F(TetherServiceTest, TestFeatureFlagDisabled) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndDisableFeature(features::kInstantTethering);
-
   EXPECT_FALSE(TetherService::Get(profile_.get()));
 }
 
 TEST_F(TetherServiceTest, TestFeatureFlagEnabled) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(features::kInstantTethering);
+
   TetherService* tether_service = TetherService::Get(profile_.get());
   ASSERT_TRUE(tether_service);
 
@@ -818,9 +814,6 @@ TEST_F(TetherServiceTest, TestEnabled) {
   EXPECT_FALSE(
       profile_->GetPrefs()->GetBoolean(prefs::kInstantTetheringEnabled));
   VerifyTetherActiveStatus(false /* expected_active */);
-  histogram_tester_.ExpectBucketCount(
-      "InstantTethering.UserPreference.OnToggle", false,
-      1u /* expected_count */);
 
   SetTetherTechnologyStateEnabled(true);
   EXPECT_EQ(chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED,
@@ -829,9 +822,6 @@ TEST_F(TetherServiceTest, TestEnabled) {
   EXPECT_TRUE(
       profile_->GetPrefs()->GetBoolean(prefs::kInstantTetheringEnabled));
   VerifyTetherActiveStatus(true /* expected_active */);
-  histogram_tester_.ExpectBucketCount(
-      "InstantTethering.UserPreference.OnToggle", true,
-      1u /* expected_count */);
 
   VerifyTetherFeatureStateRecorded(TetherService::TetherFeatureState::ENABLED,
                                    2 /* expected_count */);

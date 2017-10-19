@@ -12,6 +12,8 @@
 
 namespace device {
 
+class VRDisplayImpl;
+
 const unsigned int VR_DEVICE_LAST_ID = 0xFFFFFFFF;
 
 // Represents one of the platform's VR devices. Owned by the respective
@@ -19,21 +21,53 @@ const unsigned int VR_DEVICE_LAST_ID = 0xFFFFFFFF;
 // TODO(mthiesse, crbug.com/769373): Remove DEVICE_VR_EXPORT.
 class DEVICE_VR_EXPORT VRDevice {
  public:
-  virtual ~VRDevice() {}
+  VRDevice();
+  virtual ~VRDevice();
 
-  virtual unsigned int GetId() const = 0;
-  virtual void PauseTracking() = 0;
-  virtual void ResumeTracking() = 0;
-  virtual void Blur() = 0;
-  virtual void Focus() = 0;
+  unsigned int id() const { return id_; }
+
   virtual mojom::VRDisplayInfoPtr GetVRDisplayInfo() = 0;
+  virtual void RequestPresent(
+      VRDisplayImpl* display,
+      mojom::VRSubmitFrameClientPtr submit_client,
+      mojom::VRPresentationProviderRequest request,
+      mojom::VRDisplayHost::RequestPresentCallback callback) = 0;
+  virtual void ExitPresent() = 0;
+  virtual void GetPose(
+      VRDisplayImpl* display,
+      mojom::VRMagicWindowProvider::GetPoseCallback callback) = 0;
 
-  // TODO(mthiesse): The browser should handle browser-side exiting of
-  // presentation before device/ is even aware presentation is being exited.
-  // Then the browser should call ExitPresent() on Device, which does device/
-  // exiting of presentation before notifying displays. This is currently messy
-  // because browser-side notions of presentation are mostly Android-specific.
-  virtual void OnExitPresent() = 0;
+  void AddDisplay(VRDisplayImpl* display);
+  void RemoveDisplay(VRDisplayImpl* display);
+  virtual void OnDisplayAdded(VRDisplayImpl* display) {}
+  virtual void OnDisplayRemoved(VRDisplayImpl* display) {}
+  virtual void OnListeningForActivateChanged(VRDisplayImpl* display) {}
+
+  bool IsAccessAllowed(VRDisplayImpl* display);
+  bool CheckPresentingDisplay(VRDisplayImpl* display);
+  VRDisplayImpl* GetPresentingDisplay() { return presenting_display_; }
+
+  virtual void PauseTracking() {}
+  virtual void ResumeTracking() {}
+
+  void OnChanged();
+  void OnExitPresent();
+  void OnBlur();
+  void OnFocus();
+
+ protected:
+  void SetPresentingDisplay(VRDisplayImpl* display);
+
+ private:
+  std::set<VRDisplayImpl*> displays_;
+
+  VRDisplayImpl* presenting_display_;
+
+  unsigned int id_;
+
+  static unsigned int next_id_;
+
+  DISALLOW_COPY_AND_ASSIGN(VRDevice);
 };
 
 }  // namespace device

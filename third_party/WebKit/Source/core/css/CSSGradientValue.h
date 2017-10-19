@@ -74,7 +74,7 @@ struct CSSGradientColorStop {
 
   bool IsCacheable() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   Member<const CSSPrimitiveValue> offset_;  // percentage | length | angle
   Member<const CSSValue> color_;
@@ -119,7 +119,7 @@ class CSSGradientValue : public CSSImageGeneratorValue {
 
   void GetStopColors(Vector<Color>& stop_colors, const LayoutObject&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
   struct GradientDesc;
 
@@ -175,7 +175,7 @@ class CSSLinearGradientValue final : public CSSGradientValue {
 
   bool Equals(const CSSLinearGradientValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSLinearGradientValue(const CSSValue* first_x,
@@ -248,7 +248,7 @@ class CSSRadialGradientValue final : public CSSGradientValue {
 
   bool Equals(const CSSRadialGradientValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSRadialGradientValue(const CSSValue* first_x,
@@ -314,7 +314,7 @@ class CSSConicGradientValue final : public CSSGradientValue {
 
   bool Equals(const CSSConicGradientValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSConicGradientValue(const CSSValue* x,

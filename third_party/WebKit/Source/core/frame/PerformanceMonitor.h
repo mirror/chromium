@@ -67,7 +67,7 @@ class CORE_EXPORT PerformanceMonitor final
                                         const String& text,
                                         double time,
                                         SourceLocation*) {}
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
   static void ReportGenericViolation(ExecutionContext*,
@@ -76,8 +76,6 @@ class CORE_EXPORT PerformanceMonitor final
                                      double time,
                                      std::unique_ptr<SourceLocation>);
   static double Threshold(ExecutionContext*, Violation);
-
-  void BypassLongCompileThresholdOnceForTesting();
 
   // Instrumenting methods.
   void Will(const probe::RecalculateStyle&);
@@ -110,7 +108,7 @@ class CORE_EXPORT PerformanceMonitor final
   explicit PerformanceMonitor(LocalFrame*);
   ~PerformanceMonitor();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class PerformanceMonitorTest;
@@ -134,8 +132,6 @@ class CORE_EXPORT PerformanceMonitor final
   void WillExecuteScript(ExecutionContext*);
   void DidExecuteScript();
 
-  void UpdateTaskAttribution(ExecutionContext*);
-
   std::pair<String, DOMWindow*> SanitizedAttribution(
       const HeapHashSet<Member<Frame>>& frame_contexts,
       Frame* observer_frame);
@@ -155,14 +151,12 @@ class CORE_EXPORT PerformanceMonitor final
   Member<LocalFrame> local_root_;
   Member<ExecutionContext> task_execution_context_;
   bool task_has_multiple_contexts_ = false;
-  bool task_should_be_reported_ = false;
   using ClientThresholds = HeapHashMap<WeakMember<Client>, double>;
   HeapHashMap<Violation,
               Member<ClientThresholds>,
               typename DefaultHash<size_t>::Hash,
               WTF::UnsignedWithZeroKeyHashTraits<size_t>>
       subscriptions_;
-  bool bypass_long_compile_threshold_ = false;
 };
 
 }  // namespace blink

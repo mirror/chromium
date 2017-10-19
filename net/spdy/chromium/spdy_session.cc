@@ -702,19 +702,15 @@ bool SpdySession::CanPool(TransportSecurityState* transport_security_state,
   }
 
   // As with CheckPublicKeyPins above, disable Expect-CT reports.
-  switch (transport_security_state->CheckCTRequirements(
-      HostPortPair(new_hostname, 0), ssl_info.is_issued_by_known_root,
-      ssl_info.public_key_hashes, ssl_info.cert.get(),
-      ssl_info.unverified_cert.get(), ssl_info.signed_certificate_timestamps,
-      TransportSecurityState::DISABLE_EXPECT_CT_REPORTS,
-      ssl_info.ct_cert_policy_compliance)) {
-    case TransportSecurityState::CT_REQUIREMENTS_NOT_MET:
-      return false;
-    case TransportSecurityState::CT_REQUIREMENTS_MET:
-    case TransportSecurityState::CT_NOT_REQUIRED:
-      // Intentional fallthrough; this case is just here to make sure that all
-      // possible values of CheckCTRequirements() are handled.
-      break;
+  if (transport_security_state->CheckCTRequirements(
+          HostPortPair(new_hostname, 0), ssl_info.is_issued_by_known_root,
+          ssl_info.public_key_hashes, ssl_info.cert.get(),
+          ssl_info.unverified_cert.get(),
+          ssl_info.signed_certificate_timestamps,
+          TransportSecurityState::DISABLE_EXPECT_CT_REPORTS,
+          ssl_info.ct_cert_policy_compliance) !=
+      TransportSecurityState::CT_REQUIREMENTS_MET) {
+    return false;
   }
 
   return true;
@@ -861,7 +857,8 @@ void SpdySession::CancelPush(const GURL& url) {
   SpdyStreamId stream_id = unclaimed_it->second.stream_id;
 
   if (active_streams_.find(stream_id) == active_streams_.end()) {
-    ResetStream(stream_id, ERROR_CODE_CANCEL, "Cancelled push stream.");
+    ResetStream(stream_id, ERROR_CODE_CANCEL,
+                "Cancelled push stream with url: " + url.spec());
   }
   unclaimed_pushed_streams_.erase(unclaimed_it);
 }
@@ -1570,9 +1567,10 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   ActiveStreamMap::iterator associated_it =
       active_streams_.find(associated_stream_id);
   if (associated_it == active_streams_.end()) {
-    EnqueueResetStreamFrame(stream_id, request_priority,
-                            ERROR_CODE_STREAM_CLOSED,
-                            "Inactive associated stream.");
+    EnqueueResetStreamFrame(
+        stream_id, request_priority, ERROR_CODE_STREAM_CLOSED,
+        SpdyStringPrintf("Received push for inactive associated stream %d",
+                         associated_stream_id));
     return;
   }
 
@@ -1588,23 +1586,30 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
       if (gurl.SchemeIs("https")) {
         EnqueueResetStreamFrame(
             stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
-            "Cross origin HTTPS content from trusted proxy.");
+            SpdyStringPrintf("Rejected push of cross origin HTTPS content %d "
+                             "from trusted proxy",
+                             associated_stream_id));
         return;
       }
     } else {
       if (!gurl.SchemeIs("https") || !associated_url.SchemeIs("https")) {
         EnqueueResetStreamFrame(
             stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
-            "Both pushed URL and associated URL must have https scheme.");
+            SpdyStringPrintf("Rejected cross origin pushed stream %d: "
+                             "both pushed URL and associated URL "
+                             "must have https scheme.",
+                             associated_stream_id));
         return;
       }
       SSLInfo ssl_info;
       CHECK(GetSSLInfo(&ssl_info));
       if (!CanPool(transport_security_state_, ssl_info, associated_url.host(),
                    gurl.host())) {
-        EnqueueResetStreamFrame(stream_id, request_priority,
-                                ERROR_CODE_REFUSED_STREAM,
-                                "Certificate does not match pushed URL.");
+        EnqueueResetStreamFrame(
+            stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+            SpdyStringPrintf("Rejected pushed stream %d because certificate "
+                             "does not match pushed URL.",
+                             associated_stream_id));
         return;
       }
     }
@@ -1615,17 +1620,19 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   SpdyHeaderBlock::const_iterator it = headers.find(kHttp2MethodHeader);
   if (it == headers.end() ||
       (it->second.compare("GET") != 0 && it->second.compare("HEAD") != 0)) {
-    EnqueueResetStreamFrame(stream_id, request_priority,
-                            ERROR_CODE_REFUSED_STREAM,
-                            "Inadequate request method.");
+    EnqueueResetStreamFrame(
+        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+        SpdyStringPrintf(
+            "Rejected push stream %d due to inadequate request method",
+            associated_stream_id));
     return;
   }
 
   // Insertion fails if there already is a pushed stream with the same path.
   if (!unclaimed_pushed_streams_.insert(gurl, stream_id, time_func_())) {
-    EnqueueResetStreamFrame(stream_id, request_priority,
-                            ERROR_CODE_REFUSED_STREAM,
-                            "Duplicate pushed stream with url: " + gurl.spec());
+    EnqueueResetStreamFrame(
+        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+        "Received duplicate pushed stream with url: " + gurl.spec());
     return;
   }
 
@@ -2489,7 +2496,10 @@ void SpdySession::DoDrainSession(Error err, const SpdyString& description) {
 
 void SpdySession::LogAbandonedStream(SpdyStream* stream, Error status) {
   DCHECK(stream);
-  stream->LogStreamError(status, "Abandoned.");
+  SpdyString description =
+      SpdyStringPrintf("ABANDONED (stream_id=%d): ", stream->stream_id()) +
+      stream->url().spec();
+  stream->LogStreamError(status, description);
   // We don't increment the streams abandoned counter here. If the
   // stream isn't active (i.e., it hasn't written anything to the wire
   // yet) then it's as if it never existed. If it is active, then
@@ -2645,17 +2655,21 @@ void SpdySession::OnRstStream(SpdyStreamId stream_id,
   } else if (error_code == ERROR_CODE_HTTP_1_1_REQUIRED) {
     // TODO(bnc): Record histogram with number of open streams capped at 50.
     if (net_log().IsCapturing()) {
-      it->second->LogStreamError(ERR_HTTP_1_1_REQUIRED,
-                                 "Closing session because server reset stream "
-                                 "with ERR_HTTP_1_1_REQUIRED.");
+      it->second->LogStreamError(
+          ERR_HTTP_1_1_REQUIRED,
+          SpdyStringPrintf(
+              "Closing session because server reset stream with error %s.",
+              ErrorCodeToString(error_code)));
     }
     DoDrainSession(ERR_HTTP_1_1_REQUIRED, "HTTP_1_1_REQUIRED for stream.");
   } else {
     RecordProtocolErrorHistogram(
         PROTOCOL_ERROR_RST_STREAM_FOR_NON_ACTIVE_STREAM);
     if (net_log().IsCapturing()) {
-      it->second->LogStreamError(ERR_SPDY_PROTOCOL_ERROR,
-                                 "Server reset stream.");
+      it->second->LogStreamError(
+          ERR_SPDY_PROTOCOL_ERROR,
+          SpdyStringPrintf("Server reset stream with error %s.",
+                           ErrorCodeToString(error_code)));
     }
     // TODO(mbelshe): Map from Spdy-protocol errors to something sensical.
     //                For now, it doesn't matter much - it is a protocol error.
@@ -2854,7 +2868,9 @@ void SpdySession::OnWindowUpdate(SpdyStreamId stream_id,
     if (delta_window_size < 1) {
       ResetStreamIterator(
           it, ERROR_CODE_FLOW_CONTROL_ERROR,
-          "Received WINDOW_UPDATE with an invalid delta_window_size.");
+          SpdyStringPrintf("Received WINDOW_UPDATE with an invalid "
+                           "delta_window_size %d",
+                           delta_window_size));
       return;
     }
 

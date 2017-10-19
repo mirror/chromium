@@ -38,7 +38,7 @@ class NewCSSAnimation {
         style_rule(style_rule),
         style_rule_version(this->style_rule->Version()) {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(effect);
     visitor->Trace(style_rule);
   }
@@ -67,7 +67,7 @@ class UpdatedCSSAnimation {
         style_rule(style_rule),
         style_rule_version(this->style_rule->Version()) {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(animation);
     visitor->Trace(effect);
     visitor->Trace(style_rule);
@@ -110,6 +110,11 @@ class CSSAnimationUpdate final {
     new_animations_.push_back(NewCSSAnimation(animation_name, name_index,
                                               effect, timing, style_rule));
   }
+  // Returns whether animation has been suppressed and should be filtered during
+  // style application.
+  bool IsSuppressedAnimation(const Animation* animation) const {
+    return suppressed_animations_.Contains(animation);
+  }
   void CancelAnimation(size_t index, const Animation& animation) {
     cancelled_animation_indices_.push_back(index);
     suppressed_animations_.insert(&animation);
@@ -138,6 +143,9 @@ class CSSAnimationUpdate final {
       double reversing_shortening_factor,
       const InertEffect&);
   void UnstartTransition(const PropertyHandle&);
+  bool IsCancelledTransition(const PropertyHandle& property) const {
+    return cancelled_transitions_.Contains(property);
+  }
   void CancelTransition(const PropertyHandle& property) {
     cancelled_transitions_.insert(property);
   }
@@ -170,7 +178,7 @@ class CSSAnimationUpdate final {
    public:
     NewTransition();
     ~NewTransition();
-    void Trace(blink::Visitor* visitor) { visitor->Trace(effect); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(effect); }
 
     PropertyHandle property = HashTraits<blink::PropertyHandle>::EmptyValue();
     RefPtr<const ComputedStyle> from;
@@ -242,7 +250,7 @@ class CSSAnimationUpdate final {
            updated_compositor_keyframes_.IsEmpty();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(new_transitions_);
     visitor->Trace(new_animations_);
     visitor->Trace(suppressed_animations_);

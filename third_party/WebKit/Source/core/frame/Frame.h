@@ -71,7 +71,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
  public:
   virtual ~Frame();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   virtual bool IsLocalFrame() const = 0;
   virtual bool IsRemoteFrame() const = 0;

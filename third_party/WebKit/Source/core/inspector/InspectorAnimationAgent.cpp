@@ -307,6 +307,15 @@ blink::Animation* InspectorAnimationAgent::AnimationClone(
       for (auto& old_keyframe : old_keyframes)
         new_keyframes.push_back(ToStringKeyframe(old_keyframe.get()));
       new_model = StringKeyframeEffectModel::Create(new_keyframes);
+    } else if (old_model->IsAnimatableValueKeyframeEffectModel()) {
+      AnimatableValueKeyframeEffectModel* old_animatable_value_keyframe_model =
+          ToAnimatableValueKeyframeEffectModel(old_model);
+      KeyframeVector old_keyframes =
+          old_animatable_value_keyframe_model->GetFrames();
+      AnimatableValueKeyframeVector new_keyframes;
+      for (auto& old_keyframe : old_keyframes)
+        new_keyframes.push_back(ToAnimatableValueKeyframe(old_keyframe.get()));
+      new_model = AnimatableValueKeyframeEffectModel::Create(new_keyframes);
     } else if (old_model->IsTransitionKeyframeEffectModel()) {
       TransitionKeyframeEffectModel* old_transition_keyframe_model =
           ToTransitionKeyframeEffectModel(old_model);
@@ -559,7 +568,7 @@ double InspectorAnimationAgent::NormalizedStartTime(
                                      1000 * ReferenceTimeline().PlaybackRate();
 }
 
-void InspectorAnimationAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorAnimationAgent) {
   visitor->Trace(inspected_frames_);
   visitor->Trace(css_agent_);
   visitor->Trace(id_to_animation_);

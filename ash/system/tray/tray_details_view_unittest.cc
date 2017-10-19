@@ -123,7 +123,7 @@ class TrayDetailsViewTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     scoped_task_runner_ =
-        std::make_unique<base::ScopedMockTimeMessageLoopTaskRunner>();
+        base::MakeUnique<base::ScopedMockTimeMessageLoopTaskRunner>();
   }
 
   void TearDown() override {

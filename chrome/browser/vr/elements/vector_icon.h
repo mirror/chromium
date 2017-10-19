@@ -5,8 +5,6 @@
 #ifndef CHROME_BROWSER_VR_ELEMENTS_VECTOR_ICON_H_
 #define CHROME_BROWSER_VR_ELEMENTS_VECTOR_ICON_H_
 
-#include "base/macros.h"
-#include "chrome/browser/vr/elements/textured_element.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace gfx {
@@ -17,29 +15,11 @@ struct VectorIcon;
 
 namespace vr {
 
-class VectorIconTexture;
-
-class VectorIcon : public TexturedElement {
- public:
-  explicit VectorIcon(int maximum_width_pixels);
-  ~VectorIcon() override;
-
-  void SetColor(SkColor color);
-  void SetIcon(const gfx::VectorIcon& icon);
-
-  static void DrawVectorIcon(gfx::Canvas* canvas,
-                             const gfx::VectorIcon& icon,
-                             float size_px,
-                             const gfx::PointF& corner,
-                             SkColor color);
-
- protected:
-  UiTexture* GetTexture() const override;
-
- private:
-  std::unique_ptr<VectorIconTexture> texture_;
-  DISALLOW_COPY_AND_ASSIGN(VectorIcon);
-};
+void DrawVectorIcon(gfx::Canvas* canvas,
+                    const gfx::VectorIcon& icon,
+                    float size_px,
+                    const gfx::PointF& corner,
+                    SkColor color);
 
 }  // namespace vr
 

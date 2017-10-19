@@ -10,8 +10,8 @@
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
+#include "core/html/HTMLMediaElement.h"
 #include "core/html/media/AutoplayUmaHelper.h"
-#include "core/html/media/HTMLMediaElement.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Assertions.h"
 #include "public/platform/WebMediaPlayer.h"
@@ -334,7 +334,7 @@ bool AutoplayPolicy::ShouldAutoplay() {
   return element_->can_autoplay_ && element_->paused_ && element_->Autoplay();
 }
 
-void AutoplayPolicy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AutoplayPolicy) {
   visitor->Trace(element_);
   visitor->Trace(autoplay_visibility_observer_);
   visitor->Trace(autoplay_uma_helper_);

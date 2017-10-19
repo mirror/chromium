@@ -19,12 +19,9 @@ using testing::_;
 
 namespace {
 
-constexpr char kFakeActiveDirectoryPrefix[] = "fake-prefix";
-constexpr char kFakeFederationUrl[] = "http://example.com/adfs/ls/awesome.aspx";
-
 class MockAuthDelegateNonStrict : public ArcSupportHost::AuthDelegate {
  public:
-  MOCK_METHOD0(OnAuthSucceeded, void());
+  MOCK_METHOD1(OnAuthSucceeded, void(const std::string& auth_code));
   MOCK_METHOD1(OnAuthFailed, void(const std::string& error_msg));
   MOCK_METHOD0(OnAuthRetryClicked, void());
 };
@@ -101,13 +98,6 @@ class ArcSupportHostTest : public testing::Test {
     return error_delegate_.get();
   }
 
-  void ShowAuthPage() {
-    // Currently there is only Active Directory sign-in that provides an
-    // authorization inside the OptIn flow.
-    support_host()->ShowActiveDirectoryAuth(GURL(kFakeFederationUrl),
-                                            kFakeActiveDirectoryPrefix);
-  }
-
  private:
   // Fake as if the current testing thread is UI thread.
   content::TestBrowserThreadBundle bundle_;
@@ -125,13 +115,14 @@ class ArcSupportHostTest : public testing::Test {
 };
 
 TEST_F(ArcSupportHostTest, AuthSucceeded) {
+  constexpr char kFakeCode[] = "fake_code";
   MockAuthDelegate* auth_delegate = CreateMockAuthDelegate();
   support_host()->SetAuthDelegate(auth_delegate);
 
-  ShowAuthPage();
+  support_host()->ShowLso();
 
-  EXPECT_CALL(*auth_delegate, OnAuthSucceeded());
-  fake_arc_support()->EmulateAuthSuccess();
+  EXPECT_CALL(*auth_delegate, OnAuthSucceeded(Eq(kFakeCode)));
+  fake_arc_support()->EmulateAuthSuccess(kFakeCode);
 }
 
 TEST_F(ArcSupportHostTest, AuthFailed) {
@@ -139,7 +130,7 @@ TEST_F(ArcSupportHostTest, AuthFailed) {
   MockAuthDelegate* auth_delegate = CreateMockAuthDelegate();
   support_host()->SetAuthDelegate(auth_delegate);
 
-  ShowAuthPage();
+  support_host()->ShowLso();
 
   EXPECT_CALL(*auth_delegate, OnAuthFailed(kFakeError));
   fake_arc_support()->EmulateAuthFailure(kFakeError);

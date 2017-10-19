@@ -25,7 +25,7 @@ enum DocumentReadyState { "loading", "interactive", "complete" };
 
 
 // https://w3c.github.io/page-visibility/#visibility-states-and-the-visibilitystate-enum
-enum VisibilityState { "hidden", "visible", "prerender"};
+enum VisibilityState { "hidden", "visible", "prerender", "unloaded" };
 
 // https://wicg.github.io/cors-rfc1918/#feature-detect
 enum AddressSpace { "local", "private", "public" };
@@ -144,21 +144,12 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     // HTML obsolete features
     // https://html.spec.whatwg.org/#Document-partial
 
+    // FIXME: *Color are on HTMLDocument.
+
     [Measure] readonly attribute HTMLCollection anchors;
     [Measure] readonly attribute HTMLCollection applets;
 
-    [CEReactions, CustomElementCallbacks] attribute [TreatNullAs=EmptyString] DOMString fgColor;
-    [CEReactions, CustomElementCallbacks] attribute [TreatNullAs=EmptyString] DOMString linkColor;
-    [CEReactions, CustomElementCallbacks] attribute [TreatNullAs=EmptyString] DOMString vlinkColor;
-    [CEReactions, CustomElementCallbacks] attribute [TreatNullAs=EmptyString] DOMString alinkColor;
-    [CEReactions, CustomElementCallbacks] attribute [TreatNullAs=EmptyString] DOMString bgColor;
-
-    [MeasureAs=DocumentClear] void clear();
-    [MeasureAs=DocumentCaptureEvents] void captureEvents();
-    [MeasureAs=DocumentReleaseEvents] void releaseEvents();
-
-    // FIXME: all should not be [Replaceable].
-    [Replaceable, MeasureAs=DocumentAll] readonly attribute HTMLAllCollection all;
+    // FIXME: clear(), captureEvents(), releaseEvents() and all are on HTMLDocument.
 
     // CSS Object Model (CSSOM)
     // https://drafts.csswg.org/cssom/#extensions-to-the-document-interface

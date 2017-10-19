@@ -67,7 +67,7 @@ IN_PROC_BROWSER_TEST_F(PDFToPWGRasterBrowserTest, TestFailure) {
 }
 
 IN_PROC_BROWSER_TEST_F(PDFToPWGRasterBrowserTest, TestSuccess) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   base::FilePath test_data_dir;
   ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &test_data_dir));

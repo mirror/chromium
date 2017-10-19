@@ -32,16 +32,16 @@
         <div id="logo-non-white" title="Google"></div>
         <!-- A doodle, if any: its link and image. -->
         <div id="logo-doodle">
-          <button id="logo-doodle-button">
+          <a id="logo-doodle-link">
             <img id="logo-doodle-image"></img>
-          </button>
+          </a>
           <!-- A spinner, visible on dark-themed NTPs, prompting the doodle -->
-          <button id="logo-doodle-notifier">
+          <div id="logo-doodle-notifier">
             <div class="outer ball0"><div class="inner"></div></div>
             <div class="outer ball1"><div class="inner"></div></div>
             <div class="outer ball2"><div class="inner"></div></div>
             <div class="outer ball3"><div class="inner"></div></div>
-          </button>
+          </div>
         </div>
       </div>
       <div id="fakebox">
@@ -49,7 +49,7 @@
         <input id="fakebox-input" autocomplete="off" tabindex="-1" type="url"
             aria-hidden="true">
         <div id="fakebox-cursor"></div>
-        <div id="fakebox-microphone" tabindex="0" hidden></div>
+        <div id="fakebox-microphone" tabindex="1" hidden></div>
       </div>
     </div>
     <div id="most-visited">
@@ -60,9 +60,9 @@
         <span id="mv-msg"></span>
         <!-- Links in the notification. -->
         <span id="mv-notice-links">
-          <span id="mv-undo" tabindex="0"></span>
-          <span id="mv-restore" tabindex="0"></span>
-          <div id="mv-notice-x" tabindex="0"></div>
+          <span id="mv-undo" tabindex="2"></span>
+          <span id="mv-restore" tabindex="2"></span>
+          <div id="mv-notice-x" tabindex="2"></div>
         </span>
       </div>
     </div>

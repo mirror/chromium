@@ -50,9 +50,7 @@ class ScheduledNavigation
   bool IsLocationChange() const { return is_location_change_; }
   std::unique_ptr<UserGestureIndicator> CreateUserGestureIndicator();
 
-  virtual void Trace(blink::Visitor* visitor) {
-    visitor->Trace(origin_document_);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(origin_document_); }
 
  protected:
   void ClearUserGesture() { user_gesture_token_ = nullptr; }

@@ -67,6 +67,10 @@ DataReductionProxyConfigValues* TestDataReductionProxyConfig::config_values() {
   return config_values_.get();
 }
 
+void TestDataReductionProxyConfig::ResetLoFiStatusForTest() {
+  lofi_off_ = false;
+}
+
 void TestDataReductionProxyConfig::SetTickClock(base::TickClock* tick_clock) {
   tick_clock_ = tick_clock;
 }
@@ -126,6 +130,10 @@ MockDataReductionProxyConfig::MockDataReductionProxyConfig(
                                    event_creator) {}
 
 MockDataReductionProxyConfig::~MockDataReductionProxyConfig() {
+}
+
+void MockDataReductionProxyConfig::ResetLoFiStatusForTest() {
+  lofi_off_ = false;
 }
 
 }  // namespace data_reduction_proxy

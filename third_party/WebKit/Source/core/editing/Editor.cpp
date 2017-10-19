@@ -28,6 +28,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/CSSPropertyNames.h"
+#include "core/EventNames.h"
 #include "core/clipboard/DataObject.h"
 #include "core/clipboard/DataTransfer.h"
 #include "core/clipboard/Pasteboard.h"
@@ -65,7 +66,6 @@
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
-#include "core/event_names.h"
 #include "core/events/ClipboardEvent.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/TextEvent.h"
@@ -339,13 +339,13 @@ bool Editor::CanCut() const {
 
 static HTMLImageElement* ImageElementFromImageDocument(Document* document) {
   if (!document)
-    return nullptr;
+    return 0;
   if (!document->IsImageDocument())
-    return nullptr;
+    return 0;
 
   HTMLElement* body = document->body();
   if (!body)
-    return nullptr;
+    return 0;
 
   return ToHTMLImageElementOrNull(body->firstChild());
 }
@@ -1055,18 +1055,14 @@ bool Editor::InsertTextWithoutSendingTextEvent(
   if (!selection.IsContentEditable())
     return false;
 
-  EditingState editing_state;
   // Insert the text
   TypingCommand::InsertText(
       *selection.Start().GetDocument(), text, selection.AsSelection(),
       select_inserted_text ? TypingCommand::kSelectInsertedText : 0,
-      &editing_state,
       triggering_event && triggering_event->IsComposition()
           ? TypingCommand::kTextCompositionConfirm
           : TypingCommand::kTextCompositionNone,
       false, input_type);
-  if (editing_state.IsAborted())
-    return false;
 
   // Reveal the current selection
   if (LocalFrame* edited_frame = selection.Start().GetDocument()->GetFrame()) {
@@ -1165,7 +1161,7 @@ void Editor::Cut(EditorCommandSource source) {
   }
 }
 
-void Editor::Copy(EditorCommandSource) {
+void Editor::Copy(EditorCommandSource source) {
   if (TryDHTMLCopy())
     return;  // DHTML did the whole operation
   if (!CanCopy())
@@ -1176,6 +1172,10 @@ void Editor::Copy(EditorCommandSource) {
   // |tryDHTMLCopy| dispatches copy event, which may make layout dirty, but
   // we need clean layout to obtain the selected content.
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  if (source == kCommandFromMenuOrKeyBinding &&
+      !GetFrameSelection().SelectionHasFocus())
+    return;
 
   if (EnclosingTextControl(
           GetFrameSelection().ComputeVisibleSelectionInDOMTree().Start())) {
@@ -1825,7 +1825,7 @@ void Editor::ReplaceSelection(const String& text) {
                            InputEvent::InputType::kInsertReplacementText);
 }
 
-void Editor::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Editor) {
   visitor->Trace(frame_);
   visitor->Trace(last_edit_command_);
   visitor->Trace(undo_stack_);

@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "build/build_config.h"
@@ -16,8 +15,6 @@
 #include "content/browser/compositor/surface_utils.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ui/compositor/compositor.h"
-#include "ui/compositor/compositor_switches.h"
-#include "ui/gl/gl_implementation.h"
 
 namespace content {
 
@@ -29,10 +26,6 @@ NoTransportImageTransportFactory::NoTransportImageTransportFactory()
   // The context factory created here is for unit tests, thus using a higher
   // refresh rate to spend less time waiting for BeginFrames.
   context_factory_.SetUseFastRefreshRateForTests();
-
-  const auto* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnablePixelOutputInTests))
-    disable_null_draw_ = std::make_unique<gl::DisableNullDrawGLBindings>();
 }
 
 NoTransportImageTransportFactory::~NoTransportImageTransportFactory() {
@@ -57,5 +50,8 @@ viz::GLHelper* NoTransportImageTransportFactory::GetGLHelper() {
   }
   return gl_helper_.get();
 }
+
+void NoTransportImageTransportFactory::SetGpuChannelEstablishFactory(
+    gpu::GpuChannelEstablishFactory* factory) {}
 
 }  // namespace content

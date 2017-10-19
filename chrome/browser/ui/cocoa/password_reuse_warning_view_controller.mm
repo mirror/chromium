@@ -7,7 +7,7 @@
 #import "base/mac/scoped_nsobject.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #import "chrome/browser/ui/cocoa/chrome_style.h"
-#import "chrome/browser/ui/cocoa/constrained_window/constrained_window_button.h"
+#include "chrome/browser/ui/cocoa/constrained_window/constrained_window_button.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_control_utils.h"
 #include "chrome/browser/ui/cocoa/key_equivalent_constants.h"
 #include "chrome/browser/ui/cocoa/l10n_util.h"
@@ -33,9 +33,7 @@ constexpr CGFloat kBaselineAdjust = 1;
 }  // namespace
 
 @interface PasswordReuseWarningViewController () {
-  PasswordReuseWarningDialogCocoa* owner_;  // weak.
-
-  // UI elements.
+  // UI elements
   base::scoped_nsobject<NSBox> box_;
   base::scoped_nsobject<NSTextField> titleField_;
   base::scoped_nsobject<NSImageView> iconView_;
@@ -46,7 +44,10 @@ constexpr CGFloat kBaselineAdjust = 1;
 
 @end
 
-@implementation PasswordReuseWarningViewController
+@implementation PasswordReuseWarningViewController {
+  base::scoped_nsobject<NSWindow> window_;
+  PasswordReuseWarningDialogCocoa* owner_;
+}
 
 - (instancetype)initWithOwner:(PasswordReuseWarningDialogCocoa*)owner {
   if ((self = [super init])) {
@@ -168,11 +169,6 @@ constexpr CGFloat kBaselineAdjust = 1;
 
 - (void)ignore:(id)sender {
   owner_->OnIgnore();
-}
-
-- (void)cancelOperation:(id)sender {
-  DCHECK(owner_);
-  owner_->Close();
 }
 
 @end

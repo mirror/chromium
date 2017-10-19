@@ -6,7 +6,6 @@
 
 #include <objbase.h>
 #include <shobjidl.h>
-#include <wrl/client.h>
 
 #include "base/macros.h"
 #include "base/win/scoped_gdi_object.h"
@@ -218,7 +217,7 @@ class LocalProcessWindowFinder : public BaseWindowFinder {
   HWND result_;
 
   // Only used on Win10+.
-  Microsoft::WRL::ComPtr<IVirtualDesktopManager> virtual_desktop_manager_;
+  base::win::ScopedComPtr<IVirtualDesktopManager> virtual_desktop_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(LocalProcessWindowFinder);
 };

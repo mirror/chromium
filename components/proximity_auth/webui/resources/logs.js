@@ -17,30 +17,19 @@ Logs = {
       WebUI.clearLogs();
     };
 
-    var saveLogsButton = document.getElementById('save-logs-button');
-    saveLogsButton.onclick = () => {
-      this.saveLogs();
+    var copyLogsButton = document.getElementById('copy-logs-button');
+    copyLogsButton.onclick = () => {
+      this.copyLogsToClipboard();
     };
 
     WebUI.getLogMessages();
   },
 
-  saveLogs: function() {
-    var blob = new Blob(
-        [document.getElementById('logs-list').innerText],
-        {type: 'text/plain;charset=utf-8'});
-    var url = URL.createObjectURL(blob);
-
-    var anchorEl = document.createElement('a');
-    anchorEl.href = url;
-    anchorEl.download = 'proximity_auth_logs_' + new Date().toJSON() + '.txt';
-    document.body.appendChild(anchorEl);
-    anchorEl.click();
-
-    window.setTimeout(function() {
-      document.body.removeChild(anchorEl);
-      window.URL.revokeObjectURL(url);
-    }, 0);
+  copyLogsToClipboard: function() {
+    window.getSelection().selectAllChildren(
+        document.getElementById('logs-list'));
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
   },
 };
 

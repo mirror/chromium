@@ -87,8 +87,6 @@ class TestGpuService : public mojom::GpuService {
   void RequestCompleteGpuInfo(
       RequestCompleteGpuInfoCallback callback) override {}
 
-  void RequestHDRStatus(RequestHDRStatusCallback callback) override {}
-
   void LoadedShader(const std::string& key, const std::string& data) override {}
 
   void DestroyingVideoSurface(

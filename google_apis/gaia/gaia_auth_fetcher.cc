@@ -209,6 +209,10 @@ void GaiaAuthFetcher::SetPendingFetch(bool pending_fetch) {
   fetch_pending_ = pending_fetch;
 }
 
+void GaiaAuthFetcher::SetLogoutHeaders(const std::string& headers) {
+  logout_headers_ = headers;
+}
+
 void GaiaAuthFetcher::CancelRequest() {
   fetcher_.reset();
   fetch_pending_ = false;
@@ -895,7 +899,7 @@ void GaiaAuthFetcher::StartLogOut() {
             }
           }
         })");
-  CreateAndStartGaiaFetcher(std::string(), std::string(), logout_gurl_,
+  CreateAndStartGaiaFetcher(std::string(), logout_headers_, logout_gurl_,
                             net::LOAD_NORMAL, traffic_annotation);
 }
 

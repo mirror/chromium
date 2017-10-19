@@ -25,8 +25,7 @@ void ComputeChunkBoundsAndOpaqueness(const DisplayItemList& display_items,
     SkRegion known_to_be_opaque_region;
     for (const DisplayItem& item : display_items.ItemsInPaintChunk(chunk)) {
       bounds.Unite(FloatRect(item.Client().VisualRect()));
-      if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() ||
-          !item.IsDrawing())
+      if (!item.IsDrawing())
         continue;
       const auto& drawing = static_cast<const DrawingDisplayItem&>(item);
       if (drawing.GetPaintRecord() && drawing.KnownToBeOpaque()) {
@@ -53,7 +52,7 @@ PaintArtifact::PaintArtifact(DisplayItemList display_items,
                              Vector<PaintChunk> paint_chunks)
     : display_item_list_(std::move(display_items)),
       paint_chunks_(std::move(paint_chunks)) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
     ComputeChunkBoundsAndOpaqueness(display_item_list_, paint_chunks_);
 }
 

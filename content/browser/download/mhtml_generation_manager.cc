@@ -112,16 +112,15 @@ class MHTMLGenerationManager::Job : public RenderProcessHostObserver {
       MhtmlSaveStatus save_status,
       const std::string& boundary,
       base::File file,
-      const std::vector<MHTMLExtraDataPart>& extra_data_parts);
+      const MHTMLExtraPartsImpl* extra_parts);
   void AddFrame(RenderFrameHost* render_frame_host);
 
   // If we have any extra MHTML parts to write out, write them into the file
   // while on the file thread.  Returns true for success, or if there is no data
   // to write.
-  static bool WriteExtraDataParts(
-      const std::string& boundary,
-      base::File& file,
-      const std::vector<MHTMLExtraDataPart>& extra_data_parts);
+  static bool WriteExtraDataParts(const std::string& boundary,
+                                  base::File& file,
+                                  const MHTMLExtraPartsImpl* extra_parts);
 
   // Writes the footer into the MHTML file.  Returns false for faiulre.
   static bool WriteFooter(const std::string& boundary, base::File& file);
@@ -183,7 +182,7 @@ class MHTMLGenerationManager::Job : public RenderProcessHostObserver {
   bool is_finished_;
 
   // Any extra data parts that should be emitted into the output MHTML.
-  std::vector<MHTMLExtraDataPart> extra_data_parts_;
+  MHTMLExtraPartsImpl* extra_parts_;
 
   // RAII helper for registering this Job as a RenderProcessHost observer.
   ScopedObserver<RenderProcessHost, MHTMLGenerationManager::Job>
@@ -216,10 +215,8 @@ MHTMLGenerationManager::Job::Job(int job_id,
              ->parent() == nullptr);
 
   // Save off any extra data.
-  auto* extra_parts = static_cast<MHTMLExtraPartsImpl*>(
+  extra_parts_ = static_cast<MHTMLExtraPartsImpl*>(
       MHTMLExtraParts::FromWebContents(web_contents));
-  if (extra_parts)
-    extra_data_parts_ = extra_parts->parts();
 }
 
 MHTMLGenerationManager::Job::~Job() {
@@ -392,7 +389,7 @@ void MHTMLGenerationManager::Job::CloseFile(
           save_status,
           (save_status == MhtmlSaveStatus::SUCCESS ? mhtml_boundary_marker_
                                                    : std::string()),
-          base::Passed(&browser_file_), base::Passed(&extra_data_parts_)),
+          base::Passed(&browser_file_), extra_parts_),
       callback);
 }
 
@@ -442,7 +439,7 @@ MHTMLGenerationManager::Job::FinalizeAndCloseFileOnFileThread(
     MhtmlSaveStatus save_status,
     const std::string& boundary,
     base::File file,
-    const std::vector<MHTMLExtraDataPart>& extra_data_parts) {
+    const MHTMLExtraPartsImpl* extra_parts) {
   DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
 
   // If no previous error occurred the boundary should have been provided.
@@ -452,7 +449,7 @@ MHTMLGenerationManager::Job::FinalizeAndCloseFileOnFileThread(
     DCHECK(!boundary.empty());
 
     // Write the extra data into a part of its own, if we have any.
-    if (!WriteExtraDataParts(boundary, file, extra_data_parts)) {
+    if (!WriteExtraDataParts(boundary, file, extra_parts)) {
       save_status = MhtmlSaveStatus::FILE_WRITTING_ERROR;
     }
 
@@ -478,9 +475,13 @@ MHTMLGenerationManager::Job::FinalizeAndCloseFileOnFileThread(
 bool MHTMLGenerationManager::Job::WriteExtraDataParts(
     const std::string& boundary,
     base::File& file,
-    const std::vector<MHTMLExtraDataPart>& extra_data_parts) {
+    const MHTMLExtraPartsImpl* extra_parts) {
   DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
   // Don't write an extra data part if there is none.
+  if (extra_parts == nullptr)
+    return true;
+
+  const std::vector<MHTMLExtraDataPart>& extra_data_parts(extra_parts->parts());
   if (extra_data_parts.empty())
     return true;
 
@@ -488,7 +489,7 @@ bool MHTMLGenerationManager::Job::WriteExtraDataParts(
 
   // For each extra part, serialize that part and add to our accumulator
   // string.
-  for (const auto& part : extra_data_parts) {
+  for (auto part : extra_data_parts) {
     // Write a newline, then a boundary, a newline, then the content
     // location, a newline, the content type, a newline, extra_headers,
     // two newlines, the body, and end with a newline.

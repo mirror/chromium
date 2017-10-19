@@ -67,7 +67,7 @@ class MIDIInput final : public MIDIPort {
                           size_t length,
                           double time_stamp);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   void AddedEventListener(const AtomicString& event_type,

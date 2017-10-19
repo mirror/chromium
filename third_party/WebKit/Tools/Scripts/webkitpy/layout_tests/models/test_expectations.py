@@ -278,7 +278,7 @@ class TestExpectationLine(object):
 
     # FIXME: Update the original specifiers and remove this once the old syntax is gone.
     _configuration_tokens_list = [
-        'Mac', 'Mac10.10', 'Mac10.11', 'Retina', 'Mac10.12', 'Mac10.13',
+        'Mac', 'Mac10.9', 'Mac10.10', 'Mac10.11', 'Retina', 'Mac10.12',
         'Win', 'Win7', 'Win10',
         'Linux',
         'Android',
@@ -747,8 +747,6 @@ class TestExpectationsModel(object):
 
         if SKIP in expectation_line.parsed_expectations:
             self._result_type_to_tests[SKIP].add(test)
-        elif TIMEOUT in expectation_line.parsed_expectations:
-            self._result_type_to_tests[TIMEOUT].add(test)
         elif expectation_line.parsed_expectations == set([PASS]):
             self._result_type_to_tests[PASS].add(test)
         elif expectation_line.is_flaky():
@@ -928,7 +926,6 @@ class TestExpectations(object):
         'pass': PASS,
         'fail': FAIL,
         'flaky': FLAKY,
-        'timeout': TIMEOUT,
     }
 
     @classmethod

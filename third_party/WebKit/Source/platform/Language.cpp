@@ -90,7 +90,7 @@ void OverrideUserPreferredLanguagesForTesting(
   canonicalized.ReserveCapacity(override.size());
   for (const auto& lang : override)
     canonicalized.push_back(CanonicalizeLanguageIdentifier(lang));
-  Locale::ResetDefaultLocale();
+  Locale::ResetDefautlLocale();
 }
 
 AtomicString DefaultLanguage() {

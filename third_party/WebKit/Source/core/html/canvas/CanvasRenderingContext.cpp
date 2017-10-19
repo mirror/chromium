@@ -37,9 +37,7 @@ CanvasRenderingContext::CanvasRenderingContext(
     CanvasRenderingContextHost* host,
     const CanvasContextCreationAttributes& attrs)
     : host_(host),
-      color_params_(kLegacyCanvasColorSpace,
-                    kRGBA8CanvasPixelFormat,
-                    kNonOpaque),
+      color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
       creation_attributes_(attrs) {
   color_params_.SetCanvasColorSpace(kLegacyCanvasColorSpace);
   if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
@@ -59,15 +57,11 @@ CanvasRenderingContext::CanvasRenderingContext(
 
     // TODO(ccameron): linearPixelMath needs to be propagated here.
   }
-
-  if (!creation_attributes_.alpha()) {
-    color_params_.SetOpacityMode(kOpaque);
-  }
-
   // Make m_creationAttributes reflect the effective colorSpace, pixelFormat and
   // linearPixelMath rather than the requested one.
   creation_attributes_.setColorSpace(ColorSpaceAsString());
   creation_attributes_.setPixelFormat(PixelFormatAsString());
+  creation_attributes_.setLinearPixelMath(color_params_.LinearPixelMath());
 }
 
 WTF::String CanvasRenderingContext::ColorSpaceAsString() const {
@@ -195,7 +189,7 @@ bool CanvasRenderingContext::WouldTaintOrigin(
   return taint_origin;
 }
 
-void CanvasRenderingContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CanvasRenderingContext) {
   visitor->Trace(host_);
 }
 

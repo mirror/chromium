@@ -76,7 +76,7 @@ XSSAuditorDelegate::XSSAuditorDelegate(Document* document)
   DCHECK(document_);
 }
 
-void XSSAuditorDelegate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XSSAuditorDelegate) {
   visitor->Trace(document_);
 }
 

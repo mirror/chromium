@@ -55,7 +55,6 @@ void LogError(NSString* format, ...) {
 - (void)run;
 - (void)setStandardOutput:(id)output;
 - (void)setStandardError:(id)error;
-- (int)getTerminationStatus;
 @end
 
 @implementation XCRunTask
@@ -84,10 +83,6 @@ void LogError(NSString* format, ...) {
 
 - (void)setStandardError:(id)error {
   [_task setStandardError:error];
-}
-
-- (int)getTerminationStatus {
-  return [_task terminationStatus];
 }
 
 - (void)run {
@@ -225,12 +220,12 @@ void KillSimulator() {
   [task run];
 }
 
-int RunApplication(NSString* app_path,
-                   NSString* xctest_path,
-                   NSString* udid,
-                   NSMutableDictionary* app_env,
-                   NSString* cmd_args,
-                   NSMutableArray* tests_filter) {
+void RunApplication(NSString* app_path,
+                    NSString* xctest_path,
+                    NSString* udid,
+                    NSMutableDictionary* app_env,
+                    NSString* cmd_args,
+                    NSMutableArray* tests_filter) {
   NSString* tempFilePath = [NSTemporaryDirectory()
       stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
   [[NSFileManager defaultManager] createFileAtPath:tempFilePath
@@ -316,7 +311,6 @@ int RunApplication(NSString* app_path,
     [task setStandardError:stderr_pipe];
   }
   [task run];
-  return [task getTerminationStatus];
 }
 
 int main(int argc, char* const argv[]) {
@@ -441,8 +435,7 @@ int main(int argc, char* const argv[]) {
     exit(kExitInvalidArguments);
   }
 
-  int return_code = RunApplication(app_path, xctest_path, udid, app_env,
-                                   cmd_args, tests_filter);
+  RunApplication(app_path, xctest_path, udid, app_env, cmd_args, tests_filter);
   KillSimulator();
-  return return_code;
+  return kExitSuccess;
 }

@@ -76,14 +76,12 @@ class FetchDataLoaderAsWasmModule final : public FetchDataLoader,
     }
   }
 
-  String DebugName() const override { return "FetchDataLoaderAsWasmModule"; }
-
   void Cancel() override {
     consumer_->Cancel();
     return AbortCompilation();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(consumer_);
     visitor->Trace(client_);
     FetchDataLoader::Trace(visitor);

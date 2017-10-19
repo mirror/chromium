@@ -8,7 +8,6 @@
 
 #include "base/at_exit.h"
 #include "base/command_line.h"
-#include "base/message_loop/message_loop.h"
 #include "components/exo/wayland/clients/simple.h"
 
 int main(int argc, char* argv[]) {
@@ -19,7 +18,6 @@ int main(int argc, char* argv[]) {
   if (!params.FromCommandLine(*command_line))
     return 1;
 
-  base::MessageLoopForUI message_loop;
   exo::wayland::clients::Simple client;
   if (!client.Init(params))
     return 1;

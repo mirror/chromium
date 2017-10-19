@@ -58,17 +58,6 @@ class PDFEngine {
     PERMISSION_PRINT_HIGH_QUALITY,
   };
 
-  struct DocumentFeatures {
-    // Number of pages in document.
-    size_t page_count = 0;
-    // Whether any files are attached to document (see "File Attachment
-    // Annotations" on page 637 of PDF Reference 1.7).
-    bool has_attachments = false;
-    // Whether the document is linearized (see Appendix F "Linearized PDF" of
-    // PDF Reference 1.7).
-    bool is_linearized = false;
-  };
-
   // The interface that's provided to the rendering engine.
   class Client {
    public:
@@ -150,6 +139,9 @@ class PDFEngine {
                             const void* data,
                             int length) = 0;
 
+    // Pops up a file selection dialog and returns the result.
+    virtual std::string ShowFileSelectionDialog() = 0;
+
     // Creates and returns new URL loader for partial document requests.
     virtual pp::URLLoader CreateURLLoader() = 0;
 
@@ -175,8 +167,7 @@ class PDFEngine {
     virtual void DocumentPaintOccurred() = 0;
 
     // Notifies the client that the document has finished loading.
-    virtual void DocumentLoadComplete(
-        const DocumentFeatures& document_features) = 0;
+    virtual void DocumentLoadComplete(int page_count) = 0;
 
     // Notifies the client that the document has failed to load.
     virtual void DocumentLoadFailed() = 0;

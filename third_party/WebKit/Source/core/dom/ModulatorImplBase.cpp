@@ -42,7 +42,7 @@ ReferrerPolicy ModulatorImplBase::GetReferrerPolicy() {
   return GetExecutionContext()->GetReferrerPolicy();
 }
 
-SecurityOrigin* ModulatorImplBase::GetSecurityOriginForFetch() {
+SecurityOrigin* ModulatorImplBase::GetSecurityOrigin() {
   return GetExecutionContext()->GetSecurityOrigin();
 }
 
@@ -251,7 +251,7 @@ ScriptValue ModulatorImplBase::ExecuteModule(
   return ScriptValue();
 }
 
-void ModulatorImplBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModulatorImplBase) {
   Modulator::Trace(visitor);
   visitor->Trace(map_);
   visitor->Trace(loader_registry_);

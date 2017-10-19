@@ -100,7 +100,6 @@ void RecordNotifyEvent(const std::string& event_name,
 }
 
 void RecordShouldTriggerHelpUI(const base::Feature& feature,
-                               const FeatureConfig& feature_config,
                                const ConditionValidator::Result& result) {
   // Records the user action.
   std::string name = std::string(kShouldTriggerHelpUIHistogram)
@@ -111,22 +110,15 @@ void RecordShouldTriggerHelpUI(const base::Feature& feature,
   // Total count histogram, used to compute the percentage of each failure type,
   // in addition to a user action for whether the result was to trigger or not.
   if (result.NoErrors()) {
-    LogTriggerHelpUIResult(name,
-                           feature_config.tracking_only
-                               ? TriggerHelpUIResult::SUCCESS_TRACKING_ONLY
-                               : TriggerHelpUIResult::SUCCESS);
-    std::string action_name = "InProductHelp.ShouldTriggerHelpUIResult.";
-    action_name.append(feature_config.tracking_only ? "WouldHaveTriggered"
-                                                    : "Triggered");
-    action_name.append(".");
-    action_name.append(feature.name);
-    base::RecordComputedAction(action_name);
+    LogTriggerHelpUIResult(name, TriggerHelpUIResult::SUCCESS);
+    std::string name = "InProductHelp.ShouldTriggerHelpUIResult.Triggered.";
+    name.append(feature.name);
+    base::RecordComputedAction(name);
   } else {
     LogTriggerHelpUIResult(name, TriggerHelpUIResult::FAILURE);
-    std::string action_name =
-        "InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.";
-    action_name.append(feature.name);
-    base::RecordComputedAction(action_name);
+    std::string name = "InProductHelp.ShouldTriggerHelpUIResult.NotTriggered.";
+    name.append(feature.name);
+    base::RecordComputedAction(name);
   }
 
   // Histogram about the failure reasons.

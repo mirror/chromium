@@ -98,7 +98,6 @@ class CONTENT_EXPORT DelegatedFrameHost
                             base::TimeTicks start_time) override;
   void OnCompositingEnded(ui::Compositor* compositor) override;
   void OnCompositingLockStateChanged(ui::Compositor* compositor) override;
-  void OnCompositingChildResizing(ui::Compositor* compositor) override;
   void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
   // ui::CompositorVSyncManager::Observer implementation.
@@ -215,10 +214,10 @@ class CONTENT_EXPORT DelegatedFrameHost
 
   bool ShouldSkipFrame(const gfx::Size& size_in_dip);
 
-  // Called when the renderer's surface or something that it embeds has damage.
-  // Usually when there is damage we should give a copy to |frame_subscriber_|.
-  void OnAggregatedSurfaceDamage(const viz::LocalSurfaceId& id,
-                                 const gfx::Rect& aggregated_damage_rect);
+  // Called when surface is being scheduled for a draw. This is provided as a
+  // callback to |support_|.
+  void WillDrawSurface(const viz::LocalSurfaceId& id,
+                       const gfx::Rect& damage_rect);
 
   // Lazily grab a resize lock if the aura window size doesn't match the current
   // frame size, to give time to the renderer.

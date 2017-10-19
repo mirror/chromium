@@ -948,9 +948,7 @@ public class Tab
 
         // Start by assuming the current theme color is that one that should be used. This will
         // either be transparent, the last theme color, or the color restored from TabState.
-        int themeColor = ColorUtils.isValidThemeColor(mThemeColor) || mThemeColor == 0
-                ? mThemeColor
-                : getDefaultThemeColor();
+        int themeColor = mThemeColor;
 
         // Only use the web contents for the theme color if it is known to have changed, This
         // corresponds to the didChangeThemeColor in WebContentsObserver.
@@ -1326,6 +1324,22 @@ public class Tab
             } else {
                 setContentViewCore(contentViewCore);
             }
+
+            mContentViewCore.addImeEventObserver(new ImeEventObserver() {
+                @Override
+                public void onImeEvent() {
+                    // Some text was set in the page. Don't reuse it if a tab is
+                    // open from the same external application, we might lose some
+                    // user data.
+                    mAppAssociatedWith = null;
+                }
+
+                @Override
+                public void onNodeAttributeUpdated(boolean editable, boolean password) {
+                    if (getFullscreenManager() == null) return;
+                    updateFullscreenEnabledState();
+                }
+            });
 
             if (!creatingWebContents && webContents.isLoadingToDifferentDocument()) {
                 didStartPageLoad(webContents.getVisibleUrl(), false);
@@ -1738,22 +1752,6 @@ public class Tab
             // when it loads. This is not the default behavior for embedded
             // web views.
             mContentViewCore.setShouldSetAccessibilityFocusOnPageLoad(true);
-
-            mContentViewCore.addImeEventObserver(new ImeEventObserver() {
-                @Override
-                public void onImeEvent() {
-                    // Some text was set in the page. Don't reuse it if a tab is
-                    // open from the same external application, we might lose some
-                    // user data.
-                    mAppAssociatedWith = null;
-                }
-
-                @Override
-                public void onNodeAttributeUpdated(boolean editable, boolean password) {
-                    if (getFullscreenManager() == null) return;
-                    updateFullscreenEnabledState();
-                }
-            });
 
             setInterceptNavigationDelegate(mDelegateFactory.createInterceptNavigationDelegate(
                     this));

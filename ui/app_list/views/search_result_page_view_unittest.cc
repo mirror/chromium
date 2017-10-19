@@ -133,7 +133,7 @@ class SearchResultPageViewTest : public views::ViewsTestBase,
       relevance -= 1.0;
       for (int i = 0; i < data.second; ++i) {
         std::unique_ptr<TestSearchResult> result =
-            std::make_unique<TestSearchResult>();
+            base::MakeUnique<TestSearchResult>();
         result->set_display_type(data.first);
         result->set_relevance(relevance);
         results->Add(std::move(result));

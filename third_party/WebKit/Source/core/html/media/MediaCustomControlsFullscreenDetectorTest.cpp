@@ -4,11 +4,11 @@
 
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 
-#include "core/event_type_names.h"
-#include "core/html/media/HTMLVideoElement.h"
+#include "core/EventTypeNames.h"
+#include "core/html/HTMLVideoElement.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/geometry/IntRect.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/runtime_enabled_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -23,18 +23,21 @@ struct VideoTestParam {
 
 }  // anonymous namespace
 
-class MediaCustomControlsFullscreenDetectorTest
-    : public ::testing::Test,
-      private ScopedVideoFullscreenDetectionForTest {
- public:
-  MediaCustomControlsFullscreenDetectorTest()
-      : ScopedVideoFullscreenDetectionForTest(true) {}
-
+class MediaCustomControlsFullscreenDetectorTest : public ::testing::Test {
  protected:
   void SetUp() override {
+    original_video_fullscreen_detection_enabled_ =
+        RuntimeEnabledFeatures::VideoFullscreenDetectionEnabled();
+
+    RuntimeEnabledFeatures::SetVideoFullscreenDetectionEnabled(true);
 
     page_holder_ = DummyPageHolder::Create();
     new_page_holder_ = DummyPageHolder::Create();
+  }
+
+  void TearDown() override {
+    RuntimeEnabledFeatures::SetVideoFullscreenDetectionEnabled(
+        original_video_fullscreen_detection_enabled_);
   }
 
   HTMLVideoElement* VideoElement() const {
@@ -79,6 +82,8 @@ class MediaCustomControlsFullscreenDetectorTest
   std::unique_ptr<DummyPageHolder> page_holder_;
   std::unique_ptr<DummyPageHolder> new_page_holder_;
   Persistent<HTMLVideoElement> video_;
+
+  bool original_video_fullscreen_detection_enabled_;
 };
 
 TEST_F(MediaCustomControlsFullscreenDetectorTest, computeIsDominantVideo) {

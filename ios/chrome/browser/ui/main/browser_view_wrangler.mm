@@ -21,7 +21,6 @@
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
-#import "ios/web/public/web_state/web_state.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -264,8 +263,8 @@
   GURL activeURL;
   Tab* currentTab = [self.currentBVC tabModel].currentTab;
   // Set the active URL if there's a current tab and the current BVC is not OTR.
-  if (currentTab.webState && self.currentBVC != self.otrBVC) {
-    activeURL = currentTab.webState->GetVisibleURL();
+  if (currentTab && self.currentBVC != self.otrBVC) {
+    activeURL = currentTab.visibleURL;
   }
   [self.deviceSharingManager updateActiveURL:activeURL];
 }

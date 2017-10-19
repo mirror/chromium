@@ -53,7 +53,6 @@ class WorkerFetchContext final : public BaseFetchContext {
       SecurityViolationReportingPolicy) const override;
   bool ShouldBlockFetchAsCredentialedSubresource(const ResourceRequest&,
                                                  const KURL&) const override;
-  bool ShouldLoadNewResource(Resource::Type) const override { return true; }
   ReferrerPolicy GetReferrerPolicy() const override;
   String GetOutgoingReferrer() const override;
   const KURL& Url() const override;
@@ -65,7 +64,7 @@ class WorkerFetchContext final : public BaseFetchContext {
   // FetchContext implementation:
   SecurityOrigin* GetSecurityOrigin() const override;
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                RefPtr<WebTaskRunner>) override;
+                                                WebTaskRunner*) override;
   void PrepareRequest(ResourceRequest&, RedirectType) override;
   bool IsControlledByServiceWorker() const override;
   int ApplicationCacheHostID() const override;
@@ -103,7 +102,7 @@ class WorkerFetchContext final : public BaseFetchContext {
   void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
   RefPtr<WebTaskRunner> GetLoadingTaskRunner() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   WorkerFetchContext(WorkerOrWorkletGlobalScope&,

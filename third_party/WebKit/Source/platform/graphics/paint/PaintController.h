@@ -65,9 +65,7 @@ class PLATFORM_EXPORT PaintController {
     DCHECK(new_display_item_list_.IsEmpty());
   }
 
-  // For SPv1 only.
   void InvalidateAll();
-  bool CacheIsAllInvalid() const;
 
   // These methods are called during painting.u
 
@@ -158,6 +156,7 @@ class PLATFORM_EXPORT PaintController {
   }
 
   bool ClientCacheIsValid(const DisplayItemClient&) const;
+  bool CacheIsEmpty() const { return current_paint_artifact_.IsEmpty(); }
 
   // For micro benchmarking of record time.
   bool DisplayItemConstructionIsDisabled() const {
@@ -183,8 +182,7 @@ class PLATFORM_EXPORT PaintController {
 
   void AppendDebugDrawingAfterCommit(const DisplayItemClient&,
                                      sk_sp<const PaintRecord>,
-                                     const FloatRect& record_bounds,
-                                     const PropertyTreeState*);
+                                     const FloatRect& record_bounds);
 
   void ShowDebugData() const;
 #ifndef NDEBUG
@@ -200,6 +198,7 @@ class PLATFORM_EXPORT PaintController {
 #endif
 
   void SetTracksRasterInvalidations(bool);
+  void SetupRasterUnderInvalidationChecking();
 
   bool LastDisplayItemIsSubsequenceEnd() const;
 
@@ -234,9 +233,6 @@ class PLATFORM_EXPORT PaintController {
  private:
   friend class PaintControllerTestBase;
   friend class PaintControllerPaintTestBase;
-
-  void InvalidateAllForTesting() { InvalidateAllInternal(); }
-  void InvalidateAllInternal();
 
   bool LastDisplayItemIsNoopBegin() const;
 
@@ -293,7 +289,6 @@ class PLATFORM_EXPORT PaintController {
                                     PaintChunk&,
                                     const FloatRect&,
                                     PaintInvalidationReason);
-  void EnsureRasterInvalidationTracking();
   void TrackRasterInvalidation(const DisplayItemClient&,
                                PaintChunk&,
                                PaintInvalidationReason);

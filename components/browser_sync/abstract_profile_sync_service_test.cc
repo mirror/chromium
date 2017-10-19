@@ -146,7 +146,7 @@ ProfileSyncServiceTestHelper::MakeSingletonDeletionChangeRecordList(
 
 AbstractProfileSyncServiceTest::AbstractProfileSyncServiceTest()
     : data_type_thread_("Extra thread") {
-  EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
+  CHECK(temp_dir_.CreateUniqueTempDir());
 }
 
 AbstractProfileSyncServiceTest::~AbstractProfileSyncServiceTest() {
@@ -161,7 +161,7 @@ bool AbstractProfileSyncServiceTest::CreateRoot(ModelType model_type) {
 void AbstractProfileSyncServiceTest::CreateSyncService(
     std::unique_ptr<syncer::SyncClient> sync_client,
     const base::Closure& initialization_success_callback) {
-  ASSERT_TRUE(sync_client);
+  DCHECK(sync_client);
   ProfileSyncService::InitParams init_params =
       profile_sync_service_bundle_.CreateBasicInitParams(
           ProfileSyncService::AUTO_START, std::move(sync_client));

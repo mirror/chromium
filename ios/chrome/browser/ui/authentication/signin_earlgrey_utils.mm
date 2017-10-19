@@ -48,11 +48,6 @@ using chrome_test_util::SecondarySignInButton;
           assertWithMatcher:grey_notNil()];
       break;
   }
-  [[EarlGrey
-      selectElementWithMatcher:grey_allOf(grey_accessibilityID(
-                                              kSigninPromoCloseButtonId),
-                                          grey_sufficientlyVisible(), nil)]
-      assertWithMatcher:grey_notNil()];
 }
 
 + (void)checkSigninPromoNotVisible {

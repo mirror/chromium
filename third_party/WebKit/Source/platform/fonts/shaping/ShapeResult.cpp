@@ -37,7 +37,6 @@
 #include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
@@ -224,19 +223,11 @@ size_t ShapeResult::ByteSize() const {
 }
 
 unsigned ShapeResult::StartIndexForResult() const {
-  const RunInfo& first_run = *runs_.front();
-  if (!Rtl())
-    return first_run.start_index_;
-  unsigned end = first_run.start_index_ + first_run.num_characters_;
-  DCHECK_GE(end, NumCharacters());
-  return end - NumCharacters();
+  return !Rtl() ? runs_.front()->start_index_ : runs_.back()->start_index_;
 }
 
 unsigned ShapeResult::EndIndexForResult() const {
-  const RunInfo& first_run = *runs_.front();
-  if (!Rtl())
-    return first_run.start_index_ + NumCharacters();
-  return first_run.start_index_ + first_run.num_characters_;
+  return StartIndexForResult() + NumCharacters();
 }
 
 RefPtr<ShapeResult> ShapeResult::MutableUnique() const {
@@ -509,9 +500,9 @@ void ShapeResult::ComputeGlyphPositions(ShapeResult::RunInfo* run,
   DCHECK_EQ(is_horizontal_run, run->IsHorizontal());
   const SimpleFontData* current_font_data = run->font_data_.get();
   const hb_glyph_info_t* glyph_infos =
-      hb_buffer_get_glyph_infos(harf_buzz_buffer, nullptr);
+      hb_buffer_get_glyph_infos(harf_buzz_buffer, 0);
   const hb_glyph_position_t* glyph_positions =
-      hb_buffer_get_glyph_positions(harf_buzz_buffer, nullptr);
+      hb_buffer_get_glyph_positions(harf_buzz_buffer, 0);
   const unsigned start_cluster =
       HB_DIRECTION_IS_FORWARD(hb_buffer_get_direction(harf_buzz_buffer))
           ? glyph_infos[start_glyph].cluster
@@ -773,49 +764,6 @@ RefPtr<ShapeResult> ShapeResult::CreateForTabulationCharacters(
       font_data->PlatformData().IsVerticalAnyUpright();
   result->runs_.push_back(std::move(run));
   return result;
-}
-
-void ShapeResult::ToString(StringBuilder* output) const {
-  output->Append("#chars=");
-  output->AppendNumber(num_characters_);
-  output->Append(", #glyphs=");
-  output->AppendNumber(num_glyphs_);
-  output->Append(", dir=");
-  output->AppendNumber(direction_);
-  output->Append(", runs[");
-  output->AppendNumber(runs_.size());
-  output->Append("]{");
-  for (unsigned run_index = 0; run_index < runs_.size(); run_index++) {
-    output->AppendNumber(run_index);
-    const auto& run = *runs_[run_index];
-    output->Append(":{start=");
-    output->AppendNumber(run.start_index_);
-    output->Append(", #chars=");
-    output->AppendNumber(run.num_characters_);
-    output->Append(", dir=");
-    output->AppendNumber(run.direction_);
-    output->Append(", glyphs[");
-    output->AppendNumber(run.glyph_data_.size());
-    output->Append("]{");
-    for (unsigned glyph_index = 0; glyph_index < run.glyph_data_.size();
-         glyph_index++) {
-      output->AppendNumber(glyph_index);
-      const auto& glyph_data = run.glyph_data_[glyph_index];
-      output->Append(":{char=");
-      output->AppendNumber(glyph_data.character_index);
-      output->Append(", glyph=");
-      output->AppendNumber(glyph_data.glyph);
-      output->Append("}");
-    }
-    output->Append("}}");
-  }
-  output->Append("}");
-}
-
-String ShapeResult::ToString() const {
-  StringBuilder output;
-  ToString(&output);
-  return output.ToString();
 }
 
 }  // namespace blink

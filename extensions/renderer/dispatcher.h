@@ -76,6 +76,8 @@ class Dispatcher : public content::RenderThreadObserver,
 
   V8SchemaRegistry* v8_schema_registry() { return v8_schema_registry_.get(); }
 
+  ContentWatcher* content_watcher() { return content_watcher_.get(); }
+
   const std::string& webview_partition_id() { return webview_partition_id_; }
 
   bool activity_logging_enabled() const { return activity_logging_enabled_; }
@@ -155,6 +157,7 @@ class Dispatcher : public content::RenderThreadObserver,
   // RenderThreadObserver implementation:
   bool OnControlMessageReceived(const IPC::Message& message) override;
   void IdleNotification() override;
+  void OnRenderProcessShutdown() override;
 
   void OnActivateExtension(const std::string& extension_id);
   void OnCancelSuspend(const std::string& extension_id);

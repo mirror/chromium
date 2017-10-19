@@ -5,8 +5,7 @@
 #include "platform/graphics/gpu/SharedGpuContext.h"
 
 #include "gpu/command_buffer/client/gles2_interface.h"
-#include "gpu/config/gpu_driver_bug_workaround_type.h"
-#include "gpu/config/gpu_feature_info.h"
+#include "gpu/command_buffer/common/capabilities.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
@@ -112,10 +111,9 @@ bool SharedGpuContext::AllowSoftwareToAcceleratedCanvasUpgrade() {
   this_ptr->CreateContextProviderIfNeeded();
   if (!this_ptr->context_provider_wrapper_)
     return false;
-  return !this_ptr->context_provider_wrapper_->ContextProvider()
-              ->GetGpuFeatureInfo()
-              .IsWorkaroundEnabled(
-                  gpu::DISABLE_SOFTWARE_TO_ACCELERATED_CANVAS_UPGRADE);
+  return this_ptr->context_provider_wrapper_->ContextProvider()
+      ->GetCapabilities()
+      .software_to_accelerated_canvas_upgrade;
 }
 
 }  // blink

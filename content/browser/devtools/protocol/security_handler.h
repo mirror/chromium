@@ -35,8 +35,7 @@ class SecurityHandler : public DevToolsDomainHandler,
 
   // DevToolsDomainHandler overrides
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(RenderProcessHost* process_host,
-                   RenderFrameHostImpl* frame_host) override;
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
 
   // Security::Backend overrides.
   Response Enable() override;

@@ -498,7 +498,8 @@ public class BindingManagerIntegrationTest {
 
         mActivityTestRule.startMainActivityOnBlankPage();
 
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     @After

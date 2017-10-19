@@ -77,7 +77,7 @@ void WrapContentsInDummySpanCommand::DoReapply() {
   ExecuteApply();
 }
 
-void WrapContentsInDummySpanCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WrapContentsInDummySpanCommand) {
   visitor->Trace(element_);
   visitor->Trace(dummy_span_);
   SimpleEditCommand::Trace(visitor);

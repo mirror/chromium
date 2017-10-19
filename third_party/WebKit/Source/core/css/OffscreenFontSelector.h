@@ -16,14 +16,11 @@
 
 namespace blink {
 
-class ExecutionContext;
 class FontDescription;
 
 class CORE_EXPORT OffscreenFontSelector : public FontSelector {
  public:
-  static OffscreenFontSelector* Create(ExecutionContext* context) {
-    return new OffscreenFontSelector(context);
-  }
+  static OffscreenFontSelector* Create() { return new OffscreenFontSelector(); }
   ~OffscreenFontSelector() override;
 
   unsigned Version() const override { return 1; }
@@ -56,14 +53,10 @@ class CORE_EXPORT OffscreenFontSelector : public FontSelector {
   bool IsPlatformFamilyMatchAvailable(const FontDescription&,
                                       const AtomicString& passed_family);
 
-  ExecutionContext* GetExecutionContext() const override {
-    return execution_context_;
-  }
-
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
-  explicit OffscreenFontSelector(ExecutionContext*);
+  explicit OffscreenFontSelector();
 
   void DispatchInvalidationCallbacks();
 
@@ -71,8 +64,6 @@ class CORE_EXPORT OffscreenFontSelector : public FontSelector {
   GenericFontFamilySettings generic_font_family_settings_;
 
   FontFaceCache font_face_cache_;
-
-  Member<ExecutionContext> execution_context_;
 };
 
 }  // namespace blink

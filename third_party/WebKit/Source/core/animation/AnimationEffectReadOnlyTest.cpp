@@ -94,7 +94,7 @@ class TestAnimationEffectReadOnly : public AnimationEffectReadOnly {
     return result;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(event_delegate_);
     AnimationEffectReadOnly::Trace(visitor);
   }

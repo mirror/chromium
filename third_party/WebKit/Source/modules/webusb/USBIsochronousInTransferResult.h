@@ -50,7 +50,7 @@ class USBIsochronousInTransferResult final
     return packets_;
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(data_);
     visitor->Trace(packets_);
   }

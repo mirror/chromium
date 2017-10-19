@@ -19,7 +19,6 @@
 #include "content/browser/service_worker/service_worker_database.pb.h"
 #include "content/browser/service_worker/service_worker_metrics.h"
 #include "content/common/service_worker/service_worker_utils.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/leveldb_chrome.h"
@@ -277,7 +276,7 @@ const char* ServiceWorkerDatabase::StatusToString(
 
 ServiceWorkerDatabase::RegistrationData::RegistrationData()
     : registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId),
-      version_id(blink::mojom::kInvalidServiceWorkerVersionId),
+      version_id(kInvalidServiceWorkerVersionId),
       is_active(false),
       has_fetch_handler(false),
       resources_total_size_bytes(0) {}
@@ -588,7 +587,7 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::WriteRegistration(
   DCHECK(old_registration);
   DCHECK(!resources.empty());
   Status status = LazyOpen(true);
-  old_registration->version_id = blink::mojom::kInvalidServiceWorkerVersionId;
+  old_registration->version_id = kInvalidServiceWorkerVersionId;
   if (status != STATUS_OK)
     return status;
 
@@ -789,7 +788,7 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::DeleteRegistration(
     std::vector<int64_t>* newly_purgeable_resources) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK(deleted_version);
-  deleted_version->version_id = blink::mojom::kInvalidServiceWorkerVersionId;
+  deleted_version->version_id = kInvalidServiceWorkerVersionId;
   Status status = LazyOpen(false);
   if (IsNewOrNonexistentDatabase(status))
     return STATUS_OK;
@@ -1434,7 +1433,7 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::ParseRegistrationData(
   }
   if (data.has_origin_trial_tokens()) {
     const ServiceWorkerOriginTrialInfo& info = data.origin_trial_tokens();
-    blink::TrialTokenValidator::FeatureToTokensMap origin_trial_tokens;
+    TrialTokenValidator::FeatureToTokensMap origin_trial_tokens;
     for (int i = 0; i < info.features_size(); ++i) {
       const auto& feature = info.features(i);
       for (int j = 0; j < feature.tokens_size(); ++j)

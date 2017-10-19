@@ -22,8 +22,7 @@ class DOMHandler : public DevToolsDomainHandler,
   ~DOMHandler() override;
 
   void Wire(UberDispatcher* dispatcher) override;
-  void SetRenderer(RenderProcessHost* process_host,
-                   RenderFrameHostImpl* frame_host) override;
+  void SetRenderFrameHost(RenderFrameHostImpl* host) override;
   Response Disable() override;
 
   Response SetFileInputFiles(

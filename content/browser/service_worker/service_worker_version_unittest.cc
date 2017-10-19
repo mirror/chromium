@@ -5,7 +5,6 @@
 #include "content/browser/service_worker/service_worker_version.h"
 
 #include <stdint.h>
-#include <memory>
 #include <tuple>
 #include <utility>
 
@@ -181,11 +180,9 @@ class ServiceWorkerVersionTest : public testing::Test {
         GURL("https://www.example.com/test/service_worker.js"),
         helper_->context()->storage()->NewVersionId(),
         helper_->context()->AsWeakPtr());
-    EXPECT_EQ(url::Origin(pattern_), version_->script_origin());
     std::vector<ServiceWorkerDatabase::ResourceRecord> records;
-    records.push_back(WriteToDiskCacheSync(
-        helper_->context()->storage(), version_->script_url(), 10,
-        {} /* headers */, "I'm a body", "I'm a meta data"));
+    records.push_back(
+        ServiceWorkerDatabase::ResourceRecord(10, version_->script_url(), 100));
     version_->script_cache_map()->SetResources(records);
     version_->SetMainScriptHttpResponseInfo(
         EmbeddedWorkerTestHelper::CreateHttpResponseInfo());
@@ -223,9 +220,10 @@ class ServiceWorkerVersionTest : public testing::Test {
         SERVICE_WORKER_ERROR_MAX_VALUE;  // dummy value
 
     // Make sure worker is running.
-    version_->RunAfterStartWorker(event_type, base::Bind(&base::DoNothing),
+    scoped_refptr<MessageLoopRunner> runner(new MessageLoopRunner);
+    version_->RunAfterStartWorker(event_type, runner->QuitClosure(),
                                   CreateReceiverOnCurrentThread(&status));
-    base::RunLoop().RunUntilIdle();
+    runner->Run();
     EXPECT_EQ(SERVICE_WORKER_ERROR_MAX_VALUE, status);
     EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
@@ -270,11 +268,9 @@ class MessageReceiverDisallowStart : public MessageReceiver {
       const GURL& scope,
       const GURL& script_url,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
+      mojom::ServiceWorkerEventDispatcherRequest request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info)
+      mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
     switch (mode_) {
       case StartMode::STALL:
@@ -282,25 +278,20 @@ class MessageReceiverDisallowStart : public MessageReceiver {
         instance_host_ptr_map_[embedded_worker_id].Bind(
             std::move(instance_host));
         // Just keep the connection alive.
-        event_dispatcher_request_map_[embedded_worker_id] =
-            std::move(dispatcher_request);
-        controller_request_map_[embedded_worker_id] =
-            std::move(controller_request);
+        event_dispatcher_request_map_[embedded_worker_id] = std::move(request);
         break;
       case StartMode::FAIL:
         ASSERT_EQ(current_mock_instance_index_ + 1,
                   mock_instance_clients()->size());
         // Remove the connection by peer
         mock_instance_clients()->at(current_mock_instance_index_).reset();
-        std::move(dispatcher_request);
-        std::move(controller_request);
+        std::move(request);
         break;
       case StartMode::SUCCEED:
         MessageReceiver::OnStartWorker(
             embedded_worker_id, service_worker_version_id, scope, script_url,
-            pause_after_download, std::move(dispatcher_request),
-            std::move(controller_request), std::move(instance_host),
-            std::move(provider_info), std::move(installed_scripts_info));
+            pause_after_download, std::move(request), std::move(instance_host),
+            std::move(provider_info));
         break;
     }
     current_mock_instance_index_++;
@@ -328,8 +319,6 @@ class MessageReceiverDisallowStart : public MessageReceiver {
   std::map<int /* embedded_worker_id */,
            mojom::ServiceWorkerEventDispatcherRequest>
       event_dispatcher_request_map_;
-  std::map<int /* embedded_worker_id */, mojom::ControllerServiceWorkerRequest>
-      controller_request_map_;
   DISALLOW_COPY_AND_ASSIGN(MessageReceiverDisallowStart);
 };
 

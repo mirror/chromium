@@ -25,7 +25,7 @@ class CORE_EXPORT DOMWindowPerformance final
   static DOMWindowPerformance& From(LocalDOMWindow&);
   static Performance* performance(LocalDOMWindow&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit DOMWindowPerformance(LocalDOMWindow&);

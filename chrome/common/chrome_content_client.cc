@@ -129,8 +129,7 @@ content::PepperPluginInfo::PPP_ShutdownModuleFunc g_nacl_shutdown_module;
 #if defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
 bool IsWidevineAvailable(base::FilePath* adapter_path,
                          base::FilePath* cdm_path,
-                         std::vector<std::string>* codecs_supported,
-                         bool* is_persistent_license_supported) {
+                         std::vector<std::string>* codecs_supported) {
   static enum {
     NOT_CHECKED,
     FOUND,
@@ -155,15 +154,6 @@ bool IsWidevineAvailable(base::FilePath* adapter_path,
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
       codecs_supported->push_back(kCdmSupportedCodecAvc1);
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
-
-// TODO(crbug.com/767941): Push persistent-license support info here once
-// we check in a new CDM that supports it on Linux.
-#if defined(OS_CHROMEOS)
-      *is_persistent_license_supported = true;
-#else
-      *is_persistent_license_supported = false;
-#endif  // defined(OS_CHROMEOS)
-
       return true;
     }
   }
@@ -230,40 +220,28 @@ void ComputeBuiltInPlugins(std::vector<content::PepperPluginInfo>* plugins) {
   base::FilePath adapter_path;
   base::FilePath cdm_path;
   std::vector<std::string> codecs_supported;
-  bool is_persistent_license_supported;
-  if (IsWidevineAvailable(&adapter_path, &cdm_path, &codecs_supported,
-                          &is_persistent_license_supported)) {
-    content::PepperPluginInfo info;
-    info.is_out_of_process = true;
-    info.path = adapter_path;
-    info.name = kWidevineCdmDisplayName;
-    info.description =
+  if (IsWidevineAvailable(&adapter_path, &cdm_path, &codecs_supported)) {
+    content::PepperPluginInfo widevine_cdm;
+    widevine_cdm.is_out_of_process = true;
+    widevine_cdm.path = adapter_path;
+    widevine_cdm.name = kWidevineCdmDisplayName;
+    widevine_cdm.description =
         base::StringPrintf("%s (version: " WIDEVINE_CDM_VERSION_STRING ")",
                            kWidevineCdmDescription);
-    info.version = WIDEVINE_CDM_VERSION_STRING;
-    info.permissions = kWidevineCdmPluginPermissions;
+    widevine_cdm.version = WIDEVINE_CDM_VERSION_STRING;
+    content::WebPluginMimeType widevine_cdm_mime_type(
+        kWidevineCdmPluginMimeType, kWidevineCdmPluginExtension,
+        kWidevineCdmPluginMimeTypeDescription);
 
-    content::WebPluginMimeType mime_type(kWidevineCdmPluginMimeType,
-                                         kWidevineCdmPluginExtension,
-                                         kWidevineCdmPluginMimeTypeDescription);
-
-    // Put codec support string in additional param.
-    mime_type.additional_param_names.push_back(
+    widevine_cdm_mime_type.additional_param_names.push_back(
         base::ASCIIToUTF16(kCdmSupportedCodecsParamName));
-    mime_type.additional_param_values.push_back(base::ASCIIToUTF16(
+    widevine_cdm_mime_type.additional_param_values.push_back(base::ASCIIToUTF16(
         base::JoinString(codecs_supported,
                          std::string(1, kCdmSupportedCodecsValueDelimiter))));
 
-    // Put persistent license support string in additional param.
-    mime_type.additional_param_names.push_back(
-        base::ASCIIToUTF16(kCdmPersistentLicenseSupportedParamName));
-    mime_type.additional_param_values.push_back(base::ASCIIToUTF16(
-        is_persistent_license_supported ? kCdmFeatureSupported
-                                        : kCdmFeatureNotSupported));
-
-    info.mime_types.push_back(mime_type);
-
-    plugins->push_back(info);
+    widevine_cdm.mime_types.push_back(widevine_cdm_mime_type);
+    widevine_cdm.permissions = kWidevineCdmPluginPermissions;
+    plugins->push_back(widevine_cdm);
   }
 #endif  // defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
 }
@@ -570,19 +548,15 @@ void ChromeContentClient::AddContentDecryptionModules(
     base::FilePath adapter_path;
     base::FilePath cdm_path;
     std::vector<std::string> codecs_supported;
-    bool is_persistent_license_supported;
-    if (IsWidevineAvailable(&adapter_path, &cdm_path, &codecs_supported,
-                            &is_persistent_license_supported)) {
+    if (IsWidevineAvailable(&adapter_path, &cdm_path, &codecs_supported)) {
       // CdmInfo needs |path| to be the actual Widevine library,
       // not the adapter, so adjust as necessary. It will be in the
       // same directory as the installed adapter.
-      // TODO(xhwang): Pass |is_persistent_license_supported| to CdmInfo.
       const base::Version version(WIDEVINE_CDM_VERSION_STRING);
       DCHECK(version.IsValid());
-      cdms->push_back(
-          content::CdmInfo(kWidevineCdmDisplayName, kWidevineCdmGuid, version,
-                           cdm_path, kWidevineCdmFileSystemId, codecs_supported,
-                           kWidevineKeySystem, false));
+      cdms->push_back(content::CdmInfo(
+          kWidevineCdmDisplayName, kWidevineCdmGuid, version, cdm_path,
+          codecs_supported, kWidevineKeySystem, false));
     }
 #endif  // defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
 
@@ -606,16 +580,14 @@ void ChromeContentClient::AddContentDecryptionModules(
       // ECKEncryptedMediaTest.
       cdms->push_back(content::CdmInfo(
           media::kClearKeyCdmDisplayName, media::kClearKeyCdmDifferentGuid,
-          base::Version("0.1.0.0"), clear_key_cdm_path,
-          media::kClearKeyCdmFileSystemId, {},
+          base::Version("0.1.0.0"), clear_key_cdm_path, {},
           kExternalClearKeyDifferentGuidTestKeySystem, false));
 
       // Supported codecs are hard-coded in ExternalClearKeyProperties.
-      cdms->push_back(
-          content::CdmInfo(media::kClearKeyCdmDisplayName,
-                           media::kClearKeyCdmGuid, base::Version("0.1.0.0"),
-                           clear_key_cdm_path, media::kClearKeyCdmFileSystemId,
-                           {}, kExternalClearKeyKeySystem, true));
+      cdms->push_back(content::CdmInfo(
+          media::kClearKeyCdmDisplayName, media::kClearKeyCdmGuid,
+          base::Version("0.1.0.0"), clear_key_cdm_path, {},
+          kExternalClearKeyKeySystem, true));
     }
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
   }

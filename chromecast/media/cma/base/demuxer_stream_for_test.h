@@ -46,6 +46,7 @@ class DemuxerStreamForTest : public ::media::DemuxerStream {
   ::media::VideoDecoderConfig video_decoder_config() override;
   Type type() const override;
   bool SupportsConfigChanges() override;
+  ::media::VideoRotation video_rotation() override;
 
   bool has_pending_read() const { return has_pending_read_; }
 

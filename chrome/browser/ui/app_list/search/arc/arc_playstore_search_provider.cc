@@ -21,8 +21,7 @@ namespace {
 constexpr int kHistogramBuckets = 13;
 constexpr char kAppListPlayStoreQueryStateHistogram[] =
     "Apps.AppListPlayStoreQueryState";
-// TODO(crbug.com/742517): Use the mojo generated constants.
-constexpr int kAppListPlayStoreQueryStateNum = 17;
+constexpr int kAppListPlayStoreQueryStateNum = 3;
 
 // Skips Play Store apps that have equivalent extensions installed.
 // Do not skip recent instant apps since they should be treated like

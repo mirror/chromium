@@ -27,7 +27,7 @@ class Command : public GarbageCollectedFinalized<Command> {
  public:
   Command() = default;
   virtual ~Command() = default;
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void Run(Element*) = 0;
 };
 
@@ -75,7 +75,7 @@ class Recurse : public Command {
  public:
   Recurse(CustomElementReactionQueue* queue) : queue_(queue) {}
   ~Recurse() override = default;
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     Command::Trace(visitor);
     visitor->Trace(queue_);
   }
@@ -92,7 +92,7 @@ class Enqueue : public Command {
   Enqueue(CustomElementReactionQueue* queue, CustomElementReaction* reaction)
       : queue_(queue), reaction_(reaction) {}
   ~Enqueue() override = default;
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     Command::Trace(visitor);
     visitor->Trace(queue_);
     visitor->Trace(reaction_);
@@ -116,7 +116,7 @@ class TestReaction : public CustomElementReaction {
       commands_.push_back(command);
   }
   ~TestReaction() override = default;
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     CustomElementReaction::Trace(visitor);
     visitor->Trace(commands_);
   }

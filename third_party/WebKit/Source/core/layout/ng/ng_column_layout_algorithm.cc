@@ -90,11 +90,10 @@ RefPtr<NGLayoutResult> NGColumnLayoutAlgorithm::Layout() {
       CreateConstraintSpaceForColumns(column_size);
   if (border_box_size.block_size == NGSizeIndefinite) {
     // Get the block size from the columns if it's auto.
-    border_box_size.block_size =
-        column_size.block_size + border_scrollbar_padding.BlockSum();
+    border_box_size.block_size = child_space->AvailableSize().block_size +
+                                 border_scrollbar_padding.BlockSum();
   }
-  container_builder_.SetInlineSize(border_box_size.inline_size);
-  container_builder_.SetBlockSize(border_box_size.block_size);
+  container_builder_.SetSize(border_box_size);
 
   NGWritingMode writing_mode = ConstraintSpace().WritingMode();
   RefPtr<NGBlockBreakToken> break_token = BreakToken();
@@ -176,6 +175,10 @@ NGLogicalSize NGColumnLayoutAlgorithm::CalculateColumnSize(
         CalculateBalancedColumnBlockSize(column_size, used_count);
   }
 
+  // To ensure progression, we need something larger than 0 here. The spec
+  // actually says that fragmentainers have to accept at least 1px of content.
+  column_size.block_size = std::max(column_size.block_size, LayoutUnit(1));
+
   return column_size;
 }
 
@@ -196,14 +199,7 @@ LayoutUnit NGColumnLayoutAlgorithm::CalculateBalancedColumnBlockSize(
   // fragment tree, not just the root.
   NGFragment fragment(space->WritingMode(), *result->PhysicalFragment().get());
   LayoutUnit single_strip_block_size = fragment.BlockSize();
-
-  // Some extra care is required the division here. We want a the resulting
-  // LayoutUnit value to be large enough to prevent overflowing columns. Use
-  // floating point to get higher precision than LayoutUnit. Then convert it to
-  // a LayoutUnit, but round it up to the nearest value that LayoutUnit is able
-  // to represent.
-  LayoutUnit block_size = LayoutUnit::FromFloatCeil(
-      single_strip_block_size.ToFloat() / static_cast<float>(column_count));
+  LayoutUnit block_size = single_strip_block_size / column_count;
 
   // Finally, honor {,min-,max-}{height,width} properties.
   return ConstrainColumnBlockSize(block_size, Node(), ConstraintSpace(),
@@ -220,15 +216,9 @@ NGColumnLayoutAlgorithm::CreateConstraintSpaceForColumns(
   if (NGBaseline::ShouldPropagateBaselines(Node()))
     space_builder.AddBaselineRequests(ConstraintSpace().BaselineRequests());
 
-  // To ensure progression, we need something larger than 0 here. The spec
-  // actually says that fragmentainers have to accept at least 1px of content.
-  // See https://www.w3.org/TR/css-break-3/#breaking-rules
-  LayoutUnit column_block_size =
-      std::max(column_size.block_size, LayoutUnit(1));
-
   space_builder.SetFragmentationType(kFragmentColumn);
-  space_builder.SetFragmentainerBlockSize(column_block_size);
-  space_builder.SetFragmentainerSpaceAtBfcStart(column_block_size);
+  space_builder.SetFragmentainerBlockSize(column_size.block_size);
+  space_builder.SetFragmentainerSpaceAtBfcStart(column_size.block_size);
   space_builder.SetIsNewFormattingContext(true);
   space_builder.SetIsAnonymous(true);
 

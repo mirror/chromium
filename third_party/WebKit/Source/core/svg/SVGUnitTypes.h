@@ -37,7 +37,7 @@ class SVGUnitTypes final : public GarbageCollected<SVGUnitTypes>,
     kSvgUnitTypeObjectboundingbox = 2
   };
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   SVGUnitTypes();  // No instantiation.

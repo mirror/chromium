@@ -39,7 +39,7 @@ class SQLTransactionCallback
     : public GarbageCollectedFinalized<SQLTransactionCallback> {
  public:
   virtual ~SQLTransactionCallback() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual bool handleEvent(SQLTransaction*) = 0;
 };
 

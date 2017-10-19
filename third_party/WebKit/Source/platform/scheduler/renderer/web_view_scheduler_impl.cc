@@ -10,13 +10,13 @@
 #include "base/strings/stringprintf.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scheduler/base/trace_helper.h"
 #include "platform/scheduler/base/virtual_time_domain.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
-#include "platform/scheduler/util/tracing_helper.h"
 
 namespace blink {
 namespace scheduler {
@@ -103,7 +103,6 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
       renderer_scheduler_(renderer_scheduler),
       virtual_time_policy_(VirtualTimePolicy::ADVANCE),
       background_parser_count_(0),
-      max_task_starvation_count_(0),
       page_visible_(true),
       disable_background_timer_throttling_(disable_background_timer_throttling),
       allow_virtual_time_to_advance_(true),
@@ -357,32 +356,19 @@ void WebViewSchedulerImpl::RequestBeginMainFrameNotExpected(bool new_state) {
 }
 
 void WebViewSchedulerImpl::ApplyVirtualTimePolicy() {
-  AutoAdvancingVirtualTimeDomain* virtual_time_domain =
-      renderer_scheduler_->GetVirtualTimeDomain();
-
-  switch (virtual_time_policy_) {
-    case VirtualTimePolicy::ADVANCE:
-      virtual_time_domain->SetMaxVirtualTimeTaskStarvationCount(
-          nested_runloop_ ? 0 : max_task_starvation_count_);
-      SetAllowVirtualTimeToAdvance(true);
-      break;
-    case VirtualTimePolicy::PAUSE:
-      virtual_time_domain->SetMaxVirtualTimeTaskStarvationCount(0);
-      break;
-    case VirtualTimePolicy::DETERMINISTIC_LOADING:
-      virtual_time_domain->SetMaxVirtualTimeTaskStarvationCount(
-          nested_runloop_ ? 0 : max_task_starvation_count_);
-
-      // We pause virtual time while the run loop is nested because that implies
-      // something modal is happening such as the DevTools debugger pausing the
-      // system.  We also pause while the renderer is either waiting for a
-      // resource load or a navigation is about to start.
-      SetAllowVirtualTimeToAdvance(
-          pending_loads_.size() == 0 && background_parser_count_ == 0 &&
-          provisional_loads_.empty() && !nested_runloop_ &&
-          expect_backward_forwards_navigation_.empty());
-      break;
+  if (virtual_time_policy_ != VirtualTimePolicy::DETERMINISTIC_LOADING) {
+    return;
   }
+
+  // We pause virtual time until we've seen a loading task posted, because
+  // otherwise we could advance virtual time arbitarially far before the
+  // first load arrives.  We also pause virtual time while the run loop is
+  // nested because that implies something modal is happening such as the
+  // DevTools debugger pausing the system.
+  SetAllowVirtualTimeToAdvance(pending_loads_.size() == 0 &&
+                               background_parser_count_ == 0 &&
+                               provisional_loads_.empty() && !nested_runloop_ &&
+                               expect_backward_forwards_navigation_.empty());
 }
 
 bool WebViewSchedulerImpl::IsAudioPlaying() const {
@@ -398,12 +384,6 @@ void WebViewSchedulerImpl::OnConnectionUpdated() {
   if (has_active_connection_ != has_active_connection) {
     has_active_connection_ = has_active_connection;
     UpdateBackgroundThrottlingState();
-  }
-}
-
-void WebViewSchedulerImpl::OnTraceLogEnabled() {
-  for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
-    frame_scheduler->OnTraceLogEnabled();
   }
 }
 
@@ -425,7 +405,8 @@ void WebViewSchedulerImpl::AsValueInto(
 
   state->BeginDictionary("frame_schedulers");
   for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
-    state->BeginDictionaryWithCopiedName(PointerToString(frame_scheduler));
+    state->BeginDictionaryWithCopiedName(
+        trace_helper::PointerToString(frame_scheduler));
     frame_scheduler->AsValueInto(state);
     state->EndDictionary();
   }
@@ -507,12 +488,6 @@ void WebViewSchedulerImpl::UpdateBackgroundBudgetPoolThrottlingState() {
 
 size_t WebViewSchedulerImpl::FrameCount() const {
   return frame_schedulers_.size();
-}
-
-void WebViewSchedulerImpl::SetMaxVirtualTimeTaskStarvationCount(
-    int max_task_starvation_count) {
-  max_task_starvation_count_ = max_task_starvation_count;
-  ApplyVirtualTimePolicy();
 }
 
 // static

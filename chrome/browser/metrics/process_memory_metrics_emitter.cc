@@ -7,6 +7,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/metrics/renderer_uptime_tracker.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
@@ -32,8 +33,7 @@ namespace {
 
 void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                               ukm::SourceId ukm_source_id,
-                              ukm::UkmRecorder* ukm_recorder,
-                              const base::Optional<base::TimeDelta>& uptime) {
+                              ukm::UkmRecorder* ukm_recorder) {
   ukm::builders::Memory_Experimental builder(ukm_source_id);
   builder.SetProcessType(static_cast<int64_t>(
       memory_instrumentation::mojom::ProcessType::BROWSER));
@@ -52,8 +52,6 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Browser.PrivateMemoryFootprint",
                                 pmd->os_dump->private_footprint_kb / 1024);
   builder.SetPrivateMemoryFootprint(pmd->os_dump->private_footprint_kb / 1024);
-  if (uptime)
-    builder.SetUptime(uptime.value().InSeconds());
   builder.Record(ukm_recorder);
 }
 
@@ -77,12 +75,10 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                                   pmd->chrome_dump->v8_total_kb / 1024);       \
   } while (false)
 
-void EmitRendererMemoryMetrics(
-    const ProcessMemoryDumpPtr& pmd,
-    const resource_coordinator::mojom::PageInfoPtr& page_info,
-    ukm::UkmRecorder* ukm_recorder,
-    int number_of_extensions,
-    const base::Optional<base::TimeDelta>& uptime) {
+void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
+                               ukm::SourceId ukm_source_id,
+                               ukm::UkmRecorder* ukm_recorder,
+                               int number_of_extensions) {
   // UMA
   if (number_of_extensions == 0) {
     RENDERER_MEMORY_UMA_HISTOGRAMS("Renderer");
@@ -90,9 +86,6 @@ void EmitRendererMemoryMetrics(
     RENDERER_MEMORY_UMA_HISTOGRAMS("Extension");
   }
   // UKM
-  ukm::SourceId ukm_source_id = page_info.is_null()
-                                    ? ukm::UkmRecorder::GetNewSourceID()
-                                    : page_info->ukm_source_id;
   ukm::builders::Memory_Experimental builder(ukm_source_id);
   builder.SetProcessType(static_cast<int64_t>(
       memory_instrumentation::mojom::ProcessType::RENDERER));
@@ -104,24 +97,16 @@ void EmitRendererMemoryMetrics(
   builder.SetV8(pmd->chrome_dump->v8_total_kb / 1024);
   builder.SetNumberOfExtensions(number_of_extensions);
 
-  if (!page_info.is_null()) {
-    builder.SetIsVisible(page_info->is_visible);
-    builder.SetTimeSinceLastVisibilityChange(
-        page_info->time_since_last_visibility_change.InSeconds());
-    builder.SetTimeSinceLastNavigation(
-        page_info->time_since_last_navigation.InSeconds());
-  }
-
-  if (uptime)
-    builder.SetUptime(uptime.value().InSeconds());
+  base::TimeDelta uptime =
+      metrics::RendererUptimeTracker::Get()->GetProcessUptime(pmd->pid);
+  builder.SetUptime(uptime.InSeconds());
 
   builder.Record(ukm_recorder);
 }
 
 void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                           ukm::SourceId ukm_source_id,
-                          ukm::UkmRecorder* ukm_recorder,
-                          const base::Optional<base::TimeDelta>& uptime) {
+                          ukm::UkmRecorder* ukm_recorder) {
   ukm::builders::Memory_Experimental builder(ukm_source_id);
   builder.SetProcessType(
       static_cast<int64_t>(memory_instrumentation::mojom::ProcessType::GPU));
@@ -145,8 +130,6 @@ void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Gpu.PrivateMemoryFootprint",
                                 pmd->os_dump->private_footprint_kb / 1024);
   builder.SetPrivateMemoryFootprint(pmd->os_dump->private_footprint_kb / 1024);
-  if (uptime)
-    builder.SetUptime(uptime.value().InSeconds());
   builder.Record(ukm_recorder);
 }
 
@@ -191,6 +174,7 @@ ProcessMemoryMetricsEmitter::~ProcessMemoryMetricsEmitter() {}
 
 void ProcessMemoryMetricsEmitter::ReceivedMemoryDump(
     bool success,
+    uint64_t dump_guid,
     memory_instrumentation::mojom::GlobalMemoryDumpPtr ptr) {
   memory_dump_in_progress_ = false;
   if (!success)
@@ -259,17 +243,6 @@ int ProcessMemoryMetricsEmitter::GetNumberOfExtensions(base::ProcessId pid) {
   return number_of_extensions;
 }
 
-base::Optional<base::TimeDelta> ProcessMemoryMetricsEmitter::GetProcessUptime(
-    const base::Time& now,
-    base::ProcessId pid) {
-  auto process_info = process_infos_.find(pid);
-  if (process_info != process_infos_.end()) {
-    if (process_info->second->launch_time)
-      return now - process_info->second->launch_time.value();
-  }
-  return base::Optional<base::TimeDelta>();
-}
-
 void ProcessMemoryMetricsEmitter::CollateResults() {
   if (memory_dump_in_progress_ || get_process_urls_in_progress_)
     return;
@@ -277,38 +250,34 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
     return;
 
   uint32_t private_footprint_total_kb = 0;
-  base::Time now = base::Time::Now();
   for (const ProcessMemoryDumpPtr& pmd : global_dump_->process_dumps) {
     private_footprint_total_kb += pmd->os_dump->private_footprint_kb;
     switch (pmd->process_type) {
       case memory_instrumentation::mojom::ProcessType::BROWSER: {
         EmitBrowserMemoryMetrics(pmd, ukm::UkmRecorder::GetNewSourceID(),
-                                 GetUkmRecorder(),
-                                 GetProcessUptime(now, pmd->pid));
+                                 GetUkmRecorder());
         break;
       }
       case memory_instrumentation::mojom::ProcessType::RENDERER: {
-        resource_coordinator::mojom::PageInfoPtr page_info;
+        ukm::SourceId ukm_source_id = ukm::UkmRecorder::GetNewSourceID();
         // If there is more than one frame being hosted in a renderer, don't
         // emit any URLs. This is not ideal, but UKM does not support
         // multiple-URLs per entry, and we must have one entry per process.
         if (process_infos_.find(pmd->pid) != process_infos_.end()) {
           const resource_coordinator::mojom::ProcessInfoPtr& process_info =
               process_infos_[pmd->pid];
-          if (process_info->page_infos.size() == 1) {
-            page_info = std::move(process_info->page_infos[0]);
+          if (process_info->ukm_source_ids.size() == 1) {
+            ukm_source_id = process_info->ukm_source_ids[0];
           }
         }
-
         int number_of_extensions = GetNumberOfExtensions(pmd->pid);
-        EmitRendererMemoryMetrics(pmd, page_info, GetUkmRecorder(),
-                                  number_of_extensions,
-                                  GetProcessUptime(now, pmd->pid));
+        EmitRendererMemoryMetrics(pmd, ukm_source_id, GetUkmRecorder(),
+                                  number_of_extensions);
         break;
       }
       case memory_instrumentation::mojom::ProcessType::GPU: {
         EmitGpuMemoryMetrics(pmd, ukm::UkmRecorder::GetNewSourceID(),
-                             GetUkmRecorder(), GetProcessUptime(now, pmd->pid));
+                             GetUkmRecorder());
         break;
       }
       case memory_instrumentation::mojom::ProcessType::UTILITY:

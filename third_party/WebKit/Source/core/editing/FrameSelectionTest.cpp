@@ -51,9 +51,6 @@ class FrameSelectionTest : public EditingTestBase {
 
   Page& GetPage() const { return GetDummyPageHolder().GetPage(); }
 
-  // Returns if a word is is selected.
-  bool SelectWordAroundPosition(const Position&);
-
  private:
   Persistent<Text> text_node_;
 };
@@ -62,12 +59,6 @@ Text* FrameSelectionTest::AppendTextNode(const String& data) {
   Text* text = GetDocument().createTextNode(data);
   GetDocument().body()->AppendChild(text);
   return text;
-}
-
-bool FrameSelectionTest::SelectWordAroundPosition(const Position& position) {
-  Selection().SetSelection(
-      SelectionInDOMTree::Builder().Collapse(position).Build());
-  return Selection().SelectWordAroundCaret();
 }
 
 TEST_F(FrameSelectionTest, FirstEphemeralRangeOf) {
@@ -136,32 +127,37 @@ TEST_F(FrameSelectionTest, PaintCaretShouldNotLayout) {
 #define EXPECT_EQ_SELECTED_TEXT(text) \
   EXPECT_EQ(text, WebString(Selection().SelectedText()).Utf8())
 
-TEST_F(FrameSelectionTest, SelectWordAroundCaret) {
+TEST_F(FrameSelectionTest, SelectWordAroundPosition) {
   // "Foo Bar  Baz,"
   Text* text = AppendTextNode("Foo Bar&nbsp;&nbsp;Baz,");
   UpdateAllLifecyclePhases();
 
   // "Fo|o Bar  Baz,"
-  EXPECT_TRUE(SelectWordAroundPosition(Position(text, 2)));
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 2))));
   EXPECT_EQ_SELECTED_TEXT("Foo");
   // "Foo| Bar  Baz,"
-  EXPECT_TRUE(SelectWordAroundPosition(Position(text, 3)));
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 3))));
   EXPECT_EQ_SELECTED_TEXT("Foo");
   // "Foo Bar | Baz,"
-  EXPECT_FALSE(SelectWordAroundPosition(Position(text, 13)));
+  EXPECT_FALSE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 13))));
   // "Foo Bar  Baz|,"
-  EXPECT_TRUE(SelectWordAroundPosition(Position(text, 22)));
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(text, 22))));
   EXPECT_EQ_SELECTED_TEXT("Baz");
 }
 
 // crbug.com/657996
-TEST_F(FrameSelectionTest, SelectWordAroundCaret2) {
+TEST_F(FrameSelectionTest, SelectWordAroundPosition2) {
   SetBodyContent(
       "<p style='width:70px; font-size:14px'>foo bar<em>+</em> baz</p>");
   // "foo bar
   //  b|az"
   Node* const baz = GetDocument().body()->firstChild()->lastChild();
-  EXPECT_TRUE(SelectWordAroundPosition(Position(baz, 2)));
+  EXPECT_TRUE(Selection().SelectWordAroundPosition(
+      CreateVisiblePosition(Position(baz, 2))));
   EXPECT_EQ_SELECTED_TEXT("baz");
 }
 

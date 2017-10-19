@@ -26,6 +26,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -45,7 +46,6 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/message_center/notification.h"
 
 namespace {
 
@@ -105,8 +105,7 @@ int ClampInt(int value, int low, int hi) {
   return std::max(std::min(value, hi), low);
 }
 
-base::string16 CreateNotificationTitle(
-    const message_center::Notification& notification) {
+base::string16 CreateNotificationTitle(const Notification& notification) {
   base::string16 title;
   if (notification.type() == message_center::NOTIFICATION_TYPE_PROGRESS) {
     title += base::FormatPercent(notification.progress());
@@ -293,7 +292,7 @@ class NotificationPlatformBridgeLinuxImpl
       const std::string& notification_id,
       const std::string& profile_id,
       bool is_incognito,
-      const message_center::Notification& notification,
+      const Notification& notification,
       std::unique_ptr<NotificationCommon::Metadata> metadata) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
     // Notifications contain gfx::Image's which have reference counts
@@ -301,8 +300,7 @@ class NotificationPlatformBridgeLinuxImpl
     // notification and its images.  Wrap the notification in a
     // unique_ptr to transfer ownership of the notification (and the
     // non-thread-safe reference counts) to the task runner thread.
-    auto notification_copy =
-        std::make_unique<message_center::Notification>(notification);
+    auto notification_copy = std::make_unique<Notification>(notification);
     notification_copy->set_icon(DeepCopyImage(notification_copy->icon()));
     notification_copy->set_image(body_images_supported_.value()
                                      ? DeepCopyImage(notification_copy->image())
@@ -501,12 +499,11 @@ class NotificationPlatformBridgeLinuxImpl
   }
 
   // Makes the "Notify" call to D-Bus.
-  void DisplayOnTaskRunner(
-      NotificationCommon::Type notification_type,
-      const std::string& notification_id,
-      const std::string& profile_id,
-      bool is_incognito,
-      std::unique_ptr<message_center::Notification> notification) {
+  void DisplayOnTaskRunner(NotificationCommon::Type notification_type,
+                           const std::string& notification_id,
+                           const std::string& profile_id,
+                           bool is_incognito,
+                           std::unique_ptr<Notification> notification) {
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
     NotificationData* data =
         FindNotificationData(notification_id, profile_id, is_incognito);
@@ -565,35 +562,40 @@ class NotificationPlatformBridgeLinuxImpl
         if (body_markup &&
             base::ContainsKey(capabilities_, kCapabilityBodyHyperlinks)) {
           body << "<a href=\""
-               << net::EscapeForHTML(notification->origin_url().spec()) << "\">"
-               << url_display_text << "</a>\n\n";
+               << net::EscapePath(notification->origin_url().spec()) << "\">"
+               << url_display_text << "</a>";
         } else {
-          body << url_display_text << "\n\n";
+          body << url_display_text;
         }
       } else if (!notification->context_message().empty()) {
         std::string context =
             base::UTF16ToUTF8(notification->context_message());
         if (body_markup)
           EscapeUnsafeCharacters(&context);
-        body << context << "\n\n";
+        body << context;
       }
 
       std::string message = base::UTF16ToUTF8(notification->message());
       if (body_markup)
         EscapeUnsafeCharacters(&message);
-      if (!message.empty())
-        body << message << "\n";
+      if (!message.empty()) {
+        if (body.tellp())
+          body << "\n";
+        body << message;
+      }
 
       if (notification->type() == message_center::NOTIFICATION_TYPE_MULTIPLE) {
         for (const auto& item : notification->items()) {
+          if (body.tellp())
+            body << "\n";
           const std::string title = base::UTF16ToUTF8(item.title);
           const std::string message = base::UTF16ToUTF8(item.message);
           // TODO(peter): Figure out the right way to internationalize
           // this for RTL languages.
           if (body_markup)
-            body << "<b>" << title << "</b> " << message << "\n";
+            body << "<b>" << title << "</b> " << message;
           else
-            body << title << " - " << message << "\n";
+            body << title << " - " << message;
         }
       } else if (notification->type() ==
                      message_center::NOTIFICATION_TYPE_IMAGE &&
@@ -601,16 +603,16 @@ class NotificationPlatformBridgeLinuxImpl
         std::unique_ptr<ResourceFile> image_file = WriteDataToTmpFile(
             ResizeImageToFdoMaxSize(notification->image()).As1xPNGBytes());
         if (image_file) {
+          if (body.tellp())
+            body << "\n";
           body << "<img src=\""
                << net::EscapePath(image_file->file_path().value())
-               << "\" alt=\"\"/>\n";
+               << "\" alt=\"\"/>";
           data->resource_files.push_back(std::move(image_file));
         }
       }
     }
-    std::string body_str = body.str();
-    base::TrimString(body_str, "\n", &body_str);
-    writer.AppendString(body_str);
+    writer.AppendString(body.str());
 
     // Even-indexed elements in this vector are action IDs passed back to
     // us in OnActionInvoked().  Odd-indexed ones contain the button text.
@@ -993,7 +995,7 @@ void NotificationPlatformBridgeLinux::Display(
     const std::string& notification_id,
     const std::string& profile_id,
     bool is_incognito,
-    const message_center::Notification& notification,
+    const Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   impl_->Display(notification_type, notification_id, profile_id, is_incognito,
                  notification, std::move(metadata));

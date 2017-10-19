@@ -27,12 +27,12 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     isCapabilityAvailable() {
-      const cap = this.getDuplexCapability_();
+      var cap = this.getDuplexCapability_();
       if (!cap) {
         return false;
       }
-      let hasLongEdgeOption = false;
-      let hasSimplexOption = false;
+      var hasLongEdgeOption = false;
+      var hasSimplexOption = false;
       cap.option.forEach(function(option) {
         hasLongEdgeOption = hasLongEdgeOption || option.type == 'LONG_EDGE';
         hasSimplexOption = hasSimplexOption || option.type == 'NO_DUPLEX';
@@ -42,8 +42,8 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     getDefaultValueInternal() {
-      const cap = this.getDuplexCapability_();
-      const defaultOptions = cap.option.filter(function(option) {
+      var cap = this.getDuplexCapability_();
+      var defaultOptions = cap.option.filter(function(option) {
         return option.is_default;
       });
       return defaultOptions.length == 0 ? false :
@@ -60,7 +60,7 @@ cr.define('print_preview.ticket_items', function() {
      * @private
      */
     getDuplexCapability_() {
-      const dest = this.getSelectedDestInternal();
+      var dest = this.getSelectedDestInternal();
       return (dest && dest.capabilities && dest.capabilities.printer &&
               dest.capabilities.printer.duplex) ||
           null;

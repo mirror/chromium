@@ -61,12 +61,11 @@
     "isolated_scripts": [
       {
         "args": [
-          "--bot", "swarm823-c4",
-          "--builder", "One Buildbot Step Test Builder",
+          "--bot", "build13-b1--device2",
+          "--builder", "Android Nexus5 Perf",
           "-v",
           "--output-format=histograms",
           "--output-format=json-test-results",
-          "--xvfb",
           "--browser=release"
         ],
         "isolate_name": "telemetry_perf_tests_new",

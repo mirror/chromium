@@ -29,7 +29,7 @@ class WebTaskRunner;
 class ModulatorImplBase : public Modulator {
  public:
   virtual ~ModulatorImplBase();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   ExecutionContext* GetExecutionContext() const;
@@ -45,7 +45,7 @@ class ModulatorImplBase : public Modulator {
   }
   WebTaskRunner* TaskRunner() override { return task_runner_.get(); }
   ReferrerPolicy GetReferrerPolicy() override;
-  SecurityOrigin* GetSecurityOriginForFetch() override;
+  SecurityOrigin* GetSecurityOrigin() override;
   ScriptState* GetScriptState() override { return script_state_.get(); }
 
   void FetchTree(const ModuleScriptFetchRequest&, ModuleTreeClient*) override;

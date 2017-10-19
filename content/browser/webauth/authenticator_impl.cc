@@ -25,14 +25,14 @@ constexpr char kChallengeKey[] = "challenge";
 constexpr char kOriginKey[] = "origin";
 constexpr char kCidPubkeyKey[] = "cid_pubkey";
 
+}  // namespace
+
 // Serializes the |value| to a JSON string and returns the result.
 std::string SerializeValueToJson(const base::Value& value) {
   std::string json;
   base::JSONWriter::Write(value, &json);
   return json;
 }
-
-}  // namespace
 
 // static
 void AuthenticatorImpl::Create(
@@ -67,7 +67,7 @@ void AuthenticatorImpl::MakeCredential(
     return;
   }
 
-  if (!options->relying_party->id) {
+  if (options->relying_party->id.empty()) {
     relying_party_id = caller_origin_.Serialize();
   } else {
     effective_domain = caller_origin_.host();
@@ -76,7 +76,7 @@ void AuthenticatorImpl::MakeCredential(
     // TODO(kpaulhamus): Check if relyingPartyId is a registrable domain
     // suffix of and equal to effectiveDomain and set relyingPartyId
     // appropriately.
-    relying_party_id = *options->relying_party->id;
+    relying_party_id = options->relying_party->id;
   }
 
   // Check that at least one of the cryptographic parameters is supported.

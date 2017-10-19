@@ -38,7 +38,7 @@ class MODULES_EXPORT AbortPaymentEvent final : public ExtendableEvent {
 
   void respondWith(ScriptState*, ScriptPromise, ExceptionState&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   AbortPaymentEvent(const AtomicString& type,

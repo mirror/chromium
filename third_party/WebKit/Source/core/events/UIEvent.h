@@ -72,7 +72,7 @@ class CORE_EXPORT UIEvent : public Event {
 
   virtual unsigned which() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   UIEvent();

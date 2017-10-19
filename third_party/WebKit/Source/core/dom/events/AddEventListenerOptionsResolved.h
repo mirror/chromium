@@ -34,7 +34,7 @@ class CORE_EXPORT AddEventListenerOptionsResolved
   void SetPassiveSpecified(bool specified) { passive_specified_ = specified; }
   bool PassiveSpecified() const { return passive_specified_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   bool passive_forced_for_document_target_;

@@ -25,7 +25,7 @@ class CORE_EXPORT WorkerInspectorProxy final
   static WorkerInspectorProxy* Create();
 
   ~WorkerInspectorProxy();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   class CORE_EXPORT PageInspector {
    public:

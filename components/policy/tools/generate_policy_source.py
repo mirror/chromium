@@ -6,7 +6,7 @@
 '''python %prog [options] platform chromium_os_flag template
 
 platform specifies which platform source is being generated for
-  and can be one of (win, mac, linux, fuchsia)
+  and can be one of (win, mac, linux)
 chromium_os_flag should be 1 if this is a Chromium OS build
 template is the path to a .json policy template file.'''
 
@@ -93,7 +93,7 @@ class PolicyDetails:
       if platform not in ['chrome_frame', 'chrome_os',
                           'android', 'webview_android',
                           'chrome.win', 'chrome.linux', 'chrome.mac',
-                          'chrome.fuchsia', 'chrome.*']:
+                          'chrome.*']:
         raise RuntimeError('Platform "%s" is not supported' % platform)
 
       split_result = version_range.split('-')
@@ -111,7 +111,7 @@ class PolicyDetails:
       if platform.startswith('chrome.'):
         platform_sub = platform[7:]
         if platform_sub == '*':
-          self.platforms.extend(['win', 'mac', 'linux', 'fuchsia'])
+          self.platforms.extend(['win', 'mac', 'linux'])
         else:
           self.platforms.append(platform_sub)
       else:

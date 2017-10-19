@@ -5,7 +5,6 @@
 #include "modules/compositorworker/AnimationWorkletThread.h"
 
 #include <memory>
-#include "bindings/core/v8/ScriptModule.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8GCController.h"
@@ -21,15 +20,11 @@
 #include "platform/WaitableEvent.h"
 #include "platform/WebThreadSupportingGC.h"
 #include "platform/heap/Handle.h"
-#include "platform/loader/fetch/AccessControlStatus.h"
-#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/text/TextPosition.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebAddressSpace.h"
-#include "public/platform/WebURLRequest.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -69,7 +64,8 @@ class AnimationWorkletThreadTest : public ::testing::Test {
   void SetUp() override {
     AnimationWorkletThread::CreateSharedBackingThreadForTest();
     reporting_proxy_ = WTF::MakeUnique<WorkerReportingProxy>();
-    security_origin_ = SecurityOrigin::Create(KURL("http://fake.url/"));
+    security_origin_ =
+        SecurityOrigin::Create(KURL(kParsedURLString, "http://fake.url/"));
   }
 
   void TearDown() override {
@@ -84,12 +80,13 @@ class AnimationWorkletThreadTest : public ::testing::Test {
     std::unique_ptr<AnimationWorkletThread> thread =
         AnimationWorkletThread::Create(nullptr, *reporting_proxy_);
 
-    thread->Start(WTF::MakeUnique<GlobalScopeCreationParams>(
-                      KURL("http://fake.url/"), "fake user agent", "", nullptr,
-                      kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
-                      security_origin_.get(), clients, kWebAddressSpaceLocal,
-                      nullptr, nullptr, kV8CacheOptionsDefault),
-                  WTF::nullopt, ParentFrameTaskRunners::Create());
+    thread->Start(
+        WTF::MakeUnique<GlobalScopeCreationParams>(
+            KURL(kParsedURLString, "http://fake.url/"), "fake user agent", "",
+            nullptr, kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
+            security_origin_.get(), clients, kWebAddressSpaceLocal, nullptr,
+            nullptr, kV8CacheOptionsDefault),
+        WTF::nullopt, ParentFrameTaskRunners::Create());
     return thread;
   }
 
@@ -108,21 +105,10 @@ class AnimationWorkletThreadTest : public ::testing::Test {
 
  private:
   void ExecuteScriptInWorklet(WorkerThread* thread, WaitableEvent* wait_event) {
-    ScriptState* script_state =
-        thread->GlobalScope()->ScriptController()->GetScriptState();
-    EXPECT_TRUE(script_state);
-    ScriptState::Scope scope(script_state);
-    ScriptModule module = ScriptModule::Compile(
-        script_state->GetIsolate(), "var counter = 0; ++counter;", "worklet.js",
-        kSharableCrossOrigin, WebURLRequest::kFetchCredentialsModeOmit,
-        "" /* nonce */, kParserInserted, TextPosition::MinimumPosition(),
-        ASSERT_NO_EXCEPTION);
-    EXPECT_FALSE(module.IsNull());
-    ScriptValue exception = module.Instantiate(script_state);
-    EXPECT_TRUE(exception.IsEmpty());
-    ScriptValue value =
-        module.Evaluate(script_state, CaptureEvalErrorFlag::kCapture);
-    EXPECT_TRUE(value.IsEmpty());
+    WorkerOrWorkletScriptController* script_controller =
+        thread->GlobalScope()->ScriptController();
+    script_controller->Evaluate(
+        ScriptSourceCode("var counter = 0; ++counter;"));
     wait_event->Signal();
   }
 

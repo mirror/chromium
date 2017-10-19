@@ -251,6 +251,9 @@ chromium_strings.grd. -->
           Google Chrome is unresponsive. Relaunch now?
         </message>
       </if>
+      <message name="IDS_IMPORT_FIND_YOUR_BOOKMARKS" desc="Helpful reminder for where to find imported bookmarks">
+        Find your bookmarks in the Chrome menu or on the bookmarks bar.
+      </message>
       <message name="IDS_IMPORTER_LOCK_TEXT" desc="The message to be displayed on dialog">
         Sadly, your Mozilla Firefox settings are not available while that browser is running. To import those settings to Google Chrome, save your work and close all Firefox windows. Then click Continue.
       </message>
@@ -675,6 +678,11 @@ Google Chrome is unable to recover your settings.
       </message>
       <message name="IDS_PROFILES_PRIMARY_ACCOUNT_REMOVAL_TEXT" desc="Main text of the account removal view when removing a primary account.">
         You're using <ph name="PROFILE_EMAIL">$1<ex>jessica@gmail.com</ex></ph> to sync your Chrome stuff. To update your sync preference or to use Chrome without a Google account, visit <ph name="SETTINGS_LINK">$2<ex>settings</ex></ph>.
+      </message>
+
+      <!-- Switch user view in the avatar menu bubble -->
+      <message name="IDS_PROFILES_NOT_YOU_CONTENT_TEXT" desc="Main text of the switch user view. for an upgrade user">
+        If you share this computer with <ph name="PROFILE_NAME">$1<ex>Claire</ex></ph>, add yourself to Chrome to browse separately. Otherwise disconnect their Google Account.
       </message>
 
       <!-- One click sign-in infobar -->

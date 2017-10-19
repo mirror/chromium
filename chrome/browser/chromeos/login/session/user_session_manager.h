@@ -13,7 +13,6 @@
 #include "base/memory/singleton.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
-#include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/base/locale_util.h"
 #include "chrome/browser/chromeos/eol_notification.h"
@@ -22,7 +21,6 @@
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_notification_controller.h"
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager.h"
 #include "chrome/browser/chromeos/login/signin/token_handle_util.h"
-#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/login/auth/authenticator.h"
 #include "chromeos/login/auth/user_context.h"
@@ -88,8 +86,7 @@ class UserSessionManager
       public net::NetworkChangeNotifier::NetworkChangeObserver,
       public base::SupportsWeakPtr<UserSessionManager>,
       public UserSessionManagerDelegate,
-      public user_manager::UserManager::UserSessionStateObserver,
-      public user_manager::UserManager::Observer {
+      public user_manager::UserManager::UserSessionStateObserver {
  public:
   // Context of StartSession calls.
   typedef enum {
@@ -279,9 +276,6 @@ class UserSessionManager
   // Used when restoring user sessions after crash.
   void OnProfilePrepared(Profile* profile, bool browser_launched) override;
 
-  // user_manager::UserManager::Observer overrides:
-  void OnUsersSignInConstraintsChanged() override;
-
   void ChildAccountStatusReceivedCallback(Profile* profile);
 
   void StopChildStatusObserving(Profile* profile);
@@ -326,7 +320,8 @@ class UserSessionManager
   void PrepareTpmDeviceAndFinalizeProfile(Profile* profile);
 
   // Called on UI thread once Cryptohome operation completes.
-  void OnCryptohomeOperationCompleted(Profile* profile, bool result);
+  void OnCryptohomeOperationCompleted(Profile* profile,
+                                      DBusMethodCallStatus call_status);
 
   // Finalized profile preparation.
   void FinalizePrepareProfile(Profile* profile);
@@ -363,7 +358,8 @@ class UserSessionManager
 
   // Callback to process RetrieveActiveSessions() request results.
   void OnRestoreActiveSessions(
-      base::Optional<SessionManagerClient::ActiveSessionsMap> sessions);
+      const SessionManagerClient::ActiveSessionsMap& sessions,
+      bool success);
 
   // Called by OnRestoreActiveSessions() when there're user sessions in
   // |pending_user_sessions_| that has to be restored one by one.

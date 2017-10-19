@@ -59,12 +59,6 @@ class InFlightIO;
 namespace gpu {
 class GpuChannelHost;
 }
-namespace leveldb {
-class LevelDBMojoProxy;
-}
-namespace media {
-class BlockingUrlProtocol;
-}
 namespace mojo {
 class SyncCallRestrictions;
 namespace edk {
@@ -78,7 +72,7 @@ class GpuState;
 }
 namespace net {
 class NetworkChangeNotifierMac;
-class OCSPScopedAllowBaseSyncPrimitives;
+class OSCPScopedAllowBaseSyncPrimitives;
 namespace internal {
 class AddressTrackerLinux;
 }
@@ -215,9 +209,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
                            ScopedAllowBaseSyncPrimitivesResetsState);
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest,
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
-  friend class leveldb::LevelDBMojoProxy;
-  friend class media::BlockingUrlProtocol;
-  friend class net::OCSPScopedAllowBaseSyncPrimitives;
+  friend class net::OSCPScopedAllowBaseSyncPrimitives;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;

@@ -24,6 +24,8 @@ class StyleResolverState;
 class StylePropertyShorthand;
 class CSSParserTokenRange;
 
+enum LogicalBoxSide { kBeforeSide, kEndSide, kAfterSide, kStartSide };
+enum LogicalExtent { kLogicalWidth, kLogicalHeight };
 enum PhysicalBoxSide { kTopSide, kRightSide, kBottomSide, kLeftSide };
 
 class CSSPropertyAPI {
@@ -72,33 +74,26 @@ class CSSPropertyAPI {
     NOTREACHED();
   }
   virtual bool IsAffectedByAll() const { return IsEnabled() && IsProperty(); }
-  virtual CSSPropertyID ResolveDirectionAwareProperty(
+  virtual const CSSPropertyAPI& ResolveDirectionAwareProperty(
       TextDirection,
       WritingMode) const {
-    return PropertyID();
+    return *this;
   }
   static void FilterEnabledCSSPropertiesIntoVector(const CSSPropertyID*,
                                                    size_t length,
                                                    Vector<CSSPropertyID>&);
 
  protected:
+  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      LogicalBoxSide,
+      const StylePropertyShorthand&);
+  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
+      WritingMode,
+      LogicalExtent,
+      const CSSPropertyID*);
   static const StylePropertyShorthand& BorderDirections();
-  static CSSPropertyID ResolveAfterToPhysicalProperty(
-      TextDirection,
-      WritingMode,
-      const StylePropertyShorthand&);
-  static CSSPropertyID ResolveBeforeToPhysicalProperty(
-      TextDirection,
-      WritingMode,
-      const StylePropertyShorthand&);
-  static CSSPropertyID ResolveEndToPhysicalProperty(
-      TextDirection,
-      WritingMode,
-      const StylePropertyShorthand&);
-  static CSSPropertyID ResolveStartToPhysicalProperty(
-      TextDirection,
-      WritingMode,
-      const StylePropertyShorthand&);
 
  private:
   const CSSPropertyID id_;

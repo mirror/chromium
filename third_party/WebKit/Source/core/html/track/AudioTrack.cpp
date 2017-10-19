@@ -4,7 +4,7 @@
 
 #include "core/html/track/AudioTrack.h"
 
-#include "core/html/media/HTMLMediaElement.h"
+#include "core/html/HTMLMediaElement.h"
 
 namespace blink {
 
@@ -18,7 +18,7 @@ AudioTrack::AudioTrack(const String& id,
 
 AudioTrack::~AudioTrack() {}
 
-void AudioTrack::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AudioTrack) {
   TrackBase::Trace(visitor);
 }
 

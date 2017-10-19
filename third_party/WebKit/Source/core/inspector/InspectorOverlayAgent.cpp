@@ -60,7 +60,7 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/PageOverlay.h"
-#include "platform/bindings/ScriptForbiddenScope.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/CullRect.h"
@@ -183,7 +183,7 @@ class InspectorOverlayAgent::InspectorOverlayChromeClient final
     return new InspectorOverlayChromeClient(client, overlay);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(client_);
     visitor->Trace(overlay_);
     EmptyChromeClient::Trace(visitor);
@@ -250,7 +250,7 @@ InspectorOverlayAgent::~InspectorOverlayAgent() {
   DCHECK(!overlay_page_);
 }
 
-void InspectorOverlayAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorOverlayAgent) {
   visitor->Trace(frame_impl_);
   visitor->Trace(inspected_frames_);
   visitor->Trace(highlight_node_);
@@ -847,7 +847,7 @@ Page* InspectorOverlayAgent::OverlayPage() {
   overlay_settings.SetAcceleratedCompositingEnabled(false);
 
   LocalFrame* frame =
-      LocalFrame::Create(&dummy_local_frame_client, *overlay_page_, nullptr);
+      LocalFrame::Create(&dummy_local_frame_client, *overlay_page_, 0);
   frame->SetView(LocalFrameView::Create(*frame));
   frame->Init();
   frame->View()->SetCanHaveScrollbars(false);
@@ -947,7 +947,7 @@ String InspectorOverlayAgent::EvaluateInOverlayForTest(const String& script) {
       ToLocalFrame(OverlayPage()->MainFrame())
           ->GetScriptController()
           .ExecuteScriptInMainWorldAndReturnValue(
-              ScriptSourceCode(script), ScriptFetchOptions(),
+              ScriptSourceCode(script),
               ScriptController::kExecuteScriptWhenScriptsDisabled);
   return ToCoreStringWithUndefinedOrNullCheck(string);
 }

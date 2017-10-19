@@ -40,11 +40,9 @@ void InvokePaymentAppCallback(
   *called = true;
 }
 
-void PaymentEventResultCallback(base::OnceClosure callback,
-                                bool* out_payment_event_result,
+void PaymentEventResultCallback(bool* out_payment_event_result,
                                 bool payment_event_result) {
   *out_payment_event_result = payment_event_result;
-  std::move(callback).Run();
 }
 
 }  // namespace
@@ -87,12 +85,14 @@ class PaymentAppProviderTest : public PaymentAppContentUnitTestBase {
     PaymentAppProviderImpl::GetInstance()->CanMakePayment(
         browser_context(), registration_id, std::move(event_data),
         std::move(callback));
+    base::RunLoop().RunUntilIdle();
   }
 
   void AbortPayment(int64_t registration_id,
                     PaymentAppProvider::PaymentEventResultCallback callback) {
     PaymentAppProviderImpl::GetInstance()->AbortPayment(
         browser_context(), registration_id, std::move(callback));
+    base::RunLoop().RunUntilIdle();
   }
 
  private:
@@ -113,11 +113,8 @@ TEST_F(PaymentAppProviderTest, AbortPaymentTest) {
   ASSERT_EQ(1U, apps.size());
 
   bool payment_aborted = false;
-  base::RunLoop loop;
   AbortPayment(last_sw_registration_id(),
-               base::BindOnce(&PaymentEventResultCallback, loop.QuitClosure(),
-                              &payment_aborted));
-  loop.Run();
+               base::BindOnce(&PaymentEventResultCallback, &payment_aborted));
   ASSERT_TRUE(payment_aborted);
 }
 
@@ -142,11 +139,9 @@ TEST_F(PaymentAppProviderTest, CanMakePaymentTest) {
   event_data->method_data.push_back(std::move(methodData));
 
   bool can_make_payment = false;
-  base::RunLoop loop;
-  CanMakePayment(last_sw_registration_id(), std::move(event_data),
-                 base::BindOnce(&PaymentEventResultCallback, loop.QuitClosure(),
-                                &can_make_payment));
-  loop.Run();
+  CanMakePayment(
+      last_sw_registration_id(), std::move(event_data),
+      base::BindOnce(&PaymentEventResultCallback, &can_make_payment));
   ASSERT_TRUE(can_make_payment);
 }
 

@@ -216,17 +216,16 @@ static hb_font_funcs_t* HarfBuzzSkiaGetFontFuncs() {
   // HarfBuzz will use the fallback implementation if they aren't set.
   if (!funcs) {
     funcs = hb_font_funcs_create();
-    hb_font_funcs_set_glyph_func(funcs, HarfBuzzGetGlyph, nullptr, nullptr);
+    hb_font_funcs_set_glyph_func(funcs, HarfBuzzGetGlyph, 0, 0);
     hb_font_funcs_set_glyph_h_advance_func(
-        funcs, HarfBuzzGetGlyphHorizontalAdvance, nullptr, nullptr);
+        funcs, HarfBuzzGetGlyphHorizontalAdvance, 0, 0);
     hb_font_funcs_set_glyph_h_kerning_func(
-        funcs, HarfBuzzGetGlyphHorizontalKerning, nullptr, nullptr);
+        funcs, HarfBuzzGetGlyphHorizontalKerning, 0, 0);
     hb_font_funcs_set_glyph_v_advance_func(
-        funcs, HarfBuzzGetGlyphVerticalAdvance, nullptr, nullptr);
+        funcs, HarfBuzzGetGlyphVerticalAdvance, 0, 0);
     hb_font_funcs_set_glyph_v_origin_func(funcs, HarfBuzzGetGlyphVerticalOrigin,
-                                          nullptr, nullptr);
-    hb_font_funcs_set_glyph_extents_func(funcs, HarfBuzzGetGlyphExtents,
-                                         nullptr, nullptr);
+                                          0, 0);
+    hb_font_funcs_set_glyph_extents_func(funcs, HarfBuzzGetGlyphExtents, 0, 0);
     hb_font_funcs_make_immutable(funcs);
     FontGlobalContext::SetHarfBuzzFontFuncs(funcs);
   }
@@ -297,7 +296,7 @@ hb_face_t* HarfBuzzFace::CreateFace() {
   // Fallback to table copies if there is no in-memory access.
   if (!face) {
     face = hb_face_create_for_tables(HarfBuzzSkiaGetTable,
-                                     platform_data_->Typeface(), nullptr);
+                                     platform_data_->Typeface(), 0);
     zero_copy_success_histogram.Count(false);
   } else {
     zero_copy_success_histogram.Count(true);

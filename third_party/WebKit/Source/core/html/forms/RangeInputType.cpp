@@ -79,7 +79,7 @@ RangeInputType::RangeInputType(HTMLInputElement& element)
       InputTypeView(element),
       tick_mark_values_dirty_(true) {}
 
-void RangeInputType::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RangeInputType) {
   InputTypeView::Trace(visitor);
   InputType::Trace(visitor);
 }
@@ -274,7 +274,7 @@ void RangeInputType::AccessKeyAction(bool send_mouse_events) {
   InputTypeView::AccessKeyAction(send_mouse_events);
 
   GetElement().DispatchSimulatedClick(
-      nullptr, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
+      0, send_mouse_events ? kSendMouseUpDownEvents : kSendNoEvents);
 }
 
 void RangeInputType::SanitizeValueInResponseToMinOrMaxAttributeChange() {

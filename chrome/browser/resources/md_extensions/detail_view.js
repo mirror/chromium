@@ -26,7 +26,8 @@ cr.define('extensions', function() {
 
     /** @private */
     onCloseButtonTap_: function() {
-      extensions.navigation.navigateTo({page: Page.LIST});
+      extensions.navigation.navigateTo(
+          {page: Page.LIST, type: extensions.getItemListType(this.data)});
     },
 
     /**
@@ -77,14 +78,6 @@ cr.define('extensions', function() {
       return this.data.disableReasons.corruptInstall ||
           this.data.disableReasons.suspiciousInstall ||
           this.data.disableReasons.updateRequired || !!this.data.blacklistText;
-    },
-
-    /**
-     * @return {string}
-     * @private
-     */
-    computeEnabledStyle_: function() {
-      return this.isEnabled_() ? 'enabled-text' : '';
     },
 
     /**

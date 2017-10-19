@@ -548,7 +548,7 @@ public class VrShellDelegate
     /**
      * @return Whether or not VR Shell is currently enabled.
      */
-    /* package */ static boolean isVrShellEnabled(int vrSupportLevel) {
+    private static boolean isVrShellEnabled(int vrSupportLevel) {
         // Only enable ChromeVR (VrShell) on Daydream devices as it currently needs a Daydream
         // controller.
         if (vrSupportLevel != VR_DAYDREAM) return false;
@@ -709,11 +709,6 @@ public class VrShellDelegate
         mVrSupportLevel = supportLevel;
     }
 
-    @VrSupportLevel
-    /* package */ int getVrSupportLevel() {
-        return mVrSupportLevel;
-    }
-
     private void onVrServicesMaybeUpdated() {
         int vrCorePackageVersion = getVrCorePackageVersion();
         if (mCachedVrCorePackageVersion == vrCorePackageVersion) return;
@@ -755,18 +750,7 @@ public class VrShellDelegate
         boolean tentativeWebVrMode =
                 mListeningForWebVrActivateBeforePause && !mRequestedWebVr && !mAutopresentWebVr;
         if (tentativeWebVrMode) {
-            // Before we fire DisplayActivate, we need focus to propagate to the WebContents we're
-            // about to send DisplayActivate to. Focus propagates during onResume, which is when
-            // this function is called, so if we post DisplayActivate to fire after onResume, focus
-            // will have propagated.
-            assert !mPaused;
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mNativeVrShellDelegate == 0) return;
-                    nativeDisplayActivate(mNativeVrShellDelegate);
-                }
-            });
+            nativeDisplayActivate(mNativeVrShellDelegate);
         }
 
         enterVr(tentativeWebVrMode);
@@ -883,9 +867,6 @@ public class VrShellDelegate
         if (!VrIntentUtils.isVrIntent(intent)) return;
         VrShellDelegate instance = getInstance(activity);
         if (instance == null) return;
-        // TODO(ymalik): This should use isTrustedAutopresentIntent once the Daydream Home change
-        // that adds the autopresent intent extra rolls out on most devices. This will allow us to
-        // differentiate trusted auto-present intents from Chrome VR intents.
         if (VrIntentUtils.getHandlerInstance().isTrustedDaydreamIntent(intent)) {
             assert activitySupportsAutopresentation(activity);
             instance.mAutopresentWebVr = true;
@@ -1018,7 +999,6 @@ public class VrShellDelegate
             // This also fixes the issue tracked in crbug.com/767944, so this should not be removed
             // until the root cause of that has been found and fixed.
             mVrDaydreamApi.launchInVr(getEnterVrPendingIntent(mActivity));
-            mProbablyInDon = true;
         } else {
             enterVr(false);
         }

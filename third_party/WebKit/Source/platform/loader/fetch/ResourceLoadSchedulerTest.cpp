@@ -24,9 +24,7 @@ class MockClient final : public GarbageCollectedFinalized<MockClient>,
   }
   bool WasRan() { return was_ran_; }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ResourceLoadSchedulerClient::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ResourceLoadSchedulerClient::Trace(visitor); }
 
  private:
   bool was_ran_ = false;

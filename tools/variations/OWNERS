@@ -1,3 +1,4 @@
-file://base/metrics/OWNERS
+asvitkine@chromium.org
+danduong@chromium.org
 
-# COMPONENT: Internals>Metrics>Variations
+# COMPONENT: Internals>Metrics

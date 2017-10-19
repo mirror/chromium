@@ -13,7 +13,6 @@
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
 #include "third_party/WebKit/public/platform/WebRTCICECandidate.h"
 #include "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h"
-#include "third_party/WebKit/public/platform/WebRTCRtpReceiver.h"
 
 namespace content {
 
@@ -30,40 +29,33 @@ class MockWebRTCPeerConnectionHandlerClient
   MOCK_METHOD1(DidChangeSignalingState, void(SignalingState state));
   MOCK_METHOD1(DidChangeICEGatheringState, void(ICEGatheringState state));
   MOCK_METHOD1(DidChangeICEConnectionState, void(ICEConnectionState state));
-  void DidAddRemoteTrack(
-      std::unique_ptr<blink::WebRTCRtpReceiver> web_rtp_receiver) {
-    DidAddRemoteTrackForMock(&web_rtp_receiver);
-  }
-  void DidRemoveRemoteTrack(
-      std::unique_ptr<blink::WebRTCRtpReceiver> web_rtp_receiver) {
-    DidRemoveRemoteTrackForMock(&web_rtp_receiver);
-  }
+  MOCK_METHOD2(
+      DidAddRemoteStream,
+      void(const blink::WebMediaStream& stream_descriptor,
+           blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>>*));
+  MOCK_METHOD1(DidRemoveRemoteStream,
+               void(const blink::WebMediaStream& stream_descriptor));
   MOCK_METHOD1(DidAddRemoteDataChannel, void(blink::WebRTCDataChannelHandler*));
   MOCK_METHOD0(ReleasePeerConnectionHandler, void());
 
-  // Move-only arguments do not play nicely with MOCK, the workaround is to
-  // EXPECT_CALL with these instead.
-  MOCK_METHOD1(DidAddRemoteTrackForMock,
-               void(std::unique_ptr<blink::WebRTCRtpReceiver>*));
-  MOCK_METHOD1(DidRemoveRemoteTrackForMock,
-               void(std::unique_ptr<blink::WebRTCRtpReceiver>*));
-
   void didGenerateICECandidateWorker(
       const blink::WebRTCICECandidate& candidate);
-  void didAddRemoteTrackWorker(
-      std::unique_ptr<blink::WebRTCRtpReceiver>* stream_web_rtp_receivers);
-  void didRemoveRemoteTrackWorker(
-      std::unique_ptr<blink::WebRTCRtpReceiver>* stream_web_rtp_receivers);
+  void didAddRemoteStreamWorker(
+      const blink::WebMediaStream& stream_descriptor,
+      blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>>*
+          stream_web_rtp_receivers);
+  void didRemoveRemoteStreamWorker(
+      const blink::WebMediaStream& stream_descriptor);
 
   const std::string& candidate_sdp() const { return candidate_sdp_; }
   int candidate_mlineindex() const {
     return candidate_mline_index_;
   }
   const std::string& candidate_mid() const { return candidate_mid_ ; }
-  const blink::WebMediaStream& remote_stream() const { return remote_stream_; }
+  const blink::WebMediaStream& remote_stream() const { return remote_steam_;}
 
  private:
-  blink::WebMediaStream remote_stream_;
+  blink::WebMediaStream remote_steam_;
   std::string candidate_sdp_;
   int candidate_mline_index_;
   std::string candidate_mid_;

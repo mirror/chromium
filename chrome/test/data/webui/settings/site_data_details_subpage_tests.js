@@ -7,9 +7,8 @@ suite('SiteDataDetailsSubpage', function() {
   /** @type {?SiteDataDetailsSubpageElement} */
   var page = null;
 
-  /** @type {TestLocalDataBrowserProxy} */
+  /** @type {TestSiteSettingsPrefsBrowserProxy} */
   var browserProxy = null;
-
   /** @type {!CookieDetails} */
   var cookieDetails = {
     accessibleToScript: "Yes",

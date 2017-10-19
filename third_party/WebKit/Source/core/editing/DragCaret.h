@@ -66,7 +66,7 @@ class DragCaret final : public GarbageCollectedFinalized<DragCaret>,
   void SetCaretPosition(const PositionWithAffinity&);
   void Clear() { SetCaretPosition(PositionWithAffinity()); }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   DragCaret();

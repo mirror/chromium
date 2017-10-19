@@ -143,6 +143,8 @@ InProcessCommandBuffer::Service::Service(
     const GpuFeatureInfo& gpu_feature_info)
     : gpu_preferences_(gpu_preferences),
       gpu_feature_info_(gpu_feature_info),
+      gpu_driver_bug_workarounds_(
+          gpu_feature_info.enabled_gpu_driver_bug_workarounds),
       mailbox_manager_(mailbox_manager),
       share_group_(share_group),
       shader_translator_cache_(gpu_preferences_) {
@@ -157,6 +159,11 @@ InProcessCommandBuffer::Service::~Service() {}
 
 const GpuPreferences& InProcessCommandBuffer::Service::gpu_preferences() {
   return gpu_preferences_;
+}
+
+const GpuDriverBugWorkarounds&
+InProcessCommandBuffer::Service::gpu_driver_bug_workarounds() {
+  return gpu_driver_bug_workarounds_;
 }
 
 scoped_refptr<gl::GLShareGroup> InProcessCommandBuffer::Service::share_group() {
@@ -176,13 +183,13 @@ gles2::ProgramCache* InProcessCommandBuffer::Service::program_cache() {
       (gl::g_current_gl_driver->ext.b_GL_ARB_get_program_binary ||
        gl::g_current_gl_driver->ext.b_GL_OES_get_program_binary) &&
       !gpu_preferences().disable_gpu_program_cache) {
+    const GpuDriverBugWorkarounds& workarounds = gpu_driver_bug_workarounds_;
     bool disable_disk_cache =
         gpu_preferences_.disable_gpu_shader_disk_cache ||
-        gpu_feature_info_.IsWorkaroundEnabled(gpu::DISABLE_PROGRAM_DISK_CACHE);
+        workarounds.disable_program_disk_cache;
     program_cache_.reset(new gles2::MemoryProgramCache(
         gpu_preferences_.gpu_program_cache_size, disable_disk_cache,
-        gpu_feature_info_.IsWorkaroundEnabled(
-            gpu::DISABLE_PROGRAM_CACHING_FOR_TRANSFORM_FEEDBACK),
+        workarounds.disable_program_caching_for_transform_feedback,
         &activity_flags_));
   }
   return program_cache_.get();
@@ -194,7 +201,7 @@ InProcessCommandBuffer::InProcessCommandBuffer(
           g_next_command_buffer_id.GetNext() + 1)),
       delayed_work_pending_(false),
       image_factory_(nullptr),
-      latency_info_(std::make_unique<std::vector<ui::LatencyInfo>>()),
+      latency_info_(base::MakeUnique<std::vector<ui::LatencyInfo>>()),
       gpu_control_client_(nullptr),
 #if DCHECK_IS_ON()
       context_lost_(false),
@@ -246,7 +253,7 @@ bool InProcessCommandBuffer::MakeCurrent() {
   return true;
 }
 
-gpu::ContextResult InProcessCommandBuffer::Initialize(
+bool InProcessCommandBuffer::Initialize(
     scoped_refptr<gl::GLSurface> surface,
     bool is_offscreen,
     SurfaceHandle window,
@@ -276,40 +283,39 @@ gpu::ContextResult InProcessCommandBuffer::Initialize(
   InitializeOnGpuThreadParams params(is_offscreen, window, attribs,
                                      &capabilities, share_group, image_factory);
 
-  base::Callback<gpu::ContextResult(void)> init_task =
+  base::Callback<bool(void)> init_task =
       base::Bind(&InProcessCommandBuffer::InitializeOnGpuThread,
                  base::Unretained(this), params);
 
   base::WaitableEvent completion(
       base::WaitableEvent::ResetPolicy::MANUAL,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
-  gpu::ContextResult result = gpu::ContextResult::kSuccess;
-  QueueTask(true, base::Bind(&RunTaskWithResult<gpu::ContextResult>, init_task,
-                             &result, &completion));
+  bool result = false;
+  QueueTask(true, base::Bind(&RunTaskWithResult<bool>, init_task, &result,
+                             &completion));
   completion.Wait();
 
   gpu_memory_buffer_manager_ = gpu_memory_buffer_manager;
 
-  if (result == gpu::ContextResult::kSuccess)
+  if (result)
     capabilities_ = capabilities;
 
   return result;
 }
 
-gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
+bool InProcessCommandBuffer::InitializeOnGpuThread(
     const InitializeOnGpuThreadParams& params) {
   CheckSequencedThread();
   gpu_thread_weak_ptr_ = gpu_thread_weak_ptr_factory_.GetWeakPtr();
 
-  transfer_buffer_manager_ = std::make_unique<TransferBufferManager>(nullptr);
+  transfer_buffer_manager_ = base::MakeUnique<TransferBufferManager>(nullptr);
 
   gl_share_group_ = params.context_group ? params.context_group->gl_share_group_
                                          : service_->share_group();
 
   bool bind_generates_resource = false;
-  gpu::GpuDriverBugWorkarounds workarounds(
-      service_->gpu_feature_info().enabled_gpu_driver_bug_workarounds);
-  auto feature_info = base::MakeRefCounted<gles2::FeatureInfo>(workarounds);
+  scoped_refptr<gles2::FeatureInfo> feature_info =
+      new gles2::FeatureInfo(service_->gpu_driver_bug_workarounds());
 
   context_group_ =
       params.context_group
@@ -324,13 +330,13 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
                 nullptr /* image_factory */, nullptr /* progress_reporter */,
                 GpuFeatureInfo(), service_->discardable_manager());
 
-  command_buffer_ = std::make_unique<CommandBufferService>(
+  command_buffer_ = base::MakeUnique<CommandBufferService>(
       this, transfer_buffer_manager_.get());
   decoder_.reset(gles2::GLES2Decoder::Create(this, command_buffer_.get(),
                                              service_->outputter(),
                                              context_group_.get()));
 
-  if (!surface_) {
+  if (!surface_.get()) {
     if (params.is_offscreen) {
       surface_ = gl::init::CreateOffscreenGLSurface(gfx::Size());
     } else {
@@ -340,15 +346,15 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
       if (!surface_ || !surface_->Initialize(gl::GLSurfaceFormat())) {
         surface_ = nullptr;
         DLOG(ERROR) << "Failed to create surface.";
-        return gpu::ContextResult::kFatalFailure;
+        return false;
       }
     }
   }
 
   if (!surface_.get()) {
-    DLOG(ERROR) << "Could not create GLSurface.";
+    LOG(ERROR) << "Could not create GLSurface.";
     DestroyOnGpuThread();
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
   sync_point_order_data_ =
@@ -402,14 +408,13 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
   if (!context_.get()) {
     LOG(ERROR) << "Could not create GLContext.";
     DestroyOnGpuThread();
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
   if (!context_->MakeCurrent(surface_.get())) {
     LOG(ERROR) << "Could not make context current.";
     DestroyOnGpuThread();
-    // The caller should retry making a context, but this one won't work.
-    return gpu::ContextResult::kTransientFailure;
+    return false;
   }
 
   if (!decoder_->GetContextGroup()->has_program_cache() &&
@@ -422,18 +427,17 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
 
   gles2::DisallowedFeatures disallowed_features;
   disallowed_features.gpu_memory_manager = true;
-  auto result = decoder_->Initialize(surface_, context_, params.is_offscreen,
-                                     disallowed_features, params.attribs);
-  if (result != gpu::ContextResult::kSuccess) {
+  if (!decoder_->Initialize(surface_, context_, params.is_offscreen,
+                            disallowed_features, params.attribs)) {
     LOG(ERROR) << "Could not initialize decoder.";
     DestroyOnGpuThread();
-    return result;
+    return false;
   }
   *params.capabilities = decoder_->GetCapabilities();
 
   image_factory_ = params.image_factory;
 
-  return gpu::ContextResult::kSuccess;
+  return true;
 }
 
 void InProcessCommandBuffer::Destroy() {
@@ -525,7 +529,7 @@ void InProcessCommandBuffer::QueueTask(bool out_of_order,
   uint32_t order_num = sync_point_order_data_->GenerateUnprocessedOrderNumber();
   {
     base::AutoLock lock(task_queue_lock_);
-    task_queue_.push(std::make_unique<GpuTask>(task, order_num));
+    task_queue_.push(base::MakeUnique<GpuTask>(task, order_num));
   }
   service_->ScheduleTask(base::Bind(
       &InProcessCommandBuffer::ProcessTasksOnGpuThread, gpu_thread_weak_ptr_));
@@ -734,10 +738,6 @@ void InProcessCommandBuffer::SetGpuControlClient(GpuControlClient* client) {
 
 const Capabilities& InProcessCommandBuffer::GetCapabilities() const {
   return capabilities_;
-}
-
-const GpuFeatureInfo& InProcessCommandBuffer::GetGpuFeatureInfo() const {
-  return service_->gpu_feature_info();
 }
 
 int32_t InProcessCommandBuffer::CreateImage(ClientBuffer buffer,

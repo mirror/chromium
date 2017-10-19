@@ -212,9 +212,6 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
 
   void SetLayerTreeFrameSink(std::unique_ptr<cc::LayerTreeFrameSink> surface);
 
-  // Called when a child surface is about to resize.
-  void OnChildResizing();
-
   // Schedules a redraw of the layer tree associated with this compositor.
   void ScheduleDraw();
 

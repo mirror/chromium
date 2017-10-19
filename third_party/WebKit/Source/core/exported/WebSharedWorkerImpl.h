@@ -46,7 +46,6 @@
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSharedWorkerClient.h"
 #include "public/web/worker_content_settings_proxy.mojom-blink.h"
-#include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
 
 namespace blink {
 
@@ -90,8 +89,7 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
       WebContentSecurityPolicyType,
       WebAddressSpace,
       bool data_saver_enabled,
-      mojo::ScopedMessagePipeHandle content_settings_handle,
-      mojo::ScopedMessagePipeHandle interface_provider) override;
+      mojo::ScopedMessagePipeHandle content_settings_handle) override;
   void Connect(MessagePortChannel) override;
   void TerminateWorkerContext() override;
 
@@ -147,9 +145,6 @@ class CORE_EXPORT WebSharedWorkerImpl final : public WebSharedWorker,
   WebURL url_;
   WebString name_;
   WebAddressSpace creation_address_space_;
-
-  service_manager::mojom::blink::InterfaceProviderPtrInfo
-      pending_interface_provider_;
 };
 
 }  // namespace blink

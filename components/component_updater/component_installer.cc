@@ -23,6 +23,7 @@
 #include "base/values.h"
 #include "base/version.h"
 #include "components/component_updater/component_updater_paths.h"
+// TODO(ddorwin): Find a better place for ReadManifest.
 #include "components/component_updater/component_updater_service.h"
 #include "components/update_client/component_unpacker.h"
 #include "components/update_client/update_client.h"
@@ -84,17 +85,12 @@ void ComponentInstaller::OnUpdateError(int error) {
   LOG(ERROR) << "Component update error: " << error;
 }
 
-Result ComponentInstaller::InstallHelper(
-    const base::FilePath& unpack_path,
-    std::unique_ptr<base::DictionaryValue>* manifest,
-    base::Version* version,
-    base::FilePath* install_path) {
-  auto local_manifest = update_client::ReadManifest(unpack_path);
-  if (!local_manifest)
-    return Result(InstallError::BAD_MANIFEST);
-
+Result ComponentInstaller::InstallHelper(const base::DictionaryValue& manifest,
+                                         const base::FilePath& unpack_path,
+                                         base::Version* version,
+                                         base::FilePath* install_path) {
   std::string version_ascii;
-  local_manifest->GetStringASCII("version", &version_ascii);
+  manifest.GetStringASCII("version", &version_ascii);
   const base::Version manifest_version(version_ascii);
 
   VLOG(1) << "Install: version=" << manifest_version.GetString()
@@ -140,15 +136,13 @@ Result ComponentInstaller::InstallHelper(
   DCHECK(base::PathExists(local_install_path));
 
   const Result result =
-      installer_policy_->OnCustomInstall(*local_manifest, local_install_path);
+      installer_policy_->OnCustomInstall(manifest, local_install_path);
   if (result.error)
     return result;
 
-  if (!installer_policy_->VerifyInstallation(*local_manifest,
-                                             local_install_path))
+  if (!installer_policy_->VerifyInstallation(manifest, local_install_path))
     return Result(InstallError::INSTALL_VERIFICATION_FAILED);
 
-  *manifest = std::move(local_manifest);
   *version = manifest_version;
   *install_path = install_path_owner.Take();
 
@@ -156,13 +150,13 @@ Result ComponentInstaller::InstallHelper(
 }
 
 void ComponentInstaller::Install(
+    std::unique_ptr<base::DictionaryValue> manifest,
     const base::FilePath& unpack_path,
     const Callback& callback) {
-  std::unique_ptr<base::DictionaryValue> manifest;
   base::Version version;
   base::FilePath install_path;
   const Result result =
-      InstallHelper(unpack_path, &manifest, &version, &install_path);
+      InstallHelper(*manifest, unpack_path, &version, &install_path);
   base::DeleteFile(unpack_path, true);
   if (result.error) {
     main_task_runner_->PostTask(FROM_HERE, base::Bind(callback, result));

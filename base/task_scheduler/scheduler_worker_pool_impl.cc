@@ -61,7 +61,6 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   ~SchedulerWorkerDelegateImpl() override;
 
   // SchedulerWorker::Delegate:
-  void OnCanScheduleSequence(scoped_refptr<Sequence> sequence) override;
   void OnMainEntry(SchedulerWorker* worker) override;
   scoped_refptr<Sequence> GetWork(SchedulerWorker* worker) override;
   void DidRunTask() override;
@@ -231,7 +230,7 @@ SchedulerWorkerPoolImpl::~SchedulerWorkerPoolImpl() {
 #endif
 }
 
-void SchedulerWorkerPoolImpl::OnCanScheduleSequence(
+void SchedulerWorkerPoolImpl::ScheduleSequence(
     scoped_refptr<Sequence> sequence) {
   const auto sequence_sort_key = sequence->GetSortKey();
   shared_priority_queue_.BeginTransaction()->Push(std::move(sequence),
@@ -239,7 +238,6 @@ void SchedulerWorkerPoolImpl::OnCanScheduleSequence(
 
   WakeUpOneWorker();
 }
-
 void SchedulerWorkerPoolImpl::GetHistograms(
     std::vector<const HistogramBase*>* histograms) const {
   histograms->push_back(detach_duration_histogram_);
@@ -323,11 +321,6 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     ~SchedulerWorkerDelegateImpl() = default;
-
-void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
-    OnCanScheduleSequence(scoped_refptr<Sequence> sequence) {
-  outer_->OnCanScheduleSequence(std::move(sequence));
-}
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
     SchedulerWorker* worker) {
@@ -833,8 +826,8 @@ bool SchedulerWorkerPoolImpl::
   // scope of a MAY_BLOCK ScopedBlockingCall but haven't cause a capacity
   // increment yet.
   //
-  // - When (1) is false: A newly posted task will run on one of the idle
-  //   workers that are allowed to do work. There is no hurry to increase
+  // - When (1) is false: A newly posted task will be scheduled on one of the
+  //   idle workers that are allowed to do work. There is no hurry to increase
   //   capacity.
   // - When (2) is false: AdjustWorkerCapacity() would be a no-op.
   const int idle_workers_that_can_do_work =

@@ -122,13 +122,12 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
   source->AddLocalizedString("title",
                              IDS_MANAGE_EXTENSIONS_SETTING_WINDOWS_TITLE);
   source->AddLocalizedString("toolbarTitle", IDS_MD_EXTENSIONS_TOOLBAR_TITLE);
-  source->AddLocalizedString("mainMenu", IDS_MD_EXTENSIONS_MENU_BUTTON_LABEL);
   source->AddLocalizedString("search", IDS_MD_EXTENSIONS_SEARCH);
   // TODO(dpapad): Use a single merged string resource for "Clear search".
   source->AddLocalizedString("clearSearch", IDS_DOWNLOAD_CLEAR_SEARCH);
+  source->AddLocalizedString("sidebarApps", IDS_MD_EXTENSIONS_SIDEBAR_APPS);
   source->AddLocalizedString("sidebarExtensions",
                              IDS_MD_EXTENSIONS_SIDEBAR_EXTENSIONS);
-  source->AddLocalizedString("appsTitle", IDS_MD_EXTENSIONS_APPS_TITLE);
   source->AddLocalizedString("noExtensionsOrApps",
                              IDS_MD_EXTENSIONS_NO_INSTALLED_ITEMS);
   source->AddLocalizedString("noSearchResults",
@@ -205,7 +204,6 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
       l10n_util::GetStringFUTF16(
           IDS_EXTENSIONS_ADDED_WITHOUT_KNOWLEDGE,
           l10n_util::GetStringUTF16(IDS_EXTENSION_WEB_STORE_TITLE)));
-  source->AddLocalizedString("learnMore", IDS_MD_EXTENSIONS_LEARN_MORE);
   source->AddLocalizedString(
       "loadErrorCouldNotLoadManifest",
       IDS_MD_EXTENSIONS_LOAD_ERROR_COULD_NOT_LOAD_MANIFEST);
@@ -252,12 +250,6 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
                              IDS_MD_EXTENSIONS_SHORTCUT_SCOPE_IN_CHROME);
   source->AddLocalizedString("shortcutTypeAShortcut",
                              IDS_MD_EXTENSIONS_TYPE_A_SHORTCUT);
-  source->AddString(
-      "suspiciousInstallHelpUrl",
-      base::ASCIIToUTF16(google_util::AppendGoogleLocaleParam(
-                             GURL(chrome::kRemoveNonCWSExtensionURL),
-                             g_browser_process->GetApplicationLocale())
-                             .spec()));
   source->AddLocalizedString("toolbarDevMode",
                              IDS_MD_EXTENSIONS_DEVELOPER_MODE);
   source->AddLocalizedString("toolbarLoadUnpacked",

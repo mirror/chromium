@@ -99,10 +99,6 @@ class WindowTree : public mojom::WindowTree,
     return embedder_intercepts_events_;
   }
 
-  void set_can_change_root_window_visibility(bool value) {
-    can_change_root_window_visibility_ = value;
-  }
-
   const UserId& user_id() const { return user_id_; }
 
   mojom::WindowTreeClient* client() { return binding_->client(); }
@@ -524,10 +520,10 @@ class WindowTree : public mojom::WindowTree,
                  Id transport_window_id,
                  ui::CursorData cursor) override;
   void SetWindowTextInputState(Id transport_window_id,
-                               ui::mojom::TextInputStatePtr state) override;
+                               mojo::TextInputStatePtr state) override;
   void SetImeVisibility(Id transport_window_id,
                         bool visible,
-                        ui::mojom::TextInputStatePtr state) override;
+                        mojo::TextInputStatePtr state) override;
   void OnWindowInputEventAck(uint32_t event_id,
                              mojom::EventResult result) override;
   void DeactivateWindow(Id window_id) override;
@@ -731,9 +727,6 @@ class WindowTree : public mojom::WindowTree,
   using ScheduledEmbeds =
       base::flat_map<base::UnguessableToken, mojom::WindowTreeClientPtr>;
   ScheduledEmbeds scheduled_embeds_;
-
-  // Controls whether the client can change the visibility of the roots.
-  bool can_change_root_window_visibility_ = true;
 
   // A weak ptr factory for callbacks from the window manager for when we send
   // a image move. All weak ptrs are invalidated when a drag is completed.

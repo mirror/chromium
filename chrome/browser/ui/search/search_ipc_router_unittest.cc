@@ -16,7 +16,6 @@
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/mock_callback.h"
-#include "base/time/time.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
@@ -271,7 +270,7 @@ TEST_F(SearchIPCRouterTest, ProcessLogMostVisitedImpressionMsg) {
   const ntp_tiles::NTPTileImpression impression(
       3, ntp_tiles::TileSource::SUGGESTIONS_SERVICE,
       ntp_tiles::TileTitleSource::UNKNOWN, ntp_tiles::TileVisualType::THUMBNAIL,
-      base::Time(), GURL());
+      GURL());
   NavigateAndCommitActiveTab(GURL(chrome::kChromeSearchLocalNtpUrl));
   SetupMockDelegateAndPolicy();
   MockSearchIPCRouterPolicy* policy = GetSearchIPCRouterPolicy();
@@ -288,7 +287,7 @@ TEST_F(SearchIPCRouterTest, ProcessLogMostVisitedNavigationMsg) {
   const ntp_tiles::NTPTileImpression impression(
       3, ntp_tiles::TileSource::SUGGESTIONS_SERVICE,
       ntp_tiles::TileTitleSource::UNKNOWN, ntp_tiles::TileVisualType::THUMBNAIL,
-      base::Time(), GURL());
+      GURL());
   NavigateAndCommitActiveTab(GURL(chrome::kChromeSearchLocalNtpUrl));
   SetupMockDelegateAndPolicy();
   MockSearchIPCRouterPolicy* policy = GetSearchIPCRouterPolicy();

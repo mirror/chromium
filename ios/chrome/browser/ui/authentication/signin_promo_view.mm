@@ -51,7 +51,6 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
 @synthesize primaryButton = _primaryButton;
 @synthesize secondaryButton = _secondaryButton;
 @synthesize closeButton = _closeButton;
-@synthesize closeButtonAction = _closeButtonAction;
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -89,9 +88,6 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
     _closeButton = [[UIButton alloc] init];
     _closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     _closeButton.accessibilityIdentifier = kSigninPromoCloseButtonId;
-    [_closeButton addTarget:self
-                     action:@selector(onCloseButtonAction:)
-           forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_closeButton];
 
     // Adding style.
@@ -168,11 +164,6 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
   return self;
 }
 
-- (void)prepareForReuse {
-  _delegate = nil;
-  _closeButtonAction = nil;
-}
-
 - (void)setMode:(SigninPromoViewMode)mode {
   if (mode == _mode) {
     return;
@@ -219,11 +210,6 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
   _imageView.image = CircularImageFromImage(image, kProfileImageFixedSize);
 }
 
-- (void)setCloseButtonAction:(CloseButtonCallback)closeButtonAction {
-  _closeButtonAction = [closeButtonAction copy];
-  _closeButton.hidden = _closeButtonAction == nil;
-}
-
 - (void)accessibilityPrimaryAction:(id)unused {
   [_primaryButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
@@ -253,12 +239,6 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
 
 - (void)onSecondaryButtonAction:(id)unused {
   [_delegate signinPromoViewDidTapSigninWithOtherAccount:self];
-}
-
-- (void)onCloseButtonAction:(id)unused {
-  if (_closeButtonAction) {
-    _closeButtonAction();
-  }
 }
 
 #pragma mark - NSObject(Accessibility)

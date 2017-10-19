@@ -30,6 +30,7 @@
     <color name="white_alpha_54">#8Affffff</color>
     <color name="white_alpha_90">#E6FFFFFF</color>
     <color name="black_alpha_65">#A6000000</color>
+    <color name="toolbar_light_tint">#A3000000</color>
     <color name="light_grey">#ccc</color>
     <color name="modal_dialog_scrim_color">#7f000000</color>
 
@@ -107,7 +108,7 @@
     <!-- Sad Tab colors -->
     <color name="sad_tab_body_text_color">#646464</color>
 
-    <!-- NTP and Home sheet colors. Also used on the bookmarks and recent tabs pages. -->
+    <!-- NTP Colors. Used on the bookmarks and recent tabs pages. -->
     <color name="ntp_bg">#f2f2f2</color>
     <color name="ntp_bg_incognito">#222</color>
     <color name="ntp_search_box_hint">@color/black_alpha_54</color>
@@ -116,8 +117,7 @@
     <color name="snippets_text_color">#646464</color>
     <color name="snippets_list_header_text_color">#646464</color>
     <color name="suggestions_modern_bg">@android:color/white</color>
-    <color name="tile_view_text">@color/black_alpha_54</color>
-    <color name="suggestions_offline_badge_tint">@color/google_blue_500</color>
+    <color name="suggestions_modern_icon_black">#1F000000</color>
 
     <!-- Incognito NTP Colors. -->
     <color name="incognito_text">#b3ffffff</color>
@@ -125,6 +125,10 @@
     <color name="incognito_header">#ccffffff</color>
     <color name="incognito_ntp_learn_more_link">#03a9f4</color>
     <color name="incognito_ntp_header">#d2d2d2</color>
+
+    <!-- Site suggestion tile colors. -->
+    <color name="tile_view_text">@color/black_alpha_54</color>
+    <color name="tile_view_offline_badge_tint">#4285f4</color>
 
     <!-- Contextual Search colors -->
     <color name="contextual_search_promo_background_color">#EEEEEE</color>
@@ -203,6 +207,5 @@
     <color name="media_viewer_bg">#000000</color>
     <color name="image_viewer_bg">#0e0e0e</color>
     <color name="modern_toolbar_bg">#E6FFFFFF</color>
-    <color name="google_blue_500_alpha_38_opaque">#B7D1FB</color>
 
 </resources>

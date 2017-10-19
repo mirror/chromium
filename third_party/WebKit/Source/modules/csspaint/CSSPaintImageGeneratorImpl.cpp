@@ -104,7 +104,7 @@ bool CSSPaintImageGeneratorImpl::IsImageGeneratorReady() const {
   return HasDocumentDefinition();
 }
 
-void CSSPaintImageGeneratorImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSPaintImageGeneratorImpl) {
   visitor->Trace(observer_);
   visitor->Trace(paint_worklet_);
   CSSPaintImageGenerator::Trace(visitor);

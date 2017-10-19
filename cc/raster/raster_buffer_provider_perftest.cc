@@ -30,7 +30,6 @@
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/common/sync_token.h"
-#include "gpu/config/gpu_feature_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/perf/perf_test.h"
 #include "third_party/khronos/GLES2/gl2.h"
@@ -87,14 +86,9 @@ class PerfContextProvider : public viz::ContextProvider {
     capabilities_.sync_query = true;
   }
 
-  gpu::ContextResult BindToCurrentThread() override {
-    return gpu::ContextResult::kSuccess;
-  }
+  bool BindToCurrentThread() override { return true; }
   const gpu::Capabilities& ContextCapabilities() const override {
     return capabilities_;
-  }
-  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override {
-    return gpu_feature_info_;
   }
   gpu::gles2::GLES2Interface* ContextGL() override { return context_gl_.get(); }
   gpu::ContextSupport* ContextSupport() override { return &support_; }
@@ -128,7 +122,6 @@ class PerfContextProvider : public viz::ContextProvider {
   viz::ContextCacheController cache_controller_;
   base::Lock context_lock_;
   gpu::Capabilities capabilities_;
-  gpu::GpuFeatureInfo gpu_feature_info_;
 };
 
 enum RasterBufferProviderType {
@@ -492,14 +485,16 @@ class RasterBufferProviderPerfTest
 
  private:
   void Create3dResourceProvider() {
-    resource_provider_ = FakeResourceProvider::CreateLayerTreeResourceProvider(
-        compositor_context_provider_.get(), nullptr,
-        &gpu_memory_buffer_manager_);
+    resource_provider_ =
+        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+            compositor_context_provider_.get(), nullptr,
+            &gpu_memory_buffer_manager_);
   }
 
   void CreateSoftwareResourceProvider() {
-    resource_provider_ = FakeResourceProvider::CreateLayerTreeResourceProvider(
-        nullptr, &shared_bitmap_manager_, nullptr);
+    resource_provider_ =
+        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+            nullptr, &shared_bitmap_manager_, nullptr);
   }
 
   std::string TestModifierString() const {
@@ -563,8 +558,9 @@ class RasterBufferProviderCommonPerfTest
  public:
   // Overridden from testing::Test:
   void SetUp() override {
-    resource_provider_ = FakeResourceProvider::CreateLayerTreeResourceProvider(
-        compositor_context_provider_.get(), nullptr);
+    resource_provider_ =
+        FakeResourceProvider::Create<LayerTreeResourceProvider>(
+            compositor_context_provider_.get(), nullptr);
   }
 
   void RunBuildTileTaskGraphTest(const std::string& test_name,

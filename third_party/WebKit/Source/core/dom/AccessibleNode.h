@@ -351,7 +351,7 @@ class CORE_EXPORT AccessibleNode : public EventTargetWithInlineData {
   DEFINE_ATTRIBUTE_EVENT_LISTENER(accessibleincrement);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(accessiblescrollintoview);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   friend class AccessibleNodeList;

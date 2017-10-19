@@ -21,7 +21,6 @@ source_set("chromeos") {
   ]
 
   public_deps = [
-    "//ash",
     "//cc",
     "//gpu/command_buffer/common",
     "//ppapi/host",
@@ -33,6 +32,10 @@ source_set("chromeos") {
     "//ui/events",
     "//ui/views",
   ]
+
+  if (use_ash) {
+    public_deps += [ "//ash" ]
+  }
 }
 
 # The host portions of the remoting unit tests.

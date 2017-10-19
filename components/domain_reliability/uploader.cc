@@ -58,13 +58,12 @@ class DomainReliabilityUploaderImpl
  public:
   DomainReliabilityUploaderImpl(
       MockableTime* time,
-      const scoped_refptr<net::URLRequestContextGetter>&
-          url_request_context_getter)
+      const scoped_refptr<
+          net::URLRequestContextGetter>& url_request_context_getter)
       : time_(time),
         url_request_context_getter_(url_request_context_getter),
         discard_uploads_(true),
-        shutdown_(false),
-        discarded_upload_count_(0u) {}
+        shutdown_(false) {}
 
   ~DomainReliabilityUploaderImpl() override {
     DCHECK(shutdown_);
@@ -78,9 +77,6 @@ class DomainReliabilityUploaderImpl
       const DomainReliabilityUploader::UploadCallback& callback) override {
     VLOG(1) << "Uploading report to " << upload_url;
     VLOG(2) << "Report JSON: " << report_json;
-
-    if (discard_uploads_)
-      discarded_upload_count_++;
 
     if (discard_uploads_ || shutdown_) {
       VLOG(1) << "Discarding report instead of uploading.";
@@ -139,7 +135,7 @@ class DomainReliabilityUploaderImpl
     last_upload_start_time_ = now;
   }
 
-  void SetDiscardUploads(bool discard_uploads) override {
+  void set_discard_uploads(bool discard_uploads) override {
     discard_uploads_ = discard_uploads;
     VLOG(1) << "Setting discard_uploads to " << discard_uploads;
   }
@@ -148,10 +144,6 @@ class DomainReliabilityUploaderImpl
     DCHECK(!shutdown_);
     shutdown_ = true;
     uploads_.clear();
-  }
-
-  int GetDiscardedUploadCount() const override {
-    return discarded_upload_count_;
   }
 
   // net::URLFetcherDelegate implementation:
@@ -206,7 +198,6 @@ class DomainReliabilityUploaderImpl
   bool discard_uploads_;
   base::TimeTicks last_upload_start_time_;
   bool shutdown_;
-  int discarded_upload_count_;
 };
 
 }  // namespace

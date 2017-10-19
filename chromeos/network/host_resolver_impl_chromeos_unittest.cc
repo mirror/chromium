@@ -34,6 +34,7 @@ namespace {
 const char kTestIPv4Address[] = "1.2.3.4";
 const char kTestIPv6Address[] = "1:2:3:4:5:6:7:8";
 
+void DoNothingWithCallStatus(DBusMethodCallStatus call_status) {}
 void ErrorCallbackFunction(const std::string& error_name,
                            const std::string& error_message) {
   LOG(ERROR) << "Shill Error: " << error_name << " : " << error_message;
@@ -129,10 +130,10 @@ class HostResolverImplChromeOSTest : public testing::Test {
                    const std::string& address) {
     DBusThreadManager::Get()->GetShillIPConfigClient()->SetProperty(
         dbus::ObjectPath(path), shill::kAddressProperty, base::Value(address),
-        EmptyVoidDBusMethodCallback());
+        base::Bind(&DoNothingWithCallStatus));
     DBusThreadManager::Get()->GetShillIPConfigClient()->SetProperty(
         dbus::ObjectPath(path), shill::kMethodProperty, base::Value(method),
-        EmptyVoidDBusMethodCallback());
+        base::Bind(&DoNothingWithCallStatus));
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;

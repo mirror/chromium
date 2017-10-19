@@ -386,12 +386,10 @@
     "contexts": ["blessed_extension"]
   },
   "experimental.devtools.audits": {
-    "nocompile": true,
     "dependencies": ["permission:experimental", "manifest:devtools_page"],
     "contexts": ["blessed_extension"]
   },
   "experimental.devtools.console": {
-    "nocompile": true,
     "dependencies": ["permission:experimental", "manifest:devtools_page"],
     "contexts": ["blessed_extension"]
   },

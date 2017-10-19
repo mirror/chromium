@@ -785,9 +785,8 @@ Bindings.BreakpointManager.ModelBreakpoint = class {
 
   /**
    * @param {function()} callback
-   * @return {!Promise}
    */
-  async _updateInDebugger(callback) {
+  _updateInDebugger(callback) {
     if (this._debuggerModel.target().isDisposed()) {
       this._cleanUpAfterDebuggerIsGone();
       callback();
@@ -810,18 +809,18 @@ Bindings.BreakpointManager.ModelBreakpoint = class {
       var script = debuggerLocation.script();
       if (script.sourceURL) {
         newState = new Bindings.BreakpointManager.Breakpoint.State(
-            script.sourceURL, null, null, debuggerLocation.lineNumber, debuggerLocation.columnNumber, condition);
+            script.sourceURL, null, debuggerLocation.lineNumber, debuggerLocation.columnNumber, condition);
       } else {
         newState = new Bindings.BreakpointManager.Breakpoint.State(
-            null, script.scriptId, script.hash, debuggerLocation.lineNumber, debuggerLocation.columnNumber, condition);
+            null, debuggerLocation.scriptId, debuggerLocation.lineNumber, debuggerLocation.columnNumber, condition);
       }
     } else if (this._breakpoint._currentState && this._breakpoint._currentState.url) {
       var position = this._breakpoint._currentState;
       newState = new Bindings.BreakpointManager.Breakpoint.State(
-          position.url, null, null, position.lineNumber, position.columnNumber, condition);
+          position.url, null, position.lineNumber, position.columnNumber, condition);
     } else if (uiSourceCode) {
       newState = new Bindings.BreakpointManager.Breakpoint.State(
-          uiSourceCode.url(), null, null, lineNumber, columnNumber, condition);
+          uiSourceCode.url(), null, lineNumber, columnNumber, condition);
     }
     if (this._debuggerId && Bindings.BreakpointManager.Breakpoint.State.equals(newState, this._currentState)) {
       callback();
@@ -843,19 +842,16 @@ Bindings.BreakpointManager.ModelBreakpoint = class {
       return;
     }
 
-    var result;
-    this._currentState = newState;
+    var updateCallback = this._didSetBreakpointInDebugger.bind(this, callback);
     if (newState.url) {
-      result = await this._debuggerModel.setBreakpointByURL(
-          newState.url, newState.lineNumber, newState.columnNumber, newState.condition);
-    } else if (newState.scriptId && newState.scriptHash) {
-      result = await this._debuggerModel.setBreakpointInAnonymousScript(
-          newState.scriptId, newState.scriptHash, newState.lineNumber, newState.columnNumber, newState.condition);
+      this._debuggerModel.setBreakpointByURL(
+          newState.url, newState.lineNumber, newState.columnNumber, this._breakpoint.condition(), updateCallback);
+    } else if (newState.scriptId) {
+      this._debuggerModel.setBreakpointBySourceId(
+          /** @type {!SDK.DebuggerModel.Location} */ (debuggerLocation), condition, updateCallback);
     }
-    if (result && result.breakpointId)
-      this._didSetBreakpointInDebugger(callback, result.breakpointId, result.locations);
-    else
-      this._didSetBreakpointInDebugger(callback, null, []);
+
+    this._currentState = newState;
   }
 
   /**
@@ -966,15 +962,13 @@ Bindings.BreakpointManager.Breakpoint.State = class {
   /**
    * @param {?string} url
    * @param {?string} scriptId
-   * @param {?string} scriptHash
    * @param {number} lineNumber
    * @param {number} columnNumber
    * @param {string} condition
    */
-  constructor(url, scriptId, scriptHash, lineNumber, columnNumber, condition) {
+  constructor(url, scriptId, lineNumber, columnNumber, condition) {
     this.url = url;
     this.scriptId = scriptId;
-    this.scriptHash = scriptHash;
     this.lineNumber = lineNumber;
     this.columnNumber = columnNumber;
     this.condition = condition;
@@ -988,8 +982,11 @@ Bindings.BreakpointManager.Breakpoint.State = class {
   static equals(stateA, stateB) {
     if (!stateA || !stateB)
       return false;
-    return stateA.url === stateB.url && stateA.scriptId === stateB.scriptId &&
-        stateA.scriptHash === stateB.scriptHash && stateA.lineNumber === stateB.lineNumber &&
+
+    if (stateA.scriptId || stateB.scriptId)
+      return false;
+
+    return stateA.url === stateB.url && stateA.lineNumber === stateB.lineNumber &&
         stateA.columnNumber === stateB.columnNumber && stateA.condition === stateB.condition;
   }
 };

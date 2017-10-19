@@ -222,11 +222,10 @@ config("compiler") {
     # Linker warnings.
     if (fatal_linker_warnings && !(is_chromeos && current_cpu == "arm") &&
         !(is_android && use_order_profiling) && !is_mac && !is_ios &&
-        current_os != "aix" && !(is_linux && is_official_build)) {
+        current_os != "aix") {
       # TODO(jochen): Enable this on chromeos on arm. http://crbug.com/356580
       # TODO(lizeb,pasko): Fix link errors when linking with order_profiling=1
       # crbug.com/485542
-      # TODO(hans): Fix link warnings in official Linux builds crbug.com/774742
       ldflags += [ "-Wl,--fatal-warnings" ]
     }
   }
@@ -430,7 +429,7 @@ config("compiler") {
       "-Xclang",
       "-mllvm",
       "-Xclang",
-      "-instcombine-lower-dbg-declare=0",
+      "-instcombine-lower-dbg-declare=1",
     ]
   }
 
@@ -644,22 +643,13 @@ config("compiler_cpu_abi") {
         ldflags += [ "--target=aarch64-linux-gnu" ]
       }
     } else if (current_cpu == "mipsel" && !is_nacl) {
-      if (is_clang) {
-        if (is_android) {
-          cflags += [ "--target=mipsel-linux-android" ]
-          ldflags += [ "--target=mipsel-linux-android" ]
-        } else {
-          cflags += [ "--target=mipsel-linux-gnu" ]
-          ldflags += [ "--target=mipsel-linux-gnu" ]
-        }
-      } else {
-        cflags += [ "-EL" ]
-        ldflags += [ "-EL" ]
-      }
-
       if (mips_arch_variant == "r6") {
         if (is_clang) {
-          cflags += [ "-march=mips32r6" ]
+          cflags += [
+            "--target=mipsel-linux-gnu",
+            "-march=mips32r6",
+          ]
+          ldflags += [ "--target=mipsel-linux-gnu" ]
         } else {
           cflags += [
             "-mips32r6",
@@ -682,14 +672,18 @@ config("compiler_cpu_abi") {
         if (is_clang) {
           if (is_android) {
             cflags += [
+              "--target=mipsel-linux-android",
               "-march=mipsel",
               "-mcpu=mips32r2",
             ]
+            ldflags += [ "--target=mipsel-linux-android" ]
           } else {
             cflags += [
+              "--target=mipsel-linux-gnu",
               "-march=mipsel",
               "-mcpu=mips32r2",
             ]
+            ldflags += [ "--target=mipsel-linux-gnu" ]
           }
         } else {
           cflags += [
@@ -704,14 +698,18 @@ config("compiler_cpu_abi") {
         if (is_clang) {
           if (is_android) {
             cflags += [
+              "--target=mipsel-linux-android",
               "-march=mipsel",
               "-mcpu=mips32",
             ]
+            ldflags += [ "--target=mipsel-linux-android" ]
           } else {
             cflags += [
+              "--target=mipsel-linux-gnu",
               "-march=mipsel",
               "-mcpu=mips32",
             ]
+            ldflags += [ "--target=mipsel-linux-gnu" ]
           }
         } else {
           cflags += [
@@ -1171,9 +1169,11 @@ config("default_warnings") {
       cflags += [ "/wd4702" ]  # Unreachable code.
     }
 
+    # Building with Clang on Windows is a work in progress and very
+    # experimental. See crbug.com/82385.
     if (is_clang) {
       cflags += [
-        # TODO(hans): Enable these, http://crbug.com/504657
+        # TODO(hans): Make this list shorter eventually, http://crbug.com/504657
         "-Wno-unknown-pragmas",  # http://crbug.com/505314
         "-Wno-microsoft-cast",  # http://crbug.com/550065
       ]
@@ -1279,12 +1279,6 @@ config("default_warnings") {
         # TODO(hans): https://crbug.com/767059
         "-Wno-tautological-unsigned-enum-zero-compare",
       ]
-      if (llvm_force_head_revision) {
-        cflags += [
-          # TODO(hans): https://crbug.com/767059
-          "-Wno-tautological-constant-compare",
-        ]
-      }
     } else if (use_xcode_clang && xcode_version_int >= 830) {
       # This is necessary to allow a progressive transition from using xcode 8.0
       # to 8.3 or more recent. Remove when all bots are migrated to 8.3.

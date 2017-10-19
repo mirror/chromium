@@ -68,7 +68,7 @@ WorkerPerformance* WorkerGlobalScopePerformance::performance(
   return performance_.Get();
 }
 
-void WorkerGlobalScopePerformance::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerGlobalScopePerformance) {
   visitor->Trace(performance_);
   Supplement<WorkerGlobalScope>::Trace(visitor);
 }

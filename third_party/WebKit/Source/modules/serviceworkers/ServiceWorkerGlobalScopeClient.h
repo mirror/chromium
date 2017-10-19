@@ -159,7 +159,7 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
   static const char* SupplementName();
   static ServiceWorkerGlobalScopeClient* From(ExecutionContext*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   WebServiceWorkerContextClient& client_;

@@ -90,11 +90,20 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // Browser state associated with this Tab.
 @property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
 
+// Returns the URL of the last committed NavigationItem for this Tab.
+@property(nonatomic, readonly) const GURL& lastCommittedURL;
+
+// Returns the URL of the visible NavigationItem for this Tab.
+@property(nonatomic, readonly) const GURL& visibleURL;
+
 // The Passkit Dialog provider used to show the UI to download a passkit object.
 @property(nonatomic, weak) id<PassKitDialogProvider> passKitDialogProvider;
 
 // The current title of the tab.
 @property(nonatomic, readonly) NSString* title;
+
+// Original page title or nil if the page did not provide one.
+@property(nonatomic, readonly) NSString* originalTitle;
 
 @property(nonatomic, readonly) NSString* urlDisplayString;
 
@@ -234,9 +243,6 @@ extern NSString* const kProxyPassthroughHeaderValue;
 
 // Called when the snapshot of the content will be taken.
 - (void)willUpdateSnapshot;
-
-// Requests deletion of the Tab snapshot.
-- (void)removeSnapshot;
 
 // Called when this tab is shown.
 - (void)wasShown;

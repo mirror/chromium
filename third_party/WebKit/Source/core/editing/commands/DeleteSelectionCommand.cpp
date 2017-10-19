@@ -148,8 +148,8 @@ void DeleteSelectionCommand::InitializeStartEnd(Position& start,
     return;
 
   while (1) {
-    start_special_container = nullptr;
-    end_special_container = nullptr;
+    start_special_container = 0;
+    end_special_container = 0;
 
     Position s =
         PositionBeforeContainingSpecialElement(start, &start_special_container);
@@ -1243,7 +1243,7 @@ bool DeleteSelectionCommand::PreservesTypingStyle() const {
   return typing_style_;
 }
 
-void DeleteSelectionCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DeleteSelectionCommand) {
   visitor->Trace(selection_to_delete_);
   visitor->Trace(upstream_start_);
   visitor->Trace(downstream_start_);

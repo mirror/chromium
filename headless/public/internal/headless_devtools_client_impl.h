@@ -36,7 +36,6 @@
 #include "headless/public/devtools/domains/memory.h"
 #include "headless/public/devtools/domains/network.h"
 #include "headless/public/devtools/domains/page.h"
-#include "headless/public/devtools/domains/performance.h"
 #include "headless/public/devtools/domains/profiler.h"
 #include "headless/public/devtools/domains/runtime.h"
 #include "headless/public/devtools/domains/security.h"
@@ -94,7 +93,6 @@ class HEADLESS_EXPORT HeadlessDevToolsClientImpl
   memory::Domain* GetMemory() override;
   network::Domain* GetNetwork() override;
   page::Domain* GetPage() override;
-  performance::Domain* GetPerformance() override;
   profiler::Domain* GetProfiler() override;
   runtime::Domain* GetRuntime() override;
   security::Domain* GetSecurity() override;
@@ -205,7 +203,6 @@ class HEADLESS_EXPORT HeadlessDevToolsClientImpl
   memory::ExperimentalDomain memory_domain_;
   network::ExperimentalDomain network_domain_;
   page::ExperimentalDomain page_domain_;
-  performance::ExperimentalDomain performance_domain_;
   profiler::ExperimentalDomain profiler_domain_;
   runtime::ExperimentalDomain runtime_domain_;
   security::ExperimentalDomain security_domain_;

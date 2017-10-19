@@ -19,7 +19,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ChromeSwitches;
-import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksReader;
 
@@ -179,10 +178,11 @@ public class PartnerBrowserCustomizations {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    boolean systemOrPreStable =
+                    boolean systemOrForced =
                             (context.getApplicationInfo().flags & ApplicationInfo.FLAG_SYSTEM) == 1
-                            || !ChromeVersionInfo.isStableBuild();
-                    if (!systemOrPreStable) {
+                            || CommandLine.getInstance().hasSwitch(
+                                       ChromeSwitches.ALLOW_PARTNER_CUSTOMIZATION);
+                    if (!systemOrForced) {
                         // Only allow partner customization if this browser is a system package, or
                         // forced for testing purposes.
                         return null;

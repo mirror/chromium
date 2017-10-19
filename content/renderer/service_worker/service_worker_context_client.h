@@ -19,7 +19,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
-#include "content/common/service_worker/controller_service_worker.mojom.h"
 #include "content/common/service_worker/embedded_worker.mojom.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
@@ -91,7 +90,6 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       const GURL& script_url,
       bool is_script_streaming,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-      mojom::ControllerServiceWorkerRequest controller_request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
       std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client);
@@ -255,7 +253,6 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
  private:
   struct WorkerContextData;
   class NavigationPreloadRequest;
-  friend class ControllerServiceWorkerImpl;
 
   // Get routing_id for sending message to the ServiceWorkerVersion
   // in the browser process.
@@ -292,6 +289,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       mojom::ExtendableMessageEventPtr event,
       DispatchExtendableMessageEventCallback callback) override;
   void DispatchFetchEvent(
+      int fetch_event_id,
       const ServiceWorkerFetchRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
@@ -383,7 +381,6 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
 
   scoped_refptr<ThreadSafeSender> sender_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner_;
   scoped_refptr<base::TaskRunner> worker_task_runner_;
 
   scoped_refptr<ServiceWorkerProviderContext> provider_context_;
@@ -393,7 +390,6 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
 
   // This is bound on the worker thread.
   mojom::ServiceWorkerEventDispatcherRequest pending_dispatcher_request_;
-  mojom::ControllerServiceWorkerRequest pending_controller_request_;
 
   // This is bound on the main thread.
   scoped_refptr<mojom::ThreadSafeEmbeddedWorkerInstanceHostAssociatedPtr>

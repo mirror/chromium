@@ -100,9 +100,19 @@ public class AccountSigninConfirmationView extends ScrollView {
         if (observer == null) return;
 
         mObserver = observer;
-        mOnGlobalLayoutListener = this::checkScrolledToBottom;
+        mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                checkScrolledToBottom();
+            }
+        };
         getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
-        mOnScrollChangedListener = this::checkScrolledToBottom;
+        mOnScrollChangedListener = new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                checkScrolledToBottom();
+            }
+        };
         getViewTreeObserver().addOnScrollChangedListener(mOnScrollChangedListener);
     }
 

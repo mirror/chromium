@@ -18,6 +18,29 @@ function NavigationUma(volumeManager) {
 }
 
 /**
+ * Keep the order of this in sync with FileManagerRootType in
+ * tools/metrics/histograms/histograms.xml.
+ *
+ * @type {!Array<VolumeManagerCommon.RootType>}
+ * @const
+ */
+NavigationUma.RootType = [
+  VolumeManagerCommon.RootType.DOWNLOADS,
+  VolumeManagerCommon.RootType.ARCHIVE,
+  VolumeManagerCommon.RootType.REMOVABLE,
+  VolumeManagerCommon.RootType.DRIVE,
+  VolumeManagerCommon.RootType.TEAM_DRIVES_GRAND_ROOT,
+  VolumeManagerCommon.RootType.TEAM_DRIVE,
+  VolumeManagerCommon.RootType.MTP,
+  VolumeManagerCommon.RootType.PROVIDED,
+  VolumeManagerCommon.RootType.DRIVE_OTHER,
+  VolumeManagerCommon.RootType.DRIVE_OFFLINE,
+  VolumeManagerCommon.RootType.DRIVE_SHARED_WITH_ME,
+  VolumeManagerCommon.RootType.DRIVE_RECENT,
+  VolumeManagerCommon.RootType.MEDIA_VIEW,
+];
+
+/**
  * Exports file type metric with the given |name|.
  *
  * @param {!FileEntry} entry
@@ -28,8 +51,7 @@ function NavigationUma(volumeManager) {
 NavigationUma.prototype.exportRootType_ = function(entry, name) {
   var locationInfo = this.volumeManager_.getLocationInfo(entry);
   if (locationInfo)
-    metrics.recordEnum(
-        name, locationInfo.rootType, VolumeManagerCommon.RootTypesForUMA);
+    metrics.recordEnum(name, locationInfo.rootType, NavigationUma.RootType);
 };
 
 /**

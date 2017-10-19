@@ -134,8 +134,8 @@ class CORE_EXPORT StylePropertySet
 
   bool PropertyMatches(CSSPropertyID, const CSSValue&) const;
 
-  void Trace(blink::Visitor*);
-  void TraceAfterDispatch(blink::Visitor* visitor) {}
+  DECLARE_TRACE();
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {}
 
  protected:
   enum { kMaxArraySize = (1 << 28) - 1 };
@@ -171,7 +171,7 @@ class CSSLazyPropertyParser
   virtual StylePropertySet* ParseProperties() = 0;
   virtual void SetHasBeforeOrAfter() = 0;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 };
 
 class CORE_EXPORT ImmutableStylePropertySet : public StylePropertySet {
@@ -189,7 +189,7 @@ class CORE_EXPORT ImmutableStylePropertySet : public StylePropertySet {
   template <typename T>  // CSSPropertyID or AtomicString
   int FindPropertyIndex(T property) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
   void* operator new(std::size_t, void* location) { return location; }
 
@@ -271,7 +271,7 @@ class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
   template <typename T>  // CSSPropertyID or AtomicString
   int FindPropertyIndex(T property) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   explicit MutableStylePropertySet(CSSParserMode);

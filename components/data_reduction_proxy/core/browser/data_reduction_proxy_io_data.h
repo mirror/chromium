@@ -117,6 +117,9 @@ class DataReductionProxyIOData : public DataReductionProxyEventStorageDelegate {
   bool ShouldEnableLitePages(const net::URLRequest& request,
                              previews::PreviewsDecider* previews_decider);
 
+  // Sets Lo-Fi mode off in |config_|.
+  void SetLoFiModeOff();
+
   // Bridge methods to safely call to the UI thread objects.
   void UpdateDataUseForHost(int64_t network_bytes,
                             int64_t original_bytes,
@@ -127,6 +130,7 @@ class DataReductionProxyIOData : public DataReductionProxyEventStorageDelegate {
       bool data_reduction_proxy_enabled,
       DataReductionProxyRequestType request_type,
       const std::string& mime_type);
+  void SetLoFiUsedThisSession();
 
   // Overrides of DataReductionProxyEventStorageDelegate. Bridges to the UI
   // thread objects.

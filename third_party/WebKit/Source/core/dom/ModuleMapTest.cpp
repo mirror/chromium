@@ -26,7 +26,7 @@ class TestSingleModuleClient final : public SingleModuleClient {
   TestSingleModuleClient() = default;
   virtual ~TestSingleModuleClient() {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(module_script_);
     SingleModuleClient::Trace(visitor);
   }
@@ -78,7 +78,7 @@ class ModuleMapTestModulator final : public DummyModulator {
   ModuleMapTestModulator();
   virtual ~ModuleMapTestModulator() {}
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   TestScriptModuleResolver* GetTestScriptModuleResolver() {
     return resolver_.Get();
@@ -102,10 +102,10 @@ class ModuleMapTestModulator final : public DummyModulator {
 
   struct TestRequest : public GarbageCollectedFinalized<TestRequest> {
     KURL url;
-    ScriptFetchOptions options;
+    String nonce;
     Member<ModuleScriptLoaderClient> client;
 
-    void Trace(blink::Visitor* visitor) { visitor->Trace(client); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(client); }
   };
   HeapVector<Member<TestRequest>> test_requests_;
 
@@ -115,7 +115,7 @@ class ModuleMapTestModulator final : public DummyModulator {
 ModuleMapTestModulator::ModuleMapTestModulator()
     : resolver_(new TestScriptModuleResolver) {}
 
-void ModuleMapTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleMapTestModulator) {
   visitor->Trace(test_requests_);
   visitor->Trace(resolver_);
   DummyModulator::Trace(visitor);
@@ -127,15 +127,16 @@ void ModuleMapTestModulator::FetchNewSingleModule(
     ModuleScriptLoaderClient* client) {
   TestRequest* test_request = new TestRequest;
   test_request->url = request.Url();
-  test_request->options = request.Options();
+  test_request->nonce = request.Nonce();
   test_request->client = client;
   test_requests_.push_back(test_request);
 }
 
 void ModuleMapTestModulator::ResolveFetches() {
   for (const auto& test_request : test_requests_) {
-    auto* module_script = ModuleScript::CreateForTest(
-        this, ScriptModule(), test_request->url, test_request->options);
+    ModuleScript* module_script = ModuleScript::CreateForTest(
+        this, ScriptModule(), test_request->url, test_request->nonce,
+        kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
     TaskRunner()->PostTask(
         BLINK_FROM_HERE,
         WTF::Bind(&ModuleScriptLoaderClient::NotifyNewSingleModuleFinished,
@@ -168,7 +169,8 @@ TEST_F(ModuleMapTest, sequentialRequests) {
   platform->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
 
   KURL url(NullURL(), "https://example.com/foo.js");
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  ModuleScriptFetchRequest module_request(
+      url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
 
   // First request
   TestSingleModuleClient* client = new TestSingleModuleClient;
@@ -210,7 +212,8 @@ TEST_F(ModuleMapTest, concurrentRequestsShouldJoin) {
   platform->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
 
   KURL url(NullURL(), "https://example.com/foo.js");
-  ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
+  ModuleScriptFetchRequest module_request(
+      url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
 
   // First request
   TestSingleModuleClient* client = new TestSingleModuleClient;

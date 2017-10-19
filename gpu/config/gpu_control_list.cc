@@ -602,16 +602,16 @@ void GpuControlList::GetReasons(base::ListValue* problem_list,
   for (auto index : entries) {
     DCHECK_LT(index, entry_count_);
     const Entry& entry = entries_[index];
-    auto problem = std::make_unique<base::DictionaryValue>();
+    auto problem = base::MakeUnique<base::DictionaryValue>();
 
     problem->SetString("description", entry.description);
 
-    auto cr_bugs = std::make_unique<base::ListValue>();
+    auto cr_bugs = base::MakeUnique<base::ListValue>();
     for (size_t jj = 0; jj < entry.cr_bug_size; ++jj)
       cr_bugs->AppendInteger(entry.cr_bugs[jj]);
     problem->Set("crBugs", std::move(cr_bugs));
 
-    auto features = std::make_unique<base::ListValue>();
+    auto features = base::MakeUnique<base::ListValue>();
     entry.GetFeatureNames(features.get(), feature_map_);
     problem->Set("affectedGpuSettings", std::move(features));
 

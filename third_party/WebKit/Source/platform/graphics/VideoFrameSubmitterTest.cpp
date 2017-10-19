@@ -88,7 +88,7 @@ class VideoFrameSubmitterTest : public ::testing::Test {
   }
 
   void MakeSubmitter() {
-    submitter_ = std::make_unique<VideoFrameSubmitter>(
+    submitter_ = base::MakeUnique<VideoFrameSubmitter>(
         provider_.get(),
         base::BindRepeating(&VideoFrameSubmitterTest::ProvideContext,
                             base::Unretained(this)));

@@ -110,7 +110,7 @@ ScriptLoader::ScriptLoader(ScriptElementBase* element,
 
 ScriptLoader::~ScriptLoader() {}
 
-void ScriptLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptLoader) {
   visitor->Trace(element_);
   visitor->Trace(resource_);
   visitor->Trace(pending_script_);
@@ -446,14 +446,8 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
 
       Modulator* modulator = Modulator::From(
           ToScriptStateForMainWorld(context_document->GetFrame()));
-      // 20. "Let options be a script fetch options whose cryptographic nonce is
-      //      cryptographic nonce, integrity metadata is integrity metadata,
-      //      parser metadata is parser metadata, and credentials mode is module
-      //      script credentials mode." [spec text]
-      // TODO(kouhei,hiroshige): Move 20 higher up, when we modify
-      // FetchClassicScript to take |options| too.
-      ScriptFetchOptions options(nonce_, parser_state, credentials_mode);
-      FetchModuleScriptTree(url, modulator, options);
+      FetchModuleScriptTree(url, modulator, nonce_, parser_state,
+                            credentials_mode);
 
       DCHECK(!resource_);
       DCHECK(module_tree_client_);
@@ -501,13 +495,11 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
         // 2. "Let script be the result of creating a module script using
         //     source text, settings, base URL, cryptographic nonce,
         //     parser state, and module script credentials mode."
-        // TODO(kouhei,hiroshige): Update spec refs to use ScriptFetchOptions.
         Modulator* modulator = Modulator::From(
             ToScriptStateForMainWorld(context_document->GetFrame()));
         ModuleScript* module_script = ModuleScript::Create(
-            element_->TextFromChildren(), modulator, base_url,
-            ScriptFetchOptions(nonce_, parser_state, credentials_mode),
-            kSharableCrossOrigin, position);
+            element_->TextFromChildren(), modulator, base_url, nonce_,
+            parser_state, credentials_mode, kSharableCrossOrigin, position);
 
         // 3. "If this returns null, set the script's script to null and abort
         //     these substeps; the script is ready."
@@ -707,7 +699,6 @@ bool ScriptLoader::FetchClassicScript(
   DCHECK_EQ(nonce_, nonce);
 
   // https://html.spec.whatwg.org/#prepare-a-script
-  // TODO(kouhei,hiroshige): Update to use ScriptFetchOptions
   // 21.6, "classic":
   // "Fetch a classic script given url, settings, ..."
   ResourceRequest resource_request(url);
@@ -773,16 +764,26 @@ bool ScriptLoader::FetchClassicScript(
   return true;
 }
 
-void ScriptLoader::FetchModuleScriptTree(const KURL& url,
-                                         Modulator* modulator,
-                                         const ScriptFetchOptions& options) {
+void ScriptLoader::FetchModuleScriptTree(
+    const KURL& url,
+    Modulator* modulator,
+    const String& nonce,
+    ParserDisposition parser_state,
+    WebURLRequest::FetchCredentialsMode credentials_mode) {
+  // TODO(hiroshige): remove nonce from the method argument.
+  DCHECK_EQ(nonce_, nonce);
+
   // https://html.spec.whatwg.org/#prepare-a-script
-  // 22.6, "module":
-  //     "Fetch a module script graph given url, settings object, "script", and
-  //      options."
+  // 21.6, "module":
+  //     "Fetch a module script graph given url, settings, "script",
+  //      cryptographic nonce, parser state, and
+  //      module script credentials mode."
+  ModuleScriptFetchRequest module_request(url, nonce_, parser_state,
+                                          credentials_mode);
+
   module_tree_client_ = ModulePendingScriptTreeClient::Create();
-  modulator->FetchTree(ModuleScriptFetchRequest(url, options),
-                       module_tree_client_);
+
+  modulator->FetchTree(module_request, module_tree_client_);
 }
 
 PendingScript* ScriptLoader::CreatePendingScript() {
@@ -847,7 +848,7 @@ ScriptLoader::ExecuteScriptResult ScriptLoader::DoExecuteScript(
                   script->GetScriptType() == ScriptType::kModule ||
                   is_imported_script
               ? context_document
-              : nullptr);
+              : 0);
 
   // 4. "Let old script element be the value to which the script element's
   //     node document's currentScript object was most recently set."

@@ -34,7 +34,8 @@ public class TabStateTest {
     @Before
     public void setUp() throws Exception {
         mTestTabModelDirectory = new TestTabModelDirectory(
-                InstrumentationRegistry.getTargetContext(), "TabStateTest", null);
+                InstrumentationRegistry.getInstrumentation().getTargetContext(), "TabStateTest",
+                null);
     }
 
     @After

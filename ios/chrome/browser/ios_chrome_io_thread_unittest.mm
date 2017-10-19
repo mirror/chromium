@@ -4,6 +4,7 @@
 
 #include "ios/chrome/browser/ios_chrome_io_thread.h"
 
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -11,7 +12,7 @@
 #include "components/prefs/testing_pref_store.h"
 #include "components/proxy_config/pref_proxy_config_tracker_impl.h"
 #include "components/ssl_config/ssl_config_service_manager.h"
-#include "ios/web/public/test/test_web_thread_bundle.h"
+#include "ios/web/public/test/test_web_thread.h"
 #include "net/test/url_request/url_request_failed_job.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -41,7 +42,9 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
 class IOSChromeIOThreadTest : public PlatformTest {
  public:
   IOSChromeIOThreadTest()
-      : thread_bundle_(web::TestWebThreadBundle::IO_MAINLOOP) {
+      : loop_(base::MessageLoop::TYPE_IO),
+        ui_thread_(web::WebThread::UI, &loop_),
+        io_thread_(web::WebThread::IO, &loop_) {
     net::URLRequestFailedJob::AddUrlHandler();
   }
 
@@ -50,7 +53,9 @@ class IOSChromeIOThreadTest : public PlatformTest {
   }
 
  private:
-  web::TestWebThreadBundle thread_bundle_;
+  base::MessageLoop loop_;
+  web::TestWebThread ui_thread_;
+  web::TestWebThread io_thread_;
 };
 
 TEST_F(IOSChromeIOThreadTest, AssertNoUrlRequests) {

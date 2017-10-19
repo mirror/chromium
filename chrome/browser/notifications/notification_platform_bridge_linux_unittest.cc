@@ -14,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_test_util.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
@@ -23,10 +24,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/re2/src/re2/re2.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_delegate.h"
 
-using message_center::Notification;
 using testing::_;
 using testing::ByMove;
 using testing::Return;
@@ -45,9 +44,10 @@ class NotificationBuilder {
                       base::string16(),
                       base::string16(),
                       gfx::Image(),
+                      message_center::NotifierId(GURL()),
                       base::string16(),
                       GURL(),
-                      message_center::NotifierId(GURL()),
+                      id,
                       message_center::RichNotificationData(),
                       new message_center::NotificationDelegate()) {}
 
@@ -452,8 +452,8 @@ TEST_F(NotificationPlatformBridgeLinuxTest, NotificationAttribution) {
       .WillOnce(OnNotify(
           [](const NotificationRequest& request) {
             EXPECT_EQ(
-                "<a href=\"https://google.com/"
-                "search?q=test&amp;ie=UTF8\">google.com</a>\n\nBody text",
+                "<a href=\"https%3A//google.com/"
+                "search%3Fq=test&ie=UTF8\">google.com</a>\nBody text",
                 request.body);
           },
           1));

@@ -84,6 +84,8 @@ class CORE_EXPORT WorkerGlobalScope
     return nullptr;
   }
 
+  KURL CompleteURL(const String&) const;
+
   // WorkerOrWorkletGlobalScope
   void EvaluateClassicScript(
       const KURL& script_url,
@@ -128,11 +130,8 @@ class CORE_EXPORT WorkerGlobalScope
   bool HasPendingActivity() const override;
 
   // ExecutionContext
-  const KURL& Url() const final { return url_; }
-  KURL CompleteURL(const String&) const final;
   bool IsWorkerGlobalScope() const final { return true; }
   bool IsContextThread() const final;
-  const KURL& BaseURL() const final { return url_; }
   String UserAgent() const final { return user_agent_; }
 
   DOMTimerCoordinator* Timers() final { return &timers_; }
@@ -157,7 +156,7 @@ class CORE_EXPORT WorkerGlobalScope
   double TimeOrigin() const { return time_origin_; }
   WorkerSettings* GetWorkerSettings() const { return worker_settings_.get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
@@ -177,7 +176,8 @@ class CORE_EXPORT WorkerGlobalScope
       const Vector<CSPHeaderAndType>& headers);
 
   // |kNotHandled| is used when the script was not in
-  // InstalledScriptsManager, which means it was not an installed script.
+  // InstalledScriptsManager, which means either it was not an installed script
+  // or it was already taken.
   enum class LoadResult { kSuccess, kFailed, kNotHandled };
 
   // Tries to load the script synchronously from the
@@ -204,6 +204,8 @@ class CORE_EXPORT WorkerGlobalScope
 
   // ExecutionContext
   EventTarget* ErrorEventTarget() final { return this; }
+  const KURL& VirtualURL() const final { return url_; }
+  KURL VirtualCompleteURL(const String&) const final;
 
   // SecurityContext
   void DidUpdateSecurityOrigin() final {}

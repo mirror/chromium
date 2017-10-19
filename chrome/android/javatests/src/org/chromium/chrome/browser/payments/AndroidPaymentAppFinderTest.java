@@ -113,7 +113,8 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
     public void setUp() throws Throwable {
         mRule.startMainActivityOnBlankPage();
         mPackageManager.reset();
-        mServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mDownloader.setTestServerUri(new URI(mServer.getURL("/components/test/data/payments/")));
         mPaymentApps = new ArrayList<>();
         mAllPaymentAppsCreated = false;

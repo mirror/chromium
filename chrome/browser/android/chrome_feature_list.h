@@ -24,10 +24,9 @@ extern const base::Feature kCCTPostMessageAPI;
 extern const base::Feature kCCTRedirectPreconnect;
 extern const base::Feature kChromeHomeFeature;
 extern const base::Feature kChromeHomeDestroySuggestions;
-extern const base::Feature kChromeHomeBottomNavLabels;
 extern const base::Feature kChromeHomeDoodle;
+extern const base::Feature kChromeHomeExpandButton;
 extern const base::Feature kChromeHomePromo;
-extern const base::Feature kChromeHomeOptOutSnackbar;
 extern const base::Feature kChromeHomeSwipeLogic;
 extern const base::Feature kChromeMemexFeature;
 extern const base::Feature kContentSuggestionsLargeThumbnail;
@@ -64,7 +63,6 @@ extern const base::Feature kReaderModeInCCT;
 extern const base::Feature kSpannableInlineAutocomplete;
 extern const base::Feature kSpecialLocaleFeature;
 extern const base::Feature kSpecialLocaleWrapper;
-extern const base::Feature kTabModalJsDialog;
 extern const base::Feature kTabReparenting;
 extern const base::Feature kUserMediaScreenCapturing;
 extern const base::Feature kVideoPersistence;
@@ -73,6 +71,7 @@ extern const base::Feature kVrCustomTabBrowsing;
 extern const base::Feature kWebPaymentsSingleAppUiSkip;
 extern const base::Feature kWebVrAutopresent;
 extern const base::Feature kWebVRCardboardSupport;
+extern const base::Feature kXGEOVisibleNetworks;
 
 }  // namespace android
 }  // namespace chrome

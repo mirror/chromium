@@ -40,11 +40,11 @@ namespace blink {
 //     stacking contexts (see ObjectPainter::paintAllPhasesAtomically()).
 //  4. Outline phase: outlines are painted over the foreground.
 
-enum class PaintPhase {
+enum PaintPhase {
   // Background phase
   //
   // Paint background of the current object and non-self-painting descendants.
-  kBlockBackground = 0,
+  kPaintPhaseBlockBackground = 0,
   //
   // The following two values are added besides the normal
   // PaintPhaseBlockBackground to distinguish backgrounds for the object itself
@@ -52,63 +52,63 @@ enum class PaintPhase {
   // different scroll offsets and clips.
   //
   // Paint background of the current object only.
-  kSelfBlockBackgroundOnly = 1,
+  kPaintPhaseSelfBlockBackgroundOnly = 1,
   // Paint backgrounds of non-self-painting descendants only. The painter should
   // call each non-self-painting child's paint method by passing
   // paintInfo.forDescendants() which converts
   // PaintPhaseDescendantsBlockBackgroundsOnly to PaintPhaseBlockBackground.
-  kDescendantBlockBackgroundsOnly = 2,
+  kPaintPhaseDescendantBlockBackgroundsOnly = 2,
 
   // Float phase
-  kFloat = 3,
+  kPaintPhaseFloat = 3,
 
   // Foreground phase
-  kForeground = 4,
+  kPaintPhaseForeground = 4,
 
   // Outline phase
   //
   // Paint outline for the current object and non-self-painting descendants.
-  kOutline = 5,
+  kPaintPhaseOutline = 5,
   //
   // Similar to the background phase, the following two values are added for
   // painting outlines of the object itself and for descendants.
   //
   // Paint outline for the current object only.
-  kSelfOutlineOnly = 6,
+  kPaintPhaseSelfOutlineOnly = 6,
   // Paint outlines of non-self-painting descendants only. The painter should
   // call each non-self-painting child's paint method by passing
   // paintInfo.forDescendants() which
   // converts PaintPhaseDescendantsOutlinesOnly to PaintPhaseBlockOutline.
-  kDescendantOutlinesOnly = 7,
+  kPaintPhaseDescendantOutlinesOnly = 7,
 
   // The below are auxiliary phases which are used to paint special effects.
-  kSelection = 8,
-  kTextClip = 9,
-  kMask = 10,
-  kClippingMask = 11,
+  kPaintPhaseSelection = 8,
+  kPaintPhaseTextClip = 9,
+  kPaintPhaseMask = 10,
+  kPaintPhaseClippingMask = 11,
 
-  kMax = kClippingMask,
+  kPaintPhaseMax = kPaintPhaseClippingMask,
   // These values must be kept in sync with DisplayItem::Type and
   // DisplayItem::typeAsDebugString().
 };
 
 inline bool ShouldPaintSelfBlockBackground(PaintPhase phase) {
-  return phase == PaintPhase::kBlockBackground ||
-         phase == PaintPhase::kSelfBlockBackgroundOnly;
+  return phase == kPaintPhaseBlockBackground ||
+         phase == kPaintPhaseSelfBlockBackgroundOnly;
 }
 
 inline bool ShouldPaintSelfOutline(PaintPhase phase) {
-  return phase == PaintPhase::kOutline || phase == PaintPhase::kSelfOutlineOnly;
+  return phase == kPaintPhaseOutline || phase == kPaintPhaseSelfOutlineOnly;
 }
 
 inline bool ShouldPaintDescendantBlockBackgrounds(PaintPhase phase) {
-  return phase == PaintPhase::kBlockBackground ||
-         phase == PaintPhase::kDescendantBlockBackgroundsOnly;
+  return phase == kPaintPhaseBlockBackground ||
+         phase == kPaintPhaseDescendantBlockBackgroundsOnly;
 }
 
 inline bool ShouldPaintDescendantOutlines(PaintPhase phase) {
-  return phase == PaintPhase::kOutline ||
-         phase == PaintPhase::kDescendantOutlinesOnly;
+  return phase == kPaintPhaseOutline ||
+         phase == kPaintPhaseDescendantOutlinesOnly;
 }
 
 // Those flags are meant as global tree operations. This means

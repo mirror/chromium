@@ -123,11 +123,11 @@ V8V0CustomElementLifecycleCallbacks::V8V0CustomElementLifecycleCallbacks(
 
 V8PerContextData* V8V0CustomElementLifecycleCallbacks::CreationContextData() {
   if (!script_state_->ContextIsValid())
-    return nullptr;
+    return 0;
 
   v8::Local<v8::Context> context = script_state_->GetContext();
   if (context.IsEmpty())
-    return nullptr;
+    return 0;
 
   return V8PerContextData::From(context);
 }
@@ -180,7 +180,7 @@ void V8V0CustomElementLifecycleCallbacks::Created(Element* element) {
   exception_catcher.SetVerbose(true);
   V8ScriptRunner::CallFunction(callback,
                                ExecutionContext::From(script_state_.get()),
-                               receiver, 0, nullptr, isolate);
+                               receiver, 0, 0, isolate);
 }
 
 void V8V0CustomElementLifecycleCallbacks::Attached(Element* element) {
@@ -249,10 +249,10 @@ void V8V0CustomElementLifecycleCallbacks::Call(
   exception_catcher.SetVerbose(true);
   V8ScriptRunner::CallFunction(callback,
                                ExecutionContext::From(script_state_.get()),
-                               receiver, 0, nullptr, isolate);
+                               receiver, 0, 0, isolate);
 }
 
-void V8V0CustomElementLifecycleCallbacks::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V8V0CustomElementLifecycleCallbacks) {
   V0CustomElementLifecycleCallbacks::Trace(visitor);
 }
 

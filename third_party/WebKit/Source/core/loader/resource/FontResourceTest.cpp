@@ -35,7 +35,7 @@ class FontResourceTest : public ::testing::Test {
 // loading supports.
 TEST_F(FontResourceTest,
        ResourceFetcherRevalidateDeferedResourceFromTwoInitiators) {
-  KURL url("http://127.0.0.1:8000/font.woff");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/font.woff");
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
@@ -94,7 +94,7 @@ TEST_F(FontResourceTest,
 
 // Tests if cache-aware font loading works correctly.
 TEST_F(FontResourceTest, CacheAwareFontLoading) {
-  KURL url("http://127.0.0.1:8000/font.woff");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/font.woff");
   ResourceResponse response;
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
@@ -118,7 +118,7 @@ TEST_F(FontResourceTest, CacheAwareFontLoading) {
   resource->load_limit_state_ = FontResource::kUnderLimit;
 
   // FontResource callbacks should be blocked during cache-aware loading.
-  resource->FontLoadShortLimitCallback();
+  resource->FontLoadShortLimitCallback(nullptr);
   EXPECT_FALSE(client->FontLoadShortLimitExceededCalled());
 
   // Fail first request as disk cache miss.
@@ -137,7 +137,7 @@ TEST_F(FontResourceTest, CacheAwareFontLoading) {
   EXPECT_FALSE(client2->FontLoadLongLimitExceededCalled());
 
   // FontResource callbacks are not blocked now.
-  resource->FontLoadLongLimitCallback();
+  resource->FontLoadLongLimitCallback(nullptr);
   EXPECT_TRUE(client->FontLoadLongLimitExceededCalled());
 
   // Add client now, both callbacks should be called.

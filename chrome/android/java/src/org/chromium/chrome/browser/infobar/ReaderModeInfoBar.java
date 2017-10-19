@@ -6,13 +6,9 @@ package org.chromium.chrome.browser.infobar;
 
 import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO;
 
-import android.content.Context;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,27 +41,6 @@ public class ReaderModeInfoBar extends InfoBar {
     };
 
     /**
-     * Fake Button class, used so TextViews can announce themselves as Buttons, for accessibility.
-     */
-    public static class AccessibleTextView extends TextView {
-        public AccessibleTextView(Context context) {
-            super(context);
-        }
-
-        @Override
-        public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-            super.onInitializeAccessibilityEvent(event);
-            event.setClassName(Button.class.getName());
-        }
-
-        @Override
-        public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-            super.onInitializeAccessibilityNodeInfo(info);
-            info.setClassName(Button.class.getName());
-        }
-    }
-
-    /**
      * Default constructor.
      */
     private ReaderModeInfoBar() {
@@ -84,7 +59,7 @@ public class ReaderModeInfoBar extends InfoBar {
 
     @Override
     protected void createCompactLayoutContent(InfoBarCompactLayout layout) {
-        TextView prompt = new AccessibleTextView(getContext());
+        TextView prompt = new TextView(getContext());
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.ALLOW_READER_FOR_ACCESSIBILITY)) {
             prompt.setText(R.string.reader_view_text_alt);
         } else {
@@ -104,15 +79,6 @@ public class ReaderModeInfoBar extends InfoBar {
                 R.dimen.reader_mode_infobar_text_padding);
         prompt.setPadding(0, messagePadding, 0, messagePadding);
         layout.addContent(prompt, 1f);
-    }
-
-    @Override
-    protected CharSequence getAccessibilityMessage(CharSequence defaultMessage) {
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.ALLOW_READER_FOR_ACCESSIBILITY)) {
-            return getContext().getString(R.string.reader_view_text_alt);
-        } else {
-            return getContext().getString(R.string.reader_view_text);
-        }
     }
 
     @Override

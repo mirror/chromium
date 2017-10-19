@@ -16,14 +16,14 @@ class PLATFORM_EXPORT CompositorMutator
  public:
   virtual ~CompositorMutator() {}
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   // Called from compositor thread to run the animation frame callbacks from all
   // connected AnimationWorklets.
+  // Returns true if any animation callbacks requested an animation frame
+  // (i.e. should be reinvoked next frame).
   virtual void Mutate(double monotonic_time_now,
                       std::unique_ptr<CompositorMutatorInputState>) = 0;
-  // Returns true if Mutate may do something if called 'now'.
-  virtual bool HasAnimators() = 0;
 };
 
 }  // namespace blink

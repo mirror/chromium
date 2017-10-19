@@ -209,7 +209,7 @@ void KeyboardEvent::InitLocationModifiers(unsigned location) {
   }
 }
 
-void KeyboardEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(KeyboardEvent) {
   UIEventWithKeyState::Trace(visitor);
 }
 

@@ -29,6 +29,7 @@ import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.vr_shell.rules.ChromeTabbedActivityVrTestRule;
 import org.chromium.chrome.browser.vr_shell.util.VrInfoBarUtils;
 import org.chromium.chrome.browser.vr_shell.util.VrTransitionUtils;
+import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.ChromeTabUtils;
@@ -85,7 +86,7 @@ public class VrShellNavigationTest {
 
     /**
      * Triggers navigation to either a 2D or WebVR page. Similar to
-     * {@link ChromeActivityTestRule#loadUrl loadUrl} but makes sure page initiates the
+     * {@link ChromeActivityTestCaseBase#loadUrl loadUrl} but makes sure page initiates the
      * navigation. This is desirable since we are testing navigation transitions end-to-end.
      */
     private void navigateTo(final Page to) throws InterruptedException {
@@ -93,7 +94,7 @@ public class VrShellNavigationTest {
                 mVrTestRule.getActivity().getActivityTab(), new Runnable() {
                     @Override
                     public void run() {
-                        VrTestFramework.runJavaScriptOrFail(
+                        mVrTestFramework.runJavaScriptOrFail(
                                 "window.location.href = '" + getUrl(to) + "';",
                                 POLL_TIMEOUT_SHORT_MS, mVrTestFramework.getFirstTabWebContents());
                     }
@@ -103,7 +104,7 @@ public class VrShellNavigationTest {
     private void enterFullscreenOrFail(ContentViewCore cvc)
             throws InterruptedException, TimeoutException {
         DOMUtils.clickNode(cvc, "fullscreen");
-        VrTestFramework.waitOnJavaScriptStep(cvc.getWebContents());
+        mVrTestFramework.waitOnJavaScriptStep(cvc.getWebContents());
         Assert.assertTrue(DOMUtils.isFullscreen(cvc.getWebContents()));
     }
 

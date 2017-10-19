@@ -399,8 +399,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                            CompositorFrameSinkChange);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
                            SurfaceChanges);
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-                           DeviceScaleFactorChanges);
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest, PopupMenuTest);
   FRIEND_TEST_ALL_PREFIXES(WebContentsViewAuraTest,
                            WebContentsViewReparent);

@@ -198,6 +198,8 @@ class CORE_EXPORT HTMLCanvasElement final
   bool IsCanvasElement() const override { return true; }
   bool IsOpaque() const override;
   bool IsAccelerated() const override;
+  int SourceWidth() override { return size_.Width(); }
+  int SourceHeight() override { return size_.Height(); }
 
   // SurfaceLayerBridgeObserver implementation
   void OnWebLayerReplaced() override;
@@ -220,7 +222,7 @@ class CORE_EXPORT HTMLCanvasElement final
                            WeakPtr<OffscreenCanvasFrameDispatcher>,
                            RefPtr<WebTaskRunner>,
                            unsigned resource_id) override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
@@ -291,10 +293,13 @@ class CORE_EXPORT HTMLCanvasElement final
 
   void Reset();
 
-  std::unique_ptr<ImageBufferSurface> CreateWebGLImageBufferSurface();
+  std::unique_ptr<ImageBufferSurface> CreateWebGLImageBufferSurface(
+      OpacityMode);
   std::unique_ptr<ImageBufferSurface> CreateAcceleratedImageBufferSurface(
+      OpacityMode,
       int* msaa_sample_count);
-  std::unique_ptr<ImageBufferSurface> CreateUnacceleratedImageBufferSurface();
+  std::unique_ptr<ImageBufferSurface> CreateUnacceleratedImageBufferSurface(
+      OpacityMode);
   void CreateImageBuffer();
   void CreateImageBufferInternal(
       std::unique_ptr<ImageBufferSurface> external_surface);

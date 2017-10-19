@@ -35,7 +35,8 @@ group("bindings") {
     "validator.js",
   ]
 
-  public_deps = [
+  deps = [
+    ":new_bindings",
     "//mojo/public/interfaces/bindings:bindings_js__generator",
   ]
 }

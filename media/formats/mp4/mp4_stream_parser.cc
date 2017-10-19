@@ -453,8 +453,7 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
       }
       video_config.Initialize(entry.video_codec, entry.video_codec_profile,
                               PIXEL_FORMAT_YV12, COLOR_SPACE_HD_REC709,
-                              VIDEO_ROTATION_0, coded_size, visible_rect,
-                              natural_size,
+                              coded_size, visible_rect, natural_size,
                               // No decoder-specific buffer needed for AVC;
                               // SPS/PPS are embedded in the video stream
                               EmptyExtraData(), scheme);
@@ -618,9 +617,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
   }
 
   if (!runs_->IsSampleValid()) {
-    *err = !runs_->AdvanceRun();
-    if (*err)
-      return false;
+    runs_->AdvanceRun();
     return true;
   }
 
@@ -638,9 +635,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
 
   // Skip this entire track if it's not one we're interested in
   if (!audio && !video) {
-    *err = !runs_->AdvanceRun();
-    if (*err)
-      return false;
+    runs_->AdvanceRun();
     return true;
   }
 
@@ -678,9 +673,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
     LIMITED_MEDIA_LOG(DEBUG, media_log_, num_empty_samples_skipped_,
                       kMaxEmptySampleLogs)
         << "Skipping 'trun' sample with size of 0.";
-    *err = !runs_->AdvanceSample();
-    if (*err)
-      return false;
+    runs_->AdvanceSample();
     return true;
   }
 
@@ -763,7 +756,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
   if (runs_->cts() != kNoTimestamp) {
     stream_buf->set_timestamp(runs_->cts());
   } else {
-    MEDIA_LOG(ERROR, media_log_) << "Frame PTS exceeds representable limit";
+    MEDIA_LOG(ERROR, media_log_) << "Frame CTS exceeds representable limit";
     *err = true;
     return false;
   }
@@ -785,9 +778,7 @@ bool MP4StreamParser::EnqueueSample(BufferQueueMap* buffers, bool* err) {
            << ", size=" << sample_size;
 
   (*buffers)[runs_->track_id()].push_back(stream_buf);
-  *err = !runs_->AdvanceSample();
-  if (*err)
-    return false;
+  runs_->AdvanceSample();
   return true;
 }
 
@@ -856,11 +847,10 @@ bool MP4StreamParser::ComputeHighestEndOffset(const MovieFragment& moof) {
       int64_t sample_end_offset = runs.sample_offset() + runs.sample_size();
       if (sample_end_offset > highest_end_offset_)
         highest_end_offset_ = sample_end_offset;
-      if (!runs.AdvanceSample())
-        return false;
+
+      runs.AdvanceSample();
     }
-    if (!runs.AdvanceRun())
-      return false;
+    runs.AdvanceRun();
   }
 
   return true;

@@ -234,11 +234,6 @@ void StyleSheetHandler::StartRuleBody(unsigned offset) {
 }
 
 void StyleSheetHandler::EndRuleBody(unsigned offset) {
-  // Pop off data for a previous invalid rule.
-  if (current_rule_data_) {
-    current_rule_data_ = nullptr;
-    current_rule_data_stack_.pop_back();
-  }
   DCHECK(!current_rule_data_stack_.IsEmpty());
   current_rule_data_stack_.back()->rule_body_range.end = offset;
   AddNewRuleToSourceTree(PopRuleData());
@@ -894,7 +889,7 @@ String InspectorStyle::ShorthandValue(const String& shorthand_property) {
   return builder.ToString();
 }
 
-void InspectorStyle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorStyle) {
   visitor->Trace(style_);
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(source_data_);
@@ -980,7 +975,7 @@ InspectorStyleSheet::InspectorStyleSheet(
 
 InspectorStyleSheet::~InspectorStyleSheet() {}
 
-void InspectorStyleSheet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorStyleSheet) {
   visitor->Trace(resource_container_);
   visitor->Trace(network_agent_);
   visitor->Trace(page_style_sheet_);
@@ -1825,7 +1820,7 @@ bool InspectorStyleSheet::ResourceStyleSheetText(String* result) {
   if (!page_style_sheet_->OwnerDocument())
     return false;
 
-  KURL url(page_style_sheet_->href());
+  KURL url(kParsedURLString, page_style_sheet_->href());
   if (resource_container_->LoadStyleSheetContent(url, result))
     return true;
 
@@ -1945,7 +1940,7 @@ const String& InspectorStyleSheetForInlineStyle::ElementStyleText() {
   return element_->getAttribute("style").GetString();
 }
 
-void InspectorStyleSheetForInlineStyle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorStyleSheetForInlineStyle) {
   visitor->Trace(element_);
   visitor->Trace(inspector_style_);
   InspectorStyleSheetBase::Trace(visitor);

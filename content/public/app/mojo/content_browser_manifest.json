@@ -65,7 +65,10 @@
       "requires": {
         "*": [ "app" ],
         "cdm": [ "media:cdm" ],
+        // In classic ash, the browser supplies ash interfaces to itself.
         "content_browser": [
+          "ash",
+          "display",
           "url_keyed_metrics",
           "geolocation_config"
         ],
@@ -73,7 +76,7 @@
         "content_plugin": [ "browser" ],
         "content_renderer": [ "browser" ],
         "content_utility": [ "browser" ],
-        "data_decoder": [ "image_decoder", "json_parser" ],
+        "data_decoder": [ "image_decoder" ],
         "device": [
           "device:battery_monitor",
           "device:generic_sensor",
@@ -120,7 +123,6 @@
           // impossible this week. Remove once sky/ken fix this.
           "autofill::mojom::AutofillDriver",
           "autofill::mojom::PasswordManagerDriver",
-          "blink::mojom::DedicatedWorkerFactory",
           "blink::mojom::InsecureInputService",
           "blink::mojom::KeyboardLockService",
           "blink::mojom::MediaSessionService",
@@ -155,7 +157,6 @@
           "media::mojom::VideoDecodeStatsRecorder",
           "media::mojom::WatchTimeRecorderProvider",
           "mojom::MediaDevicesDispatcherHost",
-          "network::mojom::RestrictedCookieManager",
           "payments::mojom::PaymentManager",
           "payments::mojom::PaymentRequest",
           "resource_coordinator::mojom::CoordinationUnit",

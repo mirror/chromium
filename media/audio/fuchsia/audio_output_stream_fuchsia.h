@@ -36,7 +36,7 @@ class AudioOutputStreamFuchsia : public AudioOutputStream {
   base::TimeTicks GetCurrentStreamTime();
 
   // Updates |presentation_delay_ns_|.
-  bool UpdatePresentationDelay();
+  bool UpdatePresentatioDelay();
 
   // Requests data from AudioSourceCallback, passes it to the mixer and
   // schedules |timer_| for the next call.

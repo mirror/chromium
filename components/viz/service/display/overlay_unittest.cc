@@ -489,13 +489,13 @@ class OverlayTest : public testing::Test {
 
     shared_bitmap_manager_ = std::make_unique<cc::TestSharedBitmapManager>();
     resource_provider_ =
-        cc::FakeResourceProvider::CreateDisplayResourceProvider(
+        cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             provider_.get(), shared_bitmap_manager_.get());
 
     child_provider_ = cc::TestContextProvider::Create();
     child_provider_->BindToCurrentThread();
     child_resource_provider_ =
-        cc::FakeResourceProvider::CreateLayerTreeResourceProvider(
+        cc::FakeResourceProvider::Create<cc::LayerTreeResourceProvider>(
             child_provider_.get(), shared_bitmap_manager_.get());
 
     overlay_processor_ =
@@ -542,7 +542,7 @@ TEST(OverlayTest, OverlaysProcessorHasStrategy) {
 
   auto shared_bitmap_manager = std::make_unique<cc::TestSharedBitmapManager>();
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
-      cc::FakeResourceProvider::CreateDisplayResourceProvider(
+      cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           provider.get(), shared_bitmap_manager.get());
 
   auto overlay_processor =
@@ -1881,6 +1881,7 @@ TEST_F(CALayerOverlayTest, ThreeDTransform) {
   pass->shared_quad_state_list.back()
       ->quad_to_target_transform.RotateAboutXAxis(45.f);
 
+  gfx::Rect damage_rect;
   CALayerOverlayList ca_layer_list;
   cc::OverlayCandidateList overlay_list(BackbufferOverlayList(pass.get()));
   OverlayProcessor::FilterOperationsMap render_pass_filters;
@@ -2357,8 +2358,8 @@ class GLRendererWithOverlaysTest : public testing::Test {
     output_surface_ = std::make_unique<OutputSurfaceType>(provider_);
     output_surface_->BindToClient(&output_surface_client_);
     resource_provider_ =
-        cc::FakeResourceProvider::CreateDisplayResourceProvider(provider_.get(),
-                                                                nullptr);
+        cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
+            provider_.get(), nullptr);
 
     provider_->support()->SetScheduleOverlayPlaneCallback(base::Bind(
         &MockOverlayScheduler::Schedule, base::Unretained(&scheduler_)));
@@ -2366,7 +2367,7 @@ class GLRendererWithOverlaysTest : public testing::Test {
     child_provider_ = cc::TestContextProvider::Create();
     child_provider_->BindToCurrentThread();
     child_resource_provider_ =
-        cc::FakeResourceProvider::CreateLayerTreeResourceProvider(
+        cc::FakeResourceProvider::Create<cc::LayerTreeResourceProvider>(
             child_provider_.get(), nullptr);
   }
 
@@ -2849,6 +2850,7 @@ class CALayerOverlayRPDQTest : public CALayerOverlayTest {
   }
 
   void ProcessForOverlays() {
+    gfx::Rect damage_rect;
     overlay_list_ = BackbufferOverlayList(pass_);
     overlay_processor_->ProcessForOverlays(
         resource_provider_.get(), &pass_list_, render_pass_filters_,

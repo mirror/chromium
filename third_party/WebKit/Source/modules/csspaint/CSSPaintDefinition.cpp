@@ -95,15 +95,11 @@ RefPtr<Image> CSSPaintDefinition::Paint(
     return nullptr;
 
   DCHECK(layout_object.GetNode());
-  CanvasColorParams color_params;
-  if (!context_settings_.alpha()) {
-    color_params.SetOpacityMode(kOpaque);
-  }
 
   PaintRenderingContext2D* rendering_context = PaintRenderingContext2D::Create(
       ImageBuffer::Create(WTF::WrapUnique(new RecordingImageBufferSurface(
           container_size, RecordingImageBufferSurface::kDisallowFallback,
-          color_params))),
+          context_settings_.alpha() ? kNonOpaque : kOpaque))),
       context_settings_, zoom);
   PaintSize* paint_size = PaintSize::Create(specified_size);
   StylePropertyMapReadonly* style_map =

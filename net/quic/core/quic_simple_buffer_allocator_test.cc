@@ -24,5 +24,11 @@ TEST_F(SimpleBufferAllocatorTest, DeleteNull) {
   alloc.Delete(nullptr);
 }
 
+TEST_F(SimpleBufferAllocatorTest, StoreInUniqueStreamBuffer) {
+  SimpleBufferAllocator alloc;
+  UniqueStreamBuffer buf = NewStreamBuffer(&alloc, 4);
+  buf.reset();
+}
+
 }  // namespace
 }  // namespace net

@@ -73,7 +73,7 @@ class CORE_EXPORT FrameConsole final
 
   void DidFailLoading(unsigned long request_identifier, const ResourceError&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit FrameConsole(LocalFrame&);

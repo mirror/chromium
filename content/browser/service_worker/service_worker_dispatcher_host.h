@@ -41,6 +41,7 @@ class ServiceWorkerProviderHost;
 class ServiceWorkerRegistration;
 class ServiceWorkerRegistrationHandle;
 class ServiceWorkerVersion;
+struct ServiceWorkerObjectInfo;
 struct ServiceWorkerVersionAttributes;
 
 // ServiceWorkerDispatcherHost is the browser-side endpoint for several IPC
@@ -146,6 +147,10 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   void OnProviderCreated(ServiceWorkerProviderHostInfo info) override;
 
   // IPC Message handlers
+  void OnUpdateServiceWorker(int thread_id,
+                             int request_id,
+                             int provider_id,
+                             int64_t registration_id);
   void OnUnregisterServiceWorker(int thread_id,
                                  int request_id,
                                  int provider_id,
@@ -206,17 +211,20 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
       const SourceInfo& source_info,
       const StatusCallback& callback,
       ServiceWorkerStatusCode status);
-  bool IsValidSourceInfo(const ServiceWorkerClientInfo& source_info);
-  bool IsValidSourceInfo(
-      const blink::mojom::ServiceWorkerObjectInfo& source_info);
   void ReleaseSourceInfo(const ServiceWorkerClientInfo& source_info);
-  void ReleaseSourceInfo(
-      const blink::mojom::ServiceWorkerObjectInfo& source_info);
+  void ReleaseSourceInfo(const ServiceWorkerObjectInfo& source_info);
 
   ServiceWorkerRegistrationHandle* FindRegistrationHandle(
       int provider_id,
       int64_t registration_id);
 
+  // Callbacks from ServiceWorkerContextCore
+  void UpdateComplete(int thread_id,
+                      int provider_id,
+                      int request_id,
+                      ServiceWorkerStatusCode status,
+                      const std::string& status_message,
+                      int64_t registration_id);
   void UnregistrationComplete(int thread_id,
                               int request_id,
                               ServiceWorkerStatusCode status);

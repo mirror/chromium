@@ -42,13 +42,13 @@ OSExchangeDataProviderFactory::CreateProvider() {
     return factory_->BuildProvider();
 
 #if defined(USE_X11)
-  return std::make_unique<OSExchangeDataProviderAuraX11>();
+  return base::MakeUnique<OSExchangeDataProviderAuraX11>();
 #elif defined(OS_LINUX)
-  return std::make_unique<OSExchangeDataProviderAura>();
+  return base::MakeUnique<OSExchangeDataProviderAura>();
 #elif defined(OS_MACOSX)
   return ui::BuildOSExchangeDataProviderMac();
 #elif defined(OS_WIN)
-  return std::make_unique<OSExchangeDataProviderWin>();
+  return base::MakeUnique<OSExchangeDataProviderWin>();
 #elif defined(OS_FUCHSIA)
   // TODO(fuchsia): Implement this when UI support is added. (crbug.com/750934)
   NOTIMPLEMENTED();

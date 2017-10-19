@@ -42,7 +42,7 @@ static void NewErrorAvailable(JNIEnv* env,
 
 namespace device {
 
-void LocationApiAdapterAndroid::Start(OnGeopositionCB on_geoposition_callback,
+bool LocationApiAdapterAndroid::Start(OnGeopositionCB on_geoposition_callback,
                                       bool high_accuracy) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(on_geoposition_callback);
@@ -62,8 +62,8 @@ void LocationApiAdapterAndroid::Start(OnGeopositionCB on_geoposition_callback,
   // start receiving notifications from java in the main thread looper until
   // Stop() is called.
   DCHECK(!java_location_provider_adapter_.is_null());
-  Java_LocationProviderAdapter_start(env, java_location_provider_adapter_,
-                                     high_accuracy);
+  return Java_LocationProviderAdapter_start(
+      env, java_location_provider_adapter_, high_accuracy);
 }
 
 void LocationApiAdapterAndroid::Stop() {

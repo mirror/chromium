@@ -6,10 +6,6 @@
 
 #include <stdint.h>
 
-#include <memory>
-#include <set>
-#include <utility>
-
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/task_scheduler/task_scheduler.h"
@@ -19,6 +15,7 @@
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_delegate.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
+#include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
 #include "chrome/browser/chromeos/settings/token_encryptor.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/scoped_testing_local_state.h"
@@ -26,12 +23,10 @@
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_cryptohome_client.h"
-#include "chromeos/dbus/fake_session_manager_client.h"
 #include "components/ownership/mock_owner_key_util.h"
 #include "components/prefs/testing_pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_utils.h"
 #include "google_apis/gaia/gaia_oauth_client.h"
 #include "google_apis/gaia/oauth2_token_service_test_util.h"
 #include "net/http/http_status_code.h"
@@ -92,9 +87,9 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
   void SetRobotAccountId(const std::string& account_id) {
     device_policy_.policy_data().set_service_account_identity(account_id);
     device_policy_.Build();
-    session_manager_client_.set_device_policy(device_policy_.GetBlob());
+    device_settings_test_helper_.set_policy_blob(device_policy_.GetBlob());
     DeviceSettingsService::Get()->Load();
-    content::RunAllTasksUntilIdle();
+    device_settings_test_helper_.Flush();
   }
 
   std::unique_ptr<OAuth2TokenService::Request> StartTokenRequest() {
@@ -118,8 +113,8 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
         new ownership::MockOwnerKeyUtil());
     owner_key_util_->SetPublicKeyFromPrivateKey(
         *device_policy_.GetSigningKey());
-    DeviceSettingsService::Get()->SetSessionManager(&session_manager_client_,
-                                                    owner_key_util_);
+    DeviceSettingsService::Get()->SetSessionManager(
+        &device_settings_test_helper_, owner_key_util_);
 
     CrosSettings::Initialize();
   }
@@ -214,7 +209,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
   scoped_refptr<net::TestURLRequestContextGetter> request_context_getter_;
   net::TestURLFetcherFactory factory_;
   FakeCryptohomeClient* fake_cryptohome_client_;
-  FakeSessionManagerClient session_manager_client_;
+  DeviceSettingsTestHelper device_settings_test_helper_;
   policy::DevicePolicyBuilder device_policy_;
   std::unique_ptr<DeviceOAuth2TokenService, TokenServiceDeleter>
       oauth2_service_;

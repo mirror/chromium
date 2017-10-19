@@ -54,8 +54,7 @@ class MODULES_EXPORT PresentationRequest final
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(connectionavailable);
 
-  virtual void Trace(blink::Visitor*);
-
+  DECLARE_VIRTUAL_TRACE();
  protected:
   // EventTarget implementation.
   void AddedEventListener(const AtomicString& event_type,

@@ -31,7 +31,6 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
-#include "content/common/frame_policy.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/render_view_host.h"
@@ -51,6 +50,7 @@
 #include "content/test/test_web_contents.h"
 #include "skia/ext/platform_canvas.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/web/WebSandboxFlags.h"
 
 using base::Time;
 
@@ -74,8 +74,9 @@ bool DoImagesMatch(const gfx::Image& a, const gfx::Image& b) {
       a_bitmap.height() != b_bitmap.height()) {
     return false;
   }
-  return memcmp(a_bitmap.getPixels(), b_bitmap.getPixels(),
-                a_bitmap.computeByteSize()) == 0;
+  return memcmp(a_bitmap.getPixels(),
+                b_bitmap.getPixels(),
+                a_bitmap.getSize()) == 0;
 }
 
 class MockScreenshotManager : public content::NavigationEntryScreenshotManager {
@@ -2223,7 +2224,8 @@ TEST_F(NavigationControllerTest, NewSubframe) {
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
       std::string(), unique_name, base::UnguessableToken::Create(),
-      FramePolicy(), FrameOwnerProperties());
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://foo1/subframe");
@@ -2299,7 +2301,8 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
       std::string(), unique_name0, base::UnguessableToken::Create(),
-      FramePolicy(), FrameOwnerProperties());
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL url2("http://foo/2");
@@ -2343,7 +2346,8 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
       std::string(), unique_name1, base::UnguessableToken::Create(),
-      FramePolicy(), FrameOwnerProperties());
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe2 = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(1)->current_frame_host());
   const GURL url3("http://foo/3");
@@ -2387,7 +2391,8 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   subframe->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
       std::string(), unique_name2, base::UnguessableToken::Create(),
-      FramePolicy(), FrameOwnerProperties());
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe3 =
       static_cast<TestRenderFrameHost*>(contents()
                                             ->GetFrameTree()
@@ -2449,7 +2454,8 @@ TEST_F(NavigationControllerTest, BackSubframe) {
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
       std::string(), unique_name, base::UnguessableToken::Create(),
-      FramePolicy(), FrameOwnerProperties());
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://foo1/subframe");
@@ -3852,7 +3858,8 @@ TEST_F(NavigationControllerTest, SameSubframe) {
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
       std::string(), unique_name, base::UnguessableToken::Create(),
-      FramePolicy(), FrameOwnerProperties());
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://www.google.com/#");
@@ -4026,7 +4033,8 @@ TEST_F(NavigationControllerTest, SubframeWhilePending) {
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
       std::string(), unique_name, base::UnguessableToken::Create(),
-      FramePolicy(), FrameOwnerProperties());
+      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL url1_sub("http://foo/subframe");

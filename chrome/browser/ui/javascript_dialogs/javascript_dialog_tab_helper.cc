@@ -10,6 +10,8 @@
 #include "base/callback.h"
 #include "base/feature_list.h"
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/engagement/site_engagement_service.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/tab_modal_confirm_dialog.h"
@@ -18,9 +20,6 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "ui/gfx/text_elider.h"
-#if defined(OS_ANDROID)
-#include "chrome/browser/android/tab_android.h"
-#endif
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(JavaScriptDialogTabHelper);
 
@@ -31,14 +30,9 @@ app_modal::JavaScriptDialogManager* AppModalDialogManager() {
 }
 
 bool IsWebContentsForemost(content::WebContents* web_contents) {
-#if defined(OS_ANDROID)
-  TabAndroid* tab = TabAndroid::FromWebContents(web_contents);
-  return tab && tab->IsUserInteractable();
-#else
   Browser* browser = BrowserList::GetInstance()->GetLastActive();
   DCHECK(browser);
   return browser->tab_strip_model()->GetActiveWebContents() == web_contents;
-#endif
 }
 
 }  // namespace
@@ -85,6 +79,25 @@ void JavaScriptDialogTabHelper::RunJavaScriptDialog(
     const base::string16& default_prompt_text,
     DialogClosedCallback callback,
     bool* did_suppress_message) {
+  SiteEngagementService* site_engagement_service = SiteEngagementService::Get(
+      Profile::FromBrowserContext(alerting_web_contents->GetBrowserContext()));
+  double engagement_score =
+      site_engagement_service->GetScore(alerting_frame_url);
+  int32_t message_length = static_cast<int32_t>(message_text.length());
+  if (engagement_score == 0) {
+    UMA_HISTOGRAM_COUNTS("JSDialogs.CharacterCount.EngagementNone",
+                         message_length);
+  } else if (engagement_score < 1) {
+    UMA_HISTOGRAM_COUNTS("JSDialogs.CharacterCount.EngagementLessThanOne",
+                         message_length);
+  } else if (engagement_score < 5) {
+    UMA_HISTOGRAM_COUNTS("JSDialogs.CharacterCount.EngagementOneToFive",
+                         message_length);
+  } else {
+    UMA_HISTOGRAM_COUNTS("JSDialogs.CharacterCount.EngagementHigher",
+                         message_length);
+  }
+
   content::WebContents* parent_web_contents =
       WebContentsObserver::web_contents();
   bool foremost = IsWebContentsForemost(parent_web_contents);
@@ -148,9 +161,7 @@ void JavaScriptDialogTabHelper::RunJavaScriptDialog(
                  base::Unretained(this),
                  DismissalCause::DIALOG_BUTTON_CLICKED));
 
-#if !defined(OS_ANDROID)
   BrowserList::AddObserver(this);
-#endif
 
   // Message suppression is something that we don't give the user a checkbox
   // for any more. It was useful back in the day when dialogs were app-modal
@@ -163,9 +174,29 @@ void JavaScriptDialogTabHelper::RunJavaScriptDialog(
 
   if (did_suppress_message) {
     UMA_HISTOGRAM_COUNTS("JSDialogs.CharacterCountUserSuppressed",
-                         message_text.length());
+                         message_length);
   }
 }
+
+namespace {
+
+void SaveUnloadUmaStats(
+    double engagement_score,
+    content::JavaScriptDialogManager::DialogClosedCallback callback,
+    bool success,
+    const base::string16& user_input) {
+  if (success) {
+    UMA_HISTOGRAM_PERCENTAGE("JSDialogs.SiteEngagementOfBeforeUnload.Leave",
+                             engagement_score);
+  } else {
+    UMA_HISTOGRAM_PERCENTAGE("JSDialogs.SiteEngagementOfBeforeUnload.Stay",
+                             engagement_score);
+  }
+
+  std::move(callback).Run(success, user_input);
+}
+
+}  // namespace
 
 void JavaScriptDialogTabHelper::RunBeforeUnloadDialog(
     content::WebContents* web_contents,
@@ -177,8 +208,15 @@ void JavaScriptDialogTabHelper::RunBeforeUnloadDialog(
   // - they can be requested for many tabs at the same time
   // and therefore auto-dismissal is inappropriate for them.
 
-  return AppModalDialogManager()->RunBeforeUnloadDialog(web_contents, is_reload,
-                                                        std::move(callback));
+  SiteEngagementService* site_engagement_service = SiteEngagementService::Get(
+      Profile::FromBrowserContext(web_contents->GetBrowserContext()));
+  double engagement_score =
+      site_engagement_service->GetScore(web_contents->GetLastCommittedURL());
+
+  return AppModalDialogManager()->RunBeforeUnloadDialog(
+      web_contents, is_reload,
+      base::BindOnce(&SaveUnloadUmaStats, engagement_score,
+                     std::move(callback)));
 }
 
 bool JavaScriptDialogTabHelper::HandleJavaScriptDialog(
@@ -237,13 +275,11 @@ void JavaScriptDialogTabHelper::DidStartNavigationToPendingEntry(
     CloseDialog(DismissalCause::TAB_NAVIGATED, false, base::string16());
 }
 
-#if !defined(OS_ANDROID)
 void JavaScriptDialogTabHelper::OnBrowserSetLastActive(Browser* browser) {
   if (dialog_ && !IsWebContentsForemost(web_contents())) {
     CloseDialog(DismissalCause::BROWSER_SWITCHED, false, base::string16());
   }
 }
-#endif
 
 void JavaScriptDialogTabHelper::LogDialogDismissalCause(
     JavaScriptDialogTabHelper::DismissalCause cause) {
@@ -285,7 +321,5 @@ void JavaScriptDialogTabHelper::CloseDialog(DismissalCause cause,
   std::move(dialog_callback_).Run(success, user_input);
 
   dialog_.reset();
-#if !defined(OS_ANDROID)
   BrowserList::RemoveObserver(this);
-#endif
 }
