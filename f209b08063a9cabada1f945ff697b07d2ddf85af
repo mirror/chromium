@@ -123,6 +123,24 @@
       "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac43e8d7_c4ad2552",
+        "filename": "tools/perf/conditionally_execute",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-19T15:17:20Z",
+      "side": 1,
+      "message": "Hmhh, I see. We can treat no input here as the script is not run. Fine to remove this log as well then.",
+      "parentUuid": "04a69f2f_84c21ab8",
+      "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
