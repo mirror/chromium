@@ -15,9 +15,11 @@
 #include "base/containers/queue.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "components/previews/core/previews_black_list_observer.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_opt_out_store.h"
 
@@ -75,6 +77,15 @@ class PreviewsBlackList {
   PreviewsBlackList(std::unique_ptr<PreviewsOptOutStore> opt_out_store,
                     std::unique_ptr<base::Clock> clock);
   virtual ~PreviewsBlackList();
+
+  // Add a observer to the list. This observer will be notified when a new event
+  // happen in |this| blacklist (e.g. New host is blacklisted or the user list
+  // blacklisted). Observers must remove themselves with RemoveObserver.
+  // Virtualized in testing.
+  virtual void AddObserver(PreviewsBlacklistObserver* observer);
+
+  // Removes a observer from the observers list. Virtualized in testing.
+  virtual void RemoveObserver(PreviewsBlacklistObserver* observer);
 
   // Asynchronously adds a new navigation to to the in-memory black list and
   // backing store. |opt_out| is whether the user opted out of the preview or
@@ -154,6 +165,9 @@ class PreviewsBlackList {
   // Callbacks to be run after loading information from the backing store has
   // completed.
   base::queue<base::Closure> pending_callbacks_;
+
+  // A list of observers listening to |this| blacklist.
+  base::ObserverList<PreviewsBlacklistObserver> observer_list_;
 
   std::unique_ptr<base::Clock> clock_;
 

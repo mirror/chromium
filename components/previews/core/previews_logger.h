@@ -81,6 +81,22 @@ class PreviewsLogger {
                                       base::Time time,
                                       PreviewsType type);
 
+  // Notify observers that |host| is blacklisted at |time|. Virtualized in
+  // testing.
+  virtual void OnNewBlacklistedHost(const std::string& host, base::Time time);
+
+  // Notify observers that user is blacklisted at |time|. Virtualized in
+  // testing.
+  virtual void OnUserBlacklisted(base::Time time);
+
+  // Notify observers that user is not blacklisted at |time|. Virtualized in
+  // testing.
+  virtual void OnUserNotBlacklisted(base::Time time);
+
+  // Notify observers that the blacklist is cleared at |time|. Virtualized in
+  // testing.
+  virtual void OnBlacklistCleared(base::Time time);
+
  private:
   // Collection of recorded navigation log messages.
   std::list<MessageLog> navigations_logs_;
