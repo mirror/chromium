@@ -6,6 +6,7 @@
 
 #include "ash/ash_constants.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
+#include "ash/frame/default_header_painter.h"
 #include "ash/frame/header_painter.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller_test_api.h"
 #include "ash/shell.h"
@@ -13,9 +14,11 @@
 #include "base/command_line.h"
 #include "base/run_loop.h"
 #include "base/scoped_observer.h"
+#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/command_updater.h"
+#include "chrome/browser/extensions/extension_browsertest.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_test.h"
@@ -28,10 +31,14 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller_ash.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
+#include "chrome/browser/ui/views/toolbar/app_menu.h"
+#include "chrome/common/chrome_features.h"
+#include "chrome/common/web_application_info.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/aura/client/aura_constants.h"
@@ -43,6 +50,7 @@
 using views::Widget;
 
 typedef InProcessBrowserTest BrowserNonClientFrameViewAshTest;
+typedef ExtensionBrowserTest HostedAppNonClientFrameViewAshTest;
 
 IN_PROC_BROWSER_TEST_F(BrowserNonClientFrameViewAshTest, NonClientHitTest) {
   BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser());
@@ -439,4 +447,39 @@ IN_PROC_BROWSER_TEST_F(ImmersiveModeBrowserViewTest,
                                     {IDC_SELECT_PREVIOUS_TAB, 0}};
   for (const auto& datum : test_data)
     RunTest(datum.command, datum.expected_index);
+}
+
+// Creates a browser for a bookmark app and verifies the window frame is
+// correct.
+IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, Basic) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(features::kDesktopPWAWindowing);
+
+  WebApplicationInfo web_app_info;
+  web_app_info.app_url = GURL("http://example.org/");
+  web_app_info.theme_color = SK_ColorBLUE;
+
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+  Browser* app_browser = LaunchAppBrowser(app);
+
+  BrowserView* browser_view =
+      BrowserView::GetBrowserViewForBrowser(app_browser);
+
+  BrowserNonClientFrameViewAsh* frame_view =
+      static_cast<BrowserNonClientFrameViewAsh*>(
+          browser_view->frame()->GetFrameView());
+
+  EXPECT_TRUE(frame_view->hosted_app_button_container_->visible());
+
+  // Ensure the theme color is set.
+  auto* header_painter = static_cast<ash::DefaultHeaderPainter*>(
+      frame_view->header_painter_.get());
+  EXPECT_EQ(SK_ColorBLUE, header_painter->GetActiveFrameColor());
+  EXPECT_EQ(SK_ColorBLUE, header_painter->GetInactiveFrameColor());
+
+  // Show the menu.
+  HostedAppButtonContainer::AppMenuButton* menu_button =
+      frame_view->hosted_app_button_container_->app_menu_button_;
+  menu_button->Activate(nullptr);
+  EXPECT_TRUE(menu_button->menu()->IsShowing());
 }
