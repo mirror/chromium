@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45ec5428_949601b8",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-19T13:25:33Z",
+      "side": 1,
+      "message": "Why CHECK instead of DCHECK?\nFor guidance, see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED",
+      "revId": "c909422e9a999027db078cf787524ab6738c63e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd499e85_6ab23e69",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-19T13:25:33Z",
+      "side": 1,
+      "message": "rename to |initialized_|\nAlso, unless the CHECK leads to a security problem, you can put this inside a #if DCHECK_IS_ON() if no code actually uses the field.\nIf there is some code that is going to examine the field, then merge this CL with that code into a larger CL.",
+      "range": {
+        "startLine": 256,
+        "startChar": 7,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "c909422e9a999027db078cf787524ab6738c63e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
