@@ -77,7 +77,7 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
     private Map<Feature, Object> mFeaturesToLog;
 
     // A for-testing copy of all the features to log setup so that it will survive a {@link #reset}.
-    private Map<Feature, Object> mFeaturesAndOutcomesForTesting;
+    private Map<Feature, Object> mFeaturesLoggedForTesting;
 
     /**
      * Constructs a Ranker Logger and associated native implementation to write Contextual Search
@@ -130,10 +130,21 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
     @Override
     public boolean inferUiSuppression() {
         mHasInferenceOccurred = true;
-        // TODO(donnd): actually run the Ranker model and register its recommendation here!
         mWasUiSuppressionInfered = false;
-        // TODO(donnd): actually return the recommendation so it can be acted upon!
-        return false;
+        // Check mBasePageUrl since the URL may be null for custom Chrome URIs like chrome://flags.
+        if (isEnabled() && mBasePageUrl != null && mFeaturesToLog != null) {
+            assert mIsLoggingReadyForUrl;
+            nativeSetupLoggingAndRanker(mNativePointer, mBasePageUrl.toString());
+            for (Map.Entry<Feature, Object> entry : mFeaturesToLog.entrySet()) {
+                logObject(entry.getKey(), entry.getValue());
+            }
+            mFeaturesLoggedForTesting = mFeaturesToLog;
+            mFeaturesToLog = new HashMap<Feature, Object>();
+
+            mWasUiSuppressionInfered = nativeRunInference(mNativePointer);
+        }
+
+        return mWasUiSuppressionInfered;
     }
 
     @Override
@@ -155,11 +166,13 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
         // The URL may be null for custom Chrome URIs like chrome://flags.
         if (isEnabled() && mBasePageUrl != null && mFeaturesToLog != null) {
             assert mIsLoggingReadyForUrl;
-            nativeSetupLoggingAndRanker(mNativePointer, mBasePageUrl.toString());
+            assert mHasInferenceOccurred;
+            // Only the outcomes will be present, since we logged inference features at inference
+            // time.
             for (Map.Entry<Feature, Object> entry : mFeaturesToLog.entrySet()) {
                 logObject(entry.getKey(), entry.getValue());
             }
-            mFeaturesAndOutcomesForTesting = mFeaturesToLog;
+            mFeaturesLoggedForTesting = mFeaturesToLog;
             nativeWriteLogAndReset(mNativePointer);
         }
         reset();
@@ -228,7 +241,7 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
     @VisibleForTesting
     @Nullable
     Map<Feature, Object> getFeaturesLogged() {
-        return mFeaturesToLog != null ? mFeaturesToLog : mFeaturesAndOutcomesForTesting;
+        return mFeaturesLoggedForTesting;
     }
 
     // ============================================================================================
@@ -240,5 +253,6 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
             long nativeContextualSearchRankerLoggerImpl, String featureString, long value);
     private native void nativeSetupLoggingAndRanker(
             long nativeContextualSearchRankerLoggerImpl, String basePageUrl);
+    private native boolean nativeRunInference(long nativeContextualSearchRankerLoggerImpl);
     private native void nativeWriteLogAndReset(long nativeContextualSearchRankerLoggerImpl);
 }

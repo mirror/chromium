@@ -11,6 +11,10 @@
 
 class GURL;
 
+namespace machine_intelligence {
+class RankerExample;
+}
+
 namespace ukm {
 class UkmRecorder;
 }  // namespace ukm
@@ -39,6 +43,9 @@ class ContextualSearchRankerLoggerImpl {
                const base::android::JavaParamRef<jstring>& j_feature,
                jlong j_long);
 
+  // Runs the model and returns the inference result as a boolean.
+  bool RunInference(JNIEnv* env, jobject obj);
+
   // Writes the currently logged data and resets the current builder to be
   // ready to start logging the next set of data.
   void WriteLogAndReset(JNIEnv* env, jobject obj);
@@ -51,6 +58,10 @@ class ContextualSearchRankerLoggerImpl {
   // Used to log URL-keyed metrics. This pointer will outlive |this|, and may
   // be nullptr.
   ukm::UkmRecorder* ukm_recorder_;
+
+  // The current RankerExample or null.
+  // Set of features from one example of a Tap, for inference or training.
+  std::unique_ptr<machine_intelligence::RankerExample> ranker_example_;
 
   // The UKM source ID being used for this session.
   int32_t source_id_;

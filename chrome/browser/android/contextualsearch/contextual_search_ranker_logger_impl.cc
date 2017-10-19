@@ -7,8 +7,10 @@
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/metrics/metrics_hashes.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/browser/browser_process.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/machine_intelligence/proto/ranker_example.pb.h"
 #include "jni/ContextualSearchRankerLoggerImpl_jni.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
@@ -31,7 +33,8 @@ void ContextualSearchRankerLoggerImpl::SetupLoggingAndRanker(
       GURL(base::android::ConvertJavaStringToUTF8(env, j_base_page_url));
   ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
   SetUkmRecorder(ukm_recorder, page_url);
-  // TODO(donnd): set up the model once inference is available.
+
+  ranker_example_.reset(new machine_intelligence::RankerExample());
 }
 
 void ContextualSearchRankerLoggerImpl::SetUkmRecorder(
@@ -58,6 +61,17 @@ void ContextualSearchRankerLoggerImpl::LogLong(
 
   std::string feature = base::android::ConvertJavaStringToUTF8(env, j_feature);
   builder_->AddMetric(feature.c_str(), j_long);
+
+  // Also write to Ranker.
+  uint64_t feature_key = base::HashMetricName(feature);
+  std::string hex_feature_key = base::StringPrintf("%016" PRIx64, feature_key);
+  auto& features = *ranker_example_->mutable_features();
+  features[hex_feature_key].set_int64_value(j_long);
+}
+
+bool ContextualSearchRankerLoggerImpl::RunInference(JNIEnv* env, jobject obj) {
+  // TODO(donnd): infer from ranker example!
+  return false;
 }
 
 void ContextualSearchRankerLoggerImpl::WriteLogAndReset(JNIEnv* env,
@@ -67,6 +81,9 @@ void ContextualSearchRankerLoggerImpl::WriteLogAndReset(JNIEnv* env,
 
   // Set up another builder for the next record (in case it's needed).
   builder_ = ukm_recorder_->GetEntryBuilder(source_id_, "ContextualSearch");
+
+  // TODO(donnd): set the target feature based on outcome!
+  ranker_example_.reset();
 }
 
 // Java wrapper boilerplate
