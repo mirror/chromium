@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "503cb071_daa8997d",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T10:10:03Z",
+      "side": 1,
+      "message": "Oh sorry, I think we should update the response_url here as we won\u0027t know if the redirect is taken until then?",
+      "revId": "70416cbe90251c9f94a7359553e56e4dac1c0c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
