@@ -16,6 +16,24 @@
       "revId": "2058dac55dd45c638a45d0b15ae182db1fcd5b5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd191a7_38636022",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/accessibility/WebContentsAccessibilityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-19T18:47:49Z",
+      "side": 1,
+      "message": "You\u0027re right about the first potential race condition. Fixed.\n\nIt does seem like it\u0027d be safer if waitForCallback returned the new count.\n\nAlternatively I wish we could just do it RAII-style like we do in C++,\nwhere you construct a helper, then every time you call wait() it blocks\nif it hasn\u0027t received a callback since the last time you called it or\nconstructed it. No need for the caller to keep track of a count.\n\nI filed 776461",
+      "parentUuid": "42564256_d2e25a25",
+      "revId": "2058dac55dd45c638a45d0b15ae182db1fcd5b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
