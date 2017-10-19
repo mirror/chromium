@@ -34,6 +34,24 @@
       "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5678a418_bd71301e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-19T05:21:22Z",
+      "side": 1,
+      "message": "This is the only place in this file where GetApp()\u0027s result is used unchecked.\nI agree hiding a problem is not the best solution, but at least it\u0027s already done at all the other places in this file.\n\nThis logic involves three different lists (i.e. tracked_apps_, default_apps_, and arc::prefs::kArcApps), and two global states (i.e. IsArcAlive() and IsArcAndroidEnabledForProfile(profile_)), but has no unit tests.\nIf we are to properly fix the logic, probably it might be nicer to extract the app tracking logic into a separate class and add unit tests for it.",
+      "parentUuid": "5bae6915_da89abd8",
+      "revId": "a94970262fd611daf01dc0cc266cff09cfac2354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
