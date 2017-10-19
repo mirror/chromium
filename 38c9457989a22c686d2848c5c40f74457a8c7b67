@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "9927e8b4_f1ad6337",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T19:29:27Z",
+      "side": 1,
+      "message": "sg",
+      "parentUuid": "85d64c96_363b7219",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "683f1546_c56d7336",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 1
