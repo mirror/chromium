@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5b535499_c1196960",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-19T17:57:41Z",
+      "side": 1,
+      "message": "The original intent was to serve two purposes:\n- Notify the page authors\n- Fill in the disk cache for a future use. Even if the resource is already in the cache, it might be a stale version and this helps in refreshing it otherwise the older version will continue to be served for whenever this intervention is taking place.",
+      "parentUuid": "7abba427_3870acdb",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28d9aba_01896ee0",
         "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.h",
         "patchSetId": 5
