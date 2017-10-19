@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c376a644_c77af4e1",
+        "filename": "url/origin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T23:13:29Z",
+      "side": 1,
+      "message": "The complexity of this constructor is the rationale for adding a factory creator method. Adding the unguessable token makes this constructor kind of awkward. It would be nice to avoid creating the unguessable token unless it\u0027s needed--but since we have three different ways to return from this function (all three of which can set it), it becomes awkward.\n\nThe followup would remove this constructor and directly return either:\n- a non unique Origin with already canonicalized fields or\n- a unique Origin",
+      "revId": "4fa15c1afd35f7dc5a5141929a92d4db4f062458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e42fba_1733bab4",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T23:13:29Z",
+      "side": 1,
+      "message": "There are a lot fewer calls to this one, but I suppose we could try doing this one too. It would make default construction of this more annoying though--but maybe that\u0027s OK? *shrug*\n\nIt\u0027d be consistent with blink::SecurityOrigin anyway.",
+      "revId": "4fa15c1afd35f7dc5a5141929a92d4db4f062458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
