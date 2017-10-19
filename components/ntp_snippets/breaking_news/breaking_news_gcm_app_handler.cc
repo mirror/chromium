@@ -38,24 +38,14 @@ const char kGCMScope[] = "GCM";
 const char kPushedNewsKey[] = "payload";
 
 // Lower bound time between two token validations when listening.
-const int kTokenValidationPeriodMinutesDefault = 60 * 24;
-const char kTokenValidationPeriodMinutesParamName[] =
-    "token_validation_period_minutes";
+const base::FeatureParam<int> kTokenValidationPeriodMinutesParam{
+    &kBreakingNewsPushFeature, "token_validation_period_minutes", 60 * 24};
+
+const base::FeatureParam<bool> kEnableTokenValidationParam{
+    &kBreakingNewsPushFeature, "enable_token_validation", true};
 
 base::TimeDelta GetTokenValidationPeriod() {
-  return base::TimeDelta::FromMinutes(
-      variations::GetVariationParamByFeatureAsInt(
-          kBreakingNewsPushFeature, kTokenValidationPeriodMinutesParamName,
-          kTokenValidationPeriodMinutesDefault));
-}
-
-const bool kEnableTokenValidationDefault = true;
-const char kEnableTokenValidationParamName[] = "enable_token_validation";
-
-bool IsTokenValidationEnabled() {
-  return variations::GetVariationParamByFeatureAsBool(
-      kBreakingNewsPushFeature, kEnableTokenValidationParamName,
-      kEnableTokenValidationDefault);
+  return base::TimeDelta::FromMinutes(kTokenValidationPeriodMinutesParam.Get());
 }
 
 // Lower bound time between two forced subscriptions when listening. A
@@ -122,7 +112,7 @@ void BreakingNewsGCMAppHandler::StartListening(
       std::move(on_new_remote_suggestion_callback);
   Subscribe(/*force_token_retrieval=*/false);
   gcm_driver_->AddAppHandler(kBreakingNewsGCMAppID, this);
-  if (IsTokenValidationEnabled()) {
+  if (kEnableTokenValidationParam.Get()) {
     ScheduleNextTokenValidation();
   }
   if (IsForcedSubscriptionEnabled()) {
@@ -177,7 +167,7 @@ void BreakingNewsGCMAppHandler::DidRetrieveToken(
       // validation.
       pref_service_->SetInt64(prefs::kBreakingNewsGCMLastTokenValidationTime,
                               SerializeTime(clock_->Now()));
-      if (IsTokenValidationEnabled()) {
+      if (kEnableTokenValidationParam.Get()) {
         ScheduleNextTokenValidation();
       }
       pref_service_->SetString(prefs::kBreakingNewsGCMSubscriptionTokenCache,
@@ -200,7 +190,7 @@ void BreakingNewsGCMAppHandler::DidRetrieveToken(
 
 void BreakingNewsGCMAppHandler::ResubscribeIfInvalidToken() {
   DCHECK(IsListening());
-  DCHECK(IsTokenValidationEnabled());
+  DCHECK(kEnableTokenValidationParam.Get());
 
   // InstanceIDAndroid::ValidateToken just returns |true| on Android. Instead it
   // is ok to retrieve a token, because it is cached.
@@ -248,7 +238,7 @@ void BreakingNewsGCMAppHandler::DidReceiveTokenForValidation(
 
 void BreakingNewsGCMAppHandler::ScheduleNextTokenValidation() {
   DCHECK(IsListening());
-  DCHECK(IsTokenValidationEnabled());
+  DCHECK(kEnableTokenValidationParam.Get());
 
   const base::Time last_validation_time = DeserializeTime(
       pref_service_->GetInt64(prefs::kBreakingNewsGCMLastTokenValidationTime));

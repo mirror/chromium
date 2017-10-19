@@ -45,8 +45,8 @@ struct RequestThrottler::RequestTypeInfo {
   const char* count_pref;
   const char* interactive_count_pref;
   const char* day_pref;
-  const int default_quota;
-  const int default_interactive_quota;
+  const base::FeatureParam<int> quota;
+  const base::FeatureParam<int> interactive_quota;
 };
 
 // When adding a new type here, extend also the "RequestThrottlerTypes"
@@ -54,47 +54,52 @@ struct RequestThrottler::RequestTypeInfo {
 const RequestThrottler::RequestTypeInfo RequestThrottler::kRequestTypeInfo[] = {
     // The following three types share the same prefs. They differ in quota
     // values (and UMA histograms).
-    // RequestCounter::RequestType::CONTENT_SUGGESTION_FETCHER_RARE_NTP_USER,
-    {"SuggestionFetcherRareNTPUser", prefs::kSnippetFetcherRequestCount,
+    // RequestCounter::RequestType::
+    //     CONTENT_SUGGESTION_FETCHER_RARE_NTP_USER,
+    {"SuggestionFetcherRareNTPUser",
+     prefs::kSnippetFetcherRequestCount,
      prefs::kSnippetFetcherInteractiveRequestCount,
-     prefs::kSnippetFetcherRequestsDay, 5, kUnlimitedQuota},
-    // RequestCounter::RequestType::CONTENT_SUGGESTION_FETCHER_ACTIVE_NTP_USER,
-    {"SuggestionFetcherActiveNTPUser", prefs::kSnippetFetcherRequestCount,
+     prefs::kSnippetFetcherRequestsDay,
+     {&kArticleSuggestionsFeature, "quota_SuggestionFetcherRareNTPUser", 5},
+     {&kArticleSuggestionsFeature,
+      "interactive_quota_SuggestionFetcherRareNTPUser", kUnlimitedQuota}},
+    // RequestCounter::RequestType::
+    //     CONTENT_SUGGESTION_FETCHER_ACTIVE_NTP_USER,
+    {"SuggestionFetcherActiveNTPUser",
+     prefs::kSnippetFetcherRequestCount,
      prefs::kSnippetFetcherInteractiveRequestCount,
-     prefs::kSnippetFetcherRequestsDay, 20, kUnlimitedQuota},
-    // RequestCounter::RequestType::CONTENT_SUGGESTION_FETCHER_ACTIVE_SUGGESTIONS_CONSUMER,
+     prefs::kSnippetFetcherRequestsDay,
+     {&kArticleSuggestionsFeature, "quota_SuggestionFetcherActiveNTPUser", 20},
+     {&kArticleSuggestionsFeature,
+      "interactive_quota_SuggestionFetcherActiveNTPUser", kUnlimitedQuota}},
+    // RequestCounter::RequestType::
+    //     CONTENT_SUGGESTION_FETCHER_ACTIVE_SUGGESTIONS_CONSUMER,
     {"SuggestionFetcherActiveSuggestionsConsumer",
      prefs::kSnippetFetcherRequestCount,
      prefs::kSnippetFetcherInteractiveRequestCount,
-     prefs::kSnippetFetcherRequestsDay, 20, kUnlimitedQuota},
+     prefs::kSnippetFetcherRequestsDay,
+     {&kArticleSuggestionsFeature,
+      "quota_SuggestionFetcherActiveSuggestionsConsumer", 20},
+     {&kArticleSuggestionsFeature,
+      "interactive_quota_SuggestionFetcherActiveSuggestionsConsumer",
+      kUnlimitedQuota}},
     // RequestCounter::RequestType::CONTENT_SUGGESTION_THUMBNAIL,
-    {"SuggestionThumbnailFetcher", prefs::kSnippetThumbnailsRequestCount,
+    {"SuggestionThumbnailFetcher",
+     prefs::kSnippetThumbnailsRequestCount,
      prefs::kSnippetThumbnailsInteractiveRequestCount,
-     prefs::kSnippetThumbnailsRequestsDay, kUnlimitedQuota, kUnlimitedQuota}};
+     prefs::kSnippetThumbnailsRequestsDay,
+     {&kArticleSuggestionsFeature, "quota_SuggestionThumbnailFetcher",
+      kUnlimitedQuota},
+     {&kArticleSuggestionsFeature,
+      "interactive_quota_SuggestionThumbnailFetcher", kUnlimitedQuota}}};
 
 RequestThrottler::RequestThrottler(PrefService* pref_service, RequestType type)
     : pref_service_(pref_service),
       type_info_(kRequestTypeInfo[static_cast<int>(type)]) {
   DCHECK(pref_service);
 
-  std::string quota = variations::GetVariationParamValueByFeature(
-      ntp_snippets::kArticleSuggestionsFeature,
-      base::StringPrintf("quota_%s", GetRequestTypeName()));
-  if (!base::StringToInt(quota, &quota_)) {
-    LOG_IF(WARNING, !quota.empty())
-        << "Invalid variation parameter for quota for " << GetRequestTypeName();
-    quota_ = type_info_.default_quota;
-  }
-
-  std::string interactive_quota = variations::GetVariationParamValueByFeature(
-      ntp_snippets::kArticleSuggestionsFeature,
-      base::StringPrintf("interactive_quota_%s", GetRequestTypeName()));
-  if (!base::StringToInt(interactive_quota, &interactive_quota_)) {
-    LOG_IF(WARNING, !interactive_quota.empty())
-        << "Invalid variation parameter for interactive quota for "
-        << GetRequestTypeName();
-    interactive_quota_ = type_info_.default_interactive_quota;
-  }
+  quota_ = type_info_.quota.Get();
+  interactive_quota_ = type_info_.interactive_quota.Get();
 
   // Since the histogram names are dynamic, we cannot use the standard macros
   // and we need to lookup the histograms, instead.

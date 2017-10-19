@@ -30,34 +30,18 @@ namespace ntp_snippets {
 
 namespace {
 
-const int kMaxBookmarks = 10;
-const int kMaxBookmarkAgeInDays = 7;
-
-const char* kMaxBookmarksParamName = "bookmarks_max_count";
-const char* kMaxBookmarkAgeInDaysParamName = "bookmarks_max_age_in_days";
-const char* kConsiderDesktopVisitsParamName =
-    "bookmarks_consider_desktop_visits";
+constexpr base::FeatureParam<int> kMaxBookmarksParam{
+    &kBookmarkSuggestionsFeature, "bookmarks_max_count", 10};
+constexpr base::FeatureParam<int> kMaxBookmarkAgeInDaysParam{
+    &kBookmarkSuggestionsFeature, "bookmarks_max_age_in_days", 7};
+constexpr base::FeatureParam<bool> kConsiderDesktopVisitsParam{
+    &kBookmarkSuggestionsFeature, "bookmarks_consider_desktop_visits", true};
 
 // Any bookmark created or visited after this time will be considered recent.
 // Note that bookmarks can be shown that do not meet this threshold.
 base::Time GetThresholdTime() {
   return base::Time::Now() -
-         base::TimeDelta::FromDays(variations::GetVariationParamByFeatureAsInt(
-             ntp_snippets::kBookmarkSuggestionsFeature,
-             kMaxBookmarkAgeInDaysParamName, kMaxBookmarkAgeInDays));
-}
-
-// The maximum number of suggestions ever provided.
-int GetMaxCount() {
-  return variations::GetVariationParamByFeatureAsInt(
-      ntp_snippets::kBookmarkSuggestionsFeature, kMaxBookmarksParamName,
-      kMaxBookmarks);
-}
-
-bool AreDesktopVisitsConsidered() {
-  return variations::GetVariationParamByFeatureAsBool(
-      ntp_snippets::kBookmarkSuggestionsFeature,
-      kConsiderDesktopVisitsParamName, true);
+         base::TimeDelta::FromDays(kMaxBookmarkAgeInDaysParam.Get());
 }
 
 }  // namespace
@@ -72,7 +56,8 @@ BookmarkSuggestionsProvider::BookmarkSuggestionsProvider(
       bookmark_model_(bookmark_model),
       fetch_requested_(false),
       end_of_list_last_visit_date_(GetThresholdTime()),
-      consider_bookmark_visits_from_desktop_(AreDesktopVisitsConsidered()) {
+      consider_bookmark_visits_from_desktop_(
+          kConsiderDesktopVisitsParam.Get()) {
   observer->OnCategoryStatusChanged(this, provided_category_, category_status_);
   bookmark_model_->AddObserver(this);
   FetchBookmarks();
@@ -275,7 +260,7 @@ void BookmarkSuggestionsProvider::FetchBookmarksInternal() {
 
   base::Time threshold_time = GetThresholdTime();
   std::vector<const BookmarkNode*> bookmarks = GetRecentlyVisitedBookmarks(
-      bookmark_model_, GetMaxCount(), threshold_time,
+      bookmark_model_, kMaxBookmarksParam.Get(), threshold_time,
       consider_bookmark_visits_from_desktop_);
 
   std::vector<ContentSuggestion> suggestions;

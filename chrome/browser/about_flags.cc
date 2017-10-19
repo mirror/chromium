@@ -657,13 +657,13 @@ const FeatureEntry::Choice kAshUiModeChoices[] = {
 #if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam
     kContentSuggestionsCategoryOrderFeatureVariationGeneral[] = {
-        {ntp_snippets::kCategoryOrderParameter,
+        {ntp_snippets::kCategoryOrderParam.name,
          ntp_snippets::kCategoryOrderGeneral},
 };
 
 const FeatureEntry::FeatureParam
     kContentSuggestionsCategoryOrderFeatureVariationEMOriented[] = {
-        {ntp_snippets::kCategoryOrderParameter,
+        {ntp_snippets::kCategoryOrderParam.name,
          ntp_snippets::kCategoryOrderEmergingMarketsOriented},
 };
 
@@ -679,13 +679,13 @@ const FeatureEntry::FeatureVariation
 
 const FeatureEntry::FeatureParam
     kContentSuggestionsCategoryRankerFeatureVariationConstant[] = {
-        {ntp_snippets::kCategoryRankerParameter,
+        {ntp_snippets::kCategoryRankerParam.name,
          ntp_snippets::kCategoryRankerConstantRanker},
 };
 
 const FeatureEntry::FeatureParam
     kContentSuggestionsCategoryRankerFeatureVariationClickBased[] = {
-        {ntp_snippets::kCategoryRankerParameter,
+        {ntp_snippets::kCategoryRankerParam.name,
          ntp_snippets::kCategoryRankerClickBasedRanker},
 };
 

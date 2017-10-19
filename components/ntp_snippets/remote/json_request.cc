@@ -49,34 +49,21 @@ namespace internal {
 
 namespace {
 
-// Variation parameter for disabling the retry.
-const char kBackground5xxRetriesName[] = "background_5xx_retries_count";
+constexpr base::FeatureParam<int> kBackground5xxRetriesParam{
+    &ntp_snippets::kArticleSuggestionsFeature, "background_5xx_retries_count",
+    0};
 
-// Variation parameter for sending UrlLanguageHistogram info to the server.
-const char kSendTopLanguagesName[] = "send_top_languages";
+constexpr base::FeatureParam<bool> kSendTopLanguagesParam{
+    &ntp_snippets::kArticleSuggestionsFeature, "send_top_languages", true};
 
-// Variation parameter for sending UserClassifier info to the server.
-const char kSendUserClassName[] = "send_user_class";
+constexpr base::FeatureParam<bool> kSendUserClassParam{
+    &ntp_snippets::kArticleSuggestionsFeature, "send_user_class", true};
 
 int Get5xxRetryCount(bool interactive_request) {
   if (interactive_request) {
     return 2;
   }
-  return std::max(0, variations::GetVariationParamByFeatureAsInt(
-                         ntp_snippets::kArticleSuggestionsFeature,
-                         kBackground5xxRetriesName, 0));
-}
-
-bool IsSendingTopLanguagesEnabled() {
-  return variations::GetVariationParamByFeatureAsBool(
-      ntp_snippets::kArticleSuggestionsFeature, kSendTopLanguagesName,
-      /*default_value=*/true);
-}
-
-bool IsSendingUserClassEnabled() {
-  return variations::GetVariationParamByFeatureAsBool(
-      ntp_snippets::kArticleSuggestionsFeature, kSendUserClassName,
-      /*default_value=*/true);
+  return std::max(0, kBackground5xxRetriesParam.Get());
 }
 
 // Translate the BCP 47 |language_code| into a posix locale string.
@@ -282,7 +269,7 @@ JsonRequest::Builder& JsonRequest::Builder::SetUrlRequestContextGetter(
 
 JsonRequest::Builder& JsonRequest::Builder::SetUserClassifier(
     const UserClassifier& user_classifier) {
-  if (IsSendingUserClassEnabled()) {
+  if (kSendUserClassParam.Get()) {
     user_class_ = GetUserClassString(user_classifier.GetUserClass());
   }
   return *this;
@@ -419,7 +406,7 @@ void JsonRequest::Builder::PrepareLanguages(
   // TODO(jkrcal): Add language model factory for iOS and add fakes to tests so
   // that |language_histogram| is never nullptr. Remove this check and add a
   // DCHECK into the constructor.
-  if (!language_histogram_ || !IsSendingTopLanguagesEnabled()) {
+  if (!language_histogram_ || !kSendTopLanguagesParam.Get()) {
     return;
   }
 

@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/feature_list.h"
+#include "base/metrics/field_trial_params.h"
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
 #include "components/prefs/pref_service.h"
 
@@ -62,14 +63,14 @@ extern const base::Feature kPublisherFaviconsFromNewServerFeature;
 extern const base::Feature kRemoteSuggestionsEmulateM58FetchingSchedule;
 
 // Parameter and its values for the kCategoryRanker feature flag.
-extern const char kCategoryRankerParameter[];
-extern const char kCategoryRankerConstantRanker[];
-extern const char kCategoryRankerClickBasedRanker[];
-
 enum class CategoryRankerChoice {
   CONSTANT,
   CLICK_BASED,
+  DEFAULT,
 };
+extern const char kCategoryRankerConstantRanker[];
+extern const char kCategoryRankerClickBasedRanker[];
+extern const base::FeatureParam<CategoryRankerChoice> kCategoryRankerParam;
 
 // Returns which CategoryRanker to use according to kCategoryRanker feature and
 // Chrome Home.
@@ -85,14 +86,13 @@ std::unique_ptr<CategoryRanker> BuildSelectedCategoryRanker(
 extern const base::Feature kCategoryOrder;
 
 // Parameter and its values for the kCategoryOrder feature flag.
-extern const char kCategoryOrderParameter[];
-extern const char kCategoryOrderGeneral[];
-extern const char kCategoryOrderEmergingMarketsOriented[];
-
 enum class CategoryOrderChoice {
   GENERAL,
   EMERGING_MARKETS_ORIENTED,
 };
+extern const char kCategoryOrderGeneral[];
+extern const char kCategoryOrderEmergingMarketsOriented[];
+extern const base::FeatureParam<CategoryOrderChoice> kCategoryOrderParam;
 
 // Returns which category order to use according to kCategoryOrder feature.
 CategoryOrderChoice GetSelectedCategoryOrder();

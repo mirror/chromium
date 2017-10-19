@@ -67,8 +67,10 @@ const char kCategoryContentAllowFetchingMore[] = "allow_fetching_more";
 
 // Variation parameter for ordering new remote categories based on their
 // position in the response relative to "Article for you" category.
-const char kOrderNewRemoteCategoriesBasedOnArticlesCategory[] =
-    "order_new_remote_categories_based_on_articles_category";
+const base::FeatureParam<bool>
+    kOrderNewRemoteCategoriesBasedOnArticlesCategoryParam{
+        &kArticleSuggestionsFeature,
+        "order_new_remote_categories_based_on_articles_category", false};
 
 // Variation parameter for additional prefetched suggestions quantity. Not more
 // than this number of prefetched suggestions will be kept longer.
@@ -85,21 +87,11 @@ const char kMaxAgeForAdditionalPrefetchedSuggestionParamName[] =
 
 const int kDefaultMaxAgeForAdditionalPrefetchedSuggestionMinutes = 36 * 60;
 
-bool IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() {
-  // TODO(vitaliii): Use GetFieldTrialParamByFeature(As.*)? from
-  // base/metrics/field_trial_params.h. GetVariationParamByFeature(As.*)? are
-  // deprecated.
-  return variations::GetVariationParamByFeatureAsBool(
-      kArticleSuggestionsFeature,
-      kOrderNewRemoteCategoriesBasedOnArticlesCategory,
-      /*default_value=*/false);
-}
-
 void AddFetchedCategoriesToRankerBasedOnArticlesCategory(
     CategoryRanker* ranker,
     const FetchedCategoriesVector& fetched_categories,
     Category articles_category) {
-  DCHECK(IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled());
+  DCHECK(kOrderNewRemoteCategoriesBasedOnArticlesCategoryParam.Get());
   // Insert categories which precede "Articles" in the response.
   for (const FetchedCategory& fetched_category : fetched_categories) {
     if (fetched_category.category == articles_category) {
@@ -1017,7 +1009,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     }
 
     // Add new remote categories to the ranker.
-    if (IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() &&
+    if (kOrderNewRemoteCategoriesBasedOnArticlesCategoryParam.Get() &&
         response_includes_article_category) {
       AddFetchedCategoriesToRankerBasedOnArticlesCategory(
           category_ranker_, *fetched_categories, articles_category_);
