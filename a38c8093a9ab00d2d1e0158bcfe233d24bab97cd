@@ -524,6 +524,30 @@
     },
     {
       "key": {
+        "uuid": "25fe3fbc_255727b1",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-19T13:46:29Z",
+      "side": 1,
+      "message": "Bence also proposes just doing:\n    std::move(connection_type_callbacks_.front()).Run(type);\n    connection_type_callbacks_.pop_front();\nHe\u0027s been playing with it over at https://chromium-review.googlesource.com/c/chromium/src/+/727124/1/net/spdy/chromium/spdy_stream_unittest.cc",
+      "parentUuid": "51e5c047_d58ac364",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "a38c8093a9ab00d2d1e0158bcfe233d24bab97cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06de4493_2cb15661",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 28
