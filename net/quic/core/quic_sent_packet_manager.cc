@@ -109,15 +109,11 @@ void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
     SetSendAlgorithm(kBBR);
   }
   if (config.HasClientRequestedIndependentOption(kRENO, perspective_)) {
-    if (config.HasClientRequestedIndependentOption(kBYTE, perspective_)) {
-      SetSendAlgorithm(kRenoBytes);
-    } else {
-      SetSendAlgorithm(kReno);
-    }
-  } else if (config.HasClientRequestedIndependentOption(kBYTE, perspective_)) {
-    SetSendAlgorithm(kCubic);
-  } else if (FLAGS_quic_reloadable_flag_quic_default_to_bbr &&
-             config.HasClientRequestedIndependentOption(kQBIC, perspective_)) {
+    SetSendAlgorithm(kRenoBytes);
+  } else if (config.HasClientRequestedIndependentOption(kBYTE, perspective_) ||
+             (FLAGS_quic_reloadable_flag_quic_default_to_bbr &&
+              config.HasClientRequestedIndependentOption(kQBIC,
+                                                         perspective_))) {
     SetSendAlgorithm(kCubicBytes);
   } else if (FLAGS_quic_reloadable_flag_quic_enable_pcc &&
              config.HasClientRequestedIndependentOption(kTPCC, perspective_)) {
