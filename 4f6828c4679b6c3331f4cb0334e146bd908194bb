@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33af972_be01a96c",
+        "filename": "content/child/web_url_request_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T06:20:53Z",
+      "side": 1,
+      "message": "For my education... could you expand this part a little more (maybe in the comment too)? Bind() gets lock and initialize some internal state for mojo connections is all I know, would there be a dead lock with it?",
+      "revId": "4f6828c4679b6c3331f4cb0334e146bd908194bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
