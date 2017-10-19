@@ -205,7 +205,9 @@ std::string GetAuthorizationCodeUri() {
   NSString* authUri =
       [NSString stringWithCString:GetAuthorizationCodeUri().c_str()
                          encoding:[NSString defaultCStringEncoding]];
-  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:authUri]];
+  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:authUri]
+                                     options:@{}
+                           completionHandler:nil];
 }
 
 - (void)didTapLogout:(id)sender {
