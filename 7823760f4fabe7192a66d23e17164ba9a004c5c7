@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "041e83d7_75a811e5",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T16:28:57Z",
+      "side": 1,
+      "message": "Does it make sense to use int64 origin_offset_us directly here?\n\nNested structs have an extra cost, every usage of Time with nested structs would be:\n\n8-byte pointer to Time struct\nTime struct: 8-byte struct header + 8-byte pointer to TimeDelta\nTimeDelta struct: 8-byte struct header + int64\n\nThat is 40 bytes and two layers of indirection. Using int64 will be 24 bytes and one layer of indirection.\n\nWDYT?",
+      "revId": "7823760f4fabe7192a66d23e17164ba9a004c5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3725fc_2067061d",
         "filename": "mojo/common/time_struct_traits.h",
         "patchSetId": 4
