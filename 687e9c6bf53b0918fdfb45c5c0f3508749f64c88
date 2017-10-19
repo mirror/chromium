@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b782b96_b21407e9",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "The TODO does not align well with a function called \"IgnoreError\". If we want UMA, we should have a separate function for each case. (They\u0027ll be one aligned 0xC3 instruction w/o optimisations :P)",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d91f738_a202267b",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "Why is this called |mark_callback| while everything else is |callback|?",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42b1b9c_402422b6",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "Just define one callback. In practice the user will never see these typenames.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d758bde3_ca926ace",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "\"It would be nice\", \"unfortunately\" - delete, keep these concise and factual",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999e27ed_43df9e1e",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "nit: constexpr. also add more blank lines please",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e55000_fb096f61",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "The other Did* method is a member of the test fixture, these are not. Please keep the code consistent.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16dd9141_78adeb75",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": ":D",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939ae279_95af74fe",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "nit: consider early returning to reduce nesting.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a19cf4_b025fe69",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "nit: blank lines here (and on :128) too please. They\u0027ll help readability.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e5cb72_bacf3e54",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "Please add a GC test.",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03eb7786_65d9a9ca",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "I dislike \"tagged with\" - we deliberately removed that ambiguity... What about phrasing this something like \"and the developer\u0027s |developer_id|\"?",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03df6d3a_397cbbe1",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "Skips...aborted -\u003e remove. Implied by \"active\".",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9c56f4_f9c8cba7",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T13:36:42Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "687e9c6bf53b0918fdfb45c5c0f3508749f64c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
