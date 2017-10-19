@@ -1176,8 +1176,7 @@ void WebMediaPlayerImpl::OnEncryptedMediaInitData(
     const std::vector<uint8_t>& init_data) {
   DCHECK(init_data_type != EmeInitDataType::UNKNOWN);
 
-  // TODO(xhwang): Update this UMA name. https://crbug.com/589251
-  UMA_HISTOGRAM_COUNTS("Media.EME.NeedKey", 1);
+  UMA_HISTOGRAM_COUNTS("Media.EME.EncryptedEvent", 1);
 
   // Recreate the watch time reporter if necessary.
   const bool was_encrypted = is_encrypted_;
