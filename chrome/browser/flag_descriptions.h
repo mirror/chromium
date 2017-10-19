@@ -1275,6 +1275,9 @@ extern const char kOmniboxEntitySuggestionsDescription[];
 extern const char kOmniboxTailSuggestionsName[];
 extern const char kOmniboxTailSuggestionsDescription[];
 
+extern const char kOmniboxTabSearchesName[];
+extern const char kOmniboxTabSearchesDescription[];
+
 extern const char kOneGoogleBarOnLocalNtpName[];
 extern const char kOneGoogleBarOnLocalNtpDescription[];
 

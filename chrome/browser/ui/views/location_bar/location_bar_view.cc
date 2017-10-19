@@ -27,6 +27,7 @@
 #include "chrome/browser/ui/autofill/save_card_bubble_controller_impl.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/layout_constants.h"
@@ -676,6 +677,37 @@ ToolbarModel* LocationBarView::GetToolbarModel() {
 
 WebContents* LocationBarView::GetWebContents() {
   return delegate_->GetWebContents();
+}
+
+bool LocationBarView::SwitchToTabWithURL(const std::string& url,
+                                         bool close_this) {
+  // TODO: Can we put this loop somewhere in common with TabSearchProvider ?
+  BrowserList* browser_list = BrowserList::GetInstance();
+  for (BrowserList::const_iterator b = browser_list->begin();
+       b != browser_list->end(); ++b) {
+    Browser* browser = *b;
+    if (browser->profile() == profile()) {
+      for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
+        content::WebContents* web_contents =
+            browser->tab_strip_model()->GetWebContentsAt(i);
+        if (web_contents->GetURL() == url) {
+          if (close_this)
+            GetWebContents()->Close();
+          else
+            // Transfer focus, from the Omnibox, to the tab so that when
+            // focus comes back to the tab, it's focused on the content.
+            // TODO: No idea how appropriate this approach is.
+            // I have this feeling that we should add another command to
+            // BrowserCommandController::ExecuteCommandWithDisposition().
+            GetWebContents()->Focus();
+          if (GetWebContents() != web_contents)
+            web_contents->GetDelegate()->ActivateContents(web_contents);
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
