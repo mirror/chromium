@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "809c6870_dd969a8c",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "nit: i do think something other than current for this variable is good. current_sqs is very easy to confuse with the current loop iteration\u0027s sqs which is quad-\u003eshared_quad_state but they aren\u0027t the same thing. i think last was okay before, fwiw, but something else could work too.",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153f53d7_2507e421",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "sqs_rect_in_target?",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbd9d2e_61f8658c",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "typo: current\nnit: \"SharedQuadState\" is more greppable than \"shared quad state\"\n\nnote how \"current SharedQuadState\" here is different from |current_sqs| to explain my feelings on that variable name",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03287cf_29da8e6d",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "\"does not intersect with\"",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067abd08_55f7288e",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "current",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1948997d_92f960d3",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "current_sqs_intersects_occlusion? (thatd be inverted and move the ! to where it is used, which would be ok, or dont invert the name but then we need a negative in the name which i find often harder to think about)\n\nin general, names explaining what\u0027s in the variable seem to help understand what\u0027s happening than names about how the variable will be used in my experience",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaedfe81_2fa3bd60",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "put this inside the current_sqs !\u003d quad-\u003esqs if block?\n\nnit: and then put the skip_quads computation after it and make it uses current_sqs to show the relationship more explicitly?",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ff6a5f_15aa7927",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "drop a TODO about the performance here?",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29f3cf5_2c3ee0af",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "aligns",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f0fc13_426f6ae7",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-19T20:45:08Z",
+      "side": 1,
+      "message": "is it worth verifying that the correct quad was removed in these test cases? What if it did occlusion back to front by accident, for example? :) i think this would pass",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
