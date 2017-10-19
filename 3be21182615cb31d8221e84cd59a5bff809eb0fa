@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bac07c56_499a4015",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-19T20:45:36Z",
+      "side": 1,
+      "message": "Callbacks may call PlatformSensorProvider methods that modify |requests_map_| so we probably want to copy out the callback list and do this as the very last step of the method.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 25
+      },
+      "revId": "3be21182615cb31d8221e84cd59a5bff809eb0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36297c87_f54647ef",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-19T20:45:36Z",
+      "side": 1,
+      "message": "Copy the FakePlatformSensor implementation from generic_sensor_service_unittest.cc into a separate file and use it here as well?",
+      "revId": "3be21182615cb31d8221e84cd59a5bff809eb0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bafaa8b_87729316",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-19T20:45:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t neither of these callbacks be called because CreateSensorInternal will only be executed once and the callback passed to it is never called.\n\nI would put NOTREACHED() in both.",
+      "range": {
+        "startLine": 124,
+        "startChar": 55,
+        "endLine": 124,
+        "endChar": 70
+      },
+      "revId": "3be21182615cb31d8221e84cd59a5bff809eb0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
