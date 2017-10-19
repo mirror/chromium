@@ -5,15 +5,17 @@
 #ifndef CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PLATFORM_BRIDGE_WIN_H_
 #define CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PLATFORM_BRIDGE_WIN_H_
 
-#include <windows.ui.notifications.h>
 #include <string>
-#include <unordered_map>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
-#include "url/gurl.h"
 
-struct NotificationData;
+class NotificationPlatformBridgeWinImpl;
+
+namespace base {
+class TaskRunner;
+}
 
 // Implementation of the NotificationPlatformBridge for Windows 10 Anniversary
 // Edition and beyond, delegating display of notifications to the Action Center.
@@ -54,16 +56,18 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
                                          const GURL& origin_url,
                                          bool incognito);
 
+  void DisplayOnTaskRunner(NotificationCommon::Type notification_type,
+                           const std::string& notification_id,
+                           const std::string& profile_id,
+                           bool incognito,
+                           std::unique_ptr<Notification> notification);
+
+  void PostTaskToTaskRunnerThread(base::OnceClosure closure) const;
+
   // Whether the required functions from combase.dll have been loaded.
   bool com_functions_initialized_;
 
-  // Stores the set of Notifications in a session.
-  // A std::set<std::unique_ptr<T>> doesn't work well because e.g.,
-  // std::set::erase(T) would require a std::unique_ptr<T> argument, so the data
-  // would get double-destructed.
-  template <typename T>
-  using UnorderedUniqueSet = std::unordered_map<T*, std::unique_ptr<T>>;
-  UnorderedUniqueSet<NotificationData> notifications_;
+  scoped_refptr<base::TaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWin);
 };
