@@ -46,7 +46,8 @@ viz::mojom::HitTestRegionListPtr HitTestDataProviderAura::GetHitTestData()
     const {
   const ui::mojom::EventTargetingPolicy event_targeting_policy =
       window_->event_targeting_policy();
-  if (event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
+  if (!window_->IsVisible() ||
+      event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
     return nullptr;
 
   auto hit_test_region_list = viz::mojom::HitTestRegionList::New();
@@ -64,6 +65,9 @@ viz::mojom::HitTestRegionListPtr HitTestDataProviderAura::GetHitTestData()
 void HitTestDataProviderAura::GetHitTestDataRecursively(
     aura::Window* window,
     viz::mojom::HitTestRegionList* hit_test_region_list) const {
+  if (window->GetLocalSurfaceId().is_valid())
+    return;
+
   WindowTargeter* parent_targeter =
       static_cast<WindowTargeter*>(window->GetEventTargeter());
 
@@ -75,7 +79,8 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
   for (aura::Window* child : base::Reversed(window->children())) {
     const ui::mojom::EventTargetingPolicy event_targeting_policy =
         child->event_targeting_policy();
-    if (event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
+    if (!child->IsVisible() ||
+        event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
       continue;
     if (event_targeting_policy !=
         ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY) {
