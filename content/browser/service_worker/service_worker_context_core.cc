@@ -312,6 +312,7 @@ ServiceWorkerDispatcherHost* ServiceWorkerContextCore::GetDispatcherHost(
 void ServiceWorkerContextCore::RemoveDispatcherHost(int process_id) {
   // Temporary CHECK for debugging https://crbug.com/750267.
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
+  RemoveAllProviderHostsForProcess(process_id);
   dispatcher_hosts_.erase(process_id);
 }
 
@@ -347,6 +348,8 @@ void ServiceWorkerContextCore::RemoveProviderHost(
   map->Remove(provider_id);
 }
 
+// TODO(falken) Try to remove this method (see https://crbug.com/736203 for why
+// a removal attempt was reverted).
 void ServiceWorkerContextCore::RemoveAllProviderHostsForProcess(
     int process_id) {
   // Temporary CHECK for debugging https://crbug.com/750267.
