@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4474557a_b5e9c63c",
+        "filename": "gpu/config/gpu_control_list.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-10-19T21:03:43Z",
+      "side": 0,
+      "message": "zmo: I removed a lot of code, like this, that could have probably been repurposed to use the new version strings. Let me know what you think.",
+      "revId": "81ef09545ccc0e3e8451a4c522b90a9480e5aa8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

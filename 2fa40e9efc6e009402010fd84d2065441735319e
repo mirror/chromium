@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c95e4b67_7d537599",
+        "filename": "build/util/lastchange.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-10-19T21:03:43Z",
+      "side": 1,
+      "message": "I wouldn\u0027t have changed the name of this existing option, but its name was completely misleading and incorrectly described its behavior. I couldn\u0027t find any existing usages of --revision-only elsewhere.",
+      "revId": "2fa40e9efc6e009402010fd84d2065441735319e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce979b7_1ac21736",
+        "filename": "content/browser/gpu/gpu_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-10-19T21:03:43Z",
+      "side": 1,
+      "message": "Should this be accessed through another structure instead of directly, here?",
+      "revId": "2fa40e9efc6e009402010fd84d2065441735319e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b4dde7_89ea25c9",
+        "filename": "content/browser/resources/gpu/info_view.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-10-19T21:03:43Z",
+      "side": 1,
+      "message": "I couldn\u0027t find a way to display actual, clickable hyperlinks in the about:gpu page, so this just displays the URL as text. It doesn\u0027t seem like setTable_ allows HTML for the \u0027value\u0027 key.\n\nMaybe this could be fixed as a future enhancement.",
+      "revId": "2fa40e9efc6e009402010fd84d2065441735319e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
