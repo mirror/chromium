@@ -87,11 +87,12 @@ class UiScene {
 
   void OnGlInitialized();
 
- private:
-  void Animate(const base::TimeTicks& current_time);
+  // TODO(vollick): this should be removed once the controller is in the scene
+  // graph. crbug.com/774501
+  bool ControllerWouldBeVisibleInTheSceneGraph() const;
 
+ private:
   std::unique_ptr<UiElement> root_element_;
-  ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 
   float background_distance_ = 10.0f;
   SkColor background_color_ = 0;
