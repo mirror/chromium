@@ -18,7 +18,6 @@ namespace blink {
 
 void TableRowPainter::Paint(const PaintInfo& paint_info,
                             const LayoutPoint& paint_offset) {
-  ObjectPainter(layout_table_row_).CheckPaintOffset(paint_info, paint_offset);
   DCHECK(layout_table_row_.HasSelfPaintingLayer());
 
   // TODO(crbug.com/577282): This painting order is inconsistent with other
@@ -48,10 +47,12 @@ void TableRowPainter::Paint(const PaintInfo& paint_info,
 void TableRowPainter::PaintOutline(const PaintInfo& paint_info,
                                    const LayoutPoint& paint_offset) {
   DCHECK(ShouldPaintSelfOutline(paint_info.phase));
+  PaintInfo local_paint_info(paint_info);
   LayoutPoint adjusted_paint_offset =
-      paint_offset + layout_table_row_.Location();
+      BoxPainter(layout_table_row_)
+          .AdjustPaintOffset(local_paint_info, paint_offset);
   ObjectPainter(layout_table_row_)
-      .PaintOutline(paint_info, adjusted_paint_offset);
+      .PaintOutline(local_paint_info, adjusted_paint_offset);
 }
 
 void TableRowPainter::HandleChangedPartialPaint(
@@ -82,23 +83,25 @@ void TableRowPainter::PaintBoxDecorationBackground(
           DisplayItem::kBoxDecorationBackground))
     return;
 
+  PaintInfo local_paint_info(paint_info);
   LayoutPoint adjusted_paint_offset =
-      paint_offset + layout_table_row_.Location();
+      BoxPainter(layout_table_row_)
+          .AdjustPaintOffset(local_paint_info, paint_offset);
   LayoutRect bounds =
       BoxPainter(layout_table_row_)
-          .BoundsForDrawingRecorder(paint_info, adjusted_paint_offset);
-  DrawingRecorder recorder(paint_info.context, layout_table_row_,
+          .BoundsForDrawingRecorder(local_paint_info, adjusted_paint_offset);
+  DrawingRecorder recorder(local_paint_info.context, layout_table_row_,
                            DisplayItem::kBoxDecorationBackground, bounds);
   LayoutRect paint_rect(adjusted_paint_offset, layout_table_row_.Size());
 
   if (has_box_shadow) {
-    BoxPainterBase::PaintNormalBoxShadow(paint_info, paint_rect,
+    BoxPainterBase::PaintNormalBoxShadow(local_paint_info, paint_rect,
                                          layout_table_row_.StyleRef());
   }
 
   if (has_background) {
     const auto* section = layout_table_row_.Section();
-    PaintInfo paint_info_for_cells = paint_info.ForDescendants();
+    PaintInfo paint_info_for_cells = local_paint_info.ForDescendants();
     for (auto c = dirtied_columns.Start(); c < dirtied_columns.End(); c++) {
       if (const auto* cell =
               section->OriginatingCellAt(layout_table_row_.RowIndex(), c))
@@ -108,7 +111,7 @@ void TableRowPainter::PaintBoxDecorationBackground(
 
   if (has_box_shadow) {
     BoxPainterBase::PaintInsetBoxShadowWithInnerRect(
-        paint_info, paint_rect, layout_table_row_.StyleRef());
+        local_paint_info, paint_rect, layout_table_row_.StyleRef());
   }
 }
 
@@ -142,11 +145,14 @@ void TableRowPainter::PaintCollapsedBorders(const PaintInfo& paint_info,
             DisplayItem::kTableCollapsedBorders))
       return;
 
+    PaintInfo local_paint_info(paint_info);
+    auto adjusted_paint_offset =
+        BoxPainter(layout_table_row_)
+            .AdjustPaintOffset(local_paint_info, paint_offset);
     LayoutRect bounds =
         BoxPainter(layout_table_row_)
-            .BoundsForDrawingRecorder(
-                paint_info, paint_offset + layout_table_row_.Location());
-    recorder.emplace(paint_info.context, layout_table_row_,
+            .BoundsForDrawingRecorder(local_paint_info, adjusted_paint_offset);
+    recorder.emplace(local_paint_info.context, layout_table_row_,
                      DisplayItem::kTableCollapsedBorders, bounds);
   }
   // Otherwise TablePainter should have created the drawing recorder.
