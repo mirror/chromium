@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8e37c99f_4476d616",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T17:23:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c3a19f4_e9113428",
+      "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "741f6b62_ffea56c4",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 1
@@ -84,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "a76be05d_f8604716",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T17:23:26Z",
+      "side": 1,
+      "message": "\u003e If overriding OnWindowDestroying(aura::Window* window) here, It works fine during manual testing but breaks several unittests. The scenarios in unittests look like:\n\u003e - Have at least 2 windows in MRU list\n\u003e - Snap 2 windows to left and right of the screen\n\u003e - Delete one of the snapped windows |window|. In OnSnappedWindowMinimizedOrDestroyed(window), it will call WindowSelectorController::ToggleOverview() to open the overview\n\u003e - When calculating the MRU window lists to decide which windows to be shown in the overview window grid, |window| should not be in the MRU list. However, in the unittests, it still shows in the list.\n\u003e \n\u003e I did more investigation on this, it seems in test environment, wm::CanActivateWindow(aura::Window* window)  still returns true for a to-be-closed window. It only happens in tests though.\n\nIt sounds a bug or issue that we should look into at least. \n\nCan it be related to MruWindowTracker::OnDestroyed ? Maybe we can ignore the window kept in OnDestroying in OnWindowActivated?\n\nI guess a window being destroyed shouldn\u0027t be activatable, so may be that\u0027s what we should fix. Could you please consult with sky@?\n\n\u003e \n\u003e Actually here in OnWindowDestroyed(), it calls OnSnappedWindowMinimizedOrDestroyed(window) which doesn\u0027t call any method on the destroyed window so I think it should be fine to override either OnWindowDestroying() or OnWindowDestroyed() here. But if you think it\u0027s better to override OnWindowDestroying(), I\u0027ll try to fix the tests.\n\nIt looks to me that HasObserver is called on these windows. It understand te current code path works, but having complicated logic that may touch window after Destroyed can lead to other bugs later so we should avoid if possible.",
+      "parentUuid": "599147ec_055827c3",
+      "range": {
+        "startLine": 341,
+        "startChar": 26,
+        "endLine": 341,
+        "endChar": 43
+      },
+      "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e904ef33_eb9d13b3",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 1
@@ -119,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "3b0cc9ea_d9986aed",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T17:23:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "504bd89e_07605117",
+      "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15467eec_9a3d6042",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
         "patchSetId": 1
@@ -148,6 +208,24 @@
       "side": 1,
       "message": "They don\u0027t do the same thing. ForgetWindow(window) doesn\u0027t remove window from window_state_map_ but only restore its old previous window state object. When the old window state object is restored, the new tablet window state object will be deleted, which then calls into WindowStateDestroyed(window) function to remove the window from window_state_map_.\n\nHowever, here in OnWindowDestroying(), we don\u0027t want to restore the old previous window state object but want to remove window from window_state_map_ immediately. Otherwise, it\u0027s possible that we\u0027re trying to use window_state_map_ to send a WM event to the already-deleted window.",
       "parentUuid": "15467eec_9a3d6042",
+      "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86dd548_46bb037c",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T17:23:26Z",
+      "side": 1,
+      "message": "\u003e They don\u0027t do the same thing. ForgetWindow(window) doesn\u0027t remove window from window_state_map_ but only restore its old previous window state object. When the old window state object is restored, the new tablet window state object will be deleted, which then calls into WindowStateDestroyed(window) function to remove the window from window_state_map_.\n\u003e \n\u003e However, here in OnWindowDestroying(), we don\u0027t want to restore the old previous window state object but want to remove window from window_state_map_ immediately. Otherwise, it\u0027s possible that we\u0027re trying to use window_state_map_ to send a WM event to the already-deleted window.\n\nI meant you can add \"destroyed\" flag and handle the difference?\n\nI think it will help understand the difference",
+      "parentUuid": "e72248d0_68c7fe5d",
       "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
