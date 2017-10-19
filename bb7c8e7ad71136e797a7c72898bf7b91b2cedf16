@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9778dd9f_642ab1aa",
+        "filename": "base/allocator/partition_allocator/PartitionAlloc.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Updated the comment.\n\nThere are multiple comments in the codebase that imply 1MB was the max bucket size, but emprical testing and the static assert show that 0xF0000 is actually the max size.\n\nThis makes sense actually 1MB uses up more than 1/2 the available page in any given superpage so allowing a bucket of that size would cause crazy external fragmentation of the heap.",
+      "parentUuid": "31f8d3a8_f3af0e72",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a7daaf4_a24daa2f",
         "filename": "base/allocator/partition_allocator/partition_alloc.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c2fe9bda_d94ca8d4",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a7daaf4_a24daa2f",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0c89961_926b4da0",
         "filename": "base/allocator/partition_allocator/partition_alloc.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-17T01:05:08Z",
       "side": 1,
       "message": "Yeah, I think your reasoning is correct.",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba3d37e_6fd10486",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Added to uber-bug for this particular function. Will try to fix in a different pass as I\u0027m just scared to touch the math in this thing and would rather that be a separate change...",
+      "parentUuid": "c0c89961_926b4da0",
       "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6848a7a9_17991729",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b483f65f_9e16cd7a",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a10354cb_19805575",
         "filename": "base/allocator/partition_allocator/partition_alloc.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25867e4_1e3abf64",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10354cb_19805575",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e01ca2f9_02f710e0",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7167b7ff_e3d64b42",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1697674_7f2dbf3c",
         "filename": "base/allocator/partition_allocator/partition_alloc.cc",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2734ae3b_de0ec6b3",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1697674_7f2dbf3c",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "d1fbcc8a_c87ef864",
+        "filename": "base/allocator/partition_allocator/partition_alloc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "I\u0027m reading through the code and I *think* |bucket| equals |new_page-\u003ebucket| in most conditional branches... If it\u0027s okay, I\u0027d like to leave the TODO for now as I continue to work through this file?",
+      "parentUuid": "69ef78fe_56aafdae",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "720396a3_11dbb7c3",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 4
@@ -152,6 +296,24 @@
       "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a935037a_2c4d941f",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "720396a3_11dbb7c3",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "952347ba_867c04cd",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Doh. That is the new static_assert\u003c\u003es are for and this comment is actually out of date. Deleting.",
+      "parentUuid": "82200f16_437e8a6d",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "268b4aaa_bf9bba4e",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 4
@@ -204,6 +384,24 @@
       "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54cedcf_33483f2f",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-19T21:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "268b4aaa_bf9bba4e",
+      "revId": "bb7c8e7ad71136e797a7c72898bf7b91b2cedf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
