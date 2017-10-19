@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Omnibox Debug Page</title>
+  <link rel="stylesheet" href="scraper.css">
+  <script src="chrome://resources/js/cr.js"></script>
+  <script src="chrome://resources/js/util.js"></script>
+  <script src="omnibox.js"></script>
+</head>
+<body>
+  <suggest-table>
+
+    <top-row id="navlist">
+
+      <top-cell id="active">
+        Configure
+        <select-columns id="select-columns">  </select-columns>
+      </top-cell>
+
+      <top-cell id="active">
+        View
+        <select-columns id="view-mode">  </select-columns>
+      </top-cell>
+
+
+      <top-cell id="active">
+        Query Files
+        <select-columns id="view-mode">
+          <input type="file" id="query_files" name="files[]" multiple > Input Query set </input>
+          <br>
+          <input type="file" id="scrape_files" name="files[]" multiple > One side for SxS </input>
+        </select-columns>
+      </top-cell>
+
+  <top-cell id="active">
+    <details>
+      <summary>Help</summary>
+  <div style="background-color:#C0C0C0">
+    <p>SxS for suggest under Chrome <code>f(x) = {}</code>.
+  </div>
+    </details>
+  </top-cell>
+
+    </top-row>
+
+  </suggest-table>
+  <div class="input-section">
+    <form id="omnibox-input-form" action="">
+      <p>
+        An empty query will loop over the loaded query list:
+        <input id="input-text" type="text" size="40" autofocus>
+        <input type="submit">
+      </p>
+    </form>
+  </div>
+  <div id="view-tables"></div>
+</body>
+</html>

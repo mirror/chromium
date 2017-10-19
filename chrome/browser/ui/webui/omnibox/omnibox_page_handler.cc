@@ -125,6 +125,7 @@ OmniboxPageHandler::~OmniboxPageHandler() {}
 void OmniboxPageHandler::OnResultChanged(bool default_match_changed) {
   mojom::OmniboxResultPtr result(mojom::OmniboxResult::New());
   result->done = controller_->done();
+  result->original_query =  mojo::String::From(input_.text());
   result->time_since_omnibox_started_ms =
       (base::Time::Now() - time_omnibox_started_).InMilliseconds();
   const base::string16 host =

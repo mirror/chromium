@@ -366,6 +366,9 @@
       <if expr="enable_plugins">
         <include name="IDR_PDF_MANIFEST" file="resources\pdf\manifest.json" type="BINDATA" />
       </if>
+      <include name="IDR_SCRAPER_HTML" file="resources\scraper\scraper.html" flattenhtml="true" allowexternalscript="true" type="BINDATA" />
+      <include name="IDR_SCRAPER_CSS" file="resources\scraper\scraper.css" type="BINDATA" />
+      <include name="IDR_SCRAPER_JS" file="resources\scraper\scraper.js" type="BINDATA" />
       <if expr="is_win">
         <include name="IDR_PLUGIN_DB_JSON" file="resources\plugin_metadata\plugins_win.json" type="BINDATA" />
       </if>
