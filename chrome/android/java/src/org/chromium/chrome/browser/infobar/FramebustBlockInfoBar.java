@@ -18,7 +18,6 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.interventions.FramebustBlockMessageDelegate;
 import org.chromium.chrome.browser.interventions.FramebustBlockMessageDelegateBridge;
-import org.chromium.components.url_formatter.UrlFormatter;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
 
 /**
@@ -50,17 +49,8 @@ public class FramebustBlockInfoBar extends InfoBar {
     public void createContent(InfoBarLayout layout) {
         layout.setMessage(mDelegate.getLongMessage());
 
-        // TODO(dgn): Elide the URL to fit on a single line.
-        String link = UrlFormatter.formatUrlForSecurityDisplay(mDelegate.getBlockedUrl(), true);
         InfoBarControlLayout control = layout.addControlLayout();
-        SpannableString text = new SpannableString(link);
-        text.setSpan(new NoUnderlineClickableSpan() {
-            @Override
-            public void onClick(View view) {
-                onLinkClicked();
-            }
-        }, 0, link.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        control.addDescription(text);
+        control.createSingleLineUrlView(mDelegate.getBlockedUrl(), view -> onLinkClicked());
 
         layout.setButtons(getContext().getResources().getString(R.string.ok), null);
     }

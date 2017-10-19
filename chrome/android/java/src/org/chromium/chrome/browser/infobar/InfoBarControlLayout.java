@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.infobar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.text.method.LinkMovementMethod;
@@ -26,6 +27,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.DualControlLayout;
 import org.chromium.chrome.browser.widget.RadioButtonLayout;
+import org.chromium.components.url_formatter.UrlFormatter;
 
 import java.util.List;
 
@@ -401,6 +403,43 @@ public final class InfoBarControlLayout extends ViewGroup {
         descriptionView.setText(message);
         descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         return descriptionView;
+    }
+
+    /**
+     * Creates and adds a full-width control with a URL that will be displayed on a single line and
+     * ellipsized if necessary.
+     *
+     * --------------------------------------
+     * | SCHEME://...LIPSIZED_FORMATTED_URL |
+     * --------------------------------------
+     *
+     * @param url           URL to display. Will be securely formatted and ellipsized if necessary.
+     * @param clickListener Listener for taps on the URL.
+     */
+    public View createSingleLineUrlView(String url, OnClickListener clickListener) {
+        ControlLayoutParams params = new ControlLayoutParams();
+        params.mMustBeFullWidth = true;
+
+        ViewGroup ellipsizerView =
+                (ViewGroup) LayoutInflater.from(getContext())
+                        .inflate(R.layout.infobar_control_url_ellipsizer, this, false);
+        addView(ellipsizerView, params);
+
+        // Formatting the URL and requesting to omit the scheme might still include it for some of
+        // them (e.g. file, filesystem). We split the output of the formatting to make sure we don't
+        // end up duplicating it.
+        String formattedUrl = UrlFormatter.formatUrlForSecurityDisplay(url, true);
+        String scheme = Uri.parse(url).getScheme() + "://";
+
+        TextView schemeView = ellipsizerView.findViewById(R.id.url_scheme);
+        schemeView.setText(scheme);
+
+        TextView urlView = ellipsizerView.findViewById(R.id.url_minus_scheme);
+        urlView.setText(formattedUrl.substring(scheme.length()));
+
+        ellipsizerView.setOnClickListener(clickListener);
+
+        return ellipsizerView;
     }
 
     /**
