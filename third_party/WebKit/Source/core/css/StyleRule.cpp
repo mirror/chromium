@@ -33,6 +33,7 @@
 #include "core/css/StyleRuleImport.h"
 #include "core/css/StyleRuleKeyframe.h"
 #include "core/css/StyleRuleNamespace.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace blink {
 
@@ -231,10 +232,16 @@ const StylePropertySet& StyleRule::Properties() const {
 }
 
 StyleRule::StyleRule(const StyleRule& o)
-    : StyleRuleBase(o),
-      should_consider_for_matching_rules_(kConsiderIfNonEmpty),
-      selector_list_(o.selector_list_.Copy()),
-      properties_(o.Properties().MutableCopy()) {}
+    : StyleRuleBase(o), selector_list_(o.selector_list_.Copy()) {
+  if (RuntimeEnabledFeatures::LazyParseCSSEnabled()) {
+    should_consider_for_matching_rules_ = kAlwaysConsider;
+    properties_ =
+        o.ParsedProperties() ? o.ParsedProperties()->MutableCopy() : nullptr;
+  } else {
+    should_consider_for_matching_rules_ = kConsiderIfNonEmpty;
+    properties_ = o.Properties().MutableCopy();
+  }
+}
 
 StyleRule::~StyleRule() {}
 
