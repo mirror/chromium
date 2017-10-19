@@ -147,7 +147,7 @@ TEST(HttpAuthPreferencesTest, AuthServerWhitelist) {
                                             );
   // Check initial value
   EXPECT_FALSE(http_auth_preferences.CanUseDefaultCredentials(GURL("abc")));
-  http_auth_preferences.set_server_whitelist("*");
+  http_auth_preferences.SetServerWhitelist("*");
   EXPECT_TRUE(http_auth_preferences.CanUseDefaultCredentials(GURL("abc")));
 }
 
@@ -165,7 +165,7 @@ TEST(HttpAuthPreferencesTest, AuthDelegateWhitelist) {
                                             );
   // Check initial value
   EXPECT_FALSE(http_auth_preferences.CanDelegate(GURL("abc")));
-  http_auth_preferences.set_delegate_whitelist("*");
+  http_auth_preferences.SetDelegateWhitelist("*");
   EXPECT_TRUE(http_auth_preferences.CanDelegate(GURL("abc")));
 }
 
