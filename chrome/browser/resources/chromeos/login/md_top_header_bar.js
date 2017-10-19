@@ -398,13 +398,20 @@ cr.define('login', function() {
           this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.AVAILABLE &&
           this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.FOREGROUND;
 
+      var animate =
+          this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.FOREGROUND ||
+          (previousState == LOCK_SCREEN_APPS_STATE.FOREGROUND &&
+           this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE);
+
+      if (!animate ||
+          this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.FOREGROUND) {
+        $('login-header-bar').lockScreenAppsState = this.lockScreenAppsState_;
+      }
+
       // This might get set when the action is activated - reset it when the
       // lock screen action is updated.
       $('new-note-background')
           .classList.toggle('new-note-action-above-login-header', false);
-
-      var animate = previousState == LOCK_SCREEN_APPS_STATE.FOREGROUND &&
-          this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE;
 
       this.setBackgroundActive_(
           this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.FOREGROUND,
@@ -418,6 +425,7 @@ cr.define('login', function() {
     updateNewNoteActionVisibility_: function() {
       $('new-note-action').hidden =
           this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.AVAILABLE;
+      $('login-header-bar').lockScreenAppsState = this.lockScreenAppsState_;
     },
 
     /**
@@ -510,6 +518,8 @@ cr.define('login', function() {
           $('new-note-background')
               .classList.toggle('new-note-background-animated', false);
           $('top-header-bar').classList.toggle('new-note-activated', active);
+
+          chrome.send('newNoteLaunchAnimationDone');
 
           if (callback)
             callback();
