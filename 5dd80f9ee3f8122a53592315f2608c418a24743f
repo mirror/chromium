@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "da6e08cd_898d780a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T21:35:07Z",
+      "side": 1,
+      "message": "nit: on",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "5dd80f9ee3f8122a53592315f2608c418a24743f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "896b133f_7c901521",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 2
