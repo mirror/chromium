@@ -22,6 +22,30 @@
       "revId": "2def61dbc4f6b72d106eaec02506bd1404917951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f55c3a_6abbde36",
+        "filename": "device/bluetooth/bluetooth_discovery_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-19T19:16:23Z",
+      "side": 0,
+      "message": "Uploaded another PS to fix this one.",
+      "parentUuid": "734123ed_0ad783b3",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "2def61dbc4f6b72d106eaec02506bd1404917951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
