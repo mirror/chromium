@@ -22,6 +22,30 @@
       "revId": "906d3a806b434977ed582820ff6f180e44145aae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254195ea_a2824655",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-19T20:42:31Z",
+      "side": 0,
+      "message": "So technically the DCHECK + the callback below should handle this case. However, I\u0027ve added it back in - hjd@ will take it out in his dependent CL.",
+      "parentUuid": "cf529b6e_fd874928",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "906d3a806b434977ed582820ff6f180e44145aae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
