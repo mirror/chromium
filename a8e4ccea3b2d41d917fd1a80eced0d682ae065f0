@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7893f667_08fb867b",
+        "filename": "remoting/ios/app/remoting_menu_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-19T21:31:28Z",
+      "side": 1,
+      "message": "New APIs need to be wrapped in @available.  Here\u0027s an example:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/open_url_util.mm?l\u003d17\n\nYou may also need to ifdef the old usage, but I\u0027m not sure because I don\u0027t yet see this used in our codebase for openURL.  Here\u0027s an example for a different API: https://chromium-review.googlesource.com/c/chromium/src/+/721639/3/ios/chrome/browser/physical_web/physical_web_initial_state_recorder.mm",
+      "revId": "a8e4ccea3b2d41d917fd1a80eced0d682ae065f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
