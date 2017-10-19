@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7df6481_b36201f3",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-19T11:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70b214ae_ce788af6",
+      "range": {
+        "startLine": 679,
+        "startChar": 4,
+        "endLine": 679,
+        "endChar": 6
+      },
+      "revId": "774e3b589dc37b8ab97df60f7170d0e2f59cfc6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16694da8_3618688d",
         "filename": "tools/cygprofile/orderfile_generator.py",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d512739d_3c79af0c",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-19T11:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16694da8_3618688d",
+      "range": {
+        "startLine": 687,
+        "startChar": 9,
+        "endLine": 687,
+        "endChar": 12
+      },
+      "revId": "774e3b589dc37b8ab97df60f7170d0e2f59cfc6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79cb95e5_414a8e83",
         "filename": "tools/cygprofile/orderfile_generator.py",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-18T15:53:48Z",
       "side": 1,
       "message": "the amount of state and functionality in this class makes it more difficult than necessary imo to follow what is overridden and how it plays with the rest.\n\nI think it would be more elegant to extract a class like:\nclass FileUploader(object):\n  def __init__():\n    ...\n  def AddFile(file_name, hash_value):\n    ...\n  def UploadAndCommit():\n    ...\n\nthis way asserting on isinstance FileUploader (you name it) provides the guarantee that nothing surprising is going to be overridden.\n\nokay, after an offline discussion it does not seem to improve the readability of this code significantly .. up to you",
+      "range": {
+        "startLine": 692,
+        "startChar": 24,
+        "endLine": 692,
+        "endChar": 39
+      },
+      "revId": "774e3b589dc37b8ab97df60f7170d0e2f59cfc6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbbbf98_e235a27d",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-19T11:58:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "79cb95e5_414a8e83",
       "range": {
         "startLine": 692,
         "startChar": 24,
