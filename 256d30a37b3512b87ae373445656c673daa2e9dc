@@ -22,6 +22,30 @@
       "revId": "256d30a37b3512b87ae373445656c673daa2e9dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f59dc63_3cba5d0e",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-19T20:59:37Z",
+      "side": 1,
+      "message": "After some time investigation, I didn\u0027t find a way to notify us that the webview is rendered complete.\n\nBy checking \"messages sent from the renderer to the browser\": https://cs.chromium.org/chromium/src/content/common/view_messages.h?type\u003dcs\u0026q\u003dViewHostMsg_ResizeOrRepaint_ACK\u0026l\u003d572\n\nI think ResizeDueToAutoResize probably is what we want:\nIt is called because of this IPC message (ViewHostMsg_ResizeOrRepaint_ACK):\n// Sent as an acknowledgement to a previous resize request. This indicates that\n// the compositor has received a frame from the renderer corresponding to the\n// previous reszie request.\n\nThe root cause of old webview flash is:\nwe have two instances of navigation contexts, one for showing current webview, one for loading.\nThe one for loading might have old webview before the new webview is fully rendered. It is swapped to current context on DidStopLoading.\n\nHow about my current solution? I don\u0027t know the reason why we keep the old view but actually it is not intended for showing.",
+      "parentUuid": "f97259c2_9b68349d",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "256d30a37b3512b87ae373445656c673daa2e9dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
