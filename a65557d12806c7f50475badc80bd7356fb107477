@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d2f0ec1_88e93d81",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/application-panel/resources-panel-on-navigation-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-19T21:14:30Z",
+      "side": 0,
+      "message": "Why did this disappear?",
+      "revId": "a65557d12806c7f50475badc80bd7356fb107477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
