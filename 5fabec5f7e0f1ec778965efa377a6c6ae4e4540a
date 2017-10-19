@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2774836f_5c5cc37a",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-19T03:12:43Z",
+      "side": 1,
+      "message": "We still need to check the page-fault rate at regular interval? The caller of the SwapThrashingMonitor will poll it know the state but this interval will be used to compute the state.",
+      "parentUuid": "ff7f3e8f_6396978c",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abce34ee_dfb351f2",
         "filename": "base/memory/swap_thrashing_delegate.h",
         "patchSetId": 16
@@ -50,6 +68,24 @@
       "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3ef683_4ff5c9cf",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-19T03:12:43Z",
+      "side": 1,
+      "message": "Using interval sounds platform-specific to me, I\u0027ll remove them from here. i think that on some systems (ChromeOS, Android?) it might be possible to derive this thrashiness state directly from the system (i.e. the system might already look at page-fault over time to build a signal), in which case the delegate implementation will only have to read those signals. I\u0027ll move these to the Win specific impl.\n\nI\u0027ll remove instantaneous from the comment as you\u0027re right, there\u0027s no \"instantaneous\" thrashiness level (and this function do its estimate based on the previous state, so it\u0027s not really instantaneous).",
+      "parentUuid": "abce34ee_dfb351f2",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +121,24 @@
       "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12a36cd_2e237c0e",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-19T03:12:43Z",
+      "side": 1,
+      "message": "Removed!",
+      "parentUuid": "459289bf_6bb6e4eb",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
