@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9453bf19_028bbe87",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 2632,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:41:45Z",
+      "side": 1,
+      "message": "This and nav_button_provider are linux specific, right? Should they only be compiled on linux?",
+      "range": {
+        "startLine": 2632,
+        "startChar": 7,
+        "endLine": 2632,
+        "endChar": 49
+      },
+      "revId": "17e39492f9a563c90e8be6bbae69676773066be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
