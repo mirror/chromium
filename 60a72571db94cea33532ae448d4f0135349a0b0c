@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f340ed33_785210f4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DOMStorageItemsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-19T17:42:24Z",
+      "side": 1,
+      "message": "drop third argument.",
+      "revId": "60a72571db94cea33532ae448d4f0135349a0b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
