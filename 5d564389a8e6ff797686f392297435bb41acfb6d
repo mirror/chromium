@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3b960f8c_ad71e85c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallback.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-19T18:31:54Z",
+      "side": 1,
+      "message": "I\u0027m working on converting this, but this is the first instance of a callback function in /modules and I\u0027m running into some linking issues while trying to get it to build correctly. I\u0027ve tried mimicking the .gn usage seen with callbacks in core, specifically using IdleRequestCallback as a reference, but I must be missing something.\n\nWould you be able to take a look at the latest patchset (which compiles but does not link) and help me determine what I\u0027m missing?",
+      "parentUuid": "cc025455_bad041a3",
+      "revId": "5d564389a8e6ff797686f392297435bb41acfb6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36fe1227_c0899151",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.cpp",
         "patchSetId": 2
