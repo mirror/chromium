@@ -1464,6 +1464,9 @@ void WebContentsImpl::OnAudioStateChanged(bool is_audible) {
   // Notification for UI updates in response to the changed audio state.
   NotifyNavigationStateChanged(INVALIDATE_TYPE_TAB);
 
+  for (auto& observer : observers_)
+    observer.DidUpdateAudioState(is_audible);
+
   if (delegate_)
     delegate_->OnAudioStateChanged(is_audible);
 }
