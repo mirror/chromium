@@ -130,6 +130,29 @@
     },
     {
       "key": {
+        "uuid": "91dc7cec_59f79155",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-19T14:49:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the end result would be more readable, but what if instead of adjusting the dots/points on the fly in all these branches we just track some linear adjustments?\n\ne.g.\n\nfloat start_dot_adjust \u003d 0, end_dot_adjust \u003d 0, start_gap_adjust \u003d 0, end_gap_adjust \u003d 0;\n\nif (...) {\n  start_dot_adjust \u003d 1;\n}\n\nif (...) {\n  start_gap_adjust \u003d -1;\n}\n\n...\n\nthen do the 2D geometry voodoo at the end\n\nif (start_dot_adjust || start_gap_adjust) {\n  // draw the start dot and move the line start\n  ...\n}\n\nif (end_dot_adjust || end_gap_adjust) {\n  // draw the end dot and move the line end\n  ..\n}",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 589,
+        "endChar": 24
+      },
+      "revId": "de4223d63154299ac71e6335798f76a80167d52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c176d7b_c3b42b2d",
         "filename": "third_party/WebKit/Source/platform/graphics/StrokeData.cpp",
         "patchSetId": 12
