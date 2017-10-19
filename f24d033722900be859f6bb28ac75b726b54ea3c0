@@ -22,6 +22,30 @@
       "revId": "f24d033722900be859f6bb28ac75b726b54ea3c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc40cc5e_8f950fe4",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:45:51Z",
+      "side": 1,
+      "message": "We really only want to know how many times this event is triggered, that\u0027s why we don\u0027t have a baseline. I remember we used to have \"Counts\" tab on UMA dashboard, but I can\u0027t find it anymore. What should I use for this use case?",
+      "parentUuid": "c3c95f1a_993de49a",
+      "range": {
+        "startLine": 1179,
+        "startChar": 2,
+        "endLine": 1179,
+        "endChar": 22
+      },
+      "revId": "f24d033722900be859f6bb28ac75b726b54ea3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
