@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1391aa56_c26fc3f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-19T00:57:25Z",
+      "side": 1,
+      "message": "nit: simutaneously → simultaneously",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "79b7d29792304caac7e76badab10654eaf9a518b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0d1e63_0a920b0b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-19T00:57:25Z",
+      "side": 1,
+      "message": "nit: ignore → Ignore, button click → button tap",
+      "revId": "79b7d29792304caac7e76badab10654eaf9a518b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719bac05_3afcdf79",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-19T00:57:25Z",
+      "side": 1,
+      "message": "nit: ignore → Ignore, button click → button tap",
+      "revId": "79b7d29792304caac7e76badab10654eaf9a518b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c60f43d_251dad68",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-19T00:57:25Z",
+      "side": 1,
+      "message": "nit: ignore → Ignore, button click → button tap",
+      "revId": "79b7d29792304caac7e76badab10654eaf9a518b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c6062b_fbb3f1c8",
+        "filename": "ios/chrome/browser/ui/history/history_panel_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-19T00:57:25Z",
+      "side": 1,
+      "message": "nit: ignore → Ignore, button click → button tap",
+      "revId": "79b7d29792304caac7e76badab10654eaf9a518b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e774e0ba_76f7de59",
+        "filename": "ios/chrome/browser/ui/history/history_panel_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-19T00:57:25Z",
+      "side": 1,
+      "message": "nit: ignore → Ignore, button click → button tap",
+      "revId": "79b7d29792304caac7e76badab10654eaf9a518b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b89a97_b4dd1c12",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-19T00:57:25Z",
+      "side": 1,
+      "message": "nit: ignore → Ignore, button click → button tap",
+      "revId": "79b7d29792304caac7e76badab10654eaf9a518b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
