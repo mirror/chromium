@@ -43,6 +43,7 @@
 #include "content/child/feature_policy/feature_policy_platform.h"
 #include "content/child/quota_dispatcher.h"
 #include "content/child/request_extra_data.h"
+#include "content/child/resource_dispatcher.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_network_provider.h"
 #include "content/child/service_worker/service_worker_provider_context.h"
@@ -720,6 +721,48 @@ std::vector<gfx::Size> ConvertToFaviconSizes(
 }
 
 }  // namespace
+
+class RenderFrameImpl::FrameURLLoaderFactory
+    : public blink::WebURLLoaderFactory {
+ public:
+  FrameURLLoaderFactory(
+      base::WeakPtr<RenderFrameImpl> frame,
+      scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter)
+      : frame_(frame),
+        loader_factory_getter_(std::move(loader_factory_getter)) {}
+
+  ~FrameURLLoaderFactory() override = default;
+
+  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
+      const WebURLRequest& request,
+      blink::SingleThreadTaskRunnerRefPtr task_runner) override {
+    // This should not be called if the frame is detached.
+    DCHECK(frame_);
+    frame_->UpdatePeakMemoryStats();
+
+    mojom::URLLoaderFactory* factory =
+        frame_->GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
+            request.Url(), frame_->custom_url_loader_factory());
+    DCHECK(factory);
+
+    mojom::KeepAliveHandlePtr keep_alive_handle;
+    if (base::FeatureList::IsEnabled(
+            features::kKeepAliveRendererForKeepaliveRequests) &&
+        request.GetKeepalive()) {
+      frame_->GetFrameHost()->IssueKeepAliveHandle(
+          mojo::MakeRequest(&keep_alive_handle));
+    }
+    return base::MakeUnique<WebURLLoaderImpl>(
+        ChildThreadImpl::current()->resource_dispatcher(),
+        std::move(task_runner), factory, std::move(keep_alive_handle));
+  }
+
+ private:
+  base::WeakPtr<RenderFrameImpl> frame_;
+  scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameURLLoaderFactory);
+};
 
 // The following methods are outside of the anonymous namespace to ensure that
 // the corresponding symbols get emmitted even on symbol_level 1.
@@ -6899,29 +6942,16 @@ blink::WebPageVisibilityState RenderFrameImpl::VisibilityState() const {
   return current_state;
 }
 
-std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
-    const blink::WebURLRequest& request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  // Currently the tests (RenderViewTests) that need URLLoader but do not
-  // have ChildThread use the Platform::Current()->CreateURLLoader().
-  DCHECK(ChildThreadImpl::current());
-
-  UpdatePeakMemoryStats();
-
-  mojom::URLLoaderFactory* factory =
-      GetDefaultURLLoaderFactoryGetter()->GetFactoryForURL(
-          request.Url(), custom_url_loader_factory_.get());
-  DCHECK(factory);
-
-  mojom::KeepAliveHandlePtr keep_alive_handle;
-  if (base::FeatureList::IsEnabled(
-          features::kKeepAliveRendererForKeepaliveRequests) &&
-      request.GetKeepalive()) {
-    GetFrameHost()->IssueKeepAliveHandle(mojo::MakeRequest(&keep_alive_handle));
+std::unique_ptr<blink::WebURLLoaderFactory>
+RenderFrameImpl::CreateURLLoaderFactory() {
+  if (!RenderThreadImpl::current()) {
+    // Some tests (e.g. RenderViewTests) do not have RenderThreadImpl,
+    // use the platform's default WebURLLoaderFactoryImpl for them.
+    return std::make_unique<WebURLLoaderFactoryImpl>(
+        nullptr /* resource_dispatcher */, nullptr /* loader_factory_getter */);
   }
-  return base::MakeUnique<WebURLLoaderImpl>(
-      ChildThreadImpl::current()->resource_dispatcher(), std::move(task_runner),
-      factory, std::move(keep_alive_handle));
+  return std::make_unique<FrameURLLoaderFactory>(
+      weak_factory_.GetWeakPtr(), GetDefaultURLLoaderFactoryGetter());
 }
 
 void RenderFrameImpl::DraggableRegionsChanged() {

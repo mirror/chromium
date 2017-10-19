@@ -35,6 +35,7 @@
 #include "content/child/loader/cors_url_loader_factory.h"
 #include "content/child/quota_dispatcher.h"
 #include "content/child/quota_message_filter.h"
+#include "content/child/resource_dispatcher.h"
 #include "content/child/storage_util.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/web_database_observer_impl.h"
@@ -106,6 +107,7 @@
 #include "third_party/WebKit/public/platform/WebSocketHandshakeThrottle.h"
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/WebKit/public/platform/WebURLLoaderFactory.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceMotionListener.h"
@@ -328,24 +330,16 @@ void RendererBlinkPlatformImpl::Shutdown() {
 
 //------------------------------------------------------------------------------
 
-std::unique_ptr<blink::WebURLLoader> RendererBlinkPlatformImpl::CreateURLLoader(
-    const blink::WebURLRequest& request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  ChildThreadImpl* child_thread = ChildThreadImpl::current();
-
-  if (!url_loader_factory_getter_ && child_thread)
-    url_loader_factory_getter_ = CreateDefaultURLLoaderFactoryGetter();
-
-  mojom::URLLoaderFactory* factory =
-      url_loader_factory_getter_
-          ? url_loader_factory_getter_->GetFactoryForURL(request.Url())
-          : nullptr;
-
-  // There may be no child thread in RenderViewTests.  These tests can still use
-  // data URLs to bypass the ResourceDispatcher.
-  return base::MakeUnique<WebURLLoaderImpl>(
-      child_thread ? child_thread->resource_dispatcher() : nullptr,
-      std::move(task_runner), factory);
+std::unique_ptr<blink::WebURLLoaderFactory>
+RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactory() {
+  if (!ChildThreadImpl::current()) {
+    // ChildThreadImpl is null in some tests, the default factory impl
+    // takes care of that in the case.
+    return std::make_unique<WebURLLoaderFactoryImpl>(nullptr, nullptr);
+  }
+  return std::make_unique<WebURLLoaderFactoryImpl>(
+      ChildThreadImpl::current()->resource_dispatcher()->GetWeakPtr(),
+      CreateDefaultURLLoaderFactoryGetter());
 }
 
 scoped_refptr<ChildURLLoaderFactoryGetter>
