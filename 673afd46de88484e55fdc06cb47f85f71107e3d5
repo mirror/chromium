@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e07e74f7_1a7d534c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-enabled.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-10-19T11:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40139e52_b4abd2f0",
+      "revId": "673afd46de88484e55fdc06cb47f85f71107e3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bb50a74_874b6f6a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-enabled.html",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f0d8d453_b6453687",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-enabled.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-10-19T11:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bb50a74_874b6f6a",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "673afd46de88484e55fdc06cb47f85f71107e3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ceaf6b_b312c18b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-return-value.html",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "673afd46de88484e55fdc06cb47f85f71107e3d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c53e65_dbb50824",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-return-value.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-10-19T11:20:29Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "12ceaf6b_b312c18b",
+      "range": {
+        "startLine": 51,
+        "startChar": 10,
+        "endLine": 51,
+        "endChar": 16
+      },
+      "revId": "673afd46de88484e55fdc06cb47f85f71107e3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
