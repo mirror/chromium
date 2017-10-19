@@ -114,13 +114,6 @@ class WebContentsDelegateAndroid : public content::WebContentsDelegate {
   void ExitFullscreenModeForTab(content::WebContents* web_contents) override;
   bool IsFullscreenForTabOrPending(
       const content::WebContents* web_contents) const override;
-  void ShowValidationMessage(content::WebContents* web_contents,
-                             const gfx::Rect& anchor_in_root_view,
-                             const base::string16& main_text,
-                             const base::string16& sub_text) override;
-  void HideValidationMessage(content::WebContents* web_contents) override;
-  void MoveValidationMessage(content::WebContents* web_contents,
-                             const gfx::Rect& anchor_in_root_view) override;
   void RequestAppBannerFromDevTools(
       content::WebContents* web_contents) override;
   void OnDidBlockFramebust(content::WebContents* web_contents,
