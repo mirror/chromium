@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dadbd01f_3f57eab4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-19T19:58:10Z",
+      "side": 1,
+      "message": "nit (personal preference):\n\nif (self.paymentRequest-\u003eshipping_options().empty())\n  return nullptr;",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 55
+      },
+      "revId": "322b68f228520a44364c4dac78f7d45e7d9b0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
