@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a4842a2_c0af379d",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-19T20:38:49Z",
+      "side": 1,
+      "message": "New patch only need InitAndEnableFeatureWithParameters here.",
+      "parentUuid": "6861c1fa_97bc6022",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 71
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "036f7a6c_496f35f6",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20d3063_26528f68",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-19T20:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "036f7a6c_496f35f6",
+      "range": {
+        "startLine": 337,
+        "startChar": 50,
+        "endLine": 337,
+        "endChar": 0
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5aa3c965_b338ec3f",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-19T20:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16877370_0b00d979",
+      "range": {
+        "startLine": 328,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 72
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7efcc429_1b5226ea",
         "filename": "components/variations/field_trial_config/field_trial_util.cc",
         "patchSetId": 2
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "2dbd56ee_2cd6e588",
+        "filename": "components/variations/field_trial_config/field_trial_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-19T20:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7efcc429_1b5226ea",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 25
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506e5df8_1f2ed874",
         "filename": "content/public/test/browser_test_base.cc",
         "patchSetId": 2
@@ -129,6 +225,30 @@
       "writtenOn": "2017-10-18T22:52:43Z",
       "side": 1,
       "message": "Why is this needed?  It would probably be more appropriate to define this within the ScopedFeatureList, rather than here; and when doing so, provide documentation explaining what it\u0027s doing.",
+      "range": {
+        "startLine": 110,
+        "startChar": 70,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62fd991_3a092280",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-19T20:38:49Z",
+      "side": 1,
+      "message": "for cleanup FieldTrialList at browser_test_base, browser_test_base need to own FieldTrialList.",
+      "parentUuid": "506e5df8_1f2ed874",
       "range": {
         "startLine": 110,
         "startChar": 70,
@@ -161,6 +281,30 @@
       "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e966130_2dfd91cf",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-19T20:38:49Z",
+      "side": 1,
+      "message": "This is not necessary now.",
+      "parentUuid": "2d9354c0_eea97f7e",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 41
+      },
+      "revId": "216d2dd169911f3707e7bdbfb8e087ff4dedc445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
