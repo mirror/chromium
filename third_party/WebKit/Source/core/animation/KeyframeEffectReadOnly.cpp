@@ -6,6 +6,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/core/v8/unrestricted_double_or_keyframe_effect_options.h"
 #include "core/animation/Animation.h"
 #include "core/animation/EffectInput.h"
@@ -21,6 +22,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/paint/PaintLayer.h"
 #include "core/svg/SVGElement.h"
+#include "platform/bindings/ScriptState.h"
 
 namespace blink {
 
@@ -82,7 +84,9 @@ KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
       target_(target),
       model_(model),
       sampled_effect_(nullptr),
-      priority_(priority) {}
+      priority_(priority) {
+  DCHECK(model_->IsKeyframeEffectModel());
+}
 
 void KeyframeEffectReadOnly::Attach(Animation* animation) {
   if (target_) {
@@ -313,6 +317,36 @@ bool KeyframeEffectReadOnly::HasActiveAnimationsOnCompositor() const {
 bool KeyframeEffectReadOnly::HasActiveAnimationsOnCompositor(
     const PropertyHandle& property) const {
   return HasActiveAnimationsOnCompositor() && Affects(property);
+}
+
+Vector<ScriptValue> KeyframeEffectReadOnly::getKeyframes(
+    ScriptState* script_state) {
+  Vector<ScriptValue> computed_keyframes;
+  if (!model_)
+    return computed_keyframes;
+
+  KeyframeEffectModelBase* keyframe_model = ToKeyframeEffectModelBase(model_);
+  for (const auto& keyframe : keyframe_model->GetFrames()) {
+    V8ObjectBuilder object_builder(script_state);
+    // TODO(smcgruer): ComputedKeyframe has an offset and computedOffset. These
+    // are different somehow.
+    object_builder.Add("offset", keyframe->Offset());
+    object_builder.Add("computedOffset", keyframe->Offset());
+    object_builder.Add("easing", keyframe->Easing().ToString());
+    // TODO(smcgruer): Use a ToString() method instead.
+    object_builder.Add("composite",
+                       keyframe->Composite() == EffectModel::kCompositeReplace
+                           ? "replace"
+                           : "add");
+    for (const auto& property : keyframe->Properties()) {
+      // TODO(smcgruer): Wait, what. Where are the values?
+      // object_builder.Add(property
+      (void)property;
+    }
+    computed_keyframes.push_back(object_builder.GetScriptValue());
+  }
+
+  return computed_keyframes;
 }
 
 bool KeyframeEffectReadOnly::Affects(const PropertyHandle& property) const {
