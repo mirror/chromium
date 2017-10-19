@@ -763,6 +763,10 @@ void GpuProcessHost::SendDestroyingVideoSurface(int surface_id,
       surface_id, base::Bind(&GpuProcessHost::OnDestroyingVideoSurfaceAck,
                              weak_ptr_factory_.GetWeakPtr()));
 }
+
+void GpuProcessHost::DidSuccessfullyInitializeContext() {
+  gpu_recent_crash_count_ = 0;
+}
 #endif
 
 void GpuProcessHost::OnChannelEstablished(
