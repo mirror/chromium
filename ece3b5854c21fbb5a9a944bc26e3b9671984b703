@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b14201_ce4c39b6",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T20:51:06Z",
+      "side": 1,
+      "message": "nit: needs {}",
+      "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
