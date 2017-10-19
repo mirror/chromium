@@ -16,6 +16,24 @@
       "revId": "1a985477238e76d88136df513ad30fbfd6a2fc1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11a6587_1e24b6a8",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-19T21:38:48Z",
+      "side": 1,
+      "message": "Using a StackVector is a great idea. That will be a very common case. Even for the case where there are overlaping rects, the final invalidation uses an InvalidationRegion so it will invalidate the exact rect.\n\nCould you take another look?",
+      "parentUuid": "5e4775cd_8e5c4201",
+      "revId": "1a985477238e76d88136df513ad30fbfd6a2fc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
