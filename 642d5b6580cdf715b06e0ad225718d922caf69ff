@@ -22,6 +22,30 @@
       "revId": "642d5b6580cdf715b06e0ad225718d922caf69ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666a6143_bbdb74b8",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-19T19:20:42Z",
+      "side": 1,
+      "message": "Maybe flat_map? https://chromium.googlesource.com/chromium/src/+/2b12fcc1b0d6f04d6b2030e5be9237413cd01327/base/containers/README.md#base_flat_map-and-base_flat_set\n\nIt could be initialized as a static const local in UMAValueForSharingService to avoid the static initializer (assuming that the initializer_list ctor creates one).",
+      "parentUuid": "cff8439c_8b55e0d4",
+      "range": {
+        "startLine": 78,
+        "startChar": 78,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "642d5b6580cdf715b06e0ad225718d922caf69ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
