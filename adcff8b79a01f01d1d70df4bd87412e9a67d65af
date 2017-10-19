@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "066bb87b_75d2efaf",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T00:51:37Z",
+      "side": 1,
+      "message": "Can we just std::move(out_list) instead of cloning? Same for line 275.",
+      "revId": "adcff8b79a01f01d1d70df4bd87412e9a67d65af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02353a6e_83cdac74",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T00:51:37Z",
+      "side": 1,
+      "message": "You can drop the outer most parens to get it back to 1 line.",
+      "revId": "adcff8b79a01f01d1d70df4bd87412e9a67d65af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379aed7f_72d143c4",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T00:51:37Z",
+      "side": 1,
+      "message": "OK, so here\u0027s another suggestion at getting this to be shorter:\n\nvoid CompareStringKeys(const base::Value\u0026 expected,\n                       const base::Value\u0026 actual,\n                       base::StringPiece key) {\n  expected_val \u003d expected.FindPathOfType({key}, base::Value::Type::STRING);\n  actual_val \u003d actual.FindPathOfType({key}, base::Value::Type::STRING);\n  EXPECT_EQ(expected_val-\u003eGetString(), actual_val-\u003eGetString());\n}                                     \n\nCompareStringKeys(input_entry, output_list[index], kDisplayName);\n...\nCompareStringKeys(...);",
+      "revId": "adcff8b79a01f01d1d70df4bd87412e9a67d65af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1772d48_8c79102a",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T00:51:37Z",
+      "side": 1,
+      "message": "Why is this not just a const base::DictionaryValue* ?",
+      "range": {
+        "startLine": 211,
+        "startChar": 21,
+        "endLine": 211,
+        "endChar": 67
+      },
+      "revId": "adcff8b79a01f01d1d70df4bd87412e9a67d65af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826da3ba_cd01acd1",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T00:51:37Z",
+      "side": 1,
+      "message": "Move |cdd| down to where first used. Same with the tests below.",
+      "revId": "adcff8b79a01f01d1d70df4bd87412e9a67d65af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
