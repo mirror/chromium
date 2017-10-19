@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "net/quic/platform/api/quic_endian.h"
+
 namespace net {
 
 SpdyPriority ConvertRequestPriorityToQuicPriority(
@@ -33,6 +35,35 @@ std::unique_ptr<base::Value> QuicRequestNetLogCallback(
   dict->SetInteger("quic_priority", static_cast<int>(priority));
   dict->SetInteger("quic_stream_id", static_cast<int>(stream_id));
   return std::move(dict);
+}
+
+QuicTransportVersionVector FilterSupportedAltSvcVersions(
+    const SpdyAltSvcWireFormat::AlternativeService& quic_alt_svc,
+    const QuicTransportVersionVector& supported_versions) {
+  QuicTransportVersionVector supported_alt_svc_versions;
+  if (quic_alt_svc.protocol_id.compare("hq") == 0) {
+    // Using IETF format for advertising QUIC. In this case,
+    // |alternative_service_entry.version| will store QUIC version labels.
+    for (uint32_t quic_version_label : quic_alt_svc.version) {
+      for (QuicTransportVersion supported : supported_versions) {
+        QuicVersionLabel supported_version_label_network_order =
+            FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label
+                ? QuicVersionToQuicVersionLabel(supported)
+                : QuicEndian::HostToNet32(
+                      QuicVersionToQuicVersionLabel(supported));
+        if (supported_version_label_network_order == quic_version_label)
+          supported_alt_svc_versions.push_back(supported);
+      }
+    }
+  } else if (quic_alt_svc.protocol_id.compare("quic") == 0) {
+    for (uint32_t quic_version : quic_alt_svc.version) {
+      for (QuicTransportVersion supported : supported_versions) {
+        if (static_cast<uint32_t>(supported) == quic_version)
+          supported_alt_svc_versions.push_back(supported);
+      }
+    }
+  }
+  return supported_alt_svc_versions;
 }
 
 }  // namespace net
