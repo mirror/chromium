@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "275427bc_8fa44f8b",
+        "filename": "content/renderer/image_downloader/image_downloader_base.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-19T10:13:09Z",
+      "side": 1,
+      "message": "this is not changed by this cl, but probably just \"reload\" is better name for this use case",
+      "range": {
+        "startLine": 85,
+        "startChar": 42,
+        "endLine": 85,
+        "endChar": 54
+      },
+      "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208539e3_ea68d724",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-19T10:13:09Z",
+      "side": 1,
+      "message": "we may want to modify other loading related type names so that they are consistent each other, but may be in a separated CL? This type conversion is really confusing.",
+      "range": {
+        "startLine": 641,
+        "startChar": 11,
+        "endLine": 641,
+        "endChar": 31
+      },
+      "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10160a3a_2a21b7fe",
         "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom",
         "patchSetId": 14
@@ -30,6 +76,24 @@
       "writtenOn": "2017-10-19T08:39:08Z",
       "side": 1,
       "message": "+1 for the comments.\n\nI personally prefer using the spec terminology directly (since it is hard to memorize the mapping when reading the spec).",
+      "parentUuid": "10160a3a_2a21b7fe",
+      "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ae41e3_bb9a5d11",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-19T10:13:09Z",
+      "side": 1,
+      "message": "hum... I have mixed feeling.\nusing spec words would be great, but these names, NO_CACHE/RELOAD, would make developers surprised.\n\nbut probably only limited developers would touch reload related code path (when I changed the name before, no one were surprised as far as I noticed). so if we have one-line comments in this file, and saying how chrome actually uses, as WebCachePolicy does, it would be fine to change to spec words.",
       "parentUuid": "10160a3a_2a21b7fe",
       "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
