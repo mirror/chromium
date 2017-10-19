@@ -4,6 +4,7 @@
 
 #include "core/frame/Deprecation.h"
 
+#include "common/feature_policy/feature_policy_feature.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/DeprecationReport.h"
@@ -16,7 +17,6 @@
 #include "core/page/Page.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "platform/runtime_enabled_features.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
 #include "public/platform/reporting.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 

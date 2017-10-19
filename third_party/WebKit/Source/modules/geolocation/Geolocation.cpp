@@ -28,6 +28,7 @@
 #include "modules/geolocation/Geolocation.h"
 
 #include "bindings/core/v8/SourceLocation.h"
+#include "common/feature_policy/feature_policy_feature.h"
 #include "core/dom/Document.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/Deprecation.h"
@@ -40,7 +41,6 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
