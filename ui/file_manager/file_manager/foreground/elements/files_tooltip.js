@@ -87,6 +87,7 @@ var FilesTooltip = Polymer({
     target.addEventListener('mouseout', this.onMouseOut_.bind(this, target));
     target.addEventListener('focus', this.onFocus_.bind(this, target));
     target.addEventListener('blur', this.onBlur_.bind(this, target));
+    target.addEventListener('force_focus', this.onForceFocus_.bind(this, target));
   },
 
   /**
@@ -210,7 +211,22 @@ var FilesTooltip = Polymer({
    * @private
    */
   onFocus_: function(target, event) {
+    if (!event.sourceCapabilities && !!event.relatedTarget)
+      // Do not show tooltip because the focus is not moved by user operation.
+      // This happens when moving focus by an invocation of target.focus().
+      return;
     this.initShowingTooltip_(target);
+  },
+
+  /**
+   * @param {Event} event
+   * @private
+   */
+  onForceFocus_: function(target, event) {
+    // Unregister once so as not to confuse this with focus by user's operation.
+    target.removeEventListener('focus', this.onFocus_.bind(this, target));
+    this.focus();
+    target.addEventListener('focus', this.onFocus_.bind(this, target));
   },
 
   /**
