@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f66201b_0568422d",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-19T01:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cce1a9c_717373e2",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "d9a35ec48bf6ab3eb24b8e927cde28cd8fa17eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8a4d2dc_ec9638ee",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T17:52:56Z",
       "side": 1,
       "message": "default label should not be used. That defeats the purpose of the exhaustive enum check.",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 11
+      },
+      "revId": "d9a35ec48bf6ab3eb24b8e927cde28cd8fa17eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfbc7be_186cc893",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-10-19T01:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a4d2dc_ec9638ee",
       "range": {
         "startLine": 46,
         "startChar": 4,
