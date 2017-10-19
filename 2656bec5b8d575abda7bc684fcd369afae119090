@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8878fcfe_9739dd69",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-19T18:15:34Z",
+      "side": 1,
+      "message": "The FaceDetectionProvider is the interface that creates instances of the FaceDetection interface. This is because they have configuration options and so the interface request needs to have additional parameters. If you look at face_detection_provider_impl.cc you\u0027ll see that it always reports failure.",
+      "parentUuid": "ec62ba50_bfc3bdc1",
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "102c6c20_84aab5a4",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 4

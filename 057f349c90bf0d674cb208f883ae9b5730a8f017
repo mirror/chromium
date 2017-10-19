@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94a72b25_2aecef71",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-19T18:15:34Z",
+      "side": 1,
+      "message": "Sorry Miguel, I just suggested Junwei do it this way.",
+      "parentUuid": "932f2bf7_e0f9ddbc",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0656f337_138687e2",
         "filename": "services/shape_detection/BUILD.gn",
         "patchSetId": 7
@@ -82,6 +106,30 @@
       "writtenOn": "2017-10-19T14:49:52Z",
       "side": 1,
       "message": "This method doesn\u0027t need any of the members of FaceDetectionImplWin,\nright? If so, take it out of that class and make it a\nfile-static function into an anonymous namespace here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e937891d_0ca6cc42",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-19T18:15:34Z",
+      "side": 1,
+      "message": "This is a static method that is used by the unit tests and so needs to be available outside this compilation unit.\n\nJunwei, this should have a \"// static\" comment before the implementation.",
+      "parentUuid": "af9f2527_c3d9c179",
       "range": {
         "startLine": 27,
         "startChar": 22,
