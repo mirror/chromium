@@ -24,6 +24,7 @@
 #ifndef HTMLFrameElement_h
 #define HTMLFrameElement_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameElementBase.h"
 
@@ -39,7 +40,7 @@ class CORE_EXPORT HTMLFrameElement final : public HTMLFrameElementBase {
 
   bool NoResize() const;
 
-  Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
+  ParsedFeaturePolicy ConstructContainerPolicy(
       Vector<String>* /* messages */,
       bool* /* old_syntax */) const override;
 

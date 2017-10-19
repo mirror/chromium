@@ -204,12 +204,12 @@ void HTMLIFrameElement::ParseAttribute(
   }
 }
 
-Vector<WebParsedFeaturePolicyDeclaration>
+ParsedFeaturePolicy
 HTMLIFrameElement::ConstructContainerPolicy(Vector<String>* messages,
                                             bool* old_syntax) const {
   scoped_refptr<SecurityOrigin> src_origin = GetOriginForFeaturePolicy();
   scoped_refptr<SecurityOrigin> self_origin = GetDocument().GetSecurityOrigin();
-  Vector<WebParsedFeaturePolicyDeclaration> container_policy =
+  ParsedFeaturePolicy container_policy =
       ParseFeaturePolicyAttribute(allow_, self_origin, src_origin, messages,
                                   old_syntax);
 
@@ -218,7 +218,7 @@ HTMLIFrameElement::ConstructContainerPolicy(Vector<String>* messages,
   if (AllowFullscreen()) {
     bool has_fullscreen_policy = false;
     for (const auto& declaration : container_policy) {
-      if (declaration.feature == WebFeaturePolicyFeature::kFullscreen) {
+      if (declaration.feature == FeaturePolicyFeature::kFullscreen) {
         has_fullscreen_policy = true;
         if (messages) {
           messages->push_back(
@@ -228,10 +228,10 @@ HTMLIFrameElement::ConstructContainerPolicy(Vector<String>* messages,
       }
     }
     if (!has_fullscreen_policy) {
-      WebParsedFeaturePolicyDeclaration whitelist;
-      whitelist.feature = WebFeaturePolicyFeature::kFullscreen;
+      ParsedFeaturePolicyDeclaration whitelist;
+      whitelist.feature = FeaturePolicyFeature::kFullscreen;
       whitelist.matches_all_origins = true;
-      whitelist.origins = Vector<WebSecurityOrigin>(0UL);
+      whitelist.origins = std::vector<url::Origin>(0UL);
       container_policy.push_back(whitelist);
     }
   }
@@ -240,7 +240,7 @@ HTMLIFrameElement::ConstructContainerPolicy(Vector<String>* messages,
   if (AllowPaymentRequest()) {
     bool has_payment_policy = false;
     for (const auto& declaration : container_policy) {
-      if (declaration.feature == WebFeaturePolicyFeature::kPayment) {
+      if (declaration.feature == FeaturePolicyFeature::kPayment) {
         has_payment_policy = true;
         if (messages) {
           messages->push_back(
@@ -250,10 +250,10 @@ HTMLIFrameElement::ConstructContainerPolicy(Vector<String>* messages,
       }
     }
     if (!has_payment_policy) {
-      WebParsedFeaturePolicyDeclaration whitelist;
-      whitelist.feature = WebFeaturePolicyFeature::kPayment;
+      ParsedFeaturePolicyDeclaration whitelist;
+      whitelist.feature = FeaturePolicyFeature::kPayment;
       whitelist.matches_all_origins = true;
-      whitelist.origins = Vector<WebSecurityOrigin>(0UL);
+      whitelist.origins = std::vector<url::Origin>(0UL);
       container_policy.push_back(whitelist);
     }
   }

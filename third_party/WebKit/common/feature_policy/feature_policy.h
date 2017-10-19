@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_FEATURE_POLICY_FEATURE_POLICY_H_
-#define CONTENT_COMMON_FEATURE_POLICY_FEATURE_POLICY_H_
+#ifndef THIRD_PARTY_WEBKIT_COMMON_FEATURE_POLICY_FEATURE_POLICY_H_
+#define THIRD_PARTY_WEBKIT_COMMON_FEATURE_POLICY_FEATURE_POLICY_H_
 
 #include <map>
 #include <memory>
@@ -12,11 +12,13 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "content/common/content_export.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
+#include "third_party/WebKit/common/common_export.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
+#include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
+#include "third_party/WebKit/public/platform/WebVector.h"
 #include "url/origin.h"
 
-namespace content {
+namespace blink {
 
 // Feature Policy is a mechanism for controlling the availability of web
 // platform features in a frame, including all embedded frames. It can be used
@@ -35,7 +37,7 @@ namespace content {
 // Features
 // --------
 // Features which can be controlled by policy are defined by instances of enum
-// blink::FeaturePolicyFeature, declared in |WebFeaturePolicy.h|.
+// FeaturePolicyFeature, declared in |WebFeaturePolicy.h|.
 //
 // Whitelists
 // ----------
@@ -88,25 +90,25 @@ namespace content {
 // these form a ParsedFeaturePolicy.
 // NOTE: These types are used for replication frame state between processes.
 // They exist only because we can't transfer WebVectors directly over IPC.
-struct CONTENT_EXPORT ParsedFeaturePolicyDeclaration {
+struct BLINK_COMMON_EXPORT ParsedFeaturePolicyDeclaration {
   ParsedFeaturePolicyDeclaration();
-  ParsedFeaturePolicyDeclaration(blink::FeaturePolicyFeature feature,
+  ParsedFeaturePolicyDeclaration(FeaturePolicyFeature feature,
                                  bool matches_all_origins,
                                  std::vector<url::Origin> origins);
   ParsedFeaturePolicyDeclaration(const ParsedFeaturePolicyDeclaration& rhs);
   ~ParsedFeaturePolicyDeclaration();
 
-  blink::FeaturePolicyFeature feature;
+  FeaturePolicyFeature feature;
   bool matches_all_origins;
   std::vector<url::Origin> origins;
 };
 
 using ParsedFeaturePolicy = std::vector<ParsedFeaturePolicyDeclaration>;
 
-bool CONTENT_EXPORT operator==(const ParsedFeaturePolicyDeclaration& lhs,
-                               const ParsedFeaturePolicyDeclaration& rhs);
+bool BLINK_COMMON_EXPORT operator==(const ParsedFeaturePolicyDeclaration& lhs,
+                                    const ParsedFeaturePolicyDeclaration& rhs);
 
-class CONTENT_EXPORT FeaturePolicy : public blink::FeaturePolicy {
+class BLINK_COMMON_EXPORT FeaturePolicy {
  public:
   // Represents a collection of origins which make up a whitelist in a feature
   // policy. This collection may be set to match every origin (corresponding to
@@ -151,9 +153,9 @@ class CONTENT_EXPORT FeaturePolicy : public blink::FeaturePolicy {
     EnableForAll
   };
 
-  using FeatureList = std::map<blink::FeaturePolicyFeature, FeatureDefault>;
+  using FeatureList = std::map<FeaturePolicyFeature, FeatureDefault>;
 
-  ~FeaturePolicy() override;
+  ~FeaturePolicy();
 
   static std::unique_ptr<FeaturePolicy> CreateFromParentPolicy(
       const FeaturePolicy* parent_policy,
@@ -164,22 +166,22 @@ class CONTENT_EXPORT FeaturePolicy : public blink::FeaturePolicy {
       const FeaturePolicy& policy,
       const url::Origin& origin);
 
-  // FeaturePolicy implementation
-  bool IsFeatureEnabled(blink::FeaturePolicyFeature feature) const override;
+  bool IsFeatureEnabled(FeaturePolicyFeature feature) const;
 
   // Returns whether or not the given feature is enabled by this policy for a
   // specific origin.
-  bool IsFeatureEnabledForOrigin(blink::FeaturePolicyFeature feature,
+  bool IsFeatureEnabledForOrigin(FeaturePolicyFeature feature,
                                  const url::Origin& origin) const;
 
   // Sets the declared policy from the parsed Feature-Policy HTTP header.
   // Unrecognized features will be ignored.
   void SetHeaderPolicy(const ParsedFeaturePolicy& parsed_header);
 
+  // This should only be used in unittest.
+  url::Origin GetOriginForTest() { return origin_; }
+
  private:
   friend class FeaturePolicyTest;
-  FRIEND_TEST_ALL_PREFIXES(NavigatorTestWithBrowserSideNavigation,
-                           FeaturePolicyNewChild);
 
   explicit FeaturePolicy(url::Origin origin);
   FeaturePolicy(url::Origin origin, const FeatureList& feature_list);
@@ -201,19 +203,19 @@ class CONTENT_EXPORT FeaturePolicy : public blink::FeaturePolicy {
 
   // Map of feature names to declared whitelists. Any feature which is missing
   // from this map should use the inherited policy.
-  std::map<blink::FeaturePolicyFeature, std::unique_ptr<Whitelist>> whitelists_;
+  std::map<FeaturePolicyFeature, std::unique_ptr<Whitelist>> whitelists_;
 
   // Records whether or not each feature was enabled for this frame by its
   // parent frame.
   // TODO(iclelland): Generate, instead of this map, a set of bool flags, one
   // for each feature, as all features are supposed to be represented here.
-  std::map<blink::FeaturePolicyFeature, bool> inherited_policies_;
+  std::map<FeaturePolicyFeature, bool> inherited_policies_;
 
   const FeatureList& feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(FeaturePolicy);
 };
 
-}  // namespace content
+}  // namespace blink
 
-#endif  // CONTENT_COMMON_FEATURE_POLICY_FEATURE_POLICY_H_
+#endif  // THIRD_PARTY_WEBKIT_COMMON_FEATURE_POLICY_FEATURE_POLICY_H_

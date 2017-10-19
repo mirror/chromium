@@ -24,11 +24,11 @@
 #ifndef HTMLIFrameElement_h
 #define HTMLIFrameElement_h
 
+#include "common/feature_policy/feature_policy.h"
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLIFrameElementSandbox.h"
 #include "platform/Supplementable.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebVector.h"
 
 namespace blink {
@@ -45,7 +45,7 @@ class CORE_EXPORT HTMLIFrameElement final
   ~HTMLIFrameElement() override;
   DOMTokenList* sandbox() const;
 
-  Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
+  ParsedFeaturePolicy ConstructContainerPolicy(
       Vector<String>* /* messages */,
       bool* /* old_syntax */) const override;
 

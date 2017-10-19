@@ -36,6 +36,7 @@
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "common/feature_policy/feature_policy_feature.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/SpaceSplitString.h"
@@ -48,7 +49,6 @@
 #include "modules/mediastream/UserMediaController.h"
 #include "platform/mediastream/MediaStreamCenter.h"
 #include "platform/mediastream/MediaStreamDescriptor.h"
-#include "public/platform/WebFeaturePolicyFeature.h"
 
 namespace blink {
 
@@ -405,11 +405,11 @@ bool UserMediaRequest::IsSecureContextUse(String& error_message) {
         *document, WebFeature::kGetUserMediaSecureOriginIframe);
     if (Audio()) {
       Deprecation::CountDeprecationFeaturePolicy(
-          *document, WebFeaturePolicyFeature::kMicrophone);
+          *document, FeaturePolicyFeature::kMicrophone);
     }
     if (Video()) {
-      Deprecation::CountDeprecationFeaturePolicy(
-          *document, WebFeaturePolicyFeature::kCamera);
+      Deprecation::CountDeprecationFeaturePolicy(*document,
+                                                 FeaturePolicyFeature::kCamera);
     }
 
     HostsUsingFeatures::CountAnyWorld(
