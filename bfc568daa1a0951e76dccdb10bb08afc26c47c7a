@@ -46,6 +46,54 @@
       "revId": "bfc568daa1a0951e76dccdb10bb08afc26c47c7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1ff947_439ba38e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-19T11:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b9f6cb1_5caa8c5c",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "bfc568daa1a0951e76dccdb10bb08afc26c47c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aae9be82_68e522b4",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-19T11:36:28Z",
+      "side": 1,
+      "message": "Added a couple of extra tests.",
+      "parentUuid": "5f392168_855af666",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "bfc568daa1a0951e76dccdb10bb08afc26c47c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
