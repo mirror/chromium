@@ -136,7 +136,7 @@ void BaseParallelResourceThrottle::WillRedirectRequest(
 
 void BaseParallelResourceThrottle::WillProcessResponse(bool* defer) {
   url_loader_throttle_holder_->throttle()->WillProcessResponse(
-      content::ResourceResponseHead(), defer);
+      GURL(), content::ResourceResponseHead(), defer);
 }
 
 const char* BaseParallelResourceThrottle::GetNameForLogging() const {
