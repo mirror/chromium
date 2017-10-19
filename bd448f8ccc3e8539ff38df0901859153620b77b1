@@ -46,6 +46,30 @@
       "revId": "bd448f8ccc3e8539ff38df0901859153620b77b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f6c9d1_bf175921",
+        "filename": "net/test/embedded_test_server/embedded_test_server_connection_listener.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T19:47:22Z",
+      "side": 1,
+      "message": "I\u0027m not confident that closing the socket here would actually guarantee a reset.\n\nIf you created your own socket, accept a connection, and then used set_sock_opt() to set SO_LINGER to 0 before closing the socket, that should guarantee a reset, though it\u0027s a bit more effort.",
+      "parentUuid": "abd30585_b712b03b",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "bd448f8ccc3e8539ff38df0901859153620b77b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
