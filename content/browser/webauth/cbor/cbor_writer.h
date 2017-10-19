@@ -14,6 +14,8 @@
 #include "content/browser/webauth/cbor/cbor_values.h"
 #include "content/common/content_export.h"
 
+#include "base/gtest_prod_util.h"
+
 // A basic Concise Binary Object Representation (CBOR) encoder as defined by
 // https://tools.ietf.org/html/rfc7049.
 // This is a non-canonical, generic encoder that supplies well-formed
@@ -32,6 +34,20 @@
 //  * Floating-point numbers.
 //  * Indefinite-length encodings.
 //  * Parsing.
+//
+// Requirements for canonical CBOR to be used for CTAP are :
+//  * 1: All major data types for the CBOR values must be as short as possible.
+//  * 2: Keys in every map must be sorted (by major type, by key length,
+//        by value in byte-wise lexical order).
+//  * 3: Indefinite length items must be
+//        converted to definite length items.
+//  * 4: The depth of nested CBOR structures used by all CBOR encodings is
+//        limited to at most 4 layers.
+//  * 5: All maps must not have duplicate keys.
+//
+// Current implementation of CBORWriter encoder meets 1st, 2nd, 4th, and 5th
+// requirements of canonical CBOR for CTAP.
+
 enum class CborMajorType {
   kUnsigned = 0,    // Unsigned integer.
   kNegative = 1,    // Negative integer. Unsupported by this implementation.
@@ -44,6 +60,8 @@ enum class CborMajorType {
 namespace content {
 
 namespace {
+// Maximum depth of nested CBOR.
+constexpr uint8_t maxNestingLayerSize = 4;
 // Mask selecting the last 5 bits  of the "initial byte" where
 // 'additional information is encoded.
 constexpr uint8_t kAdditionalInformationDataMask = 0x1F;
@@ -83,6 +101,13 @@ class CONTENT_EXPORT CBORWriter {
 
   // Get the number of bytes needed to store the unsigned integer.
   size_t GetNumUintBytes(uint64_t value);
+
+  // Returns whether input CBOR value has at most 4 nested layers.
+  static bool IsValidDepth(const CBORValue& node);
+
+  // Static function to get maximum depth of nested CBOR.
+  // If the depth of CBOR is larger than 4, then the function returns 4.
+  static uint8_t IsValidDepth(const CBORValue& node, uint8_t current_layer);
 
   // Holds the encoded CBOR data.
   std::vector<uint8_t>* encoded_cbor_;

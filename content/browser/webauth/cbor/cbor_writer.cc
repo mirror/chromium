@@ -59,6 +59,7 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
       const CBORValue::ArrayValue& array = node.GetArray();
       StartItem(CborMajorType::kArray, array.size());
       for (const auto& value : array) {
+        DCHECK(IsValidDepth(value));
         EncodeCBOR(value);
       }
       return;
@@ -68,7 +69,9 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
     case CBORValue::Type::MAP: {
       const CBORValue::MapValue& map = node.GetMap();
       StartItem(CborMajorType::kMap, map.size());
+
       for (const auto& value : map) {
+        DCHECK(IsValidDepth(value.second));
         EncodeCBOR(CBORValue(value.first));
         EncodeCBOR(value.second);
       }
@@ -139,6 +142,36 @@ size_t CBORWriter::GetNumUintBytes(uint64_t value) {
     return 4;
   }
   return 8;
+}
+
+bool CBORWriter::IsValidDepth(const CBORValue& node) {
+  return IsValidDepth(node, 0) < maxNestingLayerSize;
+}
+
+uint8_t CBORWriter::IsValidDepth(const CBORValue& node, uint8_t current_layer) {
+  if (current_layer >= maxNestingLayerSize)
+    return current_layer;
+  if (!node.is_array() && !node.is_map())
+    return 1;
+  else {
+    size_t max = 0;
+    if (node.is_array()) {
+      for (const auto& cbor_element : node.GetArray()) {
+        uint8_t lower_layer_depth =
+            IsValidDepth(cbor_element, current_layer + 1);
+        if (max < lower_layer_depth)
+          max = lower_layer_depth;
+      }
+    } else {
+      DCHECK(node.is_map());
+      for (auto it = node.GetMap().begin(); it != node.GetMap().end(); ++it) {
+        uint8_t lower_layer_depth = IsValidDepth(it->second, current_layer + 1);
+        if (max < lower_layer_depth)
+          max = lower_layer_depth;
+      }
+    }
+    return max + 1;
+  }
 }
 
 }  // namespace content

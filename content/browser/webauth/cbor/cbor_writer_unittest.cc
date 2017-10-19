@@ -4,6 +4,7 @@
 
 #include "content/browser/webauth/cbor/cbor_writer.h"
 
+#include "net/test/gtest_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -161,17 +162,17 @@ TEST(CBORWriterTest, TestWriteMapWithArray) {
 TEST(CBORWriterTest, TestWriteNestedMap) {
   static const uint8_t kNestedMapTestCase[] = {
       // clang-format off
-      0xa2,  // map of 2 pairs
-        0x61, 0x61,  // "a"
-        0x01,
+       0xa2,  // map of 2 pairs
+         0x61, 0x61,  // "a"
+         0x01,
 
-        0x61, 0x62,  // "b"
-        0xa2,        // map of 2 pairs
-          0x61, 0x63,  // "c"
-          0x02,
+         0x61, 0x62,  // "b"
+         0xa2,        // map of 2 pairs
+           0x61, 0x63,  // "c"
+           0x02,
 
-          0x61, 0x64,  // "d"
-          0x03,
+           0x61, 0x64,  // "d"
+           0x03,
       // clang-format on
   };
   CBORValue::MapValue map;
@@ -183,6 +184,26 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
   std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
   EXPECT_THAT(cbor, testing::ElementsAreArray(kNestedMapTestCase,
                                               arraysize(kNestedMapTestCase)));
+}
+
+TEST(CBORWriterTest, TestWriteOverlyNestedMap) {
+  CBORValue::MapValue map;
+  CBORValue::MapValue nested_map;
+  CBORValue::MapValue inner_nested_map;
+  CBORValue::ArrayValue array;
+
+  map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  inner_nested_map["e"] = CBORValue(4);
+  inner_nested_map["f"] = CBORValue(5);
+  array.push_back(CBORValue(6));
+  array.push_back(CBORValue(7));
+  inner_nested_map["g"] = CBORValue(array);
+  nested_map["g"] = CBORValue(inner_nested_map);
+  map["b"] = CBORValue(nested_map);
+
+  EXPECT_DFATAL(CBORWriter::Write(CBORValue(map)), "");
 }
 
 }  // namespace content
