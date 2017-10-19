@@ -104,12 +104,13 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
     }
 
     auto* client = DBusThreadManager::Get()->GetDebugDaemonClient();
+    auto error_callback = base::Bind(&PrinterConfigurerImpl::OnDbusError,
+                                     weak_factory_.GetWeakPtr(), callback);
     client->CupsAddAutoConfiguredPrinter(
         printer.id(), URIForCups(printer),
         base::Bind(&PrinterConfigurerImpl::OnAddedPrinter,
                    weak_factory_.GetWeakPtr(), printer, callback),
-        base::Bind(&PrinterConfigurerImpl::OnDbusError,
-                   weak_factory_.GetWeakPtr(), callback));
+        error_callback);
   }
 
   // Callback for when the IP for a zeroconf printer has been resolved.  If the
