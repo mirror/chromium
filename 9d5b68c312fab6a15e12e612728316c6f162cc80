@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0a16e65d_e25b888b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5335,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T20:25:17Z",
+      "side": 1,
+      "message": "Nice!  I think you\u0027ve just found a bug.  :)\n\nWithout PlzNavigate (using --disable-browser-side-navigation), debug URLs go through NavigateInternal.  The browser process special cases them and sends them straight to the renderer.\n\nWith PlzNavigate, you\u0027re right-- we appear to be sending the debug URL to the network stack, failing, telling the renderer that we failed, and then running the debug URL\u0027s action via OnFailedNavigation.  That\u0027s definitely not what we should be doing.\n\nLet\u0027s fix that, and then we can proceed with the discussion below.  I\u0027ve filed https://crbug.com/776528 to track it.",
+      "parentUuid": "64723807_45f0a80a",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "673944ff_167078f7",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 4
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "This is the flow that follows any other URL that is blocked currently. They just aren\u0027t affected by MaybeHandleDebugURL. I don\u0027t know details in this part, but do you think that the URLs like chrome://kill should be treated differently when blocked?",
       "parentUuid": "ffc3018f_d80f1360",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5a0752_505d7095",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6455,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T20:25:17Z",
+      "side": 1,
+      "message": "My point was that I don\u0027t think we should be calling MaybeHandleDebugURL from OnFailedNavigation at all.  (Once we fix the bug mentioned above, anyway.)  If the navigation is marked as failed, we don\u0027t want to go through with the debug action, right?  So maybe we can just move the call to NavigateInternal.\n\nFor the second part of my question, what happens in the case that it\u0027s blocked?  What do we end up showing to the user?\n\nI just checked on chrome://shorthang, and when that works \"successfully,\" we end up committing an error page that shows chrome://shorthang in the omnibox.  location.href is chrome-error://chromewebdata and document.origin is null.  It also stays in process, similar to other blocked navigations.\n\nIs that what happens when chrome://kill is blocked?  Maybe that\u0027s ok.",
+      "parentUuid": "697ad5e9_4419bcc0",
       "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
