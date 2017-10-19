@@ -20,10 +20,10 @@ namespace blink {
 class PLATFORM_EXPORT BlobBytesProvider
     : public storage::mojom::blink::BytesProvider {
  public:
-  explicit BlobBytesProvider(RefPtr<RawData>);
+  explicit BlobBytesProvider(scoped_refptr<RawData>);
   ~BlobBytesProvider() override;
 
-  void AppendData(RefPtr<RawData>);
+  void AppendData(scoped_refptr<RawData>);
 
   // BytesProvider implementation:
   void RequestAsReply(RequestAsReplyCallback) override;
@@ -35,7 +35,7 @@ class PLATFORM_EXPORT BlobBytesProvider
                      RequestAsFileCallback) override;
 
  private:
-  Vector<RefPtr<RawData>> data_;
+  Vector<scoped_refptr<RawData>> data_;
 };
 
 }  // namespace blink
