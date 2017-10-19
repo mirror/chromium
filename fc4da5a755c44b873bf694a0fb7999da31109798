@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9205ef93_f1d78006",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T07:00:54Z",
+      "side": 1,
+      "message": "(It\u0027s not from this CL, but \u0027URLFactory\u0027 as a shorthand of URLLoaderFactory sounds slightly funny to me, but maybe it\u0027s fine... :))",
+      "revId": "fc4da5a755c44b873bf694a0fb7999da31109798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bf76ca_6154d057",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T07:00:54Z",
+      "side": 1,
+      "message": "Are we going to address this in CL? Otherwise let\u0027s make this more formal TODO comment.",
+      "revId": "fc4da5a755c44b873bf694a0fb7999da31109798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6194187_62898fab",
+        "filename": "content/browser/appcache/appcache_url_loader_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-19T07:00:54Z",
+      "side": 1,
+      "message": "Would we also need to call something like this... in case we don\u0027t call network_loader_-\u003eFollowRedirect?\n\nhttps://cs.chromium.org/chromium/src/net/url_request/redirect_util.h?sq\u003dpackage:chromium\u0026l\u003d24",
+      "revId": "fc4da5a755c44b873bf694a0fb7999da31109798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
