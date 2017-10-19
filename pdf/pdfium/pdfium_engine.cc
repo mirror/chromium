@@ -1286,6 +1286,21 @@ void PDFiumEngine::FinishLoadingDocument() {
     document_features.has_attachments = (FPDFDoc_GetAttachmentCount(doc_) > 0);
     document_features.is_linearized =
         (FPDFAvail_IsLinearized(fpdf_availability_) == PDF_LINEARIZED);
+
+    int form_type = FPDF_GetFormType(doc_);
+    switch (form_type) {
+      case FORMTYPE_NONE:
+        document_features.form_type = FormType::kNone;
+      case FORMTYPE_ACRO_FORM:
+        document_features.form_type = FormType::kAcroForm;
+      case FORMTYPE_XFA_FULL:
+        document_features.form_type = FormType::kXFAFull;
+      case FORMTYPE_XFA_FOREGROUND:
+        document_features.form_type = FormType::kXFAForeground;
+      default:
+        document_features.form_type = FormType::kOther;
+    }
+
     client_->DocumentLoadComplete(document_features);
   }
 }
