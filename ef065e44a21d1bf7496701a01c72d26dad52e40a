@@ -52,6 +52,24 @@
       "revId": "ef065e44a21d1bf7496701a01c72d26dad52e40a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb441149_652fd43a",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-19T23:21:56Z",
+      "side": 1,
+      "message": "The V8 Heap uses it to try to give an accurate amount of committed memory:\n\nhttps://cs.chromium.org/chromium/src/v8/src/heap/spaces.cc?q\u003dhaslazycommits\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d695",
+      "parentUuid": "f8218627_17c16ec5",
+      "revId": "ef065e44a21d1bf7496701a01c72d26dad52e40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
