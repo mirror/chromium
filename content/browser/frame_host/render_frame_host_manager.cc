@@ -1476,6 +1476,9 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
 bool RenderFrameHostManager::IsRendererTransferNeededForNavigation(
     RenderFrameHostImpl* rfh,
     const GURL& dest_url) {
+  if (rfh->GetSiteInstance()->HasWrongProcessForURL(dest_url))
+    return true;
+
   // A transfer is not needed if the current SiteInstance doesn't yet have a
   // site.  This is the case for tests that use NavigateToURL.
   if (!rfh->GetSiteInstance()->HasSite())
