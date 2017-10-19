@@ -34,6 +34,23 @@
       "revId": "fcb5da3e7dc109d577bd60f3a32b080047839e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bbdc06_b2791094",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioContext.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T17:41:20Z",
+      "side": 1,
+      "message": "Generally, over a whole run of Chrome, are these values coming from a small set?  That\u0027s the only time sparse histograms would be useful.\n\nI can imagine that these can get numbers 0, 1, 2, 3, ...",
+      "revId": "fcb5da3e7dc109d577bd60f3a32b080047839e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
