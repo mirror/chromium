@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69d42b57_a9dee01f",
+        "filename": "base/threading/platform_thread_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T19:30:57Z",
+      "side": 1,
+      "message": "I\u0027ve added a unit-test that calls this with a 1024-character name, and it still doesn\u0027t DCHECK, suggesting that the API itself silently truncates (which fits my experience working with the get API.",
+      "parentUuid": "071a4f27_d666fe78",
+      "revId": "21fc7c498f5fa1e4fa7102e229b11ae1b816f33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19174cf4_eb54a24f",
         "filename": "base/threading/platform_thread_fuchsia.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "21fc7c498f5fa1e4fa7102e229b11ae1b816f33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d542548_bdaabda7",
+        "filename": "base/threading/platform_thread_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T19:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19174cf4_eb54a24f",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "21fc7c498f5fa1e4fa7102e229b11ae1b816f33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
