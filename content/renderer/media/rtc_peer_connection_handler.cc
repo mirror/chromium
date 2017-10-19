@@ -1182,7 +1182,8 @@ class RTCPeerConnectionHandler::Observer
 RTCPeerConnectionHandler::RTCPeerConnectionHandler(
     blink::WebRTCPeerConnectionHandlerClient* client,
     PeerConnectionDependencyFactory* dependency_factory)
-    : client_(client),
+    : initialize_called_(false),
+      client_(client),
       is_closed_(false),
       dependency_factory_(dependency_factory),
       track_adapter_map_(
@@ -1229,6 +1230,9 @@ bool RTCPeerConnectionHandler::Initialize(
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(frame_);
 
+  CHECK(!initialize_called_);
+  initialize_called_ = true;
+
   peer_connection_tracker_ =
       RenderThreadImpl::current()->peer_connection_tracker()->AsWeakPtr();
 
@@ -1260,6 +1264,7 @@ bool RTCPeerConnectionHandler::Initialize(
 
   uma_observer_ = new rtc::RefCountedObject<PeerConnectionUMAObserver>();
   native_peer_connection_->RegisterUMAObserver(uma_observer_.get());
+
   return true;
 }
 
