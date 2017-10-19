@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff3b0d2_a6d5dde2",
+        "filename": "components/history/core/browser/url_database.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T05:14:39Z",
+      "side": 1,
+      "message": "Is there a test for this that should be updated?",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db09da2_71b68dfb",
+        "filename": "components/history/core/browser/url_database.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T05:14:39Z",
+      "side": 1,
+      "message": "scheme of one of the corresponding entries",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23814546_437d4ee8",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T05:14:39Z",
+      "side": 1,
+      "message": "This seems like a lie.  (The structure will be mostly empty.)  Don\u0027t you want db_-\u003eGetRowForURL?",
+      "range": {
+        "startLine": 410,
+        "startChar": 15,
+        "endLine": 410,
+        "endChar": 30
+      },
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea73acb2_41f0e24e",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T05:14:39Z",
+      "side": 1,
+      "message": "parens would make this more readable (As...is_valid()) ? ...",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4820208_4455286e",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T05:14:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this.  Why aren\u0027t you using input.canonicalized_url(), which is what the function implicitly did before?",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d2da39_58c19575",
+        "filename": "components/omnibox/browser/history_url_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T05:14:39Z",
+      "side": 1,
+      "message": "This comment does not correspond with the code.  (|url|, a const GURL\u0026, is modified...)",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
