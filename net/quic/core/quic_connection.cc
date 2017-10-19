@@ -1309,12 +1309,8 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
     if (self_address_.port() != last_packet_destination_address_.port() ||
         self_address_.host().Normalized() !=
             last_packet_destination_address_.host().Normalized()) {
-      if (FLAGS_quic_reloadable_flag_quic_allow_one_address_change &&
-          AllowSelfAddressChange()) {
-        QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_allow_one_address_change, 2,
-                          2);
-        OnSelfAddressChange();
-      } else {
+      if (!FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy ||
+          !visitor_->AllowSelfAddressChange()) {
         CloseConnection(
             QUIC_ERROR_MIGRATING_ADDRESS,
             "Self address migration is not supported at the server.",
@@ -1681,10 +1677,6 @@ bool QuicConnection::ShouldDiscardPacket(const SerializedPacket& packet) {
     return true;
   }
 
-  return false;
-}
-
-bool QuicConnection::AllowSelfAddressChange() const {
   return false;
 }
 

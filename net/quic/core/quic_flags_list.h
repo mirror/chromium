@@ -171,3 +171,8 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_cubic_fixes, false)
 
 // If true, enable QUIC v43.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_43, false)
+
+// If true, allows one address change when UDP proxying.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy,
+          false)

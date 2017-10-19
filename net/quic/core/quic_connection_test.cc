@@ -1149,6 +1149,9 @@ TEST_P(QuicConnectionTest, SelfAddressChangeAtServer) {
   QuicIpAddress host;
   host.FromString("1.1.1.1");
   QuicSocketAddress self_address(host, 123);
+  if (FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy) {
+    EXPECT_CALL(visitor_, AllowSelfAddressChange()).WillOnce(Return(false));
+  }
   EXPECT_CALL(visitor_, OnConnectionClosed(QUIC_ERROR_MIGRATING_ADDRESS, _, _));
   ProcessFramePacketWithAddresses(QuicFrame(&stream_frame), self_address,
                                   kPeerAddress);

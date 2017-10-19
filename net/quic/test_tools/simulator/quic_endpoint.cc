@@ -167,6 +167,10 @@ bool QuicEndpoint::HasOpenDynamicStreams() const {
   return true;
 }
 
+bool QuicEndpoint::AllowSelfAddressChange() const {
+  return false;
+}
+
 QuicEndpoint::Writer::Writer(QuicEndpoint* endpoint)
     : endpoint_(endpoint), is_blocked_(false) {}
 

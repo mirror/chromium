@@ -160,6 +160,10 @@ class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
   // Called to ask if any streams are open in this visitor, excluding the
   // reserved crypto and headers stream.
   virtual bool HasOpenDynamicStreams() const = 0;
+
+  // Called when a self address change is observed. Returns true if self address
+  // change is allowed.
+  virtual bool AllowSelfAddressChange() const = 0;
 };
 
 // Interface which gets callbacks from the QuicConnection at interesting
@@ -757,12 +761,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // Returns true if the packet should be discarded and not sent.
   virtual bool ShouldDiscardPacket(const SerializedPacket& packet);
-
-  // Returns true if this connection allows self address change.
-  virtual bool AllowSelfAddressChange() const;
-
-  // Called when a self address change is observed.
-  virtual void OnSelfAddressChange() {}
 
  private:
   friend class test::QuicConnectionPeer;

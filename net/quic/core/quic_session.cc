@@ -165,6 +165,10 @@ void QuicSession::OnSuccessfulVersionNegotiation(
 
 void QuicSession::OnPathDegrading() {}
 
+bool QuicSession::AllowSelfAddressChange() const {
+  return false;
+}
+
 void QuicSession::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
   // Stream may be closed by the time we receive a WINDOW_UPDATE, so we can't
   // assume that it still exists.

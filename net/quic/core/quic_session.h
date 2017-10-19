@@ -111,6 +111,7 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   bool HasPendingHandshake() const override;
   bool HasOpenDynamicStreams() const override;
   void OnPathDegrading() override;
+  bool AllowSelfAddressChange() const override;
 
   // QuicStreamFrameDataProducer
   bool WriteStreamData(QuicStreamId id,
