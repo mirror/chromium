@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f50f7059_20845d4c",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:28:37Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t understand the question, what\u0027s range selection? But this is the start offset of the current selection if there is a selection.",
+      "parentUuid": "85cda43c_71edf43a",
+      "range": {
+        "startLine": 162,
+        "startChar": 40,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5e0c0a_7635b633",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8d61b1_acb2f2f5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5e0c0a_7635b633",
+      "range": {
+        "startLine": 210,
+        "startChar": 17,
+        "endLine": 210,
+        "endChar": 29
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5a9c5512_16512e57",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:28:37Z",
+      "side": 1,
+      "message": "Test for getWordDelta() covered this one.",
+      "parentUuid": "29414e2e_f5ac634e",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 242,
+        "endChar": 34
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a39231d7_6842b6d5",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc572ba4_5e77d33c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a39231d7_6842b6d5",
+      "range": {
+        "startLine": 270,
+        "startChar": 20,
+        "endLine": 270,
+        "endChar": 32
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3d8c8468_37c6b3b9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:28:37Z",
+      "side": 1,
+      "message": "Done\n\nThis one is just a wrapper and should be covered in integration test.",
+      "parentUuid": "01c2308f_8dfe5b24",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 25
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "236694a6_323fff84",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b6c2c8bd_2cbcd5b0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "236694a6_323fff84",
+      "range": {
+        "startLine": 419,
+        "startChar": 20,
+        "endLine": 419,
+        "endChar": 27
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a19603da_8c8a573e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b925679f_3cf634df",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:28:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a19603da_8c8a573e",
+      "range": {
+        "startLine": 427,
+        "startChar": 20,
+        "endLine": 427,
+        "endChar": 28
+      },
+      "revId": "4b6dbe383292e8f15fd5778dc2324493a5def740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
