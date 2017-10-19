@@ -79,7 +79,7 @@ class PermissionServiceImplTest : public RenderViewHostTestHarness {
  protected:
   // The header policy should only be set once on page load, so we refresh the
   // page to simulate that.
-  void RefreshPageAndSetHeaderPolicy(blink::WebFeaturePolicyFeature feature,
+  void RefreshPageAndSetHeaderPolicy(blink::FeaturePolicyFeature feature,
                                      bool enabled) {
     NavigateAndCommit(origin_.GetURL());
     std::vector<url::Origin> whitelist;
@@ -145,7 +145,7 @@ TEST_F(PermissionServiceImplTest, HasPermissionWithFeaturePolicy) {
   EXPECT_EQ(PermissionStatus::GRANTED,
             HasPermission(PermissionName::GEOLOCATION));
 
-  RefreshPageAndSetHeaderPolicy(blink::WebFeaturePolicyFeature::kGeolocation,
+  RefreshPageAndSetHeaderPolicy(blink::FeaturePolicyFeature::kGeolocation,
                                 /*enabled=*/false);
   EXPECT_EQ(PermissionStatus::DENIED,
             HasPermission(PermissionName::GEOLOCATION));
@@ -154,7 +154,7 @@ TEST_F(PermissionServiceImplTest, HasPermissionWithFeaturePolicy) {
   EXPECT_EQ(PermissionStatus::GRANTED, HasPermission(PermissionName::MIDI));
 
   // Now block midi.
-  RefreshPageAndSetHeaderPolicy(blink::WebFeaturePolicyFeature::kMidiFeature,
+  RefreshPageAndSetHeaderPolicy(blink::FeaturePolicyFeature::kMidiFeature,
                                 /*enabled=*/false);
   EXPECT_EQ(PermissionStatus::DENIED, HasPermission(PermissionName::MIDI));
 
@@ -171,7 +171,7 @@ TEST_F(PermissionServiceImplTest, RequestPermissionsWithFeaturePolicy) {
   feature_list.InitAndEnableFeature(features::kUseFeaturePolicyForPermissions);
 
   // Disable midi.
-  RefreshPageAndSetHeaderPolicy(blink::WebFeaturePolicyFeature::kMidiFeature,
+  RefreshPageAndSetHeaderPolicy(blink::FeaturePolicyFeature::kMidiFeature,
                                 /*enabled=*/false);
 
   std::vector<PermissionStatus> result =

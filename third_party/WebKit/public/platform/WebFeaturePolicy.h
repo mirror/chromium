@@ -6,16 +6,16 @@
 #define WebFeaturePolicy_h
 
 #include "WebCommon.h"
-#include "WebFeaturePolicyFeature.h"
 #include "WebSecurityOrigin.h"
 #include "WebString.h"
 #include "WebVector.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 
 namespace blink {
 
 struct BLINK_PLATFORM_EXPORT WebParsedFeaturePolicyDeclaration {
   WebParsedFeaturePolicyDeclaration() : matches_all_origins(false) {}
-  WebFeaturePolicyFeature feature;
+  FeaturePolicyFeature feature;
   bool matches_all_origins;
   WebVector<WebSecurityOrigin> origins;
 };
@@ -32,7 +32,7 @@ class BLINK_PLATFORM_EXPORT WebFeaturePolicy {
 
   // Returns whether or not the given feature is enabled for the origin of the
   // document that owns the policy.
-  virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature) const = 0;
+  virtual bool IsFeatureEnabled(blink::FeaturePolicyFeature) const = 0;
 };
 
 }  // namespace blink

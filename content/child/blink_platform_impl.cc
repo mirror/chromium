@@ -793,9 +793,10 @@ std::unique_ptr<blink::WebFeaturePolicy> BlinkPlatformImpl::CreateFeaturePolicy(
     const blink::WebParsedFeaturePolicy& container_policy,
     const blink::WebParsedFeaturePolicy& policy_header,
     const blink::WebSecurityOrigin& origin) {
-  std::unique_ptr<FeaturePolicy> policy = FeaturePolicy::CreateFromParentPolicy(
-      static_cast<const FeaturePolicy*>(parent_policy),
-      FeaturePolicyHeaderFromWeb(container_policy), url::Origin(origin));
+  std::unique_ptr<blink::FeaturePolicy> policy =
+      blink::FeaturePolicy::CreateFromParentPolicy(
+          static_cast<const blink::FeaturePolicy*>(parent_policy),
+          FeaturePolicyHeaderFromWeb(container_policy), url::Origin(origin));
   policy->SetHeaderPolicy(FeaturePolicyHeaderFromWeb(policy_header));
   return std::move(policy);
 }
@@ -804,8 +805,9 @@ std::unique_ptr<blink::WebFeaturePolicy>
 BlinkPlatformImpl::DuplicateFeaturePolicyWithOrigin(
     const blink::WebFeaturePolicy& policy,
     const blink::WebSecurityOrigin& new_origin) {
-  return FeaturePolicy::CreateFromPolicyWithOrigin(
-      static_cast<const FeaturePolicy&>(policy), url::Origin(new_origin));
+  return blink::FeaturePolicy::CreateFromPolicyWithOrigin(
+      static_cast<const blink::FeaturePolicy&>(policy),
+      url::Origin(new_origin));
 }
 
 }  // namespace content

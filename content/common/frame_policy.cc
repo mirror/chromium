@@ -9,8 +9,9 @@ namespace content {
 FramePolicy::FramePolicy()
     : sandbox_flags(blink::WebSandboxFlags::kNone), container_policy({}) {}
 
-FramePolicy::FramePolicy(blink::WebSandboxFlags sandbox_flags,
-                         const ParsedFeaturePolicyHeader& container_policy)
+FramePolicy::FramePolicy(
+    blink::WebSandboxFlags sandbox_flags,
+    const blink::ParsedFeaturePolicyHeader& container_policy)
     : sandbox_flags(sandbox_flags), container_policy(container_policy) {}
 
 FramePolicy::FramePolicy(const FramePolicy& lhs)

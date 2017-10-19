@@ -84,7 +84,7 @@ HTMLFrameElement::ConstructContainerPolicy(Vector<String>*, bool*) const {
   // https://fullscreen.spec.whatwg.org/#model
   Vector<WebParsedFeaturePolicyDeclaration> container_policy;
   WebParsedFeaturePolicyDeclaration whitelist;
-  whitelist.feature = WebFeaturePolicyFeature::kFullscreen;
+  whitelist.feature = FeaturePolicyFeature::kFullscreen;
   whitelist.matches_all_origins = false;
   whitelist.origins = Vector<WebSecurityOrigin>(0UL);
   container_policy.push_back(whitelist);
