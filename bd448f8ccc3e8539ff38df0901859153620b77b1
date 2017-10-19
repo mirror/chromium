@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a913a63a_87ef7477",
+        "filename": "net/test/embedded_test_server/embedded_test_server_connection_listener.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T19:36:42Z",
+      "side": 1,
+      "message": "I\u0027m not following - we can\u0027t simulate the client receiving network errors this way, we can only close the socket.  If we want to close the socket (With or without sending data), RegisterRequestHandler can already do that - just return a RawHttpResponse that writes nothing to the socket.",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "bd448f8ccc3e8539ff38df0901859153620b77b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
