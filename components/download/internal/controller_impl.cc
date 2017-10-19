@@ -106,7 +106,10 @@ ControllerImpl::ControllerImpl(
   DCHECK(log_sink_);
 }
 
-ControllerImpl::~ControllerImpl() = default;
+ControllerImpl::~ControllerImpl() {
+  DCHECK(navigation_monitor_);
+  navigation_monitor_->SetObserver(nullptr);
+}
 
 void ControllerImpl::Initialize(const base::Closure& callback) {
   DCHECK_EQ(controller_state_, State::CREATED);
