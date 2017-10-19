@@ -404,7 +404,7 @@
       name: "FeaturePolicyExperimentalFeatures",
     },
     {
-      name: "FeaturePolicyForEncryptedMedia",
+      name: "FeaturePolicyForPermissions",
       status: "experimental"
     },
     {
