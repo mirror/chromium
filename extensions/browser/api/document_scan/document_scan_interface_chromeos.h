@@ -5,6 +5,8 @@
 #ifndef EXTENSIONS_BROWSER_API_DOCUMENT_SCAN_DOCUMENT_SCAN_INTERFACE_CHROMEOS_H_
 #define EXTENSIONS_BROWSER_API_DOCUMENT_SCAN_DOCUMENT_SCAN_INTERFACE_CHROMEOS_H_
 
+#include <string>
+
 #include "base/macros.h"
 #include "chromeos/dbus/lorgnette_manager_client.h"
 #include "extensions/browser/api/document_scan/document_scan_interface.h"
@@ -15,7 +17,8 @@ namespace api {
 
 class DocumentScanInterfaceChromeos : public DocumentScanInterface {
  public:
-  DocumentScanInterfaceChromeos();
+  explicit DocumentScanInterfaceChromeos(
+      chromeos::LorgnetteManagerClient* lorgnette_manager_client);
   ~DocumentScanInterfaceChromeos() override;
 
   void ListScanners(const ListScannersResultsCallback& callback) override;
@@ -25,8 +28,6 @@ class DocumentScanInterfaceChromeos : public DocumentScanInterface {
             const ScanResultsCallback& callback) override;
 
  private:
-  friend class DocumentScanInterfaceChromeosTest;
-
   void OnScannerListReceived(
       const ListScannersResultsCallback& callback,
       bool succeeded,

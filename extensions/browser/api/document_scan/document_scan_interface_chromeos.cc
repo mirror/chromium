@@ -4,6 +4,8 @@
 
 #include "extensions/browser/api/document_scan/document_scan_interface_chromeos.h"
 
+#include <vector>
+
 #include "base/base64.h"
 #include "base/bind.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -22,9 +24,9 @@ namespace extensions {
 
 namespace api {
 
-DocumentScanInterfaceChromeos::DocumentScanInterfaceChromeos()
-    : lorgnette_manager_client_(nullptr) {
-}
+DocumentScanInterfaceChromeos::DocumentScanInterfaceChromeos(
+    chromeos::LorgnetteManagerClient* lorgnette_manager_client)
+    : lorgnette_manager_client_(lorgnette_manager_client) {}
 
 DocumentScanInterfaceChromeos::~DocumentScanInterfaceChromeos() {
 }
@@ -123,7 +125,7 @@ DocumentScanInterfaceChromeos::GetLorgnetteManagerClient() {
 
 // static
 DocumentScanInterface* DocumentScanInterface::CreateInstance() {
-  return new DocumentScanInterfaceChromeos();
+  return new DocumentScanInterfaceChromeos(nullptr);
 }
 
 }  // namespace api
