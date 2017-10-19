@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c6a70ce_d59da225",
+        "filename": "device/bluetooth/bluetooth_discovery_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-19T20:06:12Z",
+      "side": 1,
+      "message": "I think you should add a new UMA entry for this. This could lead to confusing metrics, especially because the error is because the session *is* active at this point.",
+      "range": {
+        "startLine": 50,
+        "startChar": 45,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "1ef6c1a0d2dcc0dd36fcf555b529a82268ba0be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
