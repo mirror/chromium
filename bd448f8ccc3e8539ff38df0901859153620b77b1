@@ -22,6 +22,30 @@
       "revId": "bd448f8ccc3e8539ff38df0901859153620b77b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd30585_b712b03b",
+        "filename": "net/test/embedded_test_server/embedded_test_server_connection_listener.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T19:43:32Z",
+      "side": 1,
+      "message": "Got it. Is there a better way of simulating net-layer error (e.g., ERR_CONNECTION_RESET)? I suppose using mock sockets is one way, but then I would need to use test network delegate. That would bring us back to patch 6.",
+      "parentUuid": "a913a63a_87ef7477",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "bd448f8ccc3e8539ff38df0901859153620b77b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
