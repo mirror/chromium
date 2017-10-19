@@ -10,6 +10,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     super();
     this._bindingSymbol = Symbol('NetworkPersistenceBinding');
     this._domainPathForProjectSymbol = Symbol('NetworkPersistenceDomainPath');
+    this._originalResponseContentPromiseSymbol = Symbol('OriginalResponsePromise');
 
     this._enabled = false;
     this._workspace = workspace;
@@ -81,6 +82,17 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    */
   domainPathForProject(project) {
     return project[this._domainPathForProjectSymbol] || null;
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} networkUISourceCode
+   * @return {?Promise<?string>}
+   */
+  originalContentForNetworkUISourceCode(networkUISourceCode) {
+    var fileSystemUISourceCode = this._fileSystemUISourceCodeForUrlMap.get(networkUISourceCode.url());
+    if (!fileSystemUISourceCode)
+      return null;
+    return fileSystemUISourceCode[this._originalResponseContentPromiseSymbol] || null;
   }
 
   /**
@@ -300,6 +312,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
       this._fileSystemUISourceCodeForUrlMap.delete(url);
     SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(
         Array.from(this._fileSystemUISourceCodeForUrlMap.keys()), this._interceptionHandlerBound);
+    delete uiSourceCode[this._originalResponseContentPromiseSymbol];
     this._unbind(uiSourceCode);
   }
 
@@ -337,7 +350,8 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    * @return {!Promise}
    */
   async _interceptionHandler(interceptedRequest) {
-    var fileSystemUISourceCode = this._fileSystemUISourceCodeForUrlMap.get(interceptedRequest.request.url);
+    var url = interceptedRequest.request.url;
+    var fileSystemUISourceCode = this._fileSystemUISourceCodeForUrlMap.get(url);
     if (!fileSystemUISourceCode)
       return;
     var content = await fileSystemUISourceCode.requestContent();
@@ -346,6 +360,13 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     var mimeType = fileSystemUISourceCode.mimeType();
     var blob = isImage ? (await fetch('data:' + mimeType + ';base64,' + content).then(res => res.blob())) :
                          new Blob([content], {type: mimeType});
+    var headers = interceptedRequest.request.headers;
+    if (interceptedRequest.request.method.toUpperCase() !== 'GET') {
+      fileSystemUISourceCode[this._originalResponseContentPromiseSymbol] = new Promise(
+          resolve => Host.ResourceLoader.load(url, headers, (statusCode, headers, content) => resolve(content)));
+    } else {
+      delete fileSystemUISourceCode[this._originalResponseContentPromiseSymbol];
+    }
     interceptedRequest.continueRequestWithContent(blob);
   }
 };
