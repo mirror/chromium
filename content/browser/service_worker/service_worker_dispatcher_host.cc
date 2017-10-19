@@ -69,7 +69,7 @@ const uint32_t kServiceWorkerFilteredMessageClasses[] = {
     ServiceWorkerMsgStart, EmbeddedWorkerMsgStart,
 };
 
-void RunSoon(const base::Closure& callback) {
+void SWRunSoon(const base::Closure& callback) {
   if (!callback.is_null())
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
@@ -603,7 +603,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
       // postMessage from keeping workers alive forever.
       base::TimeDelta timeout =
           sender_provider_host->running_hosted_version()->remaining_timeout();
-      RunSoon(base::Bind(
+      SWRunSoon(base::Bind(
           &ServiceWorkerDispatcherHost::DispatchExtendableMessageEventInternal<
               blink::mojom::ServiceWorkerObjectInfo>,
           this, worker, message, source_origin, sent_message_ports,

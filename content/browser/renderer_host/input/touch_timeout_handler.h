@@ -14,7 +14,14 @@
 #include "content/browser/renderer_host/input/timeout_monitor.h"
 #include "content/common/input/input_event_ack_state.h"
 
+namespace blink {
+class WebTouchPoint;
+}
+
 namespace content {
+
+bool HasPointChanged(const blink::WebTouchPoint& point_1,
+                     const blink::WebTouchPoint& point_2);
 
 class TouchEventQueue;
 

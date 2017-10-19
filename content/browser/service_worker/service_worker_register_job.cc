@@ -60,7 +60,7 @@ class InstallEventMethodsReceiver
   DISALLOW_COPY_AND_ASSIGN(InstallEventMethodsReceiver);
 };
 
-void RunSoon(const base::Closure& closure) {
+void RunSoonFunctionCopy18(const base::Closure& closure) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
 }
 
@@ -119,7 +119,7 @@ void ServiceWorkerRegisterJob::AddCallback(
       provider_host->AddScopedProcessReferenceToPattern(pattern_);
     return;
   }
-  RunSoon(base::Bind(callback, promise_resolved_status_,
+  RunSoonFunctionCopy18(base::Bind(callback, promise_resolved_status_,
                      promise_resolved_status_message_,
                      base::RetainedRef(promise_resolved_registration_)));
 }
@@ -147,7 +147,7 @@ void ServiceWorkerRegisterJob::StartImpl() {
   scoped_refptr<ServiceWorkerRegistration> registration =
       context_->storage()->GetUninstallingRegistration(pattern_);
   if (registration.get())
-    RunSoon(base::Bind(next_step, SERVICE_WORKER_OK, registration));
+    RunSoonFunctionCopy18(base::Bind(next_step, SERVICE_WORKER_OK, registration));
   else
     context_->storage()->FindRegistrationForPattern(pattern_, next_step);
 }

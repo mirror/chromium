@@ -7,6 +7,8 @@
 
 #include <X11/Xlib.h>
 
+#undef None // Defined by X11/X.h to 0L which collides with other headers
+
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "components/viz/service/display/software_output_device.h"
