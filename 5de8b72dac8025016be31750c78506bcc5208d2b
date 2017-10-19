@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a9c20d8_18d67de5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-19T17:06:22Z",
+      "side": 1,
+      "message": "Set a flag and turn VR mode off in onStop so we don\u0027t get toggling of VR mode when returning to DD home?",
+      "range": {
+        "startLine": 889,
+        "startChar": 8,
+        "endLine": 889,
+        "endChar": 64
+      },
+      "revId": "5de8b72dac8025016be31750c78506bcc5208d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "954582b8_370cf930",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
         "patchSetId": 5
