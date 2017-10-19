@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MINIMAL_UI_WEBAPP;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,10 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.support.customtabs.CustomTabsSessionToken;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnSystemUiVisibilityChangeListener;
 import android.view.ViewGroup;
+import android.widget.RemoteViews;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
@@ -33,6 +36,9 @@ import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.SingleTabActivity;
 import org.chromium.chrome.browser.TabState;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
+import org.chromium.chrome.browser.browserservices.BrowserSessionContentHandler;
+import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.customtabs.CustomTabAppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.customtabs.CustomTabLayoutManager;
@@ -91,6 +97,44 @@ public class WebappActivity extends SingleTabActivity {
     private Bitmap mLargestFavicon;
 
     private Runnable mSetImmersiveRunnable;
+
+    private BrowserSessionDataProvider mBrowserSessionDataProvider;
+
+    private TrustedWebContentProvider mTrustedWebContentProvider;
+
+    private class TrustedWebContentProvider implements BrowserSessionContentHandler {
+
+        @Override
+        public void loadUrlAndTrackFromTimestamp(LoadUrlParams params, long timestamp) { }
+
+        @Override
+        public CustomTabsSessionToken getSession() {
+            return mBrowserSessionDataProvider.getSession();
+        }
+
+        @Override
+        public boolean shouldIgnoreIntent(Intent intent) {
+            return true;
+        }
+
+        @Override
+        public boolean updateCustomButton(int id, Bitmap bitmap, String description) {
+            return false;
+        }
+
+        @Override
+        public boolean updateRemoteViews(RemoteViews remoteViews, int[] clickableIDs,
+                PendingIntent pendingIntent) {
+            return false;
+        }
+
+        @Override
+        public String getCurrentUrl() {
+            if (getActivityTab() == null) return null;
+
+            return getActivityTab().getUrl();
+        }
+    }
 
     /** Initialization-on-demand holder. This exists for thread-safe lazy initialization. */
     private static class Holder {
@@ -205,6 +249,10 @@ public class WebappActivity extends SingleTabActivity {
 
         ScreenOrientationProvider.lockOrientation(
                 getWindowAndroid(), (byte) mWebappInfo.orientation());
+
+        mBrowserSessionDataProvider = new BrowserSessionDataProvider(intent);
+        mTrustedWebContentProvider = new TrustedWebContentProvider();
+
         super.preInflationStartup();
     }
 
@@ -244,6 +292,7 @@ public class WebappActivity extends SingleTabActivity {
     @Override
     public void onStartWithNative() {
         super.onStartWithNative();
+        BrowserSessionContentUtils.setActiveContentHandler(mTrustedWebContentProvider);
         mDirectoryManager.cleanUpDirectories(this, getActivityId());
     }
 
@@ -251,6 +300,7 @@ public class WebappActivity extends SingleTabActivity {
     public void onStopWithNative() {
         super.onStopWithNative();
         mDirectoryManager.cancelCleanup();
+        BrowserSessionContentUtils.setActiveContentHandler(null);
         if (getActivityTab() != null) saveState(getActivityDirectory());
         if (getFullscreenManager() != null) {
             getFullscreenManager().setPersistentFullscreenMode(false);

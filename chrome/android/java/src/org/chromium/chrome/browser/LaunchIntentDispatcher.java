@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.IntDef;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.customtabs.CustomTabsSessionToken;
 import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
@@ -24,6 +25,7 @@ import org.chromium.base.metrics.CachedMetrics;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.IntentHandler.ExternalAppId;
 import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
 import org.chromium.chrome.browser.customtabs.SeparateTaskCustomTabActivity;
@@ -43,6 +45,8 @@ import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.vr.VrMainActivity;
 import org.chromium.chrome.browser.vr_shell.VrIntentUtils;
 import org.chromium.chrome.browser.webapps.ActivityAssigner;
+import org.chromium.chrome.browser.webapps.WebappActivity;
+import org.chromium.chrome.browser.webapps.WebappInfo;
 import org.chromium.chrome.browser.webapps.WebappLauncherActivity;
 import org.chromium.ui.widget.Toast;
 
@@ -200,7 +204,12 @@ public class LaunchIntentDispatcher implements IntentHandler.IntentHandlerDelega
 
         // Check if we should launch a Custom Tab.
         if (isCustomTabIntent) {
-            launchCustomTabActivity(isHerbIntent);
+            if (!mIntent.getBooleanExtra(
+                    BrowserSessionDataProvider.EXTRA_LAUNCH_AS_TRUSTED_WEB_ACTIVITY, false)
+                    || !launchTrustedWebActivity()) {
+                launchCustomTabActivity(isHerbIntent);
+            }
+
             return Action.FINISH_ACTIVITY;
         }
 
@@ -334,8 +343,8 @@ public class LaunchIntentDispatcher implements IntentHandler.IntentHandlerDelega
 
         Intent newIntent = new Intent(intent);
         newIntent.setAction(Intent.ACTION_VIEW);
-        newIntent.setClassName(context, CustomTabActivity.class.getName());
         newIntent.setData(uri);
+        newIntent.setClassName(context, CustomTabActivity.class.getName());
 
         // If a CCT intent triggers First Run, then NEW_TASK will be automatically applied.  As
         // part of that, it will inherit the EXCLUDE_FROM_RECENTS bit from ChromeLauncherActivity,
@@ -411,6 +420,19 @@ public class LaunchIntentDispatcher implements IntentHandler.IntentHandlerDelega
         if (isHerbIntent) {
             mActivity.overridePendingTransition(R.anim.activity_open_enter, R.anim.no_anim);
         }
+    }
+
+    private boolean launchTrustedWebActivity() {
+        WebappInfo info = WebappInfo.create(
+                mIntent, CustomTabsSessionToken.getSessionTokenFromIntent(mIntent));
+        if (info == null) return false;
+
+        WebappActivity.addWebappInfo(info.id(), info);
+        Intent launchIntent = WebappLauncherActivity.createWebappLaunchIntent(info, false);
+        launchIntent.putExtras(mIntent.getExtras());
+
+        mActivity.startActivity(launchIntent);
+        return true;
     }
 
     /**
