@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "955eb1f3_dcca53c2",
+        "filename": "third_party/WebKit/LayoutTests/animations/3d/change-transform-in-end-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-19T14:18:14Z",
+      "side": 1,
+      "message": "Could this be done by calling a rAF instead?",
+      "revId": "92a0b924373608f3c9e97788ee4794ab7b785c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
