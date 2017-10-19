@@ -22,6 +22,30 @@
       "revId": "0da765c5ff25998f2cb374ef82f163fa946f170e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa3abaf_1abad792",
+        "filename": "chrome/browser/ui/views/dropdown_bar_host_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-19T18:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a614a9_95cf79e3",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "0da765c5ff25998f2cb374ef82f163fa946f170e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
