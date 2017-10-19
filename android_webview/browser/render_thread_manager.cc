@@ -100,8 +100,6 @@ RenderThreadManager::RenderThreadManager(
       compositor_frame_producer_(nullptr),
       has_received_frame_(false),
       renderer_manager_key_(GLViewRendererManager::GetInstance()->NullKey()),
-      sync_on_draw_hardware_(base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kSyncOnDrawHardware)),
       inside_hardware_release_(false),
       weak_factory_on_ui_thread_(this) {
   DCHECK(ui_loop_->BelongsToCurrentThread());
