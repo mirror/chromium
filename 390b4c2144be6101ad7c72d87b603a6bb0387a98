@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7ced344_9006f07d",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-19T15:05:17Z",
+      "side": 1,
+      "message": "This needs to be exposed publicly so that the animator can see it.  In general, we\u0027re going to need to expose internals to the animator so that it can own the animations.",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fee785fe_18f4640d",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-19T15:05:17Z",
+      "side": 1,
+      "message": "Intentionally named this way to avoid using \"presentation\" or \"dismissal\" in the name, because those terms are ambiguous.",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "945411c2_4fcaf822",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-19T15:05:17Z",
+      "side": 1,
+      "message": "This is a side-effect of not having the animator own the animation code.  We\u0027re just facilitating the animations that we get from the StackView/TabSwitcher, and we don\u0027t get any control over those besides a single hook to start them.",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1200a3e9_8f2a4e72",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-19T15:05:17Z",
+      "side": 1,
+      "message": "Everything above here was cargo-culted from sample projects.  I\u0027m pretty confident that the animator needs to add \"toView\" to the container.  I\u0027m not sure if it\u0027s also responsible for setting frames, or if we could omit those lines without issues.",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9271c6c_e542648d",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-19T15:05:17Z",
+      "side": 1,
+      "message": "My doc proposed two options: a delegate or a completion block.  I went with the delegate because I\u0027m hoping that we can somehow move enough UI code into MainViewController to make MVC the TabSwitcherDelegate, at which point the animation-specific delegate can just disappear.\n\nI think it\u0027s 50/50 whether we\u0027ll be able to pull this off or not.",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
