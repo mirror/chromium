@@ -22,6 +22,47 @@
       "revId": "946afa60ac083118c674934d90c3c6e5b2c4e664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379475b5_518d24f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-19T18:03:19Z",
+      "side": 1,
+      "message": "Looking at the source for Context and setResources usage, ActivityContexts have their own Resource instance... I\u0027m not sure if it would be valid once the activity is gone. To be on the safe side we could go with context.getApplicationContext().getResources() maybe?",
+      "parentUuid": "14122724_b0310e82",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "946afa60ac083118c674934d90c3c6e5b2c4e664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30534944_9d36259b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-19T18:03:19Z",
+      "side": 1,
+      "message": "nit: pass mResources instead?",
+      "revId": "946afa60ac083118c674934d90c3c6e5b2c4e664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
