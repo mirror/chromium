@@ -17,7 +17,8 @@
 
 namespace blink {
 
-RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
+scoped_refptr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
+                                                   LocalFrame* frame) {
   DCHECK(frame);
   // TODO(haraken): Optimize the mapping from TaskTypes to task runners.
   switch (type) {
@@ -68,7 +69,8 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
   return nullptr;
 }
 
-RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, Document* document) {
+scoped_refptr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
+                                                   Document* document) {
   DCHECK(document);
   if (document->ContextDocument() && document->ContextDocument()->GetFrame())
     return Get(type, document->ContextDocument()->GetFrame());
@@ -79,7 +81,7 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, Document* document) {
   return Platform::Current()->CurrentThread()->GetWebTaskRunner();
 }
 
-RefPtr<WebTaskRunner> TaskRunnerHelper::Get(
+scoped_refptr<WebTaskRunner> TaskRunnerHelper::Get(
     TaskType type,
     ExecutionContext* execution_context) {
   DCHECK(execution_context);
@@ -91,12 +93,12 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(
   return Platform::Current()->CurrentThread()->GetWebTaskRunner();
 }
 
-RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
-                                            ScriptState* script_state) {
+scoped_refptr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
+                                                   ScriptState* script_state) {
   return Get(type, ExecutionContext::From(script_state));
 }
 
-RefPtr<WebTaskRunner> TaskRunnerHelper::Get(
+scoped_refptr<WebTaskRunner> TaskRunnerHelper::Get(
     TaskType type,
     WorkerOrWorkletGlobalScope* global_scope) {
   DCHECK(global_scope);
@@ -110,8 +112,9 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(
   return Get(type, global_scope->GetThread());
 }
 
-RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
-                                            WorkerThread* worker_thread) {
+scoped_refptr<WebTaskRunner> TaskRunnerHelper::Get(
+    TaskType type,
+    WorkerThread* worker_thread) {
   switch (type) {
     case TaskType::kDOMManipulation:
     case TaskType::kUserInteraction:
