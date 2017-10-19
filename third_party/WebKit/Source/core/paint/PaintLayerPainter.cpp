@@ -51,7 +51,7 @@ void PaintLayerPainter::Paint(GraphicsContext& context,
   PaintLayerPaintingInfo painting_info(
       &paint_layer_, LayoutRect(EnclosingIntRect(damage_rect)),
       global_paint_flags, LayoutSize());
-  if (ShouldPaintLayerInSoftwareMode(global_paint_flags, paint_flags))
+  if (!paint_layer_.PaintsIntoOwnOrGroupedBacking(global_paint_flags))
     Paint(context, painting_info, paint_flags);
 }
 
@@ -261,7 +261,8 @@ void PaintLayerPainter::AdjustForPaintOffsetTranslation(
   // Paint offset translation for transforms or composited layers is already
   // taken care of.
   if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()) ||
-      paint_layer_.PaintsComposited(painting_info.GetGlobalPaintFlags()))
+      paint_layer_.PaintsIntoOwnOrGroupedBacking(
+          painting_info.GetGlobalPaintFlags()))
     return;
 
   if (const auto* properties =
@@ -892,12 +893,11 @@ PaintResult PaintLayerPainter::PaintChildren(
         paint_layer_.GetLayoutBox()->ScrolledContentOffset();
 
   for (; child; child = iterator.Next()) {
-    PaintLayerPainter child_painter(*child->Layer());
     // If this Layer should paint into its own backing or a grouped backing,
-    // that will be done via CompositedLayerMapping::paintContents() and
-    // CompositedLayerMapping::doPaintTask().
-    if (!child_painter.ShouldPaintLayerInSoftwareMode(
-            painting_info.GetGlobalPaintFlags(), paint_flags))
+    // that will be done via CompositedLayerMapping::PaintContents() and
+    // CompositedLayerMapping::DoPaintTask().
+    if (child->Layer()->PaintsIntoOwnOrGroupedBacking(
+            painting_info.GetGlobalPaintFlags()))
       continue;
 
     PaintLayerPaintingInfo child_painting_info = painting_info;
@@ -925,21 +925,13 @@ PaintResult PaintLayerPainter::PaintChildren(
           (*scroller)->GetLayoutBox()->ScrolledContentOffset();
     }
 
-    if (child_painter.Paint(context, child_painting_info, paint_flags) ==
+    if (PaintLayerPainter(*child->Layer())
+            .Paint(context, child_painting_info, paint_flags) ==
         kMayBeClippedByPaintDirtyRect)
       result = kMayBeClippedByPaintDirtyRect;
   }
 
   return result;
-}
-
-bool PaintLayerPainter::ShouldPaintLayerInSoftwareMode(
-    const GlobalPaintFlags global_paint_flags,
-    PaintLayerFlags paint_flags) {
-  DisableCompositingQueryAsserts disabler;
-
-  return paint_layer_.GetCompositingState() == kNotComposited ||
-         (global_paint_flags & kGlobalPaintFlattenCompositingLayers);
 }
 
 void PaintLayerPainter::PaintOverflowControlsForFragments(
@@ -1048,7 +1040,11 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     new_cull_rect.Move(painting_info.scroll_offset_accumulation);
-    paint_offset += paint_layer_.GetLayoutObject().PaintOffset();
+    auto object_paint_offset = paint_layer_.GetLayoutObject().PaintOffset();
+    paint_offset += object_paint_offset;
+    if (paint_layer_.PaintsIntoOwnOrGroupedBacking(
+            painting_info.GetGlobalPaintFlags()))
+      new_cull_rect.MoveBy(object_paint_offset);
   } else {
     paint_offset += ToSize(fragment.layer_bounds.Location());
     if (!painting_info.scroll_offset_accumulation.IsZero()) {
