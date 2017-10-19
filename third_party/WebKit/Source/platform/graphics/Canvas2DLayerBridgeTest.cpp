@@ -35,6 +35,7 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/graphics/CanvasResourceProvider.cpp"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -221,17 +222,17 @@ class Canvas2DLayerBridgeTest : public Test {
         CanvasColorParams(), IsUnitTest())));
     EXPECT_TRUE(bridge->IsValid());
     PaintFlags flags;
-    uint32_t gen_id = bridge->GetOrCreateSurface()->generationID();
+    uint32_t gen_id = bridge->GetOrCreateResourceProvider()->ContentUniqueID();
     bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-    EXPECT_EQ(gen_id, bridge->GetOrCreateSurface()->generationID());
+    EXPECT_EQ(gen_id, bridge->GetOrCreateResourceProvider()->ContentUniqueID());
     gl_.SetIsContextLost(true);
-    EXPECT_EQ(gen_id, bridge->GetOrCreateSurface()->generationID());
+    EXPECT_EQ(gen_id, bridge->GetOrCreateResourceProvider()->ContentUniqueID());
     bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-    EXPECT_EQ(gen_id, bridge->GetOrCreateSurface()->generationID());
+    EXPECT_EQ(gen_id, bridge->GetOrCreateResourceProvider()->ContentUniqueID());
     // This results in the internal surface being torn down in response to the
     // context loss.
     EXPECT_FALSE(bridge->IsValid());
-    EXPECT_EQ(nullptr, bridge->GetOrCreateSurface());
+    EXPECT_EQ(nullptr, bridge->GetOrCreateResourceProvider());
     // The following passes by not crashing
     bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
     bridge->Flush(kFlushReasonUnknown);
@@ -259,7 +260,7 @@ class Canvas2DLayerBridgeTest : public Test {
         IntSize(300, 150), 0, Canvas2DLayerBridge::kForceAccelerationForTesting,
         CanvasColorParams(), IsUnitTest())));
 
-    bridge->GetOrCreateSurface();
+    bridge->GetOrCreateResourceProvider();
     EXPECT_TRUE(bridge->IsValid());
     // When the context is lost we are not sure if we should still be producing
     // GL frames for the compositor or not, so fail to generate frames.
