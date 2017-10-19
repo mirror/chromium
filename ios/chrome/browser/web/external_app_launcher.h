@@ -15,9 +15,12 @@ class GURL;
 
 // Opens URL in an external application if possible (optionally after
 // confirming via dialog in case that user didn't interact using
-// |linkClicked| or if the external application is face time) or returns NO
+// |linkClicked|, or if the app opened repeatedly by the page using |toUrl|
+// and |srcURL|, or if the external application is face time) or returns NO
 // if there is no such application available.
-- (BOOL)openURL:(const GURL&)gURL linkClicked:(BOOL)linkClicked;
+- (BOOL)openURL:(const GURL&)toURL
+        fromURL:(const GURL&)srcURL
+    linkClicked:(BOOL)linkClicked;
 
 @end
 
