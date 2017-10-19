@@ -1501,6 +1501,7 @@ void OutOfProcessInstance::DocumentLoadComplete(
                        document_features.has_attachments ? 1 : 0, 2);
   HistogramEnumeration("PDF.IsLinearized",
                        document_features.is_linearized ? 1 : 0, 2);
+  HistogramEnumeration("PDF.IsTagged", document_features.is_tagged ? 1 : 0, 2);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
@@ -1818,7 +1819,6 @@ void OutOfProcessInstance::HistogramEnumeration(const std::string& name,
                                                 int32_t boundary_value) {
   if (IsPrintPreview())
     return;
-
   uma_.HistogramEnumeration(name, sample, boundary_value);
 }
 
