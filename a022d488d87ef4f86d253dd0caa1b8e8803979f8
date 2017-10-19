@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "393b0ce8_5708cd09",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-19T06:01:35Z",
+      "side": 1,
+      "message": "It also covers the case that Unregister() is called twice. How about checking the storage by calling context_-\u003estorage()-\u003eFindRegistrationForId() before calling Unregister?",
+      "revId": "a022d488d87ef4f86d253dd0caa1b8e8803979f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd5dd77_ab03b614",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-19T06:01:35Z",
+      "side": 1,
+      "message": "nit: something like https://does.not.exist/ might be clearer to say it doesn\u0027t match to example.com rather than a typo.",
+      "range": {
+        "startLine": 797,
+        "startChar": 29,
+        "endLine": 797,
+        "endChar": 53
+      },
+      "revId": "a022d488d87ef4f86d253dd0caa1b8e8803979f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
