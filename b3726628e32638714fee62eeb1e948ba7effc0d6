@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9b76e55_c50a8f1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-19T21:59:18Z",
+      "side": 1,
+      "message": "Exactly.",
+      "parentUuid": "f2396dce_06be797c",
+      "revId": "b3726628e32638714fee62eeb1e948ba7effc0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e2ca5b0_83561226",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 10
@@ -39,6 +57,30 @@
       "revId": "b3726628e32638714fee62eeb1e948ba7effc0d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babc64cc_7dcd5e58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-10-19T21:59:18Z",
+      "side": 1,
+      "message": "Refactored to reduce dependency.",
+      "parentUuid": "7e2ca5b0_83561226",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 66
+      },
+      "revId": "b3726628e32638714fee62eeb1e948ba7effc0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
