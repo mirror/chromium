@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd46a720_13bd4566",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T17:37:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the approach. If extensions are needed for the basic command buffer functionality, shouldn\u0027t they always be enabled?",
+      "revId": "c81d2e42518bb7f735b7c94aa2f6b81ae100f753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d116a98_4aca20cd",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-19T17:37:47Z",
+      "side": 1,
+      "message": "nit: add ForTesting to the name to clarify that it\u0027s not used in production?",
+      "revId": "c81d2e42518bb7f735b7c94aa2f6b81ae100f753",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
