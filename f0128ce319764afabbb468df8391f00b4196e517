@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c513c282_35bacbc0",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-alpha-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done. Based on the name, the test should test with alpha, so I\u0027m using 0.5.",
+      "parentUuid": "3c4bc921_9fd32953",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2706e690_4ace4aea",
         "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-alpha-with-opacity-expected.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f0128ce319764afabbb468df8391f00b4196e517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72217245_d01219a6",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-alpha-with-opacity-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2706e690_4ace4aea",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a4c841a7_782b4e28",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-content-clip-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2374c47_0d88a8ca",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "438347ff_ff9dfb5c",
         "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-padding-clip-expected.html",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "f0128ce319764afabbb468df8391f00b4196e517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04aef2ee_3ffee86e",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-padding-clip-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "438347ff_ff9dfb5c",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c9d44c75_5767c707",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-text-clip-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "706f9315_e790467e",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4ad1719_3a917fb7",
         "filename": "third_party/WebKit/LayoutTests/compositing/child-transform-layer-rounding-expected.html",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "f0128ce319764afabbb468df8391f00b4196e517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc700bf7_3eb6d4a8",
+        "filename": "third_party/WebKit/LayoutTests/compositing/child-transform-layer-rounding-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ad1719_3a917fb7",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e0d34a8d_371c335d",
+        "filename": "third_party/WebKit/LayoutTests/compositing/squashing/invalidate-new-backing-of-second-unsquashed-layer-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d80b32_22f760a1",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5aab7d_c83e4305",
         "filename": "third_party/WebKit/LayoutTests/paint/invalidation/compositing/clipped-layer-size-change-expected.html",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "f0128ce319764afabbb468df8391f00b4196e517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7156317_05dfd148",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/compositing/clipped-layer-size-change-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-19T20:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5aab7d_c83e4305",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
