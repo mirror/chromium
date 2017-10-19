@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a816e3e_35d14c5a",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-19T14:02:03Z",
+      "side": 1,
+      "message": "It is not - it is new as part of this patch.",
+      "parentUuid": "02eec34d_db48fe2f",
+      "range": {
+        "startLine": 175,
+        "startChar": 38,
+        "endLine": 175,
+        "endChar": 48
+      },
+      "revId": "99357d95e51d9c23ac696d1bfe3158162af5a8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13be0424_b8b9d222",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "99357d95e51d9c23ac696d1bfe3158162af5a8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7683e869_a3aa1b21",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-19T14:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13be0424_b8b9d222",
+      "revId": "99357d95e51d9c23ac696d1bfe3158162af5a8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
