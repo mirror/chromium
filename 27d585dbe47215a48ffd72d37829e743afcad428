@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9380ca_ae0a7519",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T16:59:44Z",
+      "side": 1,
+      "message": "nit: please use two space indent.",
+      "revId": "27d585dbe47215a48ffd72d37829e743afcad428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

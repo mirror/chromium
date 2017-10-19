@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e8e1697_1ef22c22",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T16:59:44Z",
+      "side": 1,
+      "message": "Sounds like a regression, then.\nPlease let me reply in ARC side code.",
+      "parentUuid": "e0bce648_86bb18da",
+      "revId": "d0e052dfdb913dbdfccb764e1014ff2343789c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "200b0df2_5dad2384",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 3
