@@ -174,7 +174,9 @@ ServiceWorkerSubresourceLoader::ServiceWorkerSubresourceLoader(
   StartRequest(resource_request);
 }
 
-ServiceWorkerSubresourceLoader::~ServiceWorkerSubresourceLoader() = default;
+ServiceWorkerSubresourceLoader::~ServiceWorkerSubresourceLoader() {
+  SettleInflightFetchRequestIfNeeded();
+};
 
 void ServiceWorkerSubresourceLoader::DeleteSoon() {
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
@@ -184,13 +186,16 @@ void ServiceWorkerSubresourceLoader::StartRequest(
     const ResourceRequest& resource_request) {
   // TODO(kinuko): Implement request.request_body handling.
   DCHECK(!resource_request.request_body);
-  std::unique_ptr<ServiceWorkerFetchRequest> request =
+  DCHECK(!inflight_fetch_request_);
+  inflight_fetch_request_ =
       ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request);
   DCHECK_EQ(Status::kNotStarted, status_);
   status_ = Status::kStarted;
-
-  mojom::ServiceWorkerFetchResponseCallbackPtr response_callback_ptr;
-  response_callback_binding_.Bind(mojo::MakeRequest(&response_callback_ptr));
+  controller_connector_->AddControllerConnectionErrorHandler(
+      reinterpret_cast<uint64_t>(this),
+      base::BindRepeating(
+          &ServiceWorkerSubresourceLoader::HandleControllerConnectionError,
+          weak_factory_.GetWeakPtr()));
 
   response_head_.service_worker_start_time = base::TimeTicks::Now();
   // TODO(horo): Reset |service_worker_ready_time| when the the connection to
@@ -198,13 +203,18 @@ void ServiceWorkerSubresourceLoader::StartRequest(
   response_head_.service_worker_ready_time = base::TimeTicks::Now();
   response_head_.load_timing.send_start = base::TimeTicks::Now();
   response_head_.load_timing.send_end = base::TimeTicks::Now();
+  DispatchFetchEvent();
+}
+
+void ServiceWorkerSubresourceLoader::DispatchFetchEvent() {
+  DCHECK(inflight_fetch_request_);
+  mojom::ServiceWorkerFetchResponseCallbackPtr response_callback_ptr;
+  response_callback_binding_.Bind(mojo::MakeRequest(&response_callback_ptr));
   // At this point controller should be non-null.
-  // TODO(kinuko): re-start the request if we get connection error before we
-  // get response for this.
   // TODO(kinuko): Implement request timeout and ask the browser to kill
   // the controller if it takes too long. (crbug.com/774374)
   controller_connector_->GetControllerServiceWorker()->DispatchFetchEvent(
-      *request, std::move(response_callback_ptr),
+      *inflight_fetch_request_, std::move(response_callback_ptr),
       base::BindOnce(&ServiceWorkerSubresourceLoader::OnFetchEventFinished,
                      weak_factory_.GetWeakPtr()));
 }
@@ -212,6 +222,10 @@ void ServiceWorkerSubresourceLoader::StartRequest(
 void ServiceWorkerSubresourceLoader::OnFetchEventFinished(
     blink::mojom::ServiceWorkerEventStatus status,
     base::Time dispatch_event_time) {
+  // Stop restarting logic here since OnFetchEventFinished() indicates that the
+  // fetch event could be successfully dispatched.
+  SettleInflightFetchRequestIfNeeded();
+
   switch (status) {
     case blink::mojom::ServiceWorkerEventStatus::COMPLETED:
       // ServiceWorkerFetchResponseCallback interface (OnResponse*() or
@@ -230,9 +244,32 @@ void ServiceWorkerSubresourceLoader::OnFetchEventFinished(
   }
 }
 
+void ServiceWorkerSubresourceLoader::HandleControllerConnectionError() {
+  if (!inflight_fetch_request_)
+    return;
+
+  // If the connection to the service worker gets disconnected after dispatching
+  // a fetch event and before getting the response of the fetch event, restart
+  // the fetch event again.
+  response_callback_binding_.Close();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&ServiceWorkerSubresourceLoader::DispatchFetchEvent,
+                     weak_factory_.GetWeakPtr()));
+}
+
+void ServiceWorkerSubresourceLoader::SettleInflightFetchRequestIfNeeded() {
+  if (inflight_fetch_request_) {
+    inflight_fetch_request_.reset();
+    controller_connector_->RemoveControllerConnectionErrorHandler(
+        reinterpret_cast<uint64_t>(this));
+  }
+}
+
 void ServiceWorkerSubresourceLoader::OnResponse(
     const ServiceWorkerResponse& response,
     base::Time dispatch_event_time) {
+  SettleInflightFetchRequestIfNeeded();
   StartResponse(response, nullptr /* body_as_blob */,
                 nullptr /* body_as_stream */);
 }
@@ -241,6 +278,7 @@ void ServiceWorkerSubresourceLoader::OnResponseBlob(
     const ServiceWorkerResponse& response,
     storage::mojom::BlobPtr body_as_blob,
     base::Time dispatch_event_time) {
+  SettleInflightFetchRequestIfNeeded();
   StartResponse(response, std::move(body_as_blob),
                 nullptr /* body_as_stream */);
 }
@@ -249,13 +287,16 @@ void ServiceWorkerSubresourceLoader::OnResponseStream(
     const ServiceWorkerResponse& response,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
     base::Time dispatch_event_time) {
+  SettleInflightFetchRequestIfNeeded();
   StartResponse(response, nullptr /* body_as_blob */,
                 std::move(body_as_stream));
 }
 
 void ServiceWorkerSubresourceLoader::OnFallback(
     base::Time dispatch_event_time) {
+  SettleInflightFetchRequestIfNeeded();
   DCHECK(default_loader_factory_getter_);
+
   // When the request mode is CORS or CORS-with-forced-preflight and the origin
   // of the request URL is different from the security origin of the document,
   // we can't simply fallback to the network here. It is because the CORS
