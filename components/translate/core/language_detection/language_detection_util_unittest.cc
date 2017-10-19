@@ -171,3 +171,27 @@ TEST_F(LanguageDetectionUtilTest, AdoptHtmlLang) {
   EXPECT_EQ("en", cld_language);
   EXPECT_TRUE(is_cld_reliable);
 }
+
+// Tests that languages that often have the wrong server configuration are
+// correctly identified. All incorrect language codes should be checked to
+// make sure the binary_search is correct.
+TEST_F(LanguageDetectionUtilTest, IsServerWrongConfigurationLanguage) {
+  // These languages should all be identified as having the wrong server
+  // configuration.
+  const char* const wrong_languages[] = {"ar", "de", "es",    "fr",
+                                         "id", "it", "ja",    "pt",
+                                         "ru", "th", "zh-CN", "zh-TW"};
+  for (size_t i = 0; i < arraysize(wrong_languages); ++i) {
+    EXPECT_TRUE(
+        translate::IsServerWrongConfigurationLanguage(wrong_languages[i]));
+  }
+
+  // These languages should all be identified as having the right server
+  // configuration.
+  const char* const right_languages[] = {"en", "en-AU", "en-US",
+                                         "xx", "gg",    "rr"};
+  for (size_t i = 0; i < arraysize(right_languages); ++i) {
+    EXPECT_FALSE(
+        translate::IsServerWrongConfigurationLanguage(right_languages[i]));
+  }
+}
