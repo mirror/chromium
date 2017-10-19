@@ -22,6 +22,30 @@
       "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00615e32_fa3b7c71",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-19T20:05:52Z",
+      "side": 0,
+      "message": "For the transactions that are writers first and then get added to readers we do not really change their mode to READ anywhere.\n\nAs discussed f2f, adding a comment with readers",
+      "parentUuid": "0dc25889_f469e8ab",
+      "range": {
+        "startLine": 405,
+        "startChar": 29,
+        "endLine": 405,
+        "endChar": 34
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
