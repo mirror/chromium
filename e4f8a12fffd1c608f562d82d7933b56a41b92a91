@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9fa091d_b402d506",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-19T23:58:07Z",
+      "side": 1,
+      "message": "When the verified_contents doesn\u0027t exist but PathExists -\u003e we can also return false here directly (and not set file_missing_from_verified_contents_), instead of continuing to line 86 and eventually failing on line 93. WDYT?",
+      "revId": "e4f8a12fffd1c608f562d82d7933b56a41b92a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
