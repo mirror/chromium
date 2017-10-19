@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ff44db94_88abd987",
+        "filename": "tools/perf/conditionally_execute",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-19T10:39:13Z",
+      "side": 1,
+      "message": "+1 to remove this completely",
+      "parentUuid": "8635a10f_03f07971",
+      "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10d0262c_46b6d6ee",
         "filename": "tools/perf/conditionally_execute",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "writtenOn": "2017-10-19T02:49:03Z",
       "side": 1,
       "message": "While here, could fix the grammar (\"Did not find ...\"). But I\u0027d just delete this completely too.",
+      "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db32f2b8_5c681280",
+        "filename": "tools/perf/conditionally_execute",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-19T10:39:13Z",
+      "side": 1,
+      "message": "I actually keep this so we know when this is not executed on bots.",
+      "parentUuid": "10d0262c_46b6d6ee",
       "revId": "f209b08063a9cabada1f945ff697b07d2ddf85af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
