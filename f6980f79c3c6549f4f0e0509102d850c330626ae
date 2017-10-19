@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18be15ca_0a612142",
+        "filename": "cc/layers/video_frame_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-19T23:40:06Z",
+      "side": 1,
+      "message": "Virtual methods can\u0027t be hacker_style() per style guide; so this should be GetTaskRunner()",
+      "revId": "f6980f79c3c6549f4f0e0509102d850c330626ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
