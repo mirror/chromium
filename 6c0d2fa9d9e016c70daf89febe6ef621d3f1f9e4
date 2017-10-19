@@ -16,6 +16,24 @@
       "revId": "6c0d2fa9d9e016c70daf89febe6ef621d3f1f9e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32d33af_0a64a3b7",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:22:00Z",
+      "side": 1,
+      "message": "Oh I see. Please let me work on it in a follow up CL, because it can be split.",
+      "parentUuid": "5049fd13_ab40e376",
+      "revId": "6c0d2fa9d9e016c70daf89febe6ef621d3f1f9e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
