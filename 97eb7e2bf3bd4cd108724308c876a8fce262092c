@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d7f7fd1_9136e238",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-19T14:33:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eec4917_f796131e",
+      "revId": "97eb7e2bf3bd4cd108724308c876a8fce262092c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e6ef900_864a2010",
         "filename": "ui/aura/hit_test_data_provider_aura.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T03:13:29Z",
       "side": 1,
       "message": "Now that I read the code, you don\u0027t actually need to set |flags| here, right? You can set Mine vs ChildSurface in CreateHitTestRegion() instead?",
+      "revId": "97eb7e2bf3bd4cd108724308c876a8fce262092c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8513da72_f74050dd",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-19T14:33:15Z",
+      "side": 1,
+      "message": "Right! Moved the Mine vs ChildSurface part to CreateHitTestRegion(), Mouse vs Touch remains here.",
+      "parentUuid": "4e6ef900_864a2010",
       "revId": "97eb7e2bf3bd4cd108724308c876a8fce262092c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
