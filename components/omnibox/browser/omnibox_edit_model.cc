@@ -694,7 +694,18 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
     base::RecordAction(
         base::UserMetricsAction("OmniboxDestinationURLIsSearchOnDSP"));
   }
-
+  // TODO: Make sure that this is best location for this.
+  // I suspect the stat counting in this method needs to be rearranged.
+  if (match.type == AutocompleteMatchType::TAB_SEARCH) {
+    // TODO: Should be a constant (which we wouldn't need at all if we could
+    // figure out if we were in incognito mode.)
+    std::string info = match.GetAdditionalInfo("incognito");
+    int incognito = 0;
+    base::StringToInt(info, &incognito);
+    if (view_->SwitchToTabWithURL(match.destination_url.spec(), incognito,
+                                  client_->IsNewTabPage(client_->GetURL())))
+      return;
+  }
   if (match.destination_url.is_valid()) {
     // This calls RevertAll again.
     base::AutoReset<bool> tmp(&in_revert_, true);

@@ -59,6 +59,11 @@ void HistoryQuickProvider::Start(const AutocompleteInput& input,
   // autocomplete behavior here.
   if (in_memory_url_index_) {
     DoAutocomplete();
+    // TODO: Theoretically, this would be in 'DoAutocomplete()' but
+    // it's already crowded. If it were factored, this would be another
+    // call in it.
+    if (base::FeatureList::IsEnabled(omnibox::kOmniboxTabSearches))
+      BumpOpenTabs();
   }
 }
 
@@ -181,6 +186,33 @@ void HistoryQuickProvider::DoAutocomplete() {
     matches_.push_back(QuickMatchToACMatch(history_match, max_match_score));
     // Mark this max_match_score as being used.
     max_match_score--;
+  }
+}
+
+void HistoryQuickProvider::BumpOpenTabs() {
+  for (auto& match : matches_) {
+    if (match.type != AutocompleteMatchType::TAB_SEARCH) {
+      // If url is in a tab, bump score, change type.
+      if (client()->TabIsOpen(match.destination_url)) {
+        match.relevance += 100;
+        match.type = AutocompleteMatchType::TAB_SEARCH;
+        // TODO: Make constant.
+        match.description =
+            base::UTF8ToUTF16("Switch to tab - ") + match.description;
+        // Add classfication for the prefix.
+        if (match.description_class[0].style != ACMatchClassification::NONE)
+          match.description_class.insert(
+              match.description_class.begin(),
+              ACMatchClassification(0, ACMatchClassification::NONE));
+        // Shift the rest.
+        for (auto& classification : match.description_class)
+          if (classification.offset != 0 ||
+              classification.style != ACMatchClassification::NONE)
+            classification.offset += sizeof("Switch to tab - ") - 1;
+        if (client()->IsOffTheRecord())
+          match.RecordAdditionalInfo("incognito", true);
+      }
+    }
   }
 }
 
