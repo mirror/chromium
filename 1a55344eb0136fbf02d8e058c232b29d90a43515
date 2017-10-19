@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b6d3d3_79a88e13",
+        "filename": "testing/libfuzzer/fuzzers/generate_javascript_parser_proto.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2017-10-19T09:18:27Z",
+      "side": 1,
+      "message": "Nit: indentation of the generated code is wrong here (see the line after)",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 9
+      },
+      "revId": "1a55344eb0136fbf02d8e058c232b29d90a43515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
