@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3b6129_8f70050f",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_modifiers_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-19T20:22:47Z",
+      "side": 1,
+      "message": "s/mistaching/mismatching/",
+      "range": {
+        "startLine": 182,
+        "startChar": 54,
+        "endLine": 182,
+        "endChar": 64
+      },
+      "revId": "90cb5ef438c912354b7f2d0c1e37ed242b203e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ca814c_9ea47d41",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_modifiers_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-19T20:22:47Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 220,
+        "startChar": 54,
+        "endLine": 220,
+        "endChar": 64
+      },
+      "revId": "90cb5ef438c912354b7f2d0c1e37ed242b203e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
