@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "b57e6d97_5c055e0c",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-19T21:51:44Z",
+      "side": 1,
+      "message": "Oh, I see now, this is based on the value in the proto.  I rebased and now it knows about the int32 and not the int64.",
+      "parentUuid": "a73d72db_77444c84",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b198e9d_98597c05",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 1
