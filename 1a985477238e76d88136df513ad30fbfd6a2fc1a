@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4775cd_8e5c4201",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-19T00:44:36Z",
+      "side": 1,
+      "message": "This is maybe premature optimization, but for what it\u0027s worth, Region does a bunch of extra work to generate a set of non-overlapping rects from all of the union calls it is given.  It seems unlikely most images will overlap in the common case (and even if they did, it\u0027s not worth finding exact rects). So, really this seems like a vector of rects? Or possibly even a StackVector\u003cRect,1\u003e, since n\u003d1 is probably the common case too?\n\nI think this is fine to land as-is, but I\u0027m always a bit skeptical of Region usage.",
+      "revId": "1a985477238e76d88136df513ad30fbfd6a2fc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
