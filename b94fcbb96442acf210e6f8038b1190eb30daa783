@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0cd4023_d643b441",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T00:25:56Z",
+      "side": 1,
+      "message": "Can we add some comments that help clarify which mojom target a new mojom file should go into? I suppose one could figure it out by seeing which target makes the build work...",
+      "revId": "b94fcbb96442acf210e6f8038b1190eb30daa783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48bbb70_62de5ffc",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T00:25:56Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 22,
+        "startChar": 65,
+        "endLine": 22,
+        "endChar": 70
+      },
+      "revId": "b94fcbb96442acf210e6f8038b1190eb30daa783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
