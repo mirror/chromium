@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5db61ac_25523bb8",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-19T06:58:19Z",
+      "side": 1,
+      "message": "Leaving this here to reduce churn because I\u0027ll need it again later to change the title text colour depending on whether the page is secure.",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
