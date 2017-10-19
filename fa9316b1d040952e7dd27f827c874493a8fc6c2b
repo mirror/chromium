@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c243c65_6b82ea9e",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "Use origin from origin.mojom instead of string",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed09acc_7026286a",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "May be\ns/Update/On/\n?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1898d2cb_32bcc77c",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "besides PrevioewsIOData, is there anybody else who calls this?",
+      "range": {
+        "startLine": 72,
+        "startChar": 24,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cb80da_1e478542",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 11
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37954cfd_2f7a96f8",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "typo\n\"a new\"",
+      "range": {
+        "startLine": 81,
+        "startChar": 69,
+        "endLine": 81,
+        "endChar": 74
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9274f931_fc39c0ff",
+        "filename": "components/previews/core/previews_black_list_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "Can you add comment on  when these methods will be called. e.g., OnNewBlacklistedHost() is guaranteed to be called when a previously whitelisted |host| has been blacklisted.",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e834861_68d42d13",
+        "filename": "components/previews/core/previews_black_list_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "These comments describe what each of these methods mean.\n\nCan we also add comments on  \"when\" these methods will be called. e.g., OnNewBlacklistedHost() is guaranteed to be called when a previously whitelisted |host| has been blacklisted.",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b7f6c4_d70cbbca",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-19T17:24:25Z",
+      "side": 1,
+      "message": "May be:\ns/Notify/On/",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "fa9316b1d040952e7dd27f827c874493a8fc6c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
