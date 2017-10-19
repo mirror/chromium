@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7e2e958_d73d7b99",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-19T23:32:10Z",
+      "side": 1,
+      "message": "For mocking, which I forgot to include in this CL. whoops.",
+      "parentUuid": "c5762a38_5a03ffde",
+      "revId": "3d9af71e92a7aae828ace895511256f1a011e82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a213a52b_f87b0509",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T22:13:06Z",
       "side": 1,
       "message": "Can you leave a comment (maybe in the header or here) about what thread these should be called on?\n\nDo you need to implement ReclaimResources as well? (Maybe DidRecieveCompositorFrameAck should call ReclaimResources which should do what this function does?)",
+      "revId": "3d9af71e92a7aae828ace895511256f1a011e82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d591975_7eb458bc",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-19T23:32:10Z",
+      "side": 1,
+      "message": "Uh, since we are post tasking to the correct thread, it doesnt matter what these functions above are called on? Also, sure, I can move things over.",
+      "parentUuid": "a213a52b_f87b0509",
       "revId": "3d9af71e92a7aae828ace895511256f1a011e82f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
