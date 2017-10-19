@@ -497,13 +497,14 @@ Console.ConsoleView = class extends UI.VBox {
       return;
     }
 
-    if (this._tryToCollapseMessages(viewMessage, this._visibleViewMessages.peekLast()))
+    var lastMessage = this._visibleViewMessages.peekLast();
+    if (lastMessage && this._currentGroup.nestingLevel() < lastMessage.nestingLevel())
+      lastMessage.incrementCloseGroupDecorationCount();
+
+    if (this._tryToCollapseMessages(viewMessage, lastMessage))
       return;
 
-    var lastMessage = this._visibleViewMessages.peekLast();
     if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup) {
-      if (lastMessage && !this._currentGroup.messagesHidden())
-        lastMessage.incrementCloseGroupDecorationCount();
       this._currentGroup = this._currentGroup.parentGroup() || this._currentGroup;
       return;
     }
