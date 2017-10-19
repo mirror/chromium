@@ -39,6 +39,7 @@
 #include "platform/graphics/Image.h"
 #include "platform/graphics/paint/CullRect.h"
 #include "platform/graphics/paint/DisplayItem.h"
+#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 #include "platform/transforms/AffineTransform.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
@@ -75,6 +76,15 @@ struct CORE_EXPORT PaintInfo {
         paint_container_(copy_other_fields_from.paint_container_),
         paint_flags_(copy_other_fields_from.paint_flags_),
         global_paint_flags_(copy_other_fields_from.global_paint_flags_) {}
+
+  // Copy all fields except contents_properties_.
+  PaintInfo(const PaintInfo& other)
+      : context(other.context),
+        phase(other.phase),
+        cull_rect_(other.cull_rect_),
+        paint_container_(other.paint_container_),
+        paint_flags_(other.paint_flags_),
+        global_paint_flags_(other.global_paint_flags_) {}
 
   // Creates a PaintInfo for painting descendants. See comments about the paint
   // phases in PaintPhase.h for details.
@@ -128,6 +138,12 @@ struct CORE_EXPORT PaintInfo {
                                           local_to_parent_transform);
   }
 
+  void EmplaceContentsProperties(PaintController& paint_controller,
+                                 const DisplayItemClient& client,
+                                 const PaintChunkProperties& properties) {
+    contents_properties_.emplace(paint_controller, client, properties);
+  }
+
   // FIXME: Introduce setters/getters at some point. Requires a lot of changes
   // throughout layout/.
   GraphicsContext& context;
@@ -141,6 +157,9 @@ struct CORE_EXPORT PaintInfo {
 
   const PaintLayerFlags paint_flags_;
   const GlobalPaintFlags global_paint_flags_;
+
+  // For SPv175. See BoxPainter::AdjustPaintOffset().
+  Optional<ScopedPaintChunkProperties> contents_properties_;
 
   // TODO(chrishtr): temporary while we implement CullRect everywhere.
   friend class SVGPaintContext;

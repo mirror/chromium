@@ -31,9 +31,10 @@ namespace blink {
 
 void BoxPainter::Paint(const PaintInfo& paint_info,
                        const LayoutPoint& paint_offset) {
-  ObjectPainter(layout_box_).CheckPaintOffset(paint_info, paint_offset);
   // Default implementation. Just pass paint through to the children.
-  PaintChildren(paint_info, paint_offset + layout_box_.Location());
+  PaintInfo local_paint_info(paint_info);
+  PaintChildren(local_paint_info,
+                AdjustPaintOffset(local_paint_info, paint_offset));
 }
 
 void BoxPainter::PaintChildren(const PaintInfo& paint_info,
@@ -298,6 +299,46 @@ void BoxPainter::PaintClippingMask(const PaintInfo& paint_info,
   DrawingRecorder recorder(paint_info.context, layout_box_, paint_info.phase,
                            paint_rect);
   paint_info.context.FillRect(paint_rect, Color::kBlack);
+}
+
+bool BoxPainter::ShouldAdjustForPaintOffsetTranslation(
+    const PaintInfo& paint_info) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return false;
+  if (layout_box_.HasSelfPaintingLayer())
+    return false;
+  if (!layout_box_.FirstFragment())
+    return false;
+  auto* paint_properties = layout_box_.FirstFragment()->PaintProperties();
+  if (!paint_properties)
+    return false;
+  if (!paint_properties->PaintOffsetTranslation())
+    return false;
+
+  return true;
+}
+
+LayoutPoint BoxPainter::AdjustPaintOffset(PaintInfo& paint_info,
+                                          const LayoutPoint& paint_offset) {
+  if (ShouldAdjustForPaintOffsetTranslation(paint_info)) {
+    auto* paint_properties = layout_box_.FirstFragment()->PaintProperties();
+    const auto* local_border_box_properties =
+        layout_box_.FirstFragment()->LocalBorderBoxProperties();
+    PaintChunkProperties chunk_properties(
+        paint_info.context.GetPaintController().CurrentPaintChunkProperties());
+    chunk_properties.property_tree_state = *local_border_box_properties;
+    paint_info.EmplaceContentsProperties(
+        paint_info.context.GetPaintController(), layout_box_, chunk_properties);
+
+    paint_info.UpdateCullRect(paint_properties->PaintOffsetTranslation()
+                                  ->Matrix()
+                                  .ToAffineTransform());
+    return layout_box_.PaintOffset();
+  }
+
+  auto adjusted_paint_offset = paint_offset + layout_box_.Location();
+  ObjectPainter(layout_box_).CheckPaintOffset(adjusted_paint_offset);
+  return adjusted_paint_offset;
 }
 
 }  // namespace blink
