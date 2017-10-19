@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c5e0c6a_2979b949",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-19T15:27:04Z",
+      "side": 1,
+      "message": "Indeed",
+      "parentUuid": "73408853_60d66921",
+      "range": {
+        "startLine": 226,
+        "startChar": 23,
+        "endLine": 226,
+        "endChar": 72
+      },
+      "revId": "b5164519fd2103963902c4b26d5fb59e76198d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57486984_467d5d36",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 10
@@ -48,6 +72,75 @@
     },
     {
       "key": {
+        "uuid": "b2197ebf_07a77f14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-19T15:27:04Z",
+      "side": 1,
+      "message": "startFetchTabListTask never returns null, so this is likely unneeded.",
+      "range": {
+        "startLine": 238,
+        "startChar": 28,
+        "endLine": 238,
+        "endChar": 32
+      },
+      "revId": "b5164519fd2103963902c4b26d5fb59e76198d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795812f5_bc4f874b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-19T15:27:04Z",
+      "side": 1,
+      "message": "I think the right side can be \"\u003d new Pair\u003c\u003e(task, mayMergedFileName);\", but I think using .create is potentially clearer",
+      "range": {
+        "startLine": 240,
+        "startChar": 57,
+        "endLine": 240,
+        "endChar": 58
+      },
+      "revId": "b5164519fd2103963902c4b26d5fb59e76198d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cef880_7f758718",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-19T15:27:04Z",
+      "side": 1,
+      "message": "instead of using the constructor, is it possible to do:\n\nmPrefetchTabListToMergeTasks.add(Pair.create(task, mayMergedFileName));\n\nI hope it does the generic handling for you to make this less verbose.",
+      "range": {
+        "startLine": 242,
+        "startChar": 20,
+        "endLine": 242,
+        "endChar": 48
+      },
+      "revId": "b5164519fd2103963902c4b26d5fb59e76198d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea92029f_941b556d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 10
@@ -64,6 +157,29 @@
         "startChar": 20,
         "endLine": 397,
         "endChar": 74
+      },
+      "revId": "b5164519fd2103963902c4b26d5fb59e76198d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70bf7c5_18d71fa9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-19T15:27:04Z",
+      "side": 1,
+      "message": "Replace\n.size() \u003e 0\n\nwith\n!isEmpty()\n\nWe save a whole character :-P!",
+      "range": {
+        "startLine": 407,
+        "startChar": 20,
+        "endLine": 407,
+        "endChar": 36
       },
       "revId": "b5164519fd2103963902c4b26d5fb59e76198d4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
