@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bbb3adcf_fff8a9b6",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T20:10:22Z",
+      "side": 1,
+      "message": "I guess I kind of assumed that the wire format and the way the generated C++ types are laid out (without typemapping) would have some correlation. Oh well. The overhead makes me sad though...\n\nDone.",
+      "parentUuid": "5348a73e_98e8a03d",
+      "revId": "7823760f4fabe7192a66d23e17164ba9a004c5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f3725fc_2067061d",
         "filename": "mojo/common/time_struct_traits.h",
         "patchSetId": 4
