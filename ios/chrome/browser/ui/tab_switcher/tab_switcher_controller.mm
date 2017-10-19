@@ -191,6 +191,7 @@ enum class SnapshotViewOption {
 
 @implementation TabSwitcherController
 
+@synthesize animationDelegate = _animationDelegate;
 @synthesize transitionContext = _transitionContext;
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
@@ -368,6 +369,8 @@ enum class SnapshotViewOption {
                            withModel:_onLoadActiveModel
                             animated:YES
                       withCompletion:^{
+                        [self.animationDelegate
+                            tabSwitcherPresentationAnimationDidEnd:self];
                         [self.delegate
                             tabSwitcherPresentationTransitionDidEnd:self];
                       }];
