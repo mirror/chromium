@@ -2204,7 +2204,7 @@ GURL RenderViewImpl::GetURLForGraphicsContext3D() {
   if (webview()->MainFrame()->IsWebLocalFrame())
     return GURL(webview()->MainFrame()->ToWebLocalFrame()->GetDocument().Url());
   else
-    return GURL("chrome://gpu/RenderViewImpl::CreateGraphicsContext3D");
+    return GURL();
 }
 
 void RenderViewImpl::OnSetFocus(bool enable) {
