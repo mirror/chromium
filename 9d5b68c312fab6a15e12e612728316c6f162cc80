@@ -56,6 +56,24 @@
       "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efddbe3_8382a8c1",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6455,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-19T13:20:29Z",
+      "side": 1,
+      "message": "Since this is the first thing we do in PrepareRenderViewForNavigation, we could call it from NavigateInternal or OnFailedNavigation directly.",
+      "parentUuid": "ffc3018f_d80f1360",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
