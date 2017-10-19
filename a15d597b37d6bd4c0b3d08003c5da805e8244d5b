@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "cb1d9a29_4ffa2572",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-19T23:18:46Z",
+      "side": 1,
+      "message": "Since there are no writes to be flushed (the file is read only for now) even if the file wasn\u0027t to be unmapped, it should be safe I think.\n\ncc\u0027ing bcwhite@ who modified MemoryMappedFile recently and might have more context. Brian: I am creating a MemoryMappedFile which is being owned by the IO thread. However it must be deleted on a sequence which supports blocking IO. Is it safe to just post a task to delete it (considering the task might fail during shutdown)?",
+      "parentUuid": "1390f250_ec7b9ca5",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d82854b_dc544d31",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "SG, add a quick comment on top of line 51 then.",
       "parentUuid": "15150ef2_ebf15003",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ae2db26_377f8dd9",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-19T23:18:46Z",
+      "side": 1,
+      "message": "There\u0027s a comment on line 73 saying the same thing.",
+      "parentUuid": "7d4be0c7_3965aa30",
       "range": {
         "startLine": 51,
         "startChar": 6,
