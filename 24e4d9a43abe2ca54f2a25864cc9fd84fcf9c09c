@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a08cac4d_33532108",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-19T18:12:47Z",
+      "side": 1,
+      "message": "In my view of the world, we should not need this. Why do we ever map back?",
+      "revId": "24e4d9a43abe2ca54f2a25864cc9fd84fcf9c09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948fa831_a4a1e10c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-19T18:12:47Z",
+      "side": 1,
+      "message": "/con|prn|aux|nul|com[1-9]|lpt[1-9]/",
+      "revId": "24e4d9a43abe2ca54f2a25864cc9fd84fcf9c09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
