@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec75122d_ca9d2225",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:21:49Z",
+      "side": 1,
+      "message": "When an event reaches aura::Window, the first step is the \"targeter stage\", i.e. find a right EventTargeter. Usually this is not the WebContents, because some other components can also receives events. I.e. browser notification, input box on the web page, input method, etc. This is against the design of the API, JavaScript should be able to receive the event.",
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b0164f_7e7ab7f5",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:21:49Z",
+      "side": 1,
+      "message": "There are two problems here,\n1. What should we do if |child|-\u003elocked_keys_ has conflict with |locked_keys_|? I.e. some locked keys are coming from |child|, others are coming from this-\u003eLockKeys(). In the case, I think we need two variables std::set\u003cint\u003e locked_keys_, std::map\u003cWindow*, std::set\u003cint\u003e\u003e children_locked_keys_.\n2. As we have discussed before, how should we avoid unlock and lock the keys when a window is detached from |this|, and attach to another window.",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 388,
+        "endChar": 60
+      },
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27611b7f_6e35927a",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:21:49Z",
+      "side": 1,
+      "message": "Note: there is not a Window::Blur() or Window::LostFocus() event, as well as entering and exiting fullscreen events, we always need to use some listener pattern to receive these events.",
+      "range": {
+        "startLine": 532,
+        "startChar": 28,
+        "endLine": 532,
+        "endChar": 0
+      },
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd386cdf_f36b5b93",
+        "filename": "ui/aura/window_tree_host_platform.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:21:49Z",
+      "side": 1,
+      "message": "This is not the right implementation: there are two WindowTreeHost implementations for Windows, the other is DesktopWindowTreeHostWin. By using this interface, it reduces the maintainability: it couples the logic into the WindowTreeHost and a new implementation of WindowTreeHost needs to implement more independent logic.",
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0a9c27_4cf9bf23",
+        "filename": "ui/events/event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:21:49Z",
+      "side": 1,
+      "message": "Putting EF_RESERVED aside with other EventFlags is weird: EF_RESERVED is an implementation detail inside of Chrome instead of a status of a keyboard event.",
+      "range": {
+        "startLine": 119,
+        "startChar": 45,
+        "endLine": 119,
+        "endChar": 56
+      },
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc009510_b1a7c6f3",
+        "filename": "ui/platform_window/platform_window.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:21:49Z",
+      "side": 1,
+      "message": "This is also not the right implementation, because DesktopWindowTreeHostWin uses HWNDMessageHandler instead of PlatformWindow and WinWindow. This implementation detail also couples keyboard lock feature with unrelated implementation details.",
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dce7a3_db2d5f29",
+        "filename": "ui/views/widget/desktop_aura/low_level_keyboard_proc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-19T21:21:49Z",
+      "side": 1,
+      "message": "Because we are targeting a Window instead of a WebContents in this scenario. Here we can only lock keys for an aura::Window, not a WebContents.",
+      "revId": "5454cbc5ff944d16cbf97367c99a884e147bdcdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
