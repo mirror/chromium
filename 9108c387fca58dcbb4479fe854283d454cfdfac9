@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60b017eb_f4a5bc1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ffa94d9e_9821f223",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9035295_292e1008",
         "filename": "components/policy/proto/chrome_device_policy.proto",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-19T14:31:54Z",
       "side": 1,
       "message": "As per our offline discussion, I got your intention to have the message named in a more generic fashion in order to leave a room for possible future extensions of the requirements.\n\nAfter thinking more in this direction, I\u0027d suggest making the name less concrete - now it\u0027s narrowed down to the restrictions of the \"\u003e\u003d\" kind, while it\u0027s easy to imagine some other types of restrictions.\n\nIt seems that the key point here is that this setting is constraining \"the version that is allowed to sign in / stay in session\". Therefore what about a name like \"AllowedVersionInUseRequirementsProto\"? And the field would be called \"minimum_chrome_version\" then.",
+      "range": {
+        "startLine": 905,
+        "startChar": 8,
+        "endLine": 905,
+        "endChar": 35
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ba07d2_ff7b6075",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "Please read DD and PRD.\nPurpose of this policy is to force user to update to fresh version / force users to replace used device if it reached EOL state. \nThere can be other reasons to control version on the device, but they should be guarded by different policies (as they would be handled differently). This policy would always be focused on meeting \"\u003e\u003d\" requirement by forcing users to perform the update (by signing them out / not letting them sign in again).\nThe only variation we can have here is which of the available version identifiers should we use here. Currently, when we have 1:1 mapping of Chrome version and ChromeOS platform version, we use Chrome version (as it has easier numbering scheme), but if in future it changes, it might have both Chrome version and Platform version.\n\nSo I do not agree with your suggestion.\nAlso, making proto names longer, together with 80 symbol limit and 4/8-spaces indents lead to hardly readable c++ code.",
+      "parentUuid": "c9035295_292e1008",
       "range": {
         "startLine": 905,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f9c4e6ef_6bccd3e3",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "This is just an example of the value.\nAll the comparison will be done with base::Version.CompareTo() method, and it can correctly compare \"prefix\" versions with \"full\" ones.\nAdmins can set both prefixed versions (e.g. block users from using N-2 versions), as well as use this policy to force all users to update to latest security patch (using exact version).",
+      "parentUuid": "95525483_9596c75a",
+      "range": {
+        "startLine": 906,
+        "startChar": 42,
+        "endLine": 906,
+        "endChar": 55
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2ccad35_674cb115",
         "filename": "components/policy/proto/chrome_device_policy.proto",
         "patchSetId": 5
@@ -85,6 +157,24 @@
       "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8d42e8_734d08bd",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2ccad35_674cb115",
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "12565fa7_21245d83",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9798,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5425b320_72ba6ea6",
+      "range": {
+        "startLine": 9798,
+        "startChar": 22,
+        "endLine": 9798,
+        "endChar": 29
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d5d261_e2481831",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 5
@@ -125,6 +239,24 @@
       "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe45e81f_8db9a9d8",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9809,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7d5d261_e2481831",
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +320,48 @@
       "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01feb821_59cb5545",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9811,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "In v1 implementation it would be immediate sign out that is equal to the fact that they can not be signed in on the device.",
+      "parentUuid": "5e73aa59_f7acf7ba",
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2f7150_d68ad5f4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9811,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-19T17:11:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41e46851_9211dcfa",
+      "range": {
+        "startLine": 9811,
+        "startChar": 182,
+        "endLine": 9811,
+        "endChar": 189
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
