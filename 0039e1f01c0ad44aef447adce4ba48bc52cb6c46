@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65c240e3_28633e1b",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2331,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T20:55:44Z",
+      "side": 1,
+      "message": "Unlike std::make_unique, t\u0027s not obvious what\u0027s being returned. Also it still doesn\u0027t fit on one line even with auto. So meh.",
+      "parentUuid": "8847dc67_05b0c59f",
+      "range": {
+        "startLine": 2331,
+        "startChar": 2,
+        "endLine": 2331,
+        "endChar": 52
+      },
+      "revId": "0039e1f01c0ad44aef447adce4ba48bc52cb6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c3bae94_f498ac4e",
         "filename": "ppapi/proxy/pdf_resource.cc",
         "patchSetId": 1
