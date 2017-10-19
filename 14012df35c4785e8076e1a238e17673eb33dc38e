@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "749769fc_691a8fd4",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-19T08:10:21Z",
+      "side": 1,
+      "message": "is this an intentional change for this patch set?",
+      "range": {
+        "startLine": 279,
+        "startChar": 30,
+        "endLine": 279,
+        "endChar": 64
+      },
+      "revId": "14012df35c4785e8076e1a238e17673eb33dc38e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28b8b49_88de8e59",
+        "filename": "third_party/WebKit/Source/modules/webmidi/NavigatorWebMIDI.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-19T08:10:21Z",
+      "side": 1,
+      "message": "This looks very reasonable behavior on disabled feature, but probably this is not clarified in current specs? I just put the same comment against your PR to the Web MIDI spec.\n\nYou do not need to change something in this CL, but just a note.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 51
+      },
+      "revId": "14012df35c4785e8076e1a238e17673eb33dc38e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
