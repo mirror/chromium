@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47ab1022_31871088",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "Can we tweak the context a bit? This alert is triggered when a web page tries to open another app repeatedly. The app that the page is trying to open may or may not be related to the web page. If that\u0027s the case, is there a different way to express this other than \"open in\"?",
+      "range": {
+        "startLine": 1606,
+        "startChar": 29,
+        "endLine": 1606,
+        "endChar": 59
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde16b91_cee7c2c1",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "The 2 words \"user that\" seems to be extra, isn\u0027t it?",
+      "range": {
+        "startLine": 1606,
+        "startChar": 99,
+        "endLine": 1606,
+        "endChar": 108
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2164e5e8_09d74b3b",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "Is it really \"open *this page* on another application\" or just opening another application?",
+      "range": {
+        "startLine": 1606,
+        "startChar": 145,
+        "endLine": 1606,
+        "endChar": 182
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c308e51_4a33b56f",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "Is it \"opening a web page in external application\" or just \"open an external application\"?",
+      "range": {
+        "startLine": 1609,
+        "startChar": 122,
+        "endLine": 1609,
+        "endChar": 142
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc618d0d_157d87a9",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "I think rephrasing as \"when tapped,\" (not comma after \"tapped\") reads just fine. Same for the next message.",
+      "range": {
+        "startLine": 1609,
+        "startChar": 93,
+        "endLine": 1609,
+        "endChar": 110
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c4c777_e000c0a6",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "I think use of getter\u003disPromptActive and making the variable promptActive is the preferred way to go. Please take a look at http://go/objc-style#Objective-C_Method_Names and see if you agree.",
+      "range": {
+        "startLine": 106,
+        "startChar": 31,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689cd2bb_115d6610",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "Is this __block necessary?",
+      "range": {
+        "startLine": 304,
+        "startChar": 6,
+        "endLine": 304,
+        "endChar": 13
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4a0668_d7333f33",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "Adding a better qualifier, e.g. ExternalAppLaunchAction, may help the context and prevent name collision in the future.",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e6f017_17ca9106",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "eugenebut would know for sure, but I though kMaxSectionsBetweenConsecutiveLaunches would be the preferred name here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b524f6b_17bee529",
+        "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-19T13:38:14Z",
+      "side": 1,
+      "message": "A recent PSA from sdefresne strongly suggested use TEST_F over TEST. Please check.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
