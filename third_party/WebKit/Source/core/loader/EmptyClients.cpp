@@ -72,22 +72,7 @@ class EmptyFrameScheduler : public WebFrameScheduler {
  public:
   EmptyFrameScheduler() { DCHECK(IsMainThread()); }
 
-  RefPtr<WebTaskRunner> LoadingTaskRunner() override {
-    return Platform::Current()->MainThread()->GetWebTaskRunner();
-  }
-  RefPtr<WebTaskRunner> LoadingControlTaskRunner() override {
-    return Platform::Current()->MainThread()->GetWebTaskRunner();
-  }
-  RefPtr<WebTaskRunner> ThrottleableTaskRunner() override {
-    return Platform::Current()->MainThread()->GetWebTaskRunner();
-  }
-  RefPtr<WebTaskRunner> DeferrableTaskRunner() override {
-    return Platform::Current()->MainThread()->GetWebTaskRunner();
-  }
-  RefPtr<WebTaskRunner> PausableTaskRunner() override {
-    return Platform::Current()->MainThread()->GetWebTaskRunner();
-  }
-  RefPtr<WebTaskRunner> UnpausableTaskRunner() override {
+  RefPtr<WebTaskRunner> GetTaskRunner(TaskType type) override {
     return Platform::Current()->MainThread()->GetWebTaskRunner();
   }
 
