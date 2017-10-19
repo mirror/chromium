@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "24fbdd6f_2e1c85f3",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-19T20:35:01Z",
+      "side": 1,
+      "message": "Ack. I forgot about the MouseWheelEventQueue. That sounds like it would be okay.",
+      "parentUuid": "8c7b4727_cccfc040",
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa98f0a4_6dfdb7c1",
         "filename": "content/public/browser/render_widget_host.h",
         "patchSetId": 3
@@ -127,6 +145,30 @@
       "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1594916_e9e70bf6",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-19T20:35:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1960b66_b6bc1164",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
