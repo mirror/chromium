@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "dfd5a75a_09f78265",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T18:30:54Z",
+      "side": 1,
+      "message": "s/PR/CL/ (I meant a separate Chromium code change.)\n\nThe FP check is currently here before the actual algorithm from the spec, which starts at line 329. IIRC, there was a reason for this at the time, but it doesn\u0027t make sense now that we are turning it on by default and there is a PR to update the spec algorithm.\n\nAs I note below, I think we need to move the logic at line 301 first.",
+      "parentUuid": "5fcfe66a_27b4c0d5",
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da6e8b6_8c54cef0",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 1
