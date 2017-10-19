@@ -16,6 +16,24 @@
       "revId": "6f075848b54e5918929a7ba68453769ed6f26a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e631f0_36f78130",
+        "filename": "third_party/WebKit/Source/modules/permissions/ClipboardPermissionDescriptor.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-10-19T23:51:12Z",
+      "side": 1,
+      "message": "Agreed. Changed to allowWithoutGesture.\n\nA discussion with Jeffrey about what query({name:\u0027clipboard\u0027}) should return led us to break the permission into \u0027clipboard-read\u0027 and \u0027clipboard-write\u0027.\n\nLeaving it as \u0027clipboard\u0027 meant that we didn\u0027t have a sensible return value when \u0027access\u0027 or \u0027requireGesture\u0027 were not specified.\n\nUsing separate \u0027clipboard-read/write\u0027 permissions means we can always have a useful return value as long as we use the default value for the bool. Since the default is \u0027false\u0027, it\u0027s safer to change this to be allowWithoutGesture.",
+      "parentUuid": "687c5455_dac1792e",
+      "revId": "6f075848b54e5918929a7ba68453769ed6f26a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
