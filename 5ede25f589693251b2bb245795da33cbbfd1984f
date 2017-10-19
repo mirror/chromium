@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04c11636_3e5772e8",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "unused.",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f4aa57_2bda4480",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "base::TimeDelta here, too (regardless of mojom interface).",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8165a4ba_e9596c73",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "You can merge those three callback implementation.\n\nvoid OnArcTimresCallback(...) {\n   ...\n}\n\nshould work, because what these do is exactly same \"reading the result from |response|, and invoking the callback.\"",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927cf136_c6090816",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "As all of the callbacks has same signature, you can merge.\n\nusing ArcTimerCallback \u003d\n    base::OnceCallback\u003cvoid(power_manager::ArcTimerResult result)\u003e;",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0437e1c_02f31a07",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "You\u0027d need\n\nNOTREACHED();\nreturn ... /* default value */...;\n\nhere, because even if switch() stmt covers all the case and return for each,\nsome compiler cannot understand it, so would report an error.",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd16710_470af570",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "GetPowerManagerClient()-\u003eRemoveObserver() is missing here.",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6c0dcf_34c9ac8a",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "In .cc, you don\u0027t need this comment.",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8afda14_94bfb584",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "The error log should be output already in the macro. You don\u0027t need it here.",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0156bf51_a994f9dd",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9c5268_7ea585fb",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "\"\" instead of \u003c\u003e.",
+      "revId": "5ede25f589693251b2bb245795da33cbbfd1984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

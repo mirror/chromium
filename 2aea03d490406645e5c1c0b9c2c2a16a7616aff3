@@ -129,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "dce966d6_0b735d8d",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "Even without landing the base CL, you can rebase on top of it.\nThen, you can run\ngit branch --set-upstream-to\u003d${BASE_BRANCH_NAME}\nthen git cl upload.\nWith it, you can upload the diff from the your base CL.\nAlso, git cl try handles the rebasing, so you can run try without landing the base CL.",
+      "parentUuid": "e76773dd_5362fed7",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "563bf13d_02dd1a37",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -369,6 +387,24 @@
       "side": 1,
       "message": "The initialization of |result| handles that. I think the contract is that PopInt32 doesn\u0027t modify it\u0027s value if there\u0027s an error.",
       "parentUuid": "23eec1e6_648453f0",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca26c18d_e95eadcc",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "It is implementation details and looks not explicitly documented.\nhttps://cs.chromium.org/chromium/src/dbus/message.h?q\u003dpopint32\u0026sq\u003dpackage:chromium\u0026l\u003d388\n\nSo, it\u0027s safer to see if PopInt32 returns true/false, and in case of false, you need an appropriate error handling, without assuming no data change in |result|.\nI\u0027d appreciate you keep the consistency with other dbus client code.",
+      "parentUuid": "339cb76b_1c7f1be4",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -832,6 +868,30 @@
     },
     {
       "key": {
+        "uuid": "6cd50047_8ed02f39",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "We prefer enum to not to have manual error check here.\nUsing enum sounds type safer.",
+      "parentUuid": "22ce44f6_1c02837d",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "131f8ea5_5fb27ffd",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 1
@@ -1102,6 +1162,30 @@
       "side": 1,
       "message": "I will wait till the libmojo uprev happens on Android. Right now its not available.",
       "parentUuid": "4e3bc51a_3233fb2a",
+      "range": {
+        "startLine": 33,
+        "startChar": 29,
+        "endLine": 33,
+        "endChar": 61
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dd6622_ce96c382",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "Makes sense. Thank you for clarification.",
+      "parentUuid": "54a31055_b7255d1d",
       "range": {
         "startLine": 33,
         "startChar": 29,
@@ -1412,6 +1496,30 @@
     },
     {
       "key": {
+        "uuid": "ab82ae1f_83e5c029",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "Prefer consistency.\nIf power_manager::ArcTimerResult and mojom::ArcTimerResult is one-to-one onto mapping,\ntypemap is better.",
+      "parentUuid": "e325c40d_3b4e754b",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 23
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ecf59f5_ed303318",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -1482,6 +1590,30 @@
       "side": 1,
       "message": "That\u0027s more LOC than just a cast for this one off use.",
       "parentUuid": "427be229_9d70c4e9",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262803b5_17d61145",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "Prefer consistency and more understandable. You can find examples in several other .cc files in c/b/c/arc, components/arc.",
+      "parentUuid": "17a373d7_788cecde",
       "range": {
         "startLine": 82,
         "startChar": 13,
@@ -1570,6 +1702,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "7fb23f4c_75800980",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ee5d81_ec1e30ae",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T04:13:46Z",
+      "side": 1,
+      "message": "not done yet.",
+      "parentUuid": "8f587740_c279f3d7",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
