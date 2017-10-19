@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "be9c8b2d_118ba60d",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-19T17:03:42Z",
+      "side": 1,
+      "message": "Added pydoc to function to call this out.",
+      "parentUuid": "b8e50967_982b6392",
+      "range": {
+        "startLine": 378,
+        "startChar": 43,
+        "endLine": 378,
+        "endChar": 44
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb024204_c71c9ba5",
         "filename": "tools/binary_size/libsupersize/nm.py",
         "patchSetId": 10
@@ -424,6 +448,30 @@
       "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09dbc253_c21dd6f7",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-19T17:03:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "124f2a7b_8d33e8ee",
+      "range": {
+        "startLine": 436,
+        "startChar": 12,
+        "endLine": 436,
+        "endChar": 48
+      },
+      "revId": "a6e5b785d9eaf3bcaef92ba9be305e03fcdb40f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
