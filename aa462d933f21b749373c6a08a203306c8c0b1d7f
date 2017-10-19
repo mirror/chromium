@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0119b259_8f701ec5",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "A bit nuanced but we\u0027d want it to average 500, not be 500 :-).",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 15
+      },
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e19368f_d2df8b81",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "nit: It doesn\u0027t set it, it calculates it.",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd66770_3e346496",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "ditto, it chooses a new one to use but doesn\u0027t actually set active_global_scope_",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 23
+      },
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16414882_b59efbfe",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "This doesn\u0027t really explain how we use this and it technically tracks document paint frames regardless of when the worklet was constructed. The active_frame_count_ is just set to the current frame count, so even if paint worklet was just constructed it will have the count of all of the paints of the document. How about:\nThe last document paint frame a paint worklet painted on. This is used to tell when we begin painting on a new frame.",
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878822d0_137db337",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "nit: The current global scope being used for painting.",
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1a242f_be851c99",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "The within a frame wording suggests that we re-use this value, but at any point in time it is just the remaining paint calls before we switch. How about:\nThe number of paint calls remaining before Paint will select a new global scope. SelectGlobalScope resets this at the beginning of each frame.",
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a84859_96a5643f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "nit: Not necessary but this could just be three calls to a helper function with each of the value sets, e.g.\nExpectSwitchGlobalScope(/* expect_switch_within_frame */ true, /* number of paint calls */ 15, /* paint count to switch after */ 10);",
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d0e707_2a9967f9",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T14:36:19Z",
+      "side": 1,
+      "message": "else if rather than j !\u003d 0 later? Then just set previously_selected_global_scope_ regardless at the end of the loop.",
+      "revId": "aa462d933f21b749373c6a08a203306c8c0b1d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
