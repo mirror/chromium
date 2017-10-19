@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22f2a720_bacbabc5",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T17:09:58Z",
+      "side": 1,
+      "message": "Initialize this in the member initializer list (or header).",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 209,
+        "endChar": 29
+      },
+      "revId": "34775d90c3b2d35f71bb676ca06626099490d6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418536d6_13307e1b",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T17:09:58Z",
+      "side": 1,
+      "message": "Inlining the class here makes this function longer, and harder to follow. Please move the class to an anonymous namespace at the top of the file.",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 251,
+        "endChar": 47
+      },
+      "revId": "34775d90c3b2d35f71bb676ca06626099490d6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c7bd19_7b62ea2a",
+        "filename": "ui/views/window/button_background_painter_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T17:09:58Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem to me this should be in views either.",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "34775d90c3b2d35f71bb676ca06626099490d6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4b7407_eba8430e",
+        "filename": "ui/views/window/nav_button_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T17:09:58Z",
+      "side": 1,
+      "message": "Why is this class in views? AFAICT it isn\u0027t used in views at all.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "34775d90c3b2d35f71bb676ca06626099490d6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
