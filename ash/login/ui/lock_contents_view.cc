@@ -36,6 +36,7 @@
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/scroll_view.h"
+#include "ui/views/controls/styled_label.h"
 #include "ui/views/focus/focus_search.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
@@ -136,6 +137,38 @@ views::View* FindFirstOrLastFocusableChild(views::View* root, bool reverse) {
   return search.FindNextFocusableView(
       root, reverse, views::FocusSearch::DOWN, false /*check_starting_view*/,
       &dummy_focus_traversable, &dummy_focus_traversable_view);
+}
+
+// Make a section of the error text bold.
+// |label|:       The label to apply mixed styles.
+// |error_text|:  Error message to display.
+// |bold_start|:  The position in |error_text| to start bolding.
+// |bold_length|: The length of bold text.
+void MakeSectionBold(views::StyledLabel* label,
+                     base::string16& error_text,
+                     base::Optional<int>& bold_start,
+                     int bold_length) {
+  views::StyledLabel::RangeStyleInfo regular_style;
+  regular_style.custom_font = label->GetDefaultFontList().Derive(
+      0, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::NORMAL);
+  regular_style.override_color = SK_ColorWHITE;
+  if (bold_length == 0) {
+    label->AddStyleRange(gfx::Range(0, error_text.length()), regular_style);
+    return;
+  }
+
+  views::StyledLabel::RangeStyleInfo bold_style;
+  bold_style.custom_font = label->GetDefaultFontList().Derive(
+      0, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::BOLD);
+  bold_style.override_color = SK_ColorWHITE;
+  label->AddStyleRange(
+      gfx::Range(bold_start.value(), bold_start.value() + bold_length),
+      bold_style);
+
+  label->AddStyleRange(gfx::Range(0, bold_start.value() - 1), regular_style);
+  label->AddStyleRange(
+      gfx::Range(bold_start.value() + bold_length + 1, error_text.length()),
+      regular_style);
 }
 
 }  // namespace
@@ -675,25 +708,37 @@ LoginAuthUserView* LockContentsView::CurrentAuthUserView() {
 }
 
 void LockContentsView::ShowErrorMessage() {
-  std::string error_text = l10n_util::GetStringUTF8(
+  base::string16 error_text = l10n_util::GetStringUTF16(
       unlock_attempt_ ? IDS_ASH_LOGIN_ERROR_AUTHENTICATING_2ND_TIME
                       : IDS_ASH_LOGIN_ERROR_AUTHENTICATING);
   ImeController* ime_controller = Shell::Get()->ime_controller();
   if (ime_controller->IsCapsLockEnabled()) {
-    error_text +=
-        "\n" + l10n_util::GetStringUTF8(IDS_ASH_LOGIN_ERROR_CAPS_LOCK_HINT);
+    error_text += base::ASCIIToUTF16(" ") +
+                  l10n_util::GetStringUTF16(IDS_ASH_LOGIN_ERROR_CAPS_LOCK_HINT);
   }
 
+  base::Optional<int> bold_start;
+  int bold_length = 0;
   // Display a hint to switch keyboards if there are other active input
   // methods.
   if (ime_controller->available_imes().size() > 1) {
-    error_text += "\n" + l10n_util::GetStringUTF8(
-                             IDS_ASH_LOGIN_ERROR_KEYBOARD_SWITCH_HINT);
+    error_text += base::ASCIIToUTF16(" ");
+    bold_start = error_text.length();
+    base::string16 shortcut =
+        l10n_util::GetStringUTF16(IDS_ASH_LOGIN_KEYBOARD_SWITCH_SHORTCUT);
+    bold_length = shortcut.length();
+
+    size_t shortcut_offset_in_string;
+    error_text +=
+        l10n_util::GetStringFUTF16(IDS_ASH_LOGIN_ERROR_KEYBOARD_SWITCH_HINT,
+                                   shortcut, &shortcut_offset_in_string);
+    bold_start = bold_start.value() + shortcut_offset_in_string;
   }
 
+  views::StyledLabel* label = new views::StyledLabel(error_text, this);
+  MakeSectionBold(label, error_text, bold_start, bold_length);
   error_bubble_->ShowErrorBubble(
-      base::UTF8ToUTF16(error_text),
-      CurrentAuthUserView()->password_view() /*anchor_view*/);
+      label, CurrentAuthUserView()->password_view() /*anchor_view*/);
 }
 
 void LockContentsView::OnEasyUnlockIconHovered() {
