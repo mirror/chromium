@@ -48,13 +48,6 @@ class Link;
 class Widget;
 }
 
-enum : int {
-  // Left icon margin.
-  kPermissionIconMarginLeft = 6,
-  // The width of the column that contains the permissions icons.
-  kPermissionIconColumnWidth = 16,
-};
-
 // The views implementation of the page info UI.
 class PageInfoBubbleView : public content::WebContentsObserver,
                            public PermissionSelectorRowObserver,
@@ -65,6 +58,11 @@ class PageInfoBubbleView : public content::WebContentsObserver,
                            public views::StyledLabelListener,
                            public PageInfoUI {
  public:
+  enum LayoutConstants {
+    // The width of the column size for permissions and chosen object icons.
+    kIconColumnWidth = 16
+  };
+
   ~PageInfoBubbleView() override;
 
   // Type of the bubble being displayed.
@@ -179,7 +177,7 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   views::Link* cookie_dialog_link_;
 
   // The view that contains the "Permissions" table of the site settings view.
-  views::View* permissions_view_;
+  views::View permissions_view_;
 
   // The certificate provided by the site, if one exists.
   scoped_refptr<net::X509Certificate> certificate_;
