@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d924102_7b6ba2e2",
+        "filename": "third_party/WebKit/common/message_port/cloneable_message.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T00:12:29Z",
+      "side": 1,
+      "message": "Nit: sent",
+      "range": {
+        "startLine": 39,
+        "startChar": 38,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "a4e4988a290caaef9eaf4344fe392c3ddc4e0329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
