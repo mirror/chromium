@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5348a73e_98e8a03d",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T20:03:21Z",
+      "side": 1,
+      "message": "I am not talking about the \"wapper types\", I am talking about the \"wire format\" in messages. Because we use typemapping, the wrapper types will be the types that we map to, so there won\u0027t be difference there.\n\nIn the wire format, structs are always non-inlined.\n\nI don\u0027t think it is much less clear to use int64 in this case. Time/TimeTicks are also very basic types, I don\u0027t think they have to base on the concept of TimeDelta. The win of \"conceptually more clear\" seems minimal but the actual cost of message size increase is significant, IMHO. :)",
+      "parentUuid": "d5474b3e_706e6564",
+      "revId": "7823760f4fabe7192a66d23e17164ba9a004c5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3725fc_2067061d",
         "filename": "mojo/common/time_struct_traits.h",
         "patchSetId": 4
