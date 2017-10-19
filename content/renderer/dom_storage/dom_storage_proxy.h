@@ -17,7 +17,7 @@ namespace content {
 // Abstract interface for cached area, renderer to browser communications.
 class DOMStorageProxy : public base::RefCounted<DOMStorageProxy> {
  public:
-  typedef base::Callback<void(bool)> CompletionCallback;
+  using CompletionCallback = base::Callback<void(bool)>;
 
   virtual void LoadArea(int connection_id,
                         DOMStorageValuesMap* values,

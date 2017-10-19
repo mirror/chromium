@@ -137,7 +137,7 @@ class DomStorageDispatcher::ProxyImpl : public DOMStorageProxy {
         : area_(area), open_count_(count) {}
   };
   typedef std::map<std::string, CachedAreaHolder> CachedAreaMap;
-  typedef std::list<CompletionCallback> CallbackList;
+  using CallbackList = std::list<CompletionCallback>;
 
   ~ProxyImpl() override {}
 

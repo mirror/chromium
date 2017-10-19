@@ -918,7 +918,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   // Bitmap for crashed plugin. Lazily initialized, non-owning pointer.
   SkBitmap* sad_plugin_;
 
-  typedef std::set<PluginObject*> PluginObjectSet;
+  using PluginObjectSet = std::set<PluginObject*>;
   PluginObjectSet live_plugin_objects_;
 
   // Classes of events that the plugin has registered for, both for filtering

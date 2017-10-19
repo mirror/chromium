@@ -92,8 +92,8 @@ class CONTENT_EXPORT MediaStreamTrackMetrics {
   // track object and the PeerConnection it is attached to both exist.
   uint64_t MakeUniqueId(const std::string& track, StreamType stream_type);
 
-  typedef std::vector<std::unique_ptr<MediaStreamTrackMetricsObserver>>
-      ObserverVector;
+  using ObserverVector =
+      std::vector<std::unique_ptr<MediaStreamTrackMetricsObserver>>;
   ObserverVector observers_;
 
   webrtc::PeerConnectionInterface::IceConnectionState ice_state_;

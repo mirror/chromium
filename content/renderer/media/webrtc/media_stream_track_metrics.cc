@@ -22,7 +22,7 @@ using webrtc::VideoTrackVector;
 
 namespace content {
 namespace {
-typedef std::set<std::string> IdSet;
+using IdSet = std::set<std::string>;
 
 template <class T>
 IdSet GetTrackIds(const std::vector<rtc::scoped_refptr<T>>& tracks) {
@@ -39,9 +39,7 @@ class MediaStreamObserver
     : public base::RefCountedThreadSafe<MediaStreamObserver>,
       public webrtc::ObserverInterface {
  public:
-  typedef base::Callback<
-      void(const IdSet& audio_track_ids, const IdSet& video_track_ids)>
-          OnChangedCallback;
+  using OnChangedCallback = base::Callback<void(const IdSet&, const IdSet&)>;
 
   MediaStreamObserver(
       const OnChangedCallback& callback,

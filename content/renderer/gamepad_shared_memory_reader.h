@@ -17,8 +17,8 @@
 
 namespace content {
 
-typedef device::SharedMemorySeqLockBuffer<device::Gamepads>
-    GamepadHardwareBuffer;
+using GamepadHardwareBuffer =
+    device::SharedMemorySeqLockBuffer<device::Gamepads>;
 
 class GamepadSharedMemoryReader : public RendererGamepadProvider,
                                   public device::mojom::GamepadObserver {

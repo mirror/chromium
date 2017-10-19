@@ -186,7 +186,7 @@ class CONTENT_EXPORT PepperGraphics2DHost
 
   // Keeps track of all drawing commands queued before a Flush call.
   struct QueuedOperation;
-  typedef std::vector<QueuedOperation> OperationQueue;
+  using OperationQueue = std::vector<QueuedOperation>;
   OperationQueue queued_operations_;
 
   // True if we need to send an ACK to plugin.

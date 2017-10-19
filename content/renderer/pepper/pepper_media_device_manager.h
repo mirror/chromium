@@ -41,10 +41,8 @@ class PepperMediaDeviceManager
   void StopMonitoringDevices(PP_DeviceType_Dev type,
                              uint32_t subscription_id) override;
 
-  typedef base::Callback<void(int /* request_id */,
-                              bool /* succeeded */,
-                              const std::string& /* label */)>
-      OpenDeviceCallback;
+  using OpenDeviceCallback =
+      base::Callback<void(int, bool, const std::string&)>;
 
   // Opens the specified device. The request ID passed into the callback will be
   // the same as the return value. If successful, the label passed into the

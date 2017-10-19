@@ -30,8 +30,8 @@ class AssociatedResourceFetcher;
 // an image. Useful for favicons.
 class MultiResolutionImageResourceFetcher {
  public:
-  typedef base::Callback<void(MultiResolutionImageResourceFetcher*,
-                              const std::vector<SkBitmap>&)> Callback;
+  using Callback = base::Callback<void(MultiResolutionImageResourceFetcher*,
+                                       const std::vector<SkBitmap>&)>;
 
   MultiResolutionImageResourceFetcher(
       const GURL& image_url,

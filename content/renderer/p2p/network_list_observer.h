@@ -10,7 +10,7 @@
 namespace net {
 class IPAddress;
 struct NetworkInterface;
-typedef std::vector<NetworkInterface> NetworkInterfaceList;
+using NetworkInterfaceList = std::vector<NetworkInterface>;
 }  // namespace net
 
 namespace content {

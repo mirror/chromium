@@ -347,9 +347,9 @@ static bool PreferCompositingToLCDText(CompositorDependencies* compositor_deps,
 
 namespace {
 
-typedef void (*SetFontFamilyWrapper)(blink::WebSettings*,
-                                     const base::string16&,
-                                     UScriptCode);
+using SetFontFamilyWrapper = void (*)(blink::WebSettings*,
+                                      const base::string16&,
+                                      UScriptCode);
 
 void SetStandardFontFamilyWrapper(WebSettings* settings,
                                   const base::string16& font,

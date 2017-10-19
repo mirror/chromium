@@ -59,7 +59,7 @@ class CONTENT_EXPORT PepperVideoDecoderHost
     const uint32_t size;
     const ppapi::host::ReplyMessageContext reply_context;
   };
-  typedef std::list<PendingDecode> PendingDecodeList;
+  using PendingDecodeList = std::list<PendingDecode>;
 
   friend class VideoDecoderShim;
 

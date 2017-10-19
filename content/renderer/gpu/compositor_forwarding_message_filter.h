@@ -38,7 +38,7 @@ class CONTENT_EXPORT CompositorForwardingMessageFilter
  public:
   // The handler is invoked on the compositor thread with messages that were
   // intercepted by this filter.
-  typedef base::Callback<void(const IPC::Message&)> Handler;
+  using Handler = base::Callback<void(const IPC::Message&)>;
 
   // This filter will intercept messages defined in OnMessageReceived() and run
   // them by ProcessMessageOnCompositorThread on compositor thread.

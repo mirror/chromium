@@ -37,7 +37,7 @@ namespace content {
 
 namespace {
 
-typedef std::set<WebPluginContainer*> ContainerSet;
+using ContainerSet = std::set<WebPluginContainer*>;
 
 // Adds all WebPluginContainers associated with the given module to the set.
 void GetAllContainersForModule(PluginModule* module, ContainerSet* containers) {

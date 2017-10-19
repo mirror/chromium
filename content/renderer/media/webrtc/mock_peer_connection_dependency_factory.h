@@ -18,7 +18,7 @@
 
 namespace content {
 
-typedef std::set<webrtc::ObserverInterface*> ObserverSet;
+using ObserverSet = std::set<webrtc::ObserverInterface*>;
 
 class MockWebRtcAudioTrack : public webrtc::AudioTrackInterface {
  public:

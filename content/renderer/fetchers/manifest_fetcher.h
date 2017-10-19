@@ -32,8 +32,8 @@ class CONTENT_EXPORT ManifestFetcher {
   // successfully or not.  If there is a failure, response and data will both be
   // empty.  |response| and |data| are both valid until the URLFetcher instance
   // is destroyed.
-  typedef base::Callback<void(const blink::WebURLResponse& response,
-                              const std::string& data)> Callback;
+  using Callback =
+      base::Callback<void(const blink::WebURLResponse&, const std::string&)>;
 
   explicit ManifestFetcher(const GURL& url);
   virtual ~ManifestFetcher();

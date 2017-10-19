@@ -331,8 +331,8 @@ class CONTENT_EXPORT WebRtcAudioDeviceImpl : public WebRtcAudioDeviceNotImpl,
   }
 
  private:
-  typedef std::list<ProcessedLocalAudioSource*> CapturerList;
-  typedef std::list<WebRtcPlayoutDataSource::Sink*> PlayoutDataSinkList;
+  using CapturerList = std::list<ProcessedLocalAudioSource*>;
+  using PlayoutDataSinkList = std::list<WebRtcPlayoutDataSource::Sink*>;
   class RenderBuffer;
 
   // WebRtcAudioRendererSource implementation.

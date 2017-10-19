@@ -41,10 +41,9 @@ class PepperCdmWrapper {
 
 // Callback used to create a PepperCdmWrapper. This may return null if the
 // Pepper CDM can not be created.
-typedef base::Callback<std::unique_ptr<PepperCdmWrapper>(
-    const std::string& pluginType,
-    const url::Origin& security_origin)>
-    CreatePepperCdmCB;
+using CreatePepperCdmCB =
+    base::Callback<std::unique_ptr<PepperCdmWrapper>(const std::string&,
+                                                     const url::Origin&)>;
 
 }  // namespace content
 

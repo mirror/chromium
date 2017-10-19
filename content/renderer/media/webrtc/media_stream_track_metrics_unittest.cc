@@ -108,7 +108,7 @@ class MediaStreamTrackMetricsTest : public testing::Test {
   void AddTrack(TrackType* track) {
     // Explicitly casting to this type is necessary since the
     // MediaStreamInterface has two methods with the same name.
-    typedef bool (MediaStreamInterface::*AddTrack)(TrackType*);
+    using AddTrack = bool (MediaStreamInterface::*)(TrackType*);
     base::RunLoop run_loop;
     signaling_thread_.task_runner()->PostTaskAndReply(
         FROM_HERE,
@@ -123,7 +123,7 @@ class MediaStreamTrackMetricsTest : public testing::Test {
   void RemoveTrack(TrackType* track) {
     // Explicitly casting to this type is necessary since the
     // MediaStreamInterface has two methods with the same name.
-    typedef bool (MediaStreamInterface::*RemoveTrack)(TrackType*);
+    using RemoveTrack = bool (MediaStreamInterface::*)(TrackType*);
     base::RunLoop run_loop;
     signaling_thread_.task_runner()->PostTaskAndReply(
         FROM_HERE,

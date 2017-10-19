@@ -148,7 +148,7 @@ class CONTENT_EXPORT UserMediaProcessor
 
  private:
   class RequestInfo;
-  typedef std::vector<blink::WebMediaStreamSource> LocalStreamSources;
+  using LocalStreamSources = std::vector<blink::WebMediaStreamSource>;
 
   bool IsCurrentRequestInfo(int request_id) const;
   bool IsCurrentRequestInfo(

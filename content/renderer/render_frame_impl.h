@@ -1430,7 +1430,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Plugins -------------------------------------------------------------------
 #if BUILDFLAG(ENABLE_PLUGINS)
-  typedef std::set<PepperPluginInstanceImpl*> PepperPluginSet;
+  using PepperPluginSet = std::set<PepperPluginInstanceImpl*>;
   PepperPluginSet active_pepper_instances_;
 
   // Whether or not the focus is on a PPAPI plugin

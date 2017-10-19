@@ -24,7 +24,7 @@
 #include "ppapi/c/private/ppb_instance_private.h"
 #include "ppapi/shared_impl/ppapi_permissions.h"
 
-typedef void* NPIdentifier;
+using NPIdentifier = void*;
 
 class GURL;
 
@@ -60,7 +60,7 @@ struct WebPluginInfo;
 class CONTENT_EXPORT PluginModule : public base::RefCounted<PluginModule>,
                                     public base::SupportsWeakPtr<PluginModule> {
  public:
-  typedef std::set<PepperPluginInstanceImpl*> PluginInstanceSet;
+  using PluginInstanceSet = std::set<PepperPluginInstanceImpl*>;
 
   // You must call one of the Init functions after the constructor to create a
   // module of the type you desire.

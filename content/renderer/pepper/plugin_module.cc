@@ -176,7 +176,7 @@ HostGlobals* host_globals = NULL;
 
 // Maintains all currently loaded plugin libs for validating PP_Module
 // identifiers.
-typedef std::set<PluginModule*> PluginModuleSet;
+using PluginModuleSet = std::set<PluginModule*>;
 
 PluginModuleSet* GetLivePluginSet() {
   CR_DEFINE_STATIC_LOCAL(PluginModuleSet, live_plugin_libs, ());

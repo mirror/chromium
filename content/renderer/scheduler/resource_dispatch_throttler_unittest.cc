@@ -25,7 +25,7 @@ const uint32_t kRequestsPerFlush = 4;
 const double kFlushPeriodSeconds = 1.f / 60;
 const int kRoutingId = 1;
 
-typedef std::vector<std::unique_ptr<IPC::Message>> ScopedMessages;
+using ScopedMessages = std::vector<std::unique_ptr<IPC::Message>>;
 
 int GetRequestId(const IPC::Message& msg) {
   int request_id = -1;

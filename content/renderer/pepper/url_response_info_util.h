@@ -16,8 +16,8 @@ class WebURLResponse;
 namespace content {
 class RendererPpapiHostImpl;
 
-typedef base::Callback<void(const ppapi::URLResponseInfoData&)>
-    DataFromWebURLResponseCallback;
+using DataFromWebURLResponseCallback =
+    base::Callback<void(const ppapi::URLResponseInfoData&)>;
 
 // The returned object will have one plugin reference to the "body_as_file_ref"
 // if it's non-null. It's expected that the result of this function will be

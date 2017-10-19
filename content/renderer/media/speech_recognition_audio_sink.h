@@ -37,7 +37,7 @@ class CONTENT_EXPORT SpeechRecognitionAudioSink
     : public media::AudioConverter::InputCallback,
       public MediaStreamAudioSink {
  public:
-  typedef base::Callback<void()> OnStoppedCB;
+  using OnStoppedCB = base::Callback<void()>;
 
   // Socket ownership is transferred to the class via constructor.
   SpeechRecognitionAudioSink(const blink::WebMediaStreamTrack& track,

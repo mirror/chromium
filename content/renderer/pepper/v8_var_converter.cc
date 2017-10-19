@@ -69,11 +69,11 @@ namespace {
 
 // Maps PP_Var IDs to the V8 value handle they correspond to.
 typedef base::hash_map<int64_t, v8::Local<v8::Value> > VarHandleMap;
-typedef base::hash_set<int64_t> ParentVarSet;
+using ParentVarSet = base::hash_set<int64_t>;
 
 // Maps V8 value handles to the PP_Var they correspond to.
 typedef base::hash_map<HashedHandle, ScopedPPVar> HandleVarMap;
-typedef base::hash_set<HashedHandle> ParentHandleSet;
+using ParentHandleSet = base::hash_set<HashedHandle>;
 
 // Returns a V8 value which corresponds to a given PP_Var. If |var| is a
 // reference counted PP_Var type, and it exists in |visited_ids|, the V8 value

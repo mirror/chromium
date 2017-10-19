@@ -19,8 +19,8 @@ class WebDeviceOrientationListener;
 
 namespace content {
 
-typedef SharedMemorySeqLockReader<device::OrientationData>
-    DeviceOrientationSharedMemoryReader;
+using DeviceOrientationSharedMemoryReader =
+    SharedMemorySeqLockReader<device::OrientationData>;
 
 class CONTENT_EXPORT DeviceOrientationEventPumpBase
     : public DeviceSensorEventPump<blink::WebDeviceOrientationListener> {

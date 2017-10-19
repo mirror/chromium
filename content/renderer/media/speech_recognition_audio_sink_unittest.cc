@@ -61,7 +61,7 @@ class MockSyncSocket : public base::SyncSocket {
   };
 
   // Callback used for pairing an A.Send() with B.Receieve() without blocking.
-  typedef base::Callback<void()> OnSendCB;
+  using OnSendCB = base::Callback<void()>;
 
   explicit MockSyncSocket(SharedBuffer* shared_buffer)
       : buffer_(shared_buffer),

@@ -58,8 +58,8 @@ class ImageDownloaderBase : public RenderFrameObserver,
                      MultiResolutionImageResourceFetcher* fetcher,
                      const std::vector<SkBitmap>& images);
 
-  typedef std::vector<std::unique_ptr<MultiResolutionImageResourceFetcher>>
-      ImageResourceFetcherList;
+  using ImageResourceFetcherList =
+      std::vector<std::unique_ptr<MultiResolutionImageResourceFetcher>>;
 
   // ImageResourceFetchers schedule via FetchImage.
   ImageResourceFetcherList image_fetchers_;

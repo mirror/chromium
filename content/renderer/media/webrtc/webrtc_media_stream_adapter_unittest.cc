@@ -149,7 +149,7 @@ class RemoteWebRtcMediaStreamAdapterTest : public WebRtcMediaStreamAdapterTest {
   template <typename TrackType>
   void AddTrack(webrtc::MediaStreamInterface* webrtc_stream,
                 TrackType* webrtc_track) {
-    typedef bool (webrtc::MediaStreamInterface::*AddTrack)(TrackType*);
+    using AddTrack = bool (MediaStreamInterface::*)(TrackType*);
     dependency_factory_->GetWebRtcSignalingThread()->PostTask(
         FROM_HERE, base::BindOnce(base::IgnoreResult<AddTrack>(
                                       &webrtc::MediaStreamInterface::AddTrack),
@@ -161,7 +161,7 @@ class RemoteWebRtcMediaStreamAdapterTest : public WebRtcMediaStreamAdapterTest {
   template <typename TrackType>
   void RemoveTrack(webrtc::MediaStreamInterface* webrtc_stream,
                    TrackType* webrtc_track) {
-    typedef bool (webrtc::MediaStreamInterface::*RemoveTrack)(TrackType*);
+    using RemoveTrack = bool (MediaStreamInterface::*)(TrackType*);
     dependency_factory_->GetWebRtcSignalingThread()->PostTask(
         FROM_HERE,
         base::BindOnce(base::IgnoreResult<RemoveTrack>(

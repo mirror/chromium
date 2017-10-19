@@ -91,7 +91,7 @@ class IpcPacketSocket : public rtc::AsyncPacketSocket,
     size_t packet_size;
   };
 
-  typedef std::list<InFlightPacketRecord> InFlightPacketList;
+  using InFlightPacketList = std::list<InFlightPacketRecord>;
 
   // Always takes ownership of client even if initialization fails.
   bool Init(P2PSocketType type,

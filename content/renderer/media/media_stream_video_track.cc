@@ -40,7 +40,7 @@ void ReleaseOriginalFrame(const scoped_refptr<media::VideoFrame>& frame) {
 class MediaStreamVideoTrack::FrameDeliverer
     : public base::RefCountedThreadSafe<FrameDeliverer> {
  public:
-  typedef MediaStreamVideoSink* VideoSinkId;
+  using VideoSinkId = MediaStreamVideoSink*;
 
   FrameDeliverer(scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
                  bool enabled);

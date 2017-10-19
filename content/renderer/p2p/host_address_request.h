@@ -29,7 +29,7 @@ class P2PSocketDispatcher;
 class P2PAsyncAddressResolver
     : public base::RefCountedThreadSafe<P2PAsyncAddressResolver> {
  public:
-  typedef base::Callback<void(const net::IPAddressList&)> DoneCallback;
+  using DoneCallback = base::Callback<void(const net::IPAddressList&)>;
 
   P2PAsyncAddressResolver(P2PSocketDispatcher* dispatcher);
   // Start address resolve process.

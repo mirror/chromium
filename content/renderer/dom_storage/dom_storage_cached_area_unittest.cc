@@ -93,7 +93,7 @@ class MockProxy : public DOMStorageProxy {
     pending_callbacks_.pop_front();
   }
 
-  typedef std::list<CompletionCallback> CallbackList;
+  using CallbackList = std::list<CompletionCallback>;
 
   DOMStorageValuesMap load_area_return_values_;
   CallbackList pending_callbacks_;

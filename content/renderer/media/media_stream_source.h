@@ -17,13 +17,12 @@ namespace content {
 class CONTENT_EXPORT MediaStreamSource
     : public blink::WebMediaStreamSource::ExtraData {
  public:
-  typedef base::Callback<void(const blink::WebMediaStreamSource& source)>
-      SourceStoppedCallback;
+  using SourceStoppedCallback =
+      base::Callback<void(const blink::WebMediaStreamSource&)>;
 
-  typedef base::Callback<void(MediaStreamSource* source,
-                              MediaStreamRequestResult result,
-                              const blink::WebString& result_name)>
-      ConstraintsCallback;
+  using ConstraintsCallback = base::Callback<void(MediaStreamSource*,
+                                                  MediaStreamRequestResult,
+                                                  const blink::WebString&)>;
 
   // Source constraints key for
   // http://dev.w3.org/2011/webrtc/editor/getusermedia.html.

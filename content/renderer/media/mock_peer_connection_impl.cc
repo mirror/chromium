@@ -75,8 +75,7 @@ class MockStreamCollection : public webrtc::StreamCollectionInterface {
   ~MockStreamCollection() override {}
 
  private:
-  typedef std::vector<rtc::scoped_refptr<MediaStreamInterface> >
-      StreamVector;
+  using StreamVector = std::vector<rtc::scoped_refptr<MediaStreamInterface>>;
   StreamVector streams_;
 };
 

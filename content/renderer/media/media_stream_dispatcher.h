@@ -139,7 +139,7 @@ class CONTENT_EXPORT MediaStreamDispatcher
 
   // List of calls made to the browser process that have not yet completed or
   // been canceled.
-  typedef std::list<Request> RequestList;
+  using RequestList = std::list<Request>;
   RequestList requests_;
 
   service_manager::BinderRegistry registry_;

@@ -53,7 +53,7 @@ struct CONTENT_EXPORT VideoTrackAdapterSettings {
 class VideoTrackAdapter
     : public base::RefCountedThreadSafe<VideoTrackAdapter> {
  public:
-  typedef base::Callback<void(bool mute_state)> OnMutedCallback;
+  using OnMutedCallback = base::Callback<void(bool)>;
 
   explicit VideoTrackAdapter(
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
@@ -132,8 +132,7 @@ class VideoTrackAdapter
   // render thread but operates on the IO-thread. It does the resolution
   // adaptation and delivers frames to all registered tracks on the IO-thread.
   class VideoFrameResolutionAdapter;
-  typedef std::vector<scoped_refptr<VideoFrameResolutionAdapter> >
-      FrameAdapters;
+  using FrameAdapters = std::vector<scoped_refptr<VideoFrameResolutionAdapter>>;
   FrameAdapters adapters_;
 
   // Set to true if frame monitoring has been started. It is only accessed on

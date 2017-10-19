@@ -30,7 +30,7 @@ class CONTENT_EXPORT AudioRepetitionDetector {
   // Callback that defines the action upon a repetition is detected. One int
   // parameter to the callback is the look back time (in milliseconds) of the
   // detected repetition.
-  typedef base::Callback<void(int)> RepetitionCallback;
+  using RepetitionCallback = base::Callback<void(int)>;
 
   // |min_length_ms| is the minimum duration (in milliseconds) of repetitions
   // that count.

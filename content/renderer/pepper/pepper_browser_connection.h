@@ -32,8 +32,8 @@ class PepperBrowserConnection
     : public RenderFrameObserver,
       public RenderFrameObserverTracker<PepperBrowserConnection> {
  public:
-  typedef base::Callback<void(const std::vector<int>&)>
-      PendingResourceIDCallback;
+  using PendingResourceIDCallback =
+      base::Callback<void(const std::vector<int>&)>;
   explicit PepperBrowserConnection(RenderFrame* render_frame);
   ~PepperBrowserConnection() override;
 
