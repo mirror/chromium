@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5adff885_c4647a2f",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-19T01:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf74010_af888fd4",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be99530a_893e9a75",
         "filename": "chrome/common/media_router/media_status.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T23:45:08Z",
       "side": 1,
       "message": "How can we \"always\" activate media remoting - does that mean remote playback for all compatible media elements?",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cf70a3_78a7dfd6",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-19T01:13:28Z",
+      "side": 1,
+      "message": "miu@ mentioned in the bug that \"* Always is meant for cases where remoting activates, but keeps shutting off at random times. For example, maybe the user knows their WiFi is not ideal and is willing to accept hiccups or other momentary pauses and would rather remoting did not revert back to mirroring when that happens since it would not improve their experience.\"",
+      "parentUuid": "be99530a_893e9a75",
       "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f8267f60_c2bebcbf",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-19T01:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c35666b2_8d19906b",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23897559_8df47896",
         "filename": "chrome/common/media_router/mojo/media_status.typemap",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-13T23:45:08Z",
       "side": 1,
       "message": "Since we\u0027ve decided to use Mojo to implement the API for all MRPs, I wonder if we need to do enum mapping any more.",
+      "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c961ce_478d8c1d",
+        "filename": "chrome/common/media_router/mojo/media_status.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-19T01:13:28Z",
+      "side": 1,
+      "message": "If we remove this typemapping, we will have to use mojo enum in media_router_webui_message_handler and media_route_controller...It seems better to keep the mapping here. Added a TODO to remove MediaRemotingPolicy enum in media_status.h.",
+      "parentUuid": "23897559_8df47896",
       "revId": "ca798bbcb8f7e23740a495b775a46e1923c08ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
