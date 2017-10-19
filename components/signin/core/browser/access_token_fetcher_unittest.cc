@@ -16,6 +16,7 @@
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/signin/core/browser/test_signin_client.h"
+#include "components/signin/core/common/profile_management_switches.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gmock_mutant.h"
@@ -41,6 +42,7 @@ class AccessTokenFetcherTest : public testing::Test {
 
   AccessTokenFetcherTest() : signin_client_(&pref_service_) {
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
+    signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
 #if defined(OS_CHROMEOS)
     SigninManagerBase::RegisterProfilePrefs(pref_service_.registry());
     SigninManagerBase::RegisterPrefs(pref_service_.registry());
