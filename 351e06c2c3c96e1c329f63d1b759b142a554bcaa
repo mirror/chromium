@@ -33,6 +33,24 @@
       "revId": "351e06c2c3c96e1c329f63d1b759b142a554bcaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc52f28_6c1b87b7",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-19T21:54:35Z",
+      "side": 1,
+      "message": "Ping! Otherwise the above (with Steven\u0027s suggestion) might be okay short-term.",
+      "parentUuid": "a5301c6d_d0b9b5e3",
+      "revId": "351e06c2c3c96e1c329f63d1b759b142a554bcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

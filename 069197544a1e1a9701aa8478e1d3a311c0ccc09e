@@ -94,6 +94,30 @@
       "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a241202d_092199d2",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-19T21:54:35Z",
+      "side": 0,
+      "message": "Sorry, I definitely didn\u0027t understand the different app types well when I wrote/rewrote comments in this area, and I\u0027m still not sure I understand how their differences apply to the shelf behavior.\n\nYour updated comment may be okay (given that it\u0027s describing behavior you\u0027re actually observing), but maybe it shouldn\u0027t mention anything about windows and maybe is should say something like \"opening a shortcut may replace the item\u0027s associated ShelfItemDelegate instance.\"",
+      "parentUuid": "9f608016_a48f0d25",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 58
+      },
+      "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
