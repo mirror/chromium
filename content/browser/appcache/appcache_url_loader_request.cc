@@ -69,8 +69,20 @@ AppCacheURLLoaderRequest* AppCacheURLLoaderRequest::AsURLLoaderRequest() {
   return this;
 }
 
+base::WeakPtr<AppCacheURLLoaderRequest> AppCacheURLLoaderRequest::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
+}
+
+void AppCacheURLLoaderRequest::UpdateWithRedirectInfo(
+    const net::RedirectInfo& redirect_info) {
+  request_.url = redirect_info.new_url;
+  request_.method = redirect_info.new_method;
+  request_.referrer = GURL(redirect_info.new_referrer);
+  request_.site_for_cookies = redirect_info.new_site_for_cookies;
+}
+
 AppCacheURLLoaderRequest::AppCacheURLLoaderRequest(
     const ResourceRequest& request)
-    : request_(request) {}
+    : request_(request), weak_factory_(this) {}
 
 }  // namespace content
