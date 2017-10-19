@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "426da626_7b39ab12",
+        "filename": "media/blink/cdm_session_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-19T00:13:28Z",
+      "side": 1,
+      "message": "Given that the member is used again on line 183 for the same purpose, perhaps this should just be the member variable here?",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 28
+      },
+      "revId": "afb14bc5a678087724cf55e3d16922b7feac459d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
