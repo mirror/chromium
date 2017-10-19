@@ -88,6 +88,24 @@
       "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0717cd04_3a775a86",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T18:52:38Z",
+      "side": 1,
+      "message": "You already added a link:\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d726769#c6",
+      "parentUuid": "17ca3fee_a29ea19b",
+      "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
