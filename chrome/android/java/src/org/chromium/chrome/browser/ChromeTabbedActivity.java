@@ -497,27 +497,39 @@ public class ChromeTabbedActivity
             // TODO(tedchoc): Unify promo dialog logic as the search engine promo dialog checks
             //                might not have completed at this point and we could show multiple
             //                promos.
-            if (!mLocaleManager.hasShownSearchEnginePromoThisSession() && !mIntentWithEffect
-                    && FirstRunStatus.getFirstRunFlowComplete()
+            boolean isShowingPromo = false;
+            if (mLocaleManager.hasShownSearchEnginePromoThisSession()
+                    && !mLocaleManager.hasCompletedSearchEnginePromo()) {
+                isShowingPromo = true;
+            }
+
+            if (!isShowingPromo && !mIntentWithEffect && FirstRunStatus.getFirstRunFlowComplete()
                     && preferenceManager.getPromosSkippedOnFirstStart()) {
                 // Data reduction promo should be temporarily suppressed if the sign in promo is
                 // shown to avoid nagging users too much.
-                TabModel currentModel = mTabModelSelectorImpl.getCurrentModel();
-                if (!SigninPromoUtil.launchSigninPromoIfNeeded(this)) {
-                    if (!DataReductionPromoScreen.launchDataReductionPromo(
-                                this, currentModel.isIncognito())) {
-                        // TODO(mdjones): Refine this triggering logic when promo is complete:
-                        // crbug.com/767738
-                        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
-                            ChromeHomePromoDialog chDialog = new ChromeHomePromoDialog(this);
-                            chDialog.show();
-                        } else if (getBottomSheet() != null) {
-                            getBottomSheet().showHelpBubbleIfNecessary();
-                        }
+                isShowingPromo = SigninPromoUtil.launchSigninPromoIfNeeded(this)
+                        || DataReductionPromoScreen.launchDataReductionPromo(
+                                   this, mTabModelSelectorImpl.getCurrentModel().isIncognito());
+                if (!isShowingPromo) {
+                    // TODO(mdjones): Refine this triggering logic when promo is complete:
+                    // crbug.com/767738
+                    if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+                        ChromeHomePromoDialog chDialog = new ChromeHomePromoDialog(this);
+                        chDialog.show();
+                        isShowingPromo = true;
+                    } else if (getBottomSheet() != null) {
+                        getBottomSheet().showHelpBubbleIfNecessary();
                     }
                 }
             } else {
                 preferenceManager.setPromosSkippedOnFirstStart(true);
+            }
+
+            if (!isShowingPromo) {
+                final Tracker tracker =
+                        TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+                tracker.addOnInitializedCallback(
+                        (Callback<Boolean>) success -> maybeShowDownloadHomeTextBubble(tracker));
             }
 
             super.finishNativeInitialization();
@@ -787,11 +799,6 @@ public class ChromeTabbedActivity
             } else {
                 mLayoutManager.hideOverview(false);
             }
-
-            final Tracker tracker =
-                    TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
-            tracker.addOnInitializedCallback(
-                    (Callback<Boolean>) success -> maybeShowDownloadHomeTextBubble(tracker));
 
             mScreenshotMonitor = ScreenshotMonitor.create(ChromeTabbedActivity.this);
 
