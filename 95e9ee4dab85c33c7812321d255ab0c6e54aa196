@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "529e9976_37e00d55",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-19T14:22:09Z",
+      "side": 1,
+      "message": "[This was stuck in draft last night]\n\n\u003e \u003e A few thoughts:\n\u003e \u003e - maybe we should be sending these as part of DidCommitProvisionalLoad?\n\u003e \u003e - or, checking is_active() here, to avoid overwriting FTN\u0027s flags from a frame that\u0027s no longer current?\n\u003e \n\u003e Do we need to do both of these together? I\u0027m trying to figure out if a race in the other direction is possible if we don\u0027t -- if we only check IsCurrent(), then is is possible that the DidSetFramePolicyHeaders IPC for C arrives before it commits, and so C isn\u0027t active yet, and the flags for B remain active even after the navigation commits?\n\nOkay, that doesn\u0027t seem to be possible; the call which sends the headers to the browser only happens when triggered at the end of DocumentLoader::InstallNewDocument, after the commit IPC has been sent. Given that, just checking IsCurrent should be sufficient to ensure that we don\u0027t send the values from an out-of-date document.",
+      "parentUuid": "f5c688f2_1f559483",
+      "revId": "95e9ee4dab85c33c7812321d255ab0c6e54aa196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b730e3dc_2b577636",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 4
