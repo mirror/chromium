@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "754e0566_d486f3ed",
+        "filename": "pdf/pdfium/fuzzers/dicts/pdf_formcalc.dict",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-19T19:33:18Z",
+      "side": 1,
+      "message": "Nit: I think we should add the builtin functions right?\n\n(copied and formatted from cxfa_fmsimpleexpression.cpp)\n\nAbs\nApr\nAt\nAvg\nCeil\nChoose\nConcat\nCount\nCterm\nDate\nDate2Num\nDateFmt\nDecode\nEncode\nEval\nExists\nFloor\nFormat\nFV\nGet\nHasValue\nIf\nIpmt\nIsoDate2Num\nIsoTime2Num\nLeft\nLen\nLocalDateFmt\nLocalTimeFmt\nLower\nLtrim\nMax\nMin\nMod\nNPV\nNum2Date\nNum2GMTime\nNum2Time\nOneof\nParse\nPmt\nPost\nPPmt\nPut\nPV\nRate\nRef\nReplace\nRight\nRound\nRtrim\nSpace\nStr\nStuff\nSubstr\nSum\nTerm\nTime\nTime2Num\nTimeFmt\nUnitType\nUnitValue\nUpper\nUuid\nWithin\nWordNum",
+      "revId": "6fb5b1b1ae61a301b53ed3b2db64099f134fe059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
