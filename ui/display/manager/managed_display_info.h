@@ -308,6 +308,11 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   // empty size.
   gfx::Size GetNativeModeSize() const;
 
+  const gfx::ColorSpace& color_space() const { return color_space_; }
+  void set_color_space(const gfx::ColorSpace& color_space) {
+    color_space_ = color_space;
+  }
+
   bool is_aspect_preserving_scaling() const {
     return is_aspect_preserving_scaling_;
   }
@@ -323,13 +328,11 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   }
 
   // Returns a string representation of the ManagedDisplayInfo, excluding
-  // display
-  // modes.
+  // display modes.
   std::string ToString() const;
 
   // Returns a string representation of the ManagedDisplayInfo, including
-  // display
-  // modes.
+  // display modes.
   std::string ToFullString() const;
 
  private:
@@ -394,6 +397,8 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   // mapping of each touch device, identified by its unique touch device
   // identifier, with the touch calibration data associated with the display.
   std::map<uint32_t, TouchCalibrationData> touch_calibration_data_map_;
+
+  gfx::ColorSpace color_space_;
 
   // If you add a new member, you need to update Copy().
 };
