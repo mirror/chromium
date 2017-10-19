@@ -23,7 +23,11 @@ class MediaControlDivElement : public HTMLDivElement,
   void SetOverflowElementIsWanted(bool) final;
   void MaybeRecordDisplayed() final;
 
-  virtual void Trace(blink::Visitor*);
+  // Get the size of the element in pixels or the default if we cannot get the
+  // size because the element has not been layed out yet.
+  WebSize GetSizeOrDefault() const override;
+
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   MediaControlDivElement(MediaControlsImpl&, MediaControlElementType);

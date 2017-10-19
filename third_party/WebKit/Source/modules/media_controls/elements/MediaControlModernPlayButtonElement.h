@@ -24,6 +24,8 @@ class MediaControlModernPlayButtonElement final
 
   void OnMediaKeyboardEvent(Event* event) { DefaultEventHandler(event); }
 
+  WebSize GetSizeOrDefault() const final;
+
  protected:
   const char* GetNameForHistograms() const final;
 
