@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1e6034_d8383ae7",
+        "filename": "build/android/binary_size/apk_downloader.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-19T19:55:57Z",
+      "side": 1,
+      "message": "Is this detectable somehow? Maybe by searching what .sha1 files we have here, or by reading it from //chrome/VERSION? Otherwise, should still mention updating it in the readme.",
+      "revId": "4aca15b0c4e83f5f2ff98322f08b077f814d7ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

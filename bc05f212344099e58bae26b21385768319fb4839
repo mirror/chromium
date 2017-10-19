@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1b245a8_80456750",
+        "filename": "build/android/binary_size/apks/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-19T19:55:57Z",
+      "side": 0,
+      "message": "Probably still worth having a README.md, which says what these apks are used for and shows an example command-line of updating the references.",
+      "revId": "bc05f212344099e58bae26b21385768319fb4839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
