@@ -73,4 +73,4 @@ void TabStripModelObserver::WillCloseAllTabs() {
 void TabStripModelObserver::CloseAllTabsCanceled() {
 }
 
-void TabStripModelObserver::TabNeedsAttentionAt(int index) {}
+void TabStripModelObserver::TabNeedsAttentionAt(int index, bool attention) {}

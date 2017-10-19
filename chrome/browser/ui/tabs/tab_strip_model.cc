@@ -503,14 +503,11 @@ void TabStripModel::UpdateWebContentsStateAt(int index,
     observer.TabChangedAt(GetWebContentsAtImpl(index), index, change_type);
 }
 
-void TabStripModel::TabNeedsAttentionAt(int index) {
+void TabStripModel::TabNeedsAttentionAt(int index, bool attention) {
   DCHECK(ContainsIndex(index));
 
-  if (index == active_index())
-    return;
-
   for (auto& observer : observers_)
-    observer.TabNeedsAttentionAt(index);
+    observer.TabNeedsAttentionAt(index, attention);
 }
 
 void TabStripModel::CloseAllTabs() {
