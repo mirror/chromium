@@ -22,6 +22,30 @@
       "revId": "89cb4e933449576979f7a865bb3d9df488d01f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70e23f5_50d7bb49",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-19T00:55:08Z",
+      "side": 1,
+      "message": "Removed condition and renamed to \"send_frame\".",
+      "parentUuid": "82ca3670_cb4f5892",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 53
+      },
+      "revId": "89cb4e933449576979f7a865bb3d9df488d01f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
