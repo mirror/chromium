@@ -7,13 +7,17 @@ mojom =
 public_headers = [
   "//third_party/WebKit/public/platform/WebURLRequest.h",
   "//third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
+  "//third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
 ]
 traits_headers = [ "//third_party/WebKit/Source/platform/mojo/FetchAPIRequestStructTraits.h" ]
 type_mappings = [
-  "blink.mojom.FetchCredentialsMode=::blink::WebURLRequest::FetchCredentialsMode",
-  "blink.mojom.FetchRedirectMode=::blink::WebURLRequest::FetchRedirectMode",
-  "blink.mojom.FetchRequestMode=::blink::WebURLRequest::FetchRequestMode",
-  "blink.mojom.FetchAPIRequest=::blink::WebServiceWorkerRequest",
-  "blink.mojom.RequestContextFrameType=::blink::WebURLRequest::FrameType",
   "blink.mojom.RequestContextType=::blink::WebURLRequest::RequestContext",
+  "blink.mojom.ServiceWorkerResponse=::blink::WebServiceWorkerResponse",
+  "blink.mojom.ServiceWorkerResponseType=::blink::WebServiceWorkerResponseType",
+  "blink.mojom.fetch.FetchCredentialsMode=::blink::WebURLRequest::FetchCredentialsMode",
+  "blink.mojom.fetch.FetchRedirectMode=::blink::WebURLRequest::FetchRedirectMode",
+  "blink.mojom.fetch.Request=::blink::WebServiceWorkerRequest",
+  "blink.mojom.fetch.RequestContextFrameType=::blink::WebURLRequest::FrameType",
+  "blink.mojom.fetch.RequestMode=::blink::WebURLRequest::FetchRequestMode",
+  "blink.mojom.fetch.Response=::blink::WebServiceWorkerResponse",
 ]

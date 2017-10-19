@@ -15,6 +15,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_client.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 
 namespace content {
 
@@ -780,15 +781,15 @@ void ServiceWorkerMetrics::RecordURLRequestJobResult(
 
 void ServiceWorkerMetrics::RecordStatusZeroResponseError(
     bool is_main_resource,
-    blink::WebServiceWorkerResponseError error) {
+    blink::mojom::fetch::ResponseError error) {
   if (is_main_resource) {
     UMA_HISTOGRAM_ENUMERATION(
         "ServiceWorker.URLRequestJob.MainResource.StatusZeroError", error,
-        blink::kWebServiceWorkerResponseErrorLast + 1);
+        static_cast<int>(blink::mojom::fetch::ResponseError::kLast) + 1);
   } else {
     UMA_HISTOGRAM_ENUMERATION(
         "ServiceWorker.URLRequestJob.Subresource.StatusZeroError", error,
-        blink::kWebServiceWorkerResponseErrorLast + 1);
+        static_cast<int>(blink::mojom::fetch::ResponseError::kLast) + 1);
   }
 }
 

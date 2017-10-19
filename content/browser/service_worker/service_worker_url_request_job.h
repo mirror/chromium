@@ -210,8 +210,7 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
   // For UMA.
   void SetResponseBodyType(ResponseBodyType type);
   bool ShouldRecordResult();
-  void RecordStatusZeroResponseError(
-      blink::WebServiceWorkerResponseError error);
+  void RecordStatusZeroResponseError(blink::mojom::fetch::ResponseError error);
 
   const net::HttpResponseInfo* http_info() const;
 

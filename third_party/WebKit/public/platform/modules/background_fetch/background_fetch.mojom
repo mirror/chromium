@@ -68,7 +68,7 @@ interface BackgroundFetchService {
   Fetch(int64 service_worker_registration_id,
         url.mojom.Origin origin,
         string developer_id,
-        array<FetchAPIRequest> requests,
+        array<fetch.Request> requests,
         BackgroundFetchOptions options)
       => (BackgroundFetchError error,
           BackgroundFetchRegistration? registration);

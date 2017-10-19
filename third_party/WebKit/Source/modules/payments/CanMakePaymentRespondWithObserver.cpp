@@ -21,7 +21,7 @@ CanMakePaymentRespondWithObserver::CanMakePaymentRespondWithObserver(
     : RespondWithObserver(context, event_id, observer) {}
 
 void CanMakePaymentRespondWithObserver::OnResponseRejected(
-    WebServiceWorkerResponseError error) {
+    blink::mojom::fetch::ResponseError error) {
   PaymentHandlerUtils::ReportResponseError(GetExecutionContext(),
                                            "CanMakePaymentEvent", error);
 
@@ -39,7 +39,7 @@ void CanMakePaymentRespondWithObserver::OnResponseFulfilled(
                             exception_state);
   if (exception_state.HadException()) {
     exception_state.ClearException();
-    OnResponseRejected(kWebServiceWorkerResponseErrorNoV8Instance);
+    OnResponseRejected(blink::mojom::fetch::ResponseError::NoV8Instance);
     return;
   }
 

@@ -2,15 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-module blink.mojom;
+module blink.mojom.fetch;
 
-import "third_party/WebKit/public/platform/referrer.mojom";
+import "mojo/common/time.mojom";
+import "services/network/public/interfaces/fetch_api.mojom";
 import "storage/public/interfaces/blobs.mojom";
+import "third_party/WebKit/public/platform/referrer.mojom";
 import "url/mojo/url.mojom";
 
 // The mode associated with a request.
 // https://fetch.spec.whatwg.org/#concept-request-mode
-enum FetchRequestMode {
+enum RequestMode {
   SAME_ORIGIN,
   NO_CORS,
   CORS,
@@ -66,7 +68,7 @@ enum RequestContextFrameType {
 
 // Credentials mode indicating which credentials should be included with a
 // request.
-enum FetchCredentialsMode {
+enum CredentialsMode {
   OMIT,
   SAME_ORIGIN,
   INCLUDE,
@@ -75,7 +77,7 @@ enum FetchCredentialsMode {
 
 // The redirect mode indicating how redirects should be handled.
 // https://fetch.spec.whatwg.org/#concept-request-redirect-mode
-enum FetchRedirectMode {
+enum RedirectMode {
   FOLLOW,
   ERROR_MODE,
   MANUAL,
@@ -87,8 +89,30 @@ enum ServiceWorkerFetchType {
   FOREIGN_FETCH,
 };
 
-struct FetchAPIRequest {
-  FetchRequestMode mode;
+// This enum is used in UMA histograms, so don't change the order or remove
+// entries.
+enum ResponseError {
+  Unknown = 0,
+  PromiseRejected = 1,
+  DefaultPrevented = 2,
+  NoV8Instance = 3,
+  ResponseTypeError = 4,
+  ResponseTypeOpaque = 5,
+  ResponseTypeNotBasicOrDefault = 6,
+  BodyUsed = 7,
+  ResponseTypeOpaqueForClientRequest = 8,
+  ResponseTypeOpaqueRedirect = 9,
+  BodyLocked = 10,
+  NoForeignFetchResponse = 11,
+  ForeignFetchHeadersWithoutOrigin = 12,
+  ForeignFetchMismatchedOrigin = 13,
+  RedirectedResponseForNotFollowRequest = 14,
+  DataPipeCreationFailed = 15,
+  kLast
+};
+
+struct Request {
+  RequestMode mode;
   bool is_main_resource_load;
   RequestContextType request_context_type;
   RequestContextFrameType frame_type;
@@ -98,11 +122,25 @@ struct FetchAPIRequest {
   string? blob_uuid;
   uint64 blob_size;
   storage.mojom.Blob? blob;
-  Referrer referrer;
-  FetchCredentialsMode credentials_mode;
-  FetchRedirectMode redirect_mode;
+  blink.mojom.Referrer referrer;
+  CredentialsMode credentials_mode;
+  RedirectMode redirect_mode;
   string? integrity;
   string? client_id;
   bool is_reload;
   ServiceWorkerFetchType fetch_type;
+};
+
+struct Response {
+  array<url.mojom.Url> url_list;
+  int32 status_code;
+  string status_text;
+  network.mojom.FetchResponseType response_type;
+  map<string, string> headers;
+  string? blob_uuid;
+  uint64 blob_size;
+  ResponseError error;
+  mojo.common.mojom.Time response_time;
+  string cache_storage_cache_name;
+  array<string> cors_exposed_header_names;
 };

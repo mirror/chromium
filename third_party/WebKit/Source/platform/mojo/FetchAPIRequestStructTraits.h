@@ -16,57 +16,57 @@ class KURL;
 namespace mojo {
 
 template <>
-struct EnumTraits<::blink::mojom::FetchCredentialsMode,
+struct EnumTraits<::blink::mojom::fetch::CredentialsMode,
                   ::blink::WebURLRequest::FetchCredentialsMode> {
-  static ::blink::mojom::FetchCredentialsMode ToMojom(
+  static ::blink::mojom::fetch::CredentialsMode ToMojom(
       ::blink::WebURLRequest::FetchCredentialsMode input);
 
-  static bool FromMojom(::blink::mojom::FetchCredentialsMode input,
+  static bool FromMojom(::blink::mojom::fetch::CredentialsMode input,
                         ::blink::WebURLRequest::FetchCredentialsMode* out);
 };
 
 template <>
-struct EnumTraits<::blink::mojom::FetchRedirectMode,
+struct EnumTraits<blink::mojom::fetch::RedirectMode,
                   ::blink::WebURLRequest::FetchRedirectMode> {
-  static ::blink::mojom::FetchRedirectMode ToMojom(
+  static blink::mojom::fetch::RedirectMode ToMojom(
       ::blink::WebURLRequest::FetchRedirectMode input);
 
-  static bool FromMojom(::blink::mojom::FetchRedirectMode input,
+  static bool FromMojom(blink::mojom::fetch::RedirectMode input,
                         ::blink::WebURLRequest::FetchRedirectMode* out);
 };
 
 template <>
-struct EnumTraits<::blink::mojom::FetchRequestMode,
+struct EnumTraits<blink::mojom::fetch::RequestMode,
                   ::blink::WebURLRequest::FetchRequestMode> {
-  static ::blink::mojom::FetchRequestMode ToMojom(
+  static blink::mojom::fetch::RequestMode ToMojom(
       ::blink::WebURLRequest::FetchRequestMode input);
 
-  static bool FromMojom(::blink::mojom::FetchRequestMode input,
+  static bool FromMojom(blink::mojom::fetch::RequestMode input,
                         ::blink::WebURLRequest::FetchRequestMode* out);
 };
 
 template <>
-struct EnumTraits<::blink::mojom::RequestContextFrameType,
+struct EnumTraits<::blink::mojom::fetch::RequestContextFrameType,
                   ::blink::WebURLRequest::FrameType> {
-  static ::blink::mojom::RequestContextFrameType ToMojom(
+  static ::blink::mojom::fetch::RequestContextFrameType ToMojom(
       ::blink::WebURLRequest::FrameType input);
 
-  static bool FromMojom(::blink::mojom::RequestContextFrameType input,
+  static bool FromMojom(::blink::mojom::fetch::RequestContextFrameType input,
                         ::blink::WebURLRequest::FrameType* out);
 };
 
 template <>
-struct EnumTraits<::blink::mojom::RequestContextType,
+struct EnumTraits<::blink::mojom::fetch::RequestContextType,
                   ::blink::WebURLRequest::RequestContext> {
-  static ::blink::mojom::RequestContextType ToMojom(
+  static ::blink::mojom::fetch::RequestContextType ToMojom(
       ::blink::WebURLRequest::RequestContext input);
 
-  static bool FromMojom(::blink::mojom::RequestContextType input,
+  static bool FromMojom(::blink::mojom::fetch::RequestContextType input,
                         ::blink::WebURLRequest::RequestContext* out);
 };
 
 template <>
-struct StructTraits<::blink::mojom::FetchAPIRequestDataView,
+struct StructTraits<::blink::mojom::fetch::RequestDataView,
                     ::blink::WebServiceWorkerRequest> {
   static ::blink::WebURLRequest::FetchRequestMode mode(
       const ::blink::WebServiceWorkerRequest& request) {
@@ -123,13 +123,59 @@ struct StructTraits<::blink::mojom::FetchAPIRequestDataView,
   }
 
   // The |fetch_type| is not used by ::blink yet.
-  static ::blink::mojom::blink::ServiceWorkerFetchType fetch_type(
+  static ::blink::mojom::fetch::ServiceWorkerFetchType fetch_type(
       const ::blink::WebServiceWorkerRequest& request) {
-    return ::blink::mojom::blink::ServiceWorkerFetchType::FETCH;
+    return ::blink::mojom::fetch::ServiceWorkerFetchType::FETCH;
   }
 
-  static bool Read(::blink::mojom::FetchAPIRequestDataView,
+  static bool Read(::blink::mojom::fetch::RequestDataView,
                    ::blink::WebServiceWorkerRequest* output);
+};
+
+template <>
+struct StructTraits<blink::mojom::fetch::ResponseDataView,
+                    blink::WebServiceWorkerResponse> {
+  static WTF::Vector<blink::KURL> url_list(
+      const blink::WebServiceWorkerResponse&);
+
+  static int status_code(const blink::WebServiceWorkerResponse& response) {
+    return response.Status();
+  }
+
+  static WTF::String status_text(const blink::WebServiceWorkerResponse&);
+
+  static network::mojom::FetchResponseType response_type(
+      const blink::WebServiceWorkerResponse& response) {
+    return response.ResponseType();
+  }
+
+  static WTF::HashMap<WTF::String, WTF::String> headers(
+      const blink::WebServiceWorkerResponse&);
+
+  static WTF::String blob_uuid(const blink::WebServiceWorkerResponse&);
+
+  static uint64_t blob_size(const blink::WebServiceWorkerResponse& response) {
+    return response.BlobSize();
+  }
+
+  static blink::mojom::fetch::ResponseError error(
+      const blink::WebServiceWorkerResponse& response) {
+    return response.GetError();
+  }
+
+  static base::Time response_time(
+      const blink::WebServiceWorkerResponse& response) {
+    return response.ResponseTime();
+  }
+
+  static WTF::String cache_storage_cache_name(
+      const blink::WebServiceWorkerResponse&);
+
+  static WTF::Vector<WTF::String> cors_exposed_header_names(
+      const blink::WebServiceWorkerResponse&);
+
+  static bool Read(blink::mojom::fetch::ResponseDataView,
+                   blink::WebServiceWorkerResponse* output);
 };
 
 }  // namespace mojo

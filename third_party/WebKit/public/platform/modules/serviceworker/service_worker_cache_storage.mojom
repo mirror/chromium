@@ -1,0 +1,89 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+import "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom";
+import "url/mojo/origin.mojom";
+
+// TODO(cmumford): Put the spec URL here.
+
+// The type of a single batch operation in the Cache API.
+enum OperationType {
+  Undefined,
+  Put,
+  Delete,
+};
+
+enum CacheError {
+  Success,
+  ErrorNotImplemented,
+  ErrorNotFound,
+  ErrorExists,
+  ErrorStorage,
+  ErrorQuotaExceeded,
+  ErrorCacheNameNotFound,
+  ErrorQueryTooLarge,
+};
+
+// Controls how requests are matched in the Cache API.
+struct QueryParams {
+  bool ignore_search;
+  bool ignore_method;
+  bool ignore_vary;
+  string? cache_name;
+};
+
+// A single batch operation for the Cache API.
+struct BatchOperation {
+  OperationType operation_type;
+  blink.mojom.fetch.Request request;
+  blink.mojom.fetch.Response response;
+  QueryParams match_params;
+};
+
+union HasResult {
+  CacheError status;
+  bool has_cache;
+};
+
+union OpenResult {
+  CacheError status;
+  associated CacheStorageCache cache;
+};
+
+union CacheKeysResult {
+  CacheError status;
+  array<blink.mojom.fetch.Request> keys;
+};
+
+union MatchResult {
+  CacheError status;
+  blink.mojom.fetch.Response response;
+};
+
+union MatchAllResult {
+  CacheError status;
+  array<blink.mojom.fetch.Response> responses;
+};
+
+interface CacheStorageCache {
+  Match(url.mojom.Origin origin, blink.mojom.fetch.Request request,
+        QueryParams query_params) => (MatchResult result);
+  MatchAll(blink.mojom.fetch.Request request, QueryParams query_params) =>
+    (MatchAllResult result);
+  Keys(blink.mojom.fetch.Request request, QueryParams query_params) =>
+    (CacheKeysResult result);
+  Batch(array<BatchOperation> batch_operations) => (CacheError result);
+  BlobDataHandled(string uuid);
+};
+
+interface CacheStorage {
+  Has(url.mojom.Origin origin, string cache_name) => (HasResult result);
+  Open(url.mojom.Origin origin, string cache_name) => (OpenResult result);
+  Delete(url.mojom.Origin origin, string cache_name) => (CacheError result);
+  Keys(url.mojom.Origin origin) => (array<string> keys);
+  Match(url.mojom.Origin origin, blink.mojom.fetch.Request request,
+        QueryParams match_params) => (MatchResult result);
+};

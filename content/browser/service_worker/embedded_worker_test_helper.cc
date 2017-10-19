@@ -623,7 +623,7 @@ void EmbeddedWorkerTestHelper::OnFetchEvent(
           base::MakeUnique<std::vector<GURL>>(), 200, "OK",
           network::mojom::FetchResponseType::kDefault,
           base::MakeUnique<ServiceWorkerHeaderMap>(), std::string(), 0,
-          nullptr /* blob */, blink::kWebServiceWorkerResponseErrorUnknown,
+          nullptr /* blob */, blink::mojom::fetch::ResponseError::Unknown,
           base::Time(), false /* is_in_cache_storage */,
           std::string() /* cache_storage_cache_name */,
           base::MakeUnique<

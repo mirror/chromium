@@ -17,86 +17,88 @@
 #include "modules/serviceworkers/WaitUntilObserver.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 
+using blink::mojom::fetch::ResponseError;
+
 namespace blink {
 namespace {
 
 // Returns the error message to let the developer know about the reason of the
 // unusual failures.
-const String GetMessageForResponseError(WebServiceWorkerResponseError error,
+const String GetMessageForResponseError(ResponseError error,
                                         const KURL& request_url) {
   String error_message = "The FetchEvent for \"" + request_url.GetString() +
                          "\" resulted in a network error response: ";
   switch (error) {
-    case kWebServiceWorkerResponseErrorPromiseRejected:
+    case ResponseError::PromiseRejected:
       error_message = error_message + "the promise was rejected.";
       break;
-    case kWebServiceWorkerResponseErrorDefaultPrevented:
+    case ResponseError::DefaultPrevented:
       error_message =
           error_message +
           "preventDefault() was called without calling respondWith().";
       break;
-    case kWebServiceWorkerResponseErrorNoV8Instance:
+    case ResponseError::NoV8Instance:
       error_message =
           error_message +
           "an object that was not a Response was passed to respondWith().";
       break;
-    case kWebServiceWorkerResponseErrorResponseTypeError:
+    case ResponseError::ResponseTypeError:
       error_message = error_message +
                       "the promise was resolved with an error response object.";
       break;
-    case kWebServiceWorkerResponseErrorResponseTypeOpaque:
+    case ResponseError::ResponseTypeOpaque:
       error_message =
           error_message +
           "an \"opaque\" response was used for a request whose type "
           "is not no-cors";
       break;
-    case kWebServiceWorkerResponseErrorResponseTypeNotBasicOrDefault:
+    case ResponseError::ResponseTypeNotBasicOrDefault:
       NOTREACHED();
       break;
-    case kWebServiceWorkerResponseErrorBodyUsed:
+    case ResponseError::BodyUsed:
       error_message =
           error_message +
           "a Response whose \"bodyUsed\" is \"true\" cannot be used "
           "to respond to a request.";
       break;
-    case kWebServiceWorkerResponseErrorResponseTypeOpaqueForClientRequest:
+    case ResponseError::ResponseTypeOpaqueForClientRequest:
       error_message = error_message +
                       "an \"opaque\" response was used for a client request.";
       break;
-    case kWebServiceWorkerResponseErrorResponseTypeOpaqueRedirect:
+    case ResponseError::ResponseTypeOpaqueRedirect:
       error_message = error_message +
                       "an \"opaqueredirect\" type response was used for a "
                       "request whose redirect mode is not \"manual\".";
       break;
-    case kWebServiceWorkerResponseErrorBodyLocked:
+    case ResponseError::BodyLocked:
       error_message = error_message +
                       "a Response whose \"body\" is locked cannot be used to "
                       "respond to a request.";
       break;
-    case kWebServiceWorkerResponseErrorNoForeignFetchResponse:
+    case ResponseError::NoForeignFetchResponse:
       error_message =
           error_message +
           "an object that was not a ForeignFetchResponse was passed "
           "to respondWith().";
       break;
-    case kWebServiceWorkerResponseErrorForeignFetchHeadersWithoutOrigin:
+    case ResponseError::ForeignFetchHeadersWithoutOrigin:
       error_message =
           error_message +
           "headers were specified for a response without an explicit origin.";
       break;
-    case kWebServiceWorkerResponseErrorForeignFetchMismatchedOrigin:
+    case ResponseError::ForeignFetchMismatchedOrigin:
       error_message = error_message +
                       "origin in response does not match origin of request.";
       break;
-    case kWebServiceWorkerResponseErrorRedirectedResponseForNotFollowRequest:
+    case ResponseError::RedirectedResponseForNotFollowRequest:
       error_message = error_message +
                       "a redirected response was used for a request whose "
                       "redirect mode is not \"follow\".";
       break;
-    case kWebServiceWorkerResponseErrorDataPipeCreationFailed:
+    case ResponseError::DataPipeCreationFailed:
       error_message = error_message + "insufficient resources.";
       break;
-    case kWebServiceWorkerResponseErrorUnknown:
+    case ResponseError::Unknown:
     default:
       error_message = error_message + "an unexpected error occurred.";
       break;
@@ -155,8 +157,7 @@ FetchRespondWithObserver* FetchRespondWithObserver::Create(
                                       request_context, observer);
 }
 
-void FetchRespondWithObserver::OnResponseRejected(
-    WebServiceWorkerResponseError error) {
+void FetchRespondWithObserver::OnResponseRejected(ResponseError error) {
   DCHECK(GetExecutionContext());
   GetExecutionContext()->AddConsoleMessage(
       ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel,
@@ -174,7 +175,7 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
   DCHECK(GetExecutionContext());
   if (!V8Response::hasInstance(value.V8Value(),
                                ToIsolate(GetExecutionContext()))) {
-    OnResponseRejected(kWebServiceWorkerResponseErrorNoV8Instance);
+    OnResponseRejected(ResponseError::NoV8Instance);
     return;
   }
   Response* response = V8Response::ToImplWithTypeCheck(
@@ -187,12 +188,12 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
   const FetchResponseData::Type response_type =
       response->GetResponse()->GetType();
   if (response_type == FetchResponseData::kErrorType) {
-    OnResponseRejected(kWebServiceWorkerResponseErrorResponseTypeError);
+    OnResponseRejected(ResponseError::ResponseTypeError);
     return;
   }
   if (response_type == FetchResponseData::kOpaqueType) {
     if (request_mode_ != WebURLRequest::kFetchRequestModeNoCORS) {
-      OnResponseRejected(kWebServiceWorkerResponseErrorResponseTypeOpaque);
+      OnResponseRejected(ResponseError::ResponseTypeOpaque);
       return;
     }
 
@@ -202,29 +203,26 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
     // remove this check when the spec will be updated.
     // Spec issue: https://github.com/whatwg/fetch/issues/101
     if (IsClientRequest(frame_type_, request_context_)) {
-      OnResponseRejected(
-          kWebServiceWorkerResponseErrorResponseTypeOpaqueForClientRequest);
+      OnResponseRejected(ResponseError::ResponseTypeOpaqueForClientRequest);
       return;
     }
   }
   if (redirect_mode_ != WebURLRequest::kFetchRedirectModeManual &&
       response_type == FetchResponseData::kOpaqueRedirectType) {
-    OnResponseRejected(
-        kWebServiceWorkerResponseErrorResponseTypeOpaqueRedirect);
+    OnResponseRejected(ResponseError::ResponseTypeOpaqueRedirect);
     return;
   }
   if (redirect_mode_ != WebURLRequest::kFetchRedirectModeFollow &&
       response->redirected()) {
-    OnResponseRejected(
-        kWebServiceWorkerResponseErrorRedirectedResponseForNotFollowRequest);
+    OnResponseRejected(ResponseError::RedirectedResponseForNotFollowRequest);
     return;
   }
   if (response->IsBodyLocked()) {
-    OnResponseRejected(kWebServiceWorkerResponseErrorBodyLocked);
+    OnResponseRejected(ResponseError::BodyLocked);
     return;
   }
   if (response->bodyUsed()) {
-    OnResponseRejected(kWebServiceWorkerResponseErrorBodyUsed);
+    OnResponseRejected(ResponseError::BodyUsed);
     return;
   }
 
@@ -246,7 +244,7 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
     mojo::ScopedDataPipeConsumerHandle consumer;
     MojoResult result = mojo::CreateDataPipe(nullptr, &producer, &consumer);
     if (result != MOJO_RESULT_OK) {
-      OnResponseRejected(kWebServiceWorkerResponseErrorDataPipeCreationFailed);
+      OnResponseRejected(ResponseError::DataPipeCreationFailed);
       return;
     }
     DCHECK(producer.is_valid());

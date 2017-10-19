@@ -13,7 +13,6 @@
 #include "public/platform/WebURL.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerResponseError.h"
 #include "services/network/public/interfaces/fetch_api.mojom-shared.h"
 
 #if INSIDE_BLINK
@@ -78,8 +77,8 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerResponse {
   mojo::ScopedMessagePipeHandle CloneBlobPtr() const;
 
   // Provides a more detailed error when status() is zero.
-  void SetError(WebServiceWorkerResponseError);
-  WebServiceWorkerResponseError GetError() const;
+  void SetError(mojom::fetch::ResponseError);
+  mojom::fetch::ResponseError GetError() const;
 
   void SetResponseTime(base::Time);
   base::Time ResponseTime() const;

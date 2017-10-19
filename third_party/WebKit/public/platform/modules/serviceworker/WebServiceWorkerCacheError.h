@@ -8,10 +8,12 @@
 namespace blink {
 
 enum WebServiceWorkerCacheError {
+  // TODO(cmumford): Delete after switch to Mojo.
   kWebServiceWorkerCacheErrorNotImplemented,
   kWebServiceWorkerCacheErrorNotFound,
   kWebServiceWorkerCacheErrorExists,
   kWebServiceWorkerCacheErrorQuotaExceeded,
+  kWebServiceWorkerCacheErrorStorage,
   kWebServiceWorkerCacheErrorCacheNameNotFound,
   kWebServiceWorkerCacheErrorTooLarge,
   kWebServiceWorkerCacheErrorLast = kWebServiceWorkerCacheErrorTooLarge

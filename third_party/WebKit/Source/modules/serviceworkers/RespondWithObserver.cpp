@@ -14,6 +14,8 @@
 #include "modules/serviceworkers/WaitUntilObserver.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 
+using blink::mojom::fetch::ResponseError;
+
 namespace blink {
 
 void RespondWithObserver::ContextDestroyed(ExecutionContext*) {
@@ -37,7 +39,7 @@ void RespondWithObserver::DidDispatchEvent(
   if (dispatch_result == DispatchEventResult::kNotCanceled) {
     OnNoResponse();
   } else {
-    OnResponseRejected(kWebServiceWorkerResponseErrorDefaultPrevented);
+    OnResponseRejected(ResponseError::DefaultPrevented);
   }
 
   state_ = kDone;
@@ -59,12 +61,11 @@ void RespondWithObserver::RespondWith(ScriptState* script_state,
       WTF::Bind(&RespondWithObserver::ResponseWasFulfilled,
                 WrapPersistent(this)),
       WTF::Bind(&RespondWithObserver::ResponseWasRejected, WrapPersistent(this),
-                kWebServiceWorkerResponseErrorPromiseRejected));
+                ResponseError::PromiseRejected));
 }
 
-void RespondWithObserver::ResponseWasRejected(
-    WebServiceWorkerResponseError error,
-    const ScriptValue& value) {
+void RespondWithObserver::ResponseWasRejected(ResponseError error,
+                                              const ScriptValue& value) {
   OnResponseRejected(error);
   state_ = kDone;
   observer_.Clear();

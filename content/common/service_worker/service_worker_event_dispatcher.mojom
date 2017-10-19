@@ -31,7 +31,7 @@ struct ExtendableMessageEventSource;
 // TODO(peter): Move this to Blink when ServiceWorkerResponse has a Mojo
 // counterpart.
 struct BackgroundFetchSettledFetch {
-  blink.mojom.FetchAPIRequest request;
+  blink.mojom.fetch.Request request;
   ServiceWorkerResponse response;
 };
 
@@ -96,7 +96,7 @@ interface ServiceWorkerEventDispatcher {
   // handler ran and all outstanding respondWith() and waitUntil() promises have
   // settled. |response_callback| is called once the promise to respondWith()
   // settles, or when the event handler ran without calling respondWith().
-  DispatchFetchEvent(blink.mojom.FetchAPIRequest request,
+  DispatchFetchEvent(blink.mojom.fetch.Request request,
                      FetchEventPreloadHandle? preload_handle,
                      ServiceWorkerFetchResponseCallback response_callback)
       => (blink.mojom.ServiceWorkerEventStatus status,

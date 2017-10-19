@@ -6,49 +6,50 @@
 
 #include "base/logging.h"
 #include "content/public/common/referrer_struct_traits.h"
+#include "ipc/ipc_message_utils.h"
 #include "url/mojo/url_gurl_struct_traits.h"
 
 namespace mojo {
 
-using blink::mojom::FetchCredentialsMode;
-using blink::mojom::FetchRedirectMode;
-using blink::mojom::FetchRequestMode;
-using blink::mojom::RequestContextFrameType;
-using blink::mojom::RequestContextType;
-using blink::mojom::ServiceWorkerFetchType;
+using blink::mojom::fetch::CredentialsMode;
+using blink::mojom::fetch::RedirectMode;
+using blink::mojom::fetch::RequestContextFrameType;
+using blink::mojom::fetch::RequestContextType;
+using blink::mojom::fetch::RequestMode;
+using blink::mojom::fetch::ServiceWorkerFetchType;
 
-FetchCredentialsMode
-EnumTraits<FetchCredentialsMode, content::FetchCredentialsMode>::ToMojom(
+CredentialsMode
+EnumTraits<CredentialsMode, content::FetchCredentialsMode>::ToMojom(
     content::FetchCredentialsMode input) {
   switch (input) {
     case content::FETCH_CREDENTIALS_MODE_OMIT:
-      return FetchCredentialsMode::OMIT;
+      return CredentialsMode::OMIT;
     case content::FETCH_CREDENTIALS_MODE_SAME_ORIGIN:
-      return FetchCredentialsMode::SAME_ORIGIN;
+      return CredentialsMode::SAME_ORIGIN;
     case content::FETCH_CREDENTIALS_MODE_INCLUDE:
-      return FetchCredentialsMode::INCLUDE;
+      return CredentialsMode::INCLUDE;
     case content::FETCH_CREDENTIALS_MODE_PASSWORD:
-      return FetchCredentialsMode::PASSWORD;
+      return CredentialsMode::PASSWORD;
   }
 
   NOTREACHED();
-  return FetchCredentialsMode::OMIT;
+  return CredentialsMode::OMIT;
 }
 
-bool EnumTraits<FetchCredentialsMode, content::FetchCredentialsMode>::FromMojom(
-    FetchCredentialsMode input,
+bool EnumTraits<CredentialsMode, content::FetchCredentialsMode>::FromMojom(
+    CredentialsMode input,
     content::FetchCredentialsMode* out) {
   switch (input) {
-    case FetchCredentialsMode::OMIT:
+    case CredentialsMode::OMIT:
       *out = content::FETCH_CREDENTIALS_MODE_OMIT;
       return true;
-    case FetchCredentialsMode::SAME_ORIGIN:
+    case CredentialsMode::SAME_ORIGIN:
       *out = content::FETCH_CREDENTIALS_MODE_SAME_ORIGIN;
       return true;
-    case FetchCredentialsMode::INCLUDE:
+    case CredentialsMode::INCLUDE:
       *out = content::FETCH_CREDENTIALS_MODE_INCLUDE;
       return true;
-    case FetchCredentialsMode::PASSWORD:
+    case CredentialsMode::PASSWORD:
       *out = content::FETCH_CREDENTIALS_MODE_PASSWORD;
       return true;
   }
@@ -56,33 +57,32 @@ bool EnumTraits<FetchCredentialsMode, content::FetchCredentialsMode>::FromMojom(
   return false;
 }
 
-FetchRedirectMode
-EnumTraits<FetchRedirectMode, content::FetchRedirectMode>::ToMojom(
+RedirectMode EnumTraits<RedirectMode, content::FetchRedirectMode>::ToMojom(
     content::FetchRedirectMode input) {
   switch (input) {
     case content::FetchRedirectMode::FOLLOW_MODE:
-      return FetchRedirectMode::FOLLOW;
+      return RedirectMode::FOLLOW;
     case content::FetchRedirectMode::ERROR_MODE:
-      return FetchRedirectMode::ERROR_MODE;
+      return RedirectMode::ERROR_MODE;
     case content::FetchRedirectMode::MANUAL_MODE:
-      return FetchRedirectMode::MANUAL;
+      return RedirectMode::MANUAL;
   }
 
   NOTREACHED();
-  return FetchRedirectMode::ERROR_MODE;
+  return RedirectMode::ERROR_MODE;
 }
 
-bool EnumTraits<FetchRedirectMode, content::FetchRedirectMode>::FromMojom(
-    FetchRedirectMode input,
+bool EnumTraits<RedirectMode, content::FetchRedirectMode>::FromMojom(
+    RedirectMode input,
     content::FetchRedirectMode* out) {
   switch (input) {
-    case FetchRedirectMode::FOLLOW:
+    case RedirectMode::FOLLOW:
       *out = content::FetchRedirectMode::FOLLOW_MODE;
       return true;
-    case FetchRedirectMode::ERROR_MODE:
+    case RedirectMode::ERROR_MODE:
       *out = content::FetchRedirectMode::ERROR_MODE;
       return true;
-    case FetchRedirectMode::MANUAL:
+    case RedirectMode::MANUAL:
       *out = content::FetchRedirectMode::MANUAL_MODE;
       return true;
   }
@@ -90,43 +90,42 @@ bool EnumTraits<FetchRedirectMode, content::FetchRedirectMode>::FromMojom(
   return false;
 }
 
-FetchRequestMode
-EnumTraits<FetchRequestMode, content::FetchRequestMode>::ToMojom(
+RequestMode EnumTraits<RequestMode, content::FetchRequestMode>::ToMojom(
     content::FetchRequestMode input) {
   switch (input) {
     case content::FETCH_REQUEST_MODE_SAME_ORIGIN:
-      return FetchRequestMode::SAME_ORIGIN;
+      return RequestMode::SAME_ORIGIN;
     case content::FETCH_REQUEST_MODE_NO_CORS:
-      return FetchRequestMode::NO_CORS;
+      return RequestMode::NO_CORS;
     case content::FETCH_REQUEST_MODE_CORS:
-      return FetchRequestMode::CORS;
+      return RequestMode::CORS;
     case content::FETCH_REQUEST_MODE_CORS_WITH_FORCED_PREFLIGHT:
-      return FetchRequestMode::CORS_WITH_FORCED_PREFLIGHT;
+      return RequestMode::CORS_WITH_FORCED_PREFLIGHT;
     case content::FETCH_REQUEST_MODE_NAVIGATE:
-      return FetchRequestMode::NAVIGATE;
+      return RequestMode::NAVIGATE;
   }
 
   NOTREACHED();
-  return FetchRequestMode::NO_CORS;
+  return RequestMode::NO_CORS;
 }
 
-bool EnumTraits<FetchRequestMode, content::FetchRequestMode>::FromMojom(
-    FetchRequestMode input,
+bool EnumTraits<RequestMode, content::FetchRequestMode>::FromMojom(
+    RequestMode input,
     content::FetchRequestMode* out) {
   switch (input) {
-    case FetchRequestMode::SAME_ORIGIN:
+    case RequestMode::SAME_ORIGIN:
       *out = content::FETCH_REQUEST_MODE_SAME_ORIGIN;
       return true;
-    case FetchRequestMode::NO_CORS:
+    case RequestMode::NO_CORS:
       *out = content::FETCH_REQUEST_MODE_NO_CORS;
       return true;
-    case FetchRequestMode::CORS:
+    case RequestMode::CORS:
       *out = content::FETCH_REQUEST_MODE_CORS;
       return true;
-    case FetchRequestMode::CORS_WITH_FORCED_PREFLIGHT:
+    case RequestMode::CORS_WITH_FORCED_PREFLIGHT:
       *out = content::FETCH_REQUEST_MODE_CORS_WITH_FORCED_PREFLIGHT;
       return true;
-    case FetchRequestMode::NAVIGATE:
+    case RequestMode::NAVIGATE:
       *out = content::FETCH_REQUEST_MODE_NAVIGATE;
       return true;
   }
@@ -392,7 +391,7 @@ bool EnumTraits<ServiceWorkerFetchType, content::ServiceWorkerFetchType>::
 }
 
 std::map<std::string, std::string>
-StructTraits<blink::mojom::FetchAPIRequestDataView,
+StructTraits<blink::mojom::fetch::RequestDataView,
              content::ServiceWorkerFetchRequest>::
     headers(const content::ServiceWorkerFetchRequest& request) {
   std::map<std::string, std::string> header_map;
@@ -400,9 +399,9 @@ StructTraits<blink::mojom::FetchAPIRequestDataView,
   return header_map;
 }
 
-bool StructTraits<blink::mojom::FetchAPIRequestDataView,
+bool StructTraits<blink::mojom::fetch::RequestDataView,
                   content::ServiceWorkerFetchRequest>::
-    Read(blink::mojom::FetchAPIRequestDataView data,
+    Read(blink::mojom::fetch::RequestDataView data,
          content::ServiceWorkerFetchRequest* out) {
   std::unordered_map<std::string, std::string> headers;
   base::Optional<std::string> blob_uuid;
@@ -430,6 +429,50 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
     out->blob = base::MakeRefCounted<storage::BlobHandle>(std::move(blob));
   out->is_reload = data.is_reload();
   return true;
+}
+
+bool StructTraits<blink::mojom::fetch::ResponseDataView,
+                  content::ServiceWorkerResponse>::
+    Read(blink::mojom::fetch::ResponseDataView data,
+         content::ServiceWorkerResponse* out) {
+  std::unordered_map<std::string, std::string> headers;
+  base::Optional<std::string> blob_uuid;
+  if (!data.ReadUrlList(&out->url_list) ||
+      !data.ReadStatusText(&out->status_text) ||
+      !data.ReadResponseType(&out->response_type) ||
+      !data.ReadHeaders(&headers) || !data.ReadBlobUuid(&blob_uuid) ||
+      !data.ReadError(&out->error) ||
+      !data.ReadResponseTime(&out->response_time) ||
+      !data.ReadCacheStorageCacheName(&out->cache_storage_cache_name) ||
+      !data.ReadCorsExposedHeaderNames(&out->cors_exposed_header_names)) {
+    return false;
+  }
+
+  out->status_code = data.status_code();
+  out->blob_size = data.blob_size();
+#if 0
+  // TODO(cmumford): Figure where this is set. Move to the out param?
+  out->is_in_cache_storage = data.is_in_cache_storage();
+#endif
+  out->headers.insert(headers.begin(), headers.end());
+  if (blob_uuid) {
+    out->blob_uuid = blob_uuid.value();
+    out->blob_size = data.blob_size();
+  }
+
+  return true;
+}
+
+std::map<std::string, std::string>
+StructTraits<blink::mojom::fetch::ResponseDataView,
+             content::ServiceWorkerResponse>::
+    headers(const content::ServiceWorkerResponse& response) {
+  std::map<std::string, std::string> headers;
+
+  for (const auto& it : response.headers)
+    headers[it.first] = it.second;
+
+  return headers;
 }
 
 }  // namespace mojo

@@ -36,8 +36,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::ServiceWorkerErrorType,
 IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::ServiceWorkerState,
                           blink::mojom::ServiceWorkerState::kLast)
 
-IPC_ENUM_TRAITS_MAX_VALUE(blink::WebServiceWorkerResponseError,
-                          blink::kWebServiceWorkerResponseErrorLast)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::mojom::fetch::ResponseError,
+                          blink::mojom::fetch::ResponseError::kLast)
 
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebServiceWorkerClientType,
                           blink::kWebServiceWorkerClientTypeLast)

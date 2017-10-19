@@ -19,14 +19,14 @@ class WebServiceWorkerResponsePrivate
   WebServiceWorkerResponsePrivate()
       : status(0),
         response_type(network::mojom::FetchResponseType::kDefault),
-        error(kWebServiceWorkerResponseErrorUnknown) {}
+        error(mojom::fetch::ResponseError::Unknown) {}
   WebVector<WebURL> url_list;
   unsigned short status;
   WebString status_text;
   network::mojom::FetchResponseType response_type;
   HTTPHeaderMap headers;
   RefPtr<BlobDataHandle> blob_data_handle;
-  WebServiceWorkerResponseError error;
+  mojom::fetch::ResponseError error;
   Time response_time;
   WebString cache_storage_cache_name;
   WebVector<WebString> cors_exposed_header_names;
@@ -142,11 +142,11 @@ mojo::ScopedMessagePipeHandle WebServiceWorkerResponse::CloneBlobPtr() const {
       .PassHandle();
 }
 
-void WebServiceWorkerResponse::SetError(WebServiceWorkerResponseError error) {
+void WebServiceWorkerResponse::SetError(mojom::fetch::ResponseError error) {
   private_->error = error;
 }
 
-WebServiceWorkerResponseError WebServiceWorkerResponse::GetError() const {
+mojom::fetch::ResponseError WebServiceWorkerResponse::GetError() const {
   return private_->error;
 }
 

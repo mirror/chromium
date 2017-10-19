@@ -18,11 +18,12 @@ sources = [
   "//content/common/service_worker/service_worker_fetch_request_struct_traits.cc",
 ]
 type_mappings = [
-  "blink.mojom.FetchCredentialsMode=::content::FetchCredentialsMode",
-  "blink.mojom.FetchRedirectMode=::content::FetchRedirectMode",
-  "blink.mojom.FetchRequestMode=::content::FetchRequestMode",
-  "blink.mojom.FetchAPIRequest=::content::ServiceWorkerFetchRequest",
   "blink.mojom.RequestContextFrameType=::content::RequestContextFrameType",
   "blink.mojom.RequestContextType=::content::RequestContextType",
   "blink.mojom.ServiceWorkerFetchType=::content::ServiceWorkerFetchType",
+  "blink.mojom.fetch.FetchCredentialsMode=::content::FetchCredentialsMode",
+  "blink.mojom.fetch.FetchRedirectMode=::content::FetchRedirectMode",
+  "blink.mojom.fetch.Request=::content::ServiceWorkerFetchRequest",
+  "blink.mojom.fetch.RequestMode=::content::FetchRequestMode",
+  "blink.mojom.fetch.Response=::content::ServiceWorkerResponse",
 ]

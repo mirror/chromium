@@ -38,7 +38,7 @@ enum class FetchRedirectMode {
 };
 
 // Whether this is a regular fetch, or a foreign fetch request.
-// Duplicate of blink::mojom::ServiceWorkerFetchType.
+// Duplicate of blink::mojom::fetch::ServiceWorkerFetchType.
 enum class ServiceWorkerFetchType {
   FETCH,
   FOREIGN_FETCH,

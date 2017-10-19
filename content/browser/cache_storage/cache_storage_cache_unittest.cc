@@ -459,7 +459,7 @@ class CacheStorageCacheTest : public testing::Test {
         base::MakeUnique<std::vector<GURL>>(1, GURL(url)), 200, "OK",
         network::mojom::FetchResponseType::kDefault, std::move(headers),
         blob_uuid, blob_size, nullptr /* blob */,
-        blink::kWebServiceWorkerResponseErrorUnknown, base::Time::Now(),
+        blink::mojom::fetch::ResponseError::Unknown, base::Time::Now(),
         false /* is_in_cache_storage */,
         std::string() /* cache_storage_cache_name */,
         std::move(cors_exposed_header_names));
@@ -1536,7 +1536,7 @@ TEST_F(CacheStorageCacheTest, CaselessServiceWorkerResponseHeaders) {
       base::MakeUnique<std::vector<GURL>>(), 200, "OK",
       network::mojom::FetchResponseType::kDefault,
       base::MakeUnique<ServiceWorkerHeaderMap>(), "", 0, nullptr /* blob */,
-      blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+      blink::mojom::fetch::ResponseError::Unknown, base::Time(),
       false /* is_in_cache_storage */,
       std::string() /* cache_storage_cache_name */,
       base::MakeUnique<

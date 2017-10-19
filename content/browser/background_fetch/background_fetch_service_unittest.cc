@@ -423,7 +423,7 @@ TEST_F(BackgroundFetchServiceTest, FetchSuccessEventDispatch) {
 
     // TODO(peter): change-detector tests for unsupported properties.
     EXPECT_EQ(fetches[i].response.error,
-              blink::kWebServiceWorkerResponseErrorUnknown);
+              blink::mojom::fetch::ResponseError::Unknown);
 
     // Verify that all properties have a sensible value.
     EXPECT_FALSE(fetches[i].response.response_time.is_null());
@@ -518,7 +518,7 @@ TEST_F(BackgroundFetchServiceTest, FetchFailEventDispatch) {
 
     // TODO(peter): change-detector tests for unsupported properties.
     EXPECT_EQ(fetches[i].response.error,
-              blink::kWebServiceWorkerResponseErrorUnknown);
+              blink::mojom::fetch::ResponseError::Unknown);
     EXPECT_TRUE(fetches[i].response.cors_exposed_header_names.empty());
   }
 }

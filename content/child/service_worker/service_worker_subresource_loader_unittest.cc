@@ -120,7 +120,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
                 network::mojom::FetchResponseType::kDefault,
                 base::MakeUnique<ServiceWorkerHeaderMap>(), "" /* blob_uuid */,
                 0 /* blob_size */, nullptr /* blob */,
-                blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+                blink::mojom::fetch::ResponseError::Unknown, base::Time(),
                 false /* response_is_in_cache_storage */,
                 std::string() /* response_cache_storage_cache_name */,
                 base::MakeUnique<
@@ -143,7 +143,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
                 network::mojom::FetchResponseType::kDefault,
                 base::MakeUnique<ServiceWorkerHeaderMap>(), "" /* blob_uuid */,
                 0 /* blob_size */, nullptr /* blob */,
-                blink::kWebServiceWorkerResponseErrorPromiseRejected,
+                blink::mojom::fetch::ResponseError::PromiseRejected,
                 base::Time(), false /* response_is_in_cache_storage */,
                 std::string() /* response_cache_storage_cache_name */,
                 base::MakeUnique<
@@ -161,7 +161,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
                 base::MakeUnique<std::vector<GURL>>(), 302, "Found",
                 network::mojom::FetchResponseType::kDefault, std::move(headers),
                 "" /* blob_uuid */, 0 /* blob_size */, nullptr /* blob */,
-                blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+                blink::mojom::fetch::ResponseError::Unknown, base::Time(),
                 false /* response_is_in_cache_storage */,
                 std::string() /* response_cache_storage_cache_name */,
                 base::MakeUnique<

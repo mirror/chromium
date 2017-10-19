@@ -416,7 +416,7 @@ class CacheStorageManagerTest : public testing::Test {
         std::move(url_list), status_code, "OK", response_type,
         base::MakeUnique<ServiceWorkerHeaderMap>(response_headers),
         blob_handle->uuid(), request.url.spec().size(), nullptr /* blob */,
-        blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+        blink::mojom::fetch::ResponseError::Unknown, base::Time(),
         false /* is_in_cache_storage */,
         std::string() /* cache_storage_cache_name */,
         base::MakeUnique<

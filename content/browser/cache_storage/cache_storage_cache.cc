@@ -267,7 +267,7 @@ std::unique_ptr<ServiceWorkerResponse> CreateResponse(
       metadata.response().status_text(),
       ProtoResponseTypeToFetchResponseType(metadata.response().response_type()),
       std::move(headers), "", 0, nullptr /* blob */,
-      blink::kWebServiceWorkerResponseErrorUnknown,
+      blink::mojom::fetch::ResponseError::Unknown,
       base::Time::FromInternalValue(metadata.response().response_time()),
       true /* is_in_cache_storage */, cache_name,
       base::MakeUnique<ServiceWorkerHeaderList>(
