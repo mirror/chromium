@@ -407,9 +407,7 @@ bool PepperVideoCaptureHost::SetStatus(PP_VideoCaptureStatus_Dev status,
   return true;
 }
 
-PepperVideoCaptureHost::BufferInfo::BufferInfo()
-    : in_use(false), data(NULL), buffer() {
-}
+PepperVideoCaptureHost::BufferInfo::BufferInfo() :, data(NULL), buffer() {}
 
 PepperVideoCaptureHost::BufferInfo::BufferInfo(const BufferInfo& other) =
     default;

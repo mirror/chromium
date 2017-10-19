@@ -144,7 +144,7 @@ class CONTENT_EXPORT CategorizedWorkerPool : public base::TaskRunner,
   // has finished running all associated tasks.
   base::ConditionVariable has_namespaces_with_finished_running_tasks_cv_;
   // Set during shutdown. Tells Run() to return when no more tasks are pending.
-  bool shutdown_;
+  bool shutdown_{false};
 };
 
 }  // namespace content

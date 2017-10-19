@@ -35,7 +35,7 @@ class PluginInstanceThrottlerImplTest
   const int kMaximumFramesToExamine =
       PluginInstanceThrottlerImpl::kMaximumFramesToExamine;
 
-  PluginInstanceThrottlerImplTest() : change_callback_calls_(0) {}
+  PluginInstanceThrottlerImplTest() : {}
   ~PluginInstanceThrottlerImplTest() override {
     throttler_->RemoveObserver(this);
   }
@@ -80,7 +80,7 @@ class PluginInstanceThrottlerImplTest
 
   std::unique_ptr<PluginInstanceThrottlerImpl> throttler_;
 
-  int change_callback_calls_;
+  int change_callback_calls_{0};
 
   base::MessageLoop loop_;
 };

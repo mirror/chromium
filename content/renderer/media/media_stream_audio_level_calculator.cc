@@ -29,7 +29,7 @@ float MaxAmplitude(const float* audio_data, int length) {
 
 }  // namespace
 
-MediaStreamAudioLevelCalculator::Level::Level() : level_(0.0f) {}
+MediaStreamAudioLevelCalculator::Level::Level() : {}
 
 MediaStreamAudioLevelCalculator::Level::~Level() {}
 
@@ -44,7 +44,7 @@ void MediaStreamAudioLevelCalculator::Level::Set(float level) {
 }
 
 MediaStreamAudioLevelCalculator::MediaStreamAudioLevelCalculator()
-    : counter_(0), max_amplitude_(0.0f), level_(new Level()) {}
+    :, , level_(new Level()) {}
 
 MediaStreamAudioLevelCalculator::~MediaStreamAudioLevelCalculator() {
   level_->Set(0.0f);

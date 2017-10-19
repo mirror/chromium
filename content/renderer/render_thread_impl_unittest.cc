@@ -11,9 +11,7 @@ namespace content {
 
 class RenderThreadImplUnittest : public testing::Test {
  public:
-  RenderThreadImplUnittest()
-      : kCustomizableHistogram_("Histogram1"),
-        kNormalHistogram_("Histogram2") {}
+  RenderThreadImplUnittest() :, {}
   ~RenderThreadImplUnittest() override {}
 
  protected:
@@ -22,8 +20,8 @@ class RenderThreadImplUnittest : public testing::Test {
     histogram_customizer_.custom_histograms_.insert(kCustomizableHistogram_);
   }
   RenderThreadImpl::HistogramCustomizer histogram_customizer_;
-  const char* kCustomizableHistogram_;
-  const char* kNormalHistogram_;
+  const char* kCustomizableHistogram_{"Histogram1"};
+  const char* kNormalHistogram_{"Histogram2"};
 };
 
 TEST_F(RenderThreadImplUnittest, CustomHistogramsWithNoNavigations) {

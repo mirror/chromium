@@ -75,7 +75,7 @@ class PepperBroker : public base::RefCountedThreadSafe<PepperBroker> {
     PendingConnection(const PendingConnection& other);
     ~PendingConnection();
 
-    bool is_authorized;
+    bool is_authorized{false};
     base::WeakPtr<PPB_Broker_Impl> client;
   };
 

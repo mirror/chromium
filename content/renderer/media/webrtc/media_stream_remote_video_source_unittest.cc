@@ -46,9 +46,9 @@ class MediaStreamRemoteVideoSourceTest
         child_process_(new ChildProcess()),
         mock_factory_(new MockPeerConnectionDependencyFactory()),
         webrtc_video_track_(MockWebRtcVideoTrack::Create("test")),
-        remote_source_(nullptr),
-        number_of_successful_track_starts_(0),
-        number_of_failed_track_starts_(0) {}
+        ,
+        ,
+  {}
 
   void SetUp() override {
     scoped_refptr<base::SingleThreadTaskRunner> main_thread =
@@ -148,10 +148,10 @@ class MediaStreamRemoteVideoSourceTest
   std::unique_ptr<MockPeerConnectionDependencyFactory> mock_factory_;
   scoped_refptr<webrtc::VideoTrackInterface> webrtc_video_track_;
   // |remote_source_| is owned by |webkit_source_|.
-  MediaStreamRemoteVideoSourceUnderTest* remote_source_;
+  MediaStreamRemoteVideoSourceUnderTest* remote_source_{nullptr};
   blink::WebMediaStreamSource webkit_source_;
-  int number_of_successful_track_starts_;
-  int number_of_failed_track_starts_;
+  int number_of_successful_track_starts_{0};
+  int number_of_failed_track_starts_{0};
 };
 
 TEST_F(MediaStreamRemoteVideoSourceTest, StartTrack) {

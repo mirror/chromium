@@ -9,7 +9,7 @@
 namespace content {
 
 ThreadSafeScriptContainer::ThreadSafeScriptContainer()
-    : lock_(), waiting_cv_(&lock_), are_all_data_added_(false) {}
+    : lock_(), waiting_cv_(&lock_), {}
 
 void ThreadSafeScriptContainer::AddOnIOThread(const GURL& url,
                                               std::unique_ptr<Data> data) {

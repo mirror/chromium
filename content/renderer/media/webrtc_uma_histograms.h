@@ -95,7 +95,7 @@ class CONTENT_EXPORT PerSessionWebRTCAPIMetrics {
  private:
   void ResetUsage();
 
-  int num_streams_;
+  int num_streams_{0};
   bool has_used_api_[INVALID_NAME];
 
   SEQUENCE_CHECKER(sequence_checker_);

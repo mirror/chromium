@@ -36,8 +36,8 @@ class MediaStreamVideoTrackTest : public ::testing::Test {
   MediaStreamVideoTrackTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        mock_source_(nullptr),
-        source_started_(false) {}
+        ,
+  {}
 
   ~MediaStreamVideoTrackTest() override {}
 
@@ -127,8 +127,8 @@ class MediaStreamVideoTrackTest : public ::testing::Test {
   const ChildProcess child_process_;
   blink::WebMediaStreamSource blink_source_;
   // |mock_source_| is owned by |webkit_source_|.
-  MockMediaStreamVideoSource* mock_source_;
-  bool source_started_;
+  MockMediaStreamVideoSource* mock_source_{nullptr};
+  bool source_started_{false};
 };
 
 TEST_F(MediaStreamVideoTrackTest, AddAndRemoveSink) {

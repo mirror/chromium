@@ -215,9 +215,9 @@ class CONTENT_EXPORT PeerConnectionTracker
   PeerConnectionIdMap peer_connection_id_map_;
 
   // This keeps track of the next available local ID.
-  int next_local_id_;
+  int next_local_id_{1};
   base::ThreadChecker main_thread_;
-  RenderThread* send_target_for_test_;
+  RenderThread* send_target_for_test_{nullptr};
 
   DISALLOW_COPY_AND_ASSIGN(PeerConnectionTracker);
 };

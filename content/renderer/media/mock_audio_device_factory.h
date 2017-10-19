@@ -72,7 +72,7 @@ class MockAudioDeviceFactory : public AudioDeviceFactory {
 
  private:
   scoped_refptr<MockCapturerSource> mock_capturer_source_;
-  bool did_create_once_;
+  bool did_create_once_{false};
 
   DISALLOW_COPY_AND_ASSIGN(MockAudioDeviceFactory);
 };

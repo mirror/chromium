@@ -31,7 +31,7 @@ class ResizingModeSelector {
   bool is_synchronous_mode() const;
 
  private:
-  bool is_synchronous_mode_;
+  bool is_synchronous_mode_{false};
 
   DISALLOW_COPY_AND_ASSIGN(ResizingModeSelector);
 };

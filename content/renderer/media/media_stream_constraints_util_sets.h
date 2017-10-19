@@ -99,7 +99,7 @@ template <typename T>
 class DiscreteSet {
  public:
   // Creates a universal set.
-  DiscreteSet() : is_universal_(true) {}
+  DiscreteSet() : {}
   // Creates a set containing the elements in |elements|.
   // It is the responsibility of the caller to ensure that |elements| is not
   // equivalent to the universal set and that |elements| has no repeated
@@ -163,7 +163,7 @@ class DiscreteSet {
   bool is_universal() const { return is_universal_; }
 
  private:
-  bool is_universal_;
+  bool is_universal_{true};
   std::vector<T> elements_;
 };
 

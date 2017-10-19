@@ -38,7 +38,7 @@ static const int kMaxWaitTimeMs = 5000;
 
 class FetcherDelegate {
  public:
-  FetcherDelegate() : completed_(false), timed_out_(false) {
+  FetcherDelegate() :, {
     // Start a repeating timer waiting for the download to complete.  The
     // callback has to be a static function, so we hold on to our instance.
     FetcherDelegate::instance_ = this;
@@ -93,8 +93,8 @@ class FetcherDelegate {
 
  private:
   base::OneShotTimer timer_;
-  bool completed_;
-  bool timed_out_;
+  bool completed_{false};
+  bool timed_out_{false};
   WebURLResponse response_;
   std::string data_;
   base::Closure quit_task_;
@@ -125,7 +125,7 @@ class EvilFetcherDelegate : public FetcherDelegate {
 
 class ResourceFetcherTests : public ContentBrowserTest {
  public:
-  ResourceFetcherTests() : render_view_routing_id_(MSG_ROUTING_NONE) {}
+  ResourceFetcherTests() : {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kSingleProcess);
@@ -312,7 +312,7 @@ class ResourceFetcherTests : public ContentBrowserTest {
     EXPECT_EQ(kHeader, delegate->data());
   }
 
-  int32_t render_view_routing_id_;
+  int32_t render_view_routing_id_{MSG_ROUTING_NONE};
 };
 
 // Test a fetch from the test server.

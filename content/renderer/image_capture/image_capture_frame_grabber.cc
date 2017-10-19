@@ -33,7 +33,7 @@ void OnError(std::unique_ptr<WebImageCaptureGrabFrameCallbacks> callbacks) {
 class ImageCaptureFrameGrabber::SingleShotFrameHandler
     : public base::RefCountedThreadSafe<SingleShotFrameHandler> {
  public:
-  SingleShotFrameHandler() : first_frame_received_(false) {}
+  SingleShotFrameHandler() : {}
 
   // Receives a |frame| and converts its pixels into a SkImage via an internal
   // PaintSurface and SkPixmap. Alpha channel, if any, is copied.
@@ -47,7 +47,7 @@ class ImageCaptureFrameGrabber::SingleShotFrameHandler
 
   // Flag to indicate that the first frames has been processed, and subsequent
   // ones can be safely discarded.
-  bool first_frame_received_;
+  bool first_frame_received_{false};
 
   DISALLOW_COPY_AND_ASSIGN(SingleShotFrameHandler);
 };
@@ -107,8 +107,7 @@ void ImageCaptureFrameGrabber::SingleShotFrameHandler::OnVideoFrameOnIOThread(
   callback.Run(surface->makeImageSnapshot());
 }
 
-ImageCaptureFrameGrabber::ImageCaptureFrameGrabber()
-    : frame_grab_in_progress_(false), weak_factory_(this) {}
+ImageCaptureFrameGrabber::ImageCaptureFrameGrabber() :, weak_factory_(this) {}
 
 ImageCaptureFrameGrabber::~ImageCaptureFrameGrabber() {
   DCHECK(thread_checker_.CalledOnValidThread());

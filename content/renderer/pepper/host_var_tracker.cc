@@ -37,8 +37,7 @@ bool HostVarTracker::V8ObjectVarKey::operator<(
   return std::tie(instance, hash) < std::tie(other.instance, other.hash);
 }
 
-HostVarTracker::HostVarTracker()
-    : VarTracker(SINGLE_THREADED), last_shared_memory_map_id_(0) {}
+HostVarTracker::HostVarTracker() : VarTracker(SINGLE_THREADED), {}
 
 HostVarTracker::~HostVarTracker() {}
 

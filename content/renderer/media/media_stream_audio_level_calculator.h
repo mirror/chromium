@@ -40,7 +40,7 @@ class CONTENT_EXPORT MediaStreamAudioLevelCalculator {
     void Set(float level);
 
     mutable base::Lock lock_;
-    float level_;
+    float level_{0.0f};
   };
 
   MediaStreamAudioLevelCalculator();
@@ -55,8 +55,8 @@ class CONTENT_EXPORT MediaStreamAudioLevelCalculator {
   void Calculate(const media::AudioBus& audio_bus, bool assume_nonzero_energy);
 
  private:
-  int counter_;
-  float max_amplitude_;
+  int counter_{0};
+  float max_amplitude_{0.0f};
   const scoped_refptr<Level> level_;
 };
 

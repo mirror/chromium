@@ -102,7 +102,7 @@ class HostVarTracker : public ppapi::VarTracker {
   };
   typedef std::map<int, SharedMemoryMapEntry> SharedMemoryMap;
   SharedMemoryMap shared_memory_map_;
-  uint32_t last_shared_memory_map_id_;
+  uint32_t last_shared_memory_map_id_{0};
 
   DISALLOW_COPY_AND_ASSIGN(HostVarTracker);
 };

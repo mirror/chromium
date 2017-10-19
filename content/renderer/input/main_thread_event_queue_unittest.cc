@@ -116,8 +116,7 @@ class ReceivedCallback {
 
 class HandledEventCallbackTracker {
  public:
-  HandledEventCallbackTracker()
-      : handling_event_(false), weak_ptr_factory_(this) {
+  HandledEventCallbackTracker() :, weak_ptr_factory_(this) {
     weak_this_ = weak_ptr_factory_.GetWeakPtr();
   }
 
@@ -144,7 +143,7 @@ class HandledEventCallbackTracker {
     return callbacks_received_;
   }
 
-  bool handling_event_;
+  bool handling_event_{false};
 
  private:
   std::vector<ReceivedCallback> callbacks_received_;
@@ -159,8 +158,8 @@ class MainThreadEventQueueTest : public testing::TestWithParam<unsigned>,
   MainThreadEventQueueTest()
       : main_task_runner_(new base::TestSimpleTaskRunner()),
         raf_aligned_input_setting_(GetParam()),
-        needs_main_frame_(false),
-        closure_count_(0) {
+        ,
+  {
     std::vector<base::StringPiece> features;
     std::vector<base::StringPiece> disabled_features;
     if (raf_aligned_input_setting_ & kRafAlignedEnabledTouch) {
@@ -261,9 +260,9 @@ class MainThreadEventQueueTest : public testing::TestWithParam<unsigned>,
   std::unique_ptr<HandledEventCallbackTracker> handler_callback_;
 
   int raf_aligned_input_setting_;
-  bool needs_main_frame_;
+  bool needs_main_frame_{false};
   base::TimeTicks frame_time_;
-  unsigned closure_count_;
+  unsigned closure_count_{0};
 };
 
 TEST_P(MainThreadEventQueueTest, NonBlockingWheel) {

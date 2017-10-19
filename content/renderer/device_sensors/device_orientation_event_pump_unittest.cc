@@ -23,9 +23,7 @@ namespace content {
 class MockDeviceOrientationListener
     : public blink::WebDeviceOrientationListener {
  public:
-  MockDeviceOrientationListener() : did_change_device_orientation_(false) {
-    memset(&data_, 0, sizeof(data_));
-  }
+  MockDeviceOrientationListener() : { memset(&data_, 0, sizeof(data_)); }
   ~MockDeviceOrientationListener() override {}
 
   void DidChangeDeviceOrientation(
@@ -43,7 +41,7 @@ class MockDeviceOrientationListener
   const device::OrientationData& data() const { return data_; }
 
  private:
-  bool did_change_device_orientation_;
+  bool did_change_device_orientation_{false};
   device::OrientationData data_;
 
   DISALLOW_COPY_AND_ASSIGN(MockDeviceOrientationListener);

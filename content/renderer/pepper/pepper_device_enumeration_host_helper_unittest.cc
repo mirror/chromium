@@ -48,7 +48,7 @@ std::vector<ppapi::DeviceRefData> TestEnumerationData() {
 class TestDelegate : public PepperDeviceEnumerationHostHelper::Delegate,
                      public base::SupportsWeakPtr<TestDelegate> {
  public:
-  TestDelegate() : last_used_id_(0) {}
+  TestDelegate() : {}
 
   ~TestDelegate() override { CHECK(monitoring_callbacks_.empty()); }
 
@@ -91,7 +91,7 @@ class TestDelegate : public PepperDeviceEnumerationHostHelper::Delegate,
 
  private:
   std::map<uint32_t, DevicesCallback> monitoring_callbacks_;
-  int last_used_id_;
+  int last_used_id_{0};
 
   DISALLOW_COPY_AND_ASSIGN(TestDelegate);
 };

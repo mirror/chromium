@@ -35,7 +35,7 @@ MediaStreamVideoSource* MediaStreamVideoSource::GetVideoSource(
 }
 
 MediaStreamVideoSource::MediaStreamVideoSource()
-    : state_(NEW),
+    :,
       track_adapter_(
           new VideoTrackAdapter(ChildProcess::current()->io_task_runner())),
       weak_factory_(this) {}

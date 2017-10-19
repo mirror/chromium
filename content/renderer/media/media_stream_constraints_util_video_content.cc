@@ -56,8 +56,7 @@ using DoubleRangeSet = NumericRangeSet<double>;
 
 class VideoContentCaptureCandidates {
  public:
-  VideoContentCaptureCandidates()
-      : has_explicit_max_height_(false), has_explicit_max_width_(false) {}
+  VideoContentCaptureCandidates() :, {}
   explicit VideoContentCaptureCandidates(
       const blink::WebMediaTrackConstraintSet& constraint_set)
       : resolution_set_(ResolutionSet::FromConstraintSet(constraint_set)),
@@ -114,8 +113,8 @@ class VideoContentCaptureCandidates {
 
  private:
   ResolutionSet resolution_set_;
-  bool has_explicit_max_height_;
-  bool has_explicit_max_width_;
+  bool has_explicit_max_height_{false};
+  bool has_explicit_max_width_{false};
   DoubleRangeSet frame_rate_set_;
   StringSet device_id_set_;
   BoolSet noise_reduction_set_;

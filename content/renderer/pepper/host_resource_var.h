@@ -48,7 +48,7 @@ class HostResourceVar : public ppapi::ResourceVar {
  private:
   // Real resource ID in the plugin. 0 if one has not yet been created
   // (indicating that there is a pending resource host).
-  PP_Resource pp_resource_;
+  PP_Resource pp_resource_{0};
 
   // Pending resource host ID in the renderer.
   int pending_renderer_host_id_;

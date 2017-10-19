@@ -61,13 +61,13 @@ class CONTENT_EXPORT MouseLockDispatcher {
     return mouse_locked_ || pending_lock_request_ || pending_unlock_request_;
   }
 
-  bool mouse_locked_;
+  bool mouse_locked_{false};
   // If both |pending_lock_request_| and |pending_unlock_request_| are true,
   // it means a lock request was sent before an unlock request and we haven't
   // received responses for them. The logic in LockMouse() makes sure that a
   // lock request won't be sent when there is a pending unlock request.
-  bool pending_lock_request_;
-  bool pending_unlock_request_;
+  bool pending_lock_request_{false};
+  bool pending_unlock_request_{false};
 
   // |target_| is the pending or current owner of mouse lock. We retain a non
   // owning reference here that must be cleared by |OnLockTargetDestroyed|

@@ -125,8 +125,7 @@ SkBitmap PPB_ImageData_Impl::GetMappedBitmap() const {
 
 // ImageDataPlatformBackend ----------------------------------------------------
 
-ImageDataPlatformBackend::ImageDataPlatformBackend() : width_(0), height_(0) {
-}
+ImageDataPlatformBackend::ImageDataPlatformBackend() :, {}
 
 ImageDataPlatformBackend::~ImageDataPlatformBackend() {
 }
@@ -214,7 +213,7 @@ SkBitmap ImageDataPlatformBackend::GetMappedBitmap() const {
 
 // ImageDataSimpleBackend ------------------------------------------------------
 
-ImageDataSimpleBackend::ImageDataSimpleBackend() : map_count_(0) {}
+ImageDataSimpleBackend::ImageDataSimpleBackend() : {}
 
 ImageDataSimpleBackend::~ImageDataSimpleBackend() {}
 

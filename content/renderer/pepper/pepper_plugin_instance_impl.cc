@@ -403,8 +403,7 @@ PepperPluginInstanceImpl* PepperPluginInstanceImpl::GetForTesting(
   return instance;
 }
 
-PepperPluginInstanceImpl::ExternalDocumentLoader::ExternalDocumentLoader()
-    : finished_loading_(false) {}
+PepperPluginInstanceImpl::ExternalDocumentLoader::ExternalDocumentLoader() : {}
 
 PepperPluginInstanceImpl::ExternalDocumentLoader::~ExternalDocumentLoader() {}
 

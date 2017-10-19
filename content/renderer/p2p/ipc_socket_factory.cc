@@ -157,7 +157,7 @@ class IpcPacketSocket : public rtc::AsyncPacketSocket,
   // send_bytes_available_;
   void AdjustUdpSendBufferSize();
 
-  P2PSocketType type_;
+  P2PSocketType type_{P2P_SOCKET_UDP};
 
   // Used to verify that a method runs on the thread that created this socket.
   base::ThreadChecker thread_checker_;
@@ -174,7 +174,7 @@ class IpcPacketSocket : public rtc::AsyncPacketSocket,
   rtc::SocketAddress remote_address_;
 
   // Current state of the object.
-  InternalState state_;
+  InternalState state_{IS_UNINITIALIZED};
 
   // Track the number of bytes allowed to be sent non-blocking. This is used to
   // throttle the sending of packets to the browser process. For each packet
@@ -191,20 +191,20 @@ class IpcPacketSocket : public rtc::AsyncPacketSocket,
 
   // Set to true once EWOULDBLOCK was returned from Send(). Indicates that the
   // caller expects SignalWritable notification.
-  bool writable_signal_expected_;
+  bool writable_signal_expected_{false};
 
   // Current error code. Valid when state_ == IS_ERROR.
-  int error_;
+  int error_{0};
   int options_[P2P_SOCKET_OPT_MAX];
 
   // Track the maximum and current consecutive bytes discarded due to not enough
   // send_bytes_available_.
-  size_t max_discard_bytes_sequence_;
-  size_t current_discard_bytes_sequence_;
+  size_t max_discard_bytes_sequence_{0};
+  size_t current_discard_bytes_sequence_{0};
 
   // Track the total number of packets and the number of packets discarded.
-  size_t packets_discarded_;
-  size_t total_packets_;
+  size_t packets_discarded_{0};
+  size_t total_packets_{0};
 
   DISALLOW_COPY_AND_ASSIGN(IpcPacketSocket);
 };
@@ -237,15 +237,7 @@ class AsyncAddressResolverImpl : public rtc::AsyncResolverInterface {
 };
 
 IpcPacketSocket::IpcPacketSocket()
-    : type_(P2P_SOCKET_UDP),
-      state_(IS_UNINITIALIZED),
-      send_bytes_available_(kMaximumInFlightBytes),
-      writable_signal_expected_(false),
-      error_(0),
-      max_discard_bytes_sequence_(0),
-      current_discard_bytes_sequence_(0),
-      packets_discarded_(0),
-      total_packets_(0) {
+    :, , send_bytes_available_(kMaximumInFlightBytes), , , , , , {
   static_assert(kMaximumInFlightBytes > 0, "would send at zero rate");
   std::fill_n(options_, static_cast<int> (P2P_SOCKET_OPT_MAX),
               kDefaultNonSetOptionValue);

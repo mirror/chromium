@@ -354,8 +354,7 @@ class InternalStatsObserver : public webrtc::StatsObserver {
   const scoped_refptr<base::SingleThreadTaskRunner> main_thread_;
 };
 
-PeerConnectionTracker::PeerConnectionTracker()
-    : next_local_id_(1), send_target_for_test_(nullptr) {}
+PeerConnectionTracker::PeerConnectionTracker() :, {}
 
 PeerConnectionTracker::~PeerConnectionTracker() {
 }

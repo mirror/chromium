@@ -378,7 +378,7 @@ class CONTENT_EXPORT WebRtcAudioDeviceImpl : public WebRtcAudioDeviceNotImpl,
   webrtc::AudioTransport* audio_transport_callback_;
 
   // Cached value of the current audio delay on the output/renderer side.
-  int output_delay_ms_;
+  int output_delay_ms_{0};
 
   // Protects |recording_|, |output_delay_ms_|, |input_delay_ms_|, |renderer_|
   // |recording_|, |microphone_volume_| and |playout_sinks_|.
@@ -388,9 +388,9 @@ class CONTENT_EXPORT WebRtcAudioDeviceImpl : public WebRtcAudioDeviceNotImpl,
   // than one input stream calling OnData().
   mutable base::Lock capture_callback_lock_;
 
-  bool initialized_;
-  bool playing_;
-  bool recording_;
+  bool initialized_{false};
+  bool playing_{false};
+  bool recording_{false};
 
   // Buffer used for temporary storage during render callback.
   // It is only accessed by the audio render thread.

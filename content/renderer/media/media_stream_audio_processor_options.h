@@ -85,18 +85,18 @@ class CONTENT_EXPORT EchoInformation {
 
   // Counter to track 5 seconds of data in order to query a new metric from
   // webrtc::EchoCancellation::GetEchoDelayMetrics().
-  int delay_stats_time_ms_;
-  bool echo_frames_received_;
+  int delay_stats_time_ms_{0};
+  bool echo_frames_received_{false};
 
   // Counter to track 1 second of data in order to query a new divergent filter
   // fraction metric from webrtc::EchoCancellation::GetMetrics().
-  int divergent_filter_stats_time_ms_;
+  int divergent_filter_stats_time_ms_{0};
 
   // Total number of times we queried for the divergent filter fraction metric.
-  int num_divergent_filter_fraction_;
+  int num_divergent_filter_fraction_{0};
 
   // Number of non-zero divergent filter fraction metrics.
-  int num_non_zero_divergent_filter_fraction_;
+  int num_non_zero_divergent_filter_fraction_{0};
 
   // Ensures that this class is accessed on the same thread.
   base::ThreadChecker thread_checker_;

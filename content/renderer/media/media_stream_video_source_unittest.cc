@@ -39,9 +39,9 @@ class MediaStreamVideoSourceTest : public ::testing::Test {
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         child_process_(new ChildProcess()),
-        number_of_successful_constraints_applied_(0),
-        number_of_failed_constraints_applied_(0),
-        result_(MEDIA_DEVICE_OK),
+        ,
+        ,
+        ,
         result_name_(""),
         mock_source_(new MockMediaStreamVideoSource(
             media::VideoCaptureFormat(gfx::Size(1280, 720),
@@ -253,9 +253,9 @@ class MediaStreamVideoSourceTest : public ::testing::Test {
   const base::test::ScopedTaskEnvironment scoped_task_environment_;
   const std::unique_ptr<ChildProcess> child_process_;
   blink::WebMediaStreamTrack track_to_release_;
-  int number_of_successful_constraints_applied_;
-  int number_of_failed_constraints_applied_;
-  content::MediaStreamRequestResult result_;
+  int number_of_successful_constraints_applied_{0};
+  int number_of_failed_constraints_applied_{0};
+  content::MediaStreamRequestResult result_{MEDIA_DEVICE_OK};
   blink::WebString result_name_;
   blink::WebMediaStreamSource webkit_source_;
   // |mock_source_| is owned by |webkit_source_|.

@@ -602,7 +602,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
 
    private:
     std::list<std::string> data_;
-    bool finished_loading_;
+    bool finished_loading_{false};
     std::unique_ptr<blink::WebURLError> error_;
 
     DISALLOW_COPY_AND_ASSIGN(ExternalDocumentLoader);

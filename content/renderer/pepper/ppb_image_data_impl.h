@@ -140,8 +140,8 @@ class ImageDataPlatformBackend : public PPB_ImageData_Impl::Backend {
  private:
   // This will be NULL before initialization, and if this PPB_ImageData_Impl is
   // swapped with another.
-  int width_;
-  int height_;
+  int width_{0};
+  int height_{0};
   std::unique_ptr<TransportDIB> dib_;
 
   // When the device is mapped, this is the image. Null when umapped.
@@ -175,7 +175,7 @@ class ImageDataSimpleBackend : public PPB_ImageData_Impl::Backend {
   // skia_bitmap_ is backed by shared_memory_.
   SkBitmap skia_bitmap_;
   std::unique_ptr<SkCanvas> skia_canvas_;
-  uint32_t map_count_;
+  uint32_t map_count_{0};
 
   DISALLOW_COPY_AND_ASSIGN(ImageDataSimpleBackend);
 };

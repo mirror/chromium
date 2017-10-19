@@ -6,7 +6,7 @@
 
 namespace content {
 
-HostResourceVar::HostResourceVar() : pp_resource_(0) {}
+HostResourceVar::HostResourceVar() : {}
 
 HostResourceVar::HostResourceVar(PP_Resource pp_resource)
     : pp_resource_(pp_resource),

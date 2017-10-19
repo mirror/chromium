@@ -42,15 +42,15 @@ class CONTENT_EXPORT V8VarConverter {
 
   struct VarResult {
    public:
-    VarResult() : completed_synchronously(false), success(false) {}
+    VarResult() :, {}
 
     // True if the conversion completed synchronously and the callback will not
     // be called.
-    bool completed_synchronously;
+    bool completed_synchronously{false};
 
     // True if the conversion was successful. Only valid if
     // |completed_synchronously| is true.
-    bool success;
+    bool success{false};
 
     // The result if the conversion was successful. Only valid if
     // |completed_synchronously| and |success| are true.

@@ -43,7 +43,7 @@ class FakeMediaStreamAudioSource
         stop_event_(base::WaitableEvent::ResetPolicy::MANUAL,
                     base::WaitableEvent::InitialState::NOT_SIGNALED),
         next_buffer_size_(kBufferSize),
-        sample_count_(0) {}
+  {}
 
   ~FakeMediaStreamAudioSource() final {
     CHECK(main_thread_checker_.CalledOnValidThread());
@@ -120,7 +120,7 @@ class FakeMediaStreamAudioSource
 
   base::subtle::Atomic32 next_buffer_size_;
   std::unique_ptr<media::AudioBus> audio_bus_;
-  int sample_count_;
+  int sample_count_{0};
 
   DISALLOW_COPY_AND_ASSIGN(FakeMediaStreamAudioSource);
 };
@@ -137,10 +137,7 @@ class FakeMediaStreamAudioSink : public MediaStreamAudioSink {
     WAS_DISABLED
   };
 
-  FakeMediaStreamAudioSink()
-      : MediaStreamAudioSink(), expected_sample_count_(-1),
-        num_on_data_calls_(0), audio_is_silent_(true), was_ended_(false),
-        enable_state_(NO_ENABLE_NOTIFICATION) {}
+  FakeMediaStreamAudioSink() : MediaStreamAudioSink(), , , , , {}
 
   ~FakeMediaStreamAudioSink() final {
     CHECK(main_thread_checker_.CalledOnValidThread());
@@ -226,12 +223,12 @@ class FakeMediaStreamAudioSink : public MediaStreamAudioSink {
 
   mutable base::Lock params_lock_;
   media::AudioParameters params_;
-  int expected_sample_count_;
+  int expected_sample_count_{-1};
   base::TimeTicks last_estimated_capture_time_;
-  base::subtle::Atomic32 num_on_data_calls_;
-  base::subtle::Atomic32 audio_is_silent_;
-  bool was_ended_;
-  EnableState enable_state_;
+  base::subtle::Atomic32 num_on_data_calls_{0};
+  base::subtle::Atomic32 audio_is_silent_{true};
+  bool was_ended_{false};
+  EnableState enable_state_{NO_ENABLE_NOTIFICATION};
 
   DISALLOW_COPY_AND_ASSIGN(FakeMediaStreamAudioSink);
 };

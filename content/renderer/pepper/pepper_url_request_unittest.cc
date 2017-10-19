@@ -45,7 +45,7 @@ class URLRequestInfoTest : public RenderViewTest {
  public:
   // Note: using -1 as the instance value allows code in
   // url_request_info_util.cc to detect that this is a test instance.
-  URLRequestInfoTest() : pp_instance_(-1) {}
+  URLRequestInfoTest() : {}
 
   void SetUp() override {
     RenderViewTest::SetUp();
@@ -100,7 +100,7 @@ class URLRequestInfoTest : public RenderViewTest {
     return info_->SetStringProperty(prop, s);
   }
 
-  PP_Instance pp_instance_;
+  PP_Instance pp_instance_{-1};
 
   // Disables locking for the duration of the test.
   ppapi::ProxyLock::LockingDisablerForTest disable_locking_;

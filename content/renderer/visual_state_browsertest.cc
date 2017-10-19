@@ -61,7 +61,7 @@ class CommitObserver : public RenderViewObserver {
 
 class VisualStateTest : public ContentBrowserTest {
  public:
-  VisualStateTest() : callback_count_(0) {}
+  VisualStateTest() : {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kSingleProcess);
@@ -84,7 +84,7 @@ class VisualStateTest : public ContentBrowserTest {
   int GetCallbackCount() { return callback_count_; }
 
  private:
-  int callback_count_;
+  int callback_count_{0};
 };
 
 // This test verifies that visual state callbacks do not deadlock. In other

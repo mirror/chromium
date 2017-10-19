@@ -85,7 +85,7 @@ class CONTENT_EXPORT ThreadSafeScriptContainer
   base::ConditionVariable waiting_cv_;
   std::map<GURL, std::unique_ptr<Data>> script_data_;
   GURL waiting_url_;
-  bool are_all_data_added_;
+  bool are_all_data_added_{false};
 };
 
 }  // namespace content

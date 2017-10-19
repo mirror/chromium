@@ -90,9 +90,7 @@ class TestStreamProvider : public media::mojom::AudioOutputStreamProvider {
 
 class TestRemoteFactory : public mojom::RendererAudioOutputStreamFactory {
  public:
-  TestRemoteFactory()
-      : expect_request_(false),
-        binding_(this, mojo::MakeRequest(&this_proxy_)) {}
+  TestRemoteFactory() :, binding_(this, mojo::MakeRequest(&this_proxy_)) {}
 
   ~TestRemoteFactory() override {}
 
@@ -157,7 +155,7 @@ class TestRemoteFactory : public mojom::RendererAudioOutputStreamFactory {
  private:
   mojom::RendererAudioOutputStreamFactory* get() { return this_proxy_.get(); }
 
-  bool expect_request_;
+  bool expect_request_{false};
   int64_t expected_session_id_;
   std::string expected_device_id_;
 

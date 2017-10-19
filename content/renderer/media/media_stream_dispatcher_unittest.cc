@@ -32,7 +32,7 @@ class MockMediaStreamDispatcherEventHandler
     : public MediaStreamDispatcherEventHandler,
       public base::SupportsWeakPtr<MockMediaStreamDispatcherEventHandler> {
  public:
-  MockMediaStreamDispatcherEventHandler() : request_id_(-1) {}
+  MockMediaStreamDispatcherEventHandler() : {}
 
   void OnStreamGenerated(int request_id,
                          const std::string& label,
@@ -81,7 +81,7 @@ class MockMediaStreamDispatcherEventHandler
     video_device_ = MediaStreamDevice();
   }
 
-  int request_id_;
+  int request_id_{-1};
   std::string label_;
   std::string device_stopped_label_;
   MediaStreamDevice audio_device_;

@@ -30,10 +30,10 @@ using LockResult = device::mojom::ScreenOrientationLockResult;
 class MockLockOrientationCallback : public blink::WebLockOrientationCallback {
  public:
   struct LockOrientationResultHolder {
-    LockOrientationResultHolder() : succeeded_(false), failed_(false) {}
+    LockOrientationResultHolder() :, {}
 
-    bool succeeded_;
-    bool failed_;
+    bool succeeded_{false};
+    bool failed_{false};
     blink::WebLockOrientationError error_;
   };
 

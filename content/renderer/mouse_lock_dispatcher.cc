@@ -9,11 +9,7 @@
 
 namespace content {
 
-MouseLockDispatcher::MouseLockDispatcher() : mouse_locked_(false),
-                                             pending_lock_request_(false),
-                                             pending_unlock_request_(false),
-                                             target_(NULL) {
-}
+MouseLockDispatcher::MouseLockDispatcher() :, , , target_(NULL) {}
 
 MouseLockDispatcher::~MouseLockDispatcher() {
 }

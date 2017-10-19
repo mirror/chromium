@@ -144,9 +144,9 @@ class CONTENT_EXPORT MainThreadEventQueue
 
     MainThreadEventQueueTaskList events_;
     // A BeginMainFrame has been requested but not received yet.
-    bool sent_main_frame_request_;
+    bool sent_main_frame_request_{false};
     // A PostTask to the main thread has been sent but not executed yet.
-    bool sent_post_task_;
+    bool sent_post_task_{false};
     base::TimeTicks last_async_touch_move_timestamp_;
   };
 

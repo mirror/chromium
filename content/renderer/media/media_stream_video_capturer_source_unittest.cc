@@ -104,7 +104,7 @@ class MediaStreamVideoCapturerSourceTest : public testing::Test {
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         child_process_(new ChildProcess()),
-        source_stopped_(false) {
+  {
     auto delegate = base::MakeUnique<MockVideoCapturerSource>();
     delegate_ = delegate.get();
     EXPECT_CALL(*delegate_, GetPreferredFormats());
@@ -169,7 +169,7 @@ class MediaStreamVideoCapturerSourceTest : public testing::Test {
   MediaStreamVideoCapturerSource* source_;  // owned by |webkit_source_|.
   MockVideoCapturerSource* delegate_;       // owned by |source_|.
   blink::WebString webkit_source_id_;
-  bool source_stopped_;
+  bool source_stopped_{false};
 };
 
 TEST_F(MediaStreamVideoCapturerSourceTest, StartAndStop) {

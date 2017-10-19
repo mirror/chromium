@@ -143,7 +143,7 @@ class ContentDecryptorDelegate {
   template <typename Callback>
   class TrackableCallback {
    public:
-    TrackableCallback() : id_(0u) {}
+    TrackableCallback() : {}
     ~TrackableCallback() {
       // Callbacks must be satisfied.
       DCHECK_EQ(id_, 0u);
@@ -167,7 +167,7 @@ class ContentDecryptorDelegate {
     }
 
    private:
-    uint32_t id_;
+    uint32_t id_{0u};
     Callback cb_;
   };
 

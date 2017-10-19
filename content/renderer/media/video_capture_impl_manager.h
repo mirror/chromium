@@ -114,7 +114,7 @@ class CONTENT_EXPORT VideoCaptureImplManager {
 
   // This is an internal ID for identifying clients of VideoCaptureImpl.
   // The ID is global for the render process.
-  int next_client_id_;
+  int next_client_id_{0};
 
   // Hold a pointer to the Render Main message loop to check we operate on the
   // right thread.
@@ -123,7 +123,7 @@ class CONTENT_EXPORT VideoCaptureImplManager {
   // Set to true if SuspendDevices(true) was called. This, along with
   // DeviceEntry::is_individually_suspended, is used to determine whether to
   // take action when suspending/resuming each device.
-  bool is_suspending_all_;
+  bool is_suspending_all_{false};
 
   // Bound to the render thread.
   // NOTE: Weak pointers must be invalidated before all other member variables.

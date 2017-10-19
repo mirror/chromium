@@ -195,7 +195,7 @@ class AudioCaptureCandidates {
   static const blink::BooleanConstraint blink::WebMediaTrackConstraintSet::*
       kBlinkBoolConstraintFields[NUM_BOOL_CONSTRAINTS];
 
-  const char* failed_constraint_name_;
+  const char* failed_constraint_name_{nullptr};
 
   AudioDeviceSet audio_device_set_;  // Device-related constraints.
   std::array<DiscreteSet<bool>, NUM_BOOL_CONSTRAINTS> bool_sets_;
@@ -227,8 +227,7 @@ struct BoolSetPropertyEntry {
   bool default_value;
 };
 
-AudioCaptureCandidates::AudioCaptureCandidates()
-    : failed_constraint_name_(nullptr) {}
+AudioCaptureCandidates::AudioCaptureCandidates() : {}
 
 AudioCaptureCandidates::AudioCaptureCandidates(
     const blink::WebMediaTrackConstraintSet& constraint_set,

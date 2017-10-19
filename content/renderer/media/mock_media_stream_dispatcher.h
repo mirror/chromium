@@ -50,15 +50,15 @@ class MockMediaStreamDispatcher : public MediaStreamDispatcher {
   void AddAudioDeviceToArray(bool matched_output, const std::string& device_id);
   void AddVideoDeviceToArray(bool facing_user, const std::string& device_id);
 
-  int audio_input_request_id_;
+  int audio_input_request_id_{-1};
   base::WeakPtr<MediaStreamDispatcherEventHandler> event_handler_;
-  int request_stream_counter_;
-  int stop_audio_device_counter_;
-  int stop_video_device_counter_;
+  int request_stream_counter_{0};
+  int stop_audio_device_counter_{0};
+  int stop_video_device_counter_{0};
 
   std::string stream_label_;
-  int session_id_;
-  bool test_same_id_;
+  int session_id_{0};
+  bool test_same_id_{false};
   MediaStreamDevices audio_devices_;
   MediaStreamDevices video_devices_;
 

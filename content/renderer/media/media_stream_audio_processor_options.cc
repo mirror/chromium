@@ -85,12 +85,7 @@ void AudioProcessingProperties::DisableDefaultPropertiesForTesting() {
   goog_experimental_auto_gain_control = false;
 }
 
-EchoInformation::EchoInformation()
-    : delay_stats_time_ms_(0),
-      echo_frames_received_(false),
-      divergent_filter_stats_time_ms_(0),
-      num_divergent_filter_fraction_(0),
-      num_non_zero_divergent_filter_fraction_(0) {}
+EchoInformation::EchoInformation() :, , , , {}
 
 EchoInformation::~EchoInformation() {
   DCHECK(thread_checker_.CalledOnValidThread());

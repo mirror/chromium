@@ -53,11 +53,11 @@ class MockSyncSocket : public base::SyncSocket {
 
   // Buffer to be shared between two |MockSyncSocket|s. Allocated on heap.
   struct SharedBuffer {
-    SharedBuffer() : data(), start(0), length(0) {}
+    SharedBuffer() :, , {}
 
-    uint8_t data[kSharedBufferSize];
-    size_t start;
-    size_t length;
+    uint8_t data[kSharedBufferSize]{};
+    size_t start{0};
+    size_t length{0};
   };
 
   // Callback used for pairing an A.Send() with B.Receieve() without blocking.
@@ -116,7 +116,7 @@ size_t MockSyncSocket::Receive(void* buffer, size_t length) {
 // in the production code (minus the mocks).
 class FakeSpeechRecognizer {
  public:
-  FakeSpeechRecognizer() : is_responsive_(true) {}
+  FakeSpeechRecognizer() : {}
 
   void Initialize(
       const blink::WebMediaStreamTrack& track,
@@ -184,7 +184,7 @@ class FakeSpeechRecognizer {
 
 
  private:
-  bool is_responsive_;
+  bool is_responsive_{true};
 
   // Shared memory for the audio and synchronization.
   std::unique_ptr<base::SharedMemory> shared_memory_;

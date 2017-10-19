@@ -65,7 +65,7 @@ class MockWebRTCPeerConnectionHandlerClient
  private:
   blink::WebMediaStream remote_stream_;
   std::string candidate_sdp_;
-  int candidate_mline_index_;
+  int candidate_mline_index_{-1};
   std::string candidate_mid_;
 
   DISALLOW_COPY_AND_ASSIGN(MockWebRTCPeerConnectionHandlerClient);
