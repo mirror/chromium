@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed22fa30_64e06d51",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-19T21:30:04Z",
+      "side": 1,
+      "message": "Nit: Could add a blank line here for consistency with most other scripts here.",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79ce10c_1f678f68",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-19T21:30:04Z",
+      "side": 1,
+      "message": "Could note that these \"entries\" are dicts from the config, with the keys \"paths\" and \"allowed\".",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b03415_fbc17842",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-19T21:30:04Z",
+      "side": 1,
+      "message": "Nit: You could indent all Args and Returns sections with four spaces for consistency with other Python code here currently -- but I think we want to change the indent later to match general Chromium Python style right?",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46d9b07_b8772d25",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-19T21:30:04Z",
+      "side": 1,
+      "message": "I think this is likely the same as .readlines().\nOptionally, `filename` could also be called `path`.",
+      "range": {
+        "startLine": 212,
+        "startChar": 29,
+        "endLine": 212,
+        "endChar": 49
+      },
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8f72ff_a836da4d",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-19T21:30:04Z",
+      "side": 1,
+      "message": "You could catch IOError if you want to print a message and return non-zero status code when a file can\u0027t be read.",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
