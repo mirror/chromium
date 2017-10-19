@@ -179,7 +179,7 @@ media::AudioRendererMixer* AudioRendererMixerManager::GetMixer(
   // mix and output audio with a given latency. This is opposite to
   // CreateInput() which creates a sink which is probably never used for output.
   if (!latency_map_[latency]) {
-    latency_map_[latency] = 1;
+    latency_map_[latency] = true;
     // Log the updated latency map. This can't be done once in the end of the
     // renderer lifetime, because the destructor is usually not called. So,
     // we'll have a sort of exponential scale here, with a smaller subset
