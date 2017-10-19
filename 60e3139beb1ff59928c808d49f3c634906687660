@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc9dc3cf_3e3db3b3",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T17:35:03Z",
+      "side": 1,
+      "message": "Ack. The code is removed.",
+      "parentUuid": "55311f46_8d4f4fc6",
+      "revId": "60e3139beb1ff59928c808d49f3c634906687660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7795c1b_30a7aa33",
         "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T16:43:53Z",
       "side": 1,
       "message": "optional: inject this into DBusThreadManager instead of passing it to |scan_interface_|\n\nThat way you don\u0027t need DocumentScanInterfaceChromeos.lorgnette_manager_client_",
+      "revId": "60e3139beb1ff59928c808d49f3c634906687660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e5d040_16368d4f",
+        "filename": "extensions/browser/api/document_scan/document_scan_interface_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-19T17:35:03Z",
+      "side": 1,
+      "message": "Thank you for suggestion. Done!",
+      "parentUuid": "d7795c1b_30a7aa33",
       "revId": "60e3139beb1ff59928c808d49f3c634906687660",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
