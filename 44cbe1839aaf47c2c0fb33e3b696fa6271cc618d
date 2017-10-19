@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bef9065_75fe2865",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "Could you please format this like so:\n\nTitle at most 50 characters.\n\nBody of the text, wrapped to 72 characters.",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9243d043_01d331b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "typo: implements the",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7754a1bd_f2266f67",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "Have you considered naming this something like GetContainerNestingMaxDepth, and providing it as just a utility function -- it would be up to a caller to check if the nesting is too much or not.",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7461d187_510e257d",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "nit: -space before colon.",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b2eb36_2c4bbfb0",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "formatting nit: Could you please re-wrap this entire comment to 80?",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ebbf46_9af96e9e",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "Can you please clarify what \"possible\" means here exactly?",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 79
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15981d9_df34d254",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "nit: kMaxNestingLevel?",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cfb169_48d51864",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "Can you please define \"nested CBOR\" here? The language from the spec is pretty good:\n\nBecause some authenticators are memory constrained, the depth of nested CBOR structures used by all message encodings is limited to at most four (4) levels of any combination of CBOR maps and/or CBOR arrays. Authenticators must support at least 4 levels of CBOR nesting. Clients, platforms, and servers must not use more than 4 levels of CBOR nesting.\n\nAlso, it\u0027s unclear to me if 4 levels of nesting means [[[[1]]]] or [[[1]]]?",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea0504b_fc1cc41a",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "Can we somehow make this not depend on net/test?",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd29dcf_4d7e8afa",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-19T11:22:59Z",
+      "side": 1,
+      "message": "nit: Accidental indent?",
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
