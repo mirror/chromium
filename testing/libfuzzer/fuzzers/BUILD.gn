@@ -543,3 +543,13 @@ fuzzer_test("javascript_parser_proto_fuzzer") {
   ]
   include_dirs = [ "$root_build_dir/$target_gen_dir" ]
 }
+
+fuzzer_test("base_pattern_fuzzer") {
+  sources = [
+    "base_pattern_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+    "//base/test:test_support",
+  ]
+}
