@@ -563,6 +563,7 @@ source_set("unit_tests") {
 
 test("video_decode_accelerator_service_unittest") {
   sources = [
+    "ipc/service/gpu_jpeg_decode_accelerator_mojo_unittest.cc",
     "ipc/service/gpu_jpeg_decode_accelerator_unittest.cc",
   ]
 
@@ -574,6 +575,7 @@ test("video_decode_accelerator_service_unittest") {
     "//gpu:test_support",
     "//media/gpu/ipc/common",
     "//media/gpu/ipc/service",
+    "//mojo/edk/system",
     "//testing/gmock",
     "//testing/gtest",
     "//ui/gfx:test_support",

@@ -112,10 +112,12 @@ bool CameraHalDispatcherImpl::StartThreads() {
   return true;
 }
 
-bool CameraHalDispatcherImpl::Start() {
+bool CameraHalDispatcherImpl::Start(
+    GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory) {
   if (!StartThreads()) {
     return false;
   }
+  jpeg_decoder_factory_ = jpeg_decoder_factory;
   base::WaitableEvent started(base::WaitableEvent::ResetPolicy::MANUAL,
                               base::WaitableEvent::InitialState::NOT_SIGNALED);
   blocking_io_task_runner_->PostTask(
@@ -189,6 +191,11 @@ void CameraHalDispatcherImpl::RegisterClient(
       base::Unretained(this), base::Unretained(client_observer.get())));
   AddClientObserver(std::move(client_observer));
   VLOG(1) << "Camera HAL client registered";
+}
+
+void CameraHalDispatcherImpl::GetGpuJpegDecodeAccelerator(
+    media::mojom::GpuJpegDecodeAcceleratorRequest accerlator_request) {
+  jpeg_decoder_factory_.Run(std::move(accerlator_request));
 }
 
 void CameraHalDispatcherImpl::CreateSocket(base::WaitableEvent* started) {
