@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "046c03f8_1ed649d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/ChromeWebApkHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T23:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d7720cb_43cb6e88",
+      "range": {
+        "startLine": 27,
+        "startChar": 25,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ae34ec9_c6ecf83d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/ChromeWebApkHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T23:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e150c7b_cda8e5b8",
+      "range": {
+        "startLine": 27,
+        "startChar": 25,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1d3104e_44f4f365",
         "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
         "patchSetId": 1
@@ -69,6 +117,30 @@
       "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d07c4e_b1638961",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T23:09:15Z",
+      "side": 1,
+      "message": "Of course, silly me.\nChange to be a static variable that I can change.",
+      "parentUuid": "a1d3104e_44f4f365",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "02ff6043_d9b44fe3",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T23:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f2efac_ea3f9efd",
+      "range": {
+        "startLine": 272,
+        "startChar": 30,
+        "endLine": 272,
+        "endChar": 48
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5586afc_c4ff850e",
         "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
         "patchSetId": 1
@@ -115,6 +211,30 @@
       "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8357a3ef_b138f7f1",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T23:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5586afc_c4ff850e",
+      "range": {
+        "startLine": 49,
+        "startChar": 40,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "b78c05f8_94a5fc22",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T23:09:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7ec9673_a591acff",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3afb05b_34c5d2b5",
         "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
         "patchSetId": 1
@@ -185,6 +329,30 @@
       "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fafb86_685f9820",
+        "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-19T23:09:15Z",
+      "side": 1,
+      "message": "I doubt it could be null, just being paranoid.",
+      "parentUuid": "d3afb05b_34c5d2b5",
+      "range": {
+        "startLine": 242,
+        "startChar": 1,
+        "endLine": 245,
+        "endChar": 9
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
