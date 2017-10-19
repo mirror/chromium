@@ -59,13 +59,13 @@ IsolateHolder::IsolateHolder(
                                        base::SysInfo::AmountOfVirtualMemory());
   params.array_buffer_allocator = allocator;
   params.allow_atomics_wait = atomics_wait_mode == kAllowAtomicsWait;
-  params.external_references = reference;
 
   if (startup_data) {
     CHECK(reference);
     V8Initializer::GetV8ContextSnapshotData(startup_data);
     if (startup_data->data) {
       params.snapshot_blob = startup_data;
+      params.external_references = reference;
     }
   }
   isolate_ = v8::Isolate::New(params);
