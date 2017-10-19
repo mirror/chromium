@@ -60,10 +60,10 @@ public class TestWebServer {
     private static TestWebServer sInstance;
     private static TestWebServer sSecureInstance;
 
-    private final ServerThread mServerThread;
+    private ServerThread mServerThread;
     private String mServerUri;
-    private final boolean mSsl;
-    private final int mPort;
+    private boolean mSsl;
+    private int mPort;
 
     private static class Response {
         final byte[] mResponseData;
@@ -97,13 +97,7 @@ public class TestWebServer {
     private final Map<String, Integer> mResponseCountMap = new HashMap<String, Integer>();
     private final Map<String, List<String>> mLastRequestMap = new HashMap<String, List<String>>();
 
-    /**
-     * Create and start a local HTTP server instance.
-     * @param port Port number the server must use, or 0 to automatically choose a free port.
-     * @param ssl True if the server should be using secure sockets.
-     * @throws Exception
-     */
-    private TestWebServer(int port, boolean ssl) throws Exception {
+    private void init(int port, boolean ssl, String hostname) throws Exception {
         mPort = port;
 
         mSsl = ssl;
@@ -120,22 +114,49 @@ public class TestWebServer {
         }
 
         mServerThread = new ServerThread(this, mPort, mSsl);
-        mServerUri += "//localhost:" + mServerThread.mSocket.getLocalPort();
+        mServerUri += "//" + hostname + ":" + mServerThread.mSocket.getLocalPort();
     }
 
-    public static TestWebServer start(int port) throws Exception {
+    /**
+     * Create and start a local HTTP server instance on `localhost`.
+     * @param port Port number the server must use, or 0 to automatically choose a free port.
+     * @param ssl True if the server should be using secure sockets.
+     * @throws Exception
+     */
+    private TestWebServer(int port, boolean ssl) throws Exception {
+        init(port, ssl, "localhost");
+    }
+
+    /**
+     * Create and start a local HTTP server instance on `localhost`.
+     * @param port Port number the server must use, or 0 to automatically choose a free port.
+     * @param ssl True if the server should be using secure sockets.
+     * @param hostname The server's hostname (note that this requires the host resolver to map
+     *     all hostnames to the loopback address, along the lines of
+     *     `@CommandLineFlags.Add(ContentSwitches.HOST_RESOLVER_RULES + "=MAP * 127.0.0.1")`
+     * @throws Exception
+     */
+    private TestWebServer(int port, boolean ssl, String hostname) throws Exception {
+        init(port, ssl, hostname);
+    }
+
+    public static TestWebServer start(int port, String hostname) throws Exception {
         if (sInstance != null) {
             throw new IllegalStateException("Tried to start multiple TestWebServers");
         }
 
-        TestWebServer server = new TestWebServer(port, false);
+        TestWebServer server = new TestWebServer(port, false, hostname);
         server.mServerThread.start();
         setInstance(server);
         return server;
     }
 
+    public static TestWebServer start(int port) throws Exception {
+        return start(port, "localhost");
+    }
+
     public static TestWebServer start() throws Exception {
-        return start(0);
+        return start(0, "localhost");
     }
 
     public static TestWebServer startSsl(int port) throws Exception {
