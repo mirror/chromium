@@ -401,15 +401,15 @@ int HttpCache::Transaction::TransitionToReadingState() {
   if (!InWriters()) {
     // Since transaction is not a writer and we are in Read(), it must be a
     // reader.
-    DCHECK(entry_->readers.count(this));
-    DCHECK(mode_ == READ || (mode_ == READ_WRITE && partial_));
+    DCHECK(entry_->IsInReaders(this));
     next_state_ = STATE_CACHE_READ_DATA;
     return OK;
   }
 
+  DCHECK(mode_ & WRITE || mode_ == NONE);
+
   // If it's a writer and it is partial then it may need to read from the cache
   // or from the network based on whether network transaction is present or not.
-  DCHECK(mode_ == WRITE || mode_ == NONE || (mode_ == READ_WRITE && partial_));
   if (partial_) {
     if (entry_->writers->network_transaction())
       next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
@@ -1786,7 +1786,8 @@ int HttpCache::Transaction::DoUpdateCachedResponseComplete(int result) {
     DoneWithEntry(true);
   } else if (entry_ && !handling_206_) {
     DCHECK_EQ(READ_WRITE, mode_);
-    if (!partial_ || partial_->IsLastRange()) {
+    if ((!partial_ && !cache_->IsWritingInProgress(entry_)) ||
+        partial_->IsLastRange()) {
       mode_ = READ;
     }
     // We no longer need the network transaction, so destroy it.
@@ -2009,6 +2010,8 @@ int HttpCache::Transaction::DoFinishHeadersComplete(int rv) {
 
   if (network_trans_ && InWriters()) {
     entry_->writers->SetNetworkTransaction(this, std::move(network_trans_));
+  } else if (entry_ && entry_->IsInReaders(this)) {
+    mode_ = READ;
   }
 
   // If already reading, that means it is a partial request coming back to the
@@ -2059,7 +2062,6 @@ int HttpCache::Transaction::DoNetworkReadCacheWrite() {
 
 int HttpCache::Transaction::DoNetworkReadCacheWriteComplete(int result) {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadCacheWriteComplete");
-  DCHECK(mode_ & WRITE || mode_ == NONE);
   if (!cache_.get()) {
     TransitionToState(STATE_NONE);
     return ERR_UNEXPECTED;
@@ -2821,7 +2823,8 @@ int HttpCache::Transaction::SetupEntryForRead() {
     }
   }
 
-  mode_ = READ;
+  if (!cache_->IsWritingInProgress(entry_))
+    mode_ = READ;
 
   if (method_ == "HEAD")
     FixHeadersForHead();
@@ -3322,8 +3325,9 @@ void HttpCache::Transaction::SaveNetworkTransactionInfo(
   // writing transaction.
   if (!partial_ && !network_transaction_info_.full_request_headers.IsEmpty())
     return;
-  transaction.GetFullRequestHeaders(
-      &network_transaction_info_.full_request_headers);
+  HttpRequestHeaders request_headers;
+  transaction.GetFullRequestHeaders(&request_headers);
+  network_transaction_info_.full_request_headers.CopyFrom(request_headers);
 }
 
 void HttpCache::Transaction::OnIOComplete(int result) {

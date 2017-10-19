@@ -162,11 +162,10 @@ void HttpCache::Writers::RemoveTransaction(Transaction* transaction,
 
   if (!success) {
     DCHECK_NE(State::CACHE_WRITE_TRUNCATED_RESPONSE, next_state_);
-    if (InitiateTruncateEntry()) {
+    if (InitiateTruncateEntry())
       // |this| may have been deleted after truncation, so don't touch any
       // members.
       return;
-    }
   }
 
   cache_->WritersDoneWritingToEntry(entry_, success, TransactionSet());
@@ -177,10 +176,14 @@ void HttpCache::Writers::EraseTransaction(Transaction* transaction,
   // The transaction should be part of all_writers.
   auto it = all_writers_.find(transaction);
   DCHECK(it != all_writers_.end());
+  EraseTransaction(it, result);
+}
 
+HttpCache::Writers::TransactionMap::iterator
+HttpCache::Writers::EraseTransaction(TransactionMap::iterator it, int result) {
+  Transaction* transaction = it->first;
   transaction->WriterAboutToBeRemovedFromEntry(result);
-
-  all_writers_.erase(it);
+  TransactionMap::iterator return_it = all_writers_.erase(it);
 
   if (all_writers_.empty() && next_state_ == State::NONE) {
     // This needs to be called to handle the edge case where even before Read is
@@ -195,11 +198,12 @@ void HttpCache::Writers::EraseTransaction(Transaction* transaction,
 
   if (active_transaction_ == transaction) {
     active_transaction_ = nullptr;
-    return;
+    return return_it;
   }
 
   // If waiting for read, remove it from the map.
   waiting_for_read_.erase(transaction);
+  return return_it;
 }
 
 void HttpCache::Writers::UpdatePriority() {
@@ -594,7 +598,7 @@ void HttpCache::Writers::ProcessWaitingForReadTransactions(int result) {
     it = waiting_for_read_.erase(it);
 
     // If its response completion or failure, this transaction needs to be
-    // removed.
+    // removed from writers.
     if (result <= 0)
       EraseTransaction(transaction, result);
   }
@@ -605,11 +609,12 @@ void HttpCache::Writers::SetIdleWritersFailState(int result) {
   // should be empty.
   DCHECK(waiting_for_read_.empty());
   for (auto it = all_writers_.begin(); it != all_writers_.end();) {
-    if (it->first == active_transaction_) {
+    Transaction* transaction = it->first;
+    if (transaction == active_transaction_) {
       it++;
       continue;
     }
-    EraseTransaction(it->first, result);
+    it = EraseTransaction(it, result);
   }
 }
 

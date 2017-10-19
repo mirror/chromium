@@ -430,8 +430,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
 
   // Configures the transaction to read from the network and stop writing to the
   // entry. It will release the entry if possible. Returns true if caching could
-  // be stopped successfully. It will not be stopped if there are multiple
-  // transactions writing to the cache simultaneously.
+  // be stopped successfully.
   bool StopCachingImpl(bool success);
 
   // Informs the HttpCache that this transaction is done with the entry and

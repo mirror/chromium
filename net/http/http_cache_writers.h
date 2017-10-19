@@ -231,12 +231,14 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // initiate truncation but it will be done after the ongoing operation is
   // complete.
   // Note that if this function returns a true, its possible that |this| may
-  // have been deleted and thus no members should be touched after calling this
-  // function.
+  // have been deleted and thus no members should be touched after this.
   bool InitiateTruncateEntry();
 
   // Remove the transaction.
   void EraseTransaction(Transaction* transaction, int result);
+  TransactionMap::iterator EraseTransaction(TransactionMap::iterator it,
+                                            int result);
+  void ErasedTransaction(Transaction* transaction);
 
   void SetCacheCallback(bool success, const TransactionSet& make_readers);
 

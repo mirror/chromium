@@ -292,6 +292,8 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
     // writers is not present.
     bool SafeToDestroy();
 
+    bool IsInReaders(Transaction* transaction) const;
+
     disk_cache::Entry* disk_entry = nullptr;
 
     // Transactions waiting to be added to entry.
@@ -310,7 +312,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
     std::unique_ptr<Writers> writers;
 
     // Transactions that can only read from the cache. Only one of writers or
-    // readers can be non-empty at a time.
+    // readers can be non-empty at a time. Most transactions in readers will
+    // have mode set as READ but if a transaction moves from being in writers to
+    // be a reader, it will have a WRITE bit set.
     TransactionSet readers;
 
     // The following variables are true if OnProcessQueuedTransactions is posted
@@ -477,7 +481,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   void ProcessDoneHeadersQueue(ActiveEntry* entry);
 
   // Adds a transaction to writers.
-  void AddTransactionToWriters(ActiveEntry* entry, Transaction* transaction);
+  void AddTransactionToWriters(ActiveEntry* entry,
+                               Transaction* transaction,
+                               bool can_do_shared_writing);
 
   // Returns true if this transaction can write headers to the entry.
   bool CanTransactionWriteResponseHeaders(ActiveEntry* entry,
