@@ -12,6 +12,8 @@ namespace {
 class EmptyInterfaceRegistry : public InterfaceRegistry {
   void AddInterface(const char* name,
                     const InterfaceFactory& factory) override {}
+  void AddAssociatedInterface(const char* name,
+                              const AssociatedInterfaceFactory&) override {}
 };
 
 }  // namespace

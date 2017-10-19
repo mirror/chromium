@@ -12,8 +12,11 @@
 namespace content {
 
 BlinkInterfaceRegistryImpl::BlinkInterfaceRegistryImpl(
-    base::WeakPtr<service_manager::BinderRegistry> interface_registry)
-    : interface_registry_(interface_registry) {}
+    base::WeakPtr<service_manager::BinderRegistry> interface_registry,
+    base::WeakPtr<AssociatedInterfaceRegistryImpl>
+        associated_interface_registry)
+    : interface_registry_(interface_registry),
+      associated_interface_registry_(associated_interface_registry) {}
 
 BlinkInterfaceRegistryImpl::~BlinkInterfaceRegistryImpl() = default;
 
@@ -24,6 +27,15 @@ void BlinkInterfaceRegistryImpl::AddInterface(
     return;
 
   interface_registry_->AddInterface(name, factory);
+}
+
+void BlinkInterfaceRegistryImpl::AddAssociatedInterface(
+    const char* name,
+    const blink::AssociatedInterfaceFactory& factory) {
+  if (!associated_interface_registry_)
+    return;
+
+  associated_interface_registry_->AddInterface(name, factory);
 }
 
 }  // namespace content
