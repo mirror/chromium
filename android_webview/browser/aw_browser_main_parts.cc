@@ -10,7 +10,6 @@
 #include "android_webview/browser/aw_metrics_service_client.h"
 #include "android_webview/browser/aw_result_codes.h"
 #include "android_webview/browser/deferred_gpu_command_service.h"
-#include "android_webview/browser/net/aw_network_change_notifier_factory.h"
 #include "android_webview/common/aw_descriptors.h"
 #include "android_webview/common/aw_paths.h"
 #include "android_webview/common/aw_resource.h"
@@ -36,7 +35,6 @@
 #include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/geolocation_provider.h"
-#include "net/android/network_change_notifier_factory_android.h"
 #include "net/base/network_change_notifier.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/layout.h"
@@ -55,8 +53,6 @@ AwBrowserMainParts::~AwBrowserMainParts() {
 }
 
 void AwBrowserMainParts::PreEarlyInitialization() {
-  net::NetworkChangeNotifier::SetFactory(new AwNetworkChangeNotifierFactory());
-
   // Android WebView does not use default MessageLoop. It has its own
   // Android specific MessageLoop. Also see MainMessageLoopRun.
   DCHECK(!main_message_loop_.get());

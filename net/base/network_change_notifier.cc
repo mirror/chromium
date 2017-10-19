@@ -23,6 +23,7 @@
 #if defined(OS_ANDROID)
 #include "base/metrics/sparse_histogram.h"
 #include "base/strings/string_number_conversions.h"
+#include "net/android/network_change_notifier_android.h"
 #include "net/android/network_library.h"
 #endif
 
@@ -517,8 +518,8 @@ NetworkChangeNotifier* NetworkChangeNotifier::Create() {
       new NetworkChangeNotifierWin();
   network_change_notifier->WatchForAddressChange();
   return network_change_notifier;
-#elif defined(OS_CHROMEOS) || defined(OS_ANDROID)
-  // ChromeOS and Android builds MUST use their own class factory.
+#elif defined(OS_CHROMEOS)
+// ChromeOS and Android builds MUST use their own class factory.
 #if !defined(OS_CHROMEOS)
   // TODO(oshima): ash_shell do not have access to chromeos'es
   // notifier yet. Re-enable this when chromeos'es notifier moved to
@@ -526,6 +527,8 @@ NetworkChangeNotifier* NetworkChangeNotifier::Create() {
   CHECK(false);
 #endif
   return NULL;
+#elif defined(OS_ANDROID)
+  return new net::NetworkChangeNotifierAndroid(nullptr);
 #elif defined(OS_LINUX)
   return new NetworkChangeNotifierLinux(std::unordered_set<std::string>());
 #elif defined(OS_MACOSX)
