@@ -5,16 +5,31 @@
 #include "components/metrics/net/net_metrics_log_uploader.h"
 
 #include "base/base64.h"
+#include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
+#include "components/encrypted_messages/encrypted_message.pb.h"
+#include "components/encrypted_messages/message_encrypter.h"
 #include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/proto/reporting_info.pb.h"
 #include "net/base/load_flags.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
+#include "third_party/zlib/google/compression_utils.h"
 #include "url/gurl.h"
 
 namespace {
+
+// Constants used for encrypting logs that are sent over HTTP. The
+// corresponding private key is used by the metrics server to decrypt logs.
+char kEncryptedMessageLabel[] = "metrics log";
+
+static const uint8_t kServerPublicKey[] = {
+    0x51, 0xcc, 0x52, 0x67, 0x42, 0x47, 0x3b, 0x10, 0xe8, 0x63, 0x18,
+    0x3c, 0x61, 0xa7, 0x96, 0x76, 0x86, 0x91, 0x40, 0x71, 0x39, 0x5f,
+    0x31, 0x1a, 0x39, 0x5b, 0x76, 0xb1, 0x6b, 0x3d, 0x6a, 0x2b};
+
+static const uint32_t kServerPublicKeyVersion = 1;
 
 net::NetworkTrafficAnnotationTag GetNetworkTrafficAnnotation(
     const metrics::MetricsLogUploader::MetricServiceType& service_type) {
@@ -117,6 +132,21 @@ NetMetricsLogUploader::NetMetricsLogUploader(
     const MetricsLogUploader::UploadCallback& on_upload_complete)
     : request_context_getter_(request_context_getter),
       server_url_(server_url),
+      insecure_server_url_(""),
+      mime_type_(mime_type.data(), mime_type.size()),
+      service_type_(service_type),
+      on_upload_complete_(on_upload_complete) {}
+
+NetMetricsLogUploader::NetMetricsLogUploader(
+    net::URLRequestContextGetter* request_context_getter,
+    base::StringPiece server_url,
+    base::StringPiece insecure_server_url,
+    base::StringPiece mime_type,
+    MetricsLogUploader::MetricServiceType service_type,
+    const MetricsLogUploader::UploadCallback& on_upload_complete)
+    : request_context_getter_(request_context_getter),
+      server_url_(server_url),
+      insecure_server_url_(insecure_server_url),
       mime_type_(mime_type.data(), mime_type.size()),
       service_type_(service_type),
       on_upload_complete_(on_upload_complete) {}
@@ -136,10 +166,13 @@ void NetMetricsLogUploader::UploadLogToURL(
     const std::string& log_hash,
     const ReportingInfo& reporting_info,
     const GURL& url) {
+  last_attempted_log_ = compressed_log_data;
+  last_attempted_hash_ = log_hash;
+  last_attempted_info_ = reporting_info;
+  DCHECK(!log_hash.empty());
   current_fetch_ =
       net::URLFetcher::Create(url, net::URLFetcher::POST, this,
                               GetNetworkTrafficAnnotation(service_type_));
-
   auto service = data_use_measurement::DataUseUserData::UMA;
 
   switch (service_type_) {
@@ -153,18 +186,41 @@ void NetMetricsLogUploader::UploadLogToURL(
   data_use_measurement::DataUseUserData::AttachToFetcher(current_fetch_.get(),
                                                          service);
   current_fetch_->SetRequestContext(request_context_getter_);
-  current_fetch_->SetUploadData(mime_type_, compressed_log_data);
-
-  // Tell the server that we're uploading gzipped protobufs.
-  current_fetch_->SetExtraRequestHeaders("content-encoding: gzip");
-
-  DCHECK(!log_hash.empty());
-  current_fetch_->AddExtraRequestHeader("X-Chrome-UMA-Log-SHA1: " + log_hash);
-
   std::string reporting_info_string = SerializeReportingInfo(reporting_info);
-  current_fetch_->AddExtraRequestHeader("X-Chrome-UMA-ReportingInfo:" +
-                                        reporting_info_string);
-
+  // If we are not using HTTPS for this upload, encrypt it.
+  if (!url.SchemeIs(url::kHttpsScheme)) {
+    std::string uncompressed_log;
+    // Since we are encrypting the log, we will uncompress it first, then
+    // compress it again once it's encrypted.
+    compression::GzipUncompress(compressed_log_data, &uncompressed_log);
+    encrypted_messages::EncryptedMessage encrypted_message;
+    encrypted_messages::EncryptedMessage encrypted_hash;
+    encrypted_messages::EncryptSerializedMessage(
+        kServerPublicKey, kServerPublicKeyVersion, kEncryptedMessageLabel,
+        uncompressed_log, &encrypted_message);
+    encrypted_messages::EncryptSerializedMessage(
+        kServerPublicKey, kServerPublicKeyVersion, kEncryptedMessageLabel,
+        log_hash, &encrypted_hash);
+    std::string serialized_encrypted_message;
+    std::string serialized_encrypted_hash;
+    encrypted_message.SerializeToString(&serialized_encrypted_message);
+    encrypted_hash.SerializeToString(&serialized_encrypted_hash);
+    std::string base64_encoded_hash;
+    base::Base64Encode(serialized_encrypted_hash, &base64_encoded_hash);
+    current_fetch_->AddExtraRequestHeader("X-Chrome-UMA-Log-SHA1: " +
+                                          base64_encoded_hash);
+    std::string compressed_encrypted_log;
+    compression::GzipCompress(serialized_encrypted_message,
+                              &compressed_encrypted_log);
+    current_fetch_->SetUploadData(mime_type_, compressed_encrypted_log);
+  } else {
+    current_fetch_->AddExtraRequestHeader("X-Chrome-UMA-Log-SHA1: " + log_hash);
+    current_fetch_->AddExtraRequestHeader("X-Chrome-UMA-ReportingInfo:" +
+                                          reporting_info_string);
+    current_fetch_->SetUploadData(mime_type_, compressed_log_data);
+  }
+  // Tell the server that we're uploading gzipped protobufs.
+  current_fetch_->AddExtraRequestHeader("content-encoding: gzip");
   // Drop cookies and auth data.
   current_fetch_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |
                                net::LOAD_DO_NOT_SEND_AUTH_DATA |
@@ -177,7 +233,6 @@ void NetMetricsLogUploader::OnURLFetchComplete(const net::URLFetcher* source) {
   // Note however that |source| is aliased to the fetcher, so we should be
   // careful not to delete it too early.
   DCHECK_EQ(current_fetch_.get(), source);
-
   int response_code = source->GetResponseCode();
   if (response_code == net::URLFetcher::RESPONSE_CODE_INVALID)
     response_code = -1;
@@ -186,8 +241,23 @@ void NetMetricsLogUploader::OnURLFetchComplete(const net::URLFetcher* source) {
   if (request_status.status() != net::URLRequestStatus::SUCCESS) {
     error_code = request_status.error();
   }
+  bool was_https = source->GetURL().SchemeIs(url::kHttpsScheme);
   current_fetch_.reset();
-  on_upload_complete_.Run(response_code, error_code);
+  // TODO(carlosil): Once LogResponseOrErrorCode is public and distinguishes
+  // between HTTPS and HTTP, it should be called from here instead of from
+  // the callback (So we can log cases when we are about to retry, which won't
+  // call the callback).
+  // If the last attempt was over HTTPS, we couldn't reach the server and the
+  // insecure URL is set, we immediately retry the connection over HTTP.
+  // Currently we only retry if the retry-uma-over-http flag is set.
+  if (!insecure_server_url_.is_empty() && was_https && error_code != 0 &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          "retry-uma-over-http")) {
+    UploadLogToURL(last_attempted_log_, last_attempted_hash_,
+                   last_attempted_info_, insecure_server_url_);
+  } else {  // Only call on_upload_complete if we are not about to retry.
+    on_upload_complete_.Run(response_code, error_code);
+  }
 }
 
 }  // namespace metrics

@@ -7,9 +7,12 @@
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/macros.h"
+#include "components/encrypted_messages/encrypted_message.pb.h"
 #include "components/metrics/proto/reporting_info.pb.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/zlib/google/compression_utils.h"
+#include "url/gurl.h"
 
 namespace metrics {
 
@@ -22,12 +25,39 @@ class NetMetricsLogUploaderTest : public testing::Test {
     ReportingInfo reporting_info;
     reporting_info.set_attempt_count(10);
     uploader_.reset(new NetMetricsLogUploader(
-        NULL, "http://dummy_server", "dummy_mime", MetricsLogUploader::UMA,
+        NULL, "https://dummy_server", "dummy_mime", MetricsLogUploader::UMA,
         base::Bind(&NetMetricsLogUploaderTest::OnUploadCompleteReuseUploader,
                    base::Unretained(this))));
     uploader_->UploadLog("initial_dummy_data", "initial_dummy_hash",
                          reporting_info);
   }
+
+  void CreateUploaderAndUploadToSecureURL() {
+    ReportingInfo dummy_reporting_info;
+    uploader_.reset(new NetMetricsLogUploader(
+        NULL, "https://dummy_secure_server", "dummy_mime",
+        MetricsLogUploader::UMA,
+        base::Bind(&NetMetricsLogUploaderTest::DummyOnUploadComplete,
+                   base::Unretained(this))));
+    uploader_->UploadLog("dummy_data", "dummy_hash", dummy_reporting_info);
+  }
+
+  void CreateUploaderAndUploadToInsecureURL() {
+    ReportingInfo dummy_reporting_info;
+    uploader_.reset(new NetMetricsLogUploader(
+        NULL, "http://dummy_insecure_server", "dummy_mime",
+        MetricsLogUploader::UMA,
+        base::Bind(&NetMetricsLogUploaderTest::DummyOnUploadComplete,
+                   base::Unretained(this))));
+    std::string compressed_message;
+    // Compress the data since the encryption code expects a compressed log,
+    // and tries to decompress it before encrypting it.
+    compression::GzipCompress("dummy_data", &compressed_message);
+    uploader_->UploadLog(compressed_message, "dummy_hash",
+                         dummy_reporting_info);
+  }
+
+  void DummyOnUploadComplete(int response_code, int error_code) {}
 
   void OnUploadCompleteReuseUploader(int response_code, int error_code) {
     ++on_upload_complete_count_;
@@ -45,7 +75,6 @@ class NetMetricsLogUploaderTest : public testing::Test {
  private:
   std::unique_ptr<NetMetricsLogUploader> uploader_;
   int on_upload_complete_count_;
-
   DISALLOW_COPY_AND_ASSIGN(NetMetricsLogUploaderTest);
 };
 
@@ -79,6 +108,27 @@ TEST_F(NetMetricsLogUploaderTest, OnUploadCompleteReuseUploader) {
   fetcher->delegate()->OnURLFetchComplete(fetcher);
 
   EXPECT_EQ(on_upload_complete_count(), 2);
+}
+
+// Test that attempting to upload to an HTTP URL results in an encrypted
+// message.
+TEST_F(NetMetricsLogUploaderTest, MessageOverHTTPIsEncrypted) {
+  net::TestURLFetcherFactory factory;
+  CreateUploaderAndUploadToInsecureURL();
+  net::TestURLFetcher* fetcher = factory.GetFetcherByID(0);
+  std::string uncompressed_request;
+  compression::GzipUncompress(fetcher->upload_data(), &uncompressed_request);
+  encrypted_messages::EncryptedMessage message;
+  EXPECT_TRUE(message.ParseFromString(uncompressed_request));
+}
+
+// Test that attempting to upload to an HTTPS URL results in an unencrypted
+// message.
+TEST_F(NetMetricsLogUploaderTest, MessageOverHTTPSIsNotEncrypted) {
+  net::TestURLFetcherFactory factory;
+  CreateUploaderAndUploadToSecureURL();
+  net::TestURLFetcher* fetcher = factory.GetFetcherByID(0);
+  EXPECT_EQ(fetcher->upload_data(), "dummy_data");
 }
 
 }  // namespace metrics
