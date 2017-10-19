@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0847f0db_f5602a8b",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-19T17:09:32Z",
+      "side": 1,
+      "message": "For Http2PushPromiseIndex::Find().",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "fdc0cf5ff341b4b61e8f1417e0f9c2ff6d977b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1ed7cb8_fa6d82ad",
+        "filename": "net/spdy/chromium/spdy_http_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-19T17:09:32Z",
+      "side": 1,
+      "message": "In particular, GET and HEAD method can be pushed, see https://cs.chromium.org/chromium/src/net/spdy/chromium/spdy_session.cc?q\u003d%5Cbhead%5Cb\u0026l\u003d1617.  Once GetPushStream() has the logic to compare actual and pushed request headers, this test will be unnecessary.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 70
+      },
+      "revId": "fdc0cf5ff341b4b61e8f1417e0f9c2ff6d977b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
