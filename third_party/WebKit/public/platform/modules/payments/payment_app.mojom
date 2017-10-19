@@ -26,6 +26,10 @@ struct PaymentInstrument {
   array<blink.mojom.ManifestIcon> icons;
   array<string> enabled_methods;
   string stringified_capabilities;
+
+  // Parsed basic-card payment method capabilities.
+  array<BasicCardNetwork> supported_networks;
+  array<BasicCardType> supported_types;
 };
 
 // This interface provides implementation of PaymentInstruments.idl
