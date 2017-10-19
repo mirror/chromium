@@ -11,6 +11,10 @@
 
 class GURL;
 
+namespace machine_intelligence {
+class RankerExample;
+}
+
 namespace ukm {
 class UkmRecorder;
 }  // namespace ukm
@@ -39,6 +43,9 @@ class ContextualSearchRankerLoggerImpl {
                const base::android::JavaParamRef<jstring>& j_feature,
                jlong j_long);
 
+  // Runs the model and returns the inference result as a boolean.
+  bool RunInference(JNIEnv* env, jobject obj);
+
   // Writes the currently logged data and resets the current builder to be
   // ready to start logging the next set of data.
   void WriteLogAndReset(JNIEnv* env, jobject obj);
@@ -57,6 +64,14 @@ class ContextualSearchRankerLoggerImpl {
 
   // The entry builder for the current record, or nullptr if not yet configured.
   std::unique_ptr<ukm::UkmEntryBuilder> builder_;
+
+  // The current RankerExample or null.
+  // Set of features from one example of a Tap to predict a suppression
+  // decision.
+  std::unique_ptr<machine_intelligence::RankerExample> ranker_example_;
+
+  // Whether Ranker has predicted the decision yet.
+  bool has_predicted_decision_;
 
   // The linked Java object.
   base::android::ScopedJavaGlobalRef<jobject> java_object_;
