@@ -16,6 +16,24 @@
       "revId": "0d4ebc008b218b36133b15aaff259788476f3dbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca809937_1971ec76",
+        "filename": "components/viz/service/display/software_output_device_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T06:49:36Z",
+      "side": 1,
+      "message": "Done.\n\nTurns out, README.md already has some text that explains this. I have added a line to make it super clear. PTAL.",
+      "parentUuid": "128ccd68_4ce0d1dc",
+      "revId": "0d4ebc008b218b36133b15aaff259788476f3dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
