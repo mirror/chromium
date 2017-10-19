@@ -1384,6 +1384,8 @@ jumbo_component("base") {
   # Windows.
   if (is_win) {
     sources += [
+      "memory/swap_thrashing_delegate_win.cc",
+      "memory/swap_thrashing_delegate_win.h",
       "power_monitor/power_monitor_device_source_win.cc",
       "profiler/win32_stack_frame_unwinder.cc",
       "profiler/win32_stack_frame_unwinder.h",
@@ -2087,6 +2089,7 @@ test("base_unittests") {
     "memory/shared_memory_unittest.cc",
     "memory/shared_memory_win_unittest.cc",
     "memory/singleton_unittest.cc",
+    "memory/swap_thrashing_delegate_win_unittest.cc",
     "memory/weak_ptr_unittest.cc",
     "message_loop/message_loop_io_posix_unittest.cc",
     "message_loop/message_loop_task_runner_unittest.cc",
