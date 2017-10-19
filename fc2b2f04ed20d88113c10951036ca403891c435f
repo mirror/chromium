@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46171f4a_3fe1b4b0",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-19T19:56:19Z",
+      "side": 0,
+      "message": "/facepalm",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 41
+      },
+      "revId": "fc2b2f04ed20d88113c10951036ca403891c435f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
