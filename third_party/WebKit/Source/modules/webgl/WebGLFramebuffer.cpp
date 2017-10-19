@@ -39,7 +39,7 @@ class WebGLRenderbufferAttachment final
  public:
   static WebGLFramebuffer::WebGLAttachment* Create(WebGLRenderbuffer*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappers(renderbuffer_);
   }
@@ -66,7 +66,7 @@ WebGLFramebuffer::WebGLAttachment* WebGLRenderbufferAttachment::Create(
   return new WebGLRenderbufferAttachment(renderbuffer);
 }
 
-void WebGLRenderbufferAttachment::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLRenderbufferAttachment) {
   visitor->Trace(renderbuffer_);
   WebGLFramebuffer::WebGLAttachment::Trace(visitor);
 }
@@ -112,7 +112,7 @@ class WebGLTextureAttachment final : public WebGLFramebuffer::WebGLAttachment {
                                                    GLint level,
                                                    GLint layer);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() { visitor->TraceWrappers(texture_); }
 
  private:
@@ -146,7 +146,7 @@ WebGLFramebuffer::WebGLAttachment* WebGLTextureAttachment::Create(
   return new WebGLTextureAttachment(texture, target, level, layer);
 }
 
-void WebGLTextureAttachment::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLTextureAttachment) {
   visitor->Trace(texture_);
   WebGLFramebuffer::WebGLAttachment::Trace(visitor);
 }
@@ -537,7 +537,7 @@ GLenum WebGLFramebuffer::GetDrawBuffer(GLenum draw_buffer) {
   return GL_NONE;
 }
 
-void WebGLFramebuffer::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLFramebuffer) {
   visitor->Trace(attachments_);
   WebGLContextObject::Trace(visitor);
 }

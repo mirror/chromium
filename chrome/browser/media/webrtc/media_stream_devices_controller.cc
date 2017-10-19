@@ -37,7 +37,6 @@
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/origin_util.h"
 #include "extensions/common/constants.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_ANDROID)
@@ -55,13 +54,6 @@
 using content::BrowserThread;
 
 namespace {
-
-const char kPepperMediaFeaturePolicyDeprecationMessage[] =
-    "Microphone and camera usage in cross-origin iframes is deprecated and "
-    "will be disabled in M64 (around January 2018). To continue to use this "
-    "feature, it must be enabled by the embedding document using Feature "
-    "Policy, e.g. <iframe allow=\"microphone; camera;\" ...>. See "
-    "https://goo.gl/EuHzyv for more details.";
 
 // Returns true if the given ContentSettingsType is being requested in
 // |request|.
@@ -272,21 +264,6 @@ MediaStreamDevicesController::MediaStreamDevicesController(
                                      request, &denial_reason_);
   video_setting_ = GetContentSetting(CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA,
                                      request, &denial_reason_);
-
-  // Log a deprecation warning for pepper requests made when a feature policy is
-  // in place. Other types of requests (namely getUserMedia requests) have a
-  // deprecation warning logged in blink.
-  if (request_.request_type == content::MEDIA_OPEN_DEVICE_PEPPER_ONLY) {
-    DCHECK_NE(CONTENT_SETTING_DEFAULT, audio_setting_);
-    DCHECK_NE(CONTENT_SETTING_DEFAULT, video_setting_);
-    content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
-        request.render_process_id, request.render_frame_id);
-    if (!rfh->IsFeatureEnabled(blink::WebFeaturePolicyFeature::kMicrophone) ||
-        !rfh->IsFeatureEnabled(blink::WebFeaturePolicyFeature::kCamera)) {
-      rfh->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
-                               kPepperMediaFeaturePolicyDeprecationMessage);
-    }
-  }
 }
 
 bool MediaStreamDevicesController::IsAllowedForAudio() const {
@@ -495,11 +472,10 @@ ContentSetting MediaStreamDevicesController::GetContentSetting(
     return CONTENT_SETTING_BLOCK;
   }
 
-  content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
-      request.render_process_id, request.render_frame_id);
   PermissionResult result =
-      PermissionManager::Get(profile_)->GetPermissionStatusForFrame(
-          content_type, rfh, request.security_origin);
+      PermissionManager::Get(profile_)->GetPermissionStatus(
+          content_type, request.security_origin,
+          web_contents_->GetLastCommittedURL().GetOrigin());
   if (result.content_setting == CONTENT_SETTING_BLOCK) {
     *denial_reason = (result.source == PermissionStatusSource::KILL_SWITCH)
                          ? content::MEDIA_DEVICE_KILL_SWITCH_ON

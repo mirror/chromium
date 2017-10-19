@@ -64,9 +64,7 @@ class SpeechRecognitionController final
         Supplement<Page>::From(page, SupplementName()));
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    Supplement<Page>::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<Page>::Trace(visitor); }
 
  private:
   explicit SpeechRecognitionController(

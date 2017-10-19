@@ -14,6 +14,7 @@
 #include "chrome/browser/chromeos/login/user_flow.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
@@ -131,7 +132,7 @@ void SigninErrorNotifier::OnErrorChanged() {
   notifier_id.profile_id =
       multi_user_util::GetAccountIdFromProfile(profile_).GetUserEmail();
 
-  message_center::Notification notification(
+  Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
       l10n_util::GetStringUTF16(IDS_SIGNIN_ERROR_BUBBLE_VIEW_TITLE),
       GetMessageBody(),
@@ -139,8 +140,8 @@ void SigninErrorNotifier::OnErrorChanged() {
           ? gfx::Image()
           : ui::ResourceBundle::GetSharedInstance().GetImageNamed(
                 IDR_NOTIFICATION_ALERT),
-      l10n_util::GetStringUTF16(IDS_SIGNIN_ERROR_DISPLAY_SOURCE),
-      GURL(notification_id_), notifier_id, data,
+      notifier_id, l10n_util::GetStringUTF16(IDS_SIGNIN_ERROR_DISPLAY_SOURCE),
+      GURL(notification_id_), notification_id_, data,
       new SigninNotificationDelegate());
   if (message_center::IsNewStyleNotificationEnabled()) {
     notification.set_accent_color(
@@ -153,7 +154,11 @@ void SigninErrorNotifier::OnErrorChanged() {
   notification.SetSystemPriority();
 
   // Update or add the notification.
-  notification_ui_manager->Add(notification, profile_);
+  if (notification_ui_manager->FindById(
+          notification_id_, NotificationUIManager::GetProfileID(profile_)))
+    notification_ui_manager->Update(notification, profile_);
+  else
+    notification_ui_manager->Add(notification, profile_);
 }
 
 base::string16 SigninErrorNotifier::GetMessageBody() const {

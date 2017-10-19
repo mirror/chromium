@@ -21,7 +21,6 @@
 #include "mojo/public/cpp/bindings/associated_group.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebSandboxFlags.h"
 
@@ -90,7 +89,7 @@ class WebServiceWorkerNetworkProviderForFrame
   int64_t ControllerServiceWorkerID() override {
     if (provider_->context() && provider_->context()->controller())
       return provider_->context()->controller()->version_id();
-    return blink::mojom::kInvalidServiceWorkerVersionId;
+    return kInvalidServiceWorkerVersionId;
   }
 
   ServiceWorkerNetworkProvider* provider() { return provider_.get(); }

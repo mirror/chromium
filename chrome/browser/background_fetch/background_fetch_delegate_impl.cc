@@ -99,9 +99,9 @@ void BackgroundFetchDelegateImpl::CreateDownloadJob(
 
   const JobDetails& details = emplace_result.first->second;
 
-  for (const auto& download_guid : current_guids) {
-    DCHECK(!download_job_unique_id_map_.count(download_guid));
-    download_job_unique_id_map_.emplace(download_guid, job_unique_id);
+  for (const auto& guid : current_guids) {
+    DCHECK(!download_job_unique_id_map_.count(guid));
+    download_job_unique_id_map_.emplace(guid, job_unique_id);
   }
 
   for (auto* observer : observers_) {
@@ -111,7 +111,7 @@ void BackgroundFetchDelegateImpl::CreateDownloadJob(
 
 void BackgroundFetchDelegateImpl::DownloadUrl(
     const std::string& job_unique_id,
-    const std::string& download_guid,
+    const std::string& guid,
     const std::string& method,
     const GURL& url,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
@@ -119,15 +119,12 @@ void BackgroundFetchDelegateImpl::DownloadUrl(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   DCHECK(job_details_map_.count(job_unique_id));
-  DCHECK(!download_job_unique_id_map_.count(download_guid));
+  DCHECK(!download_job_unique_id_map_.count(guid));
 
-  JobDetails& job_details = job_details_map_.find(job_unique_id)->second;
-  job_details.current_download_guids.insert(download_guid);
-
-  download_job_unique_id_map_.emplace(download_guid, job_unique_id);
+  download_job_unique_id_map_.emplace(guid, job_unique_id);
 
   download::DownloadParams params;
-  params.guid = download_guid;
+  params.guid = guid;
   params.client = download::DownloadClient::BACKGROUND_FETCH;
   params.request_params.method = method;
   params.request_params.url = url;
@@ -141,33 +138,29 @@ void BackgroundFetchDelegateImpl::DownloadUrl(
 }
 
 void BackgroundFetchDelegateImpl::OnDownloadStarted(
-    const std::string& download_guid,
+    const std::string& guid,
     std::unique_ptr<content::BackgroundFetchResponse> response) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   if (client())
-    client()->OnDownloadStarted(download_guid, std::move(response));
+    client()->OnDownloadStarted(guid, std::move(response));
 }
 
-void BackgroundFetchDelegateImpl::OnDownloadUpdated(
-    const std::string& download_guid,
-    uint64_t bytes_downloaded) {
+void BackgroundFetchDelegateImpl::OnDownloadUpdated(const std::string& guid,
+                                                    uint64_t bytes_downloaded) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   if (client())
-    client()->OnDownloadUpdated(download_guid, bytes_downloaded);
+    client()->OnDownloadUpdated(guid, bytes_downloaded);
 }
 
 void BackgroundFetchDelegateImpl::OnDownloadFailed(
-    const std::string& download_guid,
+    const std::string& guid,
     download::Client::FailureReason reason) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   using FailureReason = content::BackgroundFetchResult::FailureReason;
   FailureReason failure_reason;
-
-  const std::string& job_unique_id = download_job_unique_id_map_[download_guid];
-  JobDetails& job_details = job_details_map_.find(job_unique_id)->second;
 
   switch (reason) {
     case download::Client::FailureReason::NETWORK:
@@ -194,22 +187,20 @@ void BackgroundFetchDelegateImpl::OnDownloadFailed(
 
   if (client()) {
     client()->OnDownloadComplete(
-        download_guid, std::make_unique<content::BackgroundFetchResult>(
-                           base::Time::Now(), failure_reason));
+        guid, std::make_unique<content::BackgroundFetchResult>(
+                  base::Time::Now(), failure_reason));
   }
 
-  job_details.current_download_guids.erase(
-      job_details.current_download_guids.find(download_guid));
-  download_job_unique_id_map_.erase(download_guid);
+  download_job_unique_id_map_.erase(guid);
 }
 
 void BackgroundFetchDelegateImpl::OnDownloadSucceeded(
-    const std::string& download_guid,
+    const std::string& guid,
     const base::FilePath& path,
     uint64_t size) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  const std::string& job_unique_id = download_job_unique_id_map_[download_guid];
+  const std::string& job_unique_id = download_job_unique_id_map_[guid];
   JobDetails& job_details = job_details_map_.find(job_unique_id)->second;
   ++job_details.completed_parts;
   job_details.UpdateOfflineItem();
@@ -219,17 +210,15 @@ void BackgroundFetchDelegateImpl::OnDownloadSucceeded(
 
   if (client()) {
     client()->OnDownloadComplete(
-        download_guid, std::make_unique<content::BackgroundFetchResult>(
-                           base::Time::Now(), path, size));
+        guid, std::make_unique<content::BackgroundFetchResult>(
+                  base::Time::Now(), path, size));
   }
 
-  job_details.current_download_guids.erase(
-      job_details.current_download_guids.find(download_guid));
-  download_job_unique_id_map_.erase(download_guid);
+  download_job_unique_id_map_.erase(guid);
 }
 
 void BackgroundFetchDelegateImpl::OnDownloadReceived(
-    const std::string& download_guid,
+    const std::string& guid,
     download::DownloadParams::StartResult result) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -281,13 +270,12 @@ void BackgroundFetchDelegateImpl::RemoveItem(
 
 void BackgroundFetchDelegateImpl::CancelDownload(
     const offline_items_collection::ContentId& id) {
-  auto job_details_iter = job_details_map_.find(id.id);
-  if (job_details_iter == job_details_map_.end())
-    return;
+  // TODO(delphick): consider the data structures here.
+  for (auto& entry : download_job_unique_id_map_) {
+    if (entry.second != id.id)
+      continue;
 
-  JobDetails& job_details = job_details_iter->second;
-
-  for (auto& download_guid : job_details.current_download_guids) {
+    const std::string& download_guid = entry.first;
     download_service_->CancelDownload(download_guid);
     if (client()) {
       client()->OnDownloadComplete(
@@ -296,21 +284,17 @@ void BackgroundFetchDelegateImpl::CancelDownload(
               base::Time::Now(),
               content::BackgroundFetchResult::FailureReason::CANCELLED));
     }
-    download_job_unique_id_map_.erase(download_guid);
   }
-
-  job_details_map_.erase(job_details_iter);
 }
 
 void BackgroundFetchDelegateImpl::PauseDownload(
     const offline_items_collection::ContentId& id) {
-  auto job_details_iter = job_details_map_.find(id.id);
-  if (job_details_iter == job_details_map_.end())
-    return;
-
-  JobDetails& job_details = job_details_iter->second;
-  for (auto& download_guid : job_details.current_download_guids)
-    download_service_->PauseDownload(download_guid);
+  for (auto& entry : download_job_unique_id_map_) {
+    if (entry.second == id.id) {
+      const std::string& download_guid = entry.first;
+      download_service_->PauseDownload(download_guid);
+    }
+  }
 
   // TODO(delphick): Mark overall download job as paused so that future
   // downloads are not started until resume. (Initially not a worry because only
@@ -320,13 +304,12 @@ void BackgroundFetchDelegateImpl::PauseDownload(
 void BackgroundFetchDelegateImpl::ResumeDownload(
     const offline_items_collection::ContentId& id,
     bool has_user_gesture) {
-  auto job_details_iter = job_details_map_.find(id.id);
-  if (job_details_iter == job_details_map_.end())
-    return;
-
-  JobDetails& job_details = job_details_iter->second;
-  for (auto& download_guid : job_details.current_download_guids)
-    download_service_->ResumeDownload(download_guid);
+  for (auto& entry : download_job_unique_id_map_) {
+    if (entry.second == id.id) {
+      const std::string& download_guid = entry.first;
+      download_service_->ResumeDownload(download_guid);
+    }
+  }
 
   // TODO(delphick): Start new downloads that weren't started because of pause.
 }

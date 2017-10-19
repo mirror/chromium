@@ -102,7 +102,7 @@ class SVGElementRareData
 
   AffineTransform* AnimateMotionTransform();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   Member<SVGElement> owner_;

@@ -57,9 +57,6 @@ void DriverEGL::InitializeStaticBindings() {
       GetGLProcAddress("eglDestroySurface"));
   fn.eglDestroySyncKHRFn = reinterpret_cast<eglDestroySyncKHRProc>(
       GetGLProcAddress("eglDestroySyncKHR"));
-  fn.eglDupNativeFenceFDANDROIDFn =
-      reinterpret_cast<eglDupNativeFenceFDANDROIDProc>(
-          GetGLProcAddress("eglDupNativeFenceFDANDROID"));
   fn.eglGetCompositorTimingANDROIDFn = 0;
   fn.eglGetCompositorTimingSupportedANDROIDFn = 0;
   fn.eglGetConfigAttribFn = reinterpret_cast<eglGetConfigAttribProc>(
@@ -78,7 +75,6 @@ void DriverEGL::InitializeStaticBindings() {
       reinterpret_cast<eglGetErrorProc>(GetGLProcAddress("eglGetError"));
   fn.eglGetFrameTimestampsANDROIDFn = 0;
   fn.eglGetFrameTimestampSupportedANDROIDFn = 0;
-  fn.eglGetNativeClientBufferANDROIDFn = 0;
   fn.eglGetNextFrameIdANDROIDFn = 0;
   fn.eglGetPlatformDisplayEXTFn = 0;
   fn.eglGetProcAddressFn = reinterpret_cast<eglGetProcAddressProc>(
@@ -157,10 +153,6 @@ void DriverEGL::InitializeExtensionBindings() {
 
   ext.b_EGL_ANDROID_get_frame_timestamps =
       HasExtension(extensions, "EGL_ANDROID_get_frame_timestamps");
-  ext.b_EGL_ANDROID_get_native_client_buffer =
-      HasExtension(extensions, "EGL_ANDROID_get_native_client_buffer");
-  ext.b_EGL_ANDROID_native_fence_sync =
-      HasExtension(extensions, "EGL_ANDROID_native_fence_sync");
   ext.b_EGL_ANGLE_d3d_share_handle_client_buffer =
       HasExtension(extensions, "EGL_ANGLE_d3d_share_handle_client_buffer");
   ext.b_EGL_ANGLE_program_cache_control =
@@ -190,8 +182,6 @@ void DriverEGL::InitializeExtensionBindings() {
       HasExtension(extensions, "EGL_NV_post_sub_buffer");
   ext.b_EGL_NV_stream_consumer_gltexture_yuv =
       HasExtension(extensions, "EGL_NV_stream_consumer_gltexture_yuv");
-  ext.b_GL_CHROMIUM_egl_android_native_fence_sync_hack = HasExtension(
-      extensions, "GL_CHROMIUM_egl_android_native_fence_sync_hack");
   ext.b_GL_CHROMIUM_egl_khr_fence_sync_hack =
       HasExtension(extensions, "GL_CHROMIUM_egl_khr_fence_sync_hack");
 
@@ -244,12 +234,6 @@ void DriverEGL::InitializeExtensionBindings() {
     fn.eglGetFrameTimestampSupportedANDROIDFn =
         reinterpret_cast<eglGetFrameTimestampSupportedANDROIDProc>(
             GetGLProcAddress("eglGetFrameTimestampSupportedANDROID"));
-  }
-
-  if (ext.b_EGL_ANDROID_get_native_client_buffer) {
-    fn.eglGetNativeClientBufferANDROIDFn =
-        reinterpret_cast<eglGetNativeClientBufferANDROIDProc>(
-            GetGLProcAddress("eglGetNativeClientBufferANDROID"));
   }
 
   if (ext.b_EGL_ANDROID_get_frame_timestamps) {
@@ -484,11 +468,6 @@ EGLBoolean EGLApiBase::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
   return driver_->fn.eglDestroySyncKHRFn(dpy, sync);
 }
 
-EGLint EGLApiBase::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
-                                                EGLSyncKHR sync) {
-  return driver_->fn.eglDupNativeFenceFDANDROIDFn(dpy, sync);
-}
-
 EGLBoolean EGLApiBase::eglGetCompositorTimingANDROIDFn(
     EGLDisplay dpy,
     EGLSurface surface,
@@ -557,11 +536,6 @@ EGLBoolean EGLApiBase::eglGetFrameTimestampSupportedANDROIDFn(
     EGLint timestamp) {
   return driver_->fn.eglGetFrameTimestampSupportedANDROIDFn(dpy, surface,
                                                             timestamp);
-}
-
-EGLClientBuffer EGLApiBase::eglGetNativeClientBufferANDROIDFn(
-    const struct AHardwareBuffer* ahardwarebuffer) {
-  return driver_->fn.eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
 }
 
 EGLBoolean EGLApiBase::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
@@ -935,12 +909,6 @@ EGLBoolean TraceEGLApi::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
   return egl_api_->eglDestroySyncKHRFn(dpy, sync);
 }
 
-EGLint TraceEGLApi::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
-                                                 EGLSyncKHR sync) {
-  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglDupNativeFenceFDANDROID")
-  return egl_api_->eglDupNativeFenceFDANDROIDFn(dpy, sync);
-}
-
 EGLBoolean TraceEGLApi::eglGetCompositorTimingANDROIDFn(
     EGLDisplay dpy,
     EGLSurface surface,
@@ -1025,13 +993,6 @@ EGLBoolean TraceEGLApi::eglGetFrameTimestampSupportedANDROIDFn(
       "gpu", "TraceGLAPI::eglGetFrameTimestampSupportedANDROID")
   return egl_api_->eglGetFrameTimestampSupportedANDROIDFn(dpy, surface,
                                                           timestamp);
-}
-
-EGLClientBuffer TraceEGLApi::eglGetNativeClientBufferANDROIDFn(
-    const struct AHardwareBuffer* ahardwarebuffer) {
-  TRACE_EVENT_BINARY_EFFICIENT0("gpu",
-                                "TraceGLAPI::eglGetNativeClientBufferANDROID")
-  return egl_api_->eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
 }
 
 EGLBoolean TraceEGLApi::eglGetNextFrameIdANDROIDFn(EGLDisplay dpy,
@@ -1525,15 +1486,6 @@ EGLBoolean DebugEGLApi::eglDestroySyncKHRFn(EGLDisplay dpy, EGLSyncKHR sync) {
   return result;
 }
 
-EGLint DebugEGLApi::eglDupNativeFenceFDANDROIDFn(EGLDisplay dpy,
-                                                 EGLSyncKHR sync) {
-  GL_SERVICE_LOG("eglDupNativeFenceFDANDROID"
-                 << "(" << dpy << ", " << sync << ")");
-  EGLint result = egl_api_->eglDupNativeFenceFDANDROIDFn(dpy, sync);
-  GL_SERVICE_LOG("GL_RESULT: " << result);
-  return result;
-}
-
 EGLBoolean DebugEGLApi::eglGetCompositorTimingANDROIDFn(
     EGLDisplay dpy,
     EGLSurface surface,
@@ -1658,16 +1610,6 @@ EGLBoolean DebugEGLApi::eglGetFrameTimestampSupportedANDROIDFn(
                  << "(" << dpy << ", " << surface << ", " << timestamp << ")");
   EGLBoolean result =
       egl_api_->eglGetFrameTimestampSupportedANDROIDFn(dpy, surface, timestamp);
-  GL_SERVICE_LOG("GL_RESULT: " << result);
-  return result;
-}
-
-EGLClientBuffer DebugEGLApi::eglGetNativeClientBufferANDROIDFn(
-    const struct AHardwareBuffer* ahardwarebuffer) {
-  GL_SERVICE_LOG("eglGetNativeClientBufferANDROID"
-                 << "(" << static_cast<const void*>(ahardwarebuffer) << ")");
-  EGLClientBuffer result =
-      egl_api_->eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
   GL_SERVICE_LOG("GL_RESULT: " << result);
   return result;
 }

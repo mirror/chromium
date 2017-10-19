@@ -73,7 +73,7 @@ class PLATFORM_EXPORT PlatformSpeechSynthesisUtterance final
 
   PlatformSpeechSynthesisUtteranceClient* Client() const { return client_; }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit PlatformSpeechSynthesisUtterance(

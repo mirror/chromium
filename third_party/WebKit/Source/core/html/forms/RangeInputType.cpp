@@ -79,7 +79,7 @@ RangeInputType::RangeInputType(HTMLInputElement& element)
       InputTypeView(element),
       tick_mark_values_dirty_(true) {}
 
-void RangeInputType::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RangeInputType) {
   InputTypeView::Trace(visitor);
   InputType::Trace(visitor);
 }

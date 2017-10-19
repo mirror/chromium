@@ -100,7 +100,7 @@ class MediaList final : public GarbageCollectedFinalized<MediaList>,
 
   void Reattach(RefPtr<MediaQuerySet>);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   MediaList(RefPtr<MediaQuerySet>, CSSStyleSheet* parent_sheet);

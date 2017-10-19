@@ -88,7 +88,7 @@ class PLATFORM_EXPORT FetchContext
 
   virtual ~FetchContext() {}
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   virtual bool IsFrameFetchContext() { return false; }
 
@@ -217,7 +217,7 @@ class PLATFORM_EXPORT FetchContext
   }
 
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                        RefPtr<WebTaskRunner>) {
+                                                        WebTaskRunner*) {
     NOTREACHED();
     return nullptr;
   }

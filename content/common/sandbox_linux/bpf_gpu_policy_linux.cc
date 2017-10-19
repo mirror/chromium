@@ -24,6 +24,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
+#include "content/common/sandbox_init_gpu_linux.h"
 #include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
 #include "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
@@ -128,6 +129,10 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
       // Default on the baseline policy.
       return SandboxBPFBasePolicy::EvaluateSyscall(sysno);
   }
+}
+
+bool GpuProcessPolicy::PreSandboxHook() {
+  return GpuPreSandboxHook(this);
 }
 
 GpuBrokerProcessPolicy::GpuBrokerProcessPolicy() {}

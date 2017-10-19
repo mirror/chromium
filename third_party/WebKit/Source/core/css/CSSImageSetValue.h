@@ -66,7 +66,7 @@ class CSSImageSetValue : public CSSValueList {
 
   bool HasFailedOrCanceledSubresources() const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  protected:
   ImageWithScale BestImageForScaleFactor(float scale_factor);

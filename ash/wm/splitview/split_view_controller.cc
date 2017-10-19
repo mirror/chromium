@@ -4,7 +4,6 @@
 
 #include "ash/wm/splitview/split_view_controller.h"
 
-#include <cmath>
 #include <memory>
 
 #include "ash/display/screen_orientation_controller_chromeos.h"
@@ -20,7 +19,6 @@
 #include "ash/wm/wm_event.h"
 #include "base/command_line.h"
 #include "ui/aura/window.h"
-#include "ui/aura/window_delegate.h"
 #include "ui/compositor/layer.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
@@ -86,23 +84,10 @@ bool SplitViewController::ShouldAllowSplitView() {
   return true;
 }
 
+// static
 bool SplitViewController::CanSnap(aura::Window* window) {
-  if (!wm::CanActivateWindow(window))
-    return false;
-  if (!wm::GetWindowState(window)->CanSnap())
-    return false;
-  if (window->delegate()) {
-    // If the window's minimum size is larger than half of the display's work
-    // area size, the window can't be snapped in this case.
-    const gfx::Size min_size = window->delegate()->GetMinimumSize();
-    const gfx::Rect display_area = GetDisplayWorkAreaBoundsInScreen(window);
-    bool is_landscape = (display_area.width() > display_area.height());
-    if ((is_landscape && min_size.width() > display_area.width() / 2) ||
-        (!is_landscape && min_size.height() > display_area.height() / 2)) {
-      return false;
-    }
-  }
-  return true;
+  return wm::CanActivateWindow(window) ? wm::GetWindowState(window)->CanSnap()
+                                       : false;
 }
 
 bool SplitViewController::IsSplitViewModeActive() const {
@@ -303,7 +288,7 @@ void SplitViewController::EndResize(const gfx::Point& location_in_screen) {
   gfx::Point modified_location_in_screen =
       GetBoundedPosition(location_in_screen, work_area_bounds);
   UpdateDividerPosition(modified_location_in_screen);
-  MoveDividerToClosestFixedPosition();
+  MoveDividerToClosestFixedPostion();
   NotifyDividerPositionChanged();
 
   // Check if one of the snapped windows needs to be closed.
@@ -455,14 +440,6 @@ void SplitViewController::OnDisplayMetricsChanged(
   if (display.id() != current_display.id())
     return;
 
-  // If one of the snapped windows becomes unsnappable, end the split view mode
-  // directly.
-  if ((left_window_ && !CanSnap(left_window_)) ||
-      (right_window_ && !CanSnap(right_window_))) {
-    EndSplitView();
-    return;
-  }
-
   blink::WebScreenOrientationLockType previous_screen_orientation =
       screen_orientation_;
   screen_orientation_ =
@@ -484,7 +461,7 @@ void SplitViewController::OnDisplayMetricsChanged(
   // For other display configuration changes, we only move the divider to the
   // closest fixed position.
   if (!is_resizing_)
-    MoveDividerToClosestFixedPosition();
+    MoveDividerToClosestFixedPostion();
 
   NotifyDividerPositionChanged();
   UpdateSnappedWindowsAndDividerBounds();
@@ -694,28 +671,12 @@ void SplitViewController::SplitRect(const gfx::Rect& work_area_rect,
   }
 }
 
-void SplitViewController::MoveDividerToClosestFixedPosition() {
+void SplitViewController::MoveDividerToClosestFixedPostion() {
   DCHECK(IsSplitViewModeActive());
 
-  const gfx::Rect work_area_bounds_in_screen =
-      GetDisplayWorkAreaBoundsInScreen(GetDefaultSnappedWindow());
-  const gfx::Size divider_size = SplitViewDivider::GetDividerSize(
-      work_area_bounds_in_screen, screen_orientation_, false /* is_dragging */);
-  const int divider_thickness =
-      std::min(divider_size.width(), divider_size.height());
-
-  // The values in |kFixedPositionRatios| represent the fixed position of the
-  // center of the divider while |divider_position_| represent the origin of the
-  // divider rectangle. So, before calling FindClosestFixedPositionRatio,
-  // extract the center from |divider_position_|. The result will also be the
-  // center of the divider, so extract the origin, unless the result is on of
-  // the endpoints.
-  float ratio = FindClosestFixedPositionRatio(
-      divider_position_ + std::floor(divider_thickness / 2.f),
-      GetDividerEndPosition());
-  divider_position_ = std::floor(GetDividerEndPosition() * ratio);
-  if (ratio > 0.f && ratio < 1.f)
-    divider_position_ -= std::floor(divider_thickness / 2.f);
+  float ratio =
+      FindClosestFixedPositionRatio(divider_position_, GetDividerEndPosition());
+  divider_position_ = GetDividerEndPosition() * ratio;
 }
 
 bool SplitViewController::ShouldEndSplitViewAfterResizing() {

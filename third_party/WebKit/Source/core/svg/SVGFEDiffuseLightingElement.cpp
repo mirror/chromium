@@ -47,7 +47,7 @@ inline SVGFEDiffuseLightingElement::SVGFEDiffuseLightingElement(
   AddToPropertyMap(in1_);
 }
 
-void SVGFEDiffuseLightingElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFEDiffuseLightingElement) {
   visitor->Trace(diffuse_constant_);
   visitor->Trace(surface_scale_);
   visitor->Trace(kernel_unit_length_);

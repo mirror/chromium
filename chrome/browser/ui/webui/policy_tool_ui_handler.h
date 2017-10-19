@@ -40,6 +40,8 @@ class PolicyToolUIHandler : public PolicyUIHandler {
 
   bool IsValidSessionName(const base::FilePath::StringType& name) const;
 
+  void ShowErrorMessageToUser(const std::string& message);
+
   base::FilePath GetSessionPath(const base::FilePath::StringType& name) const;
 
   // Returns the current list of all sessions sorted by last access time in

@@ -128,13 +128,6 @@ void NGOffsetMappingBuilder::Composite(const NGOffsetMappingBuilder& other) {
     mapping_[i] = other.mapping_[mapping_[i]];
 }
 
-void NGOffsetMappingBuilder::SetDestinationString(String string) {
-  // TODO(xiaochengh): Add the check below when we stop writing back to
-  // LayoutText for inline painting.
-  // DCHECK_EQ(mapping_.back(), string.length());
-  destination_string_ = string;
-}
-
 NGOffsetMappingResult NGOffsetMappingBuilder::Build() const {
   NGOffsetMappingResult::UnitVector units;
   NGOffsetMappingResult::RangeMap ranges;
@@ -178,8 +171,7 @@ NGOffsetMappingResult NGOffsetMappingBuilder::Build() const {
   if (current_node) {
     ranges.insert(current_node, std::make_pair(unit_range_start, units.size()));
   }
-  return NGOffsetMappingResult(std::move(units), std::move(ranges),
-                               destination_string_);
+  return NGOffsetMappingResult(std::move(units), std::move(ranges));
 }
 
 Vector<unsigned> NGOffsetMappingBuilder::DumpOffsetMappingForTesting() const {

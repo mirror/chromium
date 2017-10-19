@@ -164,7 +164,7 @@ ResourceRequest HistoryItem::GenerateResourceRequest(
   return request;
 }
 
-void HistoryItem::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HistoryItem) {
   visitor->Trace(document_state_);
 }
 

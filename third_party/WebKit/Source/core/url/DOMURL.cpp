@@ -52,7 +52,7 @@ DOMURL::DOMURL(const String& url,
 
 DOMURL::~DOMURL() {}
 
-void DOMURL::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMURL) {
   visitor->Trace(search_params_);
 }
 

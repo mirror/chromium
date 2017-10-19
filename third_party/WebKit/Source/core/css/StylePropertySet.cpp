@@ -145,7 +145,7 @@ template CORE_EXPORT int ImmutableStylePropertySet::FindPropertyIndex(
 template CORE_EXPORT int ImmutableStylePropertySet::FindPropertyIndex(
     AtomicString) const;
 
-void ImmutableStylePropertySet::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(ImmutableStylePropertySet) {
   const Member<const CSSValue>* values = ValueArray();
   for (unsigned i = 0; i < array_size_; i++)
     visitor->Trace(values[i]);
@@ -198,7 +198,7 @@ template CORE_EXPORT const CSSValue*
 template CORE_EXPORT const CSSValue*
     StylePropertySet::GetPropertyCSSValue<AtomicString>(AtomicString) const;
 
-void StylePropertySet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StylePropertySet) {
   if (is_mutable_)
     ToMutableStylePropertySet(this)->TraceAfterDispatch(visitor);
   else
@@ -583,7 +583,7 @@ template CORE_EXPORT int MutableStylePropertySet::FindPropertyIndex(
 template CORE_EXPORT int MutableStylePropertySet::FindPropertyIndex(
     AtomicString) const;
 
-void MutableStylePropertySet::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(MutableStylePropertySet) {
   visitor->Trace(cssom_wrapper_);
   visitor->Trace(property_vector_);
   StylePropertySet::TraceAfterDispatch(visitor);
@@ -620,6 +620,6 @@ MutableStylePropertySet* MutableStylePropertySet::Create(
   return new MutableStylePropertySet(properties, count);
 }
 
-void CSSLazyPropertyParser::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(CSSLazyPropertyParser) {}
 
 }  // namespace blink

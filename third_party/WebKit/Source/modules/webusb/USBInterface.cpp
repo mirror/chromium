@@ -67,7 +67,7 @@ bool USBInterface::claimed() const {
   return device_->IsInterfaceClaimed(configuration_index_, interface_index_);
 }
 
-void USBInterface::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(USBInterface) {
   visitor->Trace(device_);
 }
 

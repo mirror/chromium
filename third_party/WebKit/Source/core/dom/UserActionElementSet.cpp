@@ -102,7 +102,7 @@ inline void UserActionElementSet::SetFlags(Element* element, unsigned flags) {
   elements_.insert(element, flags);
 }
 
-void UserActionElementSet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(UserActionElementSet) {
   visitor->Trace(elements_);
 }
 

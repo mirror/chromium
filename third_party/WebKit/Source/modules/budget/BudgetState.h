@@ -30,7 +30,7 @@ class BudgetState final : public GarbageCollected<BudgetState>,
   void SetBudgetAt(const double budget_at) { budget_at_ = budget_at; }
   void SetTime(const DOMTimeStamp& time) { time_ = time; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   double budget_at_;

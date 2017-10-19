@@ -68,7 +68,7 @@ const AtomicString& TransitionEvent::InterfaceName() const {
   return EventNames::TransitionEvent;
 }
 
-void TransitionEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TransitionEvent) {
   Event::Trace(visitor);
 }
 

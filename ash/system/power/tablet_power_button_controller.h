@@ -74,9 +74,6 @@ class ASH_EXPORT TabletPowerButtonController
   void OnTabletModeStarted() override;
   void OnTabletModeEnded() override;
 
-  // Cancel the ongoing tablet power button behavior.
-  void CancelTabletPowerButton();
-
  private:
   friend class TabletPowerButtonControllerTestApi;
 

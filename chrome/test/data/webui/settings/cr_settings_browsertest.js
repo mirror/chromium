@@ -1572,7 +1572,7 @@ CrSettingsPrintingPageTest.prototype = {
   __proto__: CrSettingsBrowserTest.prototype,
 
   /** @override */
-  browsePreload: 'chrome://settings/printing_page/cups_printers.html',
+  browsePreload: 'chrome://settings/printing_page/cups_add_printer_dialog.html',
 
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([

@@ -6,6 +6,7 @@
 
 #include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
@@ -16,7 +17,6 @@
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
 #include "platform/graphics/paint/ClipRecorder.h"
-#include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 
 namespace blink {
@@ -43,12 +43,12 @@ void ScrollableAreaPainter::PaintResizer(GraphicsContext& context,
     return;
   }
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           context, GetScrollableArea().Box(), DisplayItem::kResizer))
     return;
 
-  DrawingRecorder recorder(context, GetScrollableArea().Box(),
-                           DisplayItem::kResizer, abs_rect);
+  LayoutObjectDrawingRecorder recorder(context, GetScrollableArea().Box(),
+                                       DisplayItem::kResizer, abs_rect);
 
   DrawPlatformResizerImage(context, abs_rect);
 
@@ -270,12 +270,12 @@ void ScrollableAreaPainter::PaintScrollCorner(
   if (GetScrollableArea().HasOverlayScrollbars())
     return;
 
-  if (DrawingRecorder::UseCachedDrawingIfPossible(
+  if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           context, GetScrollableArea().Box(), DisplayItem::kScrollbarCorner))
     return;
 
-  DrawingRecorder recorder(context, GetScrollableArea().Box(),
-                           DisplayItem::kScrollbarCorner, abs_rect);
+  LayoutObjectDrawingRecorder recorder(context, GetScrollableArea().Box(),
+                                       DisplayItem::kScrollbarCorner, abs_rect);
   context.FillRect(abs_rect, Color::kWhite);
 }
 

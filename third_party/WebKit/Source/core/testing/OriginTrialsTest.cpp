@@ -24,6 +24,6 @@ bool OriginTrialsTest::throwingAttribute(ScriptState* script_state,
   return unconditionalAttribute();
 }
 
-void OriginTrialsTest::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(OriginTrialsTest) {}
 
 }  // namespace blink

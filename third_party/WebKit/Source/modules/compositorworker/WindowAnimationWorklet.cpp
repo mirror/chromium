@@ -31,7 +31,7 @@ void WindowAnimationWorklet::ContextDestroyed(ExecutionContext*) {
   animation_worklet_ = nullptr;
 }
 
-void WindowAnimationWorklet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WindowAnimationWorklet) {
   visitor->Trace(animation_worklet_);
   Supplement<LocalDOMWindow>::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);

@@ -126,7 +126,7 @@ class SRIBytesConsumer final : public BytesConsumer {
     }
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(underlying_);
     visitor->Trace(client_);
     BytesConsumer::Trace(visitor);
@@ -156,7 +156,7 @@ class FetchManager::Loader final
   }
 
   ~Loader() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void DidReceiveRedirectTo(const KURL&) override;
   void DidReceiveResponse(unsigned long,
@@ -249,7 +249,7 @@ class FetchManager::Loader final
 
     bool IsFinished() const { return finished_; }
 
-    void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_TRACE() {
       visitor->Trace(updater_);
       visitor->Trace(response_);
       visitor->Trace(loader_);
@@ -322,7 +322,7 @@ FetchManager::Loader::~Loader() {
   DCHECK(!loader_);
 }
 
-void FetchManager::Loader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FetchManager::Loader) {
   visitor->Trace(fetch_manager_);
   visitor->Trace(resolver_);
   visitor->Trace(request_);
@@ -860,7 +860,7 @@ void FetchManager::OnLoaderFinished(Loader* loader) {
   loader->Dispose();
 }
 
-void FetchManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FetchManager) {
   visitor->Trace(loaders_);
   ContextLifecycleObserver::Trace(visitor);
 }

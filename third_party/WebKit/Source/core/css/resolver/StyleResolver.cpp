@@ -37,6 +37,7 @@
 #include "core/animation/ElementAnimations.h"
 #include "core/animation/InvalidatableInterpolation.h"
 #include "core/animation/KeyframeEffect.h"
+#include "core/animation/LegacyStyleInterpolation.h"
 #include "core/animation/TransitionInterpolation.h"
 #include "core/animation/animatable/AnimatableValue.h"
 #include "core/animation/css/CSSAnimatableValueFactory.h"
@@ -1264,8 +1265,10 @@ void StyleResolver::ApplyAnimatedStandardProperties(
       CSSInterpolationTypesMap map(state.GetDocument().GetPropertyRegistry());
       CSSInterpolationEnvironment environment(map, state, nullptr);
       InvalidatableInterpolation::ApplyStack(entry.value, environment);
-    } else {
+    } else if (interpolation.IsTransitionInterpolation()) {
       ToTransitionInterpolation(interpolation).Apply(state);
+    } else {
+      ToLegacyStyleInterpolation(interpolation).Apply(state);
     }
   }
 }
@@ -2043,7 +2046,7 @@ void StyleResolver::UpdateMediaType() {
   }
 }
 
-void StyleResolver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleResolver) {
   visitor->Trace(matched_properties_cache_);
   visitor->Trace(selector_filter_);
   visitor->Trace(document_);

@@ -19,11 +19,6 @@ void IdlenessDetector::Shutdown() {
   local_frame_ = nullptr;
 }
 
-void IdlenessDetector::WillCommitLoad() {
-  network_2_quiet_start_time_ = 0;
-  network_0_quiet_start_time_ = 0;
-}
-
 void IdlenessDetector::DomContentLoadedEventFired() {
   if (!local_frame_)
     return;
@@ -44,16 +39,12 @@ void IdlenessDetector::DomContentLoadedEventFired() {
   OnDidLoadResource();
 }
 
-void IdlenessDetector::OnWillSendRequest(ResourceFetcher* fetcher) {
-  // If |fetcher| is not the current fetcher of the Document, then that means
-  // it's a new navigation, bail out in this case since it shouldn't affect the
-  // current idleness of the local frame.
-  if (!local_frame_ || fetcher != local_frame_->GetDocument()->Fetcher())
+void IdlenessDetector::OnWillSendRequest() {
+  if (!local_frame_)
     return;
 
-  // When OnWillSendRequest is called, the new loader hasn't been added to the
-  // fetcher, thus we need to add 1 as the total request count.
-  int request_count = fetcher->ActiveRequestCount() + 1;
+  int request_count =
+      local_frame_->GetDocument()->Fetcher()->ActiveRequestCount();
   // If we are above the allowed number of active requests, reset timers.
   if (network_2_quiet_ >= 0 && request_count > 2)
     network_2_quiet_ = 0;
@@ -103,14 +94,6 @@ void IdlenessDetector::OnDidLoadResource() {
     network_quiet_timer_.StartOneShot(kNetworkQuietWatchdogSeconds,
                                       BLINK_FROM_HERE);
   }
-}
-
-double IdlenessDetector::GetNetworkAlmostIdleTime() {
-  return network_2_quiet_start_time_;
-}
-
-double IdlenessDetector::GetNetworkIdleTime() {
-  return network_0_quiet_start_time_;
 }
 
 void IdlenessDetector::WillProcessTask(double start_time) {
@@ -172,7 +155,7 @@ void IdlenessDetector::NetworkQuietTimerFired(TimerBase*) {
   }
 }
 
-void IdlenessDetector::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IdlenessDetector) {
   visitor->Trace(local_frame_);
 }
 

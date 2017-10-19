@@ -75,7 +75,7 @@ DedicatedWorkerObjectProxy& DedicatedWorkerGlobalScope::WorkerObjectProxy()
   return static_cast<DedicatedWorkerThread*>(GetThread())->WorkerObjectProxy();
 }
 
-void DedicatedWorkerGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DedicatedWorkerGlobalScope) {
   WorkerGlobalScope::Trace(visitor);
 }
 

@@ -46,7 +46,7 @@ void LongTaskDetector::DidProcessTask(double start_time, double end_time) {
   }
 }
 
-void LongTaskDetector::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LongTaskDetector) {
   visitor->Trace(observers_);
 }
 

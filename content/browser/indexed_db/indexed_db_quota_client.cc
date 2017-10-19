@@ -138,7 +138,7 @@ void IndexedDBQuotaClient::DeleteOriginData(const GURL& origin,
                                             storage::StorageType type,
                                             const DeletionCallback& callback) {
   if (type != storage::kStorageTypeTemporary) {
-    callback.Run(storage::kQuotaStatusOk);
+    callback.Run(storage::kQuotaErrorNotSupported);
     return;
   }
 

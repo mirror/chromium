@@ -41,7 +41,7 @@ class HiddenInputType final : public InputType, private InputTypeView {
 
  public:
   static InputType* Create(HTMLInputElement&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   using InputType::GetElement;
 
  private:

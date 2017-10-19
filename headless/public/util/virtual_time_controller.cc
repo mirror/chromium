@@ -13,10 +13,8 @@ namespace headless {
 using base::TimeDelta;
 
 VirtualTimeController::VirtualTimeController(
-    HeadlessDevToolsClient* devtools_client,
-    int max_task_starvation_count)
-    : devtools_client_(devtools_client),
-      max_task_starvation_count_(max_task_starvation_count) {
+    HeadlessDevToolsClient* devtools_client)
+    : devtools_client_(devtools_client) {
   devtools_client_->GetEmulation()->GetExperimental()->AddObserver(this);
 }
 
@@ -115,7 +113,6 @@ void VirtualTimeController::SetVirtualTimePolicy(const TimeDelta& next_budget) {
       emulation::SetVirtualTimePolicyParams::Builder()
           .SetPolicy(virtual_time_policy_)
           .SetBudget(next_budget.InMilliseconds())
-          .SetMaxVirtualTimeTaskStarvationCount(max_task_starvation_count_)
           .Build(),
       base::Bind(&VirtualTimeController::SetVirtualTimePolicyDone,
                  base::Unretained(this)));

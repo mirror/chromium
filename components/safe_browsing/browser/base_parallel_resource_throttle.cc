@@ -11,7 +11,6 @@
 #include "components/safe_browsing/browser/url_checker_delegate.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/common/resource_request.h"
-#include "content/public/common/resource_response.h"
 #include "net/http/http_request_headers.h"
 #include "net/log/net_log_with_source.h"
 #include "net/url_request/url_request.h"
@@ -135,8 +134,7 @@ void BaseParallelResourceThrottle::WillRedirectRequest(
 }
 
 void BaseParallelResourceThrottle::WillProcessResponse(bool* defer) {
-  url_loader_throttle_holder_->throttle()->WillProcessResponse(
-      content::ResourceResponseHead(), defer);
+  url_loader_throttle_holder_->throttle()->WillProcessResponse(defer);
 }
 
 const char* BaseParallelResourceThrottle::GetNameForLogging() const {

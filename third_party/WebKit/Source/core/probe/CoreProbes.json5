@@ -115,7 +115,6 @@
         "markResourceAsCached",
         "scriptImported",
         "shouldBlockRequest",
-        "shouldBypassServiceWorker",
         "shouldForceCORSPreflight",
         "willDispatchEventSourceEvent",
         "willLoadXHR",

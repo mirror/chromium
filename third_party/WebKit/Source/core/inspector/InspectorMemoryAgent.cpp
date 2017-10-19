@@ -71,7 +71,7 @@ void InspectorMemoryAgent::OnLeakDetectionComplete() {
   detector_.reset();
 }
 
-void InspectorMemoryAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorMemoryAgent) {
   visitor->Trace(frames_);
   InspectorBaseAgent::Trace(visitor);
 }

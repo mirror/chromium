@@ -42,7 +42,7 @@ class CORE_EXPORT ActiveSuggestionMarkerListImpl final
                     unsigned old_length,
                     unsigned new_length) final;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   HeapVector<Member<DocumentMarker>> markers_;

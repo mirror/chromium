@@ -35,7 +35,7 @@ class StylePropertyMapIterationSource final
     return true;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(values_);
     PairIterable<String, CSSStyleValueOrCSSStyleValueSequence>::
         IterationSource::Trace(visitor);

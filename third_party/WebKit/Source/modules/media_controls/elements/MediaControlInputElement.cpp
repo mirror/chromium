@@ -193,7 +193,7 @@ void MediaControlInputElement::UpdateDisplayType() {
     overflow_element_->UpdateDisplayType();
 }
 
-void MediaControlInputElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlInputElement) {
   HTMLInputElement::Trace(visitor);
   MediaControlElementBase::Trace(visitor);
   visitor->Trace(overflow_element_);

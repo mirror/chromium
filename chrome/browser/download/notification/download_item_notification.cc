@@ -18,6 +18,7 @@
 #include "chrome/browser/download/download_crx_util.h"
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/notification/download_notification_manager.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
@@ -43,7 +44,6 @@
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/message_center/notification.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
 
@@ -185,16 +185,17 @@ DownloadItemNotification::DownloadItemNotification(
   rich_notification_data.should_make_spoken_feedback_for_popup_updates = false;
   // Dangerous notifications don't have a click handler.
   rich_notification_data.clickable = !item_->IsDangerous();
-  notification_ = std::make_unique<message_center::Notification>(
+  notification_ = std::make_unique<Notification>(
       message_center::NOTIFICATION_TYPE_PROGRESS, GetNotificationId(),
       base::string16(),  // title
       base::string16(),  // body
       gfx::Image(),      // icon
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 kDownloadNotificationNotifierId),
       l10n_util::GetStringUTF16(
           IDS_DOWNLOAD_NOTIFICATION_DISPLAY_SOURCE),  // display_source
       GURL(kDownloadNotificationOrigin),              // origin_url
-      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 kDownloadNotificationNotifierId),
+      GetNotificationId(),                            // tag
       rich_notification_data, nullptr);
 
   notification_->set_progress(0);

@@ -1339,7 +1339,7 @@ DragState& DragController::GetDragState() {
   return *drag_state_;
 }
 
-void DragController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DragController) {
   visitor->Trace(page_);
   visitor->Trace(document_under_mouse_);
   visitor->Trace(drag_initiator_);

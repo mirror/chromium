@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/subresource_filter/test_ruleset_publisher.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/safe_browsing/db/util.h"
@@ -43,11 +42,14 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
 
  protected:
   // InProcessBrowserTest:
+  void SetUpCommandLine(base::CommandLine* command_line) override;
   void SetUp() override;
   void TearDown() override;
   void SetUpOnMainThread() override;
 
   virtual std::unique_ptr<TestSafeBrowsingDatabaseHelper> CreateTestDatabase();
+
+  std::vector<base::StringPiece> RequiredFeatures() const;
 
   GURL GetTestUrl(const std::string& relative_url) const;
 
@@ -99,8 +101,6 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
   }
 
  private:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   TestRulesetCreator ruleset_creator_;
   ScopedSubresourceFilterConfigurator scoped_configuration_;
   TestRulesetPublisher test_ruleset_publisher_;

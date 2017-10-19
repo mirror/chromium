@@ -118,7 +118,7 @@ class FileReader::ThrottlingController final
     probe::AsyncTaskCanceled(context, reader);
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(pending_readers_);
     visitor->Trace(running_readers_);
     Supplement<ExecutionContext>::Trace(visitor);
@@ -467,7 +467,7 @@ void FileReader::FireEvent(const AtomicString& type) {
         ProgressEvent::Create(type, false, loader_->BytesLoaded(), 0));
 }
 
-void FileReader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FileReader) {
   visitor->Trace(error_);
   EventTargetWithInlineData::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);

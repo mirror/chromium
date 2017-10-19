@@ -32,9 +32,7 @@ class AudioParamMap final : public GarbageCollectedFinalized<AudioParamMap>,
   AudioParam* At(String name) { return parameter_map_.at(name); }
   bool Contains(String name) { return parameter_map_.Contains(name); }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    visitor->Trace(parameter_map_);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(parameter_map_); }
 
  private:
   PairIterable<String, AudioParam*>::IterationSource* StartIteration(

@@ -223,7 +223,6 @@ extern const char kDisplayRotationLock[];
 extern const char kNoteTakingAppId[];
 extern const char kNoteTakingAppEnabledOnLockScreen[];
 extern const char kNoteTakingAppsLockScreenWhitelist[];
-extern const char kNoteTakingAppsLockScreenToastShown[];
 extern const char kRestoreLastLockScreenNote[];
 extern const char kSessionUserActivitySeen[];
 extern const char kSessionStartTime[];
@@ -683,10 +682,6 @@ extern const char kAuthNegotiateDelegateWhitelist[];
 extern const char kGSSAPILibraryName[];
 extern const char kAuthAndroidNegotiateAccountType[];
 extern const char kAllowCrossOriginAuthPrompt[];
-
-#if defined(OS_POSIX)
-extern const char kNtlmV2Enabled[];
-#endif  // defined(OS_POSIX)
 
 extern const char kBuiltInDnsClientEnabled[];
 

@@ -14,7 +14,6 @@
 
 namespace autofill {
 struct PasswordForm;
-class AutofillClient;
 }
 
 namespace syncer {
@@ -54,19 +53,6 @@ bool IsLoggingActive(const password_manager::PasswordManagerClient* client);
 // slow hash function. The running time is ~10^{-4} seconds on Desktop.
 uint64_t CalculateSyncPasswordHash(const base::StringPiece16& text,
                                    const std::string& salt);
-
-// True iff the manual password generation is enabled and the user is sync user
-// without custom passphrase.
-bool ManualPasswordGenerationEnabled(syncer::SyncService* sync_service);
-
-// Returns true iff the "Show all saved passwords" option should be shown in
-// Context Menu. Also records metric, that the Context Menu will have "Show all
-// saved passwords" option.
-bool ShowAllSavedPasswordsContextMenuEnabled();
-
-// Opens Password Manager setting page and records the metrics.
-void UserTriggeredShowAllSavedPasswordsFromContextMenu(
-    autofill::AutofillClient* autofill_client);
 
 }  // namespace password_manager_util
 

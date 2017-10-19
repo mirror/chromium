@@ -29,6 +29,8 @@
 
 #include "core/dom/Document.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
@@ -261,7 +263,6 @@
 #include "public/platform/modules/insecure_input/insecure_input_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
 #include "services/metrics/public/cpp/mojo_ukm_recorder.h"
-#include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom-shared.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -312,18 +313,12 @@ class DocumentOutliveTimeReporter : public BlinkGCObserver {
     int outlive_time_count = GetOutliveTimeCount();
     if (outlive_time_count == 5 || outlive_time_count == 10) {
       const char* kUMAString = "Document.OutliveTimeAfterShutdown.GCCount";
-
       if (outlive_time_count == 5)
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount5, kGCCountMax);
       else if (outlive_time_count == 10)
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount10, kGCCountMax);
       else
         NOTREACHED();
-    }
-
-    if (outlive_time_count == 5 || outlive_time_count == 10 ||
-        outlive_time_count == 20 || outlive_time_count == 50) {
-      document_->RecordUkmOutliveTimeAfterShutdown(outlive_time_count);
     }
   }
 
@@ -531,7 +526,7 @@ class Document::NetworkStateObserver final
  public:
   explicit NetworkStateObserver(Document& document)
       : ContextLifecycleObserver(&document) {
-    online_observer_handle_ = GetNetworkStateNotifier().AddOnLineObserver(
+    GetNetworkStateNotifier().AddOnLineObserver(
         this,
         TaskRunnerHelper::Get(TaskType::kNetworking, GetExecutionContext()));
   }
@@ -552,16 +547,11 @@ class Document::NetworkStateObserver final
 
   void UnregisterAsObserver(ExecutionContext* context) {
     DCHECK(context);
-    online_observer_handle_ = nullptr;
+    GetNetworkStateNotifier().RemoveOnLineObserver(
+        this, TaskRunnerHelper::Get(TaskType::kNetworking, context));
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ContextLifecycleObserver::Trace(visitor);
-  }
-
- private:
-  std::unique_ptr<NetworkStateNotifier::NetworkStateObserverHandle>
-      online_observer_handle_;
+  DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
 };
 
 Document* Document::Create(const Document& document) {
@@ -2112,8 +2102,12 @@ static void AssertLayoutTreeUpdated(Node& root) {
 void Document::UpdateStyleAndLayoutTree() {
   DCHECK(IsMainThread());
 
-  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   ScriptForbiddenScope forbid_script;
+  // We should forbid script execution for plugins here because update while
+  // layout is changing, HTMLPlugin element can be reattached and plugin can be
+  // destroyed. Plugin can execute scripts on destroy. It produces crash without
+  // PluginScriptForbiddenScope: crbug.com/550427.
+  PluginScriptForbiddenScope plugin_forbid_script;
 
   if (!View() || !IsActive())
     return;
@@ -2212,6 +2206,7 @@ void Document::UpdateStyle() {
 
   unsigned initial_element_count = GetStyleEngine().StyleForElementCount();
 
+  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   lifecycle_.AdvanceTo(DocumentLifecycle::kInStyleRecalc);
 
   StyleRecalcChange change = kNoChange;
@@ -2364,7 +2359,6 @@ void Document::UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(Node* node) {
 void Document::UpdateStyleAndLayout() {
   DCHECK(IsMainThread());
 
-  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   ScriptForbiddenScope forbid_script;
 
   LocalFrameView* frame_view = View();
@@ -3706,17 +3700,8 @@ void Document::SetURL(const KURL& url) {
   UpdateBaseURL();
   GetContextFeatures().UrlDidChange(this);
 
-  if (!ukm_recorder_ && IsInMainFrame()) {
-    ukm::mojom::UkmRecorderInterfacePtr interface;
-    frame_->GetInterfaceProvider().GetInterface(mojo::MakeRequest(&interface));
-    ukm_source_id_ = ukm::UkmRecorder::GetNewSourceID();
-    ukm_recorder_.reset(new ukm::MojoUkmRecorder(std::move(interface)));
-  }
-
-  if (ukm_recorder_) {
-    DCHECK(IsInMainFrame());
+  if (ukm_recorder_)
     ukm_recorder_->UpdateSourceURL(ukm_source_id_, url_);
-  }
 }
 
 KURL Document::ValidBaseElementURL() const {
@@ -7170,7 +7155,7 @@ service_manager::InterfaceProvider* Document::GetInterfaceProvider() {
   return &GetFrame()->GetInterfaceProvider();
 }
 
-void Document::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Document) {
   visitor->Trace(imports_controller_);
   visitor->Trace(doc_type_);
   visitor->Trace(implementation_);
@@ -7248,15 +7233,6 @@ void Document::RecordDeferredLoadReason(WouldLoadReason reason) {
        i <= static_cast<int>(reason); ++i)
     RecordLoadReasonToHistogram(static_cast<WouldLoadReason>(i));
   would_load_reason_ = reason;
-}
-
-void Document::RecordUkmOutliveTimeAfterShutdown(int outlive_time_count) {
-  if (!ukm_recorder_)
-    return;
-
-  ukm::builders::Document_OutliveTimeAfterShutdown(ukm_source_id_)
-      .SetGCCount(outlive_time_count)
-      .Record(ukm_recorder_.get());
 }
 
 DEFINE_TRACE_WRAPPERS(Document) {

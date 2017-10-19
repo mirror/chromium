@@ -310,7 +310,7 @@ class FormKeyGenerator final
 
  public:
   static FormKeyGenerator* Create() { return new FormKeyGenerator; }
-  void Trace(blink::Visitor* visitor) { visitor->Trace(form_to_key_map_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(form_to_key_map_); }
   const AtomicString& FormKey(const HTMLFormControlElementWithState&);
   void WillDeleteForm(HTMLFormElement*);
 
@@ -401,7 +401,7 @@ DocumentState* DocumentState::Create() {
   return new DocumentState;
 }
 
-void DocumentState::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentState) {
   visitor->Trace(form_controls_);
 }
 
@@ -460,7 +460,7 @@ FormController::FormController() : document_state_(DocumentState::Create()) {}
 
 FormController::~FormController() {}
 
-void FormController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FormController) {
   visitor->Trace(document_state_);
   visitor->Trace(form_key_generator_);
 }

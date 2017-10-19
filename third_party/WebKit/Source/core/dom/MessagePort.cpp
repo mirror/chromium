@@ -287,7 +287,7 @@ MojoHandle MessagePort::EntangledHandleForTesting() const {
   return channel_.GetHandle().get().value();
 }
 
-void MessagePort::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MessagePort) {
   ContextLifecycleObserver::Trace(visitor);
   EventTargetWithInlineData::Trace(visitor);
 }

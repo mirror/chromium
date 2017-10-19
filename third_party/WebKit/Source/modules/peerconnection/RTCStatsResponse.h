@@ -49,7 +49,7 @@ class RTCStatsResponse final : public RTCStatsResponseBase,
 
   void AddStats(const WebRTCLegacyStats&) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   RTCStatsResponse();

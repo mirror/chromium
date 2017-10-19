@@ -17,15 +17,14 @@ namespace base {
 namespace {
 
 LazyInstance<ThreadLocalPointer<SequencedTaskRunnerHandle>>::Leaky
-    sequenced_task_runner_tls = LAZY_INSTANCE_INITIALIZER;
+    lazy_tls_ptr = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
 // static
 scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
   // Return the registered SequencedTaskRunner, if any.
-  const SequencedTaskRunnerHandle* handle =
-      sequenced_task_runner_tls.Pointer()->Get();
+  const SequencedTaskRunnerHandle* handle = lazy_tls_ptr.Pointer()->Get();
   if (handle) {
     // Various modes of setting SequencedTaskRunnerHandle don't combine.
     DCHECK(!SequencedWorkerPool::GetSequenceTokenForCurrentThread().IsValid());
@@ -57,7 +56,7 @@ scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
 
 // static
 bool SequencedTaskRunnerHandle::IsSet() {
-  return sequenced_task_runner_tls.Pointer()->Get() ||
+  return lazy_tls_ptr.Pointer()->Get() ||
          SequencedWorkerPool::GetSequenceTokenForCurrentThread().IsValid() ||
          ThreadTaskRunnerHandle::IsSet();
 }
@@ -67,13 +66,13 @@ SequencedTaskRunnerHandle::SequencedTaskRunnerHandle(
     : task_runner_(std::move(task_runner)) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
   DCHECK(!SequencedTaskRunnerHandle::IsSet());
-  sequenced_task_runner_tls.Pointer()->Set(this);
+  lazy_tls_ptr.Pointer()->Set(this);
 }
 
 SequencedTaskRunnerHandle::~SequencedTaskRunnerHandle() {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  DCHECK_EQ(sequenced_task_runner_tls.Pointer()->Get(), this);
-  sequenced_task_runner_tls.Pointer()->Set(nullptr);
+  DCHECK_EQ(lazy_tls_ptr.Pointer()->Get(), this);
+  lazy_tls_ptr.Pointer()->Set(nullptr);
 }
 
 }  // namespace base

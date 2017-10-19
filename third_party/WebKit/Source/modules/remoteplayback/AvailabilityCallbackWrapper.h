@@ -32,7 +32,7 @@ class AvailabilityCallbackWrapper final
 
   void Run(RemotePlayback*, bool new_availability);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:

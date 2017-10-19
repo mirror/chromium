@@ -37,7 +37,7 @@ void WindowAudioWorklet::ContextDestroyed(ExecutionContext*) {
   audio_worklet_ = nullptr;
 }
 
-void WindowAudioWorklet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WindowAudioWorklet) {
   visitor->Trace(audio_worklet_);
   Supplement<LocalDOMWindow>::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);

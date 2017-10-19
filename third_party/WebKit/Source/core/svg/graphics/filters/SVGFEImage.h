@@ -49,7 +49,7 @@ class FEImage final : public FilterEffect {
 
   TextStream& ExternalRepresentation(TextStream&, int indention) const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   ~FEImage() override {}

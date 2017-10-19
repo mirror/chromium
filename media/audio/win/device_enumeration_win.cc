@@ -7,14 +7,15 @@
 #include <objbase.h>
 #include <Functiondiscoverykeys_devpkey.h>  // MMDeviceAPI.h must come first
 #include <stddef.h>
-#include <wrl/client.h>
 
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/win/scoped_co_mem.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_propvariant.h"
 #include "media/audio/win/audio_manager_win.h"
 
+using base::win::ScopedComPtr;
 using base::win::ScopedCoMem;
 
 // Taken from Mmddk.h.
@@ -28,7 +29,7 @@ static bool GetDeviceNamesWinImpl(EDataFlow data_flow,
                                   AudioDeviceNames* device_names) {
   // It is assumed that this method is called from a COM thread, i.e.,
   // CoInitializeEx() is not called here again to avoid STA/MTA conflicts.
-  Microsoft::WRL::ComPtr<IMMDeviceEnumerator> enumerator;
+  ScopedComPtr<IMMDeviceEnumerator> enumerator;
   HRESULT hr =
       ::CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL,
                          CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&enumerator));
@@ -40,7 +41,7 @@ static bool GetDeviceNamesWinImpl(EDataFlow data_flow,
 
   // Generate a collection of active audio endpoint devices.
   // This method will succeed even if all devices are disabled.
-  Microsoft::WRL::ComPtr<IMMDeviceCollection> collection;
+  ScopedComPtr<IMMDeviceCollection> collection;
   hr = enumerator->EnumAudioEndpoints(data_flow, DEVICE_STATE_ACTIVE,
                                       collection.GetAddressOf());
   if (FAILED(hr))
@@ -59,7 +60,7 @@ static bool GetDeviceNamesWinImpl(EDataFlow data_flow,
   for (UINT i = 0; i < number_of_active_devices; ++i) {
     // Retrieve unique name of endpoint device.
     // Example: "{0.0.1.00000000}.{8db6020f-18e3-4f25-b6f5-7726c9122574}".
-    Microsoft::WRL::ComPtr<IMMDevice> audio_device;
+    ScopedComPtr<IMMDevice> audio_device;
     hr = collection->Item(i, audio_device.GetAddressOf());
     if (FAILED(hr))
       continue;
@@ -72,7 +73,7 @@ static bool GetDeviceNamesWinImpl(EDataFlow data_flow,
 
     // Retrieve user-friendly name of endpoint device.
     // Example: "Microphone (Realtek High Definition Audio)".
-    Microsoft::WRL::ComPtr<IPropertyStore> properties;
+    ScopedComPtr<IPropertyStore> properties;
     hr = audio_device->OpenPropertyStore(STGM_READ, properties.GetAddressOf());
     if (SUCCEEDED(hr)) {
       base::win::ScopedPropVariant friendly_name;

@@ -383,8 +383,6 @@ class PersonalDataManager : public KeyedService,
       DeleteDisusedCreditCards_OnlyDeleteExpiredDisusedLocalCards);
   FRIEND_TEST_ALL_PREFIXES(PersonalDataManagerTest,
                            GetCreditCardSuggestions_CreditCardAutofillDisabled);
-  FRIEND_TEST_ALL_PREFIXES(PersonalDataManagerTest,
-                           GetCreditCardSuggestions_NoCardsLoadedIfDisabled);
 
   friend class autofill::AutofillInteractiveTest;
   friend class autofill::AutofillTest;

@@ -58,7 +58,7 @@ class MODULES_EXPORT NavigatorGamepad final
   static GamepadList* getGamepads(Navigator&);
   GamepadList* Gamepads();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit NavigatorGamepad(Navigator&);

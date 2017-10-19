@@ -301,7 +301,7 @@ HTMLMediaElement* TextTrackList::Owner() const {
   return owner_;
 }
 
-void TextTrackList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrackList) {
   visitor->Trace(owner_);
   visitor->Trace(async_event_queue_);
   visitor->Trace(add_track_tracks_);

@@ -30,7 +30,7 @@ class HitRegion final : public GarbageCollectedFinalized<HitRegion> {
   const Path& GetPath() const { return path_; }
   Element* Control() const { return control_.Get(); }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   HitRegion(const Path&, const HitRegionOptions&);
@@ -61,7 +61,7 @@ class HitRegionManager final : public GarbageCollected<HitRegionManager> {
 
   unsigned GetHitRegionsCount() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   HitRegionManager() {}

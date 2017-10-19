@@ -29,7 +29,7 @@ namespace blink {
 class PopupMenu : public GarbageCollectedFinalized<PopupMenu> {
  public:
   virtual ~PopupMenu() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void Show() = 0;
   virtual void Hide() = 0;
   enum UpdateReason {

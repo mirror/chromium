@@ -3,11 +3,12 @@
 // found in the LICENSE file.
 
 #include <stdint.h>
+#include "base/command_line.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "content/browser/appcache/appcache_subresource_url_factory.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
@@ -24,11 +25,7 @@ namespace content {
 // test the AppCache code in that mode.
 class AppCacheNetworkServiceBrowserTest : public ContentBrowserTest {
  public:
-  AppCacheNetworkServiceBrowserTest() {
-    scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
-  }
-
-  ~AppCacheNetworkServiceBrowserTest() override {}
+  AppCacheNetworkServiceBrowserTest() {}
 
   // Handler to count the number of requests.
   std::unique_ptr<net::test_server::HttpResponse> HandleRequest(
@@ -44,12 +41,15 @@ class AppCacheNetworkServiceBrowserTest : public ContentBrowserTest {
 
   int request_count() const { return request_count_; }
 
- private:
-  base::test::ScopedFeatureList scoped_feature_list_;
+ protected:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                    features::kNetworkService.name);
+  }
 
+ private:
   // Tracks the number of requests.
   int request_count_ = 0;
-
   DISALLOW_COPY_AND_ASSIGN(AppCacheNetworkServiceBrowserTest);
 };
 

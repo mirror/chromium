@@ -36,13 +36,11 @@
 #include "gpu/config/gpu_switches.h"
 #include "gpu/config/gpu_util.h"
 #include "gpu/ipc/common/gpu_memory_buffer_support.h"
-#include "gpu/ipc/common/gpu_preferences_util.h"
 #include "gpu/ipc/service/gpu_config.h"
 #include "gpu/ipc/service/gpu_init.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "media/gpu/features.h"
 #include "services/ui/gpu/gpu_main.h"
-#include "third_party/angle/src/gpu_info_util/SystemInfo.h"
 #include "third_party/skia/include/core/SkGraphics.h"
 #include "ui/events/platform/platform_event_source.h"
 #include "ui/gfx/switches.h"
@@ -79,7 +77,6 @@
 #if defined(OS_LINUX)
 #include "content/common/font_config_ipc_linux.h"
 #include "content/common/sandbox_linux/sandbox_linux.h"
-#include "content/gpu/gpu_sandbox_hook_linux.h"
 #include "content/public/common/sandbox_init.h"
 #include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #endif
@@ -270,13 +267,6 @@ int GpuMain(const MainFunctionParams& parameters) {
 
   gpu_init->set_sandbox_helper(&sandbox_helper);
 
-  gpu::GpuPreferences gpu_preferences;
-  if (command_line.HasSwitch(switches::kGpuPreferences)) {
-    std::string value =
-        command_line.GetSwitchValueASCII(switches::kGpuPreferences);
-    bool success = gpu::SwitchValueToGpuPreferences(value, &gpu_preferences);
-    CHECK(success);
-  }
   // Gpu initialization may fail for various reasons, in which case we will need
   // to tear down this process. However, we can not do so safely until the IPC
   // channel is set up, because the detection of early return of a child process
@@ -286,7 +276,7 @@ int GpuMain(const MainFunctionParams& parameters) {
   // defer tearing down the GPU process until receiving the initialization
   // message from the browser (through mojom::GpuMain::CreateGpuService()).
   const bool init_success = gpu_init->InitializeAndStartSandbox(
-      const_cast<base::CommandLine*>(&command_line), gpu_preferences);
+      const_cast<base::CommandLine*>(&command_line));
   const bool dead_on_arrival = !init_success;
 
   logging::SetLogMessageHandler(NULL);
@@ -338,6 +328,8 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
                        const gpu::GPUInfo* gpu_info) {
   TRACE_EVENT0("gpu,startup", "Initialize sandbox");
 
+  bool res = false;
+
   if (watchdog_thread) {
     // LinuxSandbox needs to be able to ensure that the thread
     // has really been stopped.
@@ -346,18 +338,11 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
 
   // LinuxSandbox::InitializeSandbox() must always be called
   // with only one thread.
-  SandboxSeccompBPF::Options sandbox_options;
-  sandbox_options.use_amd_specific_policies =
-      gpu_info && angle::IsAMD(gpu_info->active_gpu().vendor_id);
-  sandbox_options.pre_sandbox_hook =
-      GetGpuProcessPreSandboxHook(sandbox_options.use_amd_specific_policies);
-
-  bool res = LinuxSandbox::InitializeSandbox(std::move(sandbox_options));
-
+  res = LinuxSandbox::InitializeSandbox(gpu_info);
   if (watchdog_thread) {
-    base::Thread::Options thread_options;
-    thread_options.timer_slack = base::TIMER_SLACK_MAXIMUM;
-    watchdog_thread->StartWithOptions(thread_options);
+    base::Thread::Options options;
+    options.timer_slack = base::TIMER_SLACK_MAXIMUM;
+    watchdog_thread->StartWithOptions(options);
   }
 
   return res;

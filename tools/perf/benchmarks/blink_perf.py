@@ -248,7 +248,9 @@ class _BlinkPerfMeasurement(legacy_page_test.LegacyPageTest):
         # reference builds.
         # --disable-gesture-requirement-for-media-playback is the old one and
         # can be removed after M60 goes to stable.
-        '--enable-experimental-canvas-features'
+        '--enable-experimental-canvas-features',
+        # TODO(qinmin): After fixing crbug.com/592017, remove this command line.
+        '--reduce-security-for-testing'
     ])
 
   def SetOptions(self, options):

@@ -108,7 +108,6 @@ void Coordinator::StartTracing(const std::string& config,
 
 void Coordinator::SendStartTracingToAgent(
     AgentRegistry::AgentEntry* agent_entry) {
-  DCHECK(!agent_entry->is_tracing());
   agent_entry->AddDisconnectClosure(
       &kStartTracingClosureName,
       base::BindOnce(&Coordinator::OnTracingStarted, base::Unretained(this),
@@ -122,7 +121,6 @@ void Coordinator::SendStartTracingToAgent(
 
 void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry,
                                    bool success) {
-  agent_entry->set_is_tracing(success);
   bool removed =
       agent_entry->RemoveDisconnectClosure(&kStartTracingClosureName);
   DCHECK(removed);
@@ -171,10 +169,8 @@ void Coordinator::StopAndFlushInternal() {
   }
 
   agent_registry_->ForAllAgents([this](AgentRegistry::AgentEntry* agent_entry) {
-    if (!agent_entry->is_tracing() ||
-        !agent_entry->supports_explicit_clock_sync()) {
+    if (!agent_entry->supports_explicit_clock_sync())
       return;
-    }
     const std::string sync_id = base::GenerateGUID();
     agent_entry->AddDisconnectClosure(
         &kRequestClockSyncMarkerClosureName,
@@ -220,8 +216,6 @@ void Coordinator::StopAndFlushAfterClockSync() {
   streaming_label_.clear();
 
   agent_registry_->ForAllAgents([this](AgentRegistry::AgentEntry* agent_entry) {
-    if (!agent_entry->is_tracing())
-      return;
     mojom::RecorderPtr ptr;
     recorders_[agent_entry->label()].insert(base::MakeUnique<Recorder>(
         MakeRequest(&ptr), agent_entry->type(),
@@ -378,9 +372,6 @@ void Coordinator::OnFlushDone() {
   recorders_.clear();
   stream_.reset();
   base::ResetAndReturn(&stop_and_flush_callback_).Run(std::move(metadata_));
-  agent_registry_->ForAllAgents([this](AgentRegistry::AgentEntry* agent_entry) {
-    agent_entry->set_is_tracing(false);
-  });
   is_tracing_ = false;
 }
 

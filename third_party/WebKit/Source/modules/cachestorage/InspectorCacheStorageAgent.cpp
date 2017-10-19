@@ -573,7 +573,7 @@ InspectorCacheStorageAgent::InspectorCacheStorageAgent(InspectedFrames* frames)
 
 InspectorCacheStorageAgent::~InspectorCacheStorageAgent() = default;
 
-void InspectorCacheStorageAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorCacheStorageAgent) {
   visitor->Trace(frames_);
   InspectorBaseAgent::Trace(visitor);
 }

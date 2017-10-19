@@ -55,6 +55,7 @@ class PreviewModeClient : public PDFEngine::Client {
   void SubmitForm(const std::string& url,
                   const void* data,
                   int length) override;
+  std::string ShowFileSelectionDialog() override;
   pp::URLLoader CreateURLLoader() override;
   void ScheduleCallback(int id, int delay_in_ms) override;
   void ScheduleTouchTimerCallback(int id, int delay_in_ms) override;

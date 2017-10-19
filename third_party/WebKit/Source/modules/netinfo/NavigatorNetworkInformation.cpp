@@ -50,7 +50,7 @@ NetworkInformation* NavigatorNetworkInformation::connection() {
   return connection_.Get();
 }
 
-void NavigatorNetworkInformation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorNetworkInformation) {
   visitor->Trace(connection_);
   Supplement<Navigator>::Trace(visitor);
   ContextClient::Trace(visitor);

@@ -12,7 +12,7 @@ namespace blink {
 
 DocumentTiming::DocumentTiming(Document& document) : document_(document) {}
 
-void DocumentTiming::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentTiming) {
   visitor->Trace(document_);
 }
 

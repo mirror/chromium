@@ -293,7 +293,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   void AcceptLanguagesChanged();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void LayerTreeViewInitialized(WebLayerTreeView&, LocalFrameView*);
   void WillCloseLayerTreeView(WebLayerTreeView&, LocalFrameView*);

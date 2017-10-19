@@ -58,7 +58,7 @@ class CORE_EXPORT PointerLockController final
   void DispatchLockedMouseEvent(const WebMouseEvent&,
                                 const AtomicString& event_type);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit PointerLockController(Page*);

@@ -60,7 +60,7 @@ class SVGFETurbulenceElement final
   SVGAnimatedEnumeration<TurbulenceType>* type() { return type_.Get(); }
   SVGAnimatedInteger* numOctaves() { return num_octaves_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGFETurbulenceElement(Document&);

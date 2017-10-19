@@ -1371,7 +1371,7 @@ StyleDifference LayoutObject::AdjustStyleDifference(
       diff.SetNeedsFullLayout();
   }
 
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     // If transform changed, and the layer does not paint into its own separate
     // backing, then we need to invalidate paints.
     if (diff.TransformChanged()) {
@@ -1533,16 +1533,8 @@ void LayoutObject::SetNeedsOverflowRecalcAfterStyleChange() {
 DISABLE_CFI_PERF
 void LayoutObject::SetStyle(RefPtr<ComputedStyle> style) {
   DCHECK(style);
-
-  if (style_ == style) {
-    // We need to run through adjustStyleDifference() for iframes, plugins, and
-    // canvas so style sharing is disabled for them. That should ensure that we
-    // never hit this code path.
-    DCHECK(!IsLayoutIFrame());
-    DCHECK(!IsEmbeddedObject());
-    DCHECK(!IsCanvas());
+  if (style_ == style)
     return;
-  }
 
   StyleDifference diff;
   if (style_)
@@ -1652,11 +1644,11 @@ void LayoutObject::SetStyle(RefPtr<ComputedStyle> style) {
                     diff.BackdropFilterChanged() || diff.CssClipChanged())) {
     SetNeedsPaintPropertyUpdate();
 
-    // We don't need to invalidate paint of objects on SPv175 when only paint
+    // We don't need to invalidate paint of objects on SPv2 when only paint
     // property or paint order change. Mark the painting layer needing repaint
     // for changed paint property or paint order. Raster invalidation will be
     // issued if needed during paint.
-    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
         !ShouldDoFullPaintInvalidation())
       ObjectPaintInvalidator(*this).SlowSetPaintingLayerNeedsRepaint();
   }
@@ -3429,7 +3421,7 @@ void LayoutObject::ClearPaintInvalidationFlags() {
 #if DCHECK_IS_ON()
   DCHECK(!ShouldCheckForPaintInvalidation() || PaintInvalidationStateIsDirty());
 #endif
-  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
     rare_paint_data_->SetPartialInvalidationRect(LayoutRect());
   ClearShouldDoFullPaintInvalidation();
   bitfields_.SetMayNeedPaintInvalidation(false);

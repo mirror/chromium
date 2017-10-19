@@ -31,7 +31,7 @@ class CORE_EXPORT ThreadedWorkletMessagingProxy
 
   void Initialize();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   ThreadedWorkletMessagingProxy(ExecutionContext*, WorkerClients*);

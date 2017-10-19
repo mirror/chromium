@@ -2017,10 +2017,9 @@ bool AXLayoutObject::OnNativeSetSelectionAction(const AXRange& selection) {
     return false;
   }
 
-  if (anchor_object->GetLayoutObject()->GetNode() &&
-      anchor_object->GetLayoutObject()->GetNode()->DispatchEvent(
+  if (anchor_object->GetLayoutObject()->GetNode()->DispatchEvent(
           Event::CreateCancelableBubble(EventTypeNames::selectstart)) !=
-          DispatchEventResult::kNotCanceled)
+      DispatchEventResult::kNotCanceled)
     return false;
 
   if (!IsValidSelectionBound(anchor_object) ||

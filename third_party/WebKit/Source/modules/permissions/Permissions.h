@@ -22,7 +22,7 @@ class Permissions final : public GarbageCollectedFinalized<Permissions>,
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
   ScriptPromise query(ScriptState*, const Dictionary&);
   ScriptPromise request(ScriptState*, const Dictionary&);

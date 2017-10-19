@@ -48,7 +48,7 @@ class StyleMedia final : public GarbageCollected<StyleMedia>,
   AtomicString type() const;
   bool matchMedium(const String&) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit StyleMedia(LocalFrame*);

@@ -87,7 +87,7 @@ void BarcodeDetector::OnBarcodeServiceConnectionError() {
   barcode_service_.reset();
 }
 
-void BarcodeDetector::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BarcodeDetector) {
   ShapeDetector::Trace(visitor);
   visitor->Trace(barcode_service_requests_);
 }

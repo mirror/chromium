@@ -9,12 +9,9 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/history/history_utils.h"
 #include "chrome/browser/history/top_sites_factory.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/test/base/testing_profile.h"
-#include "components/history/core/browser/default_top_sites_provider.h"
 #include "components/history/core/browser/top_sites_impl.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -30,13 +27,10 @@ namespace {
 class MockTopSites : public history::TopSitesImpl {
  public:
   explicit MockTopSites(Profile* profile)
-      : history::TopSitesImpl(
-            profile->GetPrefs(),
-            /*history_service=*/nullptr,
-            std::make_unique<history::DefaultTopSitesProvider>(
-                /*history_service=*/nullptr),
-            history::PrepopulatedPageList(),
-            base::Bind(CanAddURLToHistory)),
+      : history::TopSitesImpl(profile->GetPrefs(),
+                              nullptr,
+                              history::PrepopulatedPageList(),
+                              base::Bind(CanAddURLToHistory)),
         capacity_(1) {}
 
   // history::TopSitesImpl overrides.
@@ -165,10 +159,6 @@ TEST_F(ThumbnailServiceTest, ShouldUpdateThumbnail) {
 
 TEST_F(ThumbnailServiceTest,
        ShouldAcquireTempThumbnailDependingOnTransitionType) {
-  base::test::ScopedFeatureList features;
-  features.InitAndEnableFeature(
-      features::kCaptureThumbnailDependingOnTransitionType);
-
   const GURL kUnknownURL("http://www.google.com/");
   const ui::PageTransition interesting_transition = ui::PAGE_TRANSITION_TYPED;
   const ui::PageTransition uninteresting_transition = ui::PAGE_TRANSITION_LINK;

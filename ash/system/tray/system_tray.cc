@@ -176,8 +176,7 @@ class SystemBubbleWrapper {
         Shell::Get()->session_controller()->login_status();
     bubble_->InitView(anchor, login_status, init_params);
     bubble_->bubble_view()->set_anchor_view_insets(anchor_insets);
-    bubble_wrapper_ = std::make_unique<TrayBubbleWrapper>(
-        tray, bubble_->bubble_view(), is_persistent);
+    bubble_wrapper_.reset(new TrayBubbleWrapper(tray, bubble_->bubble_view()));
   }
 
   // Convenience accessors:
@@ -196,6 +195,55 @@ class SystemBubbleWrapper {
   DISALLOW_COPY_AND_ASSIGN(SystemBubbleWrapper);
 };
 
+// An activation observer to close the bubble if the window other
+// than system bubble nor popup notification is activated.
+class SystemTray::ActivationObserver : public ::wm::ActivationChangeObserver {
+ public:
+  explicit ActivationObserver(SystemTray* tray) : tray_(tray) {
+    DCHECK(tray_);
+    Shell::Get()->activation_client()->AddObserver(this);
+  }
+
+  ~ActivationObserver() override {
+    Shell::Get()->activation_client()->RemoveObserver(this);
+  }
+
+  // WmActivationObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override {
+    if (!tray_->HasSystemBubble() || !gained_active)
+      return;
+
+    int container_id = wm::GetContainerForWindow(gained_active)->id();
+
+    // Don't close the bubble if a popup notification is activated.
+    if (container_id == kShellWindowId_StatusContainer ||
+        container_id == kShellWindowId_SettingBubbleContainer) {
+      return;
+    }
+
+    views::Widget* bubble_widget =
+        tray_->GetSystemBubble()->bubble_view()->GetWidget();
+    // Don't close the bubble if a transient child is gaining or losing
+    // activation.
+    if (bubble_widget == GetInternalWidgetForWindow(gained_active) ||
+        ::wm::HasTransientAncestor(gained_active,
+                                   bubble_widget->GetNativeWindow()) ||
+        (lost_active && ::wm::HasTransientAncestor(
+                            lost_active, bubble_widget->GetNativeWindow()))) {
+      return;
+    }
+
+    tray_->CloseBubble();
+  }
+
+ private:
+  SystemTray* tray_;
+
+  DISALLOW_COPY_AND_ASSIGN(ActivationObserver);
+};
+
 // SystemTray
 
 SystemTray::SystemTray(Shelf* shelf) : TrayBackgroundView(shelf) {
@@ -209,6 +257,7 @@ SystemTray::SystemTray(Shelf* shelf) : TrayBackgroundView(shelf) {
 
 SystemTray::~SystemTray() {
   // Destroy any child views that might have back pointers before ~View().
+  activation_observer_.reset();
   system_bubble_.reset();
   for (const auto& item : items_)
     item->OnTrayViewDestroyed();
@@ -336,9 +385,20 @@ void SystemTray::SetDetailedViewCloseDelay(int close_delay) {
     system_bubble_->bubble()->StartAutoCloseTimer(close_delay);
 }
 
-void SystemTray::HideDetailedView(SystemTrayItem* item) {
+void SystemTray::HideDetailedView(SystemTrayItem* item, bool animate) {
   if (item != detailed_item_)
     return;
+
+  if (!animate) {
+    // In unittest, GetSystemBubble might return nullptr.
+    if (GetSystemBubble()) {
+      GetSystemBubble()
+          ->bubble_view()
+          ->GetWidget()
+          ->SetVisibilityAnimationTransition(
+              views::Widget::VisibilityTransition::ANIMATE_NONE);
+    }
+  }
 
   DestroySystemBubble();
 }
@@ -469,6 +529,9 @@ void SystemTray::ShowItems(const std::vector<SystemTrayItem*>& items,
     system_bubble_.reset(new SystemBubbleWrapper(bubble));
     system_bubble_->InitView(this, GetBubbleAnchor(), GetBubbleAnchorInsets(),
                              &init_params, persistent);
+
+    activation_observer_.reset(persistent ? nullptr
+                                          : new ActivationObserver(this));
 
     // Record metrics for the system menu when the default view is invoked.
     if (!detailed)
@@ -643,6 +706,7 @@ void SystemTray::ActivateBubble() {
 }
 
 void SystemTray::CloseSystemBubbleAndDeactivateSystemTray() {
+  activation_observer_.reset();
   system_bubble_.reset();
   // When closing a system bubble with the alternate shelf layout, we need to
   // turn off the active tinting of the shelf.

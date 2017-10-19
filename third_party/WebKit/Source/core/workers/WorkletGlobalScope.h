@@ -106,7 +106,7 @@ class CORE_EXPORT WorkletGlobalScope
     return document_security_origin_.get();
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:

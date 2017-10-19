@@ -188,7 +188,7 @@ class UseCounterObserverImpl final : public UseCounter::Observer {
     return true;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     UseCounter::Observer::Trace(visitor);
     visitor->Trace(resolver_);
   }
@@ -3130,7 +3130,7 @@ ScriptPromise Internals::promiseCheckOverload(ScriptState* script_state,
                              V8String(script_state->GetIsolate(), "done"));
 }
 
-void Internals::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Internals) {
   visitor->Trace(runtime_flags_);
   visitor->Trace(document_);
 }

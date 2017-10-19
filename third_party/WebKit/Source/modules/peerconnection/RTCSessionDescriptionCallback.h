@@ -41,7 +41,7 @@ class RTCSessionDescriptionCallback
     : public GarbageCollectedFinalized<RTCSessionDescriptionCallback> {
  public:
   virtual ~RTCSessionDescriptionCallback() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void handleEvent(RTCSessionDescription*) = 0;
 };
 

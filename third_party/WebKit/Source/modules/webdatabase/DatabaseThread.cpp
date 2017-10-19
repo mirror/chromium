@@ -54,7 +54,7 @@ DatabaseThread::~DatabaseThread() {
   DCHECK(!thread_);
 }
 
-void DatabaseThread::Trace(blink::Visitor* visitor) {}
+DEFINE_TRACE(DatabaseThread) {}
 
 void DatabaseThread::Start() {
   DCHECK(IsMainThread());

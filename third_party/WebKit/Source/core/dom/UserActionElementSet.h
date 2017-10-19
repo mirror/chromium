@@ -73,7 +73,7 @@ class UserActionElementSet final {
 
   void DidDetach(Element&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum ElementFlags {

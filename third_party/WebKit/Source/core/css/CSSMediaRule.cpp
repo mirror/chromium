@@ -70,7 +70,7 @@ void CSSMediaRule::Reattach(StyleRuleBase* rule) {
     media_cssom_wrapper_->Reattach(MediaQueries());
 }
 
-void CSSMediaRule::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSMediaRule) {
   visitor->Trace(media_cssom_wrapper_);
   CSSConditionRule::Trace(visitor);
 }

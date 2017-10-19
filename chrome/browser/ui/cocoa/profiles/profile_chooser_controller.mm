@@ -113,6 +113,9 @@ const CGFloat kFixedGaiaViewWidth = 360;
 // Fixed size for the account removal view.
 const CGFloat kFixedAccountRemovalViewWidth = 280;
 
+// Fixed size for the switch user view.
+const int kFixedSwitchUserViewWidth = 320;
+
 // The tag number for the primary account.
 const int kPrimaryProfileTag = -1;
 
@@ -720,6 +723,10 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
 // Creates the account removal view.
 - (NSView*)buildAccountRemovalView;
 
+// Create a view that shows various options for an upgrade user who is not
+// the same person as the currently signed in user.
+- (NSView*)buildSwitchUserView;
+
 // Creates a button with |text| and |action|, optionally with an icon given by
 // |imageResourceId| or |image|.
 - (NSButton*)hoverButtonWithRect:(NSRect)rect
@@ -756,13 +763,13 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   return viewMode_;
 }
 
-- (void)editProfile:(id)sender {
+- (IBAction)editProfile:(id)sender {
   avatarMenu_->EditProfile(avatarMenu_->GetActiveProfileIndex());
   [self postActionPerformed:ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_IMAGE];
   [self postActionPerformed:ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_NAME];
 }
 
-- (void)switchToProfile:(id)sender {
+- (IBAction)switchToProfile:(id)sender {
   // Check the event flags to see if a new window should be created.
   bool alwaysCreate =
       ui::WindowOpenDispositionFromNSEvent([NSApp currentEvent]) ==
@@ -771,47 +778,47 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
                                ProfileMetrics::SWITCH_PROFILE_ICON);
 }
 
-- (void)switchToGuest:(id)sender {
+- (IBAction)switchToGuest:(id)sender {
   PrefService* service = g_browser_process->local_state();
   DCHECK(service);
   DCHECK(service->GetBoolean(prefs::kBrowserGuestModeEnabled));
   profiles::SwitchToGuestProfile(ProfileManager::CreateCallback());
 }
 
-- (void)showUserManager:(id)sender {
+- (IBAction)showUserManager:(id)sender {
   UserManager::Show(base::FilePath(),
                     profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
   [self postActionPerformed:
       ProfileMetrics::PROFILE_DESKTOP_MENU_OPEN_USER_MANAGER];
 }
 
-- (void)exitGuest:(id)sender {
+- (IBAction)exitGuest:(id)sender {
   DCHECK(browser_->profile()->IsGuestSession());
   UserManager::Show(base::FilePath(),
                     profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
   profiles::CloseGuestProfileWindows();
 }
 
-- (void)closeAllWindows:(id)sender {
+- (IBAction)closeAllWindows:(id)sender {
   profiles::CloseProfileWindows(browser_->profile());
 }
 
-- (void)goIncognito:(id)sender {
+- (IBAction)goIncognito:(id)sender {
   DCHECK([self shouldShowGoIncognito]);
   chrome::NewIncognitoWindow(browser_);
   [self postActionPerformed:
       ProfileMetrics::PROFILE_DESKTOP_MENU_GO_INCOGNITO];
 }
 
-- (void)showAccountManagement:(id)sender {
+- (IBAction)showAccountManagement:(id)sender {
   [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT];
 }
 
-- (void)hideAccountManagement:(id)sender {
+- (IBAction)hideAccountManagement:(id)sender {
   [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
 }
 
-- (void)lockProfile:(id)sender {
+- (IBAction)lockProfile:(id)sender {
   profiles::LockProfile(browser_->profile());
   [self postActionPerformed:ProfileMetrics::PROFILE_DESKTOP_MENU_LOCK];
 }
@@ -825,16 +832,16 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   }
 }
 
-- (void)showInlineSigninPage:(id)sender {
+- (IBAction)showInlineSigninPage:(id)sender {
   [self showSigninUIForMode:profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN];
 }
 
-- (void)addAccount:(id)sender {
+- (IBAction)addAccount:(id)sender {
   [self showSigninUIForMode:profiles::BUBBLE_VIEW_MODE_GAIA_ADD_ACCOUNT];
   [self postActionPerformed:ProfileMetrics::PROFILE_DESKTOP_MENU_ADD_ACCT];
 }
 
-- (void)navigateBackFromSigninPage:(id)sender {
+- (IBAction)navigateBackFromSigninPage:(id)sender {
   std::string primaryAccount = SigninManagerFactory::GetForProfile(
       browser_->profile())->GetAuthenticatedAccountId();
   bool hasAccountManagement =
@@ -844,7 +851,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
                                  : profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
 }
 
-- (void)showAccountRemovalView:(id)sender {
+- (IBAction)showAccountRemovalView:(id)sender {
   DCHECK(!isGuestSession_);
 
   // Tag is either |kPrimaryProfileTag| for the primary account, or equal to the
@@ -861,11 +868,11 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_ACCOUNT_REMOVAL];
 }
 
-- (void)showSignoutView:(id)sender {
+- (IBAction)showSignoutView:(id)sender {
   chrome::ShowSettingsSubPage(browser_, chrome::kSignOutSubPage);
 }
 
-- (void)showSignoutSigninView:(id)sender {
+- (IBAction)showSignoutSigninView:(id)sender {
   if (ProfileSyncServiceFactory::GetForProfile(browser_->profile()))
     browser_sync::ProfileSyncService::SyncEvent(
         browser_sync::ProfileSyncService::STOP_FROM_OPTIONS);
@@ -875,20 +882,20 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   [self showSigninUIForMode:profiles::BUBBLE_VIEW_MODE_GAIA_SIGNIN];
 }
 
-- (void)showAccountReauthenticationView:(id)sender {
+- (IBAction)showAccountReauthenticationView:(id)sender {
   DCHECK(!isGuestSession_);
   [self showSigninUIForMode:profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH];
 }
 
-- (void)showUpdateChromeView:(id)sender {
+- (IBAction)showUpdateChromeView:(id)sender {
   chrome::OpenUpdateChromeDialog(browser_);
 }
 
-- (void)showSyncSetupView:(id)sender {
+- (IBAction)showSyncSetupView:(id)sender {
   chrome::ShowSettingsSubPage(browser_, chrome::kSyncSetupSubPage);
 }
 
-- (void)removeAccount:(id)sender {
+- (IBAction)removeAccount:(id)sender {
   DCHECK(!accountIdToRemove_.empty());
   ProfileOAuth2TokenServiceFactory::GetForProfile(browser_->profile())
       ->RevokeCredentials(accountIdToRemove_);
@@ -898,23 +905,41 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT];
 }
 
-- (void)showLearnMorePage:(id)sender {
+- (IBAction)showSwitchUserView:(id)sender {
+  [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_SWITCH_USER];
+  ProfileMetrics::LogProfileNewAvatarMenuUpgrade(
+      ProfileMetrics::PROFILE_AVATAR_MENU_UPGRADE_NOT_YOU);
+}
+
+- (IBAction)showLearnMorePage:(id)sender {
   signin_ui_util::ShowSigninErrorLearnMorePage(browser_->profile());
 }
 
-- (void)configureSyncSettings:(id)sender {
+- (IBAction)configureSyncSettings:(id)sender {
   LoginUIServiceFactory::GetForProfile(browser_->profile())->
       SyncConfirmationUIClosed(LoginUIService::CONFIGURE_SYNC_FIRST);
   ProfileMetrics::LogProfileNewAvatarMenuSignin(
       ProfileMetrics::PROFILE_AVATAR_MENU_SIGNIN_SETTINGS);
 }
 
-- (void)syncSettingsConfirmed:(id)sender {
+- (IBAction)syncSettingsConfirmed:(id)sender {
   LoginUIServiceFactory::GetForProfile(browser_->profile())->
       SyncConfirmationUIClosed(LoginUIService::SYNC_WITH_DEFAULT_SETTINGS);
   ProfileMetrics::LogProfileNewAvatarMenuSignin(
       ProfileMetrics::PROFILE_AVATAR_MENU_SIGNIN_OK);
   [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
+}
+
+- (IBAction)disconnectProfile:(id)sender {
+  chrome::ShowSettings(browser_);
+  ProfileMetrics::LogProfileNewAvatarMenuNotYou(
+      ProfileMetrics::PROFILE_AVATAR_MENU_NOT_YOU_DISCONNECT);
+}
+
+- (IBAction)navigateBackFromSwitchUserView:(id)sender {
+  [self showMenuWithViewMode:profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER];
+  ProfileMetrics::LogProfileNewAvatarMenuNotYou(
+      ProfileMetrics::PROFILE_AVATAR_MENU_NOT_YOU_BACK);
 }
 
 - (void)windowWillClose:(NSNotification*)notification {
@@ -1014,6 +1039,9 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
       break;
     case profiles::BUBBLE_VIEW_MODE_ACCOUNT_REMOVAL:
       subView = [self buildAccountRemovalView];
+      break;
+    case profiles::BUBBLE_VIEW_MODE_SWITCH_USER:
+      subView = [self buildSwitchUserView];
       break;
     case profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER:
     case profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT:
@@ -1647,15 +1675,18 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
       if (browser->profile()->GetOriginalProfile() == current_profile)
         num_browsers++;
     }
-    NSButton* closeAllWindowsButton = [self
-        hoverButtonWithRect:viewRect
-                       text:l10n_util::GetNSString(
-                                IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON)
-                      image:NSImageFromImageSkia(gfx::CreateVectorIcon(
-                                kCloseAllIcon, icon_size, gfx::kChromeIconGrey))
-                     action:@selector(closeAllWindows:)];
-    [container addSubview:closeAllWindowsButton];
-    viewRect.origin.y = NSMaxY([closeAllWindowsButton frame]);
+    if (num_browsers > 1) {
+      NSButton* closeAllWindowsButton =
+          [self hoverButtonWithRect:viewRect
+                               text:l10n_util::GetNSString(
+                                        IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON)
+                              image:NSImageFromImageSkia(gfx::CreateVectorIcon(
+                                        kCloseAllIcon, icon_size,
+                                        gfx::kChromeIconGrey))
+                             action:@selector(closeAllWindows:)];
+      [container addSubview:closeAllWindowsButton];
+      viewRect.origin.y = NSMaxY([closeAllWindowsButton frame]);
+    }
   }
 
   // Create a manage users/exit guest button.
@@ -1853,6 +1884,82 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
   yOffset = NSMaxY([titleView frame]);
 
   [container setFrameSize:NSMakeSize(kFixedAccountRemovalViewWidth, yOffset)];
+  return container.autorelease();
+}
+
+- (NSView*)buildSwitchUserView {
+  ProfileMetrics::LogProfileNewAvatarMenuNotYou(
+      ProfileMetrics::PROFILE_AVATAR_MENU_NOT_YOU_VIEW);
+  base::scoped_nsobject<NSView> container(
+      [[NSView alloc] initWithFrame:NSZeroRect]);
+  CGFloat availableWidth =
+      kFixedSwitchUserViewWidth - 2 * kHorizontalSpacing;
+  CGFloat yOffset = 0;
+  NSRect viewRect = NSMakeRect(0, yOffset,
+                               kFixedSwitchUserViewWidth,
+                               kBlueButtonHeight + kSmallVerticalSpacing);
+
+  const AvatarMenu::Item& avatarItem =
+      avatarMenu_->GetItemAt(avatarMenu_->GetActiveProfileIndex());
+
+  // Adds "Disconnect your Google Account" button at the bottom.
+  NSButton* disconnectButton =
+      [self hoverButtonWithRect:viewRect
+                           text:l10n_util::GetNSString(
+                                    IDS_PROFILES_DISCONNECT_BUTTON)
+                imageResourceId:IDR_ICON_PROFILES_MENU_DISCONNECT
+                         action:@selector(disconnectProfile:)];
+  [container addSubview:disconnectButton];
+  yOffset = NSMaxY([disconnectButton frame]);
+
+  NSBox* separator = [self horizontalSeparatorWithFrame:
+      NSMakeRect(0, yOffset, kFixedSwitchUserViewWidth, 0)];
+  [container addSubview:separator];
+  yOffset = NSMaxY([separator frame]);
+
+  // Adds "Add person" button.
+  viewRect.origin.y = yOffset;
+  NSButton* addPersonButton =
+      [self hoverButtonWithRect:viewRect
+                           text:l10n_util::GetNSString(
+                                    IDS_PROFILES_ADD_PERSON_BUTTON)
+                imageResourceId:IDR_ICON_PROFILES_MENU_AVATAR
+                         action:@selector(showUserManager:)];
+  [container addSubview:addPersonButton];
+  yOffset = NSMaxY([addPersonButton frame]);
+
+  separator = [self horizontalSeparatorWithFrame:
+      NSMakeRect(0, yOffset, kFixedSwitchUserViewWidth, 0)];
+  [container addSubview:separator];
+  yOffset = NSMaxY([separator frame]);
+
+  // Adds the content text.
+  base::string16 elidedName(gfx::ElideText(
+      avatarItem.name, gfx::FontList(), availableWidth, gfx::ELIDE_TAIL));
+  NSTextField* contentLabel = BuildLabel(
+      l10n_util::GetNSStringF(IDS_PROFILES_NOT_YOU_CONTENT_TEXT, elidedName),
+      NSMakePoint(kHorizontalSpacing, yOffset + kVerticalSpacing),
+      nil);
+  [contentLabel setFrameSize:NSMakeSize(availableWidth, 0)];
+  [GTMUILocalizerAndLayoutTweaker sizeToFitFixedWidthTextField:contentLabel];
+  [container addSubview:contentLabel];
+  yOffset = NSMaxY([contentLabel frame]) + kVerticalSpacing;
+
+  // Adds the title card.
+  separator = [self horizontalSeparatorWithFrame:
+      NSMakeRect(0, yOffset, kFixedSwitchUserViewWidth, 0)];
+  [container addSubview:separator];
+  yOffset = NSMaxY([separator frame]) + kVerticalSpacing;
+
+  NSView* titleView = BuildTitleCard(
+      NSMakeRect(0, yOffset, kFixedSwitchUserViewWidth,0),
+      l10n_util::GetStringFUTF16(IDS_PROFILES_NOT_YOU, avatarItem.name),
+      self /* backButtonTarget*/,
+      @selector(navigateBackFromSwitchUserView:) /* backButtonAction */);
+  [container addSubview:titleView];
+  yOffset = NSMaxY([titleView frame]);
+
+  [container setFrameSize:NSMakeSize(kFixedSwitchUserViewWidth, yOffset)];
   return container.autorelease();
 }
 

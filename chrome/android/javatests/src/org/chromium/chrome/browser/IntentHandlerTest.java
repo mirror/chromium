@@ -335,7 +335,7 @@ public class IntentHandlerTest {
     @SmallTest
     @Feature({"Android-AppBase"})
     public void testGeneratedReferrer() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         String packageName = context.getPackageName();
         String referrer = IntentHandler.constructValidReferrerForAuthority(packageName).getUrl();
         Assert.assertEquals("android-app://" + packageName, referrer);

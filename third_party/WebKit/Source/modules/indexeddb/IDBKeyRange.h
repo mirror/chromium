@@ -57,7 +57,7 @@ class MODULES_EXPORT IDBKeyRange final : public GarbageCollected<IDBKeyRange>,
                                       const ScriptValue&,
                                       ExceptionState&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Implement the IDBKeyRange IDL
   IDBKey* Lower() const { return lower_.Get(); }

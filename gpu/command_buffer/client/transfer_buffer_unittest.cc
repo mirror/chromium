@@ -68,8 +68,7 @@ void TransferBufferTest::SetUp() {
   command_buffer_.reset(new StrictMock<MockClientCommandBufferMockFlush>());
 
   helper_.reset(new CommandBufferHelper(command_buffer()));
-  ASSERT_EQ(helper_->Initialize(kCommandBufferSizeBytes),
-            gpu::ContextResult::kSuccess);
+  ASSERT_TRUE(helper_->Initialize(kCommandBufferSizeBytes));
 
   transfer_buffer_id_ = command_buffer()->GetNextFreeTransferBufferId();
 
@@ -309,8 +308,7 @@ void TransferBufferExpandContractTest::SetUp() {
       .RetiresOnSaturation();
 
   helper_.reset(new CommandBufferHelper(command_buffer()));
-  ASSERT_EQ(helper_->Initialize(kCommandBufferSizeBytes),
-            gpu::ContextResult::kSuccess);
+  ASSERT_TRUE(helper_->Initialize(kCommandBufferSizeBytes));
 
   transfer_buffer_id_ = command_buffer()->GetNextFreeTransferBufferId();
 

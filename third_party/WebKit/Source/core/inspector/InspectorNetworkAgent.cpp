@@ -549,7 +549,7 @@ BuildObjectForResourceResponse(const ResourceResponse& response,
 
 InspectorNetworkAgent::~InspectorNetworkAgent() {}
 
-void InspectorNetworkAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorNetworkAgent) {
   visitor->Trace(inspected_frames_);
   visitor->Trace(worker_global_scope_);
   visitor->Trace(resources_data_);
@@ -574,11 +574,6 @@ void InspectorNetworkAgent::ShouldBlockRequest(const KURL& url, bool* result) {
     }
   }
   return;
-}
-
-void InspectorNetworkAgent::ShouldBypassServiceWorker(bool* result) {
-  *result =
-      state_->booleanProperty(NetworkAgentState::kBypassServiceWorker, false);
 }
 
 void InspectorNetworkAgent::DidBlockRequest(
@@ -1278,7 +1273,7 @@ Response InspectorNetworkAgent::setUserAgentOverride(const String& user_agent) {
 }
 
 Response InspectorNetworkAgent::setExtraHTTPHeaders(
-    std::unique_ptr<protocol::Network::Headers> headers) {
+    const std::unique_ptr<protocol::Network::Headers> headers) {
   state_->setObject(NetworkAgentState::kExtraRequestHeaders,
                     headers->toValue());
   return Response::OK();

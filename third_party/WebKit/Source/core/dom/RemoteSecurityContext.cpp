@@ -27,7 +27,7 @@ RemoteSecurityContext* RemoteSecurityContext::Create() {
   return new RemoteSecurityContext();
 }
 
-void RemoteSecurityContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemoteSecurityContext) {
   SecurityContext::Trace(visitor);
 }
 

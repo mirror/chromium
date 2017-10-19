@@ -7,18 +7,18 @@
 function test() {
   var instanceCount = 25;
   function createHeapSnapshot() {
-    return HeapSnapshotTestRunner.createHeapSnapshot(instanceCount);
+    return ProfilerTestRunner.createHeapSnapshot(instanceCount);
   }
 
-  HeapSnapshotTestRunner.runHeapSnapshotTestSuite([function testShowAll(next) {
-    HeapSnapshotTestRunner.takeAndOpenSnapshot(createHeapSnapshot, step1);
+  ProfilerTestRunner.runHeapSnapshotTestSuite([function testShowAll(next) {
+    ProfilerTestRunner.takeAndOpenSnapshot(createHeapSnapshot, step1);
 
     function step1() {
-      HeapSnapshotTestRunner.switchToView('Summary', step2);
+      ProfilerTestRunner.switchToView('Summary', step2);
     }
 
     function step2() {
-      HeapSnapshotTestRunner.findAndExpandRow('A', step3);
+      ProfilerTestRunner.findAndExpandRow('A', step3);
     }
 
     function step3(row) {

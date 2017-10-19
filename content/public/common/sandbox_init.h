@@ -52,7 +52,7 @@ CONTENT_EXPORT bool InitializeSandbox(
 // the handles.
 CONTENT_EXPORT sandbox::ResultCode StartSandboxedProcess(
     SandboxedProcessLauncherDelegate* delegate,
-    base::CommandLine* child_command_line,
+    base::CommandLine* cmd_line,
     const base::HandlesToInheritVector& handles_to_inherit,
     base::Process* process);
 

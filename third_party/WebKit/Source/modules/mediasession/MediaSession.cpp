@@ -228,7 +228,7 @@ void MediaSession::DidReceiveAction(
   iter->value->call(this);
 }
 
-void MediaSession::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaSession) {
   visitor->Trace(metadata_);
   visitor->Trace(action_handlers_);
   ContextClient::Trace(visitor);

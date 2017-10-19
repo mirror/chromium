@@ -73,7 +73,8 @@ public class ToastHWATest implements CustomMainActivityStart {
         });
 
         mDownloadTestRule.deleteFilesInDownloadDirectory(TEST_FILES);
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     @After

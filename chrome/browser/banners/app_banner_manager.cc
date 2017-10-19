@@ -102,9 +102,10 @@ class TrackingStatusReporter
   // Records code via an UMA histogram.
   void ReportStatus(content::WebContents* web_contents,
                     InstallableStatusCode code) override {
-    // We only increment the histogram once per page load (and only if the
-    // banner pipeline is triggered).
-    if (!done_ && code != NO_ERROR_DETECTED)
+    // Ensure that we haven't yet logged a status code for this page.
+    DCHECK(!done_);
+
+    if (code != NO_ERROR_DETECTED)
       banners::TrackInstallableStatusCode(code);
 
     done_ = true;
@@ -136,7 +137,6 @@ void AppBannerManager::RequestAppBanner(const GURL& validated_url,
   // if it's been triggered from devtools.
   if (state_ != State::INACTIVE) {
     DCHECK(is_debug_mode);
-    weak_factory_.InvalidateWeakPtrs();
     ResetBindings();
   }
 
@@ -182,11 +182,6 @@ void AppBannerManager::SendBannerAccepted() {
 void AppBannerManager::SendBannerDismissed() {
   if (event_.is_bound())
     event_->BannerDismissed();
-
-  if (IsExperimentalAppBannersEnabled()) {
-    ResetBindings();
-    SendBannerPromptRequest();  // Reprompt.
-  }
 }
 
 base::WeakPtr<AppBannerManager> AppBannerManager::GetWeakPtr() {
@@ -374,7 +369,6 @@ InstallableStatusCode AppBannerManager::TerminationCode() const {
 void AppBannerManager::Stop(InstallableStatusCode code) {
   ReportStatus(web_contents(), code);
 
-  weak_factory_.InvalidateWeakPtrs();
   ResetBindings();
   UpdateState(State::COMPLETE);
   status_reporter_ = std::make_unique<NullStatusReporter>(),
@@ -513,6 +507,7 @@ bool AppBannerManager::IsExperimentalAppBannersEnabled() {
 }
 
 void AppBannerManager::ResetBindings() {
+  weak_factory_.InvalidateWeakPtrs();
   binding_.Close();
   controller_.reset();
   event_.reset();
@@ -613,15 +608,8 @@ void AppBannerManager::ShowBanner() {
         BEFORE_INSTALL_EVENT_PROMPT_CALLED_AFTER_PREVENT_DEFAULT);
   }
 
-  // If this is the first time that we are showing the banner for this site,
-  // record how long it's been since the first visit.
-  if (AppBannerSettingsHelper::GetSingleBannerEvent(
-          web_contents(), validated_url_, GetAppIdentifier(),
-          AppBannerSettingsHelper::APP_BANNER_EVENT_DID_SHOW)
-          .is_null()) {
-    AppBannerSettingsHelper::RecordMinutesFromFirstVisitToShow(
-        web_contents(), validated_url_, GetAppIdentifier(), GetCurrentTime());
-  }
+  AppBannerSettingsHelper::RecordMinutesFromFirstVisitToShow(
+      web_contents(), validated_url_, GetAppIdentifier(), GetCurrentTime());
 
   DCHECK(!manifest_url_.is_empty());
   DCHECK(!manifest_.IsEmpty());

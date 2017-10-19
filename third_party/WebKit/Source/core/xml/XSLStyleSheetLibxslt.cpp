@@ -309,7 +309,7 @@ void XSLStyleSheet::MarkAsProcessed() {
   stylesheet_doc_taken_ = true;
 }
 
-void XSLStyleSheet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XSLStyleSheet) {
   visitor->Trace(owner_node_);
   visitor->Trace(children_);
   visitor->Trace(parent_style_sheet_);

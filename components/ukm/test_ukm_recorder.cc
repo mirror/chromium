@@ -10,7 +10,6 @@
 #include "base/logging.h"
 #include "base/metrics/metrics_hashes.h"
 #include "components/ukm/ukm_source.h"
-#include "services/metrics/public/cpp/delegating_ukm_recorder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace ukm {
@@ -266,11 +265,11 @@ std::vector<int64_t> TestUkmRecorder::GetMetrics(
 }
 
 TestAutoSetUkmRecorder::TestAutoSetUkmRecorder() {
-  DelegatingUkmRecorder::Get()->AddDelegate(this);
+  UkmRecorder::Set(this);
 }
 
 TestAutoSetUkmRecorder::~TestAutoSetUkmRecorder() {
-  DelegatingUkmRecorder::Get()->RemoveDelegate(this);
+  UkmRecorder::Set(nullptr);
 };
 
 }  // namespace ukm

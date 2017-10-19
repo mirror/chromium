@@ -566,7 +566,7 @@ DOMHighResTimeStamp PerformanceBase::now() const {
   return MonotonicTimeToDOMHighResTimeStamp(MonotonicallyIncreasingTime());
 }
 
-void PerformanceBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PerformanceBase) {
   visitor->Trace(frame_timing_buffer_);
   visitor->Trace(resource_timing_buffer_);
   visitor->Trace(navigation_timing_);

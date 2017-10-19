@@ -37,7 +37,7 @@ public class RadioButtonLayoutTest {
 
     @Before
     public void setUp() {
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
     @Test

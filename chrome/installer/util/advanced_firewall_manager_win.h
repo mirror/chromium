@@ -8,13 +8,12 @@
 #include <windows.h>
 #include <netfw.h>
 #include <stdint.h>
-#include <wrl/client.h>
-
 #include <vector>
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "base/win/scoped_comptr.h"
 
 namespace installer {
 
@@ -51,21 +50,21 @@ class AdvancedFirewallManager {
   friend class AdvancedFirewallManagerTest;
 
   // Creates a firewall rule allowing inbound connections to UDP port |port|.
-  Microsoft::WRL::ComPtr<INetFwRule> CreateUDPRule(
+  base::win::ScopedComPtr<INetFwRule> CreateUDPRule(
       const base::string16& rule_name,
       const base::string16& description,
       uint16_t port);
 
   // Returns the list of rules applying to the application.
-  void GetAllRules(std::vector<Microsoft::WRL::ComPtr<INetFwRule>>* rules);
+  void GetAllRules(std::vector<base::win::ScopedComPtr<INetFwRule> >* rules);
 
   // Deletes rules. Needs elevation.
-  void DeleteRule(Microsoft::WRL::ComPtr<INetFwRule> rule);
+  void DeleteRule(base::win::ScopedComPtr<INetFwRule> rule);
 
   base::string16 app_name_;
   base::FilePath app_path_;
-  Microsoft::WRL::ComPtr<INetFwPolicy2> firewall_policy_;
-  Microsoft::WRL::ComPtr<INetFwRules> firewall_rules_;
+  base::win::ScopedComPtr<INetFwPolicy2> firewall_policy_;
+  base::win::ScopedComPtr<INetFwRules> firewall_rules_;
 
   DISALLOW_COPY_AND_ASSIGN(AdvancedFirewallManager);
 };

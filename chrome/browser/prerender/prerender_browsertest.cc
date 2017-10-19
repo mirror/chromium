@@ -3231,7 +3231,7 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, HttpPost) {
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, AutosigninInPrerenderer) {
   // Set up a credential in the password store.
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     PasswordStoreFactory::GetInstance()->SetTestingFactory(
         current_browser()->profile(),
         password_manager::BuildPasswordStore<

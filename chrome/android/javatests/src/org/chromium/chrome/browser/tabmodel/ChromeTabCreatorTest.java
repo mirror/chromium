@@ -54,7 +54,8 @@ public class ChromeTabCreatorTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     @After

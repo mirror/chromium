@@ -90,7 +90,7 @@ class CORE_EXPORT OriginTrialContext final
   // enabled.
   void InitializePendingFeatures();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   // Validate the trial token. If valid, the trial named in the token is

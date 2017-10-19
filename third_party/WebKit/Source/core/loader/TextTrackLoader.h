@@ -65,7 +65,7 @@ class TextTrackLoader final : public GarbageCollectedFinalized<TextTrackLoader>,
 
   void GetNewCues(HeapVector<Member<TextTrackCue>>& output_cues);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // RawResourceClient

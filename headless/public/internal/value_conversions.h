@@ -74,44 +74,40 @@ std::unique_ptr<base::Value> ToValueImpl(const std::unique_ptr<T>& value,
 template <>
 struct FromValue<bool> {
   static bool Parse(const base::Value& value, ErrorReporter* errors) {
-    if (!value.is_bool()) {
+    bool result = false;
+    if (!value.GetAsBoolean(&result))
       errors->AddError("boolean value expected");
-      return false;
-    }
-    return value.GetBool();
+    return result;
   }
 };
 
 template <>
 struct FromValue<int> {
   static int Parse(const base::Value& value, ErrorReporter* errors) {
-    if (!value.is_int()) {
+    int result = 0;
+    if (!value.GetAsInteger(&result))
       errors->AddError("integer value expected");
-      return 0;
-    }
-    return value.GetInt();
+    return result;
   }
 };
 
 template <>
 struct FromValue<double> {
   static double Parse(const base::Value& value, ErrorReporter* errors) {
-    if (!value.is_double() && !value.is_int()) {
+    double result = 0;
+    if (!value.GetAsDouble(&result))
       errors->AddError("double value expected");
-      return 0;
-    }
-    return value.GetDouble();
+    return result;
   }
 };
 
 template <>
 struct FromValue<std::string> {
   static std::string Parse(const base::Value& value, ErrorReporter* errors) {
-    if (!value.is_string()) {
+    std::string result;
+    if (!value.GetAsString(&result))
       errors->AddError("string value expected");
-      return "";
-    }
-    return value.GetString();
+    return result;
   }
 };
 
@@ -148,12 +144,13 @@ template <typename T>
 struct FromValue<std::vector<T>> {
   static std::vector<T> Parse(const base::Value& value, ErrorReporter* errors) {
     std::vector<T> result;
-    if (!value.is_list()) {
+    const base::ListValue* list;
+    if (!value.GetAsList(&list)) {
       errors->AddError("list value expected");
       return result;
     }
     errors->Push();
-    for (const auto& item : value.GetList())
+    for (const auto& item : *list)
       result.push_back(FromValue<T>::Parse(item, errors));
     errors->Pop();
     return result;

@@ -92,7 +92,7 @@ bool LayoutTestMessageFilter::OnMessageReceived(const IPC::Message& message) {
 
 void LayoutTestMessageFilter::OnReadFileToString(
     const base::FilePath& local_file, std::string* contents) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ReadFileToString(local_file, contents);
 }
 

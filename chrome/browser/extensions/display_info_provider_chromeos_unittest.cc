@@ -17,7 +17,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/extensions/display_info_provider_chromeos.h"
-#include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "extensions/common/api/system_display.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
@@ -33,6 +32,11 @@ namespace {
 using DisplayUnitInfoList = DisplayInfoProvider::DisplayUnitInfoList;
 using DisplayLayoutList = DisplayInfoProvider::DisplayLayoutList;
 
+void EnableTabletMode(bool enable) {
+  ash::Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
+      enable);
+}
+
 class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
  public:
   DisplayInfoProviderChromeosTest() {}
@@ -42,18 +46,7 @@ class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFirstDisplayAsInternal);
-
     ash::AshTestBase::SetUp();
-
-    tablet_mode_client_ = std::make_unique<TabletModeClient>();
-    ash::mojom::TabletModeControllerPtr controller;
-    ash::Shell::Get()->tablet_mode_controller()->BindRequest(
-        mojo::MakeRequest(&controller));
-    tablet_mode_client_->InitForTesting(std::move(controller));
-    // We must flush the TabletModeClient as we are waiting for the initial
-    // value to be set, as the TabletModeController sends an initial message on
-    // startup when it observes the PowerManagerClient.
-    tablet_mode_client_->FlushForTesting();
   }
 
  protected:
@@ -71,13 +64,6 @@ class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
     const display::Display& display =
         GetDisplayManager()->GetDisplayForId(display_id);
     return display.id() != display::kInvalidDisplayId;
-  }
-
-  void EnableTabletMode(bool enable) {
-    ash::TabletModeController* controller =
-        ash::Shell::Get()->tablet_mode_controller();
-    controller->EnableTabletModeWindowManager(enable);
-    tablet_mode_client_->FlushForTesting();
   }
 
   display::DisplayManager* GetDisplayManager() const {
@@ -104,8 +90,6 @@ class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
   }
 
  private:
-  std::unique_ptr<TabletModeClient> tablet_mode_client_;
-
   DISALLOW_COPY_AND_ASSIGN(DisplayInfoProviderChromeosTest);
 };
 
@@ -1510,7 +1494,7 @@ class DisplayInfoProviderChromeosTouchviewTest
         switches::kUseFirstDisplayAsInternal);
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ash::switches::kAshEnableTabletMode);
-    DisplayInfoProviderChromeosTest::SetUp();
+    ash::AshTestBase::SetUp();
   }
 
  private:

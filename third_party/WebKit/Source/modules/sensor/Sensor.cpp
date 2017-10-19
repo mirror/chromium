@@ -30,8 +30,12 @@ Sensor::Sensor(ExecutionContext* execution_context,
       type_(type),
       state_(SensorState::kIdle),
       last_reported_timestamp_(0.0) {
-  // [SecureContext] in idl.
-  DCHECK(execution_context->IsSecureContext());
+  // Check secure context.
+  String error_message;
+  if (!execution_context->IsSecureContext(error_message)) {
+    exception_state.ThrowSecurityError(error_message);
+    return;
+  }
 
   // Check top-level browsing context.
   if (!ToDocument(execution_context)->domWindow()->GetFrame() ||
@@ -108,7 +112,7 @@ DOMHighResTimeStamp Sensor::timestamp(ScriptState* script_state,
       sensor_proxy_->reading().timestamp());
 }
 
-void Sensor::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Sensor) {
   visitor->Trace(sensor_proxy_);
   ActiveScriptWrappable::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);

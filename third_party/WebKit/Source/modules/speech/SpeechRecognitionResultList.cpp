@@ -43,7 +43,7 @@ SpeechRecognitionResultList::SpeechRecognitionResultList(
     const HeapVector<Member<SpeechRecognitionResult>>& results)
     : results_(results) {}
 
-void SpeechRecognitionResultList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SpeechRecognitionResultList) {
   visitor->Trace(results_);
 }
 

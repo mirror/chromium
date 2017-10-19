@@ -64,7 +64,7 @@
 }
 
 - (void)closeTabStripTabAtIndex:(int)index {
-  self.webStateList.CloseWebStateAt(index, WebStateList::CLOSE_USER_ACTION);
+  self.webStateList.CloseWebStateAt(index);
   if (self.webStateList.empty()) {
     [self.callableDispatcher showTabGrid];
   }

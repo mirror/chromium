@@ -53,7 +53,7 @@ void CanMakePaymentRespondWithObserver::OnNoResponse() {
       ->RespondToCanMakePaymentEvent(event_id_, true, event_dispatch_time_);
 }
 
-void CanMakePaymentRespondWithObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CanMakePaymentRespondWithObserver) {
   RespondWithObserver::Trace(visitor);
 }
 

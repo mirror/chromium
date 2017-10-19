@@ -300,7 +300,7 @@ void InProcessBrowserTest::SetUpDefaultCommandLine(
 }
 
 bool InProcessBrowserTest::RunAccessibilityChecks(std::string* error_message) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   if (!browser()) {
     *error_message = "browser is NULL";
     return false;

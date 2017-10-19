@@ -440,7 +440,7 @@ class ChromePluginPrintContext final : public ChromePrintContext {
 
   ~ChromePluginPrintContext() override {}
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(plugin_);
     ChromePrintContext::Trace(visitor);
   }
@@ -1688,7 +1688,7 @@ WebLocalFrameImpl::~WebLocalFrameImpl() {
   g_frame_count--;
 }
 
-void WebLocalFrameImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebLocalFrameImpl) {
   visitor->Trace(local_frame_client_);
   visitor->Trace(frame_);
   visitor->Trace(dev_tools_agent_);

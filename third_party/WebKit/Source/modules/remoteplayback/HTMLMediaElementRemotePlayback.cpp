@@ -67,7 +67,7 @@ const char* HTMLMediaElementRemotePlayback::SupplementName() {
   return "HTMLMediaElementRemotePlayback";
 }
 
-void HTMLMediaElementRemotePlayback::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLMediaElementRemotePlayback) {
   visitor->Trace(remote_);
   Supplement<HTMLMediaElement>::Trace(visitor);
 }

@@ -33,7 +33,7 @@ CustomElementDefinition::CustomElementDefinition(
 
 CustomElementDefinition::~CustomElementDefinition() {}
 
-void CustomElementDefinition::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CustomElementDefinition) {
   visitor->Trace(construction_stack_);
 }
 

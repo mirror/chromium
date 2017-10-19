@@ -55,7 +55,7 @@ String EntryBase::toURL() const {
   return cached_url_;
 }
 
-void EntryBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EntryBase) {
   visitor->Trace(file_system_);
 }
 

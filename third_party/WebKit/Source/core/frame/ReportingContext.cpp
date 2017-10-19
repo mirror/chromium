@@ -70,7 +70,7 @@ bool ReportingContext::ObserverExists() {
   return observers_.size();
 }
 
-void ReportingContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ReportingContext) {
   visitor->Trace(observers_);
   visitor->Trace(reports_);
   visitor->Trace(execution_context_);

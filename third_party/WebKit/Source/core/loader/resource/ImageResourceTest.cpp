@@ -511,7 +511,7 @@ class MockFinishObserver : public GarbageCollectedFinalized<MockFinishObserver>,
   MOCK_METHOD0(NotifyFinished, void());
   String DebugName() const override { return "MockFinishObserver"; }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     blink::ResourceFinishObserver::Trace(visitor);
   }
 

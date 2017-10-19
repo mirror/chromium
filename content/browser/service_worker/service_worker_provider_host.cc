@@ -13,6 +13,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "content/browser/bad_message.h"
+#include "content/browser/service_worker/browser_side_controller_service_worker.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_request_handler.h"
@@ -38,7 +39,6 @@
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "net/base/url_util.h"
 #include "storage/browser/blob/blob_storage_context.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -333,9 +333,14 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
   scoped_refptr<ServiceWorkerVersion> previous_version = controller_;
   controller_ = version;
 
-  if (version)
-    version->AddControllee(this);
+  // This will drop the message pipes to the client pages as well.
+  controller_service_worker_.reset();
 
+  if (version) {
+    version->AddControllee(this);
+    controller_service_worker_ =
+        base::MakeUnique<BrowserSideControllerServiceWorker>(version);
+  }
   if (previous_version.get())
     previous_version->RemoveControllee(this);
 
@@ -484,12 +489,12 @@ ServiceWorkerProviderHost::CreateRequestHandler(
   return std::unique_ptr<ServiceWorkerRequestHandler>();
 }
 
-blink::mojom::ServiceWorkerObjectInfo
+ServiceWorkerObjectInfo
 ServiceWorkerProviderHost::GetOrCreateServiceWorkerHandle(
     ServiceWorkerVersion* version) {
   DCHECK(dispatcher_host_);
   if (!context_ || !version)
-    return blink::mojom::ServiceWorkerObjectInfo();
+    return ServiceWorkerObjectInfo();
   ServiceWorkerHandle* handle = dispatcher_host_->FindServiceWorkerHandle(
       provider_id(), version->version_id());
   if (handle) {
@@ -568,6 +573,13 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
   DCHECK_EQ(kDocumentMainThreadId, render_thread_id_);
   DCHECK_NE(SERVICE_WORKER_PROVIDER_UNKNOWN, info_.type);
 
+  // Clear the controller from the renderer-side provider, since no one knows
+  // what's going to happen until after cross-site transfer finishes.
+  if (controller_) {
+    SendSetControllerServiceWorker(nullptr,
+                                   false /* notify_controllerchange */);
+  }
+
   std::unique_ptr<ServiceWorkerProviderHost> provisional_host =
       base::WrapUnique(new ServiceWorkerProviderHost(
           process_id(),
@@ -579,13 +591,6 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
     DecreaseProcessReference(pattern);
 
   RemoveAllMatchingRegistrations();
-
-  // Clear the controller from the renderer-side provider, since no one knows
-  // what's going to happen until after cross-site transfer finishes.
-  if (controller_) {
-    SendSetControllerServiceWorker(nullptr,
-                                   false /* notify_controllerchange */);
-  }
 
   render_process_id_ = ChildProcessHost::kInvalidUniqueID;
   render_thread_id_ = kInvalidEmbeddedWorkerThreadId;
@@ -893,14 +898,20 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
     DCHECK_EQ(controller_.get(), version);
   }
 
-  ServiceWorkerMsg_SetControllerServiceWorker_Params params;
-  params.thread_id = render_thread_id_;
-  params.provider_id = provider_id();
-  params.object_info = GetOrCreateServiceWorkerHandle(version);
-  params.should_notify_controllerchange = notify_controllerchange;
-  if (version)
-    params.used_features = version->used_features();
-  Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
+  std::vector<blink::mojom::WebFeature> used_features;
+  if (version) {
+    for (const uint32_t feature : version->used_features()) {
+      // TODO: version->used_features() should never have a feature outside the
+      // known feature range. But there is special case, see the details in
+      // crbug.com/758419.
+      if (feature <
+          static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures)) {
+        used_features.push_back(static_cast<blink::mojom::WebFeature>(feature));
+      }
+    }
+  }
+  container_->SetController(GetOrCreateServiceWorkerHandle(version),
+                            used_features, notify_controllerchange);
 }
 
 void ServiceWorkerProviderHost::Register(
@@ -1221,15 +1232,15 @@ void ServiceWorkerProviderHost::GetRegistrationForReady(
 void ServiceWorkerProviderHost::GetControllerServiceWorker(
     mojom::ControllerServiceWorkerRequest controller_request) {
   // TODO(kinuko): Log the reasons we drop the request.
-  if (!dispatcher_host_ || !IsContextAlive() || !controller_)
+  if (!dispatcher_host_ || !IsContextAlive() || !controller_service_worker_)
     return;
 
-  // TODO(kinuko): Call version_->StartWorker() here if the service
-  // is stopped. Currently it should be starting or running at this point.
+  // TODO(kinuko): Call version_->StartWorker() here and pass the
+  // controller_request to the ServiceWorker.
+  // (Note that this could get called multiple times before the service
+  // worker is started)
   DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
-  DCHECK(controller_->running_status() == EmbeddedWorkerStatus::STARTING ||
-         controller_->running_status() == EmbeddedWorkerStatus::RUNNING);
-  controller_->controller()->Clone(std::move(controller_request));
+  controller_service_worker_->AddBinding(std::move(controller_request));
 }
 
 bool ServiceWorkerProviderHost::IsValidRegisterMessage(

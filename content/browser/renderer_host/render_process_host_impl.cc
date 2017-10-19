@@ -202,7 +202,6 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/runner/common/switches.h"
-#include "services/service_manager/sandbox/switches.h"
 #include "services/shape_detection/public/interfaces/barcodedetection.mojom.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/public/interfaces/facedetection_provider.mojom.h"
@@ -2611,6 +2610,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kPassiveListenersDefault,
     switches::kPpapiInProcess,
     switches::kReducedReferrerGranularity,
+    switches::kReduceSecurityForTesting,
     switches::kRegisterPepperPlugins,
     switches::kRendererStartupDialog,
     switches::kRootLayerScrolls,
@@ -2681,7 +2681,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnableSandboxLogging,
 #endif
 #if defined(OS_WIN)
-    service_manager::switches::kDisableWin32kLockDown,
+    switches::kDisableWin32kLockDown,
     switches::kEnableWin7WebRtcHWH264Decoding,
     switches::kTrySupportedChannelLayouts,
     switches::kTraceExportEventsToETW,

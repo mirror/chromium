@@ -26,7 +26,7 @@ class NavigatorUSB final : public GarbageCollected<NavigatorUSB>,
   static USB* usb(Navigator&);
   USB* usb();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit NavigatorUSB(Navigator&);

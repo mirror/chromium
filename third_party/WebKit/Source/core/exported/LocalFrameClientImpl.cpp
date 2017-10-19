@@ -151,7 +151,7 @@ LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameImpl* frame) {
 
 LocalFrameClientImpl::~LocalFrameClientImpl() {}
 
-void LocalFrameClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrameClientImpl) {
   visitor->Trace(web_frame_);
   LocalFrameClient::Trace(visitor);
 }
@@ -1091,7 +1091,7 @@ TextCheckerClient& LocalFrameClientImpl::GetTextCheckerClient() const {
 
 std::unique_ptr<blink::WebURLLoader> LocalFrameClientImpl::CreateURLLoader(
     const ResourceRequest& request,
-    RefPtr<WebTaskRunner> task_runner) {
+    WebTaskRunner* task_runner) {
   WrappedResourceRequest wrapped(request);
   return web_frame_->CreateURLLoader(wrapped,
                                      task_runner->ToSingleThreadTaskRunner());

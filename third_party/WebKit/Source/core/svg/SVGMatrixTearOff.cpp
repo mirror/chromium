@@ -45,7 +45,7 @@ SVGMatrixTearOff::SVGMatrixTearOff(SVGTransformTearOff* transform)
   DCHECK(transform);
 }
 
-void SVGMatrixTearOff::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGMatrixTearOff) {
   visitor->Trace(context_transform_);
 }
 

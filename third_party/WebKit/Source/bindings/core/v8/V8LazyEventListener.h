@@ -57,7 +57,7 @@ class V8LazyEventListener final : public V8AbstractEventListener {
                                    code, source_url, position, node);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(node_);
     V8AbstractEventListener::Trace(visitor);
   }

@@ -378,7 +378,7 @@ void RTCDataChannel::ScheduledEventTimerFired(TimerBase*) {
   events.clear();
 }
 
-void RTCDataChannel::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCDataChannel) {
   visitor->Trace(scheduled_events_);
   EventTargetWithInlineData::Trace(visitor);
   SuspendableObject::Trace(visitor);

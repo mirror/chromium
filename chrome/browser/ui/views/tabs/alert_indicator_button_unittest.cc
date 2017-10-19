@@ -12,7 +12,7 @@
 
 class AlertIndicatorButtonTest : public views::ViewsTestBase {
  public:
-  AlertIndicatorButtonTest() {}
+  AlertIndicatorButtonTest() : controller_(nullptr), tab_strip_(nullptr) {}
 
   ~AlertIndicatorButtonTest() override {}
 
@@ -20,7 +20,7 @@ class AlertIndicatorButtonTest : public views::ViewsTestBase {
     views::ViewsTestBase::SetUp();
 
     controller_ = new FakeBaseTabStripController;
-    tab_strip_ = new TabStrip(std::unique_ptr<TabStripController>(controller_));
+    tab_strip_ = new TabStrip(controller_);
     controller_->set_tab_strip(tab_strip_);
     // The tab strip must be added to the view hierarchy for it to create the
     // buttons.
@@ -59,10 +59,10 @@ class AlertIndicatorButtonTest : public views::ViewsTestBase {
   }
 
   // Owned by TabStrip.
-  FakeBaseTabStripController* controller_ = nullptr;
+  FakeBaseTabStripController* controller_;
   // Owns |tab_strip_|.
   views::View parent_;
-  TabStrip* tab_strip_ = nullptr;
+  TabStrip* tab_strip_;
   std::unique_ptr<views::Widget> widget_;
 
  private:

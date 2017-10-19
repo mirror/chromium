@@ -25,7 +25,7 @@ class StorageManager final : public GarbageCollectedFinalized<StorageManager>,
   ScriptPromise persist(ScriptState*);
 
   ScriptPromise estimate(ScriptState*);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   mojom::blink::PermissionService* GetPermissionService(ExecutionContext*);

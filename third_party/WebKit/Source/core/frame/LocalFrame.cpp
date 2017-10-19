@@ -215,7 +215,7 @@ LocalFrame::~LocalFrame() {
   DCHECK(!view_);
 }
 
-void LocalFrame::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrame) {
   visitor->Trace(probe_sink_);
   visitor->Trace(performance_monitor_);
   visitor->Trace(idleness_detector_);
@@ -1089,8 +1089,8 @@ void LocalFrame::MaybeAllowImagePlaceholder(FetchParameters& params) const {
 
 std::unique_ptr<WebURLLoader> LocalFrame::CreateURLLoader(
     const ResourceRequest& request,
-    RefPtr<WebTaskRunner> task_runner) {
-  return Client()->CreateURLLoader(request, std::move(task_runner));
+    WebTaskRunner* task_runner) {
+  return Client()->CreateURLLoader(request, task_runner);
 }
 
 WebPluginContainerImpl* LocalFrame::GetWebPluginContainer(Node* node) const {

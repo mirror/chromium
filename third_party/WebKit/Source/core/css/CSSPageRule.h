@@ -50,7 +50,7 @@ class CORE_EXPORT CSSPageRule final : public CSSRule {
   String selectorText() const;
   void setSelectorText(const String&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CSSPageRule(StyleRulePage*, CSSStyleSheet*);

@@ -37,7 +37,7 @@ class TestPerformanceBase : public PerformanceBase {
     return HasObserverFor(entry_type);
   }
 
-  void Trace(blink::Visitor* visitor) { PerformanceBase::Trace(visitor); }
+  DEFINE_INLINE_TRACE() { PerformanceBase::Trace(visitor); }
 };
 
 class PerformanceBaseTest : public ::testing::Test {

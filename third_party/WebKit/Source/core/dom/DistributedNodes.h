@@ -64,7 +64,7 @@ class DistributedNodes final {
 
   void Swap(DistributedNodes& other);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   HeapVector<Member<Node>> nodes_;

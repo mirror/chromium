@@ -66,7 +66,7 @@ HTMLObjectElement* HTMLObjectElement::Create(Document& document,
   return element;
 }
 
-void HTMLObjectElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLObjectElement) {
   ListedElement::Trace(visitor);
   HTMLPlugInElement::Trace(visitor);
 }

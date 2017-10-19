@@ -17,9 +17,7 @@ WebGraphicsContext3DProviderImpl::WebGraphicsContext3DProviderImpl(
 WebGraphicsContext3DProviderImpl::~WebGraphicsContext3DProviderImpl() {}
 
 bool WebGraphicsContext3DProviderImpl::BindToCurrentThread() {
-  // TODO(danakj): Could plumb this result out to the caller so they know to
-  // retry or not, if any client cared to know if it should retry or not.
-  return provider_->BindToCurrentThread() == gpu::ContextResult::kSuccess;
+  return provider_->BindToCurrentThread();
 }
 
 gpu::gles2::GLES2Interface* WebGraphicsContext3DProviderImpl::ContextGL() {

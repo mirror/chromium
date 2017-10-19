@@ -147,7 +147,7 @@ IdentityProvider* ChromeAutofillClient::GetIdentityProvider() {
 }
 
 ukm::UkmRecorder* ChromeAutofillClient::GetUkmRecorder() {
-  return ukm::UkmRecorder::Get();
+  return g_browser_process->ukm_recorder();
 }
 
 SaveCardBubbleController* ChromeAutofillClient::GetSaveCardBubbleController() {

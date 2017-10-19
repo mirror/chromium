@@ -92,7 +92,7 @@ class WebGLObject : public GarbageCollectedFinalized<WebGLObject>,
   // resources if they are GC'd before the context is.
   EAGERLY_FINALIZE();
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 

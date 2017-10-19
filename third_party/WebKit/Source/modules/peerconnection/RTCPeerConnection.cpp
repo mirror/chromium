@@ -425,7 +425,7 @@ bool RTCPeerConnection::EventWrapper::Setup() {
   return true;
 }
 
-void RTCPeerConnection::EventWrapper::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCPeerConnection::EventWrapper) {
   visitor->Trace(event_);
 }
 
@@ -1149,23 +1149,17 @@ MediaStreamVector RTCPeerConnection::getLocalStreams() const {
 }
 
 MediaStreamVector RTCPeerConnection::getRemoteStreams() const {
-  MediaStreamVector remote_streams;
-  for (const auto& rtp_receiver : rtp_receivers_) {
-    for (const auto& stream : rtp_receiver->streams()) {
-      if (!remote_streams.Contains(stream))
-        remote_streams.push_back(stream);
-    }
-  }
-  return remote_streams;
+  // TODO(hbos): We should define this as "the streams of all receivers" instead
+  // of a set that we add to and subtract from on a remote stream being added or
+  // removed. https://crbug.com/741618
+  return remote_streams_;
 }
 
 MediaStream* RTCPeerConnection::getRemoteStream(
     MediaStreamDescriptor* descriptor) const {
-  for (const auto& rtp_receiver : rtp_receivers_) {
-    for (const auto& stream : rtp_receiver->streams()) {
-      if (stream->Descriptor() == descriptor)
-        return stream;
-    }
+  for (const auto& remote_stream : remote_streams_) {
+    if (remote_stream->Descriptor() == descriptor)
+      return remote_stream;
   }
   return nullptr;
 }
@@ -1173,7 +1167,8 @@ MediaStream* RTCPeerConnection::getRemoteStream(
 size_t RTCPeerConnection::getRemoteStreamUsageCount(
     MediaStreamDescriptor* descriptor) const {
   size_t usage_count = 0;
-  for (const auto& receiver : rtp_receivers_) {
+  for (const auto& receiver_entry : rtp_receivers_) {
+    RTCRtpReceiver* receiver = receiver_entry.value;
     WebVector<WebMediaStream> streams = receiver->web_receiver().Streams();
     for (const WebMediaStream& stream : streams) {
       if (stream == descriptor)
@@ -1238,8 +1233,25 @@ HeapVector<Member<RTCRtpSender>> RTCPeerConnection::getSenders() {
   return rtp_senders;
 }
 
+// TODO(hbos): Add to |rtp_receivers_| on |DidAddRemoteTrack| and remove on
+// |DidRemoveRemoteTrack|, define this as "return rtp_receivers_;" and remove
+// |GetOrCreateRTCRtpReceiver|. http://crbug.com/755166
 HeapVector<Member<RTCRtpReceiver>> RTCPeerConnection::getReceivers() {
-  return rtp_receivers_;
+  WebVector<std::unique_ptr<WebRTCRtpReceiver>> web_rtp_receivers =
+      peer_handler_->GetReceivers();
+  HeapVector<Member<RTCRtpReceiver>> rtp_receivers;
+  for (size_t i = 0; i < web_rtp_receivers.size(); ++i) {
+    MediaStreamTrack* track = GetTrack(web_rtp_receivers[i]->Track());
+    // If the |track| is null, it means that the set of tracks in the WebRTC
+    // library differs from |track_|.
+    // TODO(hbos): Make sure that |tracks_| always reflects the set of tracks
+    // in the WebRTC library. http://crbug.com/755166
+    if (!track)
+      continue;
+    rtp_receivers.push_back(
+        GetOrCreateRTCRtpReceiver(std::move(web_rtp_receivers[i])));
+  }
+  return rtp_receivers;
 }
 
 RTCRtpSender* RTCPeerConnection::addTrack(MediaStreamTrack* track,
@@ -1360,13 +1372,21 @@ MediaStreamTrack* RTCPeerConnection::GetTrack(
   return tracks_.at(static_cast<MediaStreamComponent*>(web_track));
 }
 
-HeapVector<Member<RTCRtpReceiver>>::iterator RTCPeerConnection::FindReceiver(
-    const WebRTCRtpReceiver& web_receiver) {
-  for (auto it = rtp_receivers_.begin(); it != rtp_receivers_.end(); ++it) {
-    if ((*it)->web_receiver().Id() == web_receiver.Id())
-      return it;
-  }
-  return rtp_receivers_.end();
+RTCRtpReceiver* RTCPeerConnection::GetOrCreateRTCRtpReceiver(
+    std::unique_ptr<WebRTCRtpReceiver> web_rtp_receiver) {
+  DCHECK(web_rtp_receiver);
+  uintptr_t id = web_rtp_receiver->Id();
+  const auto it = rtp_receivers_.find(id);
+  if (it != rtp_receivers_.end())
+    return it->value;
+  // There does not exist a |RTCRtpReceiver| for this |WebRTCRtpReceiver|
+  // yet, create it.
+  MediaStreamTrack* track = GetTrack(web_rtp_receiver->Track());
+  DCHECK(track);
+  RTCRtpReceiver* rtp_receiver =
+      new RTCRtpReceiver(std::move(web_rtp_receiver), track);
+  rtp_receivers_.insert(id, rtp_receiver);
+  return rtp_receiver;
 }
 
 RTCDTMFSender* RTCPeerConnection::createDTMFSender(
@@ -1499,6 +1519,7 @@ void RTCPeerConnection::DidAddRemoteTrack(
       stream = MediaStream::Create(GetExecutionContext(), web_stream,
                                    audio_tracks, video_tracks);
       stream->RegisterObserver(this);
+      remote_streams_.push_back(stream);
       ScheduleDispatchEvent(
           MediaStreamEvent::Create(EventTypeNames::addstream, stream));
     } else {
@@ -1525,12 +1546,8 @@ void RTCPeerConnection::DidAddRemoteTrack(
     }
     streams.push_back(stream);
   }
-  DCHECK(FindReceiver(*web_rtp_receiver) == rtp_receivers_.end());
-  MediaStreamTrack* track = GetTrack(web_rtp_receiver->Track());
-  DCHECK(track);
   RTCRtpReceiver* rtp_receiver =
-      new RTCRtpReceiver(std::move(web_rtp_receiver), track, streams);
-  rtp_receivers_.push_back(rtp_receiver);
+      GetOrCreateRTCRtpReceiver(std::move(web_rtp_receiver));
   if (RuntimeEnabledFeatures::RTCRtpSenderEnabled()) {
     ScheduleDispatchEvent(
         new RTCTrackEvent(rtp_receiver, rtp_receiver->track(), streams));
@@ -1543,11 +1560,10 @@ void RTCPeerConnection::DidRemoveRemoteTrack(
   DCHECK(GetExecutionContext()->IsContextThread());
 
   WebVector<WebMediaStream> web_streams = web_rtp_receiver->Streams();
-  auto it = FindReceiver(*web_rtp_receiver);
-  DCHECK(it != rtp_receivers_.end());
-  RTCRtpReceiver* rtp_receiver = *it;
+  RTCRtpReceiver* rtp_receiver =
+      GetOrCreateRTCRtpReceiver(std::move(web_rtp_receiver));
   MediaStreamTrack* track = rtp_receiver->track();
-  rtp_receivers_.erase(it);
+  rtp_receivers_.erase(rtp_receiver->web_receiver().Id());
 
   for (const WebMediaStream& web_stream : web_streams) {
     MediaStreamDescriptor* stream_descriptor = web_stream;
@@ -1566,6 +1582,11 @@ void RTCPeerConnection::DidRemoveRemoteTrack(
       // TODO(hbos): The stream should already have ended by being empty, no
       // need for |StreamEnded|.
       stream->StreamEnded();
+      // TODO(hbos): Remove |remote_streams_| in favor of returning all streams
+      // of all receivers. https://crbug.com/741618
+      size_t pos = remote_streams_.Find(stream);
+      DCHECK(pos != kNotFound);
+      remote_streams_.EraseAt(pos);
       stream->UnregisterObserver(this);
       ScheduleDispatchEvent(
           MediaStreamEvent::Create(EventTypeNames::removestream, stream));
@@ -1749,8 +1770,9 @@ void RTCPeerConnection::RecordRapporMetrics() {
         *document, HostsUsingFeatures::Feature::kRTCPeerConnectionDataChannel);
 }
 
-void RTCPeerConnection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCPeerConnection) {
   visitor->Trace(local_streams_);
+  visitor->Trace(remote_streams_);
   visitor->Trace(tracks_);
   visitor->Trace(rtp_senders_);
   visitor->Trace(rtp_receivers_);

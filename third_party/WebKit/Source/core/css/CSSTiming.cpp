@@ -30,7 +30,7 @@ void CSSTiming::RecordUpdateDuration(double seconds) {
     update_time_before_fcp_ += seconds;
 }
 
-void CSSTiming::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSTiming) {
   visitor->Trace(paint_timing_);
   Supplement<Document>::Trace(visitor);
 }

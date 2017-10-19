@@ -31,7 +31,8 @@ public class TabIdManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        mContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
+        mContext = new AdvancedMockContext(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
     }
 
     /** Tests that IDs are stored and generated properly. */

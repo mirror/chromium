@@ -93,8 +93,10 @@ class CookiesViewHandler : public SettingsPageUIHandler,
     Request();
     void Clear();
 
-    // Whether the request expects a list response.
-    bool should_send_list;
+    // The top list item in view.
+    int start_index;
+    // How many list items are in view.
+    int index_count;
     // The callback ID for the current outstanding request.
     std::string callback_id_;
   };

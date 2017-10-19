@@ -45,7 +45,7 @@ class CORE_EXPORT HTMLViewSourceDocument final : public HTMLDocument {
 
   void AddSource(const String&, HTMLToken&, SourceAnnotation);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   HTMLViewSourceDocument(const DocumentInit&, const String& mime_type);

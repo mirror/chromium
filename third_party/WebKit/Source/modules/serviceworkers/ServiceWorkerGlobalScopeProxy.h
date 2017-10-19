@@ -166,7 +166,7 @@ class ServiceWorkerGlobalScopeProxy final
   void WillDestroyWorkerGlobalScope() override;
   void DidTerminateWorkerThread() override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Detaches this proxy object entirely from the outside world, clearing out
   // all references.

@@ -358,8 +358,7 @@ void FrameSinkManagerImpl::OnSurfaceDamageExpected(const SurfaceId& surface_id,
                                                    const BeginFrameArgs& args) {
 }
 
-void FrameSinkManagerImpl::OnSurfaceSubtreeDamaged(
-    const SurfaceId& surface_id) {}
+void FrameSinkManagerImpl::OnSurfaceWillDraw(const SurfaceId& surface_id) {}
 
 void FrameSinkManagerImpl::OnClientConnectionLost(
     const FrameSinkId& frame_sink_id) {

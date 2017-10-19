@@ -112,7 +112,7 @@ void MediaDownloadInProductHelpManager::DismissInProductHelp() {
   controls_->DidDismissDownloadInProductHelp();
 }
 
-void MediaDownloadInProductHelpManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaDownloadInProductHelpManager) {
   visitor->Trace(controls_);
 }
 

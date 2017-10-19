@@ -91,7 +91,7 @@ void CSSStyleSheetResource::SetParsedStyleSheetCache(
   UpdateDecodedSize();
 }
 
-void CSSStyleSheetResource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSStyleSheetResource) {
   visitor->Trace(parsed_style_sheet_cache_);
   StyleSheetResource::Trace(visitor);
 }

@@ -43,7 +43,7 @@ class SQLResultSet final : public GarbageCollected<SQLResultSet>,
 
  public:
   static SQLResultSet* Create() { return new SQLResultSet; }
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   SQLResultSetRowList* rows() const;
 

@@ -66,8 +66,7 @@ StylePropertySerializer::StylePropertySetForSerializer::
   }
 }
 
-void StylePropertySerializer::StylePropertySetForSerializer::Trace(
-    blink::Visitor* visitor) {
+DEFINE_TRACE(StylePropertySerializer::StylePropertySetForSerializer) {
   visitor->Trace(property_set_);
 }
 

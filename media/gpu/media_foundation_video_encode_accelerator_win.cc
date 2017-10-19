@@ -25,6 +25,7 @@
 #include "media/base/win/mf_initializer.h"
 #include "third_party/libyuv/include/libyuv.h"
 
+using base::win::ScopedComPtr;
 using media::mf::MediaBufferScopedPointer;
 
 namespace media {
@@ -537,7 +538,7 @@ void MediaFoundationVideoEncodeAccelerator::EncodeTask(
   DVLOG(3) << __func__;
   DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
 
-  Microsoft::WRL::ComPtr<IMFMediaBuffer> input_buffer;
+  base::win::ScopedComPtr<IMFMediaBuffer> input_buffer;
   input_sample_->GetBufferByIndex(0, input_buffer.GetAddressOf());
 
   {
@@ -625,7 +626,7 @@ void MediaFoundationVideoEncodeAccelerator::ProcessOutput() {
   RETURN_ON_HR_FAILURE(hr, "Couldn't get encoded data", );
   DVLOG(3) << "Got encoded data " << hr;
 
-  Microsoft::WRL::ComPtr<IMFMediaBuffer> output_buffer;
+  base::win::ScopedComPtr<IMFMediaBuffer> output_buffer;
   hr = output_sample_->GetBufferByIndex(0, output_buffer.GetAddressOf());
   RETURN_ON_HR_FAILURE(hr, "Couldn't get buffer by index", );
   DWORD size = 0;

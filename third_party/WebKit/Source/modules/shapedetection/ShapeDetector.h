@@ -20,7 +20,7 @@ class MODULES_EXPORT ShapeDetector
   virtual ~ShapeDetector() = default;
 
   ScriptPromise detect(ScriptState*, const ImageBitmapSourceUnion&);
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   ScriptPromise DetectShapesOnImageData(ScriptPromiseResolver*, ImageData*);

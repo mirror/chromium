@@ -53,7 +53,7 @@ class CORE_EXPORT DevToolsHost final
   }
 
   ~DevToolsHost();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   void DisconnectClient();
 
   float zoomFactor();

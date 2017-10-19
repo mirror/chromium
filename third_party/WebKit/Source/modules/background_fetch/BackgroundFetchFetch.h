@@ -22,7 +22,7 @@ class BackgroundFetchFetch : public GarbageCollected<BackgroundFetchFetch>,
   // Web Exposed attribute defined in the IDL file.
   Request* request() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit BackgroundFetchFetch(Request*);

@@ -45,12 +45,9 @@ enum BubbleCreationType {
   BUBBLE_USE_EXISTING,  // Uses any existing bubble, or creates a new one.
 };
 
-// For historical reasons, SystemTray is both a controller and a view. It
-// manages all the SystemTrayItem controllers, creates icon views that appear in
-// the tray, creates the bubble menu and fills the menu with items. It is also
-// the view that contains the icons in the tray.
 class ASH_EXPORT SystemTray : public TrayBackgroundView {
  public:
+
   explicit SystemTray(Shelf* shelf);
   ~SystemTray() override;
 
@@ -87,8 +84,9 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   // seconds.
   void SetDetailedViewCloseDelay(int close_delay);
 
-  // Hides the detailed view for |item|.
-  void HideDetailedView(SystemTrayItem* item);
+  // Hides the detailed view for |item|. If |animate| is false, disable
+  // the hiding animation for hiding |item|.
+  void HideDetailedView(SystemTrayItem* item, bool animate);
 
   // Updates the items when the login status of the system changes.
   void UpdateAfterLoginStatusChange(LoginStatus login_status);
@@ -152,6 +150,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
 
  private:
   friend class SystemTrayTestApi;
+  class ActivationObserver;
 
   // Activates the bubble and starts key navigation with the |key_event|.
   void ActivateAndStartNavigation(const ui::KeyEvent& key_event);
@@ -229,6 +228,8 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   // A reference to the Screen share and capture item.
   ScreenTrayItem* screen_capture_tray_item_ = nullptr;  // not owned
   ScreenTrayItem* screen_share_tray_item_ = nullptr;    // not owned
+
+  std::unique_ptr<ActivationObserver> activation_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(SystemTray);
 };

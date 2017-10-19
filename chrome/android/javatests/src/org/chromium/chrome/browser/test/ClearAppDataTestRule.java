@@ -23,7 +23,8 @@ public class ClearAppDataTestRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                ApplicationData.clearAppData(InstrumentationRegistry.getTargetContext());
+                ApplicationData.clearAppData(
+                        InstrumentationRegistry.getInstrumentation().getTargetContext());
                 base.evaluate();
             }
         };

@@ -86,15 +86,13 @@ class VirtualFileSystem : public zip::FileAccessor {
   ~VirtualFileSystem() override = default;
 
  private:
-  std::vector<base::File> OpenFilesForReading(
-      const std::vector<base::FilePath>& paths) override {
-    std::vector<base::File> files;
-    for (const auto& path : paths) {
-      auto iter = files_.find(path);
-      files.push_back(iter == files_.end() ? base::File()
-                                           : std::move(iter->second));
+  base::File OpenFileForReading(const base::FilePath& file) override {
+    auto iter = files_.find(file);
+    if (iter == files_.end()) {
+      NOTREACHED();
+      return base::File();
     }
-    return files;
+    return std::move(iter->second);
   }
 
   bool DirectoryExists(const base::FilePath& file) override {
@@ -347,7 +345,7 @@ TEST_F(ZipTest, Zip) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath zip_file = temp_dir.GetPath().AppendASCII("out.zip");
 
-  EXPECT_TRUE(zip::Zip(src_dir, zip_file, /*include_hidden_files=*/true));
+  EXPECT_TRUE(zip::Zip(src_dir, zip_file, true));
   TestUnzipFile(zip_file, true);
 }
 
@@ -360,7 +358,7 @@ TEST_F(ZipTest, ZipIgnoreHidden) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath zip_file = temp_dir.GetPath().AppendASCII("out.zip");
 
-  EXPECT_TRUE(zip::Zip(src_dir, zip_file, /*include_hidden_files=*/false));
+  EXPECT_TRUE(zip::Zip(src_dir, zip_file, false));
   TestUnzipFile(zip_file, false);
 }
 

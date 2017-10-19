@@ -52,7 +52,7 @@ class MODULES_EXPORT MediaDevices final
   void Suspend() override;
   void Resume() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(devicechange);
 

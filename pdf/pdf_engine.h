@@ -61,12 +61,6 @@ class PDFEngine {
   struct DocumentFeatures {
     // Number of pages in document.
     size_t page_count = 0;
-    // Whether any files are attached to document (see "File Attachment
-    // Annotations" on page 637 of PDF Reference 1.7).
-    bool has_attachments = false;
-    // Whether the document is linearized (see Appendix F "Linearized PDF" of
-    // PDF Reference 1.7).
-    bool is_linearized = false;
   };
 
   // The interface that's provided to the rendering engine.
@@ -149,6 +143,9 @@ class PDFEngine {
     virtual void SubmitForm(const std::string& url,
                             const void* data,
                             int length) = 0;
+
+    // Pops up a file selection dialog and returns the result.
+    virtual std::string ShowFileSelectionDialog() = 0;
 
     // Creates and returns new URL loader for partial document requests.
     virtual pp::URLLoader CreateURLLoader() = 0;

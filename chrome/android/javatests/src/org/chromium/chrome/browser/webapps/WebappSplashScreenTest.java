@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.view.View;
 import android.view.ViewGroup;
@@ -265,7 +264,7 @@ public class WebappSplashScreenTest {
     @Feature({"Webapps"})
     public void testRegularSplashScreenAppears() throws Exception {
         // Register a properly-sized icon for the splash screen.
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context context = mActivityTestRule.getInstrumentation().getTargetContext();
         int thresholdSize = context.getResources().getDimensionPixelSize(
                 R.dimen.webapp_splash_image_size_threshold);
         int size = thresholdSize + 1;
@@ -296,7 +295,7 @@ public class WebappSplashScreenTest {
     @Feature({"Webapps"})
     public void testSmallSplashScreenAppears() throws Exception {
         // Register a smaller icon for the splash screen.
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context context = mActivityTestRule.getInstrumentation().getTargetContext();
         int thresholdSize = context.getResources().getDimensionPixelSize(
                 R.dimen.webapp_splash_image_size_threshold);
         int size = context.getResources().getDimensionPixelSize(
@@ -330,7 +329,7 @@ public class WebappSplashScreenTest {
     @Feature({"Webapps"})
     public void testSplashScreenWithoutImageAppears() throws Exception {
         // Register an image that's too small for the splash screen.
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context context = mActivityTestRule.getInstrumentation().getTargetContext();
         int size = context.getResources().getDimensionPixelSize(
                 R.dimen.webapp_splash_image_size_minimum) - 1;
         Bitmap splashBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);

@@ -48,7 +48,7 @@ class CORE_EXPORT TreeScopeEventContext final
     : public GarbageCollected<TreeScopeEventContext> {
  public:
   static TreeScopeEventContext* Create(TreeScope&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   TreeScope& GetTreeScope() const { return *tree_scope_; }
   ContainerNode& RootNode() const { return tree_scope_->RootNode(); }

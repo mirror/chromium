@@ -648,7 +648,7 @@ void SpellChecker::DocumentAttached(Document* document) {
   idle_spell_check_callback_->DocumentAttached(document);
 }
 
-void SpellChecker::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SpellChecker) {
   visitor->Trace(frame_);
   visitor->Trace(spell_check_requester_);
   visitor->Trace(idle_spell_check_callback_);

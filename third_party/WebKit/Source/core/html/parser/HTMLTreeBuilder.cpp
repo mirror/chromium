@@ -266,12 +266,12 @@ void HTMLTreeBuilder::FragmentParsingContext::Init(DocumentFragment* fragment,
       context_element, HTMLStackItem::kItemForContextElement);
 }
 
-void HTMLTreeBuilder::FragmentParsingContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLTreeBuilder::FragmentParsingContext) {
   visitor->Trace(fragment_);
   visitor->Trace(context_element_stack_item_);
 }
 
-void HTMLTreeBuilder::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLTreeBuilder) {
   visitor->Trace(fragment_context_);
   visitor->Trace(tree_);
   visitor->Trace(parser_);

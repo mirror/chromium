@@ -219,8 +219,7 @@ void GLHelperHolder::Initialize() {
       gpu::kNullSurfaceHandle, url, automatic_flushes, support_locking, limits,
       attributes, nullptr,
       ui::command_buffer_metrics::BROWSER_OFFSCREEN_MAINTHREAD_CONTEXT);
-  auto result = provider_->BindToCurrentThread();
-  if (result != gpu::ContextResult::kSuccess)
+  if (!provider_->BindToCurrentThread())
     return;
   provider_->ContextGL()->TraceBeginCHROMIUM(
       "gpu_toplevel",

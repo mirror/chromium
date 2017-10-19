@@ -22,7 +22,7 @@ enum class ScriptType { kClassic, kModule };
 // https://html.spec.whatwg.org/#concept-script
 class CORE_EXPORT Script : public GarbageCollectedFinalized<Script> {
  public:
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual ~Script() {}
 

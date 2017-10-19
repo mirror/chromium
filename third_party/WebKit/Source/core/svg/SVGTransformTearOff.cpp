@@ -47,7 +47,7 @@ SVGTransformTearOff::SVGTransformTearOff(
 
 SVGTransformTearOff::~SVGTransformTearOff() {}
 
-void SVGTransformTearOff::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGTransformTearOff) {
   visitor->Trace(matrix_tearoff_);
   SVGPropertyTearOff<SVGTransform>::Trace(visitor);
 }

@@ -14,27 +14,27 @@ class FakeCSSStyleImageValue : public CSSStyleImageValue {
  public:
   FakeCSSStyleImageValue(CSSImageValue* image_value,
                          bool cache_pending,
-                         IntSize size)
+                         LayoutSize layout_size)
       : CSSStyleImageValue(image_value),
         cache_pending_(cache_pending),
-        size_(size) {}
+        layout_size_(layout_size) {}
 
   bool IsCachePending() const override { return cache_pending_; }
-  IntSize ImageSize() const override { return size_; }
+  LayoutSize ImageLayoutSize() const override { return layout_size_; }
 
   const CSSValue* ToCSSValue() const override { return nullptr; }
   StyleValueType GetType() const override { return kUnknownType; }
 
  private:
   bool cache_pending_;
-  IntSize size_;
+  LayoutSize layout_size_;
 };
 
 }  // namespace
 
 TEST(CSSStyleImageValueTest, PendingCache) {
   FakeCSSStyleImageValue* style_image_value = new FakeCSSStyleImageValue(
-      CSSImageValue::Create(""), true, IntSize(100, 100));
+      CSSImageValue::Create(""), true, LayoutSize(100, 100));
   bool is_null;
   EXPECT_EQ(style_image_value->intrinsicWidth(is_null), 0);
   EXPECT_EQ(style_image_value->intrinsicHeight(is_null), 0);
@@ -44,7 +44,7 @@ TEST(CSSStyleImageValueTest, PendingCache) {
 
 TEST(CSSStyleImageValueTest, ValidLoadedImage) {
   FakeCSSStyleImageValue* style_image_value = new FakeCSSStyleImageValue(
-      CSSImageValue::Create(""), false, IntSize(480, 120));
+      CSSImageValue::Create(""), false, LayoutSize(480, 120));
   bool is_null;
   EXPECT_EQ(style_image_value->intrinsicWidth(is_null), 480);
   EXPECT_EQ(style_image_value->intrinsicHeight(is_null), 120);

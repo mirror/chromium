@@ -140,6 +140,25 @@ static const double kMinimumCursorScale = 0.001;
 // This is roughly 9 frames, which should be long enough to be noticeable.
 constexpr TimeDelta kMinimumActiveInterval = TimeDelta::FromSecondsD(0.15);
 
+enum NoCursorChangeType { kNoCursorChange };
+
+class OptionalCursor {
+ public:
+  OptionalCursor(NoCursorChangeType) : is_cursor_change_(false) {}
+  OptionalCursor(const Cursor& cursor)
+      : is_cursor_change_(true), cursor_(cursor) {}
+
+  bool IsCursorChange() const { return is_cursor_change_; }
+  const Cursor& GetCursor() const {
+    DCHECK(is_cursor_change_);
+    return cursor_;
+  }
+
+ private:
+  bool is_cursor_change_;
+  Cursor cursor_;
+};
+
 EventHandler::EventHandler(LocalFrame& frame)
     : frame_(frame),
       selection_controller_(SelectionController::Create(frame)),
@@ -169,7 +188,7 @@ EventHandler::EventHandler(LocalFrame& frame)
           this,
           &EventHandler::ActiveIntervalTimerFired) {}
 
-void EventHandler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventHandler) {
   visitor->Trace(frame_);
   visitor->Trace(selection_controller_);
   visitor->Trace(capturing_mouse_events_node_);
@@ -344,7 +363,7 @@ void EventHandler::UpdateCursor() {
   layout_view_item.HitTest(result);
 
   if (LocalFrame* frame = result.InnerNodeFrame()) {
-    EventHandler::OptionalCursor optional_cursor =
+    OptionalCursor optional_cursor =
         frame->GetEventHandler().SelectCursor(result);
     if (optional_cursor.IsCursorChange()) {
       view->SetCursor(optional_cursor.GetCursor());
@@ -391,8 +410,7 @@ bool EventHandler::ShouldShowIBeamForNode(const Node* node,
   return HasEditableStyle(*node);
 }
 
-EventHandler::OptionalCursor EventHandler::SelectCursor(
-    const HitTestResult& result) {
+OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
   if (scroll_manager_->InResizeMode())
     return kNoCursorChange;
 
@@ -541,10 +559,9 @@ EventHandler::OptionalCursor EventHandler::SelectCursor(
   return PointerCursor();
 }
 
-EventHandler::OptionalCursor EventHandler::SelectAutoCursor(
-    const HitTestResult& result,
-    Node* node,
-    const Cursor& i_beam) {
+OptionalCursor EventHandler::SelectAutoCursor(const HitTestResult& result,
+                                              Node* node,
+                                              const Cursor& i_beam) {
   if (ShouldShowIBeamForNode(node, result))
     return i_beam;
 
@@ -898,8 +915,7 @@ WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
       scrollbar->MouseMoved(mev.Event());
     }
     if (LocalFrameView* view = frame_->View()) {
-      EventHandler::OptionalCursor optional_cursor =
-          SelectCursor(mev.GetHitTestResult());
+      OptionalCursor optional_cursor = SelectCursor(mev.GetHitTestResult());
       if (optional_cursor.IsCursorChange()) {
         view->SetCursor(optional_cursor.GetCursor());
       }

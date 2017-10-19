@@ -188,7 +188,8 @@ public class LogcatExtractionRunnableTest {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) return;
 
         final File minidump = createMinidump("test.dmp");
-        Context testContext = new TestContext(InstrumentationRegistry.getTargetContext());
+        Context testContext =
+                new TestContext(InstrumentationRegistry.getInstrumentation().getTargetContext());
 
         LogcatExtractionRunnable runnable = new TestLogcatExtractionRunnable(testContext, minidump);
         runnable.run();
@@ -203,7 +204,8 @@ public class LogcatExtractionRunnableTest {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return;
 
         final File minidump = createMinidump("test.dmp");
-        Context testContext = new TestContext(InstrumentationRegistry.getTargetContext());
+        Context testContext =
+                new TestContext(InstrumentationRegistry.getInstrumentation().getTargetContext());
 
         LogcatExtractionRunnable runnable = new TestLogcatExtractionRunnable(testContext, minidump);
         runnable.run();

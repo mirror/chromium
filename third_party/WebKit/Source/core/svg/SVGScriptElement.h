@@ -48,7 +48,7 @@ class SVGScriptElement final : public SVGElement,
 
   bool IsScriptElement() const override { return true; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
  private:

@@ -17,10 +17,6 @@ namespace base {
 class Timer;
 }  // namespace base
 
-namespace service_manager {
-class Connector;
-}  // namespace service_manager
-
 namespace arc {
 
 class ArcVoiceInteractionFrameworkService;
@@ -38,9 +34,7 @@ class HighlighterControllerClient
   // Detaches the client from the controller.
   void Detach();
 
-  void SetConnectorForTesting(service_manager::Connector* connector) {
-    connector_ = connector;
-  }
+  void SetControllerForTesting(ash::mojom::HighlighterControllerPtr controller);
 
   void SimulateSelectionTimeoutForTesting();
 
@@ -56,9 +50,6 @@ class HighlighterControllerClient
   void ReportSelection(const gfx::Rect& rect);
 
   bool start_session_pending() const { return delay_timer_.get(); }
-
-  // Unowned pointer to a mojo connector.
-  service_manager::Connector* connector_ = nullptr;
 
   // Binds to the client interface.
   mojo::Binding<ash::mojom::HighlighterControllerClient> binding_;

@@ -45,14 +45,13 @@ void RepostFormTabHelper::PresentDialog(
                    }];
 }
 
-void RepostFormTabHelper::DidStartNavigation(web::WebState* web_state,
-                                             web::NavigationContext*) {
+void RepostFormTabHelper::DidStartNavigation(web::NavigationContext*) {
   if (is_presenting_dialog_)
     [delegate_ repostFormTabHelperDismissRepostFormDialog:this];
   is_presenting_dialog_ = false;
 }
 
-void RepostFormTabHelper::WebStateDestroyed(web::WebState* web_state) {
+void RepostFormTabHelper::WebStateDestroyed() {
   if (is_presenting_dialog_)
     [delegate_ repostFormTabHelperDismissRepostFormDialog:this];
   is_presenting_dialog_ = false;

@@ -263,7 +263,7 @@ FrameLoader::~FrameLoader() {
   DCHECK(detached_);
 }
 
-void FrameLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FrameLoader) {
   visitor->Trace(frame_);
   visitor->Trace(progress_tracker_);
   visitor->Trace(document_loader_);

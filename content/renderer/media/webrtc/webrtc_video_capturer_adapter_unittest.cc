@@ -5,9 +5,9 @@
 #include <algorithm>
 
 #include "base/bind.h"
+#include "base/message_loop/message_loop.h"
 #include "base/optional.h"
-#include "base/single_thread_task_runner.h"
-#include "base/test/scoped_task_environment.h"
+#include "base/run_loop.h"
 #include "content/child/child_process.h"
 #include "content/renderer/media/webrtc/webrtc_video_capturer_adapter.h"
 #include "content/renderer/media/webrtc/webrtc_video_frame_adapter.h"
@@ -26,9 +26,7 @@ class WebRtcVideoCapturerAdapterTest
       public ::testing::Test {
  public:
   WebRtcVideoCapturerAdapterTest()
-      : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        adapter_(new WebRtcVideoCapturerAdapter(
+      : adapter_(new WebRtcVideoCapturerAdapter(
             false,
             blink::WebMediaStreamTrack::ContentHintType::kNone)),
         output_frame_width_(0),
@@ -58,8 +56,7 @@ class WebRtcVideoCapturerAdapterTest
   }
 
   void TestSourceTextureFrame() {
-    EXPECT_TRUE(scoped_task_environment_.GetMainThreadTaskRunner()
-                    ->BelongsToCurrentThread());
+    EXPECT_TRUE(message_loop_.IsCurrent());
     gpu::MailboxHolder holders[media::VideoFrame::kMaxPlanes] = {
         gpu::MailboxHolder(gpu::Mailbox::Generate(), gpu::SyncToken(), 5)};
     scoped_refptr<media::VideoFrame> frame =
@@ -139,9 +136,7 @@ class WebRtcVideoCapturerAdapterTest
   }
 
  private:
-  // The ScopedTaskEnvironment prevents the ChildProcess from leaking a
-  // TaskScheduler.
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  const base::MessageLoopForIO message_loop_;
   const ChildProcess child_process_;
 
   std::unique_ptr<WebRtcVideoCapturerAdapter> adapter_;

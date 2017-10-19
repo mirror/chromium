@@ -290,7 +290,7 @@ ArchiveResource* MHTMLArchive::SubresourceForURL(const KURL& url) const {
   return subresources_.at(url.GetString());
 }
 
-void MHTMLArchive::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MHTMLArchive) {
   visitor->Trace(main_resource_);
   visitor->Trace(subresources_);
 }

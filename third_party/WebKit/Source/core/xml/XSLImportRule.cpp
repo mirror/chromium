@@ -102,7 +102,7 @@ void XSLImportRule::LoadSheet() {
   SetXSLStyleSheet(abs_href, resource->GetResponse().Url(), resource->Sheet());
 }
 
-void XSLImportRule::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XSLImportRule) {
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(style_sheet_);
 }

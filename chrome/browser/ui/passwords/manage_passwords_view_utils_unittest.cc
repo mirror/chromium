@@ -209,6 +209,7 @@ TEST(ManagePasswordsViewUtilTest, GetManagePasswordsDialogTitleText) {
                                     << kDomainsTestCases[i].form_origin_url);
 
     base::string16 title;
+    gfx::Range title_link_range;
     GetManagePasswordsDialogTitleText(
         GURL(kDomainsTestCases[i].user_visible_url),
         GURL(kDomainsTestCases[i].form_origin_url), &title);

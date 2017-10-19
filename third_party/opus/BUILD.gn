@@ -9,9 +9,8 @@ import("//testing/test.gni")
 use_opus_fixed_point = current_cpu == "arm" || current_cpu == "arm64"
 
 # If ARM optimizations shall be used to accelerate performance.
-# TODO(scottmg): Disabled on Fuchsia for now, see https://crbug.com/775272.
-use_opus_arm_optimization =
-    current_cpu == "arm" || (current_cpu == "arm64" && is_ios)
+use_opus_arm_optimization = current_cpu == "arm" ||
+    (current_cpu == "arm64" && !is_android)
 
 # If OPUS Run Time CPU Detections (RTCD) shall be used.
 # Based on the conditions in celt/arm/armcpu.c:

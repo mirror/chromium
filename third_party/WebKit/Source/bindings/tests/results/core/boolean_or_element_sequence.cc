@@ -62,7 +62,7 @@ BooleanOrElementSequence::BooleanOrElementSequence(const BooleanOrElementSequenc
 BooleanOrElementSequence::~BooleanOrElementSequence() = default;
 BooleanOrElementSequence& BooleanOrElementSequence::operator=(const BooleanOrElementSequence&) = default;
 
-void BooleanOrElementSequence::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BooleanOrElementSequence) {
   visitor->Trace(element_sequence_);
 }
 

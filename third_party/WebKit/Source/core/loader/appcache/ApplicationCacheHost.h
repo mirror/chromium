@@ -157,7 +157,7 @@ class CORE_EXPORT ApplicationCacheHost final
   CacheInfo ApplicationCacheInfo();
   int GetHostID() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit ApplicationCacheHost(DocumentLoader*);

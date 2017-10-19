@@ -35,7 +35,7 @@ class SetMediaKeysHandler : public ScriptPromiseResolver {
   static ScriptPromise Create(ScriptState*, HTMLMediaElement&, MediaKeys*);
   ~SetMediaKeysHandler() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   SetMediaKeysHandler(ScriptState*, HTMLMediaElement&, MediaKeys*);
@@ -307,7 +307,7 @@ void SetMediaKeysHandler::SetFailed(ExceptionCode code,
   Fail(code, error_message);
 }
 
-void SetMediaKeysHandler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SetMediaKeysHandler) {
   visitor->Trace(element_);
   visitor->Trace(new_media_keys_);
   ScriptPromiseResolver::Trace(visitor);
@@ -458,7 +458,7 @@ HTMLMediaElementEncryptedMedia::ContentDecryptionModule() {
   return media_keys_ ? media_keys_->ContentDecryptionModule() : 0;
 }
 
-void HTMLMediaElementEncryptedMedia::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLMediaElementEncryptedMedia) {
   visitor->Trace(media_element_);
   visitor->Trace(media_keys_);
   Supplement<HTMLMediaElement>::Trace(visitor);

@@ -106,7 +106,7 @@ void NotificationManager::OnPermissionServiceConnectionError() {
   permission_service_.reset();
 }
 
-void NotificationManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NotificationManager) {
   Supplement<ExecutionContext>::Trace(visitor);
 }
 

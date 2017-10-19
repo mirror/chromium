@@ -1724,7 +1724,7 @@ void ResourceFetcher::StopFetchingIncludingKeepaliveLoaders() {
   StopFetchingInternal(StopFetchingTarget::kIncludingKeepaliveLoaders);
 }
 
-void ResourceFetcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ResourceFetcher) {
   visitor->Trace(context_);
   visitor->Trace(scheduler_);
   visitor->Trace(archive_);

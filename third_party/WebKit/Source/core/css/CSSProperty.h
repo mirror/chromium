@@ -92,7 +92,7 @@ class CSSProperty {
 
   bool operator==(const CSSProperty& other) const;
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(value_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(value_); }
 
  private:
   StylePropertyMetadata metadata_;

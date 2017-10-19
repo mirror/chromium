@@ -271,7 +271,7 @@ FormSubmission* FormSubmission::Create(HTMLFormElement* form,
                             std::move(form_data), boundary, event);
 }
 
-void FormSubmission::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FormSubmission) {
   visitor->Trace(form_);
   visitor->Trace(event_);
 }

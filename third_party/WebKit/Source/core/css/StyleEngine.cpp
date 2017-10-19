@@ -1328,7 +1328,7 @@ void StyleEngine::CollectMatchingUserRules(
   }
 }
 
-void StyleEngine::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleEngine) {
   visitor->Trace(document_);
   visitor->Trace(user_style_sheets_);
   visitor->Trace(active_user_style_sheets_);

@@ -415,7 +415,7 @@ void WorkerThreadableLoader::DidReceiveResourceTiming(
   client_->DidReceiveResourceTiming(*info);
 }
 
-void WorkerThreadableLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerThreadableLoader) {
   visitor->Trace(worker_global_scope_);
   ThreadableLoader::Trace(visitor);
 }
@@ -625,8 +625,7 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::ContextDestroyed(
   Cancel();
 }
 
-void WorkerThreadableLoader::MainThreadLoaderHolder::Trace(
-    blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerThreadableLoader::MainThreadLoaderHolder) {
   visitor->Trace(forwarder_);
   visitor->Trace(main_thread_loader_);
   WorkerThreadLifecycleObserver::Trace(visitor);

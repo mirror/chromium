@@ -87,7 +87,7 @@ class CORE_EXPORT AutoplayUmaHelper : public EventListener,
 
   bool HasSource() const { return !sources_.empty(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class MockAutoplayUmaHelper;

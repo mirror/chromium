@@ -68,7 +68,7 @@ class CORE_EXPORT DOMImplementation final
   static bool IsTextMIMEType(const String&);
   static bool IsJSONMIMEType(const String&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit DOMImplementation(Document&);

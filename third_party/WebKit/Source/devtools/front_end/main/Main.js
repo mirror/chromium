@@ -121,7 +121,6 @@ Main.Main = class {
     Runtime.experiments.register('logManagement', 'Log management', true);
     Runtime.experiments.register('liveSASS', 'Live SASS');
     Runtime.experiments.register('networkGroupingRequests', 'Network request groups support', true);
-    Runtime.experiments.register('networkPersistence', 'Override requests with workspace project');
     Runtime.experiments.register('objectPreviews', 'Object previews', true);
     Runtime.experiments.register('performanceMonitor', 'Performance Monitor', true);
     Runtime.experiments.register('persistence2', 'Persistence 2.0');
@@ -151,15 +150,13 @@ Main.Main = class {
         Runtime.experiments.enableForTest('accessibilityInspection');
       if (testPath.indexOf('changes/') !== -1)
         Runtime.experiments.enableForTest('changesDrawer');
-      if (testPath.indexOf('console-sidebar/') !== -1)
-        Runtime.experiments.enableForTest('logManagement');
       if (testPath.indexOf('sass/') !== -1)
         Runtime.experiments.enableForTest('liveSASS');
     }
 
     Runtime.experiments.setDefaultExperiments([
       'continueToLocationMarkers', 'autoAttachToCrossProcessSubframes', 'objectPreviews', 'persistence2',
-      'networkGroupingRequests', 'timelineColorByProduct', 'accessibilityInspection'
+      'networkGroupingRequests', 'timelineColorByProduct'
     ]);
   }
 
@@ -219,7 +216,6 @@ Main.Main = class {
     new Persistence.FileSystemWorkspaceBinding(Persistence.isolatedFileSystemManager, Workspace.workspace);
     Persistence.persistence =
         new Persistence.Persistence(Workspace.workspace, Bindings.breakpointManager, Persistence.fileSystemMapping);
-    Persistence.networkPersistenceManager = new Persistence.NetworkPersistenceManager(Workspace.workspace);
 
     new Main.ExecutionContextSelector(SDK.targetManager, UI.context);
     Bindings.blackboxManager = new Bindings.BlackboxManager(Bindings.debuggerWorkspaceBinding);

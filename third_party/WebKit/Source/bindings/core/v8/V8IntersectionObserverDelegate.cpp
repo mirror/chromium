@@ -27,7 +27,7 @@ void V8IntersectionObserverDelegate::Deliver(
   callback_->call(&observer, entries, &observer);
 }
 
-void V8IntersectionObserverDelegate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V8IntersectionObserverDelegate) {
   visitor->Trace(callback_);
   IntersectionObserverDelegate::Trace(visitor);
 }

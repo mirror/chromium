@@ -47,7 +47,6 @@
 #include "content/renderer/devtools/devtools_agent.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_blink_platform_impl.h"
-#include "content/renderer/service_worker/controller_service_worker_impl.h"
 #include "content/renderer/service_worker/embedded_worker_devtools_agent.h"
 #include "content/renderer/service_worker/embedded_worker_instance_client_impl.h"
 #include "content/renderer/service_worker/service_worker_fetch_context_impl.h"
@@ -80,7 +79,6 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextProxy.h"
@@ -338,20 +336,6 @@ struct ServiceWorkerContextClient::WorkerContextData {
 
   ~WorkerContextData() {
     DCHECK(thread_checker.CalledOnValidThread());
-
-    AbortPendingEventCallbacks(install_event_callbacks,
-                               false /* has_fetch_handler */);
-    AbortPendingEventCallbacks(activate_event_callbacks);
-    AbortPendingEventCallbacks(background_fetch_abort_event_callbacks);
-    AbortPendingEventCallbacks(background_fetch_click_event_callbacks);
-    AbortPendingEventCallbacks(background_fetch_fail_event_callbacks);
-    AbortPendingEventCallbacks(background_fetched_event_callbacks);
-    AbortPendingEventCallbacks(sync_event_callbacks);
-    AbortPendingEventCallbacks(notification_click_event_callbacks);
-    AbortPendingEventCallbacks(notification_close_event_callbacks);
-    AbortPendingEventCallbacks(push_event_callbacks);
-    AbortPendingEventCallbacks(fetch_event_callbacks);
-    AbortPendingEventCallbacks(message_event_callbacks);
   }
 
   mojo::Binding<mojom::ServiceWorkerEventDispatcher> event_dispatcher_binding;
@@ -448,8 +432,6 @@ struct ServiceWorkerContextClient::WorkerContextData {
   // Maps every install event id with its corresponding
   // mojom::ServiceWorkerInstallEventMethodsAssociatedPt.
   InstallEventMethodsMap install_methods_map;
-
-  std::unique_ptr<ControllerServiceWorkerImpl> controller_impl;
 
   base::ThreadChecker thread_checker;
   base::WeakPtrFactory<ServiceWorkerContextClient> weak_factory;
@@ -619,7 +601,6 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
     const GURL& script_url,
     bool is_script_streaming,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-    mojom::ControllerServiceWorkerRequest controller_request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
     std::unique_ptr<EmbeddedWorkerInstanceClientImpl> embedded_worker_client)
@@ -632,7 +613,6 @@ ServiceWorkerContextClient::ServiceWorkerContextClient(
       io_thread_task_runner_(ChildThreadImpl::current()->GetIOTaskRunner()),
       proxy_(nullptr),
       pending_dispatcher_request_(std::move(dispatcher_request)),
-      pending_controller_request_(std::move(controller_request)),
       embedded_worker_client_(std::move(embedded_worker_client)) {
   instance_host_ =
       mojom::ThreadSafeEmbeddedWorkerInstanceHostAssociatedPtr::Create(
@@ -784,16 +764,9 @@ void ServiceWorkerContextClient::WorkerContextStarted(
             blink::mojom::kInvalidServiceWorkerRegistrationId);
 
   DCHECK(pending_dispatcher_request_.is_pending());
-  DCHECK(pending_controller_request_.is_pending());
   DCHECK(!context_->event_dispatcher_binding.is_bound());
-  DCHECK(!context_->controller_impl);
   context_->event_dispatcher_binding.Bind(
       std::move(pending_dispatcher_request_));
-
-  if (ServiceWorkerUtils::IsServicificationEnabled()) {
-    context_->controller_impl = std::make_unique<ControllerServiceWorkerImpl>(
-        std::move(pending_controller_request_), GetWeakPtr());
-  }
 
   SetRegistrationInServiceWorkerGlobalScope(std::move(registration_info),
                                             version_attrs);
@@ -838,6 +811,20 @@ void ServiceWorkerContextClient::WillDestroyWorkerContext(
 
   blob_registry_.reset();
 
+  AbortPendingEventCallbacks(context_->install_event_callbacks,
+                             false /* has_fetch_handler */);
+  AbortPendingEventCallbacks(context_->activate_event_callbacks);
+  AbortPendingEventCallbacks(context_->background_fetch_abort_event_callbacks);
+  AbortPendingEventCallbacks(context_->background_fetch_click_event_callbacks);
+  AbortPendingEventCallbacks(context_->background_fetch_fail_event_callbacks);
+  AbortPendingEventCallbacks(context_->background_fetched_event_callbacks);
+  AbortPendingEventCallbacks(context_->sync_event_callbacks);
+  AbortPendingEventCallbacks(context_->notification_click_event_callbacks);
+  AbortPendingEventCallbacks(context_->notification_close_event_callbacks);
+  AbortPendingEventCallbacks(context_->push_event_callbacks);
+  AbortPendingEventCallbacks(context_->fetch_event_callbacks);
+  AbortPendingEventCallbacks(context_->message_event_callbacks);
+
   // We have to clear callbacks now, as they need to be freed on the
   // same thread.
   context_.reset();
@@ -873,6 +860,7 @@ void ServiceWorkerContextClient::WorkerContextDestroyed() {
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed,
                      base::Passed(&embedded_worker_client_)));
+  return;
 }
 
 void ServiceWorkerContextClient::CountFeature(uint32_t feature) {
@@ -1399,9 +1387,12 @@ void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
 
   // Register a registration and its version attributes with the dispatcher
   // living on the worker thread.
-  proxy_->SetRegistration(WebServiceWorkerRegistrationImpl::CreateHandle(
+  scoped_refptr<WebServiceWorkerRegistrationImpl> registration(
       dispatcher->GetOrCreateRegistrationForServiceWorkerGlobalScope(
-          std::move(info), attrs, io_thread_task_runner_)));
+          std::move(info), attrs, io_thread_task_runner_));
+
+  proxy_->SetRegistration(
+      WebServiceWorkerRegistrationImpl::CreateHandle(registration));
 }
 
 void ServiceWorkerContextClient::DispatchActivateEvent(
@@ -1526,10 +1517,7 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
     return;
   }
 
-  DCHECK(event->source.service_worker_info.handle_id !=
-             blink::mojom::kInvalidServiceWorkerHandleId &&
-         event->source.service_worker_info.version_id !=
-             blink::mojom::kInvalidServiceWorkerVersionId);
+  DCHECK(event->source.service_worker_info.IsValid());
   std::unique_ptr<ServiceWorkerHandleReference> handle =
       ServiceWorkerHandleReference::Adopt(event->source.service_worker_info,
                                           sender_.get());

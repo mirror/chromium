@@ -56,7 +56,7 @@ LongOrBoolean::LongOrBoolean(const LongOrBoolean&) = default;
 LongOrBoolean::~LongOrBoolean() = default;
 LongOrBoolean& LongOrBoolean::operator=(const LongOrBoolean&) = default;
 
-void LongOrBoolean::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LongOrBoolean) {
 }
 
 void V8LongOrBoolean::ToImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value, LongOrBoolean& impl, UnionTypeConversionMode conversionMode, ExceptionState& exceptionState) {

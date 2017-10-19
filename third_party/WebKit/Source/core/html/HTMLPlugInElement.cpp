@@ -90,7 +90,7 @@ HTMLPlugInElement::~HTMLPlugInElement() {
   DCHECK(!is_delaying_load_event_);
 }
 
-void HTMLPlugInElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLPlugInElement) {
   visitor->Trace(image_loader_);
   visitor->Trace(persisted_plugin_);
   HTMLFrameOwnerElement::Trace(visitor);

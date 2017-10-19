@@ -117,7 +117,7 @@ void SubresourceFilter::ReportLoad(
   }
 }
 
-void SubresourceFilter::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SubresourceFilter) {
   visitor->Trace(execution_context_);
 }
 

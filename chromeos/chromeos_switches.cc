@@ -322,11 +322,9 @@ const char kEnableVideoPlayerChromecastSupport[] =
 // Enables the VoiceInteraction support.
 const char kEnableVoiceInteraction[] = "enable-voice-interaction";
 
-// Enables zip archiver - packer.
-const char kEnableZipArchiverPacker[] = "enable-zip-archiver-packer";
-
-// Enables zip archiver - unpacker.
-const char kEnableZipArchiverUnpacker[] = "enable-zip-archiver-unpacker";
+// Enables zip archiver.
+const char kEnableZipArchiverOnFileManager[] =
+    "enable-zip-archiver-on-file-manager";
 
 // Disables ARC for managed accounts.
 const char kEnterpriseDisableArc[] = "enterprise-disable-arc";

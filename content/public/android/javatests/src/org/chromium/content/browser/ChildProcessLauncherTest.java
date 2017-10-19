@@ -105,7 +105,8 @@ public class ChildProcessLauncherTest {
                 new Callable<ChildConnectionAllocator>() {
                     @Override
                     public ChildConnectionAllocator call() {
-                        Context context = InstrumentationRegistry.getTargetContext();
+                        Context context =
+                                InstrumentationRegistry.getInstrumentation().getTargetContext();
                         return ChildConnectionAllocator.create(context, LauncherThread.getHandler(),
                                 SERVICE_PACKAGE_NAME, SERVICE_NAME_META_DATA_KEY,
                                 SERVICE_COUNT_META_DATA_KEY, false /* bindToCaller */,
@@ -331,7 +332,8 @@ public class ChildProcessLauncherTest {
                         ChildProcessConnection>() {
                     @Override
                     public ChildProcessConnection call() {
-                        Context context = InstrumentationRegistry.getTargetContext();
+                        Context context =
+                                InstrumentationRegistry.getInstrumentation().getTargetContext();
                         return mConnectionAllocator.allocate(context,
                                 new Bundle() /* serviceBundle */, serviceCallbackForwarder);
                     }

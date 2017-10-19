@@ -55,7 +55,7 @@ class CORE_EXPORT WorkletModuleResponsesMap
   // are simply ignored.
   void Dispose();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   class Entry;

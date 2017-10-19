@@ -195,7 +195,7 @@ bool CanvasRenderingContext::WouldTaintOrigin(
   return taint_origin;
 }
 
-void CanvasRenderingContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CanvasRenderingContext) {
   visitor->Trace(host_);
 }
 

@@ -19,8 +19,7 @@
 
 namespace blink {
 
-OffscreenFontSelector::OffscreenFontSelector(ExecutionContext* context)
-    : execution_context_(context) {
+OffscreenFontSelector::OffscreenFontSelector() {
   FontCache::GetFontCache()->AddClient(this);
 }
 
@@ -93,8 +92,7 @@ void OffscreenFontSelector::FontFaceInvalidated() {
   FontCacheInvalidated();
 }
 
-void OffscreenFontSelector::Trace(blink::Visitor* visitor) {
-  visitor->Trace(execution_context_);
+DEFINE_TRACE(OffscreenFontSelector) {
   visitor->Trace(font_face_cache_);
   FontSelector::Trace(visitor);
 }

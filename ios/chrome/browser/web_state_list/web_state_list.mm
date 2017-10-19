@@ -27,11 +27,6 @@ bool IsInsertionFlagSet(int flagset, WebStateList::InsertionFlags flag) {
   return (flagset & flag) == flag;
 }
 
-// Returns whether the given flag is set in a flagset.
-bool IsClosingFlagSet(int flagset, WebStateList::ClosingFlags flag) {
-  return (flagset & flag) == flag;
-}
-
 }  // namespace
 
 // Wrapper around a WebState stored in a WebStateList.
@@ -102,7 +97,7 @@ WebStateList::WebStateList(WebStateListDelegate* delegate)
 }
 
 WebStateList::~WebStateList() {
-  CloseAllWebStates(CLOSE_NO_FLAGS);
+  CloseAllWebStates();
 }
 
 bool WebStateList::ContainsIndex(int index) const {
@@ -267,21 +262,18 @@ std::unique_ptr<web::WebState> WebStateList::DetachWebStateAt(int index) {
   return detached_web_state;
 }
 
-void WebStateList::CloseWebStateAt(int index, int close_flags) {
+void WebStateList::CloseWebStateAt(int index) {
   auto detached_web_state = DetachWebStateAt(index);
 
-  const bool user_action = IsClosingFlagSet(close_flags, CLOSE_USER_ACTION);
-  for (auto& observer : observers_) {
-    observer.WillCloseWebStateAt(this, detached_web_state.get(), index,
-                                 user_action);
-  }
+  for (auto& observer : observers_)
+    observer.WillCloseWebStateAt(this, detached_web_state.get(), index);
 
   detached_web_state.reset();
 }
 
-void WebStateList::CloseAllWebStates(int close_flags) {
+void WebStateList::CloseAllWebStates() {
   while (!empty())
-    CloseWebStateAt(count() - 1, close_flags);
+    CloseWebStateAt(count() - 1);
 }
 
 void WebStateList::ActivateWebStateAt(int index) {

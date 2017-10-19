@@ -51,7 +51,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
 
  public:
   static HTMLVideoElement* Create(Document&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   bool HasPendingActivity() const final;
 

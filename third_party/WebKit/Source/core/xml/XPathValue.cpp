@@ -37,11 +37,11 @@ namespace XPath {
 
 const Value::AdoptTag Value::kAdopt = {};
 
-void ValueData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ValueData) {
   visitor->Trace(node_set_);
 }
 
-void Value::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Value) {
   visitor->Trace(data_);
 }
 

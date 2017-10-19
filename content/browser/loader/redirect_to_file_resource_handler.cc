@@ -34,13 +34,14 @@ namespace {
 // somewhat fragile, however, and depending on it is dangerous.  A more
 // principled approach would require significant refactoring, however, so for
 // the moment we're relying on fragile properties.
-class DependentIOBufferForRedirectToFile : public net::WrappedIOBuffer {
+class DependentIOBuffer : public net::WrappedIOBuffer {
  public:
-  DependentIOBufferForRedirectToFile(net::IOBuffer* backing, char* memory)
-      : net::WrappedIOBuffer(memory), backing_(backing) {}
-
+  DependentIOBuffer(net::IOBuffer* backing, char* memory)
+      : net::WrappedIOBuffer(memory),
+        backing_(backing) {
+  }
  private:
-  ~DependentIOBufferForRedirectToFile() override {}
+  ~DependentIOBuffer() override {}
 
   scoped_refptr<net::IOBuffer> backing_;
 };
@@ -342,9 +343,8 @@ bool RedirectToFileResourceHandler::WriteMore() {
     // Also note that Write may increase the refcount of "wrapped" deep in the
     // bowels of its implementation, the use of scoped_refptr here is not
     // spurious.
-    scoped_refptr<DependentIOBufferForRedirectToFile> wrapped =
-        new DependentIOBufferForRedirectToFile(
-            buf_.get(), buf_->StartOfBuffer() + write_cursor_);
+    scoped_refptr<DependentIOBuffer> wrapped = new DependentIOBuffer(
+        buf_.get(), buf_->StartOfBuffer() + write_cursor_);
     int write_len = buf_->offset() - write_cursor_;
 
     int rv = writer_->Write(wrapped.get(), write_len);

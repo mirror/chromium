@@ -49,11 +49,11 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     isCapabilityAvailable() {
-      const cap = this.getPageOrientationCapability_();
+      var cap = this.getPageOrientationCapability_();
       if (!cap)
         return false;
-      let hasAutoOrPortraitOption = false;
-      let hasLandscapeOption = false;
+      var hasAutoOrPortraitOption = false;
+      var hasLandscapeOption = false;
       cap.option.forEach(function(option) {
         hasAutoOrPortraitOption = hasAutoOrPortraitOption ||
             option.type == 'AUTO' || option.type == 'PORTRAIT';
@@ -70,8 +70,8 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     getDefaultValueInternal() {
-      const cap = this.getPageOrientationCapability_();
-      const defaultOptions = cap.option.filter(function(option) {
+      var cap = this.getPageOrientationCapability_();
+      var defaultOptions = cap.option.filter(function(option) {
         return option.is_default;
       });
       return defaultOptions.length == 0 ? false :
@@ -80,7 +80,7 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     getCapabilityNotAvailableValueInternal() {
-      const doc = this.getDocumentInfoInternal();
+      var doc = this.getDocumentInfoInternal();
       return doc.hasCssMediaStyles ?
           (doc.pageSize.width > doc.pageSize.height) :
           false;
@@ -88,7 +88,7 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     updateValueInternal(value) {
-      const updateMargins = !this.isValueEqual(value);
+      var updateMargins = !this.isValueEqual(value);
       print_preview.ticket_items.TicketItem.prototype.updateValueInternal.call(
           this, value);
       if (updateMargins) {
@@ -104,7 +104,7 @@ cr.define('print_preview.ticket_items', function() {
      * @param {string} value Option to check.
      */
     hasOption(value) {
-      const cap = this.getPageOrientationCapability_();
+      var cap = this.getPageOrientationCapability_();
       if (!cap)
         return false;
       return cap.option.some(function(option) {
@@ -117,7 +117,7 @@ cr.define('print_preview.ticket_items', function() {
      * @private
      */
     getPageOrientationCapability_() {
-      const dest = this.getSelectedDestInternal();
+      var dest = this.getSelectedDestInternal();
       return (dest && dest.capabilities && dest.capabilities.printer &&
               dest.capabilities.printer.page_orientation) ||
           null;

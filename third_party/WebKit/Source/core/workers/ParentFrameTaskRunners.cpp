@@ -43,7 +43,7 @@ RefPtr<WebTaskRunner> ParentFrameTaskRunners::Get(TaskType type) {
   return task_runners_.at(type);
 }
 
-void ParentFrameTaskRunners::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ParentFrameTaskRunners) {
   ContextLifecycleObserver::Trace(visitor);
 }
 

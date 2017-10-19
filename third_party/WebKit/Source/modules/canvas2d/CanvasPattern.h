@@ -55,7 +55,7 @@ class CanvasPattern final : public GarbageCollectedFinalized<CanvasPattern>,
 
   bool OriginClean() const { return origin_clean_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
   void setTransform(SVGMatrixTearOff*);
 

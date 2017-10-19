@@ -52,7 +52,8 @@ inline SVGImageElement::SVGImageElement(Document& document)
       preserve_aspect_ratio_(SVGAnimatedPreserveAspectRatio::Create(
           this,
           SVGNames::preserveAspectRatioAttr)),
-      image_loader_(SVGImageLoader::Create(this)) {
+      image_loader_(SVGImageLoader::Create(this)),
+      decoding_mode_(Image::kUnspecifiedDecode) {
   AddToPropertyMap(x_);
   AddToPropertyMap(y_);
   AddToPropertyMap(width_);
@@ -62,7 +63,7 @@ inline SVGImageElement::SVGImageElement(Document& document)
 
 DEFINE_NODE_FACTORY(SVGImageElement)
 
-void SVGImageElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGImageElement) {
   visitor->Trace(x_);
   visitor->Trace(y_);
   visitor->Trace(width_);

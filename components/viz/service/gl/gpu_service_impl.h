@@ -50,12 +50,11 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
   GpuServiceImpl(const gpu::GPUInfo& gpu_info,
                  std::unique_ptr<gpu::GpuWatchdogThread> watchdog,
                  scoped_refptr<base::SingleThreadTaskRunner> io_runner,
-                 const gpu::GpuFeatureInfo& gpu_feature_info,
-                 const gpu::GpuPreferences& gpu_preferences);
+                 const gpu::GpuFeatureInfo& gpu_feature_info);
 
   ~GpuServiceImpl() override;
 
-  void UpdateGPUInfo();
+  void UpdateGPUInfoFromPreferences(const gpu::GpuPreferences& preferences);
 
   void InitializeWithHost(mojom::GpuHostPtr gpu_host,
                           gpu::GpuProcessActivityFlags activity_flags,

@@ -10,7 +10,6 @@
             "AuthRetry": "interact",
             "ClientCertType": "None",
             "CompLZO": "true",
-            "ExtraHosts": [ "www.abc.com", "1.2.3.4" ],
             "KeyDirection": "1",
             "OTP": "some OTP",
             "Password": "some password",

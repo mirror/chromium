@@ -925,12 +925,8 @@ bool PaintLayerCompositor::CanBeComposited(const PaintLayer* layer) const {
 // z-order hierarchy.
 bool PaintLayerCompositor::ClipsCompositingDescendants(
     const PaintLayer* layer) const {
-  if (!layer->HasCompositingDescendant())
-    return false;
-  if (!layer->GetLayoutObject().IsBox())
-    return false;
-  const LayoutBox& box = ToLayoutBox(layer->GetLayoutObject());
-  return box.ShouldClipOverflow() || box.HasClip();
+  return layer->HasCompositingDescendant() &&
+         layer->GetLayoutObject().HasClipRelatedProperty();
 }
 
 // If an element has composited negative z-index children, those children paint
@@ -994,9 +990,9 @@ void PaintLayerCompositor::PaintContents(const GraphicsLayer* graphics_layer,
   // Replay the painted scrollbar content with the GraphicsLayer backing as the
   // DisplayItemClient in order for the resulting DrawingDisplayItem to produce
   // the correct visualRect (i.e., the bounds of the involved GraphicsLayer).
-  DrawingRecorder recorder(context, *graphics_layer,
-                           DisplayItem::kScrollbarCompositedScrollbar,
-                           layer_bounds);
+  DrawingRecorder drawing_recorder(context, *graphics_layer,
+                                   DisplayItem::kScrollbarCompositedScrollbar,
+                                   layer_bounds);
   context.Canvas()->drawPicture(builder.EndRecording());
 }
 

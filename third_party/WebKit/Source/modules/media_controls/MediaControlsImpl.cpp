@@ -216,7 +216,7 @@ class MediaControlsImpl::MediaControlsResizeObserverDelegate final
     controls_->NotifyElementSizeChanged(entries[0]->contentRect());
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(controls_);
     ResizeObserver::Delegate::Trace(visitor);
   }
@@ -262,7 +262,7 @@ class MediaControlsImpl::MediaElementMutationCallback
 
   void Disconnect() { observer_->disconnect(); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(controls_);
     visitor->Trace(observer_);
     MutationObserver::Delegate::Trace(visitor);
@@ -1386,7 +1386,7 @@ void MediaControlsImpl::MaybeRecordOverflowTimeToAction() {
       MediaControlOverflowMenuListElement::kTimeToAction);
 }
 
-void MediaControlsImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(element_mutation_callback_);
   visitor->Trace(resize_observer_);
   visitor->Trace(panel_);

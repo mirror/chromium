@@ -822,7 +822,7 @@ XMLDocumentParser::~XMLDocumentParser() {
   DCHECK(!pending_script_);
 }
 
-void XMLDocumentParser::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XMLDocumentParser) {
   visitor->Trace(current_node_);
   visitor->Trace(current_node_stack_);
   visitor->Trace(leaf_text_node_);

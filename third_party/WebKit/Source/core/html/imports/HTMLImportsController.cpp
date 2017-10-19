@@ -152,7 +152,7 @@ HTMLImportLoader* HTMLImportsController::LoaderFor(
   return nullptr;
 }
 
-void HTMLImportsController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLImportsController) {
   visitor->Trace(root_);
   visitor->Trace(loaders_);
 }

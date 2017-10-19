@@ -44,7 +44,7 @@ SVGGraphicsElement::SVGGraphicsElement(const QualifiedName& tag_name,
 
 SVGGraphicsElement::~SVGGraphicsElement() {}
 
-void SVGGraphicsElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGGraphicsElement) {
   visitor->Trace(transform_);
   SVGElement::Trace(visitor);
   SVGTests::Trace(visitor);

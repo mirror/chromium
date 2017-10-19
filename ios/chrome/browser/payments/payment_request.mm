@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/autofill/core/browser/autofill_country.h"
 #include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
@@ -95,7 +96,8 @@ PaymentRequest::PaymentRequest(
           GetAddressInputStorage()),
       address_normalization_manager_(
           &address_normalizer_,
-          GetApplicationContext()->GetApplicationLocale()),
+          autofill::AutofillCountry::CountryCodeForLocale(
+              GetApplicationContext()->GetApplicationLocale())),
       selected_shipping_profile_(nullptr),
       selected_contact_profile_(nullptr),
       selected_payment_method_(nullptr),

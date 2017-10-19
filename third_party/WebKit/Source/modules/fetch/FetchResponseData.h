@@ -116,7 +116,7 @@ class MODULES_EXPORT FetchResponseData final
   void PopulateWebServiceWorkerResponse(
       WebServiceWorkerResponse& /* response */);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   FetchResponseData(Type, unsigned short, AtomicString);

@@ -30,7 +30,7 @@ class TestModuleTreeClient final : public ModuleTreeClient {
  public:
   TestModuleTreeClient() = default;
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(module_script_);
     ModuleTreeClient::Trace(visitor);
   }
@@ -56,7 +56,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
       : script_state_(std::move(script_state)) {}
   ~ModuleTreeLinkerTestModulator() override {}
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   enum class ResolveResult { kFailure, kSuccess };
 
@@ -187,7 +187,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
   bool instantiate_should_fail_ = false;
 };
 
-void ModuleTreeLinkerTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleTreeLinkerTestModulator) {
   visitor->Trace(pending_clients_);
   visitor->Trace(module_map_);
   DummyModulator::Trace(visitor);

@@ -53,7 +53,7 @@ struct HTMLConstructionSiteTask {
   explicit HTMLConstructionSiteTask(Operation op)
       : operation(op), self_closing(false) {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(parent);
     visitor->Trace(next_child);
     visitor->Trace(child);
@@ -112,7 +112,7 @@ class HTMLConstructionSite final {
                        Document&,
                        ParserContentPolicy);
   ~HTMLConstructionSite();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void InitFragmentParsing(DocumentFragment*, Element* context_element);
 
@@ -323,7 +323,7 @@ class HTMLConstructionSite final {
       return string_builder.IsEmpty();
     }
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
 
     Member<ContainerNode> parent;
     Member<Node> next_child;

@@ -295,6 +295,7 @@ void EmptyCallback(const gpu::SyncToken& sync_token) {}
 
 TEST(VideoLayerImplTest, SoftwareVideoFrameGeneratesYUVQuad) {
   gfx::Size layer_size(1000, 1000);
+  gfx::Size viewport_size(1000, 1000);
 
   LayerTestCommon::LayerImplTest impl;
   DebugSetImplThreadAndMainThreadBlocked(impl.task_runner_provider());
@@ -332,6 +333,7 @@ TEST(VideoLayerImplTest, SoftwareVideoFrameGeneratesYUVQuad) {
 
 TEST(VideoLayerImplTest, HibitSoftwareVideoFrameGeneratesYUVQuad) {
   gfx::Size layer_size(1000, 1000);
+  gfx::Size viewport_size(1000, 1000);
 
   LayerTestCommon::LayerImplTest impl;
   DebugSetImplThreadAndMainThreadBlocked(impl.task_runner_provider());
@@ -367,6 +369,7 @@ TEST(VideoLayerImplTest, HibitSoftwareVideoFrameGeneratesYUVQuad) {
 
 TEST(VideoLayerImplTest, NativeYUVFrameGeneratesYUVQuad) {
   gfx::Size layer_size(1000, 1000);
+  gfx::Size viewport_size(1000, 1000);
 
   LayerTestCommon::LayerImplTest impl;
   DebugSetImplThreadAndMainThreadBlocked(impl.task_runner_provider());
@@ -413,6 +416,7 @@ TEST(VideoLayerImplTest, NativeYUVFrameGeneratesYUVQuad) {
 
 TEST(VideoLayerImplTest, NativeARGBFrameGeneratesTextureQuad) {
   gfx::Size layer_size(1000, 1000);
+  gfx::Size viewport_size(1000, 1000);
 
   LayerTestCommon::LayerImplTest impl;
   DebugSetImplThreadAndMainThreadBlocked(impl.task_runner_provider());

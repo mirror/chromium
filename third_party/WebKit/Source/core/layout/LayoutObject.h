@@ -228,7 +228,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
                             : LayoutRect();
   }
   void ClearPartialInvalidationRect() const final {
-    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
     return GetMutableForPainting().SetPartialInvalidationRect(LayoutRect());
   }
   String DebugName() const final;
@@ -2058,7 +2058,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     return BackgroundChangedSinceLastPaintInvalidation() ||
            ShouldCheckForPaintInvalidation() || ShouldInvalidateSelection() ||
            NeedsPaintOffsetAndVisualRectUpdate() ||
-           (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+           (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
             rare_paint_data_ &&
             !rare_paint_data_->PartialInvalidationRect().IsEmpty());
   }

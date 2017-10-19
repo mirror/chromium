@@ -64,7 +64,7 @@ class CORE_EXPORT DocumentTimeline : public AnimationTimeline {
     virtual void WakeAfter(double duration) = 0;
     virtual void ServiceOnNextFrame() = 0;
     virtual ~PlatformTiming() {}
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
   static DocumentTimeline* Create(Document*,
@@ -117,7 +117,7 @@ class CORE_EXPORT DocumentTimeline : public AnimationTimeline {
   void Wake();
   void ResetForTesting();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   DocumentTimeline(Document*,
@@ -160,7 +160,7 @@ class CORE_EXPORT DocumentTimeline : public AnimationTimeline {
 
     void TimerFired(TimerBase*) { timeline_->Wake(); }
 
-    virtual void Trace(blink::Visitor*);
+    DECLARE_VIRTUAL_TRACE();
 
    private:
     Member<DocumentTimeline> timeline_;

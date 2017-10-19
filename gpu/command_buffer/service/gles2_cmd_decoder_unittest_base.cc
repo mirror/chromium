@@ -246,9 +246,8 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
   mock_decoder_.reset(
       new MockGLES2Decoder(command_buffer_service_.get(), &outputter_));
 
-  EXPECT_EQ(group_->Initialize(mock_decoder_.get(), init.context_type,
-                               DisallowedFeatures()),
-            gpu::ContextResult::kSuccess);
+  EXPECT_TRUE(group_->Initialize(mock_decoder_.get(), init.context_type,
+                                 DisallowedFeatures()));
 
   if (init.context_type == CONTEXT_TYPE_WEBGL2 ||
       init.context_type == CONTEXT_TYPE_OPENGLES3) {
@@ -491,9 +490,8 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
                                       &outputter_, group_.get()));
   decoder_->SetIgnoreCachedStateForTest(ignore_cached_state_for_test_);
   decoder_->GetLogger()->set_log_synthesized_gl_errors(false);
-  ASSERT_EQ(decoder_->Initialize(surface_, context_, false,
-                                 DisallowedFeatures(), attribs),
-            gpu::ContextResult::kSuccess);
+  ASSERT_TRUE(decoder_->Initialize(surface_, context_, false,
+                                   DisallowedFeatures(), attribs));
 
   EXPECT_CALL(*context_, MakeCurrent(surface_.get())).WillOnce(Return(true));
   if (context_->WasAllocatedUsingRobustnessExtension()) {
@@ -2275,14 +2273,12 @@ void GLES2DecoderPassthroughTestBase::SetUp() {
 
   decoder_.reset(new GLES2DecoderPassthroughImpl(
       this, command_buffer_service_.get(), &outputter_, group_.get()));
-  ASSERT_EQ(
-      group_->Initialize(decoder_.get(), context_creation_attribs_.context_type,
-                         DisallowedFeatures()),
-      gpu::ContextResult::kSuccess);
-  ASSERT_EQ(
-      decoder_->Initialize(surface_, context_, false, DisallowedFeatures(),
-                           context_creation_attribs_),
-      gpu::ContextResult::kSuccess);
+  ASSERT_TRUE(group_->Initialize(decoder_.get(),
+                                 context_creation_attribs_.context_type,
+                                 DisallowedFeatures()));
+  ASSERT_TRUE(decoder_->Initialize(surface_, context_, false,
+                                   DisallowedFeatures(),
+                                   context_creation_attribs_));
 
   scoped_refptr<gpu::Buffer> buffer =
       command_buffer_service_->CreateTransferBufferHelper(kSharedBufferSize,

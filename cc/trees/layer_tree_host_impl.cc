@@ -2389,7 +2389,8 @@ void LayerTreeHostImpl::CreateTileManagerResources() {
         layer_tree_frame_sink_->worker_context_provider(),
         viz::ResourceFormatToClosestSkColorType(
             settings_.preferred_tile_format),
-        settings_.decoded_image_working_set_budget_bytes);
+        settings_.decoded_image_working_set_budget_bytes,
+        settings_.decoded_image_cache_budget_bytes);
   } else {
     image_decode_cache_ = std::make_unique<SoftwareImageDecodeCache>(
         viz::ResourceFormatToClosestSkColorType(
@@ -3564,13 +3565,6 @@ bool LayerTreeHostImpl::CanConsumeDelta(const ScrollNode& scroll_node,
     return true;
 
   return false;
-}
-
-void LayerTreeHostImpl::UpdateImageDecodingHints(
-    base::flat_map<PaintImage::Id, PaintImage::DecodingMode>
-        decoding_mode_map) {
-  tile_manager_.checker_image_tracker().UpdateImageDecodingHints(
-      std::move(decoding_mode_map));
 }
 
 InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(

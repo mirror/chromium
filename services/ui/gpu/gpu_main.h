@@ -80,6 +80,7 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
   // mojom::GpuMain implementation:
   void CreateGpuService(viz::mojom::GpuServiceRequest request,
                         viz::mojom::GpuHostPtr gpu_host,
+                        const gpu::GpuPreferences& preferences,
                         mojo::ScopedSharedBufferHandle activity_flags) override;
   void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,

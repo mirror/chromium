@@ -144,14 +144,12 @@ WebFaviconDriver::~WebFaviconDriver() {
 }
 
 void WebFaviconDriver::DidStartNavigation(
-    web::WebState* web_state,
     web::NavigationContext* navigation_context) {
   SetFaviconOutOfDateForPage(navigation_context->GetUrl(),
                              /*force_reload=*/false);
 }
 
 void WebFaviconDriver::DidFinishNavigation(
-    web::WebState* web_state,
     web::NavigationContext* navigation_context) {
   if (navigation_context->GetError())
     return;
@@ -170,7 +168,6 @@ void WebFaviconDriver::DidFinishNavigation(
 }
 
 void WebFaviconDriver::FaviconUrlUpdated(
-    web::WebState* web_state,
     const std::vector<web::FaviconURL>& candidates) {
   DCHECK(!candidates.empty());
   candidates_ = FaviconURLsFromWebFaviconURLs(candidates);

@@ -57,7 +57,7 @@ class PasswordTabHelper : public web::WebStateObserver,
                     id<PasswordsUiDelegate> passwords_ui_delegate);
 
   // web::WebStateObserver implementation.
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   // The Objective-C password controller instance.
   __strong PasswordController* controller_;

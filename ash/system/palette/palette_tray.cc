@@ -503,8 +503,7 @@ void PaletteTray::ShowBubble(bool show_by_click) {
     bubble_view->AddChildView(view.view);
 
   // Show the bubble.
-  bubble_ = std::make_unique<TrayBubbleWrapper>(this, bubble_view,
-                                                false /* is_persistent */);
+  bubble_ = std::make_unique<TrayBubbleWrapper>(this, bubble_view);
   SetIsActive(true);
 }
 

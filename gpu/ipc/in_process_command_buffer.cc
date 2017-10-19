@@ -246,7 +246,7 @@ bool InProcessCommandBuffer::MakeCurrent() {
   return true;
 }
 
-gpu::ContextResult InProcessCommandBuffer::Initialize(
+bool InProcessCommandBuffer::Initialize(
     scoped_refptr<gl::GLSurface> surface,
     bool is_offscreen,
     SurfaceHandle window,
@@ -276,27 +276,27 @@ gpu::ContextResult InProcessCommandBuffer::Initialize(
   InitializeOnGpuThreadParams params(is_offscreen, window, attribs,
                                      &capabilities, share_group, image_factory);
 
-  base::Callback<gpu::ContextResult(void)> init_task =
+  base::Callback<bool(void)> init_task =
       base::Bind(&InProcessCommandBuffer::InitializeOnGpuThread,
                  base::Unretained(this), params);
 
   base::WaitableEvent completion(
       base::WaitableEvent::ResetPolicy::MANUAL,
       base::WaitableEvent::InitialState::NOT_SIGNALED);
-  gpu::ContextResult result = gpu::ContextResult::kSuccess;
-  QueueTask(true, base::Bind(&RunTaskWithResult<gpu::ContextResult>, init_task,
-                             &result, &completion));
+  bool result = false;
+  QueueTask(true, base::Bind(&RunTaskWithResult<bool>, init_task, &result,
+                             &completion));
   completion.Wait();
 
   gpu_memory_buffer_manager_ = gpu_memory_buffer_manager;
 
-  if (result == gpu::ContextResult::kSuccess)
+  if (result)
     capabilities_ = capabilities;
 
   return result;
 }
 
-gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
+bool InProcessCommandBuffer::InitializeOnGpuThread(
     const InitializeOnGpuThreadParams& params) {
   CheckSequencedThread();
   gpu_thread_weak_ptr_ = gpu_thread_weak_ptr_factory_.GetWeakPtr();
@@ -309,7 +309,8 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
   bool bind_generates_resource = false;
   gpu::GpuDriverBugWorkarounds workarounds(
       service_->gpu_feature_info().enabled_gpu_driver_bug_workarounds);
-  auto feature_info = base::MakeRefCounted<gles2::FeatureInfo>(workarounds);
+  scoped_refptr<gles2::FeatureInfo> feature_info =
+      new gles2::FeatureInfo(workarounds);
 
   context_group_ =
       params.context_group
@@ -330,7 +331,7 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
                                              service_->outputter(),
                                              context_group_.get()));
 
-  if (!surface_) {
+  if (!surface_.get()) {
     if (params.is_offscreen) {
       surface_ = gl::init::CreateOffscreenGLSurface(gfx::Size());
     } else {
@@ -340,15 +341,15 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
       if (!surface_ || !surface_->Initialize(gl::GLSurfaceFormat())) {
         surface_ = nullptr;
         DLOG(ERROR) << "Failed to create surface.";
-        return gpu::ContextResult::kFatalFailure;
+        return false;
       }
     }
   }
 
   if (!surface_.get()) {
-    DLOG(ERROR) << "Could not create GLSurface.";
+    LOG(ERROR) << "Could not create GLSurface.";
     DestroyOnGpuThread();
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
   sync_point_order_data_ =
@@ -402,14 +403,13 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
   if (!context_.get()) {
     LOG(ERROR) << "Could not create GLContext.";
     DestroyOnGpuThread();
-    return gpu::ContextResult::kFatalFailure;
+    return false;
   }
 
   if (!context_->MakeCurrent(surface_.get())) {
     LOG(ERROR) << "Could not make context current.";
     DestroyOnGpuThread();
-    // The caller should retry making a context, but this one won't work.
-    return gpu::ContextResult::kTransientFailure;
+    return false;
   }
 
   if (!decoder_->GetContextGroup()->has_program_cache() &&
@@ -422,18 +422,17 @@ gpu::ContextResult InProcessCommandBuffer::InitializeOnGpuThread(
 
   gles2::DisallowedFeatures disallowed_features;
   disallowed_features.gpu_memory_manager = true;
-  auto result = decoder_->Initialize(surface_, context_, params.is_offscreen,
-                                     disallowed_features, params.attribs);
-  if (result != gpu::ContextResult::kSuccess) {
+  if (!decoder_->Initialize(surface_, context_, params.is_offscreen,
+                            disallowed_features, params.attribs)) {
     LOG(ERROR) << "Could not initialize decoder.";
     DestroyOnGpuThread();
-    return result;
+    return false;
   }
   *params.capabilities = decoder_->GetCapabilities();
 
   image_factory_ = params.image_factory;
 
-  return gpu::ContextResult::kSuccess;
+  return true;
 }
 
 void InProcessCommandBuffer::Destroy() {

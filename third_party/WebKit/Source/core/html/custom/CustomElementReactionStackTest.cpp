@@ -122,7 +122,7 @@ class EnqueueToStack : public Command {
                  CustomElementReaction* reaction)
       : stack_(stack), element_(element), reaction_(reaction) {}
   ~EnqueueToStack() override = default;
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     Command::Trace(visitor);
     visitor->Trace(stack_);
     visitor->Trace(element_);

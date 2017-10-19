@@ -18,7 +18,7 @@ class AbsoluteOrientationSensor final : public OrientationSensor {
                                            ExceptionState&);
   static AbsoluteOrientationSensor* Create(ExecutionContext*, ExceptionState&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   AbsoluteOrientationSensor(ExecutionContext*,

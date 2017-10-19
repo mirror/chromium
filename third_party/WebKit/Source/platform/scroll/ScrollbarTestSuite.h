@@ -110,7 +110,7 @@ class MockScrollableArea : public GarbageCollectedFinalized<MockScrollableArea>,
   using ScrollableArea::VerticalScrollbarNeedsPaintInvalidation;
   using ScrollableArea::ClearNeedsPaintInvalidationForScrollControls;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(chrome_client_);
     ScrollableArea::Trace(visitor);
   }

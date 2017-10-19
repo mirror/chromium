@@ -169,7 +169,7 @@ void PointerLockController::EnqueueEvent(const AtomicString& type,
     document->domWindow()->EnqueueDocumentEvent(Event::Create(type));
 }
 
-void PointerLockController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PointerLockController) {
   visitor->Trace(page_);
   visitor->Trace(element_);
   visitor->Trace(document_of_removed_element_while_waiting_for_unlock_);

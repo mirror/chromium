@@ -160,14 +160,14 @@ HRESULT CreateGoogleUpdate3WebClass(
     bool system_level_install,
     bool install_update_if_possible,
     gfx::AcceleratedWidget elevation_window,
-    Microsoft::WRL::ComPtr<IGoogleUpdate3Web>* google_update) {
+    base::win::ScopedComPtr<IGoogleUpdate3Web>* google_update) {
   if (g_google_update_factory)
     return g_google_update_factory->Run(google_update);
 
   const CLSID& google_update_clsid = system_level_install ?
       CLSID_GoogleUpdate3WebMachineClass :
       CLSID_GoogleUpdate3WebUserClass;
-  Microsoft::WRL::ComPtr<IClassFactory> class_factory;
+  base::win::ScopedComPtr<IClassFactory> class_factory;
   HRESULT hresult = S_OK;
 
   // For a user-level install, update checks and updates can both be done by a
@@ -253,7 +253,7 @@ class UpdateCheckDriver {
   // Returns true if |current_state| and |state_value| can be obtained from the
   // ongoing update check. Otherwise, populates |hresult| with the reason they
   // could not be obtained.
-  bool GetCurrentState(Microsoft::WRL::ComPtr<ICurrentState>* current_state,
+  bool GetCurrentState(base::win::ScopedComPtr<ICurrentState>* current_state,
                        CurrentState* state_value,
                        HRESULT* hresult) const;
 
@@ -268,7 +268,7 @@ class UpdateCheckDriver {
   // chrome/installer/util/util_constants.h); otherwise, it will be -1.
   // |error_string| will be populated with a completion message if one is
   // provided by Google Update.
-  bool IsErrorState(const Microsoft::WRL::ComPtr<ICurrentState>& current_state,
+  bool IsErrorState(const base::win::ScopedComPtr<ICurrentState>& current_state,
                     CurrentState state_value,
                     GoogleUpdateErrorCode* error_code,
                     HRESULT* hresult,
@@ -282,7 +282,7 @@ class UpdateCheckDriver {
   // (in case an update is being performed). For the UPGRADE_IS_AVAILABLE case,
   // |new_version| will be populated with the available version, if provided by
   // Google Update.
-  bool IsFinalState(const Microsoft::WRL::ComPtr<ICurrentState>& current_state,
+  bool IsFinalState(const base::win::ScopedComPtr<ICurrentState>& current_state,
                     CurrentState state_value,
                     GoogleUpdateUpgradeStatus* upgrade_status,
                     base::string16* new_version) const;
@@ -294,7 +294,7 @@ class UpdateCheckDriver {
   // between 0 and 100 according to how far Google Update has progressed in the
   // download and install process.
   bool IsIntermediateState(
-      const Microsoft::WRL::ComPtr<ICurrentState>& current_state,
+      const base::win::ScopedComPtr<ICurrentState>& current_state,
       CurrentState state_value,
       base::string16* new_version,
       int* progress) const;
@@ -336,13 +336,13 @@ class UpdateCheckDriver {
   bool system_level_install_;
 
   // The on-demand updater that is doing the work.
-  Microsoft::WRL::ComPtr<IGoogleUpdate3Web> google_update_;
+  base::win::ScopedComPtr<IGoogleUpdate3Web> google_update_;
 
   // An app bundle containing the application being updated.
-  Microsoft::WRL::ComPtr<IAppBundleWeb> app_bundle_;
+  base::win::ScopedComPtr<IAppBundleWeb> app_bundle_;
 
   // The application being updated (Chrome, Chrome Binaries, or Chrome SxS).
-  Microsoft::WRL::ComPtr<IAppWeb> app_;
+  base::win::ScopedComPtr<IAppWeb> app_;
 
   // The progress value reported most recently to the caller.
   int last_reported_progress_;
@@ -518,8 +518,8 @@ HRESULT UpdateCheckDriver::BeginUpdateCheckInternal(
 
   // Create an app bundle.
   if (!app_bundle_) {
-    Microsoft::WRL::ComPtr<IAppBundleWeb> app_bundle;
-    Microsoft::WRL::ComPtr<IDispatch> dispatch;
+    base::win::ScopedComPtr<IAppBundleWeb> app_bundle;
+    base::win::ScopedComPtr<IDispatch> dispatch;
     hresult = google_update_->createAppBundleWeb(dispatch.GetAddressOf());
     if (FAILED(hresult))
       return hresult;
@@ -556,7 +556,7 @@ HRESULT UpdateCheckDriver::BeginUpdateCheckInternal(
     DCHECK(app_guid);
     DCHECK(*app_guid);
 
-    Microsoft::WRL::ComPtr<IDispatch> dispatch;
+    base::win::ScopedComPtr<IDispatch> dispatch;
     // It is common for this call to fail with APP_USING_EXTERNAL_UPDATER if
     // an auto update is in progress.
     hresult = app_bundle_->createInstalledApp(base::win::ScopedBstr(app_guid));
@@ -564,12 +564,12 @@ HRESULT UpdateCheckDriver::BeginUpdateCheckInternal(
       return hresult;
     // Move the IAppBundleWeb reference into a local now so that failures from
     // this point onward result in it being released.
-    Microsoft::WRL::ComPtr<IAppBundleWeb> app_bundle;
+    base::win::ScopedComPtr<IAppBundleWeb> app_bundle;
     app_bundle.Swap(app_bundle_);
     hresult = app_bundle->get_appWeb(0, dispatch.GetAddressOf());
     if (FAILED(hresult))
       return hresult;
-    Microsoft::WRL::ComPtr<IAppWeb> app;
+    base::win::ScopedComPtr<IAppWeb> app;
     hresult = dispatch.CopyTo(app.GetAddressOf());
     if (FAILED(hresult))
       return hresult;
@@ -585,10 +585,10 @@ HRESULT UpdateCheckDriver::BeginUpdateCheckInternal(
 }
 
 bool UpdateCheckDriver::GetCurrentState(
-    Microsoft::WRL::ComPtr<ICurrentState>* current_state,
+    base::win::ScopedComPtr<ICurrentState>* current_state,
     CurrentState* state_value,
     HRESULT* hresult) const {
-  Microsoft::WRL::ComPtr<IDispatch> dispatch;
+  base::win::ScopedComPtr<IDispatch> dispatch;
   *hresult = app_->get_currentState(dispatch.GetAddressOf());
   if (FAILED(*hresult))
     return false;
@@ -605,7 +605,7 @@ bool UpdateCheckDriver::GetCurrentState(
 }
 
 bool UpdateCheckDriver::IsErrorState(
-    const Microsoft::WRL::ComPtr<ICurrentState>& current_state,
+    const base::win::ScopedComPtr<ICurrentState>& current_state,
     CurrentState state_value,
     GoogleUpdateErrorCode* error_code,
     HRESULT* hresult,
@@ -663,7 +663,7 @@ bool UpdateCheckDriver::IsErrorState(
 }
 
 bool UpdateCheckDriver::IsFinalState(
-    const Microsoft::WRL::ComPtr<ICurrentState>& current_state,
+    const base::win::ScopedComPtr<ICurrentState>& current_state,
     CurrentState state_value,
     GoogleUpdateUpgradeStatus* upgrade_status,
     base::string16* new_version) const {
@@ -687,7 +687,7 @@ bool UpdateCheckDriver::IsFinalState(
 }
 
 bool UpdateCheckDriver::IsIntermediateState(
-    const Microsoft::WRL::ComPtr<ICurrentState>& current_state,
+    const base::win::ScopedComPtr<ICurrentState>& current_state,
     CurrentState state_value,
     base::string16* new_version,
     int* progress) const {
@@ -762,7 +762,7 @@ bool UpdateCheckDriver::IsIntermediateState(
 }
 
 void UpdateCheckDriver::PollGoogleUpdate() {
-  Microsoft::WRL::ComPtr<ICurrentState> state;
+  base::win::ScopedComPtr<ICurrentState> state;
   CurrentState state_value = STATE_INIT;
   HRESULT hresult = S_OK;
   GoogleUpdateErrorCode error_code = GOOGLE_UPDATE_NO_ERROR;

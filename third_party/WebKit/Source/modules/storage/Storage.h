@@ -74,7 +74,7 @@ class Storage final : public GarbageCollected<Storage>,
   void NamedPropertyEnumerator(Vector<String>&, ExceptionState&);
   bool NamedPropertyQuery(const AtomicString&, ExceptionState&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   Storage(LocalFrame*, StorageArea*);

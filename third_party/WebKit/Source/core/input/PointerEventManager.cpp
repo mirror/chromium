@@ -89,7 +89,7 @@ void PointerEventManager::Clear() {
   dispatching_pointer_id_ = 0;
 }
 
-void PointerEventManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PointerEventManager) {
   visitor->Trace(frame_);
   visitor->Trace(node_under_pointer_);
   visitor->Trace(pointer_capture_target_);

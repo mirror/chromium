@@ -14,7 +14,8 @@
 #include "components/prefs/pref_store.h"
 
 PrefRegistry::PrefRegistry()
-    : defaults_(base::MakeRefCounted<DefaultPrefStore>()) {}
+    : defaults_(new DefaultPrefStore()) {
+}
 
 PrefRegistry::~PrefRegistry() {
 }
@@ -22,7 +23,9 @@ PrefRegistry::~PrefRegistry() {
 uint32_t PrefRegistry::GetRegistrationFlags(
     const std::string& pref_name) const {
   const auto& it = registration_flags_.find(pref_name);
-  return it != registration_flags_.end() ? it->second : NO_REGISTRATION_FLAGS;
+  if (it == registration_flags_.end())
+    return NO_REGISTRATION_FLAGS;
+  return it->second;
 }
 
 scoped_refptr<PrefStore> PrefRegistry::defaults() {
@@ -38,15 +41,15 @@ PrefRegistry::const_iterator PrefRegistry::end() const {
 }
 
 void PrefRegistry::SetDefaultPrefValue(const std::string& pref_name,
-                                       base::Value value) {
-  const base::Value* current_value = nullptr;
+                                       base::Value* value) {
+  DCHECK(value);
+  const base::Value* current_value = NULL;
   DCHECK(defaults_->GetValue(pref_name, &current_value))
       << "Setting default for unregistered pref: " << pref_name;
-  DCHECK(value.IsType(current_value->type()))
+  DCHECK(value->IsType(current_value->type()))
       << "Wrong type for new default: " << pref_name;
 
-  defaults_->ReplaceDefaultValue(
-      pref_name, std::make_unique<base::Value>(std::move(value)));
+  defaults_->ReplaceDefaultValue(pref_name, base::WrapUnique(value));
 }
 
 void PrefRegistry::SetDefaultForeignPrefValue(

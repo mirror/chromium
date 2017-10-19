@@ -71,7 +71,7 @@ class FrontendMenuProvider final : public ContextMenuProvider {
     DCHECK(!devtools_host_);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(devtools_host_);
     ContextMenuProvider::Trace(visitor);
   }
@@ -119,7 +119,7 @@ DevToolsHost::~DevToolsHost() {
   DCHECK(!client_);
 }
 
-void DevToolsHost::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DevToolsHost) {
   visitor->Trace(frontend_frame_);
   visitor->Trace(menu_provider_);
 }

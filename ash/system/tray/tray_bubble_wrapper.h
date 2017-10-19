@@ -8,7 +8,6 @@
 #include "ash/ash_export.h"
 #include "base/macros.h"
 #include "ui/views/widget/widget_observer.h"
-#include "ui/wm/public/activation_change_observer.h"
 
 namespace views {
 class TrayBubbleView;
@@ -19,23 +18,16 @@ class TrayBackgroundView;
 
 // Creates and manages the Widget and EventFilter components of a bubble.
 
-class ASH_EXPORT TrayBubbleWrapper : public views::WidgetObserver,
-                                     public ::wm::ActivationChangeObserver {
+class ASH_EXPORT TrayBubbleWrapper : public views::WidgetObserver {
  public:
   TrayBubbleWrapper(TrayBackgroundView* tray,
-                    views::TrayBubbleView* bubble_view,
-                    bool is_persistent);
+                    views::TrayBubbleView* bubble_view);
   ~TrayBubbleWrapper() override;
 
   // views::WidgetObserver overrides:
   void OnWidgetDestroying(views::Widget* widget) override;
   void OnWidgetBoundsChanged(views::Widget* widget,
                              const gfx::Rect& new_bounds) override;
-
-  // ::wm::ActivationChangeObserver overrides:
-  void OnWindowActivated(ActivationReason reason,
-                         aura::Window* gained_active,
-                         aura::Window* lost_active) override;
 
   const TrayBackgroundView* tray() const { return tray_; }
   TrayBackgroundView* tray() { return tray_; }
@@ -48,7 +40,6 @@ class ASH_EXPORT TrayBubbleWrapper : public views::WidgetObserver,
   TrayBackgroundView* tray_;
   views::TrayBubbleView* bubble_view_;  // unowned
   views::Widget* bubble_widget_;
-  bool is_persistent_;
 
   DISALLOW_COPY_AND_ASSIGN(TrayBubbleWrapper);
 };

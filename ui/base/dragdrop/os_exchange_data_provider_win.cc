@@ -9,7 +9,6 @@
 #include <shlobj.h>
 #include <shobjidl.h>
 #include <stdint.h>
-#include <wrl/client.h>
 
 #include <algorithm>
 #include <iterator>
@@ -21,6 +20,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/pickle.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_hdc.h"
 #include "base/win/scoped_hglobal.h"
 #include "net/base/filename_util.h"
@@ -582,7 +582,7 @@ void OSExchangeDataProviderWin::SetDragImage(
 
   memcpy(bits, unpremul_bitmap.getPixels(), height * rowbytes);
 
-  Microsoft::WRL::ComPtr<IDragSourceHelper> helper;
+  base::win::ScopedComPtr<IDragSourceHelper> helper;
   HRESULT rv = CoCreateInstance(CLSID_DragDropHelper, 0, CLSCTX_INPROC_SERVER,
                                 IID_PPV_ARGS(&helper));
   if (!SUCCEEDED(rv))

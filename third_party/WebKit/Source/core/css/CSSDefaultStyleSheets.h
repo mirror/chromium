@@ -81,7 +81,7 @@ class CSSDefaultStyleSheets
     return media_controls_style_sheet_loader_.get();
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   CSSDefaultStyleSheets();

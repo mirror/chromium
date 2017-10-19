@@ -44,7 +44,7 @@ class CORE_EXPORT PointerEvent final : public MouseEvent {
 
   HeapVector<Member<PointerEvent>> getCoalescedEvents();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   PointerEvent(const AtomicString&,

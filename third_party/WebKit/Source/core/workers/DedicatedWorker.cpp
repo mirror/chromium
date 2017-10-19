@@ -158,7 +158,7 @@ const AtomicString& DedicatedWorker::InterfaceName() const {
   return EventTargetNames::Worker;
 }
 
-void DedicatedWorker::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DedicatedWorker) {
   visitor->Trace(context_proxy_);
   AbstractWorker::Trace(visitor);
 }

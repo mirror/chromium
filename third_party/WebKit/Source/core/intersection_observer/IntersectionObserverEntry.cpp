@@ -27,7 +27,7 @@ IntersectionObserverEntry::IntersectionObserverEntry(
 
 {}
 
-void IntersectionObserverEntry::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IntersectionObserverEntry) {
   visitor->Trace(bounding_client_rect_);
   visitor->Trace(root_bounds_);
   visitor->Trace(intersection_rect_);

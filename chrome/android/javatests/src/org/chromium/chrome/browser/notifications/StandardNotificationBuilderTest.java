@@ -57,7 +57,7 @@ public class StandardNotificationBuilderTest {
             throw new IllegalArgumentException();
         }
 
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         Intent contentIntent = new Intent("contentIntent");
         outContentAndDeleteIntents[0] = PendingIntent.getBroadcast(
@@ -121,7 +121,7 @@ public class StandardNotificationBuilderTest {
         Assert.assertNotNull(picture);
         Assert.assertTrue(picture.getWidth() > 0 && picture.getHeight() > 0);
 
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Bitmap smallIcon =
                 BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_chrome);
         Assert.assertTrue(smallIcon.sameAs(
@@ -175,7 +175,7 @@ public class StandardNotificationBuilderTest {
     @SmallTest
     @Feature({"Browser", "Notifications"})
     public void testSetSmallIcon() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         NotificationBuilderBase notificationBuilder =
                 new StandardNotificationBuilder(context, ChannelDefinitions.CHANNEL_ID_SITES);
 
@@ -217,7 +217,7 @@ public class StandardNotificationBuilderTest {
     @SmallTest
     @Feature({"Browser", "Notifications"})
     public void testAddTextActionSetsRemoteInput() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         NotificationBuilderBase notificationBuilder =
                 new StandardNotificationBuilder(context, ChannelDefinitions.CHANNEL_ID_SITES)
                         .addTextAction(null, "Action Title", null, "Placeholder");

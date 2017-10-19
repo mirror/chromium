@@ -26,7 +26,7 @@ class MediaCapabilities final
   ScriptPromise decodingInfo(ScriptState*, const MediaDecodingConfiguration&);
   ScriptPromise encodingInfo(ScriptState*, const MediaEncodingConfiguration&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 };
 
 }  // namespace blink

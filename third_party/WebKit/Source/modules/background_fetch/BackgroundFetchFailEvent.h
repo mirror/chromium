@@ -47,7 +47,7 @@ class MODULES_EXPORT BackgroundFetchFailEvent final
   // ExtendableEvent interface.
   const AtomicString& InterfaceName() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   BackgroundFetchFailEvent(const AtomicString& type,

@@ -12,8 +12,8 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
-#include "ui/message_center/notification.h"
 
 class Browser;
 class Profile;
@@ -27,8 +27,7 @@ class StubNotificationUIManager : public NotificationUIManager {
   unsigned int GetNotificationCount() const;
 
   // Returns a reference to the notification at index |index|.
-  const message_center::Notification& GetNotificationAt(
-      unsigned int index) const;
+  const Notification& GetNotificationAt(unsigned int index) const;
 
   // Sets a one-shot callback that will be invoked when a notification has been
   // added to the Notification UI manager. Will be invoked on the UI thread.
@@ -41,13 +40,10 @@ class StubNotificationUIManager : public NotificationUIManager {
   bool SilentDismissById(const std::string& delegate_id, ProfileID profile_id);
 
   // NotificationUIManager implementation.
-  void Add(const message_center::Notification& notification,
-           Profile* profile) override;
-  bool Update(const message_center::Notification& notification,
-              Profile* profile) override;
-  const message_center::Notification* FindById(
-      const std::string& delegate_id,
-      ProfileID profile_id) const override;
+  void Add(const Notification& notification, Profile* profile) override;
+  bool Update(const Notification& notification, Profile* profile) override;
+  const Notification* FindById(const std::string& delegate_id,
+                               ProfileID profile_id) const override;
   bool CancelById(const std::string& delegate_id,
                   ProfileID profile_id) override;
   std::set<std::string> GetAllIdsByProfile(ProfileID profile_id) override;
@@ -59,7 +55,7 @@ class StubNotificationUIManager : public NotificationUIManager {
   GURL& last_canceled_source() { return last_canceled_source_; }
 
  private:
-  using NotificationPair = std::pair<message_center::Notification, ProfileID>;
+  using NotificationPair = std::pair<Notification, ProfileID>;
   std::vector<NotificationPair> notifications_;
 
   base::Closure notification_added_callback_;

@@ -905,7 +905,7 @@ void Fullscreen::FullscreenElementChanged(Element* old_element,
   GetDocument()->UpdateStyleAndLayoutTree();
 }
 
-void Fullscreen::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Fullscreen) {
   visitor->Trace(pending_requests_);
   visitor->Trace(fullscreen_element_stack_);
   Supplement<Document>::Trace(visitor);

@@ -89,7 +89,7 @@ class CORE_EXPORT UseCounter {
     // remove a reference to the observer and stop notifications.
     virtual bool OnCountFeature(WebFeature) = 0;
 
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
   // "count" sets the bit for this feature to 1. Repeated calls are ignored.
@@ -139,7 +139,7 @@ class CORE_EXPORT UseCounter {
   // reporting disabled.
   bool HasRecordedMeasurement(WebFeature) const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // Notifies that a feature is newly counted to |m_observers|. This shouldn't

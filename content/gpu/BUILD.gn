@@ -27,7 +27,6 @@ if (is_component_build) {
 } else {
   link_target_type = "static_library"
 }
-
 target(link_target_type, "gpu_sources") {
   # This is an internal content API. Code outside of the content "component"
   # (like content/test and content/shell) should depend on ":gpu" above.
@@ -39,8 +38,6 @@ target(link_target_type, "gpu_sources") {
     "gpu_main.cc",
     "gpu_process.cc",
     "gpu_process.h",
-    "gpu_sandbox_hook_linux.cc",
-    "gpu_sandbox_hook_linux.h",
     "gpu_service_factory.cc",
     "gpu_service_factory.h",
     "in_process_gpu_thread.cc",
@@ -62,7 +59,6 @@ target(link_target_type, "gpu_sources") {
     "//content/public/common:common_sources",
     "//gpu:gpu",
     "//gpu/ipc/common:command_buffer_traits",
-    "//gpu/ipc/common:gpu_preferences_util",
     "//gpu/ipc/service",
     "//ipc",
     "//media/gpu",
@@ -80,7 +76,6 @@ target(link_target_type, "gpu_sources") {
     "//services/ui/gpu",
     "//services/ui/gpu/interfaces",
     "//skia",
-    "//third_party/angle:angle_gpu_info_util",
     "//ui/gfx/ipc",
     "//ui/gl",
     "//ui/gl/init",

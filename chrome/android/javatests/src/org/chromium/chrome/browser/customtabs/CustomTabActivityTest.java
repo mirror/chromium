@@ -250,7 +250,7 @@ public class CustomTabActivityTest {
      */
     private Intent createMinimalCustomTabIntent() {
         return CustomTabsTestUtils.createMinimalCustomTabIntent(
-                InstrumentationRegistry.getTargetContext(), mTestPage);
+                InstrumentationRegistry.getInstrumentation().getTargetContext(), mTestPage);
     }
 
     /**
@@ -260,7 +260,8 @@ public class CustomTabActivityTest {
      */
     private PendingIntent addMenuEntriesToIntent(Intent intent, int numEntries) {
         PendingIntent pi = PendingIntent.getBroadcast(
-                InstrumentationRegistry.getTargetContext(), 0, new Intent(), 0);
+                InstrumentationRegistry.getInstrumentation().getTargetContext(), 0, new Intent(),
+                0);
         ArrayList<Bundle> menuItems = new ArrayList<>();
         for (int i = 0; i < numEntries; i++) {
             Bundle bundle = new Bundle();
@@ -285,7 +286,8 @@ public class CustomTabActivityTest {
         bundle.putParcelable(CustomTabsIntent.KEY_ICON, icon);
         bundle.putString(CustomTabsIntent.KEY_DESCRIPTION, description);
         PendingIntent pi = PendingIntent.getBroadcast(
-                InstrumentationRegistry.getTargetContext(), 0, new Intent(), 0);
+                InstrumentationRegistry.getInstrumentation().getTargetContext(), 0, new Intent(),
+                0);
         bundle.putParcelable(CustomTabsIntent.KEY_PENDING_INTENT, pi);
 
         intent.putExtra(CustomTabsIntent.EXTRA_ACTION_BUTTON_BUNDLE, bundle);
@@ -295,7 +297,8 @@ public class CustomTabActivityTest {
     private Bundle makeBottomBarBundle(int id, Bitmap icon, String description) {
         Bundle bundle = new Bundle();
         PendingIntent pi = PendingIntent.getBroadcast(
-                InstrumentationRegistry.getTargetContext(), 0, new Intent(), 0);
+                InstrumentationRegistry.getInstrumentation().getTargetContext(), 0, new Intent(),
+                0);
 
         bundle.putInt(CustomTabsIntent.KEY_ID, sIdToIncrement++);
         bundle.putString(CustomTabsIntent.KEY_DESCRIPTION, description);
@@ -345,7 +348,8 @@ public class CustomTabActivityTest {
     }
 
     private Bitmap createTestBitmap(int widthDp, int heightDp) {
-        Resources testRes = InstrumentationRegistry.getTargetContext().getResources();
+        Resources testRes =
+                InstrumentationRegistry.getInstrumentation().getTargetContext().getResources();
         float density = testRes.getDisplayMetrics().density;
         return Bitmap.createBitmap((int) (widthDp * density),
                 (int) (heightDp * density), Bitmap.Config.ARGB_8888);
@@ -732,7 +736,7 @@ public class CustomTabActivityTest {
         LocationSettingsTestUtil.setSystemLocationSettingEnabled(true);
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(),
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(),
                         mTestServer.getURL(GEOLOCATION_PAGE)));
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
@@ -766,7 +770,7 @@ public class CustomTabActivityTest {
         LocationSettingsTestUtil.setSystemLocationSettingEnabled(true);
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(),
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(),
                         mTestServer.getURL(SELECT_POPUP_PAGE)));
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
@@ -953,7 +957,7 @@ public class CustomTabActivityTest {
     @SmallTest
     @RetryOnFailure
     public void testLoadNewUrlWithSession() throws InterruptedException {
-        final Context context = InstrumentationRegistry.getTargetContext();
+        final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         final Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage);
         CustomTabsSessionToken session = CustomTabsSessionToken.getSessionTokenFromIntent(intent);
         warmUpAndLaunchUrlWithSession(intent);
@@ -1011,7 +1015,7 @@ public class CustomTabActivityTest {
                 "/chrome/test/data/android/customtabs/test_window_open.html");
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(), testUrl));
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), testUrl));
         final TabModelSelector tabSelector =
                 mCustomTabActivityTestRule.getActivity().getTabModelSelector();
 
@@ -1153,8 +1157,9 @@ public class CustomTabActivityTest {
         });
         Intent intent = new CustomTabsIntent.Builder(session).build().intent;
         intent.setData(Uri.parse(mTestPage));
-        intent.setComponent(new ComponentName(
-                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
@@ -1212,8 +1217,9 @@ public class CustomTabActivityTest {
         CustomTabsSession session = bindWithCallback(cb);
         Intent intent = new CustomTabsIntent.Builder(session).build().intent;
         intent.setData(Uri.parse(mTestPage));
-        intent.setComponent(new ComponentName(
-                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
@@ -1264,8 +1270,9 @@ public class CustomTabActivityTest {
         });
         Intent intent = new CustomTabsIntent.Builder(session).build().intent;
         intent.setData(Uri.parse(mTestPage));
-        intent.setComponent(new ComponentName(
-                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
@@ -1316,7 +1323,7 @@ public class CustomTabActivityTest {
     private void hideDomainAndEnsureTitleIsSet(
             final String url, int speculation, final String expectedTitle) {
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, url);
         intent.putExtra(
                 CustomTabsIntent.EXTRA_TITLE_VISIBILITY_STATE, CustomTabsIntent.SHOW_PAGE_TITLE);
@@ -1369,7 +1376,7 @@ public class CustomTabActivityTest {
     @RetryOnFailure
     public void testPostMessageBasic() throws InterruptedException {
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage);
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.getSessionTokenFromIntent(intent);
@@ -1416,7 +1423,7 @@ public class CustomTabActivityTest {
     @RetryOnFailure
     public void testPostMessageWebContentsDestroyed() throws InterruptedException {
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage);
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.getSessionTokenFromIntent(intent);
@@ -1472,7 +1479,7 @@ public class CustomTabActivityTest {
     @RetryOnFailure
     public void testPostMessageRequiresValidation() throws InterruptedException {
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage);
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.getSessionTokenFromIntent(intent);
@@ -1503,7 +1510,7 @@ public class CustomTabActivityTest {
         final String url =
                 mWebServer.setResponse("/test.html", TITLE_FROM_POSTMESSAGE_TO_CHANNEL, null);
         final CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, url);
         final CustomTabsSessionToken token =
                 CustomTabsSessionToken.getSessionTokenFromIntent(intent);
@@ -1557,8 +1564,9 @@ public class CustomTabActivityTest {
         session.requestPostMessageChannel(null);
         Intent intent = new CustomTabsIntent.Builder(session).build().intent;
         intent.setData(Uri.parse(url));
-        intent.setComponent(new ComponentName(
-                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         Assert.assertTrue(session.postMessage("Message", null)
@@ -1609,8 +1617,9 @@ public class CustomTabActivityTest {
 
         Intent intent = new CustomTabsIntent.Builder(session).build().intent;
         intent.setData(Uri.parse(url));
-        intent.setComponent(new ComponentName(
-                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
@@ -1757,8 +1766,9 @@ public class CustomTabActivityTest {
 
         Intent intent = new CustomTabsIntent.Builder(session).build().intent;
         intent.setData(Uri.parse(url));
-        intent.setComponent(new ComponentName(
-                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class));
+        intent.setComponent(
+                new ComponentName(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                        ChromeLauncherActivity.class));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         CustomTabsSessionToken token = CustomTabsSessionToken.getSessionTokenFromIntent(intent);
 
@@ -1860,7 +1870,7 @@ public class CustomTabActivityTest {
     @RetryOnFailure
     public void testPrecreatedRenderer() throws Exception {
         CustomTabsConnection connection = CustomTabsTestUtils.warmUpAndWait();
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage);
         CustomTabsSessionToken token = CustomTabsSessionToken.getSessionTokenFromIntent(intent);
         Assert.assertTrue(connection.newSession(token));
@@ -1931,8 +1941,8 @@ public class CustomTabActivityTest {
     @CommandLineFlags.Add(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
     public void testWarmupAndLaunchRegularChrome() {
         CustomTabsTestUtils.warmUpAndWait();
-        Intent intent = new Intent(
-                InstrumentationRegistry.getTargetContext(), ChromeLauncherActivity.class);
+        Intent intent = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(),
+                ChromeLauncherActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         Instrumentation.ActivityMonitor monitor =
@@ -2582,7 +2592,7 @@ public class CustomTabActivityTest {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(), testUrl));
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), testUrl));
         Tab tab = mCustomTabActivityTestRule.getActivity().getActivityTab();
         Assert.assertEquals(mTestPage, tab.getUrl());
     }
@@ -2601,7 +2611,7 @@ public class CustomTabActivityTest {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(), testUrl));
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), testUrl));
         Tab tab = mCustomTabActivityTestRule.getActivity().getActivityTab();
         Assert.assertEquals(testUrl, tab.getUrl());
     }
@@ -2619,7 +2629,7 @@ public class CustomTabActivityTest {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(), testUrl));
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), testUrl));
         Tab tab = mCustomTabActivityTestRule.getActivity().getActivityTab();
         Assert.assertEquals(testUrl, tab.getUrl());
     }
@@ -2637,7 +2647,7 @@ public class CustomTabActivityTest {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(), testUrl));
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), testUrl));
         Tab tab = mCustomTabActivityTestRule.getActivity().getActivityTab();
         Assert.assertEquals(testUrl, tab.getUrl());
     }
@@ -2655,7 +2665,7 @@ public class CustomTabActivityTest {
         final String testUrl = WEBLITE_PREFIX + mTestPage.replaceFirst("http", "https");
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(), testUrl));
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), testUrl));
         Tab tab = mCustomTabActivityTestRule.getActivity().getActivityTab();
         Assert.assertEquals(testUrl, tab.getUrl());
     }
@@ -2673,7 +2683,7 @@ public class CustomTabActivityTest {
         final String testUrl = mTestPage2 + "/?lite_url=" + mTestPage;
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(
                 CustomTabsTestUtils.createMinimalCustomTabIntent(
-                        InstrumentationRegistry.getTargetContext(), testUrl));
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), testUrl));
         Tab tab = mCustomTabActivityTestRule.getActivity().getActivityTab();
         Assert.assertEquals(testUrl, tab.getUrl());
     }
@@ -2893,7 +2903,7 @@ public class CustomTabActivityTest {
 
     private CustomTabsSessionToken warmUpAndLaunchUrlWithSession() throws InterruptedException {
         return warmUpAndLaunchUrlWithSession(CustomTabsTestUtils.createMinimalCustomTabIntent(
-                InstrumentationRegistry.getTargetContext(), mTestPage));
+                InstrumentationRegistry.getInstrumentation().getTargetContext(), mTestPage));
     }
 
     private static void ensureCompletedSpeculationForUrl(final CustomTabsConnection connection,
@@ -2923,8 +2933,9 @@ public class CustomTabActivityTest {
 
     private CustomTabsSession bindWithCallback(final CustomTabsCallback callback) {
         final AtomicReference<CustomTabsSession> sessionReference = new AtomicReference<>(null);
-        CustomTabsClient.bindCustomTabsService(InstrumentationRegistry.getContext(),
-                InstrumentationRegistry.getTargetContext().getPackageName(),
+        CustomTabsClient.bindCustomTabsService(
+                InstrumentationRegistry.getInstrumentation().getContext(),
+                InstrumentationRegistry.getInstrumentation().getTargetContext().getPackageName(),
                 new CustomTabsServiceConnection() {
                     @Override
                     public void onServiceDisconnected(ComponentName name) {}

@@ -59,7 +59,7 @@ void SpeechGrammarList::addFromString(const String& string, double weight) {
 
 SpeechGrammarList::SpeechGrammarList() {}
 
-void SpeechGrammarList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SpeechGrammarList) {
   visitor->Trace(grammars_);
 }
 

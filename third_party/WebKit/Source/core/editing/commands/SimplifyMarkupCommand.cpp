@@ -154,7 +154,7 @@ int SimplifyMarkupCommand::PruneSubsequentAncestorsToRemove(
   return past_last_node_to_remove - start_node_index - 1;
 }
 
-void SimplifyMarkupCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SimplifyMarkupCommand) {
   visitor->Trace(first_node_);
   visitor->Trace(node_after_last_);
   CompositeEditCommand::Trace(visitor);

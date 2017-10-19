@@ -33,7 +33,7 @@ class EXTDisjointTimerQuery final : public WebGLExtension {
   ScriptValue getQueryEXT(ScriptState*, GLenum, GLenum);
   ScriptValue getQueryObjectEXT(ScriptState*, WebGLTimerQueryEXT*, GLenum);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class WebGLTimerQueryEXT;

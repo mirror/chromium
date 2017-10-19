@@ -98,7 +98,7 @@ class CORE_EXPORT LiveNodeListBase : public GarbageCollectedMixin {
       unsigned& current_offset,
       MatchFunc);
 
-  virtual void Trace(blink::Visitor* visitor) { visitor->Trace(owner_node_); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(owner_node_); }
 
  private:
   Member<ContainerNode> owner_node_;  // Cannot be null.

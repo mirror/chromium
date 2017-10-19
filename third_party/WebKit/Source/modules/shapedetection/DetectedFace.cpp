@@ -37,7 +37,7 @@ DetectedFace::DetectedFace(DOMRect* bounding_box,
                            const HeapVector<Landmark>& landmarks)
     : bounding_box_(bounding_box), landmarks_(landmarks) {}
 
-void DetectedFace::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DetectedFace) {
   visitor->Trace(bounding_box_);
   visitor->Trace(landmarks_);
 }

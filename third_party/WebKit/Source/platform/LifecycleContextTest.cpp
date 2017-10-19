@@ -41,7 +41,7 @@ class DummyContext final
  public:
   static DummyContext* Create() { return new DummyContext; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     LifecycleNotifier<DummyContext, TestingObserver>::Trace(visitor);
   }
 };
@@ -64,7 +64,7 @@ class TestingObserver final
     context_destroyed_called_ = true;
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(observer_to_remove_on_destruct_);
     LifecycleObserver::Trace(visitor);
   }

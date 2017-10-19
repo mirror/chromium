@@ -26,7 +26,7 @@ class USBConnectionEvent final : public Event {
 
   USBDevice* device() const { return device_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   Member<USBDevice> device_;

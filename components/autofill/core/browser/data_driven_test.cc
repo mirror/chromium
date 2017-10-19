@@ -36,7 +36,7 @@ void DataDrivenTest::RunDataDrivenTest(
     const base::FilePath& input_directory,
     const base::FilePath& output_directory,
     const base::FilePath::StringType& file_name_pattern) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   ASSERT_TRUE(base::DirectoryExists(input_directory));
   ASSERT_TRUE(base::DirectoryExists(output_directory));
   base::FileEnumerator input_files(input_directory,
@@ -55,7 +55,7 @@ void DataDrivenTest::RunOneDataDrivenTest(
     const base::FilePath& test_file_name,
     const base::FilePath& output_directory,
     DataDrivenTestStatus expected_status) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   // iOS doesn't get rid of removed test files. TODO(estade): remove this after
   // all iOS bots are clobbered.
   if (test_file_name.BaseName().value() == FILE_PATH_LITERAL("multimerge.in"))

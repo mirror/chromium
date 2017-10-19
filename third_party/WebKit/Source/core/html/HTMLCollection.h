@@ -113,7 +113,7 @@ class CORE_EXPORT HTMLCollection
   Iterator begin() const { return Iterator(this); }
   Iterator end() const { return Iterator::CreateEnd(this); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   HTMLCollection(ContainerNode& base, CollectionType, ItemAfterOverrideType);
@@ -143,7 +143,7 @@ class CORE_EXPORT HTMLCollection
       AddElementToMap(name_cache_, name, element);
     }
 
-    void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_TRACE() {
       visitor->Trace(id_cache_);
       visitor->Trace(name_cache_);
     }

@@ -48,7 +48,7 @@ class CORE_EXPORT InspectorOverlayHost final
   };
 
   explicit InspectorOverlayHost(Listener*);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void resume();
   void stepOver();

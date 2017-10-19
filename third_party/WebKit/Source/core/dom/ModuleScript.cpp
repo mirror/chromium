@@ -214,7 +214,7 @@ void ModuleScript::SetErrorAndClearRecord(ScriptValue error) {
   }
 }
 
-void ModuleScript::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleScript) {
   visitor->Trace(settings_object_);
   Script::Trace(visitor);
 }

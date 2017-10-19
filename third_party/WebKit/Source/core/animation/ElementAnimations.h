@@ -81,7 +81,7 @@ class ElementAnimations : public GarbageCollectedFinalized<ElementAnimations> {
   void UpdateBaseComputedStyle(const ComputedStyle*);
   void ClearBaseComputedStyle();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   bool IsAnimationStyleChange() const;

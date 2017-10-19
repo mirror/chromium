@@ -61,7 +61,7 @@ class MODULES_EXPORT BlobBytesConsumer final : public BytesConsumer,
   void DidFail(const ResourceError&) override;
   void DidFailRedirectCheck() override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   static BlobBytesConsumer* CreateForTesting(ExecutionContext*,
                                              RefPtr<BlobDataHandle>,

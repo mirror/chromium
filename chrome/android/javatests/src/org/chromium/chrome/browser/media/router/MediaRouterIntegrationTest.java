@@ -96,7 +96,8 @@ public class MediaRouterIntegrationTest {
                 mOldPolicy = StrictMode.allowThreadDiskWrites();
             }
         });
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     @After

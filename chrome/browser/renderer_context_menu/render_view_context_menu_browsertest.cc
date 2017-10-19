@@ -154,7 +154,7 @@ class ContextMenuBrowserTest : public InProcessBrowserTest {
 
   // Does not work on ChromeOS.
   Profile* CreateSecondaryProfile(int profile_num) {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     ProfileManager* profile_manager = g_browser_process->profile_manager();
     base::FilePath profile_path = profile_manager->user_data_dir();
     profile_path = profile_path.AppendASCII(

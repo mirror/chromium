@@ -21,8 +21,6 @@ namespace features {
 // All features in alphabetical order. The features should be documented
 // alongside the definition of their values in the .cc file.
 
-extern const base::Feature kAdsFeature;
-
 #if defined(OS_ANDROID)
 extern const base::Feature kAllowAutoplayUnmutedInWebappManifestScope;
 #endif  // defined(OS_ANDROID)
@@ -67,10 +65,6 @@ extern const base::Feature kBrowserTouchBar;
 extern const base::Feature kDialogTouchBar;
 extern const base::Feature kTabStripKeyboardFocus;
 #endif  // defined(OS_MACOSX)
-
-extern const base::Feature kCaptureThumbnailDependingOnTransitionType;
-
-extern const base::Feature kCaptureThumbnailOnNavigatingAway;
 
 extern const base::Feature kCheckInstallabilityForBannerOnLoad;
 
@@ -167,10 +161,6 @@ extern const base::Feature kNativeNotifications;
 
 extern const base::Feature kNetworkPrediction;
 
-#if defined(OS_POSIX)
-extern const base::Feature kNtlmV2Enabled;
-#endif
-
 extern const base::Feature kOfflinePageDownloadSuggestionsFeature;
 
 #if !defined(OS_ANDROID)
@@ -180,8 +170,6 @@ extern const base::Feature kOneGoogleBarOnLocalNtp;
 extern const base::Feature kUseNewAcceptLanguageHeader;
 
 extern const base::Feature kPermissionsBlacklist;
-
-extern const base::Feature kPreconnectMore;
 
 #if defined(OS_WIN)
 extern const base::Feature kDisablePostScriptPrinting;
@@ -239,8 +227,6 @@ extern const base::Feature kSyzyasanDeferredFree;
 #endif
 
 extern const base::Feature kTabsInCbd;
-
-extern const base::Feature kTopSitesFromSiteEngagement;
 
 extern const base::Feature kUseGoogleLocalNtp;
 

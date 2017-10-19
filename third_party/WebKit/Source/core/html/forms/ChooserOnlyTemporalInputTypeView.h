@@ -45,7 +45,7 @@ class ChooserOnlyTemporalInputTypeView final
   static ChooserOnlyTemporalInputTypeView* Create(HTMLInputElement&,
                                                   BaseTemporalInputType&);
   ~ChooserOnlyTemporalInputTypeView() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   ChooserOnlyTemporalInputTypeView(HTMLInputElement&, BaseTemporalInputType&);

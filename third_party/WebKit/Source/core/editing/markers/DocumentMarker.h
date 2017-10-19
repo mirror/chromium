@@ -152,7 +152,7 @@ class CORE_EXPORT DocumentMarker
   void SetEndOffset(unsigned offset) { end_offset_ = offset; }
   void ShiftOffsets(int delta);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   DocumentMarker(unsigned start_offset, unsigned end_offset);

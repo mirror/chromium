@@ -281,32 +281,17 @@ IntRect GraphicsLayer::InterestRect() {
 
 void GraphicsLayer::Paint(const IntRect* interest_rect,
                           GraphicsContext::DisabledMode disabled_mode) {
-  if (!PaintWithoutCommit(interest_rect, disabled_mode))
-    return;
-
-  GetPaintController().CommitNewDisplayItems();
-
-  if (layer_state_) {
-    // Generate raster invalidations for SPv175 (but not SPv2).
-    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
-    IntRect layer_bounds(layer_state_->offset, ExpandedIntSize(Size()));
-    EnsureRasterInvalidator().Generate(layer_bounds, AllChunkPointers(),
-                                       layer_state_->state, this);
-  }
-
-  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
-      DrawsContent()) {
-    auto& tracking = EnsureRasterInvalidator().EnsureTracking();
-    tracking.CheckUnderInvalidations(
-        DebugName(), CaptureRecord(), InterestRect(),
-        layer_state_ ? layer_state_->offset : IntPoint());
-    if (auto record = tracking.UnderInvalidationRecord()) {
-      // Add the under-invalidation overlay onto the painted result.
-      GetPaintController().AppendDebugDrawingAfterCommit(
-          *this, std::move(record), InterestRect(),
-          layer_state_ ? &layer_state_->state : nullptr);
-      // Ensure the compositor will raster the under-invalidation overlay.
-      layer_->Layer()->Invalidate();
+  if (PaintWithoutCommit(interest_rect, disabled_mode)) {
+    GetPaintController().CommitNewDisplayItems();
+    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
+        DrawsContent()) {
+      auto& tracking = EnsureRasterInvalidator().EnsureTracking();
+      tracking.CheckUnderInvalidations(DebugName(), CaptureRecord(),
+                                       InterestRect());
+      if (auto record = tracking.UnderInvalidationRecord()) {
+        GetPaintController().AppendDebugDrawingAfterCommit(
+            *this, std::move(record), InterestRect());
+      }
     }
   }
 }
@@ -490,7 +475,8 @@ WebLayer* GraphicsLayer::ContentsLayerIfRegistered() {
 CompositedLayerRasterInvalidator& GraphicsLayer::EnsureRasterInvalidator() {
   if (!raster_invalidator_) {
     raster_invalidator_ = WTF::MakeUnique<CompositedLayerRasterInvalidator>(
-        [this](const IntRect& r) { SetNeedsDisplayInRectInternal(r); });
+        // TODO(wangxianzhu): Hook up raster invalidation for SPv175.
+        [](const IntRect&) {});
     raster_invalidator_->SetTracksRasterInvalidations(
         client_->IsTrackingRasterInvalidations());
   }
@@ -498,14 +484,10 @@ CompositedLayerRasterInvalidator& GraphicsLayer::EnsureRasterInvalidator() {
 }
 
 void GraphicsLayer::UpdateTrackingRasterInvalidations() {
-  bool should_track = client_->IsTrackingRasterInvalidations();
-  if (should_track)
+  if (client_->IsTrackingRasterInvalidations())
     EnsureRasterInvalidator().SetTracksRasterInvalidations(true);
   else if (raster_invalidator_)
     raster_invalidator_->SetTracksRasterInvalidations(false);
-
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() && paint_controller_)
-    paint_controller_->SetTracksRasterInvalidations(should_track);
 }
 
 void GraphicsLayer::ResetTrackedRasterInvalidations() {
@@ -530,8 +512,6 @@ void GraphicsLayer::TrackRasterInvalidation(const DisplayItemClient& client,
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
     EnsureRasterInvalidator().EnsureTracking();
 
-  // For SPv175, this only tracks invalidations that the WebLayer is fully
-  // invalidated directly, e.g. from SetContentsNeedsDisplay(), etc.
   if (auto* tracking = GetRasterInvalidationTracking())
     tracking->AddInvalidation(&client, client.DebugName(), rect, reason);
 }
@@ -724,8 +704,7 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
   }
 
   if ((flags & kLayerTreeIncludesPaintInvalidations) &&
-      client_->IsTrackingRasterInvalidations() &&
-      GetRasterInvalidationTracking())
+      client_->IsTrackingRasterInvalidations())
     GetRasterInvalidationTracking()->AsJSON(json.get());
 
   if ((flags & kLayerTreeIncludesPaintingPhases) && painting_phase_) {
@@ -1098,26 +1077,18 @@ void GraphicsLayer::SetNeedsDisplayInRect(
     const IntRect& rect,
     PaintInvalidationReason invalidation_reason,
     const DisplayItemClient& client) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
   if (!DrawsContent())
     return;
 
   if (!ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_) {
-    SetNeedsDisplayInRectInternal(rect);
-    // TODO(wangxianzhu): Need equivalence for SPv175/SPv2.
+    layer_->Layer()->InvalidateRect(rect);
     if (FirstPaintInvalidationTracking::IsEnabled())
       debug_info_.AppendAnnotatedInvalidateRect(rect, invalidation_reason);
+    for (size_t i = 0; i < link_highlights_.size(); ++i)
+      link_highlights_[i]->Invalidate();
   }
 
   TrackRasterInvalidation(client, rect, invalidation_reason);
-}
-
-void GraphicsLayer::SetNeedsDisplayInRectInternal(const IntRect& rect) {
-  DCHECK(DrawsContent());
-
-  layer_->Layer()->InvalidateRect(rect);
-  for (auto* link_highlight : link_highlights_)
-    link_highlight->Invalidate();
 }
 
 void GraphicsLayer::SetContentsRect(const IntRect& rect) {
@@ -1233,13 +1204,8 @@ void GraphicsLayer::didChangeScrollbarsHidden(bool hidden) {
 
 PaintController& GraphicsLayer::GetPaintController() const {
   CHECK(DrawsContent());
-  if (!paint_controller_) {
+  if (!paint_controller_)
     paint_controller_ = PaintController::Create();
-    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      paint_controller_->SetTracksRasterInvalidations(
-          client_->IsTrackingRasterInvalidations());
-    }
-  }
   return *paint_controller_;
 }
 
@@ -1268,8 +1234,6 @@ sk_sp<PaintRecord> GraphicsLayer::CaptureRecord() {
 
 void GraphicsLayer::SetLayerState(PropertyTreeState&& layer_state,
                                   const IntPoint& layer_offset) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
-
   if (!layer_state_) {
     layer_state_ = std::make_unique<LayerState>(
         LayerState{std::move(layer_state), layer_offset});
@@ -1277,15 +1241,6 @@ void GraphicsLayer::SetLayerState(PropertyTreeState&& layer_state,
   }
   layer_state_->state = std::move(layer_state);
   layer_state_->offset = layer_offset;
-}
-
-Vector<const PaintChunk*> GraphicsLayer::AllChunkPointers() const {
-  const auto& chunks = GetPaintController().GetPaintArtifact().PaintChunks();
-  Vector<const PaintChunk*> result;
-  result.ReserveInitialCapacity(chunks.size());
-  for (const auto& chunk : chunks)
-    result.push_back(&chunk);
-  return result;
 }
 
 void GraphicsLayer::PaintContents(WebDisplayItemList* web_display_item_list,
@@ -1316,16 +1271,23 @@ void GraphicsLayer::PaintContents(WebDisplayItemList* web_display_item_list,
     disabled_mode = GraphicsContext::kFullyDisabled;
 
   // Anything other than PaintDefaultBehavior is for testing. In non-testing
-  // scenarios, it is an error to call GraphicsLayer::Paint. Actual painting
-  // occurs in LocalFrameView::PaintTree() which calls GraphicsLayer::Paint();
-  // this method merely copies the painted output to the WebDisplayItemList.
+  // scenarios, it is an error to call GraphicsLayer::paint. Actual painting
+  // occurs in FrameView::paintTree(); this method merely copies the painted
+  // output to the WebDisplayItemList.
   if (painting_control != kPaintDefaultBehavior)
     Paint(nullptr, disabled_mode);
 
   if (layer_state_) {
     DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+
+    Vector<const PaintChunk*> all_chunks;
+    all_chunks.ReserveInitialCapacity(
+        paint_controller.GetPaintArtifact().PaintChunks().size());
+    for (const auto& chunk : paint_controller.GetPaintArtifact().PaintChunks())
+      all_chunks.push_back(&chunk);
+
     PaintChunksToCcLayer::ConvertInto(
-        AllChunkPointers(), layer_state_->state,
+        all_chunks, layer_state_->state,
         gfx::Vector2dF(layer_state_->offset.X(), layer_state_->offset.Y()),
         paint_controller.GetPaintArtifact().GetDisplayItemList(),
         *web_display_item_list->GetCcDisplayItemList());

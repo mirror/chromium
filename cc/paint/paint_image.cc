@@ -18,9 +18,8 @@ base::AtomicSequenceNumber s_next_id_;
 base::AtomicSequenceNumber s_next_content_id_;
 }  // namespace
 
-const PaintImage::Id PaintImage::kNonLazyStableId = -1;
+const int PaintImage::kNonLazyStableId = -1;
 const size_t PaintImage::kDefaultFrameIndex = 0u;
-const PaintImage::Id PaintImage::kInvalidId = -2;
 
 PaintImage::PaintImage() = default;
 PaintImage::PaintImage(const PaintImage& other) = default;
@@ -42,26 +41,10 @@ bool PaintImage::operator==(const PaintImage& other) const {
          is_multipart_ == other.is_multipart_;
 }
 
-// static
-PaintImage::DecodingMode PaintImage::GetConservative(DecodingMode one,
-                                                     DecodingMode two) {
-  if (one == two)
-    return one;
-  if (one == DecodingMode::kSync || two == DecodingMode::kSync)
-    return DecodingMode::kSync;
-  if (one == DecodingMode::kUnspecified || two == DecodingMode::kUnspecified)
-    return DecodingMode::kUnspecified;
-  DCHECK_EQ(one, DecodingMode::kAsync);
-  DCHECK_EQ(two, DecodingMode::kAsync);
-  return DecodingMode::kAsync;
-}
-
-// static
 PaintImage::Id PaintImage::GetNextId() {
   return s_next_id_.GetNext();
 }
 
-// static
 PaintImage::ContentId PaintImage::GetNextContentId() {
   return s_next_content_id_.GetNext();
 }

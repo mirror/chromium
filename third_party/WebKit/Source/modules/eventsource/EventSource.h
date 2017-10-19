@@ -98,7 +98,7 @@ class MODULES_EXPORT EventSource final
   // ScriptWrappable
   bool HasPendingActivity() const final;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   EventSource(ExecutionContext*, const KURL&, const EventSourceInit&);

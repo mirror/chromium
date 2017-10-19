@@ -13,11 +13,11 @@
 #include <vector>
 
 #include "base/location.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "content/child/child_process.h"
@@ -71,6 +71,10 @@ using testing::SaveArg;
 using testing::WithArg;
 
 namespace content {
+
+ACTION_P2(ExitMessageLoop, message_loop, quit_closure) {
+  message_loop->task_runner()->PostTask(FROM_HERE, quit_closure);
+}
 
 // Action SaveArgPointeeMove<k>(pointer) saves the value pointed to by the k-th
 // (0-based) argument of the mock function by moving it to *pointer.
@@ -261,6 +265,7 @@ class RTCPeerConnectionHandlerUnderTest : public RTCPeerConnectionHandler {
 class RTCPeerConnectionHandlerTest : public ::testing::Test {
  public:
   RTCPeerConnectionHandlerTest() : mock_peer_connection_(NULL) {
+    child_process_.reset(new ChildProcess());
   }
 
   void SetUp() override {
@@ -495,10 +500,8 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
   }
 
  public:
-  // The ScopedTaskEnvironment prevents the ChildProcess from leaking a
-  // TaskScheduler.
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
-  ChildProcess child_process_;
+  base::MessageLoop message_loop_;
+  std::unique_ptr<ChildProcess> child_process_;
   std::unique_ptr<MockWebRTCPeerConnectionHandlerClient> mock_client_;
   std::unique_ptr<MockPeerConnectionDependencyFactory> mock_dependency_factory_;
   std::unique_ptr<NiceMock<MockPeerConnectionTracker>> mock_tracker_;
@@ -1010,6 +1013,73 @@ TEST_F(RTCPeerConnectionHandlerTest, GetRTCStats) {
   }
   EXPECT_EQ(undefined_stats_count, 1);
   EXPECT_EQ(defined_stats_count, 1);
+}
+
+TEST_F(RTCPeerConnectionHandlerTest, GetReceivers) {
+  std::vector<blink::WebMediaStream> remote_streams;
+  std::vector<std::unique_ptr<blink::WebRTCRtpReceiver>> receivers_added;
+
+  rtc::scoped_refptr<webrtc::MediaStreamInterface> remote_stream(
+      AddRemoteMockMediaStream("remote_stream", "video", "audio"));
+  // Grab the added receivers and media streams when they've been successfully
+  // added to the PC.
+  EXPECT_CALL(*mock_client_.get(), DidAddRemoteTrackForMock(_))
+      .WillRepeatedly(
+          Invoke([&remote_streams, &receivers_added](
+                     std::unique_ptr<blink::WebRTCRtpReceiver>* receiver) {
+            remote_streams.push_back((*receiver)->Streams()[0]);
+            receivers_added.push_back(std::move(*receiver));
+          }));
+
+  rtc::scoped_refptr<webrtc::MediaStreamInterface> stream0(
+      AddRemoteMockMediaStream("stream0", "video0", "audio0"));
+  rtc::scoped_refptr<webrtc::MediaStreamInterface> stream1(
+      AddRemoteMockMediaStream("stream1", "video1", "audio1"));
+  rtc::scoped_refptr<webrtc::MediaStreamInterface> stream2(
+      AddRemoteMockMediaStream("stream2", "video2", "audio2"));
+
+  InvokeOnAddStream(stream0);
+  InvokeOnAddStream(stream1);
+  InvokeOnAddStream(stream2);
+  RunMessageLoopsUntilIdle();
+  EXPECT_TRUE(HasReceiverForEveryTrack(stream0, receivers_added));
+  EXPECT_TRUE(HasReceiverForEveryTrack(stream1, receivers_added));
+  EXPECT_TRUE(HasReceiverForEveryTrack(stream2, receivers_added));
+
+  std::set<std::string> expected_remote_track_ids;
+  expected_remote_track_ids.insert("video0");
+  expected_remote_track_ids.insert("audio0");
+  expected_remote_track_ids.insert("video1");
+  expected_remote_track_ids.insert("audio1");
+  expected_remote_track_ids.insert("video2");
+  expected_remote_track_ids.insert("audio2");
+
+  std::set<std::string> remote_track_ids;
+  for (const auto& remote_stream : remote_streams) {
+    blink::WebVector<blink::WebMediaStreamTrack> tracks;
+    remote_stream.AudioTracks(tracks);
+    for (const auto& audio_track : tracks) {
+      remote_track_ids.insert(audio_track.Id().Utf8());
+    }
+    remote_stream.VideoTracks(tracks);
+    for (const auto& video_track : tracks) {
+      remote_track_ids.insert(video_track.Id().Utf8());
+    }
+  }
+  EXPECT_EQ(expected_remote_track_ids, remote_track_ids);
+
+  blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>> receivers =
+      pc_handler_->GetReceivers();
+  EXPECT_EQ(remote_track_ids.size(), receivers.size());
+  EXPECT_EQ(receivers_added.size(), receivers.size());
+  std::set<uintptr_t> receiver_ids;
+  std::set<std::string> receiver_track_ids;
+  for (const auto& receiver : receivers) {
+    receiver_ids.insert(receiver->Id());
+    receiver_track_ids.insert(receiver->Track().Id().Utf8());
+  }
+  EXPECT_EQ(expected_remote_track_ids.size(), receiver_ids.size());
+  EXPECT_EQ(expected_remote_track_ids.size(), receiver_track_ids.size());
 }
 
 TEST_F(RTCPeerConnectionHandlerTest, OnSignalingChange) {

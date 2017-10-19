@@ -72,7 +72,7 @@ DOMFileSystemBase::DOMFileSystemBase(ExecutionContext* context,
 
 DOMFileSystemBase::~DOMFileSystemBase() {}
 
-void DOMFileSystemBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMFileSystemBase) {
   visitor->Trace(context_);
 }
 

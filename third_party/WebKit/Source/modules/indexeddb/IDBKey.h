@@ -61,7 +61,7 @@ class MODULES_EXPORT IDBKey : public GarbageCollectedFinalized<IDBKey> {
   }
 
   ~IDBKey();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // In order of the least to the highest precedent in terms of sort order.
   // These values are written to logs. New enum values can be added, but

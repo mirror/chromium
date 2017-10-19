@@ -609,12 +609,6 @@ const char kNoteTakingAppEnabledOnLockScreen[] =
 const char kNoteTakingAppsLockScreenWhitelist[] =
     "settings.note_taking_apps_lock_screen_whitelist";
 
-// Dictionary pref that maps lock screen app ID to a boolean indicating whether
-// the toast dialog has been show and dismissed as the app was being launched
-// on the lock screen.
-const char kNoteTakingAppsLockScreenToastShown[] =
-    "settings.note_taking_apps_lock_screen_toast_shown";
-
 // Whether the preferred note taking app should be requested to restore the last
 // note created on lock screen when launched on lock screen.
 const char kRestoreLastLockScreenNote[] =
@@ -1490,9 +1484,9 @@ const char kContentSuggestionsConsecutiveIgnoredPrefName[] =
 // as an integer YYYYMMDD, in wall time in the local timezone.
 // If sent_day changes, sent_count is reset to 0. Allows limiting per-day
 // notification count.
-const char kContentSuggestionsNotificationsSentDay[] =
+extern const char kContentSuggestionsNotificationsSentDay[] =
     "ntp.content_suggestions.notifications.sent_day";
-const char kContentSuggestionsNotificationsSentCount[] =
+extern const char kContentSuggestionsNotificationsSentCount[] =
     "ntp.content_suggestions.notifications.sent_count";
 #endif  // defined(OS_ANDROID)
 
@@ -1664,11 +1658,6 @@ const char kAuthAndroidNegotiateAccountType[] =
 // Boolean that specifies whether to allow basic auth prompting on cross-
 // domain sub-content requests.
 const char kAllowCrossOriginAuthPrompt[] = "auth.allow_cross_origin_prompt";
-
-#if defined(OS_POSIX)
-// Boolean that specifies whether NTLMv2 is enabled.
-const char kNtlmV2Enabled[] = "auth.ntlm_v2_enabled";
-#endif  // defined(OS_POSIX)
 
 // Boolean that specifies whether the built-in asynchronous DNS client is used.
 const char kBuiltInDnsClientEnabled[] = "async_dns.enabled";

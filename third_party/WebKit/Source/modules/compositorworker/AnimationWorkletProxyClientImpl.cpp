@@ -17,7 +17,7 @@ AnimationWorkletProxyClientImpl::AnimationWorkletProxyClientImpl(
   DCHECK(IsMainThread());
 }
 
-void AnimationWorkletProxyClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationWorkletProxyClientImpl) {
   AnimationWorkletProxyClient::Trace(visitor);
   CompositorAnimator::Trace(visitor);
 }
@@ -39,11 +39,14 @@ void AnimationWorkletProxyClientImpl::Dispose() {
   global_scope_ = nullptr;
 }
 
-void AnimationWorkletProxyClientImpl::Mutate(double monotonic_time_now) {
+bool AnimationWorkletProxyClientImpl::Mutate(double monotonic_time_now) {
   DCHECK(global_scope_->IsContextThread());
 
   if (global_scope_)
     global_scope_->Mutate();
+
+  // Always request another rAF for now.
+  return true;
 }
 
 // static

@@ -575,7 +575,7 @@ bool Layer::ShouldDraw() const {
 // static
 void Layer::ConvertPointToLayer(const Layer* source,
                                 const Layer* target,
-                                gfx::PointF* point) {
+                                gfx::Point* point) {
   if (source == target)
     return;
 
@@ -1111,22 +1111,22 @@ void Layer::StackRelativeTo(Layer* child, Layer* other, bool above) {
 }
 
 bool Layer::ConvertPointForAncestor(const Layer* ancestor,
-                                    gfx::PointF* point) const {
+                                    gfx::Point* point) const {
   gfx::Transform transform;
   bool result = GetTargetTransformRelativeTo(ancestor, &transform);
-  auto p = gfx::Point3F(*point);
+  auto p = gfx::Point3F(gfx::PointF(*point));
   transform.TransformPoint(&p);
-  *point = p.AsPointF();
+  *point = gfx::ToFlooredPoint(p.AsPointF());
   return result;
 }
 
 bool Layer::ConvertPointFromAncestor(const Layer* ancestor,
-                                     gfx::PointF* point) const {
+                                     gfx::Point* point) const {
   gfx::Transform transform;
   bool result = GetTargetTransformRelativeTo(ancestor, &transform);
-  auto p = gfx::Point3F(*point);
+  auto p = gfx::Point3F(gfx::PointF(*point));
   transform.TransformPointReverse(&p);
-  *point = p.AsPointF();
+  *point = gfx::ToFlooredPoint(p.AsPointF());
   return result;
 }
 

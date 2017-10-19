@@ -19,6 +19,8 @@ class SystemHealthDesktopCommonExpectations(expectations.StoryExpectations):
     self.DisableStory('play:media:pandora', [expectations.ALL],
                       'crbug.com/64939')
     self.DisableStory('browse:media:tumblr',
+                      [expectations.MAC_10_11], 'crbug.com/760966')
+    self.DisableStory('browse:media:tumblr',
                       [expectations.ALL_WIN], 'crbug.com/773393')
     self.DisableStory('browse:news:cnn',
                       [expectations.ALL_MAC], 'crbug.com/728576')
@@ -43,6 +45,8 @@ class SystemHealthDesktopMemoryExpectations(expectations.StoryExpectations):
                       'crbug.com/649392')
     self.DisableStory('play:media:pandora', [expectations.ALL],
                       'crbug.com/64939')
+    self.DisableStory('browse:media:tumblr',
+                      [expectations.MAC_10_11], 'crbug.com/760966')
     self.DisableStory('browse:news:cnn',
                       [expectations.ALL_MAC], 'crbug.com/728576')
     self.DisableStory('browse:social:twitter_infinite_scroll',

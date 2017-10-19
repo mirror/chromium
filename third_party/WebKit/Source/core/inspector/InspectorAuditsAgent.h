@@ -19,7 +19,7 @@ class CORE_EXPORT InspectorAuditsAgent final
   explicit InspectorAuditsAgent(InspectorNetworkAgent*);
   ~InspectorAuditsAgent() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // Protocol methods.
   protocol::Response getEncodedResponse(const String& request_id,

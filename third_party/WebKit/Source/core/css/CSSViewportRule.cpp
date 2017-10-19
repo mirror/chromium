@@ -73,7 +73,7 @@ void CSSViewportRule::Reattach(StyleRuleBase* rule) {
     properties_cssom_wrapper_->Reattach(viewport_rule_->MutableProperties());
 }
 
-void CSSViewportRule::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSViewportRule) {
   visitor->Trace(viewport_rule_);
   visitor->Trace(properties_cssom_wrapper_);
   CSSRule::Trace(visitor);

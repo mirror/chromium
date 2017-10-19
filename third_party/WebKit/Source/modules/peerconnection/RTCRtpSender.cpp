@@ -40,7 +40,7 @@ void RTCRtpSender::SetTrack(MediaStreamTrack* track) {
   track_ = track;
 }
 
-void RTCRtpSender::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCRtpSender) {
   visitor->Trace(track_);
 }
 

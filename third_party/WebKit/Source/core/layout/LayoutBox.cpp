@@ -1205,13 +1205,13 @@ IntSize LayoutBox::ScrolledContentOffset() const {
   return result;
 }
 
-LayoutRect LayoutBox::ClippingRect(const LayoutPoint& location) const {
+LayoutRect LayoutBox::ClippingRect() const {
   LayoutRect result = LayoutRect(LayoutRect::InfiniteIntRect());
   if (ShouldClipOverflow())
-    result = OverflowClipRect(location);
+    result = OverflowClipRect(LayoutPoint());
 
   if (HasClip())
-    result.Intersect(ClipRect(location));
+    result.Intersect(ClipRect(LayoutPoint()));
 
   return result;
 }
@@ -1332,7 +1332,7 @@ bool LayoutBox::ApplyBoxClips(
   // This won't work fully correctly for fixed-position elements, who should
   // receive CSS clip but for whom the current object is not in the containing
   // block chain.
-  LayoutRect clip_rect = ClippingRect(LayoutPoint());
+  LayoutRect clip_rect = ClippingRect();
 
   transform_state.Flatten();
   LayoutRect rect(transform_state.LastPlanarQuad().EnclosingBoundingBox());
@@ -2428,9 +2428,9 @@ bool LayoutBox::PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const {
     return false;
 
   // If the box has any kind of clip, we need issue paint invalidation to cover
-  // the changed part of children when the box got resized. In SPv175 this is
+  // the changed part of children when the box got resized. In SPv2 this is
   // handled by detecting paint property changes.
-  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     if (HasClipRelatedProperty())
       return false;
   }

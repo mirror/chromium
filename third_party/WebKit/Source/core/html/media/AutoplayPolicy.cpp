@@ -334,7 +334,7 @@ bool AutoplayPolicy::ShouldAutoplay() {
   return element_->can_autoplay_ && element_->paused_ && element_->Autoplay();
 }
 
-void AutoplayPolicy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AutoplayPolicy) {
   visitor->Trace(element_);
   visitor->Trace(autoplay_visibility_observer_);
   visitor->Trace(autoplay_uma_helper_);

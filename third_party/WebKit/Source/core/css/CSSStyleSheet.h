@@ -145,7 +145,7 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
   void StartLoadingDynamicSheet();
   void SetText(const String&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CSSStyleSheet(StyleSheetContents*, CSSImportRule* owner_rule);

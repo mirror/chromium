@@ -42,7 +42,7 @@ class TestModuleScriptLoaderClient final
   TestModuleScriptLoaderClient() = default;
   ~TestModuleScriptLoaderClient() override {}
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(module_script_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(module_script_); }
 
   void NotifyNewSingleModuleFinished(ModuleScript* module_script) override {
     was_notify_finished_ = true;
@@ -115,7 +115,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
 
   ResourceFetcher* Fetcher() const { return fetcher_.Get(); }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   RefPtr<ScriptState> script_state_;
@@ -124,7 +124,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
   Vector<ModuleRequest> requests_;
 };
 
-void ModuleScriptLoaderTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleScriptLoaderTestModulator) {
   visitor->Trace(fetcher_);
   DummyModulator::Trace(visitor);
 }

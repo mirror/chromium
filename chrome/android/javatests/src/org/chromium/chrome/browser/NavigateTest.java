@@ -76,7 +76,8 @@ public class NavigateTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityFromLauncher();
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     @After

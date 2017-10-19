@@ -120,7 +120,7 @@ class Resource::CachedMetadataHandlerImpl : public CachedMetadataHandler {
     return new CachedMetadataHandlerImpl(resource);
   }
   ~CachedMetadataHandlerImpl() override {}
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   void SetCachedMetadata(uint32_t, const char*, size_t, CacheType) override;
   void ClearCachedMetadata(CacheType) override;
   RefPtr<CachedMetadata> GetCachedMetadata(uint32_t) const override;
@@ -145,7 +145,7 @@ Resource::CachedMetadataHandlerImpl::CachedMetadataHandlerImpl(
     Resource* resource)
     : resource_(resource) {}
 
-void Resource::CachedMetadataHandlerImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Resource::CachedMetadataHandlerImpl) {
   visitor->Trace(resource_);
   CachedMetadataHandler::Trace(visitor);
 }
@@ -214,7 +214,7 @@ class Resource::ServiceWorkerResponseCachedMetadataHandler
                                                           security_origin);
   }
   ~ServiceWorkerResponseCachedMetadataHandler() override {}
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   void SendToPlatform() override;
@@ -231,8 +231,7 @@ Resource::ServiceWorkerResponseCachedMetadataHandler::
                                                SecurityOrigin* security_origin)
     : CachedMetadataHandlerImpl(resource), security_origin_(security_origin) {}
 
-void Resource::ServiceWorkerResponseCachedMetadataHandler::Trace(
-    blink::Visitor* visitor) {
+DEFINE_TRACE(Resource::ServiceWorkerResponseCachedMetadataHandler) {
   CachedMetadataHandlerImpl::Trace(visitor);
 }
 
@@ -293,7 +292,7 @@ Resource::~Resource() {
   InstanceCounters::DecrementCounter(InstanceCounters::kResourceCounter);
 }
 
-void Resource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Resource) {
   visitor->Trace(loader_);
   visitor->Trace(cache_handler_);
   visitor->Trace(clients_);
@@ -423,7 +422,7 @@ void Resource::FinishAsError(const ResourceError& error,
   error_ = error;
   is_revalidating_ = false;
 
-  if (IsMainThread())
+  if ((error_.IsCancellation() || !is_unused_preload_) && IsMainThread())
     GetMemoryCache()->Remove(this);
 
   if (!ErrorOccurred())

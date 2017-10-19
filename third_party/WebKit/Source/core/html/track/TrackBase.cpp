@@ -48,7 +48,7 @@ TrackBase::TrackBase(WebMediaPlayer::TrackType type,
 
 TrackBase::~TrackBase() {}
 
-void TrackBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TrackBase) {
   Supplementable<TrackBase>::Trace(visitor);
   visitor->Trace(media_element_);
 }

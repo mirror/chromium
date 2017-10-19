@@ -110,7 +110,7 @@ class MediaGalleriesGalleryWatchApiTest : public ExtensionApiTest {
   }
 
   bool AddNewFileInTestGallery() {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     base::FilePath gallery_file =
         test_gallery_.GetPath().Append(FILE_PATH_LITERAL("test1.txt"));
     std::string content("new content");

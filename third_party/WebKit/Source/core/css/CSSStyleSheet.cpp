@@ -49,7 +49,7 @@ class StyleSheetCSSRuleList final : public CSSRuleList {
     return new StyleSheetCSSRuleList(sheet);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     CSSRuleList::Trace(visitor);
   }
@@ -438,7 +438,7 @@ void CSSStyleSheet::SetText(const String& text) {
   contents_->ParseString(text);
 }
 
-void CSSStyleSheet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSStyleSheet) {
   visitor->Trace(contents_);
   visitor->Trace(owner_node_);
   visitor->Trace(owner_rule_);

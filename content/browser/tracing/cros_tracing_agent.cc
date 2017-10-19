@@ -49,6 +49,7 @@ void CrOSTracingAgent::StartTracing(
   base::trace_event::TraceConfig trace_config(config);
   debug_daemon_ = chromeos::DBusThreadManager::Get()->GetDebugDaemonClient();
   if (!trace_config.IsSystraceEnabled() || !debug_daemon_) {
+    debug_daemon_ = nullptr;
     callback.Run(false /* success */);
     return;
   }
@@ -62,7 +63,8 @@ void CrOSTracingAgent::StartTracing(
 }
 
 void CrOSTracingAgent::StopAndFlush(tracing::mojom::RecorderPtr recorder) {
-  DCHECK(debug_daemon_);
+  if (!debug_daemon_)
+    return;
   recorder_ = std::move(recorder);
   debug_daemon_->StopAgentTracing(base::BindRepeating(
       &CrOSTracingAgent::RecorderProxy, base::Unretained(this)));

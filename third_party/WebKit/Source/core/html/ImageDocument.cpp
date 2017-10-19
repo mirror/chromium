@@ -78,7 +78,7 @@ class ImageEventListener : public EventListener {
 
   bool operator==(const EventListener& other) const override;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(doc_);
     EventListener::Trace(visitor);
   }
@@ -213,9 +213,10 @@ DocumentParser* ImageDocument::CreateParser() {
 IntSize ImageDocument::ImageSize() const {
   DCHECK(image_element_);
   DCHECK(image_element_->CachedImage());
-  return image_element_->CachedImage()->IntrinsicSize(
+  return FlooredIntSize(image_element_->CachedImage()->ImageSize(
       LayoutObject::ShouldRespectImageOrientation(
-          image_element_->GetLayoutObject()));
+          image_element_->GetLayoutObject()),
+      1.0f));
 }
 
 void ImageDocument::CreateDocumentStructure() {
@@ -597,7 +598,7 @@ bool ImageDocument::ShouldShrinkToFit() const {
   return GetFrame()->IsMainFrame() && !is_wrap_content_web_view;
 }
 
-void ImageDocument::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageDocument) {
   visitor->Trace(div_element_);
   visitor->Trace(image_element_);
   HTMLDocument::Trace(visitor);

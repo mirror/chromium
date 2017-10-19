@@ -83,7 +83,8 @@ public class BookmarkTest {
                         mActivityTestRule.getActivity().getActivityTab().getProfile());
             }
         });
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mTestPage = mTestServer.getURL(TEST_PAGE_URL_GOOGLE);
         mTestPageFoo = mTestServer.getURL(TEST_PAGE_URL_FOO);
     }
@@ -145,7 +146,6 @@ public class BookmarkTest {
         // Click star button to bookmark the current tab.
         MenuUtils.invokeCustomMenuActionSync(InstrumentationRegistry.getInstrumentation(),
                 mActivityTestRule.getActivity(), R.id.bookmark_this_page_id);
-        BookmarkTestUtil.waitForBookmarkModelLoaded();
         // All actions with BookmarkModel needs to run on UI thread.
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override

@@ -60,7 +60,7 @@ StorageArea::StorageArea(std::unique_ptr<WebStorageArea> storage_area,
 
 StorageArea::~StorageArea() {}
 
-void StorageArea::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StorageArea) {
   visitor->Trace(frame_used_for_can_access_storage_);
 }
 

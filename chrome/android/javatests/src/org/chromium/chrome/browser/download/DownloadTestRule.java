@@ -9,7 +9,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.test.InstrumentationRegistry;
 import android.text.TextUtils;
 
 import org.junit.Assert;
@@ -212,8 +211,8 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
         cleanUpAllDownloads();
 
-        ApplicationUtils.waitForLibraryDependencies(InstrumentationRegistry.getInstrumentation());
-        final Context context = InstrumentationRegistry.getTargetContext().getApplicationContext();
+        ApplicationUtils.waitForLibraryDependencies(getInstrumentation());
+        final Context context = getInstrumentation().getTargetContext().getApplicationContext();
 
         ThreadUtils.runOnUiThreadBlocking(() -> {
             mSavedDownloadManagerService = DownloadManagerService.setDownloadManagerService(

@@ -67,7 +67,7 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   static bool ShouldAllowSplitView();
 
   // Returns true if |window| can be activated and snapped.
-  bool CanSnap(aura::Window* window);
+  static bool CanSnap(aura::Window* window);
 
   // Returns true if split view mode is active.
   bool IsSplitViewModeActive() const;
@@ -192,9 +192,9 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
                  gfx::Rect* left_or_top_rect,
                  gfx::Rect* right_or_bottom_rect);
 
-  // Finds the closest fix location for |divider_position_| and updates its
+  // Finds the closest fix location for |divider_postion_| and updates its
   // value.
-  void MoveDividerToClosestFixedPosition();
+  void MoveDividerToClosestFixedPostion();
 
   // Returns true if we should end split view mode after resizing, i.e., the
   // split view divider is near to the edge of the screen.

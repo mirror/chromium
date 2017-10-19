@@ -181,7 +181,7 @@ const std::vector<CertVerifyProcType> kAllCertVerifiers = {
 // TODO(crbug.com/649017): Enable this everywhere. Right now this is
 // gated on having CertVerifyProcBuiltin understand the roots added
 // via TestRootCerts.
-#if defined(USE_NSS_CERTS) || (defined(OS_MACOSX) && !defined(OS_IOS))
+#if defined(USE_NSS_CERTS)
         ,
     CERT_VERIFY_PROC_BUILTIN
 #endif

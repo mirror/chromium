@@ -44,7 +44,7 @@ class CORE_EXPORT BooleanOrStringOrUnrestrictedDouble final {
   BooleanOrStringOrUnrestrictedDouble(const BooleanOrStringOrUnrestrictedDouble&);
   ~BooleanOrStringOrUnrestrictedDouble();
   BooleanOrStringOrUnrestrictedDouble& operator=(const BooleanOrStringOrUnrestrictedDouble&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum class SpecificType {

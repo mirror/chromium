@@ -47,7 +47,7 @@ const AtomicString& PageTransitionEvent::InterfaceName() const {
   return EventNames::PageTransitionEvent;
 }
 
-void PageTransitionEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PageTransitionEvent) {
   Event::Trace(visitor);
 }
 

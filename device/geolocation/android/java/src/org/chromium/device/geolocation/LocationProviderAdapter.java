@@ -44,7 +44,7 @@ public class LocationProviderAdapter {
      * @param enableHighAccuracy Whether or not to enable high accuracy location providers.
      */
     @CalledByNative
-    public void start(final boolean enableHighAccuracy) {
+    public boolean start(final boolean enableHighAccuracy) {
         FutureTask<Void> task = new FutureTask<Void>(new Runnable() {
             @Override
             public void run() {
@@ -52,6 +52,7 @@ public class LocationProviderAdapter {
             }
         }, null);
         ThreadUtils.runOnUiThread(task);
+        return true;
     }
 
     /**

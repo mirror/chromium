@@ -62,7 +62,7 @@ const AtomicString& VRDisplayEvent::InterfaceName() const {
   return EventNames::VRDisplayEvent;
 }
 
-void VRDisplayEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRDisplayEvent) {
   visitor->Trace(display_);
   Event::Trace(visitor);
 }

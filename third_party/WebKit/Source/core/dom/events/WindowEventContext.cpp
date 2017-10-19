@@ -57,7 +57,7 @@ bool WindowEventContext::HandleLocalEvents(Event& event) {
   return true;
 }
 
-void WindowEventContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WindowEventContext) {
   visitor->Trace(window_);
   visitor->Trace(target_);
 }

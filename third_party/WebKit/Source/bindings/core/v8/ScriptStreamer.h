@@ -38,7 +38,7 @@ class CORE_EXPORT ScriptStreamer final
   enum Type { kParsingBlocking, kDeferred, kAsync };
 
   ~ScriptStreamer();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Launches a task (on a background thread) which will stream the given
   // ClassicPendingScript into V8 as it loads.

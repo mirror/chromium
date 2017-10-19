@@ -325,7 +325,7 @@ AudioWorkletGlobalScope::WorkletProcessorInfoListForSynchronization() {
   return processor_info_list;
 }
 
-void AudioWorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AudioWorkletGlobalScope) {
   visitor->Trace(processor_definition_map_);
   visitor->Trace(processor_instances_);
   ThreadedWorkletGlobalScope::Trace(visitor);

@@ -132,15 +132,15 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
       const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds);
 
   // Initializes the feature information. Needs a current GL context.
-  void Initialize(ContextType context_type,
+  bool Initialize(ContextType context_type,
                   const DisallowedFeatures& disallowed_features);
 
   // Helper that defaults to no disallowed features and a GLES2 context.
-  void InitializeForTesting();
+  bool InitializeForTesting();
   // Helper that defaults to no disallowed Features.
-  void InitializeForTesting(ContextType context_type);
+  bool InitializeForTesting(ContextType context_type);
   // Helper that defaults to a GLES2 context.
-  void InitializeForTesting(const DisallowedFeatures& disallowed_features);
+  bool InitializeForTesting(const DisallowedFeatures& disallowed_features);
 
   const Validators* validators() const {
     return &validators_;

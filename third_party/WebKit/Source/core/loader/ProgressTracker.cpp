@@ -79,7 +79,7 @@ ProgressTracker::ProgressTracker(LocalFrame* frame)
 
 ProgressTracker::~ProgressTracker() {}
 
-void ProgressTracker::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ProgressTracker) {
   visitor->Trace(frame_);
 }
 

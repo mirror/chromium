@@ -68,7 +68,7 @@ class MediaControlsOrientationLockDelegate final : public EventListener {
   // EventListener implementation.
   bool operator==(const EventListener&) const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class MediaControlsOrientationLockDelegateTest;

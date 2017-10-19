@@ -133,7 +133,6 @@ SKIP_GN_ISOLATE_MAP_TARGETS = {
   'system_webview_apk',
   'ui_junit_tests',
   'vrcore_fps_test',
-  'vr_common_perftests',
   'vr_perf_tests',
   'webapk_client_junit_tests',
   'webapk_shell_apk_junit_tests',

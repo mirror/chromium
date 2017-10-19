@@ -40,7 +40,7 @@ class BodyConsumerBase : public GarbageCollectedFinalized<BodyConsumerBase>,
         Resolver()->GetScriptState()->GetIsolate(), "Failed to fetch"));
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(resolver_);
     FetchDataLoader::Client::Trace(visitor);
   }

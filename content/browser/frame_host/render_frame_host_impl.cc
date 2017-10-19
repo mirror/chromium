@@ -26,7 +26,6 @@
 #include "content/browser/bluetooth/web_bluetooth_service_impl.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/child_process_security_policy_impl.h"
-#include "content/browser/dedicated_worker/dedicated_worker_host.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/download/mhtml_generation_manager.h"
@@ -2908,10 +2907,6 @@ void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
   reply->main_frame_widget_route_id = main_frame_widget_route_id;
   reply->cloned_session_storage_namespace_id =
       cloned_session_storage_namespace_id;
-  RenderFrameHost* rfh =
-      RenderFrameHost::FromID(GetProcess()->GetID(), main_frame_route_id);
-  reply->devtools_main_frame_token =
-      rfh ? rfh->GetDevToolsFrameToken() : base::UnguessableToken::Create();
   std::move(callback).Run(std::move(reply));
 }
 
@@ -2988,10 +2983,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   registry_->AddInterface(base::Bind(&SharedWorkerConnectorImpl::Create,
                                      process_->GetID(), routing_id_));
-
-  registry_->AddInterface(base::Bind(&CreateDedicatedWorkerHostFactory,
-                                     GetProcess()->GetID(),
-                                     base::Unretained(this)));
 
   registry_->AddInterface<device::mojom::VRService>(base::Bind(
       &WebvrServiceProvider::BindWebvrService, base::Unretained(this)));

@@ -26,7 +26,7 @@ class MODULES_EXPORT Credential : public GarbageCollectedFinalized<Credential>,
   const String& id() const { return platform_credential_->Id(); }
   const String& type() const { return platform_credential_->GetType(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   PlatformCredential* GetPlatformCredential() const {
     return platform_credential_;

@@ -172,7 +172,7 @@ IDBTransaction::~IDBTransaction() {
   DCHECK(request_list_.IsEmpty() || !GetExecutionContext());
 }
 
-void IDBTransaction::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBTransaction) {
   visitor->Trace(database_);
   visitor->Trace(open_db_request_);
   visitor->Trace(error_);

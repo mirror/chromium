@@ -55,7 +55,7 @@ class MODULES_EXPORT FileEntry final : public Entry {
 
   bool isFile() const override { return true; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   FileEntry(DOMFileSystemBase*, const String& full_path);

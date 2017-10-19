@@ -93,7 +93,7 @@ class SVGElementProxy : public GarbageCollectedFinalized<SVGElementProxy> {
 
   const AtomicString& Id() const { return id_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGElementProxy(const AtomicString&);
@@ -126,7 +126,7 @@ class SVGElementProxySet : public GarbageCollected<SVGElementProxySet> {
   // changed.
   void NotifyContentChanged(TreeScope&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   using ProxySet = HeapHashSet<WeakMember<SVGElementProxy>>;

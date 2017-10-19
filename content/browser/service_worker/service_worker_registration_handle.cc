@@ -76,8 +76,6 @@ ServiceWorkerRegistrationHandle::CreateObjectInfo() {
       registration_->pattern());
   info->registration_id = registration_->id();
   bindings_.AddBinding(this, mojo::MakeRequest(&info->host_ptr_info));
-  if (!remote_registration_)
-    info->request = mojo::MakeRequest(&remote_registration_);
   return info;
 }
 

@@ -867,27 +867,6 @@ TEST_F(OfflinePageRequestJobTest, LoadOfflinePageOnProhibitivelySlowNetwork) {
   ExpectOnlinePageSizeTotalSuffixCount(0);
 }
 
-TEST_F(OfflinePageRequestJobTest,
-       DontLoadReloadOfflinePageOnProhibitivelySlowNetwork) {
-  SimulateHasNetworkConnectivity(true);
-
-  test_previews_decider()->set_should_allow_preview(true);
-
-  // Treat this as a reloaded page.
-  InterceptRequest(kTestUrl1, "GET", kOfflinePageHeader,
-                   std::string(kOfflinePageHeaderReasonKey) + "=" +
-                       kOfflinePageHeaderReasonValueReload,
-                   content::RESOURCE_TYPE_MAIN_FRAME);
-  base::RunLoop().Run();
-
-  EXPECT_EQ(0, bytes_read());
-  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
-  ExpectNoAccessEntryPoint();
-  ExpectNoSamplesInAggregatedRequestResult();
-  ExpectOfflinePageSizeTotalSuffixCount(0);
-  ExpectOnlinePageSizeTotalSuffixCount(0);
-}
-
 TEST_F(OfflinePageRequestJobTest, PageNotFoundOnProhibitivelySlowNetwork) {
   SimulateHasNetworkConnectivity(true);
 

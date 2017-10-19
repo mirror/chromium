@@ -154,10 +154,6 @@ class CC_PAINT_EXPORT DisplayItemList
   const DiscardableImageMap& discardable_image_map() const {
     return image_map_;
   }
-  base::flat_map<PaintImage::Id, PaintImage::DecodingMode>
-  TakeDecodingModeMap() {
-    return image_map_.TakeDecodingModeMap();
-  }
 
   void EmitTraceSnapshot() const;
   void GenerateDiscardableImagesMetadata();

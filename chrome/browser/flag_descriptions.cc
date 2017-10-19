@@ -89,13 +89,6 @@ const char kBypassAppBannerEngagementChecksDescription[] =
     "eligibility requirements for showing app banners, such as having a "
     "manifest, are met.";
 
-const char kCaptureThumbnailOnNavigatingAwayName[] =
-    "Capture page thumbnail on navigating away";
-const char kCaptureThumbnailOnNavigatingAwayDescription[] =
-    "Capture a page thumbnail (for use on the New Tab page) when navigating "
-    "away from the current page, in addition to other times a thumbnail may be "
-    "captured.";
-
 const char kCastStreamingHwEncodingName[] =
     "Cast Streaming hardware video encoding";
 const char kCastStreamingHwEncodingDescription[] =
@@ -476,6 +469,11 @@ const char kEnableScrollAnchoringDescription[] =
     "Adjusts scroll position to prevent visible jumps when offscreen content "
     "changes.";
 
+const char kEnableSharedArrayBufferName[] =
+    "Experimental enabled SharedArrayBuffer support in JavaScript.";
+const char kEnableSharedArrayBufferDescription[] =
+    "Enable SharedArrayBuffer support in JavaScript.";
+
 const char kEnableWasmName[] = "WebAssembly structured cloning support.";
 const char kEnableWasmDescription[] =
     "Enable web pages to use WebAssembly structured cloning.";
@@ -764,9 +762,16 @@ const char kManualPasswordSavingDescription[] =
 const char kMarkHttpAsName[] = "Mark non-secure origins as non-secure";
 const char kMarkHttpAsDescription[] = "Change the UI treatment for HTTP pages";
 const char kMarkHttpAsDangerous[] = "Always mark HTTP as actively dangerous";
+const char kMarkHttpAsNonSecureAfterEditing[] =
+    "Warn on HTTP after editing forms";
+const char kMarkHttpAsNonSecureWhileIncognito[] =
+    "Warn on HTTP while in Incognito mode";
+const char kMarkHttpAsNonSecureWhileIncognitoOrEditing[] =
+    "Warn on HTTP while in Incognito mode or after editing forms";
 
-const char kMaterialDesignIncognitoNTPName[] = "Material Design Incognito NTP.";
-const char kMaterialDesignIncognitoNTPDescription[] =
+extern const char kMaterialDesignIncognitoNTPName[] =
+    "Material Design Incognito NTP.";
+extern const char kMaterialDesignIncognitoNTPDescription[] =
     "If enabled, the Incognito New Tab page uses the new material design with "
     "a better readable text.";
 
@@ -852,12 +857,6 @@ const char kNotificationsNativeFlagName[] = "Enable native notifications.";
 const char kNotificationsNativeFlagDescription[] =
     "Enable support for using the native notification toasts and notification "
     "center on platforms where these are available.";
-
-#if defined(OS_POSIX)
-const char kNtlmV2EnabledName[] = "Enable NTLMv2 Authentication";
-const char kNtlmV2EnabledDescription[] =
-    "Enable NTLMv2 HTTP Authentication. This disables NTLMv1 support.";
-#endif
 
 const char kNumRasterThreadsName[] = "Number of raster threads";
 const char kNumRasterThreadsDescription[] =
@@ -1309,11 +1308,6 @@ const char kTabsInCbdName[] = "Enable tabs for the Clear Browsing Data dialog.";
 const char kTabsInCbdDescription[] =
     "Enables a basic and an advanced tab for the Clear Browsing Data dialog.";
 
-const char kTabModalJsDialogName[] = "Auto-dismissing JavaScript Dialogs";
-const char kTabModalJsDialogDescription[] =
-    "If enabled, the JavaScript dialog will be auto dismissable when switching"
-    " tab.";
-
 const char kTcpFastOpenName[] = "TCP Fast Open";
 const char kTcpFastOpenDescription[] =
     "Enable the option to send extra authentication information in the initial "
@@ -1348,11 +1342,6 @@ const char kTopDocumentIsolationDescription[] =
     "Highly experimental performance mode where cross-site iframes are kept in "
     "a separate process from the top document. In this mode, iframes from "
     "different third-party sites will be allowed to share a process.";
-
-const char kTopSitesFromSiteEngagementName[] = "Top Sites from Site Engagement";
-const char kTopSitesFromSiteEngagementDescription[] =
-    "Enable Top Sites on the New Tab Page to be sourced and sorted using site "
-    "engagement.";
 
 const char kTouchAdjustmentName[] = "Touch adjustment";
 const char kTouchAdjustmentDescription[] =
@@ -1616,11 +1605,6 @@ const char kChromeHomeSwipeLogicName[] = "Chrome Home Swipe Logic";
 const char kChromeHomeSwipeLogicDescription[] =
     "Various swipe logic options for Chrome Home for sheet expansion.";
 const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
-
-const char kChromeHomeBottomNavLabelsName[] =
-    "Chrome Home bottom navigation menu item labels.";
-const char kChromeHomeBottomNavLabelsDescription[] =
-    "Enables text labels for Chrome Home bottom navigation menu items.";
 
 const char kChromeHomeName[] = "Chrome Home";
 const char kChromeHomeDescription[] =
@@ -1976,8 +1960,8 @@ const char kOffliningRecentPagesDescription[] =
     "Enable storing recently visited pages locally for offline use. Requires "
     "Offline Pages to be enabled.";
 
-const char kPayWithGoogleV1Name[] = "Pay with Google v1";
-const char kPayWithGoogleV1Description[] =
+extern const char kPayWithGoogleV1Name[] = "Pay with Google v1";
+extern const char kPayWithGoogleV1Description[] =
     "Enable Pay with Google integration into Web Payments with API version "
     "'1'.";
 
@@ -2201,8 +2185,8 @@ const char kWindows10CustomTitlebarDescription[] =
     "deferring to Windows.";
 
 #if DCHECK_IS_ON() && defined(SYZYASAN)
-const char kSyzyAsanDcheckIsFatalName[] = "DCHECKs are fatal";
-const char kSyzyAsanDcheckIsFatalDescription[] =
+extern const char kSyzyAsanDcheckIsFatalName[] = "DCHECKs are fatal";
+extern const char kSyzyAsanDcheckIsFatalDescription[] =
     "By default Chrome will evaluate DCHECKs in SyzyASAN builds, but only log "
     "failed DCHECKs. If enabled, DCHECKs will crash the calling process.";
 #endif  // DCHECK_IS_ON() && defined(SYZYASAN)
@@ -2227,8 +2211,9 @@ const char kAppWindowCyclingDescription[] =
     "browser window, and browser windows will not be cycled when a Chrome App "
     "is active.";
 
-const char kCreditCardAutofillTouchBarName[] = "Credit Card Autofill Touch Bar";
-const char kCreditCardAutofillTouchBarDescription[] =
+extern const char kCreditCardAutofillTouchBarName[] =
+    "Credit Card Autofill Touch Bar";
+extern const char kCreditCardAutofillTouchBarDescription[] =
     "Shows Credit Card Autofill Suggestions on the Touch Bar.";
 
 const char kFullscreenToolbarRevealName[] =
@@ -2242,8 +2227,8 @@ const char kContentFullscreenDescription[] =
     "Fullscreen content window detaches from main browser window and goes to "
     "a new space without moving or changing the original browser window.";
 
-const char kDialogTouchBarName[] = "Dialog Touch Bar";
-const char kDialogTouchBarDescription[] =
+extern const char kDialogTouchBarName[] = "Dialog Touch Bar";
+extern const char kDialogTouchBarDescription[] =
     "Shows Dialog buttons on the Touch Bar.";
 
 const char kHostedAppsInWindowsName[] =
@@ -2252,15 +2237,17 @@ const char kHostedAppsInWindowsDescription[] =
     "Allows hosted apps to be opened in windows instead of being limited to "
     "tabs.";
 
-const char kMacRTLName[] = "Enable RTL";
-const char kMacRTLDescription[] = "Mirrors the UI for RTL language users";
+extern const char kMacRTLName[] = "Enable RTL";
+extern const char kMacRTLDescription[] =
+    "Mirrors the UI for RTL language users";
 
-const char kMacSystemShareMenuName[] = "Enable System Share Menu";
-const char kMacSystemShareMenuDescription[] =
+extern const char kMacSystemShareMenuName[] = "Enable System Share Menu";
+extern const char kMacSystemShareMenuDescription[] =
     "Enables sharing via macOS share extensions.";
 
-const char kMacTouchBarName[] = "Hardware Touch Bar";
-const char kMacTouchBarDescription[] = "Control the use of the Touch Bar.";
+extern const char kMacTouchBarName[] = "Hardware Touch Bar";
+extern const char kMacTouchBarDescription[] =
+    "Control the use of the Touch Bar.";
 
 const char kMacV2SandboxName[] = "Mac V2 Sandbox";
 const char kMacV2SandboxDescription[] =
@@ -2383,8 +2370,8 @@ const char kEnableFullscreenAppListDescription[] =
     "The peeking launcher UI supports touch and provides more space for "
     "upcoming features.";
 
-const char kEnableBackgroundBlurName[] = "Enable background blur.";
-const char kEnableBackgroundBlurDescription[] =
+extern const char kEnableBackgroundBlurName[] = "Enable background blur.";
+extern const char kEnableBackgroundBlurDescription[] =
     "Enables background blur for the Peeking Launcher, Lock Screen, and Tab "
     "Switcher.";
 
@@ -2421,13 +2408,9 @@ const char kEnableTabletSplitViewName[] = "Split view in Tablet mode";
 const char kEnableTabletSplitViewDescription[] =
     "Enable split view for Chrome OS tablet mode.";
 
-const char kEnableZipArchiverPackerName[] = "ZIP archiver - Packer";
-const char kEnableZipArchiverPackerDescription[] =
-    "Enable the ability to archive files on Drive in the Files app";
-
-const char kEnableZipArchiverUnpackerName[] = "ZIP archiver - Unpacker";
-const char kEnableZipArchiverUnpackerDescription[] =
-    "Enable the ability to unpack archives in incognito mode";
+const char kEnableZipArchiverOnFileManagerName[] = "ZIP archiver for Drive";
+const char kEnableZipArchiverOnFileManagerDescription[] =
+    "Enable the ability to archive and unpack files on Drive in the Files app";
 
 const char kEolNotificationName[] = "Disable Device End of Life notification.";
 const char kEolNotificationDescription[] =

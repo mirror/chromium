@@ -41,8 +41,7 @@ int HeadlessNetworkDelegate::OnBeforeURLRequest(
     const net::CompletionCallback& callback,
     GURL* new_url) {
   base::AutoLock lock(lock_);
-  if (headless_browser_context_ &&
-      headless_browser_context_->ShouldRemoveHeaders()) {
+  if (headless_browser_context_->ShouldRemoveHeaders()) {
     request->RemoveRequestHeaderByName(
         kDevToolsEmulateNetworkConditionsClientId);
   }

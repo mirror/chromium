@@ -135,10 +135,10 @@ void SurfaceManager::DestroySurface(const SurfaceId& surface_id) {
   GarbageCollectSurfaces();
 }
 
-void SurfaceManager::SurfaceSubtreeDamaged(const SurfaceId& surface_id) {
+void SurfaceManager::SurfaceWillDraw(const SurfaceId& surface_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   for (auto& observer : observer_list_)
-    observer.OnSurfaceSubtreeDamaged(surface_id);
+    observer.OnSurfaceWillDraw(surface_id);
 }
 
 void SurfaceManager::RequireSequence(const SurfaceId& surface_id,

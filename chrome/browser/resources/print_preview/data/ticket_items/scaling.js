@@ -37,7 +37,7 @@ cr.define('print_preview.ticket_items', function() {
     isCapabilityAvailable() {
       // This is not a function of the printer, but should be disabled if we are
       // saving a PDF to a PDF.
-      const knownSizeToSaveAsPdf =
+      var knownSizeToSaveAsPdf =
           (!this.getDocumentInfoInternal().isModifiable ||
            this.getDocumentInfoInternal().hasCssMediaStyles) &&
           this.getSelectedDestInternal() &&
@@ -48,7 +48,7 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @return {number} The scaling percentage indicated by the ticket item. */
     getValueAsNumber() {
-      const value = this.getValue() == '' ? 0 : parseInt(this.getValue(), 10);
+      var value = this.getValue() == '' ? 0 : parseInt(this.getValue(), 10);
       assert(!isNaN(value));
       return value;
     }

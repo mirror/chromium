@@ -201,7 +201,7 @@ void FetchEvent::OnNavigationPreloadComplete(
       ->AddResourceTiming(*info);
 }
 
-void FetchEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FetchEvent) {
   visitor->Trace(observer_);
   visitor->Trace(request_);
   visitor->Trace(preload_response_property_);

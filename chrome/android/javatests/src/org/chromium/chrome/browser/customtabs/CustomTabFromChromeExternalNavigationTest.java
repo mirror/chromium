@@ -59,7 +59,8 @@ public class CustomTabFromChromeExternalNavigationTest {
 
     @Before
     public void setUp() throws Exception {
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
 
         ChromePreferenceManager.getInstance().setCachedHerbFlavor(
                 ChromeSwitches.HERB_FLAVOR_ELDERBERRY);
@@ -83,7 +84,8 @@ public class CustomTabFromChromeExternalNavigationTest {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 return LaunchIntentDispatcher.createCustomTabActivityIntent(
-                        InstrumentationRegistry.getTargetContext(), intent, true);
+                        InstrumentationRegistry.getInstrumentation().getTargetContext(), intent,
+                        true);
             }
         });
 

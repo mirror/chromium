@@ -48,7 +48,7 @@ class DOMWindowCrypto final : public GarbageCollected<DOMWindowCrypto>,
   static Crypto* crypto(LocalDOMWindow&);
   Crypto* crypto() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit DOMWindowCrypto(LocalDOMWindow&);

@@ -51,7 +51,7 @@ SVGURIReference::SVGURIReference(SVGElement* element)
   href_->AddToPropertyMap(element);
 }
 
-void SVGURIReference::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGURIReference) {
   visitor->Trace(href_);
 }
 

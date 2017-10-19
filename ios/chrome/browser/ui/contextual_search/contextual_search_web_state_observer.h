@@ -29,12 +29,10 @@ class ContextualSearchWebStateObserver : public web::WebStateObserver {
 
  private:
   void NavigationItemCommitted(
-      web::WebState* web_state,
       const web::LoadCommittedDetails& load_details) override;
   void PageLoaded(
-      web::WebState* web_state,
       web::PageLoadCompletionStatus load_completion_status) override;
-  void WebStateDestroyed(web::WebState* web_state) override;
+  void WebStateDestroyed() override;
 
   id<ContextualSearchWebStateDelegate> delegate_;
   bool loaded_;

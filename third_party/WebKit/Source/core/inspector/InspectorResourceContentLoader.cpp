@@ -43,7 +43,7 @@ class InspectorResourceContentLoader::ResourceClient final
       resource->AddClient(static_cast<StyleSheetResourceClient*>(this));
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(loader_);
     StyleSheetResourceClient::Trace(visitor);
     RawResourceClient::Trace(visitor);
@@ -191,7 +191,7 @@ InspectorResourceContentLoader::~InspectorResourceContentLoader() {
   DCHECK(resources_.IsEmpty());
 }
 
-void InspectorResourceContentLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorResourceContentLoader) {
   visitor->Trace(inspected_frame_);
   visitor->Trace(pending_resource_clients_);
   visitor->Trace(resources_);

@@ -78,7 +78,7 @@ XPathResult* DocumentXPathEvaluator::evaluate(Document& document,
       expression, context_node, resolver, type, ScriptValue(), exception_state);
 }
 
-void DocumentXPathEvaluator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentXPathEvaluator) {
   visitor->Trace(xpath_evaluator_);
   Supplement<Document>::Trace(visitor);
 }

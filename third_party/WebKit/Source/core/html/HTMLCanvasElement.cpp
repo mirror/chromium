@@ -1093,7 +1093,7 @@ void HTMLCanvasElement::NotifySurfaceInvalid() {
     context_->LoseContext(CanvasRenderingContext::kRealLostContext);
 }
 
-void HTMLCanvasElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLCanvasElement) {
   visitor->Trace(listeners_);
   visitor->Trace(context_);
   ContextLifecycleObserver::Trace(visitor);

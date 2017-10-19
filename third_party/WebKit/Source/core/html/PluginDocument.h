@@ -48,7 +48,7 @@ class CORE_EXPORT PluginDocument final : public HTMLDocument {
 
   void Shutdown() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit PluginDocument(const DocumentInit&);

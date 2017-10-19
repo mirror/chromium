@@ -43,7 +43,7 @@ class CSSFontFeatureValue : public CSSValue {
 
   bool Equals(const CSSFontFeatureValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 

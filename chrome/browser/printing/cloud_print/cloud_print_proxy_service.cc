@@ -22,6 +22,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/service_process/service_process_control.h"
@@ -30,7 +31,6 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "printing/backend/print_backend.h"
-#include "ui/message_center/notification.h"
 
 using content::BrowserThread;
 

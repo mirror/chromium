@@ -12,7 +12,6 @@
 #include "ui/display/types/display_mode.h"
 #include "ui/display/types/display_snapshot.h"
 #include "ui/gfx/geometry/mojo/geometry_struct_traits.h"
-#include "ui/gfx/ipc/color/gfx_param_traits.h"
 
 namespace mojo {
 
@@ -52,11 +51,6 @@ struct StructTraits<display::mojom::DisplaySnapshotDataView,
   static bool has_color_correction_matrix(
       const std::unique_ptr<display::DisplaySnapshot>& snapshot) {
     return snapshot->has_color_correction_matrix();
-  }
-
-  static const gfx::ColorSpace& color_space(
-      const std::unique_ptr<display::DisplaySnapshot>& snapshot) {
-    return snapshot->color_space();
   }
 
   static std::string display_name(

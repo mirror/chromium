@@ -31,9 +31,6 @@ class ChromeBrowserState;
 // Called when the user cancels the folder creation.
 - (void)bookmarkFolderEditorDidCancel:
     (BookmarkFolderEditorViewController*)folderEditor;
-// Called when the controller is going to commit the title change.
-- (void)bookmarkFolderEditorWillCommitTitleChange:
-    (BookmarkFolderEditorViewController*)folderEditor;
 @end
 
 // View controller for creating or editing a bookmark folder. Allows editing of

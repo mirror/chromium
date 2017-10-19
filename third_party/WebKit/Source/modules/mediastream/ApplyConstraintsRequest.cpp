@@ -51,7 +51,7 @@ void ApplyConstraintsRequest::RequestFailed(const String& constraint,
   track_.Reset();
 }
 
-void ApplyConstraintsRequest::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ApplyConstraintsRequest) {
   visitor->Trace(resolver_);
 }
 

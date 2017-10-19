@@ -43,7 +43,7 @@ class RTCVoidRequest : public GarbageCollectedFinalized<RTCVoidRequest> {
   virtual void RequestSucceeded() = 0;
   virtual void RequestFailed(const String& error) = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   RTCVoidRequest() {}

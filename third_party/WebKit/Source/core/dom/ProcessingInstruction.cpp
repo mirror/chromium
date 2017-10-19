@@ -299,7 +299,7 @@ void ProcessingInstruction::ClearSheet() {
   sheet_.Release()->ClearOwnerNode();
 }
 
-void ProcessingInstruction::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ProcessingInstruction) {
   visitor->Trace(sheet_);
   visitor->Trace(listener_for_xslt_);
   CharacterData::Trace(visitor);

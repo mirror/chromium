@@ -258,7 +258,7 @@ class ScheduledReload final : public ScheduledNavigation {
 
   KURL Url() const override { return frame_->GetDocument()->Url(); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(frame_);
     ScheduledNavigation::Trace(visitor);
   }
@@ -317,7 +317,7 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
 
   KURL Url() const override { return submission_->RequestURL(); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(submission_);
     ScheduledNavigation::Trace(visitor);
   }
@@ -556,7 +556,7 @@ void NavigationScheduler::Cancel() {
   redirect_.Clear();
 }
 
-void NavigationScheduler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigationScheduler) {
   visitor->Trace(frame_);
   visitor->Trace(redirect_);
 }

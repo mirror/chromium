@@ -31,7 +31,7 @@ DeviceAcceleration::DeviceAcceleration(
     DeviceMotionData::Acceleration* acceleration)
     : acceleration_(acceleration) {}
 
-void DeviceAcceleration::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DeviceAcceleration) {
   visitor->Trace(acceleration_);
 }
 

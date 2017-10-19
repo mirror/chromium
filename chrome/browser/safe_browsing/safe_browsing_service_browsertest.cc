@@ -49,6 +49,7 @@
 #include "chrome/browser/safe_browsing/safe_browsing_database.h"
 #include "chrome/browser/safe_browsing/test_safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
+#include "chrome/browser/safe_browsing/v4_test_utils.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -69,7 +70,6 @@
 #include "components/safe_browsing/db/v4_feature_list.h"
 #include "components/safe_browsing/db/v4_get_hash_protocol_manager.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
-#include "components/safe_browsing/db/v4_test_util.h"
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
@@ -1510,7 +1510,7 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceTest, StartAndStop) {
   EXPECT_TRUE(csd_service->enabled());
 
   // Add a new Profile. SBS should keep running.
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   ASSERT_TRUE(temp_profile_dir_.CreateUniqueTempDir());
   std::unique_ptr<Profile> profile2(Profile::CreateProfile(
       temp_profile_dir_.GetPath(), nullptr, Profile::CREATE_MODE_SYNCHRONOUS));
@@ -1704,7 +1704,7 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceShutdownTest,
   // the profile will get destroyed in the normal browser shutdown process.
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   {
-    base::ScopedAllowBlockingForTesting allow_blocking;
+    base::ThreadRestrictions::ScopedAllowIO allow_io;
     ASSERT_TRUE(temp_profile_dir_.CreateUniqueTempDir());
   }
   profile_manager->CreateProfileAsync(

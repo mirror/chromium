@@ -103,7 +103,7 @@ EventDispatchMediator* WheelEvent::CreateMediator() {
   return EventDispatchMediator::Create(this);
 }
 
-void WheelEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WheelEvent) {
   MouseEvent::Trace(visitor);
 }
 

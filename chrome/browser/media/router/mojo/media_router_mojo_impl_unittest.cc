@@ -967,6 +967,10 @@ TEST_F(MediaRouterMojoImplTest, SearchSinks) {
   TestSearchSinks();
 }
 
+TEST_F(MediaRouterMojoImplTest, ProvideSinks) {
+  TestProvideSinks();
+}
+
 TEST_F(MediaRouterMojoImplTest, GetRouteController) {
   TestCreateMediaRouteController();
 }

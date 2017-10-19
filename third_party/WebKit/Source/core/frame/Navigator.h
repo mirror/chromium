@@ -65,7 +65,7 @@ class CORE_EXPORT Navigator final : public GarbageCollected<Navigator>,
   // NavigatorLanguage
   Vector<String> languages() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:

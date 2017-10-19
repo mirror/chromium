@@ -153,13 +153,13 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   MHTMLArchive* Archive() const override;
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                RefPtr<WebTaskRunner>) override;
+                                                WebTaskRunner*) override;
 
   bool IsDetached() const override { return frozen_state_; }
 
   FetchContext* Detach() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   struct FrozenState;

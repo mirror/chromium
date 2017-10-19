@@ -11,9 +11,9 @@
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/notifier_settings.h"
-#include "ui/views/controls/scroll_view.h"
 
 using message_center::Notifier;
+using message_center::NotifierGroup;
 using message_center::NotifierId;
 using message_center::NotifierSettingsObserver;
 using message_center::NotifierSettingsProvider;
@@ -38,14 +38,31 @@ class TestingNotifierSettingsProvider : public NotifierSettingsProvider {
   void AddObserver(NotifierSettingsObserver* observer) override {}
   void RemoveObserver(NotifierSettingsObserver* observer) override {}
 
+  size_t GetNotifierGroupCount() const override { return 1; }
+
+  const message_center::NotifierGroup& GetNotifierGroupAt(
+      size_t index) const override {
+    DCHECK_EQ(0u, index);
+    return GetActiveNotifierGroup();
+  }
+
+  bool IsNotifierGroupActiveAt(size_t index) const override {
+    return index == 0;
+  }
+
+  void SwitchToNotifierGroup(size_t index) override { NOTREACHED(); }
+
+  const NotifierGroup& GetActiveNotifierGroup() const override {
+    static NotifierGroup group{base::UTF8ToUTF16("Fake name"),
+                               base::UTF8ToUTF16("fake@email.com")};
+    return group;
+  }
+
   void GetNotifierList(
       std::vector<std::unique_ptr<Notifier>>* notifiers) override {
     notifiers->clear();
-    if (!no_notifiers_) {
-      notifiers->push_back(NewNotifier("id", "title", true /* enabled */));
-      notifiers->push_back(
-          NewNotifier("id2", "other title", false /* enabled */));
-    }
+    notifiers->push_back(NewNotifier("id", "title", /*enabled=*/true));
+    notifiers->push_back(NewNotifier("id2", "other title", /*enabled=*/false));
   }
 
   void SetNotifierEnabled(const NotifierId& notifier_id,
@@ -66,8 +83,6 @@ class TestingNotifierSettingsProvider : public NotifierSettingsProvider {
     last_notifier_id_settings_requested_.reset(new NotifierId(notifier_id));
   }
 
-  void set_no_notifiers(bool no_notifiers) { no_notifiers_ = no_notifiers; }
-
  private:
   std::unique_ptr<Notifier> NewNotifier(const std::string& id,
                                         const std::string& title,
@@ -79,7 +94,6 @@ class TestingNotifierSettingsProvider : public NotifierSettingsProvider {
 
   size_t request_count_ = 0u;
   std::unique_ptr<NotifierId> last_notifier_id_settings_requested_;
-  bool no_notifiers_ = false;
 };
 
 }  // namespace
@@ -92,13 +106,9 @@ class NotifierSettingsViewTest : public AshTestBase {
   void SetUp() override;
   void TearDown() override;
 
-  void InitView();
   NotifierSettingsView* GetView() const;
   const TestingNotifierSettingsProvider* settings_provider() const {
     return &settings_provider_;
-  }
-  void SetNoNotifiers(bool no_notifiers) {
-    settings_provider_.set_no_notifiers(no_notifiers);
   }
 
  private:
@@ -114,7 +124,8 @@ NotifierSettingsViewTest::~NotifierSettingsViewTest() = default;
 
 void NotifierSettingsViewTest::SetUp() {
   AshTestBase::SetUp();
-  SetNoNotifiers(false);
+  notifier_settings_view_ =
+      std::make_unique<NotifierSettingsView>(&settings_provider_);
 }
 
 void NotifierSettingsViewTest::TearDown() {
@@ -122,17 +133,11 @@ void NotifierSettingsViewTest::TearDown() {
   AshTestBase::TearDown();
 }
 
-void NotifierSettingsViewTest::InitView() {
-  notifier_settings_view_ =
-      std::make_unique<NotifierSettingsView>(&settings_provider_);
-}
-
 NotifierSettingsView* NotifierSettingsViewTest::GetView() const {
   return notifier_settings_view_.get();
 }
 
 TEST_F(NotifierSettingsViewTest, TestLearnMoreButton) {
-  InitView();
   const std::set<NotifierSettingsView::NotifierButton*>& buttons =
       GetView()->buttons_;
   EXPECT_EQ(2u, buttons.size());
@@ -151,17 +156,6 @@ TEST_F(NotifierSettingsViewTest, TestLearnMoreButton) {
   ASSERT_FALSE(last_settings_button_id == nullptr);
   EXPECT_EQ(NotifierId(NotifierId::APPLICATION, "id"),
             *last_settings_button_id);
-}
-
-TEST_F(NotifierSettingsViewTest, TestEmptyNotifierView) {
-  InitView();
-  EXPECT_FALSE(GetView()->no_notifiers_view_->visible());
-  EXPECT_TRUE(GetView()->top_label_->visible());
-
-  SetNoNotifiers(true);
-  InitView();
-  EXPECT_TRUE(GetView()->no_notifiers_view_->visible());
-  EXPECT_FALSE(GetView()->top_label_->visible());
 }
 
 }  // namespace ash

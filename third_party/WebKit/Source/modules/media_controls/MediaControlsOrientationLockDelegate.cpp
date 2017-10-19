@@ -471,7 +471,7 @@ void MediaControlsOrientationLockDelegate::
               kLockToAnyDelay);
 }
 
-void MediaControlsOrientationLockDelegate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsOrientationLockDelegate) {
   EventListener::Trace(visitor);
   visitor->Trace(video_element_);
 }

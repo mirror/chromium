@@ -89,7 +89,8 @@ public class InfoBarContainerTest {
         mListener =  new InfoBarTestAnimationListener();
         container.addAnimationListener(mListener);
 
-        mTestServer = EmbeddedTestServer.createAndStartServer(InstrumentationRegistry.getContext());
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
     }
 
     @After

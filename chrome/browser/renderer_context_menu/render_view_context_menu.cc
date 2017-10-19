@@ -53,7 +53,6 @@
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
-#include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/translate/chrome_translate_client.h"
 #include "chrome/browser/translate/translate_service.h"
 #include "chrome/browser/ui/autofill/chrome_autofill_client.h"
@@ -82,7 +81,6 @@
 #include "components/metrics/proto/omnibox_input_type.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match.h"
-#include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/common/experiments.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
@@ -1534,14 +1532,12 @@ void RenderViewContextMenu::AppendPasswordItems() {
                                     IDS_CONTENT_CONTEXT_FORCESAVEPASSWORD);
     add_separator = true;
   }
-  if (password_manager_util::ManualPasswordGenerationEnabled(
-          ProfileSyncServiceFactory::GetSyncServiceForBrowserContext(
-              source_web_contents_->GetBrowserContext()))) {
+  if (password_manager::ManualPasswordGenerationEnabled()) {
     menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_GENERATEPASSWORD,
                                     IDS_CONTENT_CONTEXT_GENERATEPASSWORD);
     add_separator = true;
   }
-  if (password_manager_util::ShowAllSavedPasswordsContextMenuEnabled()) {
+  if (password_manager::ShowAllSavedPasswordsContextMenuEnabled()) {
     menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS,
                                     IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
     add_separator = true;
@@ -2029,9 +2025,8 @@ void RenderViewContextMenu::ExecuteCommand(int id, int event_flags) {
       break;
 
     case IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS:
-      password_manager_util::UserTriggeredShowAllSavedPasswordsFromContextMenu(
-          autofill::ChromeAutofillClient::FromWebContents(
-              source_web_contents_));
+      autofill::ChromeAutofillClient::FromWebContents(source_web_contents_)
+          ->ExecuteCommand(autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
       break;
 
     case IDC_CONTENT_CONTENT_PICTUREINPICTURE:

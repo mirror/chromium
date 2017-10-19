@@ -66,7 +66,7 @@ void RemoveCSSPropertyCommand::DoUnapply() {
                                          IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-void RemoveCSSPropertyCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemoveCSSPropertyCommand) {
   visitor->Trace(element_);
   SimpleEditCommand::Trace(visitor);
 }

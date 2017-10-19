@@ -129,7 +129,7 @@ bool CSSImageValue::KnownToBeOpaque(const Document& document,
                        : false;
 }
 
-void CSSImageValue::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSImageValue) {
   visitor->Trace(cached_image_);
   CSSValue::TraceAfterDispatch(visitor);
 }

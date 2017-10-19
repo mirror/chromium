@@ -212,7 +212,7 @@ ScriptValue EXTDisjointTimerQuery::getQueryObjectEXT(ScriptState* script_state,
   return ScriptValue::CreateNull(script_state);
 }
 
-void EXTDisjointTimerQuery::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EXTDisjointTimerQuery) {
   visitor->Trace(current_elapsed_query_);
   WebGLExtension::Trace(visitor);
 }

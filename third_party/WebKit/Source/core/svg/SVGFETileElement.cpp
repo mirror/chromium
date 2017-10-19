@@ -32,7 +32,7 @@ inline SVGFETileElement::SVGFETileElement(Document& document)
   AddToPropertyMap(in1_);
 }
 
-void SVGFETileElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFETileElement) {
   visitor->Trace(in1_);
   SVGFilterPrimitiveStandardAttributes::Trace(visitor);
 }

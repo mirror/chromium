@@ -42,7 +42,7 @@ class CORE_EXPORT DocumentResource final : public TextResource {
 
   static DocumentResource* FetchSVGDocument(FetchParameters&, ResourceFetcher*);
   ~DocumentResource() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   Document* GetDocument() const { return document_.Get(); }
 

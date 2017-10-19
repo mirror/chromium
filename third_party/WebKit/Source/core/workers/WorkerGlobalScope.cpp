@@ -254,6 +254,8 @@ WorkerGlobalScope::LoadingScriptFromInstalledScriptsManager(
       GetThread()->GetInstalledScriptsManager()->GetScriptData(script_url,
                                                                &script_data);
   switch (status) {
+    case InstalledScriptsManager::ScriptStatus::kTaken:
+      return LoadResult::kNotHandled;
     case InstalledScriptsManager::ScriptStatus::kFailed:
       return LoadResult::kFailed;
     case InstalledScriptsManager::ScriptStatus::kSuccess:
@@ -379,7 +381,7 @@ WorkerGlobalScope::WorkerGlobalScope(
       event_queue_(WorkerEventQueue::Create(this)),
       timers_(TaskRunnerHelper::Get(TaskType::kJavascriptTimer, this)),
       time_origin_(time_origin),
-      font_selector_(OffscreenFontSelector::Create(this)) {
+      font_selector_(OffscreenFontSelector::Create()) {
   InstanceCounters::IncrementCounter(
       InstanceCounters::kWorkerGlobalScopeCounter);
   SetSecurityOrigin(SecurityOrigin::Create(url_));
@@ -451,7 +453,7 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
 }
 
-void WorkerGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerGlobalScope) {
   visitor->Trace(location_);
   visitor->Trace(navigator_);
   visitor->Trace(event_queue_);

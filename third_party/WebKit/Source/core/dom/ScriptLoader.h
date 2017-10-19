@@ -62,7 +62,7 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   }
 
   ~ScriptLoader() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
   enum LegacyTypeSupport {

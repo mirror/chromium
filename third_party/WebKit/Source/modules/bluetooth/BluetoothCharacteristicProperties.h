@@ -32,7 +32,7 @@ class BluetoothCharacteristicProperties final
   bool reliableWrite() const;
   bool writableAuxiliaries() const;
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit BluetoothCharacteristicProperties(uint32_t properties);

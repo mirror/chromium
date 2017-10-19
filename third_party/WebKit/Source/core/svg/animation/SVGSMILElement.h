@@ -125,7 +125,7 @@ class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
 
   virtual bool IsSVGDiscardElement() const { return false; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   enum BeginOrEnd { kBegin, kEnd };
@@ -193,7 +193,7 @@ class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
       return new Condition(type, begin_or_end, base_id, name, offset, repeat);
     }
     ~Condition();
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
 
     Type GetType() const { return type_; }
     BeginOrEnd GetBeginOrEnd() const { return begin_or_end_; }

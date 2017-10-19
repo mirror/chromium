@@ -24,7 +24,7 @@ class MODULES_EXPORT HTMLMediaElementAudioOutputDevice final
   USING_GARBAGE_COLLECTED_MIXIN(HTMLMediaElementAudioOutputDevice);
 
  public:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   static String sinkId(HTMLMediaElement&);
   static ScriptPromise setSinkId(ScriptState*,
                                  HTMLMediaElement&,

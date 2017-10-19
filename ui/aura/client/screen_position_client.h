@@ -25,14 +25,10 @@ class AURA_EXPORT ScreenPositionClient {
 
   // Converts the |screen_point| from a given |window|'s coordinate space
   // into screen coordinate space.
-  // TODO(crbug.com/773331): remove int version of point conversion when
-  // current usage are changed to use float version.
   virtual void ConvertPointToScreen(const Window* window,
-                                    gfx::PointF* point) = 0;
+                                    gfx::Point* point) = 0;
   virtual void ConvertPointFromScreen(const Window* window,
-                                      gfx::PointF* point) = 0;
-  void ConvertPointToScreen(const Window* window, gfx::Point* point);
-  void ConvertPointFromScreen(const Window* window, gfx::Point* point);
+                                      gfx::Point* point) = 0;
   // Converts the |screen_point| from root window host's coordinate of
   // into screen coordinate space.
   // A typical example of using this function instead of ConvertPointToScreen is

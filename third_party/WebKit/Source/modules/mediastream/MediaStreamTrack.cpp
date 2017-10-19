@@ -545,7 +545,7 @@ ExecutionContext* MediaStreamTrack::GetExecutionContext() const {
   return ContextLifecycleObserver::GetExecutionContext();
 }
 
-void MediaStreamTrack::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaStreamTrack) {
   visitor->Trace(registered_media_streams_);
   visitor->Trace(component_);
   visitor->Trace(image_capture_);

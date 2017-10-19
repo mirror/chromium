@@ -63,7 +63,7 @@ void TreeOrderedList::Remove(const Node* node) {
   nodes_.erase(const_cast<Node*>(node));
 }
 
-void TreeOrderedList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TreeOrderedList) {
   visitor->Trace(nodes_);
 }
 

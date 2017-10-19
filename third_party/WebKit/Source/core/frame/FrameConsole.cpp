@@ -150,7 +150,7 @@ void FrameConsole::DidFailLoading(unsigned long request_identifier,
       error.FailingURL(), request_identifier));
 }
 
-void FrameConsole::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FrameConsole) {
   visitor->Trace(frame_);
 }
 

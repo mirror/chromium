@@ -291,10 +291,6 @@ bool TranslateUIDelegate::IsSiteBlacklisted() {
   return !host.empty() && prefs_->IsSiteBlacklisted(host);
 }
 
-bool TranslateUIDelegate::CanBlacklistSite() {
-  return !GetPageHost().empty();
-}
-
 void TranslateUIDelegate::SetSiteBlacklist(bool value) {
   std::string host = GetPageHost();
   if (host.empty())

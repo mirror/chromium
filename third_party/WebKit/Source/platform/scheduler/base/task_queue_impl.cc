@@ -318,11 +318,7 @@ TaskQueueImpl::TaskDeque TaskQueueImpl::TakeImmediateIncomingQueue() {
   TaskQueueImpl::TaskDeque queue;
   queue.Swap(immediate_incoming_queue());
 
-  // Activate delayed fence if necessary. This is ideologically similar to
-  // ActivateDelayedFenceIfNeeded, but due to immediate tasks being posted
-  // from any thread we can't generate an enqueue order for the fence there,
-  // so we have to check all immediate tasks and use their enqueue order for
-  // a fence.
+  // Activate delayed fence if necessary.
   if (main_thread_only().delayed_fence) {
     for (const Task& task : queue) {
       if (task.delayed_run_time >= main_thread_only().delayed_fence.value()) {
@@ -664,12 +660,7 @@ bool TaskQueueImpl::BlockedByFence() const {
          main_thread_only().current_fence;
 }
 
-bool TaskQueueImpl::HasActiveFence() {
-  if (main_thread_only().delayed_fence &&
-      main_thread_only().time_domain->Now() >
-          main_thread_only().delayed_fence.value()) {
-    return true;
-  }
+bool TaskQueueImpl::HasFence() const {
   return !!main_thread_only().current_fence;
 }
 

@@ -81,7 +81,8 @@ public class DocumentModeAssassinTest {
 
     @Before
     public void setUp() throws Exception {
-        mContext = new AdvancedMockContext(InstrumentationRegistry.getTargetContext());
+        mContext = new AdvancedMockContext(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
         mDocumentModeDirectory = new TestTabModelDirectory(
                 mContext, DOCUMENT_MODE_DIRECTORY_NAME, null);
         mTabbedModeDirectory = new TestTabModelDirectory(

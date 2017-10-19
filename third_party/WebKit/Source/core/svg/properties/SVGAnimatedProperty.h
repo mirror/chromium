@@ -79,7 +79,7 @@ class SVGAnimatedPropertyBase
 
   bool IsSpecified() const;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappersWithManualWriteBarrier(context_element_.Get());
@@ -147,7 +147,7 @@ class SVGAnimatedPropertyCommon : public SVGAnimatedPropertyBase {
     SVGAnimatedPropertyBase::AnimationEnded();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(base_value_);
     visitor->Trace(current_value_);
     SVGAnimatedPropertyBase::Trace(visitor);
@@ -279,7 +279,7 @@ class SVGAnimatedProperty<Property, TearOffType, void>
     return anim_val_tear_off_;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(base_val_tear_off_);
     visitor->Trace(anim_val_tear_off_);
     SVGAnimatedPropertyCommon<Property>::Trace(visitor);

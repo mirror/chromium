@@ -603,7 +603,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
 // a handler accepts "".
 IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
                        LaunchWithFileEmptyExtension) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath test_file;
@@ -618,7 +618,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
 // a handler accepts *.
 IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest,
                        LaunchWithFileEmptyExtensionAcceptAny) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath test_file;
@@ -727,7 +727,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest, GetDisplayPath) {
 // Tests that the file is created if the file does not exist and the app has the
 // fileSystem.write permission.
 IN_PROC_BROWSER_TEST_F(PlatformAppWithFileBrowserTest, LaunchNewFile) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   ASSERT_TRUE(RunPlatformAppTestWithFile(

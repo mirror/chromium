@@ -48,7 +48,7 @@ namespace blink {
 NavigatorWebMIDI::NavigatorWebMIDI(Navigator& navigator)
     : Supplement<Navigator>(navigator) {}
 
-void NavigatorWebMIDI::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorWebMIDI) {
   Supplement<Navigator>::Trace(visitor);
 }
 

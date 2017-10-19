@@ -36,9 +36,6 @@ def main():
   parser.add_argument('--bootdata', type=os.path.realpath,
                       help='Path to a bootdata to use instead of the default '
                            'one from the SDK')
-  parser.add_argument('--kernel', type=os.path.realpath,
-                      help='Path to a kernel to use instead of the default '
-                           'one from the SDK')
   args, child_args = parser.parse_known_args()
 
   bootfs = BuildBootfs(
@@ -49,7 +46,7 @@ def main():
   if not bootfs:
     return 2
 
-  return RunFuchsia(bootfs, args.device, args.kernel, args.dry_run, None)
+  return RunFuchsia(bootfs, args.device, args.dry_run, None)
 
 
 if __name__ == '__main__':

@@ -48,7 +48,7 @@ class MediaKeyStatusMap final
   bool has(const ArrayBufferOrArrayBufferView& key_id);
   ScriptValue get(ScriptState*, const ArrayBufferOrArrayBufferView& key_id);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   // PairIterable<> implementation.

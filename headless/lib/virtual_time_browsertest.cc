@@ -23,9 +23,6 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
                                public page::ExperimentalObserver,
                                public runtime::Observer {
  public:
-  explicit VirtualTimeBrowserTest(const std::string& initial_url)
-      : initial_url_(initial_url) {}
-
   void RunDevTooledTest() override {
     EXPECT_TRUE(embedded_test_server()->Start());
     devtools_client_->GetEmulation()->GetExperimental()->AddObserver(this);
@@ -48,20 +45,31 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
     MaybeSetVirtualTimePolicy();
   }
 
-  virtual void MaybeSetVirtualTimePolicy() = 0;
+  void MaybeSetVirtualTimePolicy() {
+    if (!page_enabled || !runtime_enabled)
+      return;
+
+    // To avoid race conditions start with virtual time paused.
+    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
+        emulation::SetVirtualTimePolicyParams::Builder()
+            .SetPolicy(emulation::VirtualTimePolicy::PAUSE)
+            .Build(),
+        base::Bind(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
+                   base::Unretained(this)));
+  }
 
   void SetVirtualTimePolicyDone(
       std::unique_ptr<emulation::SetVirtualTimePolicyResult>) {
     // Virtual time is paused, so start navigating.
     devtools_client_->GetPage()->Navigate(
-        embedded_test_server()->GetURL(initial_url_).spec());
+        embedded_test_server()->GetURL("/virtual_time_test.html").spec());
   }
 
   void OnFrameStartedLoading(
       const page::FrameStartedLoadingParams& params) override {
-    if (initial_load_seen_)
+    if (intial_load_seen_)
       return;
-    initial_load_seen_ = true;
+    intial_load_seen_ = true;
     // The navigation is underway, so allow virtual time to advance while
     // network fetches are not pending.
     devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
@@ -78,21 +86,12 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
     // We expect the arguments always to be a single string.
     const std::vector<std::unique_ptr<runtime::RemoteObject>>& args =
         *params.GetArgs();
-    if (args.size() == 1u && args[0]->HasValue())
-      log_.push_back(args[0]->GetValue()->GetString());
+    std::string message;
+    if (args.size() == 1u && args[0]->HasValue() &&
+        args[0]->GetValue()->GetAsString(&message)) {
+      log_.push_back(message);
+    }
   }
-
-  const std::string initial_url_;
-  std::vector<std::string> log_;
-  bool initial_load_seen_ = false;
-  bool page_enabled = false;
-  bool runtime_enabled = false;
-};
-
-class VirtualTimeObserverTest : public VirtualTimeBrowserTest {
- public:
-  VirtualTimeObserverTest()
-      : VirtualTimeBrowserTest("/virtual_time_test.html") {}
 
   // emulation::Observer implementation:
   void OnVirtualTimeBudgetExpired(
@@ -119,19 +118,6 @@ class VirtualTimeObserverTest : public VirtualTimeBrowserTest {
     FinishAsynchronousTest();
   }
 
-  void MaybeSetVirtualTimePolicy() override {
-    if (!page_enabled || !runtime_enabled)
-      return;
-
-    // To avoid race conditions start with virtual time paused.
-    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
-        emulation::SetVirtualTimePolicyParams::Builder()
-            .SetPolicy(emulation::VirtualTimePolicy::PAUSE)
-            .Build(),
-        base::Bind(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
-                   base::Unretained(this)));
-  }
-
   void OnVirtualTimeAdvanced(
       const emulation::VirtualTimeAdvancedParams& params) override {
     log_.push_back(
@@ -143,38 +129,13 @@ class VirtualTimeObserverTest : public VirtualTimeBrowserTest {
     log_.push_back(
         base::StringPrintf("Paused @ %dms", params.GetVirtualTimeElapsed()));
   }
+
+  std::vector<std::string> log_;
+  bool intial_load_seen_ = false;
+  bool page_enabled = false;
+  bool runtime_enabled = false;
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeObserverTest);
-
-class MaxVirtualTimeTaskStarvationCountTest : public VirtualTimeBrowserTest {
- public:
-  MaxVirtualTimeTaskStarvationCountTest()
-      : VirtualTimeBrowserTest("/virtual_time_starvation_test.html") {}
-
-  void MaybeSetVirtualTimePolicy() override {
-    if (!page_enabled || !runtime_enabled)
-      return;
-
-    // To avoid race conditions start with virtual time paused.
-    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
-        emulation::SetVirtualTimePolicyParams::Builder()
-            .SetPolicy(emulation::VirtualTimePolicy::PAUSE)
-            .SetMaxVirtualTimeTaskStarvationCount(100)
-            .Build(),
-        base::Bind(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
-                   base::Unretained(this)));
-  }
-
-  // emulation::Observer implementation:
-  void OnVirtualTimeBudgetExpired(
-      const emulation::VirtualTimeBudgetExpiredParams& params) override {
-    // If SetMaxVirtualTimeTaskStarvationCount was not set, this callback would
-    // never fire.
-    FinishAsynchronousTest();
-  }
-};
-
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(MaxVirtualTimeTaskStarvationCountTest);
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeBrowserTest);
 
 }  // namespace headless

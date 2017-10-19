@@ -5152,11 +5152,8 @@ Battery full
   <message name="IDS_ARC_MIGRATE_ENCRYPTION_NOTIFICATION_RESTART_BUTTON" desc="Label for the button in the notification that navigates the user to sign-out for completing the encryption update step.">
     Sign out &amp; sign back in
   </message>
-  <message name="IDS_ARC_MIGRATE_ENCRYPTION_SUCCESS_TITLE" desc="Title of the toast shown on the first sign-in after the successfully completed migration needed for using Android apps.">
-    OS update successful
-  </message>
   <message name="IDS_ARC_MIGRATE_ENCRYPTION_SUCCESS_MESSAGE" desc="Message of the toast shown on the first sign-in after the successfully completed migration needed for using Android apps.">
-    You can now use Android apps.
+    Update successful. You can now use Android apps.
   </message>
   <message name="IDS_VOICE_INTERACTION_VALUE_PROP_LOADING" desc="Loading message of the voice interaction value prop dialog.">
     Loading Google Assistant...
@@ -5339,13 +5336,5 @@ Battery full
   </message>
   <message name="IDS_HATS_NOTIFICATION_TAKE_SURVEY_BUTTON" desc="The title of the button in the notification for Happiness Tracking Survey to take the said survey.">
     Take survey
-  </message>
-
-  <!-- Lock screen note app toast dialog -->
-  <message name="IDS_LOCK_SCREEN_NOTE_APP_TOAST_DIALOG_TITLE" desc="Title of the dialog shown to the user when they first launch note taking app from the lock screen - the title contains the launched app's name.">
-    Taking notes with <ph name="LOCK_SCREEN_APP_NAME">$1<ex>Lock Screen Enabled App</ex></ph>
-  </message>
-  <message name="IDS_LOCK_SCREEN_NOTE_APP_TOAST_DIALOG_MESSAGE" desc="Message shown in the body of the dialog shown to the user when they launch note taking app from the lock screen for the first time - the message has a placeholder for the launched app's name.">
-    Lock screen notes are accessible from the lock screen and automatically saved to <ph name="LOCK_SCREEN_APP_NAME">$1<ex>Lock Screen Enabled App</ex></ph>.
   </message>
 </grit-part>

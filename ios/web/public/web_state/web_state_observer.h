@@ -31,26 +31,24 @@ class WebStateObserver {
   WebState* web_state() const { return web_state_; }
 
   // These methods are invoked every time the WebState changes visibility.
-  virtual void WasShown(WebState* web_state) {}
-  virtual void WasHidden(WebState* web_state) {}
+  virtual void WasShown() {}
+  virtual void WasHidden() {}
 
   // This method is invoked when committed navigation items have been pruned.
-  virtual void NavigationItemsPruned(WebState* web_state,
-                                     size_t pruned_item_count) {}
+  virtual void NavigationItemsPruned(size_t pruned_item_count) {}
 
   // This method is invoked either when NavigationItem's titile did change or
   // when window.location.replace JavaScript API was called.
   // DEPRECATED. Use |TitleWasSet| to listen for title changes and
   // |DidFinishNavigation| for |window.location.replace|.
   // TODO(crbug.com/720786): Remove this method.
-  virtual void NavigationItemChanged(WebState* web_state) {}
+  virtual void NavigationItemChanged() {}
 
   // This method is invoked when a new non-pending navigation item is created.
   // This corresponds to one NavigationManager item being created
   // (in the case of new navigations) or renavigated to (for back/forward
   // navigations).
   virtual void NavigationItemCommitted(
-      WebState* web_state,
       const LoadCommittedDetails& load_details) {}
 
   // Called when a navigation started in the WebState for the main frame.
@@ -69,8 +67,7 @@ class WebStateObserver {
   //
   // There is no guarantee that DidFinishNavigation() will be called for any
   // particular navigation before DidStartNavigation is called on the next.
-  virtual void DidStartNavigation(WebState* web_state,
-                                  NavigationContext* navigation_context) {}
+  virtual void DidStartNavigation(NavigationContext* navigation_context) {}
 
   // Called when a navigation finished in the WebState for the main frame. This
   // happens when a navigation is committed, aborted or replaced by a new one.
@@ -89,64 +86,59 @@ class WebStateObserver {
   //
   // |navigation_context| will be destroyed at the end of this call, so do not
   // keep a reference to it afterward.
-  virtual void DidFinishNavigation(WebState* web_state,
-                                   NavigationContext* navigation_context) {}
+  virtual void DidFinishNavigation(NavigationContext* navigation_context) {}
 
   // Called when the current page has started loading.
-  virtual void DidStartLoading(WebState* web_state) {}
+  virtual void DidStartLoading() {}
 
   // Called when the current page has stopped loading.
-  virtual void DidStopLoading(WebState* web_state) {}
+  virtual void DidStopLoading() {}
 
   // Called when the current page is loaded.
-  virtual void PageLoaded(WebState* web_state,
-                          PageLoadCompletionStatus load_completion_status) {}
+  virtual void PageLoaded(PageLoadCompletionStatus load_completion_status) {}
 
   // Called when the interstitial is dismissed by the user.
-  virtual void InterstitialDismissed(WebState* web_state) {}
+  virtual void InterstitialDismissed() {}
 
   // Notifies the observer that the page has made some progress loading.
   // |progress| is a value between 0.0 (nothing loaded) to 1.0 (page fully
   // loaded).
-  virtual void LoadProgressChanged(WebState* web_state, double progress) {}
+  virtual void LoadProgressChanged(double progress) {}
 
   // Called when the title of the WebState is set.
-  virtual void TitleWasSet(WebState* web_state) {}
+  virtual void TitleWasSet() {}
 
   // Called when the visible security state of the page changes.
-  virtual void DidChangeVisibleSecurityState(WebState* web_state) {}
+  virtual void DidChangeVisibleSecurityState() {}
 
   // Called when a JavaScript dialog or window open request was suppressed.
   // NOTE: Called only if WebState::SetShouldSuppressDialogs() was called with
   // false.
-  virtual void DidSuppressDialog(WebState* web_state) {}
+  virtual void DidSuppressDialog() {}
 
   // Called on form submission. |user_initiated| is true if the user
   // interacted with the page.
-  virtual void DocumentSubmitted(WebState* web_state,
-                                 const std::string& form_name,
+  virtual void DocumentSubmitted(const std::string& form_name,
                                  bool user_initiated) {}
 
   // Called when the user is typing on a form field, with |error| indicating if
   // there is any error when parsing the form field information.
-  virtual void FormActivityRegistered(WebState* web_state,
-                                      const std::string& form_name,
+  virtual void FormActivityRegistered(const std::string& form_name,
                                       const std::string& field_name,
                                       const std::string& type,
                                       const std::string& value,
                                       bool input_missing) {}
 
   // Invoked when new favicon URL candidates are received.
-  virtual void FaviconUrlUpdated(WebState* web_state,
-                                 const std::vector<FaviconURL>& candidates) {}
+  virtual void FaviconUrlUpdated(const std::vector<FaviconURL>& candidates) {}
 
   // Called when the web process is terminated (usually by crashing, though
   // possibly by other means).
-  virtual void RenderProcessGone(WebState* web_state) {}
+  virtual void RenderProcessGone() {}
 
   // Invoked when the WebState is being destroyed. Gives subclasses a chance
   // to cleanup.
-  virtual void WebStateDestroyed(WebState* web_state) {}
+  virtual void WebStateDestroyed() {}
 
  protected:
   // Use this constructor when the object is tied to a single WebState for

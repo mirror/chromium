@@ -16,7 +16,7 @@ class CORE_EXPORT ReportBody : public GarbageCollectedFinalized<ReportBody>,
  public:
   virtual ~ReportBody() {}
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

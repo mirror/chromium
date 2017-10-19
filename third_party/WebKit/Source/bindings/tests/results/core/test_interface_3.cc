@@ -21,7 +21,7 @@ TestInterface3* TestInterface3::Create(blink::TestInterface3* test_interface_3) 
   return test_interface_3 ? new TestInterface3(test_interface_3) : nullptr;
 }
 
-void TestInterface3::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TestInterface3) {
   visitor->trace(test_interface_3_);
 }
 

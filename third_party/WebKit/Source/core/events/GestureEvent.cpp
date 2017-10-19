@@ -98,7 +98,7 @@ bool GestureEvent::IsGestureEvent() const {
   return true;
 }
 
-void GestureEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(GestureEvent) {
   UIEvent::Trace(visitor);
 }
 

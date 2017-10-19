@@ -11,7 +11,6 @@
 #include <stddef.h>
 #include <urlhist.h>
 #include <wininet.h>
-#include <wrl/client.h>
 
 #include <algorithm>
 #include <map>
@@ -29,6 +28,7 @@
 #include "base/time/time.h"
 #include "base/win/registry.h"
 #include "base/win/scoped_co_mem.h"
+#include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/scoped_propvariant.h"
 #include "chrome/common/importer/edge_importer_utils_win.h"
@@ -287,14 +287,14 @@ void SortBookmarksInIEOrder(
 // representing it.
 bool LoadInternetShortcut(
     const base::string16& file,
-    Microsoft::WRL::ComPtr<IUniformResourceLocator>* shortcut) {
-  Microsoft::WRL::ComPtr<IUniformResourceLocator> url_locator;
+    base::win::ScopedComPtr<IUniformResourceLocator>* shortcut) {
+  base::win::ScopedComPtr<IUniformResourceLocator> url_locator;
   if (FAILED(::CoCreateInstance(CLSID_InternetShortcut, NULL,
                                 CLSCTX_INPROC_SERVER,
                                 IID_PPV_ARGS(&url_locator))))
     return false;
 
-  Microsoft::WRL::ComPtr<IPersistFile> persist_file;
+  base::win::ScopedComPtr<IPersistFile> persist_file;
   if (FAILED(url_locator.CopyTo(persist_file.GetAddressOf())))
     return false;
 
@@ -316,11 +316,11 @@ GURL ReadURLFromInternetShortcut(IUniformResourceLocator* url_locator) {
 
 // Reads the URL of the favicon of the internet shortcut.
 GURL ReadFaviconURLFromInternetShortcut(IUniformResourceLocator* url_locator) {
-  Microsoft::WRL::ComPtr<IPropertySetStorage> property_set_storage;
+  base::win::ScopedComPtr<IPropertySetStorage> property_set_storage;
   if (FAILED(url_locator->QueryInterface(IID_PPV_ARGS(&property_set_storage))))
     return GURL();
 
-  Microsoft::WRL::ComPtr<IPropertyStorage> property_storage;
+  base::win::ScopedComPtr<IPropertyStorage> property_storage;
   if (FAILED(property_set_storage->Open(FMTID_Intshcut, STGM_READ,
                                         property_storage.GetAddressOf()))) {
     return GURL();
@@ -506,12 +506,12 @@ void IEImporter::ImportHistory() {
                                   url::kFileScheme};
   int total_schemes = arraysize(kSchemes);
 
-  Microsoft::WRL::ComPtr<IUrlHistoryStg2> url_history_stg2;
+  base::win::ScopedComPtr<IUrlHistoryStg2> url_history_stg2;
   if (FAILED(::CoCreateInstance(CLSID_CUrlHistory, NULL, CLSCTX_INPROC_SERVER,
                                 IID_PPV_ARGS(&url_history_stg2)))) {
     return;
   }
-  Microsoft::WRL::ComPtr<IEnumSTATURL> enum_url;
+  base::win::ScopedComPtr<IEnumSTATURL> enum_url;
   if (SUCCEEDED(url_history_stg2->EnumUrls(enum_url.GetAddressOf()))) {
     std::vector<ImporterURLRow> rows;
     STATURL stat_url;
@@ -587,7 +587,7 @@ void IEImporter::ImportPasswordsIE6() {
     return;
   }
 
-  Microsoft::WRL::ComPtr<IPStore> pstore;
+  base::win::ScopedComPtr<IPStore> pstore;
   HRESULT result = PStoreCreateInstance(pstore.GetAddressOf(), 0, 0, 0);
   if (result != S_OK) {
     FreeLibrary(pstorec_dll);
@@ -597,7 +597,7 @@ void IEImporter::ImportPasswordsIE6() {
   std::vector<AutoCompleteInfo> ac_list;
 
   // Enumerates AutoComplete items in the protected database.
-  Microsoft::WRL::ComPtr<IEnumPStoreItems> item;
+  base::win::ScopedComPtr<IEnumPStoreItems> item;
   result = pstore->EnumItems(0, &AutocompleteGUID, &AutocompleteGUID, 0,
                              item.GetAddressOf());
   if (result != PST_E_OK) {
@@ -843,7 +843,7 @@ void IEImporter::ParseFavoritesFolder(
       continue;
 
     // Skip the bookmark with invalid URL.
-    Microsoft::WRL::ComPtr<IUniformResourceLocator> url_locator;
+    base::win::ScopedComPtr<IUniformResourceLocator> url_locator;
     if (!LoadInternetShortcut(*it, &url_locator))
       continue;
     GURL url = ReadURLFromInternetShortcut(url_locator.Get());

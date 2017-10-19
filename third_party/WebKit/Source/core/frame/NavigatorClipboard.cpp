@@ -22,7 +22,7 @@ Clipboard* NavigatorClipboard::clipboard(ScriptState* script_state,
   return supplement->clipboard_;
 }
 
-void NavigatorClipboard::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorClipboard) {
   visitor->Trace(clipboard_);
   Supplement<Navigator>::Trace(visitor);
 }

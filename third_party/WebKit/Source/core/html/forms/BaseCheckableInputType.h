@@ -41,7 +41,7 @@ class BaseCheckableInputType : public InputType, public InputTypeView {
   USING_GARBAGE_COLLECTED_MIXIN(BaseCheckableInputType);
 
  public:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   using InputType::GetElement;
 
  protected:

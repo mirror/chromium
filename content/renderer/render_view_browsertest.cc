@@ -855,13 +855,12 @@ TEST_F(RenderViewImplTest, OriginReplicationForSwapOut) {
 // a new tab looks fine, but visiting the second web page renders smaller DOM
 // elements. We can solve this by updating DSF after swapping in the main frame.
 // See crbug.com/737777#c37.
-TEST_F(RenderViewImplScaleFactorTest, UpdateDSFAfterSwapIn) {
-  DoSetUp();
+TEST_F(RenderViewImplTest, UpdateDSFAfterSwapIn) {
   // The bug reproduces if zoom is used for devices scale factor.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableUseZoomForDSF);
   const float device_scale = 3.0f;
-  SetDeviceScaleFactor(device_scale);
+  view()->OnSetDeviceScaleFactor(device_scale);
   EXPECT_EQ(device_scale, view()->GetDeviceScaleFactor());
 
   LoadHTML("Hello world!");

@@ -72,7 +72,7 @@ void IDBObserverChanges::ExtractChanges(
   }
 }
 
-void IDBObserverChanges::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBObserverChanges) {
   visitor->Trace(database_);
   visitor->Trace(transaction_);
   visitor->Trace(records_);

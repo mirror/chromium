@@ -49,7 +49,7 @@ class MediaStreamTrackEvent final : public Event {
   // Event
   const AtomicString& InterfaceName() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   MediaStreamTrackEvent(const AtomicString& type, MediaStreamTrack*);

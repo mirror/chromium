@@ -44,7 +44,7 @@ ApplicationCache::ApplicationCache(LocalFrame* frame) : DOMWindowClient(frame) {
     cache_host->SetApplicationCache(this);
 }
 
-void ApplicationCache::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ApplicationCache) {
   EventTargetWithInlineData::Trace(visitor);
   DOMWindowClient::Trace(visitor);
 }

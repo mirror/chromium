@@ -23,9 +23,7 @@ class CORE_EXPORT AudioTrackList final : public TrackListBase<AudioTrack> {
   // EventTarget
   const AtomicString& InterfaceName() const override;
 
-  void Trace(blink::Visitor* visitor) {
-    TrackListBase<AudioTrack>::Trace(visitor);
-  }
+  DEFINE_INLINE_TRACE() { TrackListBase<AudioTrack>::Trace(visitor); }
 
  private:
   explicit AudioTrackList(HTMLMediaElement&);

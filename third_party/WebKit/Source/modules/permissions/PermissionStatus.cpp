@@ -110,7 +110,7 @@ void PermissionStatus::OnPermissionStatusChange(MojoPermissionStatus status) {
   DispatchEvent(Event::Create(EventTypeNames::change));
 }
 
-void PermissionStatus::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PermissionStatus) {
   EventTargetWithInlineData::Trace(visitor);
   SuspendableObject::Trace(visitor);
 }
