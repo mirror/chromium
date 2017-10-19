@@ -18,6 +18,17 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "url/gurl.h"
 
+#if defined(OS_CHROMEOS)
+#include "base/base_switches.h"
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
+#include "base/threading/thread_restrictions.h"
+#include "chrome/browser/chromeos/ash_config.h"
+#include "content/public/browser/browser_child_process_host_iterator.h"
+#include "content/public/browser/child_process_data.h"
+#include "content/public/common/process_type.h"
+#endif
+
 namespace content {
 
 // Use a test class with SetUpCommandLine to ensure the flag is sent to the
@@ -53,5 +64,71 @@ IN_PROC_BROWSER_TEST_F(ChromeContentBrowserClientBrowserTest,
   EXPECT_EQ(url, entry->GetURL());
   EXPECT_EQ(url, entry->GetVirtualURL());
 }
+
+#if defined(OS_CHROMEOS)
+
+namespace {
+
+void GetUtilityProcessPidsOnIOThread(std::vector<pid_t>* pids) {
+  BrowserChildProcessHostIterator it(PROCESS_TYPE_UTILITY);
+  for (; !it.Done(); ++it) {
+    pid_t pid = it.GetData().handle;
+    pids->push_back(pid);
+  }
+}
+
+std::string ReadCmdLine(pid_t pid) {
+  // Files in "/proc" are in-memory, so it's safe to do IO.
+  base::ScopedAllowBlockingForTesting allow_io;
+  base::FilePath cmdline_file =
+      base::FilePath("/proc").Append(base::IntToString(pid)).Append("cmdline");
+  std::string cmdline;
+  base::ReadFileToString(cmdline_file, &cmdline);
+  return cmdline;
+}
+
+// We don't seem to have a string utility or STL utility for this.
+bool HasSubstring(base::StringPiece str, base::StringPiece sub) {
+  return str.find(sub) != base::StringPiece::npos;
+}
+
+}  // namespace
+
+using ChromeContentBrowserClientMashTest = InProcessBrowserTest;
+
+// Verifies that mash service child processes do not use in-process breakpad
+// crash dumping.
+IN_PROC_BROWSER_TEST_F(ChromeContentBrowserClientMashTest, CrashReporter) {
+  if (chromeos::GetAshConfig() != ash::Config::MASH)
+    return;
+
+  // Child process management lives on the IO thread.
+  std::vector<pid_t> pids;
+  base::RunLoop loop;
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&GetUtilityProcessPidsOnIOThread, &pids), loop.QuitClosure());
+  loop.Run();
+  // There's at least one utility process, for ash.
+  ASSERT_GT(pids.size(), 0u);
+
+  // Iterate through all utility processes looking for mash services.
+  int mash_service_count = 0;
+  for (pid_t pid : pids) {
+    std::string cmdline = ReadCmdLine(pid);
+    ASSERT_FALSE(cmdline.empty());
+    // Subprocess command lines may have their null separators replaced with
+    // spaces, which makes them hard to tokenize. Just search the whole string.
+    if (HasSubstring(cmdline, switches::kMashServiceName)) {
+      ++mash_service_count;
+      // Mash services should not use in-process breakpad crash dumping.
+      EXPECT_FALSE(HasSubstring(cmdline, switches::kEnableCrashReporter));
+    }
+  }
+  // There's at least one mash service, for ash.
+  EXPECT_GT(mash_service_count, 0);
+}
+
+#endif  // defined(OS_CHROMEOS)
 
 }  // namespace content
