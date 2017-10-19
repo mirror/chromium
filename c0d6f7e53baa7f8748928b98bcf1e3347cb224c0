@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66b4c33_682ac408",
+        "filename": "third_party/WebKit/LayoutTests/animations/responsive/animations-responsive-offsetRotate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T17:48:24Z",
+      "side": 1,
+      "message": "This is presumably the same root cause as the error as on 41? I\u0027m assuming it\u0027s commented out so as to test the rest of the assertions before it? If so, do we not have a non-fatal assertion that will just emit an extra error message?",
+      "revId": "c0d6f7e53baa7f8748928b98bcf1e3347cb224c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66dabefe_04d964d7",
+        "filename": "third_party/WebKit/LayoutTests/animations/responsive/animations-responsive-offsetRotate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-19T17:48:24Z",
+      "side": 1,
+      "message": "Bug reference?",
+      "revId": "c0d6f7e53baa7f8748928b98bcf1e3347cb224c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
