@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f77ff9e_6607977c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T04:36:59Z",
+      "side": 1,
+      "message": "I don\u0027t think this string is used anywhere? I think we must have gotten rid of the specific manage links in favour of a single manage button.",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311cd90c_5d16a944",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-19T04:36:59Z",
+      "side": 1,
+      "message": "Should we test the other case where audio is playing and then the content setting changes?",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
