@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47023c6_070670c5",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-19T14:58:47Z",
+      "side": 1,
+      "message": "4 lines shorter:\n\n      UILayoutGuide* safeArea \u003d SafeAreaLayoutGuideForView(view_);\n      [NSLayoutConstraint activateConstraints:@[\n        [contentView_.leadingAnchor\n            constraintEqualToAnchor:safeArea.leadingAnchor],\n        [contentView_.trailingAnchor\n            constraintEqualToAnchor:safeArea.trailingAnchor],\n        [contentView_.topAnchor constraintEqualToAnchor:view_.topAnchor],\n        [contentView_.bottomAnchor constraintEqualToAnchor:view_.bottomAnchor],\n      ]];",
+      "range": {
+        "startLine": 173,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 5
+      },
+      "revId": "bf38224605234c859e7d73b9f5883180bf116524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328c014d_ccd912a0",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-19T14:58:47Z",
+      "side": 1,
+      "message": "safeAreaInsets \u003d SafeAreaInsetsForView(SafeAreaInsetsForView);",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 5
+      },
+      "revId": "bf38224605234c859e7d73b9f5883180bf116524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
