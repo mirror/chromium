@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb201ce4_72ca6c38",
+        "filename": "chrome/browser/extensions/chrome_content_verifier_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-19T21:56:34Z",
+      "side": 1,
+      "message": "remove extra newline",
+      "revId": "1f8759b177f6c75c392c9d9c12e21f470eeaed69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df0b9ee_39f509a5",
+        "filename": "chrome/browser/extensions/chrome_content_verifier_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-19T21:56:34Z",
+      "side": 1,
+      "message": "was this intentional?",
+      "revId": "1f8759b177f6c75c392c9d9c12e21f470eeaed69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b929de08_af79a4fb",
+        "filename": "chrome/browser/extensions/chrome_content_verifier_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-19T21:56:34Z",
+      "side": 1,
+      "message": "What prompted this change?",
+      "revId": "1f8759b177f6c75c392c9d9c12e21f470eeaed69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
