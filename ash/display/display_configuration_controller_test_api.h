@@ -6,6 +6,7 @@
 #define ASH_DISPLAY_DISPLAY_CONFIGURATION_CONTROLLER_TEST_API_H_
 
 #include <stdint.h>
+#include <memory>
 
 #include "base/macros.h"
 
@@ -23,6 +24,10 @@ class DisplayConfigurationControllerTestApi {
   void DisableDisplayAnimator();
   ScreenRotationAnimator* GetScreenRotationAnimatorForDisplay(
       int64_t display_id);
+
+  void SetScreenRotationAnimatorForDisplay(
+      int64_t display_id,
+      std::unique_ptr<ScreenRotationAnimator> animator);
 
  private:
   DisplayConfigurationController* controller_;
