@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b41dce64_0dd8868d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Can\u0027t. Added a comment on the reasons.",
+      "parentUuid": "af25e633_f2ea6126",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62802b39_5fe293d6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
         "patchSetId": 29
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-03T23:36:48Z",
       "side": 1,
       "message": "I\u0027m not sure how the comment helps the readers. IMO this\u0027d make some sense if someone other than you would be landing these tests and we\u0027d want to make sure that the original author is credited.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8dd358_bf358566",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Deleted",
+      "parentUuid": "62802b39_5fe293d6",
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "59e69105_5b736850",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "That documentation says setup only works with synchronous setup functions. This one is not synchronous",
+      "parentUuid": "d272e62e_28ff5d17",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fc4e2b9_429ea2cb",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
         "patchSetId": 29
@@ -81,6 +135,24 @@
       "writtenOn": "2017-10-03T23:36:48Z",
       "side": 1,
       "message": "promise_rejects_when_unsecured doesn\u0027t seem right here. If this throws due to a bug, the cleanup fails. I think you want something like Promise.finally, namely an await wrapped in a try with an empty catch.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7c7035_196a80cf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Added exception buffering. Does this look more reasonable?",
+      "parentUuid": "8fc4e2b9_429ea2cb",
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "faebdd1a_ef26e770",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78e2798_ad12837f",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a37c6747_1a0c1b9a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
         "patchSetId": 29
@@ -115,6 +205,24 @@
       "writtenOn": "2017-10-03T23:36:48Z",
       "side": 1,
       "message": "Why are restrictions necessary at all? I think that the tests would be responsible for regulating their commands.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e565adf_2f366ebb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "To ensure a subtle bug in the test (for instance, newline or other non-header-legal character) is caught early",
+      "parentUuid": "a37c6747_1a0c1b9a",
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "d6b32f0b_ee27b352",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Ensure charset in response type matches the spelling of it expected by the test harness",
+      "parentUuid": "866fe642_fc4344f4",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9ba08b4_90b9e616",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
         "patchSetId": 29
@@ -149,6 +275,24 @@
       "writtenOn": "2017-10-03T23:36:48Z",
       "side": 1,
       "message": "This seems odd. Can you do JSON for requests and responses instead of URL-encoding? This\u0027ll make things easier to debug, and fetch() has built-in JSON support.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15321d45_5f2fc321",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "I could, but it complicates the CGI quite a bit and deviates from usual CGI parameter encoding, and adds an extra layer of encoding/decoding. What\u0027s the benefit?",
+      "parentUuid": "f9ba08b4_90b9e616",
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "998202ee_917ae58c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Deleted. This was used in the pre-wptserve CGI hosting",
+      "parentUuid": "bb31733b_54dca183",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc806fd_ca99ff20",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
         "patchSetId": 29
@@ -186,6 +348,24 @@
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b0e458_df0ed2ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ebc806fd_ca99ff20",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "e12ab1b4_7d8855b1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7ed0de4_c28f9775",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c61cff4_21bbe952",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
         "patchSetId": 29
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "46c9a0db_44b2afc1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c61cff4_21bbe952",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6e580ac_742ce657",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
         "patchSetId": 29
@@ -234,6 +450,24 @@
       "writtenOn": "2017-10-03T23:36:48Z",
       "side": 1,
       "message": "I think it\u0027d be clearer if you either use a separate script per operation, or use a unified POST format with an \"op\" / \"method\" property to the JSON body received by the POST. I see no reason for the cognitive overhead of having to remember what a GET and a POST does.\n\nIf you do separate scripts, their names should reflect what they do (example: echo_set_cookie.py). If you use a single script, the \"op\" / \"method\" property should convey that.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ccf6ec_dcfac416",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Why? I think REST HTTP method names are a fairly straightforward fir for cookie semantics here, and JSON adds a bunch of additional encoding complexity for little gain",
+      "parentUuid": "e6e580ac_742ce657",
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "679b8490_1558a3db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "It\u0027s not dead yet:\n\nhttps://github.com/whatwg/html/issues/3076",
+      "parentUuid": "e1f4f8eb_50e491f6",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b38ed64_bd93ed20",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/test_document_cookie_static.tentative.html",
         "patchSetId": 29
@@ -271,6 +523,24 @@
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b715e369_5cc09bb7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/test_document_cookie_static.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-10-19T19:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b38ed64_bd93ed20",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
