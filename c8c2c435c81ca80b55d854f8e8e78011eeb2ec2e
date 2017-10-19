@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2357630_919b3cd8",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T00:11:40Z",
+      "side": 1,
+      "message": "nit: kEme...\nSince this is EME-specific. It\u0027s not obvious where it is used.",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da6e8b6_8c54cef0",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T00:11:40Z",
+      "side": 1,
+      "message": "Should there be common infrastructure for this? Do we expect other such features to have such a counter?\nPutting them in a common place would also help ensure the messages are consistent.",
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91600bb8_8a9cdd13",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T00:11:40Z",
+      "side": 1,
+      "message": "Is this not an error?",
+      "range": {
+        "startLine": 288,
+        "startChar": 51,
+        "endLine": 288,
+        "endChar": 71
+      },
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe4bb8e_e91d2771",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-19T00:11:40Z",
+      "side": 1,
+      "message": "This count now has a very different meaning. Do we care? Should we document that starting in M64, kEncryptedMediaDisabledByFeaturePolicy + WebFeaturePolicyFeature::kEncryptedMedia are equivalent to WebFeaturePolicyFeature::kEncryptedMedia in earlier versions?",
+      "range": {
+        "startLine": 298,
+        "startChar": 44,
+        "endLine": 298,
+        "endChar": 59
+      },
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
