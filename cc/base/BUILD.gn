@@ -42,6 +42,8 @@ component("base") {
     "rtree.h",
     "simple_enclosed_region.cc",
     "simple_enclosed_region.h",
+    "simple_region.cc",
+    "simple_region.h",
     "spiral_iterator.cc",
     "spiral_iterator.h",
     "switches.cc",
