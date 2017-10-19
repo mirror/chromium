@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77ccf4e6_c565aa68",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-19T19:25:42Z",
+      "side": 1,
+      "message": "static constexpr ?",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c3f7f8_b42e36c7",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-19T19:25:42Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0307d89_cebb8f29",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-19T19:25:42Z",
+      "side": 1,
+      "message": "Comment. It\u0027s not clear what the |text| parameter is for.",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
