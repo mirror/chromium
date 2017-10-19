@@ -5160,6 +5160,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
             connectWithLandingURL:(GURL)landingURL {
   _captivePortalLoginCoordinator = [[CaptivePortalLoginCoordinator alloc]
       initWithBaseViewController:self
+                        webState:[_model currentTab].webState
                       landingURL:landingURL];
   [_captivePortalLoginCoordinator start];
 }

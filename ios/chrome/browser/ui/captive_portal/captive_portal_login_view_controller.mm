@@ -6,9 +6,12 @@
 
 #import <WebKit/WebKit.h>
 
+#include "base/mac/bind_objc_block.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/captive_portal/captive_portal_detector.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/elide_url.h"
+#import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.h"
 #import "ios/chrome/browser/ui/material_components/utils.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -23,13 +26,22 @@
 #error "This file requires ARC support."
 #endif
 
+using captive_portal::CaptivePortalDetector;
+
 const CGFloat kToolbarButtonWidth = 42.0f;
 
-@interface CaptivePortalLoginViewController ()
-
+@interface CaptivePortalLoginViewController ()<WKNavigationDelegate>
+// The web page which allows the user to complete their connection to the
+// network.
 @property(nonatomic, strong) NSURL* landingURL;
 @property(nonatomic, strong) UILabel* landingPageURLLabel;
+// The WebState which provides an associated CaptivePortalDetectorTabHelper to
+// test the current connection for a captive portal login page.
+@property(nonatomic) web::WebState* webState;
+// The WebView used to login to the Captive Portal network.
 @property(nonatomic, strong) WKWebView* webView;
+// Whether or not the network is providing an internet connection.
+@property(nonatomic) BOOL internetConnected;
 
 @property(nonatomic, strong) MDCAppBar* appBar;
 @property(nonatomic, strong) UIBarButtonItem* backItem;
@@ -40,27 +52,36 @@ const CGFloat kToolbarButtonWidth = 42.0f;
 - (UIButton*)newBackButton;
 // Creates and returns a button for navigating forward in the web view history.
 - (UIButton*)newForwardButton;
-
 // Called when the user taps on |doneItem|.
 - (void)donePressed;
-
+// Cancels any ongoing captive portal detection.
+- (void)cancelCaptivePortalDetection;
+// Updates the button which closes this UI. If an internet connection has been
+// established as determined by |internetConnected|, the button text will be
+// "Done", otherwise it will display "Cancel".
+- (void)updateDoneButton;
 @end
 
 @implementation CaptivePortalLoginViewController
 @synthesize landingURL = _landingURL;
 @synthesize landingPageURLLabel = _landingPageURLLabel;
+@synthesize webState = _webState;
 @synthesize delegate = _delegate;
 @synthesize webView = _webView;
+@synthesize internetConnected = _internetConnected;
 @synthesize appBar = _appBar;
 @synthesize backItem = _backItem;
 @synthesize forwardItem = _forwardItem;
 @synthesize doneItem = _doneItem;
 
-- (instancetype)initWithLandingURL:(const GURL&)landingURL {
+- (instancetype)initWithWebState:(web::WebState*)webState
+                      landingURL:(const GURL&)landingURL {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
+    _webState = webState;
     _landingURL = net::NSURLWithGURL(landingURL);
     _appBar = [[MDCAppBar alloc] init];
+    _internetConnected = NO;
   }
   return self;
 }
@@ -82,6 +103,7 @@ const CGFloat kToolbarButtonWidth = 42.0f;
                                     configuration:configuration];
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
+  [_webView setNavigationDelegate:self];
   [self.view addSubview:_webView];
 
   ConfigureAppBarWithCardStyle(_appBar);
@@ -104,17 +126,7 @@ const CGFloat kToolbarButtonWidth = 42.0f;
   _landingPageURLLabel.textAlignment = NSTextAlignmentCenter;
   [self.view addSubview:_landingPageURLLabel];
 
-  // Create a custom Done bar button item, as Material Navigation Bar does not
-  // handle a system UIBarButtonSystemItemDone item.
-  self.doneItem = [[UIBarButtonItem alloc]
-      initWithTitle:l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)
-              style:UIBarButtonItemStyleDone
-             target:self
-             action:@selector(donePressed)];
-  // TODO(crbug.com/752216): The close button should dynamically change from
-  // "cancel" (before the login is complete) to "done" (after the login is
-  // complete).
-  self.navigationItem.rightBarButtonItem = _doneItem;
+  [self updateDoneButton];
 
   UIButton* backButton = [self newBackButton];
   self.backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -147,6 +159,35 @@ const CGFloat kToolbarButtonWidth = 42.0f;
                        context:(void*)context {
   _backItem.enabled = [_webView canGoBack];
   _forwardItem.enabled = [_webView canGoForward];
+}
+
+#pragma mark WKNavigationDelegate
+
+- (void)webView:(WKWebView*)webView
+    didFinishNavigation:(WKNavigation*)navigation {
+  // Connection already established, no need to do further captive portal tests.
+  if (_internetConnected) {
+    return;
+  }
+
+  [self cancelCaptivePortalDetection];
+
+  CaptivePortalDetectorTabHelper* tabHelper =
+      CaptivePortalDetectorTabHelper::FromWebState(_webState);
+  // TODO(crbug.com/760873): replace test with DCHECK when this method is only
+  // called on WebStates attached to tabs.
+  if (tabHelper) {
+    __weak CaptivePortalLoginViewController* weakSelf = self;
+    tabHelper->detector()->DetectCaptivePortal(
+        GURL(CaptivePortalDetector::kDefaultURL),
+        base::BindBlockArc(^(const CaptivePortalDetector::Results& results) {
+          if (results.result == captive_portal::RESULT_INTERNET_CONNECTED) {
+            weakSelf.internetConnected = YES;
+          }
+          [weakSelf updateDoneButton];
+        }),
+        NO_TRAFFIC_ANNOTATION_YET);
+  }
 }
 
 #pragma mark - Private methods
@@ -188,7 +229,37 @@ const CGFloat kToolbarButtonWidth = 42.0f;
 }
 
 - (void)donePressed {
+  [self cancelCaptivePortalDetection];
   [self.delegate captivePortalLoginViewControllerDidFinish:self];
+}
+
+- (void)cancelCaptivePortalDetection {
+  CaptivePortalDetectorTabHelper* tabHelper =
+      CaptivePortalDetectorTabHelper::FromWebState(_webState);
+  // TODO(crbug.com/760873): replace test with DCHECK when this method is only
+  // called on WebStates attached to tabs.
+  if (tabHelper) {
+    // Cancel any ongoing detection.
+    tabHelper->detector()->Cancel();
+  }
+}
+
+- (void)updateDoneButton {
+  NSString* title;
+  if (_internetConnected) {
+    title = l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON);
+  } else {
+    title = l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_CANCEL_BUTTON);
+  }
+
+  // Create a custom Done bar button item, as Material Navigation Bar does not
+  // handle a system UIBarButtonSystemItemDone item.
+  self.doneItem =
+      [[UIBarButtonItem alloc] initWithTitle:title
+                                       style:UIBarButtonItemStyleDone
+                                      target:self
+                                      action:@selector(donePressed)];
+  self.navigationItem.rightBarButtonItem = _doneItem;
 }
 
 @end

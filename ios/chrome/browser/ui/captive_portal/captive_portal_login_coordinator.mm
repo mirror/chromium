@@ -14,6 +14,7 @@
 @interface CaptivePortalLoginCoordinator ()<
     CaptivePortalLoginViewControllerDelegate> {
   GURL _landingURL;
+  web::WebState* _webState;
 }
 
 @property(nonatomic, strong, readonly)
@@ -26,10 +27,13 @@
 @synthesize loginNavigationController = _loginNavigationController;
 
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
+                                  webState:(web::WebState*)webState
                                 landingURL:(const GURL&)landingURL {
+  DCHECK(webState);
   self = [super initWithBaseViewController:viewController];
   if (self) {
     _landingURL = landingURL;
+    _webState = webState;
   }
   return self;
 }
@@ -61,8 +65,8 @@
     // CaptivePortalLoginViewController in order to continue page load with
     // |callback_| if the user successfully connected to the captive portal.
     CaptivePortalLoginViewController* loginController =
-        [[CaptivePortalLoginViewController alloc]
-            initWithLandingURL:_landingURL];
+        [[CaptivePortalLoginViewController alloc] initWithWebState:_webState
+                                                        landingURL:_landingURL];
     loginController.delegate = self;
 
     _loginNavigationController = [[UINavigationController alloc]

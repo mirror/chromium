@@ -35,6 +35,7 @@ TEST_F(CaptivePortalLoginCoordinatorTest, StartAndStop) {
   CaptivePortalLoginCoordinator* coordinator =
       [[CaptivePortalLoginCoordinator alloc]
           initWithBaseViewController:view_controller
+                            webState:web_state()
                           landingURL:landing_url];
 
   void (^test_steps)(void) = ^{
