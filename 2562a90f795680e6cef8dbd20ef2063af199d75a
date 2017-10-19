@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2a4dfdb_008a60f4",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-19T13:47:45Z",
+      "side": 1,
+      "message": "Explain the security vulnerability that you are fixing in this CL with this CHECK (the referenced bug just tracks a new feature).\nIf it\u0027s a vulnerability to be introduced by an upcoming CL, just add the CHECK in that CL.\nIf there is no security vulnerability, just use a DCHECK, as per the style guide.",
+      "range": {
+        "startLine": 1233,
+        "startChar": 2,
+        "endLine": 1233,
+        "endChar": 7
+      },
+      "revId": "2562a90f795680e6cef8dbd20ef2063af199d75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea61a25c_cebb0cdc",
         "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
         "patchSetId": 1
