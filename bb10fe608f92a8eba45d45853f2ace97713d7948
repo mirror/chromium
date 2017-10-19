@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0a50a7_a12f0473",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-19T10:06:08Z",
+      "side": 1,
+      "message": "\"in accordance with the spec\" or \"according to the spec\"\n\nhttps://forum.wordreference.com/threads/accordance-with-or-accordance-to.1933170/",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a3c31d_a8513bdf",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-19T10:06:08Z",
+      "side": 1,
+      "message": "Usually we use \"TODO(rakina): ... \" notation to mark this should be fixed in the future.\nThe id can be yours, as it is used to record who added this comment, rather than\nwho is assigned to this TODO.\nhttps://google.github.io/styleguide/cppguide.html#TODO_Comments",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db743c3_e060446b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-19T10:06:08Z",
+      "side": 1,
+      "message": "Can a event be `BeforeUnloadEvent` but its type is not `beforeunload`?",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
