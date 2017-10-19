@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "87ece703_648c8469",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T17:13:32Z",
+      "side": 1,
+      "message": "Prefer enum class.",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b542281_9c22a678",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T17:13:32Z",
+      "side": 1,
+      "message": "Let\u0027s call this EPHEMERAL. \"Simple\" does not properly capture the fact that its lifetime semantics will be entirely different from the other handler types, which needs to be documented.",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211b149a_44b93f3a",
         "filename": "chrome/browser/notifications/notification_display_service.cc",
         "patchSetId": 4
@@ -19,6 +53,81 @@
         "endLine": 40,
         "endChar": 9
       },
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97466609_33d52597",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T17:13:32Z",
+      "side": 1,
+      "message": "|by_user| can also be set to false for other reasons, notably when the notification expires. That\u0027s my only concern about these changes, the rest looks fine.",
+      "parentUuid": "211b149a_44b93f3a",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f127335_e3f9807b",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T17:13:32Z",
+      "side": 1,
+      "message": "nit: delete (nobody does this, on purpose)",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325e3fc0_0007a3a8",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T17:13:32Z",
+      "side": 1,
+      "message": "nit: DCHECK(!simple_handlers_.count(notification.id());",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1d77a9_12ccccee",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-19T17:13:32Z",
+      "side": 1,
+      "message": "dito re: Simple -\u003e Ephemeral\n\nThis needs documentation. Specifically, the lifetime requirements of |handler|. It must outlive the notification. If the caller is a KeyedService on the same profile without its factory defining a dependency on the NotificationDisplayService, shut down may happen in the wrong order.",
       "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
