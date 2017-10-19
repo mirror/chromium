@@ -221,10 +221,7 @@ int32_t PepperWebSocketHost::OnHostMsgConnect(
        ++vector_it) {
 
     // Check containing characters.
-    for (std::string::const_iterator string_it = vector_it->begin();
-         string_it != vector_it->end();
-         ++string_it) {
-      uint8_t character = *string_it;
+    for (uint8_t character : *vector_it) {
       // WebSocket specification says "(Subprotocol string must consist of)
       // characters in the range U+0021 to U+007E not including separator
       // characters as defined in [RFC2616]."

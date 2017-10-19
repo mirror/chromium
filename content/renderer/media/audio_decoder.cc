@@ -66,8 +66,8 @@ bool DecodeAudioFileData(
                               file_sample_rate);
 
   int dest_frame_offset = 0;
-  for (size_t k = 0; k < decoded_audio_packets.size(); ++k) {
-    AudioBus* packet = decoded_audio_packets[k].get();
+  for (auto& decoded_audio_packet : decoded_audio_packets) {
+    AudioBus* packet = decoded_audio_packet.get();
     int packet_length = packet->frames();
     for (size_t ch = 0; ch < number_of_channels; ++ch) {
       float* dst = destination_bus->ChannelData(ch);

@@ -283,13 +283,12 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestAllSampleRates) {
 
   static const int kSupportedSampleRates[] =
       { 8000, 16000, 22050, 32000, 44100, 48000 };
-  for (size_t i = 0; i < arraysize(kSupportedSampleRates); ++i) {
-    int buffer_size = (kSupportedSampleRates[i] / 100)  < 128 ?
-        kSupportedSampleRates[i] / 100 : 128;
-    media::AudioParameters params(
-        media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
-        media::CHANNEL_LAYOUT_STEREO, kSupportedSampleRates[i], 16,
-        buffer_size);
+  for (int kSupportedSampleRate : kSupportedSampleRates) {
+    int buffer_size =
+        (kSupportedSampleRate / 100) < 128 ? kSupportedSampleRate / 100 : 128;
+    media::AudioParameters params(media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
+                                  media::CHANNEL_LAYOUT_STEREO,
+                                  kSupportedSampleRate, 16, buffer_size);
     audio_processor->OnCaptureFormatChanged(params);
     VerifyDefaultComponents(audio_processor.get());
 

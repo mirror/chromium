@@ -190,13 +190,13 @@ void MediaStreamCenter::DidStopLocalMediaStream(
   // need to support both MediaStream::Stop and MediaStreamTrack::Stop.
   blink::WebVector<blink::WebMediaStreamTrack> audio_tracks;
   stream.AudioTracks(audio_tracks);
-  for (size_t i = 0; i < audio_tracks.size(); ++i)
-    DidStopMediaStreamTrack(audio_tracks[i]);
+  for (const auto& audio_track : audio_tracks)
+    DidStopMediaStreamTrack(audio_track);
 
   blink::WebVector<blink::WebMediaStreamTrack> video_tracks;
   stream.VideoTracks(video_tracks);
-  for (size_t i = 0; i < video_tracks.size(); ++i)
-    DidStopMediaStreamTrack(video_tracks[i]);
+  for (const auto& video_track : video_tracks)
+    DidStopMediaStreamTrack(video_track);
 }
 
 void MediaStreamCenter::DidStopMediaStreamSource(

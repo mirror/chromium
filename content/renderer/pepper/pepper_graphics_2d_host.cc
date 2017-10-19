@@ -601,8 +601,7 @@ int32_t PepperGraphics2DHost::Flush(PP_Resource* old_image_data) {
   bool no_update_visible = true;
   bool is_plugin_visible = true;
 
-  for (size_t i = 0; i < queued_operations_.size(); i++) {
-    QueuedOperation& operation = queued_operations_[i];
+  for (auto& operation : queued_operations_) {
     gfx::Rect op_rect;
     switch (operation.type) {
       case QueuedOperation::TRANSFORM:

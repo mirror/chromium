@@ -234,8 +234,8 @@ blink::WebVector<int> RTCStatsMember::ValueSequenceBool() const {
       *member_->cast_to<webrtc::RTCStatsMember<std::vector<bool>>>();
   std::vector<int> uint32_vector;
   uint32_vector.reserve(vector.size());
-  for (size_t i = 0; i < vector.size(); ++i) {
-    uint32_vector.push_back(vector[i] ? 1 : 0);
+  for (const auto& i : vector) {
+    uint32_vector.push_back(i ? 1 : 0);
   }
   return blink::WebVector<int>(uint32_vector);
 }

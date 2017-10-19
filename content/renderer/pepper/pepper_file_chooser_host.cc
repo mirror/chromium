@@ -35,9 +35,9 @@ class PepperFileChooserHost::CompletionHandler
       const blink::WebVector<blink::WebString>& file_names) override {
     if (host_.get()) {
       std::vector<PepperFileChooserHost::ChosenFileInfo> files;
-      for (size_t i = 0; i < file_names.size(); i++) {
-        files.push_back(PepperFileChooserHost::ChosenFileInfo(
-            file_names[i].Utf8(), std::string()));
+      for (const auto& file_name : file_names) {
+        files.push_back(PepperFileChooserHost::ChosenFileInfo(file_name.Utf8(),
+                                                              std::string()));
       }
       host_->StoreChosenFiles(files);
     }
@@ -49,9 +49,9 @@ class PepperFileChooserHost::CompletionHandler
       const blink::WebVector<SelectedFileInfo>& file_names) override {
     if (host_.get()) {
       std::vector<PepperFileChooserHost::ChosenFileInfo> files;
-      for (size_t i = 0; i < file_names.size(); i++) {
+      for (const auto& file_name : file_names) {
         files.push_back(PepperFileChooserHost::ChosenFileInfo(
-            file_names[i].path.Utf8(), file_names[i].display_name.Utf8()));
+            file_name.path.Utf8(), file_name.display_name.Utf8()));
       }
       host_->StoreChosenFiles(files);
     }
@@ -95,11 +95,11 @@ void PepperFileChooserHost::StoreChosenFiles(
   std::vector<IPC::Message> create_msgs;
   std::vector<base::FilePath> file_paths;
   std::vector<std::string> display_names;
-  for (size_t i = 0; i < files.size(); i++) {
-    base::FilePath file_path = base::FilePath::FromUTF8Unsafe(files[i].path);
+  for (const auto& file : files) {
+    base::FilePath file_path = base::FilePath::FromUTF8Unsafe(file.path);
     file_paths.push_back(file_path);
     create_msgs.push_back(PpapiHostMsg_FileRef_CreateForRawFS(file_path));
-    display_names.push_back(files[i].display_name);
+    display_names.push_back(file.display_name);
   }
 
   if (!files.empty()) {

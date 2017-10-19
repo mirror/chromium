@@ -110,9 +110,8 @@ void MockMediaStream::UnregisterObserver(ObserverInterface* observer) {
 }
 
 void MockMediaStream::NotifyObservers() {
-  for (ObserverSet::iterator it = observers_.begin(); it != observers_.end();
-       ++it) {
-    (*it)->OnChanged();
+  for (auto observer : observers_) {
+    observer->OnChanged();
   }
 }
 

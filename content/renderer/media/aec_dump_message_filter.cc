@@ -160,17 +160,15 @@ void AecDumpMessageFilter::DoEnableAecDump(
 
 void AecDumpMessageFilter::DoDisableAecDump() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  for (DelegateMap::iterator it = delegates_.begin();
-       it != delegates_.end(); ++it) {
-    it->second->OnDisableAecDump();
+  for (auto& delegate : delegates_) {
+    delegate.second->OnDisableAecDump();
   }
 }
 
 void AecDumpMessageFilter::DoChannelClosingOnDelegates() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  for (DelegateMap::iterator it = delegates_.begin();
-       it != delegates_.end(); ++it) {
-    it->second->OnIpcClosing();
+  for (auto& delegate : delegates_) {
+    delegate.second->OnIpcClosing();
   }
   delegates_.clear();
 }
@@ -178,10 +176,9 @@ void AecDumpMessageFilter::DoChannelClosingOnDelegates() {
 int AecDumpMessageFilter::GetIdForDelegate(
     AecDumpMessageFilter::AecDumpDelegate* delegate) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
-  for (DelegateMap::iterator it = delegates_.begin();
-       it != delegates_.end(); ++it) {
-    if (it->second == delegate)
-      return it->first;
+  for (auto& it : delegates_) {
+    if (it.second == delegate)
+      return it.first;
   }
   return kInvalidDelegateId;
 }

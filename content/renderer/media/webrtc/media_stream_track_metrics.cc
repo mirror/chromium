@@ -260,8 +260,8 @@ void MediaStreamTrackMetricsObserver::ReportTracks(
     MediaStreamTrackMetrics::TrackType track_type,
     MediaStreamTrackMetrics::LifetimeEvent event) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  for (IdSet::const_iterator it = ids.begin(); it != ids.end(); ++it) {
-    owner_->SendLifetimeMessage(*it, track_type, event, stream_type_);
+  for (const auto& id : ids) {
+    owner_->SendLifetimeMessage(id, track_type, event, stream_type_);
   }
 }
 

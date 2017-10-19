@@ -93,8 +93,7 @@ scoped_refptr<base::RefCountedMemory> GetBuiltinModuleData(
   if (!module_sources) {
     // Initialize the module source map on first access.
     module_sources.reset(new ModuleSourceMap);
-    for (size_t i = 0; i < arraysize(kBuiltinModuleResources); ++i) {
-      const auto& resource = kBuiltinModuleResources[i];
+    for (auto resource : kBuiltinModuleResources) {
       scoped_refptr<base::RefCountedMemory> data =
           GetContentClient()->GetDataResourceBytes(resource.id);
       DCHECK_GT(data->size(), 0u);
@@ -174,14 +173,14 @@ void MojoContextState::FetchModules(const std::vector<std::string>& ids) {
   gin::ContextHolder* context_holder = runner_->GetContextHolder();
   gin::ModuleRegistry* registry = gin::ModuleRegistry::From(
       context_holder->context());
-  for (size_t i = 0; i < ids.size(); ++i) {
-    if (fetched_modules_.find(ids[i]) == fetched_modules_.end() &&
-        registry->available_modules().count(ids[i]) == 0) {
-      scoped_refptr<base::RefCountedMemory> data = GetBuiltinModuleData(ids[i]);
+  for (const auto& id : ids) {
+    if (fetched_modules_.find(id) == fetched_modules_.end() &&
+        registry->available_modules().count(id) == 0) {
+      scoped_refptr<base::RefCountedMemory> data = GetBuiltinModuleData(id);
       if (data)
-        runner_->Run(std::string(data->front_as<char>(), data->size()), ids[i]);
+        runner_->Run(std::string(data->front_as<char>(), data->size()), id);
       else
-        FetchModule(ids[i]);
+        FetchModule(id);
     }
   }
 }

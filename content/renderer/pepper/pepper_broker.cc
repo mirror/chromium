@@ -213,10 +213,8 @@ PepperBroker::PendingConnection::~PendingConnection() {}
 
 void PepperBroker::ReportFailureToClients(int error_code) {
   DCHECK_NE(PP_OK, error_code);
-  for (ClientMap::iterator i = pending_connects_.begin();
-       i != pending_connects_.end();
-       ++i) {
-    base::WeakPtr<PPB_Broker_Impl>& weak_ptr = i->second.client;
+  for (auto& pending_connect : pending_connects_) {
+    base::WeakPtr<PPB_Broker_Impl>& weak_ptr = pending_connect.second.client;
     if (weak_ptr.get()) {
       weak_ptr->BrokerConnected(
           ppapi::PlatformFileToInt(base::SyncSocket::kInvalidHandle),

@@ -142,9 +142,9 @@ int ConvertMockKeyboardModifier(MockKeyboard::Modifiers modifiers) {
     { MockKeyboard::RIGHT_ALT, ui::EF_ALT_DOWN },
   };
   int flags = 0;
-  for (size_t i = 0; i < arraysize(kModifierMap); ++i) {
-    if (kModifierMap[i].src & modifiers) {
-      flags |= kModifierMap[i].dst;
+  for (auto& i : kModifierMap) {
+    if (i.src & modifiers) {
+      flags |= i.dst;
     }
   }
   return flags;
@@ -745,8 +745,8 @@ TEST_F(RenderViewImplTest, DecideNavigationPolicyHandlesAllTopLevel) {
   blink::WebFrameClient::NavigationPolicyInfo policy_info(request);
   policy_info.default_policy = blink::kWebNavigationPolicyCurrentTab;
 
-  for (size_t i = 0; i < arraysize(kNavTypes); ++i) {
-    policy_info.navigation_type = kNavTypes[i];
+  for (auto kNavType : kNavTypes) {
+    policy_info.navigation_type = kNavType;
 
     blink::WebNavigationPolicy policy =
         frame()->DecidePolicyForNavigation(policy_info);
@@ -1170,8 +1170,8 @@ TEST_F(RenderViewImplTest, OnImeTypeChanged) {
     input_mode = p.mode;
     EXPECT_EQ(ui::TEXT_INPUT_TYPE_PASSWORD, type);
 
-    for (size_t i = 0; i < arraysize(kInputModeTestCases); i++) {
-      const InputModeTestCase* test_case = &kInputModeTestCases[i];
+    for (const auto& kInputModeTestCase : kInputModeTestCases) {
+      const InputModeTestCase* test_case = &kInputModeTestCase;
       std::string javascript =
           base::StringPrintf("document.getElementById('%s').focus();",
                              test_case->input_id);
@@ -1268,8 +1268,8 @@ TEST_F(RenderViewImplTest, ImeComposition) {
       {IME_FINISHCOMPOSINGTEXT, false, -1, -1, L"", L"\xC548\xB155"},
   };
 
-  for (size_t i = 0; i < arraysize(kImeMessages); i++) {
-    const ImeMessage* ime_message = &kImeMessages[i];
+  for (const auto& kImeMessage : kImeMessages) {
+    const ImeMessage* ime_message = &kImeMessage;
     switch (ime_message->command) {
       case IME_INITIALIZE:
         // Load an HTML page consisting of a content-editable <div> element,
@@ -1363,10 +1363,10 @@ TEST_F(RenderViewImplTest, OnSetTextDirection) {
        L"\x000A"
        L"ltr,ltr"},
   };
-  for (size_t i = 0; i < arraysize(kTextDirection); ++i) {
+  for (auto i : kTextDirection) {
     // Set the text direction of the <textarea> element.
     ExecuteJavaScriptForTests("document.getElementById('test').focus();");
-    view()->OnSetTextDirection(kTextDirection[i].direction);
+    view()->OnSetTextDirection(i.direction);
 
     // Write the values of its DOM 'dir' attribute and its CSS 'direction'
     // property to the <div> element.
@@ -1384,7 +1384,7 @@ TEST_F(RenderViewImplTest, OnSetTextDirection) {
     base::string16 output = WebFrameContentDumper::DumpWebViewAsText(
                                 view()->GetWebView(), kMaxOutputCharacters)
                                 .Utf16();
-    EXPECT_EQ(base::WideToUTF16(kTextDirection[i].expected_result), output);
+    EXPECT_EQ(base::WideToUTF16(i.expected_result), output);
   }
 }
 
@@ -1599,8 +1599,8 @@ TEST_F(RenderViewImplTest, GetCompositionCharacterBoundsTest) {
   view()->GetCompositionCharacterBounds(&bounds);
   ASSERT_EQ(ascii_composition.size(), bounds.size());
 
-  for (size_t i = 0; i < bounds.size(); ++i)
-    EXPECT_LT(0, bounds[i].width());
+  for (auto& bound : bounds)
+    EXPECT_LT(0, bound.width());
   view()->OnImeCommitText(empty_string, std::vector<blink::WebImeTextSpan>(),
                           gfx::Range::InvalidRange(), 0);
 
@@ -1611,8 +1611,8 @@ TEST_F(RenderViewImplTest, GetCompositionCharacterBoundsTest) {
                               gfx::Range::InvalidRange(), 0, 0);
   view()->GetCompositionCharacterBounds(&bounds);
   ASSERT_EQ(unicode_composition.size(), bounds.size());
-  for (size_t i = 0; i < bounds.size(); ++i)
-    EXPECT_LT(0, bounds[i].width());
+  for (auto& bound : bounds)
+    EXPECT_LT(0, bound.width());
   view()->OnImeCommitText(empty_string, empty_ime_text_span,
                           gfx::Range::InvalidRange(), 0);
 

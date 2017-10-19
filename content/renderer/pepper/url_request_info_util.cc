@@ -109,8 +109,7 @@ bool ValidateURLRequestData(const URLRequestInfoData& data) {
 std::string FilterStringForXRequestedWithValue(const std::string& s) {
   std::string rv;
   rv.reserve(s.length());
-  for (size_t i = 0; i < s.length(); i++) {
-    char c = s[i];
+  for (char c : s) {
     // Allow ASCII digits, letters, periods, commas, and underscores. (Ignore
     // all other characters.)
     if (base::IsAsciiDigit(c) || base::IsAsciiAlpha(c) || (c == '.') ||
@@ -192,8 +191,7 @@ bool CreateWebURLRequest(PP_Instance instance,
     WebHTTPBody http_body;
     http_body.Initialize();
     int file_index = 0;
-    for (size_t i = 0; i < data->body.size(); ++i) {
-      const URLRequestInfoData::BodyItem& item = data->body[i];
+    for (const auto& item : data->body) {
       if (item.is_file) {
         if (!AppendFileRefToBody(instance,
                                  item.file_ref_pp_resource,

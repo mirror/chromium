@@ -255,13 +255,12 @@ TEST_F(RenderFrameImplTest, EffectiveConnectionType) {
                {blink::WebEffectiveConnectionType::kType2G},
                {blink::WebEffectiveConnectionType::kType4G}};
 
-  for (size_t i = 0; i < arraysize(tests); ++i) {
-    SetEffectionConnectionType(GetMainRenderFrame(), tests[i].type);
-    SetEffectionConnectionType(frame(), tests[i].type);
+  for (auto test : tests) {
+    SetEffectionConnectionType(GetMainRenderFrame(), test.type);
+    SetEffectionConnectionType(frame(), test.type);
 
-    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
-    EXPECT_EQ(tests[i].type,
-              GetMainRenderFrame()->GetEffectiveConnectionType());
+    EXPECT_EQ(test.type, frame()->GetEffectiveConnectionType());
+    EXPECT_EQ(test.type, GetMainRenderFrame()->GetEffectiveConnectionType());
 
     blink::WebHistoryItem item;
     item.Initialize();
@@ -269,10 +268,10 @@ TEST_F(RenderFrameImplTest, EffectiveConnectionType) {
     // The main frame's and subframe's effective connection type should stay the
     // same on navigations within the page.
     frame()->DidNavigateWithinPage(item, blink::kWebStandardCommit, true);
-    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
+    EXPECT_EQ(test.type, frame()->GetEffectiveConnectionType());
     GetMainRenderFrame()->DidNavigateWithinPage(item, blink::kWebStandardCommit,
                                                 true);
-    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
+    EXPECT_EQ(test.type, frame()->GetEffectiveConnectionType());
 
     // The subframe's effective connection type should not be reset on commit.
     DocumentState* document_state = DocumentState::FromDocumentLoader(
@@ -281,7 +280,7 @@ TEST_F(RenderFrameImplTest, EffectiveConnectionType) {
         ->set_was_within_same_document(false);
 
     frame()->DidCommitProvisionalLoad(item, blink::kWebStandardCommit);
-    EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
+    EXPECT_EQ(test.type, frame()->GetEffectiveConnectionType());
 
     // The main frame's effective connection type should be reset on commit.
     document_state = DocumentState::FromDocumentLoader(

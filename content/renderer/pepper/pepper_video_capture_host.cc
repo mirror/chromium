@@ -326,9 +326,9 @@ int32_t PepperVideoCaptureHost::Close() {
 
 void PepperVideoCaptureHost::ReleaseBuffers() {
   ppapi::ResourceTracker* tracker = HostGlobals::Get()->GetResourceTracker();
-  for (size_t i = 0; i < buffers_.size(); ++i) {
-    buffers_[i].buffer->Unmap();
-    tracker->ReleaseResource(buffers_[i].buffer->pp_resource());
+  for (auto& buffer : buffers_) {
+    buffer.buffer->Unmap();
+    tracker->ReleaseResource(buffer.buffer->pp_resource());
   }
   buffers_.clear();
 }

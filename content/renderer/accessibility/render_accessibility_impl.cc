@@ -284,9 +284,9 @@ void RenderAccessibilityImpl::HandleAXEvent(
     acc_event.event_from = ui::AX_EVENT_FROM_PAGE;
 
   // Discard duplicate accessibility events.
-  for (uint32_t i = 0; i < pending_events_.size(); ++i) {
-    if (pending_events_[i].id == acc_event.id &&
-        pending_events_[i].event_type == acc_event.event_type) {
+  for (auto& pending_event : pending_events_) {
+    if (pending_event.id == acc_event.id &&
+        pending_event.event_type == acc_event.event_type) {
       return;
     }
   }
@@ -353,8 +353,8 @@ void RenderAccessibilityImpl::OnPluginRootNodeUpdated() {
     // Explore children of this object.
     std::vector<blink::WebAXObject> children;
     tree_source_.GetChildren(obj, &children);
-    for (size_t i = 0; i < children.size(); ++i)
-      objs_to_explore.push(children[i]);
+    for (const auto& i : children)
+      objs_to_explore.push(i);
   }
 }
 
@@ -390,8 +390,7 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
   bool had_layout_complete_messages = false;
 
   // Loop over each event and generate an updated event message.
-  for (size_t i = 0; i < src_events.size(); ++i) {
-    AccessibilityHostMsg_EventParams& event = src_events[i];
+  for (auto& event : src_events) {
     if (event.event_type == ui::AX_EVENT_LAYOUT_COMPLETE)
       had_layout_complete_messages = true;
 
@@ -429,9 +428,9 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
 
     // For each node in the update, set the location in our map from
     // ids to locations.
-    for (size_t i = 0; i < event_msg.update.nodes.size(); ++i) {
-      ui::AXNodeData& src = event_msg.update.nodes[i];
-      ui::AXRelativeBounds& dst = locations_[event_msg.update.nodes[i].id];
+    for (auto& node : event_msg.update.nodes) {
+      ui::AXNodeData& src = node;
+      ui::AXRelativeBounds& dst = locations_[node.id];
       dst.offset_container_id = src.offset_container_id;
       dst.bounds = src.location;
       dst.transform.reset(nullptr);
@@ -503,8 +502,8 @@ void RenderAccessibilityImpl::SendLocationChanges() {
     // Explore children of this object.
     std::vector<blink::WebAXObject> children;
     tree_source_.GetChildren(obj, &children);
-    for (size_t i = 0; i < children.size(); ++i)
-      objs_to_explore.push(children[i]);
+    for (const auto& i : children)
+      objs_to_explore.push(i);
   }
   locations_.swap(new_locations);
 

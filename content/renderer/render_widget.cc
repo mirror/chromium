@@ -273,38 +273,30 @@ WebDragData DropDataToWebDragData(const DropData& drop_data) {
     item_list.push_back(item);
   }
 
-  for (std::vector<ui::FileInfo>::const_iterator it =
-           drop_data.filenames.begin();
-       it != drop_data.filenames.end();
-       ++it) {
+  for (const auto& filename : drop_data.filenames) {
     WebDragData::Item item;
     item.storage_type = WebDragData::Item::kStorageTypeFilename;
-    item.filename_data = blink::FilePathToWebString(it->path);
+    item.filename_data = blink::FilePathToWebString(filename.path);
     item.display_name_data =
-        blink::FilePathToWebString(base::FilePath(it->display_name));
+        blink::FilePathToWebString(base::FilePath(filename.display_name));
     item_list.push_back(item);
   }
 
-  for (std::vector<DropData::FileSystemFileInfo>::const_iterator it =
-           drop_data.file_system_files.begin();
-       it != drop_data.file_system_files.end();
-       ++it) {
+  for (const auto& file_system_file : drop_data.file_system_files) {
     WebDragData::Item item;
     item.storage_type = WebDragData::Item::kStorageTypeFileSystemFile;
-    item.file_system_url = it->url;
-    item.file_system_file_size = it->size;
-    item.file_system_id = blink::WebString::FromASCII(it->filesystem_id);
+    item.file_system_url = file_system_file.url;
+    item.file_system_file_size = file_system_file.size;
+    item.file_system_id =
+        blink::WebString::FromASCII(file_system_file.filesystem_id);
     item_list.push_back(item);
   }
 
-  for (std::map<base::string16, base::string16>::const_iterator it =
-           drop_data.custom_data.begin();
-       it != drop_data.custom_data.end();
-       ++it) {
+  for (const auto& it : drop_data.custom_data) {
     WebDragData::Item item;
     item.storage_type = WebDragData::Item::kStorageTypeString;
-    item.string_type = WebString::FromUTF16(it->first);
-    item.string_data = WebString::FromUTF16(it->second);
+    item.string_type = WebString::FromUTF16(it.first);
+    item.string_data = WebString::FromUTF16(it.second);
     item_list.push_back(item);
   }
 
@@ -2195,9 +2187,9 @@ void RenderWidget::GetCompositionCharacterBounds(
   if (!GetWebWidget()->GetCompositionCharacterBounds(bounds_from_blink))
     return;
 
-  for (size_t i = 0; i < bounds_from_blink.size(); ++i) {
-    ConvertViewportToWindow(&bounds_from_blink[i]);
-    bounds->push_back(bounds_from_blink[i]);
+  for (auto& i : bounds_from_blink) {
+    ConvertViewportToWindow(&i);
+    bounds->push_back(i);
   }
 }
 

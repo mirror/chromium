@@ -399,12 +399,9 @@ bool V8VarConverter::ToV8Value(const PP_Var& var,
       DCHECK(current_v8->IsObject());
       v8::Local<v8::Object> v8_object = current_v8.As<v8::Object>();
 
-      for (DictionaryVar::KeyValueMap::const_iterator iter =
-               dict_var->key_value_map().begin();
-           iter != dict_var->key_value_map().end();
-           ++iter) {
-        const std::string& key = iter->first;
-        const PP_Var& child_var = iter->second.get();
+      for (const auto& iter : dict_var->key_value_map()) {
+        const std::string& key = iter.first;
+        const PP_Var& child_var = iter.second.get();
         v8::Local<v8::Value> child_v8;
         if (!GetOrCreateV8Value(context,
                                 child_var,

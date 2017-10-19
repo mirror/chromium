@@ -418,12 +418,11 @@ UScriptCode GetScriptForWebSettings(UScriptCode scriptCode) {
 void ApplyFontsFromMap(const ScriptFontFamilyMap& map,
                        SetFontFamilyWrapper setter,
                        WebSettings* settings) {
-  for (ScriptFontFamilyMap::const_iterator it = map.begin(); it != map.end();
-       ++it) {
-    int32_t script = u_getPropertyValueEnum(UCHAR_SCRIPT, (it->first).c_str());
+  for (const auto& it : map) {
+    int32_t script = u_getPropertyValueEnum(UCHAR_SCRIPT, (it.first).c_str());
     if (script >= 0 && script < USCRIPT_CODE_LIMIT) {
       UScriptCode code = static_cast<UScriptCode>(script);
-      (*setter)(settings, it->second, GetScriptForWebSettings(code));
+      (*setter)(settings, it.second, GetScriptForWebSettings(code));
     }
   }
 }
@@ -672,10 +671,8 @@ void RenderViewImpl::Initialize(
 RenderViewImpl::~RenderViewImpl() {
   DCHECK(!frame_widget_);
 
-  for (BitmapMap::iterator it = disambiguation_bitmaps_.begin();
-       it != disambiguation_bitmaps_.end();
-       ++it)
-    delete it->second;
+  for (auto& disambiguation_bitmap : disambiguation_bitmaps_)
+    delete disambiguation_bitmap.second;
 
 #if defined(OS_ANDROID)
   // The date/time picker client is both a std::unique_ptr member of this class
@@ -733,8 +730,8 @@ size_t RenderView::GetRenderViewCount() {
 /*static*/
 void RenderView::ForEach(RenderViewVisitor* visitor) {
   ViewMap* views = g_view_map.Pointer();
-  for (ViewMap::iterator it = views->begin(); it != views->end(); ++it) {
-    if (!visitor->Visit(it->second))
+  for (auto& view : *views) {
+    if (!visitor->Visit(view.second))
       return;
   }
 }

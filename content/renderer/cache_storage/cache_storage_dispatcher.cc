@@ -61,11 +61,9 @@ void PopulateWebRequestFromFetchRequest(
     blink::WebServiceWorkerRequest* web_request) {
   web_request->SetURL(request.url);
   web_request->SetMethod(WebString::FromASCII(request.method));
-  for (ServiceWorkerHeaderMap::const_iterator i = request.headers.begin(),
-                                              end = request.headers.end();
-       i != end; ++i) {
-    web_request->SetHeader(WebString::FromASCII(i->first),
-                           WebString::FromASCII(i->second));
+  for (const auto& header : request.headers) {
+    web_request->SetHeader(WebString::FromASCII(header.first),
+                           WebString::FromASCII(header.second));
   }
   web_request->SetReferrer(WebString::FromASCII(request.referrer.url.spec()),
                            request.referrer.policy);
@@ -611,9 +609,8 @@ void CacheStorageDispatcher::dispatchBatchForCache(
 
   std::vector<CacheStorageBatchOperation> operations;
   operations.reserve(web_operations.size());
-  for (size_t i = 0; i < web_operations.size(); ++i) {
-    operations.push_back(
-        BatchOperationFromWebBatchOperation(web_operations[i]));
+  for (const auto& web_operation : web_operations) {
+    operations.push_back(BatchOperationFromWebBatchOperation(web_operation));
   }
 
   Send(new CacheStorageHostMsg_CacheBatch(CurrentWorkerId(), request_id,

@@ -62,8 +62,8 @@ void AddIntListAttributeFromWebObjects(ui::AXIntListAttribute attr,
                                        const WebVector<WebAXObject>& objects,
                                        AXContentNodeData* dst) {
   std::vector<int32_t> ids;
-  for (size_t i = 0; i < objects.size(); i++)
-    ids.push_back(objects[i].AxID());
+  for (const auto& object : objects)
+    ids.push_back(object.AxID());
   if (!ids.empty())
     dst->AddIntListAttribute(attr, ids);
 }
@@ -566,8 +566,8 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
       src.CharacterOffsets(src_character_offsets);
       std::vector<int32_t> character_offsets;
       character_offsets.reserve(src_character_offsets.size());
-      for (size_t i = 0; i < src_character_offsets.size(); ++i)
-        character_offsets.push_back(src_character_offsets[i]);
+      for (int src_character_offset : src_character_offsets)
+        character_offsets.push_back(src_character_offset);
       dst->AddIntListAttribute(ui::AX_ATTR_CHARACTER_OFFSETS,
                                character_offsets);
 

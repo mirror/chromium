@@ -615,14 +615,14 @@ void UserMediaProcessor::OnStreamGeneratedForCancelledRequest(
     const MediaStreamDevices& audio_devices,
     const MediaStreamDevices& video_devices) {
   // Only stop the device if the device is not used in another MediaStream.
-  for (auto it = audio_devices.begin(); it != audio_devices.end(); ++it) {
-    if (!FindLocalSource(*it))
-      media_stream_dispatcher_->StopStreamDevice(*it);
+  for (const auto& audio_device : audio_devices) {
+    if (!FindLocalSource(audio_device))
+      media_stream_dispatcher_->StopStreamDevice(audio_device);
   }
 
-  for (auto it = video_devices.begin(); it != video_devices.end(); ++it) {
-    if (!FindLocalSource(*it))
-      media_stream_dispatcher_->StopStreamDevice(*it);
+  for (const auto& video_device : video_devices) {
+    if (!FindLocalSource(video_device))
+      media_stream_dispatcher_->StopStreamDevice(video_device);
   }
 }
 

@@ -574,8 +574,8 @@ bool BrowserPlugin::SetComposition(
 
   BrowserPluginHostMsg_SetComposition_Params params;
   params.text = text.Utf16();
-  for (size_t i = 0; i < ime_text_spans.size(); ++i) {
-    params.ime_text_spans.push_back(ime_text_spans[i]);
+  for (const auto& ime_text_span : ime_text_spans) {
+    params.ime_text_spans.push_back(ime_text_span);
   }
 
   params.replacement_range =
@@ -601,8 +601,8 @@ bool BrowserPlugin::CommitText(
     return false;
 
   std::vector<blink::WebImeTextSpan> std_ime_text_spans;
-  for (size_t i = 0; i < ime_text_spans.size(); ++i) {
-    std_ime_text_spans.push_back(ime_text_spans[i]);
+  for (const auto& ime_text_span : ime_text_spans) {
+    std_ime_text_spans.push_back(ime_text_span);
   }
   gfx::Range replacement_range =
       replacementRange.IsNull()

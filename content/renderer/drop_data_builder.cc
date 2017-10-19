@@ -28,8 +28,7 @@ DropData DropDataBuilder::Build(const WebDragData& drag_data) {
   result.referrer_policy = blink::kWebReferrerPolicyDefault;
 
   const WebVector<WebDragData::Item>& item_list = drag_data.Items();
-  for (size_t i = 0; i < item_list.size(); ++i) {
-    const WebDragData::Item& item = item_list[i];
+  for (const auto& item : item_list) {
     switch (item.storage_type) {
       case WebDragData::Item::kStorageTypeString: {
         base::string16 str_type(item.string_type.Utf16());

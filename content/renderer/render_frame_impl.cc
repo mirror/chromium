@@ -336,8 +336,8 @@ void GetRedirectChain(WebDocumentLoader* document_loader,
   WebVector<WebURL> urls;
   document_loader->RedirectChain(urls);
   result->reserve(urls.size());
-  for (size_t i = 0; i < urls.size(); ++i) {
-    result->push_back(urls[i]);
+  for (auto& url : urls) {
+    result->push_back(url);
   }
 }
 
@@ -1121,8 +1121,8 @@ RenderFrame* RenderFrame::FromWebFrame(blink::WebLocalFrame* web_frame) {
 // static
 void RenderFrame::ForEach(RenderFrameVisitor* visitor) {
   FrameMap* frames = g_frame_map.Pointer();
-  for (FrameMap::iterator it = frames->begin(); it != frames->end(); ++it) {
-    if (!visitor->Visit(it->second))
+  for (auto& frame : *frames) {
+    if (!visitor->Visit(frame.second))
       return;
   }
 }
@@ -4230,9 +4230,9 @@ blink::WebColorChooser* RenderFrameImpl::CreateColorChooser(
   RendererWebColorChooserImpl* color_chooser =
       new RendererWebColorChooserImpl(this, client);
   std::vector<ColorSuggestion> color_suggestions;
-  for (size_t i = 0; i < suggestions.size(); i++) {
+  for (const auto& suggestion : suggestions) {
     color_suggestions.push_back(
-        ColorSuggestion(suggestions[i].color, suggestions[i].label.Utf16()));
+        ColorSuggestion(suggestion.color, suggestion.label.Utf16()));
   }
   color_chooser->Open(static_cast<SkColor>(initial_color), color_suggestions);
   return color_chooser;
@@ -5877,9 +5877,9 @@ void RenderFrameImpl::OnFileChooserResponse(
   WebVector<blink::WebFileChooserCompletion::SelectedFileInfo> selected_files(
       files.size());
   size_t current_size = 0;
-  for (size_t i = 0; i < files.size(); ++i) {
+  for (const auto& file : files) {
     blink::WebFileChooserCompletion::SelectedFileInfo selected_file;
-    selected_file.path = blink::FilePathToWebString(files[i].file_path);
+    selected_file.path = blink::FilePathToWebString(file.file_path);
 
     // Exclude files whose paths can't be converted into WebStrings. Blink won't
     // be able to handle these, and the browser process would kill the renderer
@@ -5888,12 +5888,12 @@ void RenderFrameImpl::OnFileChooserResponse(
       continue;
 
     selected_file.display_name =
-        blink::FilePathToWebString(base::FilePath(files[i].display_name));
-    if (files[i].file_system_url.is_valid()) {
-      selected_file.file_system_url = files[i].file_system_url;
-      selected_file.length = files[i].length;
-      selected_file.modification_time = files[i].modification_time.ToDoubleT();
-      selected_file.is_directory = files[i].is_directory;
+        blink::FilePathToWebString(base::FilePath(file.display_name));
+    if (file.file_system_url.is_valid()) {
+      selected_file.file_system_url = file.file_system_url;
+      selected_file.length = file.length;
+      selected_file.modification_time = file.modification_time.ToDoubleT();
+      selected_file.is_directory = file.is_directory;
     }
 
     selected_files[current_size] = selected_file;

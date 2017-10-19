@@ -433,10 +433,10 @@ TEST_F(SpeechRecognitionAudioSinkTest, RecognizerNotifiedOnSocket) {
       {176400, 1764}, {176400, 17640}, {192000, 1920}, {192000, 19200}};
 
   // Check all listed tuples of input sample rates and buffers sizes.
-  for (size_t i = 0; i < kNumAudioParamTuples; ++i) {
-    AssertConsumptionForAudioParameters(
-        kAudioParams[i][0], kAudioParams[i][1],
-        kSpeechRecognitionSampleRate, kSpeechRecognitionFramesPerBuffer, 3U);
+  for (auto kAudioParam : kAudioParams) {
+    AssertConsumptionForAudioParameters(kAudioParam[0], kAudioParam[1],
+                                        kSpeechRecognitionSampleRate,
+                                        kSpeechRecognitionFramesPerBuffer, 3U);
   }
 }
 

@@ -700,9 +700,9 @@ bool AsyncAddressResolverImpl::GetResolvedAddress(
   if (addresses_.empty())
    return false;
 
-  for (size_t i = 0; i < addresses_.size(); ++i) {
-    if (family == addresses_[i].family()) {
-      addr->SetResolvedIP(addresses_[i]);
+  for (const auto& addresse : addresses_) {
+    if (family == addresse.family()) {
+      addr->SetResolvedIP(addresse);
       addr->SetPort(port_);
       return true;
     }
@@ -726,10 +726,10 @@ void AsyncAddressResolverImpl::Destroy(bool wait) {
 void AsyncAddressResolverImpl::OnAddressResolved(
     const net::IPAddressList& addresses) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  for (size_t i = 0; i < addresses.size(); ++i) {
+  for (const auto& addresse : addresses) {
     rtc::SocketAddress socket_address;
-    if (!jingle_glue::IPEndPointToSocketAddress(
-            net::IPEndPoint(addresses[i], 0), &socket_address)) {
+    if (!jingle_glue::IPEndPointToSocketAddress(net::IPEndPoint(addresse, 0),
+                                                &socket_address)) {
       NOTREACHED();
     }
     addresses_.push_back(socket_address.ipaddr());

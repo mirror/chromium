@@ -21,8 +21,8 @@ MenuItem MenuItemBuilder::Build(const blink::WebMenuItemInfo& item) {
   result.has_directional_override = item.has_text_direction_override;
   result.enabled = item.enabled;
   result.checked = item.checked;
-  for (size_t i = 0; i < item.sub_menu_items.size(); ++i)
-    result.submenu.push_back(MenuItemBuilder::Build(item.sub_menu_items[i]));
+  for (const auto& sub_menu_item : item.sub_menu_items)
+    result.submenu.push_back(MenuItemBuilder::Build(sub_menu_item));
 
   return result;
 }

@@ -283,24 +283,24 @@ int32_t PepperVideoDecoderHost::OnHostMsgAssignTextures(
   // Verify that the new texture IDs are unique and store them in
   // |new_textures|.
   PictureBufferMap new_textures;
-  for (uint32_t i = 0; i < texture_ids.size(); i++) {
-    if (picture_buffer_map_.find(texture_ids[i]) != picture_buffer_map_.end() ||
-        new_textures.find(texture_ids[i]) != new_textures.end()) {
+  for (unsigned int texture_id : texture_ids) {
+    if (picture_buffer_map_.find(texture_id) != picture_buffer_map_.end() ||
+        new_textures.find(texture_id) != new_textures.end()) {
       // Can't assign the same texture more than once.
       return PP_ERROR_BADARGUMENT;
     }
     new_textures.insert(
-        std::make_pair(texture_ids[i], PictureBufferState::ASSIGNED));
+        std::make_pair(texture_id, PictureBufferState::ASSIGNED));
   }
 
   picture_buffer_map_.insert(new_textures.begin(), new_textures.end());
 
   std::vector<media::PictureBuffer> picture_buffers;
-  for (uint32_t i = 0; i < texture_ids.size(); i++) {
+  for (unsigned int texture_id : texture_ids) {
     media::PictureBuffer::TextureIds ids;
-    ids.push_back(texture_ids[i]);
+    ids.push_back(texture_id);
     media::PictureBuffer buffer(
-        texture_ids[i],  // Use the texture_id to identify the buffer.
+        texture_id,  // Use the texture_id to identify the buffer.
         gfx::Size(size.width, size.height), ids);
     picture_buffers.push_back(buffer);
   }

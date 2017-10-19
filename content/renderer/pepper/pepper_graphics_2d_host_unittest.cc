@@ -136,20 +136,20 @@ TEST_F(PepperGraphics2DHostTest, ConvertToLogicalPixels) {
                // Check negative scroll deltas
                {10, 10, 20, 20, 5, 5, 10, 10, -6, -4, -3, -2, 0.5, true},
                {10, 10, 20, 20, 5, 5, 10, 10, -6, -3, -3, -1, 0.5, false}, };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
-    gfx::Rect r1(tests[i].x1, tests[i].y1, tests[i].w1, tests[i].h1);
-    gfx::Rect r2(tests[i].x2, tests[i].y2, tests[i].w2, tests[i].h2);
+  for (const auto& test : tests) {
+    gfx::Rect r1(test.x1, test.y1, test.w1, test.h1);
+    gfx::Rect r2(test.x2, test.y2, test.w2, test.h2);
     gfx::Rect orig = r1;
-    gfx::Point delta(tests[i].dx1, tests[i].dy1);
-    bool res = ConvertToLogicalPixels(tests[i].scale, &r1, &delta);
+    gfx::Point delta(test.dx1, test.dy1);
+    bool res = ConvertToLogicalPixels(test.scale, &r1, &delta);
     EXPECT_EQ(r2.ToString(), r1.ToString());
-    EXPECT_EQ(res, tests[i].result);
+    EXPECT_EQ(res, test.result);
     if (res) {
-      EXPECT_EQ(delta, gfx::Point(tests[i].dx2, tests[i].dy2));
+      EXPECT_EQ(delta, gfx::Point(test.dx2, test.dy2));
     }
     // Reverse the scale and ensure all the original pixels are still inside
     // the result.
-    ConvertToLogicalPixels(1.0f / tests[i].scale, &r1, NULL);
+    ConvertToLogicalPixels(1.0f / test.scale, &r1, NULL);
     EXPECT_TRUE(r1.Contains(orig));
   }
 }

@@ -47,13 +47,12 @@ ContextMenuParams ContextMenuParamsBuilder::Build(
         data.image_response, data.is_placeholder_image, &params.properties);
   }
 
-  for (size_t i = 0; i < data.dictionary_suggestions.size(); ++i)
-    params.dictionary_suggestions.push_back(
-        data.dictionary_suggestions[i].Utf16());
+  for (const auto& dictionary_suggestion : data.dictionary_suggestions)
+    params.dictionary_suggestions.push_back(dictionary_suggestion.Utf16());
 
   params.custom_context.is_pepper_menu = false;
-  for (size_t i = 0; i < data.custom_items.size(); ++i)
-    params.custom_items.push_back(MenuItemBuilder::Build(data.custom_items[i]));
+  for (const auto& custom_item : data.custom_items)
+    params.custom_items.push_back(MenuItemBuilder::Build(custom_item));
 
   if (!data.frame_history_item.IsNull()) {
     params.frame_page_state =

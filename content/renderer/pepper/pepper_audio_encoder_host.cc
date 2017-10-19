@@ -93,12 +93,12 @@ PepperAudioEncoderHost::AudioEncoderImpl::GetSupportedProfiles() {
   std::vector<PP_AudioProfileDescription> profiles;
   static const uint32_t sampling_rates[] = {8000, 12000, 16000, 24000, 48000};
 
-  for (uint32_t i = 0; i < arraysize(sampling_rates); ++i) {
+  for (unsigned int sampling_rate : sampling_rates) {
     PP_AudioProfileDescription profile;
     profile.profile = PP_AUDIOPROFILE_OPUS;
     profile.max_channels = 2;
     profile.sample_size = PP_AUDIOBUFFER_SAMPLESIZE_16_BITS;
-    profile.sample_rate = sampling_rates[i];
+    profile.sample_rate = sampling_rate;
     profile.hardware_accelerated = PP_FALSE;
     profiles.push_back(profile);
   }

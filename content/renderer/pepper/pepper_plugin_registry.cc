@@ -28,9 +28,9 @@ PepperPluginRegistry* PepperPluginRegistry::GetInstance() {
 
 const PepperPluginInfo* PepperPluginRegistry::GetInfoForPlugin(
     const WebPluginInfo& info) {
-  for (size_t i = 0; i < plugin_list_.size(); ++i) {
-    if (info.path == plugin_list_[i].path)
-      return &plugin_list_[i];
+  for (auto& i : plugin_list_) {
+    if (info.path == i.path)
+      return &i;
   }
   // We did not find the plugin in our list. But wait! the plugin can also
   // be a latecomer, as it happens with pepper flash. This information
@@ -112,8 +112,7 @@ void PepperPluginRegistry::Initialize() {
   // initialization. If we bail out (in the continue clauses) before saving
   // the initialized module, it will still try to unregister itself in its
   // destructor.
-  for (size_t i = 0; i < plugin_list_.size(); i++) {
-    const PepperPluginInfo& current = plugin_list_[i];
+  for (const auto& current : plugin_list_) {
     if (current.is_out_of_process)
       continue;  // Out of process plugins need no special pre-initialization.
 

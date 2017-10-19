@@ -1028,10 +1028,10 @@ void VideoDecoderShim::OnOutputComplete(std::unique_ptr<PendingFrame> frame) {
            ++it) {
         textures_to_dismiss_.insert(it->first);
       }
-      for (TextureIdSet::const_iterator it = available_textures_.begin();
-           it != available_textures_.end();
-           ++it) {
-        DismissTexture(*it);
+      for (std::__1::__hash_const_iterator<
+               std::__1::__hash_node<unsigned int, void*>*>::value_type
+               available_texture : available_textures_) {
+        DismissTexture(available_texture);
       }
       available_textures_.clear();
       FlushCommandBuffer();

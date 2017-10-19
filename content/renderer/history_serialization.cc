@@ -35,8 +35,8 @@ void ToOptionalString16Vector(
     const WebVector<WebString>& input,
     std::vector<base::Optional<base::string16>>* output) {
   output->reserve(output->size() + input.size());
-  for (size_t i = 0; i < input.size(); ++i)
-    output->emplace_back(WebString::ToOptionalString16(input[i]));
+  for (const auto& i : input)
+    output->emplace_back(WebString::ToOptionalString16(i));
 }
 
 void GenerateFrameStateFromItem(const WebHistoryItem& item,
@@ -109,8 +109,8 @@ void RecursivelyGenerateHistoryItem(const ExplodedFrameState& state,
   }
   node->set_item(item);
 
-  for (size_t i = 0; i < state.children.size(); ++i)
-    RecursivelyGenerateHistoryItem(state.children[i], node->AddChild());
+  for (const auto& i : state.children)
+    RecursivelyGenerateHistoryItem(i, node->AddChild());
 }
 
 }  // namespace

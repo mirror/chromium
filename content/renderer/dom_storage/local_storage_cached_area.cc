@@ -357,9 +357,9 @@ void LocalStorageCachedArea::EnsureLoaded() {
                    &status, &data);
 
   DOMStorageValuesMap values;
-  for (size_t i = 0; i < data.size(); ++i) {
-    values[Uint8VectorToString16(data[i]->key)] =
-        base::NullableString16(Uint8VectorToString16(data[i]->value), false);
+  for (auto& i : data) {
+    values[Uint8VectorToString16(i->key)] =
+        base::NullableString16(Uint8VectorToString16(i->value), false);
   }
 
   map_ = new DOMStorageMap(kPerStorageAreaQuota);

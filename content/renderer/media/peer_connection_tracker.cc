@@ -377,15 +377,14 @@ void PeerConnectionTracker::OnGetAllStats() {
   DCHECK(main_thread_.CalledOnValidThread());
 
   const std::string empty_track_id;
-  for (PeerConnectionIdMap::iterator it = peer_connection_id_map_.begin();
-       it != peer_connection_id_map_.end(); ++it) {
+  for (auto& it : peer_connection_id_map_) {
     rtc::scoped_refptr<InternalStatsObserver> observer(
-        new rtc::RefCountedObject<InternalStatsObserver>(it->second));
+        new rtc::RefCountedObject<InternalStatsObserver>(it.second));
 
     // The last type parameter is ignored when the track id is empty.
-    it->first->GetStats(
-        observer, webrtc::PeerConnectionInterface::kStatsOutputLevelDebug,
-        empty_track_id, blink::WebMediaStreamSource::kTypeAudio);
+    it.first->GetStats(observer,
+                       webrtc::PeerConnectionInterface::kStatsOutputLevelDebug,
+                       empty_track_id, blink::WebMediaStreamSource::kTypeAudio);
   }
 }
 
@@ -398,9 +397,8 @@ RenderThread* PeerConnectionTracker::SendTarget() {
 
 void PeerConnectionTracker::OnSuspend() {
   DCHECK(main_thread_.CalledOnValidThread());
-  for (PeerConnectionIdMap::iterator it = peer_connection_id_map_.begin();
-       it != peer_connection_id_map_.end(); ++it) {
-    it->first->CloseClientPeerConnection();
+  for (auto& it : peer_connection_id_map_) {
+    it.first->CloseClientPeerConnection();
   }
 }
 

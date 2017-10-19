@@ -410,9 +410,8 @@ PepperPluginInstanceImpl::ExternalDocumentLoader::~ExternalDocumentLoader() {}
 
 void PepperPluginInstanceImpl::ExternalDocumentLoader::ReplayReceivedData(
     WebAssociatedURLLoaderClient* document_loader) {
-  for (std::list<std::string>::iterator it = data_.begin(); it != data_.end();
-       ++it) {
-    document_loader->DidReceiveData(it->c_str(), it->length());
+  for (auto& it : data_) {
+    document_loader->DidReceiveData(it.c_str(), it.length());
   }
   if (finished_loading_) {
     document_loader->DidFinishLoading(0 /* finish_time */);
@@ -569,10 +568,8 @@ PepperPluginInstanceImpl::~PepperPluginInstanceImpl() {
   // unregister themselves inside the delete call).
   PluginObjectSet plugin_object_copy;
   live_plugin_objects_.swap(plugin_object_copy);
-  for (PluginObjectSet::iterator i = plugin_object_copy.begin();
-       i != plugin_object_copy.end();
-       ++i) {
-    (*i)->InstanceDeleted();
+  for (auto i : plugin_object_copy) {
+    i->InstanceDeleted();
   }
 
   if (message_channel_)
@@ -973,9 +970,9 @@ bool PepperPluginInstanceImpl::
   std::vector<size_t> utf16_offsets;
   utf16_offsets.push_back(selection_start);
   utf16_offsets.push_back(selection_end);
-  for (size_t i = 0; i < ime_text_spans.size(); ++i) {
-    utf16_offsets.push_back(ime_text_spans[i].start_offset);
-    utf16_offsets.push_back(ime_text_spans[i].end_offset);
+  for (const auto& ime_text_span : ime_text_spans) {
+    utf16_offsets.push_back(ime_text_span.start_offset);
+    utf16_offsets.push_back(ime_text_span.end_offset);
   }
   std::vector<size_t> utf8_offsets(utf16_offsets);
   event.character_text = base::UTF16ToUTF8AndAdjustOffsets(text, &utf8_offsets);
@@ -1177,14 +1174,14 @@ bool PepperPluginInstanceImpl::HandleInputEvent(
       }
 
       // Each input event may generate more than one PP_InputEvent.
-      for (size_t i = 0; i < events.size(); i++) {
+      for (auto& event : events) {
         if (filtered_input_event_mask_ & event_class)
-          events[i].is_filtered = true;
+          event.is_filtered = true;
         else
           rv = true;  // Unfiltered events are assumed to be handled.
         scoped_refptr<PPB_InputEvent_Shared> event_resource(
-            new PPB_InputEvent_Shared(
-                ppapi::OBJECT_IS_IMPL, pp_instance(), events[i]));
+            new PPB_InputEvent_Shared(ppapi::OBJECT_IS_IMPL, pp_instance(),
+                                      event));
 
         rv |= PP_ToBool(plugin_input_event_interface_->HandleInputEvent(
             pp_instance(), event_resource->pp_resource()));
@@ -2301,10 +2298,8 @@ void PepperPluginInstanceImpl::SimulateInputEvent(
       CreateSimulatedWebInputEvents(
           input_event, view_data_.rect.point.x + view_data_.rect.size.width / 2,
           view_data_.rect.point.y + view_data_.rect.size.height / 2);
-  for (std::vector<std::unique_ptr<WebInputEvent>>::iterator it =
-           events.begin();
-       it != events.end(); ++it) {
-    widget->HandleInputEvent(blink::WebCoalescedInputEvent(*it->get()));
+  for (auto& event : events) {
+    widget->HandleInputEvent(blink::WebCoalescedInputEvent(*event.get()));
   }
 }
 

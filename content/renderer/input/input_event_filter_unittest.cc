@@ -220,8 +220,8 @@ class InputEventFilterTest : public testing::Test,
   }
 
   void AddMessagesToFilter(const std::vector<IPC::Message>& events) {
-    for (size_t i = 0; i < events.size(); ++i)
-      filter_->OnMessageReceived(events[i]);
+    for (const auto& event : events)
+      filter_->OnMessageReceived(event);
 
     // base::RunLoop is the "IO Thread".
     base::RunLoop().RunUntilIdle();

@@ -32,17 +32,16 @@ class MockStreamCollection : public webrtc::StreamCollectionInterface {
   size_t count() override { return streams_.size(); }
   MediaStreamInterface* at(size_t index) override { return streams_[index]; }
   MediaStreamInterface* find(const std::string& label) override {
-    for (size_t i = 0; i < streams_.size(); ++i) {
-      if (streams_[i]->label() == label)
-        return streams_[i];
+    for (auto& stream : streams_) {
+      if (stream->label() == label)
+        return stream;
     }
     return NULL;
   }
   webrtc::MediaStreamTrackInterface* FindAudioTrack(
       const std::string& id) override {
-    for (size_t i = 0; i < streams_.size(); ++i) {
-      webrtc::MediaStreamTrackInterface* track =
-          streams_.at(i)->FindAudioTrack(id);
+    for (auto& stream : streams_) {
+      webrtc::MediaStreamTrackInterface* track = stream->FindAudioTrack(id);
       if (track)
         return track;
     }
@@ -50,9 +49,8 @@ class MockStreamCollection : public webrtc::StreamCollectionInterface {
   }
   webrtc::MediaStreamTrackInterface* FindVideoTrack(
       const std::string& id) override {
-    for (size_t i = 0; i < streams_.size(); ++i) {
-      webrtc::MediaStreamTrackInterface* track =
-          streams_.at(i)->FindVideoTrack(id);
+    for (auto& stream : streams_) {
+      webrtc::MediaStreamTrackInterface* track = stream->FindVideoTrack(id);
       if (track)
         return track;
     }

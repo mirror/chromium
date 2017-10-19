@@ -42,10 +42,8 @@ typedef std::set<WebPluginContainer*> ContainerSet;
 // Adds all WebPluginContainers associated with the given module to the set.
 void GetAllContainersForModule(PluginModule* module, ContainerSet* containers) {
   const PluginModule::PluginInstanceSet& instances = module->GetAllInstances();
-  for (PluginModule::PluginInstanceSet::const_iterator i = instances.begin();
-       i != instances.end();
-       ++i) {
-    WebPluginContainer* container = (*i)->container();
+  for (auto instance : instances) {
+    WebPluginContainer* container = instance->container();
     // If "Delete" is called on an instance, the instance sets its container to
     // NULL, but the instance may actually outlive its container. Callers of
     // GetAllContainersForModule only want to know about valid containers.
@@ -181,9 +179,8 @@ void HostGlobals::BroadcastLogWithSource(PP_Module pp_module,
   }
 
   WebConsoleMessage message = MakeLogMessage(level, source, value);
-  for (ContainerSet::iterator i = containers.begin(); i != containers.end();
-       ++i) {
-    WebLocalFrame* frame = (*i)->GetDocument().GetFrame();
+  for (auto container : containers) {
+    WebLocalFrame* frame = container->GetDocument().GetFrame();
     if (frame)
       frame->AddMessageToConsole(message);
   }

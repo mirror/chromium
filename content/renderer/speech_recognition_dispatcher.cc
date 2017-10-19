@@ -101,8 +101,7 @@ void SpeechRecognitionDispatcher::Start(
 #endif
 
   SpeechRecognitionHostMsg_StartRequest_Params msg_params;
-  for (size_t i = 0; i < params.Grammars().size(); ++i) {
-    const WebSpeechGrammar& grammar = params.Grammars()[i];
+  for (const auto& grammar : params.Grammars()) {
     msg_params.grammars.push_back(SpeechRecognitionGrammar(
         grammar.Src().GetString().Utf8(), grammar.Weight()));
   }
@@ -287,11 +286,9 @@ void SpeechRecognitionDispatcher::OnAudioReceiverReady(
 int SpeechRecognitionDispatcher::GetOrCreateIDForHandle(
     const WebSpeechRecognitionHandle& handle) {
   // Search first for an existing mapping.
-  for (HandleMap::iterator iter = handle_map_.begin();
-      iter != handle_map_.end();
-      ++iter) {
-    if (iter->second.Equals(handle))
-      return iter->first;
+  for (auto& iter : handle_map_) {
+    if (iter.second.Equals(handle))
+      return iter.first;
   }
   // If no existing mapping found, create a new one.
   const int new_id = next_id_;
@@ -302,10 +299,8 @@ int SpeechRecognitionDispatcher::GetOrCreateIDForHandle(
 
 bool SpeechRecognitionDispatcher::HandleExists(
     const WebSpeechRecognitionHandle& handle) {
-  for (HandleMap::iterator iter = handle_map_.begin();
-      iter != handle_map_.end();
-      ++iter) {
-    if (iter->second.Equals(handle))
+  for (auto& iter : handle_map_) {
+    if (iter.second.Equals(handle))
       return true;
   }
   return false;
