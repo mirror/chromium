@@ -592,8 +592,8 @@ NET_ERROR(ENCODING_CONVERSION_FAILED, -333)
 // The server sent an FTP directory listing in a format we do not understand.
 NET_ERROR(UNRECOGNIZED_FTP_DIRECTORY_LISTING_FORMAT, -334)
 
-// Attempted use of an unknown SPDY stream id.
-NET_ERROR(INVALID_SPDY_STREAM, -335)
+// HTTP/2 stream pushed by server was not claimed by any request.
+NET_ERROR(PUSHED_STREAM_EXPIRED, -335)
 
 // There are no supported proxies in the provided list.
 NET_ERROR(NO_SUPPORTED_PROXIES, -336)

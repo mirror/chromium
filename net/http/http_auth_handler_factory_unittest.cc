@@ -53,7 +53,7 @@ TEST(HttpAuthHandlerFactoryTest, RegistryFactory) {
   SSLInfo null_ssl_info;
   HttpAuthHandlerRegistryFactory registry_factory;
   GURL gurl("www.google.com");
-  const int kBasicReturnCode = ERR_INVALID_SPDY_STREAM;
+  const int kBasicReturnCode = ERR_PUSHED_STREAM_EXPIRED;
   MockHttpAuthHandlerFactory* mock_factory_basic =
       new MockHttpAuthHandlerFactory(kBasicReturnCode);
 
