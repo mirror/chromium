@@ -37,6 +37,7 @@
 #include "platform/heap/GCInfo.h"
 #include "platform/heap/HeapPage.h"
 #include "platform/heap/StackFrameDepth.h"
+#include "platform/heap/StackRoots.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/heap/Visitor.h"
 #include "platform/wtf/AddressSanitizer.h"
@@ -270,8 +271,6 @@ class PLATFORM_EXPORT ThreadHeap {
 
   void VisitPersistentRoots(Visitor*);
   void VisitStackRoots(Visitor*);
-  void EnterSafePoint(ThreadState*);
-  void LeaveSafePoint();
 
   // Is the finalizable GC object still alive, but slated for lazy sweeping?
   // If a lazy sweep is in progress, returns true if the object was found
@@ -540,6 +539,7 @@ class PLATFORM_EXPORT ThreadHeap {
   std::unique_ptr<CallbackStack> weak_callback_stack_;
   std::unique_ptr<CallbackStack> ephemeron_stack_;
   StackFrameDepth stack_frame_depth_;
+  StackRoots stack_roots_;
 
   std::unique_ptr<HeapCompact> compaction_;
 
