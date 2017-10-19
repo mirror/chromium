@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9addd20_b876e15a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-animator-registration.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59789059_793b7657",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6256b47e_8a0b4795",
         "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-19T02:46:02Z",
       "side": 1,
       "message": "Isn\u0027t this implied by animating it?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28feebe_5bc49fa8",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Nope at the moment :(. Just filed a bug (http://crbug.com/776533) and \nadded a TODO in WorkletAnimation and here to track this.",
+      "parentUuid": "6256b47e_8a0b4795",
       "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "99ca45e5_cebcb353",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Yes. Legacy. Changed it to 100 just to match.",
+      "parentUuid": "e0ba1701_75bd5927",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "151a4fa6_aa3b6643",
         "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc26aa79_b8674ae5",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Removed.\n\njs-test.js used to insert one so this was here to ensure it\ndoes not insert one and cause visual difference.",
+      "parentUuid": "151a4fa6_aa3b6643",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1f561932_0d8ed53e",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "21fb9464_059d9ddf",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d65f6f95_42c9d2dd",
         "filename": "third_party/WebKit/Source/modules/compositorworker/WorkletAnimation.cpp",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f65d0b_ad8b6f4c",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/WorkletAnimation.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d65f6f95_42c9d2dd",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cad150e7_fd84f5af",
+        "filename": "third_party/WebKit/Source/platform/animation/CompositorAnimationPlayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Hmmm, constructor is private. Though I don\u0027t see any reason why and\nmade it public.",
+      "parentUuid": "7518cbb5_54d3ae91",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09ad7e42_66f96262",
         "filename": "third_party/WebKit/Source/platform/animation/CompositorAnimationPlayer.cpp",
         "patchSetId": 11
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-19T02:46:02Z",
       "side": 1,
       "message": "This constructor isn\u0027t used is it?",
+      "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a99468_ddda7e2f",
+        "filename": "third_party/WebKit/Source/platform/animation/CompositorAnimationPlayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-19T21:29:26Z",
+      "side": 1,
+      "message": "Actually used by CompositorAnimationPlayer::Create. I went ahead\nand remove it to simplify things.",
+      "parentUuid": "09ad7e42_66f96262",
       "revId": "0e5046deb37c73fbdc94d571d1f1e1994563b118",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
