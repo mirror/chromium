@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13c9242c_f44067c4",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "140ec95a_5e2b1ce5",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31283630_22554d42",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
         "patchSetId": 22
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-18T16:15:00Z",
       "side": 1,
       "message": "do we need this proliferation of classes? How many children of AutofillPopupChildView do you expect? For example it seems fine to have one class which handles either text only or text + image.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13058b14_d367bd96",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "I don\u0027t know :) I would keep image/no-image views separate in the beginning, because having in mind our plans for the password manager rows, full separation imho will simplify further modifications.",
+      "parentUuid": "31283630_22554d42",
       "range": {
         "startLine": 76,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "05cbd83c_296d5bf5",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a341552d_8d5ff9bf",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 11
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd36ec6_2e81a2bb",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
         "patchSetId": 22
@@ -91,6 +163,30 @@
       "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e939add3_f4e9eb5b",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd36ec6_2e81a2bb",
+      "range": {
+        "startLine": 142,
+        "startChar": 37,
+        "endLine": 142,
+        "endChar": 57
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e9030e7f_00f61a3d",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cde9d8b_ff5e629f",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 68
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e22d4f4b_5049726a",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h",
         "patchSetId": 22
@@ -137,6 +257,30 @@
       "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9aedd36_b7c959fa",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22d4f4b_5049726a",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "36f65185_5a67e1b4",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa775ee7_01f8cd20",
+      "range": {
+        "startLine": 39,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c41fa1a_b28ae150",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views_unittest.cc",
         "patchSetId": 22
@@ -183,6 +351,30 @@
       "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c14691_1e074ac8",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-19T12:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c41fa1a_b28ae150",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
