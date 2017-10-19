@@ -46,7 +46,8 @@ const char kTestAndroidRealm2[] = "android://hash@com.example.two.android/";
 class MockPasswordManagerClient : public StubPasswordManagerClient {
  public:
   MOCK_CONST_METHOD0(IsSavingAndFillingEnabledForCurrentPage, bool());
-  MOCK_CONST_METHOD0(IsFillingEnabledForCurrentPage, bool());
+  MOCK_CONST_METHOD1(IsFillingEnabledForCurrentPage,
+                     bool(PasswordManagerClient::NavigationEntryToCheck));
   MOCK_METHOD0(OnCredentialManagerUsed, bool());
   MOCK_CONST_METHOD0(IsIncognito, bool());
   MOCK_METHOD0(NotifyUserAutoSigninPtr, bool());
@@ -178,7 +179,9 @@ class CredentialManagerImplTest : public testing::Test {
     cm_service_impl_.reset(new CredentialManagerImpl(client_.get()));
     ON_CALL(*client_, IsSavingAndFillingEnabledForCurrentPage())
         .WillByDefault(testing::Return(true));
-    ON_CALL(*client_, IsFillingEnabledForCurrentPage())
+    ON_CALL(*client_,
+            IsFillingEnabledForCurrentPage(
+                PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED))
         .WillByDefault(testing::Return(true));
     ON_CALL(*client_, OnCredentialManagerUsed())
         .WillByDefault(testing::Return(true));
@@ -1105,7 +1108,10 @@ TEST_F(CredentialManagerImplTest, RequestCredentialWithFirstRunAndSkip) {
 
 TEST_F(CredentialManagerImplTest, RequestCredentialWithTLSErrors) {
   // If we encounter TLS errors, we won't return credentials.
-  EXPECT_CALL(*client_, IsFillingEnabledForCurrentPage())
+  EXPECT_CALL(
+      *client_,
+      IsFillingEnabledForCurrentPage(
+          PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED))
       .WillRepeatedly(testing::Return(false));
 
   store_->AddLogin(form_);

@@ -110,7 +110,8 @@ void CredentialManagerImpl::Get(CredentialMediationRequirement mediation,
 
   // Return an empty credential if the current page has TLS errors, or if the
   // page is being prerendered.
-  if (!client_->IsFillingEnabledForCurrentPage() ||
+  if (!client_->IsFillingEnabledForCurrentPage(
+          PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED) ||
       !client_->OnCredentialManagerUsed()) {
     std::move(callback).Run(CredentialManagerError::SUCCESS, CredentialInfo());
     LogCredentialManagerGetResult(metrics_util::CREDENTIAL_MANAGER_GET_NONE,

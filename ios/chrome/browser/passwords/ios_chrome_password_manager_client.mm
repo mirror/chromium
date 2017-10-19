@@ -156,9 +156,12 @@ void IOSChromePasswordManagerClient::ForceSavePassword() {
 
 bool IOSChromePasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage()
     const {
+  // TODO(crbug.com/540699): Once HTTP auth forms are supported on iOS, ensure
+  // that the proper |entry_to_check| argument is passed to
+  // IsFillingEnabledForCurrentPage.
   return *saving_passwords_enabled_ && !IsIncognito() &&
          !DidLastPageLoadEncounterSSLErrors() &&
-         IsFillingEnabledForCurrentPage();
+         IsFillingEnabledForCurrentPage(NavigationEntryToCheck::LAST_COMMITTED);
 }
 
 const GURL& IOSChromePasswordManagerClient::GetLastCommittedEntryURL() const {

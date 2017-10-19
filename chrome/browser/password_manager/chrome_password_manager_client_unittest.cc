@@ -38,9 +38,11 @@
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -60,6 +62,7 @@
 using browser_sync::ProfileSyncServiceMock;
 using content::BrowserContext;
 using content::WebContents;
+using password_manager::PasswordManagerClient;
 using sessions::GetPasswordStateFromNavigation;
 using sessions::SerializedNavigationEntry;
 using testing::Return;
@@ -400,14 +403,16 @@ TEST_F(ChromePasswordManagerClientTest, SavingAndFillingEnabledConditionsTest) {
   EXPECT_CALL(*client, DidLastPageLoadEncounterSSLErrors())
       .WillRepeatedly(Return(true));
   EXPECT_FALSE(client->IsSavingAndFillingEnabledForCurrentPage());
-  EXPECT_FALSE(client->IsFillingEnabledForCurrentPage());
+  EXPECT_FALSE(client->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
 
   // Functionality disabled if there are SSL errors and the manager itself is
   // disabled.
   prefs()->SetUserPref(password_manager::prefs::kCredentialsEnableService,
                        base::MakeUnique<base::Value>(false));
   EXPECT_FALSE(client->IsSavingAndFillingEnabledForCurrentPage());
-  EXPECT_FALSE(client->IsFillingEnabledForCurrentPage());
+  EXPECT_FALSE(client->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
 
   // Functionality disabled if there are no SSL errors, but the manager itself
   // is disabled.
@@ -416,7 +421,8 @@ TEST_F(ChromePasswordManagerClientTest, SavingAndFillingEnabledConditionsTest) {
   prefs()->SetUserPref(password_manager::prefs::kCredentialsEnableService,
                        base::MakeUnique<base::Value>(false));
   EXPECT_FALSE(client->IsSavingAndFillingEnabledForCurrentPage());
-  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage());
+  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
 
   // Functionality enabled if there are no SSL errors and the manager is
   // enabled.
@@ -425,19 +431,22 @@ TEST_F(ChromePasswordManagerClientTest, SavingAndFillingEnabledConditionsTest) {
   prefs()->SetUserPref(password_manager::prefs::kCredentialsEnableService,
                        base::MakeUnique<base::Value>(true));
   EXPECT_TRUE(client->IsSavingAndFillingEnabledForCurrentPage());
-  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage());
+  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
 
   // Functionality disabled in Incognito mode.
   profile()->ForceIncognito(true);
   EXPECT_FALSE(client->IsSavingAndFillingEnabledForCurrentPage());
-  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage());
+  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
 
   // Functionality disabled in Incognito mode also when manager itself is
   // enabled.
   prefs()->SetUserPref(password_manager::prefs::kCredentialsEnableService,
                        base::MakeUnique<base::Value>(true));
   EXPECT_FALSE(client->IsSavingAndFillingEnabledForCurrentPage());
-  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage());
+  EXPECT_TRUE(client->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
   profile()->ForceIncognito(false);
 }
 
@@ -453,11 +462,41 @@ TEST_F(ChromePasswordManagerClientTest, SavingDependsOnAutomation) {
 // Check that password manager is disabled on about:blank pages.
 // See https://crbug.com/756587.
 TEST_F(ChromePasswordManagerClientTest, SavingAndFillingDisbledForAboutBlank) {
-  GURL kUrl(url::kAboutBlankURL);
+  const GURL kUrl(url::kAboutBlankURL);
   NavigateAndCommit(kUrl);
   EXPECT_EQ(kUrl, GetClient()->GetLastCommittedEntryURL());
   EXPECT_FALSE(GetClient()->IsSavingAndFillingEnabledForCurrentPage());
-  EXPECT_FALSE(GetClient()->IsFillingEnabledForCurrentPage());
+  EXPECT_FALSE(GetClient()->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
+}
+
+// Verify the filling check behaves accordingly to the passed type of navigation
+// entry to check.
+TEST_F(ChromePasswordManagerClientTest,
+       IsFillingEnabledForCurrentPage_NavigationEntry) {
+  // about:blank is one of the pages where password manager should not work.
+  const GURL kUrlOff(url::kAboutBlankURL);
+  // accounts.google.com is one of the pages where password manager should work.
+  const GURL kUrlOn("https://accounts.google.com");
+
+  // Ensure that the committed entry is one where password manager should work.
+  NavigateAndCommit(kUrlOn);
+  // Start a navigation to where password manager should not work, but do not
+  // commit the navigation. The target URL should be associated with the
+  // visible entry.
+  std::unique_ptr<content::NavigationSimulator> navigation =
+      content::NavigationSimulator::CreateBrowserInitiated(kUrlOff,
+                                                           web_contents());
+  navigation->Start();
+  EXPECT_EQ(kUrlOn,
+            web_contents()->GetController().GetLastCommittedEntry()->GetURL());
+  EXPECT_EQ(kUrlOff,
+            web_contents()->GetController().GetVisibleEntry()->GetURL());
+
+  EXPECT_TRUE(GetClient()->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::LAST_COMMITTED));
+  EXPECT_FALSE(GetClient()->IsFillingEnabledForCurrentPage(
+      PasswordManagerClient::NavigationEntryToCheck::VISIBLE));
 }
 
 TEST_F(ChromePasswordManagerClientTest, GetLastCommittedEntryURL_Empty) {

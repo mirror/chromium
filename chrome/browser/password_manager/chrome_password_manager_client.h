@@ -52,7 +52,8 @@ class ChromePasswordManagerClient
 
   // PasswordManagerClient implementation.
   bool IsSavingAndFillingEnabledForCurrentPage() const override;
-  bool IsFillingEnabledForCurrentPage() const override;
+  bool IsFillingEnabledForCurrentPage(
+      NavigationEntryToCheck entry_to_check) const override;
   bool IsFillingFallbackEnabledForCurrentPage() const override;
   void PostHSTSQueryForHost(const GURL& origin,
                             const HSTSCallback& callback) const override;
@@ -182,8 +183,11 @@ class ChromePasswordManagerClient
 
   // Checks if the current page fulfils the conditions for the password manager
   // to be active on it, for example Sync credentials are not saved or auto
-  // filled.
-  bool IsPasswordManagementEnabledForCurrentPage() const;
+  // filled. |entry_to_check| specifies which navigation entry is relevant for
+  // the check; the last commited one is relevant for HTML forms, the visible
+  // is for HTTP auth.
+  bool IsPasswordManagementEnabledForCurrentPage(
+      NavigationEntryToCheck entry_to_check) const;
 
   // Returns true if this profile has metrics reporting and active sync
   // without custom sync passphrase.
