@@ -25,6 +25,76 @@
     },
     {
       "key": {
+        "uuid": "dd73d9d5_6f5e5890",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:46:07Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "fdbed97c_5ce47a36",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 35
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1feb5dd8_301d3ac8",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:46:07Z",
+      "side": 1,
+      "message": "You can shorten these two lines to:\n(*ranker_example_-\u003emutable_features())[hex_feature_key]-\u003eset_int64_value(j_long);\n\nUp to you if you prefer one or two lines.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26b2d7a_f6712710",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:46:07Z",
+      "side": 1,
+      "message": "I am changing int values to 32bit (see https://chromium-review.googlesource.com/c/chromium/src/+/724122)\nThis will need to be changed to set_int32_value in sync with the above CL.",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b198e9d_98597c05",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 1
@@ -41,6 +111,76 @@
         "startChar": 29,
         "endLine": 73,
         "endChar": 35
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10c5fc4_5bb66f21",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:46:07Z",
+      "side": 1,
+      "message": "As mentioned below, no need to put the outcome in the RankerExample for now.\n\nFrom here, you should only have to do something like:\nreturn ranker_predictor_-\u003ePredictDecision(ranker_example_);\n\nThat is, once I finish building the code to build the predictor.",
+      "parentUuid": "1b198e9d_98597c05",
+      "range": {
+        "startLine": 73,
+        "startChar": 29,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20c399d_11cfdf7c",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:46:07Z",
+      "side": 1,
+      "message": "No need to add the outcomes as long as we are not using RankerExample for logging.",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 58
+      },
+      "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f43184_1723bf13",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-10-19T00:46:07Z",
+      "side": 1,
+      "message": "I would not mention training here, since we won\u0027t use RankerExample for logging for now.",
+      "range": {
+        "startLine": 63,
+        "startChar": 62,
+        "endLine": 63,
+        "endChar": 73
       },
       "revId": "cf6737eed8c3fb0b4877c4a37b17c4db4ffc9067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
