@@ -731,7 +731,6 @@ TEST_F(BbrSenderTest, SimpleTransfer2RTTStartup) {
 
 // Test exiting STARTUP earlier upon loss due to the LRTT connection option.
 TEST_F(BbrSenderTest, SimpleTransferLRTTStartup) {
-  FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss = true;
   CreateDefaultSetup();
 
   SetConnectionOption(kLRTT);
@@ -760,7 +759,6 @@ TEST_F(BbrSenderTest, SimpleTransferLRTTStartup) {
 
 // Test exiting STARTUP earlier upon loss due to the LRTT connection option.
 TEST_F(BbrSenderTest, SimpleTransferLRTTStartupSmallBuffer) {
-  FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss = true;
   CreateSmallBufferSetup();
 
   SetConnectionOption(kLRTT);

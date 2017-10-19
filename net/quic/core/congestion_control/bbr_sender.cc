@@ -184,9 +184,7 @@ bool BbrSender::IsProbingForMoreBandwidth() const {
 
 void BbrSender::SetFromConfig(const QuicConfig& config,
                               Perspective perspective) {
-  if (FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss &&
-      config.HasClientRequestedIndependentOption(kLRTT, perspective)) {
-    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_bbr_exit_startup_on_loss);
+  if (config.HasClientRequestedIndependentOption(kLRTT, perspective)) {
     exit_startup_on_loss_ = true;
   }
   if (config.HasClientRequestedIndependentOption(k1RTT, perspective)) {

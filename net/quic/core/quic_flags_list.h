@@ -120,10 +120,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque2, false)
 // If true, enable QUIC v42.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_42, false)
 
-// When true, allows the LRTT connection option to cause QUIC BBR to exit
-// STARTUP when in recovery and there has been no bandwidth increase for 1RTT.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss, true)
-
 // If buffered data in QUIC stream is less than this threshold, buffers all
 // provided data or asks upper layer for more data.
 QUIC_FLAG(uint32_t, FLAGS_quic_buffered_data_threshold, 8192u)
