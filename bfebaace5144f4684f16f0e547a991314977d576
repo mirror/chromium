@@ -22,6 +22,30 @@
       "revId": "bfebaace5144f4684f16f0e547a991314977d576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae3d0b6_512364fa",
+        "filename": "third_party/WebKit/Source/core/input/TouchEventManagerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-19T20:24:58Z",
+      "side": 1,
+      "message": "I don\u0027t think keeping a raw reference would change anything here. But I did it anyway.",
+      "parentUuid": "d3a5777e_4639a384",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "bfebaace5144f4684f16f0e547a991314977d576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
