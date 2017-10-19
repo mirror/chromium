@@ -71,11 +71,17 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
     CGRect containerBounds = [configuration.displayView bounds];
     CGFloat minY = CGRectGetMinY(configuration.sourceRect) - popupInsets.top;
 
+    UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+      safeAreaInsets = configuration.displayView.safeAreaInsets;
+    }
+
     // The tools popup appears trailing- aligned, but because
     // kToolsPopupMenuTrailingOffset is smaller than the popupInsets's trailing
     // value, destination needs to be shifted a bit.
-    CGFloat trailingShift =
-        UIEdgeInsetsGetTrailing(popupInsets) - kToolsPopupMenuTrailingOffset;
+    CGFloat trailingShift = UIEdgeInsetsGetTrailing(popupInsets) -
+                            UIEdgeInsetsGetTrailing(safeAreaInsets) -
+                            kToolsPopupMenuTrailingOffset;
     if (UseRTLLayout())
       trailingShift = -trailingShift;
 
