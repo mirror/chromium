@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c27a45d0_4d2d0db5",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-19T17:27:00Z",
+      "side": 1,
+      "message": "Does \\W (non-word character) work instead of \\S? That way you\u0027ll match\none,two,three as separate words rather than all one word.",
+      "revId": "1996daf1d34fb4d6957da4d93a8e385f6c72f985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4858660b_9256cf2f",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-19T17:27:00Z",
+      "side": 1,
+      "message": "Nit: Regulard -\u003e Regular.",
+      "revId": "1996daf1d34fb4d6957da4d93a8e385f6c72f985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa786b34_0d8068e1",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-19T17:27:00Z",
+      "side": 1,
+      "message": "How about \\w\\b, for same reasons as above?",
+      "revId": "1996daf1d34fb4d6957da4d93a8e385f6c72f985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
