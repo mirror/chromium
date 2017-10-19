@@ -165,16 +165,37 @@ class WinTool(object):
     """Filter logo banner from invocations of rc.exe. Older versions of RC
     don't support the /nologo flag."""
     env = self._GetEnv(arch)
-    popen = subprocess.Popen(args, shell=True, env=env,
-                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    out, _ = popen.communicate()
-    for line in out.splitlines():
-      if (not line.startswith('Microsoft (R) Windows (R) Resource Compiler') and
-          not line.startswith('Copy' + 'right (C' +
-                              ') Microsoft Corporation') and
-          line):
-        print line
-    return popen.returncode
+
+    # Run our rc.py.
+    # Also pass /showIncludes to track dependencies of .rc files.
+    args = list(args)
+    rcpy_args = args[:]
+    rcpy_args[0:1] = [sys.executable, os.path.join(BASE_DIR, 'rc', 'rc.py')]
+    rcpy_res_output = rcpy_args[-2]
+    rcpy_args.append('/showIncludes')
+    assert rcpy_res_output.endswith('.res')
+    rc_res_output = rcpy_res_output + '2'
+    args[-2] = rc_res_output
+    rc_exe_exit_code = subprocess.call(rcpy_args, env=env,
+                                       shell=sys.platform == 'win32')
+
+    # Run Microsoft rc.exe.
+    if sys.platform == 'win32':
+      popen = subprocess.Popen(args, shell=True, env=env,
+                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+      out, _ = popen.communicate()
+      for line in out.splitlines():
+        if (not line.startswith('Microsoft (R) Windows (R) Resource Compiler')
+            and not line.startswith('Copy' + 'right (C' +
+                                ') Microsoft Corporation')
+            and line):
+          print line
+      rc_exe_exit_code = popen.returncode
+      # Assert Microsoft rc.exe and rc.py produced identical .res files.
+      if rc_exe_exit_code == 0:
+        import filecmp
+        assert filecmp.cmp(rc_res_output, rcpy_res_output)
+    return rc_exe_exit_code
 
   def ExecActionWrapper(self, arch, rspfile, *dirname):
     """Runs an action command line from a response file using the environment
