@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f9350c74_86f0acdd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webmessaging/Channel_postMessage_Blob.htm",
+        "patchSetId": 24
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1236435
+      },
+      "writtenOn": "2017-10-19T12:44:57Z",
+      "side": 1,
+      "message": "Since this is a non-standard API, per https://github.com/w3c/web-platform-tests/pull/7887#pullrequestreview-70408610 please add a TODO comment to each use of `self.gc()` in these tests that points at https://github.com/w3c/web-platform-tests/issues/7899 .",
+      "revId": "a4e4988a290caaef9eaf4344fe392c3ddc4e0329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d924102_7b6ba2e2",
         "filename": "third_party/WebKit/common/message_port/cloneable_message.h",
         "patchSetId": 24
