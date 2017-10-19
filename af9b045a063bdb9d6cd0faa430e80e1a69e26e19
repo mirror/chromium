@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "90208a2f_2b408967",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-19T00:47:03Z",
+      "side": 1,
+      "message": "Experimentally, this looks to be needed.  The following does, in fact, compile and link:\n\nclass Foo {\npublic:\n  virtual void spam() \u003d 0;\nprotected:\n  Foo() {}\n  ~Foo() {}\n};\n\nvoid Spam() {\n  Foo* foo1 \u003d nullptr;\n  Foo* foo2 \u003d nullptr;\n  *foo1 \u003d *foo2;\n}",
+      "parentUuid": "277df687_eeac04c0",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0b45785_2d6a1db5",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 31
