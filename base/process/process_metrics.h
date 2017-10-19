@@ -367,7 +367,7 @@ struct BASE_EXPORT SystemMemoryInfoKB {
   SystemMemoryInfoKB(const SystemMemoryInfoKB& other);
 
   // Serializes the platform specific fields to value.
-  std::unique_ptr<Value> ToValue() const;
+  std::unique_ptr<DictionaryValue> ToValue() const;
 
   int total = 0;
 
@@ -408,11 +408,6 @@ struct BASE_EXPORT SystemMemoryInfoKB {
   int inactive_file = 0;
   int dirty = 0;
   int reclaimable = 0;
-
-  // vmstats data.
-  unsigned long pswpin = 0;
-  unsigned long pswpout = 0;
-  unsigned long pgmajfault = 0;
 #endif  // defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_AIX) ||
         // defined(OS_FUCHSIA)
 
@@ -463,11 +458,24 @@ BASE_EXPORT extern const char kProcSelfExe[];
 BASE_EXPORT bool ParseProcMeminfo(StringPiece input,
                                   SystemMemoryInfoKB* meminfo);
 
+// Data from /proc/vmstat.
+struct BASE_EXPORT VmStatInfo {
+  // Serializes the platform specific fields to value.
+  std::unique_ptr<DictionaryValue> ToValue() const;
+
+  unsigned long pswpin = 0;
+  unsigned long pswpout = 0;
+  unsigned long pgmajfault = 0;
+};
+
+// Retrieves data from /proc/vmstat about system-wide vm operations.
+// Fills in the provided |vmstat| structure. Returns true on success.
+BASE_EXPORT bool GetVmStatInfo(VmStatInfo* vmstat);
+
 // Parses a string containing the contents of /proc/vmstat
 // returns true on success or false for a parsing error
 // Exposed for testing.
-BASE_EXPORT bool ParseProcVmstat(StringPiece input,
-                                 SystemMemoryInfoKB* meminfo);
+BASE_EXPORT bool ParseProcVmstat(StringPiece input, VmStatInfo* vmstat);
 
 // Data from /proc/diskstats about system-wide disk I/O.
 struct BASE_EXPORT SystemDiskInfo {
@@ -501,6 +509,7 @@ BASE_EXPORT bool GetSystemDiskInfo(SystemDiskInfo* diskinfo);
 
 // Returns the amount of time spent in user space since boot across all CPUs.
 BASE_EXPORT TimeDelta GetUserCpuTimeSinceBoot();
+
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 #if defined(OS_CHROMEOS)
@@ -560,6 +569,7 @@ class SystemMetrics {
   size_t committed_memory_;
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   SystemMemoryInfoKB memory_info_;
+  VmStatInfo vmstat_info_;
   SystemDiskInfo disk_info_;
 #endif
 #if defined(OS_CHROMEOS)
