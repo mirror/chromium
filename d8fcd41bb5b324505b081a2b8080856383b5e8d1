@@ -22,6 +22,30 @@
       "revId": "d8fcd41bb5b324505b081a2b8080856383b5e8d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe3ac61_a2f13468",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-19T14:32:24Z",
+      "side": 1,
+      "message": "The events are being produced by chromeOS correctly.  Sahel describes a race condition in bug 717205 comment #21, where GSU events and GFS events follow a different path and sometimes arrive out of order.  Looks like there may be a longer term effort to fix this.",
+      "parentUuid": "fdbd5ed9_5d28c740",
+      "range": {
+        "startLine": 11,
+        "startChar": 24,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "d8fcd41bb5b324505b081a2b8080856383b5e8d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
