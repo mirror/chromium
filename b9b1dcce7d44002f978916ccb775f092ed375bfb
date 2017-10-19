@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a7dfddbe_1ea44a95",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-19T20:46:36Z",
+      "side": 1,
+      "message": "I hadn\u0027t considered EINTR/EAGAIN, that\u0027s a good one to handle.",
+      "parentUuid": "684c9d95_8771e9fa",
+      "revId": "b9b1dcce7d44002f978916ccb775f092ed375bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1899cc50_e6013905",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-19T19:57:15Z",
       "side": 1,
       "message": "Same here: it\u0027s some not-quite-trivial work, potentially performed even in production, to support a DCHECK.",
+      "revId": "b9b1dcce7d44002f978916ccb775f092ed375bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405468d2_d0838c8c",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-19T20:46:36Z",
+      "side": 1,
+      "message": "The #if !DCHECK_IS_ON() above will create an empty AssertMemoryIsReadOnly for production builds.",
+      "parentUuid": "1899cc50_e6013905",
       "revId": "b9b1dcce7d44002f978916ccb775f092ed375bfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
