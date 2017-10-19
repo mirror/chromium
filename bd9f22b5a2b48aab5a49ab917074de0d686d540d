@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d6488bb_5a533fb1",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-19T22:00:34Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 9
+      },
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ccf4e6_c565aa68",
         "filename": "components/omnibox/browser/autocomplete_match_type.cc",
         "patchSetId": 2
@@ -47,6 +70,23 @@
       "writtenOn": "2017-10-19T19:25:42Z",
       "side": 1,
       "message": "Comment. It\u0027s not clear what the |text| parameter is for.",
+      "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c183418b_157af87d",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-19T22:00:34Z",
+      "side": 1,
+      "message": "Add unit test",
       "revId": "bd9f22b5a2b48aab5a49ab917074de0d686d540d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
