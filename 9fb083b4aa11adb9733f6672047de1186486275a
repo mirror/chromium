@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "0a8d6de8_8699c395",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-19T21:02:26Z",
+      "side": 1,
+      "message": "I mean comments get stale. This is easy to fix with an assert, and I don\u0027t think it\u0027s weird.\nbool isVrIntent \u003d VrIntentUtils.isVrIntent(mIntent);\nif (isVrIntent) {\n    return dispatchVrIntent();\n}\nif (isCustomTabIntent) {\n    assert !isVrIntent;\n    ...\n}",
+      "parentUuid": "c4da689e_92a07b84",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "9fb083b4aa11adb9733f6672047de1186486275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e37b075_38b10c9f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
         "patchSetId": 3
