@@ -20,6 +20,20 @@
 
 namespace {
 
+class SimpleService : public service_manager::Service {
+ public:
+  explicit SimpleService() {}
+  ~SimpleService() override {}
+
+ private:
+  // service_manager::Service:
+  void OnBindInterface(const service_manager::BindSourceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override {}
+
+  DISALLOW_COPY_AND_ASSIGN(SimpleService);
+};
+
 class Singleton : public service_manager::Service {
  public:
   explicit Singleton() {}
@@ -66,6 +80,11 @@ class Embedder : public service_manager::Service,
     if (name == "service_manager_unittest_singleton") {
       context_.reset(new service_manager::ServiceContext(
           base::MakeUnique<Singleton>(), std::move(request)));
+    } else if (name == "service_manager_unittest_simple") {
+      context_.reset(new service_manager::ServiceContext(
+          base::MakeUnique<SimpleService>(), std::move(request)));
+    } else {
+      LOG(ERROR) << "Failed to create unknow service " << name;
     }
   }
 
