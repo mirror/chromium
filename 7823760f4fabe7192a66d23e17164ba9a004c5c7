@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "a03d81eb_504b5b9f",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T20:18:15Z",
+      "side": 1,
+      "message": "Yeah. :/ If we rewrite the *_Data layer of our bindings, it is possible to change the layout format to inline structs. (We won\u0027t be able to directly map bytes into C structs because of some fields of nested structs may grow their size due to versioning.)\n\nThat will affect current clients who relies on the wire format (ARC++, and some other random stuff such as some private extension API).\n\nDoable, just take efforts.",
+      "parentUuid": "bbb3adcf_fff8a9b6",
+      "revId": "7823760f4fabe7192a66d23e17164ba9a004c5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f3725fc_2067061d",
         "filename": "mojo/common/time_struct_traits.h",
         "patchSetId": 4
