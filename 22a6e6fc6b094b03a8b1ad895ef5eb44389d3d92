@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f44c131_2a537a0a",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-19T16:10:09Z",
+      "side": 1,
+      "message": "Removal CL: https://chromium-review.googlesource.com/c/chromium/src/+/728360",
+      "parentUuid": "e9208e0a_fc313e40",
+      "revId": "22a6e6fc6b094b03a8b1ad895ef5eb44389d3d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b87f99e7_95286100",
         "filename": "net/cert/multi_threaded_cert_verifier.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "22a6e6fc6b094b03a8b1ad895ef5eb44389d3d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247b3593_f9724c99",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-19T16:10:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87f99e7_95286100",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "22a6e6fc6b094b03a8b1ad895ef5eb44389d3d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
