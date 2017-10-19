@@ -543,3 +543,21 @@ fuzzer_test("javascript_parser_proto_fuzzer") {
   ]
   include_dirs = [ "$root_build_dir/$target_gen_dir" ]
 }
+
+fuzzer_test("base64_decode_fuzzer") {
+  sources = [
+    "base64_decode_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
+fuzzer_test("base64_encode_fuzzer") {
+  sources = [
+    "base64_encode_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
