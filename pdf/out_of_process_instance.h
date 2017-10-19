@@ -186,7 +186,7 @@ class OutOfProcessInstance : public pp::Instance,
   void LoadAccessibility();
 
   // Send accessibility information about the given page index.
-  void SendNextAccessibilityPage(int32_t page_index);
+  void SendNextAccessibilityPage(size_t page_index);
 
   // Send the accessibility information about the current viewport. This is
   // done once when accessibility is first loaded and again when the geometry

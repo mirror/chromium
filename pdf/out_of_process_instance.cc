@@ -158,7 +158,8 @@ constexpr int kInvalidPDFIndex = -2;
 
 // A delay to wait between each accessibility page to keep the system
 // responsive.
-const int kAccessibilityPageDelayMs = 100;
+constexpr base::TimeDelta kAccessibilityPageDelay =
+    base::TimeDelta::FromMilliseconds(100);
 
 const double kMinZoom = 0.01;
 
@@ -818,13 +819,13 @@ void OutOfProcessInstance::LoadAccessibility() {
   // Schedule loading the first page.
   pp::CompletionCallback callback = callback_factory_.NewCallback(
       &OutOfProcessInstance::SendNextAccessibilityPage);
-  pp::Module::Get()->core()->CallOnMainThread(kAccessibilityPageDelayMs,
-                                              callback, 0);
+  pp::Module::Get()->core()->CallOnMainThread(
+      kAccessibilityPageDelay.InMilliseconds(), callback, 0);
 }
 
-void OutOfProcessInstance::SendNextAccessibilityPage(int32_t page_index) {
-  int page_count = engine_->GetNumberOfPages();
-  if (page_index < 0 || page_index >= page_count)
+void OutOfProcessInstance::SendNextAccessibilityPage(size_t page_index) {
+  size_t page_count = engine_->GetNumberOfPages();
+  if (page_index >= page_count)
     return;
 
   int char_count = engine_->GetCharCount(page_index);
@@ -884,8 +885,12 @@ void OutOfProcessInstance::SendNextAccessibilityPage(int32_t page_index) {
   // Schedule loading the next page.
   pp::CompletionCallback callback = callback_factory_.NewCallback(
       &OutOfProcessInstance::SendNextAccessibilityPage);
-  pp::Module::Get()->core()->CallOnMainThread(kAccessibilityPageDelayMs,
-                                              callback, page_index + 1);
+  size_t next = page_index + 1;
+  if (next == page_count)
+    return;
+
+  pp::Module::Get()->core()->CallOnMainThread(
+      kAccessibilityPageDelay.InMilliseconds(), callback, next);
 }
 
 void OutOfProcessInstance::SendAccessibilityViewportInfo() {
@@ -1060,9 +1065,8 @@ void OutOfProcessInstance::OnPaint(const std::vector<pp::Rect>& paint_rects,
     }
 
     // Ensure the region above the first page (if any) is filled;
-    int32_t first_page_ypos = engine_->GetNumberOfPages() == 0
-                                  ? 0
-                                  : engine_->GetPageScreenRect(0).y();
+    int32_t first_page_ypos =
+        engine_->GetNumberOfPages() ? engine_->GetPageScreenRect(0).y() : 0;
     if (rect.y() < first_page_ypos) {
       pp::Rect region = rect.Intersect(pp::Rect(
           pp::Point(), pp::Size(plugin_size_.width(), first_page_ypos)));
@@ -1164,8 +1168,8 @@ void OutOfProcessInstance::DocumentSizeUpdated(const pp::Size& size) {
   dimensions.Set(kJSDocumentWidth, pp::Var(document_size_.width()));
   dimensions.Set(kJSDocumentHeight, pp::Var(document_size_.height()));
   pp::VarArray page_dimensions_array;
-  int num_pages = engine_->GetNumberOfPages();
-  for (int i = 0; i < num_pages; ++i) {
+  size_t num_pages = engine_->GetNumberOfPages();
+  for (size_t i = 0; i < num_pages; ++i) {
     pp::Rect page_rect = engine_->GetPageRect(i);
     pp::VarDictionary page_dimensions;
     page_dimensions.Set(kJSPageX, pp::Var(page_rect.x()));

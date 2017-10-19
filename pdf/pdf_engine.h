@@ -17,6 +17,7 @@
 #include <string>
 #include <vector>
 
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "ppapi/c/dev/pp_cursor_type_dev.h"
@@ -259,20 +260,20 @@ class PDFEngine {
   virtual bool HasPermission(DocumentPermission permission) const = 0;
   virtual void SelectAll() = 0;
   // Gets the number of pages in the document.
-  virtual int GetNumberOfPages() = 0;
+  virtual size_t GetNumberOfPages() = 0;
   // Gets the 0-based page number of |destination|, or -1 if it does not exist.
   virtual int GetNamedDestinationPage(const std::string& destination) = 0;
-  // Gets the index of the most visible page, or -1 if none are visible.
-  virtual int GetMostVisiblePage() = 0;
+  // Gets the index of the most visible page, or nullopt if none are visible.
+  virtual base::Optional<size_t> GetMostVisiblePage() = 0;
   // Gets the rectangle of the page including shadow.
-  virtual pp::Rect GetPageRect(int index) = 0;
+  virtual pp::Rect GetPageRect(size_t index) = 0;
   // Gets the rectangle of the page not including the shadow.
-  virtual pp::Rect GetPageBoundsRect(int index) = 0;
+  virtual pp::Rect GetPageBoundsRect(size_t index) = 0;
   // Gets the rectangle of the page excluding any additional areas.
-  virtual pp::Rect GetPageContentsRect(int index) = 0;
+  virtual pp::Rect GetPageContentsRect(size_t index) = 0;
   // Returns a page's rect in screen coordinates, as well as its surrounding
   // border areas and bottom separator.
-  virtual pp::Rect GetPageScreenRect(int page_index) const = 0;
+  virtual pp::Rect GetPageScreenRect(size_t page_index) const = 0;
   // Gets the offset of the vertical scrollbar from the top in document
   // coordinates.
   virtual int GetVerticalScrollbarYPosition() = 0;
@@ -283,15 +284,15 @@ class PDFEngine {
   // Callback for timer that's set with ScheduleTouchTimerCallback().
   virtual void OnTouchTimerCallback(int id) = 0;
   // Get the number of characters on a given page.
-  virtual int GetCharCount(int page_index) = 0;
+  virtual int GetCharCount(size_t page_index) = 0;
   // Get the bounds in page pixels of a character on a given page.
-  virtual pp::FloatRect GetCharBounds(int page_index, int char_index) = 0;
+  virtual pp::FloatRect GetCharBounds(size_t page_index, int char_index) = 0;
   // Get a given unicode character on a given page.
-  virtual uint32_t GetCharUnicode(int page_index, int char_index) = 0;
+  virtual uint32_t GetCharUnicode(size_t page_index, int char_index) = 0;
   // Given a start char index, find the longest continuous run of text that's
   // in a single direction and with the same style and font size. Return the
   // length of that sequence and its font size and bounding box.
-  virtual void GetTextRunInfo(int page_index,
+  virtual void GetTextRunInfo(size_t page_index,
                               int start_char_index,
                               uint32_t* out_len,
                               double* out_font_size,
@@ -316,10 +317,10 @@ class PDFEngine {
 
   // Append blank pages to make a 1-page document to a |num_pages| document.
   // Always retain the first page data.
-  virtual void AppendBlankPages(int num_pages) = 0;
+  virtual void AppendBlankPages(size_t num_pages) = 0;
   // Append the first page of the document loaded with the |engine| to this
   // document at page |index|.
-  virtual void AppendPage(PDFEngine* engine, int index) = 0;
+  virtual void AppendPage(PDFEngine* engine, size_t index) = 0;
 
 #if defined(PDF_ENABLE_XFA)
   // Allow client to set scroll positions in document coordinates. Note that
