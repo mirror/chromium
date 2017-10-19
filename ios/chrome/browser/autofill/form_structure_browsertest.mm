@@ -11,6 +11,7 @@
 #include "base/path_service.h"
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/data_driven_test.h"
 #import "components/autofill/ios/browser/autofill_agent.h"
@@ -169,13 +170,21 @@ void FormStructureBrowserTest::SetUp() {
 
 void FormStructureBrowserTest::TearDown() {
   [autofillController_ detachFromWebState];
-
+  base::TaskScheduler::GetInstance()->FlushForTesting();
+  __block BOOL called = NO;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    called = YES;
+  });
+  WaitForCondition(^{
+    return called;
+  });
   ChromeWebTest::TearDown();
 }
 
 void FormStructureBrowserTest::GenerateResults(const std::string& input,
                                                std::string* output) {
   LoadHtml(input);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   AutofillManager* autofill_manager =
       AutofillDriverIOS::FromWebState(web_state())->autofill_manager();
   ASSERT_NE(nullptr, autofill_manager);
