@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "25eea548_1961b837",
+        "filename": "docs/layout_tests_linux.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T14:28:02Z",
+      "side": 1,
+      "message": "nit: add two more spaces here: https://github.com/google/styleguide/blob/gh-pages/docguide/style.md#nested-list-spacing",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "697b134c05c5d768b8fd0731e670db9ae9cb50df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3a0a566_254902f9",
         "filename": "ui/gfx/test/fontconfig_util_linux.cc",
         "patchSetId": 3
@@ -13,6 +36,29 @@
       "writtenOn": "2017-10-19T11:29:30Z",
       "side": 1,
       "message": "derat@, I did it in one .Append chain now, hope that works for you?",
+      "revId": "697b134c05c5d768b8fd0731e670db9ae9cb50df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6858531_dd57a5ec",
+        "filename": "ui/gfx/test/fontconfig_util_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-19T14:28:02Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need this trailing slash, right?",
+      "range": {
+        "startLine": 134,
+        "startChar": 61,
+        "endLine": 134,
+        "endChar": 62
+      },
       "revId": "697b134c05c5d768b8fd0731e670db9ae9cb50df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
