@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a2b9f1_d6d2fa58",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-19T23:09:48Z",
+      "side": 1,
+      "message": "This will incorrectly enable the accelerator for app windows. Additionally the accelerator should be enabled on mac and chromeos always. I think you need to modify CanSupportFeature and add a feature for OMNIBOX.",
+      "range": {
+        "startLine": 1033,
+        "startChar": 2,
+        "endLine": 1033,
+        "endChar": 76
+      },
+      "revId": "5d640a6eafa99f59074709978f2ef32900d4332c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
