@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc640a3a_6d643a5a",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "Do you need all of these includes? I don\u0027t see where RenderFrameHost is used.",
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5846137_087c8697",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "Input parameters should be before output parameters, and the |callback| is kinda an output parameter. That being said, this function can be done synchronously and we should be able to just return the Storage ID?\n\nAlso, dropping callbacks intentionally and assume the caller will use a ScopedCallbackRunner is an anti-pattern, which will make code harder to read.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e690858e_82cca983",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "Please let tinskip@ take a look at this block.",
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d036865_bf4b4be3",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "tip: Only use ScopedCallbackRunner when we are not certain when the callback will be dropped. So only use this in the ChromeOS case.",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 33
+      },
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6489101d_1db6e115",
+        "filename": "chrome/browser/media/cdm_storage_id_key.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "sorry, you need to update this file name now:\n\ngoogle_chrome_...",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e4f567_145c440c",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "nit: \": storage_id (hex encoded) \u003d\"",
+      "range": {
+        "startLine": 840,
+        "startChar": 27,
+        "endLine": 840,
+        "endChar": 28
+      },
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1f74a9_6b181285",
+        "filename": "media/media_options.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be in a new declare_args, just put it after line 164.",
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03237aae_d30d3128",
+        "filename": "media/media_options.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "s/official builds/chrome branding/. Official builds have it\u0027s own meaning.",
+      "range": {
+        "startLine": 258,
+        "startChar": 71,
+        "endLine": 259,
+        "endChar": 10
+      },
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcffc1d_21e0bd66",
+        "filename": "media/media_options.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:35:37Z",
+      "side": 1,
+      "message": "nit: s/enable_media_cdm_storage_id/enable_cdm_storage_id/ ?",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 29
+      },
+      "revId": "0246fdb1eddd8ae0a49fb98d60a6e345270144f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
