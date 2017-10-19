@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09000656_0b81d9a6",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-19T21:17:46Z",
+      "side": 1,
+      "message": "nit: \"...work when MD for secondary UI is enabled.\"",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 51
+      },
+      "revId": "0d6d7d84718686b90611910a838bf12987dd2298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
