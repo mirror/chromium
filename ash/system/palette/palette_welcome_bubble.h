@@ -9,7 +9,6 @@
 #include "ash/session/session_observer.h"
 #include "base/macros.h"
 #include "base/optional.h"
-#include "ui/views/pointer_watcher.h"
 #include "ui/views/widget/widget_observer.h"
 
 class PrefRegistrySimple;
@@ -27,7 +26,6 @@ class PaletteTray;
 // users know about the PaletteTray the first time a stylus is ejected, or if an
 // external stylus is detected.
 class ASH_EXPORT PaletteWelcomeBubble : public SessionObserver,
-                                        public views::PointerWatcher,
                                         public views::WidgetObserver {
  public:
   explicit PaletteWelcomeBubble(PaletteTray* tray);
@@ -38,7 +36,16 @@ class ASH_EXPORT PaletteWelcomeBubble : public SessionObserver,
   // Show the welcome bubble iff it has not been shown before.
   void ShowIfNeeded();
 
+  void Hide();
+
   bool BubbleShown() { return bubble_view_ != nullptr; }
+
+  // Set the pref which stores whether the bubble has been shown before as true.
+  // The bubble will not be shown after this is called.
+  void MarkAsShown();
+
+  // Returns the bounds of the bubble view if it exists.
+  base::Optional<gfx::Rect> GetBubbleBounds();
 
   // SessionObserver:
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
@@ -46,23 +53,14 @@ class ASH_EXPORT PaletteWelcomeBubble : public SessionObserver,
   // views::WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override;
 
-  // views::PointerWatcher:
-  void OnPointerEventObserved(const ui::PointerEvent& event,
-                              const gfx::Point& location_in_screen,
-                              gfx::NativeView target) override;
-
   // Returns the close button on the bubble if it exists.
   views::ImageButton* GetCloseButtonForTest();
-
-  // Returns the bounds of the bubble view if it exists.
-  base::Optional<gfx::Rect> GetBubbleBoundsForTest();
 
  private:
   friend class PaletteWelcomeBubbleTest;
   class WelcomeBubbleView;
 
   void Show();
-  void Hide();
 
   // The PaletteTray this bubble is associated with. Serves as the anchor for
   // the bubble. Not owned.
