@@ -146,8 +146,7 @@ class PepperWebPluginImplBrowserTest
     info.is_internal = true;
     info.path = base::FilePath(FILE_PATH_LITERAL("internal-always-throttle"));
     info.name = "Always Throttle";
-    info.mime_types.push_back(
-        WebPluginMimeType("test/always-throttle", "", ""));
+    info.mime_types.emplace_back("test/always-throttle", "", "");
     info.internal_entry_points.get_interface =
         &PepperWebPluginImplBrowserTest::GetInterface;
     info.internal_entry_points.initialize_module =

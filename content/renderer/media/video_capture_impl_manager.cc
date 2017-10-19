@@ -82,7 +82,7 @@ base::Closure VideoCaptureImplManager::UseDevice(
       devices_.begin(), devices_.end(),
       [id] (const DeviceEntry& entry) { return entry.session_id == id; });
   if (it == devices_.end()) {
-    devices_.push_back(DeviceEntry());
+    devices_.emplace_back();
     it = devices_.end() - 1;
     it->session_id = id;
     it->impl = CreateVideoCaptureImplForTesting(id);

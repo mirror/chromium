@@ -133,8 +133,7 @@ class QueueMessageSwapPromiseTest : public testing::Test {
 
   void QueueMessages(QueueMessageData data[], size_t count) {
     for (size_t i = 0; i < count; ++i) {
-      messages_.push_back(
-          IPC::Message(0, i + 1, IPC::Message::PRIORITY_NORMAL));
+      messages_.emplace_back(0, i + 1, IPC::Message::PRIORITY_NORMAL);
       promises_.push_back(QueueMessageImpl(new IPC::Message(messages_[i]),
                                            data[i].policy,
                                            data[i].source_frame_number));

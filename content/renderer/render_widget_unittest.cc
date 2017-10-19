@@ -200,8 +200,8 @@ TEST_F(RenderWidgetUnittest, TouchHitTestSinglePoint) {
   widget()->sink()->ClearMessages();
 
   std::vector<gfx::Rect> rects;
-  rects.push_back(gfx::Rect(0, 0, 20, 20));
-  rects.push_back(gfx::Rect(25, 0, 10, 10));
+  rects.emplace_back(0, 0, 20, 20);
+  rects.emplace_back(25, 0, 10, 10);
   widget()->SetTouchRegion(rects);
 
   EXPECT_CALL(*widget()->mock_webwidget(), HandleInputEvent(_))
@@ -220,8 +220,8 @@ TEST_F(RenderWidgetUnittest, TouchHitTestSinglePoint) {
 
 TEST_F(RenderWidgetUnittest, TouchHitTestMultiplePoints) {
   std::vector<gfx::Rect> rects;
-  rects.push_back(gfx::Rect(0, 0, 20, 20));
-  rects.push_back(gfx::Rect(25, 0, 10, 10));
+  rects.emplace_back(0, 0, 20, 20);
+  rects.emplace_back(25, 0, 10, 10);
   widget()->SetTouchRegion(rects);
 
   SyntheticWebTouchEvent touch;

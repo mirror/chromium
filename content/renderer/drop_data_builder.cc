@@ -77,9 +77,9 @@ DropData DropDataBuilder::Build(const WebDragData& drag_data) {
         break;
       case WebDragData::Item::kStorageTypeFilename:
         // TODO(varunjain): This only works on chromeos. Support win/mac/gtk.
-        result.filenames.push_back(
-            ui::FileInfo(blink::WebStringToFilePath(item.filename_data),
-                         blink::WebStringToFilePath(item.display_name_data)));
+        result.filenames.emplace_back(
+            blink::WebStringToFilePath(item.filename_data),
+            blink::WebStringToFilePath(item.display_name_data));
         break;
       case WebDragData::Item::kStorageTypeFileSystemFile: {
         DropData::FileSystemFileInfo info;

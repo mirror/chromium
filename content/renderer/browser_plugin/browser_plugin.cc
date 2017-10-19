@@ -558,7 +558,7 @@ bool BrowserPlugin::ExecuteEditCommand(const blink::WebString& name) {
 
 bool BrowserPlugin::ExecuteEditCommand(const blink::WebString& name,
                                        const blink::WebString& value) {
-  edit_commands_.push_back(EditCommand(name.Utf8(), value.Utf8()));
+  edit_commands_.emplace_back(name.Utf8(), value.Utf8());
   // BrowserPlugin swallows edit commands.
   return true;
 }

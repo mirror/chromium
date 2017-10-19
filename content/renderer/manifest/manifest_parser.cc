@@ -448,7 +448,7 @@ void ManifestParser::AddErrorInfo(const std::string& error_msg,
                                   bool critical,
                                   int error_line,
                                   int error_column) {
-  errors_.push_back({error_msg, critical, error_line, error_column});
+  errors_.emplace_back(error_msg, critical, error_line, error_column);
 }
 
 } // namespace content

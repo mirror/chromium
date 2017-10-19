@@ -715,7 +715,7 @@ std::vector<gfx::Size> ConvertToFaviconSizes(
   std::vector<gfx::Size> result;
   result.reserve(web_sizes.size());
   for (const blink::WebSize& web_size : web_sizes)
-    result.push_back(gfx::Size(web_size));
+    result.emplace_back(web_size);
   return result;
 }
 
@@ -924,7 +924,7 @@ RenderFrameImpl::UniqueNameFrameAdapter::CollectAncestorNames(
                                     ? GetWebFrame()->Parent()
                                     : GetWebFrame();
        frame; frame = frame->Parent()) {
-    result.push_back(UniqueNameForWebFrame(frame));
+    result.emplace_back(UniqueNameForWebFrame(frame));
     if (should_stop(result.back()))
       break;
   }
@@ -3926,9 +3926,8 @@ void RenderFrameImpl::SendUpdateFaviconURL(
   std::vector<FaviconURL> urls;
   urls.reserve(icon_urls.size());
   for (const blink::WebIconURL& icon_url : icon_urls) {
-    urls.push_back(FaviconURL(icon_url.GetIconURL(),
-                              ToFaviconType(icon_url.IconType()),
-                              ConvertToFaviconSizes(icon_url.Sizes())));
+    urls.emplace_back(icon_url.GetIconURL(), ToFaviconType(icon_url.IconType()),
+                      ConvertToFaviconSizes(icon_url.Sizes()));
   }
   DCHECK_EQ(icon_urls.size(), urls.size());
 
@@ -4231,8 +4230,8 @@ blink::WebColorChooser* RenderFrameImpl::CreateColorChooser(
       new RendererWebColorChooserImpl(this, client);
   std::vector<ColorSuggestion> color_suggestions;
   for (size_t i = 0; i < suggestions.size(); i++) {
-    color_suggestions.push_back(
-        ColorSuggestion(suggestions[i].color, suggestions[i].label.Utf16()));
+    color_suggestions.emplace_back(suggestions[i].color,
+                                   suggestions[i].label.Utf16());
   }
   color_chooser->Open(static_cast<SkColor>(initial_color), color_suggestions);
   return color_chooser;

@@ -36,8 +36,7 @@ class PepperFileChooserHost::CompletionHandler
     if (host_.get()) {
       std::vector<PepperFileChooserHost::ChosenFileInfo> files;
       for (size_t i = 0; i < file_names.size(); i++) {
-        files.push_back(PepperFileChooserHost::ChosenFileInfo(
-            file_names[i].Utf8(), std::string()));
+        files.emplace_back(file_names[i].Utf8(), std::string());
       }
       host_->StoreChosenFiles(files);
     }
@@ -50,8 +49,8 @@ class PepperFileChooserHost::CompletionHandler
     if (host_.get()) {
       std::vector<PepperFileChooserHost::ChosenFileInfo> files;
       for (size_t i = 0; i < file_names.size(); i++) {
-        files.push_back(PepperFileChooserHost::ChosenFileInfo(
-            file_names[i].path.Utf8(), file_names[i].display_name.Utf8()));
+        files.emplace_back(file_names[i].path.Utf8(),
+                           file_names[i].display_name.Utf8());
       }
       host_->StoreChosenFiles(files);
     }

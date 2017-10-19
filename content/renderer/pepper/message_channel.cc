@@ -263,8 +263,8 @@ std::vector<std::string> MessageChannel::EnumerateNamedProperties(
   PluginObject* plugin_object = GetPluginObject(isolate);
   if (plugin_object)
     result = plugin_object->EnumerateNamedProperties(isolate);
-  result.push_back(kPostMessage);
-  result.push_back(kPostMessageAndAwaitResponse);
+  result.emplace_back(kPostMessage);
+  result.emplace_back(kPostMessageAndAwaitResponse);
   return result;
 }
 
@@ -373,7 +373,7 @@ PluginObject* MessageChannel::GetPluginObject(v8::Isolate* isolate) {
 }
 
 void MessageChannel::EnqueuePluginMessage(v8::Local<v8::Value> v8_value) {
-  plugin_message_queue_.push_back(VarConversionResult());
+  plugin_message_queue_.emplace_back();
   // Convert the v8 value in to an appropriate PP_Var like Dictionary,
   // Array, etc. (We explicitly don't want an "Object" PP_Var, which we don't
   // support for Messaging.)

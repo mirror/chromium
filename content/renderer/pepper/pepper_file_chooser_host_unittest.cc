@@ -82,7 +82,7 @@ TEST_F(PepperFileChooserHostTest, Show) {
   host.set_has_user_gesture(true);
 
   std::vector<std::string> accept;
-  accept.push_back("text/plain");
+  accept.emplace_back("text/plain");
   PpapiHostMsg_FileChooser_Show show_msg(false, false, std::string(), accept);
 
   ppapi::proxy::ResourceMessageCallParams call_params(pp_resource, 0);
@@ -146,7 +146,7 @@ TEST_F(PepperFileChooserHostTest, NoUserGesture) {
   host.set_has_user_gesture(false);
 
   std::vector<std::string> accept;
-  accept.push_back("text/plain");
+  accept.emplace_back("text/plain");
   PpapiHostMsg_FileChooser_Show show_msg(false, false, std::string(), accept);
 
   ppapi::proxy::ResourceMessageCallParams call_params(pp_resource, 0);

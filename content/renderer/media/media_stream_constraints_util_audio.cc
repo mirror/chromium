@@ -83,7 +83,7 @@ AudioDeviceSet AudioDeviceSetForDeviceCapture(
         *failed_constraint_name = constraint_set.device_id.GetName();
       continue;
     }
-    result.push_back(AudioDeviceInfo(device_capabilities));
+    result.emplace_back(device_capabilities);
   }
 
   if (!result.empty())
@@ -100,7 +100,7 @@ AudioDeviceSet AudioDeviceSetForContentCapture(
 
   std::vector<AudioDeviceInfo> result;
   for (auto& device_id : constraint_set.device_id.Exact())
-    result.push_back(AudioDeviceInfo(device_id.Utf8()));
+    result.emplace_back(device_id.Utf8());
 
   return AudioDeviceSet(std::move(result));
 }

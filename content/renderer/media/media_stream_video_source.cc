@@ -54,10 +54,10 @@ void MediaStreamVideoSource::AddTrack(
   tracks_.push_back(track);
   secure_tracker_.Add(track, true);
 
-  pending_tracks_.push_back(PendingTrackInfo(
+  pending_tracks_.emplace_back(
       track, frame_callback,
       base::MakeUnique<VideoTrackAdapterSettings>(track_adapter_settings),
-      callback));
+      callback);
 
   switch (state_) {
     case NEW: {

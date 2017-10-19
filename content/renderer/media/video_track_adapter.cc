@@ -174,7 +174,7 @@ void VideoTrackAdapter::VideoFrameResolutionAdapter::AddCallback(
     const MediaStreamVideoTrack* track,
     const VideoCaptureDeliverFrameCB& callback) {
   DCHECK(io_thread_checker_.CalledOnValidThread());
-  callbacks_.push_back(std::make_pair(track, callback));
+  callbacks_.emplace_back(track, callback);
 }
 
 void VideoTrackAdapter::VideoFrameResolutionAdapter::RemoveAndReleaseCallback(

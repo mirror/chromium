@@ -38,10 +38,10 @@ blink::WebVector<blink::WebRTCDtlsFingerprint> RTCCertificate::GetFingerprints()
   for (rtc::SSLCertificateStats* certificate_stats =
            first_certificate_stats.get();
        certificate_stats; certificate_stats = certificate_stats->issuer.get()) {
-    fingerprints.push_back(blink::WebRTCDtlsFingerprint(
+    fingerprints.emplace_back(
         blink::WebString::FromUTF8(certificate_stats->fingerprint_algorithm),
         blink::WebString::FromUTF8(
-            base::ToLowerASCII(certificate_stats->fingerprint))));
+            base::ToLowerASCII(certificate_stats->fingerprint)));
   }
   return blink::WebVector<blink::WebRTCDtlsFingerprint>(fingerprints);
 }

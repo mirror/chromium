@@ -152,7 +152,7 @@ void UserMediaClientImpl::RequestUserMedia(
       base::MakeUnique<UserMediaRequest>(
           request_id, web_request,
           blink::WebUserGestureIndicator::IsProcessingUserGesture());
-  pending_request_infos_.push_back(Request(std::move(request_info)));
+  pending_request_infos_.emplace_back(std::move(request_info));
   if (!is_processing_request_) {
     base::SequencedTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
@@ -165,7 +165,7 @@ void UserMediaClientImpl::ApplyConstraints(
     const blink::WebApplyConstraintsRequest& web_request) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // TODO(guidou): Implement applyConstraints(). http://crbug.com/338503
-  pending_request_infos_.push_back(Request(web_request));
+  pending_request_infos_.emplace_back(web_request);
   if (!is_processing_request_) {
     base::SequencedTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,

@@ -186,12 +186,12 @@ class MockMediaDevicesDispatcherHost
     device->facing_mode = ::mojom::FacingMode::USER;
     if (!video_source_ || !video_source_->IsRunning() ||
         !video_source_->GetCurrentFormat()) {
-      device->formats.push_back(media::VideoCaptureFormat(
-          gfx::Size(640, 480), 30.0f, media::PIXEL_FORMAT_I420));
-      device->formats.push_back(media::VideoCaptureFormat(
-          gfx::Size(800, 600), 30.0f, media::PIXEL_FORMAT_I420));
-      device->formats.push_back(media::VideoCaptureFormat(
-          gfx::Size(1024, 768), 20.0f, media::PIXEL_FORMAT_I420));
+      device->formats.emplace_back(gfx::Size(640, 480), 30.0f,
+                                   media::PIXEL_FORMAT_I420);
+      device->formats.emplace_back(gfx::Size(800, 600), 30.0f,
+                                   media::PIXEL_FORMAT_I420);
+      device->formats.emplace_back(gfx::Size(1024, 768), 20.0f,
+                                   media::PIXEL_FORMAT_I420);
     } else {
       device->formats.push_back(*video_source_->GetCurrentFormat());
     }
@@ -201,8 +201,8 @@ class MockMediaDevicesDispatcherHost
     device = ::mojom::VideoInputDeviceCapabilities::New();
     device->device_id = kFakeVideoInputDeviceId2;
     device->facing_mode = ::mojom::FacingMode::ENVIRONMENT;
-    device->formats.push_back(media::VideoCaptureFormat(
-        gfx::Size(640, 480), 30.0f, media::PIXEL_FORMAT_I420));
+    device->formats.emplace_back(gfx::Size(640, 480), 30.0f,
+                                 media::PIXEL_FORMAT_I420);
     result.push_back(std::move(device));
 
     std::move(client_callback).Run(std::move(result));

@@ -425,7 +425,7 @@ void PepperPluginInstanceImpl::ExternalDocumentLoader::ReplayReceivedData(
 void PepperPluginInstanceImpl::ExternalDocumentLoader::DidReceiveData(
     const char* data,
     int data_length) {
-  data_.push_back(std::string(data, data_length));
+  data_.emplace_back(data, data_length);
 }
 
 void PepperPluginInstanceImpl::ExternalDocumentLoader::DidFinishLoading(
@@ -3515,7 +3515,7 @@ void PepperPluginInstanceImpl::IncrementTextureReferenceCount(
                      return ref_count.first.mailbox() == mailbox.mailbox();
                    });
   if (it == texture_ref_counts_.end()) {
-    texture_ref_counts_.push_back(std::make_pair(mailbox, 1));
+    texture_ref_counts_.emplace_back(mailbox, 1);
     return;
   }
 

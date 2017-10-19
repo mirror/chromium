@@ -404,7 +404,7 @@ int32_t PepperCompositorHost::OnHostMsgCommitLayers(
     if (old_layer)
       *old_layer = *pp_layer;
     else
-      layers_.push_back(LayerData(cc_layer, *pp_layer));
+      layers_.emplace_back(cc_layer, *pp_layer);
   }
 
   // We need to force a commit for each CommitLayers() call, even if no layers

@@ -87,7 +87,7 @@ class InputEventRecorder : public content::InputHandlerManager {
                         const InputHandlerManager::InputEventAckStateCallback&
                             callback) override {
     DCHECK_EQ(kTestRoutingID, routing_id);
-    records_.push_back(Record(event.get()));
+    records_.emplace_back(event.get());
     if (handle_events_) {
       callback.Run(INPUT_EVENT_ACK_STATE_CONSUMED, std::move(event),
                    latency_info, nullptr);

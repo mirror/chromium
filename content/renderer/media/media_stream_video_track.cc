@@ -116,7 +116,7 @@ void MediaStreamVideoTrack::FrameDeliverer::AddCallbackOnIO(
     VideoSinkId id,
     const VideoCaptureDeliverFrameCB& callback) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
-  callbacks_.push_back(std::make_pair(id, callback));
+  callbacks_.emplace_back(id, callback);
 }
 
 void MediaStreamVideoTrack::FrameDeliverer::RemoveCallback(VideoSinkId id) {

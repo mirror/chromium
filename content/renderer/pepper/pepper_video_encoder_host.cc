@@ -411,10 +411,10 @@ void PepperVideoEncoderHost::RequireBitstreamBuffers(
   std::vector<SerializedHandle> handles;
   for (const auto& buffer : shm_buffers_) {
     encoder_->UseOutputBitstreamBuffer(buffer->ToBitstreamBuffer());
-    handles.push_back(SerializedHandle(
+    handles.emplace_back(
         renderer_ppapi_host_->ShareSharedMemoryHandleWithRemote(
             buffer->shm->handle()),
-        output_buffer_size));
+        output_buffer_size);
   }
 
   host()->SendUnsolicitedReplyWithHandles(

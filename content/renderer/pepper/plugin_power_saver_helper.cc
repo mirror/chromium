@@ -94,8 +94,7 @@ void PluginPowerSaverHelper::OnUpdatePluginContentOriginWhitelist(
 void PluginPowerSaverHelper::RegisterPeripheralPlugin(
     const url::Origin& content_origin,
     const base::Closure& unthrottle_callback) {
-  peripheral_plugins_.push_back(
-      PeripheralPlugin(content_origin, unthrottle_callback));
+  peripheral_plugins_.emplace_back(content_origin, unthrottle_callback);
 }
 
 RenderFrame::PeripheralContentStatus

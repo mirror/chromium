@@ -243,7 +243,7 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
 
   std::vector<blink::WebURL> url_list;
   for (const GURL& url : response.url_list)
-    url_list.push_back(blink::WebURL(url));
+    url_list.emplace_back(url);
 
   web_response->SetURLList(blink::WebVector<blink::WebURL>(url_list));
   web_response->SetStatus(static_cast<unsigned short>(response.status_code));

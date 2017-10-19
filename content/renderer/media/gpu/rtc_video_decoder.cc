@@ -333,9 +333,8 @@ void RTCVideoDecoder::ProvidePictureBuffers(uint32_t buffer_count,
       mailboxes.push_back(texture_mailboxes[texture_id]);
     }
 
-    picture_buffers.push_back(media::PictureBuffer(next_picture_buffer_id_++,
-                                                   size, ids, mailboxes,
-                                                   texture_target, format));
+    picture_buffers.emplace_back(next_picture_buffer_id_++, size, ids,
+                                 mailboxes, texture_target, format);
     const bool inserted =
         assigned_picture_buffers_
             .insert(std::make_pair(picture_buffers.back().id(),

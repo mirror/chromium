@@ -122,7 +122,7 @@ class HandledEventCallbackTracker {
   }
 
   HandledEventCallback GetCallback() {
-    callbacks_received_.push_back(ReceivedCallback());
+    callbacks_received_.emplace_back();
     HandledEventCallback callback =
         base::BindOnce(&HandledEventCallbackTracker::DidHandleEvent, weak_this_,
                        callbacks_received_.size() - 1);
@@ -164,14 +164,16 @@ class MainThreadEventQueueTest : public testing::TestWithParam<unsigned>,
     std::vector<base::StringPiece> features;
     std::vector<base::StringPiece> disabled_features;
     if (raf_aligned_input_setting_ & kRafAlignedEnabledTouch) {
-      features.push_back(features::kRafAlignedTouchInputEvents.name);
+      features.emplace_back(features::kRafAlignedTouchInputEvents.name);
     } else {
-      disabled_features.push_back(features::kRafAlignedTouchInputEvents.name);
+      disabled_features.emplace_back(
+          features::kRafAlignedTouchInputEvents.name);
     }
     if (raf_aligned_input_setting_ & kRafAlignedEnabledMouse) {
-      features.push_back(features::kRafAlignedMouseInputEvents.name);
+      features.emplace_back(features::kRafAlignedMouseInputEvents.name);
     } else {
-      disabled_features.push_back(features::kRafAlignedMouseInputEvents.name);
+      disabled_features.emplace_back(
+          features::kRafAlignedMouseInputEvents.name);
     }
 
     feature_list_.InitFromCommandLine(base::JoinString(features, ","),
