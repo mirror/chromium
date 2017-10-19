@@ -117,6 +117,75 @@
     },
     {
       "key": {
+        "uuid": "edd43827_36f4ed1c",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "nit: s/srcURL/fromURL",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f9a8cb_cb41f7ac",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "nit: s/This is a dictionary that maps/Maps",
+      "range": {
+        "startLine": 99,
+        "startChar": 3,
+        "endLine": 99,
+        "endChar": 33
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b933cd_fee69f28",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "nit: s/seperated/separated",
+      "range": {
+        "startLine": 101,
+        "startChar": 22,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98c4c777_e000c0a6",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 7
@@ -133,6 +202,69 @@
         "startChar": 31,
         "endLine": 106,
         "endChar": 45
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac667f77_104ce2c1",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "Is there a reason for making this property atomic?",
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efe762a_2a651fd5",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "From \"Coding Guidelines for Cocoa\": For methods that represent actions an object takes, start the name with a verb.\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-BCIGIJJF\n\ninternalOpenURL: is quite different from openURL: and if it would be better to be more explicit in the name to explain the difference.\n\nHow about creating shouldOpenURL:... which will contain most of the logic which is currently present in openURL: and then fold internalOpenURL: into openURL: ?",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 23
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f2de23_457343d5",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about using a single completion handler with a boolean? Using single completion handler is generally considered the best practice and allow to avoid code duplication (like calling RecordExternalApplicationOpened from 2 places).\n\nhttps://docs.google.com/document/d/11Z5oWh33Etlgui2PlmydIxi0W7omzKYcNln9gxFlOw8/edit",
+      "range": {
+        "startLine": 139,
+        "startChar": 40,
+        "endLine": 139,
+        "endChar": 53
       },
       "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -163,6 +295,92 @@
     },
     {
       "key": {
+        "uuid": "3611d7ef_59b47aee",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "Please add tests for newly written code in this class.",
+      "range": {
+        "startLine": 314,
+        "startChar": 27,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a196702b_97dc12a4",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "nit: Do you want to flip Allow and Prompt? Allow is shorter and for the code reader it is easier to read shorter blocks first.",
+      "range": {
+        "startLine": 331,
+        "startChar": 9,
+        "endLine": 331,
+        "endChar": 14
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb04451_864a0dcf",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "nit: Do you wan to add braces because if statement is multiline?",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 30
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bf4317_02f65057",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about using enum class? Otherwise you have to prefix Allow, Prompt and Block.\nAlso please explain each value in the comments and initialize the first item",
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af4a0668_d7333f33",
         "filename": "ios/chrome/browser/web/external_app_launching_state.h",
         "patchSetId": 7
@@ -179,6 +397,213 @@
         "startChar": 27,
         "endLine": 10,
         "endChar": 39
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4d0367_96e86dcd",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about using enum class? Otherwise you have to prefix Allow, Prompt and Block.",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805b6e0d_df1e6209",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about making a public constant for 30 and not mentioning specific time?",
+      "range": {
+        "startLine": 14,
+        "startChar": 67,
+        "endLine": 14,
+        "endChar": 69
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410aa92d_a0b380a9",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "Would it be better to put the responsibility of mapping to this class? This class is easier to test than ExternalAppLauncher.",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c499958_0cdd33b8",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "This class holds \"Blocking State\" \"Not Launching State\". What do you think ExternalAppLauncherBlockingState for the name?",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6ac97d_2ec47124",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "s/Update/Updates\n\nSame comment for |block| comments",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5224e34a_b820cc67",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about didRequestExternalApplicationLaunch for the name?",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7816426_f3fc205e",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about didBlockExternalApplicationLaunch for the name?",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbd9d68_0f65cf7b",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about externalApplicationLaunchPolicy for the name?",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9e0cfb_86797d4f",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "Please add comments",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 0
       },
       "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -209,6 +634,76 @@
     },
     {
       "key": {
+        "uuid": "9a12ec22_e2952aa2",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "I can confirm that. https://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "parentUuid": "39e6f017_17ca9106",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1271a7d4_c854e5b4",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "0 and NO are default in Objective-C. No need for initialization.\n\nhttp://google.github.io/styleguide/objcguide.html#initialization",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36da94b9_0fddb236",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "How about this?:\n\nif (_appLaunchingBlocked)\n    return;\nif (-_lastAppLaunchTime.timeIntervalSinceNow \u003e MAX_SECONDS_BETWEEN_CONSECUTIVE_LAUNCHES) {\n  _consecutiveLaunchesCount \u003d 1;\n} else  {\n  _consecutiveLaunchesCount++;\n}\n_lastAppLaunchTime \u003d [NSDate date];",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b524f6b_17bee529",
         "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
         "patchSetId": 7
@@ -220,6 +715,53 @@
       "writtenOn": "2017-10-19T13:38:14Z",
       "side": 1,
       "message": "A recent PSA from sdefresne strongly suggested use TEST_F over TEST. Please check.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deff343f_a3a4fe2d",
+        "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "Please add comments",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 73
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ddc69b5_28124b4d",
+        "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T15:04:48Z",
+      "side": 1,
+      "message": "TEST will not use PlatformTest fixture.",
+      "parentUuid": "9b524f6b_17bee529",
       "range": {
         "startLine": 16,
         "startChar": 0,
