@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34b5ffd7_11b27aee",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-19T22:38:22Z",
+      "side": 1,
+      "message": "When this fails, the gtest error is not helpful at all. It\u0027s just console spam. Can we call base::SHA1HashString() + base::HexEncode() to get human readable checksums instead?",
+      "revId": "b36c75a26626ef1ef6ad761c8beb407a4ccbee13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
