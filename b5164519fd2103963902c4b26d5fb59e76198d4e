@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "0d789ad4_c00a8082",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-19T15:26:24Z",
+      "side": 1,
+      "message": "A note on thread safety from our discussion yesterday. I *think* that we should be OK here even though we\u0027re not actually accessing mMergedFileNames using thread-safe constructs.\n\nOn the UI thread, when we populate mMergeFileNames, we setMergeInProgress(true). Once this is set, #loadState and #mergeState will return early until it is set back to false. This method doesn\u0027t get called with a file name that will cause wasMergeFile to be true until all merged tabs are loaded, so we won\u0027t setMergeInProgress back to true until mMergeFileNames is empty again.",
+      "range": {
+        "startLine": 1273,
+        "startChar": 43,
+        "endLine": 1273,
+        "endChar": 59
+      },
+      "revId": "b5164519fd2103963902c4b26d5fb59e76198d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cb2bdd8_0ea2a7ce",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 10
