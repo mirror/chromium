@@ -141,6 +141,7 @@ void DownloadDriverImpl::Start(
     const std::string& guid,
     const base::FilePath& file_path,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  LOG(ERROR) << "@@@ " << __func__;
   DCHECK(!request_params.url.is_empty());
   DCHECK(!guid.empty());
   if (!download_manager_)
