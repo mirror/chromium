@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "932f2bf7_e0f9ddbc",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "Instead of the changes in this file, consider:\n\nsources \u003d [ common stuff]\n\nif (is_mac) {\n  sources +\u003d [ mac specific]\n  // etc\n} else if (is_win) {\n  sources +\u003d [ win specific]\n  // etc\n} else {\n sources +\u003d [ empty implementers such as \"barcode_detection_impl.cc\" etc]\n}",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0656f337_138687e2",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "Same here, \n\nif (is_mac) {\n  sources \u003d [...]\n  libs \u003d [...]\n} else if {is_win) {\n   // etc\n}",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 3
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95bd3677_9de234b8",
+        "filename": "services/shape_detection/PRESUBMIT.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "we might need to add here \nmaster.tryserver.chromium.win.win10_chromium_x64_rel_ng \n\nas well (not sure if optional_gpu is win10).",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 64
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9f2527_c3d9c179",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "This method doesn\u0027t need any of the members of FaceDetectionImplWin,\nright? If so, take it out of that class and make it a\nfile-static function into an anonymous namespace here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8af265_c14219da",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "nit: what about:\n\"FaceDetector not supported before Windows 10\"\n?",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 43
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2876ce7_376698ab",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "Remove this part, and the associated functions and file,\nand use instead \n\nDPLOG(ERROR) \u003c\u003c \"IFaceDetectorStatics factory failed\";\n\nwhich will automatically append the last HRESULT and error\nstringified.",
+      "range": {
+        "startLine": 45,
+        "startChar": 56,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a347f4f_40bf2f37",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "return (is_supported \u003d\u003d FALSE) ? nullptr : factory;\n\n?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 17
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9b7471_5a7b8dc9",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "Always good to say DPLOG_IF() in win-related functions.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e832fd_fbdbf9af",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "The new thing [1] is base::test::ScopedTaskEnvironment,\njust use it here.\n\n[1] http://tinyurl.com/scopedtaskenvironment",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bd2b29_764581d0",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-19T14:49:52Z",
+      "side": 1,
+      "message": "This might not be true in Windows bots, we need to try.\n(This sentence applied to Mac bots though).",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "057f349c90bf0d674cb208f883ae9b5730a8f017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
