@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "471fe3f1_b049abe0",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "BrowserProcessImpl creates and shuts down the message center, whereas Shell creates and destroys |this|. I guess that means the message center outlasts this? Many NotificationDelegates have this same problem and the scoped_refptr ownership is pretty icky, but it seems shutdown isn\u0027t a problem because Close doesn\u0027t get invoked when the MC is shutting down. We will need to move MC init/shutdown out of the browser process and into Shell for ash so then the ordering will probably be clearer.",
+      "parentUuid": "195fe0c7_c002d11b",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a16e72a1_9315c28e",
         "filename": "ash/message_center/message_center_controller.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0488761d_64b2b8c2",
+        "filename": "ash/message_center/message_center_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a16e72a1_9315c28e",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5a17c4a7_924b8e04",
+        "filename": "ash/message_center/message_center_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6ce429_1debde32",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d167fb6_cbb409cc",
         "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-19T01:03:10Z",
       "side": 1,
       "message": "How strongly do you feel about this name? I would usually call this MessageCenterController. It\u0027s already in the ash::mojom namespace. We don\u0027t usually put Ash in our mojo interface names.",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6075726_07fc6f1e",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "There\u0027s already an interface named MessageCenterController in ui/message_center, and I want to avoid confusion both with that and with message center stuff as a whole. We could call this something like NotificationService instead, or NotificationController, but all the names in this space are already overused, so I think being overly specific is the least confusing thing to do.",
+      "parentUuid": "4d167fb6_cbb409cc",
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "e11431db_9c158fab",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "only the browser process has access to ash afaiu",
+      "parentUuid": "c459edd0_29192f97",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e0b0797_bdc1f287",
         "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
         "patchSetId": 4
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "64e59d42_5d3b5165",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8e0b0797_bdc1f287",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc7f153a_c0920c69",
         "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
         "patchSetId": 4
@@ -121,6 +235,30 @@
       "writtenOn": "2017-10-18T20:25:57Z",
       "side": 1,
       "message": "who generates these IDs?  Are the guessable?  What happens if an untrusted client sends crafted values?",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757736f7_c2aeb451",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "We currently only have one (trusted) client. The IDs could be guessed.",
+      "parentUuid": "dc7f153a_c0920c69",
       "range": {
         "startLine": 20,
         "startChar": 27,
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "c1b88fa7_eb00bf95",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "I didn\u0027t document them because they\u0027re indentical to the ones in NotificationDelegate. How do you think I should best document them while avoiding duplication?",
+      "parentUuid": "7b774c4a_bfc7cf09",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5316baaf_53a3b848",
         "filename": "ash/shell.h",
         "patchSetId": 4
@@ -164,6 +320,24 @@
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b89900b_c275ed9d",
+        "filename": "ash/shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5316baaf_53a3b848",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +370,24 @@
       "side": 1,
       "message": "I\u0027m pretty sure Display() should be passing a profile pointer and not a string, so this should go away soon. This dance seems completely unnecessary to me, but I\u0027m waiting to hear back if there\u0027s some non-obvious reason for it.",
       "parentUuid": "744f1be8_4ca85486",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a40714_359ec432",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "So I\u0027ve talked with Peter about this and the idea is to remove all notion of profile from NotificationPlatformBridge. It\u0027s hard to make the switch right away because there\u0027s a NPB for every platform, but I split this new NPB into two classes to better reflect what the future holds. (Note that NotificationPlatformBridgeChromeOsImpl doesn\u0027t use profile.) See crbug.com/776443\n\nI added a TODO here to remove this GetProfile helper.",
+      "parentUuid": "301b1694_a555fb54",
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -237,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "93f82d21_b3b6a466",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e2e7cd8_811162ba",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f99492b4_7f18e205",
         "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.h",
         "patchSetId": 4
@@ -251,6 +461,24 @@
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9db02d_98074e52",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-19T18:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f99492b4_7f18e205",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
