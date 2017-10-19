@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fe7b69b_67f66a30",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter to me where it is. I can appreciate saying \u0027location_bar_view_-\u003e\u0027 less, but I don\u0027t understand the extra hop through the controller. Looking at how littered this file is with those references, it looks to me like others have had this same thought, and that a lot of the location bar\u0027s responsibilities should move here.",
+      "parentUuid": "3d0643be_7d2084d2",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1d3710_0f9dd80a",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e0f3cb_2065ca1c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "Funny, I thought I\u0027d already done that.",
+      "parentUuid": "cf1d3710_0f9dd80a",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d917aa48_cbbe7baa",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "It was only there to avoid needless work (and in fact it\u0027s wrong). I moved it where more appropriate.\n\nI think the provider side needs some thinking. I could see a tab match lowering the score as easily as I could see simply avoiding the tab, or even leaving this as is. I think it\u0027s bound up in the \"when does user want to navigate\" question.",
+      "parentUuid": "ef4ddaf9_7d968e7d",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbbf90b_180593b3",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ab019cd6_3be69385",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "If we don\u0027t close it, the user isn\u0027t likely go looking for it when they want to open something new. They will accumulate NTPs like they collect tabs today. I\u0027m not sure why we would want that.\n\nRegarding focusing, if we don\u0027t do this, the focus is still in the Omnibox. This is not what happens, for example, when we navigate to a URL.\n\nMy comment is more regarding this file being the wrong place to be playing with focus. I feel like it belongs over in the other files (chrome/browser/ui.) Specifically, if someone were looking into a focus bug, they would want all that logic in the same place.",
+      "parentUuid": "0dbbf90b_180593b3",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d708c417_48f9f39e",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-18T23:31:14Z",
       "side": 1,
       "message": "It think this needs to include a check for TAB_SEARCH. Something like:\n\n  // Revert for all dispositions except opening a new tab in the\n  // background. Tab search matches always open a different tab so revert\n  // in that case regardless of the disposition.\n  if (disposition !\u003d WindowOpenDisposition::NEW_BACKGROUND_TAB ||\n      match.type \u003d\u003d AutocompleteMatchType::TAB_SEARCH) {",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5eb030_2c20d2af",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "AFAICT, the conditional isn\u0027t even necessary before my change. It\u0027s only ever called with current tab and new foreground.\n\nAnd a note to myself, mostly: If this is needed for some reason, we\u0027ll have to handle that below if the tab search fails.",
+      "parentUuid": "d708c417_48f9f39e",
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "852bffe2_db04c255",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1a73f43a_aa32f28e",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3f51072_9633466b",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "70dfdf0a_8263a836",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "No, you can build up a huge history, then go to chrome://newtab, then tab search, and this would close it. :(\n\nI guess I was hoping for something like \u0027if history is empty\u0027.",
+      "parentUuid": "d3f51072_9633466b",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d25a7bf_36929ca2",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980d8029_6e73dc02",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-19T20:25:05Z",
+      "side": 1,
+      "message": "sg",
+      "parentUuid": "3d25a7bf_36929ca2",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
