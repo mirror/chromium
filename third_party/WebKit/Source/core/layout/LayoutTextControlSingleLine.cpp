@@ -87,8 +87,7 @@ void LayoutTextControlSingleLine::Paint(const PaintInfo& paint_info,
     // Convert the rect into the coords used for painting the content
     contents_rect.MoveBy(paint_offset + Location());
     IntRect snapped_rect = PixelSnappedIntRect(contents_rect);
-    DrawingRecorder recorder(paint_info.context, *this, paint_info.phase,
-                             snapped_rect);
+    DrawingRecorder recorder(paint_info.context, *this, paint_info.phase);
     LayoutTheme::GetTheme().Painter().PaintCapsLockIndicator(*this, paint_info,
                                                              snapped_rect);
   }

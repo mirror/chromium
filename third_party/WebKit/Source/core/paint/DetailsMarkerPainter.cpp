@@ -33,7 +33,7 @@ void DetailsMarkerPainter::Paint(const PaintInfo& paint_info,
     return;
 
   DrawingRecorder recorder(paint_info.context, layout_details_marker_,
-                           paint_info.phase, overflow_rect);
+                           paint_info.phase);
   const Color color(layout_details_marker_.ResolveColor(CSSPropertyColor));
   paint_info.context.SetFillColor(color);
 

@@ -43,9 +43,6 @@ class NGBoxFragmentPainter : public BoxPainterBase {
       const NGPaintFragment&,
       const PaintInfo&);
 
-  LayoutRect BoundsForDrawingRecorder(const PaintInfo&,
-                                      const LayoutPoint& adjusted_paint_offset);
-
   // TODO(eae): Change to take a HitTestResult pointer instead as it mutates.
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation& location_in_container,
