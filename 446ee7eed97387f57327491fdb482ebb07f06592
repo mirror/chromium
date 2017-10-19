@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "170e8533_086a89bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ExpandableInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-19T15:59:26Z",
+      "side": 1,
+      "message": "Flesh this out",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 7
+      },
+      "revId": "446ee7eed97387f57327491fdb482ebb07f06592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529a6121_cafabc02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/NearOomInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-19T15:59:26Z",
+      "side": 1,
+      "message": "Same as other class.",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "446ee7eed97387f57327491fdb482ebb07f06592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42da4919_30024677",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/NearOomInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-19T15:59:26Z",
+      "side": 1,
+      "message": "nit: javadoc",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "446ee7eed97387f57327491fdb482ebb07f06592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cadef9d_e33fab22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/NearOomInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-19T15:59:26Z",
+      "side": 1,
+      "message": "These should be strings in android_chrome_strings.grd.",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 57
+      },
+      "revId": "446ee7eed97387f57327491fdb482ebb07f06592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ffbd9ef_08e15739",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-19T15:59:26Z",
+      "side": 1,
+      "message": "Does the implementation work here depend on this patch?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "446ee7eed97387f57327491fdb482ebb07f06592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
