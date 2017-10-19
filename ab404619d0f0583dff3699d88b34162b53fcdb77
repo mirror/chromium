@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf68286_16a7818b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/fullscreen/FullscreenHtmlApiHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-19T12:19:23Z",
+      "side": 1,
+      "message": "If you enter fullscreen but it isn\u0027t a video, should we be doing this?\n\nI\u0027m also thinking this could be in Tab#toggleFullscreenMode as this class should be more focused on the UI bits that are required to enter fullscreen and less about the other things that need to change as a result of entering fullscreen.",
+      "range": {
+        "startLine": 261,
+        "startChar": 8,
+        "endLine": 261,
+        "endChar": 23
+      },
+      "revId": "ab404619d0f0583dff3699d88b34162b53fcdb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
