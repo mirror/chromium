@@ -23,6 +23,7 @@
 #include "components/download/public/client.h"
 #include "components/download/public/download_metadata.h"
 #include "components/download/public/navigation_monitor.h"
+#include "content/public/common/resource_request_body.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace download {
@@ -455,6 +456,19 @@ bool ControllerImpl::IsTrackingDownload(const std::string& guid) const {
   if (controller_state_ != State::READY)
     return false;
   return !!model_->Get(guid);
+}
+
+scoped_refptr<content::ResourceRequestBody> ControllerImpl::GetUploadData(
+    const std::string& guid) const {
+  auto* entry = model_->Get(guid);
+  if (entry) {
+    auto* client = clients_->GetClient(entry->client);
+    if (client) {
+      return client->GetUploadData();
+    }
+  }
+
+  return nullptr;
 }
 
 void ControllerImpl::OnFileMonitorReady(bool success) {

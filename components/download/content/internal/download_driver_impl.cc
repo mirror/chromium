@@ -167,6 +167,10 @@ void DownloadDriverImpl::Start(
   download_url_params->set_method(request_params.method);
   download_url_params->set_file_path(file_path);
 
+  if (request_params.method == "POST") {
+    download_url_params->set_post_body(client_->GetUploadData(guid));
+  }
+
   download_manager_->DownloadUrl(std::move(download_url_params));
 }
 

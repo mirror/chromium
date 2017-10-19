@@ -14,6 +14,7 @@
 #include "components/download/public/download_metadata.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
+#include "content/public/common/resource_request_body.h"
 
 namespace offline_pages {
 
@@ -97,6 +98,11 @@ bool OfflinePrefetchDownloadClient::CanServiceRemoveDownloadedFile(
     const std::string& guid,
     bool force_delete) {
   return true;
+}
+
+scoped_refptr<content::ResourceRequestBody>
+OfflinePrefetchDownloadClient::GetUploadData() {
+  return nullptr;
 }
 
 PrefetchDownloader* OfflinePrefetchDownloadClient::GetPrefetchDownloader()

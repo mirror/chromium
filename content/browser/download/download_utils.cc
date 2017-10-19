@@ -8,6 +8,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/process/process_handle.h"
 #include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/download/download_create_info.h"
 #include "content/browser/download/download_interrupt_reasons_impl.h"
 #include "content/browser/download/download_stats.h"
@@ -20,6 +22,7 @@
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/load_flags.h"
 #include "net/base/upload_bytes_element_reader.h"
+#include "net/base/upload_file_element_reader.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/url_request_context.h"
@@ -184,9 +187,8 @@ std::unique_ptr<ResourceRequest> CreateResourceRequest(
   }
 
   bool has_upload_data = false;
-  if (!params->post_body().empty()) {
-    request->request_body = ResourceRequestBody::CreateFromBytes(
-        params->post_body().data(), params->post_body().size());
+  if (params->post_body()) {
+    request->request_body = params->post_body();
     has_upload_data = true;
   }
 
@@ -212,6 +214,86 @@ std::unique_ptr<ResourceRequest> CreateResourceRequest(
   return request;
 }
 
+// Copied verbatim from content/network/url_loader_impl.cc
+// A subclass of net::UploadBytesElementReader which owns
+// ResourceRequestBody.
+class BytesElementReader : public net::UploadBytesElementReader {
+ public:
+  BytesElementReader(ResourceRequestBody* resource_request_body,
+                     const ResourceRequestBody::Element& element)
+      : net::UploadBytesElementReader(element.bytes(), element.length()),
+        resource_request_body_(resource_request_body) {
+    DCHECK_EQ(ResourceRequestBody::Element::TYPE_BYTES, element.type());
+  }
+
+  ~BytesElementReader() override {}
+
+ private:
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
+
+  DISALLOW_COPY_AND_ASSIGN(BytesElementReader);
+};
+
+// A subclass of net::UploadFileElementReader which owns
+// ResourceRequestBody.
+// This class is necessary to ensure the BlobData and any attached shareable
+// files survive until upload completion.
+class FileElementReader : public net::UploadFileElementReader {
+ public:
+  FileElementReader(ResourceRequestBody* resource_request_body,
+                    base::TaskRunner* task_runner,
+                    const ResourceRequestBody::Element& element)
+      : net::UploadFileElementReader(task_runner,
+                                     element.path(),
+                                     element.offset(),
+                                     element.length(),
+                                     element.expected_modification_time()),
+        resource_request_body_(resource_request_body) {
+    DCHECK_EQ(ResourceRequestBody::Element::TYPE_FILE, element.type());
+  }
+
+  ~FileElementReader() override {}
+
+ private:
+  scoped_refptr<ResourceRequestBody> resource_request_body_;
+
+  DISALLOW_COPY_AND_ASSIGN(FileElementReader);
+};
+
+// TODO: copied from content/browser/loader/upload_data_stream_builder.cc.
+std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
+    ResourceRequestBody* body,
+    base::SequencedTaskRunner* file_task_runner) {
+  std::vector<std::unique_ptr<net::UploadElementReader>> element_readers;
+  for (const auto& element : *body->elements()) {
+    switch (element.type()) {
+      case ResourceRequestBody::Element::TYPE_BYTES:
+        element_readers.push_back(
+            base::MakeUnique<BytesElementReader>(body, element));
+        break;
+      case ResourceRequestBody::Element::TYPE_FILE:
+        element_readers.push_back(base::MakeUnique<FileElementReader>(
+            body, file_task_runner, element));
+        break;
+      case ResourceRequestBody::Element::TYPE_FILE_FILESYSTEM:
+        NOTIMPLEMENTED();
+        break;
+      case ResourceRequestBody::Element::TYPE_BLOB: {
+        NOTIMPLEMENTED();
+        break;
+      }
+      case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
+      case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
+      case ResourceRequestBody::Element::TYPE_UNKNOWN:
+        NOTREACHED();
+        break;
+    }
+  }
+
+  return base::MakeUnique<net::ElementsUploadDataStream>(
+      std::move(element_readers), body->identifier());
+}
+
 std::unique_ptr<net::URLRequest>
 CreateURLRequestOnIOThread(DownloadUrlParameters* params) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -227,12 +309,14 @@ CreateURLRequestOnIOThread(DownloadUrlParameters* params) {
                           params->GetNetworkTrafficAnnotation()));
   request->set_method(params->method());
 
-  if (!params->post_body().empty()) {
-    const std::string& body = params->post_body();
-    std::unique_ptr<net::UploadElementReader> reader(
-        net::UploadOwnedBytesElementReader::CreateWithString(body));
-    request->set_upload(
-        net::ElementsUploadDataStream::CreateWithReader(std::move(reader), 0));
+  if (params->post_body()) {
+    scoped_refptr<base::SequencedTaskRunner> task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
+
+    std::unique_ptr<net::UploadDataStream> upload_data_stream =
+        CreateUploadDataStream(params->post_body().get(), task_runner.get());
+    request->set_upload(std::move(upload_data_stream));
   }
 
   if (params->post_id() >= 0) {

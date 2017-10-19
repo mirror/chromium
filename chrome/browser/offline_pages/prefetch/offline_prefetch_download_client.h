@@ -45,6 +45,7 @@ class OfflinePrefetchDownloadClient : public download::Client {
       const download::CompletionInfo& completion_info) override;
   bool CanServiceRemoveDownloadedFile(const std::string& guid,
                                       bool force_delete) override;
+  scoped_refptr<content::ResourceRequestBody> GetUploadData() override;
 
   PrefetchDownloader* GetPrefetchDownloader() const;
 
