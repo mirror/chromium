@@ -199,6 +199,9 @@ class CONTENT_EXPORT SimpleURLLoader {
 
  protected:
   SimpleURLLoader();
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SimpleURLLoader);
 };
 
 }  // namespace content
