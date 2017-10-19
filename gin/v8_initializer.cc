@@ -227,6 +227,8 @@ void GetMappedFileData(base::MemoryMappedFile* mapped_file,
 
 // static
 void V8Initializer::LoadV8Snapshot() {
+#if !defined(USE_V8_CONTEXT_SNAPSHOT)
+  LOG(INFO) << "LoadSnapshotBlobFD";
   if (g_mapped_snapshot)
     return;
 
@@ -236,6 +238,9 @@ void V8Initializer::LoadV8Snapshot() {
   // start up (slower) without the snapshot.
   UMA_HISTOGRAM_ENUMERATION("V8.Initializer.LoadV8Snapshot.Result", result,
                             V8_LOAD_MAX_VALUE);
+#else
+  LoadV8ContextSnapshot();
+#endif
 }
 
 void V8Initializer::LoadV8Natives() {
@@ -254,6 +259,8 @@ void V8Initializer::LoadV8Natives() {
 void V8Initializer::LoadV8SnapshotFromFD(base::PlatformFile snapshot_pf,
                                          int64_t snapshot_offset,
                                          int64_t snapshot_size) {
+#if !defined(USE_V8_CONTEXT_SNAPSHOT)
+  LOG(INFO) << "LoadSnapshotBlobFD";
   if (g_mapped_snapshot)
     return;
 
@@ -276,6 +283,7 @@ void V8Initializer::LoadV8SnapshotFromFD(base::PlatformFile snapshot_pf,
   }
   UMA_HISTOGRAM_ENUMERATION("V8.Initializer.LoadV8Snapshot.Result", result,
                             V8_LOAD_MAX_VALUE);
+#endif
 }
 
 // static
@@ -379,6 +387,7 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 
 // static
 void V8Initializer::LoadV8ContextSnapshot() {
+  LOG(INFO) << "LoadV8ContextSnapshot";
   if (g_mapped_v8_context_snapshot)
     return;
 
@@ -392,6 +401,7 @@ void V8Initializer::LoadV8ContextSnapshot() {
 void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
                                                 int64_t snapshot_offset,
                                                 int64_t snapshot_size) {
+  LOG(INFO) << "LoadV8ContextSnapshotFD";
   if (g_mapped_v8_context_snapshot)
     return;
   CHECK_NE(base::kInvalidPlatformFile, snapshot_pf);
