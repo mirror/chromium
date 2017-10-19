@@ -1125,7 +1125,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // Does preparation for the navigation to |url|.
   void PrepareRenderViewForNavigation(
       const GURL& url,
-      const RequestNavigationParams& request_params);
+      const RequestNavigationParams& request_params,
+      const bool should_handle_debug_url = true);
 
   // PlzNavigate
   // Sends a FrameHostMsg_BeginNavigation to the browser
