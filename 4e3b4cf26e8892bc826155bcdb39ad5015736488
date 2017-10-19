@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ced7861_e6cc7f74",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5904,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-19T00:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64bedc91_a7e8b27c",
+      "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50d5fe8f_bdd49304",
         "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67f17a7_ccdfd8e2",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-19T00:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d5fe8f_bdd49304",
+      "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "daa43e01_bcb55c51",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-19T00:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e157c89_f0fd6a9b",
+      "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce55fa04_c96f84fc",
         "filename": "chrome/browser/ui/views/overlay/overlay_window_views.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fc6339_c841a192",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-10-19T00:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce55fa04_c96f84fc",
+      "revId": "4e3b4cf26e8892bc826155bcdb39ad5015736488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
