@@ -154,7 +154,9 @@ void LocateSpecificPasswords(std::vector<WebInputElement> passwords,
   // First, look for elements marked with either autocomplete='current-password'
   // or 'new-password' -- if we find any, take the hint, and treat the first of
   // each kind as the element we are looking for.
+  //  LOG(ERROR) << "values:";
   for (const WebInputElement& it : passwords) {
+    //    LOG(ERROR) << it.Value().Utf8();
     if (HasAutocompleteAttributeValue(it, kAutocompleteCurrentPassword) &&
         current_password->IsNull()) {
       *current_password = it;
@@ -166,6 +168,7 @@ void LocateSpecificPasswords(std::vector<WebInputElement> passwords,
       *confirmation_password = it;
     }
   }
+  //  LOG(ERROR) << "end";
 
   // If we have seen an element with either of autocomplete attributes above,
   // take that as a signal that the page author must have intentionally left the
@@ -317,13 +320,40 @@ bool FieldHasPropertiesMask(const FieldValueAndPropertiesMaskMap* field_map,
   return it != field_map->end() && (it->second.second & mask);
 }
 
+// Returns true iff |control_elements| contains any password field. Also sets
+// |found_password_with_user_input| to true iff any password field has user
+// input.
+bool FormHasPasswordFields(
+    const std::vector<blink::WebFormControlElement>& control_elements,
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
+    bool* found_password_with_user_input) {
+  DCHECK(found_password_with_user_input);
+
+  *found_password_with_user_input = false;
+  bool found_password_field = false;
+  for (size_t i = 0; i < control_elements.size(); ++i) {
+    const WebInputElement* input_element =
+        ToWebInputElement(&control_elements[i]);
+    if (!input_element || !input_element->IsPasswordField())
+      continue;
+    if (FieldHasPropertiesMask(field_value_and_properties_map, *input_element,
+                               FieldPropertiesFlags::USER_TYPED)) {
+      *found_password_with_user_input = true;
+      return true;
+    }
+
+    found_password_field = true;
+  }
+  return found_password_field;
+}
+
 // Helper function that checks the presence of visible password and username
-// fields in |form.control_elements|.
+// fields in |control_elements|.
 // Iff a visible password is found, then |*found_visible_password| is set to
 // true. Iff a visible password is found AND there is a visible username before
 // it, then |*found_visible_username_before_visible_password| is set to true.
 void FindVisiblePasswordAndVisibleUsernameBeforePassword(
-    const SyntheticForm& form,
+    const std::vector<blink::WebFormControlElement>& control_elements,
     bool* found_visible_password,
     bool* found_visible_username_before_visible_password) {
   DCHECK(found_visible_password);
@@ -332,7 +362,7 @@ void FindVisiblePasswordAndVisibleUsernameBeforePassword(
   *found_visible_username_before_visible_password = false;
 
   bool found_visible_username = false;
-  for (auto& control_element : form.control_elements) {
+  for (auto& control_element : control_elements) {
     const WebInputElement* input_element = ToWebInputElement(&control_element);
     if (!input_element || !input_element->IsEnabled() ||
         !input_element->IsTextField()) {
@@ -410,12 +440,19 @@ bool GetPasswordForm(
     PasswordForm* password_form,
     const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
     const FormsPredictionsMap* form_predictions) {
-  WebInputElement latest_input_element;
   WebInputElement username_element;
   password_form->username_marked_by_site = false;
+
   std::vector<WebInputElement> passwords;
+  WebInputElement latest_input_element;
   std::map<blink::WebInputElement, blink::WebInputElement>
       last_text_input_before_password;
+
+  std::vector<WebInputElement> passwords_without_heuristics;
+  WebInputElement latest_input_element_without_heuristics;
+  std::map<blink::WebInputElement, blink::WebInputElement>
+      last_text_input_without_heuristics;
+
   std::vector<WebInputElement> all_possible_usernames;
 
   std::map<WebInputElement, PasswordFormFieldPredictionType> predicted_elements;
@@ -423,6 +460,15 @@ bool GetPasswordForm(
     FindPredictedElements(form, password_form->form_data, *form_predictions,
                           &predicted_elements);
   }
+
+  bool ignore_elements_without_user_input = false;
+  if (!FormHasPasswordFields(form.control_elements,
+                             field_value_and_properties_map,
+                             &ignore_elements_without_user_input))
+    return false;
+
+  // If there is user input, don't care about visibility.
+  // Otherwise:
   // Check the presence of visible password and username fields.
   // If there is a visible password field, then ignore invisible password
   // fields. If there is a visible username before visible password, then ignore
@@ -431,8 +477,15 @@ bool GetPasswordForm(
   // the latest username field just before selected password field).
   bool ignore_invisible_passwords = false;
   bool ignore_invisible_usernames = false;
-  FindVisiblePasswordAndVisibleUsernameBeforePassword(
-      form, &ignore_invisible_passwords, &ignore_invisible_usernames);
+  if (!ignore_elements_without_user_input) {
+    FindVisiblePasswordAndVisibleUsernameBeforePassword(
+        form.control_elements, &ignore_invisible_passwords,
+        &ignore_invisible_usernames);
+  }
+
+  LOG(ERROR) << "ignore: " << ignore_elements_without_user_input << " "
+             << ignore_invisible_passwords << " " << ignore_invisible_usernames;
+
   std::string layout_sequence;
   layout_sequence.reserve(form.control_elements.size());
   size_t number_of_non_empty_text_non_password_fields = 0;
@@ -443,9 +496,28 @@ bool GetPasswordForm(
     if (!input_element || !input_element->IsEnabled())
       continue;
 
-    if (HasCreditCardAutocompleteAttributes(*input_element))
+    if (ignore_elements_without_user_input &&
+        !FieldHasPropertiesMask(field_value_and_properties_map, *input_element,
+                                FieldPropertiesFlags::USER_TYPED |
+                                    FieldPropertiesFlags::AUTOFILLED))
       continue;
-    if (IsCreditCardVerificationPasswordField(*input_element))
+
+    // Fill |...without_heuristics| variables before heuristics are applied.
+    if (input_element->IsPasswordField()) {
+      passwords_without_heuristics.push_back(*input_element);
+      last_text_input_without_heuristics[*input_element] =
+          latest_input_element_without_heuristics;
+    } else {
+      latest_input_element_without_heuristics = *input_element;
+    }
+
+    bool password_marked_by_autocomplete_attribute =
+        HasAutocompleteAttributeValue(*input_element,
+                                      kAutocompleteCurrentPassword) ||
+        HasAutocompleteAttributeValue(*input_element, kAutocompleteNewPassword);
+    if (!password_marked_by_autocomplete_attribute &&
+        (HasCreditCardAutocompleteAttributes(*input_element) ||
+         IsCreditCardVerificationPasswordField(*input_element)))
       continue;
 
     bool element_is_invisible = !form_util::IsWebElementVisible(*input_element);
@@ -466,11 +538,6 @@ bool GetPasswordForm(
         layout_sequence.push_back('N');
       }
     }
-
-    bool password_marked_by_autocomplete_attribute =
-        HasAutocompleteAttributeValue(*input_element,
-                                      kAutocompleteCurrentPassword) ||
-        HasAutocompleteAttributeValue(*input_element, kAutocompleteNewPassword);
 
     // If the password field is readonly, the page is likely using a virtual
     // keyboard and bypassing the password field value (see
@@ -539,8 +606,19 @@ bool GetPasswordForm(
     }
   }
 
-  if (passwords.empty())
-    return false;
+  // If for some reason (e.g. only credit card fields, confusing autocomplete
+  // attributes) the passwords list is empty, build list based on user input (if
+  // there is any non-empty password field) and the type of a field. Also mark
+  // that the form should be available only for fallback saving (automatic
+  // bubble will not pop up).
+  password_form->only_for_fallback_saving = passwords.empty();
+  LOG(ERROR) << "only_for_fallback_saving "
+             << password_form->only_for_fallback_saving;
+  if (passwords.empty()) {
+    passwords = passwords_without_heuristics;
+    last_text_input_before_password = last_text_input_without_heuristics;
+  }
+  DCHECK(!passwords.empty());
 
   // Call HTML based username detector, only if corresponding flag is enabled.
   if (base::FeatureList::IsEnabled(
@@ -556,13 +634,16 @@ bool GetPasswordForm(
   WebInputElement confirmation_password;
   LocateSpecificPasswords(passwords, &password, &new_password,
                           &confirmation_password);
+  //  LOG(ERROR) << "pass" << password.IsNull();
+  //  LOG(ERROR) << "new_pass" << new_password.IsNull();
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection)) {
     bool form_has_autofilled_value = false;
     // Add non-empty unique possible passwords to the vector.
     std::vector<base::string16> all_possible_passwords;
-    for (const WebInputElement& password_element : passwords) {
+    for (const WebInputElement& password_element :
+         passwords_without_heuristics) {
       const base::string16 value = password_element.Value().Utf16();
       if (value.empty())
         continue;
@@ -595,6 +676,8 @@ bool GetPasswordForm(
   WebInputElement predicted_username_element;
   bool map_has_username_prediction = MapContainsPrediction(
       predicted_elements, PREDICTION_USERNAME, &predicted_username_element);
+  //  LOG(ERROR) << "map_has_username_prediction " <<
+  //  map_has_username_prediction;
 
   // Let server predictions override the selection of the username field. This
   // allows instant adjusting without changing Chromium code.
