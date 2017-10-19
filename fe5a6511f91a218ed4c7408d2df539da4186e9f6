@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76ef1b6f_7b133f88",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-19T17:40:58Z",
+      "side": 1,
+      "message": "This is great-- thanks!",
+      "revId": "fe5a6511f91a218ed4c7408d2df539da4186e9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
