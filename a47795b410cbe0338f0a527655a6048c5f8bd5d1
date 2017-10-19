@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f37e6254_19ef4a86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-19T06:59:45Z",
+      "side": 1,
+      "message": "Confirmed that the .admx file output does not change. This is expected because the .admx file is supposed to be language-neutral.\nBinary diff of one of the chrome.adm files shows that the first change is at a trademark sign (which is expected), but I can\u0027t diff further because the strings are UTF-16 encoded in that file, so the diff gets confused due to the \"interleaved\" 0 bytes in the strings.\nSame for chrome.adml (test for en-US, de).\nI\u0027ll kindly ask Julian if he could confirm that these files don\u0027t break with this patch.",
+      "parentUuid": "77a99fe9_f7364ea9",
+      "revId": "a47795b410cbe0338f0a527655a6048c5f8bd5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56908f7_07363f03",
         "filename": "components/policy/resources/policy_templates.grd",
         "patchSetId": 1
