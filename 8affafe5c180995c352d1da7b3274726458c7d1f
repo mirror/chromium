@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94aff9fb_ea4e0c2f",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T22:25:21Z",
+      "side": 1,
+      "message": "What if there is no internet in this callback? Does it mean that UI is stuck with \"Cancel\" button forever? Should we poll for the internet connectivity?",
+      "range": {
+        "startLine": 184,
+        "startChar": 22,
+        "endLine": 184,
+        "endChar": 28
+      },
+      "revId": "8affafe5c180995c352d1da7b3274726458c7d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19d84c1_924bbe67",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-19T22:25:21Z",
+      "side": 1,
+      "message": "Mark is it ok to use TabHelpers (model objects) in view controllers? My gut feeling is \"No, web controller should use delegation to detect connectivity and cancel detection\".",
+      "range": {
+        "startLine": 237,
+        "startChar": 32,
+        "endLine": 237,
+        "endChar": 33
+      },
+      "revId": "8affafe5c180995c352d1da7b3274726458c7d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
