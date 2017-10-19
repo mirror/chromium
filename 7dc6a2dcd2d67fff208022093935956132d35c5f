@@ -16,6 +16,24 @@
       "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c805d94a_935e0c70",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-19T08:39:08Z",
+      "side": 1,
+      "message": "+1 for the comments.\n\nI personally prefer using the spec terminology directly (since it is hard to memorize the mapping when reading the spec).",
+      "parentUuid": "10160a3a_2a21b7fe",
+      "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
