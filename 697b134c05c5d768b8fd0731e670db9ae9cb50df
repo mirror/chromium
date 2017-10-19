@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "2370c173_29e3726b",
+        "filename": "third_party/content_shell_fonts/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-19T23:42:07Z",
+      "side": 1,
+      "message": "nit: please lease - typo?",
+      "revId": "697b134c05c5d768b8fd0731e670db9ae9cb50df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3a0a566_254902f9",
         "filename": "ui/gfx/test/fontconfig_util_linux.cc",
         "patchSetId": 3
