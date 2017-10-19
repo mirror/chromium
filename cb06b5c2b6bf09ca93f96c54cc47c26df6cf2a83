@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89a4a9a0_bfa94233",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3075,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T20:58:00Z",
+      "side": 1,
+      "message": "\u003e Question: Where is this asserting that we only created a display info once for the internal display?\n\nWe do recreate info when the property of the internal display changes, whe the native bounds for internal display may change. This test is to make sure we re-create the display info for such case.",
+      "parentUuid": "37c447c6_47abfa8c",
+      "range": {
+        "startLine": 3075,
+        "startChar": 0,
+        "endLine": 3075,
+        "endChar": 1
+      },
+      "revId": "cb06b5c2b6bf09ca93f96c54cc47c26df6cf2a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66d23218_fe44f6f9",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5972836b_b22fa87a",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66d23218_fe44f6f9",
+      "range": {
+        "startLine": 232,
+        "startChar": 17,
+        "endLine": 232,
+        "endChar": 28
+      },
+      "revId": "cb06b5c2b6bf09ca93f96c54cc47c26df6cf2a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c0a7cc5_72d5359e",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-18T23:49:21Z",
       "side": 1,
       "message": "Nit: What will not be updated?",
+      "range": {
+        "startLine": 234,
+        "startChar": 44,
+        "endLine": 234,
+        "endChar": 45
+      },
+      "revId": "cb06b5c2b6bf09ca93f96c54cc47c26df6cf2a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7626fe_d3d28749",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T20:58:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5c0a7cc5_72d5359e",
       "range": {
         "startLine": 234,
         "startChar": 44,
