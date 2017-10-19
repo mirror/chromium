@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d51b3bb_d2989351",
+        "filename": "content/browser/devtools/service_worker_devtools_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T06:04:26Z",
+      "side": 1,
+      "message": "Alternately, replace this with \"\u003d default\";",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 61
+      },
+      "revId": "b8edb0630536c65419e60ac5534514fd076cdf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988459cb_1531f248",
+        "filename": "content/browser/shared_worker/shared_worker_instance.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T06:04:26Z",
+      "side": 1,
+      "message": "Ditto about \u003d default; here",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 61
+      },
+      "revId": "b8edb0630536c65419e60ac5534514fd076cdf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4e5f43_020035fa",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T06:04:26Z",
+      "side": 1,
+      "message": "These can probably all return a const ref as well to avoid copies.",
+      "revId": "b8edb0630536c65419e60ac5534514fd076cdf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb75778_c5b8a994",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T06:04:26Z",
+      "side": 1,
+      "message": "const WebString\u0026 here as well",
+      "revId": "b8edb0630536c65419e60ac5534514fd076cdf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f707b529_7404c58a",
+        "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T06:04:26Z",
+      "side": 1,
+      "message": "const WebString\u0026",
+      "revId": "b8edb0630536c65419e60ac5534514fd076cdf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
