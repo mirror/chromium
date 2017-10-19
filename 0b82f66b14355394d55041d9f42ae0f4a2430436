@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06fd1475_6ea65543",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:40:27Z",
+      "side": 1,
+      "message": "Should this DCHECK or early exit? Since this is an API method, it\u0027s not clear that this would be logicially impossible (which DCHECK implies), but rather might be the result of a UI bug, which warrants a LOG(ERROR) and early exit instead.",
+      "revId": "0b82f66b14355394d55041d9f42ae0f4a2430436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92ca190_7cadd7f5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:40:27Z",
+      "side": 1,
+      "message": "Same here (which means we should handle null notifications above).",
+      "revId": "0b82f66b14355394d55041d9f42ae0f4a2430436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

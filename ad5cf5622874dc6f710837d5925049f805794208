@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "84e9e93c_0f57fcb4",
+        "filename": "ash/message_center/message_center_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:40:27Z",
+      "side": 1,
+      "message": "FWIW various authors have strong opinions about this (notably pkasting@) and much chrome code does not use a trailing : ; to the best of my knowledge either is considered acceptable.",
+      "parentUuid": "0488761d_64b2b8c2",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6ce429_1debde32",
         "filename": "ash/message_center/message_center_controller.h",
         "patchSetId": 4
@@ -388,6 +406,24 @@
       "side": 1,
       "message": "So I\u0027ve talked with Peter about this and the idea is to remove all notion of profile from NotificationPlatformBridge. It\u0027s hard to make the switch right away because there\u0027s a NPB for every platform, but I split this new NPB into two classes to better reflect what the future holds. (Note that NotificationPlatformBridgeChromeOsImpl doesn\u0027t use profile.) See crbug.com/776443\n\nI added a TODO here to remove this GetProfile helper.",
       "parentUuid": "301b1694_a555fb54",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0248eba6_0c352943",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-19T21:40:27Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "67a40714_359ec432",
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
