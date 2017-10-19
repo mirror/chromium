@@ -1397,6 +1397,8 @@ void GlobalActivityTracker::SetProcessExitCallback(
 void GlobalActivityTracker::RecordProcessLaunch(
     ProcessId process_id,
     const FilePath::StringType& cmd) {
+// DO NOT SUBMIT
+#if 0
   const int64_t pid = process_id;
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
@@ -1415,12 +1417,16 @@ void GlobalActivityTracker::RecordProcessLaunch(
 #else
   known_processes_.insert(std::make_pair(pid, cmd));
 #endif
+
+#endif  // 0
 }
 
 void GlobalActivityTracker::RecordProcessLaunch(
     ProcessId process_id,
     const FilePath::StringType& exe,
     const FilePath::StringType& args) {
+// DO NOT SUBMIT
+#if 0
   const int64_t pid = process_id;
   if (exe.find(FILE_PATH_LITERAL(" "))) {
     RecordProcessLaunch(pid, FilePath::StringType(FILE_PATH_LITERAL("\"")) +
@@ -1428,10 +1434,14 @@ void GlobalActivityTracker::RecordProcessLaunch(
   } else {
     RecordProcessLaunch(pid, exe + FILE_PATH_LITERAL(' ') + args);
   }
+#endif  // 0
 }
 
 void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
                                               int exit_code) {
+
+// DO NOT SUBMIT
+#if 0
   const int64_t pid = process_id;
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
@@ -1465,6 +1475,7 @@ void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
   }
 
   CleanupAfterProcess(pid, now_stamp, exit_code, std::move(command_line));
+#endif  // 0
 }
 
 void GlobalActivityTracker::SetProcessPhase(ProcessPhase phase) {
