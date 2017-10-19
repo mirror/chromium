@@ -2983,7 +2983,7 @@ group("telemetry_perf_tests") {
     # Needed for isolate script to execute.
     "//testing/scripts/common.py",
     "//testing/xvfb.py",
-    "//testing/scripts/run_telemetry_benchmark_as_googletest.py",
+    "//testing/scripts/run_leak_detection_as_google_test.py",
   ]
 }
 
