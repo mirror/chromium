@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c4ade359_d80fc5a7",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T00:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "161834a2_e42248cf",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf6c413_b74a8ea4",
         "filename": "content/browser/appcache/appcache_request_handler.h",
         "patchSetId": 2
@@ -135,6 +153,24 @@
       "writtenOn": "2017-10-18T14:38:23Z",
       "side": 1,
       "message": "Ditto for subresource loading flow.",
+      "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49868a5c_6f2d8fb0",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T00:58:25Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "7cf6c413_b74a8ea4",
       "revId": "59512fd979fedfb3c5d7bf014c8a4cd08338c024",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

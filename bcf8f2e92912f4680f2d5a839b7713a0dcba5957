@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecde732a_b7acbf87",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T00:58:25Z",
+      "side": 1,
+      "message": "doh! removed, these were remnants of dbging instrumentation junk",
+      "parentUuid": "90a719b4_3e08c5e6",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a4744c7_79c66220",
         "filename": "content/browser/appcache/appcache_request_handler.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-18T14:38:23Z",
       "side": 1,
       "message": "It\u0027s probably not too obvious what this code pattern\u0027s doing, could we document that loader_callback_ is still there if MaybeLoad* didn\u0027t create a job?\n\n(Is job_ always null if loader_callback_ is there?  Could this instead be if (!job_) and DCHECK(loader_callback_)?)",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278b3de4_377a0a33",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T00:58:25Z",
+      "side": 1,
+      "message": "job_ is always null if loader_callback_ is non-null. But a null loader_callback_ doesn\u0027t imply that job_ in non-null. A job could have been created, which consumes the callback, but is then deleted prior to return.\n\nI\u0027ve added some comments here.",
+      "parentUuid": "0a4744c7_79c66220",
       "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "505bc110_7df60d4f",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T00:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6309bd8_1f620fb5",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "584b1a52_0be83d44",
         "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce1047a_6d08354b",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-10-19T00:58:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "584b1a52_0be83d44",
+      "revId": "bcf8f2e92912f4680f2d5a839b7713a0dcba5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
