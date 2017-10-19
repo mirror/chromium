@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b99a897_049919bf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-19T23:53:51Z",
+      "side": 1,
+      "message": "Should the model also implement suspendModel() and disable the agent?",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca94999_b9c6c397",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-19T23:53:51Z",
+      "side": 1,
+      "message": "use .fill?",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b920fb_570ce15a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-19T23:53:51Z",
+      "side": 1,
+      "message": "use single space after \u0027:\u0027",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c78eab_dbca2aa2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-19T23:53:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
