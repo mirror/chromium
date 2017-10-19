@@ -88,11 +88,6 @@ using ::payment_request_util::GetShippingSectionTitle;
           ![self requestContactInfo]);
 }
 
-- (BOOL)canShip {
-  return !self.paymentRequest->shipping_options().empty() &&
-         self.paymentRequest->selected_shipping_profile() != nullptr;
-}
-
 - (BOOL)hasPaymentItems {
   return !self.paymentRequest
               ->GetDisplayItems(self.paymentRequest->selected_payment_method())
@@ -132,6 +127,8 @@ using ::payment_request_util::GetShippingSectionTitle;
 }
 
 - (PaymentsTextItem*)shippingSectionHeaderItem {
+  if (!self.paymentRequest->selected_shipping_profile())
+    return nil;
   PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
   item.text = GetShippingSectionTitle(self.paymentRequest->shipping_type());
   return item;
@@ -166,6 +163,8 @@ using ::payment_request_util::GetShippingSectionTitle;
 }
 
 - (CollectionViewItem*)shippingOptionItem {
+  if (!self.paymentRequest->selected_shipping_profile())
+    return nullptr;
   const payments::PaymentShippingOption* option =
       self.paymentRequest->selected_shipping_option();
   if (option) {
@@ -178,13 +177,15 @@ using ::payment_request_util::GetShippingSectionTitle;
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
     return item;
   }
-
-  PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
-  item.text = base::SysUTF16ToNSString(
-      GetChooseShippingOptionButtonLabel(self.paymentRequest->shipping_type()));
-  item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
-  item.textColor = [[MDCPalette cr_bluePalette] tint500];
-  return item;
+  if (!self.paymentRequest->shipping_options().empty()) {
+    PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
+    item.text = base::SysUTF16ToNSString(GetChooseShippingOptionButtonLabel(
+        self.paymentRequest->shipping_type()));
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.textColor = [[MDCPalette cr_bluePalette] tint500];
+    return item;
+  }
+  return nullptr;
 }
 
 - (PaymentsTextItem*)paymentMethodSectionHeaderItem {
