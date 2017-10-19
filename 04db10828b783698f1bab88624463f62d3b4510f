@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efb04f7e_7890cb34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-19T15:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "887dae3b_c16dacd7",
+      "range": {
+        "startLine": 10,
+        "startChar": 60,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "04db10828b783698f1bab88624463f62d3b4510f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ababd9_ad3f1489",
         "filename": "components/password_manager/core/browser/resources/OWNERS",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "04db10828b783698f1bab88624463f62d3b4510f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14909806_7cf31da0",
+        "filename": "components/password_manager/core/browser/resources/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-19T15:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3ababd9_ad3f1489",
+      "revId": "04db10828b783698f1bab88624463f62d3b4510f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
