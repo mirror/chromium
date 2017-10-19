@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64723807_45f0a80a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5335,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-10-19T14:31:34Z",
+      "side": 1,
+      "message": "The chrome:// links processed by MaybeHandleDebugURL can come from this path. E.g., chrome://hang when not blocked falls in this function with error_code\u003d-300 (I think that\u0027s ERR_INVALID_URL). I\u0027m actually not sure if any of the URLs processed by MaybeHandleDebugURL can come there through success flow (from NavigateInternal).",
+      "parentUuid": "c4ff8f4a_a3fb4760",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "673944ff_167078f7",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4baf9e35_6415ec14",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6450,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-10-19T14:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "673944ff_167078f7",
+      "range": {
+        "startLine": 6450,
+        "startChar": 15,
+        "endLine": 6450,
+        "endChar": 31
+      },
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +112,42 @@
       "writtenOn": "2017-10-19T13:20:29Z",
       "side": 1,
       "message": "Since this is the first thing we do in PrepareRenderViewForNavigation, we could call it from NavigateInternal or OnFailedNavigation directly.",
+      "parentUuid": "ffc3018f_d80f1360",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35628f35_4df129bc",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6455,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-10-19T14:31:34Z",
+      "side": 1,
+      "message": "IIUC, currently it is called from both functions (NavigateInternal and OnFailedNavigation). Do you suggest duplicating the call from both functions?",
+      "parentUuid": "9efddbe3_8382a8c1",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697ad5e9_4419bcc0",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6455,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-10-19T14:31:34Z",
+      "side": 1,
+      "message": "This is the flow that follows any other URL that is blocked currently. They just aren\u0027t affected by MaybeHandleDebugURL. I don\u0027t know details in this part, but do you think that the URLs like chrome://kill should be treated differently when blocked?",
       "parentUuid": "ffc3018f_d80f1360",
       "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
