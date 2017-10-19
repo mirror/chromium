@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73abade7_61abea57",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_internal.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5d77089_2e3d4a78",
+      "range": {
+        "startLine": 16,
+        "startChar": 23,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "036155d7_e65877aa",
         "filename": "ios/web_view/internal/autofill/cwv_autofill_form_suggestion.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabadde0_8a4d97dd",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_form_suggestion.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "036155d7_e65877aa",
+      "range": {
+        "startLine": 54,
+        "startChar": 13,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9cc6272e_4dfa2a53",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "no, because we don\u0027t want to initialize it if the user never lazily loaded this object.",
+      "parentUuid": "7082e61b_d3fc77d5",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 443,
+        "endChar": 21
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acfe0a29_f676caca",
         "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4aa380_2a631943",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "I\u0027m using it for CWV_EXPORT down below.",
+      "parentUuid": "acfe0a29_f676caca",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "68d17300_57da1521",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "Oops! THanks.",
+      "parentUuid": "7dc1b512_6a93bf8a",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dc25960_527dac43",
         "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad33a4c_86e43206",
+        "filename": "ios/web_view/public/cwv_autofill_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc25960_527dac43",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 59
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7346ba58_f58aa2de",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a582df_b65c9c88",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 3
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99583870_1ff03539",
         "filename": "ios/web_view/shell/shell_view_controller.m",
         "patchSetId": 6
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "7c7afd05_762e0850",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99583870_1ff03539",
+      "range": {
+        "startLine": 322,
+        "startChar": 38,
+        "endLine": 322,
+        "endChar": 67
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e9bd8b5_938a9460",
         "filename": "ios/web_view/shell/shell_view_controller.m",
         "patchSetId": 6
@@ -206,6 +398,30 @@
       "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0554b956_829ea3a3",
+        "filename": "ios/web_view/shell/shell_view_controller.m",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-19T21:26:22Z",
+      "side": 1,
+      "message": "True. I\u0027ll create a new object similar to shell translate delegate.",
+      "parentUuid": "7e9bd8b5_938a9460",
+      "range": {
+        "startLine": 341,
+        "startChar": 8,
+        "endLine": 341,
+        "endChar": 37
+      },
+      "revId": "12582585b300cbc0b1f7e528848e44228ff45fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
