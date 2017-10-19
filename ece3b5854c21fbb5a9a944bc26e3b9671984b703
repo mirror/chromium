@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6ca17c6_94b2701b",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-19T21:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b14201_ce4c39b6",
+      "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4b057f_34073a45",
         "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
         "patchSetId": 2
@@ -86,6 +104,30 @@
       "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6ec330_8835b6ab",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-19T21:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65e0035d_f03dedeb",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
