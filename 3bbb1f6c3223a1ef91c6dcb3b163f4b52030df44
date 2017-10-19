@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce520954_b58ba55b",
+        "filename": "chrome/browser/ui/test/browser_dialog_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-19T21:02:03Z",
+      "side": 1,
+      "message": "I think auto lambdas are disallowed? (\"Generic lambdas\" https://chromium-cpp.appspot.com)",
+      "revId": "3bbb1f6c3223a1ef91c6dcb3b163f4b52030df44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
