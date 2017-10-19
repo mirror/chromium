@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46c1766e_84d2b3c7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/interaction/focus/cross-frame-focus.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1236435
+      },
+      "writtenOn": "2017-10-19T16:51:16Z",
+      "side": 1,
+      "message": "Please follow http://web-platform-tests.org/writing-tests/server-features.html and use server-side substitution instead of hardcoding the www1.web-platform.test domain.",
+      "revId": "14d7360ae1b41b7466a5cd02f03b0ad687d2fee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
