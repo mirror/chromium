@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1244ff_dd639eab",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-19T17:13:15Z",
+      "side": 1,
+      "message": "Would it work to just test node.state.offscreen? Semantically that seems more clear.\n\nIn the current implementation, it\u0027s either true or undefined. But it ought to still work if we modified the implementation so that it returns true or false.",
+      "revId": "23541bdddccc47b33970dda3d055d743d5228ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
