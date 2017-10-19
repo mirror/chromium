@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7abba427_3870acdb",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-19T16:29:13Z",
+      "side": 1,
+      "message": "IIUC, the intention is to send GET to notify the page authors.\nIdeally we don\u0027t even want to fill disk cache.\n\nI was wondering if we could move this to use RawResource::Fetch or PingLoader or some other generic \"report-only\" fetch.",
+      "parentUuid": "ef7c1be9_6ed50b60",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28d9aba_01896ee0",
         "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.h",
         "patchSetId": 5
@@ -123,6 +141,30 @@
       "side": 1,
       "message": "This is to intervene preloading request as well (|params| is modified).",
       "parentUuid": "c0a9a7b2_4b28d393",
+      "range": {
+        "startLine": 114,
+        "startChar": 48,
+        "endLine": 114,
+        "endChar": 49
+      },
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c231006_462e931a",
+        "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-19T16:29:13Z",
+      "side": 1,
+      "message": "Thanks for clarifying.\nCodesearched and now I understand. We run HTMLPreloadScanner for document.write contents, and this block forbids preloading script from that.",
+      "parentUuid": "348be46c_8387c650",
       "range": {
         "startLine": 114,
         "startChar": 48,
