@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "311db110_f615d95a",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-19T20:57:53Z",
+      "side": 1,
+      "message": "Actually I can do PreSandboxHook hook \u003d std::move(options.pre_sandbox_book);\nThen call it with std::move(options).",
+      "parentUuid": "be4b057f_34073a45",
+      "range": {
+        "startLine": 218,
+        "startChar": 19,
+        "endLine": 218,
+        "endChar": 25
+      },
+      "revId": "ece3b5854c21fbb5a9a944bc26e3b9671984b703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65e0035d_f03dedeb",
         "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h",
         "patchSetId": 2
