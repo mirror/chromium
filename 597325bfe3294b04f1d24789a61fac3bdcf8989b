@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3133f00d_37866e35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-19T15:07:21Z",
+      "side": 1,
+      "message": "nit: Not sure, but maybe mention the original CL in the commit message?\nhttps://chromium-review.googlesource.com/c/chromium/src/+/675243",
+      "revId": "597325bfe3294b04f1d24789a61fac3bdcf8989b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
