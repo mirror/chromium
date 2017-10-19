@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bf3fe78_55dcf04b",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T15:47:21Z",
+      "side": 1,
+      "message": "Hmm... maybe I should add NOTREACHED here...",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe7553a_1480e3fc",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T15:47:21Z",
+      "side": 1,
+      "message": "In theory we could call this DoesNeedDynamicNameSuffix, but I think IsDynamicFrame is better here.",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "299fabcc_125a65df",
+        "filename": "content/shell/test_runner/web_frame_test_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T15:47:21Z",
+      "side": 1,
+      "message": "Just modernizing the code - no expected behavior change.",
+      "range": {
+        "startLine": 549,
+        "startChar": 4,
+        "endLine": 549,
+        "endChar": 39
+      },
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09e2230c_06bf3162",
+        "filename": "third_party/WebKit/LayoutTests/fast/frames/unique-name-all-subframes-have-same-name-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T15:47:21Z",
+      "side": 1,
+      "message": "Expected change - after this CL there will be no uniqueName conflict anymore, so the 4/1 suffix won\u0027t be used (the names differ by the dynamicFrameId which is ommitted by layout tests).",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 65
+      },
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84978e77_af89139d",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/history-length-append-subframe-no-hash-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T15:47:21Z",
+      "side": 1,
+      "message": "Similarily here - the old FNE for this dynamic frame has a different name than the new FNE (the difference is in the dynamicFrameId that is stripped in the layout tests output).  So - the test change is expected (and the essence of this test is still getting verified [\"that appending iframe with with no URL and setting its URL later (without the hash part) does not overwrite current history entry\"].",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 69
+      },
+      "revId": "f6fa716f20c14311e779ea0ba0096f77b1eff42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

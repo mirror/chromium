@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26ef165a_c2827824",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 6031,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T15:47:21Z",
+      "side": 0,
+      "message": "Not sure what to do about the test here (and the EnsureFrameNavigationEntriesClearedOnMismatchNoSrc one below).  The test doesn\u0027t work because the 2 uniqueNames differ because of the dynamicFrameId being added by this CL (so - maybe it doesn\u0027t even make sense to keep the FNEs for dynamic frames after this CL, since they will never match a new dynamic frame).  Maybe I can/should rewrite the test in a way that uses static frames, but that strikes me as a test that is very dependent on the implementation it tests.\n\nWDYT?",
+      "range": {
+        "startLine": 6026,
+        "startChar": 0,
+        "endLine": 6031,
+        "endChar": 3
+      },
+      "revId": "3813cdc5d461f3f45465f8e63d1dbc9f1364ed4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fb5765_724b09f1",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-19T15:47:21Z",
+      "side": 0,
+      "message": "|git cl lint| (and me as well) was surprised by an anonymous namespace here.  FWIW, a (non-anonymous-namespace) CreateFrameWidgetParams class is already brought in by the include of content/common/renderer.mojom.h on line 38.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 1
+      },
+      "revId": "3813cdc5d461f3f45465f8e63d1dbc9f1364ed4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
