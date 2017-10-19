@@ -122,6 +122,24 @@
       "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5486859a_8056065e",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-19T14:52:51Z",
+      "side": 1,
+      "message": "\u003e The thing is that in the case of columns I was not doing anything, as the IndefiniteSizeStrategy for columns is only used when computing intrinsic widths. And later during the layout everything works as expected.\n\u003e But if I\u0027m returning 0 for columns here, this will lead to wrong computations of preferred logical widths, which is not nice.\n\u003e I need to modify that in order to check the minWidth and return the proper value as free space. So preferred widths are properly computed.\n\u003e I\u0027ll work on a new version of the patch doing that.\n\nI\u0027ve uploaded a new version that fixes this.\n\n\u003e Note that we\u0027ve the very same problem regarding preferred widths in the case of flexible tracks.\n\u003e IndefiniteSizeStrategy::RecomputeUsedFlexFractionIfNeeded() always returns \"false\" for columns,\n\u003e when it should actually do the computation in that case too.\n\nHowever it doesn\u0027t fix this part, probably that should be done in a separated patch\nand can also modify the code to solve the previous issue.\n\nI\u0027m not sure what\u0027s the best path here:\n1) Land this so we fix the regression and then work on a patch\n   to properly fix the intrinsic size issues.\n2) Revert the previous change that caused the regression.\n3) Wait for other \"related\" patches to land, and then try to fix\n   everything related to intrinsic sizes in this patch later.\n\nWDYT?",
+      "parentUuid": "825bb7bf_a9e9fef1",
+      "revId": "86a58c18a8cca4c35890de58443fa23493ba2374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
