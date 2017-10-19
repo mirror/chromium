@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce428e80_a80671f4",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-19T09:08:36Z",
+      "side": 1,
+      "message": "You should handle Chinese as an exception here.\nThe current logic for back-off of Chinese can be found here: https://cs.chromium.org/chromium/src/components/translate/core/common/translate_util.cc?rcl\u003db1a556c6e58f6302ec19273c52d235f428b70d89\u0026l\u003d72",
+      "range": {
+        "startLine": 52,
+        "startChar": 47,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7fc394_2c692629",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-19T09:08:36Z",
+      "side": 1,
+      "message": "You mean \"region\"?\nI think you can r/region-specializations/regions/",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ddba01_4ff407ce",
+        "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-19T09:08:36Z",
+      "side": 1,
+      "message": "How about \u0027LD\u0027 as the type name?",
+      "range": {
+        "startLine": 26,
+        "startChar": 42,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2ca20f_68a78ef5",
+        "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-19T09:08:36Z",
+      "side": 1,
+      "message": "Can you add test of a string like \"es---AR\".",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
