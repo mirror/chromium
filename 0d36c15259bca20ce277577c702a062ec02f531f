@@ -16,6 +16,24 @@
       "revId": "0d36c15259bca20ce277577c702a062ec02f531f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebd29e0_2782a994",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-19T19:33:22Z",
+      "side": 1,
+      "message": "It looks to me like this is more of a \"condition we expect to be true when this method is called\" kind of DCHECK rather than a \"condition that MUST be true when this method is called\" kind. In which case, I\u0027ve added a new use case under which this method will be called that doesn\u0027t satisfy this expectation so I should just remove it. But again, if I\u0027ve missed some reason why calling this when the text field isn\u0027t the first responder is dangerous, please let me know.",
+      "parentUuid": "07223b8c_dac7d90d",
+      "revId": "0d36c15259bca20ce277577c702a062ec02f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
