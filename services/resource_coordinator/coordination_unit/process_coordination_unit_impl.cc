@@ -5,7 +5,6 @@
 #include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 
 #include "base/logging.h"
-#include "base/values.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
 
@@ -14,9 +13,33 @@ namespace resource_coordinator {
 ProcessCoordinationUnitImpl::ProcessCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitBase(id, std::move(service_ref)) {}
+    : CoordinationUnitInterface(id, std::move(service_ref)) {}
 
-ProcessCoordinationUnitImpl::~ProcessCoordinationUnitImpl() = default;
+ProcessCoordinationUnitImpl::~ProcessCoordinationUnitImpl() {
+  for (auto* child_frame : frame_coordination_units_)
+    child_frame->RemoveProcessCoordinationUnit(this);
+}
+
+void ProcessCoordinationUnitImpl::AddFrame(const CoordinationUnitID& cu_id) {
+  DCHECK(cu_id.type == CoordinationUnitType::kFrame);
+  auto* frame_cu = FrameCoordinationUnitImpl::GetCoordinationUnitByID(cu_id);
+  if (!frame_cu)
+    return;
+  if (AddFrame(frame_cu)) {
+    frame_cu->AddProcessCoordinationUnit(this);
+  }
+}
+
+void ProcessCoordinationUnitImpl::RemoveFrame(const CoordinationUnitID& cu_id) {
+  DCHECK(cu_id != id());
+  FrameCoordinationUnitImpl* frame_cu =
+      FrameCoordinationUnitImpl::GetCoordinationUnitByID(cu_id);
+  if (!frame_cu)
+    return;
+  if (RemoveFrame(frame_cu)) {
+    frame_cu->RemoveProcessCoordinationUnit(this);
+  }
+}
 
 void ProcessCoordinationUnitImpl::SetCPUUsage(double cpu_usage) {
   SetProperty(mojom::PropertyType::kCPUUsage, cpu_usage * 1000);
@@ -36,32 +59,32 @@ void ProcessCoordinationUnitImpl::SetPID(int64_t pid) {
   SetProperty(mojom::PropertyType::kPID, pid);
 }
 
-std::set<CoordinationUnitBase*>
-ProcessCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
-    CoordinationUnitType type) const {
-  switch (type) {
-    case CoordinationUnitType::kPage: {
-      // There is currently not a direct relationship between processes and
-      // pages. However, frames are children of both processes and frames, so we
-      // find all of the pages that are reachable from the process's child
-      // frames.
-      std::set<CoordinationUnitBase*> page_cus;
-
-      for (auto* frame_cu :
-           GetChildCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
-        for (auto* page_cu : frame_cu->GetAssociatedCoordinationUnitsOfType(
-                 CoordinationUnitType::kPage)) {
-          page_cus.insert(page_cu);
-        }
-      }
-
-      return page_cus;
-    }
-    case CoordinationUnitType::kFrame:
-      return GetChildCoordinationUnitsOfType(type);
-    default:
-      return std::set<CoordinationUnitBase*>();
+// There is currently not a direct relationship between processes and
+// pages. However, frames are children of both processes and frames, so we
+// find all of the pages that are reachable from the process's child
+// frames.
+std::set<PageCoordinationUnitImpl*>
+ProcessCoordinationUnitImpl::GetAssociatedPageCoordinationUnits() const {
+  std::set<PageCoordinationUnitImpl*> page_cus;
+  for (auto* frame_cu : frame_coordination_units_) {
+    if (auto* page_cu = frame_cu->GetPageCoordinationUnit())
+      page_cus.insert(page_cu);
   }
+  return page_cus;
+}
+
+bool ProcessCoordinationUnitImpl::HasAncestor(CoordinationUnitBase* ancestor) {
+  return false;
+}
+
+bool ProcessCoordinationUnitImpl::HasDescendant(
+    CoordinationUnitBase* descendant) {
+  DCHECK(descendant->id().type == CoordinationUnitType::kFrame);
+  for (auto* child : frame_coordination_units_) {
+    if (child == descendant)
+      return true;
+  }
+  return false;
 }
 
 void ProcessCoordinationUnitImpl::PropagateProperty(
@@ -70,22 +93,17 @@ void ProcessCoordinationUnitImpl::PropagateProperty(
   switch (property_type) {
     // Trigger Page CU to recalculate their CPU usage.
     case mojom::PropertyType::kCPUUsage: {
-      for (auto* page_cu :
-           GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kPage)) {
+      for (auto* page_cu : GetAssociatedPageCoordinationUnits()) {
         page_cu->RecalculateProperty(mojom::PropertyType::kCPUUsage);
       }
       break;
     }
     case mojom::PropertyType::kExpectedTaskQueueingDuration: {
       // Do not propagate if the associated frame is not the main frame.
-      for (auto* cu :
-           GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
-        auto* frame_cu = ToFrameCoordinationUnit(cu);
+      for (auto* frame_cu : frame_coordination_units_) {
         if (!frame_cu->IsMainFrame())
           continue;
-
         auto* page_cu = frame_cu->GetPageCoordinationUnit();
-
         if (page_cu) {
           page_cu->RecalculateProperty(
               mojom::PropertyType::kExpectedTaskQueueingDuration);
@@ -96,6 +114,19 @@ void ProcessCoordinationUnitImpl::PropagateProperty(
     default:
       break;
   }
+}
+
+bool ProcessCoordinationUnitImpl::AddFrame(
+    FrameCoordinationUnitImpl* frame_cu) {
+  bool success = frame_coordination_units_.count(frame_cu)
+                     ? false
+                     : frame_coordination_units_.insert(frame_cu).second;
+  return success;
+}
+
+bool ProcessCoordinationUnitImpl::RemoveFrame(
+    FrameCoordinationUnitImpl* frame_cu) {
+  return frame_coordination_units_.erase(frame_cu) > 0;
 }
 
 }  // namespace resource_coordinator
