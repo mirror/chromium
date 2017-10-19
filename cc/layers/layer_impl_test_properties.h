@@ -45,6 +45,7 @@ struct CC_EXPORT LayerImplTestProperties {
   bool opacity_can_animate;
   bool subtree_has_copy_request;
   int sorting_context_id;
+  float color_temperature;
   float opacity;
   FilterOperations filters;
   FilterOperations background_filters;

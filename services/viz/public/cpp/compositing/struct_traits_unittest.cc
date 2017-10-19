@@ -745,6 +745,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
 
 TEST_F(StructTraitsTest, RenderPass) {
   const RenderPassId render_pass_id = 3u;
+  const float temperature = 0.f;
   const gfx::Rect output_rect(45, 22, 120, 13);
   const gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
@@ -881,6 +882,7 @@ TEST_F(StructTraitsTest, RenderPass) {
 
 TEST_F(StructTraitsTest, RenderPassWithEmptySharedQuadStateList) {
   const RenderPassId render_pass_id = 3u;
+  const float temperature = 0.f;
   const gfx::Rect output_rect(45, 22, 120, 13);
   const gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);

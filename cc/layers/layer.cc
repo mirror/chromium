@@ -42,6 +42,7 @@ Layer::Inputs::Inputs(int layer_id)
     : layer_id(layer_id),
       masks_to_bounds(false),
       mask_layer(nullptr),
+      color_temperature(0.f),
       opacity(1.f),
       blend_mode(SkBlendMode::kSrcOver),
       is_root_for_isolated_group(false),
@@ -1093,6 +1094,20 @@ void Layer::SetNeedsDisplayRect(const gfx::Rect& dirty_rect) {
 
   if (DrawsContent() && layer_tree_host_ && !ignore_set_needs_commit_)
     layer_tree_host_->SetNeedsUpdateLayers();
+}
+
+void Layer::SetColorTemperature(float temperature) {
+  DCHECK(IsPropertyChangeAllowed());
+  DCHECK_GE(temperature, 0.f);
+  DCHECK_LE(temperature, 1.f);
+
+  if (inputs_.color_temperature == temperature)
+    return;
+  inputs_.color_temperature = temperature;
+
+  SetSubtreePropertyChanged();
+  SetPropertyTreesNeedRebuild();
+  SetNeedsCommit();
 }
 
 bool Layer::DescendantIsFixedToContainerLayer() const {

@@ -13,6 +13,7 @@ EffectNode::EffectNode()
     : id(EffectTree::kInvalidNodeId),
       parent_id(EffectTree::kInvalidNodeId),
       stable_id(INVALID_STABLE_ID),
+      color_temperature(0.f),
       opacity(1.f),
       screen_space_opacity(1.f),
       blend_mode(SkBlendMode::kSrcOver),
@@ -42,7 +43,9 @@ EffectNode::EffectNode(const EffectNode& other) = default;
 
 bool EffectNode::operator==(const EffectNode& other) const {
   return id == other.id && parent_id == other.parent_id &&
-         stable_id == other.stable_id && opacity == other.opacity &&
+         stable_id == other.stable_id &&
+         color_temperature == other.color_temperature &&
+         opacity == other.opacity &&
          screen_space_opacity == other.screen_space_opacity &&
          has_render_surface == other.has_render_surface &&
          cache_render_surface == other.cache_render_surface &&

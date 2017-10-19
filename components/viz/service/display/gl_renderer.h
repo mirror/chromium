@@ -214,6 +214,8 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
                         const gfx::QuadF* clip_region);
   void DrawOverlayCandidateQuadBorder(float* gl_matrix);
 
+  void SetShaderColorTemperature(DrawRenderPassDrawQuadParams* params);
+
   void SetShaderOpacity(const DrawQuad* quad);
   void SetShaderQuadF(const gfx::QuadF& quad);
   void SetShaderMatrix(const gfx::Transform& transform);

@@ -34,7 +34,8 @@ bool ProgramKey::operator==(const ProgramKey& other) const {
          yuv_alpha_texture_mode_ == other.yuv_alpha_texture_mode_ &&
          uv_texture_mode_ == other.uv_texture_mode_ &&
          color_conversion_mode_ == other.color_conversion_mode_ &&
-         color_transform_ == other.color_transform_;
+         color_transform_ == other.color_transform_ &&
+         has_color_temperature_ == other.has_color_temperature_;
 }
 
 bool ProgramKey::operator!=(const ProgramKey& other) const {
@@ -95,7 +96,8 @@ ProgramKey ProgramKey::RenderPass(TexCoordPrecision precision,
                                   AAMode aa_mode,
                                   MaskMode mask_mode,
                                   bool mask_for_background,
-                                  bool has_color_matrix) {
+                                  bool has_color_matrix,
+                                  bool has_color_temperature) {
   ProgramKey result;
   result.type_ = PROGRAM_TYPE_RENDER_PASS;
   result.precision_ = precision;
@@ -105,6 +107,7 @@ ProgramKey ProgramKey::RenderPass(TexCoordPrecision precision,
   result.mask_mode_ = mask_mode;
   result.mask_for_background_ = mask_for_background;
   result.has_color_matrix_ = has_color_matrix;
+  result.has_color_temperature_ = has_color_temperature;
   return result;
 }
 
