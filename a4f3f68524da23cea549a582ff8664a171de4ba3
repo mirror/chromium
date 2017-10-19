@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ff80a2_3cf659ec",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T08:34:41Z",
+      "side": 1,
+      "message": "Or just base::Bind(\u0026DoNothing) would work as well.",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b969e1aa_8e2f653f",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T08:34:41Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why this is a unique_ptr, given that it\u0027s always initialized in the ctor. Maybe it\u0027s possible to drop the unique_ptr indirection?",
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6d94f5_f3c01c9a",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_dxgi.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T08:34:41Z",
+      "side": 1,
+      "message": "Though not introduced by this CL, it\u0027s definitely unusual to have lowercased virtual methods.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 9
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d3f629_d3b99fab",
+        "filename": "ui/gfx/mojo/buffer_types.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T08:34:41Z",
+      "side": 1,
+      "message": "Mind adding a TODO pointing to https://crbug.com/676224 ?",
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd46fc8_8d8416a8",
+        "filename": "ui/gfx/mojo/buffer_types_struct_traits.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T08:34:41Z",
+      "side": 1,
+      "message": "Hmm... I think this isn\u0027t quite right. The point of the GUID is to help with tracking shmem allocations between processes for instrumentation. If we generate a new one, we lose the association.\n\nPerhaps this can use WrapSharedMemoryHandle / UnwrapSharedMemoryHandle instead of dealing with PlatformFile directly?",
+      "range": {
+        "startLine": 135,
+        "startChar": 43,
+        "endLine": 135,
+        "endChar": 75
+      },
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d4a9ad_bcf77523",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T08:34:41Z",
+      "side": 1,
+      "message": "Nit: usually it\u0027s preferred to use the type to express this, rather than using a comment.",
+      "revId": "a4f3f68524da23cea549a582ff8664a171de4ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
