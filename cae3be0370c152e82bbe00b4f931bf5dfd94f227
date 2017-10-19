@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "707cd724_9f38651b",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-19T22:47:19Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3b3bfdac_e8a1e766",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05060060_644c5c0d",
         "filename": "device/geolocation/public/interfaces/geolocation.mojom",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2dcad899_408fa2d3",
+        "filename": "device/geolocation/public/interfaces/geolocation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-19T22:47:19Z",
+      "side": 1,
+      "message": "Yep cool. I did have a funny feeling about putting that impl-specfiic \"e.g.\" part in there.\n\nI\u0027ve used your wording.",
+      "parentUuid": "a237b49d_9397999e",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96659b1e_f226e43b",
         "filename": "services/device/public/interfaces/BUILD.gn",
         "patchSetId": 4
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "bfce48b7_3338ff0b",
+        "filename": "services/device/public/interfaces/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-19T22:47:19Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "96659b1e_f226e43b",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "349f31b1_b18bf5e9",
         "filename": "services/device/public/interfaces/public_ip_address_geolocation_provider.mojom",
         "patchSetId": 4
@@ -85,6 +139,24 @@
       "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b96407_8e7660d4",
+        "filename": "services/device/public/interfaces/public_ip_address_geolocation_provider.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-19T22:47:19Z",
+      "side": 1,
+      "message": "I like it",
+      "parentUuid": "349f31b1_b18bf5e9",
+      "revId": "cae3be0370c152e82bbe00b4f931bf5dfd94f227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
