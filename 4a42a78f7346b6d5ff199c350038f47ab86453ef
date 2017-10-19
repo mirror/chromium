@@ -16,6 +16,24 @@
       "revId": "4a42a78f7346b6d5ff199c350038f47ab86453ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f671bc50_9b0588d0",
+        "filename": "third_party/WebKit/Source/core/css/StyleRule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-10-19T03:58:35Z",
+      "side": 1,
+      "message": "Ooohh good call! Done!",
+      "parentUuid": "7af37522_3c7d279d",
+      "revId": "4a42a78f7346b6d5ff199c350038f47ab86453ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
