@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c000eadf_1690dabf",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-19T19:03:22Z",
+      "side": 1,
+      "message": "I\u0027m still surprised to hear this hidden works without $\u003d.",
+      "revId": "41a85ca4b68a3de033470452b415e01260dbf59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
