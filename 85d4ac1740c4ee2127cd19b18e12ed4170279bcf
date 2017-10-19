@@ -22,6 +22,30 @@
       "revId": "85d4ac1740c4ee2127cd19b18e12ed4170279bcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40724e1c_cddef5ed",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-19T13:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f608216b_905f7bf9",
+      "range": {
+        "startLine": 178,
+        "startChar": 22,
+        "endLine": 178,
+        "endChar": 28
+      },
+      "revId": "85d4ac1740c4ee2127cd19b18e12ed4170279bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
