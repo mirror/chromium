@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1fd2183_92931bdd",
+        "filename": "content/browser/loader/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T22:37:11Z",
+      "side": 0,
+      "message": "Just to double check: is it intentional to remove this DEPS file in this CL?",
+      "revId": "0ffd0bb18932f2d2002218c939c3e34e13cde04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "193c8d69_3c542d50",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-19T22:37:11Z",
+      "side": 1,
+      "message": "The upload progress tracker needs to be destroyed before we destroy url_request_,  because it holds a raw pointer to the request and may access it.",
+      "revId": "30c61c6471959b20db94fdfd46e5ebe4cf590e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
