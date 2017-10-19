@@ -267,6 +267,13 @@ EmbeddedSharedWorkerStub::CreateWorkerFetchContext(
           ->provider()
           ->context()
           ->CreateWorkerClientRequest();
+  mojom::ServiceWorkerContainerHostPtrInfo
+      service_worker_container_host_for_worker =
+          static_cast<WebServiceWorkerNetworkProviderForSharedWorker*>(
+              web_network_provider)
+              ->provider()
+              ->context()
+              ->CreateContainerHostCopy();
 
   scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter =
       RenderThreadImpl::current()
@@ -274,7 +281,8 @@ EmbeddedSharedWorkerStub::CreateWorkerFetchContext(
           ->CreateDefaultURLLoaderFactoryGetter();
   DCHECK(url_loader_factory_getter);
   auto worker_fetch_context = base::MakeUnique<WorkerFetchContextImpl>(
-      std::move(request), url_loader_factory_getter->GetClonedInfo());
+      std::move(request), std::move(service_worker_container_host_for_worker),
+      url_loader_factory_getter->GetClonedInfo());
 
   // TODO(horo): To get the correct first_party_to_cookies for the shared
   // worker, we need to check the all documents bounded by the shared worker.

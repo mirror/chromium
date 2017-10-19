@@ -27,7 +27,8 @@ class WebWorkerFetchContext {
  public:
   virtual ~WebWorkerFetchContext() {}
 
-  virtual void InitializeOnWorkerThread(SingleThreadTaskRunnerRefPtr) = 0;
+  virtual void InitializeOnWorkerThread(const WebURL& context_url,
+                                        SingleThreadTaskRunnerRefPtr) = 0;
 
   // Returns a new WebURLLoader instance which is associated with the worker
   // thread.
