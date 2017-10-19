@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eee9a0fb_81b8bfb3",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-19T23:29:01Z",
+      "side": 1,
+      "message": "@tapted:\n\nIt looks like ChromeLayoutProvider::IsHarmonyMode() always returns false. Is it reasonable to always use EXTENSION_ICON_MEDIUM here, and not worry about how the layout would behave with a smaller icon?",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 56
+      },
+      "revId": "0adf69e4d6ad27c767927e0b4a34fbcb10d11884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
