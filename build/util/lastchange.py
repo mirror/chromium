@@ -45,7 +45,7 @@ def RunGitCommand(directory, command):
     return None
 
 
-def FetchGitRevision(directory):
+def FetchGitRevision(formatString, directory):
   """
   Fetch the Git hash for a given directory.
 
@@ -72,15 +72,16 @@ def FetchGitRevision(directory):
         if line.startswith('Cr-Commit-Position:'):
           pos = line.rsplit()[-1].strip()
           break
-  return VersionInfo('%s-%s' % (hsh, pos))
+  revision = formatString.format(hash=hsh, commitPosition=pos)
+  return VersionInfo(revision)
 
 
-def FetchVersionInfo(directory=None):
+def FetchVersionInfo(formatString, directory=None):
   """
   Returns the last change (in the form of a branch, revision tuple),
   from some appropriate revision control system.
   """
-  version_info = FetchGitRevision(directory)
+  version_info = FetchGitRevision(formatString, directory)
   if not version_info:
     version_info = VersionInfo(None)
   return version_info
@@ -155,8 +156,11 @@ def main(argv=None):
   parser.add_option("", "--header", metavar="FILE",
                     help="Write last change to FILE as a C/C++ header. " +
                     "Can be combined with --output to write both files.")
-  parser.add_option("--revision-only", action='store_true',
-                    help="Just print the GIT hash. Overrides any " +
+  parser.add_option("--revision-hash-only", action='store_true',
+                    help="Output the revision as a 40-character Git hash " +
+                    "only (excluding the Cr-Commit-Position).")
+  parser.add_option("--print-revision", action='store_true',
+                    help="Just print the Git revision string. Overrides any " +
                     "file-output-related options.")
   parser.add_option("-s", "--source-dir", metavar="DIR",
                     help="Use repository in the given directory.")
@@ -178,12 +182,15 @@ def main(argv=None):
   else:
     src_dir = os.path.dirname(os.path.abspath(__file__))
 
-  version_info = FetchVersionInfo(directory=src_dir)
+  fmt = '{hash}-{commitPosition}'
+  if opts.revision_hash_only:
+    fmt = '{hash}'
+  version_info = FetchVersionInfo(fmt, directory=src_dir)
 
   if version_info.revision == None:
     version_info.revision = '0'
 
-  if opts.revision_only:
+  if opts.print_revision:
     print version_info.revision
   else:
     contents = "LASTCHANGE=%s\n" % version_info.revision
