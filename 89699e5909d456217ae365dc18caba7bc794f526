@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "debf2075_7bf11fe7",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-19T13:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed646bf6_7c5f1fb7",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "114532ad_b42f8512",
         "filename": "components/favicon/core/large_icon_service.cc",
         "patchSetId": 1
@@ -87,6 +105,24 @@
       "revId": "89699e5909d456217ae365dc18caba7bc794f526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bfc0cf_ac88c177",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-19T13:56:51Z",
+      "side": 1,
+      "message": "Done, PTAL after heavy rewrite. I ended up implementing something slightly more sophisticated.",
+      "parentUuid": "a970ee80_e47ea2bc",
+      "revId": "89699e5909d456217ae365dc18caba7bc794f526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
