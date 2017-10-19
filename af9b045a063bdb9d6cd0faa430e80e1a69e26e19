@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26d6ad54_ae3c373d",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T00:23:54Z",
+      "side": 1,
+      "message": "nit: redundant since the header is included above",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37062c7_cff43d04",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T00:23:54Z",
+      "side": 1,
+      "message": "nit\" no blank lines between overridden methods",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb99a2cb_7aa2b925",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 31
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T00:23:54Z",
+      "side": 1,
+      "message": "nit: the comments for network service public api should be self-contained.",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d877e1_c0fb547f",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T00:23:54Z",
+      "side": 1,
+      "message": "ditto, we should make the comments self-contained within the network service. but you can point to the mojom\u0027s comment",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac82a60c_e0a28948",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T00:23:54Z",
+      "side": 1,
+      "message": "nit: not needed since class isn\u0027t copyable",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b45785_2d6a1db5",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T00:23:54Z",
+      "side": 1,
+      "message": "ditto re comment",
+      "revId": "af9b045a063bdb9d6cd0faa430e80e1a69e26e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
