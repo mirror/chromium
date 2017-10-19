@@ -31,6 +31,7 @@
 #include "net/url_request/url_fetcher_delegate.h"
 
 class GURL;
+class V4GetHashProtocolManagerFuzzer;
 
 namespace net {
 class URLFetcher;
@@ -225,6 +226,7 @@ class V4GetHashProtocolManager : public net::URLFetcherDelegate {
   FRIEND_TEST_ALL_PREFIXES(V4GetHashProtocolManagerTest, GetCachedResults);
   FRIEND_TEST_ALL_PREFIXES(V4GetHashProtocolManagerTest, TestUpdatesAreMerged);
   friend class V4GetHashProtocolManagerTest;
+  friend class ::V4GetHashProtocolManagerFuzzer;
   friend class V4GetHashProtocolManagerFactoryImpl;
 
   FullHashCache* full_hash_cache_for_tests() { return &full_hash_cache_; }
