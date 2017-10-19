@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "444ec596_c1d540e1",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:49:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a34bd953_3da30478",
+      "revId": "29c33da865b257f65c4f7c10e63f6dfcc755824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb7aeeaf_1f9e741f",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 1
@@ -82,6 +100,24 @@
       "side": 1,
       "message": "WriteNoLock() is treating this failing the same as the message containing no handles.  Maybe it should check the result of TakeHandles() vs the message_view\u0027s handle set?  I\u0027ll leave it a DLOG(ERROR) for now",
       "parentUuid": "1985cf75_324fae48",
+      "revId": "29c33da865b257f65c4f7c10e63f6dfcc755824a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430057e0_9cd5c781",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:49:55Z",
+      "side": 1,
+      "message": "Yes, it should definitely not be swallowing the failure; once this has landed I\u0027ll look at fixing that as well.",
+      "parentUuid": "c356477a_459c8354",
       "revId": "29c33da865b257f65c4f7c10e63f6dfcc755824a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
