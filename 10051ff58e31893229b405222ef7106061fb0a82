@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1122a0df_9689147d",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-19T00:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76860b90_d781d958",
+      "revId": "10051ff58e31893229b405222ef7106061fb0a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f4b5ca1_64435adf",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
         "patchSetId": 3
@@ -53,6 +71,24 @@
       "writtenOn": "2017-10-18T22:37:48Z",
       "side": 1,
       "message": "Just wondering: GRC actually require this to be the real PID? My understanding is we currently leaking the child PID to child processes, and we do want to fix this at some point down the road.",
+      "revId": "10051ff58e31893229b405222ef7106061fb0a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c21aea8_ebe6e866",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-19T00:33:23Z",
+      "side": 1,
+      "message": "I think it\u0027s a real PID, and mainly used by memory metrics to aggregate a bunch of messages to a process, see https://cs.chromium.org/chromium/src/services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc?l\u003d22 for example.",
+      "parentUuid": "4da9e251_560a30d6",
       "revId": "10051ff58e31893229b405222ef7106061fb0a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
