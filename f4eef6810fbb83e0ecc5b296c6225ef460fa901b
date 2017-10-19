@@ -16,6 +16,24 @@
       "revId": "f4eef6810fbb83e0ecc5b296c6225ef460fa901b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8c4ac8_c878c531",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-19T16:59:40Z",
+      "side": 1,
+      "message": "Right, good point. Moved the check and updated test.",
+      "parentUuid": "0a69bdf6_d1d9823e",
+      "revId": "f4eef6810fbb83e0ecc5b296c6225ef460fa901b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
