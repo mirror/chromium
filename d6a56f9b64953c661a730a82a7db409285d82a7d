@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5c41e535_14f596ec",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "Right; I wasn\u0027t thinking so much about documenting how calling could should use this for mitigations, more just that if we provide an interface that must be polled to get the level, rather than calling out to inform callers of the level, then we should at least clarify e.g. \"parts of the system such as the TabManager will use this to sample the swap-thrashing level to examine correlation \u0026 impact on existing speed metrics.\" or similar.",
+      "parentUuid": "7ca65298_40f9b5cc",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81291640_e2a10b84",
         "filename": "base/memory/swap_thrashing_monitor.h",
         "patchSetId": 6
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Ha! I dropped this arc as I don\u0027t think it really make sense, I think that it\u0027s better to always have a \"cooldown\" period and to only allow dropping from Confirmed to Suspected.",
       "parentUuid": "81291640_e2a10b84",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5f4b3af_be1c7567",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f65081d_dde1af91",
       "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -125,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "f057c87b_fcc943a1",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14f36429_518b99cd",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c568398d_c1682086",
         "filename": "base/memory/swap_thrashing_monitor.h",
         "patchSetId": 6
@@ -160,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "0519b0ba_3022ced4",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "Your CL currently defines a SwapThrashingDelegate interface that you\u0027ll specialize per-platform, rather than using compile-time specialization (e.g. if you look at net::TCPSocket you\u0027ll see that it is typedef\u0027d to the platform-specific type; they can all provide the same TCP-specific functions without there being a virtual interface for those) - is that what you intended?",
+      "parentUuid": "c932d722_994d29d1",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4cf3a6a_a3423e47",
         "filename": "base/memory/swap_thrashing_monitor.h",
         "patchSetId": 6
@@ -189,6 +261,24 @@
       "side": 1,
       "message": "It\u0027s just that I\u0027m trying to not make assumptions or design things for !Win platforms yet, I\u0027m trying to keep the cross-platform set of functions as simple as possible.",
       "parentUuid": "d4cf3a6a_a3423e47",
+      "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac144249_97263a21",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "Totally sensible approach - and I think that fits with the idea of building a single Windows-specific Delegate, for now, and restructuring to allow platform-specific Delegates in future, once we know what we want it to look like?",
+      "parentUuid": "fc471133_b5f37b7a",
       "revId": "d6a56f9b64953c661a730a82a7db409285d82a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

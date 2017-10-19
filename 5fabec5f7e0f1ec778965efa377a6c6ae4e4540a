@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "15249b82_d1869dba",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "I actually hadn\u0027t meant this to be an interface (although that does make testing the SwapThrashingMonitor easier), just a typedef to a platform-specific impl, with all the impls implementing the same set of methods.\n\ne.g.\n\n#if defined(OS_WIN)\nusing SwapThrashingMonitorDelegate \u003d SwapThrashingMonitorDelegateWin;\n#elif ...\n#endif",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7f3e8f_6396978c",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "I thought that the caller of the SwapThrashingMonitor has a polled interface that the caller decided when to check?",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abce34ee_dfb351f2",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "This means that each platform-specific implementation has to provide its own logic to map from (platform-specific-metrics + previous_state + interval_length) to a new level. It\u0027s also not clear what \"instantaneous\" means in this context, since there isn\u0027t really such a thing as thrashiness at any given moment, only some amount of thrashiness over a given interval - if you look at things like base::ProcessMetrics::GetPlatformIndependentCpuUsage() you\u0027ll see that that explicitly states that it measures the usage over the interval between now and the last time it was called.\n\nIf we think that the intervals that you\u0027ve laid out below will be consistent across platforms then I\u0027d recommend instead having the Delegate generate a \"raw\" thrashiness signal (e.g. just an int64 or something), and then have the Monitor implement a single, cross-platform sampling window.\n\nHowever, since that sounds tricky for us to design up-front, without knowing the shape of the other platform-specific metrics, though, perhaps it\u0027s best just to implement the most trivial Delegate API we can think of for Windows, and flesh it out more as we learn more?  i.e. move the intervals below to be part of the Windows-specific impl for now?",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00dad223_a68000bc",
         "filename": "base/memory/swap_thrashing_delegate.h",
         "patchSetId": 16
@@ -13,6 +64,41 @@
       "writtenOn": "2017-10-18T07:11:44Z",
       "side": 1,
       "message": "I\u0027m not convinced if these intervals should be here or not. The only reason why I declared them is to make sure that the platform specific implementation think about these and implement this as described in the swap_thrashing_monitor.h header file (i.e. monitor the swap-thrash rate over some given period of time). Any opinion on this?",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459289bf_6bb6e4eb",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "See above; I\u0027d recommend focusing on a Windows-specific impl for now, and generalize the Delegate interface once we start thinking about metrics on other platforms.",
+      "parentUuid": "00dad223_a68000bc",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb64a6a_f4eb1893",
+        "filename": "base/memory/swap_thrashing_monitor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-19T00:57:52Z",
+      "side": 1,
+      "message": "Could you put this in a method of the form:\n\nbool IsValidTransition(old_level, new_level)\n\nso you can then just write:\n\nif (IsValidTransition(...))\n  level \u003d new_level\nelse\n  level \u003d invalid\n\nAlthough presumably we just shouldn\u0027t have the Delegate emitting an invalid level-transition in the first place?  This ties in to a comment I made on the Delegate, as to where the \"sampling window\" logic belongs; should the Delegate return a \"recent level\" or some \"raw\" value that the Monitor then samples to generate a level?",
       "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
