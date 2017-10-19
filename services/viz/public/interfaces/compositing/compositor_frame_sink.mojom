@@ -4,6 +4,7 @@
 
 module viz.mojom;
 
+import "mojo/common/time.mojom";
 import "services/viz/public/interfaces/compositing/begin_frame_args.mojom";
 import "services/viz/public/interfaces/compositing/compositor_frame.mojom";
 import "services/viz/public/interfaces/compositing/local_surface_id.mojom";
@@ -52,6 +53,16 @@ interface CompositorFrameSinkClient {
   // However, there's a fair amount of cleanup and refactoring necessary to get
   // rid of it.
   DidReceiveCompositorFrameAck(array<ReturnedResource> resources);
+
+  // Notification that a CompositorFrame with given presentation_token has been
+  // turned into light the first time on the surface's main output.
+  DidPresentCompositorFrame(uint32 presentation_token,
+                            mojo.common.mojom.TimeTicks time,
+                            mojo.common.mojom.TimeDelta refresh);
+
+  // Notification that a CompositorFrame with given presentation_token has been
+  // discarded. It will never be displayed.
+  DidDiscardCompositorFrame(uint32 presentation_token);
 
   // Notification for the client to generate a CompositorFrame.
   OnBeginFrame(BeginFrameArgs args);
