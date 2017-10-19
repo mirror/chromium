@@ -31,15 +31,8 @@ namespace ntp_snippets {
 
 namespace {
 
-const int kDefaultMaxSuggestionsCount = 5;
-
-const char* kMaxSuggestionsCountParamName = "recent_tabs_max_count";
-
-int GetMaxSuggestionsCount() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kRecentOfflineTabSuggestionsFeature, kMaxSuggestionsCountParamName,
-      kDefaultMaxSuggestionsCount);
-}
+const base::FeatureParam<int> kMaxSuggestionsCountParam{
+    &kRecentOfflineTabSuggestionsFeature, "recent_tabs_max_count", 5};
 
 struct OrderUIItemsByMostRecentlyCreatedFirst {
   bool operator()(const OfflineItem& left, const OfflineItem& right) const {
@@ -275,7 +268,8 @@ RecentTabSuggestionsProvider::GetMostRecentlyCreatedWithoutDuplicates(
   std::vector<ContentSuggestion> suggestions;
   for (const OfflineItem& ui_item : ui_items) {
     suggestions.push_back(ConvertUIItem(ui_item));
-    if (static_cast<int>(suggestions.size()) == GetMaxSuggestionsCount()) {
+    if (static_cast<int>(suggestions.size()) ==
+        kMaxSuggestionsCountParam.Get()) {
       break;
     }
   }

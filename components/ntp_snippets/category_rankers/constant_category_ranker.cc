@@ -140,6 +140,8 @@ ConstantCategoryRanker::GetKnownCategoriesDefaultOrder() {
       categories.push_back(KnownCategories::RECENT_TABS);
       categories.push_back(KnownCategories::FOREIGN_TABS);
       break;
+    case CategoryOrderChoice::DEFAULT:
+      NOTREACHED();
   }
 
   static_assert(

@@ -19,7 +19,6 @@
 #include "components/ntp_snippets/time_serialization.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
-#include "components/variations/variations_associated_data.h"
 
 namespace ntp_snippets {
 
@@ -32,96 +31,66 @@ namespace {
 // a passing margin. Each position has its own passing margin. The category is
 // moved upwards (i.e. passes another category) when it has at least passing
 // margin of the previous category position more clicks.
-const int kDefaultPassingMargin = 5;
-const char kPassingMarginParamName[] =
-    "click_based_category_ranker-passing_margin";
+constexpr base::FeatureParam<int> kPassingMarginParam{
+    &kCategoryRanker, "click_based_category_ranker-passing_margin", 5};
 
 // The first categories get more attention and, therefore, here more stability
 // is needed. The passing margin of such categories is increased and they are
 // referred to as top categories (with extra margin). Only category position
 // defines whether a category is top, but not its content.
-const int kDefaultNumTopCategoriesWithExtraMargin = 3;
-const char kNumTopCategoriesWithExtraMarginParamName[] =
-    "click_based_category_ranker-num_top_categories_with_extra_margin";
+constexpr base::FeatureParam<int> kNumTopCategoriesWithExtraMarginParam{
+    &kCategoryRanker,
+    "click_based_category_ranker-num_top_categories_with_extra_margin", 3};
 
 // The increase of passing margin for each top category compared to the next
 // category (e.g. the first top category has passing margin larger by this value
 // than the second top category, the last top category has it larger by this
 // value than the first non-top category).
-const int kDefaultExtraPassingMargin = 2;
-const char kExtraPassingMarginParamName[] =
-    "click_based_category_ranker-extra_passing_margin";
+constexpr base::FeatureParam<int> kExtraPassingMarginParam{
+    &kCategoryRanker, "click_based_category_ranker-extra_passing_margin", 2};
 
 // The ranker must "forget" history with time, so that changes in the user
 // behavior are reflected by the order in reasonable time. This is done using
 // click count decay with time. However, if there is not enough data, there is
 // no need in "forgetting" it. This value defines how many total clicks (across
 // categories) are considered enough to decay.
-const int kDefaultMinNumClicksToDecay = 30;
-const char kMinNumClicksToDecayParamName[] =
-    "click_based_category_ranker-min_num_clicks_to_decay";
+constexpr base::FeatureParam<int> kMinNumClicksToDecayParam{
+    &kCategoryRanker, "click_based_category_ranker-min_num_clicks_to_decay",
+    30};
 
 // Time between two consecutive decays (assuming enough clicks).
-const int kDefaultTimeBetweenDecaysMinutes = 24 * 60;  // 24 hours = 1 day
-const char kTimeBetweenDecaysParamName[] =
-    "click_based_category_ranker-time_between_decays_minutes";
+constexpr base::FeatureParam<int> kTimeBetweenDecaysParam{
+    &kCategoryRanker, "click_based_category_ranker-time_between_decays_minutes",
+    24 * 60};
 
-// Decay factor as a fraction. The current value approximates the seventh root
-// of 0.5. This yields a 50% decay per seven decays. Seven weak decays are used
-// instead of one 50% decay in order to decrease difference of click weight in
-// time.
-const int kDefaultDecayFactorNumerator = 91;
-const int kDefaultDecayFactorDenominator = 100;  // pow(0.91, 7) = 0.517
-const char kDecayFactorNumeratorParamName[] =
-    "click_based_category_ranker-decay_factor_numerator";
-const char kDecayFactorDenominatorParamName[] =
-    "click_based_category_ranker-decay_factor_denominator";
+// Decay factor as a fraction. The current value (0.91) approximates the seventh
+// root of 0.5. This yields a 50% decay per seven decays (pow(0.91, 7) = 0.517).
+// Seven weak decays are used instead of one 50% decay in order to decrease
+// difference of click weight in time.
+constexpr base::FeatureParam<int> kDecayFactorNumeratorParam{
+    &kCategoryRanker, "click_based_category_ranker-decay_factor_numerator", 91};
+constexpr base::FeatureParam<int> kDecayFactorDenominatorParam{
+    &kCategoryRanker, "click_based_category_ranker-decay_factor_denominator",
+    100};
 
 // Number of positions by which a dismissed category is downgraded.
-const int kDefaultDismissedCategoryPenalty = 1;
-const char kDismissedCategoryPenaltyParamName[] =
-    "click_based_category_ranker-dismissed_category_penalty";
+constexpr base::FeatureParam<int> kDismissedCategoryPenaltyParam{
+    &kCategoryRanker, "click_based_category_ranker-dismissed_category_penalty",
+    1};
+
+constexpr base::FeatureParam<int> kContentSuggestionsPromotedCategoryParam{
+    &kCategoryRanker, "click_based_category_ranker-promoted_category", -1};
 
 const char kCategoryIdKey[] = "category";
 const char kClicksKey[] = "clicks";
 const char kLastDismissedKey[] = "last_dismissed";
-const char kContentSuggestionsPromotedCategory[] =
-    "click_based_category_ranker-promoted_category";
-
-int GetExtraPassingMargin() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kExtraPassingMarginParamName,
-      kDefaultExtraPassingMargin);
-}
-
-int GetMinNumClicksToDecay() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kMinNumClicksToDecayParamName,
-      kDefaultMinNumClicksToDecay);
-}
 
 base::TimeDelta GetTimeBetweenDecays() {
-  return base::TimeDelta::FromMinutes(
-      variations::GetVariationParamByFeatureAsInt(
-          kCategoryRanker, kTimeBetweenDecaysParamName,
-          kDefaultTimeBetweenDecaysMinutes));
-}
-
-int GetDecayFactorNumerator() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kDecayFactorNumeratorParamName,
-      kDefaultDecayFactorNumerator);
-}
-
-int GetDecayFactorDenominator() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kDecayFactorDenominatorParamName,
-      kDefaultDecayFactorDenominator);
+  return base::TimeDelta::FromMinutes(kTimeBetweenDecaysParam.Get());
 }
 
 base::Optional<Category> GetPromotedCategoryFromVariations() {
-  int category_id = variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kContentSuggestionsPromotedCategory, -1);
+  int category_id = kContentSuggestionsPromotedCategoryParam.Get();
   if (category_id < 0) {
     return base::nullopt;
   }
@@ -393,22 +362,17 @@ void ClickBasedCategoryRanker::RegisterProfilePrefs(
 
 // static
 int ClickBasedCategoryRanker::GetPassingMargin() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kPassingMarginParamName, kDefaultPassingMargin);
+  return kPassingMarginParam.Get();
 }
 
 // static
 int ClickBasedCategoryRanker::GetNumTopCategoriesWithExtraMargin() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kNumTopCategoriesWithExtraMarginParamName,
-      kDefaultNumTopCategoriesWithExtraMargin);
+  return kNumTopCategoriesWithExtraMarginParam.Get();
 }
 
 // static
 int ClickBasedCategoryRanker::GetDismissedCategoryPenalty() {
-  return variations::GetVariationParamByFeatureAsInt(
-      kCategoryRanker, kDismissedCategoryPenaltyParamName,
-      kDefaultDismissedCategoryPenalty);
+  return kDismissedCategoryPenaltyParam.Get();
 }
 
 ClickBasedCategoryRanker::RankedCategory::RankedCategory(
@@ -426,7 +390,7 @@ int ClickBasedCategoryRanker::GetPositionPassingMargin(
   const int num_top_categories_with_extra_margin =
       GetNumTopCategoriesWithExtraMargin();
   if (index < num_top_categories_with_extra_margin) {
-    passing_margin_increase = GetExtraPassingMargin() *
+    passing_margin_increase = kExtraPassingMarginParam.Get() *
                               (num_top_categories_with_extra_margin - index);
   }
   return GetPassingMargin() + passing_margin_increase;
@@ -568,7 +532,7 @@ bool ClickBasedCategoryRanker::IsEnoughClicksToDecay() const {
   for (const RankedCategory& ranked_category : ordered_categories_) {
     num_clicks += ranked_category.clicks;
   }
-  return num_clicks >= GetMinNumClicksToDecay();
+  return num_clicks >= kMinNumClicksToDecayParam.Get();
 }
 
 bool ClickBasedCategoryRanker::DecayClicksIfNeeded() {
@@ -587,8 +551,8 @@ bool ClickBasedCategoryRanker::DecayClicksIfNeeded() {
     for (RankedCategory& ranked_category : ordered_categories_) {
       DCHECK_GE(ranked_category.clicks, 0);
       const int64_t old_clicks = static_cast<int64_t>(ranked_category.clicks);
-      ranked_category.clicks =
-          old_clicks * GetDecayFactorNumerator() / GetDecayFactorDenominator();
+      ranked_category.clicks = old_clicks * kDecayFactorNumeratorParam.Get() /
+                               kDecayFactorDenominatorParam.Get();
     }
 
     ++executed_decays;
