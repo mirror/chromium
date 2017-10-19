@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "195fe0c7_c002d11b",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "Can the AshClientNotificationDelegate object outlive |client_|? What\u0027s the shutdown order here? What happens during shutdown if a notification is open -- does Close() get invoked?",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16e72a1_9315c28e",
+        "filename": "ash/message_center/message_center_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "nit: trailing :",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6ce429_1debde32",
+        "filename": "ash/message_center/message_center_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "Since there is only one client (chrome), I would use Binding instead of BindingSet.",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d167fb6_cbb409cc",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "How strongly do you feel about this name? I would usually call this MessageCenterController. It\u0027s already in the ash::mojom namespace. We don\u0027t usually put Ash in our mojo interface names.",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c459edd0_29192f97",
         "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
         "patchSetId": 4
@@ -25,6 +93,23 @@
     },
     {
       "key": {
+        "uuid": "8e0b0797_bdc1f287",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "Ditto re \"Ash\"",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc7f153a_c0920c69",
         "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
         "patchSetId": 4
@@ -42,6 +127,40 @@
         "endLine": 20,
         "endChar": 36
       },
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b774c4a_bfc7cf09",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "Please document these methods, including the id string format.",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5316baaf_53a3b848",
+        "filename": "ash/shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "nit: please alphabetize",
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -112,6 +231,23 @@
       "side": 1,
       "message": "oh, yea, we should be removing from the map in HandleNotificationClosed().",
       "parentUuid": "a4839e28_5817dc2f",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99492b4_7f18e205",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-19T01:03:10Z",
+      "side": 1,
+      "message": "nit: ash::mojom::AshMessageCenterClient:",
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
