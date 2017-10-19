@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34bc4970_0d6f276f",
+        "filename": "components/cast_channel/keep_alive_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-19T16:45:52Z",
+      "side": 1,
+      "message": "Can you use base::MakeUnique here and below?",
+      "revId": "867c976a173d6b3566fda035aeb8a71625320235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fe0676_1008d1e7",
+        "filename": "components/cast_channel/keep_alive_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-19T16:45:52Z",
+      "side": 1,
+      "message": "std::move() on the unique_ptrs created above.",
+      "revId": "867c976a173d6b3566fda035aeb8a71625320235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
