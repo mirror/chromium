@@ -126,7 +126,7 @@ bool ThreadRestrictions::SetIOAllowed(bool allowed) {
 }
 
 // static
-void ThreadRestrictions::AssertIOAllowed() {
+void AssertBlockingAllowed() {
   AssertBlockingAllowed();
 }
 
