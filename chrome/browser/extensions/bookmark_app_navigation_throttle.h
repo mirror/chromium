@@ -40,6 +40,7 @@ class BookmarkAppNavigationThrottle : public content::NavigationThrottle {
   content::NavigationThrottle::ThrottleCheckResult CheckNavigation();
   void OpenBookmarkApp(scoped_refptr<const Extension> bookmark_app);
   void CloseWebContents();
+  void OpenNewTab();
 
   base::WeakPtrFactory<BookmarkAppNavigationThrottle> weak_ptr_factory_;
 
