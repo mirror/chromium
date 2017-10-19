@@ -1016,6 +1016,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         // locking and app switching.
         updateTextSelectionUI(false);
         mSystemCaptioningBridge.removeListener(this);
+        mWebContentsAccessibility.onDetachedFromWindow();
     }
 
     /**
@@ -1742,6 +1743,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
             mWebContentsAccessibility = WebContentsAccessibility.create(mContext, mContainerView,
                     mWebContents, mRenderCoordinates, mShouldSetAccessibilityFocusOnPageLoad);
             mWebContentsAccessibility.enable();
+            return mWebContentsAccessibility.getAccessibilityNodeProvider();
         }
         return null;
     }

@@ -1205,6 +1205,11 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         return 0;
     }
 
+    /**
+     * @see View#onDetachedFromWindow()
+     */
+    public void onDetachedFromWindow() {}
+
     private native long nativeInit(WebContents webContents);
     private native void nativeOnAutofillPopupDisplayed(long nativeWebContentsAccessibilityAndroid);
     private native void nativeOnAutofillPopupDismissed(long nativeWebContentsAccessibilityAndroid);
