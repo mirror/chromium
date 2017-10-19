@@ -94,6 +94,30 @@
       "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7a84ea_91141f80",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3967,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-19T09:32:13Z",
+      "side": 1,
+      "message": "I strongly agree.\nI the next patch (#5), I started from a new FrameNavigationEntry and only copied (url, page_state, method, post_id).\nI am not sure if post_id is needed thought.\n\nOne question: In the same way, aren\u0027t you worried with the NavigationEntryImpl. We start from a cloned one and update a few field.\nShouldn\u0027t we start from a new one like with FrameNavigationEntry.",
+      "parentUuid": "62742a51_737f5392",
+      "range": {
+        "startLine": 3967,
+        "startChar": 67,
+        "endLine": 3967,
+        "endChar": 0
+      },
+      "revId": "eeb96997c2a17de1d2cf8e07db97d24f9227bda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
