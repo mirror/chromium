@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecdc4959_e0d923da",
+        "filename": "third_party/WebKit/common/content_security_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T10:34:01Z",
+      "side": 1,
+      "message": "`enum class` please.",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21a8c87_7b981ae0",
+        "filename": "third_party/WebKit/common/content_security_policy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T10:34:01Z",
+      "side": 1,
+      "message": "Hrm. I\u0027d prefer that we not add another version of this enum without removing some of the existing duplication. That is, we have (at least) `//public/platform/content_security_policy.mojo`, `//public/platform/WebContentSecurityPolicyStruct.h`, `//platform/network/ContentSecurityPolicyParsers.h`.\n\nLet\u0027s not end up with three versions of the same thing. :)\n\nIdeally, we\u0027d use the mojo version everywhere, now that it exists; perhaps it makes sense to start migrating source and disposition in that direction as well?",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f467ba83_194697ee",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T10:34:01Z",
+      "side": 1,
+      "message": "We already define a `ContentSecurityPolicy` class in `blink::`. I suspect this will stop compiling if you actually try to use it. This struct looks similar in concept to the `CSPHeaderAndType` typedef... did you consider replacing that with this by moving it up to `//public` and using the public enum?",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1af296_975da92f",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T10:34:01Z",
+      "side": 1,
+      "message": "I\u0027d drop this for the moment: you\u0027re not using it in the class below.",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540c984d_c4c01b9f",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T10:34:01Z",
+      "side": 1,
+      "message": "Please export this via `BLINK_COMMON_EXPORT`.",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f222b09a_045a0240",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T10:34:01Z",
+      "side": 1,
+      "message": "I\u0027d prefer for this to be an enum. That\u0027s simpler to read at the callsite.",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c222291d_bb385b42",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-19T10:34:01Z",
+      "side": 1,
+      "message": "Nit: Private members end with `_`.\nOptional nit: I\u0027d rename these `csp_baseline` and `csp_fallback`, just so they\u0027re grouped together if we ever sort things, and we know what aspect of the policy they\u0027re baselining and falling back.",
+      "revId": "26e12dd9198b154fcbfeedf364fe37bc8223e451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
