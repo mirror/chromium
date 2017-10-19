@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2c5fead_dd4abc7a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4111,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T16:01:58Z",
+      "side": 1,
+      "message": "nit: remove this, as this method will be called on the UI thread (the base class below is thread safe)",
+      "revId": "9ceabf8af6a3c2ecb09324b2544d2a069ed5cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27036303_620a4648",
+        "filename": "content/renderer/stats_collection_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-19T16:01:58Z",
+      "side": 1,
+      "message": "RendererHost has a getter on RenderThreadImpl::GetRendererHost(), so call that creating another temporary binding",
+      "revId": "9ceabf8af6a3c2ecb09324b2544d2a069ed5cda7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
