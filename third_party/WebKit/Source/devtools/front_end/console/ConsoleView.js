@@ -45,8 +45,8 @@ Console.ConsoleView = class extends UI.VBox {
     this._sidebar.addEventListener(Console.ConsoleSidebar.Events.FilterSelected, this._updateMessageList.bind(this));
 
     var toolbar = new UI.Toolbar('', this.element);
-    var isLogManagementEnabled = Runtime.experiments.isEnabled('logManagement');
-    if (isLogManagementEnabled) {
+    this._isLogManagementEnabled = Runtime.experiments.isEnabled('logManagement');
+    if (this._isLogManagementEnabled) {
       this._splitWidget =
           new UI.SplitWidget(true /* isVertical */, false /* secondIsSidebar */, 'console.sidebar.width', 100);
       this._splitWidget.setMainWidget(this._searchableView);
@@ -64,6 +64,8 @@ Console.ConsoleView = class extends UI.VBox {
     this._visibleViewMessages = [];
     this._urlToMessageCount = {};
     this._hiddenByFilterCount = 0;
+    /** @type {!Map<string, !Console.ConsoleGroupViewMessage>} */
+    this._browserGroupStartMessage = new Map();
 
     /**
      * @type {!Array.<!Console.ConsoleView.RegexMatchRange>}
@@ -86,7 +88,7 @@ Console.ConsoleView = class extends UI.VBox {
     toolbar.appendToolbarItem(this._consoleContextSelector.toolbarItem());
     toolbar.appendSeparator();
     toolbar.appendToolbarItem(this._filter._textFilterUI);
-    if (!isLogManagementEnabled) {
+    if (!this._isLogManagementEnabled) {
       toolbar.appendToolbarItem(this._filter._levelMenuButton);
       toolbar.appendToolbarItem(this._filter._levelMenuButtonArrow);
     }
@@ -112,6 +114,12 @@ Console.ConsoleView = class extends UI.VBox {
     var monitoringXHREnabledSetting = Common.moduleSetting('monitoringXHREnabled');
     this._timestampsSetting = Common.moduleSetting('consoleTimestampsEnabled');
     this._consoleHistoryAutocompleteSetting = Common.moduleSetting('consoleHistoryAutocomplete');
+    this._groupBrowserMessagesSetting =
+        Common.settings.createSetting('groupBrowserMessages', false, Common.SettingStorageType.Session);
+    var groupBrowserMessagesCheckbox = new UI.ToolbarSettingCheckbox(
+        this._groupBrowserMessagesSetting,
+        Common.UIString('Coalesces verbose logs, including violations, deprecations, interventions'),
+        Common.UIString('Group browser messages'));
 
     var settingsPane = new UI.HBox();
     settingsPane.show(this._contentsElement);
@@ -123,6 +131,10 @@ Console.ConsoleView = class extends UI.VBox {
     settingsToolbarLeft.appendToolbarItem(this._preserveLogCheckbox);
     settingsToolbarLeft.appendToolbarItem(filterByExecutionContextCheckbox);
     settingsToolbarLeft.appendToolbarItem(filterConsoleAPICheckbox);
+    if (this._isLogManagementEnabled) {
+      this._groupBrowserMessagesSetting.set(true);
+      settingsToolbarLeft.appendToolbarItem(groupBrowserMessagesCheckbox);
+    }
 
     var settingsToolbarRight = new UI.Toolbar('', settingsPane.element);
     settingsToolbarRight.makeVertical();
@@ -182,6 +194,7 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._updateFilterStatus();
     this._timestampsSetting.addChangeListener(this._consoleTimestampsSettingChanged, this);
+    this._groupBrowserMessagesSetting.addChangeListener(this._updateMessageList, this);
 
     this._registerWithMessageSink();
 
@@ -497,9 +510,17 @@ Console.ConsoleView = class extends UI.VBox {
       return;
     }
 
+    if (viewMessage.consoleMessage().isBrowserMessage() && this._groupBrowserMessagesSetting.get()) {
+      this._insertVerboseMessage(viewMessage);
+      this._messageAppendedForTests();
+      return;
+    }
     var lastMessage = this._visibleViewMessages.peekLast();
     if (lastMessage && this._currentGroup.nestingLevel() < lastMessage.nestingLevel())
       lastMessage.incrementCloseGroupDecorationCount();
+
+    if (this._isLogManagementEnabled && viewMessage.consoleMessage().isBrowserMessage())
+      viewMessage.updateNestingLevel(this._currentGroup.nestingLevel());
 
     if (this._tryToCollapseMessages(viewMessage, lastMessage))
       return;
@@ -521,6 +542,78 @@ Console.ConsoleView = class extends UI.VBox {
       this._currentGroup = new Console.ConsoleGroup(this._currentGroup, viewMessage);
 
     this._messageAppendedForTests();
+  }
+
+  /**
+   * @param {!Console.ConsoleViewMessage} viewMessage
+   */
+  _insertVerboseMessage(viewMessage) {
+    // TODO(luoe): instead of replacing times and quoted strings, send substitution parameters from the backend.
+    var key = viewMessage.text.replace(/\d+ms/, '* ms').replace(/'\w+'/, '*').replace(/ %o/, '');
+    if (!this._browserGroupStartMessage.get(key) && this._currentGroup.messagesHidden())
+      return;
+    var groupIndex = this._insertOrIncrementBrowserGroup(key, viewMessage.consoleMessage());
+    var groupMessage = this._visibleViewMessages[groupIndex];
+    if (groupMessage.collapsed())
+      return;
+
+    // Insert the message after the group's existing children.
+    var nestingLevel = groupMessage.nestingLevel() + 1;
+    viewMessage.updateNestingLevel(nestingLevel);
+    for (var i = groupIndex + 1; i < this._visibleViewMessages.length; i++) {
+      if (this._visibleViewMessages[i].nestingLevel() !== nestingLevel)
+        break;
+    }
+    if (!this._tryToCollapseMessages(viewMessage, this._visibleViewMessages[i - 1])) {
+      this._visibleViewMessages[i - 1].resetCloseGroupDecorationCount();
+      this._visibleViewMessages.splice(i, 0, viewMessage);
+      viewMessage.incrementCloseGroupDecorationCount();
+    }
+  }
+
+  /**
+   * @param {string} key
+   * @param {!ConsoleModel.ConsoleMessage} message
+   * @return {number}
+   */
+  _insertOrIncrementBrowserGroup(key, message) {
+    var groupCreated = this._createBrowserGroupIfNeeded(key, message);
+    var groupMessage = this._browserGroupStartMessage.get(key);
+    var groupIndex;
+    if (groupCreated) {
+      groupIndex = this._visibleViewMessages.length;
+    } else {
+      // Upon rebuilding message list, the group might not be in _visibleViewMessages.
+      groupIndex = this._visibleViewMessages.indexOf(groupMessage);
+      if (groupIndex === -1)
+        groupIndex = this._visibleViewMessages.length;
+    }
+
+    if (groupIndex < this._visibleViewMessages.length) {
+      groupMessage.incrementRepeatCount();
+    } else {
+      var lastMessage = this._visibleViewMessages.peekLast();
+      if (lastMessage && this._currentGroup.nestingLevel() < lastMessage.nestingLevel())
+        lastMessage.incrementCloseGroupDecorationCount();
+      this._visibleViewMessages.push(groupMessage);
+    }
+    return groupIndex;
+  }
+
+  /**
+   * @param {string} key
+   * @param {!ConsoleModel.ConsoleMessage} message
+   * @return {boolean}
+   */
+  _createBrowserGroupIfNeeded(key, message) {
+    if (this._browserGroupStartMessage.get(key))
+      return false;
+    var groupConsoleMessage = new ConsoleModel.ConsoleMessage(
+        null, message.source, message.level, key, ConsoleModel.ConsoleMessage.MessageType.StartGroupCollapsed);
+    var groupMessage = /** @type {!Console.ConsoleGroupViewMessage} */ (this._createViewMessage(groupConsoleMessage));
+    groupMessage.toMessageElement().classList.add('console-browser-group-wrapper');
+    this._browserGroupStartMessage.set(key, groupMessage);
+    return true;
   }
 
   _messageAppendedForTests() {
@@ -550,6 +643,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._currentMatchRangeIndex = -1;
     this._consoleMessages = [];
     this._sidebar.clear();
+    this._browserGroupStartMessage.clear();
     this._updateMessageList();
     this._hidePromptSuggestBox();
     this._viewport.setStickToBottom(true);
