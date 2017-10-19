@@ -9,6 +9,6 @@
 
 #include <string>
 
-std::string token_to_string(const javascript_parser_proto_fuzzer::Token& token);
+std::string token_to_string(const javascript_parser_proto_fuzzer::Token& token, int count);
 
 #endif  // TESTING_LIBFUZZER_FUZZERS_JAVASCRIPT_PARSER_PROTO_TO_STRING_H
