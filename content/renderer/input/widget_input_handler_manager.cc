@@ -245,7 +245,7 @@ void WidgetInputHandlerManager::ObserveGestureEventOnMainThread(
 void WidgetInputHandlerManager::DispatchEvent(
     std::unique_ptr<content::InputEvent> event,
     mojom::WidgetInputHandler::DispatchEventCallback callback) {
-  if (!event || !event->web_event || !input_handler_proxy_) {
+  if (!event || !event->web_event) {
     // Call |callback| if it was available indicating this event wasn't
     // handled.
     if (callback) {
@@ -265,6 +265,15 @@ void WidgetInputHandlerManager::DispatchEvent(
   }
 
   if (compositor_task_runner_) {
+    // If the input_handler_proxy has disappeared ensure we just ack event.
+    if (!input_handler_proxy_) {
+      if (callback) {
+        std::move(callback).Run(
+            InputEventAckSource::MAIN_THREAD, ui::LatencyInfo(),
+            INPUT_EVENT_ACK_STATE_NOT_CONSUMED, base::nullopt, base::nullopt);
+      }
+      return;
+    }
     CHECK(!main_thread_task_runner_->BelongsToCurrentThread());
     input_handler_proxy_->HandleInputEventWithLatencyInfo(
         std::move(event->web_event), event->latency_info,
