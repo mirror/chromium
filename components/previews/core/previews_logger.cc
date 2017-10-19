@@ -163,4 +163,33 @@ void PreviewsLogger::LogPreviewDecisionMade(PreviewsEligibilityReason reason,
   decisions_logs_.emplace_back(kPreviewDecisionMade, description, url, time);
 }
 
+void PreviewsLogger::NotifyNewBlacklistedHost(const std::string& host,
+                                              base::Time time) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  for (auto& observer : observer_list_) {
+    observer.OnNewBlacklistedHost(host, time);
+  }
+}
+
+void PreviewsLogger::NotifyUserBlacklisted(base::Time time) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  for (auto& observer : observer_list_) {
+    observer.OnUserBlacklisted(time);
+  }
+}
+
+void PreviewsLogger::NotifyUserNotBlacklisted(base::Time time) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  for (auto& observer : observer_list_) {
+    observer.OnUserNotBlacklisted(time);
+  }
+}
+
+void PreviewsLogger::NotifyBlacklistCleared(base::Time time) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  for (auto& observer : observer_list_) {
+    observer.OnBlacklistCleared(time);
+  }
+}
+
 }  // namespace previews

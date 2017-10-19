@@ -19,6 +19,19 @@ class PreviewsLoggerObserver {
   virtual void OnNewMessageLogAdded(
       const PreviewsLogger::MessageLog& message) = 0;
 
+  // Notifies this observer that |host| is blacklisted at |time|.
+  virtual void OnNewBlacklistedHost(const std::string& host,
+                                    base::Time time) = 0;
+
+  // Notifies this observer that the user is blacklisted at |time|.
+  virtual void OnUserBlacklisted(base::Time time) = 0;
+
+  // Notifies this observer that the user is not blacklisted at |time|.
+  virtual void OnUserNotBlacklisted(base::Time time) = 0;
+
+  // Notifies this observer that the blacklist is cleared at |time|.
+  virtual void OnBlacklistCleared(base::Time time) = 0;
+
  protected:
   PreviewsLoggerObserver() {}
   virtual ~PreviewsLoggerObserver() {}

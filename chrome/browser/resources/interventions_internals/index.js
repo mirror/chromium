@@ -69,9 +69,11 @@ function setupLogSearch() {
 }
 
 /** @constructor */
-let InterventionsInternalPageImpl = function(request) {
+let InterventionsInternalPageImpl = function(request, blacklistedHosts) {
+  this.blacklistedHosts_ = blacklistedHosts;
   this.binding_ =
       new mojo.Binding(mojom.InterventionsInternalsPage, this, request);
+  this.userBlacklisted = null;
 };
 
 InterventionsInternalPageImpl.prototype = {
@@ -111,6 +113,100 @@ InterventionsInternalPageImpl.prototype = {
     tableRow.appendChild(urlTd);
 
     logsTable.appendChild(tableRow);
+  },
+
+  /**
+   * Update new blacklisted host to the web page.
+   *
+   * @override
+   * @param {!string} host The blacklisted host.
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateBlacklistedHost: function(host, time) {
+    if (this.blacklistedHosts_.has(host)) {
+      // Host is blacklisted already.
+      return;
+    }
+
+    let row = document.createElement('tr');
+    row.setAttribute('class', 'blacklisted-host-row');
+
+    let hostTd = document.createElement('td');
+    hostTd.setAttribute('class', 'host-blacklisted');
+    hostTd.textContent = host;
+    row.appendChild(hostTd);
+
+    let timeTd = document.createElement('td');
+    timeTd.setAttribute('class', 'host-blacklisted-time');
+    let date = new Date(time);
+    timeTd.textContent = date.toISOString();
+    row.appendChild(timeTd);
+
+    // TODO(thanhdle): Insert row at correct index. crbug.com/776105.
+    $('blacklisted-hosts-table').appendChild(row);
+
+    // Put the new row in the map of blacklisted hosts.
+    this.blacklistedHosts_.set(host, row);
+  },
+
+  /**
+   * Update to the page that the user is blacklisted at given time.
+   *
+   * @override
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateUserBlacklisted: function(time) {
+    if (this.userBlacklisted) {
+      // Do not update when user is already blacklisted.
+      return;
+    }
+    let userBlacklistedStatus = $('user-blacklisted-status');
+    let date = new Date(time);
+    userBlacklistedStatus.textContent =
+        'User blacklisted status: Blacklisted ' +
+        '(at ' + date.toISOString() + ')';
+    this.userBlacklisted = true;
+  },
+
+  /**
+   * Update to the page that the user is not blacklisted at given time.
+   *
+   * @override
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateUserNotBlacklisted: function(time) {
+    let userBlacklistedStatus = $('user-blacklisted-status');
+    let date = new Date(time);
+    userBlacklistedStatus.textContent =
+        'User blacklisted status: Not blacklisted ' +
+        '(last update: ' + date.toISOString() + ')';
+    this.userBlacklisted = false;
+  },
+
+  /**
+   * Update the blacklist cleared status on the page.
+   *
+   * @override
+   * @param {number} time The time of the event in milliseconds since Unix
+   * epoch.
+   */
+  updateBlacklistCleared: function(time) {
+    let blacklistClearedStatus = $('blacklist-cleared-status');
+    let date = new Date(time);
+    blacklistClearedStatus.textContent =
+        'Last blacklist cleared: ' + date.toISOString();
+
+    // Remove hosts from table.
+    let blacklistedHostsTable = $('blacklisted-hosts-table');
+    let rows = blacklistedHostsTable.querySelectorAll('.blacklisted-host-row');
+    rows.forEach((_) => {
+      blacklistedHostsTable.deleteRow(1);
+    });
+
+    this.updateUserNotBlacklisted(time);
   },
 };
 
@@ -176,7 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Set up client side mojo interface.
       let client = new mojom.InterventionsInternalsPagePtr;
-      pageImpl = new InterventionsInternalPageImpl(mojo.makeRequest(client));
+      pageImpl = new InterventionsInternalPageImpl(
+          mojo.makeRequest(client), new Map());
       pageHandler.setClientPage(client);
     }
 
