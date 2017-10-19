@@ -154,6 +154,7 @@ MediaKeyStatusMap::StartIteration(ScriptState*, ExceptionState&) {
 
 DEFINE_TRACE(MediaKeyStatusMap) {
   visitor->Trace(entries_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

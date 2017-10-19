@@ -34,8 +34,7 @@
 
 namespace blink {
 
-class CORE_EXPORT TextMetrics final : public GarbageCollected<TextMetrics>,
-                                      public ScriptWrappable {
+class CORE_EXPORT TextMetrics final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -67,8 +66,6 @@ class CORE_EXPORT TextMetrics final : public GarbageCollected<TextMetrics>,
   double ideographicBaseline() const { return ideographic_baseline_; }
 
   static float GetFontBaseline(const TextBaseline&, const FontMetrics&);
-
-  DEFINE_INLINE_TRACE() {}
 
  private:
   void Update(const Font&,

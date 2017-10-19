@@ -30,6 +30,7 @@ KURL Credential::ParseStringAsURL(const String& url,
 
 DEFINE_TRACE(Credential) {
   visitor->Trace(platform_credential_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

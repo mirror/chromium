@@ -3133,6 +3133,7 @@ ScriptPromise Internals::promiseCheckOverload(ScriptState* script_state,
 DEFINE_TRACE(Internals) {
   visitor->Trace(runtime_flags_);
   visitor->Trace(document_);
+  ScriptWrappable::Trace(visitor);
 }
 
 void Internals::setValueForUser(HTMLInputElement* element,

@@ -31,6 +31,7 @@ DOMFloat32Array* VRCoordinateSystem::getTransformTo(
 
 DEFINE_TRACE(VRCoordinateSystem) {
   visitor->Trace(session_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

@@ -34,6 +34,7 @@ G*     * Redistributions in binary form must reproduce the above
 #include "core/svg/SVGParsingError.h"
 #include "core/svg/properties/SVGPropertyInfo.h"
 #include "core/svg/properties/SVGPropertyTearOff.h"
+#include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
 
@@ -42,8 +43,7 @@ namespace blink {
 class ExceptionState;
 class SVGElement;
 
-class SVGAnimatedPropertyBase
-    : public GarbageCollectedFinalized<SVGAnimatedPropertyBase> {
+class SVGAnimatedPropertyBase : public ScriptWrappable {
   WTF_MAKE_NONCOPYABLE(SVGAnimatedPropertyBase);
 
  public:
@@ -78,8 +78,6 @@ class SVGAnimatedPropertyBase
   }
 
   bool IsSpecified() const;
-
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappersWithManualWriteBarrier(context_element_.Get());

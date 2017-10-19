@@ -92,6 +92,7 @@ String USBEndpoint::type() const {
 
 DEFINE_TRACE(USBEndpoint) {
   visitor->Trace(alternate_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

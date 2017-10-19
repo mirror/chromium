@@ -34,8 +34,7 @@ class ExceptionState;
 class LocalFrame;
 class PluginData;
 
-class DOMMimeTypeArray final : public GarbageCollected<DOMMimeTypeArray>,
-                               public ScriptWrappable,
+class DOMMimeTypeArray final : public ScriptWrappable,
                                public ContextLifecycleObserver,
                                public PluginsChangedObserver {
   DEFINE_WRAPPERTYPEINFO();

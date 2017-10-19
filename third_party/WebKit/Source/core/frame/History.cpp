@@ -60,6 +60,7 @@ History::History(LocalFrame* frame)
     : DOMWindowClient(frame), last_state_object_requested_(nullptr) {}
 
 DEFINE_TRACE(History) {
+  ScriptWrappable::Trace(visitor);
   DOMWindowClient::Trace(visitor);
 }
 

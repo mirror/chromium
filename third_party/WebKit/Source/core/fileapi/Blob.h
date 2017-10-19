@@ -49,8 +49,7 @@ class BlobPropertyBag;
 class ExceptionState;
 class ExecutionContext;
 
-class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
-                         public ScriptWrappable,
+class CORE_EXPORT Blob : public ScriptWrappable,
                          public URLRegistrable,
                          public ImageBitmapSource {
   DEFINE_WRAPPERTYPEINFO();
@@ -114,8 +113,6 @@ class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
 
   // ImageBitmapSource implementation
   bool IsBlob() const override { return true; }
-
-  DEFINE_INLINE_TRACE() {}
 
  protected:
   explicit Blob(RefPtr<BlobDataHandle>);

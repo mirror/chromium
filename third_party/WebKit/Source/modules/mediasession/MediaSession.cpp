@@ -231,6 +231,7 @@ void MediaSession::DidReceiveAction(
 DEFINE_TRACE(MediaSession) {
   visitor->Trace(metadata_);
   visitor->Trace(action_handlers_);
+  ScriptWrappable::Trace(visitor);
   ContextClient::Trace(visitor);
 }
 

@@ -95,7 +95,8 @@ class DOMWrapperMap {
   }
 
   void MarkWrapper(KeyType* object) {
-    map_.RegisterExternallyReferencedObject(object);
+    typename PersistentValueMapTraits::ImplKeyType key = object;
+    map_.RegisterExternallyReferencedObject(key);
   }
 
  private:
@@ -104,7 +105,14 @@ class DOMWrapperMap {
 
    public:
     // Map traits:
-    typedef HashMap<KeyType*, v8::PersistentContainerValue> Impl;
+    //
+    // DOMWrapperMap always uses |const void*| as the key type of the underlying
+    // storage.  |KeyType| is expected to be |ScriptWrappable|, which is
+    // a GarbageCollected type.  However, DOMWrapperMap is *NOT* responsible to
+    // make key objects alive, and does not support Oilpan-tracing.  So,
+    // DOMWrapperMap uses |const void*| as non-GC pointer type.
+    using ImplKeyType = const void*;
+    typedef HashMap<ImplKeyType, v8::PersistentContainerValue> Impl;
     typedef typename Impl::iterator Iterator;
     static size_t Size(const Impl* impl) { return impl->size(); }
     static bool Empty(Impl* impl) { return impl->IsEmpty(); }
@@ -114,31 +122,32 @@ class DOMWrapperMap {
     static v8::PersistentContainerValue Value(Iterator& iter) {
       return iter->value;
     }
-    static KeyType* Key(Iterator& iter) { return iter->key; }
+    static ImplKeyType Key(Iterator& iter) { return iter->key; }
     static v8::PersistentContainerValue
-    Set(Impl* impl, KeyType* key, v8::PersistentContainerValue value) {
+    Set(Impl* impl, ImplKeyType key, v8::PersistentContainerValue value) {
       v8::PersistentContainerValue old_value = Get(impl, key);
       impl->Set(key, value);
       return old_value;
     }
-    static v8::PersistentContainerValue Get(const Impl* impl, KeyType* key) {
+    static v8::PersistentContainerValue Get(const Impl* impl, ImplKeyType key) {
       return impl->at(key);
     }
 
-    static v8::PersistentContainerValue Remove(Impl* impl, KeyType* key) {
+    static v8::PersistentContainerValue Remove(Impl* impl, ImplKeyType key) {
       return impl->Take(key);
     }
 
     // Weak traits:
     static const v8::PersistentContainerCallbackType kCallbackType =
         v8::kWeakWithInternalFields;
-    typedef v8::GlobalValueMap<KeyType*, v8::Object, PersistentValueMapTraits>
-        MapType;
+    typedef v8::
+        GlobalValueMap<ImplKeyType, v8::Object, PersistentValueMapTraits>
+            MapType;
     typedef MapType WeakCallbackDataType;
 
     static WeakCallbackDataType* WeakCallbackParameter(
         MapType* map,
-        KeyType* key,
+        ImplKeyType key,
         v8::Local<v8::Object>& value) {
       return map;
     }
@@ -150,16 +159,16 @@ class DOMWrapperMap {
       return data.GetParameter();
     }
 
-    static KeyType* KeyFromWeakCallbackInfo(
+    static ImplKeyType KeyFromWeakCallbackInfo(
         const v8::WeakCallbackInfo<WeakCallbackDataType>& data) {
-      return reinterpret_cast<KeyType*>(
+      return reinterpret_cast<ImplKeyType>(
           data.GetInternalField(kV8DOMWrapperObjectIndex));
     }
 
     static void OnWeakCallback(
         const v8::WeakCallbackInfo<WeakCallbackDataType>&) {}
 
-    static void Dispose(v8::Isolate*, v8::Global<v8::Object>, KeyType*);
+    static void Dispose(v8::Isolate*, v8::Global<v8::Object>, ImplKeyType);
 
     static void DisposeWeak(const v8::WeakCallbackInfo<WeakCallbackDataType>&);
   };

@@ -33,13 +33,11 @@
 
 #include "core/svg/SVGAngleTearOff.h"
 #include "core/svg/SVGAnimatedEnumeration.h"
-#include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class SVGAnimatedAngle final : public SVGAnimatedProperty<SVGAngle>,
-                               public ScriptWrappable {
+class SVGAnimatedAngle final : public SVGAnimatedProperty<SVGAngle> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -61,8 +59,6 @@ class SVGAnimatedAngle final : public SVGAnimatedProperty<SVGAngle>,
   void AnimationEnded() override;
 
   DECLARE_VIRTUAL_TRACE();
-
-  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   explicit SVGAnimatedAngle(SVGElement* context_element);

@@ -39,8 +39,7 @@ namespace blink {
 
 class LocalFrame;
 
-class CORE_EXPORT Screen final : public GarbageCollected<Screen>,
-                                 public ScriptWrappable,
+class CORE_EXPORT Screen final : public ScriptWrappable,
                                  public DOMWindowClient,
                                  public Supplementable<Screen> {
   DEFINE_WRAPPERTYPEINFO();

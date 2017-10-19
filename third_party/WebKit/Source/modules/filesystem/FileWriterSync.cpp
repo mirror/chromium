@@ -112,6 +112,7 @@ void FileWriterSync::PrepareForWrite() {
 FileWriterSync::~FileWriterSync() {}
 
 DEFINE_TRACE(FileWriterSync) {
+  ScriptWrappable::Trace(visitor);
   FileWriterBase::Trace(visitor);
 }
 

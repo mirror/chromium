@@ -100,6 +100,7 @@ DEFINE_TRACE(PushSubscription) {
   visitor->Trace(p256dh_);
   visitor->Trace(auth_);
   visitor->Trace(service_worker_registration_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

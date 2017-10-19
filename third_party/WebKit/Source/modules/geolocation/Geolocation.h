@@ -48,11 +48,9 @@ class Document;
 class LocalFrame;
 class ExecutionContext;
 
-class MODULES_EXPORT Geolocation final
-    : public GarbageCollectedFinalized<Geolocation>,
-      public ScriptWrappable,
-      public ContextLifecycleObserver,
-      public PageVisibilityObserver {
+class MODULES_EXPORT Geolocation final : public ScriptWrappable,
+                                         public ContextLifecycleObserver,
+                                         public PageVisibilityObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Geolocation);
 

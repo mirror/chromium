@@ -57,6 +57,7 @@ HeapVector<Member<USBInterface>> USBConfiguration::interfaces() const {
 
 DEFINE_TRACE(USBConfiguration) {
   visitor->Trace(device_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

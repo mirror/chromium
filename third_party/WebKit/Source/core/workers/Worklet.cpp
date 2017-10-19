@@ -167,6 +167,7 @@ size_t Worklet::SelectGlobalScope() const {
 DEFINE_TRACE(Worklet) {
   visitor->Trace(proxies_);
   visitor->Trace(module_responses_map_);
+  ScriptWrappable::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }
 

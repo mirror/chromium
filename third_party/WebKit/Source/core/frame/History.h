@@ -44,8 +44,7 @@ class SecurityOrigin;
 class ScriptState;
 
 // This class corresponds to the History interface.
-class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
-                                  public ScriptWrappable,
+class CORE_EXPORT History final : public ScriptWrappable,
                                   public DOMWindowClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(History);

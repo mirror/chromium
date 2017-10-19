@@ -83,6 +83,7 @@ DEFINE_TRACE(SQLTransaction) {
   visitor->Trace(callback_);
   visitor->Trace(success_callback_);
   visitor->Trace(error_callback_);
+  ScriptWrappable::Trace(visitor);
 }
 
 bool SQLTransaction::HasCallback() const {

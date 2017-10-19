@@ -33,15 +33,13 @@
 
 #include "core/svg/SVGTransformListTearOff.h"
 #include "core/svg/properties/SVGAnimatedProperty.h"
-#include "platform/bindings/ScriptWrappable.h"
 
 namespace blink {
 
 // SVG Spec:
 // http://www.w3.org/TR/SVG11/coords.html#InterfaceSVGAnimatedTransformList
 class SVGAnimatedTransformList final
-    : public SVGAnimatedProperty<SVGTransformList>,
-      public ScriptWrappable {
+    : public SVGAnimatedProperty<SVGTransformList> {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
@@ -51,11 +49,6 @@ class SVGAnimatedTransformList final
       CSSPropertyID css_property_id = CSSPropertyInvalid) {
     return new SVGAnimatedTransformList(context_element, attribute_name,
                                         css_property_id);
-  }
-
-  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
-    SVGAnimatedProperty<SVGTransformList>::TraceWrappers(visitor);
-    ScriptWrappable::TraceWrappers(visitor);
   }
 
  protected:

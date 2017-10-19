@@ -528,6 +528,7 @@ HTMLCollection::NamedItemCache::NamedItemCache() {}
 DEFINE_TRACE(HTMLCollection) {
   visitor->Trace(named_item_cache_);
   visitor->Trace(collection_items_cache_);
+  ScriptWrappable::Trace(visitor);
   LiveNodeListBase::Trace(visitor);
 }
 

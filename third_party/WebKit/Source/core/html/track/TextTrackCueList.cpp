@@ -144,6 +144,7 @@ void TextTrackCueList::ValidateCueIndexes() {
 
 DEFINE_TRACE(TextTrackCueList) {
   visitor->Trace(list_);
+  ScriptWrappable::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(TextTrackCueList) {

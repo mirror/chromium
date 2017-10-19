@@ -858,6 +858,7 @@ void DOMSelection::AddConsoleError(const String& message) {
 
 DEFINE_TRACE(DOMSelection) {
   visitor->Trace(tree_scope_);
+  ScriptWrappable::Trace(visitor);
   ContextClient::Trace(visitor);
 }
 

@@ -31,9 +31,7 @@ namespace blink {
 
 class ExceptionState;
 
-class DOMPlugin final : public GarbageCollected<DOMPlugin>,
-                        public ScriptWrappable,
-                        public ContextClient {
+class DOMPlugin final : public ScriptWrappable, public ContextClient {
   USING_GARBAGE_COLLECTED_MIXIN(DOMPlugin);
   DEFINE_WRAPPERTYPEINFO();
 

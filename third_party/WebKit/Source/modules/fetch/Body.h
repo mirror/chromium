@@ -27,8 +27,7 @@ class ScriptState;
 // spec only Response has it and Request has a byte stream defined in the
 // Encoding spec. The spec should be fixed shortly to be aligned with this
 // implementation.
-class MODULES_EXPORT Body : public GarbageCollected<Body>,
-                            public ScriptWrappable,
+class MODULES_EXPORT Body : public ScriptWrappable,
                             public ActiveScriptWrappable<Body>,
                             public ContextClient {
   WTF_MAKE_NONCOPYABLE(Body);
@@ -53,7 +52,10 @@ class MODULES_EXPORT Body : public GarbageCollected<Body>,
   // ScriptWrappable override.
   bool HasPendingActivity() const override;
 
-  DEFINE_INLINE_VIRTUAL_TRACE() { ContextClient::Trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    ScriptWrappable::Trace(visitor);
+    ContextClient::Trace(visitor);
+  }
 
  private:
   // TODO(e_hakkinen): Fix |MimeType()| to always contain parameters and

@@ -273,6 +273,7 @@ AnimationEffectTimingReadOnly* AnimationEffectReadOnly::timing() {
 DEFINE_TRACE(AnimationEffectReadOnly) {
   visitor->Trace(animation_);
   visitor->Trace(event_delegate_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

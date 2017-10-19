@@ -62,6 +62,7 @@ DEFINE_TRACE(StaticRange) {
   visitor->Trace(owner_document_);
   visitor->Trace(start_container_);
   visitor->Trace(end_container_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

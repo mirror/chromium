@@ -81,6 +81,7 @@ PushSubscriptionOptions::PushSubscriptionOptions(
 
 DEFINE_TRACE(PushSubscriptionOptions) {
   visitor->Trace(application_server_key_);
+  ScriptWrappable::Trace(visitor);
 }
 
 }  // namespace blink

@@ -21,8 +21,7 @@ namespace blink {
 class ReadableStreamController;
 
 class CORE_EXPORT UnderlyingSourceBase
-    : public GarbageCollectedFinalized<UnderlyingSourceBase>,
-      public ScriptWrappable,
+    : public ScriptWrappable,
       public ActiveScriptWrappable<UnderlyingSourceBase>,
       public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();

@@ -19,6 +19,7 @@ VideoTrack::VideoTrack(const String& id,
 VideoTrack::~VideoTrack() {}
 
 DEFINE_TRACE(VideoTrack) {
+  ScriptWrappable::Trace(visitor);
   TrackBase::Trace(visitor);
 }
 

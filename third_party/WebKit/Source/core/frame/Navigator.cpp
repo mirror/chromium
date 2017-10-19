@@ -114,6 +114,7 @@ Vector<String> Navigator::languages() {
 }
 
 DEFINE_TRACE(Navigator) {
+  ScriptWrappable::Trace(visitor);
   DOMWindowClient::Trace(visitor);
   Supplementable<Navigator>::Trace(visitor);
 }
