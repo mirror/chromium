@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14122724_b0310e82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-19T17:10:20Z",
+      "side": 1,
+      "message": "Holding on to resources should be fine, right?",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "946afa60ac083118c674934d90c3c6e5b2c4e664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
