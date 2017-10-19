@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3502ebb8_4c6af53f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-19T23:41:28Z",
+      "side": 1,
+      "message": "This function is making me sad.\n\nThe tab gets the icon via the OnAudioStateChanged. We already have a delegate call OnAudioStateChanged, and now we\u0027re getting a WebContentsObserver call DidUpdateAudioState.\n\nFirst, can we make the name the same between the delegate and the observer. Second, can we simplify this? Have one path for the tab, the omnibox, and the users of the delegate?",
+      "range": {
+        "startLine": 1461,
+        "startChar": 5,
+        "endLine": 1472,
+        "endChar": 1
+      },
+      "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
