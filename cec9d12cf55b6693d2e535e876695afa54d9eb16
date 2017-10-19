@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ca40357_3177754d",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-19T09:01:55Z",
+      "side": 1,
+      "message": "I think there will be a null pointer access error. I will move the jpeg_decoder_factory to the Start() parameter and remove the Set GpuJpegDecodeFactory. So we can make sure GetGpuJpegDecodeAccelerator is called after the jpeg_decoder_factory_ set.",
+      "parentUuid": "c91d47da_c48062ae",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 23
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa5dd254_66c3dedd",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T11:53:29Z",
       "side": 1,
       "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2129573c_32bbfdf0",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-19T09:01:55Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "aa5dd254_66c3dedd",
       "range": {
         "startLine": 1,
         "startChar": 13,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "02bad0b0_ffa3290c",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-19T09:01:55Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "0711b487_403a3561",
+      "range": {
+        "startLine": 105,
+        "startChar": 37,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbafe50e_d9aecc14",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
         "patchSetId": 6
@@ -105,6 +177,30 @@
       "writtenOn": "2017-10-13T11:53:29Z",
       "side": 1,
       "message": "Why do we need move() here?\ncallback.Run() doesn\u0027t work?",
+      "range": {
+        "startLine": 106,
+        "startChar": 9,
+        "endLine": 106,
+        "endChar": 13
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65452bc1_7fb45f48",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-19T09:01:55Z",
+      "side": 1,
+      "message": "because it is a OnceCallback.\nIf we don\u0027t use move() here, there will be \"OnceCallback::Run() may only be invoked on a non-const rvalue, i.e. std::move(callback).Run()\" compile error message.",
+      "parentUuid": "fbafe50e_d9aecc14",
       "range": {
         "startLine": 106,
         "startChar": 9,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0526a37f_0c05e11c",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-19T09:01:55Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "cf157ef4_9276854f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a62798b_1a372d68",
         "filename": "media/gpu/mojo/jpeg_decoder.mojom",
         "patchSetId": 6
@@ -151,6 +271,30 @@
       "writtenOn": "2017-10-13T11:53:29Z",
       "side": 1,
       "message": "Remove duplicated \u0027|\u0027",
+      "range": {
+        "startLine": 62,
+        "startChar": 46,
+        "endLine": 62,
+        "endChar": 47
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53baa8d0_a7ce606d",
+        "filename": "media/gpu/mojo/jpeg_decoder.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-19T09:01:55Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "3a62798b_1a372d68",
       "range": {
         "startLine": 62,
         "startChar": 46,
