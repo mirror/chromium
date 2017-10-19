@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27c6ca32_3b661958",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-19T03:45:48Z",
+      "side": 1,
+      "message": "app opt out trumps this one too now? ok..",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 75
+      },
+      "revId": "b1e35ad854b7aae4739294bd7784f93af1cbf1f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
