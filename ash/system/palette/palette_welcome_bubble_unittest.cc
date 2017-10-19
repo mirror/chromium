@@ -105,27 +105,6 @@ TEST_F(PaletteWelcomeBubbleTest, CloseButton) {
   EXPECT_FALSE(welcome_bubble_->BubbleShown());
 }
 
-// Verify that tapping on the screen outside of the welcome bubble closes the
-// bubble.
-TEST_F(PaletteWelcomeBubbleTest, TapOutsideOfBubble) {
-  ShowBubble();
-  ASSERT_TRUE(welcome_bubble_->BubbleShown());
-  ASSERT_TRUE(welcome_bubble_->GetBubbleBoundsForTest().has_value());
-
-  // The bubble remains open if a tap occurs on the bubble.
-  GetEventGenerator().set_current_location(
-      welcome_bubble_->GetBubbleBoundsForTest()->CenterPoint());
-  GetEventGenerator().ClickLeftButton();
-  EXPECT_TRUE(welcome_bubble_->BubbleShown());
-
-  // Tap anywhere outside the bubble.
-  ASSERT_FALSE(
-      welcome_bubble_->GetBubbleBoundsForTest()->Contains(gfx::Point()));
-  GetEventGenerator().set_current_location(gfx::Point());
-  GetEventGenerator().ClickLeftButton();
-  EXPECT_FALSE(welcome_bubble_->BubbleShown());
-}
-
 // Verify that a second user sees the bubble even after a first user has seen it
 // already.
 TEST_F(PaletteWelcomeBubbleTest, BubbleShownForSecondUser) {
