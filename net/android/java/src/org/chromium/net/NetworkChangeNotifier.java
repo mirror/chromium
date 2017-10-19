@@ -369,6 +369,17 @@ public class NetworkChangeNotifier {
         mConnectionTypeObservers.removeObserver(observer);
     }
 
+    /**
+     * Is the process bound to a network?
+     */
+    @CalledByNative
+    public static boolean isProcessBoundToNetwork() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) ContextUtils.getApplicationContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getBoundNetworkForProcess() != null;
+    }
+
     @NativeClassQualifiedName("NetworkChangeNotifierDelegateAndroid")
     private native void nativeNotifyConnectionTypeChanged(
             long nativePtr, int newConnectionType, long defaultNetId);

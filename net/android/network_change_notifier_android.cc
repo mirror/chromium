@@ -66,6 +66,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread.h"
+#include "jni/NetworkChangeNotifier_jni.h"
 #include "net/base/address_tracker_linux.h"
 #include "net/dns/dns_config_service_posix.h"
 
@@ -182,7 +183,9 @@ bool NetworkChangeNotifierAndroid::AreNetworkHandlesCurrentlySupported() const {
   // NetworkHandles only implemented for Android versions >= L.
   return force_network_handles_supported_for_testing_ ||
          (base::android::BuildInfo::GetInstance()->sdk_int() >=
-          base::android::SDK_VERSION_LOLLIPOP);
+              base::android::SDK_VERSION_LOLLIPOP &&
+          !Java_NetworkChangeNotifier_isProcessBoundToNetwork(
+              base::android::AttachCurrentThread()));
 }
 
 void NetworkChangeNotifierAndroid::GetCurrentConnectedNetworks(
