@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7851d134_6e55160a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30067,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-19T06:01:27Z",
+      "side": 0,
+      "message": "Do not delete old entries; mark them as obsolete.  More details here:\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Deleting-Histogram-Entries",
+      "revId": "e1c84d994028d1b56a9d9cc414753f0c99b5ebdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
