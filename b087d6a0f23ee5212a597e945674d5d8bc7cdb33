@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b15248e6_88ecf85e",
+        "filename": "components/policy/resources/PRESUBMIT.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "Do you still need this?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23b2339_7a06711e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "I didn\u0027t check everything here, but can you make sure the generated files are still the same?\n- Edit chromium/src/components/policy/BUILD.gn and set all the gen_policy* to true\n- ninja -C out/Release -j 2000 policy_templates\n- Rename out/Release/gen/chrome/app/policy to something else\n- Repeat without this CL.\n- Use meld to compare the renamed folder to out/Release/gen/chrome/app/policy.",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 19
+      },
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e059f11_27f91b9c",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "This can be removed now. The only place that uses it can now simply write\n\nfor policy in template_file_contents[\u0027policy_definitions\u0027]\nif policy[\u0027type\u0027] !\u003d \u0027group\u0027",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f9f04e_b63099c7",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "Empty groups shouldn\u0027t be allowed IMHO.",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 30
+      },
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a3cf4b_238e92d1",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "Policies must be a list?",
+      "range": {
+        "startLine": 235,
+        "startChar": 23,
+        "endLine": 235,
+        "endChar": 55
+      },
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6871e8_cb0e2adc",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "Can you also make sure that all entries in the list point to a policy and that no policy is in two groups?",
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02d54ba_86c7e94f",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "Please add a function-wide comment that explains what this does.",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 39
+      },
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be15d07_3ee95b15",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-19T13:00:50Z",
+      "side": 1,
+      "message": "Not sure you need this assert. It\u0027ll crash two lines below, anyway.",
+      "range": {
+        "startLine": 165,
+        "startChar": 6,
+        "endLine": 165,
+        "endChar": 32
+      },
+      "revId": "b087d6a0f23ee5212a597e945674d5d8bc7cdb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
