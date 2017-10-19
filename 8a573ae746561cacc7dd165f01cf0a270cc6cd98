@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "725b4bf7_9c7423a8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-19T01:46:50Z",
+      "side": 1,
+      "message": "Why can\u0027t we use setEnabled already? I think it\u0027s supported on all toolbar items.",
+      "revId": "8a573ae746561cacc7dd165f01cf0a270cc6cd98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56db242_3de95703",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/toolbar.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-19T01:46:50Z",
+      "side": 1,
+      "message": "Please undo this.",
+      "revId": "8a573ae746561cacc7dd165f01cf0a270cc6cd98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
