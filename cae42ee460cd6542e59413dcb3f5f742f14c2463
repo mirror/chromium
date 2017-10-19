@@ -71,6 +71,24 @@
       "revId": "cae42ee460cd6542e59413dcb3f5f742f14c2463",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0b5127_38a6d80c",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-19T15:55:05Z",
+      "side": 1,
+      "message": "I was confused. For some reason I was thinking that we were adding a query parameter to |intentStartUrl| not |startUrl|.",
+      "parentUuid": "61456776_2201a5b5",
+      "revId": "cae42ee460cd6542e59413dcb3f5f742f14c2463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
