@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4bc921_9fd32953",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-alpha-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "Not caused by you but the rgba syntax is [0-255], [0-255], [0-255], [0-1] so these are wrong. Could you update them to either rgba(0, 128, 0, 1) or rgba(0, 128, 0, 0.5) (the latter would be a small test change).",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2706e690_4ace4aea",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-alpha-with-opacity-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "Similar comment here",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2374c47_0d88a8ca",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-content-clip-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "Nit: can you remove the trailing space here?",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438347ff_ff9dfb5c",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-padding-clip-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "Nit: can you remove the trailing space here?",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706f9315_e790467e",
+        "filename": "third_party/WebKit/LayoutTests/compositing/background-color/background-color-text-clip-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "Nit: can you remove the trailing space here?",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ad1719_3a917fb7",
+        "filename": "third_party/WebKit/LayoutTests/compositing/child-transform-layer-rounding-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "nit: can you move border-width to a new line?",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d80b32_22f760a1",
+        "filename": "third_party/WebKit/LayoutTests/compositing/squashing/invalidate-new-backing-of-second-unsquashed-layer-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "Nit: can you remove the trailing space here?",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5aab7d_c83e4305",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/compositing/clipped-layer-size-change-expected.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-19T16:49:06Z",
+      "side": 1,
+      "message": "Nit: can you remove the whitespace here?",
+      "revId": "f0128ce319764afabbb468df8391f00b4196e517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
