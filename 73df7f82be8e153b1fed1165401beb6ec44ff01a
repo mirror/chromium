@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfcf241b_c08f1898",
+        "filename": "media/blink/cdm_session_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:50:29Z",
+      "side": 1,
+      "message": "I vaguely remember we don\u0027t like to use !!. Anyway, I do feel the current code is is easier to read :)",
+      "parentUuid": "ec43c537_a33eb383",
+      "range": {
+        "startLine": 169,
+        "startChar": 28,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f157000d_7bf27093",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-19T23:04:07Z",
       "side": 1,
       "message": "It would be nice to clean up all of these Media.EME histograms to use histogram_suffixes, rather than duplicating the metadata for each.  Doesn\u0027t necessarily need to part of this CL, though.",
+      "range": {
+        "startLine": 32484,
+        "startChar": 0,
+        "endLine": 32491,
+        "endChar": 12
+      },
+      "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa664528_6d9f5cca",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32491,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-19T23:50:29Z",
+      "side": 1,
+      "message": "Agreed! I don\u0027t remember the history, but maybe when we started histogram_suffixes didn\u0027t exist. Anyway, now the \"key system\" is in the middle and it\u0027s harder to migrate.\n\nAny suggestions on renaming these and use suffix? Make new ones and mark old ones as obsolete?",
+      "parentUuid": "f157000d_7bf27093",
       "range": {
         "startLine": 32484,
         "startChar": 0,
