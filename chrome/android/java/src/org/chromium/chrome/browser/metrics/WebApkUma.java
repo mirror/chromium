@@ -68,6 +68,8 @@ public class WebApkUma {
     // Obsolete: WEBAPK_OPEN_NO_LAUNCH_INTENT = 1;
     public static final int WEBAPK_OPEN_ACTIVITY_NOT_FOUND = 2;
 
+    private static long sAvailableSpaceAboveLowSpaceLimitInByte = 0;
+
     /**
      * Records the time point when a request to update a WebAPK is sent to the WebAPK Server.
      * @param type representing when the update request is sent to the WebAPK server.
@@ -100,9 +102,8 @@ public class WebApkUma {
 
     /** Records whether a WebAPK has permission to display notifications. */
     public static void recordNotificationPermissionStatus(boolean permissionEnabled) {
-        int status = permissionEnabled ? 1 : 0;
-        RecordHistogram.recordEnumeratedHistogram(
-                "WebApk.Notification.Permission.Status", status, 2);
+        RecordHistogram.recordBooleanHistogram(
+                "WebApk.Notification.Permission.Status", permissionEnabled);
     }
 
     /**
@@ -162,94 +163,112 @@ public class WebApkUma {
                 TimeUnit.HOURS.toMillis(1), TimeUnit.DAYS.toMillis(30), TimeUnit.MILLISECONDS, 50);
     }
 
+    // TODO(ranj): Remove this function after downstream is checked in.
+    public static void logAvailableSpaceAboveLowSpaceLimitInUMA(boolean installSucceeded) {}
+
+    /**
+     * Log necessary disk usage and cache size UMAs when WebAPK installation fails.
+     */
+    public static void logSpaceUsageUMAWhenInstallationFails() {
+        new AsyncTask<Void, Void, Void>() {
+            long mCacheSizeInByte;
+            @Override
+            protected Void doInBackground(Void... params) {
+                sAvailableSpaceAboveLowSpaceLimitInByte = getAvailableSpaceAboveLowSpaceLimit();
+                mCacheSizeInByte =
+                        getDirectorySizeInByte(ContextUtils.getApplicationContext().getCacheDir());
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                logAvailableSpaceAboveLowSpaceLimitInUMA(sAvailableSpaceAboveLowSpaceLimitInByte);
+                logCacheSizeInUMA(mCacheSizeInByte);
+                logAvailableSpaceAfterFreeUpCacheInUMA(
+                        sAvailableSpaceAboveLowSpaceLimitInByte + mCacheSizeInByte);
+                logUnimportantStorageSizeInUMA();
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private static void logCacheSizeInUMA(long cacheSizeInByte) {
+        int cacheSizeInMb = Math.min(2000, (int) (cacheSizeInByte / 1024L / 1024L / 10L * 10L));
+        RecordHistogram.recordSparseSlowlyHistogram(
+                "WebApk.Install.ChromeCacheSize.Fail", cacheSizeInMb);
+    }
+
     /**
      * Log the estimated amount of space above the minimum free space threshold that can be used
      * for WebAPK installation in UMA.
      */
-    @SuppressWarnings("deprecation")
-    public static void logAvailableSpaceAboveLowSpaceLimitInUMA(boolean installSucceeded) {
-        // ContentResolver APIs are usually heavy, do it in AsyncTask.
-        new AsyncTask<Void, Void, Long>() {
-            long mPartitionAvailableBytes;
-            @Override
-            protected Long doInBackground(Void... params) {
-                StatFs partitionStats =
-                        new StatFs(Environment.getDataDirectory().getAbsolutePath());
-                long partitionTotalBytes;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    mPartitionAvailableBytes = partitionStats.getAvailableBytes();
-                    partitionTotalBytes = partitionStats.getTotalBytes();
-                } else {
-                    // these APIs were deprecated in API level 18.
-                    long blockSize = partitionStats.getBlockSize();
-                    mPartitionAvailableBytes = blockSize
-                            * (long) partitionStats.getAvailableBlocks();
-                    partitionTotalBytes = blockSize * (long) partitionStats.getBlockCount();
-                }
-                return getLowSpaceLimitBytes(partitionTotalBytes);
-            }
+    private static void logAvailableSpaceAboveLowSpaceLimitInUMA(
+            long availableBytesForInstallation) {
+        int availableSpaceMb = (int) (availableBytesForInstallation / 1024L / 1024L);
+        // Bound the number to [-1000, 500] and round down to the nearest multiple of 10MB
+        // to avoid exploding the histogram.
+        availableSpaceMb = Math.min(500, Math.max(-1000, availableSpaceMb));
+        availableSpaceMb = availableSpaceMb / 10 * 10;
 
-            @Override
-            protected void onPostExecute(Long minimumFreeBytes) {
-                long availableBytesForInstallation = mPartitionAvailableBytes - minimumFreeBytes;
-                int availableSpaceMb = (int) (availableBytesForInstallation / 1024L / 1024L);
-                // Bound the number to [-1000, 500] and round down to the nearest multiple of 10MB
-                // to avoid exploding the histogram.
-                availableSpaceMb = Math.max(-1000, availableSpaceMb);
-                availableSpaceMb = Math.min(500, availableSpaceMb);
-                availableSpaceMb = availableSpaceMb / 10 * 10;
-
-                if (installSucceeded) {
-                    RecordHistogram.recordSparseSlowlyHistogram(
-                            "WebApk.Install.AvailableSpace.Success", availableSpaceMb);
-                } else {
-                    RecordHistogram.recordSparseSlowlyHistogram(
-                            "WebApk.Install.AvailableSpace.Fail", availableSpaceMb);
-                }
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        RecordHistogram.recordSparseSlowlyHistogram(
+                "WebApk.Install.AvailableSpace.Fail", availableSpaceMb);
     }
 
-    public static void logCacheSizeInUMA() {
-        new AsyncTask<Void, Void, Integer>() {
-            private long getDirectorySizeInByte(File dir) {
-                if (dir == null) return 0;
-                if (!dir.isDirectory()) return dir.length();
+    private static void logAvailableSpaceAfterFreeUpCacheInUMA(
+            long availableSpaceAfterFreeUpCacheInByte) {
+        int availableSpaceAfterFreeUpCacheInMb =
+                (int) (availableSpaceAfterFreeUpCacheInByte / 1024L / 1024L);
+        availableSpaceAfterFreeUpCacheInMb =
+                Math.min(500, Math.max(-1000, availableSpaceAfterFreeUpCacheInMb));
+        availableSpaceAfterFreeUpCacheInMb = availableSpaceAfterFreeUpCacheInMb / 10 * 10;
 
-                long sizeInByte = 0;
-                try {
-                    File[] files = dir.listFiles();
-                    if (files == null) return 0;
-
-                    for (File file : files) {
-                        sizeInByte += getDirectorySizeInByte(file);
-                    }
-                } catch (SecurityException e) {
-                    return 0;
-                }
-                return sizeInByte;
-            }
-
-            @Override
-            protected Integer doInBackground(Void... params) {
-                long cacheSizeInByte =
-                        getDirectorySizeInByte(ContextUtils.getApplicationContext().getCacheDir());
-                return Math.min(2000, (int) (cacheSizeInByte / 1024L / 1024L / 10L * 10L));
-            }
-
-            @Override
-            protected void onPostExecute(Integer cacheSizeInMb) {
-                RecordHistogram.recordSparseSlowlyHistogram(
-                        "WebApk.Install.ChromeCacheSize.Fail", cacheSizeInMb);
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        RecordHistogram.recordSparseSlowlyHistogram(
+                "WebApk.Install.AvailableSpaceAfterFreeUpCache.Fail",
+                availableSpaceAfterFreeUpCacheInMb);
     }
 
+    // TODO(ranj): Change to private after downstream is checked in.
     public static void logUnimportantStorageSizeInUMA() {
         WebsitePermissionsFetcher fetcher =
                 new WebsitePermissionsFetcher(new UnimportantStorageSizeCalculator());
         fetcher.fetchPreferencesForCategory(
                 SiteSettingsCategory.fromString(SiteSettingsCategory.CATEGORY_USE_STORAGE));
+    }
+
+    private static long getDirectorySizeInByte(File dir) {
+        if (dir == null) return 0;
+        if (!dir.isDirectory()) return dir.length();
+
+        long sizeInByte = 0;
+        try {
+            File[] files = dir.listFiles();
+            if (files == null) return 0;
+
+            for (File file : files) {
+                sizeInByte += getDirectorySizeInByte(file);
+            }
+        } catch (SecurityException e) {
+            return 0;
+        }
+        return sizeInByte;
+    }
+
+    @SuppressWarnings("deprecation")
+    private static long getAvailableSpaceAboveLowSpaceLimit() {
+        long partitionAvailableBytes;
+        long partitionTotalBytes;
+        StatFs partitionStats = new StatFs(Environment.getDataDirectory().getAbsolutePath());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            partitionAvailableBytes = partitionStats.getAvailableBytes();
+            partitionTotalBytes = partitionStats.getTotalBytes();
+        } else {
+            // these APIs were deprecated in API level 18.
+            long blockSize = partitionStats.getBlockSize();
+            partitionAvailableBytes = blockSize * (long) partitionStats.getAvailableBlocks();
+            partitionTotalBytes = blockSize * (long) partitionStats.getBlockCount();
+        }
+        long minimumFreeBytes = getLowSpaceLimitBytes(partitionTotalBytes);
+
+        return partitionAvailableBytes - minimumFreeBytes;
     }
 
     /**
@@ -304,9 +323,19 @@ public class WebApkUma {
             int unimportantSiteStorageTotalMb =
                     (int) (unimportantSiteStorageTotal / 1024L / 1024L / 10L * 10L);
             unimportantSiteStorageTotalMb = Math.min(unimportantSiteStorageTotalMb, 1000);
-
             RecordHistogram.recordSparseSlowlyHistogram(
                     "WebApk.Install.ChromeUnimportantStorage.Fail", unimportantSiteStorageTotalMb);
+
+            long availableSpaceAfterFreeUpUnimportantSiteStorage =
+                    sAvailableSpaceAboveLowSpaceLimitInByte + unimportantSiteStorageTotal;
+            int availableSpaceAfterFreeUpUnimportantSiteStorageInMb =
+                    (int) (availableSpaceAfterFreeUpUnimportantSiteStorage / 1024L / 1024L / 10L
+                            * 10L);
+            availableSpaceAfterFreeUpUnimportantSiteStorageInMb = Math.min(
+                    500, Math.max(-1000, availableSpaceAfterFreeUpUnimportantSiteStorageInMb));
+            RecordHistogram.recordSparseSlowlyHistogram(
+                    "WebApk.Install.AvailableSpaceAfterFreeUpUnimportantStorage.Fail",
+                    availableSpaceAfterFreeUpUnimportantSiteStorageInMb);
         }
     }
 }
