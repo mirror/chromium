@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a69bdf6_d1d9823e",
+        "filename": "ui/aura/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-19T02:55:00Z",
+      "side": 1,
+      "message": "We should check for GetLocalsurfaceId() at the top of this function, right? Otherwise, if |window_| itself is embedding a client, and has child windows, then calling GetHitTestData() would include the hit-test regions of those children.",
+      "revId": "f4eef6810fbb83e0ecc5b296c6225ef460fa901b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
