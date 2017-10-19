@@ -273,19 +273,19 @@ ScriptPromise NavigatorRequestMediaKeySystemAccess::requestMediaKeySystemAccess(
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
   Document* document = ToDocument(execution_context);
 
-  Deprecation::CountDeprecationFeaturePolicy(
-      *document, WebFeaturePolicyFeature::kEncryptedMedia);
-
-  if (RuntimeEnabledFeatures::FeaturePolicyForEncryptedMediaEnabled()) {
+  if (RuntimeEnabledFeatures::FeaturePolicyForPermissionsEnabled()) {
     if (!document->GetFrame() ||
         !document->GetFrame()->IsFeatureEnabled(
             WebFeaturePolicyFeature::kEncryptedMedia)) {
       return ScriptPromise::RejectWithDOMException(
           script_state,
           DOMException::Create(
-              kNotSupportedError,
+              kSecurityError,
               "requestMediaKeySystemAccess is disabled by feature policy."));
     }
+  } else {
+    Deprecation::CountDeprecationFeaturePolicy(
+        *document, WebFeaturePolicyFeature::kEncryptedMedia);
   }
 
   // From https://w3c.github.io/encrypted-media/#common-key-systems

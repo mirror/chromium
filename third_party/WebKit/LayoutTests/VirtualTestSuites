@@ -115,11 +115,6 @@
   },
   {
     "prefix": "feature-policy-permissions",
-    "base": "http/tests/webmidi",
-    "args": ["--enable-features=UseFeaturePolicyForPermissions"]
-  },
-  {
-    "prefix": "feature-policy-permissions",
     "base": "http/tests/geolocation-api",
     "args": ["--enable-features=UseFeaturePolicyForPermissions"]
   },
