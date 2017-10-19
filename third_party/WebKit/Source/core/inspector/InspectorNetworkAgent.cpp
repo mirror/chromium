@@ -77,7 +77,6 @@
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/Base64.h"
-#include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebMixedContentContextType.h"
 #include "public/platform/WebURLLoaderClient.h"
 #include "public/platform/WebURLRequest.h"
@@ -122,15 +121,16 @@ bool Matches(const String& url, const String& pattern) {
 }
 
 bool LoadsFromCacheOnly(const ResourceRequest& request) {
-  switch (request.GetCachePolicy()) {
-    case WebCachePolicy::kUseProtocolCachePolicy:
-    case WebCachePolicy::kValidatingCacheData:
-    case WebCachePolicy::kBypassingCache:
-    case WebCachePolicy::kReturnCacheDataElseLoad:
+  switch (request.GetCacheMode()) {
+    case mojom::FetchCacheMode::DEFAULT:
+    case mojom::FetchCacheMode::NO_STORE:
+    case mojom::FetchCacheMode::NO_CACHE:
+    case mojom::FetchCacheMode::RELOAD:
+    case mojom::FetchCacheMode::FORCE_CACHE:
       return false;
-    case WebCachePolicy::kReturnCacheDataDontLoad:
-    case WebCachePolicy::kReturnCacheDataIfValid:
-    case WebCachePolicy::kBypassCacheLoadOnlyFromCache:
+    case mojom::FetchCacheMode::ONLY_IF_CACHED:
+    case mojom::FetchCacheMode::UNSPECIFIED_ONLY_IF_CACHED_STRICT:
+    case mojom::FetchCacheMode::UNSPECIFIED_FORCE_CACHE_MISS:
       return true;
   }
   NOTREACHED();
@@ -710,9 +710,9 @@ void InspectorNetworkAgent::WillSendRequest(
   if (state_->booleanProperty(NetworkAgentState::kCacheDisabled, false)) {
     if (LoadsFromCacheOnly(request) &&
         request.GetRequestContext() != WebURLRequest::kRequestContextInternal) {
-      request.SetCachePolicy(WebCachePolicy::kBypassCacheLoadOnlyFromCache);
+      request.SetCacheMode(mojom::FetchCacheMode::UNSPECIFIED_FORCE_CACHE_MISS);
     } else {
-      request.SetCachePolicy(WebCachePolicy::kBypassingCache);
+      request.SetCacheMode(mojom::FetchCacheMode::RELOAD);
     }
     request.SetShouldResetAppCache(true);
   }
