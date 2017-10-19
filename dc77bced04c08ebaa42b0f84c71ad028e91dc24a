@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c4ab900_ee6fff8c",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-19T17:04:42Z",
+      "side": 1,
+      "message": "should also this one be conditioned by if (request-\u003eadd_to_trace?)",
+      "range": {
+        "startLine": 550,
+        "startChar": 3,
+        "endLine": 552,
+        "endChar": 80
+      },
+      "revId": "dc77bced04c08ebaa42b0f84c71ad028e91dc24a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8d1b39_7e648c06",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-19T17:04:42Z",
+      "side": 1,
+      "message": "Maybe add a comment above saying:\n\n// RequestGlobalMemoryDump, as opposite to RequestGlobalMemoryDumpAndAddToTrace, shouldn\u0027t add anything into the trace",
+      "range": {
+        "startLine": 671,
+        "startChar": 0,
+        "endLine": 671,
+        "endChar": 68
+      },
+      "revId": "dc77bced04c08ebaa42b0f84c71ad028e91dc24a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71f768b_d4ce52eb",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-19T17:04:42Z",
+      "side": 1,
+      "message": "s/Arent/Are/ ?",
+      "range": {
+        "startLine": 716,
+        "startChar": 33,
+        "endLine": 716,
+        "endChar": 38
+      },
+      "revId": "dc77bced04c08ebaa42b0f84c71ad028e91dc24a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
