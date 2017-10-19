@@ -1043,6 +1043,9 @@ bool GLES2DecoderPassthroughImpl::MakeCurrent() {
   }
 #endif  // defined(USE_EGL)
 
+  ProcessReadPixels(false);
+  ProcessQueries(false);
+
   return true;
 }
 
