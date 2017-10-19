@@ -70,6 +70,24 @@
       "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17ca3fee_a29ea19b",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-19T17:38:09Z",
+      "side": 1,
+      "message": "Can you add a link to the mocks in the description of this CL or on the bug? Or if it\u0027s an email thread that\u0027s not on a list, can you let me know the title of the thread so I can go find it?",
+      "parentUuid": "4a4ff118_ed76c070",
+      "revId": "55d1f172c97f4faeffce2699e708d1fc95360bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
