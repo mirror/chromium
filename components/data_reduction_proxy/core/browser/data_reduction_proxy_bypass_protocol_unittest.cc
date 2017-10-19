@@ -25,6 +25,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
 #include "net/base/completion_callback.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
@@ -37,6 +38,9 @@
 #include "net/proxy/proxy_server.h"
 #include "net/proxy/proxy_service.h"
 #include "net/socket/socket_test_util.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/embedded_test_server_connection_listener.h"
+#include "net/test/embedded_test_server/http_response.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/static_http_user_agent_settings.h"
 #include "net/url_request/url_request.h"
@@ -73,6 +77,180 @@ class SimpleURLRequestInterceptor : public net::URLRequestInterceptor {
     return net::URLRequestHttpJob::Factory(request, network_delegate, "http");
   }
 };
+
+// An embedded test server connection listener that resets the connection
+// after accepting it.
+class SimpleConnectionListener
+    : public net::test_server::EmbeddedTestServerConnectionListener {
+ public:
+  SimpleConnectionListener() : accepted_socket_count_(0) {}
+  ~SimpleConnectionListener() override {}
+
+  void AcceptedSocket(const net::StreamSocket& socket) override {
+    accepted_socket_count_++;
+  }
+  void ReadFromSocket(const net::StreamSocket& socket, int* rv) override {
+    if (accepted_socket_count_ == 1) {
+      // Only intercept the first connection attempt.
+      *rv = -130;
+    }
+  }
+
+  size_t accepted_socket_count() const { return accepted_socket_count_; }
+
+ private:
+  const scoped_refptr<base::SequencedTaskRunner> run_loop_task_runner_;
+
+  base::RunLoop run_loop_;
+
+  size_t accepted_socket_count_;
+
+  DISALLOW_COPY_AND_ASSIGN(SimpleConnectionListener);
+};
+
+// Fetches resources from the embedded test server.
+class DataReductionProxyProtocolEmbeddedServerTest : public testing::Test {
+ public:
+  DataReductionProxyProtocolEmbeddedServerTest() {
+    embedded_test_server_.SetConnectionListener(&simple_connection_listener_);
+  }
+
+  ~DataReductionProxyProtocolEmbeddedServerTest() override {}
+
+  void SetUp() override {
+    net::NetworkChangeNotifier::SetTestNotificationsOnly(true);
+    test_context_ = DataReductionProxyTestContext::Builder()
+                        .SkipSettingsInitialization()
+                        .Build();
+    // Since some of the tests fetch a webpage from the embedded server running
+    // on localhost, the adding of default bypass rules is disabled. This allows
+    // Chrome to fetch webpages using data saver proxy.
+    test_context_->config()->SetShouldAddDefaultProxyBypassRules(false);
+    test_context_->InitSettingsWithoutCheck();
+
+    test_context_->RunUntilIdle();
+  }
+
+  // Sets up the |TestURLRequestContext| with the provided |ProxyService|.
+  void ConfigureTestDependencies(std::unique_ptr<ProxyService> proxy_service) {
+    // Create a context with delayed initialization.
+    context_.reset(new TestURLRequestContext(true));
+
+    proxy_service_ = std::move(proxy_service);
+    context_->set_proxy_service(proxy_service_.get());
+
+    DataReductionProxyInterceptor* interceptor =
+        new DataReductionProxyInterceptor(
+            test_context_->config(), test_context_->io_data()->config_client(),
+            nullptr /* bypass_stats */, test_context_->event_creator());
+
+    std::unique_ptr<net::URLRequestJobFactoryImpl> job_factory_impl(
+        new net::URLRequestJobFactoryImpl());
+
+    job_factory_.reset(new net::URLRequestInterceptingJobFactory(
+        std::move(job_factory_impl), base::WrapUnique(interceptor)));
+
+    context_->set_job_factory(job_factory_.get());
+
+    proxy_delegate_ = test_context_->io_data()->CreateProxyDelegate();
+    context_->set_proxy_delegate(proxy_delegate_.get());
+
+    context_->Init();
+  }
+
+ protected:
+  base::MessageLoopForIO message_loop_;
+  SimpleConnectionListener simple_connection_listener_;
+  net::EmbeddedTestServer embedded_test_server_;
+
+  std::unique_ptr<ProxyService> proxy_service_;
+  std::unique_ptr<DataReductionProxyTestContext> test_context_;
+
+  std::unique_ptr<net::URLRequestInterceptingJobFactory> job_factory_;
+  std::unique_ptr<TestURLRequestContext> context_;
+  std::unique_ptr<net::ProxyDelegate> proxy_delegate_;
+};
+
+// Tests that if the embedded test server resets the connection after accepting
+// it, then the data saver proxy is bypassed, and the request is retried.
+TEST_F(DataReductionProxyProtocolEmbeddedServerTest,
+       EmbeddedTestServerBypassRetryOnPostConnectionErrors) {
+  base::HistogramTester histogram_tester;
+  embedded_test_server_.AddDefaultHandlers(
+      base::FilePath(FILE_PATH_LITERAL("net/data/url_request_unittest")));
+  ASSERT_TRUE(embedded_test_server_.Start());
+
+  test_context_->config()->test_params()->UseNonSecureProxiesForHttp();
+  test_context_->SetDataReductionProxyEnabled(true);
+  net::ProxyServer proxy_server(net::ProxyServer::SCHEME_HTTP,
+                                embedded_test_server_.host_port_pair());
+
+  ASSERT_TRUE(proxy_server.is_http());
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kDataReductionProxy, proxy_server.host_port_pair().ToString());
+  test_context_->config()->ResetParamFlagsForTest();
+  ConfigureTestDependencies(ProxyService::CreateFixedFromPacResult("DIRECT"));
+
+  test_context_->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
+
+  {
+    const GURL url = embedded_test_server_.GetURL("/simple.html");
+    net::TestDelegate delegate;
+    std::unique_ptr<net::URLRequest> url_request(context_->CreateRequest(
+        url, net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+    url_request->Start();
+    while (!url_request->status().is_success()) {
+      // Need to pump the thread for the embedded server and the DRP thread.
+      test_context_->RunUntilIdle();
+      base::RunLoop().RunUntilIdle();
+    }
+    EXPECT_FALSE(url_request->proxy_server().is_http());
+    // The proxy should have been marked as bad.
+    ProxyRetryInfoMap retry_info = proxy_service_->proxy_retry_info();
+    while (retry_info.size() != 1) {
+      test_context_->RunUntilIdle();
+      base::RunLoop().RunUntilIdle();
+      retry_info = proxy_service_->proxy_retry_info();
+    }
+
+    EXPECT_LE(base::TimeDelta::FromMinutes(4),
+              retry_info.begin()->second.current_delay);
+    // Two connections should be accepted: First when using the proxy, second
+    // when establishing the direct connection.
+    EXPECT_EQ(2u, simple_connection_listener_.accepted_socket_count());
+  }
+
+  histogram_tester.ExpectUniqueSample(
+      "DataReductionProxy.InValidResponseHeadersReceived.NetError",
+      std::abs(net::ERR_EMPTY_RESPONSE), 1);
+
+  {
+    // Second request should be fetched directly.
+    const GURL url = embedded_test_server_.GetURL("/simple2.html");
+    net::TestDelegate delegate;
+    std::unique_ptr<net::URLRequest> url_request(context_->CreateRequest(
+        url, net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+    url_request->Start();
+    while (!(url_request->status().is_success())) {
+      // Need to pump the thread for the embedded server and the DRP thread.
+      test_context_->RunUntilIdle();
+      base::RunLoop().RunUntilIdle();
+    }
+    EXPECT_TRUE(!url_request->proxy_server().is_valid() ||
+                url_request->proxy_server().is_direct());
+    // The proxy should still be marked as bad.
+    ProxyRetryInfoMap retry_info = proxy_service_->proxy_retry_info();
+    while (retry_info.size() != 1) {
+      test_context_->RunUntilIdle();
+      base::RunLoop().RunUntilIdle();
+      retry_info = proxy_service_->proxy_retry_info();
+    }
+
+    EXPECT_LE(base::TimeDelta::FromMinutes(4),
+              retry_info.begin()->second.current_delay);
+  }
+}
 
 // Constructs a |TestURLRequestContext| that uses a |MockSocketFactory| to
 // simulate requests and responses.
@@ -385,16 +563,6 @@ TEST_F(DataReductionProxyProtocolTest, BypassLogic) {
       "Via: 1.1 Chrome-Compression-Proxy\r\n\r\n",
       false,
       false,
-      0u,
-      true,
-      -1,
-      BYPASS_EVENT_TYPE_MAX,
-    },
-    // Response error does not result in bypass.
-    { "GET",
-      "Not an HTTP response",
-      false,
-      true,
       0u,
       true,
       -1,

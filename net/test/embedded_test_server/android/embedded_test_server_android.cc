@@ -33,7 +33,7 @@ void EmbeddedTestServerAndroid::ConnectionListener::AcceptedSocket(
 
 void EmbeddedTestServerAndroid::ConnectionListener::ReadFromSocket(
     const StreamSocket& socket,
-    int rv) {
+    int* rv) {
   test_server_android_->ReadFromSocket(static_cast<const void*>(&socket));
 }
 
