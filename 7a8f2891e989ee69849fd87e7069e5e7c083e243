@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e475316_b7ea08f3",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-19T15:31:08Z",
+      "side": 1,
+      "message": "nit: s/trait/request/",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "7a8f2891e989ee69849fd87e7069e5e7c083e243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879de9cb_acc6767f",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-19T15:31:08Z",
+      "side": 1,
+      "message": "nit: s/being applied the trait/the request/",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "7a8f2891e989ee69849fd87e7069e5e7c083e243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
