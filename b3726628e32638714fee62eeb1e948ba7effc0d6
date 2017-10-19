@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2396dce_06be797c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-19T20:09:51Z",
+      "side": 1,
+      "message": "From my understanding, the metrics interested are:\n1) AvailableSpaceAboveLowSpaceLimit\n2) AvailableSpaceAfterFreeUp, which frees up both cached size and unimportant storage.\nBesides, we can continue logging 3) CacheSize and 4) unimportant storage size.",
+      "revId": "b3726628e32638714fee62eeb1e948ba7effc0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2ca5b0_83561226",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-19T20:09:51Z",
+      "side": 1,
+      "message": "Can you move from line 329 to line 339 to another static function in WebApkUma, something like logAvailableSpaceOnGetUnimportantSiteStorage(long unimportantSiteStorageTotal)? Perhaps you can move line from 323 to 327 too. It will decrease the dependency of the storeagesizeCalculator and WebApkUma recording:)",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 66
+      },
+      "revId": "b3726628e32638714fee62eeb1e948ba7effc0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
