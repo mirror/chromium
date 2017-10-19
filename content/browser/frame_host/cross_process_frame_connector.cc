@@ -8,6 +8,7 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_hittest.h"
+#include "content/browser/bad_message.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -274,6 +275,16 @@ void CrossProcessFrameConnector::UnlockMouse() {
 void CrossProcessFrameConnector::OnFrameRectChanged(
     const gfx::Rect& frame_rect,
     const viz::LocalSurfaceId& local_surface_id) {
+  // If size of the frame has changed, then the viz::LocalSurfaceId must
+  // also change.
+  if (child_frame_rect_.size() != frame_rect.size() &&
+      local_surface_id_ == local_surface_id) {
+    bad_message::ReceivedBadMessage(
+        frame_proxy_in_parent_renderer_->GetProcess(),
+        bad_message::CPFC_FRAME_SIZE_CHANGED_LOCAL_SURFACE_ID_UNCHANGED);
+    return;
+  }
+
   local_surface_id_ = local_surface_id;
   if (!frame_rect.size().IsEmpty())
     SetRect(frame_rect);
