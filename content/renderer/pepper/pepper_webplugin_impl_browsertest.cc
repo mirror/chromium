@@ -35,12 +35,7 @@ class PepperWebPluginImplBrowserTest
     : public RenderViewTest,
       public PluginInstanceThrottler::Observer {
  public:
-  PepperWebPluginImplBrowserTest()
-      : throttler_(nullptr),
-        throttle_engaged_(false),
-        pp_module_(0),
-        pp_instance_(0),
-        graphics2d_(0) {}
+  PepperWebPluginImplBrowserTest() :, , , , {}
 
   void SetUp() override {
     base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
@@ -178,11 +173,11 @@ class PepperWebPluginImplBrowserTest
     }
   };
 
-  PluginInstanceThrottlerImpl* throttler_;
-  bool throttle_engaged_;
-  PP_Module pp_module_;
-  PP_Instance pp_instance_;
-  PP_Resource graphics2d_;
+  PluginInstanceThrottlerImpl* throttler_{nullptr};
+  bool throttle_engaged_{false};
+  PP_Module pp_module_{0};
+  PP_Instance pp_instance_{0};
+  PP_Resource graphics2d_{0};
   static PepperWebPluginImplBrowserTest* current_test_;
   static const PPB_Core* ppb_core_;
   static const PPB_Graphics2D* ppb_graphics2d_;

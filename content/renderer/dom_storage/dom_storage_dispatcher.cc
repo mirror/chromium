@@ -131,8 +131,8 @@ class DomStorageDispatcher::ProxyImpl : public DOMStorageProxy {
   // to keep track of how many tabs have a given area open.
   struct CachedAreaHolder {
     scoped_refptr<DOMStorageCachedArea> area_;
-    int open_count_;
-    CachedAreaHolder() : open_count_(0) {}
+    int open_count_{0};
+    CachedAreaHolder() : {}
     CachedAreaHolder(DOMStorageCachedArea* area, int count)
         : area_(area), open_count_(count) {}
   };

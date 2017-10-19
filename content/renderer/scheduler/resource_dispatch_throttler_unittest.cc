@@ -54,7 +54,7 @@ int GetRequestId(const IPC::Message& msg) {
 class RendererSchedulerForTest
     : public blink::scheduler::FakeRendererScheduler {
  public:
-  RendererSchedulerForTest() : high_priority_work_anticipated_(false) {}
+  RendererSchedulerForTest() : {}
   ~RendererSchedulerForTest() override {}
 
   // RendererScheduler implementation:
@@ -67,7 +67,7 @@ class RendererSchedulerForTest
   }
 
  private:
-  bool high_priority_work_anticipated_;
+  bool high_priority_work_anticipated_{false};
 };
 
 }  // namespace
@@ -110,7 +110,7 @@ class ResourceDispatchThrottlerForTest : public ResourceDispatchThrottler {
 
 class ResourceDispatchThrottlerTest : public testing::Test, public IPC::Sender {
  public:
-  ResourceDispatchThrottlerTest() : last_request_id_(0) {
+  ResourceDispatchThrottlerTest() : {
     throttler_.reset(new ResourceDispatchThrottlerForTest(this, &scheduler_));
   }
   ~ResourceDispatchThrottlerTest() override {}
@@ -198,7 +198,7 @@ class ResourceDispatchThrottlerTest : public testing::Test, public IPC::Sender {
  private:
   std::unique_ptr<ResourceDispatchThrottlerForTest> throttler_;
   RendererSchedulerForTest scheduler_;
-  int last_request_id_;
+  int last_request_id_{0};
 
   DISALLOW_COPY_AND_ASSIGN(ResourceDispatchThrottlerTest);
 };

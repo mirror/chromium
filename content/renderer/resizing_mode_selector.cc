@@ -10,7 +10,7 @@
 
 namespace content {
 
-ResizingModeSelector::ResizingModeSelector() : is_synchronous_mode_(false) {}
+ResizingModeSelector::ResizingModeSelector() : {}
 
 bool ResizingModeSelector::NeverUsesSynchronousResize() const {
   return !RenderThreadImpl::current() ||  // can be NULL when in unit tests

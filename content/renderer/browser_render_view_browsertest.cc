@@ -46,10 +46,7 @@ namespace {
 
 class TestShellContentRendererClient : public ShellContentRendererClient {
  public:
-  TestShellContentRendererClient()
-      : latest_error_valid_(false),
-        latest_error_reason_(0),
-        latest_error_stale_copy_in_cache_(false) {}
+  TestShellContentRendererClient() :, , {}
 
   void GetNavigationErrorStrings(content::RenderFrame* render_frame,
                                  const blink::WebURLRequest& failed_request,
@@ -72,9 +69,9 @@ class TestShellContentRendererClient : public ShellContentRendererClient {
   }
 
  private:
-  bool latest_error_valid_;
-  int latest_error_reason_;
-  bool latest_error_stale_copy_in_cache_;
+  bool latest_error_valid_{false};
+  int latest_error_reason_{0};
+  bool latest_error_stale_copy_in_cache_{false};
 };
 
 // Must be called on IO thread.

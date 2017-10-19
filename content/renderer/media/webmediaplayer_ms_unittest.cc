@@ -464,9 +464,9 @@ class WebMediaPlayerMSTest
             nullptr,
             blink::WebString(),
             blink::WebSecurityOrigin())),
-        web_layer_set_(false),
-        rendering_(false),
-        background_rendering_(false) {}
+        ,
+        ,
+  {}
   ~WebMediaPlayerMSTest() override {
     player_.reset();
     base::RunLoop().RunUntilIdle();
@@ -562,9 +562,9 @@ class WebMediaPlayerMSTest
   // rendering.
   void RenderFrame();
 
-  bool web_layer_set_;
-  bool rendering_;
-  bool background_rendering_;
+  bool web_layer_set_{false};
+  bool rendering_{false};
+  bool background_rendering_{false};
 };
 
 MockMediaStreamVideoRenderer* WebMediaPlayerMSTest::LoadAndGetFrameProvider(

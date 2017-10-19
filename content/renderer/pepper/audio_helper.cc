@@ -15,7 +15,7 @@ namespace content {
 
 // AudioHelper -----------------------------------------------------------------
 
-AudioHelper::AudioHelper() : shared_memory_size_for_create_callback_(0) {}
+AudioHelper::AudioHelper() : {}
 
 AudioHelper::~AudioHelper() {}
 

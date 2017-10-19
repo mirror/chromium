@@ -82,7 +82,7 @@ namespace {
 // FIXME: It would be great if there was a reusable mock SingleThreadTaskRunner
 class TestTaskCounter : public base::SingleThreadTaskRunner {
  public:
-  TestTaskCounter() : count_(0) {}
+  TestTaskCounter() : {}
 
   // SingleThreadTaskRunner implementation.
   bool PostDelayedTask(const base::Location&,
@@ -112,7 +112,7 @@ class TestTaskCounter : public base::SingleThreadTaskRunner {
   ~TestTaskCounter() override {}
 
   mutable base::Lock lock_;
-  int count_;
+  int count_{0};
 };
 
 #if defined(COMPILER_MSVC)

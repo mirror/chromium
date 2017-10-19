@@ -67,7 +67,7 @@ bool HasDocType(const WebDocument& doc) {
 class DomSerializerTests : public ContentBrowserTest,
                            public WebFrameSerializerClient {
  public:
-  DomSerializerTests() : serialization_reported_end_of_data_(false) {}
+  DomSerializerTests() : {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(switches::kSingleProcess);
@@ -616,7 +616,7 @@ class DomSerializerTests : public ContentBrowserTest,
  private:
   int32_t render_view_routing_id_;
   std::string serialized_contents_;
-  bool serialization_reported_end_of_data_;
+  bool serialization_reported_end_of_data_{false};
 };
 
 // If original contents have document type, the serialized contents also have

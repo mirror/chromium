@@ -42,10 +42,7 @@ namespace content {
 
 class MockDeviceMotionListener : public blink::WebDeviceMotionListener {
  public:
-  MockDeviceMotionListener()
-      : did_change_device_motion_(false), number_of_events_(0) {
-    memset(&data_, 0, sizeof(data_));
-  }
+  MockDeviceMotionListener() :, { memset(&data_, 0, sizeof(data_)); }
   ~MockDeviceMotionListener() override {}
 
   void DidChangeDeviceMotion(const device::MotionData& data) override {
@@ -63,8 +60,8 @@ class MockDeviceMotionListener : public blink::WebDeviceMotionListener {
   const device::MotionData& data() const { return data_; }
 
  private:
-  bool did_change_device_motion_;
-  int number_of_events_;
+  bool did_change_device_motion_{false};
+  int number_of_events_{0};
   device::MotionData data_;
 
   DISALLOW_COPY_AND_ASSIGN(MockDeviceMotionListener);
@@ -72,8 +69,7 @@ class MockDeviceMotionListener : public blink::WebDeviceMotionListener {
 
 class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
  public:
-  DeviceMotionEventPumpForTesting()
-      : DeviceMotionEventPump(nullptr), stop_on_fire_event_(true) {}
+  DeviceMotionEventPumpForTesting() : DeviceMotionEventPump(nullptr), {}
   ~DeviceMotionEventPumpForTesting() override {}
 
   // DeviceMotionEventPump:
@@ -188,7 +184,7 @@ class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
   }
 
  private:
-  bool stop_on_fire_event_;
+  bool stop_on_fire_event_{true};
   mojo::ScopedSharedBufferHandle shared_memory_;
   device::SensorReadingSharedBuffer* accelerometer_buffer_;
   device::SensorReadingSharedBuffer* linear_acceleration_sensor_buffer_;

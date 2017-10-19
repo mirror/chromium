@@ -47,7 +47,7 @@ class CONTENT_EXPORT WebRtcAudioRenderer
   // the state in the same way in WebRtcAudioRenderer and SharedAudioRenderer.
   class PlayingState {
    public:
-    PlayingState() : playing_(false), volume_(1.0f) {}
+    PlayingState() :, {}
 
     ~PlayingState() { DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_); }
 
@@ -72,8 +72,8 @@ class CONTENT_EXPORT WebRtcAudioRenderer
     }
 
    private:
-    bool playing_;
-    float volume_;
+    bool playing_{false};
+    float volume_{1.0f};
 
     SEQUENCE_CHECKER(sequence_checker_);
   };

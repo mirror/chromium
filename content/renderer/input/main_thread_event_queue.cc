@@ -221,8 +221,7 @@ class QueuedWebInputEvent : public ScopedWebInputEventWithLatencyInfo,
   HandledEventCallback callback_;
 };
 
-MainThreadEventQueue::SharedState::SharedState()
-    : sent_main_frame_request_(false), sent_post_task_(false) {}
+MainThreadEventQueue::SharedState::SharedState() :, {}
 
 MainThreadEventQueue::SharedState::~SharedState() {}
 

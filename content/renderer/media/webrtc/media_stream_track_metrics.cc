@@ -265,8 +265,7 @@ void MediaStreamTrackMetricsObserver::ReportTracks(
   }
 }
 
-MediaStreamTrackMetrics::MediaStreamTrackMetrics()
-    : ice_state_(webrtc::PeerConnectionInterface::kIceConnectionNew) {}
+MediaStreamTrackMetrics::MediaStreamTrackMetrics() : {}
 
 MediaStreamTrackMetrics::~MediaStreamTrackMetrics() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

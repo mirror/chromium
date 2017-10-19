@@ -18,7 +18,7 @@ namespace content {
 class MockDataChannelHandlerClient :
     public blink::WebRTCDataChannelHandlerClient {
  public:
-  MockDataChannelHandlerClient() : state_(kReadyStateConnecting) {}
+  MockDataChannelHandlerClient() : {}
 
   void DidChangeReadyState(ReadyState state) override { state_ = state; }
   void DidDecreaseBufferedAmount(unsigned previous_amount) override {}
@@ -29,7 +29,7 @@ class MockDataChannelHandlerClient :
   ReadyState ready_state() const { return state_; }
 
  private:
-  ReadyState state_;
+  ReadyState state_{kReadyStateConnecting};
 };
 
 class RtcDataChannelHandlerTest : public ::testing::Test {

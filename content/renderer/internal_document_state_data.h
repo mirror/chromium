@@ -79,13 +79,14 @@ class InternalDocumentStateData : public base::SupportsUserData::Data {
   }
 
  private:
-  int http_status_code_;
+  int http_status_code_{0};
   GURL searchable_form_url_;
   std::string searchable_form_encoding_;
-  bool is_overriding_user_agent_;
-  bool must_reset_scroll_and_scale_state_;
-  bool cache_policy_override_set_;
-  blink::WebCachePolicy cache_policy_override_;
+  bool is_overriding_user_agent_{false};
+  bool must_reset_scroll_and_scale_state_{false};
+  bool cache_policy_override_set_{false};
+  blink::WebCachePolicy cache_policy_override_{
+      blink::WebCachePolicy::kUseProtocolCachePolicy};
 
   DISALLOW_COPY_AND_ASSIGN(InternalDocumentStateData);
 };

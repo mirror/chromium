@@ -24,11 +24,7 @@ using media::ChannelLayout;
 namespace content {
 
 WebRtcAudioDeviceImpl::WebRtcAudioDeviceImpl()
-    : audio_transport_callback_(NULL),
-      output_delay_ms_(0),
-      initialized_(false),
-      playing_(false),
-      recording_(false) {
+    : audio_transport_callback_(NULL), , , , {
   DVLOG(1) << "WebRtcAudioDeviceImpl::WebRtcAudioDeviceImpl()";
   // This object can be constructed on either the signaling thread or the main
   // thread, so we need to detach these thread checkers here and have them

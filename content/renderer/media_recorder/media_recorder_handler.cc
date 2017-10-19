@@ -91,13 +91,7 @@ void OnEncodingInfoError(
 
 }  // anonymous namespace
 
-MediaRecorderHandler::MediaRecorderHandler()
-    : video_bits_per_second_(0),
-      audio_bits_per_second_(0),
-      codec_id_(VideoTrackRecorder::CodecId::VP8),
-      recording_(false),
-      client_(nullptr),
-      weak_factory_(this) {}
+MediaRecorderHandler::MediaRecorderHandler() :, , , , , weak_factory_(this) {}
 
 MediaRecorderHandler::~MediaRecorderHandler() {
   DCHECK(main_render_thread_checker_.CalledOnValidThread());

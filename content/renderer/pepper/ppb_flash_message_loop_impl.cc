@@ -17,7 +17,7 @@ namespace content {
 class PPB_Flash_MessageLoop_Impl::State
     : public base::RefCounted<PPB_Flash_MessageLoop_Impl::State> {
  public:
-  State() : result_(PP_OK), run_called_(false), quit_called_(false) {}
+  State() :, , {}
 
   int32_t result() const { return result_; }
   void set_result(int32_t result) { result_ = result; }
@@ -37,9 +37,9 @@ class PPB_Flash_MessageLoop_Impl::State
   friend class base::RefCounted<State>;
   virtual ~State() {}
 
-  int32_t result_;
-  bool run_called_;
-  bool quit_called_;
+  int32_t result_{PP_OK};
+  bool run_called_{false};
+  bool quit_called_{false};
   RunFromHostProxyCallback run_callback_;
 };
 

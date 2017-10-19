@@ -46,7 +46,7 @@ void PerSessionWebRTCAPIMetrics::DecrementStreamCounter() {
   }
 }
 
-PerSessionWebRTCAPIMetrics::PerSessionWebRTCAPIMetrics() : num_streams_(0) {
+PerSessionWebRTCAPIMetrics::PerSessionWebRTCAPIMetrics() : {
   ResetUsage();
 }
 

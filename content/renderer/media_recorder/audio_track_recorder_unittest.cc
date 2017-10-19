@@ -120,7 +120,7 @@ class AudioTrackRecorderTest : public TestWithParam<ATRTestParams> {
         second_source_(second_params_.channels(),
                        440,
                        second_params_.sample_rate()),
-        opus_decoder_(nullptr) {
+  {
     ResetDecoder(first_params_);
     PrepareBlinkTrack();
     audio_track_recorder_.reset(new AudioTrackRecorder(
@@ -207,7 +207,7 @@ class AudioTrackRecorderTest : public TestWithParam<ATRTestParams> {
   media::SineWaveAudioSource second_source_;
 
   // Decoder for verifying data was properly encoded.
-  OpusDecoder* opus_decoder_;
+  OpusDecoder* opus_decoder_{nullptr};
   std::unique_ptr<float[]> buffer_;
 
  private:

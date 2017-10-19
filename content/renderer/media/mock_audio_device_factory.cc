@@ -13,8 +13,7 @@ MockCapturerSource::~MockCapturerSource() {}
 void MockCapturerSource::SetVolume(double volume) {}
 
 MockAudioDeviceFactory::MockAudioDeviceFactory()
-    : AudioDeviceFactory(), mock_capturer_source_(new MockCapturerSource()),
-      did_create_once_(false) {}
+    : AudioDeviceFactory(), mock_capturer_source_(new MockCapturerSource()), {}
 
 MockAudioDeviceFactory::~MockAudioDeviceFactory() {}
 

@@ -82,10 +82,7 @@ ACTION_TEMPLATE(SaveArgPointeeMove,
 
 class MockRTCStatsResponse : public LocalRTCStatsResponse {
  public:
-  MockRTCStatsResponse()
-      : report_count_(0),
-        statistic_count_(0) {
-  }
+  MockRTCStatsResponse() :, {}
 
   void addStats(const blink::WebRTCLegacyStats& stats) override {
     ++report_count_;
@@ -99,16 +96,14 @@ class MockRTCStatsResponse : public LocalRTCStatsResponse {
   int report_count() const { return report_count_; }
 
  private:
-  int report_count_;
-  int statistic_count_;
+  int report_count_{0};
+  int statistic_count_{0};
 };
 
 // Mocked wrapper for blink::WebRTCStatsRequest
 class MockRTCStatsRequest : public LocalRTCStatsRequest {
  public:
-  MockRTCStatsRequest()
-      : has_selector_(false),
-        request_succeeded_called_(false) {}
+  MockRTCStatsRequest() :, {}
 
   bool hasSelector() const override { return has_selector_; }
   blink::WebMediaStreamTrack component() const override { return component_; }
@@ -139,10 +134,10 @@ class MockRTCStatsRequest : public LocalRTCStatsRequest {
   }
 
  private:
-  bool has_selector_;
+  bool has_selector_{false};
   blink::WebMediaStreamTrack component_;
   scoped_refptr<MockRTCStatsResponse> response_;
-  bool request_succeeded_called_;
+  bool request_succeeded_called_{false};
 };
 
 class MockPeerConnectionTracker : public PeerConnectionTracker {

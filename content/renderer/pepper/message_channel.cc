@@ -55,7 +55,7 @@ const char kVarToV8ConversionError[] =
 
 // MessageChannel --------------------------------------------------------------
 struct MessageChannel::VarConversionResult {
-  VarConversionResult() : success_(false), conversion_completed_(false) {}
+  VarConversionResult() :, {}
   void ConversionCompleted(const ScopedPPVar& var,
                            bool success) {
     conversion_completed_ = true;
@@ -68,8 +68,8 @@ struct MessageChannel::VarConversionResult {
 
  private:
   ScopedPPVar var_;
-  bool success_;
-  bool conversion_completed_;
+  bool success_{false};
+  bool conversion_completed_{false};
 };
 
 // static

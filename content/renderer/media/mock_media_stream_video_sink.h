@@ -54,10 +54,11 @@ class MockMediaStreamVideoSink : public MediaStreamVideoSink {
   void DeliverVideoFrame(const scoped_refptr<media::VideoFrame>& frame,
                          base::TimeTicks estimated_capture_time);
 
-  int number_of_frames_;
-  bool enabled_;
-  media::VideoPixelFormat format_;
-  blink::WebMediaStreamSource::ReadyState state_;
+  int number_of_frames_{0};
+  bool enabled_{true};
+  media::VideoPixelFormat format_{media::PIXEL_FORMAT_UNKNOWN};
+  blink::WebMediaStreamSource::ReadyState state_{
+      blink::WebMediaStreamSource::kReadyStateLive};
   gfx::Size frame_size_;
   scoped_refptr<media::VideoFrame> last_frame_;
   base::WeakPtrFactory<MockMediaStreamVideoSink> weak_factory_;

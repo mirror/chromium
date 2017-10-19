@@ -36,7 +36,7 @@ ACTION(DoNothing) {}
 // Mock implementation of the Mojo Host service.
 class MockMojoVideoCaptureHost : public mojom::VideoCaptureHost {
  public:
-  MockMojoVideoCaptureHost() : released_buffer_count_(0) {
+  MockMojoVideoCaptureHost() : {
     ON_CALL(*this, GetDeviceSupportedFormatsMock(_, _, _))
         .WillByDefault(WithArgs<2>(Invoke(RunEmptyFormatsCallback)));
     ON_CALL(*this, GetDeviceFormatsInUseMock(_, _, _))
@@ -83,7 +83,7 @@ class MockMojoVideoCaptureHost : public mojom::VideoCaptureHost {
   void increase_released_buffer_count() { released_buffer_count_++; }
 
  private:
-  int released_buffer_count_;
+  int released_buffer_count_{0};
 
   DISALLOW_COPY_AND_ASSIGN(MockMojoVideoCaptureHost);
 };

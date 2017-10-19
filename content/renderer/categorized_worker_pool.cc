@@ -126,7 +126,7 @@ CategorizedWorkerPool::CategorizedWorkerPool()
       has_ready_to_run_foreground_tasks_cv_(&lock_),
       has_ready_to_run_background_tasks_cv_(&lock_),
       has_namespaces_with_finished_running_tasks_cv_(&lock_),
-      shutdown_(false) {}
+{}
 
 void CategorizedWorkerPool::Start(int num_threads) {
   DCHECK(threads_.empty());

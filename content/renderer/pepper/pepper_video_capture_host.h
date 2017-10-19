@@ -99,7 +99,7 @@ class PepperVideoCaptureHost : public ppapi::host::ResourceHost {
     BufferInfo(const BufferInfo& other);
     ~BufferInfo();
 
-    bool in_use;
+    bool in_use{false};
     void* data;
     scoped_refptr<PPB_Buffer_Impl> buffer;
   };

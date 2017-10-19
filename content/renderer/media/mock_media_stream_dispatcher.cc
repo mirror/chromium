@@ -15,13 +15,7 @@ const char kAudioOutputDeviceIdPrefix[] = "audio_output_device_id";
 namespace content {
 
 MockMediaStreamDispatcher::MockMediaStreamDispatcher()
-    : MediaStreamDispatcher(nullptr),
-      audio_input_request_id_(-1),
-      request_stream_counter_(0),
-      stop_audio_device_counter_(0),
-      stop_video_device_counter_(0),
-      session_id_(0),
-      test_same_id_(false) {}
+    : MediaStreamDispatcher(nullptr), , , , , , {}
 
 MockMediaStreamDispatcher::~MockMediaStreamDispatcher() {}
 

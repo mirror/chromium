@@ -96,7 +96,8 @@ class CONTENT_EXPORT MediaStreamTrackMetrics {
       ObserverVector;
   ObserverVector observers_;
 
-  webrtc::PeerConnectionInterface::IceConnectionState ice_state_;
+  webrtc::PeerConnectionInterface::IceConnectionState ice_state_{
+      webrtc::PeerConnectionInterface::kIceConnectionNew};
 
   SEQUENCE_CHECKER(sequence_checker_);
 

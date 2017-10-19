@@ -36,7 +36,7 @@ namespace {
 
 class PepperFileChooserHostTest : public RenderViewTest {
  public:
-  PepperFileChooserHostTest() : pp_instance_(123456) {}
+  PepperFileChooserHostTest() : {}
 
   void SetUp() override {
     SetContentClient(&client_);
@@ -53,7 +53,7 @@ class PepperFileChooserHostTest : public RenderViewTest {
   PP_Instance pp_instance() const { return pp_instance_; }
 
  private:
-  PP_Instance pp_instance_;
+  PP_Instance pp_instance_{123456};
 
   // Disables locking for the duration of the test.
   ppapi::ProxyLock::LockingDisablerForTest disable_locking_;

@@ -31,8 +31,8 @@ class WebRtcVideoCapturerAdapterTest
         adapter_(new WebRtcVideoCapturerAdapter(
             false,
             blink::WebMediaStreamTrack::ContentHintType::kNone)),
-        output_frame_width_(0),
-        output_frame_height_(0) {
+        ,
+  {
     adapter_->AddOrUpdateSink(this, rtc::VideoSinkWants());
   }
   ~WebRtcVideoCapturerAdapterTest() override { adapter_->RemoveSink(this); }
@@ -146,8 +146,8 @@ class WebRtcVideoCapturerAdapterTest
 
   std::unique_ptr<WebRtcVideoCapturerAdapter> adapter_;
   base::Optional<webrtc::VideoFrame> output_frame_;
-  int output_frame_width_;
-  int output_frame_height_;
+  int output_frame_width_{0};
+  int output_frame_height_{0};
 };
 
 TEST_F(WebRtcVideoCapturerAdapterTest, CropFrameTo640360) {

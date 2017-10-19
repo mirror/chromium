@@ -17,12 +17,7 @@ const char kUserDataKey[] = "InternalDocumentStateData";
 
 }
 
-InternalDocumentStateData::InternalDocumentStateData()
-    : http_status_code_(0),
-      is_overriding_user_agent_(false),
-      must_reset_scroll_and_scale_state_(false),
-      cache_policy_override_set_(false),
-      cache_policy_override_(blink::WebCachePolicy::kUseProtocolCachePolicy) {}
+InternalDocumentStateData::InternalDocumentStateData() :, , , , {}
 
 // static
 InternalDocumentStateData* InternalDocumentStateData::FromDocumentLoader(

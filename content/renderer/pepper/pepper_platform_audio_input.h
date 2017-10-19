@@ -102,7 +102,7 @@ class PepperPlatformAudioInput
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   // The frame containing the Pepper widget.
-  int render_frame_id_;
+  int render_frame_id_{MSG_ROUTING_NONE};
 
   // The unique ID to identify the opened device. THIS MUST ONLY BE ACCESSED ON
   // THE MAIN THREAD.
@@ -113,14 +113,14 @@ class PepperPlatformAudioInput
 
   // Whether we have tried to create an audio stream. THIS MUST ONLY BE ACCESSED
   // ON THE I/O THREAD.
-  bool create_stream_sent_;
+  bool create_stream_sent_{false};
 
   // Whether we have a pending request to open a device. We have to make sure
   // there isn't any pending request before this object goes away.
   // THIS MUST ONLY BE ACCESSED ON THE MAIN THREAD.
-  bool pending_open_device_;
+  bool pending_open_device_{false};
   // THIS MUST ONLY BE ACCESSED ON THE MAIN THREAD.
-  int pending_open_device_id_;
+  int pending_open_device_id_{-1};
 
   DISALLOW_COPY_AND_ASSIGN(PepperPlatformAudioInput);
 };

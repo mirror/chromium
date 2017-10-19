@@ -130,11 +130,10 @@ PepperPlatformAudioInput::PepperPlatformAudioInput()
     : client_(NULL),
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       io_task_runner_(ChildProcess::current()->io_task_runner()),
-      render_frame_id_(MSG_ROUTING_NONE),
-      create_stream_sent_(false),
-      pending_open_device_(false),
-      pending_open_device_id_(-1) {
-}
+      ,
+      ,
+      ,
+{}
 
 bool PepperPlatformAudioInput::Initialize(
     int render_frame_id,

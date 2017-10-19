@@ -15,8 +15,7 @@ namespace content {
 class CompositorForwardingMessageFilterTestHandler
     : public base::RefCounted<CompositorForwardingMessageFilterTestHandler> {
  public:
-  CompositorForwardingMessageFilterTestHandler() : count_(0) {
-  }
+  CompositorForwardingMessageFilterTestHandler() : {}
 
   void OnPlusMethod(const IPC::Message& msg) {
     count_++;
@@ -34,7 +33,7 @@ class CompositorForwardingMessageFilterTestHandler
   friend class base::RefCounted<CompositorForwardingMessageFilterTestHandler>;
   ~CompositorForwardingMessageFilterTestHandler() {}
 
-  int count_;
+  int count_{0};
 };
 
 TEST(CompositorForwardingMessageFilterTest, BasicTest) {

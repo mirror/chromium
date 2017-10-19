@@ -36,30 +36,29 @@
 namespace content {
 
 struct VideoCaptureImplManager::DeviceEntry {
-  media::VideoCaptureSessionId session_id;
+  media::VideoCaptureSessionId session_id{0};
 
   // To be used and destroyed only on the IO thread.
   std::unique_ptr<VideoCaptureImpl> impl;
 
   // Number of clients using |impl|.
-  int client_count;
+  int client_count{0};
 
   // This is set to true if this device is being suspended, via
   // VideoCaptureImplManager::Suspend().
   // See also: VideoCaptureImplManager::is_suspending_all_.
-  bool is_individually_suspended;
+  bool is_individually_suspended{false};
 
-  DeviceEntry()
-      : session_id(0), client_count(0), is_individually_suspended(false) {}
+  DeviceEntry() :, , {}
   DeviceEntry(DeviceEntry&& other) = default;
   DeviceEntry& operator=(DeviceEntry&& other) = default;
   ~DeviceEntry() = default;
 };
 
 VideoCaptureImplManager::VideoCaptureImplManager()
-    : next_client_id_(0),
+    :,
       render_main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      is_suspending_all_(false),
+      ,
       weak_factory_(this) {}
 
 VideoCaptureImplManager::~VideoCaptureImplManager() {

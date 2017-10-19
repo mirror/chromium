@@ -94,11 +94,11 @@ class CONTENT_EXPORT MediaRecorderHandler final
   base::ThreadChecker main_render_thread_checker_;
 
   // Sanitized video and audio bitrate settings passed on initialize().
-  int32_t video_bits_per_second_;
-  int32_t audio_bits_per_second_;
+  int32_t video_bits_per_second_{0};
+  int32_t audio_bits_per_second_{0};
 
   // Video Codec, VP8 is used by default.
-  VideoTrackRecorder::CodecId codec_id_;
+  VideoTrackRecorder::CodecId codec_id_{VideoTrackRecorder::CodecId::VP8};
 
   // |client_| has no notion of time, thus may configure us via start(timeslice)
   // to notify it after a certain |timeslice_| has passed. We use a moving
@@ -106,13 +106,13 @@ class CONTENT_EXPORT MediaRecorderHandler final
   base::TimeDelta timeslice_;
   base::TimeTicks slice_origin_timestamp_;
 
-  bool recording_;
+  bool recording_{false};
   blink::WebMediaStream media_stream_;  // The MediaStream being recorded.
   blink::WebVector<blink::WebMediaStreamTrack> video_tracks_;
   blink::WebVector<blink::WebMediaStreamTrack> audio_tracks_;
 
   // |client_| is a weak pointer, and is valid for the lifetime of this object.
-  blink::WebMediaRecorderHandlerClient* client_;
+  blink::WebMediaRecorderHandlerClient* client_{nullptr};
 
   std::vector<std::unique_ptr<VideoTrackRecorder>> video_recorders_;
   std::vector<std::unique_ptr<AudioTrackRecorder>> audio_recorders_;

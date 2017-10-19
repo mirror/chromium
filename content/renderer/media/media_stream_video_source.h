@@ -254,7 +254,7 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   void UpdateTrackSettings(MediaStreamVideoTrack* track,
                            const VideoTrackAdapterSettings& adapter_settings);
 
-  State state_;
+  State state_{NEW};
 
   struct PendingTrackInfo {
     PendingTrackInfo(

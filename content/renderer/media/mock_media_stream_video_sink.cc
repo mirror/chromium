@@ -9,11 +9,7 @@
 namespace content {
 
 MockMediaStreamVideoSink::MockMediaStreamVideoSink()
-    : number_of_frames_(0),
-      enabled_(true),
-      format_(media::PIXEL_FORMAT_UNKNOWN),
-      state_(blink::WebMediaStreamSource::kReadyStateLive),
-      weak_factory_(this) {}
+    :, , , , weak_factory_(this) {}
 
 MockMediaStreamVideoSink::~MockMediaStreamVideoSink() {
 }

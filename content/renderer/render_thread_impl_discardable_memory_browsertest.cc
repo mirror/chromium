@@ -32,8 +32,7 @@ namespace {
 
 class RenderThreadImplDiscardableMemoryBrowserTest : public ContentBrowserTest {
  public:
-  RenderThreadImplDiscardableMemoryBrowserTest()
-      : child_discardable_shared_memory_manager_(nullptr) {}
+  RenderThreadImplDiscardableMemoryBrowserTest() : {}
 
   // Overridden from BrowserTestBase:
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -59,7 +58,7 @@ class RenderThreadImplDiscardableMemoryBrowserTest : public ContentBrowserTest {
   }
 
   discardable_memory::ClientDiscardableSharedMemoryManager*
-      child_discardable_shared_memory_manager_;
+      child_discardable_shared_memory_manager_{nullptr};
 };
 
 IN_PROC_BROWSER_TEST_F(RenderThreadImplDiscardableMemoryBrowserTest,

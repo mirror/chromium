@@ -47,8 +47,7 @@ class MessageImpl : public WebDevToolsAgent::MessageDescriptor {
 }  // namespace
 
 DevToolsAgentFilter::DevToolsAgentFilter()
-    : io_task_runner_(ChildProcess::current()->io_task_runner()),
-      current_routing_id_(0) {}
+    : io_task_runner_(ChildProcess::current()->io_task_runner()), {}
 
 bool DevToolsAgentFilter::OnMessageReceived(const IPC::Message& message) {
   // Dispatch debugger commands directly from IO.

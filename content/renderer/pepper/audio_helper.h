@@ -52,7 +52,7 @@ class AudioHelper {
   // other process instead of mapping them in the renderer. These will be
   // invalid all other times.
   std::unique_ptr<base::SharedMemory> shared_memory_for_create_callback_;
-  size_t shared_memory_size_for_create_callback_;
+  size_t shared_memory_size_for_create_callback_{0};
   std::unique_ptr<base::SyncSocket> socket_for_create_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(AudioHelper);

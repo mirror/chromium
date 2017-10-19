@@ -56,7 +56,7 @@ class DevToolsAgentFilter : public IPC::MessageFilter {
   void RemoveEmbeddedWorkerRoute(int32_t routing_id);
 
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
-  int current_routing_id_;
+  int current_routing_id_{0};
 
   std::set<int32_t> embedded_worker_routes_;
 

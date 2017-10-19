@@ -73,7 +73,7 @@ class PepperAudioEncoderHost::AudioEncoderImpl {
 
  private:
   std::unique_ptr<uint8_t[]> encoder_memory_;
-  OpusEncoder* opus_encoder_;
+  OpusEncoder* opus_encoder_{nullptr};
 
   // Initialization parameters, only valid if |encoder_memory_| is not
   // nullptr.
@@ -82,8 +82,7 @@ class PepperAudioEncoderHost::AudioEncoderImpl {
   DISALLOW_COPY_AND_ASSIGN(AudioEncoderImpl);
 };
 
-PepperAudioEncoderHost::AudioEncoderImpl::AudioEncoderImpl()
-    : opus_encoder_(nullptr) {}
+PepperAudioEncoderHost::AudioEncoderImpl::AudioEncoderImpl() : {}
 
 PepperAudioEncoderHost::AudioEncoderImpl::~AudioEncoderImpl() {}
 
