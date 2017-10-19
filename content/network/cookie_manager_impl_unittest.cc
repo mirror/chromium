@@ -76,8 +76,18 @@ class SynchronousCookieManager {
     bool result = false;
     cookie_service_->SetCanonicalCookie(
         cookie, secure_source, modify_http_only,
-        base::BindOnce(&SynchronousCookieManager::SetCookieCallback, &run_loop,
+        base::BindOnce(&SynchronousCookieManager::BoolReturnCallback, &run_loop,
                        &result));
+    run_loop.Run();
+    return result;
+  }
+
+  bool DeleteCanonicalCookie(const net::CanonicalCookie& cookie) {
+    base::RunLoop run_loop;
+    bool result = false;
+    cookie_service_->DeleteCanonicalCookie(
+        cookie, base::BindOnce(&SynchronousCookieManager::BoolReturnCallback,
+                               &run_loop, &result));
     run_loop.Run();
     return result;
   }
@@ -107,9 +117,9 @@ class SynchronousCookieManager {
     run_loop->Quit();
   }
 
-  static void SetCookieCallback(base::RunLoop* run_loop,
-                                bool* result_out,
-                                bool result) {
+  static void BoolReturnCallback(base::RunLoop* run_loop,
+                                 bool* result_out,
+                                 bool result) {
     *result_out = result;
     run_loop->Quit();
   }
@@ -465,6 +475,28 @@ TEST_F(CookieManagerImplTest, GetCookieListAccessTime) {
   EXPECT_FALSE(cookies[0].LastAccessDate().is_null());
   EXPECT_GE(cookies[0].LastAccessDate(), start);
   EXPECT_LE(cookies[0].LastAccessDate(), base::Time::Now());
+}
+
+TEST_F(CookieManagerImplTest, DeleteOneCookie) {
+  std::vector<net::CanonicalCookie> cookies =
+      service_wrapper()->GetAllCookies();
+  ASSERT_EQ(4u, cookies.size());
+  std::sort(cookies.begin(), cookies.end(), &CompareCanonicalCookies);
+
+  EXPECT_TRUE(service_wrapper()->DeleteCanonicalCookie(cookies[0]));
+
+  cookies = service_wrapper()->GetAllCookies();
+  ASSERT_EQ(3u, cookies.size());
+  std::sort(cookies.begin(), cookies.end(), &CompareCanonicalCookies);
+
+  EXPECT_EQ("C", cookies[0].Name());
+  EXPECT_EQ("D", cookies[0].Value());
+
+  EXPECT_EQ("HttpOnly", cookies[1].Name());
+  EXPECT_EQ("F", cookies[1].Value());
+
+  EXPECT_EQ("Secure", cookies[2].Name());
+  EXPECT_EQ("E", cookies[2].Value());
 }
 
 TEST_F(CookieManagerImplTest, DeleteThroughSet) {

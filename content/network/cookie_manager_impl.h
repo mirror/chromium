@@ -48,6 +48,8 @@ class CONTENT_EXPORT CookieManagerImpl : public network::mojom::CookieManager {
                           bool secure_source,
                           bool modify_http_only,
                           SetCanonicalCookieCallback callback) override;
+  void DeleteCanonicalCookie(const net::CanonicalCookie& cookie,
+                             DeleteCanonicalCookieCallback callback) override;
   void DeleteCookies(network::mojom::CookieDeletionFilterPtr filter,
                      DeleteCookiesCallback callback) override;
   void RequestNotification(const GURL& url,

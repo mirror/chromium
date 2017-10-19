@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "content/public/common/cookie_manager.mojom.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
 #include "url/origin.h"
@@ -171,6 +172,23 @@ BrowsingDataFilterBuilderImpl::BuildCookieFilter() const {
       "different scoping, such as RegistrableDomainFilterBuilder.";
   return base::BindRepeating(&MatchesCookieForRegisterableDomainsAndIPs,
                              domains_, mode_);
+}
+
+void BrowsingDataFilterBuilderImpl::BuildCookieManagerFilter(
+    mojom::CookieDeletionFilter* filter) const {
+  DCHECK(origins_.empty())
+      << "Origin-based deletion is not suitable for cookies. Please use "
+         "different scoping, such as RegistrableDomainFilterBuilder.";
+  if (mode_ == WHITELIST) {
+    filter->including_domains = std::vector<std::string>();
+    for (auto& s : domains_)
+      filter->including_domains->push_back(s);
+  } else {
+    DCHECK(mode_ == BLACKLIST);
+    filter->excluding_domains = std::vector<std::string>();
+    for (auto& s : domains_)
+      filter->excluding_domains->push_back(s);
+  }
 }
 
 base::RepeatingCallback<bool(const std::string& channel_id_server_id)>

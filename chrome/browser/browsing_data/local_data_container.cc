@@ -51,8 +51,8 @@ void LocalDataContainer::Init(CookiesTreeModel* model) {
   batches_started_ = 1;
   DCHECK(cookie_helper_.get());
   cookie_helper_->StartFetching(
-      base::Bind(&LocalDataContainer::OnCookiesModelInfoLoaded,
-                 weak_ptr_factory_.GetWeakPtr()));
+      base::BindOnce(&LocalDataContainer::OnCookiesModelInfoLoaded,
+                     weak_ptr_factory_.GetWeakPtr()));
 
   if (database_helper_.get()) {
     batches_started_++;

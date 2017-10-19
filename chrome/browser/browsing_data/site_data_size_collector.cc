@@ -67,8 +67,8 @@ void SiteDataSizeCollector::Fetch(const FetchCallback& callback) {
   }
   if (cookie_helper_.get()) {
     cookie_helper_->StartFetching(
-        base::Bind(&SiteDataSizeCollector::OnCookiesModelInfoLoaded,
-                   weak_ptr_factory_.GetWeakPtr()));
+        base::BindOnce(&SiteDataSizeCollector::OnCookiesModelInfoLoaded,
+                       weak_ptr_factory_.GetWeakPtr()));
     in_flight_operations_++;
   }
   if (database_helper_.get()) {

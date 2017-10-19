@@ -261,7 +261,7 @@ void CookiesViewHandler::EnsureCookiesTreeModelCreated() {
     storage::FileSystemContext* file_system_context =
         storage_partition->GetFileSystemContext();
     LocalDataContainer* container = new LocalDataContainer(
-        new BrowsingDataCookieHelper(profile->GetRequestContext()),
+        new BrowsingDataCookieHelper(profile),
         new BrowsingDataDatabaseHelper(profile),
         new BrowsingDataLocalStorageHelper(profile),
         /*session_storage_helper=*/nullptr,

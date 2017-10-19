@@ -191,30 +191,6 @@ void ClearPnaclCacheOnIOThread(base::Time begin,
 }
 #endif
 
-void ClearCookiesOnIOThread(base::Time delete_begin,
-                            base::Time delete_end,
-                            net::URLRequestContextGetter* rq_context,
-                            const base::Closure& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  net::CookieStore* cookie_store =
-      rq_context->GetURLRequestContext()->cookie_store();
-  cookie_store->DeleteAllCreatedBetweenAsync(
-      delete_begin, delete_end, IgnoreArgument<uint32_t>(callback));
-}
-
-void ClearCookiesWithPredicateOnIOThread(
-    base::Time delete_begin,
-    base::Time delete_end,
-    net::CookieStore::CookiePredicate predicate,
-    net::URLRequestContextGetter* rq_context,
-    const base::Closure& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  net::CookieStore* cookie_store =
-      rq_context->GetURLRequestContext()->cookie_store();
-  cookie_store->DeleteAllCreatedBetweenWithPredicateAsync(
-      delete_begin, delete_end, predicate, IgnoreArgument<uint32_t>(callback));
-}
-
 void ClearNetworkPredictorOnIOThread(chrome_browser_net::Predictor* predictor) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(predictor);
@@ -364,7 +340,13 @@ ChromeBrowsingDataRemoverDelegate::ChromeBrowsingDataRemoverDelegate(
 #if defined(OS_ANDROID)
       webapp_registry_(new WebappRegistry()),
 #endif
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  content::mojom::CookieManagerRequest request(
+      mojo::MakeRequest(&cookie_manager_));
+  BrowserContext::GetDefaultStoragePartition(browser_context)
+      ->GetNetworkContext()
+      ->GetCookieManager(std::move(request));
+}
 
 ChromeBrowsingDataRemoverDelegate::~ChromeBrowsingDataRemoverDelegate() {}
 
@@ -713,26 +695,16 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
         scoped_refptr<net::URLRequestContextGetter> sb_context =
             sb_service->url_request_context();
         ++clear_cookies_count_;
-        if (filter_builder.IsEmptyBlacklist()) {
-          BrowserThread::PostTask(
-              BrowserThread::IO, FROM_HERE,
-              base::BindOnce(
-                  &ClearCookiesOnIOThread, delete_begin_, delete_end_,
-                  base::RetainedRef(std::move(sb_context)),
-                  UIThreadTrampoline(base::Bind(
-                      &ChromeBrowsingDataRemoverDelegate::OnClearedCookies,
-                      weak_ptr_factory_.GetWeakPtr()))));
-        } else {
-          BrowserThread::PostTask(
-              BrowserThread::IO, FROM_HERE,
-              base::BindOnce(
-                  &ClearCookiesWithPredicateOnIOThread, delete_begin_,
-                  delete_end_, filter_builder.BuildCookieFilter(),
-                  base::RetainedRef(std::move(sb_context)),
-                  UIThreadTrampoline(base::Bind(
-                      &ChromeBrowsingDataRemoverDelegate::OnClearedCookies,
-                      weak_ptr_factory_.GetWeakPtr()))));
-        }
+        content::mojom::CookieDeletionFilterPtr filter(
+            content::mojom::CookieDeletionFilter::New());
+
+        // Not assigning delete_begin_ as it is null by conditional above.
+        filter->created_after_time = delete_end_;
+        filter_builder.BuildCookieManagerFilter(filter.get());
+        cookie_manager_->DeleteCookies(
+            std::move(filter),
+            base::BindOnce(&ChromeBrowsingDataRemoverDelegate::OnClearedCookies,
+                           weak_ptr_factory_.GetWeakPtr()));
       }
     }
 
@@ -1160,7 +1132,8 @@ void ChromeBrowsingDataRemoverDelegate::OnKeywordsLoaded(
   clear_keyword_data_.GetCompletionCallback().Run();
 }
 
-void ChromeBrowsingDataRemoverDelegate::OnClearedCookies() {
+void ChromeBrowsingDataRemoverDelegate::OnClearedCookies(
+    uint32_t /* num_deleted */) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   DCHECK_GT(clear_cookies_count_, 0);

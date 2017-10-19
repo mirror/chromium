@@ -12,7 +12,10 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/storage_partition.h"
+#include "content/public/common/network_service.mojom.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_util.h"
@@ -27,64 +30,36 @@ namespace {
 
 const char kGlobalCookieSetURL[] = "chrome://cookieset";
 
-void OnFetchComplete(const BrowsingDataCookieHelper::FetchCallback& callback,
-                     const net::CookieList& cookies) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(!callback.is_null());
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, cookies));
-}
-
 }  // namespace
 
-BrowsingDataCookieHelper::BrowsingDataCookieHelper(
-    net::URLRequestContextGetter* request_context_getter)
-    : request_context_getter_(request_context_getter) {
+BrowsingDataCookieHelper::BrowsingDataCookieHelper(Profile* profile) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  content::mojom::CookieManagerRequest request(
+      mojo::MakeRequest(&cookie_manager_ptr_));
+  content::BrowserContext::GetDefaultStoragePartition(profile)
+      ->GetNetworkContext()
+      ->GetCookieManager(std::move(request));
 }
 
 BrowsingDataCookieHelper::~BrowsingDataCookieHelper() {
 }
 
-void BrowsingDataCookieHelper::StartFetching(const FetchCallback& callback) {
+void BrowsingDataCookieHelper::StartFetching(FetchCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!callback.is_null());
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&BrowsingDataCookieHelper::FetchCookiesOnIOThread, this,
-                     callback));
+  cookie_manager_ptr_->GetAllCookies(std::move(callback));
 }
 
 void BrowsingDataCookieHelper::DeleteCookie(
     const net::CanonicalCookie& cookie) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&BrowsingDataCookieHelper::DeleteCookieOnIOThread, this,
-                     cookie));
+  cookie_manager_ptr_->DeleteCanonicalCookie(
+      cookie, content::mojom::CookieManager::DeleteCanonicalCookieCallback());
 }
 
-void BrowsingDataCookieHelper::FetchCookiesOnIOThread(
-    const FetchCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(!callback.is_null());
-  request_context_getter_->GetURLRequestContext()
-      ->cookie_store()
-      ->GetAllCookiesAsync(base::BindOnce(&OnFetchComplete, callback));
-}
-
-void BrowsingDataCookieHelper::DeleteCookieOnIOThread(
-    const net::CanonicalCookie& cookie) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  request_context_getter_->GetURLRequestContext()->cookie_store()->
-      DeleteCanonicalCookieAsync(
-          cookie, net::CookieStore::DeleteCallback());
-}
-
-CannedBrowsingDataCookieHelper::CannedBrowsingDataCookieHelper(
-    net::URLRequestContextGetter* request_context_getter)
-    : BrowsingDataCookieHelper(request_context_getter) {
-}
+CannedBrowsingDataCookieHelper::CannedBrowsingDataCookieHelper(Profile* profile)
+    : BrowsingDataCookieHelper(profile) {}
 
 CannedBrowsingDataCookieHelper::~CannedBrowsingDataCookieHelper() {
   Reset();
@@ -121,7 +96,6 @@ bool CannedBrowsingDataCookieHelper::empty() const {
   return true;
 }
 
-
 size_t CannedBrowsingDataCookieHelper::GetCookieCount() const {
   size_t count = 0;
   for (const auto& pair : origin_cookie_set_map_)
@@ -129,15 +103,14 @@ size_t CannedBrowsingDataCookieHelper::GetCookieCount() const {
   return count;
 }
 
-void CannedBrowsingDataCookieHelper::StartFetching(
-    const FetchCallback& callback) {
+void CannedBrowsingDataCookieHelper::StartFetching(FetchCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   net::CookieList cookie_list;
   for (const auto& pair : origin_cookie_set_map_) {
     cookie_list.insert(cookie_list.begin(), pair.second->begin(),
                        pair.second->end());
   }
-  callback.Run(cookie_list);
+  std::move(callback).Run(cookie_list);
 }
 
 void CannedBrowsingDataCookieHelper::DeleteCookie(

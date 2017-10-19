@@ -206,49 +206,45 @@ class BrowsingDataCookieHelperTest : public testing::Test {
 TEST_F(BrowsingDataCookieHelperTest, FetchData) {
   CreateCookiesForTest();
   scoped_refptr<BrowsingDataCookieHelper> cookie_helper(
-      new BrowsingDataCookieHelper(testing_profile_->GetRequestContext()));
+      new BrowsingDataCookieHelper(testing_profile_.get()));
 
-  cookie_helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::FetchCallback,
-                 base::Unretained(this)));
+  cookie_helper->StartFetching(base::BindOnce(
+      &BrowsingDataCookieHelperTest::FetchCallback, base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(BrowsingDataCookieHelperTest, DomainCookie) {
   CreateCookiesForDomainCookieTest();
   scoped_refptr<BrowsingDataCookieHelper> cookie_helper(
-      new BrowsingDataCookieHelper(testing_profile_->GetRequestContext()));
+      new BrowsingDataCookieHelper(testing_profile_.get()));
 
   cookie_helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::DomainCookieCallback,
-                 base::Unretained(this)));
+      base::BindOnce(&BrowsingDataCookieHelperTest::DomainCookieCallback,
+                     base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(BrowsingDataCookieHelperTest, DeleteCookie) {
   CreateCookiesForTest();
   scoped_refptr<BrowsingDataCookieHelper> cookie_helper(
-      new BrowsingDataCookieHelper(testing_profile_->GetRequestContext()));
+      new BrowsingDataCookieHelper(testing_profile_.get()));
 
-  cookie_helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::FetchCallback,
-                 base::Unretained(this)));
+  cookie_helper->StartFetching(base::BindOnce(
+      &BrowsingDataCookieHelperTest::FetchCallback, base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
 
   net::CanonicalCookie cookie = cookie_list_[0];
   cookie_helper->DeleteCookie(cookie);
 
-  cookie_helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::DeleteCallback,
-                 base::Unretained(this)));
+  cookie_helper->StartFetching(base::BindOnce(
+      &BrowsingDataCookieHelperTest::DeleteCallback, base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(BrowsingDataCookieHelperTest, CannedDeleteCookie) {
   CreateCookiesForTest();
   scoped_refptr<CannedBrowsingDataCookieHelper> helper(
-      new CannedBrowsingDataCookieHelper(
-          testing_profile_->GetRequestContext()));
+      new CannedBrowsingDataCookieHelper(testing_profile_.get()));
 
   ASSERT_TRUE(helper->empty());
 
@@ -257,9 +253,8 @@ TEST_F(BrowsingDataCookieHelperTest, CannedDeleteCookie) {
   helper->AddChangedCookie(origin1, origin1, "A=1", net::CookieOptions());
   helper->AddChangedCookie(origin2, origin2, "B=1", net::CookieOptions());
 
-  helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::FetchCallback,
-                 base::Unretained(this)));
+  helper->StartFetching(base::BindOnce(
+      &BrowsingDataCookieHelperTest::FetchCallback, base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(2u, helper->GetCookieCount());
@@ -267,9 +262,8 @@ TEST_F(BrowsingDataCookieHelperTest, CannedDeleteCookie) {
   DeleteCookie(helper.get(), origin1.host());
 
   EXPECT_EQ(1u, helper->GetCookieCount());
-  helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::DeleteCallback,
-                 base::Unretained(this)));
+  helper->StartFetching(base::BindOnce(
+      &BrowsingDataCookieHelperTest::DeleteCallback, base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
 }
 
@@ -278,8 +272,7 @@ TEST_F(BrowsingDataCookieHelperTest, CannedDomainCookie) {
   net::CookieList cookie;
 
   scoped_refptr<CannedBrowsingDataCookieHelper> helper(
-      new CannedBrowsingDataCookieHelper(
-          testing_profile_->GetRequestContext()));
+      new CannedBrowsingDataCookieHelper(testing_profile_.get()));
 
   ASSERT_TRUE(helper->empty());
   helper->AddChangedCookie(origin, origin, "A=1", net::CookieOptions());
@@ -292,8 +285,8 @@ TEST_F(BrowsingDataCookieHelperTest, CannedDomainCookie) {
                            net::CookieOptions());
 
   helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::CannedDomainCookieCallback,
-                 base::Unretained(this)));
+      base::BindOnce(&BrowsingDataCookieHelperTest::CannedDomainCookieCallback,
+                     base::Unretained(this)));
   cookie = cookie_list_;
 
   helper->Reset();
@@ -301,8 +294,8 @@ TEST_F(BrowsingDataCookieHelperTest, CannedDomainCookie) {
 
   helper->AddReadCookies(origin, origin, cookie);
   helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::CannedDomainCookieCallback,
-                 base::Unretained(this)));
+      base::BindOnce(&BrowsingDataCookieHelperTest::CannedDomainCookieCallback,
+                     base::Unretained(this)));
 }
 
 TEST_F(BrowsingDataCookieHelperTest, CannedUnique) {
@@ -310,15 +303,14 @@ TEST_F(BrowsingDataCookieHelperTest, CannedUnique) {
   net::CookieList cookie;
 
   scoped_refptr<CannedBrowsingDataCookieHelper> helper(
-      new CannedBrowsingDataCookieHelper(
-          testing_profile_->GetRequestContext()));
+      new CannedBrowsingDataCookieHelper(testing_profile_.get()));
 
   ASSERT_TRUE(helper->empty());
   helper->AddChangedCookie(origin, origin, "A=1", net::CookieOptions());
   helper->AddChangedCookie(origin, origin, "A=1", net::CookieOptions());
   helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::CannedUniqueCallback,
-                 base::Unretained(this)));
+      base::BindOnce(&BrowsingDataCookieHelperTest::CannedUniqueCallback,
+                     base::Unretained(this)));
 
   cookie = cookie_list_;
   helper->Reset();
@@ -327,8 +319,8 @@ TEST_F(BrowsingDataCookieHelperTest, CannedUnique) {
   helper->AddReadCookies(origin, origin, cookie);
   helper->AddReadCookies(origin, origin, cookie);
   helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::CannedUniqueCallback,
-                 base::Unretained(this)));
+      base::BindOnce(&BrowsingDataCookieHelperTest::CannedUniqueCallback,
+                     base::Unretained(this)));
 }
 
 TEST_F(BrowsingDataCookieHelperTest, CannedReplaceCookie) {
@@ -336,8 +328,7 @@ TEST_F(BrowsingDataCookieHelperTest, CannedReplaceCookie) {
   net::CookieList cookie;
 
   scoped_refptr<CannedBrowsingDataCookieHelper> helper(
-      new CannedBrowsingDataCookieHelper(
-          testing_profile_->GetRequestContext()));
+      new CannedBrowsingDataCookieHelper(testing_profile_.get()));
 
   ASSERT_TRUE(helper->empty());
   helper->AddChangedCookie(origin, origin, "A=1", net::CookieOptions());
@@ -365,8 +356,8 @@ TEST_F(BrowsingDataCookieHelperTest, CannedReplaceCookie) {
                            net::CookieOptions());
 
   helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::CannedReplaceCookieCallback,
-                 base::Unretained(this)));
+      base::BindOnce(&BrowsingDataCookieHelperTest::CannedReplaceCookieCallback,
+                     base::Unretained(this)));
 
   cookie = cookie_list_;
   helper->Reset();
@@ -375,16 +366,15 @@ TEST_F(BrowsingDataCookieHelperTest, CannedReplaceCookie) {
   helper->AddReadCookies(origin, origin, cookie);
   helper->AddReadCookies(origin, origin, cookie);
   helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::CannedReplaceCookieCallback,
-                 base::Unretained(this)));
+      base::BindOnce(&BrowsingDataCookieHelperTest::CannedReplaceCookieCallback,
+                     base::Unretained(this)));
 }
 
 TEST_F(BrowsingDataCookieHelperTest, CannedEmpty) {
   const GURL url_google("http://www.google.com");
 
   scoped_refptr<CannedBrowsingDataCookieHelper> helper(
-      new CannedBrowsingDataCookieHelper(
-          testing_profile_->GetRequestContext()));
+      new CannedBrowsingDataCookieHelper(testing_profile_.get()));
 
   ASSERT_TRUE(helper->empty());
   helper->AddChangedCookie(url_google, url_google, "a=1",
@@ -410,8 +400,7 @@ TEST_F(BrowsingDataCookieHelperTest, CannedDifferentFrames) {
   GURL request_url("http://www.google.com");
 
   scoped_refptr<CannedBrowsingDataCookieHelper> helper(
-      new CannedBrowsingDataCookieHelper(
-          testing_profile_->GetRequestContext()));
+      new CannedBrowsingDataCookieHelper(testing_profile_.get()));
 
   ASSERT_TRUE(helper->empty());
   helper->AddChangedCookie(frame1_url, request_url, "a=1",
@@ -421,9 +410,9 @@ TEST_F(BrowsingDataCookieHelperTest, CannedDifferentFrames) {
   helper->AddChangedCookie(frame2_url, request_url, "c=1",
                            net::CookieOptions());
 
-  helper->StartFetching(
-      base::Bind(&BrowsingDataCookieHelperTest::CannedDifferentFramesCallback,
-                 base::Unretained(this)));
+  helper->StartFetching(base::BindOnce(
+      &BrowsingDataCookieHelperTest::CannedDifferentFramesCallback,
+      base::Unretained(this)));
 }
 
 TEST_F(BrowsingDataCookieHelperTest, CannedGetCookieCount) {
@@ -447,8 +436,7 @@ TEST_F(BrowsingDataCookieHelperTest, CannedGetCookieCount) {
   std::string cookie_pair4("A=3");
 
   scoped_refptr<CannedBrowsingDataCookieHelper> helper(
-      new CannedBrowsingDataCookieHelper(
-          testing_profile_->GetRequestContext()));
+      new CannedBrowsingDataCookieHelper(testing_profile_.get()));
 
   // Add two different cookies (distinguished by the tuple [cookie-name,
   // domain-value, path-value]) for a HTTP request to |frame1_url| and verify

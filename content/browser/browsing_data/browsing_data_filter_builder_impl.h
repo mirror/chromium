@@ -28,6 +28,8 @@ class CONTENT_EXPORT BrowsingDataFilterBuilderImpl
       BuildCookieFilter() const override;
   base::RepeatingCallback<bool(const std::string& server_id)>
       BuildChannelIDFilter() const override;
+  void BuildCookieManagerFilter(
+      mojom::CookieDeletionFilter* filter) const override;
   base::RepeatingCallback<bool(const std::string& site)>
       BuildPluginFilter() const override;
   Mode GetMode() const override;

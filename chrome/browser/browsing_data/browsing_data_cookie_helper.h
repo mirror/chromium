@@ -14,13 +14,14 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/browsing_data/canonical_cookie_hash.h"
+#include "content/public/common/cookie_manager.mojom.h"
 #include "net/cookies/cookie_monster.h"
 
 class GURL;
+class Profile;
 
 namespace net {
 class CanonicalCookie;
-class URLRequestContextGetter;
 }
 
 // This class fetches cookie information on behalf of a caller
@@ -31,14 +32,13 @@ class URLRequestContextGetter;
 class BrowsingDataCookieHelper
     : public base::RefCountedThreadSafe<BrowsingDataCookieHelper> {
  public:
-  using FetchCallback = base::Callback<void(const net::CookieList&)>;
-  explicit BrowsingDataCookieHelper(
-      net::URLRequestContextGetter* request_context_getter);
+  using FetchCallback = content::mojom::CookieManager::GetCookieListCallback;
+  explicit BrowsingDataCookieHelper(Profile* profile);
 
   // Starts the fetching process, which will notify its completion via
   // callback.
   // This must be called only in the UI thread.
-  virtual void StartFetching(const FetchCallback& callback);
+  virtual void StartFetching(FetchCallback callback);
 
   // Requests a single cookie to be deleted in the IO thread. This must be
   // called in the UI thread.
@@ -48,18 +48,8 @@ class BrowsingDataCookieHelper
   friend class base::RefCountedThreadSafe<BrowsingDataCookieHelper>;
   virtual ~BrowsingDataCookieHelper();
 
-  net::URLRequestContextGetter* request_context_getter() {
-    return request_context_getter_.get();
-  }
-
  private:
-  // Fetch the cookies. This must be called in the IO thread.
-  void FetchCookiesOnIOThread(const FetchCallback& callback);
-
-  // Delete a single cookie. This must be called in IO thread.
-  void DeleteCookieOnIOThread(const net::CanonicalCookie& cookie);
-
-  scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
+  content::mojom::CookieManagerPtr cookie_manager_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowsingDataCookieHelper);
 };
@@ -81,8 +71,7 @@ class CannedBrowsingDataCookieHelper : public BrowsingDataCookieHelper {
   typedef std::map<GURL, std::unique_ptr<canonical_cookie::CookieHashSet>>
       OriginCookieSetMap;
 
-  explicit CannedBrowsingDataCookieHelper(
-      net::URLRequestContextGetter* request_context);
+  explicit CannedBrowsingDataCookieHelper(Profile* profile);
 
   // Adds the cookies from |cookie_list|. Current cookies that have the same
   // cookie name, cookie domain, cookie path, host-only-flag tuple as passed
@@ -114,7 +103,7 @@ class CannedBrowsingDataCookieHelper : public BrowsingDataCookieHelper {
   bool empty() const;
 
   // BrowsingDataCookieHelper methods.
-  void StartFetching(const FetchCallback& callback) override;
+  void StartFetching(FetchCallback callback) override;
   void DeleteCookie(const net::CanonicalCookie& cookie) override;
 
   // Returns the number of stored cookies.

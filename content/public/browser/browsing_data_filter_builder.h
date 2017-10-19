@@ -26,6 +26,10 @@ class Origin;
 
 namespace content {
 
+namespace mojom {
+class CookieDeletionFilter;
+}
+
 // An class that builds GURL->bool predicates to filter browsing data.
 // These filters can be of two modes - a whitelist or a blacklist. The filter
 // entries can be origins or registrable domains.
@@ -73,6 +77,8 @@ class CONTENT_EXPORT BrowsingDataFilterBuilder {
   // or aren't in the blacklist.
   virtual base::RepeatingCallback<bool(const net::CanonicalCookie& pattern)>
       BuildCookieFilter() const = 0;
+  virtual void BuildCookieManagerFilter(
+      mojom::CookieDeletionFilter* filter) const = 0;
 
   // Builds a filter that matches channel IDs whose server identifiers are in
   // the whitelist, or aren't in the blacklist.
