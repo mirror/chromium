@@ -123,6 +123,24 @@
       "revId": "204d62065d602e202445d9c2d9f5c25d144e1c5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "157b991a_8e392cdf",
+        "filename": "ui/base/menu_source_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-19T02:40:08Z",
+      "side": 1,
+      "message": "Yeah, my mistake. I checked few examples, found out that all of them have only one enum. Somehow ended with an impression it has to be in its own header file. I didn\u0027t realize the important part is the comments until I had done with the separation. Then I added comments, didn\u0027t give it a try to put it back. Luckily enough Bo caught it! :D",
+      "parentUuid": "3b157c2f_43b30809",
+      "revId": "204d62065d602e202445d9c2d9f5c25d144e1c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
