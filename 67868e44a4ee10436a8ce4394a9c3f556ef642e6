@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f66738b4_ec8169a9",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-19T18:02:19Z",
+      "side": 1,
+      "message": "I strongly prefer not to add an attribute or walk the ancestry.\nI took a peek at the current state of things under the button (webView, rootWebArea). It looks like focus is never set on the webView, so I would be fine if we did something like:\nif (node.parent \u0026\u0026 node.parent.role \u003d\u003d Role.WEB_VIEW \u0026\u0026 !node.parent.state[StateType.FOCUSED])\n  return false;\n\nTypically, webView containers are always focused when interacting with a web page (i.e. rootWebArea). Since the launcher seems to always keep system focus on the text field, we can make the above assumption.",
+      "revId": "67868e44a4ee10436a8ce4394a9c3f556ef642e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05e6a8e8_f3ba2c37",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-19T18:02:19Z",
+      "side": 1,
+      "message": "I\u0027m still not getting the entire interaction.\nIf I press alt+shift+l, then type a search e.g. \u0027cat\u0027, then navigate with arrows, I land on a button.\nThe button does indeed have a webView as a child, but hitting Search+Right or Left does not enter the descendants of the button since usually buttons are atomic and don\u0027t contain an entire webView. How do we even get here?",
+      "revId": "67868e44a4ee10436a8ce4394a9c3f556ef642e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
