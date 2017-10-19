@@ -128,6 +128,14 @@ public class BottomSheetBackBehaviorTest {
 
         assertEquals("The bottom sheet should be peeking.", BottomSheet.SHEET_STATE_PEEK,
                 mBottomSheet.getSheetState());
+
+        // It takes some time for Chrome to completely close.
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return !mActivity.hasWindowFocus();
+            }
+        });
         assertFalse("Chrome should no longer have focus.", mActivity.hasWindowFocus());
     }
 
