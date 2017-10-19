@@ -103,9 +103,36 @@ LayoutSize LayoutImageResource::ImageSize(float multiplier) const {
   return size;
 }
 
+float LayoutImageResource::DeviceScaleFactor() const {
+  return DeviceScaleFactorDeprecated(layout_object_->GetFrame());
+}
+
+Image* LayoutImageResource::BrokenImage(float device_scale_factor) {
+  if (device_scale_factor >= 2) {
+    DEFINE_STATIC_REF(Image, broken_image_hi_res,
+                      (Image::LoadPlatformResource("missingImage@2x")));
+    return broken_image_hi_res;
+  }
+
+  DEFINE_STATIC_REF(Image, broken_image_lo_res,
+                    (Image::LoadPlatformResource("missingImage")));
+  return broken_image_lo_res;
+}
+
+void LayoutImageResource::UseBrokenImage() {
+  SetImageResource(
+      ImageResourceContent::CreateLoaded(BrokenImage(DeviceScaleFactor())));
+}
+
 RefPtr<Image> LayoutImageResource::GetImage(
     const IntSize& container_size) const {
   if (!cached_image_)
+    return Image::NullImage();
+
+  if (cached_image_->ErrorOccurred())
+    return BrokenImage(DeviceScaleFactor());
+
+  if (!cached_image_->HasImage())
     return Image::NullImage();
 
   if (!cached_image_->GetImage()->IsSVGImage())
