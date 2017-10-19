@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9d187dd_db8be689",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-19T18:00:50Z",
+      "side": 1,
+      "message": "hmm I was wondering about those. Just did a quick check and found crrev.com/c/621513. Looks like the Mac build was failing when the link strings were removed for some reason. I\u0027ll remove this and we\u0027ll see how the Mac build reacts",
+      "parentUuid": "6f77ff9e_6607977c",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540f175a_ed3d15d7",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89109bde_e1fcc25b",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-19T18:00:50Z",
+      "side": 1,
+      "message": "We\u0027ll await the response from UX like you said. Leaving as is for now",
+      "parentUuid": "540f175a_ed3d15d7",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5dcff8c8_eca4c73b",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-19T18:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c49f2767_ee37aec1",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c90732c_82a9bc4e",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f85a453a_d9954ca3",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-19T18:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c90732c_82a9bc4e",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "311cd90c_5d16a944",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings_unittest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c959a50_a2a825c5",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-19T18:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "311cd90c_5d16a944",
+      "revId": "1931e227a6c76f6212e9dbb5e75ad60714f01949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
