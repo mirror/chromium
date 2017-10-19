@@ -1731,6 +1731,7 @@ jumbo_static_library("test_support") {
     "//components/viz/test:test_support",
     "//testing/gmock",
     "//testing/gtest:gtest",
+    "//testing/perf",
   ]
 
   deps = [
@@ -1816,6 +1817,7 @@ jumbo_source_set("blink_platform_unittests_sources") {
     "fonts/shaping/HarfBuzzShaperTest.cpp",
     "fonts/shaping/RunSegmenterTest.cpp",
     "fonts/shaping/ShapeResultBloberizerTest.cpp",
+    "fonts/shaping/ShapingLineBreakerPerfTest.cpp",
     "fonts/shaping/ShapingLineBreakerTest.cpp",
     "geometry/DoubleRectTest.cpp",
     "geometry/FloatBoxTest.cpp",
