@@ -16,6 +16,24 @@
       "revId": "f540b23e797f6e62c1ecbc320f1d56e47fb0e548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c9020e_5917db55",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-19T03:06:11Z",
+      "side": 1,
+      "message": "Done.\n\nThere\u0027s a few things in RunAllTests.cpp and BlinkInitializer.cpp; we can take a look at that in a followup.",
+      "parentUuid": "40c29458_b6e7f870",
+      "revId": "f540b23e797f6e62c1ecbc320f1d56e47fb0e548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
