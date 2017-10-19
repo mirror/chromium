@@ -4,9 +4,11 @@
 
 #include "components/previews/core/previews_black_list.h"
 
+#include <algorithm>
 #include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -20,9 +22,11 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/previews/core/previews_black_list_item.h"
+#include "components/previews/core/previews_black_list_observer.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_opt_out_store.h"
 #include "components/variations/variations_associated_data.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -37,6 +41,57 @@ void RunLoadCallback(
   callback.Run(std::move(black_list_item_map),
                std::move(host_indifferent_black_list_item));
 }
+
+// Mock class to test that PreviewsBlackList notifies the observers with correct
+// events (e.g. New host blacklisted, user blacklisted, and blacklist cleared).
+class TestPreviewsBlacklistObserver : public PreviewsBlacklistObserver {
+ public:
+  TestPreviewsBlacklistObserver()
+      : user_blacklisted_(false),
+        blacklist_cleared_(false),
+        blacklist_cleared_time_(base::Time::Now()) {}
+
+  ~TestPreviewsBlacklistObserver() override {}
+
+  // PreviewsBlacklistObserver:
+  void OnNewBlacklistedHost(const std::string& host, base::Time time) override {
+    blacklisted_hosts_[host] = time;
+  }
+  void OnUserBlacklistedStatusChange(bool blacklisted) override {
+    user_blacklisted_ = blacklisted;
+  }
+  void OnBlacklistCleared(base::Time time) override {
+    blacklist_cleared_ = true;
+    blacklist_cleared_time_ = time;
+  }
+
+  // Gets the set of blacklisted hosts recorded.
+  const std::unordered_map<std::string, base::Time>& blacklisted_hosts() const {
+    return blacklisted_hosts_;
+  }
+
+  // Gets the state of user blacklisted status.
+  bool user_blacklisted() const { return user_blacklisted_; }
+
+  // Gets the state of blacklisted cleared status of |this| for testing.
+  bool blacklist_cleared() const { return blacklist_cleared_; }
+
+  // Gets the event time of blacklist is as cleared.
+  base::Time blacklist_cleared_time() const { return blacklist_cleared_time_; }
+
+ private:
+  // The user blacklisted status of |this| observer.
+  bool user_blacklisted_;
+
+  // Check if the blacklist is notified as cleared on |this| observer.
+  bool blacklist_cleared_;
+
+  // The time when blacklist is cleared.
+  base::Time blacklist_cleared_time_;
+
+  // |this| observer's collection of blacklisted hosts.
+  std::unordered_map<std::string, base::Time> blacklisted_hosts_;
+};
 
 class TestPreviewsOptOutStore : public PreviewsOptOutStore {
  public:
@@ -588,6 +643,179 @@ TEST_F(PreviewsBlackListTest, ClearingBlackListClearsRecentNavigation) {
 
   EXPECT_EQ(PreviewsEligibilityReason::ALLOWED,
             black_list_->IsLoadedAndAllowed(url, PreviewsType::OFFLINE));
+}
+
+TEST_F(PreviewsBlackListTest, ObserversAreNotifiedOnHostBlacklisted) {
+  // Tests the black list behavior when a null OptOutStore is passed in.
+  const GURL url_("http://www.url_.com");
+
+  // Host indifferent blacklisting should have no effect with the following
+  // params.
+  const size_t host_indifferent_history = 1;
+  SetHostHistoryParam(4);
+  SetHostThresholdParam(2);
+  SetHostIndifferentHistoryParam(host_indifferent_history);
+  SetHostIndifferentThresholdParam(host_indifferent_history + 1);
+  SetHostDurationParam(365);
+  // Disable single opt out by setting duration to 0.
+  SetSingleOptOutDurationParam(0);
+
+  StartTest(true /* null_opt_out */);
+
+  TestPreviewsBlacklistObserver observers[3];
+  const size_t number_of_obs = 3;
+
+  for (size_t i = 0; i < number_of_obs; i++) {
+    black_list_->AddObserver(&observers[i]);
+  }
+
+  EXPECT_EQ(PreviewsEligibilityReason::ALLOWED,
+            black_list_->IsLoadedAndAllowed(url_, PreviewsType::OFFLINE));
+
+  // Observer is not notified as blacklisted when the threshold does not met.
+  test_clock_->Advance(base::TimeDelta::FromSeconds(1));
+  black_list_->AddPreviewNavigation(url_, true, PreviewsType::OFFLINE);
+  base::RunLoop().RunUntilIdle();
+  for (size_t i = 0; i < number_of_obs; i++) {
+    EXPECT_THAT(observers[i].blacklisted_hosts(), ::testing::SizeIs(0));
+  }
+
+  // Observer is notified as blacklisted when the threshold is met.
+  test_clock_->Advance(base::TimeDelta::FromSeconds(1));
+  black_list_->AddPreviewNavigation(url_, true, PreviewsType::OFFLINE);
+  base::RunLoop().RunUntilIdle();
+  const base::Time blacklisted_time = test_clock_->Now();
+  for (size_t i = 0; i < number_of_obs; i++) {
+    EXPECT_THAT(observers[i].blacklisted_hosts(), ::testing::SizeIs(1));
+    EXPECT_EQ(blacklisted_time,
+              observers[i].blacklisted_hosts().find(url_.host())->second);
+  }
+
+  // Observer is not notified when the host is already blacklisted.
+  test_clock_->Advance(base::TimeDelta::FromSeconds(1));
+  black_list_->AddPreviewNavigation(url_, true, PreviewsType::OFFLINE);
+  base::RunLoop().RunUntilIdle();
+  for (size_t i = 0; i < number_of_obs; i++) {
+    EXPECT_THAT(observers[i].blacklisted_hosts(), ::testing::SizeIs(1));
+    EXPECT_EQ(blacklisted_time,
+              observers[i].blacklisted_hosts().find(url_.host())->second);
+  }
+
+  // Observer is notified when blacklist is cleared.
+  for (size_t i = 0; i < number_of_obs; i++) {
+    EXPECT_FALSE(observers[i].blacklist_cleared());
+  }
+
+  test_clock_->Advance(base::TimeDelta::FromSeconds(1));
+  black_list_->ClearBlackList(start_, test_clock_->Now());
+  base::RunLoop().RunUntilIdle();
+
+  for (size_t i = 0; i < number_of_obs; ++i) {
+    EXPECT_TRUE(observers[i].blacklist_cleared());
+    EXPECT_EQ(test_clock_->Now(), observers[i].blacklist_cleared_time());
+  }
+}
+
+TEST_F(PreviewsBlackListTest, ObserversAreNotifiedOnUserBlacklisted) {
+  // Tests the black list behavior when a null OptOutStore is passed in.
+  const GURL urls[] = {
+      GURL("http://www.url_0.com"), GURL("http://www.url_1.com"),
+      GURL("http://www.url_2.com"), GURL("http://www.url_3.com"),
+  };
+
+  // Per host blacklisting should have no effect with the following params.
+  const size_t per_host_history = 1;
+  const size_t host_indifferent_history = 4;
+  const size_t host_indifferent_threshold = host_indifferent_history;
+  SetHostHistoryParam(per_host_history);
+  SetHostIndifferentHistoryParam(host_indifferent_history);
+  SetHostThresholdParam(per_host_history + 1);
+  SetHostIndifferentThresholdParam(host_indifferent_threshold);
+  SetHostDurationParam(365);
+  // Disable single opt out by setting duration to 0.
+  SetSingleOptOutDurationParam(0);
+
+  StartTest(true /* null_opt_out */);
+  TestPreviewsBlacklistObserver observers[3];
+  const size_t number_of_obs = 3;
+
+  // Initially no host is blacklisted, and user is not blacklisted.
+  for (size_t i = 0; i < number_of_obs; ++i) {
+    black_list_->AddObserver(&observers[i]);
+    EXPECT_THAT(observers[i].blacklisted_hosts(), ::testing::SizeIs(0));
+    EXPECT_FALSE(observers[i].user_blacklisted());
+  }
+
+  for (size_t i = 0; i < host_indifferent_threshold; ++i) {
+    test_clock_->Advance(base::TimeDelta::FromSeconds(1));
+    black_list_->AddPreviewNavigation(urls[i], true, PreviewsType::OFFLINE);
+    base::RunLoop().RunUntilIdle();
+
+    for (size_t j = 0; j < number_of_obs; ++j) {
+      EXPECT_THAT(observers[j].blacklisted_hosts(), ::testing::SizeIs(0));
+      if (i < host_indifferent_threshold - 1) {
+        EXPECT_FALSE(observers[j].user_blacklisted());
+      } else {
+        // Observer is notified when number of recently opt out meets
+        // |host_indifferent_threshold|.
+        EXPECT_TRUE(observers[j].user_blacklisted());
+      }
+    }
+  }
+
+  // Observers are notified when the user is no longer blacklisted.
+  test_clock_->Advance(base::TimeDelta::FromSeconds(1));
+  black_list_->AddPreviewNavigation(urls[3], false, PreviewsType::OFFLINE);
+  base::RunLoop().RunUntilIdle();
+
+  for (size_t i = 0; i < number_of_obs; i++) {
+    EXPECT_FALSE(observers[i].user_blacklisted());
+  }
+}
+
+TEST_F(PreviewsBlackListTest, RemovedObserversAreNotNotifiedOnNewEvents) {
+  // Tests the black list behavior when a null OptOutStore is passed in.
+  const GURL url_("http://www.url_.com");
+
+  // Host indifferent blacklisting should have no effect with the following
+  // params.
+  const size_t per_host_history = 4;
+  const size_t per_host_threshold = 2;
+  const size_t host_indifferent_history = 1;
+  SetHostHistoryParam(per_host_history);
+  SetHostThresholdParam(per_host_threshold);
+  SetHostIndifferentHistoryParam(host_indifferent_history);
+  SetHostIndifferentThresholdParam(host_indifferent_history + 1);
+  SetHostDurationParam(365);
+  // Disable single opt out by setting duration to 0.
+  SetSingleOptOutDurationParam(0);
+
+  StartTest(true /* null_opt_out */);
+
+  TestPreviewsBlacklistObserver observers[3];
+  const size_t number_of_obs = 3;
+
+  // Initially no host is blacklisted, and user is not blacklisted.
+  for (size_t i = 0; i < number_of_obs; ++i) {
+    black_list_->AddObserver(&observers[i]);
+  }
+
+  const size_t removed_observer = 1;
+  black_list_->RemoveObserver(&observers[removed_observer]);
+
+  for (size_t i = 0; i < per_host_threshold; ++i) {
+    black_list_->AddPreviewNavigation(url_, true, PreviewsType::OFFLINE);
+  }
+  base::RunLoop().RunUntilIdle();
+
+  for (size_t i = 0; i < number_of_obs; ++i) {
+    if (i != removed_observer) {
+      EXPECT_THAT(observers[i].blacklisted_hosts(), ::testing::SizeIs(1));
+    }
+  }
+
+  EXPECT_THAT(observers[removed_observer].blacklisted_hosts(),
+              ::testing::SizeIs(0));
 }
 
 }  // namespace

@@ -68,8 +68,11 @@ bool IsPreviewFieldTrialEnabled(PreviewsType type) {
 // testing PreviewsIOData.
 class TestPreviewsBlackList : public PreviewsBlackList {
  public:
-  TestPreviewsBlackList(PreviewsEligibilityReason status)
-      : PreviewsBlackList(nullptr, nullptr), status_(status) {}
+  TestPreviewsBlackList(PreviewsEligibilityReason status, bool* removed_called)
+      : PreviewsBlackList(nullptr, nullptr),
+        status_(status),
+        added_observer_called_(false),
+        removed_observer_called_(removed_called) {}
   ~TestPreviewsBlackList() override {}
 
   // PreviewsBlackList:
@@ -78,9 +81,23 @@ class TestPreviewsBlackList : public PreviewsBlackList {
       PreviewsType type) const override {
     return status_;
   }
+  void AddObserver(PreviewsBlacklistObserver* observer) override {
+    added_observer_called_ = true;
+  }
+  void RemoveObserver(PreviewsBlacklistObserver* observer) override {
+    *removed_observer_called_ = true;
+  }
+
+  // Checks whether AddObserver was called.
+  bool added_observer_called() const { return added_observer_called_; }
+
+  // Checks whether RemoveObserver was called.
+  bool removed_observer_called() const { return removed_observer_called_; }
 
  private:
   PreviewsEligibilityReason status_;
+  bool added_observer_called_;
+  bool* removed_observer_called_;
 };
 
 // Stub class of PreviewsUIService to test logging functionalities in
@@ -98,6 +115,18 @@ class TestPreviewsUIService : public PreviewsUIService {
                           std::move(previews_opt_out_store),
                           is_enabled_callback,
                           std::move(logger)) {}
+
+  // PreviewsUIService:
+  void OnNewBlacklistedHost(const std::string& host, base::Time time) override {
+    host_blacklisted_ = host;
+    host_blacklisted_time_ = time;
+  }
+  void OnUserBlacklistedStatusChange(bool blacklisted) override {
+    user_blacklisted_ = blacklisted;
+  }
+  void OnBlacklistCleared(base::Time time) override {
+    blacklist_cleared_time_ = time;
+  }
 
   // Expose passed in LogPreviewDecision parameters.
   const std::vector<PreviewsEligibilityReason>& decision_reasons() const {
@@ -123,6 +152,12 @@ class TestPreviewsUIService : public PreviewsUIService {
     return navigation_types_;
   }
 
+  // Expose passed in params for hosts and user blacklist event.
+  std::string host_blacklisted() const { return host_blacklisted_; }
+  base::Time host_blacklisted_time() const { return host_blacklisted_time_; }
+  bool user_blacklisted() const { return user_blacklisted_; }
+  base::Time blacklist_cleared_time() const { return blacklist_cleared_time_; }
+
  private:
   // PreviewsUIService:
   void LogPreviewNavigation(const GURL& url,
@@ -145,6 +180,12 @@ class TestPreviewsUIService : public PreviewsUIService {
     decision_types_.push_back(type);
   }
 
+  // Passed in params for blacklist status events.
+  std::string host_blacklisted_;
+  base::Time host_blacklisted_time_;
+  bool user_blacklisted_;
+  base::Time blacklist_cleared_time_;
+
   // Passed in LogPreviewDecision parameters.
   std::vector<PreviewsEligibilityReason> decision_reasons_;
   std::vector<GURL> decision_urls_;
@@ -163,8 +204,19 @@ class TestPreviewsIOData : public PreviewsIOData {
   TestPreviewsIOData(
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
       const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner)
-      : PreviewsIOData(io_task_runner, ui_task_runner), initialized_(false) {}
+      : PreviewsIOData(io_task_runner, ui_task_runner),
+        initialized_(false),
+        added_to_observers_list_(false) {}
   ~TestPreviewsIOData() override {}
+
+  // Whether AddToBlackList is called.
+  bool added_to_observers_list() { return added_to_observers_list_; }
+
+  // Set |aded_to_observers_list_| to true and use base class functionality.
+  void AddToBlacklistObserver() override {
+    added_to_observers_list_ = true;
+    PreviewsIOData::AddToBlacklistObserver();
+  }
 
   // Whether Initialize was called.
   bool initialized() { return initialized_; }
@@ -185,6 +237,7 @@ class TestPreviewsIOData : public PreviewsIOData {
 
   // Whether Initialize was called.
   bool initialized_;
+  bool added_to_observers_list_;
 };
 
 void RunLoadCallback(
@@ -251,6 +304,8 @@ class PreviewsIODataTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
   }
 
+  void SetUp() override { removed_called_ = false; }
+
   std::unique_ptr<net::URLRequest> CreateRequest() const {
     return CreateRequestWithURL(GURL("http://example.com"));
   }
@@ -269,6 +324,7 @@ class PreviewsIODataTest : public testing::Test {
 
  protected:
   base::MessageLoopForIO loop_;
+  bool removed_called_;
 
  private:
   base::FieldTrialList field_trial_list_;
@@ -605,10 +661,13 @@ TEST_F(PreviewsIODataTest, LogPreviewDecisionMadePassInCorrectParams) {
 TEST_F(PreviewsIODataTest, BlacklistNotAvailableLogDecisionMade) {
   InitializeUIService();
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
-  io_data()->InjectTestBlacklist(nullptr);
-
   auto expected_reason = PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE;
   auto expected_type = PreviewsType::LOFI;
+
+  std::unique_ptr<TestPreviewsBlackList> blacklist =
+      base::MakeUnique<TestPreviewsBlackList>(expected_reason,
+                                              &removed_called_);
+  io_data()->InjectTestBlacklist(std::move(blacklist));
 
   io_data()->ShouldAllowPreviewAtECT(*CreateRequest(), expected_type,
                                      net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
@@ -636,7 +695,8 @@ TEST_F(PreviewsIODataTest, BlacklistStatusesLogDecisionMade) {
 
   for (auto expected_reason : expected_reasons) {
     std::unique_ptr<TestPreviewsBlackList> blacklist =
-        base::MakeUnique<TestPreviewsBlackList>(expected_reason);
+        base::MakeUnique<TestPreviewsBlackList>(expected_reason,
+                                                &removed_called_);
     io_data()->InjectTestBlacklist(std::move(blacklist));
 
     io_data()->ShouldAllowPreviewAtECT(*CreateRequest(), expected_type,
@@ -656,7 +716,7 @@ TEST_F(PreviewsIODataTest, NetworkQualityNotAvailableCallsLogDecisionMade) {
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
       base::MakeUnique<TestPreviewsBlackList>(
-          PreviewsEligibilityReason::ALLOWED);
+          PreviewsEligibilityReason::ALLOWED, &removed_called_);
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
   auto expected_reason = PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE;
@@ -683,7 +743,7 @@ TEST_F(PreviewsIODataTest, NetworkNotSlowLogDecisionMade) {
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
       base::MakeUnique<TestPreviewsBlackList>(
-          PreviewsEligibilityReason::ALLOWED);
+          PreviewsEligibilityReason::ALLOWED, &removed_called_);
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
   network_quality_estimator()->set_effective_connection_type(
@@ -709,7 +769,7 @@ TEST_F(PreviewsIODataTest, HostBlacklistedLogDecisionMade) {
                              {{"short_host_blacklist", "example.com"}});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
       base::MakeUnique<TestPreviewsBlackList>(
-          PreviewsEligibilityReason::ALLOWED);
+          PreviewsEligibilityReason::ALLOWED, &removed_called_);
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
   network_quality_estimator()->set_effective_connection_type(
@@ -735,7 +795,7 @@ TEST_F(PreviewsIODataTest, ReloadDisallowedLogDecisionMade) {
   InitializeUIService();
   std::unique_ptr<TestPreviewsBlackList> blacklist =
       base::MakeUnique<TestPreviewsBlackList>(
-          PreviewsEligibilityReason::ALLOWED);
+          PreviewsEligibilityReason::ALLOWED, &removed_called_);
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
   network_quality_estimator()->set_effective_connection_type(
@@ -764,7 +824,7 @@ TEST_F(PreviewsIODataTest, AllowPreviewsOnECTLogDecisionMade) {
   CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
   std::unique_ptr<TestPreviewsBlackList> blacklist =
       base::MakeUnique<TestPreviewsBlackList>(
-          PreviewsEligibilityReason::ALLOWED);
+          PreviewsEligibilityReason::ALLOWED, &removed_called_);
   io_data()->InjectTestBlacklist(std::move(blacklist));
 
   network_quality_estimator()->set_effective_connection_type(
@@ -784,6 +844,73 @@ TEST_F(PreviewsIODataTest, AllowPreviewsOnECTLogDecisionMade) {
               ::testing::Contains(expected_reason));
   EXPECT_THAT(ui_service()->decision_types(),
               ::testing::Contains(expected_type));
+}
+
+TEST_F(PreviewsIODataTest, OnNewBlacklistedHostCallsUIMethodCorrectly) {
+  InitializeUIService();
+  std::string expected_host = "example.com";
+  base::Time expected_time = base::Time::Now();
+  io_data()->OnNewBlacklistedHost(expected_host, expected_time);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(expected_host, ui_service()->host_blacklisted());
+  EXPECT_EQ(expected_time, ui_service()->host_blacklisted_time());
+}
+
+TEST_F(PreviewsIODataTest, OnUserBlacklistedCallsUIMethodCorrectly) {
+  InitializeUIService();
+  io_data()->OnUserBlacklistedStatusChange(true /* blacklisted */);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(ui_service()->user_blacklisted());
+
+  io_data()->OnUserBlacklistedStatusChange(false /* blacklisted */);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(ui_service()->user_blacklisted());
+}
+
+TEST_F(PreviewsIODataTest, OnBlacklistClearedCallsUIMethodCorrectly) {
+  InitializeUIService();
+  base::Time expected_time = base::Time::Now();
+  io_data()->OnBlacklistCleared(expected_time);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(expected_time, ui_service()->blacklist_cleared_time());
+}
+
+TEST_F(PreviewsIODataTest, AddToPreviewsBlackListObserversList) {
+  InitializeUIService();
+  std::unique_ptr<TestPreviewsBlackList> blacklist =
+      base::MakeUnique<TestPreviewsBlackList>(
+          PreviewsEligibilityReason::ALLOWED, &removed_called_);
+  TestPreviewsBlackList* blacklist_ptr = blacklist.get();
+  io_data()->InjectTestBlacklist(std::move(blacklist));
+
+  EXPECT_FALSE(blacklist_ptr->added_observer_called());
+  io_data()->AddToBlacklistObserver();
+  EXPECT_TRUE(blacklist_ptr->added_observer_called());
+}
+
+TEST_F(PreviewsIODataTest, InitializeCallsAddToBlacklistObservers) {
+  InitializeUIService();
+  EXPECT_TRUE(io_data()->added_to_observers_list());
+}
+
+TEST_F(PreviewsIODataTest, RemoveFromObserverListWhenDestroyed) {
+  InitializeUIService();
+  std::unique_ptr<TestPreviewsBlackList> blacklist =
+      base::MakeUnique<TestPreviewsBlackList>(
+          PreviewsEligibilityReason::ALLOWED, &removed_called_);
+
+  std::unique_ptr<TestPreviewsIOData> io_data =
+      base::MakeUnique<TestPreviewsIOData>(loop_.task_runner(),
+                                           loop_.task_runner());
+  io_data->InjectTestBlacklist(std::move(blacklist));
+
+  EXPECT_FALSE(removed_called_);
+  io_data.reset();
+  EXPECT_TRUE(removed_called_);
 }
 
 }  // namespace

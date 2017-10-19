@@ -67,7 +67,11 @@ PreviewsIOData::PreviewsIOData(
       io_task_runner_(io_task_runner),
       weak_factory_(this) {}
 
-PreviewsIOData::~PreviewsIOData() {}
+PreviewsIOData::~PreviewsIOData() {
+  if (previews_black_list_) {
+    previews_black_list_->RemoveObserver(this);
+  }
+}
 
 void PreviewsIOData::Initialize(
     base::WeakPtr<PreviewsUIService> previews_ui_service,
@@ -84,15 +88,44 @@ void PreviewsIOData::Initialize(
                  base::Passed(&previews_opt_out_store)));
 }
 
+void PreviewsIOData::OnNewBlacklistedHost(const std::string& host,
+                                          base::Time time) {
+  DCHECK(io_task_runner_->BelongsToCurrentThread());
+  ui_task_runner_->PostTask(FROM_HERE,
+                            base::Bind(&PreviewsUIService::OnNewBlacklistedHost,
+                                       previews_ui_service_, host, time));
+}
+
+void PreviewsIOData::OnUserBlacklistedStatusChange(bool blacklisted) {
+  DCHECK(io_task_runner_->BelongsToCurrentThread());
+  ui_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&PreviewsUIService::OnUserBlacklistedStatusChange,
+                            previews_ui_service_, blacklisted));
+}
+
+void PreviewsIOData::OnBlacklistCleared(base::Time time) {
+  DCHECK(io_task_runner_->BelongsToCurrentThread());
+  ui_task_runner_->PostTask(FROM_HERE,
+                            base::Bind(&PreviewsUIService::OnBlacklistCleared,
+                                       previews_ui_service_, time));
+}
+
 void PreviewsIOData::InitializeOnIOThread(
     std::unique_ptr<PreviewsOptOutStore> previews_opt_out_store) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   previews_black_list_.reset(
       new PreviewsBlackList(std::move(previews_opt_out_store),
                             base::MakeUnique<base::DefaultClock>()));
+  AddToBlacklistObserver();
   ui_task_runner_->PostTask(
       FROM_HERE, base::Bind(&PreviewsUIService::SetIOData, previews_ui_service_,
                             weak_factory_.GetWeakPtr()));
+}
+
+void PreviewsIOData::AddToBlacklistObserver() {
+  DCHECK(io_task_runner_->BelongsToCurrentThread());
+  DCHECK(previews_black_list_);
+  previews_black_list_->AddObserver(this);
 }
 
 void PreviewsIOData::SetTestingPreviewsBlacklistForTesting(
