@@ -76,6 +76,7 @@ appear in each object is unimportant.
 | `seconds_since_epoch` | float | **Required.** The start time of the test run expressed as a floating-point offset in seconds from the UNIX epoch. |
 | `tests` | dict | **Required.** The actual trie of test results. Each directory or module component in the test name is a node in the trie, and the leaf contains the dict of per-test fields as described below. |
 | `version` | integer | **Required.** Version of the file format. Current version is 3. |
+| `artifact_types_info` | dict | **Optional.** If any test specifies artifacts, this dict should have type information for each artifact in tests. All artifacts with the same name must share the same data type. |
 | `build_number` | string | **Optional.** If this test run was produced on a bot, this should be the build number of the run, e.g., "1234". |
 | `builder_name` | string | **Optional.** If this test run was produced on a bot, this should be the builder name of the bot, e.g., "Linux Tests". |
 | `chromium_revision` | string | **Optional.** The revision of the current Chromium checkout, if relevant, e.g. "356123". |
@@ -99,6 +100,7 @@ results for each invocation in the `actual` field.
 |-------------|-----------|-------------|
 |  `actual` | string | **Required.** An ordered space-separated list of the results the test actually produced. `FAIL PASS` means that a test was run twice, failed the first time, and then passed when it was retried. If a test produces multiple different results, then it was actually flaky during the run. |
 |  `expected` | string | **Required.** An unordered space-separated list of the result types expected for the test, e.g. `FAIL PASS` means that a test is expected to either pass or fail. A test that contains multiple values is expected to be flaky. |
+|  `artifacts` | dict | **Optional.** A list of dictionaries that describe the artifacts (the i-th element in the list corresponds to artifacts of the i-th run of the test).  Each dictionary maps a key, which is the human readable name of the artifact, to another dictionary. The structured dictionary contains either `local_path`, which is path to artifact file stored locally (this field is only needed for uploading the artifact files to cloud storage. After the files are uploaded, this will be removed), or `cloud_url`: path to artifact file stored on cloud storage.  |
 |  `bugs` | string | **Optional.** A comma-separated list of URLs to bug database entries associated with each test. |
 |  `is_unexpected` | bool | **Optional.** If present and true, the failure was unexpected (a regression). If false (or if the key is not present at all), the failure was expected and will be ignored. |
 |  `time` | float | **Optional.** If present, the time it took in seconds to execute the first invocation of the test. |
