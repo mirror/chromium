@@ -173,7 +173,13 @@ void V8AbstractEventListener::InvokeEventHandler(
     ToBeforeUnloadEvent(event)->setReturnValue(string_return_value);
   }
 
-  if (is_attribute_ && ShouldPreventDefault(return_value))
+  // TODO(rakina): The last condition is to guarantee CustomEvents with the type
+  // beforeunload won't get canceled, in accordance with the spec
+  // https://html.spec.whatwg.org/multipage/webappapis.html#the-event-handler-processing-algorithm
+  // Should be removed once OnBeforeUnloadEventHandler is implemented
+  if (is_attribute_ && ShouldPreventDefault(return_value) &&
+      (event->IsBeforeUnloadEvent() ||
+       !(event->type() == EventTypeNames::beforeunload)))
     event->preventDefault();
 }
 
