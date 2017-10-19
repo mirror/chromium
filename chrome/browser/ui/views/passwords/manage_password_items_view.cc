@@ -129,6 +129,8 @@ std::unique_ptr<views::Textfield> CreateUsernameEditable(
   editable->SetText(form.username_value);
   editable->SetAccessibleName(
       l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_USERNAME_LABEL));
+  // In case of long username, ensure that the beginning of value is visible.
+  editable->SelectRange(gfx::Range(0));
   return editable;
 }
 
