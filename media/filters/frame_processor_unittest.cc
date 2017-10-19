@@ -1151,6 +1151,52 @@ TEST_P(FrameProcessorTest,
   CheckReadsThenReadStalls(video_.get(), "50 60 40");
 }
 
+// BIG TODO
+TEST_P(FrameProcessorTest, OOOKeyframePts_1) {
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  ProcessFrames("0K 1000|10K 100|20K", "");
+
+  // Force sequence mode to place the next frames where segments mode would put
+  // them, to simplify this test case.
+  if (use_sequence_mode_)
+    SetTimestampOffset(Milliseconds(500));
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(510)));
+  // If only signalling discontinuity by DTS, yet there's a PTS *keyframe*
+  // discontinuity (versus prior keyframe) and buffering by PTS, then the
+  // following breaks SBRByPts |keyframe_map_| sanity (when done on top of
+  // similarly non-signalled processing, above). See https://crbug.com/771482.
+  ProcessFrames("500|100K", "");
+
+  // BIG TODO add buffered range and buffer read expectations
+}
+
+// BIG TODO perhaps for other fuzzer bug(s)?
+TEST_P(FrameProcessorTest, OOOKeyframePts_2) {
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  ProcessFrames("0K 1000|10K", "");
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(1010)));
+  // If only signalling discontinuity by DTS, yet there's a PTS *keyframe*
+  // discontinuity (versus prior keyframe) and buffering by PTS, then the
+  // following breaks SBRByPts |keyframe_map_| sanity (when done on top
+  // of similarly non-signalled processing, above). See
+  // https://crbug.com/771482.
+  ProcessFrames("100|20K", "");
+
+  // BIG TODO add buffered range and buffer read expectations
+}
+
+// BIG TODO add a similar video test including non-keyframes
+
 TEST_P(FrameProcessorTest, AudioNonKeyframeChangedToKeyframe) {
   // Verifies that an audio non-keyframe is changed to a keyframe with a media
   // log warning. An exact overlap append of the preceding keyframe is also done
