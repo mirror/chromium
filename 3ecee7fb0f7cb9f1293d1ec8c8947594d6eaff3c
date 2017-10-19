@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "17badf9c_ad885a3d",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-19T14:19:23Z",
+      "side": 1,
+      "message": "That seems fine. That means the coordinator doesn\u0027t need to have the UIApplication injected, since that\u0027s functionally the \u0027model object\u0027 the mediator is interacting with.\n\nHowever, I think that having this be a ChromeCoordinator subclass doesn\u0027t get us anything, so just an NSObject is fine.",
+      "parentUuid": "8accb305_dc54d557",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6587fcd8_c3128f61",
         "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
         "patchSetId": 10
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I followed the pattern of the other coordinators in BVC:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/browser_view_controller.mm?type\u003dcs\u0026q\u003d%22Create+child+coordinators%22\u0026sq\u003dpackage:chromium\u0026l\u003d1935-1970\n\nWithout this, I can\u0027t do the start/stop in -setDispatcher:.\n\nI think this is a comment I should address once we settle on the \"coordinator or not\" comment. Keeping it unresolved here for now.",
       "parentUuid": "6587fcd8_c3128f61",
+      "range": {
+        "startLine": 22,
+        "startChar": 37,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "3ecee7fb0f7cb9f1293d1ec8c8947594d6eaff3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8fb151_c4fd063d",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-19T14:19:23Z",
+      "side": 1,
+      "message": "Yep, my mistake. Another approach would be to make this object conform to the external search protocol and then have the BVC dispatch to it, but if you shift to a mediator, that\u0027s less clean.",
+      "parentUuid": "47a93cb0_d148b04e",
       "range": {
         "startLine": 22,
         "startChar": 37,
