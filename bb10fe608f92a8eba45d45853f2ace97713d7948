@@ -50,6 +50,23 @@
       "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87538057_3e8177d2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-19T10:25:12Z",
+      "side": 1,
+      "message": "Hmm, this seems a little different from what the spec is saying.  \"The event handler processing algorithm\" step 5 says \"if E is a BeforeUnloadEvent object and E\u0027s type is beforeunload\", so the condition should be:\n    event-\u003eIsBeforeUnloadEvent() \u0026\u0026 event-type() \u003d\u003d EventTypeNames::beforeunload\n\nIf the condition is true, we need to check if |return_value| is null or non-null.  If the above condition is false (not beforeunload), then we need to check if |return_value| is false or not (ignoring special error event handling case).",
+      "revId": "bb10fe608f92a8eba45d45853f2ace97713d7948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
