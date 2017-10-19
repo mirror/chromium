@@ -97,8 +97,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, Caching) {
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(100), NGSizeIndefinite));
 
-  LayoutNGBlockFlow* block_flow =
-      ToLayoutNGBlockFlow(GetLayoutObjectByElementId("box"));
+  LayoutBlockFlow* block_flow =
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("box"));
   NGBlockNode node(block_flow);
 
   RefPtr<NGLayoutResult> result(node.Layout(*space, nullptr));
@@ -2168,7 +2168,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, RootFragmentOffsetInsideLegacy) {
   GetDocument().View()->UpdateAllLifecyclePhases();
   const LayoutObject* innerNGRoot = GetLayoutObjectByElementId("innerNGRoot");
 
-  ASSERT_TRUE(innerNGRoot->IsLayoutNGBlockFlow());
+  ASSERT_TRUE(innerNGRoot->IsLayoutNGMixin());
   const NGPhysicalBoxFragment* fragment =
       CurrentFragmentFor(ToLayoutNGBlockFlow(innerNGRoot));
 
