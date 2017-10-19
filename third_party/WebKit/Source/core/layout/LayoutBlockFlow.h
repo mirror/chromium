@@ -36,6 +36,7 @@
 #ifndef LayoutBlockFlow_h
 #define LayoutBlockFlow_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/layout/FloatingObjects.h"
 #include "core/layout/LayoutBlock.h"
@@ -43,7 +44,7 @@
 #include "core/layout/line/LineBoxList.h"
 #include "core/layout/line/RootInlineBox.h"
 #include "core/layout/line/TrailingObjects.h"
-#include <memory>
+#include "core/layout/ng/ng_layout_result.h"
 
 namespace blink {
 
@@ -58,6 +59,8 @@ class LayoutMultiColumnSpannerPlaceholder;
 class LayoutRubyRun;
 template <class Run>
 class BidiRunList;
+struct NGInlineNodeData;
+class NGPaintFragment;
 
 enum IndentTextOrNot { kDoNotIndentText, kIndentText };
 
@@ -411,6 +414,23 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
   // This function is only public so we can call it from NGBlockNode while we're
   // still working on LayoutNG.
   void AddOverflowFromFloats();
+
+  virtual NGInlineNodeData* GetNGInlineNodeData() const { return nullptr; }
+  virtual void ResetNGInlineNodeData() {}
+  virtual bool HasNGInlineNodeData() const { return false; }
+  virtual const NGPaintFragment* PaintFragment() const { return nullptr; }
+  virtual RefPtr<NGLayoutResult> CachedLayoutResult(const NGConstraintSpace&,
+                                                    NGBreakToken*) const {
+    return nullptr;
+  }
+  virtual void SetCachedLayoutResult(const NGConstraintSpace&,
+                                     NGBreakToken*,
+                                     RefPtr<NGLayoutResult>) {}
+  virtual void WillCollectInlines() {}
+  virtual void SetPaintFragment(RefPtr<const NGPhysicalFragment>) {}
+  virtual const NGPhysicalBoxFragment* CurrentFragment() const {
+    return nullptr;
+  }
 
 #ifndef NDEBUG
   void ShowLineTreeAndMark(const InlineBox* = nullptr,
