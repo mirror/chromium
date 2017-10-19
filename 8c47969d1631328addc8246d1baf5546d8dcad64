@@ -330,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "611c8fe4_8368340c",
+        "filename": "chrome/app/chrome_native_notification_prep_win.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-19T14:58:08Z",
+      "side": 1,
+      "message": "Well, my worry is about the lifetime of the activator. It looks like it will survive until shutdown -- does that mean we can have attempts to call into our code while we\u0027re being torn down, resulting in shutdown crashes?",
+      "parentUuid": "627b3b26_dc7064e2",
+      "range": {
+        "startLine": 253,
+        "startChar": 34,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "8c47969d1631328addc8246d1baf5546d8dcad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51994dd6_6f58f511",
         "filename": "chrome/app/chrome_native_notification_prep_win.cc",
         "patchSetId": 24
