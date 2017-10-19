@@ -39,6 +39,24 @@
       "revId": "24557a97774f0df4e6d292a39b51771afbe768a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030d4cba_8510725c",
+        "filename": "ash/display/display_configuration_controller_test_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-19T22:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3de43f3_d44bedf8",
+      "revId": "24557a97774f0df4e6d292a39b51771afbe768a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
