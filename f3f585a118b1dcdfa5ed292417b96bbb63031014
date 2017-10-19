@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cc22f73_f482b2c4",
+        "filename": "components/history/core/browser/url_database.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-19T15:21:37Z",
+      "side": 1,
+      "message": "There are no tests that check IsTypedHost directly. The code paths that are using this function are all tested.",
+      "parentUuid": "7ff3b0d2_a6d5dde2",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3db09da2_71b68dfb",
         "filename": "components/history/core/browser/url_database.h",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8738b05c_10fc1218",
+        "filename": "components/history/core/browser/url_database.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-19T15:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3db09da2_71b68dfb",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23814546_437d4ee8",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 9
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-19T05:14:39Z",
       "side": 1,
       "message": "This seems like a lie.  (The structure will be mostly empty.)  Don\u0027t you want db_-\u003eGetRowForURL?",
+      "range": {
+        "startLine": 410,
+        "startChar": 15,
+        "endLine": 410,
+        "endChar": 30
+      },
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08d45c5_b10b52ce",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-19T15:21:37Z",
+      "side": 1,
+      "message": "It is as much of a lie as it is in the baseline code. |as_known_intranet_url| is not in the history. What is in the history is some other url with the same host. Note that the same applies for |url| in baseline code. \n\nLet me know if I should change the comment above to make this distinction more clear. I can add the fact that \"the structure will be mostly empty\", which is true, as the suggestions is a simple unvisited url with the same host as some visited url, and the same scheme as that visited intranet url.\n\nSee L911-913 in history_url_provider_unittest.cc for the expected result.",
+      "parentUuid": "23814546_437d4ee8",
       "range": {
         "startLine": 410,
         "startChar": 15,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e260e613_b3d81d7b",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-19T15:21:37Z",
+      "side": 1,
+      "message": "Improved readability.",
+      "parentUuid": "ea73acb2_41f0e24e",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4820208_4455286e",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 9
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "394dc13f_90f4b1f8",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-19T15:21:37Z",
+      "side": 1,
+      "message": "Good catch. Since the canonicalized_url can be accessed from the AutocompleteInput, I changed AsKnownIntranetURL to always use the canonicalized version.",
+      "parentUuid": "a4820208_4455286e",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94d2da39_58c19575",
         "filename": "components/omnibox/browser/history_url_provider.h",
         "patchSetId": 9
@@ -107,6 +203,24 @@
       "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5434ae_df6c37d0",
+        "filename": "components/omnibox/browser/history_url_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-19T15:21:37Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "94d2da39_58c19575",
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
