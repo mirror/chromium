@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ab97c7_accc2f80",
+        "filename": "ui/display/manager/display_layout_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-19T01:01:48Z",
+      "side": 1,
+      "message": "Nit: Can you please expand this comment by explaining why we need this condition?",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 54
+      },
+      "revId": "2dff3ea24beea6208fe2139dc62e5f175e524311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
