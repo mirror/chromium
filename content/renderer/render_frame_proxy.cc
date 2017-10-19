@@ -33,7 +33,7 @@
 #include "content/renderer/render_widget.h"
 #include "ipc/ipc_message_macros.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
+#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"

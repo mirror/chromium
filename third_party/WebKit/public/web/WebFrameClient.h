@@ -57,7 +57,7 @@
 #include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebEffectiveConnectionType.h"
-#include "public/platform/WebFeaturePolicy.h"
+#include "common/feature_policy/feature_policy.h"
 #include "public/platform/WebFileSystem.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"

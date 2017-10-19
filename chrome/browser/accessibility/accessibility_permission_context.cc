@@ -8,7 +8,7 @@ AccessibilityPermissionContext::AccessibilityPermissionContext(Profile* profile)
     : PermissionContextBase(
           profile,
           CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS,
-          blink::WebFeaturePolicyFeature::kAccessibilityEvents) {}
+          blink::FeaturePolicyFeature::kAccessibilityEvents) {}
 
 AccessibilityPermissionContext::~AccessibilityPermissionContext() = default;
 
