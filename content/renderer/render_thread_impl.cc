@@ -397,10 +397,8 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
   const bool automatic_flushes = false;
   return base::MakeRefCounted<ui::ContextProviderCommandBuffer>(
       std::move(gpu_channel_host), stream_id, stream_priority,
-      gpu::kNullSurfaceHandle,
-      GURL("chrome://gpu/RenderThreadImpl::CreateOffscreenContext/" +
-           ui::command_buffer_metrics::ContextTypeToString(type)),
-      automatic_flushes, support_locking, limits, attributes, nullptr, type);
+      gpu::kNullSurfaceHandle, GURL(), automatic_flushes, support_locking,
+      limits, attributes, nullptr, type);
 }
 
 // Hook that allows single-sample metric code from //components/metrics to
