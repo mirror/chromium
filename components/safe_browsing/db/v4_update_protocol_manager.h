@@ -23,7 +23,6 @@
 #include "base/timer/timer.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/db/safebrowsing.pb.h"
-#include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/proto/webui.pb.h"
 #include "net/url_request/url_fetcher_delegate.h"

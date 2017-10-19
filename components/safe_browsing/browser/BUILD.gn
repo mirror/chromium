@@ -32,6 +32,7 @@ source_set("browser") {
     "//components/safe_browsing:safe_browsing",
     "//components/safe_browsing/common:common",
     "//components/safe_browsing/db:database_manager",
+    "//components/safe_browsing/db:v4_protocol_manager_util",
     "//components/safe_browsing/web_ui:constants",
     "//components/safe_browsing/web_ui:web_ui",
     "//components/security_interstitials/content:security_interstitial_page",

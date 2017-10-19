@@ -46,9 +46,7 @@ class BasePingManagerTest : public testing::Test {
           "&key=%s", net::EscapeQueryParamValue(key, true).c_str());
     }
 
-    SafeBrowsingProtocolConfig config;
-    config.client_name = kClient;
-    config.url_prefix = kUrlPrefix;
+    V4ProtocolConfig config(kClient, true, key, kUrlPrefix, kAppVer);
     ping_manager_.reset(new BasePingManager(NULL, config));
     ping_manager_->version_ = kAppVer;
     ping_manager_->net_log_ = net_log_with_source_;

@@ -10,7 +10,7 @@
 #include "base/trace_event/trace_event.h"
 #include "components/safe_browsing/base_ui_manager.h"
 #include "components/safe_browsing/common/utils.h"
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/web_ui/constants.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/browser_thread.h"

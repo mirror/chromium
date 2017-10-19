@@ -16,7 +16,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/safe_browsing/db/hit_report.h"
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "content/public/browser/permission_type.h"
 #include "net/log/net_log_with_source.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -35,7 +35,7 @@ class BasePingManager : public net::URLFetcherDelegate {
   // Create an instance of the safe browsing ping manager.
   static std::unique_ptr<BasePingManager> Create(
       net::URLRequestContextGetter* request_context_getter,
-      const SafeBrowsingProtocolConfig& config);
+      const V4ProtocolConfig& config);
 
   // net::URLFetcherDelegate interface.
   void OnURLFetchComplete(const net::URLFetcher* source) override;
@@ -54,7 +54,7 @@ class BasePingManager : public net::URLFetcherDelegate {
   // Constructs a BasePingManager that issues network requests
   // using |request_context_getter|.
   BasePingManager(net::URLRequestContextGetter* request_context_getter,
-                  const SafeBrowsingProtocolConfig& config);
+                  const V4ProtocolConfig& config);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(BasePingManagerTest, TestSafeBrowsingHitUrl);

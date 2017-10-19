@@ -11,7 +11,7 @@ namespace safe_browsing {
 // through Finch.
 namespace V4FeatureList {
 
-enum class V4UsageStatus {
+enum V4UsageStatus {
   // The V4 database manager is not even instantiated i.e. is diabled. All
   // SafeBrowsing operations use PVer3 code.
   V4_DISABLED,

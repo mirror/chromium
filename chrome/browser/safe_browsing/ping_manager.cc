@@ -20,7 +20,7 @@ namespace safe_browsing {
 // static
 std::unique_ptr<SafeBrowsingPingManager> SafeBrowsingPingManager::Create(
     net::URLRequestContextGetter* request_context_getter,
-    const SafeBrowsingProtocolConfig& config) {
+    const V4ProtocolConfig& config) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return base::WrapUnique(
       new SafeBrowsingPingManager(request_context_getter, config));
@@ -28,7 +28,7 @@ std::unique_ptr<SafeBrowsingPingManager> SafeBrowsingPingManager::Create(
 
 SafeBrowsingPingManager::SafeBrowsingPingManager(
     net::URLRequestContextGetter* request_context_getter,
-    const SafeBrowsingProtocolConfig& config)
+    const V4ProtocolConfig& config)
     : BasePingManager(request_context_getter, config) {
   if (request_context_getter) {
     permission_reporter_ = base::MakeUnique<PermissionReporter>(

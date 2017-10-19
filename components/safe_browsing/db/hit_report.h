@@ -8,7 +8,7 @@
 #define COMPONENTS_SAFE_BROWSING_DB_HIT_REPORT_H_
 
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "url/gurl.h"
 
 namespace safe_browsing {
