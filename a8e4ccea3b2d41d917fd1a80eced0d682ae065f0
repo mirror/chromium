@@ -16,6 +16,24 @@
       "revId": "a8e4ccea3b2d41d917fd1a80eced0d682ae065f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f675f4_ba07bef4",
+        "filename": "remoting/ios/app/remoting_menu_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-19T22:02:09Z",
+      "side": 1,
+      "message": "Done. We do need to wrap the old API in macro.",
+      "parentUuid": "7893f667_08fb867b",
+      "revId": "a8e4ccea3b2d41d917fd1a80eced0d682ae065f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
