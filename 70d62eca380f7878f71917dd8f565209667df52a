@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1945ecff_27d1ae4f",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-19T19:17:18Z",
+      "side": 1,
+      "message": "this is a bit odd (and was a bit odd above, too).  Let\u0027s just use a basic for loop here:\nfor (size_t i \u003d 0; i \u003c messages.size(); ++i) {\n  const PermissionMessage\u0026 message \u003d messages[i];\n  const developer_private::Permission\u0026 info_permission \u003d\n      info-\u003epermissions[i];\n  EXPECT_EQ(message, info_permission.message);\n  ASSERT_EQ(messages.submessages().size(),\n            info_permission.submessages.size());\n  for (size_t j \u003d 0; j \u003c message.submessages().size(); ++j) {\n    EXPECT_EQ(message.submessages[j],\n              base::UTF8ToUTF16(info_permission.submessages[j]));\n  }\n}\n\nA few notes:\n- prefer \u0027i\u0027 -\u003e \u0027j\u0027, rather than \u0027i\u0027 -\u003e \u0027h\u0027.  Just convention.\n- the added ASSERT_EQ() on the sizes is important; otherwise we\u0027ll crash if the converted is smaller than the input, and pass (when we shouldn\u0027t) if the converted is larger than the input.",
+      "revId": "70d62eca380f7878f71917dd8f565209667df52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
