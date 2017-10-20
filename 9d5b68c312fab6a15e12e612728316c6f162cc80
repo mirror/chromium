@@ -188,6 +188,24 @@
       "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff4732a_46bb25dd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6455,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-10-20T08:26:55Z",
+      "side": 1,
+      "message": "I agree, if the special pages will go through NavigateInternal, while OnFailedNavigation will never call MaybeHandleDebugURL then we should be fine.\n\nIn current implementation, when chrome://kill is blocked, it runs MaybeHandleDebugURL and kills the page. That is the problem I\u0027m trying to fix with this CL.\n\nI guess if we have a fix for 776528, we shouldn\u0027t need an additional CL like this anymore.",
+      "parentUuid": "7b5a0752_505d7095",
+      "revId": "9d5b68c312fab6a15e12e612728316c6f162cc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
