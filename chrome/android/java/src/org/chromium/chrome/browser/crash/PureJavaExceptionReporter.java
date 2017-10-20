@@ -59,7 +59,13 @@ public class PureJavaExceptionReporter {
      *
      * @param javaException The exception to report.
      */
-    public void createAndUploadReport(Throwable javaException) {
+    public static void reportJavaException(Throwable javaException) {
+        PureJavaExceptionReporter reporter = new PureJavaExceptionReporter();
+        reporter.createAndUploadReport(javaException);
+    }
+
+    @VisibleForTesting
+    void createAndUploadReport(Throwable javaException) {
         // It is OK to do IO in main thread when we know there is a crash happens.
         try (StrictModeContext unused = StrictModeContext.allowDiskWrites()) {
             createReport(javaException);
@@ -69,7 +75,7 @@ public class PureJavaExceptionReporter {
     }
 
     @VisibleForTesting
-    public File getMinidumpFile() {
+    File getMinidumpFile() {
         return mMinidumpFile;
     }
 
