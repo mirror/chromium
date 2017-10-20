@@ -2655,7 +2655,8 @@ bool Node::HasMediaControlAncestor() const {
   const Node* current = this;
 
   while (current) {
-    if (current->IsMediaControls() || current->IsMediaControlElement())
+    if (current->IsMediaControls() || current->IsMediaControlElement() ||
+        current->IsTextTrackContainer())
       return true;
 
     if (current->IsShadowRoot())

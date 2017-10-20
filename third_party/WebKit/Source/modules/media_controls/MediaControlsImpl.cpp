@@ -39,6 +39,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/geometry/DOMRect.h"
+#include "core/html/HTMLStyleElement.h"
 #include "core/html/media/AutoplayPolicy.h"
 #include "core/html/media/HTMLMediaElement.h"
 #include "core/html/media/HTMLMediaElementControlsList.h"
@@ -426,6 +427,8 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 //  |    (-internal-media-controls-text-track-list-kind-captions)
 //  +-MediaControlTextTrackListItemSubtitles
 //       (-internal-media-controls-text-track-list-kind-subtitles)
+// + HTMLStyleElement
+//   {if ModernMediaControlsEnabled}
 void MediaControlsImpl::InitializeControls() {
   overlay_enclosure_ = new MediaControlOverlayEnclosureElement(*this);
 
@@ -527,6 +530,12 @@ void MediaControlsImpl::InitializeControls() {
   overflow_list_->AppendChild(
       toggle_closed_captions_button_->CreateOverflowElement(
           new MediaControlToggleClosedCaptionsButtonElement(*this)));
+
+  // This stylesheet element contains rules that cannot be present in the UA
+  // stylesheet (e.g. animations).
+  HTMLStyleElement* style = HTMLStyleElement::Create(GetDocument(), false);
+  style->setTextContent(MediaControlsResourceLoader::GetShadowStyleSheet());
+  AppendChild(style);
 
   // Set the default CSS classes.
   UpdateCSSClassFromState();
