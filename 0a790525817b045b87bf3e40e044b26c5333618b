@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15bbcfc9_c14b4858",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "s/user/use/",
+      "range": {
+        "startLine": 164,
+        "startChar": 57,
+        "endLine": 164,
+        "endChar": 77
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60d0c1b_6b06abdb",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "are these declarations needed here?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 44
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ea3384_ec3af630",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "nit: kTextSizeMaxInBytes or just kTextSizeMaxBytes (to stress that it is not the actual size, but the limit)",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed0cb08_b17e3e7d",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "maybe g_function_offsets would be more intuitive? I realize that we are calculating this by getting the return address from the instrumentation hook, but outside that context it is not clear what \u0027return\u0027 is\n\nnaming things ..",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92df2830_8d77bb2d",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "__attribute__((constructor(0)) is probably sufficient, and does not depend on having an orderfile\n\n// unless we have another constructor with priority\u003d\u003d0, which we don\u0027t seem to have .. according to my limited use of grep\n\n// this is a brittle hack, of course, feel free to pushback, I am worried that this may crash the CHECK I am proposing below .. because of calling out functions via a PLT entry that comes earlier in .text (should not happen, but could be another hack I don\u0027t know about)",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ea6a7c_2a7aaefc",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "s/th/the",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c364fe3_163b3f37",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "\u0027expected\u0027 is passed as non-const ref, and will be updated on CAS failures, so we can actually use bitfield_element here and avoid \u0027expected \u003d element-\u003eload(...)\u0027\n\nNot sure this makes the code clearer, I\u0027d probably be more confused reading the thing that uses \nthe updated \u0027expected\u0027 from the atomic::compare_exchange_weak. But I am biased:\n* allergic to non-const refs\n* saw too many CAS in assembly that do not backfill memory\n* not knowing C++\n\nPlease consider carefully what to in this case and feel free to do something stupid and arbitrary :)",
+      "range": {
+        "startLine": 63,
+        "startChar": 42,
+        "endLine": 63,
+        "endChar": 50
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea4eb72_49c09180",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "this memory ordering constraint looks too strict. What it essentially means is: \"writes in the current thread are visible in other threads that acquire the same atomic variable and writes that carry a dependency into the atomic variable become visible in other threads that consume the same atomic\". Since we did not write anything beyond the atomic itself, we can use memory_order_relaxed .. maybe?",
+      "range": {
+        "startLine": 64,
+        "startChar": 42,
+        "endLine": 64,
+        "endChar": 67
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f77aebf_481153d9",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "in non-official builds an unsuccessful CHECK would call an instrumented function and recurse infinitely right? On official builds the string is not logged\n\nI think it still makes sense to convert to an \u0027if\u0027 to avoid this subtle dependency on build flavor",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 12
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b26d389_2e4fe568",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "the bigger problem is infinitely recursing into instrumentation in CHECK or base::File :)",
+      "range": {
+        "startLine": 85,
+        "startChar": 60,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c0d243_397ad6c3",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "let\u0027s remove the path part of this comment, went out of sync already",
+      "range": {
+        "startLine": 94,
+        "startChar": 24,
+        "endLine": 94,
+        "endChar": 76
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277089ad_7fb64e8e",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "perhaps \u0027function-instrumentation-profile\u0027, or maybe without excess generalization: \u0027cygprofile-instrumented-code-hitmap\u0027 (but the latter will need to be updated as we advance the format)",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 63
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a543a9_934cb785",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "nit: printing an error message would be nice in this case, like\n\nPLOG(ERROR) \u003c\u003c \"Could not open \" \u003c\u003c path;",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c44f65_5f27799a",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "let\u0027s dump only until the last non-zero bit. Faster, less assumptions to carry to the mergetraces/whatever",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 110,
+        "endChar": 59
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67419586_247196bb",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "s/10s/timeout/",
+      "range": {
+        "startLine": 120,
+        "startChar": 69,
+        "endLine": 120,
+        "endChar": 72
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3a5a9a_9b4da030",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "theoretical problems again: when g_enabled_and_array is not atomic, any spill values can appear in it, meaning that using it as array is undefined\n\nhow about making g_enabled_and_array an atomic and reading/writing it in relaxed memory model? this would add clarity that we allow some concurrent reading/writing it",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 13
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da635a5_6d565d60",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-20T16:24:57Z",
+      "side": 1,
+      "message": "CHECK(return_address \u003c kStartOfText + kTextSizeMaxBytes)\n\n.. also nice to reset g_enabled_and_array back to nullptr before calling it, to rule out recursing into the hook infinitely\n\nThis would probably complain more sanely for component build?\n\nfor this purpose I\u0027d also suggest to:\nconst void* kStartOfText \u003d\n    reinterpret_cast\u003csize_t\u003e(dummy_function_to_anchor_text);\n\ni.e. no need to cast to void* to and then later cast to size_t (but not 100% sure that the compiler would not complain)",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "0a790525817b045b87bf3e40e044b26c5333618b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
