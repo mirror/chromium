@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a736195_b68d3ee2",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-20T13:33:33Z",
+      "side": 1,
+      "message": "Optional: Bonus points if you care to change to use Stringprintf() here. :) (Similar to input delegate.)",
+      "revId": "13fd703643822a5d5ce6e8f420efacf62ff2df0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f42a90_2a8a3741",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-20T13:33:33Z",
+      "side": 1,
+      "message": "Nit: We\u0027d prefer not have longer strings in total. But sure, less code size probably. You decide.",
+      "revId": "13fd703643822a5d5ce6e8f420efacf62ff2df0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
