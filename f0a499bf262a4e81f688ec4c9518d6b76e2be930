@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9ea6898_cd9a097f",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-20T18:18:55Z",
+      "side": 1,
+      "message": "Sorry, I have no clue about what you are talking about :(. Let\u0027s discuss more in our meeting today.\n\nFor now I changed it here to match what I had in my other implementation:\n\n  if ((may_have_transparency || has_color_temperature) \u0026\u0026\n      ShouldFlattenTransform(layer) \u0026\u0026\n      at_least_two_layers_in_subtree_draw_content) {\n    TRACE_EVENT_INSTANT0(\n        \"cc\", \"PropertyTreeBuilder::ShouldCreateRenderSurface opacity\",\n        TRACE_EVENT_SCOPE_THREAD);\n    DCHECK(!is_root);\n    return true;\n  }",
+      "parentUuid": "2bf21626_5cbdc0ef",
+      "revId": "f0a499bf262a4e81f688ec4c9518d6b76e2be930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a68ff13d_0b03367a",
         "filename": "components/viz/service/display/shader.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T02:46:18Z",
       "side": 1,
       "message": "it doesn\u0027t make sense to use a separate color matrix for this. we should integrate with the existing color matrix if possible. if that\u0027s hard then using a full matrix here is overkill as only two values in that matrix will ever be set.",
+      "revId": "f0a499bf262a4e81f688ec4c9518d6b76e2be930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad30bda_97c9a185",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-20T18:18:55Z",
+      "side": 1,
+      "message": "Yes, that makes sense, we really don\u0027t need a matrix at all.\nI replaced it with two uniform floats for the blue and green scales. Thanks for suggesting!",
+      "parentUuid": "a68ff13d_0b03367a",
       "revId": "f0a499bf262a4e81f688ec4c9518d6b76e2be930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
