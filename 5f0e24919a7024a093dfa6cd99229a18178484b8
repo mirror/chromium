@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d0effe_ca506c03",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T18:20:21Z",
+      "side": 1,
+      "message": "I agree, I can\u0027t see this being used anywhere. If InitAsFullscreen is impossible, then this ought to be impossible too.",
+      "revId": "5f0e24919a7024a093dfa6cd99229a18178484b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
