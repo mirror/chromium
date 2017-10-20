@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26ce58d1_0763b495",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-ui/break-on-set-timeout-with-syntax-error.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-20T17:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "053506f0_3352ef9d",
+      "revId": "387c426903e3aa6d074077e9f3c4ff79e2e96ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd462f6a_e5f9311b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-ui/debugger-inline-values-expected.txt",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-20T15:49:01Z",
       "side": 1,
       "message": "This color looks scary.",
+      "range": {
+        "startLine": 4,
+        "startChar": 27,
+        "endLine": 4,
+        "endChar": 28
+      },
+      "revId": "387c426903e3aa6d074077e9f3c4ff79e2e96ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c6bc3b_b364f0c8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-ui/debugger-inline-values-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-20T17:54:06Z",
+      "side": 1,
+      "message": "I believe this is just gerrit\u0027s formatting for whitespace. The diff (although big) seems reasonable.",
+      "parentUuid": "dd462f6a_e5f9311b",
       "range": {
         "startLine": 4,
         "startChar": 27,
