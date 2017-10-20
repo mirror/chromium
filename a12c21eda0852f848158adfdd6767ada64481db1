@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5396761_f0eb92bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-20T15:29:09Z",
+      "side": 1,
+      "message": "Unfortunately, this code can\u0027t be moved onDetachedFromWindow as doing so produces IllegalStateException: \"Activity has been destroyed\" from dialog dismissal code.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 50
+      },
+      "revId": "a12c21eda0852f848158adfdd6767ada64481db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6aad1cd_8f38360c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-20T15:29:09Z",
+      "side": 1,
+      "message": "This method can be unified with ConfirmSyncDataStateMachineDelegate.dismissDialog, but it would require moving ConfirmImportSyncDataDialog and ConfirmManagedSyncDataDialog management to ConfirmSyncDataStateMachineDelegate. I would like to to that in a separate CL as this one will be merged back to M-63.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "a12c21eda0852f848158adfdd6767ada64481db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cd0998c_b50b02b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-20T15:29:09Z",
+      "side": 1,
+      "message": "DialogFragment is \"the intended way\" of dialog management that is lifecycle-aware, so I\u0027ve used it here. There\u0027s also an added benefit of automatic state saving/restoring, although I would need to reimplement AccountSigninView to use it.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 71
+      },
+      "revId": "a12c21eda0852f848158adfdd6767ada64481db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
