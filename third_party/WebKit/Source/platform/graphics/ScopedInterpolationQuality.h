@@ -1,0 +1,43 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef ScopedInterpolationQuality_h
+#define ScopedInterpolationQuality_h
+
+#include "platform/graphics/GraphicsContext.h"
+#include "platform/graphics/GraphicsTypes.h"
+
+namespace blink {
+
+// Helper to update the interpolation quality setting of a GraphicsContext
+// within the current scope. Be careful when mixing with other GraphicsContext
+// mechanisms that save/restore state (like GraphicsContextStateSaver or the
+// Save/Restore methods) to ensure the restoration behavior is the expected
+// one.
+class ScopedInterpolationQuality {
+ public:
+  ScopedInterpolationQuality(GraphicsContext& context,
+                             InterpolationQuality interpolation_quality)
+      : context_(context),
+        previous_interpolation_quality_(context.ImageInterpolationQuality()),
+        interpolation_quality_changed_(previous_interpolation_quality_ !=
+                                       interpolation_quality) {
+    if (interpolation_quality_changed_)
+      context_.SetImageInterpolationQuality(interpolation_quality);
+  }
+
+  ~ScopedInterpolationQuality() {
+    if (interpolation_quality_changed_)
+      context_.SetImageInterpolationQuality(previous_interpolation_quality_);
+  }
+
+ private:
+  GraphicsContext& context_;
+  const InterpolationQuality previous_interpolation_quality_;
+  const bool interpolation_quality_changed_;
+};
+
+}  // namespace blink
+
+#endif  // ScopedInterpolationQuality_h
