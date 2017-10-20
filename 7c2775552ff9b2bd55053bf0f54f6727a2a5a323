@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "56f2c946_07c4a803",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-20T15:25:44Z",
+      "side": 1,
+      "message": "You are totally right, there is no point to inherit from LabelButton. We tried to inherit directly from ImageView, but it doesn\u0027t well since we need padding inside for the badge (see the comment bellow).\nI don\u0027t see any better solution to have this class inherit from View. What do you think?",
+      "parentUuid": "2226b78e_929acb06",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2dd6e8b_1eee598f",
         "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
         "patchSetId": 13
@@ -82,6 +106,30 @@
       "writtenOn": "2017-10-18T15:31:07Z",
       "side": 1,
       "message": "What kind of padding do you want to set here? Wouldn\u0027t it be better to apply it in the parent view instead?",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4421cde6_7df8ddeb",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-20T15:25:44Z",
+      "side": 1,
+      "message": "So we tried to remove the inside padding, but it is useful to be able to display the badge which is a bit outside of the circle (see the clip path in PaintChildren).\nWe tried to have the class inherit ImageView and add extra space for its preferred size (with overriding ImageView::CalculatePreferredSize()), but the image itself will be stretched. In that test, we moved the clip mask inside OnPaint method().\n\nThe profile photo should be 40x40, but we definitely need to have extra empty pixels on right and the bottom for badge. So the author of this code was adding 4 pixels on the right, and 4 pixels on the top and bottom, for that reason. And the code was painting the profile photo with a size of 40x40 pixels inside that view (44x48 pixels).\n\nSo for that reason, I don\u0027t see any better solution that have BadgedProfilePhoto inherit from View, and keep the padding inside that class.\nOtherwise, this class can still inherit from ImageView, but we would have to override ImageView::OnPaintImage() to avoid to stretch the image. That would seem a bit hack to me.",
+      "parentUuid": "d2dd6e8b_1eee598f",
       "range": {
         "startLine": 50,
         "startChar": 27,
