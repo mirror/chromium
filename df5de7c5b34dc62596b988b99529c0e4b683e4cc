@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa28ab2e_c1bf996a",
+        "filename": "components/password_manager/core/browser/resources/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-20T09:46:59Z",
+      "side": 1,
+      "message": "can we have one central owners files, e.g., in components/password_manger and include that via file://components/password_manager/OWNERS everywhere?",
+      "revId": "df5de7c5b34dc62596b988b99529c0e4b683e4cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

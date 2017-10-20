@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e29e47b_a56d46d6",
+        "filename": "components/password_manager/core/browser/resources/password_manager_internals.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-20T09:46:59Z",
+      "side": 0,
+      "message": "I\u0027d expect those resources to be in components/resources/password_manager/",
+      "revId": "fff1898179ef406ea6866f27e2ecba8a39031448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
