@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "cdb03b44_c84d90f4",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:43:56Z",
+      "side": 1,
+      "message": "I don\u0027t quite see why this is needed.",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20234903_5ee68eba",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:43:56Z",
+      "side": 1,
+      "message": "Cl description says \"from TabSwitcher to BVC\", but this looks like it\u0027s the case where the BVC is visible and then it animates away such that the switcher is shown -- what I would call \"dismissing the BVC\". What am I missing?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 41
+      },
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fee785fe_18f4640d",
         "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.h",
         "patchSetId": 3
@@ -30,6 +76,24 @@
       "writtenOn": "2017-10-19T15:05:17Z",
       "side": 1,
       "message": "Intentionally named this way to avoid using \"presentation\" or \"dismissal\" in the name, because those terms are ambiguous.",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "334e7bd3_556edc16",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:43:56Z",
+      "side": 1,
+      "message": "Sure; also the same animator can often handle both animations.",
+      "parentUuid": "fee785fe_18f4640d",
       "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -70,6 +134,64 @@
     },
     {
       "key": {
+        "uuid": "880e0ecb_35040e53",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:43:56Z",
+      "side": 1,
+      "message": "See /ios/clean/chrome/browser/ui/transitions/animators/zoom_transition_animator for a less cargo-culted example. Yes, I think the frame setting needs to happen.",
+      "parentUuid": "1200a3e9_8f2a4e72",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d3acaeb_6854e1a5",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:43:56Z",
+      "side": 1,
+      "message": "Instead of depending on the presenting VC being of the right class, can the constructor for this class just be passed an id\u003cTabSwitcher\u003e?\n\n(and if not, use ObjCCast\u003c\u003e())",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612bccd3_69d966a2",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:43:56Z",
+      "side": 1,
+      "message": "pragma mark TabSwitcher",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9271c6c_e542648d",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher.h",
         "patchSetId": 3
@@ -81,6 +203,24 @@
       "writtenOn": "2017-10-19T15:05:17Z",
       "side": 1,
       "message": "My doc proposed two options: a delegate or a completion block.  I went with the delegate because I\u0027m hoping that we can somehow move enough UI code into MainViewController to make MVC the TabSwitcherDelegate, at which point the animation-specific delegate can just disappear.\n\nI think it\u0027s 50/50 whether we\u0027ll be able to pull this off or not.",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1432f159_c4e5d581",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:43:56Z",
+      "side": 1,
+      "message": "In any case I prefer this to a completion block.",
+      "parentUuid": "a9271c6c_e542648d",
       "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
