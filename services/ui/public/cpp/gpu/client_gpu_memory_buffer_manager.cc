@@ -162,6 +162,16 @@ ClientGpuMemoryBufferManager::CreateGpuMemoryBuffer(
   return std::move(buffer);
 }
 
+std::unique_ptr<gfx::GpuMemoryBuffer>
+ClientGpuMemoryBufferManager::CreateFromHandle(
+    const gfx::GpuMemoryBufferHandle& handle,
+    const gfx::Size& size,
+    gfx::BufferFormat format,
+    gfx::BufferUsage usage) {
+  return gpu::GpuMemoryBufferImpl::CreateFromHandle(handle, size, format, usage,
+                                                    DestructionCallback());
+}
+
 void ClientGpuMemoryBufferManager::SetDestructionSyncToken(
     gfx::GpuMemoryBuffer* buffer,
     const gpu::SyncToken& sync_token) {
