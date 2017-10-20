@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "994c85a7_0ece1f05",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-20T02:35:54Z",
+      "side": 1,
+      "message": "I cited from: https://cs.chromium.org/chromium/src/components/session_manager/session_manager_types.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d30\n\nAnd from here: https://cs.chromium.org/chromium/src/ash/session/session_controller.cc?type\u003dcs\u0026l\u003d104, it says \"user sessions are blocked when session state is not ACTIVE\". So I think ACTIVE means it is user session and no overlay UI.\n\n+xiyuan for confirmation:\n\nI have seen this in code base: https://cs.chromium.org/chromium/src/ash/system/palette/palette_utils.cc?type\u003dcs\u0026q\u003disinusersession\u0026l\u003d30, could we add this API in session_controller?\n\nbool SessionController::IsInUserSession() {\n  return state_ \u003d\u003d SessionState::ACTIVE \u0026\u0026 !IsRunningInAppMode();\n}  // we don\u0027t need !session_controller-\u003eIsUserSessionBlocked(). It is redundant.",
+      "parentUuid": "c0301e36_11876124",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "307e44e86984e14b01a65ece35ec791ad3f7d86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f71c66db_81effac0",
         "filename": "ash/wm/lock_state_controller_unittest.cc",
         "patchSetId": 2
