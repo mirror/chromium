@@ -34,6 +34,24 @@
       "revId": "e0a09dae1c075ddf39163aab2f82315ca0580f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911a5815_137a1711",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-20T23:55:09Z",
+      "side": 1,
+      "message": "Ahh, it\u0027s for performance. Thanks.\n\nI think this is fine as-is.",
+      "parentUuid": "dd0aef60_e849c84c",
+      "revId": "e0a09dae1c075ddf39163aab2f82315ca0580f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
