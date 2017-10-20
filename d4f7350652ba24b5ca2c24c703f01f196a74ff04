@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "281188a9_556bdf7d",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-20T15:23:36Z",
+      "side": 1,
+      "message": "Doesn\u0027t mean it wouldn\u0027t flake later! But, I checked the documentation of ExecuteScript just now and it appends the DomAutomationController call at the end of the script, so it seems like you\u0027re good to go and this is indeed blocking.\n\nhttps://cs.chromium.org/chromium/src/content/public/test/browser_test_utils.h?rcl\u003d6f8cbe2f3c2296743a184006211c8a15eb349113\u0026l\u003d280",
+      "parentUuid": "2f697840_00740ff1",
+      "range": {
+        "startLine": 1023,
+        "startChar": 2,
+        "endLine": 1024,
+        "endChar": 31
+      },
+      "revId": "d4f7350652ba24b5ca2c24c703f01f196a74ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92b409f6_dedcc43d",
         "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
         "patchSetId": 4
