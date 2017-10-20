@@ -16,6 +16,24 @@
       "revId": "5cd1d33d5d91217a6df7a01dc8e1d02d365c17ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be745f6_fc979d69",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-10-20T21:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4ee85be_1c0c8ec0",
+      "revId": "5cd1d33d5d91217a6df7a01dc8e1d02d365c17ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
