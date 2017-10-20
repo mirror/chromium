@@ -25,7 +25,7 @@ class PrefService;
 
 namespace net {
 class URLRequestContext;
-class URLRequestContextBuilder;
+class URLRequestContextBuilderMojo;
 class HttpServerPropertiesManager;
 }
 
@@ -57,7 +57,7 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   NetworkContext(NetworkServiceImpl* network_service,
                  mojom::NetworkContextRequest request,
                  mojom::NetworkContextParamsPtr params,
-                 std::unique_ptr<net::URLRequestContextBuilder> builder);
+                 std::unique_ptr<net::URLRequestContextBuilderMojo> builder);
 
   // Creates a NetworkContext that wraps a consumer-provided URLRequestContext
   // that the NetworkContext does not own. In this case, there is no

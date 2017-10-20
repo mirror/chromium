@@ -7,6 +7,7 @@ module content.mojom;
 import "cookie_manager.mojom";
 import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
+import "net/interfaces/proxy_resolver_service.mojom";
 import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
@@ -55,6 +56,10 @@ struct NetworkContextParams {
 
   // Enables HTTP/0.9 on ports other than 80 for HTTP and 443 for HTTPS.
   bool http_09_on_non_default_ports_enabled = false;
+
+  // Runs PAC scripts. If a ProxyResolverFactory is not provded, PAC scripts
+  // will not be executed.
+  net.interfaces.ProxyResolverFactory proxy_resolver_factory;
 };
 
 // Represents a distinct context for making network requests, with its own

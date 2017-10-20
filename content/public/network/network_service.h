@@ -12,7 +12,7 @@
 
 namespace net {
 class URLRequestContext;
-class URLRequestContextBuilder;
+class URLRequestContextBuilderMojo;
 }  // namespace net
 
 namespace content {
@@ -35,7 +35,7 @@ class CONTENT_EXPORT NetworkService : public mojom::NetworkService {
   CreateNetworkContextWithBuilder(
       content::mojom::NetworkContextRequest request,
       content::mojom::NetworkContextParamsPtr params,
-      std::unique_ptr<net::URLRequestContextBuilder> builder,
+      std::unique_ptr<net::URLRequestContextBuilderMojo> builder,
       net::URLRequestContext** url_request_context) = 0;
 
   ~NetworkService() override {}

@@ -38,6 +38,7 @@
 #include "net/proxy/proxy_config_service_fixed.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
+#include "net/url_request/url_request_context_builder_mojo.h"
 
 namespace content {
 
@@ -63,7 +64,7 @@ NetworkContext::NetworkContext(
     NetworkServiceImpl* network_service,
     mojom::NetworkContextRequest request,
     mojom::NetworkContextParamsPtr params,
-    std::unique_ptr<net::URLRequestContextBuilder> builder)
+    std::unique_ptr<net::URLRequestContextBuilderMojo> builder)
     : network_service_(network_service),
       params_(std::move(params)),
       binding_(this, std::move(request)) {
@@ -298,6 +299,9 @@ void NetworkContext::ApplyContextParamsToBuilder(
       network_context_params->http_09_on_non_default_ports_enabled;
 
   builder->set_http_network_session_params(session_params);
+
+  builder->SetMojoProxyResolverFactory(
+      std::move(network_context_params->proxy_resolver_factory));
 }
 
 void NetworkContext::ClearNetworkingHistorySince(
