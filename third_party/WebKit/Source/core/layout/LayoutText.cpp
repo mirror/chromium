@@ -1968,10 +1968,11 @@ unsigned LayoutText::ResolvedTextLength() const {
     if (!GetNode())
       return 0;
     const NGOffsetMappingResult& mapping = GetNGOffsetMapping();
-    const unsigned start = mapping.GetTextContentOffset(*GetNode(), 0);
-    const unsigned end = mapping.GetTextContentOffset(*GetNode(), TextLength());
-    DCHECK_LE(start, end);
-    return end - start;
+    Optional<unsigned> start = mapping.GetTextContentOffset(*GetNode(), 0);
+    Optional<unsigned> end =
+        mapping.GetTextContentOffset(*GetNode(), TextLength());
+    DCHECK_LE(*start, *end);
+    return *end - *start;
   }
 
   int len = 0;
