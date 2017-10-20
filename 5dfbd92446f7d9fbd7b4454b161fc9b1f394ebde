@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7713cac2_97953b31",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-20T20:23:10Z",
+      "side": 1,
+      "message": "We end with the same code as for CSSPropertyD.\n\nI have now used a\n// Fall through.\ncomment instead of relying on the compiler.",
+      "parentUuid": "ff6ee857_80fd89b2",
+      "revId": "5dfbd92446f7d9fbd7b4454b161fc9b1f394ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69934510_f3676982",
         "filename": "third_party/WebKit/Source/core/animation/CSSRayInterpolationType.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dc7b053b_d020a35d",
+        "filename": "third_party/WebKit/Source/core/animation/CSSRayInterpolationType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-20T20:23:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69934510_f3676982",
+      "revId": "5dfbd92446f7d9fbd7b4454b161fc9b1f394ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43a48e61_9c384ea5",
         "filename": "third_party/WebKit/Source/core/animation/CSSRayInterpolationType.cpp",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "5dfbd92446f7d9fbd7b4454b161fc9b1f394ebde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3bb0be_ff89b7e5",
+        "filename": "third_party/WebKit/Source/core/animation/CSSRayInterpolationType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-20T20:23:10Z",
+      "side": 1,
+      "message": "To avoid errors\nerror: unused function \u0027ToCSSRayNonInterpolableValueOrNull\u0027 [-Werror,-Wunused-function]\nerror: unused function \u0027ToCSSRayNonInterpolableValueOrDie\u0027 [-Werror,-Wunused-function]",
+      "parentUuid": "43a48e61_9c384ea5",
+      "revId": "5dfbd92446f7d9fbd7b4454b161fc9b1f394ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
