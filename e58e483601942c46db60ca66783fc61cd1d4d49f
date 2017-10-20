@@ -22,6 +22,30 @@
       "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1f9a2b_311589f5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-20T17:13:30Z",
+      "side": 1,
+      "message": "I understand your concerns, but DidUpdateAudioState more closely follows the naming of methods in WebContentsObserver, so I hesitate to change the name there. Regarding the delegate and tab paths, I don\u0027t really know enough about them to make a call as to whether they can be easily combined into a single path. Is there someone I can talk to who has insights into those codepaths?",
+      "parentUuid": "3502ebb8_4c6af53f",
+      "range": {
+        "startLine": 1461,
+        "startChar": 5,
+        "endLine": 1472,
+        "endChar": 1
+      },
+      "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
