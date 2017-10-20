@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "689b73cc_8e60eb70",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-20T05:41:29Z",
+      "side": 1,
+      "message": "Yea, UploadDataStreamBuilder::Build would be my preference. I wasn\u0027t sure if we can get the FileSystemContext and BlobStorageContext, Looks like we can, so we can get rid of these copied over functions. We would need to pass BrowserContext from DownloadManagerImpl/ParalleDownloadJob to this function, which is required to build the FileSystemContext. Also this conversion from ResourceRequestBody -\u003e UploadDataStream is only required for one of the two functions in download_utils.cc. The other one (CreateURLRequestOnIOThread which is called for network service) works fine with ResourceRequestBody, so no conversions required there.",
+      "parentUuid": "650695d5_40063f3d",
+      "range": {
+        "startLine": 217,
+        "startChar": 1,
+        "endLine": 217,
+        "endChar": 2
+      },
+      "revId": "301ed9b451aeeae9bd76f95b3afe9c9f1767fccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d746692_70657266",
         "filename": "content/browser/download/download_utils.cc",
         "patchSetId": 2
