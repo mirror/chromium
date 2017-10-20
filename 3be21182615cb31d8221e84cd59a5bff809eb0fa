@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52a4486e_9432d444",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-20T09:07:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bac07c56_499a4015",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 25
+      },
+      "revId": "3be21182615cb31d8221e84cd59a5bff809eb0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36297c87_f54647ef",
         "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "b4c2a0ec_ad8f2ab5",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-20T09:07:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36297c87_f54647ef",
+      "revId": "3be21182615cb31d8221e84cd59a5bff809eb0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bafaa8b_87729316",
         "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-19T20:45:36Z",
       "side": 1,
       "message": "Shouldn\u0027t neither of these callbacks be called because CreateSensorInternal will only be executed once and the callback passed to it is never called.\n\nI would put NOTREACHED() in both.",
+      "range": {
+        "startLine": 124,
+        "startChar": 55,
+        "endLine": 124,
+        "endChar": 70
+      },
+      "revId": "3be21182615cb31d8221e84cd59a5bff809eb0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332ecfbd_8cf8869d",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-20T09:07:09Z",
+      "side": 1,
+      "message": "Right, done.",
+      "parentUuid": "0bafaa8b_87729316",
       "range": {
         "startLine": 124,
         "startChar": 55,
