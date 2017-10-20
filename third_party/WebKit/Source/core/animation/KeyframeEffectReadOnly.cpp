@@ -6,6 +6,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/core/v8/unrestricted_double_or_keyframe_effect_options.h"
 #include "core/animation/Animation.h"
 #include "core/animation/EffectInput.h"
@@ -15,12 +16,14 @@
 #include "core/animation/KeyframeEffectOptions.h"
 #include "core/animation/PropertyHandle.h"
 #include "core/animation/SampledEffect.h"
+#include "core/animation/StringKeyframe.h"
 #include "core/animation/TimingInput.h"
 #include "core/dom/Element.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/frame/UseCounter.h"
 #include "core/paint/PaintLayer.h"
 #include "core/svg/SVGElement.h"
+#include "platform/bindings/ScriptState.h"
 
 namespace blink {
 
@@ -82,7 +85,9 @@ KeyframeEffectReadOnly::KeyframeEffectReadOnly(Element* target,
       target_(target),
       model_(model),
       sampled_effect_(nullptr),
-      priority_(priority) {}
+      priority_(priority) {
+  DCHECK(model_->IsKeyframeEffectModel());
+}
 
 void KeyframeEffectReadOnly::Attach(Animation* animation) {
   if (target_) {
@@ -313,6 +318,61 @@ bool KeyframeEffectReadOnly::HasActiveAnimationsOnCompositor() const {
 bool KeyframeEffectReadOnly::HasActiveAnimationsOnCompositor(
     const PropertyHandle& property) const {
   return HasActiveAnimationsOnCompositor() && Affects(property);
+}
+
+Vector<ScriptValue> KeyframeEffectReadOnly::getKeyframes(
+    ScriptState* script_state) {
+  Vector<ScriptValue> computed_keyframes;
+  if (!model_)
+    return computed_keyframes;
+
+  KeyframeEffectModelBase* keyframe_model = ToKeyframeEffectModelBase(model_);
+  for (const auto& keyframe : keyframe_model->GetFrames()) {
+    if (!keyframe->IsStringKeyframe()) {
+      // TODO(smcgruer): Support TransitionKeyframe.
+      continue;
+    }
+
+    V8ObjectBuilder object_builder(script_state);
+    // TODO(smcgruer): ComputedKeyframe has an offset and computedOffset. These
+    // are different somehow.
+    object_builder.Add("offset", keyframe->Offset());
+    object_builder.Add("computedOffset", keyframe->Offset());
+    object_builder.Add("easing", keyframe->Easing().ToString());
+    // TODO(smcgruer): Use a ToString() method instead.
+    // TODO(smcgruer): From the spec: "This member will be absent if the
+    // composite operation specified on the keyframe effect is being used."
+    object_builder.Add("composite",
+                       keyframe->Composite() == EffectModel::kCompositeReplace
+                           ? "replace"
+                           : "add");
+    StringKeyframe* string_keyframe = ToStringKeyframe(keyframe.get());
+    for (const auto& property : string_keyframe->Properties()) {
+      if (property.IsCSSProperty()) {
+        String value = string_keyframe->CssPropertyValue(property).CssText();
+        if (property.IsCSSCustomProperty()) {
+          object_builder.Add(property.CustomPropertyName(), value);
+        } else {
+          object_builder.Add(getPropertyName(property.CssProperty()), value);
+        }
+      } else if (property.IsPresentationAttribute()) {
+        CSSPropertyID presentation_attribute = property.PresentationAttribute();
+        String value =
+            string_keyframe->PresentationAttributeValue(presentation_attribute)
+                .CssText();
+        object_builder.Add(getPropertyName(presentation_attribute), value);
+      } else {
+        DCHECK(property.IsSVGAttribute());
+        const QualifiedName& attribute_name = property.SvgAttribute();
+        String value = string_keyframe->SvgPropertyValue(attribute_name);
+        object_builder.Add(attribute_name.LocalName(), value);
+      }
+    }
+
+    computed_keyframes.push_back(object_builder.GetScriptValue());
+  }
+
+  return computed_keyframes;
 }
 
 bool KeyframeEffectReadOnly::Affects(const PropertyHandle& property) const {
