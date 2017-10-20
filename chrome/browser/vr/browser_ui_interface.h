@@ -11,6 +11,7 @@
 namespace vr {
 
 struct ToolbarState;
+struct OmniboxSuggestions;
 
 // The browser communicates state changes to the VR UI via this interface.
 class BrowserUiInterface {
@@ -33,6 +34,8 @@ class BrowserUiInterface {
   virtual void SetLocationAccessIndicator(bool enabled) = 0;
   virtual void SetExitVrPromptEnabled(bool enabled,
                                       UiUnsupportedMode reason) = 0;
+  virtual void SetOmniboxSuggestions(
+      std::unique_ptr<OmniboxSuggestions> suggestions) = 0;
 
   // Tab handling.
   virtual void AppendToTabList(bool incognito,

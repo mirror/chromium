@@ -135,6 +135,7 @@ class UiSceneManager {
   void CreateBackground();
   void CreateViewportAwareRoot();
   void CreateUrlBar(Model* model);
+  void CreateSuggestionList(Model* model);
   void CreateWebVrUrlToast();
   void CreateCloseButton();
   void CreateExitPrompt();

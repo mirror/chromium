@@ -92,6 +92,10 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
   scene_manager_->SetExitVrPromptEnabled(enabled, reason);
 }
 
+void Ui::SetOmniboxSuggestions(std::unique_ptr<OmniboxSuggestions> suggestions) {
+  model_->omnibox_suggestions = suggestions->suggestions;
+}
+
 bool Ui::ShouldRenderWebVr() {
   return scene_manager_->ShouldRenderWebVr();
 }

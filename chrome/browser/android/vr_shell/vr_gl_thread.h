@@ -22,6 +22,7 @@ namespace vr_shell {
 
 class VrShell;
 class VrShellGl;
+struct OmniboxSuggestions;
 
 class VrGLThread : public base::android::JavaHandlerThread,
                    public GlBrowserInterface,
@@ -58,6 +59,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
+  void OnAutocompleteText(const base::string16& string) override;
+  void StopAutocomplete() override;
 
   // vr::BrowserUiInterface implementation (Browser calling to UI).
   void SetWebVrMode(bool enabled, bool show_toast) override;
@@ -75,6 +78,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetLocationAccessIndicator(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
+  void SetOmniboxSuggestions(
+      std::unique_ptr<vr::OmniboxSuggestions> result) override;
 
  protected:
   void Init() override;

@@ -67,6 +67,8 @@
 #include "ui/gfx/native_widget_types.h"
 #include "url/gurl.h"
 
+#include "chrome/browser/vr/autocomplete_controller.h"
+
 using base::android::JavaParamRef;
 
 namespace vr_shell {
@@ -148,6 +150,7 @@ VrShell::VrShell(JNIEnv* env,
       ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
+  autocomplete_controller_ = base::MakeUnique<vr::AutocompleteController>(ui_);
 
   gl_thread_->Start();
 
@@ -856,6 +859,13 @@ bool VrShell::ShouldDisplayURL() const {
   }
   return ChromeToolbarModelDelegate::ShouldDisplayURL();
 }
+
+void VrShell::OnAutocompleteText(const base::string16& string) {
+  LOG(INFO) << "Handling autocomplete input: " << string;
+  autocomplete_controller_->HandleInput(string);
+}
+
+void VrShell::StopAutocomplete() {}
 
 // ----------------------------------------------------------------------------
 // Native JNI methods
