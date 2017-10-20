@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dabb785_68d1ced1",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T21:37:16Z",
+      "side": 1,
+      "message": "nit: consider introducing bool Pattern::Match(resource_type, url)",
+      "revId": "32f7ff991ff4a6456316e05f9e3d77144022215d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb818190_3f56dbab",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T21:37:16Z",
+      "side": 1,
+      "message": "is this needed? wouldn\u0027t it be better to make it move-only instead?",
+      "revId": "32f7ff991ff4a6456316e05f9e3d77144022215d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34239ea3_0e0a6771",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T21:37:16Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "32f7ff991ff4a6456316e05f9e3d77144022215d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5b5cb5_a8fe9d3b",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T21:37:16Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "32f7ff991ff4a6456316e05f9e3d77144022215d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23878819_c12d1789",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T21:37:16Z",
+      "side": 1,
+      "message": "nit: Response::InvalidParams()",
+      "revId": "32f7ff991ff4a6456316e05f9e3d77144022215d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfbf143_2784f125",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T21:37:16Z",
+      "side": 1,
+      "message": "nit: emplace_back() instead of push_back().",
+      "revId": "32f7ff991ff4a6456316e05f9e3d77144022215d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
