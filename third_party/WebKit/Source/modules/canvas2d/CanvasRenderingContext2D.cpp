@@ -329,12 +329,20 @@ void CanvasRenderingContext2D::ScrollPathIntoViewInternal(const Path& path) {
   transformed_path.Transform(GetState().Transform());
   FloatRect bounding_rect = transformed_path.BoundingRect();
 
-  // Offset by the canvas rect
+  // We first map canvas coordinates to layout coordinates.
   LayoutRect path_rect(bounding_rect);
   IntRect canvas_rect = layout_box->AbsoluteContentBox();
-  path_rect.MoveBy(canvas_rect.Location());
+  path_rect.SetX(
+      (canvas_rect.X() + path_rect.X() * canvas_rect.Width() / Width()));
+  path_rect.SetY(
+      (canvas_rect.Y() + path_rect.Y() * canvas_rect.Height() / Height()));
+  path_rect.SetWidth((path_rect.Width() * canvas_rect.Width() / Width()));
+  path_rect.SetHeight((path_rect.Height() * canvas_rect.Height() / Height()));
 
-  renderer->ScrollRectToVisible(path_rect, ScrollAlignment::kAlignCenterAlways,
+  // Then we clip the bounding box to the canvas visible range.
+  path_rect.Intersect(LayoutRect(canvas_rect));
+
+  renderer->ScrollRectToVisible(path_rect, ScrollAlignment::kAlignTopAlways,
                                 ScrollAlignment::kAlignTopAlways);
 
   // TODO: should implement "inform the user" that the caret and/or
