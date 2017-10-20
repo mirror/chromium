@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aabfd1a_bde2ad46",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T12:45:10Z",
+      "side": 1,
+      "message": "Bug number, list of operating systems on which it flakes, and most importantly period at the end of the sentence :)\n\nAlso please look into this after, because unlike with cache, storage datatype deletion should be pretty reliable.",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 25
+      },
+      "revId": "036b97c7507ab88e99a14cc79f601126c22cd2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
