@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d242b79e_322c5ea3",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-20T21:11:10Z",
+      "side": 1,
+      "message": "Update CL description to cover this as well?",
+      "revId": "a97a78399f1fc4f8ffb016d06faa47291ec85681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
