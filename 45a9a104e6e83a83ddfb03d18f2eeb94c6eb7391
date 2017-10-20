@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55184b4b_7d90348b",
+        "filename": "testing/buildbot/filters/mus.browser_tests.filter",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T19:49:26Z",
+      "side": 1,
+      "message": "Can you add a new line, and add a comment to point to bug 763452?",
+      "revId": "45a9a104e6e83a83ddfb03d18f2eeb94c6eb7391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
