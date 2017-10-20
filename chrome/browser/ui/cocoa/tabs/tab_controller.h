@@ -84,6 +84,10 @@ enum TabLoadingState {
 // Sets the current tab alert state and updates the views.
 - (void)setAlertState:(TabAlertState)alertState;
 
+// Starts/Stops a pulse animation.
+- (void)startPulse;
+- (void)stopPulse;
+
 // Notifies the tab that its title changed outside of loading.
 - (void)titleChangedNotLoading;
 

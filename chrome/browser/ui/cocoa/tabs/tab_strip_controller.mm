@@ -858,17 +858,17 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
 }
 
 // Dispatch context menu commands for the given tab controller.
-- (void)commandDispatch:(TabStripModel::ContextMenuCommand)command
-          forController:(TabController*)controller {
+- (void)command:(TabStripModel::ContextMenuCommand)command
+    dispatchForController:(TabController*)controller {
   int index = [self modelIndexForTabView:[controller view]];
   if (tabStripModel_->ContainsIndex(index))
     tabStripModel_->ExecuteContextMenuCommand(index, command);
 }
 
-// Returns YES if the specificed command should be enabled for the given
+// Returns YES if the specified command should be enabled for the given
 // controller.
-- (BOOL)isCommandEnabled:(TabStripModel::ContextMenuCommand)command
-           forController:(TabController*)controller {
+- (BOOL)isCommand:(TabStripModel::ContextMenuCommand)command
+    enabledForController:(TabController*)controller {
   int index = [self modelIndexForTabView:[controller view]];
   if (!tabStripModel_->ContainsIndex(index))
     return NO;
@@ -880,6 +880,31 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
     menuDelegate:(ui::SimpleMenuModel::Delegate*)delegate {
   int index = [self modelIndexForTabView:[controller view]];
   return new TabMenuModel(delegate, tabStripModel_, index);
+}
+
+- (void)stopPulsingTabs {
+  for (TabController* tab in tabArray_.get())
+    [tab stopPulse];
+}
+
+- (void)command:(TabStripModel::ContextMenuCommand)command
+    isHighlightedForController:(TabController*)controller {
+  [self stopPulsingTabs];
+  if (command == TabStripModel::CommandCloseOtherTabs ||
+      command == TabStripModel::CommandCloseTabsToRight) {
+    int index = [self modelIndexForTabView:[controller view]];
+    std::vector<int> indices =
+        tabStripModel_->GetIndicesClosedByCommand(index, command);
+    for (int affectedIndex : indices) {
+      TabController* tab =
+          [tabArray_ objectAtIndex:[self indexFromModelIndex:affectedIndex]];
+      [tab startPulse];
+    }
+  }
+}
+
+- (void)contextMenuClosedForController:(TabController*)controller {
+  [self stopPulsingTabs];
 }
 
 // Returns a weak reference to the controller that manages dragging of tabs.

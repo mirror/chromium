@@ -71,6 +71,7 @@ UI_BASE_EXPORT
 
 // NSMenuDelegate methods this class implements. Subclasses should call super
 // if extending the behavior.
+- (void)menu:(NSMenu*)menu willHighlightItem:(NSMenuItem*)item;
 - (void)menuWillOpen:(NSMenu*)menu;
 - (void)menuDidClose:(NSMenu*)menu;
 
