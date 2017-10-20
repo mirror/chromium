@@ -25,6 +25,11 @@
 #define TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION \
   trace_event_internal::HeapProfilerScopedTaskExecutionTracker
 
+// Scoped tracker that tracks the given program counter as a native stack frame
+// in the heap profiler.
+#define TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER \
+  trace_event_internal::HeapProfilerScopedWithProgramCounter
+
 // A scoped ignore event used to tell heap profiler to ignore all the
 // allocations in the scope. It is useful to exclude allocations made for
 // tracing from the heap profiler dumps.
@@ -60,6 +65,31 @@ class HeapProfilerScopedTaskExecutionTracker {
 
  private:
   const char* context_;
+};
+
+class HeapProfilerScopedWithProgramCounter {
+ public:
+  inline explicit HeapProfilerScopedWithProgramCounter(const void* pc)
+      : pc_(pc) {
+    using base::trace_event::AllocationContextTracker;
+    if (UNLIKELY(AllocationContextTracker::capture_mode() ==
+                 AllocationContextTracker::CaptureMode::MIXED_STACK)) {
+      AllocationContextTracker::GetInstanceForCurrentThread()
+          ->PushNativeStackFrame(pc_);
+    }
+  }
+
+  inline ~HeapProfilerScopedWithProgramCounter() {
+    using base::trace_event::AllocationContextTracker;
+    if (UNLIKELY(AllocationContextTracker::capture_mode() ==
+                 AllocationContextTracker::CaptureMode::MIXED_STACK)) {
+      AllocationContextTracker::GetInstanceForCurrentThread()
+          ->PopNativeStackFrame(pc_);
+    }
+  }
+
+ private:
+  const void* const pc_;
 };
 
 class BASE_EXPORT HeapProfilerScopedIgnore {
