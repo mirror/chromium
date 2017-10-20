@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "e0b3e1c7_bebd8a37",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-20T16:09:23Z",
+      "side": 1,
+      "message": "Why have two different polling intervals inside and outside? That seems inefficient?",
+      "parentUuid": "2774836f_5c5cc37a",
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abce34ee_dfb351f2",
         "filename": "base/memory/swap_thrashing_delegate.h",
         "patchSetId": 16
@@ -193,6 +211,29 @@
     },
     {
       "key": {
+        "uuid": "bba38bf7_cbe3b77f",
+        "filename": "base/memory/swap_thrashing_delegate.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-20T16:09:23Z",
+      "side": 1,
+      "message": "All of this magic should likely be hidden inside the platfrom-specific impl as well, no?",
+      "range": {
+        "startLine": 72,
+        "startChar": 19,
+        "endLine": 72,
+        "endChar": 50
+      },
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9cb64a6a_f4eb1893",
         "filename": "base/memory/swap_thrashing_monitor.cc",
         "patchSetId": 16
@@ -226,6 +267,52 @@
         "startChar": 33,
         "endLine": 18,
         "endChar": 34
+      },
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c04ca9_026dd9e0",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-20T16:09:23Z",
+      "side": 1,
+      "message": "TabStatsTracker?",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 30
+      },
+      "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc845ea_4434b370",
+        "filename": "base/memory/swap_thrashing_monitor.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-20T16:09:23Z",
+      "side": 1,
+      "message": "I thought there were no signals to emit?",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 25
       },
       "revId": "5fabec5f7e0f1ec778965efa377a6c6ae4e4540a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
