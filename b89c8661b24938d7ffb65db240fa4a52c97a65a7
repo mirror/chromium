@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8075d0e_a11d56d2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-20T22:33:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c0c13e8a_a0151017",
+      "revId": "b89c8661b24938d7ffb65db240fa4a52c97a65a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17ff8bd6_8b13e2be",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b89c8661b24938d7ffb65db240fa4a52c97a65a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55a8540_d0f7d0f9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-20T22:33:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17ff8bd6_8b13e2be",
+      "revId": "b89c8661b24938d7ffb65db240fa4a52c97a65a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
