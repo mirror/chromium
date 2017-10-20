@@ -43,6 +43,8 @@ using content::WebContents;
 
 namespace {
 
+uint64_t next_persistent_group_id_ = 1;
+
 // Returns true if the specified transition is one of the types that cause the
 // opener relationships for the tab in which the transition occurred to be
 // forgotten. This is generally any navigation that isn't a link click (i.e.
@@ -161,6 +163,9 @@ class TabStripModel::WebContentsData : public content::WebContentsObserver {
   WebContents* opener() const { return opener_; }
   void set_opener(WebContents* value) { opener_ = value; }
 
+  int64_t persistent_group_id() { return persistent_group_id_; }
+  void set_persistent_group_id(int64_t id) { persistent_group_id_ = id; }
+
   // Alters the properties of the WebContents.
   bool reset_group_on_select() const { return reset_group_on_select_; }
   void set_reset_group_on_select(bool value) { reset_group_on_select_ = value; }
@@ -191,6 +196,11 @@ class TabStripModel::WebContentsData : public content::WebContentsObserver {
   // logical group of related tabs.
   WebContents* group_ = nullptr;
 
+  // An identifier for the group. Unlike the group_ pointer, this is not reset
+  // and will live even if the original tab that created the group is
+  // destroyed.
+  int64_t persistent_group_id_;
+
   // The owner models the same relationship as group, except it is more
   // easily discarded, e.g. when the user switches to a tab not part of the
   // same group. This property is used to determine what tab to select next
@@ -218,7 +228,9 @@ TabStripModel::WebContentsData::WebContentsData(TabStripModel* tab_strip_model,
                                                 WebContents* contents)
     : content::WebContentsObserver(contents),
       contents_(contents),
-      tab_strip_model_(tab_strip_model) {}
+      tab_strip_model_(tab_strip_model) {
+  persistent_group_id_ = next_persistent_group_id_++;
+}
 
 void TabStripModel::WebContentsData::SetWebContents(WebContents* contents) {
   contents_ = contents;
@@ -272,7 +284,8 @@ void TabStripModel::AppendWebContents(WebContents* contents,
 
 void TabStripModel::InsertWebContentsAt(int index,
                                         WebContents* contents,
-                                        int add_types) {
+                                        int add_types,
+                                        bool inherit_persistent_group) {
   delegate_->WillAddWebContents(contents);
 
   bool active = (add_types & ADD_ACTIVE) != 0;
@@ -292,6 +305,17 @@ void TabStripModel::InsertWebContentsAt(int index,
   std::unique_ptr<WebContentsData> data =
       base::MakeUnique<WebContentsData>(this, contents);
   data->set_pinned(pin);
+
+  // Carry over any persistent group ID whenever the opener is inherited.
+  if (inherit_persistent_group) {
+    // Carry over the persistent group before clearing any associations.
+    int active_contents_index = GetIndexOfWebContents(active_contents);
+    if (active_contents_index != kNoTab) {
+      data->set_persistent_group_id(
+          contents_data_[active_contents_index]->persistent_group_id());
+    }
+  }
+
   if ((add_types & ADD_INHERIT_GROUP) && active_contents) {
     if (active) {
       // Forget any existing relationships, we don't want to make things too
@@ -326,10 +350,9 @@ void TabStripModel::InsertWebContentsAt(int index,
     observer.TabInsertedAt(this, contents, index, active);
 
   if (active) {
-    ui::ListSelectionModel new_model;
-    new_model.Copy(selection_model_);
+    ui::ListSelectionModel new_model = selection_model_;
     new_model.SetSelectedIndex(index);
-    SetSelection(new_model, NOTIFY_DEFAULT);
+    SetSelection(std::move(new_model), NOTIFY_DEFAULT);
   }
 }
 
@@ -384,7 +407,7 @@ WebContents* TabStripModel::DetachWebContentsAt(int index) {
     int old_active = active_index();
     selection_model_.DecrementFrom(index);
     ui::ListSelectionModel old_model;
-    old_model.Copy(selection_model_);
+    old_model = selection_model_;
     if (index == old_active) {
       NotifyIfTabDeactivated(removed_contents);
       if (!selection_model_.empty()) {
@@ -414,18 +437,17 @@ WebContents* TabStripModel::DetachWebContentsAt(int index) {
 
 void TabStripModel::ActivateTabAt(int index, bool user_gesture) {
   DCHECK(ContainsIndex(index));
-  ui::ListSelectionModel new_model;
-  new_model.Copy(selection_model_);
+  ui::ListSelectionModel new_model = selection_model_;
   new_model.SetSelectedIndex(index);
-  SetSelection(new_model, user_gesture ? NOTIFY_USER_GESTURE : NOTIFY_DEFAULT);
+  SetSelection(std::move(new_model),
+               user_gesture ? NOTIFY_USER_GESTURE : NOTIFY_DEFAULT);
 }
 
 void TabStripModel::AddTabAtToSelection(int index) {
   DCHECK(ContainsIndex(index));
-  ui::ListSelectionModel new_model;
-  new_model.Copy(selection_model_);
+  ui::ListSelectionModel new_model = selection_model_;
   new_model.AddIndexToSelection(index);
-  SetSelection(new_model, NOTIFY_DEFAULT);
+  SetSelection(std::move(new_model), NOTIFY_DEFAULT);
 }
 
 void TabStripModel::MoveWebContentsAt(int index,
@@ -543,6 +565,16 @@ bool TabStripModel::TabsAreLoading() const {
 WebContents* TabStripModel::GetOpenerOfWebContentsAt(int index) {
   DCHECK(ContainsIndex(index));
   return contents_data_[index]->opener();
+}
+
+WebContents* TabStripModel::GetGroupAt(int index) {
+  DCHECK(ContainsIndex(index));
+  return contents_data_[index]->group();
+}
+
+int64_t TabStripModel::GetPersistentGroupIdAt(int index) {
+  DCHECK(ContainsIndex(index));
+  return contents_data_[index]->persistent_group_id();
 }
 
 void TabStripModel::SetOpenerOfWebContentsAt(int index,
@@ -697,16 +729,14 @@ int TabStripModel::ConstrainInsertionIndex(int index, bool pinned_tab) {
 
 void TabStripModel::ExtendSelectionTo(int index) {
   DCHECK(ContainsIndex(index));
-  ui::ListSelectionModel new_model;
-  new_model.Copy(selection_model_);
+  ui::ListSelectionModel new_model = selection_model_;
   new_model.SetSelectionFromAnchorTo(index);
-  SetSelection(new_model, NOTIFY_DEFAULT);
+  SetSelection(std::move(new_model), NOTIFY_DEFAULT);
 }
 
 void TabStripModel::ToggleSelectionAt(int index) {
   DCHECK(ContainsIndex(index));
-  ui::ListSelectionModel new_model;
-  new_model.Copy(selection_model());
+  ui::ListSelectionModel new_model = selection_model();
   if (selection_model_.IsSelected(index)) {
     if (selection_model_.size() == 1) {
       // One tab must be selected and this tab is currently selected so we can't
@@ -723,14 +753,13 @@ void TabStripModel::ToggleSelectionAt(int index) {
     new_model.set_anchor(index);
     new_model.set_active(index);
   }
-  SetSelection(new_model, NOTIFY_DEFAULT);
+  SetSelection(std::move(new_model), NOTIFY_DEFAULT);
 }
 
 void TabStripModel::AddSelectionFromAnchorTo(int index) {
-  ui::ListSelectionModel new_model;
-  new_model.Copy(selection_model_);
+  ui::ListSelectionModel new_model = selection_model_;
   new_model.AddSelectionFromAnchorTo(index);
-  SetSelection(new_model, NOTIFY_DEFAULT);
+  SetSelection(std::move(new_model), NOTIFY_DEFAULT);
 }
 
 bool TabStripModel::IsTabSelected(int index) const {
@@ -738,10 +767,9 @@ bool TabStripModel::IsTabSelected(int index) const {
   return selection_model_.IsSelected(index);
 }
 
-void TabStripModel::SetSelectionFromModel(
-    const ui::ListSelectionModel& source) {
+void TabStripModel::SetSelectionFromModel(ui::ListSelectionModel source) {
   DCHECK_NE(ui::ListSelectionModel::kUnselectedIndex, source.active());
-  SetSelection(source, NOTIFY_DEFAULT);
+  SetSelection(std::move(source), NOTIFY_DEFAULT);
 }
 
 void TabStripModel::AddWebContents(WebContents* contents,
@@ -753,6 +781,7 @@ void TabStripModel::AddWebContents(WebContents* contents,
   // closed we'll jump back to the parent tab.
   bool inherit_group = (add_types & ADD_INHERIT_GROUP) == ADD_INHERIT_GROUP;
 
+  bool inherit_persistent_group = false;
   if (ui::PageTransitionTypeIncludingQualifiersIs(transition,
                                                   ui::PAGE_TRANSITION_LINK) &&
       (add_types & ADD_FORCE_INDEX) == 0) {
@@ -764,6 +793,7 @@ void TabStripModel::AddWebContents(WebContents* contents,
     index = order_controller_->DetermineInsertionIndex(transition,
                                                        add_types & ADD_ACTIVE);
     inherit_group = true;
+    inherit_persistent_group = true;
   } else {
     // For all other types, respect what was passed to us, normalizing -1s and
     // values that are too large.
@@ -783,7 +813,8 @@ void TabStripModel::AddWebContents(WebContents* contents,
     inherit_group = true;
   }
   InsertWebContentsAt(index, contents,
-                      add_types | (inherit_group ? ADD_INHERIT_GROUP : 0));
+                      add_types | (inherit_group ? ADD_INHERIT_GROUP : 0),
+                      inherit_persistent_group);
   // Reset the index, just in case insert ended up moving it on us.
   index = GetIndexOfWebContents(contents);
 
@@ -1037,7 +1068,7 @@ void TabStripModel::ExecuteContextMenuCommand(
       selection_model.SetSelectedIndex(context_index);
       for (size_t i = 0; i < indices.size(); ++i)
         selection_model.AddIndexToSelection(indices[i]);
-      SetSelectionFromModel(selection_model);
+      SetSelectionFromModel(std::move(selection_model));
       break;
     }
 
@@ -1242,9 +1273,10 @@ bool TabStripModel::InternalCloseTabs(const std::vector<int>& indices,
                      (close_types & CLOSE_CREATE_HISTORICAL_TAB) != 0);
   }
 
-  if (ref && closing_all && !retval)
+  if (ref && closing_all && !retval) {
     for (auto& observer : observers_)
       observer.CloseAllTabsCanceled();
+  }
 
   return retval;
 }
@@ -1301,21 +1333,20 @@ void TabStripModel::NotifyIfActiveOrSelectionChanged(
     const ui::ListSelectionModel& old_model) {
   NotifyIfActiveTabChanged(old_contents, notify_types);
 
-  if (!selection_model().Equals(old_model)) {
+  if (selection_model() != old_model) {
     for (auto& observer : observers_)
       observer.TabSelectionChanged(this, old_model);
   }
 }
 
-void TabStripModel::SetSelection(
-    const ui::ListSelectionModel& new_model,
-    NotifyTypes notify_types) {
+void TabStripModel::SetSelection(ui::ListSelectionModel new_model,
+                                 NotifyTypes notify_types) {
   WebContents* old_contents = GetActiveWebContents();
   ui::ListSelectionModel old_model;
-  old_model.Copy(selection_model_);
+  old_model = selection_model_;
   if (new_model.active() != selection_model_.active())
     NotifyIfTabDeactivated(old_contents);
-  selection_model_.Copy(new_model);
+  selection_model_ = new_model;
   NotifyIfActiveOrSelectionChanged(old_contents, notify_types, old_model);
 }
 
