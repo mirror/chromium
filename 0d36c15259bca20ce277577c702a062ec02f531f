@@ -34,6 +34,24 @@
       "revId": "0d36c15259bca20ce277577c702a062ec02f531f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7af49b_e09ad195",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-20T18:39:15Z",
+      "side": 1,
+      "message": "\"Selected range\" also doesn\u0027t have any meaning if the text field is unfocused, right?  It looks like text selection is cleared when the field loses focus.\n\nWhat causes this method to get called on an unfocused text field?  The underlying bug is about passing the cursor to the search provider -- that should only happen when the user is actively editing, right?",
+      "parentUuid": "1ebd29e0_2782a994",
+      "revId": "0d36c15259bca20ce277577c702a062ec02f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
