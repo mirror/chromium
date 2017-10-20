@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0299914c_c110094f",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "We must \u0027New\u0027 a struct because these must be non-null members to be able to get passed via Mojo connection.\nstruct ServiceWorkerRegistrationObjectInfo {\n  XXXXXXX\n  ServiceWorkerObjectInfo installing;\n  ServiceWorkerObjectInfo waiting;\n  ServiceWorkerObjectInfo active;\n};",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 53
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c2e554_2ae56b9a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This \u0027*\u0027 is temporary. Soon when we mojofy ServiceWorkerMsg_SetVersionAttributes we should pass ServiceWorkerObjectInfoPtr directly via Mojo.",
+      "range": {
+        "startLine": 784,
+        "startChar": 23,
+        "endLine": 784,
+        "endChar": 24
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0c8238_2222cdf9",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This \u0027*\u0027 is temporary. Soon when we mojofy IPC SetController we should pass ServiceWorkerObjectInfoPtr directly via Mojo.",
+      "range": {
+        "startLine": 908,
+        "startChar": 23,
+        "endLine": 908,
+        "endChar": 24
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbc446f_c9a901f8",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "These must be non-null members to be able to get passed via Mojo connection.",
+      "range": {
+        "startLine": 1073,
+        "startChar": 2,
+        "endLine": 1075,
+        "endChar": 66
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c6923a_e5922487",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This function is moved from SWDispatcherHost class because this is just used by SWProviderHost class. Currently its\u0027 implementation is still depending on SWDispatcherHost but finally we\u0027ll eliminate this dependency.",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 30
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c23129_01529030",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This \u0027Clone\u0027 is temporary. Later when we mojofy SetVersionAttributes we\u0027ll use the ServiceWorkerObjectInfoPtr directly passed via the Mojo call.",
+      "range": {
+        "startLine": 447,
+        "startChar": 29,
+        "endLine": 447,
+        "endChar": 34
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09109c4b_801913b0",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This \u0027Clone\u0027 is temporary.",
+      "range": {
+        "startLine": 488,
+        "startChar": 31,
+        "endLine": 488,
+        "endChar": 36
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33fa63b_e61a5535",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This \u0027Clone\u0027 is temporary.",
+      "range": {
+        "startLine": 507,
+        "startChar": 31,
+        "endLine": 507,
+        "endChar": 36
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ebd9aa_a401da17",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This \u0027Clone\u0027 is temporary.",
+      "range": {
+        "startLine": 527,
+        "startChar": 64,
+        "endLine": 527,
+        "endChar": 69
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35216077_3183f40b",
+        "filename": "content/child/service_worker/service_worker_handle_reference.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This class will disappear when we introduce ServiceWorkerObjectHost interface, just like ServiceWorkerRegistrationHandleReference before.",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac633c4_8948d9a4",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "All these will disappear together with ServiceWorkerHandleReference class later.",
+      "range": {
+        "startLine": 134,
+        "startChar": 1,
+        "endLine": 139,
+        "endChar": 47
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7827d2_dddbac1c",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "All these will disappear together with ServiceWorkerHandleReference class later.",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 64
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35be6d5f_e8f125a3",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T07:43:43Z",
+      "side": 1,
+      "message": "This is to be used by ServiceWorkerHandleReference to send legacy Incre/Decre IPCs, will disappear soon together with class ServiceWorkerHandleReference.",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
