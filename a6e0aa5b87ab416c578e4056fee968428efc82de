@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb3b8064_e1ce50b5",
+        "filename": "components/autofill/core/browser/autofill_credit_card_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-10-20T19:17:49Z",
+      "side": 1,
+      "message": "I agree that the DTC should only watch  kAutofillCreditCardEnabled, but we still need the kSync* prefs here, because if the policy is enabled from the first time chrome is run, then the policy handler will set pref values at start-up, but there is not guaranteed be a pref change event while sync is running.",
+      "parentUuid": "f1a722d4_f6274a4e",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 74
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6725080f_20057ed7",
         "filename": "components/autofill/core/browser/autofill_policy_handler.cc",
         "patchSetId": 10
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "that seems reasonable to me. if autofill is completely disabled there\u0027s no need to sync any of the suggestion data. this should probably affect the sync prefs UI as well, to disable the prefs that control syncing of autofill data, if not already done.",
       "parentUuid": "6725080f_20057ed7",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "a6e0aa5b87ab416c578e4056fee968428efc82de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79276445_1e7a420e",
+        "filename": "components/autofill/core/browser/autofill_policy_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-10-20T19:17:49Z",
+      "side": 1,
+      "message": "Agreed. I think this is related to https://bugs.chromium.org/p/chromium/issues/detail?id\u003d649064#c10. I\u0027d prefer to land this as a separate CL though, as it will require a fair amount of tweaking to the AutofillDataTypeController tests.",
+      "parentUuid": "2a9d4537_1267c6fd",
       "range": {
         "startLine": 27,
         "startChar": 39,
