@@ -112,11 +112,9 @@ class AppsGridViewTest : public views::ViewsTestBase,
   // testing::Test overrides:
   void SetUp() override {
     views::ViewsTestBase::SetUp();
-
-    test_with_fullscreen_ = GetParam();
-    if (!test_with_fullscreen_) {
-      scoped_feature_list_.InitAndDisableFeature(
-          features::kEnableFullscreenAppList);
+    if (testing::UnitTest::GetInstance()->current_test_info()->value_param()) {
+      is_rtl_ = GetParam();
+      base::i18n::SetICUDefaultLocale(is_rtl_ ? "he" : "en");
     }
 
     gfx::NativeView parent = GetContext();
@@ -128,12 +126,6 @@ class AppsGridViewTest : public views::ViewsTestBase,
     app_list_view_->Initialize(params);
     contents_view_ = app_list_view_->app_list_main_view()->contents_view();
     apps_grid_view_ = contents_view_->apps_container_view()->apps_grid_view();
-    // Initialize around a point that ensures the window is wholly shown. It
-    // bails out early with |test_with_fullscreen_|.
-    // TODO(warx): remove MaybeSetAnchorPoint setup here when bubble launcher is
-    // removed from code base.
-    app_list_view_->MaybeSetAnchorPoint(
-        parent->GetBoundsInRootWindow().CenterPoint());
     app_list_view_->GetWidget()->Show();
 
     model_ = delegate_->GetTestModel();
@@ -143,15 +135,8 @@ class AppsGridViewTest : public views::ViewsTestBase,
       model_->results()->Add(std::make_unique<TestSuggestedSearchResult>());
     // Needed to update suggestions from |model_|.
     apps_grid_view_->ResetForShowApps();
-
-    if (test_with_fullscreen_) {
-      app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
-      app_list_view_->Layout();
-    } else {
-      // Set app list view to show all apps page to test AppsGridView.
-      contents_view_->SetActiveState(AppListModel::STATE_APPS);
-      contents_view_->Layout();
-    }
+    app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+    app_list_view_->Layout();
 
     test_api_.reset(new AppsGridViewTestApi(apps_grid_view_));
   }
@@ -202,10 +187,14 @@ class AppsGridViewTest : public views::ViewsTestBase,
     views::View::ConvertPointToWidget(apps_grid_view_, &root_from);
     aura::Window::ConvertPointToTarget(window, window->GetRootWindow(),
                                        &root_from);
+    // Ensure that the |root_from| point is correct if RTL.
+    root_from.set_x(apps_grid_view_->GetMirroredXInView(root_from.x()));
     gfx::Point root_to(to);
     views::View::ConvertPointToWidget(apps_grid_view_, &root_to);
     aura::Window::ConvertPointToTarget(window, window->GetRootWindow(),
                                        &root_to);
+    // Ensure that the |root_to| point is correct if RTL.
+    root_to.set_x(apps_grid_view_->GetMirroredXInView(root_to.x()));
     apps_grid_view_->InitiateDrag(view, pointer, from, root_from);
 
     ui::MouseEvent drag_event(ui::ET_MOUSE_DRAGGED, to, root_to,
@@ -247,10 +236,6 @@ class AppsGridViewTest : public views::ViewsTestBase,
     EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(index)));
   }
 
-  size_t GetMaxFolderItems() const {
-    return test_with_fullscreen_ ? kMaxFolderItemsFullscreen : kMaxFolderItems;
-  }
-
   AppListView* app_list_view_ = nullptr;    // Owned by native widget.
   AppsGridView* apps_grid_view_ = nullptr;  // Owned by |app_list_view_|.
   ContentsView* contents_view_ = nullptr;   // Owned by |app_list_view_|.
@@ -260,14 +245,14 @@ class AppsGridViewTest : public views::ViewsTestBase,
   std::unique_ptr<AppListTestViewDelegate> delegate_;
   AppListTestModel* model_ = nullptr;  // Owned by |delegate_|.
   std::unique_ptr<AppsGridViewTestApi> test_api_;
-  bool test_with_fullscreen_ = false;
+  bool is_rtl_ = false;
   base::test::ScopedFeatureList scoped_feature_list_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AppsGridViewTest);
 };
 
-// Instantiate the Boolean which is used to toggle the Fullscreen app list in
+// Instantiate the Boolean which is used to toggle RTL in
 // the parameterized tests.
 INSTANTIATE_TEST_CASE_P(, AppsGridViewTest, testing::Bool());
 
@@ -311,12 +296,12 @@ class TestAppsGridViewFolderDelegate : public AppsGridViewFolderDelegate {
 TEST_P(AppsGridViewTest, CreatePage) {
   // Fully populates a page.
   const int kPages = 1;
-  if (test_with_fullscreen_) {
-    EXPECT_EQ(kNumOfSuggestedApps, suggestions_container_->num_results());
-    int kExpectedTilesOnFirstPage =
-        apps_grid_view_->cols() * (apps_grid_view_->rows_per_page() - 1);
-    EXPECT_EQ(kExpectedTilesOnFirstPage, GetTilesPerPage(kPages - 1));
-  }
+
+  EXPECT_EQ(kNumOfSuggestedApps, suggestions_container_->num_results());
+  int kExpectedTilesOnFirstPage =
+      apps_grid_view_->cols() * (apps_grid_view_->rows_per_page() - 1);
+  EXPECT_EQ(kExpectedTilesOnFirstPage, GetTilesPerPage(kPages - 1));
+
   model_->PopulateApps(kPages * GetTilesPerPage(kPages - 1));
   EXPECT_EQ(kPages, GetPaginationModel()->total_pages());
 
@@ -462,8 +447,8 @@ TEST_P(AppsGridViewTest, MouseDragItemIntoFolder) {
 }
 
 TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
-  // Create and add a folder with |GetMaxFolderItems() - 1| items.
-  size_t kTotalItems = GetMaxFolderItems() - 1;
+  // Create and add a folder with |kMaxFolderItemsFullscreen - 1| items.
+  size_t kTotalItems = kMaxFolderItemsFullscreen - 1;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
   EXPECT_EQ(1u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(AppListFolderItem::kItemType,
@@ -477,9 +462,9 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   model_->PopulateAppWithId(kTotalItems + 1);
   EXPECT_EQ(3u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(folder_item->id(), model_->top_level_item_list()->item_at(0)->id());
-  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems() - 1),
+  EXPECT_EQ(model_->GetItemName(kMaxFolderItemsFullscreen - 1),
             model_->top_level_item_list()->item_at(1)->id());
-  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems()),
+  EXPECT_EQ(model_->GetItemName(kMaxFolderItemsFullscreen),
             model_->top_level_item_list()->item_at(2)->id());
 
   gfx::Point from = GetItemRectOnCurrentPageAt(0, 1).CenterPoint();
@@ -490,8 +475,8 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(folder_item->id(), model_->top_level_item_list()->item_at(0)->id());
-  EXPECT_EQ(GetMaxFolderItems(), folder_item->ChildItemCount());
-  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems()),
+  EXPECT_EQ(kMaxFolderItemsFullscreen, folder_item->ChildItemCount());
+  EXPECT_EQ(model_->GetItemName(kMaxFolderItemsFullscreen),
             model_->top_level_item_list()->item_at(1)->id());
   test_api_->LayoutToIdealBounds();
 
@@ -500,15 +485,15 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   SimulateDrag(AppsGridView::MOUSE, from, to);
   apps_grid_view_->EndDrag(false);
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
-  EXPECT_EQ(GetMaxFolderItems(), folder_item->ChildItemCount());
+  EXPECT_EQ(kMaxFolderItemsFullscreen, folder_item->ChildItemCount());
   test_api_->LayoutToIdealBounds();
 }
 
 // Check that moving items around doesn't allow a drop to happen into a full
 // folder.
 TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
-  // Create and add a folder with |GetMaxFolderItems()| in it.
-  size_t kTotalItems = GetMaxFolderItems();
+  // Create and add a folder with |kMaxFolderItemsFullscreen| in it.
+  size_t kTotalItems = kMaxFolderItemsFullscreen;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
   EXPECT_EQ(1u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(AppListFolderItem::kItemType,
@@ -521,7 +506,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   model_->PopulateAppWithId(kTotalItems);
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(folder_item->id(), model_->top_level_item_list()->item_at(0)->id());
-  EXPECT_EQ(model_->GetItemName(GetMaxFolderItems()),
+  EXPECT_EQ(model_->GetItemName(kMaxFolderItemsFullscreen),
             model_->top_level_item_list()->item_at(1)->id());
 
   AppListItemView* folder_view =
@@ -551,7 +536,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
 
   // The item should not have moved into the folder.
   EXPECT_EQ(2u, model_->top_level_item_list()->item_count());
-  EXPECT_EQ(GetMaxFolderItems(), folder_item->ChildItemCount());
+  EXPECT_EQ(kMaxFolderItemsFullscreen, folder_item->ChildItemCount());
   test_api_->LayoutToIdealBounds();
 }
 
@@ -559,7 +544,7 @@ TEST_P(AppsGridViewTest, MouseDragItemReorder) {
   // Using a simulated 2x2 layout for the test. If fullscreen app list is
   // enabled, rows_per_page passed should be 3 as the first row is occupied by
   // suggested apps.
-  apps_grid_view_->SetLayout(2, test_with_fullscreen_ ? 3 : 2);
+  apps_grid_view_->SetLayout(2, 3);
   model_->PopulateApps(4);
   EXPECT_EQ(4u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(std::string("Item 0,Item 1,Item 2,Item 3"),
@@ -695,10 +680,7 @@ TEST_P(AppsGridViewTest, MouseDragFlipPage) {
   gfx::Point from = GetItemRectOnCurrentPageAt(0, 0).CenterPoint();
   gfx::Point to;
   const gfx::Rect apps_grid_bounds = apps_grid_view_->GetLocalBounds();
-  if (test_with_fullscreen_)
-    to = gfx::Point(apps_grid_bounds.width() / 2, apps_grid_bounds.bottom());
-  else
-    to = gfx::Point(apps_grid_bounds.right(), apps_grid_view_->height() / 2);
+  to = gfx::Point(apps_grid_bounds.width() / 2, apps_grid_bounds.bottom());
 
   // For fullscreen/bubble launcher, drag to the bottom/right of bounds.
   page_flip_waiter.Reset();
@@ -712,13 +694,8 @@ TEST_P(AppsGridViewTest, MouseDragFlipPage) {
   EXPECT_EQ(2, GetPaginationModel()->selected_page());
 
   apps_grid_view_->EndDrag(true);
-
-  // Now drag to the top/left edge and test the other direction for
-  // fullscreen/bubble launcher.
-  if (test_with_fullscreen_)
-    to.set_y(apps_grid_bounds.y());
-  else
-    to.set_x(0);
+  // Now drag to the top edge.
+  to.set_y(apps_grid_bounds.y());
 
   page_flip_waiter.Reset();
   SimulateDrag(AppsGridView::MOUSE, from, to);
@@ -784,93 +761,7 @@ TEST_P(AppsGridViewTest, UpdateFolderBackgroundOnCancelDrag) {
             model_->GetModelContent());
 }
 
-// TODO(warx): This test applies to bubble launcher only. Remove this test once
-// bubble launcher is removed from code base.
-TEST_P(AppsGridViewTest, HighlightWithKeyboard) {
-  if (test_with_fullscreen_)
-    return;
-
-  const int kPages = 3;
-  const int kItems = GetTilesPerPage(0) + GetTilesPerPage(1) + 1;
-  model_->PopulateApps(kItems);
-  EXPECT_EQ(kPages, GetPaginationModel()->total_pages());
-
-  const int first_index = 0;
-  const int last_index = kItems - 1;
-  const int last_index_on_page1_first_row =
-      apps_grid_view_->rows_per_page() - 1;
-  const int last_index_on_page1 = GetTilesPerPage(0) - 1;
-  const int first_index_on_page2 = GetTilesPerPage(1);
-  const int first_index_on_page2_last_row =
-      2 * GetTilesPerPage(1) - apps_grid_view_->cols();
-  const int last_index_on_page2_last_row = 2 * GetTilesPerPage(1) - 1;
-
-  // Try moving off the item beyond the first one.
-  apps_grid_view_->SetSelectedView(GetItemViewAt(first_index));
-  SimulateKeyPress(ui::VKEY_UP);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(first_index)));
-  SimulateKeyPress(ui::VKEY_LEFT);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(first_index)));
-
-  // Move to the last item and try to go past it.
-  apps_grid_view_->SetSelectedView(GetItemViewAt(last_index));
-  SimulateKeyPress(ui::VKEY_DOWN);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(last_index)));
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(last_index)));
-
-  // Move right on last item on page 1 should get to first item on page 2's last
-  // row and vice versa.
-  apps_grid_view_->SetSelectedView(GetItemViewAt(last_index_on_page1));
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(
-      GetItemViewAt(first_index_on_page2_last_row)));
-  SimulateKeyPress(ui::VKEY_LEFT);
-  EXPECT_TRUE(
-      apps_grid_view_->IsSelectedView(GetItemViewAt(last_index_on_page1)));
-
-  // Up/down on page boundary does nothing.
-  apps_grid_view_->SetSelectedView(GetItemViewAt(last_index_on_page1));
-  SimulateKeyPress(ui::VKEY_DOWN);
-  EXPECT_TRUE(
-      apps_grid_view_->IsSelectedView(GetItemViewAt(last_index_on_page1)));
-  apps_grid_view_->SetSelectedView(
-      GetItemViewAt(first_index_on_page2_last_row));
-  apps_grid_view_->SetSelectedView(
-      GetItemViewAt(last_index_on_page1_first_row));
-  SimulateKeyPress(ui::VKEY_UP);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(
-      GetItemViewAt(last_index_on_page1_first_row)));
-
-  // Page up and down should go to the same item on the next and last page.
-  apps_grid_view_->SetSelectedView(GetItemViewAt(first_index_on_page2));
-  SimulateKeyPress(ui::VKEY_PRIOR);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(first_index)));
-  SimulateKeyPress(ui::VKEY_NEXT);
-  EXPECT_TRUE(
-      apps_grid_view_->IsSelectedView(GetItemViewAt(first_index_on_page2)));
-
-  // Moving onto a page with too few apps to support the expected index snaps
-  // to the last available index.
-  apps_grid_view_->SetSelectedView(GetItemViewAt(last_index_on_page2_last_row));
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(last_index)));
-  apps_grid_view_->SetSelectedView(GetItemViewAt(last_index_on_page2_last_row));
-  SimulateKeyPress(ui::VKEY_NEXT);
-  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(last_index)));
-
-  // After page switch, arrow keys select first item on current page.
-  apps_grid_view_->SetSelectedView(GetItemViewAt(first_index));
-  GetPaginationModel()->SelectPage(1, false);
-  SimulateKeyPress(ui::VKEY_LEFT);
-  EXPECT_TRUE(
-      apps_grid_view_->IsSelectedView(GetItemViewAt(first_index_on_page2)));
-}
-
 TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
-  if (!test_with_fullscreen_)
-    return;
-
   const int kItemsOnSecondPage = 3;
   const int kAllAppsItems = GetTilesPerPage(0) + kItemsOnSecondPage;
   const int kLastIndexOfFirstPage = GetTilesPerPage(0) - 1;
@@ -880,7 +771,7 @@ TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
 
   // Tests moving left from the first tile on the first page.
   apps_grid_view_->SetSelectedView(GetItemViewAt(0));
-  SimulateKeyPress(ui::VKEY_LEFT);
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_RIGHT : ui::VKEY_LEFT);
   EXPECT_FALSE(apps_grid_view_->has_selected_view());
   EXPECT_EQ(suggestions_container_->num_results() - 1,
             suggestions_container_->selected_index());
@@ -888,13 +779,13 @@ TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
 
   // Tests moving left from the first tile on the second page.
   apps_grid_view_->SetSelectedView(GetItemViewAt(GetTilesPerPage(0)));
-  SimulateKeyPress(ui::VKEY_LEFT);
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_RIGHT : ui::VKEY_LEFT);
   EXPECT_TRUE(
       apps_grid_view_->IsSelectedView(GetItemViewAt(kLastIndexOfFirstPage)));
 
   // Tests moving right from the last slot on the first page.
   apps_grid_view_->SetSelectedView(GetItemViewAt(kLastIndexOfFirstPage));
-  SimulateKeyPress(ui::VKEY_RIGHT);
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_LEFT : ui::VKEY_RIGHT);
   EXPECT_TRUE(
       apps_grid_view_->IsSelectedView(GetItemViewAt(GetTilesPerPage(0))));
 
@@ -926,55 +817,117 @@ TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
       apps_grid_view_->IsSelectedView(GetItemViewAt(kAllAppsItems - 1)));
 }
 
-// Tests the selection movement in state apps.
-TEST_P(AppsGridViewTest, SelectionInStateApps) {
-  if (!test_with_fullscreen_)
-    return;
-
-  // Simulates that the app list is at state apps.
-  contents_view_->SetActiveState(AppListModel::STATE_APPS);
-  const int kPages = 2;
+// Tests that moving selection down from the searchbox focuses the first app.
+TEST_P(AppsGridViewTest, SelectionDownFromSearchBoxFocusesFirstApp) {
   const int kAllAppsItems = GetTilesPerPage(0) + 1;
   model_->PopulateApps(kAllAppsItems);
 
   // Moves selection to the first app in the suggestions container.
   SimulateKeyPress(ui::VKEY_DOWN);
 
-  // Tests moving to previous page.
-  SimulateKeyPress(ui::VKEY_PRIOR);
-  CheckSelectionAtSuggestionsContainer(0);
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(0, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
+}
+
+// Tests that moving selection up from the first app focuses nothing.
+TEST_P(AppsGridViewTest, SelectionUpFromFirstAppFocusesNothing) {
+  const int kAllAppsItems = GetTilesPerPage(0) + 1;
+  model_->PopulateApps(kAllAppsItems);
+  // Select the first app.
+  suggestions_container_->SetSelectedIndex(0);
 
   // Tests moving up.
   SimulateKeyPress(ui::VKEY_UP);
-  CheckNoSelection();
-  SimulateKeyPress(ui::VKEY_DOWN);
 
-  // Tests moving left and right.
-  SimulateKeyPress(ui::VKEY_LEFT);
-  CheckNoSelection();
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  CheckSelectionAtSuggestionsContainer(0);
+  // Check that there is no selection.
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
+}
 
-  // Tests moving right out of suggestions.
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  CheckSelectionAtSuggestionsContainer(kNumOfSuggestedApps - 1);
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  CheckSelectionAtAppsGridView(0);
+// Tests that reversing selection from the first app focuses nothing.
+TEST_P(AppsGridViewTest, SelectionReverseFromFirstAppFocusesNothing) {
+  const int kAllAppsItems = GetTilesPerPage(0) + 1;
+  model_->PopulateApps(kAllAppsItems);
+  // Select the first app.
+  suggestions_container_->SetSelectedIndex(0);
 
-  // Tests moving down from |suggestions_container_|.
-  apps_grid_view_->ClearAnySelectedView();
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  CheckSelectionAtSuggestionsContainer(1);
-  SimulateKeyPress(ui::VKEY_DOWN);
-  CheckSelectionAtAppsGridView(1);
+  // Move selection forward.
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_RIGHT : ui::VKEY_LEFT);
+
+  // Check that there is no selection.
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
+}
+
+// Tests that moving selection forward from the search box focuses the first
+// suggested app.
+TEST_P(AppsGridViewTest, SelectionForwardFromSearchBoxFocusesFirstApp) {
+  const int kAllAppsItems = GetTilesPerPage(0) + 1;
+  model_->PopulateApps(kAllAppsItems);
+
+  // Move selection forward.
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_LEFT : ui::VKEY_RIGHT);
+
+  // Check selection at suggestions container view 0.
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(0, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
+}
+
+// Tests that selection can traverse all suggested apps.
+TEST_P(AppsGridViewTest, SelectionTraverseAllSuggestedApps) {
+  const int kAllAppsItems = GetTilesPerPage(0) + 1;
+  model_->PopulateApps(kAllAppsItems);
+  // There are only three suggested apps in the test version of the
+  // AppsGridView, so move selection to the second to last app.
+  suggestions_container_->SetSelectedIndex(1);
+
+  // Advance focus to the last app.
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_LEFT : ui::VKEY_RIGHT);
+
+  // Check selection at suggestions container view 0.
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(kNumOfSuggestedApps - 1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
+}
+
+// Tests that selection moves from the last suggested app to the first app that
+// is not suggested when selection moves forward.
+TEST_P(AppsGridViewTest, SelectionMovesFromLastSuggestedAppToFirstAppInGrid) {
+  const int kAllAppsItems = GetTilesPerPage(0) + 1;
+  model_->PopulateApps(kAllAppsItems);
+  // There are only three suggested apps in the test version of the
+  // AppsGridView, so move selection from the second to last to the last app..
+  suggestions_container_->SetSelectedIndex(2);
+
+  // Move selection forward, off of the last suggested app.
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_LEFT : ui::VKEY_RIGHT);
+
+  // Check selection at apps grid view position 0 (first app in the app grid).
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(0)));
+}
+
+// Tests that selection moves to the first element of the next page when the
+// next key is pressed.
+TEST_P(AppsGridViewTest, SelectionMovesToFirstElementOfNextPageWithNextKey) {
+  const int kPages = 2;
+  const int kAllAppsItems = GetTilesPerPage(0) + 1;
+  model_->PopulateApps(kAllAppsItems);
 
   // Tests moving to next page.
   apps_grid_view_->ClearAnySelectedView();
   SimulateKeyPress(ui::VKEY_DOWN);
   SimulateKeyPress(ui::VKEY_NEXT);
-  CheckSelectionAtAppsGridView(kAllAppsItems - 1);
+
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_TRUE(
+      apps_grid_view_->IsSelectedView(GetItemViewAt(kAllAppsItems - 1)));
   EXPECT_EQ(kPages - 1, GetPaginationModel()->selected_page());
 }
 
@@ -982,9 +935,6 @@ TEST_P(AppsGridViewTest, SelectionInStateApps) {
 // down/tab/right arrow key moves the selection to the first app in suggestions
 // container.
 TEST_P(AppsGridViewTest, InitialSelectionInStateStart) {
-  if (!test_with_fullscreen_)
-    return;
-
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
@@ -1005,9 +955,6 @@ TEST_P(AppsGridViewTest, InitialSelectionInStateStart) {
 // Tests that in state start when selection exists. Hitting tab key does
 // nothing while hitting shift+tab key clears selection.
 TEST_P(AppsGridViewTest, ClearSelectionInStateStart) {
-  if (!test_with_fullscreen_)
-    return;
-
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
@@ -1026,34 +973,53 @@ TEST_P(AppsGridViewTest, ClearSelectionInStateStart) {
 // left/up arrow key moves the selection to the last app in suggestion
 // container.
 TEST_P(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
-  if (!test_with_fullscreen_)
-    return;
-
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
 
   // Moves selection to the expand arrow.
   expand_arrow_view_->SetSelected(true);
-  CheckSelectionAtExpandArrow();
+
+  // Expect the selection to be on the expand arrow.
+  EXPECT_TRUE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
 
   SimulateKeyPress(ui::VKEY_DOWN);
-  CheckSelectionAtExpandArrow();
 
-  SimulateKeyPress(ui::VKEY_RIGHT);
-  CheckSelectionAtExpandArrow();
+  // Expect the selection to be on the expand arrow.
+  EXPECT_TRUE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
+
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_LEFT : ui::VKEY_RIGHT);
+
+  // Expect the selection to be on the expand arrow.
+  EXPECT_TRUE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
 
   SimulateKeyPress(ui::VKEY_TAB);
-  CheckSelectionAtExpandArrow();
+
+  // Expect the selection to be on the expand arrow.
+  EXPECT_TRUE(expand_arrow_view_->selected());
+  EXPECT_EQ(-1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
 
   SimulateKeyPress(ui::VKEY_UP);
-  CheckSelectionAtSuggestionsContainer(kNumOfSuggestedApps - 1);
+
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(kNumOfSuggestedApps - 1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
 
   // Resets selection to the expand arrow.
   apps_grid_view_->ClearAnySelectedView();
   expand_arrow_view_->SetSelected(true);
-  SimulateKeyPress(ui::VKEY_LEFT);
-  CheckSelectionAtSuggestionsContainer(kNumOfSuggestedApps - 1);
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_RIGHT : ui::VKEY_LEFT);
+
+  EXPECT_FALSE(expand_arrow_view_->selected());
+  EXPECT_EQ(kNumOfSuggestedApps - 1, suggestions_container_->selected_index());
+  EXPECT_FALSE(apps_grid_view_->has_selected_view());
 }
 
 // Tests that in state start when selection is on app in suggestions container,
@@ -1062,9 +1028,6 @@ TEST_P(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
 // selection is on the last app in suggestions container or hitting down key
 // move the selection to the expand arrow.
 TEST_P(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
-  if (!test_with_fullscreen_)
-    return;
-
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
@@ -1076,11 +1039,11 @@ TEST_P(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
   SimulateKeyPress(ui::VKEY_DOWN);
 
   // Tests moving right.
-  SimulateKeyPress(ui::VKEY_RIGHT);
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_LEFT : ui::VKEY_RIGHT);
   CheckSelectionAtSuggestionsContainer(1);
 
   // Tests moving left.
-  SimulateKeyPress(ui::VKEY_LEFT);
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_RIGHT : ui::VKEY_LEFT);
   CheckSelectionAtSuggestionsContainer(0);
 
   // Tests moving down.
@@ -1090,7 +1053,7 @@ TEST_P(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
   // Sets selection to the last app in the suggestions container.
   apps_grid_view_->ClearAnySelectedView();
   suggestions_container_->SetSelectedIndex(kNumOfSuggestedApps - 1);
-  SimulateKeyPress(ui::VKEY_RIGHT);
+  SimulateKeyPress(is_rtl_ ? ui::VKEY_LEFT : ui::VKEY_RIGHT);
   CheckSelectionAtExpandArrow();
 }
 
@@ -1129,9 +1092,6 @@ TEST_P(AppsGridViewTest, ItemLabelNoShortName) {
 }
 
 TEST_P(AppsGridViewTest, ScrollSequenceHandledByAppListView) {
-  if (!test_with_fullscreen_)
-    return;
-
   model_->PopulateApps(GetTilesPerPage(0) + 1);
   EXPECT_EQ(2, GetPaginationModel()->total_pages());
 
@@ -1156,9 +1116,6 @@ TEST_P(AppsGridViewTest, ScrollSequenceHandledByAppListView) {
 
 TEST_P(AppsGridViewTest,
        OnGestureEventScrollSequenceHandleByPaginationController) {
-  if (!test_with_fullscreen_)
-    return;
-
   model_->PopulateApps(GetTilesPerPage(0) + 1);
   EXPECT_EQ(2, GetPaginationModel()->total_pages());
 
