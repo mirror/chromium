@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be78b8a8_63f5fa08",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-20T17:49:43Z",
+      "side": 1,
+      "message": "This can take a gfx::Rect* to the invalidated_rect. So we can conditionally use it to compute the rect to query images from, if provided.",
+      "range": {
+        "startLine": 887,
+        "startChar": 4,
+        "endLine": 887,
+        "endChar": 24
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e05ef6_d4fad563",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-20T17:49:43Z",
+      "side": 1,
+      "message": "The invalidation rect you want to use when querying images for a tile is this one. The step TryAcquireResourceForPartialRaster takes the invalid rect for the tile and unions it with the invalid rect on the resource we acquired. That\u0027s the rect this raster task will rasterize.",
+      "range": {
+        "startLine": 1121,
+        "startChar": 12,
+        "endLine": 1121,
+        "endChar": 28
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1427bd_ce8a7a81",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-20T17:49:43Z",
+      "side": 1,
+      "message": "We still won\u0027t be able to do partial raster if no resource could be found. This condition will be satisfied in the if block at 1129.",
+      "range": {
+        "startLine": 1126,
+        "startChar": 4,
+        "endLine": 1126,
+        "endChar": 26
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e5c96d_34863e5b",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-20T17:49:43Z",
+      "side": 1,
+      "message": "const\u0026. And suffix it with for_testing.",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 275,
+        "endChar": 24
+      },
+      "revId": "b353c6d467c2e1f2206cd5ff91ae1c958fc95e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
