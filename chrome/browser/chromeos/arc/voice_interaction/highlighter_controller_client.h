@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_CHROMEOS_ARC_VOICE_INTERACTION_HIGHLIGHTER_CONTROLLER_CLIENT_H_
 #define CHROME_BROWSER_CHROMEOS_ARC_VOICE_INTERACTION_HIGHLIGHTER_CONTROLLER_CLIENT_H_
 
+#include <memory>
+
 #include "ash/public/interfaces/highlighter_controller.mojom.h"
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -46,6 +48,11 @@ class HighlighterControllerClient
 
   void FlushMojoForTesting();
 
+  bool is_enabled() { return enabled_; }
+
+  // Request to exit curent session.
+  void Exit();
+
  private:
   void ConnectToHighlighterController();
 
@@ -69,6 +76,8 @@ class HighlighterControllerClient
   ArcVoiceInteractionFrameworkService* service_;
 
   std::unique_ptr<base::Timer> delay_timer_;
+
+  bool enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(HighlighterControllerClient);
 };

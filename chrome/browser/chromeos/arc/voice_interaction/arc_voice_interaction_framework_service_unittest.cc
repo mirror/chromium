@@ -5,6 +5,8 @@
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
 
 #include <memory>
+#include <string>
+#include <utility>
 
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
@@ -64,6 +66,20 @@ class TestHighlighterController : public ash::mojom::HighlighterController,
                    base::Unretained(this)));
   }
 
+  void Exit() override {
+    DCHECK(is_enabled_);
+
+    // simulate exiting current session.
+    SetEnabledForTesting(false);
+  }
+
+  void SetEnabledForTesting(bool enabled) {
+    is_enabled_ = enabled;
+    client_->HandleEnabledStateChange(enabled);
+  }
+
+  bool is_enabled() { return is_enabled_; }
+
   // service_manager::Service:
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
@@ -83,6 +99,7 @@ class TestHighlighterController : public ash::mojom::HighlighterController,
   service_manager::TestConnectorFactory connector_factory_;
   std::unique_ptr<service_manager::Connector> connector_;
   ash::mojom::HighlighterControllerClientPtr client_;
+  bool is_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TestHighlighterController);
 };
@@ -275,6 +292,23 @@ TEST_F(ArcVoiceInteractionFrameworkServiceTest, HighlighterControllerClient) {
   highlighter_controller()->CallHandleEnabledStateChange(true);
   EXPECT_EQ(1u, framework_instance()->set_metalayer_visibility_count());
   EXPECT_TRUE(framework_instance()->metalayer_visible());
+}
+
+TEST_F(ArcVoiceInteractionFrameworkServiceTest,
+       ExitVoiceInteractionAlsoExitHighlighter) {
+  highlighter_controller()->SetEnabledForTesting(true);
+
+  framework_service()->ToggleSessionFromUserInteraction();
+  framework_instance()->FlushMojoForTesting();
+  EXPECT_EQ(ash::VoiceInteractionState::RUNNING,
+            framework_service()->GetStateTesting());
+
+  framework_service()->ToggleSessionFromUserInteraction();
+  framework_instance()->FlushMojoForTesting();
+  EXPECT_EQ(ash::VoiceInteractionState::STOPPED,
+            framework_service()->GetStateTesting());
+
+  EXPECT_FALSE(highlighter_controller()->is_enabled());
 }
 
 }  // namespace arc

@@ -127,6 +127,8 @@ class ArcVoiceInteractionFrameworkService
     return highlighter_client_.get();
   }
 
+  ash::VoiceInteractionState GetStateTesting() const { return state_; }
+
   // For supporting ArcServiceManager::GetService<T>().
   static const char kArcServiceName[];
 
