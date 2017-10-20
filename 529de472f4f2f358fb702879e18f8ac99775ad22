@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db444f9a_a812360d",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to. There are only *12* instance of this error code on non-OSX, which is as close to 0 as I think we\u0027ll ever see:\n\nhttps://uma.googleplex.com/histograms/?endDate\u003d20171019\u0026dayCount\u003d1\u0026histograms\u003dNet.QuicSession.WriteError\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dplatform%2Cne%2CM%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial",
+      "parentUuid": "39a2c474_54ee94d4",
+      "range": {
+        "startLine": 102,
+        "startChar": 35,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "529de472f4f2f358fb702879e18f8ac99775ad22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86cf6fb4_566ebdfc",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5e2bc9e4_009158b6",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "86cf6fb4_566ebdfc",
+      "revId": "529de472f4f2f358fb702879e18f8ac99775ad22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ffb04e_84c6d5a0",
         "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-18T00:35:30Z",
       "side": 1,
       "message": "Instead of creating a special path for retrying packets, is it possible to reuse the write blocked code path for ENOBUFS?",
+      "range": {
+        "startLine": 141,
+        "startChar": 31,
+        "endLine": 141,
+        "endChar": 56
+      },
+      "revId": "529de472f4f2f358fb702879e18f8ac99775ad22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddf93b7_b38b316e",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "No, I don\u0027t think so. In chrome, the write-blocked case is handled by the socket itself via the OnWriteComplete callback not being executed until after the socket becomes unblocked and the write succeeds.\n\nI mean, I guess we could implement this in the Socket itself, but I\u0027d rather do this in QUIC at least initially.",
+      "parentUuid": "98ffb04e_84c6d5a0",
       "range": {
         "startLine": 141,
         "startChar": 31,
