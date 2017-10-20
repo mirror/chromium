@@ -4,15 +4,16 @@
 
 function renovation_wikipedia() {
   // Get list of elements to expand.
-  elems = document.querySelectorAll(
-      "div.collapsible-block,h2.collapsible-heading");
+  var elems =
+      document.querySelectorAll('div.collapsible-block,h2.collapsible-heading');
 
+  var i = 0;
   // Apply 'open-block' class to elements. This makes the sections'
   // content visible.
-  for (i = 0; i < elems.length; ++i) {
+  for (; i < elems.length; ++i) {
     // If a block was already expanded, re-adding the 'open-block'
     // class will do nothing; no need to check if it's there already.
-    elems.item(i).className += " open-block";
+    elems.item(i).className += ' open-block';
   }
 
   // Now we force the page to load images inside the expanded
@@ -21,24 +22,24 @@ function renovation_wikipedia() {
   // disabled). We get the list of these elements in order. For every
   // lazy image placeholder, there is always a corresponding noscript
   // element.
-  placeholders = document.querySelectorAll(
-      ".image > span.lazy-image-placeholder, \
-       .mwe-math-element > span.lazy-image-placeholder");
-  noscripts = document.querySelectorAll(
-      ".image > noscript, .mwe-math-element > noscript");
+  var placeholders = document.querySelectorAll(
+      '.image > span.lazy-image-placeholder, ' +
+      '.mwe-math-element > span.lazy-image-placeholder');
+  var noscripts = document.querySelectorAll(
+      '.image > noscript, .mwe-math-element > noscript');
 
   // Next we delete all the placeholders, then move the img elements
   // out of the noscripts, deleting the noscript element in the
   // process.
   for (i = 0; i < placeholders.length; ++i) {
     placeholders.item(i).remove();
-    innerText = noscripts.item(i).innerText;
+    var innerText = noscripts.item(i).innerText;
     noscripts.item(i).outerHTML = innerText;
   }
 }
 
 var map_renovations = {
-  "wikipedia" : renovation_wikipedia,
+  'wikipedia': renovation_wikipedia,
 };
 
 function run_renovations(flist) {

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grit-part>
+  <include name="IDR_OFFLINE_INTERNALS_BROWSER_PROXY_JS" file="../offline_pages/webui/resources/offline_internals_browser_proxy.js" type="BINDATA" compress="gzip"/>
+  <include name="IDR_OFFLINE_INTERNALS_CSS" file="../offline_pages/webui/resources/offline_internals.css" type="BINDATA" compress="gzip"/>
+  <include name="IDR_OFFLINE_INTERNALS_HTML" file="../offline_pages/webui/resources/offline_internals.html" flattenhtml="true" allowexternalscript="true" type="BINDATA" compress="gzip"/>
+  <include name="IDR_OFFLINE_INTERNALS_JS" file="../offline_pages/webui/resources/offline_internals.js" type="BINDATA" compress="gzip"/>
   <include name="IDR_OFFLINE_PAGES_RENOVATIONS_JS" file="../offline_pages/resources/renovations.js" type="BINDATA" />
 </grit-part>
