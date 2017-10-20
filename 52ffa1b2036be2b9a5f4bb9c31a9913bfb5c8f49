@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b12ec26_ef9b52b2",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-20T01:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "117a7fdc_c8e6441b",
+      "range": {
+        "startLine": 55,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 2
+      },
+      "revId": "52ffa1b2036be2b9a5f4bb9c31a9913bfb5c8f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "787f7158_79670387",
         "filename": "base/callback_with_delete.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-19T09:12:46Z",
       "side": 1,
       "message": "This overload looks ambiguous to me when the callback signature is OnceCallback\u003cvoid(OnceClosure)\u003e.\nCan we use add a separate setter for delete_callback?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "52ffa1b2036be2b9a5f4bb9c31a9913bfb5c8f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e29663_7800e83a",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-20T01:17:10Z",
+      "side": 1,
+      "message": "Great catch! We can disambiguate with an initial (ignored) int parameter, similar to operator++(int) and operator++() for post- and pre-increment respectively",
+      "parentUuid": "787f7158_79670387",
       "range": {
         "startLine": 62,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "52ffa1b2036be2b9a5f4bb9c31a9913bfb5c8f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8703a9ff_3c8ccd6f",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-20T01:17:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5406112_b2ab75cd",
+      "range": {
+        "startLine": 105,
+        "startChar": 37,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "52ffa1b2036be2b9a5f4bb9c31a9913bfb5c8f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
