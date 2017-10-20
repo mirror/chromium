@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cb17eb9_6dacd8ac",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-20T00:18:53Z",
+      "side": 1,
+      "message": "I\u0027ve had a chat with Jon and we think it\u0027s best to leave as-is.\n\nThe \"backoff\" will still be applied (here: https://cs.chromium.org/chromium/src/components/translate/core/browser/translate_manager.cc?l\u003d488\u0026rcl\u003de641ba867642f2c55c001f5af19844c9034d1868) in the translate case, and it\u0027s not clear we want to do it in other cases.\n\nWhat do you think?",
+      "parentUuid": "ce428e80_a80671f4",
+      "range": {
+        "startLine": 52,
+        "startChar": 47,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a7fc394_2c692629",
         "filename": "components/language/core/browser/heuristic_language_model.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-19T09:08:36Z",
       "side": 1,
       "message": "You mean \"region\"?\nI think you can r/region-specializations/regions/",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc24004d_e8738fd7",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-20T00:18:53Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s quite true: I would say \"AU\" and \"CA\" are regions of \"en\", but \"en-AU\" and \"en-CA\" are the corresponding region-specializations (which are what we output here).\n\nI\u0027ve changed the wording of the comment; do you find it clearer now?",
+      "parentUuid": "9a7fc394_2c692629",
       "range": {
         "startLine": 62,
         "startChar": 41,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "be3816d2_9ef25556",
+        "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-20T00:18:53Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to do this for two reasons:\n 1) The style guide prefers capitalising acronyms in this way (see https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Function_Names which is about function names, but their examples of class names - e.g. UrlTable - follow the same convention).\n 2) I already used Ld in https://cs.chromium.org/chromium/src/components/language/core/browser/baseline_language_model_unittest.cc?l\u003d18\u0026rcl\u003d69e46ae5a0e16ed23e01ce2abc285d2e5c2d2ae7",
+      "parentUuid": "f7ddba01_4ff407ce",
+      "range": {
+        "startLine": 26,
+        "startChar": 42,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2ca20f_68a78ef5",
         "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88fa52cb_a5e1bb84",
+        "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-20T00:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2ca20f_68a78ef5",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
