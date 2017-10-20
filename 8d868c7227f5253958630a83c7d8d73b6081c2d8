@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0788ea6d_66d979b8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 95080,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-20T22:41:48Z",
+      "side": 1,
+      "message": "Optional nit: It might be more helpful for alphabetization-based grouping to swap the last two components of this name, i.e. name this \"XHR.PageDismissal.Async\".",
+      "range": {
+        "startLine": 95080,
+        "startChar": 17,
+        "endLine": 95080,
+        "endChar": 40
+      },
+      "revId": "8d868c7227f5253958630a83c7d8d73b6081c2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
