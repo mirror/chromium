@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d047890_7368df11",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-20T16:04:55Z",
+      "side": 1,
+      "message": "As indicated in\nhttps://chromium-review.googlesource.com/c/chromium/src/+/715656/5/base/win/core_winrt_util.h#12\n\ncore_winrt_util.h is intended for Core WinRT Functions. These typically are prefixed by Ro*.\n\nWindows::Streams::Storage is definitely outside of Core WinRT, and should go in its own separate file.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "0358e82b0a5c5cf140b3dda992c57d1c89072661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
