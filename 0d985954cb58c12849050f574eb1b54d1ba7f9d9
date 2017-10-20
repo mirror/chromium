@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "433ac0ac_c696c315",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-20T22:03:54Z",
+      "side": 1,
+      "message": "This code is specific to cached pages.\nWe need to guard for that and disable sharing user requested pages for now.",
+      "range": {
+        "startLine": 354,
+        "startChar": 8,
+        "endLine": 354,
+        "endChar": 69
+      },
+      "revId": "0d985954cb58c12849050f574eb1b54d1ba7f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2fec2a_aadc7374",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-20T22:03:54Z",
+      "side": 1,
+      "message": "Perhaps this should be wrapped with a method on ChromeFileProvider, instead of being called here...",
+      "range": {
+        "startLine": 356,
+        "startChar": 31,
+        "endLine": 357,
+        "endChar": 82
+      },
+      "revId": "0d985954cb58c12849050f574eb1b54d1ba7f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
