@@ -4,14 +4,9 @@
 
 #include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h"
 
-#include "base/time/time.h"
+#include "chrome/browser/feature_engagement/feature_promo_bubble.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
-#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/toolbar/app_menu_icon_controller.h"
-#include "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h"
-#include "chrome/browser/ui/views/frame/browser_view.h"
-#include "chrome/browser/ui/views/toolbar/app_menu_button.h"
-#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -19,16 +14,6 @@
 namespace {
 
 constexpr int kDefaultPromoShowTimeInHours = 2;
-
-AppMenuButton* GetAppMenuButton() {
-  auto* browser = BrowserView::GetBrowserViewForBrowser(
-      BrowserList::GetInstance()->GetLastActive());
-  DCHECK(browser);
-  DCHECK(browser->IsActive());
-  DCHECK(browser->toolbar());
-  DCHECK(browser->toolbar()->app_menu_button());
-  return browser->toolbar()->app_menu_button();
-}
 
 }  // namespace
 
@@ -40,13 +25,12 @@ IncognitoWindowTracker::IncognitoWindowTracker(
     : FeatureTracker(profile,
                      session_duration_updater,
                      &kIPHIncognitoWindowFeature,
-                     base::TimeDelta::FromHours(kDefaultPromoShowTimeInHours)),
-      incognito_promo_observer_(this) {}
+                     base::TimeDelta::FromHours(kDefaultPromoShowTimeInHours)) {
+}
 
 IncognitoWindowTracker::IncognitoWindowTracker(
     SessionDurationUpdater* session_duration_updater)
     : IncognitoWindowTracker(nullptr, session_duration_updater) {}
-
 IncognitoWindowTracker::~IncognitoWindowTracker() = default;
 
 void IncognitoWindowTracker::OnIncognitoWindowOpened() {
@@ -54,7 +38,7 @@ void IncognitoWindowTracker::OnIncognitoWindowOpened() {
 }
 
 void IncognitoWindowTracker::OnBrowsingDataCleared() {
-  const auto severity = GetAppMenuButton()->severity();
+  const auto severity = GetAppMenuButtonSeverity(GetBrowser());
   if (severity == AppMenuIconController::Severity::NONE && ShouldShowPromo())
     ShowPromo();
 }
@@ -68,24 +52,8 @@ void IncognitoWindowTracker::OnSessionTimeMet() {
 }
 
 void IncognitoWindowTracker::ShowPromo() {
-  DCHECK(!incognito_promo_);
-  auto* app_menu_button = GetAppMenuButton();
-
-  // Owned by its native widget. Will be destroyed when its widget is destroyed.
-  incognito_promo_ =
-      IncognitoWindowPromoBubbleView::CreateOwned(app_menu_button);
-  views::Widget* widget = incognito_promo_->GetWidget();
-  incognito_promo_observer_.Add(widget);
-  app_menu_button->SetIsProminent(true);
-}
-
-void IncognitoWindowTracker::OnWidgetDestroying(views::Widget* widget) {
-  OnPromoClosed();
-
-  if (incognito_promo_observer_.IsObserving(widget)) {
-    incognito_promo_observer_.Remove(widget);
-    GetAppMenuButton()->SetIsProminent(false);
-  }
+  DCHECK(!feature_promo_bubble());
+  set_feature_promo_bubble(ShowIncognitoFeaturePromoBubble(GetBrowser()));
 }
 
 }  // namespace feature_engagement
