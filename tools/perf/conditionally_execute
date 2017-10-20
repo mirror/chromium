@@ -28,10 +28,6 @@ def main(args):
     print 'Found matching condition in GYP_DEFINES. Execute: %s' % (
         ' '.join(script_args))
     subprocess.check_call(script_args)
-  else:
-    print ('Not found "%s" condition in GYP_DEFINES="%s". '
-           'Skip script execution.' %
-           (options.gyp_condition, gyp_defines))
   return 0
 
 
