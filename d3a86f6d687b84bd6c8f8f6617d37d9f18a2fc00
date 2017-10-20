@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "150e811d_20ceefb7",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T02:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed22fa30_64e06d51",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a79ce10c_1f678f68",
         "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c9a90f16_02eb8248",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T02:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79ce10c_1f678f68",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b03415_fbc17842",
         "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4278984_2ea5b7cd",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T02:45:00Z",
+      "side": 1,
+      "message": "Done. There\u0027s no actual set date for Python style changes, so it\u0027s probably easier just to be consistent.",
+      "parentUuid": "76b03415_fbc17842",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "08ce203d_87cc98c6",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T02:45:00Z",
+      "side": 1,
+      "message": "readlines() includes the newline character, while splitlines() does not. Done for the filename comment.",
+      "parentUuid": "d46d9b07_b8772d25",
+      "range": {
+        "startLine": 212,
+        "startChar": 29,
+        "endLine": 212,
+        "endChar": 49
+      },
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df8f72ff_a836da4d",
         "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4414e8bc_d0f9b3d2",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T02:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8f72ff_a836da4d",
+      "revId": "d3a86f6d687b84bd6c8f8f6617d37d9f18a2fc00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
