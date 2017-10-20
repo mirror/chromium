@@ -4,12 +4,21 @@
 """Logic for diffing two SizeInfo objects."""
 
 import collections
+import logging
 import re
 
 import models
 
 
-def _SymbolKey(symbol):
+def _ExactMatchKey(s):
+  # Remove numbers for symbols defined by macros that use __line__ in names.
+  name = re.sub(r'\d+', '', s.full_name)
+  # Use section rather than section_name since clang & gcc use
+  # .data.rel.ro vs .data.rel.ro.local.
+  return s.section, name, s.object_path, s.size_without_padding
+
+
+def _GoodMatchKey(symbol):
   """Returns a tuple that can be used to see if two Symbol are the same.
 
   Keys are not guaranteed to be unique within a SymbolGroup. When multiple
@@ -18,13 +27,13 @@ def _SymbolKey(symbol):
 
   Examples of symbols with shared keys:
     "** merge strings"
-    "** symbol gap 3", "** symbol gap 5"
+    "** symbol gap 3", "** symbol gap 5 (end of section)"
     "foo() [clone ##]"
     "CSWTCH.61", "CSWTCH.62"
     "._468", "._467"
     ".L__unnamed_1193", ".L__unnamed_712"
   """
-  name = symbol.full_name
+  name = re.sub(r'\d+', '', symbol.full_name)
   clone_idx = name.find(' [clone ')
   if clone_idx != -1:
     name = name[:clone_idx]
@@ -32,42 +41,68 @@ def _SymbolKey(symbol):
     # "symbol gap 3 (bar)" -> "symbol gaps"
     name = re.sub(r'\s+\d+( \(.*\))?$', 's', name)
 
-  # Use section rather than section_name since clang & gcc use
-  # .data.rel.ro vs .data.rel.ro.local.
-  if '.' not in name:
-    return (symbol.section, name)
+  return symbol.section, symbol.object_path, name
 
-  # Compiler or Linker generated symbol.
-  name = re.sub(r'[.0-9]', '', name)  # Strip out all numbers and dots.
-  return (symbol.section, name, symbol.object_path)
+
+def _PoorMatchKey(symbol):
+  section, _, name = _GoodMatchKey(symbol)
+  return section, name
+
+
+def _MatchSymbols(before, after, key_func, padding_by_section_name):
+  logging.debug('%s: Building symbol index', key_func.__name__)
+  before_symbols_by_key = collections.defaultdict(list)
+  for s in before:
+    before_symbols_by_key[key_func(s)].append(s)
+
+  logging.debug('%s: Creating delta symbols', key_func.__name__)
+  unmatched_after = []
+  delta_symbols = []
+  for after_sym in after:
+    before_sym = before_symbols_by_key.get(key_func(after_sym))
+    if before_sym:
+      before_sym = before_sym.pop(0)
+      # Padding tracked in aggregate, except for padding-only symbols.
+      if before_sym.size_without_padding != 0:
+        padding_by_section_name[before_sym.section_name] += (
+            after_sym.padding_pss - before_sym.padding_pss)
+      delta_symbols.append(models.DeltaSymbol(before_sym, after_sym))
+    else:
+      unmatched_after.append(after_sym)
+
+  logging.debug('%s: Matched %d of %d symbols', key_func.__name__,
+                len(delta_symbols), len(after))
+
+  unmatched_before = []
+  for remaining_syms in before_symbols_by_key.itervalues():
+    unmatched_before.extend(remaining_syms)
+  return delta_symbols, unmatched_after, unmatched_before
 
 
 def _DiffSymbolGroups(before, after):
-  before_symbols_by_key = collections.defaultdict(list)
-  for s in before:
-    before_symbols_by_key[_SymbolKey(s)].append(s)
-
-  delta_symbols = []
   # For changed symbols, padding is zeroed out. In order to not lose the
   # information entirely, store it in aggregate.
   padding_by_section_name = collections.defaultdict(int)
 
-  # Create a DeltaSymbol for each after symbol.
-  for after_sym in after:
-    matching_syms = before_symbols_by_key.get(_SymbolKey(after_sym))
-    before_sym = None
-    if matching_syms:
-      before_sym = matching_syms.pop(0)
-      # Padding tracked in aggregate, except for padding-only symbols.
-      if before_sym.size_without_padding:
-        padding_by_section_name[before_sym.section_name] += (
-            after_sym.padding_pss - before_sym.padding_pss)
-    delta_symbols.append(models.DeltaSymbol(before_sym, after_sym))
+  # Usually, >90% of symbols are exact matches, so all of the time is spent in
+  # this first pass.
+  all_deltas, after, before = _MatchSymbols(
+      before, after, _ExactMatchKey, padding_by_section_name)
 
-  # Create a DeltaSymbol for each unmatched before symbol.
-  for remaining_syms in before_symbols_by_key.itervalues():
-    for before_sym in remaining_syms:
-      delta_symbols.append(models.DeltaSymbol(before_sym, None))
+  good_deltas, after, before = _MatchSymbols(
+      before, after, _GoodMatchKey, padding_by_section_name)
+
+  poor_deltas, after, before = _MatchSymbols(
+      before, after, _PoorMatchKey, padding_by_section_name)
+
+  all_deltas.extend(good_deltas)
+  all_deltas.extend(poor_deltas)
+
+  logging.debug('Creating %d unmatched symbols', len(after) + len(before))
+  for after_sym in after:
+    all_deltas.append(models.DeltaSymbol(None, after_sym))
+  for before_sym in before:
+    all_deltas.append(models.DeltaSymbol(before_sym, None))
 
   # Create a DeltaSymbol to represent the zero'd out padding of matched symbols.
   for section_name, padding in padding_by_section_name.iteritems():
@@ -75,9 +110,9 @@ def _DiffSymbolGroups(before, after):
       after_sym = models.Symbol(section_name, padding,
                                 name="** aggregate padding of diff'ed symbols")
       after_sym.padding = padding
-      delta_symbols.append(models.DeltaSymbol(None, after_sym))
+      all_deltas.append(models.DeltaSymbol(None, after_sym))
 
-  return models.DeltaSymbolGroup(delta_symbols)
+  return models.DeltaSymbolGroup(all_deltas)
 
 
 def Diff(before, after):
