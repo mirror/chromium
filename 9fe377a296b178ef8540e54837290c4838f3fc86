@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6919dcaf_67cfcd19",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-20T21:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3d05c2_81680759",
+      "revId": "9fe377a296b178ef8540e54837290c4838f3fc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb6a4809_8732b414",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "915eac03_daf1f182",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-20T21:15:26Z",
+      "side": 1,
+      "message": "\u003e Does this test fail without this CL?\n\nYes. Canary fails with this test.\n\n\u003e In any case, I think it\u0027s better to make the channel count change more explicit by doing a suspend(time) that then sets the buffer.  Then the rendered data should be all zero until the buffer is connected at which time it should have the desired values.\n\nDone.",
+      "parentUuid": "cb6a4809_8732b414",
+      "revId": "9fe377a296b178ef8540e54837290c4838f3fc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4190132a_15b8ec15",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "9fe377a296b178ef8540e54837290c4838f3fc86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d385e6_cb13574b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-20T21:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4190132a_15b8ec15",
+      "revId": "9fe377a296b178ef8540e54837290c4838f3fc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
