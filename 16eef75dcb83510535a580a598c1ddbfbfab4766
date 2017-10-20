@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df2cbf2a_a5eb853e",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1147730
+      },
+      "writtenOn": "2017-10-20T12:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43aa06df_e14bb4bc",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "219681da_0a8b0f88",
         "filename": "components/password_manager/core/browser/password_manager.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T11:52:32Z",
       "side": 1,
       "message": "Why do we need this? Nowadays most submissions are done with JavaScript, action is not so important. If there is no any specific reason I\u0027d prefer to keep things simple and not to remove these lines.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215e7cab_51295997",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1147730
+      },
+      "writtenOn": "2017-10-20T12:36:29Z",
+      "side": 1,
+      "message": "Well, it comes from the logic above which checks for full action including path. I decided to keep it but made less strict. If you think it\u0027s okay to remove the action check at all, then I don\u0027t mind.",
+      "parentUuid": "219681da_0a8b0f88",
       "range": {
         "startLine": 81,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4c01aa06_8693525e",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1147730
+      },
+      "writtenOn": "2017-10-20T12:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb0d94a3_e8f48c0b",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eeb9573_bb535dc4",
         "filename": "components/password_manager/core/browser/password_manager.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-20T11:52:32Z",
       "side": 1,
       "message": "What\u0027s the usecase for checking password_element and _value?",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 42
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42679b5f_7f41a490",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1147730
+      },
+      "writtenOn": "2017-10-20T12:36:29Z",
+      "side": 1,
+      "message": "This is just a precaution to gracefully handle some forms if our heuristic fails to recognize some of the fields properly.",
+      "parentUuid": "2eeb9573_bb535dc4",
       "range": {
         "startLine": 107,
         "startChar": 7,
