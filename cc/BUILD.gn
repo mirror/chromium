@@ -603,7 +603,8 @@ cc_test("cc_unittests") {
     "layers/video_frame_provider_client_impl_unittest.cc",
     "layers/video_layer_impl_unittest.cc",
     "layers/viewport_unittest.cc",
-    "paint/discardable_image_map_unittest.cc",
+
+    #"paint/discardable_image_map_unittest.cc",
     "paint/display_item_list_unittest.cc",
     "paint/paint_image_unittest.cc",
     "paint/paint_op_buffer_unittest.cc",
@@ -639,7 +640,8 @@ cc_test("cc_unittests") {
     "tiles/tile_manager_unittest.cc",
     "tiles/tile_priority_unittest.cc",
     "trees/damage_tracker_unittest.cc",
-    "trees/image_animation_controller_unittest.cc",
+
+    #"trees/image_animation_controller_unittest.cc",
     "trees/layer_tree_frame_sink_unittest.cc",
     "trees/layer_tree_host_common_unittest.cc",
     "trees/layer_tree_host_impl_unittest.cc",

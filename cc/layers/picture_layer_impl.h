@@ -67,7 +67,7 @@ class CC_EXPORT PictureLayerImpl
   gfx::Rect GetEnclosingRectInTargetSpace() const override;
 
   // ImageAnimationController::AnimationDriver overrides.
-  bool ShouldAnimate(PaintImage::Id paint_image_id) const override;
+  UpdateType ShouldAnimate(PaintImage::Id paint_image_id) const override;
 
   void set_gpu_raster_max_texture_size(gfx::Size gpu_raster_max_texture_size) {
     gpu_raster_max_texture_size_ = gpu_raster_max_texture_size;
@@ -109,7 +109,8 @@ class CC_EXPORT PictureLayerImpl
   }
 
   void InvalidateRegionForImages(
-      const PaintImageIdFlatSet& images_to_invalidate);
+      const PaintImageIdFlatSet& checkered_images,
+      const ImageAnimationController::Invalidations& animated_images);
 
   bool RasterSourceUsesLCDTextForTesting() const { return can_use_lcd_text_; }
 
@@ -186,6 +187,13 @@ class CC_EXPORT PictureLayerImpl
   // of comparing pointers, since objects pointed to are not guaranteed to
   // exist.
   std::vector<PictureLayerTiling*> last_append_quads_tilings_;
+
+  // In the case of animated images, we only invalidate the region which is
+  // visible. This means its possible to have cases where the current frame for
+  // an image in the prepaint region has changed and it is displaying stale
+  // content. This keeps track of that region and ensures that it is invalidated
+  // when it comes onscreen.
+  base::flat_map<PaintImage::Id, Region> image_region_with_stale_content_;
 
   DISALLOW_COPY_AND_ASSIGN(PictureLayerImpl);
 };
