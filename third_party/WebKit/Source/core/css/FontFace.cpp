@@ -707,9 +707,8 @@ void FontFace::InitCSSFontFace(ExecutionContext* context, const CSSValue* src) {
           } else {
             NOTREACHED();
           }
-          source =
-              new RemoteFontFaceSource(css_font_face_, fetched, font_selector,
-                                       CSSValueToFontDisplay(display_.Get()));
+          source = new RemoteFontFaceSource(
+              fetched, font_selector, CSSValueToFontDisplay(display_.Get()));
         }
       }
     } else {

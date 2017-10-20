@@ -11,7 +11,6 @@
 
 namespace blink {
 
-class CSSFontFace;
 class FontSelector;
 class FontCustomPlatformData;
 
@@ -32,7 +31,7 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
  public:
   enum DisplayPeriod { kBlockPeriod, kSwapPeriod, kFailurePeriod };
 
-  RemoteFontFaceSource(CSSFontFace*, FontResource*, FontSelector*, FontDisplay);
+  RemoteFontFaceSource(FontResource*, FontSelector*, FontDisplay);
   ~RemoteFontFaceSource() override;
   void Dispose();
 
@@ -62,6 +61,7 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
       const FontSelectionCapabilities&) override;
   scoped_refptr<SimpleFontData> CreateLoadingFallbackFontData(
       const FontDescription&);
+  void PruneTable();
 
  private:
   class FontLoadHistograms {
@@ -113,8 +113,6 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
   bool ShouldTriggerWebFontsIntervention();
   bool IsLowPriorityLoadingAllowedForRemoteFont() const override;
 
-  // Our owning font face.
-  Member<CSSFontFace> face_;
   // Cleared once load is finished.
   Member<FontResource> font_;
   Member<FontSelector> font_selector_;
