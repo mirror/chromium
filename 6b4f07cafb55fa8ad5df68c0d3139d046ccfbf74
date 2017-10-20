@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575caa9f_36f632a7",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T22:34:31Z",
+      "side": 1,
+      "message": "Only include the ON_CALL lines that are required to make the dialog run, though it does look like a lot of these are required.",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 360,
+        "endChar": 11
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140504c6_5453464f",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T22:34:31Z",
+      "side": 1,
+      "message": "I think you can just do \"base::Callback\u003cvoid(DownloadDangerPrompt::Action)\u003e()\"",
+      "range": {
+        "startLine": 377,
+        "startChar": 14,
+        "endLine": 377,
+        "endChar": 18
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c7b7f3_e2e6a8fd",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T22:34:31Z",
+      "side": 1,
+      "message": "Inline in ShowDialog",
+      "range": {
+        "startLine": 383,
+        "startChar": 13,
+        "endLine": 383,
+        "endChar": 26
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91254b3a_fb3bf392",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T22:34:31Z",
+      "side": 1,
+      "message": "Inline in ShowDialog",
+      "range": {
+        "startLine": 384,
+        "startChar": 23,
+        "endLine": 384,
+        "endChar": 39
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
