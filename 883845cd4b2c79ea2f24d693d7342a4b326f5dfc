@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e349863_288a2dc0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImageResource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-20T17:39:07Z",
+      "side": 1,
+      "message": "Could you add a todo here, on me, to replace the static images with dynamically rendered, scale independent results? With so much device scaling going on these days we have quality issues with these images. In particular, some devices return a scale factor that is (2 - epsilon) and we serve low quality results.",
+      "revId": "883845cd4b2c79ea2f24d693d7342a4b326f5dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab45e87_a7b41331",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImageResource.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-20T17:39:07Z",
+      "side": 1,
+      "message": "Should this comment be above the previous line?",
+      "range": {
+        "startLine": 79,
+        "startChar": 22,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "883845cd4b2c79ea2f24d693d7342a4b326f5dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed75efa2_a0c7bc96",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-20T17:39:07Z",
+      "side": 1,
+      "message": "Are we losing anything by not returning the broken image here?",
+      "revId": "883845cd4b2c79ea2f24d693d7342a4b326f5dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
