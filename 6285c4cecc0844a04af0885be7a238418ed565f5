@@ -511,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "8e3612ce_06ce78c6",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3970,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T20:45:02Z",
+      "side": 1,
+      "message": "I\u0027m just curious, but isn\u0027t the \"obvious\" thing here to reuse |frame|\u0027s site instance?",
+      "parentUuid": "1b2f2caf_76da0197",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dfa36b5_9c8b582c",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 15
