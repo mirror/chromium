@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "c5cc1acb_f9deab63",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T20:53:49Z",
+      "side": 1,
+      "message": "If not inside Run(), old_state_ will be true, so this would end up calling SetNestableTasksAllowed(true) twice?\n\nAnd if inside Run(true) the same thing, it would allow more nestable tasks?",
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af557fc_93bf7470",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T20:53:49Z",
+      "side": 1,
+      "message": "does this \"accidentally induced\" still belong?",
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23671e32_dade80b0",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 6
