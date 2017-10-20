@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb67346_3f55ad97",
+        "filename": "chrome/browser/chrome_browser_field_trials.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-20T15:53:46Z",
+      "side": 1,
+      "message": "You can actually use SCOPED_UMA_HISTOGRAM_TIMER",
+      "revId": "4b996620ec918242af6a85aeec8e16b9400f66c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3d83f8_fbc61d40",
+        "filename": "chrome/browser/chrome_browser_field_trials.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-20T15:53:46Z",
+      "side": 1,
+      "message": "I\u0027m actually a bit confused by putting this here - the SetupFieldTrial function is doing a lot of other things, everything in InstantiatePersistentHistograms - plus setting on default field trials, etc.\n\nIf you\u0027re really trying to measure seed processing time should this live in variations_seed_processor.cc or something?",
+      "revId": "4b996620ec918242af6a85aeec8e16b9400f66c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
