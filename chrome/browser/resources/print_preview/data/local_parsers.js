@@ -16,7 +16,7 @@ cr.define('print_preview', function() {
    *       For EXTENSION_PRINTER => print_preview.ProvisionalDestinationInfo
    * @return {!Array<!print_preview.Destination> | !print_preview.Destination}
    */
-  var parseDestination = function(type, printer) {
+  const parseDestination = function(type, printer) {
     if (type === print_preview.PrinterType.LOCAL_PRINTER) {
       return parseLocalDestination(
           /** @type {!print_preview.LocalDestinationInfo} */ (printer));
@@ -40,7 +40,7 @@ cr.define('print_preview', function() {
    * @return {!print_preview.Destination} Parsed local print destination.
    */
   var parseLocalDestination = function(destinationInfo) {
-    var options = {
+    const options = {
       description: destinationInfo.printerDescription,
       isEnterprisePrinter: destinationInfo.cupsEnterprisePrinter
     };
@@ -67,7 +67,7 @@ cr.define('print_preview', function() {
    *          !Array<!print_preview.Destination>} Parsed destination info.
    */
   var parsePrivetDestination = function(destinationInfo) {
-    var returnedPrinters = [];
+    const returnedPrinters = [];
 
     if (destinationInfo.hasLocalPrinting) {
       returnedPrinters.push(new print_preview.Destination(
@@ -97,7 +97,7 @@ cr.define('print_preview', function() {
    * @return {!print_preview.Destination} Parsed destination.
    */
   var parseExtensionDestination = function(destinationInfo) {
-    var provisionalType = destinationInfo.provisional ?
+    const provisionalType = destinationInfo.provisional ?
         print_preview.DestinationProvisionalType.NEEDS_USB_PERMISSION :
         print_preview.DestinationProvisionalType.NONE;
 
