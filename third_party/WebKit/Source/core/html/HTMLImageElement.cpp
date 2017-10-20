@@ -530,8 +530,8 @@ const String& HTMLImageElement::currentSrc() const {
   // available or broken.  We use the image's dimensions as a proxy to it being
   // in any of these states.
   ImageResourceContent* image_content = GetImageLoader().GetContent();
-  if (!image_content || !image_content->GetImage() ||
-      !image_content->GetImage()->width())
+  if (!image_content ||
+      (!image_content->ErrorOccurred() && !image_content->HasImage()))
     return g_empty_atom;
 
   return image_content->Url().GetString();
