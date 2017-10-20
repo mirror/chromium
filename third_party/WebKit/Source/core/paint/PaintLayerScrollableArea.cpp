@@ -1269,37 +1269,52 @@ static inline const LayoutObject& ScrollbarStyleSource(
 }
 
 bool PaintLayerScrollableArea::NeedsScrollbarReconstruction() const {
+  if (!HasScrollbar())
+    return false;
+
   const LayoutObject& style_source = ScrollbarStyleSource(Box());
   bool should_use_custom =
       style_source.IsBox() &&
       style_source.StyleRef().HasPseudoStyle(kPseudoIdScrollbar);
-  bool has_any_scrollbar = HasScrollbar();
 
-  bool did_scrollbar_theme_changed = false;
-
+  // Native Scrollbar <-> Custom Scrollbar.
   if (HasHorizontalScrollbar() &&
       HorizontalScrollbar()->IsCustomScrollbar() != should_use_custom)
-    did_scrollbar_theme_changed = true;
+    return true;
 
   if (HasVerticalScrollbar() &&
       VerticalScrollbar()->IsCustomScrollbar() != should_use_custom)
-    did_scrollbar_theme_changed = true;
+    return true;
 
-  bool did_custom_scrollbar_owner_changed = false;
-
+  // Custom Scrollbar owner change.
   if (HasHorizontalScrollbar() && HorizontalScrollbar()->IsCustomScrollbar()) {
     if (style_source != ToLayoutScrollbar(HorizontalScrollbar())->StyleSource())
-      did_custom_scrollbar_owner_changed = true;
+      return true;
   }
 
   if (HasVerticalScrollbar() && VerticalScrollbar()->IsCustomScrollbar()) {
     if (style_source != ToLayoutScrollbar(VerticalScrollbar())->StyleSource())
-      did_custom_scrollbar_owner_changed = true;
+      return true;
   }
 
-  return has_any_scrollbar &&
-         (did_scrollbar_theme_changed ||
-          (should_use_custom && did_custom_scrollbar_owner_changed));
+  // Should use custom scrollbar and nothing should change.
+  if (should_use_custom)
+    return false;
+
+  // Check native scrollbar theme change.
+  Page* page = Box().GetFrame()->LocalFrameRoot().GetPage();
+  DCHECK(page);
+  ScrollbarTheme* current_theme = &page->GetScrollbarTheme();
+
+  if (HasVerticalScrollbar() &&
+      current_theme != &VerticalScrollbar()->GetTheme())
+    return true;
+
+  if (HasHorizontalScrollbar() &&
+      current_theme != &HorizontalScrollbar()->GetTheme())
+    return true;
+
+  return false;
 }
 
 void PaintLayerScrollableArea::ComputeScrollbarExistence(
