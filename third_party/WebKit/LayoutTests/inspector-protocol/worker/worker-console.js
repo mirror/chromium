@@ -1,6 +1,8 @@
 (async function(testRunner) {
   var {page, session, dp} = await testRunner.startBlank(`Tests how console messages from worker get into page's console once worker is destroyed.`);
 
+
+  testRunner.log(testRunner.url('../resources/worker-console-worker.js'));
   await session.evaluate(`
     var worker = null;
     var onMessageCallbacks = {};
