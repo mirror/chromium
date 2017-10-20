@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19fcab72_d3452c87",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-20T21:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ac3706e_74020fbd",
+      "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d804eba0_ae3b2bcd",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T21:06:41Z",
       "side": 1,
       "message": "Isn\u0027t this CheckSelectionAtExpandArrow() ?",
+      "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07f8b0e_5972d1e5",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-20T21:41:15Z",
+      "side": 1,
+      "message": "It is, I found it pretty hard to debug test failures when helper methods are used for all assertions.\n\nFor example, the test prints that it failed at line 200, but in reality it failed at like 984. \n\nI don\u0027t feel strongly about this, it was just easier to debug the failures this way. Do you think it is better the other way?",
+      "parentUuid": "d804eba0_ae3b2bcd",
       "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b2bf2d_ee5b7bae",
+        "filename": "ui/views/focus/focus_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-20T21:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1ef287_bb19aa9d",
+      "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
