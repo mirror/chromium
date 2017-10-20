@@ -138,6 +138,7 @@ class CORE_EXPORT ImageBitmap final
     bool flip_y = false;
     bool premultiply_alpha = true;
     bool should_scale_input = false;
+    bool color_space_conversion_none = true;
     unsigned resize_width = 0;
     unsigned resize_height = 0;
     IntRect crop_rect;

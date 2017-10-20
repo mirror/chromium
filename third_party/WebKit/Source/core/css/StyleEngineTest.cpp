@@ -115,8 +115,7 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       "#t1 { color: green !important }"
       "#t2 { color: white !important }"
       "#t3 { color: white }");
-  WebStyleSheetId green_id =
-      GetStyleEngine().AddUserSheet(green_parsed_sheet);
+  WebStyleSheetId green_id = GetStyleEngine().AddUserSheet(green_parsed_sheet);
   EXPECT_EQ(1u, green_id);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -140,8 +139,7 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
       "#t1 { color: blue !important }"
       "#t2 { color: silver }"
       "#t3 { color: silver !important }");
-  WebStyleSheetId blue_id =
-      GetStyleEngine().AddUserSheet(blue_parsed_sheet);
+  WebStyleSheetId blue_id = GetStyleEngine().AddUserSheet(blue_parsed_sheet);
   EXPECT_EQ(2u, blue_id);
   GetDocument().View()->UpdateAllLifecyclePhases();
 

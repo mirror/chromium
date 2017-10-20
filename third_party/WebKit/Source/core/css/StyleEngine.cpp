@@ -141,9 +141,8 @@ StyleEngine::StyleSheetsForStyleSheetList(TreeScope& tree_scope) {
 }
 
 WebStyleSheetId StyleEngine::AddUserSheet(StyleSheetContents* sheet) {
-  user_style_sheets_.push_back(
-      std::make_pair(++user_sheets_id_count_,
-                     CSSStyleSheet::Create(sheet, *document_)));
+  user_style_sheets_.push_back(std::make_pair(
+      ++user_sheets_id_count_, CSSStyleSheet::Create(sheet, *document_)));
 
   MarkUserStyleDirty();
   return user_sheets_id_count_;

@@ -173,10 +173,9 @@ TEST_F(MatchResultTest, AuthorRulesMultipleScopes) {
 }
 
 TEST_F(MatchResultTest, AllRulesMultipleScopes) {
-  const StylePropertySet* all_sets[] = {PropertySet(0), PropertySet(1),
-                                        PropertySet(2), PropertySet(3),
-                                        PropertySet(4), PropertySet(5),
-                                        PropertySet(6), PropertySet(7)};
+  const StylePropertySet* all_sets[] = {
+      PropertySet(0), PropertySet(1), PropertySet(2), PropertySet(3),
+      PropertySet(4), PropertySet(5), PropertySet(6), PropertySet(7)};
   const StylePropertySet** ua_sets = &all_sets[0];
   const StylePropertySet** user_sets = &all_sets[2];
   const StylePropertySet** author_sets = &all_sets[4];

@@ -60,8 +60,7 @@ void MatchResult::FinishAddingUARules() {
 
 void MatchResult::FinishAddingUserRules() {
   // Don't add empty ranges.
-  if (user_range_ends_.IsEmpty() &&
-      ua_range_end_ == matched_properties_.size())
+  if (user_range_ends_.IsEmpty() && ua_range_end_ == matched_properties_.size())
     return;
   if (!user_range_ends_.IsEmpty() &&
       user_range_ends_.back() == matched_properties_.size())

@@ -819,11 +819,8 @@ void Canvas2DLayerBridge::FlushRecordingOnly() {
     SkCanvas* canvas = GetOrCreateSurface()->getCanvas();
     std::unique_ptr<PaintCanvas> color_transform_canvas =
         color_params_.WrapCanvas(canvas);
-
-    {
-      sk_sp<PaintRecord> recording = recorder_->finishRecordingAsPicture();
-      color_transform_canvas->drawPicture(recording);
-    }
+    sk_sp<PaintRecord> recording = recorder_->finishRecordingAsPicture();
+    color_transform_canvas->drawPicture(recording);
 
     if (is_deferral_enabled_)
       StartRecording();

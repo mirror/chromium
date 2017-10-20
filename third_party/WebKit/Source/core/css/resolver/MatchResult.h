@@ -119,16 +119,14 @@ class CORE_EXPORT MatchResult {
     MatchedPropertiesVector::const_iterator begin =
         matched_properties_.begin() + ua_range_end_;
     MatchedPropertiesVector::const_iterator end =
-        matched_properties_.begin() + (user_range_ends_.IsEmpty()
-                                           ? ua_range_end_
-                                           : user_range_ends_.back());
+        matched_properties_.begin() +
+        (user_range_ends_.IsEmpty() ? ua_range_end_ : user_range_ends_.back());
     return MatchedPropertiesRange(begin, end);
   }
   MatchedPropertiesRange AuthorRules() const {
     MatchedPropertiesVector::const_iterator begin =
-        matched_properties_.begin() + (user_range_ends_.IsEmpty()
-                                           ? ua_range_end_
-                                           : user_range_ends_.back());
+        matched_properties_.begin() +
+        (user_range_ends_.IsEmpty() ? ua_range_end_ : user_range_ends_.back());
     MatchedPropertiesVector::const_iterator end = matched_properties_.end();
     return MatchedPropertiesRange(begin, end);
   }
@@ -159,9 +157,8 @@ class ImportantUserRangeIterator {
 
   MatchedPropertiesRange operator*() const {
     unsigned range_end = result_.user_range_ends_[end_index_];
-    unsigned range_begin = end_index_
-                               ? result_.user_range_ends_[end_index_ - 1]
-                               : result_.ua_range_end_;
+    unsigned range_begin = end_index_ ? result_.user_range_ends_[end_index_ - 1]
+                                      : result_.ua_range_end_;
     return MatchedPropertiesRange(
         result_.GetMatchedProperties().begin() + range_begin,
         result_.GetMatchedProperties().begin() + range_end);
@@ -192,7 +189,7 @@ class ImportantUserRanges {
 
   ImportantUserRangeIterator begin() const {
     return ImportantUserRangeIterator(result_,
-                                        result_.user_range_ends_.size() - 1);
+                                      result_.user_range_ends_.size() - 1);
   }
   ImportantUserRangeIterator end() const {
     return ImportantUserRangeIterator(result_, -1);
