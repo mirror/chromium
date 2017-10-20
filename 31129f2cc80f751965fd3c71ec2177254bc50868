@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e290e54_35a066de",
+        "filename": "content/browser/child_process_launcher_helper_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-20T20:40:48Z",
+      "side": 1,
+      "message": "Do we really want to crash the browser if this operation fails? It seems suboptimal UX to me, given that we are just trying to improve performance.",
+      "revId": "31129f2cc80f751965fd3c71ec2177254bc50868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
