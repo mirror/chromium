@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec83e213_f7bc170b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T10:45:47Z",
+      "side": 1,
+      "message": "Would it be worth it to try to avoid inflating these views in the first place?",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 54
+      },
+      "revId": "a89a0f908d026bd64fa49bbad502638330ac6ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
