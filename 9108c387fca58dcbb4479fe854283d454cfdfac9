@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f7d0923b_52335302",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-20T13:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60b017eb_f4a5bc1e",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9035295_292e1008",
         "filename": "components/policy/proto/chrome_device_policy.proto",
         "patchSetId": 5
@@ -260,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "6572fbf4_9d9e93d5",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9809,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-20T13:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe45e81f_8db9a9d8",
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41e46851_9211dcfa",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 5
@@ -353,6 +395,54 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "41e46851_9211dcfa",
+      "range": {
+        "startLine": 9811,
+        "startChar": 182,
+        "endLine": 9811,
+        "endChar": 189
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8ddcd4e_65d0b69e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9811,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-20T13:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af4e44a5_e8f1e8f0",
+      "range": {
+        "startLine": 9811,
+        "startChar": 17,
+        "endLine": 9811,
+        "endChar": 104
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e36fea38_f18e95c1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9811,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-10-20T13:28:03Z",
+      "side": 1,
+      "message": "The is no \"sign-in\" in my CL. What do you argue about?",
+      "parentUuid": "9e2f7150_d68ad5f4",
       "range": {
         "startLine": 9811,
         "startChar": 182,
