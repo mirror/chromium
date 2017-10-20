@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01657964_3d517a22",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T20:00:13Z",
+      "side": 1,
+      "message": "How about:\n  // Running the login UI (primary user), including the post login steps\n  // such as selecting avatar, agreeing to terms of service etc.",
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9295e7ff_dbeeb1ca",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T20:00:13Z",
+      "side": 1,
+      "message": "Let\u0027s add more document:\n  // A transient state between LOGIN_PRIMARY/LOGIN_SECONDARY and ACTIVE\n  // to prepare user desktop environment (e.g. launching browser windows)\n  // while the login screen is still visible.",
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
