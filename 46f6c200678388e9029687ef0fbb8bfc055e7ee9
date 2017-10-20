@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "99d45cac_7227e8bc",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3633,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T21:26:35Z",
+      "side": 1,
+      "message": "nit: might also be nice to check that root-\u003eeffective_frame_policy().sandbox_flags matches the right flags, because we should\u0027ve executed CommitPendingFramePolicy() as part of WCI::CreateWithOpener.",
+      "revId": "46f6c200678388e9029687ef0fbb8bfc055e7ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce46c3aa_69ee9da1",
         "filename": "third_party/WebKit/LayoutTests/virtual/presentation/receiver/resources/iframe-sandbox.html",
         "patchSetId": 19
