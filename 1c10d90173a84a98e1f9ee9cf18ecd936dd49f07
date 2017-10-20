@@ -88,6 +88,24 @@
       "revId": "1c10d90173a84a98e1f9ee9cf18ecd936dd49f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a270f720_3c7f6c1b",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-20T16:03:43Z",
+      "side": 1,
+      "message": "Newest version of the CL should have the changes we discussed. Landing this CL is dependent on https://pdfium-review.googlesource.com/c/pdfium/+/16392 to get rolled in.",
+      "parentUuid": "d289f68b_97133006",
+      "revId": "1c10d90173a84a98e1f9ee9cf18ecd936dd49f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
