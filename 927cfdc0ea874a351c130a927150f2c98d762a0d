@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e743f36e_875077b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-20T05:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad5474a1_4a4d1cd1",
+      "revId": "927cfdc0ea874a351c130a927150f2c98d762a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9f095b_1260804d",
         "filename": "ui/views/controls/combobox/combobox.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a8252603_fbb4c97d",
+        "filename": "ui/views/controls/combobox/combobox.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-20T05:17:42Z",
+      "side": 1,
+      "message": "Done (although I was copying the order of logic from view.cc so...)",
+      "parentUuid": "8b9f095b_1260804d",
+      "range": {
+        "startLine": 785,
+        "startChar": 9,
+        "endLine": 785,
+        "endChar": 59
+      },
+      "revId": "927cfdc0ea874a351c130a927150f2c98d762a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c26e084e_fa5cf69a",
         "filename": "ui/views/controls/combobox/combobox.h",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-19T22:52:32Z",
       "side": 1,
       "message": "Move between OnPaint() and OnFocus()?",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 62
+      },
+      "revId": "927cfdc0ea874a351c130a927150f2c98d762a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a221db_72b11ff0",
+        "filename": "ui/views/controls/combobox/combobox.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-20T05:17:42Z",
+      "side": 1,
+      "message": "I moved it... above GetAccessibleNodeData. So it doesn\u0027t split up the OnSomething functions, but it\u0027s still adjacent to the other AX overloads. Why between focus and blur in particular?",
+      "parentUuid": "c26e084e_fa5cf69a",
       "range": {
         "startLine": 105,
         "startChar": 2,
