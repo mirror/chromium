@@ -39,6 +39,7 @@ class RequestInit {
   const String& CacheMode() const { return cache_; }
   const String& Redirect() const { return redirect_; }
   const String& Integrity() const { return integrity_; }
+  const WTF::Optional<bool>& Keepalive() const { return keepalive_; }
   RefPtr<EncodedFormData> AttachedCredential() { return attached_credential_; }
   bool AreAnyMembersSet() const { return are_any_members_set_; }
 
@@ -71,6 +72,7 @@ class RequestInit {
   String cache_;
   String redirect_;
   String integrity_;
+  WTF::Optional<bool> keepalive_;
   RefPtr<EncodedFormData> attached_credential_;
   // True if any members in RequestInit are set and hence the referrer member
   // should be used in the Request constructor.
