@@ -22,9 +22,7 @@ class UiScene;
 class UiSceneManager;
 class VrShellRenderer;
 struct Model;
-}  // namespace vr
-
-namespace vr {
+class SkiaSurfaceProvider;
 
 struct UiInitialState {
   bool in_cct = false;
@@ -85,6 +83,7 @@ class Ui : public BrowserUiInterface, public UiInterface {
   std::unique_ptr<vr::VrShellRenderer> vr_shell_renderer_;
   std::unique_ptr<vr::UiInputManager> input_manager_;
   std::unique_ptr<vr::UiRenderer> ui_renderer_;
+  std::unique_ptr<SkiaSurfaceProvider> provider_;
 
   base::WeakPtrFactory<Ui> weak_ptr_factory_;
 
