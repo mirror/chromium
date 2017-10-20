@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a4a81fd_24797621",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296ddcba_0ce3f1f2",
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f92b3d71_29e29929",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "449d8961_57a44df8",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "The deleter of unique_ptr can only be set in constructor. But if we construct encoder_ in the constructor of VaapiJpegEncodeAccelerator, then we will have to create vaapi_wrapper at that point, which will make the constructor too heavy.",
+      "parentUuid": "f92b3d71_29e29929",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 67
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb94f9f_7e88fd9a",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
         "patchSetId": 15
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-20T04:32:41Z",
       "side": 1,
       "message": "Is it possible that a task runs on |encoder_task_runner_| after |encoder_| is deleted?",
+      "range": {
+        "startLine": 258,
+        "startChar": 17,
+        "endLine": 258,
+        "endChar": 49
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b913fb5e_d190ee73",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "dalecurtis@, now that we create the thread with CreateSingleThreadTaskRunnerWithTraits(), how do we stop the encoder thread in ~VaapiJpegEncodeAccelerator() so that we can guarantee |encoder_| always exists on encoder thread?",
+      "parentUuid": "6eb94f9f_7e88fd9a",
       "range": {
         "startLine": 258,
         "startChar": 17,
@@ -85,6 +151,30 @@
       "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4787f10e_b960c3b9",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c58881e6_37bd17c7",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 59
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,54 @@
     },
     {
       "key": {
+        "uuid": "af81c0af_e7608369",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372707c1_0e540bf6",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6014479_d317a2e6",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84316e52_13ef1b1e",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1385c2b0_ebb54b1b",
         "filename": "media/gpu/vaapi_jpeg_encoder.cc",
         "patchSetId": 15
@@ -148,6 +286,24 @@
       "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2bb33f_41838f38",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1385c2b0_ebb54b1b",
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "fcc5bf4f_ba4d1196",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca74aea6_1288d0f5",
+      "range": {
+        "startLine": 250,
+        "startChar": 14,
+        "endLine": 250,
+        "endChar": 18
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac529133_1ef179c4",
         "filename": "media/gpu/vaapi_jpeg_encoder.cc",
         "patchSetId": 15
@@ -194,6 +374,30 @@
       "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a876bd4c_fde63a20",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac529133_1ef179c4",
+      "range": {
+        "startLine": 259,
+        "startChar": 16,
+        "endLine": 259,
+        "endChar": 20
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "cf4e4ef5_0d8f862a",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26506c41_1e04f0c9",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 327,
+        "endChar": 59
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42256053_2fe67bbd",
         "filename": "media/gpu/vaapi_jpeg_encoder.h",
         "patchSetId": 15
@@ -240,6 +468,30 @@
       "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c842a03d_a7e5bfdc",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42256053_2fe67bbd",
+      "range": {
+        "startLine": 23,
+        "startChar": 51,
+        "endLine": 23,
+        "endChar": 64
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "0b5fa07f_d1625830",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f801a9_fbc6474d",
+      "range": {
+        "startLine": 24,
+        "startChar": 44,
+        "endLine": 24,
+        "endChar": 55
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b968fcc8_502a0449",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 15
@@ -280,6 +556,24 @@
       "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ae9af3_3490f279",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-20T10:22:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b968fcc8_502a0449",
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
