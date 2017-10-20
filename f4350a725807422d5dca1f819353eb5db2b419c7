@@ -33,6 +33,24 @@
       "revId": "f4350a725807422d5dca1f819353eb5db2b419c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf99bac_3e7d6135",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T15:44:06Z",
+      "side": 1,
+      "message": "For example, we setup DevToolsFrontend (and extension api) immediately after ReadyToCommitNavigation, but before navigation happens, so that our api script is there when frontend starts to load.",
+      "parentUuid": "a0a761b2_308c3c15",
+      "revId": "f4350a725807422d5dca1f819353eb5db2b419c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
