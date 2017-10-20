@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18cb046d_cecd75b4",
+        "filename": "components/safe_browsing/db/database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T00:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c98303_5cdc355c",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "949dacee_b593ca89",
         "filename": "components/safe_browsing/db/database_manager.cc",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "f9cbcb30_f2fa751c",
+        "filename": "components/safe_browsing/db/database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T00:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b6cea4e_dbd55b20",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 41
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e169c066_e7aad539",
+        "filename": "components/safe_browsing/db/database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T00:10:18Z",
+      "side": 1,
+      "message": "Doesn\u0027t work.",
+      "parentUuid": "949dacee_b593ca89",
+      "range": {
+        "startLine": 93,
+        "startChar": 57,
+        "endLine": 93,
+        "endChar": 58
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09e0516_1499fe41",
         "filename": "components/safe_browsing/db/database_manager.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4987bde4_c45e88ec",
+        "filename": "components/safe_browsing/db/database_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T00:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d09e0516_1499fe41",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c103dff1_a1adc87d",
         "filename": "components/safe_browsing/db/v4_local_database_manager.h",
         "patchSetId": 2
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "a61482f4_dd68a403",
+        "filename": "components/safe_browsing/db/v4_local_database_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T00:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c103dff1_a1adc87d",
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7d6f7e_8c9dcd07",
         "filename": "components/safe_browsing/db/v4_protocol_manager_util.h",
         "patchSetId": 2
@@ -122,6 +236,24 @@
       "writtenOn": "2017-10-19T22:44:28Z",
       "side": 1,
       "message": "nit: Could you just return the vector\u003cstring\u003e?  I think the compiler would do the right thing with temporaries, so it\u0027d be nearly equiv, but wouldn\u0027t require a named temp variable in the calling code.  I\u0027m ok with either.",
+      "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea558909_910d474b",
+        "filename": "components/safe_browsing/db/v4_protocol_manager_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T00:10:18Z",
+      "side": 1,
+      "message": "I don\u0027t mind making the change but the current implementation is following the pattern in the file.\nSee: GeneratePathVariantsToCheck(), UrlToFullHashes(), ...",
+      "parentUuid": "3c7d6f7e_8c9dcd07",
       "revId": "8d220bcf76f9e9edf274fede4f90205a72c56a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
