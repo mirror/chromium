@@ -530,20 +530,25 @@ Console.ConsoleView = class extends UI.VBox {
     if (viewMessage[this._browserMessageGroupSymbol] && this._groupBrowserMessagesSetting.get())
       this._appendBrowserMessageToEnd(viewMessage);
     else
-      this._appendGenericMessageToEnd(viewMessage);
+      this._appendGenericMessageToEnd(viewMessage, this._visibleViewMessages, true /* shouldSearch */);
   }
 
-  _appendGenericMessageToEnd(viewMessage) {
+  /**
+   * @param {!Console.ConsoleViewMessage} viewMessage
+   * @param {!Array<!Console.ConsoleViewMessage>} list
+   * @param {boolean=} shouldSearch
+   */
+  _appendGenericMessageToEnd(viewMessage, list, shouldSearch) {
     if (!this._filter.shouldBeVisible(viewMessage) ||
         (this._isSidebarOpen && !this._sidebar.shouldBeVisible(viewMessage))) {
       this._hiddenByFilterCount++;
       return;
     }
 
-    if (this._tryToCollapseMessages(viewMessage, this._visibleViewMessages.peekLast()))
+    if (this._tryToCollapseMessages(viewMessage, list.peekLast()))
       return;
 
-    var lastMessage = this._visibleViewMessages.peekLast();
+    var lastMessage = list.peekLast();
     if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup) {
       if (lastMessage && !this._currentGroup.messagesHidden())
         lastMessage.incrementCloseGroupDecorationCount();
@@ -555,8 +560,9 @@ Console.ConsoleView = class extends UI.VBox {
       if (lastMessage && originatingMessage && lastMessage.consoleMessage() === originatingMessage)
         lastMessage.toMessageElement().classList.add('console-adjacent-user-command-result');
 
-      this._visibleViewMessages.push(viewMessage);
-      this._searchMessage(this._visibleViewMessages.length - 1);
+      list.push(viewMessage);
+      if (shouldSearch)
+        this._searchMessage(list.length - 1);
     }
 
     if (viewMessage.consoleMessage().isGroupStartMessage())
@@ -569,12 +575,45 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Console.ConsoleViewMessage} groupMessage
    */
   _appendBrowserMessageToEnd(groupMessage) {
+    if (this._currentGroup.messagesHidden())
+      return;
+    groupMessage.resetCloseGroupDecorationCount();
+    groupMessage.resetIncrementRepeatCount();
     var groupChildren = groupMessage[this._browserMessageGroupSymbol].children();
     for (var childMessage of groupChildren) {
       childMessage.resetCloseGroupDecorationCount();
       childMessage.resetIncrementRepeatCount();
-      this._appendGenericMessageToEnd(childMessage);
     }
+
+    var visibleChildMessages = [];
+    for (var childMessage of groupChildren)
+      this._appendGenericMessageToEnd(childMessage, visibleChildMessages);
+    var totalRepeatCount = 0;
+    for (var visibleChild of visibleChildMessages)
+      totalRepeatCount += visibleChild.repeatCount();
+    groupMessage.incrementRepeatCount(totalRepeatCount - 1);
+    if (visibleChildMessages.length === 0)
+      return;
+
+    // Only show the group title if there is more than one visible child.
+    if (visibleChildMessages.length > 1)
+      this._visibleViewMessages.push(groupMessage);
+    else
+      this._visibleViewMessages.push(visibleChildMessages[0]);
+    this._searchMessage(this._visibleViewMessages.length - 1);
+    this._messageAppendedForTests();
+
+    if (groupMessage.collapsed())
+      return;
+    for (var childMessage of visibleChildMessages) {
+      childMessage.updateNestingLevel(groupMessage.nestingLevel() + 1);
+      this._visibleViewMessages.push(childMessage);
+      this._searchMessage(this._visibleViewMessages.length - 1);
+      this._messageAppendedForTests();
+    }
+    var lastVisibleChild = visibleChildMessages.peekLast();
+    if (lastVisibleChild)
+      lastVisibleChild.incrementCloseGroupDecorationCount();
   }
 
   /**
