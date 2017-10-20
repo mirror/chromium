@@ -8,6 +8,8 @@
 #include "core/dom/events/Event.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/PointerEvent.h"
+#include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLStyleElement.h"
 #include "core/html/TimeRanges.h"
 #include "core/html/media/HTMLMediaElement.h"
 #include "core/html/shadow/ShadowElementNames.h"
@@ -16,6 +18,7 @@
 #include "core/layout/LayoutBoxModelObject.h"
 #include "core/page/ChromeClient.h"
 #include "modules/media_controls/MediaControlsImpl.h"
+#include "modules/media_controls/MediaControlsResourceLoader.h"
 #include "modules/media_controls/elements/MediaControlElementsHelper.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebScreenInfo.h"
@@ -28,10 +31,34 @@ const double kCurrentTimeBufferedDelta = 1.0;
 
 namespace blink {
 
+// The DOM structure looks like:
+//
+// MediaControlTimelineElement
+//   (-webkit-media-controls-timeline)
+//   These three <div>'s are used to show the buffering animation.
+// +-div (-internal-track-segment-buffering)
+// +-div (-internal-track-segment-buffering)
+// +-div (-internal-track-segment-buffering)
+// +-HTMLStyleElement
 MediaControlTimelineElement::MediaControlTimelineElement(
     MediaControlsImpl& media_controls)
     : MediaControlSliderElement(media_controls, kMediaSlider) {
   SetShadowPseudoId(AtomicString("-webkit-media-controls-timeline"));
+
+  Element& track = GetTrackElement();
+  MediaControlElementsHelper::CreateDiv("-internal-track-segment-buffering",
+                                        &track);
+  MediaControlElementsHelper::CreateDiv("-internal-track-segment-buffering",
+                                        &track);
+  MediaControlElementsHelper::CreateDiv("-internal-track-segment-buffering",
+                                        &track);
+
+  // This stylesheet element contains rules that cannot be present in the UA
+  // stylesheet (e.g. animations).
+  HTMLStyleElement* style = HTMLStyleElement::Create(GetDocument(), false);
+  style->setTextContent(
+      MediaControlsResourceLoader::GetShadowTimelineStyleSheet());
+  track.AppendChild(style);
 }
 
 bool MediaControlTimelineElement::WillRespondToMouseClickEvents() {
