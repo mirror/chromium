@@ -142,8 +142,6 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
   bool ImageDataInCanvasColorSettings(CanvasColorSpace,
                                       CanvasPixelFormat,
                                       std::unique_ptr<uint8_t[]>&);
-  bool ImageDataInCanvasColorSettings(const CanvasColorParams&,
-                                      std::unique_ptr<uint8_t[]>&);
 
   // ImageBitmapSource implementation
   IntSize BitmapSourceSize() const override { return size_; }
@@ -199,6 +197,8 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
 
   static DOMFloat32Array* ConvertFloat16ArrayToFloat32Array(const uint16_t*,
                                                             unsigned);
+
+  void ChangeU16EndiannessForSkColorSpaceXform();
 };
 
 }  // namespace blink

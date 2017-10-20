@@ -53,17 +53,10 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
 
   CHECK(gr_context);
 
-  SkImageInfo info = SkImageInfo::Make(size.Width(), size.Height(),
-                                       color_params.GetSkColorType(),
-                                       color_params.GetSkAlphaType());
-  // In legacy mode the backing SkSurface should not have any color space.
-  // If color correct rendering is enabled only for SRGB, still the backing
-  // surface should not have any color space and the treatment of legacy data
-  // as SRGB will be managed by wrapping the internal SkCanvas inside a
-  // SkColorSpaceXformCanvas. If color correct rendering is enbaled for other
-  // color spaces, we set the color space properly.
-  if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
-    info = info.makeColorSpace(color_params.GetSkColorSpaceForSkSurfaces());
+  SkImageInfo info = SkImageInfo::Make(
+      size.Width(), size.Height(), color_params.GetSkColorType(),
+      color_params.GetSkAlphaType(),
+      color_params.GetSkColorSpaceForSkSurfaces());
 
   surface_ = SkSurface::MakeRenderTarget(gr_context, SkBudgeted::kYes, info,
                                          0 /* sampleCount */,
@@ -71,7 +64,6 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
   if (!surface_)
     return;
 
-  sk_sp<SkColorSpace> xform_canvas_color_space = nullptr;
   canvas_ = color_params.WrapCanvas(surface_->getCanvas());
   Clear();
 

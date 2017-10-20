@@ -49,13 +49,20 @@ void StaticBitmapImage::DrawHelper(PaintCanvas* canvas,
 
 RefPtr<StaticBitmapImage> StaticBitmapImage::ConvertToColorSpace(
     sk_sp<SkColorSpace> target,
-    SkTransferFunctionBehavior premulBehavior) {
+    SkTransferFunctionBehavior transfer_function_behavior) {
   sk_sp<SkImage> skia_image = PaintImageForCurrentFrame().GetSkImage();
-  sk_sp<SkImage> converted_skia_image =
-      skia_image->makeColorSpace(target, premulBehavior);
-
-  if (skia_image == converted_skia_image)
+  sk_sp<SkColorSpace> src_color_space = skia_image->colorSpace()
+                                            ? skia_image->refColorSpace()
+                                            : SkColorSpace::MakeSRGB();
+  sk_sp<SkColorSpace> dst_color_space =
+      target.get() ? target : SkColorSpace::MakeSRGB();
+  if (SkColorSpace::Equals(src_color_space.get(), dst_color_space.get()))
     return this;
+
+  sk_sp<SkImage> converted_skia_image =
+      skia_image->makeColorSpace(dst_color_space, transfer_function_behavior);
+  DCHECK(converted_skia_image.get());
+  DCHECK(skia_image != converted_skia_image);
 
   return StaticBitmapImage::Create(converted_skia_image,
                                    ContextProviderWrapper());
