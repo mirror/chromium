@@ -59,6 +59,8 @@ Persistence.IsolatedFileSystemManager = class extends Common.Object {
 
     this._initExcludePatterSetting();
 
+    /** @type {?function(?Persistence.IsolatedFileSystem)} */
+    this._fileSystemRequestResolve = null;
     this._fileSystemsLoadedPromise = this._requestFileSystems();
   }
 
@@ -93,8 +95,14 @@ Persistence.IsolatedFileSystemManager = class extends Common.Object {
     }
   }
 
+  /**
+   * @return {!Promise<?Persistence.IsolatedFileSystem>}
+   */
   addFileSystem() {
-    InspectorFrontendHost.addFileSystem('');
+    return new Promise(resolve => {
+      this._fileSystemRequestResolve = resolve;
+      InspectorFrontendHost.addFileSystem('');
+    });
   }
 
   /**
@@ -133,6 +141,10 @@ Persistence.IsolatedFileSystemManager = class extends Common.Object {
       this._fileSystems.set(fileSystemURL, fileSystem);
       if (dispatchEvent)
         this.dispatchEventToListeners(Persistence.IsolatedFileSystemManager.Events.FileSystemAdded, fileSystem);
+      if (this._fileSystemRequestResolve) {
+        this._fileSystemRequestResolve.call(null, fileSystem);
+        this._fileSystemRequestResolve = null;
+      }
       return fileSystem;
     }
   }
