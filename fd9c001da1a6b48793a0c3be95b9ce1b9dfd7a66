@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc1650d_d8a8ac7c",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-20T20:23:58Z",
+      "side": 1,
+      "message": "Should this method become private now?",
+      "revId": "fd9c001da1a6b48793a0c3be95b9ce1b9dfd7a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
