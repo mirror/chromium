@@ -28,6 +28,9 @@ enum class NetworkStatus {
 struct DeviceStatus {
   DeviceStatus();
   DeviceStatus(BatteryStatus battery, NetworkStatus network);
+  DeviceStatus(BatteryStatus battery,
+               int battery_percentage,
+               NetworkStatus network);
 
   struct Result {
     Result();
@@ -37,6 +40,11 @@ struct DeviceStatus {
   };
 
   BatteryStatus battery_status;
+
+  // Battery percentage which is in the range of [0, 100].
+  // TODO(xingliu): Move this into BatteryStatus, and rename the enum.
+  int battery_percentage;
+
   NetworkStatus network_status;
 
   bool operator==(const DeviceStatus& rhs) const;

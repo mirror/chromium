@@ -15,6 +15,19 @@
 
 namespace download {
 
+// Helper class to listen to battery changes.
+// TODO(xingliu): Move power monitor observer implementation to this class.
+class BatteryStatusListener {
+ public:
+  BatteryStatusListener();
+  virtual ~BatteryStatusListener();
+
+  virtual int GetBatteryPercentage();
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BatteryStatusListener);
+};
+
 // Listens to network and battery status change and notifies the observer.
 class DeviceStatusListener : public NetworkStatusListener::Observer,
                              public base::PowerObserver {
@@ -26,11 +39,13 @@ class DeviceStatusListener : public NetworkStatusListener::Observer,
   };
 
   explicit DeviceStatusListener(const base::TimeDelta& startup_delay,
-                                const base::TimeDelta& online_delay);
+                                const base::TimeDelta& online_delay,
+                                const base::TimeDelta& battery_query_interval);
   ~DeviceStatusListener() override;
 
-  // Returns the current device status for download scheduling.
-  const DeviceStatus& CurrentDeviceStatus() const;
+  // Returns the current device status for download scheduling. May updates
+  // internal device status when called.
+  const DeviceStatus& CurrentDeviceStatus();
 
   // Starts/stops to listen network and battery change events, virtual for
   // testing.
@@ -38,11 +53,14 @@ class DeviceStatusListener : public NetworkStatusListener::Observer,
   virtual void Stop();
 
  protected:
-  // Creates the instance of |network_listener_|, visible for testing.
-  virtual void BuildNetworkStatusListener();
+  // Creates cross platform instances, visible for testing.
+  virtual void BuildPlatformListeners();
 
   // Used to listen to network connectivity changes.
   std::unique_ptr<NetworkStatusListener> network_listener_;
+
+  // Used to listen to battery status.
+  std::unique_ptr<BatteryStatusListener> battery_listener_;
 
   // The current device status.
   DeviceStatus status_;
@@ -70,6 +88,10 @@ class DeviceStatusListener : public NetworkStatusListener::Observer,
   // Called after a delay to notify the observer. See |delay_|.
   void NotifyNetworkChange(NetworkStatus network_status);
 
+  // Updates battery percentage. Will throttle based on
+  // |battery_query_interval_| when |force| is false.
+  void UpdateBatteryPercentage(bool force);
+
   // Used to start the device listener or notify network change after a delay.
   base::OneShotTimer timer_;
 
@@ -78,6 +100,13 @@ class DeviceStatusListener : public NetworkStatusListener::Observer,
 
   // The delay used when network status becomes online.
   base::TimeDelta online_delay_;
+
+  // Interval to throttle battery queries. Cached value will be returned inside
+  // this interval.
+  base::TimeDelta battery_query_interval_;
+
+  // Time stamp to record last battery query.
+  base::Time last_battery_query_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceStatusListener);
 };

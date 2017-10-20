@@ -219,6 +219,9 @@ TEST_F(DownloadSchedulerImplTest, SchedulingParams) {
   MakeEntryActive(next);
 
   // Tests battery sensitive scheduling parameter.
+  entries_[0].scheduling_params.battery_requirements =
+      SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE;
+
   next = scheduler_->Next(
       entries(),
       BuildDeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
@@ -227,8 +230,17 @@ TEST_F(DownloadSchedulerImplTest, SchedulingParams) {
       entries(),
       BuildDeviceStatus(BatteryStatus::NOT_CHARGING, NetworkStatus::UNMETERED));
   EXPECT_EQ(nullptr, next);
-  MakeEntryActive(next);
 
+  // Tests battery sensitive with optimal battery level.
+  const int kBatteryPercentage = 81;
+  entries_[0].scheduling_params.optimal_battery_percentage = kBatteryPercentage;
+  DeviceStatus status =
+      BuildDeviceStatus(BatteryStatus::NOT_CHARGING, NetworkStatus::UNMETERED);
+  status.battery_percentage = kBatteryPercentage + 1;
+  next = scheduler_->Next(entries(), status);
+  EXPECT_EQ(&entries_[0], next);
+
+  // Tests battery insensitive scheduling parameter.
   entries_[0].scheduling_params.battery_requirements =
       SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE;
   next = scheduler_->Next(

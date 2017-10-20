@@ -10,6 +10,7 @@
 #include "components/download/internal/scheduler/network_status_listener.h"
 
 #if defined(OS_ANDROID)
+#include "components/download/internal/android/battery_status_listener_android.h"
 #include "components/download/internal/android/network_status_listener_android.h"
 #endif
 
@@ -44,18 +45,31 @@ NetworkStatus ToNetworkStatus(net::NetworkChangeNotifier::ConnectionType type) {
 
 }  // namespace
 
-DeviceStatusListener::DeviceStatusListener(const base::TimeDelta& startup_delay,
-                                           const base::TimeDelta& online_delay)
+BatteryStatusListener::BatteryStatusListener() = default;
+
+BatteryStatusListener::~BatteryStatusListener() = default;
+
+int BatteryStatusListener::GetBatteryPercentage() {
+  return 100;
+}
+
+DeviceStatusListener::DeviceStatusListener(
+    const base::TimeDelta& startup_delay,
+    const base::TimeDelta& online_delay,
+    const base::TimeDelta& battery_query_interval)
     : observer_(nullptr),
       listening_(false),
       startup_delay_(startup_delay),
-      online_delay_(online_delay) {}
+      online_delay_(online_delay),
+      battery_query_interval_(battery_query_interval),
+      last_battery_query_(base::Time::Now()) {}
 
 DeviceStatusListener::~DeviceStatusListener() {
   Stop();
 }
 
-const DeviceStatus& DeviceStatusListener::CurrentDeviceStatus() const {
+const DeviceStatus& DeviceStatusListener::CurrentDeviceStatus() {
+  UpdateBatteryPercentage(false);
   return status_;
 }
 
@@ -65,6 +79,8 @@ void DeviceStatusListener::Start(DeviceStatusListener::Observer* observer) {
 
   DCHECK(observer);
   observer_ = observer;
+
+  BuildPlatformListeners();
 
   // Network stack may shake off all connections after getting the IP address,
   // use a delay to wait for potential network setup.
@@ -80,18 +96,18 @@ void DeviceStatusListener::StartAfterDelay() {
   power_monitor->AddObserver(this);
 
   // Listen to network status changes.
-  BuildNetworkStatusListener();
   network_listener_->Start(this);
 
   status_.battery_status =
       ToBatteryStatus(base::PowerMonitor::Get()->IsOnBatteryPower());
+  UpdateBatteryPercentage(true);
+
   status_.network_status =
       ToNetworkStatus(network_listener_->GetConnectionType());
   listening_ = true;
 
-  // Notify the current status if we are online or charging.
-  // TODO(xingliu): Do we need to notify if we are disconnected?
-  if (status_ != DeviceStatus())
+  // Notify the current status if we are online.
+  if (status_.network_status != NetworkStatus::DISCONNECTED)
     NotifyStatusChange();
 }
 
@@ -102,6 +118,7 @@ void DeviceStatusListener::Stop() {
     return;
 
   base::PowerMonitor::Get()->RemoveObserver(this);
+  battery_listener_.reset();
 
   network_listener_->Stop();
   network_listener_.reset();
@@ -151,11 +168,26 @@ void DeviceStatusListener::NotifyNetworkChange(NetworkStatus network_status) {
   NotifyStatusChange();
 }
 
-void DeviceStatusListener::BuildNetworkStatusListener() {
+void DeviceStatusListener::UpdateBatteryPercentage(bool force) {
+  if (!battery_listener_)
+    return;
+
+  if (!force &&
+      base::Time::Now() - last_battery_query_ < battery_query_interval_)
+    return;
+
+  DCHECK(battery_listener_.get());
+  status_.battery_percentage = battery_listener_->GetBatteryPercentage();
+  last_battery_query_ = base::Time::Now();
+}
+
+void DeviceStatusListener::BuildPlatformListeners() {
 #if defined(OS_ANDROID)
   network_listener_ = base::MakeUnique<NetworkStatusListenerAndroid>();
+  battery_listener_ = base::MakeUnique<BatteryStatusListenerAndroid>();
 #else
   network_listener_ = base::MakeUnique<NetworkStatusListenerImpl>();
+  battery_listener_ = base::MakeUnique<BatteryStatusListener>();
 #endif
 }
 
