@@ -94,6 +94,30 @@
       "revId": "a89a0f908d026bd64fa49bbad502638330ac6ab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58f02852_e2eb6e45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T16:28:16Z",
+      "side": 1,
+      "message": "\u003e While rolling out Chrome Home unconditionally could take a bit, I\u0027d rather not re-do the view hierarchy and add additional complexity to this class, extra XML files, etc. The \u0027G\u0027 is 25kb on a high res phone, so the memory impact is minuscule. Hopefully this lives for a few milestones at most (maybe that\u0027s too optimistic).\n\u003e \n\u003e In regular Chrome showing the \u0027G\u0027 is controlled by an experiment (NTP_SHOW_GOOGLE_G_IN_OMNIBOX) -- where are we on those experiments? Is it likely that the \u0027G\u0027 code will be removed all together soon?\n\nThe G is tied to the (condensed) NTP layout _without_ a logo, so when that isn\u0027t available anywhere on Stable (and no plans to launch it later), we can remove it. For details we should probably chat off-review, because launch plans :)",
+      "parentUuid": "02c27eae_d1208251",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 54
+      },
+      "revId": "a89a0f908d026bd64fa49bbad502638330ac6ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
