@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "919da09d_a78ef414",
+        "filename": "cc/input/page_scale_animation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T18:56:51Z",
+      "side": 1,
+      "message": "This change looks fine to me but I think we should really be setting root_layer_size be at least as large as viewport_size_ at construction. I\u0027m also a little surprised this can happen, can you paste the viewport and root_layer sizes here?",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "7182501025f46a5a1f63f54db1804dadc39ee9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691b8a59_156e6640",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T18:56:51Z",
+      "side": 1,
+      "message": "While you\u0027re here, please change this to `scrollable_size`, it\u0027s not scaled...",
+      "range": {
+        "startLine": 543,
+        "startChar": 13,
+        "endLine": 543,
+        "endChar": 35
+      },
+      "revId": "7182501025f46a5a1f63f54db1804dadc39ee9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
