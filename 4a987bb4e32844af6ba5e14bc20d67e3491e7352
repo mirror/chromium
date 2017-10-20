@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e71042b3_977576da",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-20T20:46:48Z",
+      "side": 1,
+      "message": "This API is now a bit misleading as it\u0027s no longer idempotent as one would expect with a boolean setter.\n\nI think the scoped object idea you had might have legs if applied to the RunLoop delegate level and nesting is requested right at RunLoop::Run().\n\nA MessageLoop either allows nestability or it doesn\u0027t. ScopedNestableTaskAllower was there to ensure that this count was by design true. Can we have the Run Loop delegate somehow take care of this with a scoped object. This scoped object would behave similar to ScopedNestableTaskAllower and set/unset nesting allowed as necessary.\n\nThis allows us to keep this API idempotent and abstracts nesting scopes away from MessageLoop by design.\n\nWhat do you think?",
+      "range": {
+        "startLine": 233,
+        "startChar": 18,
+        "endLine": 233,
+        "endChar": 55
+      },
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23671e32_dade80b0",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-20T20:46:48Z",
+      "side": 1,
+      "message": "This can be clarified as it\u0027s more than just a recursion block.\n\nDiscuss that nestability is modeled as the number of tasks executing on the stack. When the message loop isn\u0027t running, this is 0. When the message loop is not nestable, this is 1. When the message loop allows nesting, this can be greater than 1.",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 23
+      },
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
