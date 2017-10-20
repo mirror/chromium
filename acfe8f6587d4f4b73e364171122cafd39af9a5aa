@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "947fec12_4f20ed3f",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T18:08:30Z",
+      "side": 1,
+      "message": "\u003e Originally I tried just always returning true if HasWrongProcessForURL is true as first thing in that function, but that broke the hosted apps scenario we discussed on chat, caught by AppApiTest.OpenWebPopupFromWebIframe (hosted app embeds non-app iframe, which opens non-app same-origin popup -- the popup has the \"wrong\" process type but has to stay in the app process to allow scripting with the iframe).  Limiting to just the racy siteless cases avoids this.\n\nSigh.  Hosted apps are probably worth tackling before long.  Makes sense for now.\n\n\u003e  I think we might also need to keep returning false for webview guests no matter what.\n\nGood point-- should we move the kGuestScheme check to be at the top of this function?  (Maybe in a followup, since that\u0027s a good observation even without this change?)",
+      "parentUuid": "da83851d_8c69d9b8",
+      "range": {
+        "startLine": 1488,
+        "startChar": 0,
+        "endLine": 1492,
+        "endChar": 0
+      },
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa254ed_54ed03c0",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T18:08:30Z",
+      "side": 1,
+      "message": "Looks like this works because of the IsSuitableHost call within here, right?  Sure, that should work.\n\nIn general, I feel like HasWrongProcessForURL isn\u0027t a great mechanism (it was one we introduced for swapping on reload after installing/uninstalling a hosted app), but I don\u0027t have concrete plans to remove it yet.  I think we\u0027ll want to do a simplifying pass over RFHM once the non-PlzNav code is gone, and we can come back to it then.  :)",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b51e7195_d94b2c59",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 7
@@ -36,6 +77,58 @@
       "writtenOn": "2017-10-20T15:45:47Z",
       "side": 1,
       "message": "This test shows how the race can happen via process reuse.  With --site-per-process, it hits the WRONG_LOCK CHECK, and without it, it hits the NO_LOCK check.",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3395eb54_698e810a",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T18:08:30Z",
+      "side": 1,
+      "message": "Ack.\n\nThe race could go in the other direction as well, right?  An unisolated site is slow to commit, and an isolated site grabs it in the meantime?  Not sure if it\u0027s worth including a test for that?",
+      "parentUuid": "b51e7195_d94b2c59",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6f7ede_28525e80",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T18:08:30Z",
+      "side": 1,
+      "message": "Just curious-- is this navigation necessary?  I was under the impression the RFH starts in that state for tests.",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8297f55e_a022628a",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T18:08:30Z",
+      "side": 1,
+      "message": "Yes, I agree that we want the isolated origin to be able to grab the existing process at this point.  It\u0027s not great for the previous navigation (which now has to transfer), but we might as well use the process that is ready to go while we have it.",
       "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +149,24 @@
       "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da81fd76_e2723be4",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T18:08:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "879cc34c_08bb3207",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
