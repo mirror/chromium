@@ -42,6 +42,7 @@ class Node;
 class WebDocument;
 class WebElement;
 class WebElementCollection;
+class WebFrame;
 class WebPluginContainer;
 
 // Provides access to some properties of a DOM node.
@@ -71,6 +72,7 @@ class BLINK_EXPORT WebNode {
   WebNode ParentNode() const;
   WebString NodeValue() const;
   WebDocument GetDocument() const;
+  WebFrame* ContentFrame() const;
   WebNode FirstChild() const;
   WebNode LastChild() const;
   WebNode PreviousSibling() const;
