@@ -16,6 +16,75 @@
       "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00172d3e_8a483bc4",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T14:33:10Z",
+      "side": 1,
+      "message": "Do we actually need to expose the underying WebThread?\n\nThere seems to be a TaskRunnerHelper that can be used to\nget the right task runner given a global scope of a WorkerThread.\nSo I think something like this may actually work:\nTaskRunnerHelper::Get(TaskType::kMiscPlatformAPI, global_scope_)-\u003ePostTask",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34445ef9_211630cf",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T14:33:10Z",
+      "side": 1,
+      "message": "I think we just DCHECK here given that the assumption is that at this point\nEnsureShareBackingThread() is called. In fact, the user\u0027s of this function\ndon\u0027t check null so they will crash anyways.\n\nAlso, what is preventing us from calling EnsureSharedBackingThread() at\nthe top of this function?",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f82830_be2854b7",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T14:33:10Z",
+      "side": 1,
+      "message": "See my comment above on not exposing WebThread.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "9c2f2b5514b2bd25ea98857b87115894ec0a01fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
