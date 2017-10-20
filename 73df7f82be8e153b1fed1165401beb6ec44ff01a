@@ -93,6 +93,30 @@
       "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8363f6_8f0c6f37",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32491,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-20T07:45:04Z",
+      "side": 1,
+      "message": "You should still be able to use histogram_suffixes without renaming the histograms – either via two layers of suffixes, or ordering\u003dprefix.",
+      "parentUuid": "aa664528_6d9f5cca",
+      "range": {
+        "startLine": 32484,
+        "startChar": 0,
+        "endLine": 32491,
+        "endChar": 12
+      },
+      "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
