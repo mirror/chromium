@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01329090_d559dbb3",
+        "filename": "chromeos/network/managed_network_configuration_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-20T23:57:20Z",
+      "side": 1,
+      "message": "Do we need to check if the network is actually in the connected-and-online state?",
+      "range": {
+        "startLine": 834,
+        "startChar": 44,
+        "endLine": 834,
+        "endChar": 51
+      },
+      "revId": "1b52d140664c6a81a639fb2f3a6ded939ed0d2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
