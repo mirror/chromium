@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ca6d63_151da0d1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-20T12:23:31Z",
+      "side": 1,
+      "message": "super nit: numberOfItems ?",
+      "range": {
+        "startLine": 207,
+        "startChar": 14,
+        "endLine": 207,
+        "endChar": 26
+      },
+      "revId": "78add7742a7e29357fd26eb66b80ac9795b2ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8078a2_d22be4d6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-20T12:23:31Z",
+      "side": 1,
+      "message": "I don\u0027t see the reference of the empty line in the code.",
+      "range": {
+        "startLine": 215,
+        "startChar": 28,
+        "endLine": 215,
+        "endChar": 35
+      },
+      "revId": "78add7742a7e29357fd26eb66b80ac9795b2ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
