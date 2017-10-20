@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/vr/ganesh_surface_provider.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_interface.h"
@@ -101,7 +102,10 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
   vr_shell_renderer_ = base::MakeUnique<vr::VrShellRenderer>();
   ui_renderer_ =
       base::MakeUnique<vr::UiRenderer>(scene_.get(), vr_shell_renderer_.get());
-  scene_manager_->OnGlInitialized(content_texture_id, content_location);
+  provider_ = base::MakeUnique<GaneshSurfaceProvider>();
+
+  scene_manager_->OnGlInitialized(content_texture_id, content_location,
+                                  provider_.get());
 }
 
 void Ui::OnAppButtonClicked() {

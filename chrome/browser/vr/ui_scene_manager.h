@@ -108,7 +108,8 @@ class UiSceneManager {
   // UiInterface support methods.
   bool ShouldRenderWebVr();
   void OnGlInitialized(unsigned int content_texture_id,
-                       UiElementRenderer::TextureLocation content_location);
+                       UiElementRenderer::TextureLocation content_location,
+                       SkiaSurfaceProvider* provider);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix);
