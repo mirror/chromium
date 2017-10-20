@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21e2da17_ad015b7d",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-20T20:14:50Z",
+      "side": 1,
+      "message": "linter complained (include what you use), for std::move",
+      "parentUuid": "c64815e5_1ea15ea7",
+      "range": {
+        "startLine": 8,
+        "startChar": 18,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44c0545e_782ca23f",
         "filename": "ash/public/interfaces/highlighter_controller.mojom",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b0c402_3e2d5d58",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-20T20:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c0545e_782ca23f",
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3a50e294_a2d3ced4",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-20T20:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34569335_97ed49dc",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 306,
+        "endChar": 39
+      },
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "823551dc_5d83540d",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fdb83c_d5bbcdac",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-20T20:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823551dc_5d83540d",
+      "range": {
+        "startLine": 299,
+        "startChar": 28,
+        "endLine": 299,
+        "endChar": 48
+      },
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
