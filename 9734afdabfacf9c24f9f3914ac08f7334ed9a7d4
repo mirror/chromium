@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d74a184_197f4830",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-20T14:54:44Z",
+      "side": 1,
+      "message": "Did you test the CL manually?",
+      "range": {
+        "startLine": 493,
+        "startChar": 5,
+        "endLine": 493,
+        "endChar": 41
+      },
+      "revId": "9734afdabfacf9c24f9f3914ac08f7334ed9a7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
