@@ -83,7 +83,7 @@ class CORE_EXPORT ContentSettingsClient {
 
   // Reports that passive mixed content was found at the provided URL. It may or
   // may not be actually displayed later, what would be flagged by
-  // didDisplayInsecureContent.
+  // DidDisplayMixedContent.
   void PassiveInsecureContentFound(const KURL&);
 
   // This callback notifies the client that the frame was about to run

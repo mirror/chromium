@@ -63,8 +63,8 @@ class WebWorkerFetchContext {
 
   // Reports that the security origin has run active content from an insecure
   // source.
-  virtual void DidRunInsecureContent(const WebSecurityOrigin&,
-                                     const WebURL& insecure_url) {}
+  virtual void DidRunMixedContent(const WebSecurityOrigin&,
+                                  const WebURL& insecure_url) {}
 
   virtual void SetApplicationCacheHostID(int id) {}
   virtual int ApplicationCacheHostID() const {
