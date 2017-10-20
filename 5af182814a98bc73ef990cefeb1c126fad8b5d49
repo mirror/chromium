@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "c091b15d_a283dc31",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-20T19:14:32Z",
+      "side": 1,
+      "message": "Okay, done.  (It\u0027s actually WebPresentationReceiverFlags, since those are the flags needed by OffscreenTab).",
+      "parentUuid": "3ec514a4_1cde69e1",
+      "range": {
+        "startLine": 693,
+        "startChar": 1,
+        "endLine": 711,
+        "endChar": 3
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca831e21_8d94cf82",
         "filename": "content/public/browser/web_contents.h",
         "patchSetId": 16
