@@ -22,6 +22,30 @@
       "revId": "58eb565260dcddb5133b6de7720143d80b99e493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f503007b_76732433",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetBackBehaviorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-20T22:10:15Z",
+      "side": 1,
+      "message": "Indeed. There are a few other assertions of !mActivity.hasWindowFocus() in this file, so I\u0027ve made this a utility method for BottomSheetBackBehaviorTest.\n\nAs for those assertTrue(hasWindowFocus), I left them intact since they shouldn\u0027t be flaky.",
+      "parentUuid": "15350d2d_2fb0b879",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 11
+      },
+      "revId": "58eb565260dcddb5133b6de7720143d80b99e493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
