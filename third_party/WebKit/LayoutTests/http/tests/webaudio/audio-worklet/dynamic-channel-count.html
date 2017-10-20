@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Test AudioWorkletNode's dynamic channel count feature
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../../../webaudio-resources/audit.js"></script>
+    <script src="../../../webaudio-resources/audit-util.js"></script>
+    <script src="audio-worklet-common.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      // TODO(hongchan): remove this assertion when AudioWorklet shipped.
+      assertAudioWorklet();
+
+      let audit = Audit.createTaskRunner();
+      let sampleRate = 48000;
+      let renderLength = 48000 * 0.1;
+      let context;
+
+      let testChannelValues = [1, 2, 3];
+
+      // Creates a 3-channel buffer and play with BufferSourceNode. The source
+      // goes through a bypass AudioWorkletNode (gain value of 1).
+      audit.define('setup-buffer-and-worklet', (task, should) => {
+        context = new OfflineAudioContext(testChannelValues.length,
+                                          renderLength,
+                                          sampleRate);
+        audioWorklet.addModule('gain-processor.js').then(() => {
+          let testBuffer = createConstantBuffer(context, 1, testChannelValues);
+          let sourceNode = new AudioBufferSourceNode(context);
+          let gainWorkletNode = new AudioWorkletNode(context, 'gain');
+          gainWorkletNode.parameters.get('gain').value = 1.0;
+          sourceNode.buffer = testBuffer;
+          sourceNode.loop = true;
+          sourceNode.connect(gainWorkletNode).connect(context.destination);
+          sourceNode.start();
+          task.done();
+        });
+      });
+
+      // Verifies if AudioWorkletNode is passing 3-channel content to the
+      // destination. The rendered buffer must have the expected values for all
+      // 3 channels.
+      audit.define('verify-rendered-buffer', (task, should) => {
+          context.startRendering().then(renderedBuffer => {
+            testChannelValues.forEach((value, index) => {
+              should(renderedBuffer.getChannelData(index),
+                  'Channel #' + index)
+                  .beConstantValueOf(value);
+            });
+            task.done();
+          });
+        });
+
+      audit.run();
+    </script>
+  </body>
+</html>
