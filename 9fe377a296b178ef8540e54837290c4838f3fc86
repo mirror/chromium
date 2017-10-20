@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3d05c2_81680759",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-20T20:04:07Z",
+      "side": 1,
+      "message": "I think you should explicitly set the destination channelCountMode and channelInterpretation to make sure the result does no mixing.",
+      "revId": "9fe377a296b178ef8540e54837290c4838f3fc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6a4809_8732b414",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/dynamic-channel-count.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-20T20:04:07Z",
+      "side": 1,
+      "message": "Does this test fail without this CL?\n\nIn any case, I think it\u0027s better to make the channel count change more explicit by doing a suspend(time) that then sets the buffer.  Then the rendered data should be all zero until the buffer is connected at which time it should have the desired values.",
+      "revId": "9fe377a296b178ef8540e54837290c4838f3fc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4190132a_15b8ec15",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-20T20:04:07Z",
+      "side": 1,
+      "message": "Explain what you want to happen when this isn\u0027t true.",
+      "revId": "9fe377a296b178ef8540e54837290c4838f3fc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
