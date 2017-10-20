@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d2dbe7b_85d4cb57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T18:05:01Z",
+      "side": 1,
+      "message": "should this be isOpenAction() instead?",
+      "revId": "1184f905858233758b8d11477e42b2bc372a52d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
