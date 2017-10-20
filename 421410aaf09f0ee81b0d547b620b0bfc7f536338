@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bfc9b16_e249ab87",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-20T01:06:44Z",
+      "side": 1,
+      "message": "nit: if the \"if ()\" part is more than one line, then the block should have {} (and if the \"if()\" has {} then the \"else\" should too).",
+      "revId": "421410aaf09f0ee81b0d547b620b0bfc7f536338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e38519f_4e0ac286",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-20T01:06:44Z",
+      "side": 1,
+      "message": "Please help me see what this normalizeUrl function is doing. My reading of it is that it passes all the strings (url) that it\u0027s called with as-is. Err, I mean in this test code. It would return something different iff the url started and ended with a slash \u0027/\u0027, but none of them do.",
+      "revId": "421410aaf09f0ee81b0d547b620b0bfc7f536338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
