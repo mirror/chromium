@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efbb8940_8ba47cf9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T22:40:24Z",
+      "side": 1,
+      "message": "You can use ServiceCompat which will drop the flag automatically if less than 24.",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 83
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e3aae3_f71e56ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T22:40:24Z",
+      "side": 1,
+      "message": "Does not calling this do anything different on sdk \u003e\u003d 24?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 9
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b440829b_14a5dd78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T22:40:24Z",
+      "side": 1,
+      "message": "Just a nit, should we return a bool for whether or not something needs to clean up the pinned notification?  Would that let us remove some of the check dependencies?",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 94
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd6a92c_7b1f7bd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T22:40:24Z",
+      "side": 1,
+      "message": "See https://developer.android.com/reference/android/support/v4/app/ServiceCompat.html#stopForeground(android.app.Service, int)",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 5
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dae956_4f6a0a85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T22:40:24Z",
+      "side": 1,
+      "message": "Can we call this something like forceRebuild?",
+      "range": {
+        "startLine": 296,
+        "startChar": 36,
+        "endLine": 296,
+        "endChar": 54
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe063c7a_99dbf89a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T22:40:24Z",
+      "side": 1,
+      "message": "Why can\u0027t we reuse the same notification id now that we\u0027ve restarted?  Will this be a problem for other consumers eventually?",
+      "range": {
+        "startLine": 626,
+        "startChar": 16,
+        "endLine": 631,
+        "endChar": 96
+      },
+      "revId": "3c74f8bbcd3d7e79955ea83b3c3d2430ff164363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
