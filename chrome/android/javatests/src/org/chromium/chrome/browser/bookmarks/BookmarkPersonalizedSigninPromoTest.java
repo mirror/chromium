@@ -17,6 +17,8 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
+import static org.chromium.ui.test.util.UiRestriction.RESTRICTION_TYPE_PHONE;
+
 import android.accounts.Account;
 import android.content.Intent;
 import android.support.test.filters.LargeTest;
@@ -31,6 +33,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -82,6 +85,7 @@ public class BookmarkPersonalizedSigninPromoTest {
 
     @Test
     @LargeTest
+    @Restriction(RESTRICTION_TYPE_PHONE) // Disabled on tablets, see https://crbug.com/776405.
     public void testAutoDismissPromo() throws Exception {
         int impressionCap = SigninPromoController.getMaxImpressionsBookmarksForTests();
         for (int impression = 0; impression < impressionCap; impression++) {
