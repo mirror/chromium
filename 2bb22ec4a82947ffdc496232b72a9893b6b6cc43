@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a8c1ba_29954de2",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-20T23:06:38Z",
+      "side": 1,
+      "message": "Is this #include still needed? If not, is the \"deps\" still needed?",
+      "revId": "2bb22ec4a82947ffdc496232b72a9893b6b6cc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511c9e87_d9e76723",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-20T23:06:38Z",
+      "side": 1,
+      "message": "ditto, is this include still needed?",
+      "revId": "2bb22ec4a82947ffdc496232b72a9893b6b6cc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254d87ba_3327195d",
+        "filename": "ios/chrome/browser/ui/payments/payment_method_selection_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-20T23:06:38Z",
+      "side": 1,
+      "message": "ditto, is this include still needed.",
+      "revId": "2bb22ec4a82947ffdc496232b72a9893b6b6cc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80088a3_2af052fb",
+        "filename": "ios/chrome/browser/ui/payments/shipping_address_selection_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-20T23:06:38Z",
+      "side": 1,
+      "message": "ditto, is this include still needed?",
+      "revId": "2bb22ec4a82947ffdc496232b72a9893b6b6cc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
