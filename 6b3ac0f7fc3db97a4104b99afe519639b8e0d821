@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6daf9cba_f6f6f169",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-20T18:35:16Z",
+      "side": 1,
+      "message": "Renamed and made specific. I agree we can refactor in the future if we have other generic checks we want to combine.",
+      "parentUuid": "a5012f97_2fed0d9f",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c97c35b0_f12f2c3c",
         "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
         "patchSetId": 3
@@ -78,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a106e17a_5a2e442b",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-20T18:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c97c35b0_f12f2c3c",
+      "range": {
+        "startLine": 48,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f43beb_e7b16dd9",
         "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
         "patchSetId": 3
@@ -98,6 +140,30 @@
       "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22cc58d8_7e23e982",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-20T18:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f43beb_e7b16dd9",
+      "range": {
+        "startLine": 49,
+        "startChar": 43,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "237056e7_1825c3c0",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-20T18:35:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the newly rewritten comment on the throttle itself makes it clear enough or more is needed. Let me know and I\u0027m happy to clarify further.\n\nI\u0027ve added a couple of tests to cover the scenarios above.",
+      "parentUuid": "db548292_bd05c534",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "359d1e53_b9c34e8c",
         "filename": "content/browser/frame_host/security_properties_navigation_throttle.h",
         "patchSetId": 3
@@ -201,6 +285,24 @@
       "side": 1,
       "message": "Sure, some rephrasing here will help.  From your other reply, it sounds like it\u0027s worth covering the fact that this only applies to navigations that target subframes of WebUI pages.  (Links that go to web pages in the main frame in a new process are still ok.)\n\nI think it\u0027s also worth giving some explanation for why we consider this unsafe, since people will look here when the throttle blocks their feature.  :)",
       "parentUuid": "ded6943a_0ce0b3c2",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d79768_0b137953",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-20T18:35:16Z",
+      "side": 1,
+      "message": "This is now completely rewritten :).",
+      "parentUuid": "0e368399_335bca62",
       "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
