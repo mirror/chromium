@@ -5,7 +5,9 @@
 package org.chromium.net;
 
 import android.annotation.SuppressLint;
+import android.net.ConnectivityManager;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -367,6 +369,17 @@ public class NetworkChangeNotifier {
 
     private void removeConnectionTypeObserverInternal(ConnectionTypeObserver observer) {
         mConnectionTypeObservers.removeObserver(observer);
+    }
+
+    /**
+     * Is the process bound to a network?
+     */
+    @CalledByNative
+    public static boolean isProcessBoundToNetwork() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) ContextUtils.getApplicationContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getBoundNetworkForProcess() != null;
     }
 
     @NativeClassQualifiedName("NetworkChangeNotifierDelegateAndroid")
