@@ -490,7 +490,8 @@ ManagePasswordsBubbleView::PendingView::PendingView(
   const bool is_non_federated_credential =
       password_form.federation_origin.unique();
   if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnableUsernameCorrection)) {
+          password_manager::features::kEnableUsernameCorrection) &&
+      !password_form.disable_editing_) {
     username_field_ = CreateUsernameEditable(password_form).release();
   } else {
     username_field_ = CreateUsernameLabel(password_form).release();
@@ -579,7 +580,8 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
   const autofill::PasswordForm& password_form =
       parent_->model()->pending_password();
   if (enable_password_selection &&
-      password_form.all_possible_passwords.size() > 1) {
+      password_form.all_possible_passwords.size() > 1 &&
+      !parent_->model()->disable_editing_) {
     password_dropdown_ = CreatePasswordDropdownView(password_form).release();
   } else {
     password_label_ =

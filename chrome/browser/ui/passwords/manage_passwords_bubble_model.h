@@ -169,6 +169,9 @@ class ManagePasswordsBubbleModel {
   // True iff the eye icon should be hidden for privacy reasons.
   bool hide_eye_icon_;
 
+  // true iff username/password editing should be disabled.
+  bool disable_editing_;
+
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordsBubbleModel);
 };
 
