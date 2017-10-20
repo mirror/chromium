@@ -67,6 +67,9 @@
 #include "content/renderer/media_capture_from_element/html_video_element_capturer_source.h"
 #include "content/renderer/media_recorder/media_recorder_handler.h"
 #include "content/renderer/mojo/blink_interface_provider_impl.h"
+#include "content/renderer/notifications/notification_dispatcher.h"
+#include "content/renderer/notifications/notification_manager.h"
+#include "content/renderer/push_messaging/push_provider.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_clipboard_delegate.h"
 #include "content/renderer/webclipboard_impl.h"
@@ -292,6 +295,8 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     web_idb_factory_.reset(new WebIDBFactoryImpl(
         sync_message_filter_,
         RenderThreadImpl::current()->GetIOTaskRunner().get()));
+    notification_dispatcher_ =
+        RenderThreadImpl::current()->notification_dispatcher();
   } else {
     service_manager::mojom::ConnectorRequest request;
     connector_ = service_manager::Connector::Create(&request);
@@ -1325,6 +1330,12 @@ void RendererBlinkPlatformImpl::QueryStorageUsageAndQuota(
 
 //------------------------------------------------------------------------------
 
+blink::WebPushProvider* RendererBlinkPlatformImpl::PushProvider() {
+  return PushProvider::ThreadSpecificInstance(default_task_runner_);
+}
+
+//------------------------------------------------------------------------------
+
 std::unique_ptr<blink::WebTrialTokenValidator>
 RendererBlinkPlatformImpl::TrialTokenValidator() {
   return std::make_unique<WebTrialTokenValidatorImpl>(
@@ -1335,6 +1346,20 @@ std::unique_ptr<blink::TrialPolicy>
 RendererBlinkPlatformImpl::OriginTrialPolicy() {
   return std::make_unique<TrialPolicyImpl>();
 }
+
+//------------------------------------------------------------------------------
+
+blink::WebNotificationManager*
+RendererBlinkPlatformImpl::GetNotificationManager() {
+  if (!thread_safe_sender_.get() || !notification_dispatcher_.get())
+    return nullptr;
+
+  return NotificationManager::ThreadSpecificInstance(
+      thread_safe_sender_.get(),
+      notification_dispatcher_.get());
+}
+
+//------------------------------------------------------------------------------
 
 void RendererBlinkPlatformImpl::WorkerContextCreated(
     const v8::Local<v8::Context>& worker) {
