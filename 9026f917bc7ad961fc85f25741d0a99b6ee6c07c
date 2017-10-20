@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa98463_5655d2c6",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_detail_dialog.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-20T23:53:34Z",
+      "side": 1,
+      "message": "no",
+      "range": {
+        "startLine": 21,
+        "startChar": 59,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "9026f917bc7ad961fc85f25741d0a99b6ee6c07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779af1d3_84c5a8c6",
+        "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-20T23:53:34Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "9026f917bc7ad961fc85f25741d0a99b6ee6c07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5baa2b0a_5d7392fd",
+        "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-20T23:53:34Z",
+      "side": 1,
+      "message": "remove one .",
+      "range": {
+        "startLine": 15,
+        "startChar": 55,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "9026f917bc7ad961fc85f25741d0a99b6ee6c07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6a7bce_25938e43",
+        "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-20T23:53:34Z",
+      "side": 1,
+      "message": "nit: document these",
+      "revId": "9026f917bc7ad961fc85f25741d0a99b6ee6c07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
