@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80a147d8_7dbdca8e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:02:02Z",
+      "side": 1,
+      "message": "We will need this when showing the cast overlay at least. We might want to show this for the play button (see other CL).",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff02021_dd198e43",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:02:02Z",
+      "side": 1,
+      "message": "We will have to discuss this with UX but the gradient felt too strong when testing.",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938aed06_0b4ce4c0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:02:02Z",
+      "side": 1,
+      "message": "Is it useful to have the play-button in this ruleset and also below for its own rules?",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111630e5_54d9a440",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:02:02Z",
+      "side": 1,
+      "message": "For my culture, what does `i` do here?",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7359e6d7_04231a4d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:02:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure what would be the performance implications of `.state-playing` but to be safe, should media-controls be explicitly mention in the rule? Otherwise, the rule will look for all element with .state-playing I believe.",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
