@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79d44d5a_0877d0ad",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-10-20T11:28:09Z",
+      "side": 1,
+      "message": "I think could would be simpler if CreateSensorInternal would be mocked and then gmock methods used to change behavior, instead of custom RequestResult / set_next_request_result.\n\nSomething like:\n\n// Default\nON_CALL(*provider_, CreateSensorInternal(_, _, _))\n    .WillByDefault(Invoke([provider_](Invoke([](mojom::SensorType type,\n        mojo::ScopedSharedBufferMapping mapping,\n        const CreateSensorCallback\u0026 callback) {\n      auto sensor \u003d\n      base::MakeRefCounted\u003cFakePlatformSensor\u003e(type, std::move(mapping), provider_);\n      callback.Run(sensor);\n    }));\n\n// Failure for any sensor type\nEXPECT_CALL(*provider_, CreateSensorInternal(_, _, _))\n    .WillOnce(Invoke([](mojom::SensorType,\n        mojo::ScopedSharedBufferMapping,\n        const CreateSensorCallback\u0026 callback) {\n        callback.Run(nullptr);\n    }));\n\n// Pending for ALS\nEXPECT_CALL(*provider_, CreateSensorInternal(mojom::SensorType::AMBIENT_LIGHT, _, _))\n    .WillOnce(Invoke([](mojom::SensorType,\n        mojo::ScopedSharedBufferMapping,\n        const CreateSensorCallback\u0026) {\n        return;\n    }));",
+      "revId": "4f9687f6a66d27250e7aa5f9d7b950cdbfc4c430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98d74e2_d23aa79e",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-10-20T11:28:09Z",
+      "side": 1,
+      "message": "These could be converted to EXPECT_CALL / ON_CALL.",
+      "revId": "4f9687f6a66d27250e7aa5f9d7b950cdbfc4c430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
