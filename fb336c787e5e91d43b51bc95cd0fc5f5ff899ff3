@@ -16,6 +16,24 @@
       "revId": "fb336c787e5e91d43b51bc95cd0fc5f5ff899ff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c81cc7_a328ce2d",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-20T03:36:33Z",
+      "side": 0,
+      "message": "The entire function is very hacky, and there are similar functions doing similar jobs at other places but I don\u0027t have a good way to consolidate them... So this patch just leave them as is.\n\nTo be more specific, the \"similar functions\" are:\n- IsVisuallyDistinctCandidate\n- EndsOfNodeAreVisuallyDistinctPositions\n- StartPositionForLine, which checks block emptiness to identify the caret position inside\n- EndPositionForLine, for the same reason",
+      "parentUuid": "652464d8_8d899493",
+      "revId": "fb336c787e5e91d43b51bc95cd0fc5f5ff899ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

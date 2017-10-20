@@ -16,6 +16,24 @@
       "revId": "5f3178e9fa02fe502bc153063fe0aa1301a62d83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3590b30_4f2e7d86",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-20T03:36:33Z",
+      "side": 1,
+      "message": "LayoutText::LinesBoundingBox() iterates on all the InlineTextBoxes to calculate the bounding box, which is the dependency this patch removes. It\u0027s also a heavy function due to the text box iteration, while checking HasNonCollapsedText() in NG consists of only 2 binary searches.\n\nRegarding the usage in other places, we may have to rely on the PhysicalFragment iteration introduced by kojii@.",
+      "parentUuid": "011eee5c_91ba8a2f",
+      "revId": "5f3178e9fa02fe502bc153063fe0aa1301a62d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
