@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf752c7_0ff4895e",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-20T18:33:56Z",
+      "side": 1,
+      "message": "nit: Add a bug to remove this, and reference it here.",
+      "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145709ca_874b31c0",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-20T18:33:56Z",
+      "side": 1,
+      "message": "Can you verify it\u0027s not actually sending the request?",
+      "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669cc391_b0e23a3c",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-20T18:33:56Z",
+      "side": 1,
+      "message": "Check here too that it\u0027s not sent.",
+      "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
