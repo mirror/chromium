@@ -57,7 +57,7 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   void OnBeginFrame(const viz::BeginFrameArgs&) override;
   void OnBeginFramePausedChanged(bool paused) override {}
   void ReclaimResources(
-      const WTF::Vector<viz::ReturnedResource>& resources) override {}
+      const WTF::Vector<viz::ReturnedResource>& resources) override;
 
  private:
   void SubmitFrameInternal(viz::BeginFrameAck,
