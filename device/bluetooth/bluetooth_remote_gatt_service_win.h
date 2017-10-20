@@ -25,7 +25,8 @@ class BluetoothTaskManagerWin;
 // The BluetoothRemoteGattServiceWin class implements BluetoothRemoteGattService
 // for remote GATT services on Windows 8 and later.
 class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattServiceWin
-    : public BluetoothRemoteGattService {
+    : public BluetoothRemoteGattService,
+      public BluetoothAdapter::Observer {
  public:
   BluetoothRemoteGattServiceWin(
       BluetoothDeviceWin* device,
@@ -47,6 +48,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattServiceWin
   std::vector<BluetoothRemoteGattService*> GetIncludedServices() const override;
   BluetoothRemoteGattCharacteristic* GetCharacteristic(
       const std::string& identifier) const override;
+  void GattDiscoveryCompleteForService(
+      BluetoothRemoteGattService* service) override;
 
   // Notify |characteristic| discovery complete, |characteristic| is the
   // included characteritic of this service.

@@ -346,6 +346,7 @@ void BluetoothDeviceWin::UpdateGattServices(
         std::unique_ptr<BluetoothTaskManagerWin::ServiceRecordState>>&
         service_state) {
   SetGattServicesDiscoveryComplete(false);
+  adapter_->AddObserver(this);  // For GattDiscoveryCompleteForService
 
   // First, remove no longer exist GATT service.
   {
@@ -384,7 +385,17 @@ void BluetoothDeviceWin::UpdateGattServices(
       adapter_->NotifyGattServiceAdded(primary_service);
     }
   }
+}
 
+void BluetoothDeviceWin::GattDiscoveryCompleteForService(
+    BluetoothRemoteGattService* service) {
+  for (const auto& gatt_service : gatt_services_) {
+    if (!gatt_service.second.get()->IsDiscoveryComplete())
+      return;
+  }
+
+  adapter_->RemoveObserver(this);
+  SetGattServicesDiscoveryComplete(true);
   adapter_->NotifyGattServicesDiscovered(this);
 }
 
