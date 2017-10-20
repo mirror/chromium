@@ -79,6 +79,7 @@
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseManager.h"
 #include "modules/webdatabase/InspectorDatabaseAgent.h"
+#include "modules/webdatabase/WebDatabaseImpl.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "platform/mojo/MojoHelper.h"
@@ -86,6 +87,7 @@
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/web/WebViewClient.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace blink {
 
@@ -109,8 +111,10 @@ void ModulesInitializer::Initialize() {
   // Some unit tests may have no message loop ready, so we can't initialize the
   // mojo stuff here. They can initialize those mojo stuff they're interested in
   // later after they got a message loop ready.
-  if (CanInitializeMojo())
+  if (CanInitializeMojo()) {
     TimeZoneMonitorClient::Init();
+    InitMojo();
+  }
 
   CoreInitializer::Initialize();
 
@@ -277,6 +281,16 @@ void ModulesInitializer::ForceNextWebGLContextCreationToFail() const {
 
 void ModulesInitializer::CollectAllGarbageForAnimationWorklet() const {
   AnimationWorkletThread::CollectAllGarbage();
+}
+
+void ModulesInitializer::InitMojo() const {
+  Platform* platform = Platform::Current();
+
+  auto registry = std::make_unique<service_manager::BinderRegistry>();
+  registry->AddInterface(
+      ConvertToBaseCallback(WTF::Bind(&WebDatabaseImpl::Create)),
+      platform->BaseIOTaskRunner());
+  platform->AddConnectionFilter(std::move(registry));
 }
 
 }  // namespace blink
