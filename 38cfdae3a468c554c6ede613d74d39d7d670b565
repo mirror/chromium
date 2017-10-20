@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c211e0d2_d4333209",
+        "filename": "net/http/http_auth_handler_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-20T15:25:08Z",
+      "side": 1,
+      "message": "I am not sure about this part. Maybe we need to talk to asanka@.",
+      "revId": "38cfdae3a468c554c6ede613d74d39d7d670b565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b7d9ae_d4c54ae3",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2555,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-20T15:25:08Z",
+      "side": 1,
+      "message": "The next line (ResetStreamIterator) will put the net error code as \"ERR_SPDY_PROTOCOL_ERROR\"\nI think we should match it, otherwise we would have two different net error codes for the same stream.",
+      "revId": "38cfdae3a468c554c6ede613d74d39d7d670b565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
