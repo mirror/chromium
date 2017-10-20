@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7986dd1c_1bb6d8a5",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T14:53:47Z",
+      "side": 1,
+      "message": "Move comment inside function (line 714).",
+      "range": {
+        "startLine": 712,
+        "startChar": 0,
+        "endLine": 712,
+        "endChar": 13
+      },
+      "revId": "28375eb0ed16e5c12e635dd2a7fbf13f2b263883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
