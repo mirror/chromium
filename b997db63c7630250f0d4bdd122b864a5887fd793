@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45abec57_f4be3320",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b762af_cbfa4425",
+      "range": {
+        "startLine": 858,
+        "startChar": 50,
+        "endLine": 858,
+        "endChar": 62
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bdbb9a8_39111667",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29e73ba_8d5e0ca1",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "I am not sure if we want to skip a transaction and go to the next one because we are maintaining a FIFO variant all the way from when add_to_entry_queue -\u003e headers_transaction -\u003e done_headers_queue -\u003e writers/readers.\n\nEven in the original code if a writer \u003d\u003e reader \u003d\u003e writer came in, we were processing the reader first.",
+      "parentUuid": "3bdbb9a8_39111667",
+      "range": {
+        "startLine": 1086,
+        "startChar": 6,
+        "endLine": 1086,
+        "endChar": 12
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "b30e3ec4_37144403",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99387b04_7b6f8b89",
+      "range": {
+        "startLine": 317,
+        "startChar": 7,
+        "endLine": 317,
+        "endChar": 18
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a657af9_9046ef10",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd826758_e7651931",
+      "range": {
+        "startLine": 317,
+        "startChar": 23,
+        "endLine": 317,
+        "endChar": 32
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8c25c8_9548f62e",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 19
@@ -114,6 +210,30 @@
       "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daf99db_946cc7f5",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2826,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "This is done here to check the latest state of this transaction because at the time of SetupEntryForRead if writing was in progress, we would not have changed the mode to READ so that the transaction could join parallel writing but by the time it got out of done_headers_queue if writing was over, we would then change it to READ here.",
+      "parentUuid": "6e8c25c8_9548f62e",
+      "range": {
+        "startLine": 2826,
+        "startChar": 1,
+        "endLine": 2826,
+        "endChar": 43
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5c58e5fa_01c7be13",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3330,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Reverted",
+      "parentUuid": "44fad54a_d6ac5330",
+      "range": {
+        "startLine": 3328,
+        "startChar": 0,
+        "endLine": 3330,
+        "endChar": 75
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a34894_5b12c40c",
         "filename": "net/http/http_cache_unittest.cc",
         "patchSetId": 19
@@ -160,6 +304,30 @@
       "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca35fc4_7ae5b8cf",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31a34894_5b12c40c",
+      "range": {
+        "startLine": 1385,
+        "startChar": 18,
+        "endLine": 1385,
+        "endChar": 26
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "ba836965_b04840f8",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2235,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60460422_e6c4f444",
+      "range": {
+        "startLine": 2235,
+        "startChar": 21,
+        "endLine": 2235,
+        "endChar": 25
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e772af_ec686674",
         "filename": "net/http/http_cache_unittest.cc",
         "patchSetId": 19
@@ -206,6 +398,30 @@
       "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533ba590_defeb795",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11e772af_ec686674",
+      "range": {
+        "startLine": 2234,
+        "startChar": 0,
+        "endLine": 2238,
+        "endChar": 0
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "54beb904_63fab8fd",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Should come with rebase. Updating it in this branch as well, just in case.",
+      "parentUuid": "775bb64b_b147fe5f",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 13
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f69025bc_064aca0a",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 19
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "6b25ad7c_85bd832f",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f69025bc_064aca0a",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 51
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a55a5204_291a586e",
         "filename": "net/http/mock_http_cache.cc",
         "patchSetId": 19
@@ -275,6 +539,30 @@
       "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eca95fa_b4f4ea02",
+        "filename": "net/http/mock_http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T15:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a55a5204_291a586e",
+      "range": {
+        "startLine": 738,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 11
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
