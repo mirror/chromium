@@ -75,12 +75,13 @@ static void RecordPackageFormatHistogram(FontPackageFormat format) {
 }
 
 FontResource* FontResource::Fetch(FetchParameters& params,
-                                  ResourceFetcher* fetcher) {
+                                  ResourceFetcher* fetcher,
+                                  ResourceClient* client) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
   params.SetRequestContext(WebURLRequest::kRequestContextFont);
   return ToFontResource(
-      fetcher->RequestResource(params, FontResourceFactory()));
+      fetcher->RequestResource(params, client, FontResourceFactory()));
 }
 
 FontResource::FontResource(const ResourceRequest& resource_request,

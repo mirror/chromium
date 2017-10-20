@@ -43,8 +43,7 @@ StyleRuleImport::StyleRuleImport(const String& href,
       parent_style_sheet_(nullptr),
       style_sheet_client_(new ImportedStyleSheetClient(this)),
       str_href_(href),
-      media_queries_(media),
-      loading_(false) {
+      media_queries_(media) {
   if (!media_queries_)
     media_queries_ = MediaQuerySet::Create(String());
 }
@@ -88,8 +87,6 @@ void StyleRuleImport::SetCSSStyleSheet(
   style_sheet_->ParseAuthorStyleSheet(
       cached_style_sheet, document ? document->GetSecurityOrigin() : nullptr);
 
-  loading_ = false;
-
   if (parent_style_sheet_) {
     parent_style_sheet_->NotifyLoadedSheet(cached_style_sheet);
     parent_style_sheet_->CheckLoaded();
@@ -97,7 +94,8 @@ void StyleRuleImport::SetCSSStyleSheet(
 }
 
 bool StyleRuleImport::IsLoading() const {
-  return loading_ || (style_sheet_ && style_sheet_->IsLoading());
+  return (resource_ && resource_->IsLoading()) ||
+         (style_sheet_ && style_sheet_->IsLoading());
 }
 
 void StyleRuleImport::RequestStyleSheet() {
@@ -135,7 +133,8 @@ void StyleRuleImport::RequestStyleSheet() {
   options.initiator_info.name = FetchInitiatorTypeNames::css;
   FetchParameters params(ResourceRequest(abs_url), options);
   params.SetCharset(parent_style_sheet_->Charset());
-  resource_ = CSSStyleSheetResource::Fetch(params, fetcher);
+  resource_ =
+      CSSStyleSheetResource::Fetch(params, fetcher, style_sheet_client_);
   if (resource_) {
     // if the import rule is issued dynamically, the sheet may be
     // removed from the pending sheet count, so let the doc know
@@ -143,8 +142,6 @@ void StyleRuleImport::RequestStyleSheet() {
     if (parent_style_sheet_ && parent_style_sheet_->LoadCompleted() &&
         root_sheet == parent_style_sheet_)
       parent_style_sheet_->StartLoadingDynamicSheet();
-    loading_ = true;
-    resource_->AddClient(style_sheet_client_);
   }
 }
 

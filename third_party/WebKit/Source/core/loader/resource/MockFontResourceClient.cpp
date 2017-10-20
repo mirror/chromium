@@ -12,7 +12,7 @@ MockFontResourceClient::MockFontResourceClient(Resource* resource)
     : resource_(resource),
       font_load_short_limit_exceeded_called_(false),
       font_load_long_limit_exceeded_called_(false) {
-  resource_->AddClient(this);
+  resource_->AddClient(this, nullptr);
 }
 
 MockFontResourceClient::~MockFontResourceClient() {}

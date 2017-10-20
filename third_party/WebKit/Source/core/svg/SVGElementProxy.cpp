@@ -76,11 +76,8 @@ void SVGElementProxy::AddClient(SVGResourceClient* client) {
   // An empty id will never be a valid element reference.
   if (id_.IsEmpty())
     return;
-  if (!is_local_) {
-    if (document_)
-      document_->AddClient(client);
+  if (!is_local_ && !document_)
     return;
-  }
   TreeScope* client_scope = client->GetTreeScope();
   if (!client_scope)
     return;
@@ -112,11 +109,8 @@ void SVGElementProxy::RemoveClient(SVGResourceClient* client) {
   // An empty id will never be a valid element reference.
   if (id_.IsEmpty())
     return;
-  if (!is_local_) {
-    if (document_)
-      document_->RemoveClient(client);
+  if (!is_local_ && !document_)
     return;
-  }
   auto entry = clients_.find(client);
   if (entry == clients_.end())
     return;
@@ -140,8 +134,20 @@ void SVGElementProxy::Resolve(Document& document) {
   ResourceLoaderOptions options;
   options.initiator_info.name = FetchInitiatorTypeNames::css;
   FetchParameters params(ResourceRequest(url_), options);
-  document_ = DocumentResource::FetchSVGDocument(params, document.Fetcher());
+  document_ =
+      DocumentResource::FetchSVGDocument(params, document.Fetcher(), this);
   url_ = String();
+}
+
+void SVGElementProxy::NotifyFinished(Resource* resource) {
+  DCHECK_EQ(resource, document_);
+
+  HeapVector<Member<SVGResourceClient>> clients_to_notify;
+  CopyKeysToVector(clients_, clients_to_notify);
+  for (const auto& client : clients_to_notify) {
+    if (clients_.Contains(client))
+      client->ResourceElementChanged();
+  }
 }
 
 TreeScope* SVGElementProxy::TreeScopeForLookup(TreeScope& tree_scope) const {
@@ -178,6 +184,7 @@ void SVGElementProxy::ContentChanged(TreeScope& tree_scope) {
 }
 
 void SVGElementProxy::Trace(blink::Visitor* visitor) {
+  DocumentResourceClient::Trace(visitor);
   visitor->Trace(clients_);
   visitor->Trace(observers_);
   visitor->Trace(document_);
