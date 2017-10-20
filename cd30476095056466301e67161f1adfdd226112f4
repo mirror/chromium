@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f5687006_d288d214",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T03:57:02Z",
+      "side": 1,
+      "message": "I don\u0027t quite like it. What\u0027s the point of project.requestFileContent at this point? The project is no longer responsible for the original content...",
+      "revId": "cd30476095056466301e67161f1adfdd226112f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb4730ed_4176b88f",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
         "patchSetId": 1
