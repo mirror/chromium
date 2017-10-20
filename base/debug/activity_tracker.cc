@@ -1404,7 +1404,7 @@ void GlobalActivityTracker::RecordProcessLaunch(
   base::AutoLock lock(global_tracker_lock_);
   if (base::ContainsKey(known_processes_, pid)) {
     // TODO(bcwhite): Measure this in UMA.
-    NOTREACHED() << "Process #" << process_id
+    DLOG(ERROR) << "Process #" << process_id
                  << " was previously recorded as \"launched\""
                  << " with no corresponding exit.";
     known_processes_.erase(pid);
@@ -1432,6 +1432,7 @@ void GlobalActivityTracker::RecordProcessLaunch(
 
 void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
                                               int exit_code) {
+
   const int64_t pid = process_id;
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
@@ -1475,6 +1476,7 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
                                                 int64_t exit_stamp,
                                                 int exit_code,
                                                 std::string&& command_line) {
+#if 0
   // The process may not have exited cleanly so its necessary to go through
   // all the data structures it may have allocated in the persistent memory
   // segment and mark them as "released". This will allow them to be reused
@@ -1551,6 +1553,7 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
       } break;
     }
   }
+#endif  // 0
 }
 
 void GlobalActivityTracker::RecordLogMessage(StringPiece message) {
