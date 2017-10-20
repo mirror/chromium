@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/auto_reset.h"
+#include "base/i18n/rtl.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "ui/base/accelerators/accelerator.h"
@@ -25,6 +26,16 @@
 #include "ui/views/widget/widget_delegate.h"
 
 namespace views {
+
+namespace {
+
+bool IsArrowKey(const ui::KeyEvent& event) {
+  return event.key_code() == ui::VKEY_UP || event.key_code() == ui::VKEY_DOWN ||
+         event.key_code() == ui::VKEY_LEFT ||
+         event.key_code() == ui::VKEY_RIGHT;
+}
+
+}  // namespace
 
 bool FocusManager::arrow_key_traversal_enabled_ = false;
 
@@ -518,17 +529,15 @@ bool FocusManager::ProcessArrowKeyTraversal(const ui::KeyEvent& event) {
   if (event.IsShiftDown() || event.IsControlDown() || event.IsAltDown())
     return false;
 
-  const int key_code = event.key_code();
-  if (key_code == ui::VKEY_LEFT || key_code == ui::VKEY_UP) {
-    AdvanceFocus(true);
-    return true;
-  }
-  if (key_code == ui::VKEY_RIGHT || key_code == ui::VKEY_DOWN) {
-    AdvanceFocus(false);
-    return true;
-  }
+  if (!IsArrowKey(event))
+    return false;
 
-  return false;
+  const int reverse_key_code =
+      base::i18n::IsRTL() ? ui::VKEY_RIGHT : ui::VKEY_LEFT;
+  const bool reverse =
+      event.key_code() == reverse_key_code || event.key_code() == ui::VKEY_UP;
+  AdvanceFocus(reverse);
+  return true;
 }
 
 bool FocusManager::IsFocusable(View* view) const {
