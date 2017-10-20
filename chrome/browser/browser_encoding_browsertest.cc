@@ -4,12 +4,10 @@
 
 #include <stddef.h>
 
-#include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "build/build_config.h"
-#include "chrome/browser/net/url_request_mock_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -18,7 +16,6 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/prefs/pref_service.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_service.h"
@@ -27,7 +24,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/download_test_observer.h"
 #include "content/public/test/test_navigation_observer.h"
-#include "net/test/url_request/url_request_mock_http_job.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 
 namespace {
 
@@ -71,8 +68,6 @@ const EncodingTestData kEncodingTestDatas[] = {
 
 }  // namespace
 
-using content::BrowserThread;
-
 static const base::FilePath::CharType* kTestDir =
     FILE_PATH_LITERAL("encoding_tests");
 
@@ -80,7 +75,7 @@ class BrowserEncodingTest
     : public InProcessBrowserTest,
       public testing::WithParamInterface<EncodingTestData> {
  protected:
-  BrowserEncodingTest() {}
+  BrowserEncodingTest() { ASSERT_TRUE(embedded_test_server()->Start()); }
 
   // Saves the current page and verifies that the output matches the expected
   // result.
@@ -114,10 +109,6 @@ class BrowserEncodingTest
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     save_dir_ = temp_dir_.GetPath();
     temp_sub_resource_dir_ = save_dir_.AppendASCII("sub_resource_files");
-
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&chrome_browser_net::SetUrlRequestMocksEnabled, true));
   }
 
   base::ScopedTempDir temp_dir_;
@@ -140,7 +131,7 @@ IN_PROC_BROWSER_TEST_P(BrowserEncodingTest, TestEncodingAliasMapping) {
       GetParam().file_name);
 
   GURL url =
-      net::URLRequestMockHTTPJob::GetMockUrl(test_file_path.MaybeAsASCII());
+      embedded_test_server()->GetURL("/" + test_file_path.MaybeAsASCII());
   ui_test_utils::NavigateToURL(browser(), url);
   EXPECT_EQ(GetParam().encoding_name,
             browser()->tab_strip_model()->GetActiveWebContents()->
@@ -232,7 +223,7 @@ IN_PROC_BROWSER_TEST_F(BrowserEncodingTest, TestEncodingAutoDetect) {
     base::FilePath test_file_path(test_dir_path);
     test_file_path = test_file_path.AppendASCII(kTestDatas[i].test_file_name);
     GURL url =
-        net::URLRequestMockHTTPJob::GetMockUrl(test_file_path.MaybeAsASCII());
+        embedded_test_server()->GetURL("/" + test_file_path.MaybeAsASCII());
     ui_test_utils::NavigateToURL(browser(), url);
 
     // Get the encoding of page. It should return the real encoding now.
