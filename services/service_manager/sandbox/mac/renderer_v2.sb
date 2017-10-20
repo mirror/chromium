@@ -32,8 +32,8 @@
 
 ; --enable-sandbox-logging causes the sandbox to log failures to the syslog.
 (if (param-true? disable-sandbox-denial-logging)
-   (deny default (with no-log))
-   (deny default))
+  (deny default (with no-log))
+  (deny default))
 
 (if (param-true? enable-logging) (debug deny))
 
@@ -86,6 +86,12 @@
   (path "/dev/urandom"))
 
 (allow file-write-data (path "/dev/null"))
+
+; Reads from /etc.
+; This file is read by mach_msg_trap() when a mach connection fails,
+; and the read is safe because no user password hashes are stored
+; directly in /etc/passwd.
+(allow file-read-data (path "/private/etc/passwd"))
 
 ; Reads from /usr.
 (allow file-read-data
