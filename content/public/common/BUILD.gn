@@ -54,6 +54,14 @@ source_set("content_descriptor_keys") {
   ]
 }
 
+# This target allows other targets to depend on previews_state.h which is a
+# header-only dependency, without bringing in all of content.
+source_set("previews_state") {
+  sources = [
+    "previews_state.h",
+  ]
+}
+
 # Forces static linking for targets using the static_switches constants, even
 # in the component build. This config makes it impossible to use the static
 # switches target and use the rest of content at the same time, because the
