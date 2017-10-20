@@ -305,6 +305,7 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
   BeginDrawingFrame();
 
   for (const auto& pass : *render_passes_in_draw_order) {
+    render_pass_color_temperatures_[pass->id] = pass->color_temperature;
     if (!pass->filters.IsEmpty())
       render_pass_filters_[pass->id] = &pass->filters;
     if (!pass->background_filters.IsEmpty())
@@ -372,6 +373,7 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
 
   FinishDrawingFrame();
   render_passes_in_draw_order->clear();
+  render_pass_color_temperatures_.clear();
   render_pass_filters_.clear();
   render_pass_background_filters_.clear();
 
@@ -469,6 +471,12 @@ void DirectRenderer::DoDrawPolygon(const DrawPolygon& poly,
   for (size_t i = 0; i < quads.size(); ++i) {
     DoDrawQuad(poly.original_ref(), &quads[i]);
   }
+}
+
+float DirectRenderer::ColorTemperatureForPass(
+    RenderPassId render_pass_id) const {
+  auto it = render_pass_color_temperatures_.find(render_pass_id);
+  return it == render_pass_color_temperatures_.end() ? 0.f : it->second;
 }
 
 const cc::FilterOperations* DirectRenderer::FiltersForPass(

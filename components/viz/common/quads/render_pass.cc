@@ -110,9 +110,9 @@ RenderPass::~RenderPass() {
 std::unique_ptr<RenderPass> RenderPass::Copy(int new_id) const {
   std::unique_ptr<RenderPass> copy_pass(
       Create(shared_quad_state_list.size(), quad_list.size()));
-  copy_pass->SetAll(new_id, output_rect, damage_rect, transform_to_root_target,
-                    filters, background_filters, color_space,
-                    has_transparent_background, cache_render_pass,
+  copy_pass->SetAll(new_id, color_temperature, output_rect, damage_rect,
+                    transform_to_root_target, filters, background_filters,
+                    color_space, has_transparent_background, cache_render_pass,
                     has_damage_from_contributing_content, generate_mipmap);
   return copy_pass;
 }
@@ -124,9 +124,9 @@ std::unique_ptr<RenderPass> RenderPass::DeepCopy() const {
 
   std::unique_ptr<RenderPass> copy_pass(
       Create(shared_quad_state_list.size(), quad_list.size()));
-  copy_pass->SetAll(id, output_rect, damage_rect, transform_to_root_target,
-                    filters, background_filters, color_space,
-                    has_transparent_background, cache_render_pass,
+  copy_pass->SetAll(id, color_temperature, output_rect, damage_rect,
+                    transform_to_root_target, filters, background_filters,
+                    color_space, has_transparent_background, cache_render_pass,
                     has_damage_from_contributing_content, generate_mipmap);
 
   if (shared_quad_state_list.empty()) {
@@ -185,6 +185,7 @@ void RenderPass::SetNew(uint64_t id,
 }
 
 void RenderPass::SetAll(uint64_t id,
+                        float color_temperature,
                         const gfx::Rect& output_rect,
                         const gfx::Rect& damage_rect,
                         const gfx::Transform& transform_to_root_target,
@@ -198,6 +199,7 @@ void RenderPass::SetAll(uint64_t id,
   DCHECK(id);
 
   this->id = id;
+  this->color_temperature = color_temperature;
   this->output_rect = output_rect;
   this->damage_rect = damage_rect;
   this->transform_to_root_target = transform_to_root_target;
@@ -216,6 +218,8 @@ void RenderPass::SetAll(uint64_t id,
 }
 
 void RenderPass::AsValueInto(base::trace_event::TracedValue* value) const {
+  value->SetDouble("color_temperature", color_temperature);
+
   cc::MathUtil::AddToTracedValue("output_rect", output_rect, value);
   cc::MathUtil::AddToTracedValue("damage_rect", damage_rect, value);
 
