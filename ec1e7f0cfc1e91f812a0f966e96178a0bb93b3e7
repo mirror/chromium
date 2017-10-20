@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "146ef277_cf13276f",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:28:31Z",
+      "side": 1,
+      "message": "nit: type?",
+      "range": {
+        "startLine": 794,
+        "startChar": 6,
+        "endLine": 794,
+        "endChar": 16
+      },
+      "revId": "ec1e7f0cfc1e91f812a0f966e96178a0bb93b3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0b5a38_185c2bff",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:28:31Z",
+      "side": 1,
+      "message": "Remove |type|.",
+      "range": {
+        "startLine": 182,
+        "startChar": 39,
+        "endLine": 182,
+        "endChar": 43
+      },
+      "revId": "ec1e7f0cfc1e91f812a0f966e96178a0bb93b3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea48be6_60e41408",
+        "filename": "third_party/WebKit/Source/devtools/front_end/host/InspectorFrontendHostAPI.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:28:31Z",
+      "side": 1,
+      "message": "Remove type.",
+      "range": {
+        "startLine": 78,
+        "startChar": 103,
+        "endLine": 78,
+        "endChar": 107
+      },
+      "revId": "ec1e7f0cfc1e91f812a0f966e96178a0bb93b3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
