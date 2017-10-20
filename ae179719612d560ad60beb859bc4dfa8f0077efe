@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d461d48a_d6000fc8",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_metadata.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-20T19:37:16Z",
+      "side": 1,
+      "message": "make this optional?",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "ae179719612d560ad60beb859bc4dfa8f0077efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
