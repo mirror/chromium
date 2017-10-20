@@ -1,0 +1,502 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ec0381_39f0d18c",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "s/access/read?",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ca4d02_4e32c382",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "It could be the same CDM instance opening two files. Just drop this part?",
+      "range": {
+        "startLine": 24,
+        "startChar": 37,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a3f6ed_65c60e67",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "There\u0027s no Initialize() now. Remove?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e9e04d_00dc5dff",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "Now we have 3 places returning a file, maybe we should use different names to clarify it\u0027s purpose:\n- file_for_read\n- temp_file_for_write\n- file_for_read or updated_file_for_read",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0723e201_4bb5801b",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "style nit: do the 3 params fit in one line?",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a65a496_ce984e42",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2a971f_68211b15",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "Add comments for these two.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e6a4b6_430bc14a",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "As discussed offline, this whole open temp file logic is complicated and we should document it, and choose more precise function/variable names. Otherwise it\u0027s not obvious why we can\u0027t just use the original file to read, and why after I write to this new file, it\u0027s still not done.\n\nWith that, how about OpenTempFileForWrite() here? I thought about hiding it as impl detail, but it doesn\u0027t make sense since this API is so special. It\u0027d actually be easier to understand if we expose all the impl details.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4291f4c2_032e8481",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "It\u0027s only done on the client side, and not done on the service side, so this is a bit ambiguous. How about FinalizeWrite()?",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6caa1d2_b6951948",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "nit: file_name_string",
+      "range": {
+        "startLine": 61,
+        "startChar": 14,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27ad22b_4b70d99a",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "mojo calls are already async, so we don\u0027t need to post a task here; can we call cdm_storage_-\u003eOpen() directly here? Then you don\u0027t need DoOpen().",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7505c4b4_c0b0f24e",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "nit: OnError() posts a task, so typically we should immediately return. How about s/break/return to make this super clear?",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 12
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bec8ead_f30c46d6",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "nit: s/file_data/buffer?",
+      "range": {
+        "startLine": 185,
+        "startChar": 23,
+        "endLine": 185,
+        "endChar": 32
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5aee46b_f7b1f2e3",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "should the state be kError now? Or do we expect the CDM to clear it? (which I am not sure whether we do). If so, add a comment as you did above?",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 28
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f77e03_11419b24",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "nice!",
+      "range": {
+        "startLine": 234,
+        "startChar": 30,
+        "endLine": 234,
+        "endChar": 55
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4c19aa_8e1014b1",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "DCHECK we are still in State::kWriting state.",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5654d6_7d6ab852",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "We should set the state here; otherwise we are stuck with kWriting. Should it be kError?",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793768ba_eaf9e1d6",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "ditto, set the state_ here",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b04b9b1_7e75d001",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "Have a comment why we don\u0027t do anything if bytes_to_write is 0.\n\nAlso, shall we GetLength() to make sure it\u0027s 0, e.g. in a DCHECK so it doesn\u0027t affect release build performance.",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c3e614_59997385",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "This also looks confusing. Another reason to have a temp_file I think.",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0592ab0d_fcaebb6d",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "nit: also DCHECK that file_ is null",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fb5000_82daff6a",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "nit: add a comment that this is only for logging. Actually, since it\u0027s only for logging, just use std::string? Sorry I didn\u0027t notice this is only for logging.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a556038_e6d503db",
+        "filename": "media/mojo/services/mojo_cdm_file_io_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "s/Mojo//*\n\nWe might drop the Mojo/Pepper from the tests soon",
+      "range": {
+        "startLine": 67,
+        "startChar": 38,
+        "endLine": 67,
+        "endChar": 43
+      },
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f262203_80d210bc",
+        "filename": "media/mojo/services/mojo_cdm_file_io_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T06:08:43Z",
+      "side": 1,
+      "message": "nit: please file a bug and fix this TODO",
+      "revId": "9ed77c438c24caf0cb672dea41d08bd03398246b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
