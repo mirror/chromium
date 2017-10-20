@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f8bff4a_fb9b8fa5",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-20T08:26:45Z",
+      "side": 1,
+      "message": "Would be nice if you could also initialize these while you\u0027re here",
+      "revId": "5d586f6f4be57da90412a578aa50a873284bc18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dd959d_2d5db899",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-20T08:26:45Z",
+      "side": 1,
+      "message": "and also initialize these",
+      "revId": "5d586f6f4be57da90412a578aa50a873284bc18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14dc4dc5_8edb0963",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 4
