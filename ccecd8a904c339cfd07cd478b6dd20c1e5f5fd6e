@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d63a017_2f2078bb",
+        "filename": "ui/base/ime/ime_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T14:30:08Z",
+      "side": 1,
+      "message": "nullptr (may as well change the ones above this too).",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "ccecd8a904c339cfd07cd478b6dd20c1e5f5fd6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9ce79d_7be379a2",
+        "filename": "ui/base/ime/ime_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T14:30:08Z",
+      "side": 1,
+      "message": "You only add this once in a section.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "ccecd8a904c339cfd07cd478b6dd20c1e5f5fd6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
