@@ -787,6 +787,17 @@ CommandHandler.onCommand = function(command) {
               return;
             }
 
+            // If there is a valid current range, then move from it since we
+            // have refreshed node data.
+            // Ensure to check if |current| is the same as the previous range to
+            // break any loops.
+            if (current.isValid() &&
+                ChromeVoxState.instance.currentRange.isValid() &&
+                !current.equals(ChromeVoxState.instance.currentRange)) {
+              CommandHandler.onCommand(command);
+              return;
+            }
+
             // Otherwise, sync to the directed deepest child.
             var sync = scrollable;
             if (dir == Dir.FORWARD) {
