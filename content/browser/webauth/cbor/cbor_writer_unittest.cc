@@ -185,4 +185,93 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
                                               arraysize(kNestedMapTestCase)));
 }
 
+// Testing IsValidDepth() function CBOR structure with major data type
+// 0(unsigned integer), major data type 2(byte string), major data type 3(text
+// string), and an empty CBOR. Since all four cases would have 0 nesting
+// layers, IsValidDepth() function is expected to return true.
+TEST(CBORWriterTest, TestWriterIsValidDepthSingleLayer) {
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue(2)));
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue()));
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue("AA")));
+  EXPECT_TRUE(CBORWriter::IsValidDepth(
+      CBORValue(base::StringPiece("\x44\x01\x02\x03\x04"))));
+}
+
+// Testing IsValidDepth() function for major type 5 CBOR structure with
+// nested CBOR map. The structure of CBOR tested is shown below.
+//     {"a": 1,
+//      "b": {"c": 2,
+//            "d": 3}}
+// Since the above CBOR has nesting layer size of 2, IsValidDepth() is
+// expected to return true.
+TEST(CBORWriterTest, TestWriterIsValidDepthMultiLayer) {
+  CBORValue::MapValue cbor_map;
+  cbor_map["a"] = CBORValue(1);
+  CBORValue::MapValue nested_map;
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue(cbor_map)));
+}
+
+// Testing IsValidDepth() function for following CBOR structure.
+//     [1,
+//      2,
+//      3,
+//      {"a": 1,
+//       "b": {"c": 2,
+//             "d": 3}}]
+// Since above CBOR has nesting level of 3, IsValidDepth() is expected to
+// return true. Note that IsValidDepth() is called to check CBOR data
+// being encoded as a value to a CBOR map type or as an element to CBOR array
+// type. Thus, 3 is the maximum nesting level allowed.
+TEST(CBORWriterTest, TestWriterIsValidDepthUnbalancedCBOR) {
+  CBORValue::ArrayValue cbor_array;
+  CBORValue::MapValue cbor_map;
+  CBORValue::MapValue nested_map;
+
+  cbor_map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+  cbor_array.push_back(CBORValue(1));
+  cbor_array.push_back(CBORValue(2));
+  cbor_array.push_back(CBORValue(3));
+  cbor_array.push_back(CBORValue(cbor_map));
+
+  EXPECT_TRUE(CBORWriter::IsValidDepth(CBORValue(cbor_array)));
+}
+
+// Testing IsValidDepth() function for following CBOR structure.
+//     {"a": 1,
+//      "b": {"c": 2,
+//            "d": 3
+//            "h": { "e": 4,
+//                   "f": 5,
+//                   "g": [5, 6]}}}
+// Since above CBOR contains 4 nesting levels, encoding this CBOR value
+// object as an element to an array or a value to CBOR map would result in
+// CBOR data with 5 nesting level. Thus, IsValidDepth() is expected to
+// return false.
+TEST(CBORWriterTest, TestWriterIsValidDepthOverlyNestedCBOR) {
+  CBORValue::MapValue map;
+  CBORValue::MapValue nested_map;
+  CBORValue::MapValue inner_nested_map;
+  CBORValue::ArrayValue array;
+
+  map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  inner_nested_map["e"] = CBORValue(4);
+  inner_nested_map["f"] = CBORValue(5);
+  array.push_back(CBORValue(6));
+  array.push_back(CBORValue(7));
+  inner_nested_map["g"] = CBORValue(array);
+  nested_map["h"] = CBORValue(inner_nested_map);
+  map["b"] = CBORValue(nested_map);
+
+  EXPECT_FALSE(CBORWriter::IsValidDepth(CBORValue(map)));
+}
+
 }  // namespace content
