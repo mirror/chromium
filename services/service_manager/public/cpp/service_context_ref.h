@@ -33,8 +33,10 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT ServiceContextRef {
 
 class SERVICE_MANAGER_PUBLIC_CPP_EXPORT ServiceContextRefFactory {
  public:
-  // |quit_closure| is called whenever the last ref is destroyed.
-  explicit ServiceContextRefFactory(const base::Closure& quit_closure);
+  // |quit_closure| is called after |release_delay| since the last ref is
+  // destroyed. By default |release_delay| is zero.
+  ServiceContextRefFactory(const base::Closure& quit_closure,
+                           base::TimeDelta release_delay = base::TimeDelta());
   ~ServiceContextRefFactory();
 
   std::unique_ptr<ServiceContextRef> CreateRef();
@@ -50,6 +52,10 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT ServiceContextRefFactory {
 
   const base::Closure quit_closure_;
   int ref_count_ = 0;
+
+  // Delay before releasing the ref-count.
+  base::TimeDelta release_delay_;
+
   base::WeakPtrFactory<ServiceContextRefFactory> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceContextRefFactory);

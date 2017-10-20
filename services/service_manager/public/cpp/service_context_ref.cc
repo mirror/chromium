@@ -17,8 +17,11 @@ class ServiceContextRefImpl : public ServiceContextRef {
  public:
   ServiceContextRefImpl(
       base::WeakPtr<ServiceContextRefFactory> factory,
-      scoped_refptr<base::SequencedTaskRunner> service_task_runner)
-      : factory_(factory), service_task_runner_(service_task_runner) {
+      scoped_refptr<base::SequencedTaskRunner> service_task_runner,
+      base::TimeDelta release_delay)
+      : factory_(factory),
+        service_task_runner_(service_task_runner),
+        release_delay_(release_delay) {
     // This object is not thread-safe but may be used exclusively on a different
     // thread from the one which constructed it.
     DETACH_FROM_SEQUENCE(sequence_checker_);
@@ -27,11 +30,13 @@ class ServiceContextRefImpl : public ServiceContextRef {
   ~ServiceContextRefImpl() override {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-    if (service_task_runner_->RunsTasksInCurrentSequence() && factory_) {
+    if (service_task_runner_->RunsTasksInCurrentSequence() && factory_ &&
+        release_delay_.is_zero()) {
       factory_->Release();
     } else {
-      service_task_runner_->PostTask(
-          FROM_HERE, base::Bind(&ServiceContextRefFactory::Release, factory_));
+      service_task_runner_->PostDelayedTask(
+          FROM_HERE, base::Bind(&ServiceContextRefFactory::Release, factory_),
+          release_delay_);
     }
   }
 
@@ -47,20 +52,27 @@ class ServiceContextRefImpl : public ServiceContextRef {
           FROM_HERE, base::Bind(&ServiceContextRefFactory::AddRef, factory_));
     }
 
-    return base::MakeUnique<ServiceContextRefImpl>(factory_,
-                                                   service_task_runner_);
+    return base::MakeUnique<ServiceContextRefImpl>(
+        factory_, service_task_runner_, release_delay_);
   }
 
   base::WeakPtr<ServiceContextRefFactory> factory_;
   scoped_refptr<base::SequencedTaskRunner> service_task_runner_;
+
+  // Delay before releasing the ref-count.
+  base::TimeDelta release_delay_;
+
   SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(ServiceContextRefImpl);
 };
 
 ServiceContextRefFactory::ServiceContextRefFactory(
-    const base::Closure& quit_closure)
-    : quit_closure_(quit_closure), weak_factory_(this) {
+    const base::Closure& quit_closure,
+    base::TimeDelta release_delay)
+    : quit_closure_(quit_closure),
+      release_delay_(release_delay),
+      weak_factory_(this) {
   DCHECK(!quit_closure_.is_null());
 }
 
@@ -69,7 +81,8 @@ ServiceContextRefFactory::~ServiceContextRefFactory() {}
 std::unique_ptr<ServiceContextRef> ServiceContextRefFactory::CreateRef() {
   AddRef();
   return base::MakeUnique<ServiceContextRefImpl>(
-      weak_factory_.GetWeakPtr(), base::SequencedTaskRunnerHandle::Get());
+      weak_factory_.GetWeakPtr(), base::SequencedTaskRunnerHandle::Get(),
+      release_delay_);
 }
 
 void ServiceContextRefFactory::AddRef() {
