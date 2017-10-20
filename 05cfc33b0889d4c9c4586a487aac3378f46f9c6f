@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2afa313f_f0463a06",
+        "filename": "third_party/WebKit/Source/core/animation/CSSOffsetRotateInterpolationType.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-20T13:52:55Z",
+      "side": 1,
+      "message": "nit: Can we use WTF::MakeUnique\u003cInheritedRotationChecker\u003e(inherited_rotation);?",
+      "revId": "05cfc33b0889d4c9c4586a487aac3378f46f9c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8212df_8c16bc8a",
+        "filename": "third_party/WebKit/Source/core/animation/CSSTextIndentInterpolationType.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-20T13:52:55Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "05cfc33b0889d4c9c4586a487aac3378f46f9c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
