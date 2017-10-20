@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "496581fc_0895e598",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-20T08:46:02Z",
+      "side": 1,
+      "message": "I wonder if this block of code can just be a series of if/elses at this point\n\nif (!FirstRunStatus.getFirstRunFlowComplete()) {\n    throw new IllegalStateException(\"User did not complete the first run experience.\");\n}\n\nif (isShowingPromo || mIntentWithEffect || !preferenceManager.getPromosSkippedOnFirstStart()\n        || VrShellDelegate.isInVr()) {\n    preferenceManager.setPromosSkippedOnFirstStart(true);\n} else if (SigninPromoUtil.launchSigninPromoIfNeeded(this)) {\n    // Sad empty conditional\n} else if (DataReductionPromoScreen.launchDataReductionPromo(\n        this, getTabModelSelector().isIncognitoSelected())) {\n    // You call the one above sad, what about me?!\n} else if (FeatureUtilities.shouldShowChromeHomePromoForStartup()) {\n    new ChromeHomePromoDialog(this, ChromeHomePromoDialog.ShowReason.STARTUP).show();\n} else {\n    if (getBottomSheet() !\u003d null) getBottomSheet().showHelpBubbleIfNecessary();\n\n    final Tracker tracker \u003d\n            TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());\n    tracker.addOnInitializedCallback(\n            (Callback\u003cBoolean\u003e) success -\u003e maybeShowDownloadHomeTextBubble(tracker));\n}\n\nThe nested-ness of the current block seems unfortunate, but I\u0027m not convinced this is better.\n\nMaybe it would be clearer if each were individual ifs checking isShowingPromo\n\nif (!isShowingPromo) {\n    isShowingPromo \u003d SigninPromoUtil.launchSigninPromoIfNeeded(this);\n}\nif (!isShowingPromo) {\n    isShowingPromo \u003d DataReductionPromoScreen.launc...\n}\netc...\n\nReally, this is a long winded nit.  Do with it as you please :-P",
+      "range": {
+        "startLine": 504,
+        "startChar": 17,
+        "endLine": 504,
+        "endChar": 31
+      },
+      "revId": "c639363f6ad3dcd7043ca309bde14a060d7eac9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
