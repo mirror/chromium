@@ -35,6 +35,7 @@
 #include "chrome/browser/data_usage/tab_id_annotator.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
+#include "chrome/browser/net/cross_thread_network_context_params.h"
 #include "chrome/browser/net/dns_probe_service.h"
 #include "chrome/browser/net/proxy_resolver_manager.h"
 #include "chrome/browser/net/proxy_service_factory.h"
@@ -385,9 +386,12 @@ IOThread::IOThread(
 
   BrowserThread::SetIOThreadDelegate(this);
 
+  content::mojom::NetworkContextParamsPtr network_context_params;
   system_network_context_manager->SetUp(&network_context_request_,
-                                        &network_context_params_,
+                                        &network_context_params,
                                         &is_quic_allowed_on_init_);
+  network_context_params_ = std::make_unique<CrossThreadNetworkContextParams>(
+      std::move(network_context_params));
 }
 
 IOThread::~IOThread() {
@@ -740,8 +744,6 @@ void IOThread::SetUpProxyConfigService(
     if (command_line.HasSwitch(switches::kSingleProcess)) {
       LOG(ERROR) << "Cannot use V8 Proxy resolver in single process mode.";
     } else {
-      builder->SetMojoProxyResolverFactory(
-          ProxyResolverManager::GetInstance()->CreateFactoryInterface());
 #if defined(OS_CHROMEOS)
       builder->SetDhcpFetcherFactory(
           base::MakeUnique<chromeos::DhcpProxyScriptFetcherFactoryChromeos>());
@@ -822,7 +824,7 @@ void IOThread::ConstructSystemRequestContext() {
   globals_->system_network_context =
       globals_->network_service->CreateNetworkContextWithBuilder(
           std::move(network_context_request_),
-          std::move(network_context_params_), std::move(builder),
+          network_context_params_->ExtractParams(), std::move(builder),
           &globals_->system_request_context);
 
 #if defined(USE_NSS_CERTS)

@@ -15,18 +15,12 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace {
 
 constexpr base::TimeDelta kUtilityProcessIdleTimeout =
     base::TimeDelta::FromSeconds(5);
-
-void BindConnectorOnUIThread(service_manager::mojom::ConnectorRequest request) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  content::ServiceManagerConnection::GetForProcess()
-      ->GetConnector()
-      ->BindConnectorRequest(std::move(request));
-}
 
 }  // namespace
 
@@ -100,7 +94,7 @@ class ProxyResolverManager::ResolverFactoryChannel
 
 // static
 ProxyResolverManager* ProxyResolverManager::GetInstance() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   return base::Singleton<
       ProxyResolverManager,
       base::LeakySingletonTraits<ProxyResolverManager>>::get();
@@ -116,11 +110,11 @@ ProxyResolverManager::CreateFactoryInterface() {
 
 ProxyResolverManager::ProxyResolverManager()
     : factory_idle_timeout_(kUtilityProcessIdleTimeout) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
 ProxyResolverManager::~ProxyResolverManager() {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
 void ProxyResolverManager::SetFactoryIdleTimeoutForTests(
@@ -128,33 +122,15 @@ void ProxyResolverManager::SetFactoryIdleTimeoutForTests(
   factory_idle_timeout_ = timeout;
 }
 
-void ProxyResolverManager::InitServiceManagerConnector() {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  if (service_manager_connector_)
-    return;
-
-  // The existing ServiceManagerConnection retrieved with
-  // ServiceManagerConnection::GetForProcess() lives on the UI thread, so we
-  // can't access it from here. We create our own connector so it can be used
-  // right away and will bind it on the UI thread.
-  service_manager::mojom::ConnectorRequest request;
-  service_manager_connector_ = service_manager::Connector::Create(&request);
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::Bind(&BindConnectorOnUIThread, base::Passed(&request)));
-}
-
 proxy_resolver::mojom::ProxyResolverFactory*
 ProxyResolverManager::ResolverFactory() {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   if (!resolver_factory_) {
-    InitServiceManagerConnector();
-
-    service_manager_connector_->BindInterface(
-        proxy_resolver::mojom::kProxyResolverServiceName,
-        mojo::MakeRequest(&resolver_factory_));
+    content::ServiceManagerConnection::GetForProcess()
+        ->GetConnector()
+        ->BindInterface(proxy_resolver::mojom::kProxyResolverServiceName,
+                        mojo::MakeRequest(&resolver_factory_));
 
     resolver_factory_.set_connection_error_handler(base::Bind(
         &ProxyResolverManager::DestroyFactory, base::Unretained(this)));
@@ -167,7 +143,7 @@ void ProxyResolverManager::DestroyFactory() {
 }
 
 void ProxyResolverManager::OnIdleTimeout() {
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DestroyFactory();
 }
 
