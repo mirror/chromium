@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78c8b351_8dd7b5ad",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-20T12:45:02Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 171,
+        "startChar": 29,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d42371_a9857c52",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-20T12:45:02Z",
+      "side": 1,
+      "message": "Isn\u0027t the padding zero anyway? (Does \u003cbutton\u003e come with some default padding?)",
+      "range": {
+        "startLine": 209,
+        "startChar": 13,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0395bf_bd4e6d14",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-20T12:45:02Z",
+      "side": 1,
+      "message": "Reducing the width affects the background gradient, which \"hides\" the title text. It\u0027s visible in the screenshots on the bug. So I think this needs to keep its width.",
+      "range": {
+        "startLine": 213,
+        "startChar": 29,
+        "endLine": 213,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a3a81c_6a55aca0",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-20T12:45:02Z",
+      "side": 1,
+      "message": "nit: I think if both values are the same, you don\u0027t have to repeat them.",
+      "range": {
+        "startLine": 226,
+        "startChar": 57,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

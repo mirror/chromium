@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c632856_5cc8558f",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-20T12:45:02Z",
+      "side": 0,
+      "message": "What did this do?",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "9d0681551b79c909c1980a03343772fdef50a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
