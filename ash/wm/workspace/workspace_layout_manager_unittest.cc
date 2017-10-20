@@ -1728,6 +1728,21 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropForSplitScreenTest) {
   ShowTopWindowBackdropForContainer(default_container(), true);
   Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
 
+  class SplitViewTestWindowDelegate : public aura::test::TestWindowDelegate {
+   public:
+    SplitViewTestWindowDelegate() {}
+    ~SplitViewTestWindowDelegate() override {}
+
+    // aura::test::TestWindowDelegate:
+    void OnWindowDestroying(aura::Window* window) override { window->Hide(); }
+  };
+
+  auto CreateWindow = [this](const gfx::Rect& bounds) {
+    aura::Window* window = CreateTestWindowInShellWithDelegate(
+        new SplitViewTestWindowDelegate, -1, bounds);
+    return window;
+  };
+
   SplitViewController* split_view_controller =
       Shell::Get()->split_view_controller();
 
@@ -1738,7 +1753,7 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropForSplitScreenTest) {
   const bool is_mash = Shell::GetAshConfig() == Config::MASH;
 
   const gfx::Rect bounds(0, 0, 400, 400);
-  std::unique_ptr<aura::Window> window1(CreateTestWindow(bounds));
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   window1->Show();
 
   // In mash, with one window, there is a extra child, the title area renderer
@@ -1767,7 +1782,7 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropForSplitScreenTest) {
   // Now snap another window to right. Test that the backdrop window is still
   // visible but is now the third window in the container. Its bounds should
   // still be the same as the container bounds.
-  std::unique_ptr<aura::Window> window2(CreateTestWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
   split_view_controller->SnapWindow(window2.get(), SplitViewController::RIGHT);
 
   // In mash, with two windows, there are two extra children, the title area
