@@ -165,7 +165,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   // This frame has displayed inactive content (such as an image) from an
   // insecure source.  Inactive content cannot spread to other frames.
-  virtual void DidDisplayInsecureContent() = 0;
+  virtual void DidDisplayMixedContent() = 0;
 
   // This frame contains a form that submits to an insecure target url.
   virtual void DidContainInsecureFormAction() = 0;
@@ -173,7 +173,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   // The indicated security origin has run active content (such as a script)
   // from an insecure source.  Note that the insecure content can spread to
   // other frames in the same origin.
-  virtual void DidRunInsecureContent(SecurityOrigin*, const KURL&) = 0;
+  virtual void DidRunMixedContent(SecurityOrigin*, const KURL&) = 0;
   virtual void DidDetectXSS(const KURL&, bool did_block_entire_page) = 0;
   virtual void DidDispatchPingLoader(const KURL&) = 0;
 
