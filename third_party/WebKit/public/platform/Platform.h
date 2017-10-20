@@ -74,6 +74,11 @@ class GpuMemoryBufferManager;
 
 namespace service_manager {
 class Connector;
+
+template <typename... BinderArgs>
+class BinderRegistryWithArgs;
+
+using BinderRegistry = BinderRegistryWithArgs<>;
 }
 
 namespace v8 {
@@ -608,6 +613,9 @@ class BLINK_PLATFORM_EXPORT Platform {
   virtual service_manager::Connector* GetConnector();
 
   virtual InterfaceProvider* GetInterfaceProvider();
+
+  virtual void AddConnectionFilter(
+      std::unique_ptr<service_manager::BinderRegistry>);
 
   virtual const char* GetBrowserServiceName() const { return ""; }
 
