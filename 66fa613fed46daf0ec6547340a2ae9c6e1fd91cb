@@ -22,6 +22,30 @@
       "revId": "66fa613fed46daf0ec6547340a2ae9c6e1fd91cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdc7aaa_a55c793b",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-20T00:32:20Z",
+      "side": 1,
+      "message": "Changed to using a dictionary pref and having keys for each feature. Also will move using the first run file stuff into a separate CL.",
+      "parentUuid": "3bd792b6_3d199b8f",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 59
+      },
+      "revId": "66fa613fed46daf0ec6547340a2ae9c6e1fd91cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
