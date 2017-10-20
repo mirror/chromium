@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e65a330c_d6e42294",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Someone told me this helpful tip once:\n\n  Whenever you write \"new Foo\" in your code: Think again. Can it be std::unique_ptr\u003c...\u003e? What\u0027s the expected lifetime?",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa7aba8_c376289d",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Do we want to do this if we\u0027ve already met the requirement? I.e. on the startup after the one where it was met?\nOr are we planning on",
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b848c6_915acc02",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Do you think it would be easier to read this method if it looked something like:\n\n  if (has_session_time_been_met_)\n    return;\n\n  if (!HasEnoughSessionTimeElapsed(total_session_time))\n    return;\n\n  has_session_time_been_met_ \u003d true;\n  OnSessionTimeMet();\n  RemoveSessionDurationObserver();\n\nOf course, depending on the response to when we add and remove observers, this might have to change I guess.",
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b27e71_b8e5e8cb",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Nit: pref",
+      "range": {
+        "startLine": 38,
+        "startChar": 51,
+        "endLine": 38,
+        "endChar": 55
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cd952b_eb640ddd",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a singleton anymore?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 40
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8928d96_b4d325a7",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "We probably want to make this std::unique_ptr\u003c...\u003e now. In the current version of the CL, I guess it\u0027s leaked on profile destruction.",
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7acfed_37f466d9",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Nit: We have almost a perfect record for writing \"in-product help\" in the code base, so add a \u0027-\u0027? :-p",
+      "range": {
+        "startLine": 49,
+        "startChar": 66,
+        "endLine": 49,
+        "endChar": 67
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33248290_c7a5c608",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Nit: in-product help",
+      "range": {
+        "startLine": 49,
+        "startChar": 46,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3d1b42_3c21fb7b",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "What does this count? Total time? Current session? Could you add a comment to document it?",
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11790705_d7fa7344",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Could you add a test that tests reading and updating stored values, so something like:\n\n1) Initialize with positive time.\n2) Verify it\u0027s read correctly\n3) Add some time\n4) Verify that it\u0027s added together.",
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a3a41a_17fae09d",
+        "filename": "chrome/browser/feature_engagement/tracker_factory.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T20:52:42Z",
+      "side": 1,
+      "message": "Nit: Remove?",
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
