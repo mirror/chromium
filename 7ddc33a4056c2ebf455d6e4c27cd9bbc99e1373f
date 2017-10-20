@@ -16,6 +16,24 @@
       "revId": "7ddc33a4056c2ebf455d6e4c27cd9bbc99e1373f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3f40d7_1d4cc7d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-20T08:45:37Z",
+      "side": 1,
+      "message": "Hum my team has been using that for months without issues... I guess that\u0027s verifying our tools to make sure they are properly supporting unicode! Anywyay replaced with ascii tag.",
+      "parentUuid": "519d2c5f_8fc04346",
+      "revId": "7ddc33a4056c2ebf455d6e4c27cd9bbc99e1373f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
