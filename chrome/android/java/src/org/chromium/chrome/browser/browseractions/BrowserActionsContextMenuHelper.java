@@ -24,6 +24,7 @@ import android.view.View.OnCreateContextMenuListener;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.contextmenu.ChromeContextMenuItem;
 import org.chromium.chrome.browser.contextmenu.ContextMenuItem;
@@ -106,6 +107,7 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
         mOnMenuShown = new Runnable() {
             @Override
             public void run() {
+                RecordUserAction.record("BrowserActionsMenuOpened");
                 mOnMenuShownListener.run();
                 if (mTestDelegate != null) {
                     mTestDelegate.onBrowserActionsMenuShown();
