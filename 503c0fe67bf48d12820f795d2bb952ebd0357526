@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "a766b840_96222b07",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1248123
+      },
+      "writtenOn": "2017-10-20T15:58:06Z",
+      "side": 1,
+      "message": "Sorry I misunderstood your comment the first time, and though my sIsGoogleSignedResult in patchset 3 was want you wanted.\nFixed.",
+      "parentUuid": "52d0e2c0_6f0aaaeb",
+      "range": {
+        "startLine": 272,
+        "startChar": 30,
+        "endLine": 272,
+        "endChar": 48
+      },
+      "revId": "503c0fe67bf48d12820f795d2bb952ebd0357526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5586afc_c4ff850e",
         "filename": "chrome/android/webapk/libs/client/src/org/chromium/webapk/lib/client/WebApkValidator.java",
         "patchSetId": 1
