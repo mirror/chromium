@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef7f4d21_701c550f",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-20T21:01:10Z",
+      "side": 1,
+      "message": "regular URL",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "ffa60d36108be4678e831fa30ce5e42684bba32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa5f32b_1d800391",
+        "filename": "components/omnibox/browser/autocomplete_match_type.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-20T21:01:10Z",
+      "side": 1,
+      "message": "... except for a URL.\n(otherwise reading this comment, I\u0027d think they should have the same label.)",
+      "revId": "ffa60d36108be4678e831fa30ce5e42684bba32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fdf9b1_8a36a80c",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-20T21:01:10Z",
+      "side": 1,
+      "message": "\"descriptive text\" perhaps?\nAnd can you add an example or something?\nFor example, I may see a suggestion for \"chromium code review - Google Search\".  Is that the match_text?  (Answer: no, not the way you use.)",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 15
+      },
+      "revId": "ffa60d36108be4678e831fa30ce5e42684bba32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42672593_c214cbe9",
+        "filename": "components/omnibox_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-20T21:01:10Z",
+      "side": 1,
+      "message": "This message isn\u0027t used anymore.  Remove?",
+      "revId": "ffa60d36108be4678e831fa30ce5e42684bba32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78890154_5a133b99",
+        "filename": "components/omnibox_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-20T21:01:10Z",
+      "side": 1,
+      "message": "This message isn\u0027t used anymore.  Remove?",
+      "revId": "ffa60d36108be4678e831fa30ce5e42684bba32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
