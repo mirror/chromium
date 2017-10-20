@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a587ed8_8aea102c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-20T00:10:23Z",
+      "side": 1,
+      "message": "disable actually does nothing for the agent.",
+      "parentUuid": "6b99a897_049919bf",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ca94999_b9c6c397",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9d947a_dd2827d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-20T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ca94999_b9c6c397",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eb1d141a_d4f8e183",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-20T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35b920fb_570ce15a",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7c78eab_dbca2aa2",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24152503_b673c882",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/performanceMonitor.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-20T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c78eab_dbca2aa2",
+      "revId": "9fd26e803727c70a71d1f621df99038d138ec192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
