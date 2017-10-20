@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8dd747c_74de2a66",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-10-20T09:47:12Z",
+      "side": 1,
+      "message": "Why do we need to clear and reset the timer every time finish() is called? Can\u0027t we just have finish be\n\n  if (this.removeDropIndicatorTimeoutId_ \u003d\u003d null)\n    this.timerProxy.setTimeout(..., 100);\n\nAnd then in update, when the timeout is cleared it would also need to be nulled out.\n\nThat way, we have a one-shot 100ms timer that gets cancelled if update() is called before it finishes.",
+      "revId": "e04445861fe2f31fe5a9130321cc9933ce59c841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
