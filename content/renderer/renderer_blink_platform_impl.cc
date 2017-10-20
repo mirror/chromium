@@ -28,6 +28,7 @@
 #include "build/build_config.h"
 #include "components/url_formatter/url_formatter.h"
 #include "content/child/blob_storage/webblobregistry_impl.h"
+#include "content/child/child_process.h"
 #include "content/child/child_url_loader_factory_getter_impl.h"
 #include "content/child/file_info_util.h"
 #include "content/child/fileapi/webfilesystem_impl.h"
@@ -517,6 +518,14 @@ void RendererBlinkPlatformImpl::SuddenTerminationChanged(bool enabled) {
   RenderThread* thread = RenderThread::Get();
   if (thread)  // NULL in unittests.
     thread->Send(new RenderProcessHostMsg_SuddenTerminationChanged(enabled));
+}
+
+void RendererBlinkPlatformImpl::AddRefProcess() {
+  ChildProcess::current()->AddRefProcess();
+}
+
+void RendererBlinkPlatformImpl::ReleaseRefProcess() {
+  ChildProcess::current()->ReleaseProcess();
 }
 
 std::unique_ptr<WebStorageNamespace>
