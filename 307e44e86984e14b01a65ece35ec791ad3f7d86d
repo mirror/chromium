@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f71c66db_81effac0",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-20T00:18:35Z",
+      "side": 1,
+      "message": "shall we add coverage for legacy button? probably not?",
+      "revId": "307e44e86984e14b01a65ece35ec791ad3f7d86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
