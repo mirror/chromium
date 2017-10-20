@@ -317,6 +317,7 @@ cr.define('print_preview', function() {
           'Implemented for Windows only');
 
       var ticket = {
+        'pageRange': printTicketStore.pageRange.getDocumentPageRanges(),
         'mediaSize': printTicketStore.mediaSize.getValue(),
         'pageCount': printTicketStore.pageRange.getPageNumberSet().size,
         'landscape': printTicketStore.landscape.getValue(),

@@ -194,7 +194,6 @@ class PrintRenderFrameHelper
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   void OnPrintPages();
   void OnPrintForSystemDialog();
-  void OnPrintForPrintPreview(const base::DictionaryValue& job_settings);
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   void OnInitiatePrintPreview(bool has_selection);
