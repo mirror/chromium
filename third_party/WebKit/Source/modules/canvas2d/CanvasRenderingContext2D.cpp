@@ -334,8 +334,9 @@ void CanvasRenderingContext2D::ScrollPathIntoViewInternal(const Path& path) {
   IntRect canvas_rect = layout_box->AbsoluteContentBox();
   path_rect.MoveBy(canvas_rect.Location());
 
-  renderer->ScrollRectToVisible(path_rect, ScrollAlignment::kAlignCenterAlways,
-                                ScrollAlignment::kAlignTopAlways);
+  renderer->ScrollRectToVisible(path_rect,
+                                ScrollAlignment::kAlignToEdgeIfNeeded,
+                                ScrollAlignment::kAlignToEdgeIfNeeded);
 
   // TODO: should implement "inform the user" that the caret and/or
   // selection the specified rectangle of the canvas. See
