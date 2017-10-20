@@ -34,6 +34,8 @@ class CursorWindowControllerTest : public AshTestBase {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ash::switches::kAshEnableNightLight);
     AshTestBase::SetUp();
+    cursor_window_controller_ =
+        Shell::Get()->window_tree_host_manager()->cursor_window_controller();
     SetCursorCompositionEnabled(true);
   }
 
@@ -58,9 +60,9 @@ class CursorWindowControllerTest : public AshTestBase {
   }
 
   void SetCursorCompositionEnabled(bool enabled) {
-    cursor_window_controller_ =
-        Shell::Get()->window_tree_host_manager()->cursor_window_controller();
-    cursor_window_controller_->SetCursorCompositingEnabled(enabled);
+    cursor_window_controller_->is_cursor_compositing_enabled_for_test_ =
+        enabled;
+    Shell::Get()->UpdateCursorCompositingEnabled();
   }
 
   CursorWindowController* cursor_window_controller() {

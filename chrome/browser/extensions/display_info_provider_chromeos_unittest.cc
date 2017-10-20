@@ -42,6 +42,8 @@ class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFirstDisplayAsInternal);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kEnableMultiDisplayMirroring);
 
     ash::AshTestBase::SetUp();
 
@@ -531,8 +533,13 @@ TEST_F(DisplayInfoProviderChromeosTest, GetMirroring) {
 
   ASSERT_EQ(1u, result.size());
   EXPECT_EQ(base::Int64ToString(display_id_primary), result[0].id);
-  EXPECT_EQ(base::Int64ToString(display_id_secondary),
-            result[0].mirroring_source_id);
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    EXPECT_EQ(base::Int64ToString(display_id_primary),
+              result[0].mirroring_source_id);
+  } else {
+    EXPECT_EQ(base::Int64ToString(display_id_secondary),
+              result[0].mirroring_source_id);
+  }
 
   GetDisplayManager()->SetMirrorMode(false);
   ASSERT_FALSE(GetDisplayManager()->IsInMirrorMode());

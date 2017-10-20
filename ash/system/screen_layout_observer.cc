@@ -56,7 +56,14 @@ base::string16 GetDisplaySize(int64_t display_id) {
 
   // We don't show display size for mirrored display. Fallback
   // to empty string if this happens on release build.
-  bool mirroring = display_manager->mirroring_display_id() == display_id;
+  bool mirroring = false;
+  if (!display_manager->is_multi_display_mirroring_enabled()) {
+    mirroring = display_manager->mirroring_display_id() == display_id;
+  } else if (display_manager->IsInMirrorMode()) {
+    std::vector<int64_t> id_list = display_manager->GetMirroringDisplayIdList();
+    mirroring =
+        std::find(id_list.begin(), id_list.end(), display_id) != id_list.end();
+  }
   DCHECK(!mirroring);
   if (mirroring)
     return base::string16();
@@ -132,9 +139,13 @@ bool IsDockedModeEnabled() {
 // mode is entered.
 base::string16 GetEnterMirrorModeMessage() {
   if (display::Display::HasInternalDisplay()) {
+    // TODO(weidongg/607844) Add multi mirror mode message.
+    display::DisplayManager* display_manager = GetDisplayManager();
     return l10n_util::GetStringFUTF16(
         IDS_ASH_STATUS_TRAY_DISPLAY_MIRRORING,
-        GetDisplayName(GetDisplayManager()->mirroring_display_id()));
+        GetDisplayName(display_manager->is_multi_display_mirroring_enabled()
+                           ? display_manager->GetMirroringDisplayIdList()[0]
+                           : display_manager->mirroring_display_id()));
   }
 
   return l10n_util::GetStringUTF16(
