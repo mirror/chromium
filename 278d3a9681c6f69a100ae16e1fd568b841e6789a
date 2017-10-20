@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "842d0db9_08881ca1",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-20T06:09:47Z",
+      "side": 1,
+      "message": "Which offset does take LT::Is{Before,After}NonCollapsedCharacter(), DOM offset or LayoutText offset?\n\nHere passes LayoutText offset, but call sites of NGOffsetMapping::Is{Before,After}NonCollapsedCharacter() use as DOM offset.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 28,
+        "endLine": 1018,
+        "endChar": 50
+      },
+      "revId": "278d3a9681c6f69a100ae16e1fd568b841e6789a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
