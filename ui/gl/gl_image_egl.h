@@ -19,6 +19,9 @@ class GL_EXPORT GLImageEGL : public GLImage {
 
   bool Initialize(EGLenum target, EGLClientBuffer buffer, const EGLint* attrs);
 
+  bool InitializeFromHardwareBuffer(const struct AHardwareBuffer* buffer,
+                                    const EGLint* attrs);
+
   // Overridden from GLImage:
   gfx::Size GetSize() override;
   unsigned GetInternalFormat() override;
@@ -34,6 +37,9 @@ class GL_EXPORT GLImageEGL : public GLImage {
                             const gfx::Rect& bounds_rect,
                             const gfx::RectF& crop_rect) override;
   void Flush() override {}
+  void OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
+                    uint64_t process_tracing_id,
+                    const std::string& dump_name) override;
 
  protected:
   ~GLImageEGL() override;

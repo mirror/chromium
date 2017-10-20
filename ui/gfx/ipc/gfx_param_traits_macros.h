@@ -8,6 +8,7 @@
 #ifndef UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 #define UI_GFX_IPC_GFX_PARAM_TRAITS_MACROS_H_
 
+#include "build/build_config.h"
 #include "ipc/ipc_message_macros.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/gpu_memory_buffer.h"

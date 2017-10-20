@@ -660,6 +660,24 @@ bool ParamTraits<base::SharedMemoryHandle>::Read(const base::Pickle* m,
 #elif defined(OS_FUCHSIA)
   *r = base::SharedMemoryHandle(handle_fuchsia.get_handle(),
                                 static_cast<size_t>(size), guid);
+#elif defined(OS_ANDROID)
+  if (size == 0) {
+    // AHardwareBuffer constructor, no size
+    *r = base::SharedMemoryHandle(
+        base::FileDescriptor(
+            static_cast<internal::PlatformFileAttachment*>(attachment.get())
+            ->TakePlatformFile(),
+            true),
+        guid);
+  } else {
+    // POSIX
+    *r = base::SharedMemoryHandle(
+        base::FileDescriptor(
+            static_cast<internal::PlatformFileAttachment*>(attachment.get())
+            ->TakePlatformFile(),
+            true),
+        static_cast<size_t>(size), guid);
+  }
 #else
   *r = base::SharedMemoryHandle(
       base::FileDescriptor(

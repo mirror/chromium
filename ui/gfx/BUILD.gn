@@ -565,6 +565,13 @@ source_set("memory_buffer_sources") {
 
     deps += [ "//third_party/libdrm" ]
   }
+
+  if (is_android) {
+    sources += [
+      "android/android_hardware_buffer_compat.cc",
+      "android/android_hardware_buffer_compat.h",
+    ]
+  }
 }
 
 # TODO(ccameron): This can be moved into a separate source_set.

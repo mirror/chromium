@@ -24,6 +24,10 @@
 #include "base/file_descriptor_posix.h"
 #endif
 
+#if defined(OS_ANDROID)
+extern "C" typedef struct AHardwareBuffer AHardwareBuffer;
+#endif
+
 namespace base {
 
 // SharedMemoryHandle is the smallest possible IPC-transportable "reference" to
@@ -82,26 +86,6 @@ class BASE_EXPORT SharedMemoryHandle {
     MACH,
   };
 
-  // Constructs a SharedMemoryHandle backed by the components of a
-  // FileDescriptor. The newly created instance has the same ownership semantics
-  // as base::FileDescriptor. This typically means that the SharedMemoryHandle
-  // takes ownership of the |fd| if |auto_close| is true. Unfortunately, it's
-  // common for existing code to make shallow copies of SharedMemoryHandle, and
-  // the one that is finally passed into a base::SharedMemory is the one that
-  // "consumes" the fd.
-  // |guid| uniquely identifies the shared memory region pointed to by the
-  // underlying OS resource. If |file_descriptor| is associated with another
-  // SharedMemoryHandle, the caller must pass the |guid| of that
-  // SharedMemoryHandle. Otherwise, the caller should generate a new
-  // UnguessableToken.
-  // |size| refers to the size of the memory region pointed to by
-  // file_descriptor.fd. Passing the wrong |size| has no immediate consequence,
-  // but may cause errors when trying to map the SharedMemoryHandle at a later
-  // point in time.
-  SharedMemoryHandle(const base::FileDescriptor& file_descriptor,
-                     size_t size,
-                     const base::UnguessableToken& guid);
-
   // Makes a Mach-based SharedMemoryHandle of the given size. On error,
   // subsequent calls to IsValid() return false.
   // Passing the wrong |size| has no immediate consequence, but may cause errors
@@ -150,17 +134,6 @@ class BASE_EXPORT SharedMemoryHandle {
   SharedMemoryHandle(HANDLE h, size_t size, const base::UnguessableToken& guid);
   HANDLE GetHandle() const;
 #else
-  // |guid| uniquely identifies the shared memory region pointed to by the
-  // underlying OS resource. If |file_descriptor| is associated with another
-  // SharedMemoryHandle, the caller must pass the |guid| of that
-  // SharedMemoryHandle. Otherwise, the caller should generate a new
-  // UnguessableToken.
-  // Passing the wrong |size| has no immediate consequence, but may cause errors
-  // when trying to map the SharedMemoryHandle at a later point in time.
-  SharedMemoryHandle(const base::FileDescriptor& file_descriptor,
-                     size_t size,
-                     const base::UnguessableToken& guid);
-
   // Creates a SharedMemoryHandle from an |fd| supplied from an external
   // service.
   // Passing the wrong |size| has no immediate consequence, but may cause errors
@@ -174,6 +147,45 @@ class BASE_EXPORT SharedMemoryHandle {
   // unless the caller is careful.
   int Release();
 #endif
+
+#if defined(OS_ANDROID)
+  enum Type {
+    // The SharedMemoryHandle is backed by a POSIX fd.
+    POSIX,
+    // The SharedMemoryHandle is backed by an AHardwareBuffer object.
+    ANDROID_HARDWARE_BUFFER,
+  };
+  SharedMemoryHandle(struct AHardwareBuffer* buffer,
+                     size_t size,
+                     const base::UnguessableToken& guid);
+  // Constructor that makes an AHardwareBuffer from a file descriptor (for IPC)
+  SharedMemoryHandle(const base::FileDescriptor& file_descriptor,
+                     const base::UnguessableToken& guid);
+  struct AHardwareBuffer* GetMemoryObject() const;
+#endif
+
+  // Common implementation for Posix, MacOS, and Android
+#if !defined(OS_FUCHSIA) && !defined(OS_WIN)
+  // Constructs a SharedMemoryHandle backed by the components of a
+  // FileDescriptor. The newly created instance has the same ownership semantics
+  // as base::FileDescriptor. This typically means that the SharedMemoryHandle
+  // takes ownership of the |fd| if |auto_close| is true. Unfortunately, it's
+  // common for existing code to make shallow copies of SharedMemoryHandle, and
+  // the one that is finally passed into a base::SharedMemory is the one that
+  // "consumes" the fd.
+  //
+  // |guid| uniquely identifies the shared memory region pointed to by the
+  // underlying OS resource. If |file_descriptor| is associated with another
+  // SharedMemoryHandle, the caller must pass the |guid| of that
+  // SharedMemoryHandle. Otherwise, the caller should generate a new
+  // UnguessableToken.
+  // Passing the wrong |size| has no immediate consequence, but may cause errors
+  // when trying to map the SharedMemoryHandle at a later point in time.
+  SharedMemoryHandle(const base::FileDescriptor& file_descriptor,
+                     size_t size,
+                     const base::UnguessableToken& guid);
+#endif
+
 
  private:
 #if defined(OS_MACOSX) && !defined(OS_IOS)
@@ -196,6 +208,17 @@ class BASE_EXPORT SharedMemoryHandle {
       bool ownership_passes_to_ipc_ = false;
     };
   };
+#elif defined(OS_ANDROID)
+  // Each instance of a SharedMemoryHandle is backed either by a POSIX fd or a
+  // AHardwareBuffer. |type_| determines the backing member.
+  Type type_ = POSIX;
+  //union {
+    FileDescriptor file_descriptor_;
+    //    struct {
+      struct AHardwareBuffer* memory_object_ = nullptr;
+      bool ownership_passes_to_ipc_ = false;
+      //};
+    //};
 #elif defined(OS_FUCHSIA)
   zx_handle_t handle_ = ZX_HANDLE_INVALID;
   bool ownership_passes_to_ipc_ = false;

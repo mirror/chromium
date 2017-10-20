@@ -11,11 +11,18 @@
 #include "ui/gfx/client_native_pixmap_factory.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "ui/gfx/android/android_hardware_buffer_compat.h"
+#endif
+
 namespace gpu {
 
 gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
 #if defined(OS_MACOSX)
   return gfx::IO_SURFACE_BUFFER;
+#endif
+#if defined(OS_ANDROID)
+  return gfx::ANDROID_HARDWARE_BUFFER;
 #endif
 #if defined(OS_LINUX)
   return gfx::NATIVE_PIXMAP;
@@ -49,6 +56,26 @@ bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
              format == gfx::BufferFormat::RGBA_F16 ||
              format == gfx::BufferFormat::UYVY_422 ||
              format == gfx::BufferFormat::YUV_420_BIPLANAR;
+    case gfx::BufferUsage::SCANOUT_VDA_WRITE:
+    case gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE:
+      return false;
+  }
+  NOTREACHED();
+  return false;
+#endif
+
+#if defined(OS_ANDROID)
+  if (!gfx::AndroidHardwareBufferCompat::IsSupportAvailable()) {
+    return false;
+  }
+  switch (usage) {
+    case gfx::BufferUsage::GPU_READ:
+    case gfx::BufferUsage::SCANOUT:
+      return format == gfx::BufferFormat::RGBA_8888 ||
+             format == gfx::BufferFormat::RGBX_8888;
+    case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
+    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
+    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
     case gfx::BufferUsage::SCANOUT_VDA_WRITE:
     case gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE:
       return false;
