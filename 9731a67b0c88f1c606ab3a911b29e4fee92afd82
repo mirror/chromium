@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "e83495bf_fc450577",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-20T10:03:57Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f398741_ea348faa",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-20T10:03:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1813b17d_9628f324",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-20T10:03:57Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 731,
+        "startChar": 16,
+        "endLine": 731,
+        "endChar": 17
+      },
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4020babd_df21bcf3",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 12
@@ -43,6 +100,40 @@
         "endLine": 740,
         "endChar": 10
       },
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d41572_71e56479",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-20T10:03:57Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112be87f_2a55fb93",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6894,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-20T10:03:57Z",
+      "side": 1,
+      "message": "I\u0027d rather have WebURLLoaderFactoryImpl::CreateTestOnlyFactory or something similar for readability.",
       "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
