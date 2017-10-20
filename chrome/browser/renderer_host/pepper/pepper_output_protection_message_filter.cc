@@ -49,6 +49,10 @@ static_assert(
     static_cast<int>(PP_OUTPUT_PROTECTION_LINK_TYPE_PRIVATE_NETWORK) ==
         static_cast<int>(display::DISPLAY_CONNECTION_TYPE_NETWORK),
     "PP_OUTPUT_PROTECTION_LINK_TYPE_PRIVATE_NETWORK value mismatch");
+static_assert(
+    static_cast<int>(PP_OUTPUT_PROTECTION_LINK_TYPE_PRIVATE_VIRTUAL) ==
+        static_cast<int>(display::DISPLAY_CONNECTION_TYPE_VIRTUAL),
+    "PP_OUTPUT_PROTECTION_LINK_TYPE_PRIVATE_VIRTUAL value mismatch");
 static_assert(static_cast<int>(PP_OUTPUT_PROTECTION_METHOD_PRIVATE_NONE) ==
                   static_cast<int>(display::CONTENT_PROTECTION_METHOD_NONE),
               "PP_OUTPUT_PROTECTION_METHOD_PRIVATE_NONE value mismatch");

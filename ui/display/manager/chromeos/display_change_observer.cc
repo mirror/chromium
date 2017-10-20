@@ -215,7 +215,9 @@ void DisplayChangeObserver::OnTouchscreenDeviceConfigurationChanged() {
 void DisplayChangeObserver::UpdateInternalDisplay(
     const DisplayConfigurator::DisplayStateList& display_states) {
   for (auto* state : display_states) {
-    if (state->type() == DISPLAY_CONNECTION_TYPE_INTERNAL) {
+    if (state->type() == DISPLAY_CONNECTION_TYPE_INTERNAL ||
+        // Treat virtual display in emulator as internal for test.
+        state->type() == DISPLAY_CONNECTION_TYPE_VIRTUAL) {
       if (Display::HasInternalDisplay())
         DCHECK_EQ(Display::InternalDisplayId(), state->display_id());
       Display::SetInternalDisplayId(state->display_id());

@@ -33,6 +33,9 @@ display::mojom::DisplayConnectionType EnumTraits<
     case display::DisplayConnectionType::DISPLAY_CONNECTION_TYPE_NETWORK:
       return display::mojom::DisplayConnectionType::
           DISPLAY_CONNECTION_TYPE_NETWORK;
+    case display::DisplayConnectionType::DISPLAY_CONNECTION_TYPE_VIRTUAL:
+      return display::mojom::DisplayConnectionType::
+          DISPLAY_CONNECTION_TYPE_VIRTUAL;
   }
   NOTREACHED();
   return display::mojom::DisplayConnectionType::DISPLAY_CONNECTION_TYPE_NONE;
@@ -69,6 +72,9 @@ bool EnumTraits<display::mojom::DisplayConnectionType,
       return true;
     case display::mojom::DisplayConnectionType::DISPLAY_CONNECTION_TYPE_NETWORK:
       *out = display::DisplayConnectionType::DISPLAY_CONNECTION_TYPE_NETWORK;
+      return true;
+    case display::mojom::DisplayConnectionType::DISPLAY_CONNECTION_TYPE_VIRTUAL:
+      *out = display::DisplayConnectionType::DISPLAY_CONNECTION_TYPE_VIRTUAL;
       return true;
   }
   return false;
