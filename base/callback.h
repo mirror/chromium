@@ -7,6 +7,7 @@
 
 #include "base/callback_forward.h"
 #include "base/callback_internal.h"
+#include "base/trace_event/heap_profiler.h"
 
 // NOTE: Header files that do not require the full definition of Callback or
 // Closure should #include "base/callback_forward.h" instead of this file.
@@ -61,6 +62,8 @@ class OnceCallback<R(Args...)> : public internal::CallbackBase {
     OnceCallback cb = std::move(*this);
     PolymorphicInvoke f =
         reinterpret_cast<PolymorphicInvoke>(cb.polymorphic_invoke());
+    void* address = *reinterpret_cast<void**>(&f);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return f(cb.bind_state_.get(), std::forward<Args>(args)...);
   }
 };
@@ -89,6 +92,8 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
   R Run(Args... args) const & {
     PolymorphicInvoke f =
         reinterpret_cast<PolymorphicInvoke>(this->polymorphic_invoke());
+    void* address = *reinterpret_cast<void**>(&f);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return f(this->bind_state_.get(), std::forward<Args>(args)...);
   }
 
@@ -100,6 +105,8 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
     RepeatingCallback cb = std::move(*this);
     PolymorphicInvoke f =
         reinterpret_cast<PolymorphicInvoke>(cb.polymorphic_invoke());
+    void* address = *reinterpret_cast<void**>(&f);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return f(cb.bind_state_.get(), std::forward<Args>(args)...);
   }
 };
