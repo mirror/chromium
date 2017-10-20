@@ -1,0 +1,533 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e245d53_de588f3a",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "I\u0027m not quite following this. Can you expand on the comment a bit? Or we can sort it out in person.",
+      "range": {
+        "startLine": 324,
+        "startChar": 17,
+        "endLine": 325,
+        "endChar": 73
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5a94b9_f0285240",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "Invert, same as in input_router_impl.cc.",
+      "range": {
+        "startLine": 635,
+        "startChar": 13,
+        "endLine": 635,
+        "endChar": 38
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70e15c2_9342a6b4",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "events",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6377fc7_aa023611",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "the gesture is moving",
+      "range": {
+        "startLine": 47,
+        "startChar": 30,
+        "endLine": 47,
+        "endChar": 59
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c0910f_4c8ecb8f",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "by -\u003e from",
+      "range": {
+        "startLine": 50,
+        "startChar": 75,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd520ef1_216cd2e1",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "I personally prefer {} with multi-line conditions, but the style guide doesn\u0027t care.\nUp to you.",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9284f416_841bf03a",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "You\u0027re checking if it has been set, below. I\u0027m a bit confused here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 54
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a164af6_37876aa2",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "It might be worth adding a comment on why we multiply by scale here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 45,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050842dd_3a7bd310",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "Nittiest nits: And it -\u003e It",
+      "range": {
+        "startLine": 171,
+        "startChar": 60,
+        "endLine": 171,
+        "endChar": 66
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1f1abe_a238ed12",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "and indicates that we should not\n\n(I think that\u0027s what\u0027s meant here?)",
+      "range": {
+        "startLine": 172,
+        "startChar": 43,
+        "endLine": 172,
+        "endChar": 65
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64334f8_37badfdc",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "Should we verify that we have a value first?\n\nIf we\u0027re confident we should, let\u0027s add a DCHECK.",
+      "range": {
+        "startLine": 237,
+        "startChar": 38,
+        "endLine": 237,
+        "endChar": 67
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bfd8b7_ebc1459c",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "the user has force enabled zoom,",
+      "range": {
+        "startLine": 267,
+        "startChar": 10,
+        "endLine": 267,
+        "endChar": 28
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef16d0ac_373d3586",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "Style guide requires {} for multi-line bodies of conditionals.",
+      "range": {
+        "startLine": 269,
+        "startChar": 74,
+        "endLine": 269,
+        "endChar": 0
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1694ee_439d179a",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "This name is a bit misleading, as we aren\u0027t setting the white listed touch action to this value.\n\nWe\u0027re accumulating white listed touch action information.\n\nPerhaps OnAddWhiteListedTouchAction? Or OnReceiveWhiteListedTouchAction?",
+      "range": {
+        "startLine": 311,
+        "startChar": 26,
+        "endLine": 311,
+        "endChar": 29
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a4ca0e_aa3965a3",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "This naming is a bit hard to follow, because we normally distinguish between allowed and whitelisted, but here we conflate them. I think we can address this by renaming allowed_touch_action_.",
+      "range": {
+        "startLine": 337,
+        "startChar": 18,
+        "endLine": 337,
+        "endChar": 38
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60efc251_ab9d3e4c",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "\"save any scrolling\" -\u003e \"accumulate any scroll or pinch delta\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949c1c8e_2f18d0cb",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "Indicate the duration for which this value is valid.\nIf suppress_manipulation_events_ was set when?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5f3f68_9db5f09e",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "For white_listed_touch_action_, you state this value comes from the compositor.\nMaybe clarify that this value comes from an event ack?\n\nPotentially bad idea, what if we renamed |allowed_touch_action| to |acked_touch_action|? That would mean that when we\u0027re talking about the allowed touch action, we mean our current best guess, based on either the whitelisted or acked values. I\u0027ve flagged one place in touch_action_filter.cc where this is confusing, but I think it\u0027s generally a bit hard to figure out.",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 56
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4285903f_b38f3e0b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 6296,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "initially has no set touch action.",
+      "range": {
+        "startLine": 6296,
+        "startChar": 37,
+        "endLine": 6296,
+        "endChar": 57
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40044255_e11bfa2e",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "If you\u0027re in the mood, converting this to a range based for loop might be a nice little cleanup.",
+      "range": {
+        "startLine": 1051,
+        "startChar": 7,
+        "endLine": 1051,
+        "endChar": 56
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ae420e_ab3cb90d",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "Does it make sense to move this DCHECK above the loop?",
+      "range": {
+        "startLine": 1053,
+        "startChar": 4,
+        "endLine": 1053,
+        "endChar": 38
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7cd9d5_a7f452d8",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "ack",
+      "range": {
+        "startLine": 1084,
+        "startChar": 60,
+        "endLine": 1084,
+        "endChar": 63
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b3f70d_800d1fa7",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 1,
+      "message": "action",
+      "range": {
+        "startLine": 1084,
+        "startChar": 5,
+        "endLine": 1084,
+        "endChar": 11
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

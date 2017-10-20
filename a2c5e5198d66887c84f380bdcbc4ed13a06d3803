@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad51e505_390d8bee",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-20T14:26:05Z",
+      "side": 0,
+      "message": "Landing a patch this large, and turning it on at the same time isn\u0027t ideal, as if something bad happens, someone is likely to revert the whole patch, instead of just disable the feature.\n\nHow big a pain would it be to split enabling this into a separate patch?\n\nEr, actually, looks like you\u0027re just changing the kind of flag this is behind?\nIf that\u0027s the case, lets mention it in the CL description.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 78
+      },
+      "revId": "a2c5e5198d66887c84f380bdcbc4ed13a06d3803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
