@@ -392,6 +392,7 @@ void NavigationSimulator::Commit() {
   params.nav_entry_id = handle_->pending_nav_entry_id();
   params.url = navigation_url_;
   params.origin = url::Origin::Create(navigation_url_);
+  params.referrer = referrer_;
   params.transition = transition_;
   params.should_update_history = true;
   params.did_create_new_entry = !ui::PageTransitionCoreTypeIs(
@@ -514,6 +515,7 @@ void NavigationSimulator::CommitErrorPage() {
   params.did_create_new_entry = !ui::PageTransitionCoreTypeIs(
       transition_, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
   params.url = navigation_url_;
+  params.referrer = referrer_;
   params.transition = transition_;
   params.was_within_same_document = false;
   params.url_is_unreachable = true;
@@ -558,6 +560,7 @@ void NavigationSimulator::CommitSameDocument() {
   params.nav_entry_id = 0;
   params.url = navigation_url_;
   params.origin = url::Origin::Create(navigation_url_);
+  params.referrer = referrer_;
   params.transition = transition_;
   params.should_update_history = true;
   params.did_create_new_entry = false;
