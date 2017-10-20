@@ -22,6 +22,30 @@
       "revId": "fd4118d5549d870e2b590df1c0b4277349e8d75a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d0717e_8508efd2",
+        "filename": "ios/chrome/browser/ui/external_search/external_search_coordinator.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-10-20T16:43:15Z",
+      "side": 1,
+      "message": "Good idea, thanks!\nDone.",
+      "parentUuid": "1798a28e_a17133e4",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "fd4118d5549d870e2b590df1c0b4277349e8d75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
