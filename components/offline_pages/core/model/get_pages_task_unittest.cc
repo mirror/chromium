@@ -136,7 +136,7 @@ TEST_F(GetPagesTaskTest, GetPagesForSingleClientId) {
   std::vector<ClientId> client_ids = {item_1.client_id};
 
   runner()->RunTask(GetPagesTask::CreateTaskMatchingClientIds(
-      store(), get_pages_callback(), client_ids));
+      store(), client_ids, get_pages_callback()));
 
   EXPECT_EQ(1UL, read_result().size());
   EXPECT_EQ(item_1, *(read_result().begin()));
@@ -154,7 +154,7 @@ TEST_F(GetPagesTaskTest, GetPagesForMultipleClientIds) {
   std::vector<ClientId> client_ids{item_1.client_id, item_2.client_id};
 
   runner()->RunTask(GetPagesTask::CreateTaskMatchingClientIds(
-      store(), get_pages_callback(), client_ids));
+      store(), client_ids, get_pages_callback()));
 
   std::set<OfflinePageItem> result_set;
   result_set.insert(read_result().begin(), read_result().end());
@@ -175,7 +175,7 @@ TEST_F(GetPagesTaskTest, GetPagesByNamespace) {
   store_util()->InsertItem(item_3);
 
   runner()->RunTask(GetPagesTask::CreateTaskMatchingNamespace(
-      store(), get_pages_callback(), kTestNamespace));
+      store(), kTestNamespace, get_pages_callback()));
 
   std::set<OfflinePageItem> result_set;
   result_set.insert(read_result().begin(), read_result().end());
@@ -198,7 +198,7 @@ TEST_F(GetPagesTaskTest, GetPagesByRequestOrigin) {
   store_util()->InsertItem(item_3);
 
   runner()->RunTask(GetPagesTask::CreateTaskMatchingRequestOrigin(
-      store(), get_pages_callback(), kRequestOrigin1));
+      store(), kRequestOrigin1, get_pages_callback()));
 
   std::set<OfflinePageItem> result_set;
   result_set.insert(read_result().begin(), read_result().end());
@@ -235,8 +235,8 @@ TEST_F(GetPagesTaskTest, GetPagesByUrl) {
   OfflinePageItem item_5 = generator()->CreateItem();
   store_util()->InsertItem(item_5);
 
-  runner()->RunTask(GetPagesTask::CreateTaskMatchingUrl(
-      store(), get_pages_callback(), kUrl1));
+  runner()->RunTask(GetPagesTask::CreateTaskMatchingUrl(store(), kUrl1,
+                                                        get_pages_callback()));
 
   std::set<OfflinePageItem> result_set;
   result_set.insert(read_result().begin(), read_result().end());
@@ -257,7 +257,7 @@ TEST_F(GetPagesTaskTest, GetPageByOfflineId) {
   store_util()->InsertItem(item_3);
 
   runner()->RunTask(GetPagesTask::CreateTaskMatchingOfflineId(
-      store(), get_single_page_callback(), item_1.offline_id));
+      store(), item_1.offline_id, get_single_page_callback()));
 
   EXPECT_EQ(item_1, single_page_result());
 }

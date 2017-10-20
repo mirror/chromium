@@ -31,7 +31,7 @@ int64_t GetPageCountSync(sql::Connection* db) {
 
 OfflinePageMetadataStoreTestUtil::OfflinePageMetadataStoreTestUtil(
     scoped_refptr<base::TestSimpleTaskRunner> task_runner)
-    : task_runner_(task_runner) {}
+    : task_runner_(task_runner), store_ptr(nullptr) {}
 
 OfflinePageMetadataStoreTestUtil::~OfflinePageMetadataStoreTestUtil() {}
 
@@ -43,14 +43,17 @@ void OfflinePageMetadataStoreTestUtil::BuildStore() {
 
   store_.reset(
       new OfflinePageMetadataStoreSQL(task_runner_, temp_directory_.GetPath()));
+  store_ptr = store_.get();
 }
 
 void OfflinePageMetadataStoreTestUtil::BuildStoreInMemory() {
   store_.reset(new OfflinePageMetadataStoreSQL(task_runner_));
+  store_ptr = store_.get();
 }
 
 void OfflinePageMetadataStoreTestUtil::DeleteStore() {
   store_.reset();
+  store_ptr = nullptr;
   task_runner_->RunUntilIdle();
 }
 
@@ -73,7 +76,7 @@ void OfflinePageMetadataStoreTestUtil::InsertItem(const OfflinePageItem& page) {
 
 int64_t OfflinePageMetadataStoreTestUtil::GetPageCount() {
   int64_t count = 0;
-  store_->Execute(
+  store()->Execute(
       base::BindOnce(&GetPageCountSync),
       base::BindOnce(
           [](int64_t* out_count, int64_t cb_count) { *out_count = cb_count; },
@@ -86,14 +89,13 @@ std::unique_ptr<OfflinePageItem>
 OfflinePageMetadataStoreTestUtil::GetPageByOfflineId(int64_t offline_id) {
   OfflinePageItem* page = nullptr;
   auto task = GetPagesTask::CreateTaskMatchingOfflineId(
-      store(),
+      store(), offline_id,
       base::Bind(
           [](OfflinePageItem** out_page, const OfflinePageItem* cb_page) {
             if (cb_page)
               *out_page = new OfflinePageItem(*cb_page);
           },
-          &page),
-      offline_id);
+          &page));
   task->Run();
   task_runner_->RunUntilIdle();
   return base::WrapUnique<OfflinePageItem>(page);
