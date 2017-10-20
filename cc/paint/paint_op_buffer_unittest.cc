@@ -1763,7 +1763,8 @@ void PushDrawTextBlobOps(PaintOpBuffer* buffer) {
                         test_floats.size() - 1);
   for (size_t i = 0; i < len; ++i) {
     buffer->push<DrawTextBlobOp>(test_blobs[i], test_floats[i],
-                                 test_floats[i + 1], test_flags[i]);
+                                 test_floats[i + 1], test_flags[i], nullptr,
+                                 0u);
   }
   ValidateOps<DrawTextBlobOp>(buffer);
 }
