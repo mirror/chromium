@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c933d1fa_02425eb6",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-20T20:02:15Z",
+      "side": 1,
+      "message": "I\u0027m not understanding this comment--would you be willing to provide more detail?  I\u0027m not sure which four transactions are being discussed (there are five total, do you mean all transactions except for the first?) or why the race for creating the entry means that only two succeed.",
+      "range": {
+        "startLine": 1465,
+        "startChar": 28,
+        "endLine": 1465,
+        "endChar": 32
+      },
+      "revId": "917f6768d8c196a7031b59b59799d6a36d841106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
