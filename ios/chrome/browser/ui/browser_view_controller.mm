@@ -174,6 +174,7 @@
 #include "ios/chrome/browser/upgrade/upgrade_center.h"
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
 #import "ios/chrome/browser/web/error_page_content.h"
+#import "ios/chrome/browser/web/load_timing_tab_helper.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #include "ios/chrome/browser/web/print_tab_helper.h"
 #import "ios/chrome/browser/web/repost_form_tab_helper.h"
@@ -2296,6 +2297,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 // is added directly to the model via pre-rendering.
 - (void)tabLoadComplete:(Tab*)tab withSuccess:(BOOL)success {
   DCHECK(tab && ([_model indexOfTab:tab] != NSNotFound));
+  LoadTimingTabHelper* timing_helper =
+      LoadTimingTabHelper::FromWebState(tab.webState);
+  DCHECK(timing_helper);
+  timing_helper->ReportLoadTime();
 
   // Persist the session on a delay.
   [_model saveSessionImmediately:NO];
@@ -3897,6 +3902,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
       // and show the prerendering animation.
       newTab.isPrerenderTab = NO;
 
+      LoadTimingTabHelper* timing_helper =
+          LoadTimingTabHelper::FromWebState(newTab.webState);
+      DCHECK(timing_helper);
+      timing_helper->DidPromotePrerenderTab();
+
       [self tabLoadComplete:newTab withSuccess:newTab.loadFinished];
       return;
     }
@@ -3917,6 +3927,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
                     appendTo:kCurrentTab];
     return;
   }
+
+  LoadTimingTabHelper* current_tab_timing_helper =
+      LoadTimingTabHelper::FromWebState([_model currentTab].webState);
+  DCHECK(current_tab_timing_helper);
+  current_tab_timing_helper->DidInitiatePageLoad();
 
   // If this is a reload initiated from the omnibox.
   // TODO(crbug.com/730192): Add DCHECK to verify that whenever urlToLood is the
