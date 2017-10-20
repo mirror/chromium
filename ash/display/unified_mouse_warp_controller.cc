@@ -104,6 +104,11 @@ bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
   point_in_native.Offset(host->GetBoundsInPixels().x(),
                          host->GetBoundsInPixels().y());
 
+  LOG(ERROR) << "PointInNative: host=" << host->window()->GetName()
+             << ", point host=" << point_in_unified_host.ToString()
+             << ", point in native=" << point_in_native.ToString()
+             << ", host bounds=" << host->GetBoundsInPixels().ToString();
+
   return WarpMouseCursorInNativeCoords(point_in_native, point_in_unified_host,
                                        update_location_for_test_);
 }
@@ -155,6 +160,8 @@ bool UnifiedMouseWarpController::WarpMouseCursorInNativeCoords(
   AshWindowTreeHost* target_ash_host =
       GetMirroringAshWindowTreeHostForDisplayId(
           in_first_edge ? display_list[1].id() : display_list[0].id());
+  LOG(ERROR) << "point_in_unified_host=" << point_in_unified_host.ToString()
+             << ", target host=" << target_ash_host->AsWindowTreeHost()->window()->GetName();
   MoveCursorTo(target_ash_host, point_in_unified_host,
                update_mouse_location_now);
   return true;

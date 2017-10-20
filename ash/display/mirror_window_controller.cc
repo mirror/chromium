@@ -31,6 +31,8 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/native_widget_types.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace ash {
 namespace {
 
@@ -43,31 +45,39 @@ class MirroringScreenPositionClient
 
   void ConvertPointToScreen(const aura::Window* window,
                             gfx::PointF* point) override {
+    gfx::PointF o(*point);
     const aura::Window* root = window->GetRootWindow();
     aura::Window::ConvertPointToTarget(window, root, point);
     const display::Display& display =
         controller_->GetDisplayForRootWindow(root);
     const gfx::Point display_origin = display.bounds().origin();
     point->Offset(display_origin.x(), display_origin.y());
+    LOG(ERROR) << "ToScreen(" << root->GetName() << ") " << o.ToString() << " => " << point->ToString();
+    //base::debug::StackTrace().Print();
   }
 
   void ConvertPointFromScreen(const aura::Window* window,
                               gfx::PointF* point) override {
+    gfx::PointF o(*point);
     const aura::Window* root = window->GetRootWindow();
     const display::Display& display =
         controller_->GetDisplayForRootWindow(root);
     const gfx::Point display_origin = display.bounds().origin();
     point->Offset(-display_origin.x(), -display_origin.y());
     aura::Window::ConvertPointToTarget(root, window, point);
+    LOG(ERROR) << "FromScreen(" << root->GetName() << ") " << o.ToString() << " => " << point->ToString();
+    //base::debug::StackTrace().Print();
   }
 
   void ConvertHostPointToScreen(aura::Window* root_window,
                                 gfx::Point* point) override {
+    gfx::PointF o(*point);
     aura::Window* not_used;
     ScreenPositionController::ConvertHostPointToRelativeToRootWindow(
         root_window, controller_->GetAllRootWindows(), point, &not_used);
     aura::client::ScreenPositionClient::ConvertPointToScreen(root_window,
                                                              point);
+    LOG(ERROR) << "HostToScreen(" << root_window->GetName() << ") " << o.ToString() << " => " << point->ToString();
   }
 
   void SetBounds(aura::Window* window,
@@ -100,6 +110,17 @@ class NoneCaptureClient : public aura::client::CaptureClient {
 
   DISALLOW_COPY_AND_ASSIGN(NoneCaptureClient);
 };
+
+
+
+
+
+
+
+
+
+
+
 
 display::DisplayManager::MultiDisplayMode GetCurrentMultiDisplayMode() {
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
