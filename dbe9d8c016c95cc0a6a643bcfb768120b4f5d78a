@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71803d23_f2ac5b45",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T22:59:44Z",
+      "side": 1,
+      "message": "addFileSystemOverridesProject",
+      "revId": "dbe9d8c016c95cc0a6a643bcfb768120b4f5d78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732aad7e_3b9117e4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T22:59:44Z",
+      "side": 1,
+      "message": "rename event into ProjectDomainChanged",
+      "range": {
+        "startLine": 79,
+        "startChar": 79,
+        "endLine": 79,
+        "endChar": 91
+      },
+      "revId": "dbe9d8c016c95cc0a6a643bcfb768120b4f5d78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39fa7b4_ee97b9c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesNavigator.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T22:59:44Z",
+      "side": 1,
+      "message": "you can accept project which is added/removed and fast-return if its not a \u0027overrides\u0027 project",
+      "revId": "dbe9d8c016c95cc0a6a643bcfb768120b4f5d78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
