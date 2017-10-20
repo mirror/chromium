@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a79feb2_105d893e",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-20T20:38:33Z",
+      "side": 1,
+      "message": "There is a need to have a comment explaining the origin of the number.",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c1410d_002339a3",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-20T20:38:33Z",
+      "side": 1,
+      "message": "This is a bit inconsistent - the \"renovations_enabled_\" for example is a class member, while this enable check is done directly calling a function. \n\nI also think that as is this code may sometimes skip running renovations if the resources are loaded enough before OnLoad.",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29f4e1e6_88d25dd8",
         "filename": "components/offline_pages/core/snapshot_controller.cc",
         "patchSetId": 1
@@ -36,6 +70,57 @@
       "writtenOn": "2017-10-20T02:13:47Z",
       "side": 1,
       "message": "Do we also want to mark quality depending on ratio of images/css resources received?",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c6cfc4_0f33488c",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-20T20:38:33Z",
+      "side": 1,
+      "message": "can images_requested be 0?",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2f39d5_a0a3ae28",
+        "filename": "components/offline_pages/core/snapshot_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-20T20:38:33Z",
+      "side": 1,
+      "message": "This is public state and is consumed externally. Need to make sure consumers are allright.",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac6a561_9d1a6c3b",
+        "filename": "components/offline_pages/core/snapshot_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-20T20:38:33Z",
+      "side": 1,
+      "message": "The name is ambiguous... Maybe UpdateResourceLoadingPercentage or UpdateResourceLoadingProgress?",
       "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
