@@ -413,6 +413,20 @@ TEST_F(PictureLayerTilingIteratorTest, ResizeLiveTileRectOverTileBorders) {
   EXPECT_TRUE(tiling_->TileAt(2, 0));
 }
 
+TEST_F(PictureLayerTilingIteratorTest, ShrinkWidthExpandHeightTilingRect) {
+  Initialize(gfx::Size(100, 100), 1.f, gfx::Size(450, 296));
+  EXPECT_EQ(5, tiling_->TilingDataForTesting().num_tiles_x());
+  EXPECT_EQ(3, tiling_->TilingDataForTesting().num_tiles_y());
+
+  SetLiveRectAndVerifyTiles(gfx::Rect(450, 296));
+
+  scoped_refptr<FakeRasterSource> raster_source =
+      FakeRasterSource::CreateFilled(gfx::Size(310, 310));
+  tiling_->SetRasterSourceAndResize(raster_source);
+  EXPECT_EQ(4, tiling_->TilingDataForTesting().num_tiles_x());
+  EXPECT_EQ(4, tiling_->TilingDataForTesting().num_tiles_y());
+}
+
 TEST_F(PictureLayerTilingIteratorTest, ResizeLiveTileRectOverSameTiles) {
   // The tiling has four rows and three columns.
   Initialize(gfx::Size(100, 100), 1.f, gfx::Size(250, 350));
