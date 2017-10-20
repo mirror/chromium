@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7d9a753_94bda9bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "The comment doesn\u0027t explain why this is necessary. (and I couldn\u0027t guess, so it\u0027s not obvious)\n\nThe timeouts here are arbitrary and will likely result in test flakiness.\n\nAfter reading the entire CL, it seems like you\u0027re using this function to assert that an observer does / does not fire tests. I think the setup would be simplified if instead you had a waitForCookieObservation() idiom. This wouldn\u0027t let you assert that an observer never fires, and I think that\u0027s just fine for these tests.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60af85d5_1f94a6fb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "The meaning of this is unclear and requires looking through the entire .js file and understanding how the code is pieced together. If you can\u0027t remove all this, please replace t0/t1/t2 with more descriptive strings, like \"immediately\", \"after setTimeout(0)\", \"after setTimeout(4)\".",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4b5f53_f8c1f564",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "If you have to use setTimeout, please be explicit about the time argument (0).",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4484f9_cd0233f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "We don\u0027t generally test the testing framework.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f39f886_8f6a2103",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "// Start with a clean slate.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e5da22_6b36b3ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This seems like unnecessary complexity. If the test will fail anyway, might as well have it fail right here.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c973010c_3bde97ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "I think these checks are also currently done in resetCookies. I do think that there\u0027s merit to separating checks from the reset code. You can either do the checks explicitly in every test (like here), or pull them in a assertEmptyCookieJar() function. The former is preferable, assuming it doesn\u0027t swell the tests by too much.\n\nIf you go down either path, please remove the checks from resetCookies. That\u0027d make the code match the name.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3e95b0_122fc8db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "The meaning of \"legacy\" is unclear here. Consider switching to \"unsecured\", to match the name of the function setting it.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337f28a8_b6fa7d44",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "Non-alphanumeric characters make tests more difficult to reason about (some displays don\u0027t show them well, the sort order is not necessarily intuitive), so they should be isolated to specific tests that check for encoding correctness. cookie-name{1,2,3} would be easier to reason about in most tests.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6781fd77_634a8e41",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "I still don\u0027t think assertions are appropriate in a cleanup.\n\nThe best way around that I can see is to pull out an array with the steps above, then conditionally concatenate the steps below (simplified to bare cookie.delete calls) if the page is https.\n\nSeparately, I think that Promise.all() should be sufficient here -- if a cookieStore.delete call fails, there\u0027s little reason to expect that the other calls would succeed.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7d82b9_82ddc5bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This \"step\" and the next 2 are not actually cleanup tests. They can be done after all the cleanup tests, and they can result in exceptions.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002c78c3_392f6d02",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This seems like a good candidate for a test cleanup to be registered right after the observer is created. The change would make the observer lifetime clearer.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad849f5_cc9b5f11",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "Promises and async-await implementations are highly unlikely to be coupled with cookies, so there is no value in testing both. async-await are allowed in WPT tests now (at least they made their way to the repo), so you get to pick which version (async/await vs Promise API) you prefer, but there should only be one.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af99229f_b52a472f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "\"simple\" is not very suggestive, because it\u0027s an awfully overloaded word.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980caaad_b0268520",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "Please consider cookie-name or cookie_name instead of shouty casing.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b18886ac_ad4ff5db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "\"async function\" is slightly simpler than assigning an anonymous function to a variable. (you also have let/const inconsistencies, but those will go away when you use \"async function\" everywhere)",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97cb9a50_0f4ef228",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "The function name is misleading, as you\u0027re performing a test here. This is applicable in more places below.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e46bbe_27a0850b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "Can you please stick to [A-Za-z0-9_]+ (and English words) for variable names?",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4794e998_a26c15f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem relevant to the tests landing in WPT.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4530f3_44fc4083",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This really seems like it can be its own test. I can\u0027t think of interactions issues that would be uncovered by having it combined with other tests.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb89ba1_3608b6a7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "I imagine this is in response to https://github.com/whatwg/html/issues/3076#issuecomment-332920132. While that is a valid wish for the WPT project, it is not in the scope of the Async Cookies API work. If you wish to add coverage for \u003cmeta http-equiv\u003d\"set-cookie\" ... \u003e, please do that in a separate CL.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b85a23e_6baa14c0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t look helpful to someone trying to build an interoperable implementation. I\u0027m guessing it means that some of the checks below are not helpful either.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

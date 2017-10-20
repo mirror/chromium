@@ -404,6 +404,23 @@
     },
     {
       "key": {
+        "uuid": "edc48d3e_488c4112",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be necessary to read through something like this to understand what happens in a test case.\n\nThe easiest way I see to accomplish this goal is to have each .html file contain one or multiple promise_tests that (ideally) contain the test code, or call into functions defined in the JS filethat has shared test code. I think you\u0027re trying to do DRY in a situations where a bit more redundancy would make the test code significantly easier to read.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c61cff4_21bbe952",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
         "patchSetId": 29
@@ -474,6 +491,126 @@
     },
     {
       "key": {
+        "uuid": "d40bf3e0_6dfe202c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "REST: It\u0027s not entirely obvious, because any HTTP request (even get) can set cookies. Having \"echo-cookies-headers\" in the script URL or in the request body makes the intent clearer. The REST argument requires guessing, which is extra mental burden.\n\nJSON: Like I said above, the fetch API has built-in support for JSON, so the extra complexity in the CGI script will be more than paid off by the simplicity in the tests calling into the script. JSON is also easier to debug than URL-encoding in the network tab.",
+      "parentUuid": "36ccf6ec_dcfac416",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497c9e72_11607f7c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "\"Allows sub-path to be specified\" can be roughly inferred from the extraPath argument. I think it\u0027d be more useful to state how that can/should be used (it\u0027s there to help test path-scoped cookies, right?)",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896f846e_e60f0977",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "I think these helpers should be more explicit -- this one is readCookieHttpHeader, and the one below is issueSetCookieHttpHeader. I think that browser implementers should know exactly what a HTTP header is, and being explicit about that is more meaningful than \"approximate equivalent to document.cookie\", which forces the reader to guess what\u0027s happening.\n\nI\u0027m purposefully avoiding get/set, because there are HTTP requests involved. However, if you prefer those prefixes, the get/read distinction is much less important to me than making it clear that HTTP headers are involved here.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e1118f_1d63476f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "I think this should be removed. A failed fetch() with a relevant URL should be clear enough.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be132553_98bc3b52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "The 3 assertions here don\u0027t look like they test the async cookies API implementation. If you want to test the CGI script (not a bad idea!), those tests should be in a separate file.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f52801_486c6585",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This line and the one below would be a bit clearer if the body was JSON.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa795aa9_1c0f2714",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t look like it tests the async cookies API implementation. If you want to test the CGI script (not a bad idea!), those tests should be in a separate file.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1f4f8eb_50e491f6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
         "patchSetId": 29
@@ -503,6 +640,24 @@
       "side": 1,
       "message": "It\u0027s not dead yet:\n\nhttps://github.com/whatwg/html/issues/3076",
       "parentUuid": "e1f4f8eb_50e491f6",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cea11d_289b1845",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-20T22:55:46Z",
+      "side": 1,
+      "message": "The subject is largely orthogonal to async cookies and doesn\u0027t warrant extra complexity in tests specifically targeted at async cookies.",
+      "parentUuid": "679b8490_1558a3db",
       "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
