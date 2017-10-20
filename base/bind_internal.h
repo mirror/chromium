@@ -15,6 +15,7 @@
 #include "base/memory/raw_scoped_refptr_mismatch_checker.h"
 #include "base/memory/weak_ptr.h"
 #include "base/template_util.h"
+#include "base/trace_event/heap_profiler.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -133,6 +134,8 @@ struct FunctorTraits<Functor,
   template <typename... RunArgs>
   static ExtractReturnType<RunType>
   Invoke(const Functor& functor, RunArgs&&... args) {
+    void* address = *reinterpret_cast<void* const*>(&functor);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return functor(std::forward<RunArgs>(args)...);
   }
 };
@@ -146,6 +149,8 @@ struct FunctorTraits<R (*)(Args...)> {
 
   template <typename... RunArgs>
   static R Invoke(R (*function)(Args...), RunArgs&&... args) {
+    void* address = *reinterpret_cast<void* const*>(&function);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return function(std::forward<RunArgs>(args)...);
   }
 };
@@ -161,6 +166,8 @@ struct FunctorTraits<R(__stdcall*)(Args...)> {
 
   template <typename... RunArgs>
   static R Invoke(R(__stdcall* function)(Args...), RunArgs&&... args) {
+    void* address = *reinterpret_cast<void* const*>(&function);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return function(std::forward<RunArgs>(args)...);
   }
 };
@@ -174,6 +181,8 @@ struct FunctorTraits<R(__fastcall*)(Args...)> {
 
   template <typename... RunArgs>
   static R Invoke(R(__fastcall* function)(Args...), RunArgs&&... args) {
+    void* address = *reinterpret_cast<void* const*>(&function);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return function(std::forward<RunArgs>(args)...);
   }
 };
@@ -191,6 +200,8 @@ struct FunctorTraits<R (Receiver::*)(Args...)> {
   static R Invoke(R (Receiver::*method)(Args...),
                   ReceiverPtr&& receiver_ptr,
                   RunArgs&&... args) {
+    void* address = *reinterpret_cast<void* const*>(&method);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return ((*receiver_ptr).*method)(std::forward<RunArgs>(args)...);
   }
 };
@@ -206,6 +217,8 @@ struct FunctorTraits<R (Receiver::*)(Args...) const> {
   static R Invoke(R (Receiver::*method)(Args...) const,
                   ReceiverPtr&& receiver_ptr,
                   RunArgs&&... args) {
+    void* address = *reinterpret_cast<void* const*>(&method);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     return ((*receiver_ptr).*method)(std::forward<RunArgs>(args)...);
   }
 };
@@ -219,6 +232,9 @@ struct FunctorTraits<IgnoreResultHelper<T>> : FunctorTraits<T> {
   template <typename IgnoreResultType, typename... RunArgs>
   static void Invoke(IgnoreResultType&& ignore_result_helper,
                      RunArgs&&... args) {
+    void* address =
+        *reinterpret_cast<void* const*>(&ignore_result_helper.functor_);
+    TRACE_HEAP_PROFILER_API_SCOPED_WITH_PROGRAM_COUNTER e(address);
     FunctorTraits<T>::Invoke(
         std::forward<IgnoreResultType>(ignore_result_helper).functor_,
         std::forward<RunArgs>(args)...);

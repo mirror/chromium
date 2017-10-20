@@ -17,7 +17,9 @@ namespace {
 
 inline bool IsPseudoStackEnabled() {
   return AllocationContextTracker::capture_mode() ==
-         AllocationContextTracker::CaptureMode::PSEUDO_STACK;
+             AllocationContextTracker::CaptureMode::PSEUDO_STACK ||
+         AllocationContextTracker::capture_mode() ==
+             AllocationContextTracker::CaptureMode::MIXED_STACK;
 }
 
 inline AllocationContextTracker* GetThreadLocalTracker() {

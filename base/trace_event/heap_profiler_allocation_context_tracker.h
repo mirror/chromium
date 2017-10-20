@@ -9,7 +9,6 @@
 
 #include "base/atomicops.h"
 #include "base/base_export.h"
-#include "base/debug/stack_trace.h"
 #include "base/macros.h"
 #include "base/trace_event/heap_profiler_allocation_context.h"
 
@@ -25,9 +24,9 @@ class BASE_EXPORT AllocationContextTracker {
  public:
   enum class CaptureMode : int32_t {
     DISABLED,      // Don't capture anything
-    PSEUDO_STACK,  // GetContextSnapshot() returns pseudo stack trace
-    NATIVE_STACK,  // GetContextSnapshot() returns native (real) stack trace
-    NO_STACK,  // GetContextSnapshot() returns thread names and task contexts.
+    PSEUDO_STACK,  // Backtrace has trace events
+    MIXED_STACK,   // Backtrace has trace events and program counters
+    NATIVE_STACK,  // Backtrace has native (real) stack trace
   };
 
   // Stack frame constructed from trace events in codebase.
@@ -85,6 +84,10 @@ class BASE_EXPORT AllocationContextTracker {
   // Pops a frame from the thread-local pseudo stack.
   void PopPseudoStackFrame(PseudoStackFrame stack_frame);
 
+  // Pushes and pops a native stack frame onto thread local tracked stack.
+  void PushNativeStackFrame(const void* pc);
+  void PopNativeStackFrame(const void* pc);
+
   // Push and pop current task's context. A stack is used to support nested
   // tasks and the top of the stack will be used in allocation context.
   void PushCurrentTaskContext(const char* context);
@@ -101,8 +104,8 @@ class BASE_EXPORT AllocationContextTracker {
 
   static subtle::Atomic32 capture_mode_;
 
-  // The pseudo stack where frames are |TRACE_EVENT| names.
-  std::vector<PseudoStackFrame> pseudo_stack_;
+  // The pseudo stack where frames are |TRACE_EVENT| names or inserted PCs.
+  std::vector<StackFrame> tracked_stack_;
 
   // The thread name is used as the first entry in the pseudo stack.
   const char* thread_name_;
