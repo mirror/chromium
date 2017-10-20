@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 #include <tuple>
+#include <vector>
 
 #include "base/callback_forward.h"
 #include "base/containers/flat_map.h"
@@ -136,6 +137,9 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
   void GetDeveloperIdsForServiceWorker(
       int64_t service_worker_registration_id,
       blink::mojom::BackgroundFetchService::GetDeveloperIdsCallback callback);
+
+  int GetNumberOfRequestsForRegistration(
+      const BackgroundFetchRegistrationId& registration_id);
 
  private:
   friend class BackgroundFetchDataManagerTest;
