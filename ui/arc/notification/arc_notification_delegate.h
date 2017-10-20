@@ -26,10 +26,11 @@ class ArcNotificationDelegate : public message_center::NotificationDelegate {
  public:
   explicit ArcNotificationDelegate(base::WeakPtr<ArcNotificationItem> item);
 
-  // message_center::NotificationDelegate overrides:
-  std::unique_ptr<message_center::MessageView> CreateCustomMessageView(
+  static std::unique_ptr<message_center::MessageView> CreateCustomMessageView(
       message_center::MessageCenterController* controller,
-      const message_center::Notification& notification) override;
+      const message_center::Notification& notification);
+
+  // message_center::NotificationDelegate overrides:
   void Close(bool by_user) override;
   void Click() override;
   bool SettingsClick() override;

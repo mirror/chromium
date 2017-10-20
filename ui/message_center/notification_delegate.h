@@ -8,17 +8,12 @@
 #include <memory>
 #include <string>
 
-#include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
 #include "ui/message_center/message_center_export.h"
 
 namespace message_center {
-
-class MessageCenterController;
-class MessageView;
-class Notification;
 
 // Delegate for a notification. This class has two roles: to implement callback
 // methods for notification, and to provide an identity of the associated
@@ -56,14 +51,6 @@ class MESSAGE_CENTER_EXPORT NotificationDelegate
 
   // Called when the user attempts to disable the notification.
   virtual void DisableNotification();
-
-#if defined(TOOLKIT_VIEWS) && !defined(OS_MACOSX)
-  // To be called to construct the message view for notifications whose type is
-  // NOTIFICATION_TYPE_CUSTOM.
-  virtual std::unique_ptr<MessageView> CreateCustomMessageView(
-      MessageCenterController* controller,
-      const Notification& notification);
-#endif
 
   // Indicates whether this notification should be displayed when there is
   // fullscreen content being displayed.

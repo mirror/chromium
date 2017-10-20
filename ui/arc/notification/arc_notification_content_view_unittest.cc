@@ -307,7 +307,7 @@ class ArcNotificationContentViewTest : public ash::AshTestBase {
         notification_item->GetNotificationId(), base::UTF8ToUTF16("title"),
         base::UTF8ToUTF16("message"), gfx::Image(), base::UTF8ToUTF16("arc"),
         GURL(),
-        message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+        message_center::NotifierId(message_center::NotifierId::ARC_APPLICATION,
                                    "ARC_NOTIFICATION"),
         message_center::RichNotificationData(),
         new ArcNotificationDelegate(notification_item->GetWeakPtr()));
