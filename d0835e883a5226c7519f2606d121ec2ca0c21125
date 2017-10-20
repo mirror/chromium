@@ -22,6 +22,30 @@
       "revId": "d0835e883a5226c7519f2606d121ec2ca0c21125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948e2146_d93a99be",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T15:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "654c47fc_ee262c9c",
+      "range": {
+        "startLine": 9,
+        "startChar": 78,
+        "endLine": 9,
+        "endChar": 79
+      },
+      "revId": "d0835e883a5226c7519f2606d121ec2ca0c21125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
