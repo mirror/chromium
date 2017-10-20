@@ -364,7 +364,6 @@ struct SSLSocketDataProvider {
   bool client_cert_sent;
   SSLCertRequestInfo* cert_request_info;
   scoped_refptr<X509Certificate> cert;
-  CertStatus cert_status;
   bool channel_id_sent;
   ChannelIDService* channel_id_service;
   int connection_status;
