@@ -111,6 +111,24 @@
       "revId": "278d3a9681c6f69a100ae16e1fd568b841e6789a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c3144d_4d88f699",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-20T14:39:46Z",
+      "side": 1,
+      "message": "Added local variable |dom_offset \u003d text_offset + Start()| in LayoutTextFragment.\n\nI don\u0027t know how to make it more clear here because there\u0027s already documentation in LayoutText.h, and for \"normal\" LayoutText, there\u0027s no distinction between text and dom offsets (again, ignoring text-transform).",
+      "parentUuid": "2f432d8c_7a769a22",
+      "revId": "278d3a9681c6f69a100ae16e1fd568b841e6789a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
