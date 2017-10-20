@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a1365b9_3ec6d022",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-20T04:21:41Z",
+      "side": 1,
+      "message": "The alternatives I have are to have all network projects inherit from something which injects the fake original content, or override it at the workspacediff level and remove requestOriginalContent from uisourcecodes.",
+      "parentUuid": "f5687006_d288d214",
+      "revId": "cd30476095056466301e67161f1adfdd226112f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb4730ed_4176b88f",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
         "patchSetId": 1
