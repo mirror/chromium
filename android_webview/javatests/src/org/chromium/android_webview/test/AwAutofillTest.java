@@ -771,6 +771,57 @@ public class AwAutofillTest {
         }
     }
 
+    /**
+     * This test is verifying new session starts if frame change.
+     */
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testSwitchFromIFrame() throws Throwable {
+        TestWebServer webServer = TestWebServer.start();
+        final String data = "<html><head></head><body><form name='formname' id='formid'>"
+                + "<input type='text' id='text1' name='username'"
+                + " placeholder='placeholder@placeholder.com' autocomplete='username name'>"
+                + "<input type='submit'></form>"
+                + "<iframe src='iframe.html'></iframe>"
+                + "</body></html>";
+        // The form in iframe is same as one in main frame from autofill aspect, so the new session
+        // won't be trigger because of form change.
+        final String iframeData = "<html><head></head><body><form name='formname' id='formid'>"
+                + "<input type='text' id='text1' name='username'"
+                + " placeholder='placeholder@placeholder.com' autocomplete='username name' "
+                + " autofocus>"
+                + "<input type='submit'></form>"
+                + "</body></html>";
+        try {
+            webServer.setResponse("/iframe.html", iframeData, null);
+            final String url = webServer.setResponse(FILE, data, null);
+            loadUrlSync(url);
+
+            // Trigger the autofill in iframe.
+            int count = clearEventQueue();
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
+            // Verify autofill session triggered.
+            count += waitForCallbackAndVerifyTypes(count,
+                    new Integer[] {AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED, AUTOFILL_VIEW_EXITED,
+                            AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+
+            // Move focus to the main frame form.
+            clearChangedValues();
+            executeJavaScriptAndWaitForResult("document.getElementById('text1').select();");
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
+            // The new session starts because cancel() has been called.
+            waitForCallbackAndVerifyTypes(count,
+                    new Integer[] {AUTOFILL_VIEW_EXITED, AUTOFILL_CANCEL, AUTOFILL_VIEW_ENTERED,
+                            AUTOFILL_VIEW_EXITED, AUTOFILL_VIEW_ENTERED, AUTOFILL_VALUE_CHANGED});
+            ArrayList<Pair<Integer, AutofillValue>> values = getChangedValues();
+            assertEquals(1, values.size());
+            assertEquals("a", values.get(0).second.getTextValue());
+        } finally {
+            webServer.shutdown();
+        }
+    }
+
     private void loadUrlSync(String url) throws Exception {
         mRule.loadUrlSync(
                 mTestContainerView.getAwContents(), mContentsClient.getOnPageFinishedHelper(), url);
@@ -802,6 +853,11 @@ public class AwAutofillTest {
         return mCallbackHelper.getCallCount();
     }
 
+    private int clearEventQueue() {
+        mEventQueue.clear();
+        return mCallbackHelper.getCallCount();
+    }
+
     /**
      * Wait for expected callbacks to be called, and verify the types.
      *
@@ -814,14 +870,25 @@ public class AwAutofillTest {
      */
     private int waitForCallbackAndVerifyTypes(int currentCallCount, Integer[] expectedEventArray)
             throws InterruptedException, TimeoutException {
-        // Check against the call count to avoid missing out a callback in between waits, while
-        // exposing it so that the test can control where the call count starts.
-        mCallbackHelper.waitForCallback(currentCallCount, expectedEventArray.length);
-        Object[] objectArray = mEventQueue.toArray();
-        mEventQueue.clear();
-        Integer[] resultArray = Arrays.copyOf(objectArray, objectArray.length, Integer[].class);
-        Assert.assertArrayEquals(Arrays.toString(resultArray), expectedEventArray, resultArray);
-        return expectedEventArray.length;
+        try {
+            // Check against the call count to avoid missing out a callback in between waits, while
+            // exposing it so that the test can control where the call count starts.
+            mCallbackHelper.waitForCallback(currentCallCount, expectedEventArray.length);
+            Object[] objectArray = mEventQueue.toArray();
+            mEventQueue.clear();
+            Integer[] resultArray = Arrays.copyOf(objectArray, objectArray.length, Integer[].class);
+            Assert.assertArrayEquals("Expect: " + Arrays.toString(expectedEventArray)
+                            + " Result: " + Arrays.toString(resultArray),
+                    expectedEventArray, resultArray);
+            return expectedEventArray.length;
+        } catch (TimeoutException e) {
+            Object[] objectArray = mEventQueue.toArray();
+            Integer[] resultArray = Arrays.copyOf(objectArray, objectArray.length, Integer[].class);
+            Assert.assertArrayEquals("Expect:" + Arrays.toString(expectedEventArray)
+                            + " Result:" + Arrays.toString(resultArray),
+                    expectedEventArray, resultArray);
+            throw e;
+        }
     }
 
     private void dispatchDownAndUpKeyEvents(final int code) throws Throwable {
