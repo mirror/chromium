@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec80985f_196208ea",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d0d8dfc_2815592a",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8edea69_1caf537f",
         "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3c752dc0_65630d84",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "Excessively paranoid, as I called CloseDialog on line 103 but OK.",
+      "parentUuid": "e8edea69_1caf537f",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e1c8687_b5750f7a",
         "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d4ba82_7149a57d",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "3e1c8687_b5750f7a",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "fe8e478e_e270b847",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7b7790_d473ab10",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 250,
+        "endChar": 6
+      },
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "353bb6ec_b7021c4b",
         "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
         "patchSetId": 5
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-20T20:18:01Z",
       "side": 1,
       "message": "callback.md claims that Reset() isn\u0027t necessary. \"Note that the moved-from base::Callback becomes null, as if its Reset() method had been called, and its is_null() method will return true.\"  (It would be nice if the move ctor declaration in the .h file had a comment to this effect too ... )",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31da6c3_2139be90",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "I don\u0027t trust that line in the doc. What happens when a base::OnceCallback is really a base::Callback? Does move(cb).Run() clear it too? That explanatory line is below a bunch of OnceCallback examples.",
+      "parentUuid": "353bb6ec_b7021c4b",
       "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "b707ac68_9a6050dd",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "3d0cbde9_21144391",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8843aeb6_331fe95f",
         "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
         "patchSetId": 5
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "15dbfffe_3796613a",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8843aeb6_331fe95f",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bed52ee_e7e2e97b",
         "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
         "patchSetId": 5
@@ -141,6 +273,24 @@
       "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cc8683_163b189c",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:27:41Z",
+      "side": 1,
+      "message": "I used to know but that\u0027s not in my head any more.\n\nAll code creating tab-modal dialogs used weak pointers. I tried to make the tab helper own the dialog, but I remember there were lifetime issues that prevented it but I don\u0027t remember what they were.\n\nMaybe use a normal raw pointer? It\u0027s not like the dialog will close without doing the callback. Doing a switch like that will require coordination with the Android version, so I\u0027m thinking about delaying that to a new CL.",
+      "parentUuid": "8bed52ee_e7e2e97b",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
