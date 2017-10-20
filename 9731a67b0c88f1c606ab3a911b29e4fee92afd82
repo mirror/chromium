@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4020babd_df21bcf3",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-20T06:53:32Z",
+      "side": 1,
+      "message": "can we have this check in ctor?\nI think I don\u0027t understand the comment above well.\nIn this class, once the frame is passed in ctor, it won\u0027t be reset forever, right?",
+      "range": {
+        "startLine": 740,
+        "startChar": 4,
+        "endLine": 740,
+        "endChar": 10
+      },
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df551c0_56d9b267",
+        "filename": "content/renderer/service_worker/service_worker_fetch_context_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-20T06:53:32Z",
+      "side": 1,
+      "message": "is this called only once?",
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce444abd_0308c655",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-20T06:53:32Z",
+      "side": 1,
+      "message": "ditto: is this called only once?",
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bbcd73_9eb54726",
+        "filename": "content/test/test_blink_web_unit_test_support.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-20T06:53:32Z",
+      "side": 1,
+      "message": "can we have this in ctor?",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 10
+      },
+      "revId": "9731a67b0c88f1c606ab3a911b29e4fee92afd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
