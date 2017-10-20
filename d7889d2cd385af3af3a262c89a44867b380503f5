@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "1332291c_ffbba6c5",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T15:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaed19c4_ba0411d3",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a5272af_4c97bd39",
         "filename": "content/browser/devtools/devtools_pipe_handler.cc",
         "patchSetId": 5
@@ -70,6 +88,24 @@
       "writtenOn": "2017-10-20T14:46:34Z",
       "side": 1,
       "message": "Don\u0027t you have to delete them on the same thread they were created? If so, perhaps we should pass BrowserThread::UI to post task?",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b085713f_d556b0b2",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T15:13:26Z",
+      "side": 1,
+      "message": "No, I deliberately delete/join them on the bg thread.",
+      "parentUuid": "7a5272af_4c97bd39",
       "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "1066ebbf_68819ac0",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T15:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9c4c73_f518b299",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e8a90ed_1c8f9c0c",
         "filename": "content/browser/devtools/devtools_pipe_handler.cc",
         "patchSetId": 5
@@ -113,6 +167,30 @@
       "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcefde8_00fed63f",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T15:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e8a90ed_1c8f9c0c",
+      "range": {
+        "startLine": 225,
+        "startChar": 24,
+        "endLine": 225,
+        "endChar": 53
+      },
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
