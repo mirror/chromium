@@ -8,12 +8,43 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "build/build_config.h"
 #include "components/signin/core/common/signin_features.h"
 #include "components/signin/core/common/signin_switches.h"
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_service.h"
+#endif
+
 namespace signin {
+
+namespace {
+
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+const char kDiceMigrationComplete[] = "signin.DiceMigrationComplete";
+
+// Returns wether Dice is enabled for the user, based on the account consistency
+// mode and the dice pref value.
+bool IsDiceEnabledForProfile(bool dice_pref_value) {
+  switch (GetAccountConsistencyMethod()) {
+    case AccountConsistencyMethod::kDisabled:
+    case AccountConsistencyMethod::kMirror:
+    case AccountConsistencyMethod::kDiceFixAuthErrors:
+      return false;
+    case AccountConsistencyMethod::kDice:
+      return true;
+    case AccountConsistencyMethod::kDiceMigration:
+      return dice_pref_value;
+  }
+  NOTREACHED();
+  return false;
+}
+#endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
+
+}  // namespace
 
 // base::Feature definitions.
 const base::Feature kAccountConsistencyFeature{
@@ -24,6 +55,13 @@ const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[] =
     "dice_fix_auth_errors";
 const char kAccountConsistencyFeatureMethodDiceMigration[] = "dice_migration";
 const char kAccountConsistencyFeatureMethodDice[] = "dice";
+
+void RegisterAccountConsistencyProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  registry->RegisterBooleanPref(kDiceMigrationComplete, false);
+#endif
+}
 
 AccountConsistencyMethod GetAccountConsistencyMethod() {
 #if BUILDFLAG(ENABLE_MIRROR)
@@ -59,6 +97,44 @@ bool IsDiceMigrationEnabled() {
   return (GetAccountConsistencyMethod() ==
           AccountConsistencyMethod::kDiceMigration) ||
          (GetAccountConsistencyMethod() == AccountConsistencyMethod::kDice);
+}
+
+bool IsDiceEnabledForProfile(PrefService* user_prefs) {
+  DCHECK(user_prefs);
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  return IsDiceEnabledForProfile(
+      user_prefs->GetBoolean(kDiceMigrationComplete));
+#else
+  return false;
+#endif
+}
+
+bool IsDiceEnabled(BooleanPrefMember* dice_pref_member) {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  DCHECK(dice_pref_member);
+  DCHECK_EQ(kDiceMigrationComplete, dice_pref_member->GetPrefName());
+  return IsDiceEnabledForProfile(dice_pref_member->GetValue());
+#else
+  return false;
+#endif
+}
+
+std::unique_ptr<BooleanPrefMember> GetDicePrefMember(PrefService* user_prefs) {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  std::unique_ptr<BooleanPrefMember> pref_member =
+      base::MakeUnique<BooleanPrefMember>();
+  pref_member->Init(kDiceMigrationComplete, user_prefs);
+  return pref_member;
+#else
+  return std::unique_ptr<BooleanPrefMember>();
+#endif
+}
+
+void MigrateProfileToDice(PrefService* user_prefs) {
+  DCHECK(IsDiceMigrationEnabled());
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  user_prefs->SetBoolean(kDiceMigrationComplete, true);
+#endif
 }
 
 bool IsDiceFixAuthErrorsEnabled() {
