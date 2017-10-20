@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4d7b76a_ee63f71d",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-20T12:29:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02ca6d63_151da0d1",
+      "range": {
+        "startLine": 207,
+        "startChar": 14,
+        "endLine": 207,
+        "endChar": 26
+      },
+      "revId": "78add7742a7e29357fd26eb66b80ac9795b2ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e8078a2_d22be4d6",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "78add7742a7e29357fd26eb66b80ac9795b2ca10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d52f8b1_87c2b3db",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-10-20T12:29:00Z",
+      "side": 1,
+      "message": "Well as we don\u0027t want to add an empty item, it is expected to have nothing about it.\nThe previous method (the one removing the suggestion) is a method specific to ContentSuggestionsVC which adds an empty item if it removes the last item.\nI have updated the comment to reflect it.",
+      "parentUuid": "7e8078a2_d22be4d6",
+      "range": {
+        "startLine": 215,
+        "startChar": 28,
+        "endLine": 215,
+        "endChar": 35
+      },
+      "revId": "78add7742a7e29357fd26eb66b80ac9795b2ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
