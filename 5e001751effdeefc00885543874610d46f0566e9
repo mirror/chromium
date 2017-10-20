@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2b52e4_16c01ece",
+        "filename": "chrome/android/webapk/libs/client/junit/src/org/chromium/webapk/lib/client/WebApkValidatorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-20T16:55:49Z",
+      "side": 1,
+      "message": "Nit: I think it is ok to reuse either SIGNATURE_1 or SIGNATURE_1.",
+      "revId": "5e001751effdeefc00885543874610d46f0566e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
