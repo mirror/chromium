@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d021212b_1e28b4d7",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-20T22:46:52Z",
+      "side": 1,
+      "message": "No, there are two different things at stake here (nesting vs nestable tasks -- and yes this is very confusing hence why I\u0027m trying to deprecate the *NestableTasks* APIs).\n\n1) Allowing nesting (i.e. nested RunLoops) : this is totally controlled by RunLoop\u0027s *Nesting* APIs.\n\n2) Allowing nestable tasks (i.e. should nestable tasks be allowed to be processed -- nestable tasks are a subset of all tasks: those not flagged as non-nestable) : while I think RunLoop::Type is generally the right place to specify this (I want a nested RunLoop that will process application tasks), system events can also sometimes trigger reentrancy in the case of custom MessageLoops specifically (this is ML specific, not RL::Delegate specific).\nThe reentrancy request can\u0027t be made from Run() because what matters is that there is a task in progress when MessageLoop::RunTask() is invoked again reentrantly. MessageLoop::RunTask() is what needs to be gated against reentrancy unless explicitly allowed.",
+      "parentUuid": "e71042b3_977576da",
+      "range": {
+        "startLine": 233,
+        "startChar": 18,
+        "endLine": 233,
+        "endChar": 55
+      },
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5cc1acb_f9deab63",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1ae0e2cf_24a72da5",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-20T22:46:52Z",
+      "side": 1,
+      "message": "Well, \n\n1) This scoped object isn\u0027t used outside of Run() in practice but I agree it\u0027s weird to rely on that.\n2) Run(true) merely means application tasks can be processed, but those asks will consume that allowance and as such the scoper has the desired effect when added inside a running task (which is how it\u0027s used) -- see MessageLoopTypedTest.NestableTasksProcessedWhenRunLoopAllows\n\nBut either way, thinking through this made me realize, the ints are either equal or one off from each other, so I\u0027ll go back to representing this via a bool. Thanks :)",
+      "parentUuid": "c5cc1acb_f9deab63",
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1af557fc_93bf7470",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5d6573_527b5baa",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-20T22:46:52Z",
+      "side": 1,
+      "message": "Yes, on custom MessageLoops (e.g. ForUI/ForIO), system calls can result in running the system loop which may trigger MessagePump to call back into MessageLoop without an explicit nested RunLoop having been activated. This can be unintentional/accidental (i.e. the dev doesn\u0027t know this sys call does that).",
+      "parentUuid": "1af557fc_93bf7470",
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59698404_e752ffce",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-20T22:46:52Z",
+      "side": 1,
+      "message": "Reworded",
+      "parentUuid": "23671e32_dade80b0",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 23
+      },
+      "revId": "4a987bb4e32844af6ba5e14bc20d67e3491e7352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
