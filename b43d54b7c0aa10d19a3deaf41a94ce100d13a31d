@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "e09458fe_8444ef1c",
+        "filename": "ash/metrics/login_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T14:19:01Z",
+      "side": 1,
+      "message": "OK. xiaoyin@, up to you what you want to do. I think UserMetricsAction would simplify the code, and not require as much test, at the expense of the dashboard not showing relative counts quite so easily.",
+      "parentUuid": "abf934a5_0ec93734",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71254dcd_853940fb",
         "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
         "patchSetId": 6
