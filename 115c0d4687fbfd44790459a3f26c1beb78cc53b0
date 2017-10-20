@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "bd09b0be_c07f27ec",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3290,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-20T19:47:58Z",
+      "side": 1,
+      "message": "+1!",
+      "parentUuid": "e0ff5de7_9e86fa66",
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36a7075d_ceeee001",
         "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
         "patchSetId": 3
