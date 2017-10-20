@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9218f270_e822fba3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-20T19:38:19Z",
+      "side": 1,
+      "message": "Initially we decided to be strict, and not to handle non-MAIN intents sent to .Main alias (because it doesn\u0027t have intent filters for anything except MAIN).\n\nHere we have a problem that someone sends custom tab intents to .Main alias, so I\u0027m trying to handle exactly that. For example if we remove MAIN_LAUNCHER_ACTIVITY_NAME check, we can end up changing how CTA handles VIEW intents (since right now it won\u0027t start a custom tab).",
+      "parentUuid": "cc4ac572_59d94073",
+      "range": {
+        "startLine": 418,
+        "startChar": 19,
+        "endLine": 418,
+        "endChar": 46
+      },
+      "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b133048_7d7c19e2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T17:34:15Z",
       "side": 1,
       "message": "making these visible and not final makes me worried a bit.\n\nAny way to either change the below constructor logic to make it possible have these as final or add a isCustomTabIntent(), isHerbIntent() that are package protected?",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc227950_4c12ab6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-20T19:38:19Z",
+      "side": 1,
+      "message": "Oops, I just forgot to add private there. Added private and made everything final.",
+      "parentUuid": "2b133048_7d7c19e2",
       "range": {
         "startLine": 84,
         "startChar": 12,
@@ -68,6 +116,30 @@
       "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d55b46_030242cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-20T19:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7add3511_8a507c9a",
+      "range": {
+        "startLine": 158,
+        "startChar": 9,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
