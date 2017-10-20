@@ -72,6 +72,8 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
  public:
   using WillDrawCallback =
       base::RepeatingCallback<void(const LocalSurfaceId&, const gfx::Rect&)>;
+  using PresentedCallback =
+      base::OnceCallback<void(base::TimeTicks, base::TimeDelta, uint32_t)>;
 
   Surface(const SurfaceInfo& surface_info,
           SurfaceManager* surface_manager,
@@ -122,10 +124,13 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
   // there is visible damage.
   // |will_draw_callback| is called when |surface| is scheduled for a draw and
   // there is visible damage.
+  // |presentation_callback| is called when |surface| has been presented the
+  // first time on display.
   bool QueueFrame(CompositorFrame frame,
                   uint64_t frame_index,
                   base::OnceClosure draw_callback,
-                  const WillDrawCallback& will_draw_callback);
+                  const WillDrawCallback& will_draw_callback,
+                  PresentedCallback presented_callback);
   void RequestCopyOfOutput(std::unique_ptr<CopyOutputRequest> copy_request);
 
   // Notifies the Surface that a blocking SurfaceId now has an active
@@ -159,6 +164,7 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
   }
 
   void TakeLatencyInfo(std::vector<ui::LatencyInfo>* latency_info);
+  bool TakePresentedCallback(PresentedCallback* callback);
   void RunDrawCallback();
   void RunWillDrawCallback(const gfx::Rect& damage_rect);
 
@@ -208,7 +214,8 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
     FrameData(CompositorFrame&& frame,
               uint64_t frame_index,
               base::OnceClosure draw_callback,
-              const WillDrawCallback& will_draw_callback);
+              const WillDrawCallback& will_draw_callback,
+              PresentedCallback presented_callback);
     FrameData(FrameData&& other);
     ~FrameData();
     FrameData& operator=(FrameData&& other);
@@ -216,6 +223,7 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
     uint64_t frame_index;
     base::OnceClosure draw_callback;
     WillDrawCallback will_draw_callback;
+    PresentedCallback presented_callback;
   };
 
   // Rejects CompositorFrames submitted to surfaces referenced from this

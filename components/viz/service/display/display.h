@@ -99,6 +99,8 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   void DidReceiveSwapBuffersAck() override;
   void DidReceiveTextureInUseResponses(
       const gpu::TextureInUseResponses& responses) override;
+  void UpdateVSyncParameters(base::TimeTicks timebase,
+                             base::TimeDelta interval) override;
 
   bool has_scheduler() const { return !!scheduler_; }
   DirectRenderer* renderer_for_testing() const { return renderer_.get(); }
@@ -139,6 +141,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   std::unique_ptr<DirectRenderer> renderer_;
   SoftwareRenderer* software_renderer_ = nullptr;
   std::vector<ui::LatencyInfo> stored_latency_info_;
+  std::vector<Surface::PresentedCallback> presented_callbacks_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Display);

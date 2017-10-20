@@ -149,6 +149,7 @@ void DisplayOutputSurface::OnVSyncParametersUpdated(base::TimeTicks timebase,
   synthetic_begin_frame_source_->OnUpdateVSyncParameters(
       timebase,
       interval.is_zero() ? BeginFrameArgs::DefaultInterval() : interval);
+  client_->UpdateVSyncParameters(timebase, interval);
 }
 
 }  // namespace viz
