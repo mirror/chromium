@@ -22,6 +22,30 @@
       "revId": "faf0e422335048edef950b5088b742e4740d1609",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5a0bc7_e886d649",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-20T00:38:29Z",
+      "side": 1,
+      "message": "Chatted offline, changing the SetEnabled(bool) to Exit()",
+      "parentUuid": "9bc4c47e_117772d2",
+      "range": {
+        "startLine": 307,
+        "startChar": 25,
+        "endLine": 307,
+        "endChar": 35
+      },
+      "revId": "faf0e422335048edef950b5088b742e4740d1609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
