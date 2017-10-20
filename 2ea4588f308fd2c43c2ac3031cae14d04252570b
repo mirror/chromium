@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37b83a7_18ddb3f8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1242628
+      },
+      "writtenOn": "2017-10-20T16:35:46Z",
+      "side": 1,
+      "message": "Typo, this should not be a NOT",
+      "revId": "2ea4588f308fd2c43c2ac3031cae14d04252570b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
