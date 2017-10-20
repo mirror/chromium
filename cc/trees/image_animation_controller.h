@@ -48,8 +48,20 @@ class CC_EXPORT ImageAnimationController {
    public:
     virtual ~AnimationDriver() {}
 
-    // Returns true if the image should be animated.
-    virtual bool ShouldAnimate(PaintImage::Id paint_image_id) const = 0;
+    enum class UpdateType {
+      // Animate this image but no immediate invalidation is necessary.
+      kAnimate,
+
+      // Animate and also perform an immediate invalidation. In cases where
+      // multiple instances of the same image exist but only some of them are
+      // visible, the driver may defer the update. If this was done, we need an
+      // immediate invalidation to display the current frame for that region.
+      kAnimateAndInvalidate,
+
+      // Don't animate the image.
+      kDontAnimate
+    };
+    virtual UpdateType ShouldAnimate(PaintImage::Id paint_image_id) const = 0;
   };
 
   // |invalidation_callback| is the callback to trigger an invalidation and
@@ -78,9 +90,20 @@ class CC_EXPORT ImageAnimationController {
   // Called to advance the animations to the frame to be used on the sync tree.
   // This should be called only once for a sync tree and must be followed with
   // a call to DidActivate when this tree is activated.
-  // Returns the set of images that were animated and should be invalidated on
-  // this sync tree.
-  const PaintImageIdFlatSet& AnimateForSyncTree(base::TimeTicks now);
+  // Returns the invalidations for this sync tree.
+  enum class InvalidationType {
+    // Invalidate all instances of this image. Used when the animation is
+    // advanced.
+    kFullInvalidation,
+
+    // Invalidate only the region which was not updated in a previous
+    // invalidation. Used when this invalidation was generated only in response
+    // to a AnimationDriver::UpdateType::kAnimateAndInvalidate request from a
+    // driver.
+    kDeferredInvalidation
+  };
+  using Invalidations = base::flat_map<PaintImage::Id, InvalidationType>;
+  const Invalidations& AnimateForSyncTree(base::TimeTicks now);
 
   // Called whenever the ShouldAnimate response for a driver could have changed.
   // For instance on a change in the visibility of the image, we would pause
@@ -116,7 +139,7 @@ class CC_EXPORT ImageAnimationController {
 
     void AddDriver(AnimationDriver* driver);
     void RemoveDriver(AnimationDriver* driver);
-    void UpdateStateFromDrivers();
+    void UpdateStateFromDrivers(Invalidations* deferred_images);
 
     size_t pending_index() const { return pending_index_; }
     size_t active_index() const { return active_index_; }
@@ -226,8 +249,14 @@ class CC_EXPORT ImageAnimationController {
   // The set of currently active animations.
   PaintImageIdFlatSet active_animations_;
 
-  // The set of images that were animated and invalidated on the last sync tree.
-  PaintImageIdFlatSet images_animated_on_sync_tree_;
+  // The set of images that were invalidated on the last sync tree.
+  Invalidations images_invalidated_on_sync_tree_;
+
+  // The set of images which were advanced but were not completely
+  // invalidated on the sync tree where the animation was advanced. Since these
+  // images are displaying stale content, they need to be invalidated on the
+  // next tree.
+  Invalidations images_for_deferred_update_;
 
   DelayedNotifier notifier_;
 };

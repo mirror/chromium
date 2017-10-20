@@ -97,6 +97,8 @@
 namespace cc {
 namespace {
 
+const ImageAnimationController::Invalidations kEmptyImageInvalidations;
+
 // Small helper class that saves the current viewport location as the user sees
 // it and resets to the same location.
 class ViewportAnchor {
@@ -395,15 +397,17 @@ void LayerTreeHostImpl::UpdateSyncTreeAfterCommitOrImplSideInvalidation() {
   // Defer invalidating images until UpdateDrawProperties is performed since
   // that updates whether an image should be animated based on its visibility
   // and the updated data for the image from the main frame.
-  PaintImageIdFlatSet images_to_invalidate =
+  const auto& checkered_images =
       tile_manager_.TakeImagesToInvalidateOnSyncTree();
   if (image_animation_controller_.has_value()) {
     const auto& animated_images =
         image_animation_controller_.value().AnimateForSyncTree(
             CurrentBeginFrameArgs().frame_time);
-    images_to_invalidate.insert(animated_images.begin(), animated_images.end());
+    sync_tree()->InvalidateRegionForImages(checkered_images, animated_images);
+  } else {
+    sync_tree()->InvalidateRegionForImages(checkered_images,
+                                           kEmptyImageInvalidations);
   }
-  sync_tree()->InvalidateRegionForImages(images_to_invalidate);
 
   // Start working on newly created tiles immediately if needed.
   // TODO(vmpstr): Investigate always having PrepareTiles issue
