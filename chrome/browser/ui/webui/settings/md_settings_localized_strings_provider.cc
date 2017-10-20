@@ -745,6 +745,11 @@ void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
           .spec();
   html_source->AddString("chromeCleanupLearnMoreUrl", cleanup_learn_more_url);
 
+  if (safe_browsing::UserInitiatedCleanupsEnabled()) {
+    // TODO(crbug.com/776538): Localized this string.
+    html_source->AddString("chromeCleanupPageTitle", "Clean up computer");
+  }
+
   base::string16 powered_by_html =
       l10n_util::GetStringFUTF16(IDS_CHROME_CLEANUP_WEBUI_FOOTER_POWERED_BY,
                                  L"<span id='powered-by-logo'></span>");
