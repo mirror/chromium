@@ -355,18 +355,12 @@ bool GetHomeProviderFromProperty(const base::Value& value,
   const base::DictionaryValue* dict = NULL;
   if (!value.GetAsDictionary(&dict))
     return false;
-  std::string home_provider_country;
   std::string home_provider_name;
-  dict->GetStringWithoutPathExpansion(shill::kOperatorCountryKey,
-                                      &home_provider_country);
   dict->GetStringWithoutPathExpansion(shill::kOperatorNameKey,
                                       &home_provider_name);
   // Set home_provider_id
-  if (!home_provider_name.empty() && !home_provider_country.empty()) {
-    *home_provider_id = base::StringPrintf(
-        "%s (%s)", home_provider_name.c_str(), home_provider_country.c_str());
-  } else if (!home_provider_name.empty()) {
-    *home_provider_id = home_provider_name.c_str();
+  if (!home_provider_name.empty()) {
+    *home_provider_id = home_provider_name;
   } else {
     if (!dict->GetStringWithoutPathExpansion(shill::kOperatorCodeKey,
                                              home_provider_id)) {
