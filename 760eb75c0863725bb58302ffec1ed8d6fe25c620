@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e239f4db_f5a2eb34",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-20T18:23:59Z",
+      "side": 1,
+      "message": "historical reasons.  (translation: i have no idea.)  i tend to favor putting new stuff in MediaPlayerParams.\n\nmight also want to combine it @283 with:\n\nscoped_refptr\u003cSTTR\u003e video_frame_..._runner;\nunique_ptr\u003cWebVideoFrameSubmitter\u003e vfs;\nif (check flag) {\n  video_...runner \u003d ...;\n  vfs \u003d ...;\n}",
+      "parentUuid": "a56f999b_8f9c34dd",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "decb023c_898cfb30",
         "filename": "media/blink/webmediaplayer_params.h",
         "patchSetId": 4
@@ -282,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "612de69a_056bd688",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-20T18:23:59Z",
+      "side": 1,
+      "message": "now that SubmitFrame is posted to the current seqeunce, SetNeedsBeginFrame will run before the posted task runs.  that\u0027s opposite what it was before.",
+      "parentUuid": "c256d006_506fd93c",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2d4ad38_1d28b577",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 4
@@ -381,6 +417,24 @@
       "side": 1,
       "message": "What do you mean by inlining it? Sorry still learning vocab.",
       "parentUuid": "adf409af_a8c7086a",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a44f49_f64a74a3",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-20T18:23:59Z",
+      "side": 1,
+      "message": "i meant \"paste the body of this function into OnBeginFrame\".",
+      "parentUuid": "36c5a925_5de9bfb6",
       "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
