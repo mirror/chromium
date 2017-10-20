@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f888bf29_f2afeb17",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-20T20:08:56Z",
+      "side": 1,
+      "message": "Is the geolocation change here intentionally part of this cl? If so, say so (and why) in cl description.",
+      "revId": "1f3f51a57af791d73a41da9d2f80d44569754a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
