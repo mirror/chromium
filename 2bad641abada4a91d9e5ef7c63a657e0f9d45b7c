@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b22e63e_fbd0bb84",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-20T01:47:42Z",
+      "side": 1,
+      "message": "It seems to be doing the same job as |GetNGOffsetMappingFor(node, offset)|, which will be changed to take |Position| instead of node-offset pair.\n\nBut why do we allow |IsFloating()| here? Do we want to allow float as part of word?",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 576,
+        "endChar": 0
+      },
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f563429c_b3116cdf",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-20T01:47:42Z",
+      "side": 1,
+      "message": "AdjustPositionForMapping seems to be a weaker version of canonicalization... And we can\u0027t get the correct block before adjusting, when there are nesting blocks and |layout_object| is in the middle of those nesting blocks.\n\nIs there any reason SelectionController must be independent from canonicalization?",
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bde3bac_a60ab4ce",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-20T01:47:42Z",
+      "side": 1,
+      "message": "One of the reasons I have\u0027t introduced this function is that, one text content offset can map to multiple DOM positions due to whitespace collapsing. For example, if we have a text node \"foo   bar\", text content offset 4 can be mapped to DOM offsets 4, 5 or 6 in the node. Things can get even more complicated when we have multiple nodes.\n\nDo we want variants, say, MapToFirst/LastPosition, or MapToAllPositions?",
+      "range": {
+        "startLine": 189,
+        "startChar": 9,
+        "endLine": 189,
+        "endChar": 45
+      },
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b799dc_d010f1e4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-20T01:47:42Z",
+      "side": 1,
+      "message": "There\u0027s no such design yet...",
+      "range": {
+        "startLine": 190,
+        "startChar": 23,
+        "endLine": 192,
+        "endChar": 51
+      },
+      "revId": "2bad641abada4a91d9e5ef7c63a657e0f9d45b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
