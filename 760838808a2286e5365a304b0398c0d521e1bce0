@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d4fade0_03ec4554",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-20T01:38:50Z",
+      "side": 1,
+      "message": "If this is a new term, let\u0027s try to make it more understandable to an outsider (like me, for whom this long name doesn\u0027t have much meaning). If it\u0027s a common term in some domain (like Ads) then it\u0027s fine as-is.",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593baad3_5f897152",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-20T01:38:50Z",
+      "side": 1,
+      "message": "This /looks/ like different thing among the other things in this if/else chain. It makes me wonder whether this should be a |source|. Could (or should) it be?",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a70e461_6decf714",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-20T01:38:50Z",
+      "side": 1,
+      "message": "How about adding arg comments for generic values like std::string() and nullptr?\n\n   if (map-\u003eGetWebsiteSetting(origin, GURL(), CONTENT_SETTINGS_TYPE_ADS_DATA,\n                               /*paramName\u003d*/std::string(), /*paramName\u003d*/nullptr) !\u003d nullptr) {\n\nThe last nullptr doesn\u0027t need a comment.",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb836e15_18167ac9",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-20T01:38:50Z",
+      "side": 1,
+      "message": "how about a\n\nlet type \u003d this.prefs_.exceptions[type];\n\nthat can be used on line 129 and 132",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b295fdf_2bc2bebd",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-20T01:38:50Z",
+      "side": 1,
+      "message": "another of these?\n\nlet type \u003d this.prefs_.exceptions[type];",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
