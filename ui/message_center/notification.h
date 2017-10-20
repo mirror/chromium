@@ -54,6 +54,12 @@ enum class ButtonType {
   TEXT
 };
 
+enum class SettingsButtonAction {
+  NONE,     // No button.
+  DEFAULT,  // Button shown, takes default action.
+  CUSTOM    // Button shown, notification's delegate handles action.
+};
+
 enum class SystemNotificationWarningLevel { NORMAL, WARNING, CRITICAL_WARNING };
 
 // Represents a button to be shown as part of a notification.
@@ -179,6 +185,11 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   // and hides the icon when the notification is expanded.
   // This is only effective when new style notification is enabled.
   bool use_image_as_icon = false;
+
+  // Controls whether a settings button should appear on the notification, and
+  // if so, whether it should be handled by the delegate (CUSTOM) or in a
+  // default manner (DEFAULT).
+  SettingsButtonAction settings_button_action = SettingsButtonAction::NONE;
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -408,6 +419,11 @@ class MESSAGE_CENTER_EXPORT Notification {
   bool use_image_as_icon() const { return optional_fields_.use_image_as_icon; }
   void set_use_image_as_icon(bool use_image_as_icon) {
     optional_fields_.use_image_as_icon = use_image_as_icon;
+  }
+
+  bool should_show_settings_button() const {
+    return optional_fields_.settings_button_action !=
+           SettingsButtonAction::DEFAULT;
   }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
