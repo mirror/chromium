@@ -143,7 +143,6 @@ using EnableIfConstSpanCompatibleContainer =
 // - no extent constant
 //
 // Differences from [span.cons]:
-// - no constructor from a pointer range
 // - no constructor from std::array
 // - no constructor from std::unique_ptr
 // - no constructor from std::shared_ptr
@@ -179,10 +178,10 @@ class span {
   // span constructors, copy, assignment, and destructor
   constexpr span() noexcept : data_(nullptr), size_(0) {}
   constexpr span(std::nullptr_t) noexcept : span() {}
-  constexpr span(T* data, size_t size) noexcept : data_(data), size_(size) {}
-  // TODO(dcheng): Implement construction from a |begin| and |end| pointer.
+  constexpr span(T* data, size_t size) : data_(data), size_(size) {}
+  constexpr span(T* begin, T* end) : span(begin, end - begin) {}
   template <size_t N>
-  constexpr span(T (&array)[N]) noexcept : span(array, N) {}
+  constexpr span(T (&array)[N]) : span(array, N) {}
   // TODO(dcheng): Implement construction from std::array.
   // Conversion from a container that provides |T* data()| and |integral_type
   // size()|.
@@ -280,12 +279,12 @@ constexpr bool operator>=(const span<T>& lhs, const span<T>& rhs) noexcept {
 
 // Type-deducing helpers for constructing a span.
 template <typename T>
-constexpr span<T> make_span(T* data, size_t size) noexcept {
+constexpr span<T> make_span(T* data, size_t size) {
   return span<T>(data, size);
 }
 
 template <typename T, size_t N>
-constexpr span<T> make_span(T (&array)[N]) noexcept {
+constexpr span<T> make_span(T (&array)[N]) {
   return span<T>(array);
 }
 
@@ -302,6 +301,12 @@ template <
     typename = internal::EnableIfConstSpanCompatibleContainer<Container, T>>
 constexpr span<T> make_span(const Container& container) {
   return span<T>(container);
+}
+
+template <typename T>
+constexpr span<const T> make_span(std::initializer_list<T> list) {
+  // TODO(dcheng): This isn't very nice.
+  return span<const T>(list.begin(), list.end());
 }
 
 }  // namespace base
