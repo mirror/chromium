@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bf0b3ed_43234cdc",
+        "filename": "ash/wm/window_mirror_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-20T16:22:05Z",
+      "side": 1,
+      "message": "nit: sorry I wasn\u0027t making myself clear - all I meant in my previous comment here was to say something like \"Layer* mirror_layer \u003d GetMirrorLayer();\" and then use |mirror_layer| after that rather than calling every time (even though it would be likely inlined). I don\u0027t really know if changing order here is good bad or neutral change so cannot comment on that.",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 20
+      },
+      "revId": "e8f16ea1f312dae0bea38deaae978f7c56f6a053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
