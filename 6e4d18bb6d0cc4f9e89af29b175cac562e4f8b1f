@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee484c1_5445670f",
+        "filename": "tools/chrome_proxy/webdriver/proxy_connection.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-20T18:53:08Z",
+      "side": 1,
+      "message": "Please just assert the return value of this, as it already does the get and compare.",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "6e4d18bb6d0cc4f9e89af29b175cac562e4f8b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
