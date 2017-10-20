@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d1cf53a_af032df3",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-20T00:48:16Z",
+      "side": 1,
+      "message": "In accordance with https://github.com/w3c/webrtc-pc/issues/1568 we don\u0027t queue a task to mute/to fire unmute, but mute immediately as we process the removal of the track.",
+      "revId": "1d53427b333a0fdf88b05228a8cc0f28a5e5f653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
