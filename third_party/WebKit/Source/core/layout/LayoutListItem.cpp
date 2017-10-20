@@ -128,10 +128,12 @@ static LayoutObject* GetParentOfFirstLineBox(LayoutBlockFlow* curr,
     if (curr_child == marker)
       continue;
 
-    // Shouldn't add marker into Overflow box, instead, add marker
-    // into listitem
-    if (curr->HasOverflowClip())
-      break;
+    if (curr->IsListItem() && curr_child->IsAnonymous()) {
+      LayoutListItem* list_item = ToLayoutListItem(curr);
+      LayoutListMarker* marker = list_item->Marker();
+      if (marker && !marker->NextSibling() && marker->Parent() == curr_child)
+        continue;
+    }
 
     if (curr_child->IsInline() &&
         (!curr_child->IsLayoutInline() ||
@@ -170,27 +172,42 @@ bool LayoutListItem::UpdateMarkerLocation() {
   DCHECK(marker_);
 
   LayoutObject* marker_parent = marker_->Parent();
-  // list-style-position:inside makes the ::marker pseudo an ordinary
-  // position:static element that should be attached to LayoutListItem block.
-  LayoutObject* line_box_parent =
-      marker_->IsInside() ? this : GetParentOfFirstLineBox(this, marker_);
-  if (!line_box_parent) {
-    // If the marker is currently contained inside an anonymous box, then we
-    // are the only item in that anonymous box (since no line box parent was
-    // found). It's ok to just leave the marker where it is in this case.
-    if (marker_parent && marker_parent->IsAnonymousBlock())
-      line_box_parent = marker_parent;
-    else
-      line_box_parent = this;
+  if (marker_parent && marker_parent->IsAnonymous()) {
+    LayoutObject* line_box_parent = GetParentOfFirstLineBox(this, marker_);
+    if (marker_->IsInside() || marker_->NextSibling()) {
+      // Restore old marker_container logicalHeight.
+      if (marker_parent->MutableStyleRef().LogicalHeight().IsZero()) {
+        marker_parent->MutableStyleRef().SetLogicalHeight(
+            Style()->LogicalHeight());
+      }
+
+      // If marker_parent isn't the ancestor of line_box_parent, marker might
+      // generate a new empty line. We need to remove marker here.E.g:
+      // <li><span><div>text<div><span></li>
+      if (line_box_parent && !line_box_parent->IsDescendantOf(marker_parent)) {
+        marker_->Remove();
+        marker_parent = nullptr;
+      }
+    } else {
+      if (line_box_parent)
+        marker_parent->MutableStyleRef().SetLogicalHeight(Length(0, kFixed));
+    }
   }
 
-  if (marker_parent != line_box_parent) {
-    marker_->Remove();
-    line_box_parent->AddChild(marker_, FirstNonMarkerChild(line_box_parent));
-    // TODO(rhogan): lineBoxParent and markerParent may be deleted by addChild,
-    // so they are not safe to reference here.
-    // Once we have a safe way of referencing them delete markerParent if it is
-    // an empty anonymous block.
+  if (!marker_parent) {
+    LayoutObject* before_child = FirstNonMarkerChild(this);
+    if (!marker_->IsInside() && before_child && before_child->IsLayoutBlock()) {
+      // Create marker_container and set its logicalHeight to 0px.
+      LayoutBlock* parent = CreateAnonymousBlock();
+      LayoutObject* line_box_parent = GetParentOfFirstLineBox(this, marker_);
+      if (line_box_parent)
+        parent->MutableStyleRef().SetLogicalHeight(Length(0, kFixed));
+      parent->AddChild(marker_, FirstNonMarkerChild(parent));
+      this->AddChild(parent, before_child);
+    } else {
+      this->AddChild(marker_, before_child);
+    }
+
     marker_->UpdateMarginsAndContent();
     return true;
   }
@@ -221,6 +238,47 @@ void LayoutListItem::PositionListMarker() {
 
     LayoutUnit line_top = root.LineTop();
     LayoutUnit line_bottom = root.LineBottom();
+
+    LayoutObject* line_box_parent = GetParentOfFirstLineBox(this, marker_);
+    if (line_box_parent && line_box_parent->IsLayoutBlockFlow()) {
+      LayoutBlockFlow* line_box_parent_block =
+          ToLayoutBlockFlow(line_box_parent);
+      RootInlineBox* line_box_root = line_box_parent_block->FirstRootBox();
+      if (line_box_root && line_box_root != &root) {
+        // Position marker in block direction.
+        const SimpleFontData* line_box_font_data =
+            line_box_root->GetLineLayoutItem()
+                .Style(true)
+                ->GetFont()
+                .PrimaryFont();
+        if (line_box_font_data) {
+          const FontMetrics& line_box_font_metrics =
+              line_box_font_data->GetFontMetrics();
+          LayoutUnit offset =
+              line_box_root->LogicalTop() +
+              line_box_font_metrics.Ascent(line_box_root->BaselineType());
+          for (LayoutBox* o = line_box_parent_block; o != this;
+               o = o->ParentBox()) {
+            offset += o->LogicalTop();
+          }
+
+          const SimpleFontData* marker_font_data =
+              marker_->Style(true)->GetFont().PrimaryFont();
+          if (marker_font_data) {
+            const FontMetrics& marker_font_metrics =
+                marker_font_data->GetFontMetrics();
+            offset -= marker_font_metrics.Ascent(root.BaselineType());
+          }
+          for (LayoutBox* o = marker_->ParentBox(); o != this;
+               o = o->ParentBox()) {
+            offset -= o->LogicalTop();
+          }
+          offset -= marker_->InlineBoxWrapper()->LogicalTop();
+
+          marker_->InlineBoxWrapper()->MoveInBlockDirection(offset);
+        }
+      }
+    }
 
     // TODO(jchaffraix): Propagating the overflow to the line boxes seems
     // pretty wrong (https://crbug.com/554160).
