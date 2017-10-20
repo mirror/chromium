@@ -74,26 +74,29 @@ NetworkServiceImpl::NetworkServiceImpl(
     registry_->AddInterface<mojom::NetworkService>(
         base::Bind(&NetworkServiceImpl::Create, base::Unretained(this)));
 
-    // Set up net::NetworkChangeNotifier to watch for network change events.
-    std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier;
-    /* disabled temporarily
+    // Set up net::NetworkChangeNotifier to watch for network change events if
+    // NetworkService is running out of process.
+    if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kSingleProcess)) {
+      std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier;
 #if defined(OS_ANDROID)
-    network_change_notifier_factory_ =
-        std::make_unique<net::NetworkChangeNotifierFactoryAndroid>();
-    network_change_notifier =
-        base::WrapUnique(network_change_notifier_factory_->CreateInstance());
-#elif defined(OS_CHROMEOS) || defined(OS_IOS)
-    // ChromeOS has its own implementation of NetworkChangeNotifier that lives
-    // outside of //net and iOS doesn't embed //content.
-    // TODO(xunjieli): Figure out what to do for these two platforms.
-    NOTIMPLEMENTED();
+      network_change_notifier_factory_ =
+          std::make_unique<net::NetworkChangeNotifierFactoryAndroid>();
+      network_change_notifier =
+          base::WrapUnique(network_change_notifier_factory_->CreateInstance());
+#elif defined(OS_CHROMEOS) || defined(OS_IOS) || defined(OS_FUCHSIA)
+      // ChromeOS has its own implementation of NetworkChangeNotifier that lives
+      // outside of //net. iOS doesn't embed //content. Fuchsia doesn't have an
+      // implementation yet.
+      // TODO(xunjieli): Figure out what to do for these 3 platforms.
+      NOTIMPLEMENTED();
 #else
-    network_change_notifier =
-        base::WrapUnique(net::NetworkChangeNotifier::Create());
+      network_change_notifier =
+          base::WrapUnique(net::NetworkChangeNotifier::Create());
 #endif
-    */
-    network_change_manager_ = std::make_unique<NetworkChangeManagerImpl>(
-        std::move(network_change_notifier));
+      network_change_manager_ = std::make_unique<NetworkChangeManagerImpl>(
+          std::move(network_change_notifier));
+    }
   } else {
     network_change_manager_ =
         std::make_unique<NetworkChangeManagerImpl>(nullptr);
