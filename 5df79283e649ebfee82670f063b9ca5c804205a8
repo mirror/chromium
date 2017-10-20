@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e1ab0f00_0a969faa",
+        "filename": "base/bind_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-20T20:05:17Z",
+      "side": 1,
+      "message": "I think that this is getting a pointer to \u0027function\u0027 variable, not casting \u0027functor\u0027 to a pointer. Note that in some cases cast is not possible, for example pointer-to-member can be 2 pointer wide.",
+      "revId": "5df79283e649ebfee82670f063b9ca5c804205a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2e34c6f_2e0ebf92",
         "filename": "base/trace_event/heap_profiler.h",
         "patchSetId": 4
