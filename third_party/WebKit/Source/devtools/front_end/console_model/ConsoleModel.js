@@ -553,6 +553,21 @@ ConsoleModel.ConsoleMessage = class {
   }
 
   /**
+   * @return {boolean}
+   */
+  isGroupable() {
+    // if (this.source === ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
+    //   return false;
+    if (this.level === ConsoleModel.ConsoleMessage.MessageLevel.Error)
+      return false;
+    if (this.type === ConsoleModel.ConsoleMessage.MessageType.Command)
+      return false;
+    if (this.type === ConsoleModel.ConsoleMessage.MessageType.Result)
+      return false;
+    return true;
+  }
+
+  /**
    * @param {?ConsoleModel.ConsoleMessage} msg
    * @return {boolean}
    */

@@ -1084,6 +1084,13 @@ Console.ConsoleViewMessage = class {
     this._showRepeatCountElement();
   }
 
+  /**
+   * @param {number} repeatCount
+   */
+  setRepeatCount(repeatCount) {
+    this._repeatCount = repeatCount;
+  }
+
   _showRepeatCountElement() {
     if (!this._element)
       return;

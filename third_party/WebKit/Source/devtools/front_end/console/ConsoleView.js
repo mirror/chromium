@@ -71,6 +71,11 @@ Console.ConsoleView = class extends UI.VBox {
     this._urlToMessageCount = {};
     this._hiddenByFilterCount = 0;
 
+    /** @type {!Multimap<string, !Console.ConsoleViewMessage>} */
+    this._groupableMessages = new Multimap();
+    /** @type {!Map<string, !Console.ConsoleViewMessage>} */
+    this._groupableMessageTitle = new Map();
+
     /**
      * @type {!Array.<!Console.ConsoleView.RegexMatchRange>}
      */
@@ -459,7 +464,15 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._filter.onMessageAdded(message);
     this._sidebar.onMessageAdded(viewMessage);
-    if (!insertedInMiddle) {
+
+    // If we already have similar messages, go slow path.
+    var shouldGoIntoGroup = false;
+    if (message.isGroupable()) {
+      shouldGoIntoGroup = !!this._groupableMessages.get(message.messageText).size;
+      this._groupableMessages.set(message.messageText, viewMessage);
+    }
+
+    if (!shouldGoIntoGroup && !insertedInMiddle) {
       this._appendMessageToEnd(viewMessage);
       this._updateFilterStatus();
       this._searchableView.updateSearchMatchesCount(this._regexMatchRanges.length);
@@ -559,6 +572,8 @@ Console.ConsoleView = class extends UI.VBox {
   _consoleCleared() {
     this._currentMatchRangeIndex = -1;
     this._consoleMessages = [];
+    this._groupableMessages.clear();
+    this._groupableMessageTitle.clear();
     this._sidebar.clear();
     this._updateMessageList();
     this._hidePromptSuggestBox();
@@ -673,6 +688,7 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _updateMessageList() {
+    // Erase all.
     this._topGroup = Console.ConsoleGroup.createTopGroup();
     this._currentGroup = this._topGroup;
     this._regexMatchRanges = [];
@@ -682,8 +698,45 @@ Console.ConsoleView = class extends UI.VBox {
       this._visibleViewMessages[i].resetIncrementRepeatCount();
     }
     this._visibleViewMessages = [];
-    for (var i = 0; i < this._consoleMessages.length; ++i)
-      this._appendMessageToEnd(this._consoleMessages[i]);
+
+    // Re-populate.
+
+    /** @type {!Set<!Console.ConsoleMessage>} */
+    var alreadyAdded = new Set();
+    for (var i = 0; i < this._consoleMessages.length; ++i) {
+      var viewMessage = this._consoleMessages[i];
+      var message = viewMessage.consoleMessage();
+      if (alreadyAdded.has(message))
+        continue;
+
+      var key = message.messageText;
+      var viewMessagesInGroup = this._groupableMessages.get(key);
+      if (viewMessagesInGroup.size > 1) {
+        // We are creating artificial group!
+        var startGroupViewMessage = this._groupableMessageTitle.get(key);
+        if (!startGroupViewMessage) {
+          var startGroupMessage = new ConsoleModel.ConsoleMessage(
+              null, message.source, message.level, message.messageText,
+              ConsoleModel.ConsoleMessage.MessageType.StartGroupCollapsed);
+          startGroupViewMessage = this._createViewMessage(startGroupMessage);
+          this._groupableMessageTitle.set(key, startGroupViewMessage);
+        }
+        startGroupViewMessage.setRepeatCount(viewMessagesInGroup.size);
+        this._appendMessageToEnd(startGroupViewMessage);
+
+        for (var viewMessageInGroup of viewMessagesInGroup) {
+          this._appendMessageToEnd(viewMessageInGroup);
+          alreadyAdded.add(viewMessageInGroup.consoleMessage());
+        }
+
+        var endGroupMessage = new ConsoleModel.ConsoleMessage(
+            null, message.source, message.level, message.messageText, ConsoleModel.ConsoleMessage.MessageType.EndGroup);
+        this._appendMessageToEnd(this._createViewMessage(endGroupMessage));
+        continue;
+      }
+      this._appendMessageToEnd(viewMessage);
+    }
+
     this._updateFilterStatus();
     this._searchableView.updateSearchMatchesCount(this._regexMatchRanges.length);
     this._viewport.invalidate();
