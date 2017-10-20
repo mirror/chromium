@@ -15,6 +15,7 @@
 #include "base/memory/raw_scoped_refptr_mismatch_checker.h"
 #include "base/memory/weak_ptr.h"
 #include "base/template_util.h"
+#include "base/unbindable_as_pointer.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -101,6 +102,27 @@ struct HasRefCountedTypeAsRawPtr<T, Args...>
     : std::conditional_t<NeedsScopedRefptrButGetsRawPtr<T>::value,
                          std::true_type,
                          HasRefCountedTypeAsRawPtr<Args...>> {};
+
+// Similar to HasRefCountedTypeAsRawPtr.
+// TODO(liberato): Merge this with HasRefCountedTypeAsRawPtr.  While we can't
+// pass in templates as template arguments prior to C++17, we can specialize
+// some class which, itself contains the predicate.  We'd just pass in the
+// typename here that is selects the right specialization.
+template <typename... Args>
+struct DoesPredicateApplyToAnyType : std::false_type {};
+template <typename T, typename... Args>
+struct DoesPredicateApplyToAnyType<T, Args...>
+    : std::conditional_t<DoesIncorrectlyUseUnbindableAsPointerType<T>::value,
+                         std::true_type,
+                         DoesPredicateApplyToAnyType<Args...>> {};
+
+// Helper class to check arguments for a RunType.  In other words, given
+// double(int, float), will check int and float.
+template <typename RunType>
+struct DoesPredicateApplyToAnyRunTypeArgument;
+template <typename Return, typename... Args>
+struct DoesPredicateApplyToAnyRunTypeArgument<Return(Args...)>
+    : DoesPredicateApplyToAnyType<Args...> {};
 
 // ForceVoidReturn<>
 //
@@ -477,10 +499,19 @@ struct BindState final : BindStateBase {
 template <bool is_method, typename Functor, typename... BoundArgs>
 struct MakeBindStateTypeImpl;
 
+// Helper to check Functor arguments for incorrect use.
+template <typename Functor>
+struct DoesPredicateApplyToAnyFunctorArgument
+    : DoesPredicateApplyToAnyRunTypeArgument<
+          typename MakeFunctorTraits<Functor>::RunType> {};
+
 template <typename Functor, typename... BoundArgs>
 struct MakeBindStateTypeImpl<false, Functor, BoundArgs...> {
   static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
+  static_assert(
+      !DoesPredicateApplyToAnyFunctorArgument<Functor>::value,
+      "A functor must not take a pointer to an UnbindableType as an argument.");
   using Type = BindState<std::decay_t<Functor>, std::decay_t<BoundArgs>...>;
 };
 
@@ -495,6 +526,9 @@ struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
                 "First bound argument to a method cannot be an array.");
   static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
+  static_assert(
+      !DoesPredicateApplyToAnyFunctorArgument<Functor>::value,
+      "A functor must not take a pointer to an UnbindableType as an argument.");
 
  private:
   using DecayedReceiver = std::decay_t<Receiver>;
