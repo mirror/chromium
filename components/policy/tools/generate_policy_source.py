@@ -243,7 +243,8 @@ def main():
   risk_tags = RiskTags(template_file_contents)
   policy_details = [ PolicyDetails(policy, major_version, os, is_chromium_os,
                                    risk_tags.GetValidTags())
-                     for policy in _Flatten(template_file_contents) ]
+                    for policy in template_file_contents['policy_definitions']
+                    if policy['type'] != 'group' ]
   risk_tags.ComputeMaxTags(policy_details)
   sorted_policy_details = sorted(policy_details, key=lambda policy: policy.name)
 
@@ -328,10 +329,7 @@ def _OutputComment(f, comment):
 # Returns an iterator over all the policies in |template_file_contents|.
 def _Flatten(template_file_contents):
   for policy in template_file_contents['policy_definitions']:
-    if policy['type'] == 'group':
-      for sub_policy in policy['policies']:
-        yield sub_policy
-    else:
+    if policy['type'] != 'group':
       yield policy
 
 
