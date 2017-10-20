@@ -96,9 +96,6 @@ Process LaunchProcess(const std::vector<std::string>& argv,
   EnvironmentMap environ_modifications = options.environ;
   if (!options.current_directory.empty()) {
     environ_modifications["PWD"] = options.current_directory.value();
-
-    // Don't clone the parent's CWD if we are overriding the child's PWD.
-    to_clone = to_clone & ~LP_CLONE_FDIO_CWD;
   }
 
   if (to_clone & LP_CLONE_DEFAULT_JOB) {
