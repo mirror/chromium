@@ -126,15 +126,15 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
   _encodeUrlPathToLocalPath(urlPath) {
     var encodedParts = [];
     for (var pathPart of fileNamePartsFromUrlPath(urlPath)) {
-      if (!pathPart)
-        continue;
       // encodeURI() escapes all the unsafe filename characters except /:?*
       var encodedName = encodeURI(pathPart).replace(/[\/:\?\*]/g, match => '%' + match[0].charCodeAt(0).toString(16));
+      if (!encodedName)
+        continue;
       // Windows does not allow a small set of filenames.
       if (Persistence.NetworkPersistenceManager._reservedFileNames.has(encodedName.toLowerCase()))
         encodedName = encodedName.split('').map(char => '%' + char.charCodeAt(0).toString(16)).join('');
-      // Windows does not allow the file to end in a space or dot (space should already be encoded).
-      var lastChar = encodedName.charAt(encodedName.length - 1);
+      // Windows does not allow the file ot end in a space or dot (space should already be encoded).
+      var lastChar = encodedName.substr(encodedName.length - 1);
       if (lastChar === '.')
         encodedName = encodedName.substr(0, encodedName.length - 1) + '%2e';
       encodedParts.push(encodedName);
@@ -156,7 +156,7 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
         return [urlPath];
       var endSection = urlPath.substr(queryIndex);
       var parts = urlPath.substr(0, urlPath.length - endSection.length).split(/[\/\\]/g);
-      parts[parts.length - 1] += endSection;
+      parts[0] += endSection;
       return parts;
     }
   }
