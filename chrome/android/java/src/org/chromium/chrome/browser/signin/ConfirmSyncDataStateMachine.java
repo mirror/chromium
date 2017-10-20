@@ -80,43 +80,12 @@ public class ConfirmSyncDataStateMachine
      * @param callback One of the two functions of the {@link ConfirmImportSyncDataDialog.Listener}
      *         are guaranteed to be called.
      */
-    public static void run(String oldAccountName, String newAccountName,
-            ImportSyncType importSyncType, FragmentManager fragmentManager, Context context,
-            ConfirmImportSyncDataDialog.Listener callback) {
-        // Includes implicit not-null assertion.
-        assert !newAccountName.equals("") : "New account name must be provided.";
-
-        ConfirmSyncDataStateMachine stateMachine = new ConfirmSyncDataStateMachine(oldAccountName,
-                newAccountName, importSyncType, fragmentManager, context, callback);
-        stateMachine.progress();
-    }
-
-    /**
-     * If any of the dialogs used by this state machine are shown, cancel them. If this state
-     * machine is running and a dialog is being shown, the given
-     * {@link ConfirmImportSyncDataDialog.Listener#onCancel())} is called.
-     */
-    public static void cancelAllDialogs(FragmentManager fragmentManager) {
-        cancelDialog(fragmentManager,
-                ConfirmImportSyncDataDialog.CONFIRM_IMPORT_SYNC_DATA_DIALOG_TAG);
-        cancelDialog(fragmentManager,
-                ConfirmManagedSyncDataDialog.CONFIRM_IMPORT_SYNC_DATA_DIALOG_TAG);
-    }
-
-    private static void cancelDialog(FragmentManager fragmentManager, String tag) {
-        Fragment fragment = fragmentManager.findFragmentByTag(tag);
-
-        if (fragment == null) return;
-        DialogFragment dialogFragment = (DialogFragment) fragment;
-
-        if (dialogFragment.getDialog() == null) return;
-        dialogFragment.getDialog().cancel();
-    }
-
-    private ConfirmSyncDataStateMachine(String oldAccountName, String newAccountName,
+    public ConfirmSyncDataStateMachine(String oldAccountName, String newAccountName,
             ImportSyncType importSyncType, FragmentManager fragmentManager, Context context,
             ConfirmImportSyncDataDialog.Listener callback) {
         ThreadUtils.assertOnUiThread();
+        // Includes implicit not-null assertion.
+        assert !newAccountName.equals("") : "New account name must be provided.";
 
         mOldAccountName = oldAccountName;
         mNewAccountName = newAccountName;
@@ -127,11 +96,31 @@ public class ConfirmSyncDataStateMachine
 
         mCurrentlyManaged = SigninManager.get(context).getManagementDomain() != null;
 
-        mDelegate = new ConfirmSyncDataStateMachineDelegate(mContext);
+        mDelegate = new ConfirmSyncDataStateMachineDelegate(mFragmentManager);
 
         // New account management status isn't needed right now, but fetching it
         // can take a few seconds, so we kick it off early.
         requestNewAccountManagementStatus();
+
+        progress();
+    }
+
+    public void cancel() {
+        ThreadUtils.assertOnUiThread();
+        onCancel();
+
+        cancelDialog(ConfirmImportSyncDataDialog.CONFIRM_IMPORT_SYNC_DATA_DIALOG_TAG);
+        cancelDialog(ConfirmManagedSyncDataDialog.CONFIRM_IMPORT_SYNC_DATA_DIALOG_TAG);
+    }
+
+    private void cancelDialog(String tag) {
+        Fragment fragment = mFragmentManager.findFragmentByTag(tag);
+
+        if (fragment == null) return;
+        DialogFragment dialogFragment = (DialogFragment) fragment;
+
+        if (dialogFragment.getDialog() == null) return;
+        dialogFragment.getDialog().cancel();
     }
 
     /**
