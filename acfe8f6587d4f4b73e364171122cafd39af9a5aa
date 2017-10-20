@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "3ee43dbe_b636906f",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T20:54:08Z",
+      "side": 1,
+      "message": "Ah, yes -- the difference being that the unisolated site should still mark the process as used even though it doesn\u0027t set its origin lock.  I think such a test is indeed useful.  I\u0027ll add it in a followup to not risk missing today\u0027s canary with this CL.",
+      "parentUuid": "05058882_d871878d",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c6f7ede_28525e80",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 7
