@@ -11,11 +11,11 @@
 #include "base/memory/ref_counted.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/base/completion_callback.h"
+#include "net/interfaces/proxy_resolver_service.mojom.h"
 #include "net/proxy/proxy_resolver_factory.h"
 
 namespace net {
 class HostResolver;
-class MojoProxyResolverFactory;
 class NetLog;
 class ProxyResolverErrorObserver;
 class ProxyResolverScriptData;
@@ -25,7 +25,7 @@ class ProxyResolverScriptData;
 class ProxyResolverFactoryMojo : public ProxyResolverFactory {
  public:
   ProxyResolverFactoryMojo(
-      MojoProxyResolverFactory* mojo_proxy_factory,
+      interfaces::ProxyResolverFactoryPtr mojo_proxy_factory,
       HostResolver* host_resolver,
       const base::Callback<std::unique_ptr<ProxyResolverErrorObserver>()>&
           error_observer_factory,
@@ -42,7 +42,7 @@ class ProxyResolverFactoryMojo : public ProxyResolverFactory {
  private:
   class Job;
 
-  MojoProxyResolverFactory* const mojo_proxy_factory_;
+  interfaces::ProxyResolverFactoryPtr mojo_proxy_factory_;
   HostResolver* const host_resolver_;
   const base::Callback<std::unique_ptr<ProxyResolverErrorObserver>()>
       error_observer_factory_;
