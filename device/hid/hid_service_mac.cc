@@ -128,21 +128,21 @@ HidServiceMac::HidServiceMac() : weak_factory_(this) {
 HidServiceMac::~HidServiceMac() {}
 
 void HidServiceMac::Connect(const std::string& device_guid,
-                            const ConnectCallback& callback) {
+                            ConnectCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const auto& map_entry = devices().find(device_guid);
   if (map_entry == devices().end()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, nullptr));
+        FROM_HERE, base::BindOnce(callback, nullptr));
     return;
   }
 
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, kBlockingTaskTraits,
-      base::Bind(&HidServiceMac::OpenOnBlockingThread, map_entry->second),
-      base::Bind(&HidServiceMac::DeviceOpened, weak_factory_.GetWeakPtr(),
-                 map_entry->second, callback));
+      base::BindOnce(&HidServiceMac::OpenOnBlockingThread, map_entry->second),
+      base::BindOnce(&HidServiceMac::DeviceOpened, weak_factory_.GetWeakPtr(),
+                     map_entry->second, callback));
 }
 
 base::WeakPtr<HidService> HidServiceMac::GetWeakPtr() {

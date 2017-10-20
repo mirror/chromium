@@ -105,8 +105,8 @@ InputServiceLinuxImpl::InputServiceLinuxImpl() : observer_(this) {
 
   DeviceMonitorLinux* monitor = DeviceMonitorLinux::GetInstance();
   observer_.Add(monitor);
-  monitor->Enumerate(base::Bind(&InputServiceLinuxImpl::OnDeviceAdded,
-                                base::Unretained(this)));
+  monitor->Enumerate(base::BindOnce(&InputServiceLinuxImpl::OnDeviceAdded,
+                                    base::Unretained(this)));
 }
 
 InputServiceLinuxImpl::~InputServiceLinuxImpl() {
