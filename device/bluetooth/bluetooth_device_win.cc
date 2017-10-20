@@ -38,6 +38,7 @@ BluetoothDeviceWin::BluetoothDeviceWin(
       socket_thread_(socket_thread),
       net_log_(net_log),
       net_log_source_(net_log_source) {
+  adapter_->AddObserver(this);
   Update(device_state);
 }
 
@@ -382,7 +383,17 @@ void BluetoothDeviceWin::UpdateGattServices(
       adapter_->NotifyGattServiceAdded(primary_service);
     }
   }
+}
 
+void BluetoothDeviceWin::GattDiscoveryCompleteForService(
+    BluetoothAdapter* adapter,
+    BluetoothRemoteGattService* service) {
+  for (const auto& gatt_service : gatt_services_) {
+    if (!gatt_service.second.get()->IsDiscoveryComplete())
+      return;
+  }
+
+  SetGattServicesDiscoveryComplete(true);
   adapter_->NotifyGattServicesDiscovered(this);
 }
 

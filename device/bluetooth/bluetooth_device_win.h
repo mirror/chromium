@@ -28,7 +28,9 @@ class BluetoothAdapterWin;
 class BluetoothServiceRecordWin;
 class BluetoothSocketThread;
 
-class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin : public BluetoothDevice {
+class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin
+    : public BluetoothDevice,
+      public BluetoothAdapter::Observer {
  public:
   explicit BluetoothDeviceWin(
       BluetoothAdapterWin* adapter,
@@ -86,6 +88,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin : public BluetoothDevice {
   void CreateGattConnection(
       const GattConnectionCallback& callback,
       const ConnectErrorCallback& error_callback) override;
+  void GattDiscoveryCompleteForService(
+      BluetoothAdapter* adapter,
+      BluetoothRemoteGattService* service) override;
 
   // Used by BluetoothProfileWin to retrieve the service record for the given
   // |uuid|.
