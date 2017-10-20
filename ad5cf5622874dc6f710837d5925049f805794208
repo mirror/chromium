@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e192eec_9175113d",
+        "filename": "ash/message_center/message_center_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T00:50:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "471fe3f1_b049abe0",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a16e72a1_9315c28e",
         "filename": "ash/message_center/message_center_controller.h",
         "patchSetId": 4
@@ -318,6 +336,24 @@
       "side": 1,
       "message": "I didn\u0027t document them because they\u0027re indentical to the ones in NotificationDelegate. How do you think I should best document them while avoiding duplication?",
       "parentUuid": "7b774c4a_bfc7cf09",
+      "revId": "ad5cf5622874dc6f710837d5925049f805794208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55867e80_377856b1",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T00:50:10Z",
+      "side": 1,
+      "message": "The signatures are not identical, and there is no documentation of what \"id\" means. I would just copy/paste the docs, or failing that say something like \"See NotificationDelegate::ButtonClick. id| is a Notification::id_, for example \u0027foo\u0027\". (I said \u0027foo\u0027 because I don\u0027t actually know what the format is -- I would use a real example.)",
+      "parentUuid": "c1b88fa7_eb00bf95",
       "revId": "ad5cf5622874dc6f710837d5925049f805794208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
