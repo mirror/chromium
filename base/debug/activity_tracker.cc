@@ -1397,6 +1397,9 @@ void GlobalActivityTracker::SetProcessExitCallback(
 void GlobalActivityTracker::RecordProcessLaunch(
     ProcessId process_id,
     const FilePath::StringType& cmd) {
+  LOG(ERROR) << "Enter RecordProcessLaunch process_id:" << process_id
+             << ", cmd: " << cmd;
+
   const int64_t pid = process_id;
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
@@ -1404,7 +1407,7 @@ void GlobalActivityTracker::RecordProcessLaunch(
   base::AutoLock lock(global_tracker_lock_);
   if (base::ContainsKey(known_processes_, pid)) {
     // TODO(bcwhite): Measure this in UMA.
-    NOTREACHED() << "Process #" << process_id
+    DLOG(ERROR) << "Process #" << process_id
                  << " was previously recorded as \"launched\""
                  << " with no corresponding exit.";
     known_processes_.erase(pid);
@@ -1415,6 +1418,9 @@ void GlobalActivityTracker::RecordProcessLaunch(
 #else
   known_processes_.insert(std::make_pair(pid, cmd));
 #endif
+
+  LOG(ERROR) << "Exit RecordProcessLaunch process_id:" << process_id
+             << ", cmd: " << cmd;
 }
 
 void GlobalActivityTracker::RecordProcessLaunch(
@@ -1432,6 +1438,10 @@ void GlobalActivityTracker::RecordProcessLaunch(
 
 void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
                                               int exit_code) {
+
+  LOG(ERROR) << "Enter RecordProcessExit process_id:" << process_id
+             << ", exit_code: " << exit_code;
+
   const int64_t pid = process_id;
   DCHECK_NE(GetProcessId(), pid);
   DCHECK_NE(0, pid);
@@ -1465,6 +1475,9 @@ void GlobalActivityTracker::RecordProcessExit(ProcessId process_id,
   }
 
   CleanupAfterProcess(pid, now_stamp, exit_code, std::move(command_line));
+
+  LOG(ERROR) << "Exit RecordProcessExit process_id:" << process_id
+             << ", exit_code: " << exit_code;
 }
 
 void GlobalActivityTracker::SetProcessPhase(ProcessPhase phase) {
@@ -1475,6 +1488,10 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
                                                 int64_t exit_stamp,
                                                 int exit_code,
                                                 std::string&& command_line) {
+  LOG(ERROR) << "Enter CleanupAfterProcess process_id:" << process_id
+             << ", exit_code: " << exit_code
+             << ", command_line: " << command_line;
+
   // The process may not have exited cleanly so its necessary to go through
   // all the data structures it may have allocated in the persistent memory
   // segment and mark them as "released". This will allow them to be reused
@@ -1551,6 +1568,9 @@ void GlobalActivityTracker::CleanupAfterProcess(int64_t process_id,
       } break;
     }
   }
+  LOG(ERROR) << "Exit CleanupAfterProcess process_id:" << process_id
+             << ", exit_code: " << exit_code
+             << ", command_line: " << command_line;
 }
 
 void GlobalActivityTracker::RecordLogMessage(StringPiece message) {
