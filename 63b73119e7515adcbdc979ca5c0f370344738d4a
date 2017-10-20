@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7961021a_b4552ea8",
+        "filename": "base/stl_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-20T20:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "930a45c3_4ed5ae1f",
+      "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a18f535_553f7b6d",
         "filename": "components/bookmarks/browser/titled_url_index.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Ah I see. I missed the state in the IsNotIn. Is there some promise that std::erase_if will walk in the same order that this requires? http://en.cppreference.com/w/cpp/experimental/vector/erase_if does not mention it for instance. base::EraseIf will be replaced with std::erase_if eventually, which will be implemented differently in diff libraries/platforms, so this is important.",
       "parentUuid": "defed03f_cccc2c10",
+      "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26645dc2_bf39e8ed",
+        "filename": "components/bookmarks/browser/titled_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-20T20:56:56Z",
+      "side": 1,
+      "message": "Your link says that it\u0027s equivalent to ::remove_if(c.begin(), c.end()...), necessitating forward iteration (and it would be n-squared any other way.)\n\nLikewise, list::erase_if says it\u0027s equivalent to list::remove_if which mandates a const_iterator that points to T.\n\nFinally, set::erase_if says that it iterates forwards. (I suspect that the actual standard says the same thing in more formal terms.)\n\nThere may still be a way for a conforming implementation to wiggle out of these constraints, but I don\u0027t see it.",
+      "parentUuid": "a7618309_afc5e6bf",
       "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
