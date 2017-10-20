@@ -16,6 +16,24 @@
       "revId": "081d8e2b0e70bae083ac461d25dfe7c0e30af31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64ff0ef_49a94583",
+        "filename": "third_party/ots/include/opentype-sanitiser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-20T05:08:06Z",
+      "side": 1,
+      "message": "Talked to xam@ (OSPO team), and he said this is OK.\nLanding.",
+      "parentUuid": "6b3dbc04_2bd71d45",
+      "revId": "081d8e2b0e70bae083ac461d25dfe7c0e30af31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
