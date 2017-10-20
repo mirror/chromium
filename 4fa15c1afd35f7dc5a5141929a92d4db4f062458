@@ -33,6 +33,41 @@
       "revId": "4fa15c1afd35f7dc5a5141929a92d4db4f062458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514f774b_8f3e5002",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2017-10-20T06:54:45Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion about this. Having a default constructor seems like it might be valuable, but I take your point about parity with SecurityOrigin (though that\u0027s a bit different because of the refcounting requirement).",
+      "parentUuid": "e7e42fba_1733bab4",
+      "revId": "4fa15c1afd35f7dc5a5141929a92d4db4f062458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ec6a87_b716e94d",
+        "filename": "url/origin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2017-10-20T06:54:45Z",
+      "side": 1,
+      "message": "Can you make this private? Or is there still usage out there that isn\u0027t addressed in this (large!) CL?",
+      "revId": "4fa15c1afd35f7dc5a5141929a92d4db4f062458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
