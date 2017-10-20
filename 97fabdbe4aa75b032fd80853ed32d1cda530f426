@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ac1d5af_cea94a1b",
+        "filename": "third_party/WebKit/common/blob/size_getter.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-20T13:49:05Z",
+      "side": 1,
+      "message": "this file is only used by storage::DataElement, which Blink doesn\u0027t use. So it seems it should still stay in storage/ ?\n\nMy plan was that, once DataElement is simplified so that it\u0027s just string/file/data pipe, I would move it to services/network. I guess I could move the interface from blink to services/network then. It just seemed a little confusing to have interfaces in blink/ that blink/ doesn\u0027t use.",
+      "revId": "97fabdbe4aa75b032fd80853ed32d1cda530f426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
