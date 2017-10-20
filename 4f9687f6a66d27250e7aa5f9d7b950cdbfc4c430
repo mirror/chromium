@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35724495_e4e44cbf",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-20T12:49:09Z",
+      "side": 1,
+      "message": "Great proposal, however unfortunately it is not yet possible to make this mock directly because \u0027mojo::ScopedSharedBufferMapping mapping\u0027 argument is move-only:\nhttps://github.com/google/googletest/blob/master/googlemock/docs/CookBook.md#mocking-methods-that-use-move-only-types\nWe could make the workaround trick that the documentation describes, but this change IMO is better to be put into a separate CL (and considering that the existing GenericSensorServiceTest will need modifying), wdyt?",
+      "parentUuid": "79d44d5a_0877d0ad",
+      "revId": "4f9687f6a66d27250e7aa5f9d7b950cdbfc4c430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d98d74e2_d23aa79e",
         "filename": "services/device/generic_sensor/platform_sensor_provider_unittest.cc",
         "patchSetId": 3
