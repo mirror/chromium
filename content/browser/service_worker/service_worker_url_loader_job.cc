@@ -131,8 +131,7 @@ void ServiceWorkerURLLoaderJob::Cancel() {
   fetch_dispatcher_.reset();
   stream_waiter_.reset();
 
-  url_loader_client_->OnComplete(
-      ResourceRequestCompletionStatus(net::ERR_ABORTED));
+  url_loader_client_->OnComplete(network::URLLoaderStatus(net::ERR_ABORTED));
   url_loader_client_.reset();
 }
 
@@ -217,7 +216,7 @@ void ServiceWorkerURLLoaderJob::CommitCompleted(int error_code) {
   // |stream_waiter_| calls this when done.
   stream_waiter_.reset();
 
-  url_loader_client_->OnComplete(ResourceRequestCompletionStatus(error_code));
+  url_loader_client_->OnComplete(network::URLLoaderStatus(error_code));
 }
 
 void ServiceWorkerURLLoaderJob::ReturnNetworkError() {
@@ -431,7 +430,7 @@ void ServiceWorkerURLLoaderJob::OnStartLoadingResponseBody(
 }
 
 void ServiceWorkerURLLoaderJob::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
+    const network::URLLoaderStatus& status) {
   DCHECK_EQ(Status::kSentHeader, status_);
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;

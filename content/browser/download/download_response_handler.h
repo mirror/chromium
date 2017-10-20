@@ -56,8 +56,7 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;
-  void OnComplete(const content::ResourceRequestCompletionStatus&
-                  completion_status) override;
+  void OnComplete(const network::URLLoaderStatus& completion_status) override;
 
  private:
   std::unique_ptr<DownloadCreateInfo> CreateDownloadCreateInfo(

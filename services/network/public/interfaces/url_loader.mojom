@@ -1,0 +1,27 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module network.mojom;
+
+import "mojo/common/time.mojom";
+
+struct URLLoaderStatus {
+  // The network error code defined in net/base/net_error_list.h.
+  int32 error_code;
+
+  // A copy of the data exists in the cache.
+  bool exists_in_cache;
+
+  // Time the request completed.
+  mojo.common.mojom.TimeTicks completion_time;
+
+  // Total amount of data received from the network.
+  int64 encoded_data_length;
+
+  // The length of the response body before removing any content encodings.
+  int64 encoded_body_length;
+
+  // The length of the response body after decoding.
+  int64 decoded_body_length;
+};

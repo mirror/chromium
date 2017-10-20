@@ -1,28 +1,26 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_PUBLIC_COMMON_RESOURCE_REQUEST_COMPLETION_STATUS_H_
-#define CONTENT_PUBLIC_COMMON_RESOURCE_REQUEST_COMPLETION_STATUS_H_
+#ifndef SERVICES_NETWORK_PUBLIC_CPP_URL_LOADER_STATUS_H_
+#define SERVICES_NETWORK_PUBLIC_CPP_URL_LOADER_STATUS_H_
 
 #include <stdint.h>
 #include <string>
 
 #include "base/time/time.h"
-#include "content/common/content_export.h"
 
-namespace content {
+namespace network {
 
-struct CONTENT_EXPORT ResourceRequestCompletionStatus {
-  ResourceRequestCompletionStatus();
-  ResourceRequestCompletionStatus(
-      const ResourceRequestCompletionStatus& status);
+struct URLLoaderStatus {
+  URLLoaderStatus();
+  URLLoaderStatus(const URLLoaderStatus& status);
 
   // Sets |error_code| to |error_code| and |completion_time| to
   // base::TimeTicks::Now().
-  explicit ResourceRequestCompletionStatus(int error_code);
+  explicit URLLoaderStatus(int error_code);
 
-  ~ResourceRequestCompletionStatus();
+  ~URLLoaderStatus();
 
   // The error code.
   int error_code = 0;
@@ -43,6 +41,10 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
   int64_t decoded_body_length = 0;
 };
 
+}  // namespace network
+
+namespace content {
+// using ResourceRequestCompletionStatus = network::URLLoaderStatus;
 }  // namespace content
 
-#endif  // CONTENT_PUBLIC_COMMON_RESOURCE_REQUEST_COMPLETION_STATUS_H_
+#endif  // SERVICES_NETWORK_PUBLIC_CPP_URL_LOADER_STATUS_H_

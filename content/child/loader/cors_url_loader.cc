@@ -92,7 +92,7 @@ void CORSURLLoader::OnStartLoadingResponseBody(
   forwarding_client_->OnStartLoadingResponseBody(std::move(body));
 }
 
-void CORSURLLoader::OnComplete(const ResourceRequestCompletionStatus& status) {
+void CORSURLLoader::OnComplete(const network::URLLoaderStatus& status) {
   forwarding_client_->OnComplete(status);
 }
 
