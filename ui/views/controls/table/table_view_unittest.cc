@@ -1227,6 +1227,15 @@ TEST_F(TableViewTest, FocusAfterRemovingAnchor) {
   table_->RequestFocus();
 }
 
+TEST_F(TableViewTest, RemovingInvalidRowIsNoOp) {
+  table_->Select(3);
+  EXPECT_EQ("active=3 anchor=3 selection=3", SelectionStateAsString());
+  table_->OnItemsRemoved(4, 1);
+  EXPECT_EQ("active=3 anchor=3 selection=3", SelectionStateAsString());
+  table_->OnItemsRemoved(2, 0);
+  EXPECT_EQ("active=3 anchor=3 selection=3", SelectionStateAsString());
+}
+
 namespace {
 
 class RemoveFocusChangeListenerDelegate : public WidgetDelegate {
