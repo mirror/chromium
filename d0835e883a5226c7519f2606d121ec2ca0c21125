@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "654c47fc_ee262c9c",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-20T14:21:45Z",
+      "side": 1,
+      "message": "nit: No need to signify the end of your comment line with a semicolon :-)",
+      "range": {
+        "startLine": 9,
+        "startChar": 78,
+        "endLine": 9,
+        "endChar": 79
+      },
+      "revId": "d0835e883a5226c7519f2606d121ec2ca0c21125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
