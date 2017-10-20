@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+promise_test((t) => {
+    const method = 'X';
+    const keepalive = 'true';
+    return fetch('/', {method, keepalive})
+      .then(t.unreached_func('fetch should fail'), () => {});
+  }, 'keepalive: we do not support non-simple requests at this moment');
+</script>
+</html>
