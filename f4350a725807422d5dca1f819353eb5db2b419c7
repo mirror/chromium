@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "740fa916_6f559087",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-20T02:46:44Z",
+      "side": 1,
+      "message": "Provides",
+      "revId": "f4350a725807422d5dca1f819353eb5db2b419c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a761b2_308c3c15",
+        "filename": "content/common/devtools.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-20T02:46:44Z",
+      "side": 1,
+      "message": "Would you elaborate on why it needs to be associated with the legacy IPC?",
+      "revId": "f4350a725807422d5dca1f819353eb5db2b419c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
