@@ -13,11 +13,18 @@ class GURL;
 // confirmation dialog before switching context to an external application.
 @interface ExternalAppLauncher : NSObject
 
-// Opens URL in an external application if possible (optionally after
-// confirming via dialog in case that user didn't interact using
-// |linkClicked| or if the external application is face time) or returns NO
-// if there is no such application available.
-- (BOOL)openURL:(const GURL&)gURL linkClicked:(BOOL)linkClicked;
+// Requests to open URL in an external application.
+// The method checks if the application from the |toURL| has been opened
+// repeatedly by the |fromURL| page in a short time frame, in that case a prompt
+// will appear to the user with an option to block the application from running.
+// Then the method also checks for user interaction and for schemes that require
+// special handling (eg. facetome, mailto) and may present the user with a
+// confirmation dialog to open the applicaiton.
+// If there is no such application available or it's not possible to open the
+// application the method returns NO.
+- (BOOL)requestURLOpen:(const GURL&)toURL
+               fromURL:(const GURL&)fromURL
+           linkClicked:(BOOL)linkClicked;
 
 @end
 
