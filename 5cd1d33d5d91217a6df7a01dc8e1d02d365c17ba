@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4ee85be_1c0c8ec0",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-20T20:48:21Z",
+      "side": 1,
+      "message": "This needs an update per our offline investigation. Though if we can figure out why \"com.apple.system.opendirectoryd.libinfo\" isn\u0027t working, that\u0027d be even better.",
+      "revId": "5cd1d33d5d91217a6df7a01dc8e1d02d365c17ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
