@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74b10097_68dd2484",
+        "filename": "ui/views/controls/combobox/combobox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T05:35:23Z",
+      "side": 1,
+      "message": "does something like text_button_-\u003eSetTooltipText(tooltip_text) work?\n\nMaybe then you don\u0027t need to implement the other two methods (but you might need to set accessible state still - be sure to check that too).",
+      "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1320c49_c3f30e2a",
+        "filename": "ui/views/controls/combobox/combobox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T05:35:23Z",
+      "side": 1,
+      "message": "what\u0027s wrong with the default implementation? (comment here?)",
+      "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7739358_03fb9f36",
+        "filename": "ui/views/controls/combobox/combobox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T05:35:23Z",
+      "side": 1,
+      "message": "comment",
+      "revId": "d265e11335c746e23225c4ee55f538d0838cbcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
