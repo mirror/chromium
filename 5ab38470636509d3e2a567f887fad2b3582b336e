@@ -22,6 +22,30 @@
       "revId": "5ab38470636509d3e2a567f887fad2b3582b336e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b414d7_7ecc0e2a",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapingLineBreakerPerfTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-20T00:51:35Z",
+      "side": 1,
+      "message": "ShapeResults are quite small so I think that\u0027s fine. It also matches how it is typically used.\n\nThanks for pointing it out though!",
+      "parentUuid": "aa5b1c4d_d5246d0a",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 78
+      },
+      "revId": "5ab38470636509d3e2a567f887fad2b3582b336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
