@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a514dcf8_8a7d7ed9",
+        "filename": "cc/test/test_web_graphics_context_3d.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-20T16:46:59Z",
+      "side": 0,
+      "message": "nit: remove consumeTextureCHROMIUM from header",
+      "revId": "4f650e95b5e0526f0aa39800b1fa729af15b002e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38844dab_3e9d340b",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers_autogen.cc",
         "patchSetId": 8
