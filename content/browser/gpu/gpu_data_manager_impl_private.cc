@@ -655,7 +655,6 @@ void GpuDataManagerImplPrivate::Initialize() {
   InitializeImpl(gpu_blacklist_data, gpu_info);
 
   if (in_process_gpu_) {
-    command_line->AppendSwitch(switches::kDisableGpuWatchdog);
     AppendGpuCommandLine(command_line);
   }
 }
@@ -849,6 +848,9 @@ void GpuDataManagerImplPrivate::UpdateGpuPreferences(
 
   gpu_preferences->gpu_program_cache_size =
       gpu::ShaderDiskCache::CacheSizeBytes();
+
+  if (in_process_gpu_)
+    gpu_preferences->disable_gpu_watchdog = true;
 }
 
 void GpuDataManagerImplPrivate::DisableHardwareAcceleration() {

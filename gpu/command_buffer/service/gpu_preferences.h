@@ -144,6 +144,13 @@ struct GPU_EXPORT GpuPreferences {
   // Use the Pass-through command decoder, skipping all validation and state
   // tracking.
   bool use_passthrough_cmd_decoder = false;
+
+  // Causes the GPU process to display a dialog on launch.
+  bool gpu_startup_dialog = false;
+
+  // Disable the thread that crashes the GPU process if it stops responding to
+  // messages.
+  bool disable_gpu_watchdog = false;
 };
 
 }  // namespace gpu
