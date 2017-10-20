@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40894ca5_1522b886",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-20T18:28:08Z",
+      "side": 1,
+      "message": "Nit: Space around the \"*\".",
+      "revId": "bbb3f8609a7e01d3fda6ff981408abcb56e288bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
