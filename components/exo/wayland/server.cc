@@ -41,6 +41,8 @@
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/shell.h"
+#include "ash/shell_observer.h"
+#include "ash/wm/overview/window_selector_controller.h"
 #include "base/bind.h"
 #include "base/cancelable_callback.h"
 #include "base/command_line.h"
@@ -1216,6 +1218,7 @@ class WaylandPrimaryDisplayObserver : public display::DisplayObserver {
     const char* kUnknownModel = "unknown";
 
     gfx::Rect bounds = info.bounds_in_native();
+
     wl_output_send_geometry(
         output_resource_, bounds.x(), bounds.y(),
         static_cast<int>(kInchInMm * bounds.width() / info.device_dpi()),
@@ -2165,7 +2168,8 @@ const struct zcr_notification_surface_v1_interface
 // for the remote shell interface.
 class WaylandRemoteShell : public WMHelper::TabletModeObserver,
                            public WMHelper::ActivationObserver,
-                           public display::DisplayObserver {
+                           public display::DisplayObserver,
+                           public ash::ShellObserver {
  public:
   WaylandRemoteShell(Display* display, wl_resource* remote_shell_resource)
       : display_(display),
@@ -2175,6 +2179,7 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
     helper->AddTabletModeObserver(this);
     helper->AddActivationObserver(this);
     display::Screen::GetScreen()->AddObserver(this);
+    ash::Shell::Get()->AddShellObserver(this);
 
     layout_mode_ = helper->IsTabletModeWindowManagerEnabled()
                        ? ZCR_REMOTE_SHELL_V1_LAYOUT_MODE_TABLET
@@ -2198,6 +2203,7 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
     helper->RemoveTabletModeObserver(this);
     helper->RemoveActivationObserver(this);
     display::Screen::GetScreen()->RemoveObserver(this);
+    ash::Shell::Get()->RemoveShellObserver(this);
   }
 
   bool IsMultiDisplaySupported() const {
@@ -2262,6 +2268,15 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
     SendActivated(gained_active, lost_active);
   }
 
+  // Overridden from ash::ShellObserver
+  void OnOverviewModeStarting() override {
+    ScheduleSendDisplayMetrics(0);
+  }
+
+  void OnOverviewModeEnded() override {
+    ScheduleSendDisplayMetrics(0);
+  }
+
  private:
   void ScheduleSendDisplayMetrics(int delay_ms) {
     needs_send_display_metrics_ = true;
@@ -2287,6 +2302,8 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
     return WL_OUTPUT_TRANSFORM_NORMAL;
   }
 
+
+
   void SendDisplayMetrics() {
     if (!needs_send_display_metrics_)
       return;
@@ -2294,10 +2311,15 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
 
     const display::Screen* screen = display::Screen::GetScreen();
 
+    ash::WindowSelectorController* controller = ash::Shell::Get()->window_selector_controller();
+    const bool is_selecting_ = controller->IsSelecting();
+
     if (IsMultiDisplaySupported()) {
       for (const auto& display : screen->GetAllDisplays()) {
         const gfx::Rect& bounds = display.bounds();
-        const gfx::Insets& insets = display.GetWorkAreaInsets();
+        // If window selection mode is active, pass an empty work area insets in order to
+        // show the content of windows only.
+        const gfx::Insets& insets = is_selecting_? gfx::Insets() : display.GetWorkAreaInsets();
 
         double device_scale_factor =
             WMHelper::GetInstance()->GetDisplayInfo(display.id())
@@ -2316,7 +2338,9 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
     }
 
     display::Display primary_display = screen->GetPrimaryDisplay();
-    const gfx::Insets& insets = primary_display.GetWorkAreaInsets();
+    // If window selection mode is active, pass an empty work area insets in order to
+    // show the content of windows only.
+    const gfx::Insets& insets = is_selecting_? gfx::Insets() : primary_display.GetWorkAreaInsets();
 
     zcr_remote_shell_v1_send_configuration_changed(
         remote_shell_resource_, primary_display.size().width(),
