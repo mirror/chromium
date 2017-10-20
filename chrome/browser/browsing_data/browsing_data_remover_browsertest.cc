@@ -373,7 +373,9 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, SessionStorageCounting) {
   EXPECT_TRUE(HasDataForType("SessionStorage"));
 }
 
-IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, ServiceWorkerDeletion) {
+// Test seems to be flaky
+IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest,
+                       DISABLED_ServiceWorkerDeletion) {
   TestSiteData("ServiceWorker");
 }
 
