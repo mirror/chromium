@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "3e01f641_af329dd7",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T01:28:57Z",
+      "side": 1,
+      "message": "Yes, I did try printing a PDF on Linux, with or without your CL. In either case, the |kSettingPreviewModifiable| key is associated with a value of 0.\n\nIf you need to set |kSettingPreviewModifiable|, can you explain exactly why and with which scenario? Is it because the |kSettingPreviewModifiable| key is not in the dictionary? Or because it has the wrong value?",
+      "parentUuid": "ca27cbae_b6ba78ff",
+      "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97c48c1b_16f85e8d",
         "filename": "printing/print_settings_conversion.cc",
         "patchSetId": 3
