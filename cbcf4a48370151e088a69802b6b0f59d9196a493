@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890f4976_468e43af",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T00:00:00Z",
+      "side": 1,
+      "message": "No need for this I guess.",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beaafc56_b7538a98",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T00:00:00Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::UI)",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c17e2d_1408a0a2",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T00:00:00Z",
+      "side": 1,
+      "message": "devtools_target_id",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b14c3f_46f300d4",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T00:00:00Z",
+      "side": 1,
+      "message": "- There should be a RemoveWebContents method as well.\n- I\u0027d call them Register/Unregister.",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f17cb7_06ec69f0",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T00:00:00Z",
+      "side": 1,
+      "message": "The typical way is to Registry::GetInstance()-\u003eCallTheMethod. This makes it easier to have two instances later.",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f671f887_8c614178",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T00:00:00Z",
+      "side": 1,
+      "message": "You could use InterceptedPage* instead.",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025341a2_aec3f82f",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T00:00:00Z",
+      "side": 1,
+      "message": "Let\u0027s call this from interceptor, not from here.",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
