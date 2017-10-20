@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4393ebc1_306eb7e4",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-20T19:48:58Z",
+      "side": 1,
+      "message": "I know this isn\u0027t from this patch, but this is weird and we should probably make this less weird somehow. Why is \u0027NotifyClientFloatAnimated\u0027 setting opacity? It\u0027s weird.",
+      "range": {
+        "startLine": 285,
+        "startChar": 16,
+        "endLine": 285,
+        "endChar": 41
+      },
+      "revId": "3f4d9e1ab85f75738c73591da85eaf819209a887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a713c38_0d3db273",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-20T19:48:58Z",
+      "side": 1,
+      "message": "This should dirty the scene. Is this something you can do with a binding? Something like a generic one-shot binding would be sweet.",
+      "range": {
+        "startLine": 684,
+        "startChar": 4,
+        "endLine": 684,
+        "endChar": 78
+      },
+      "revId": "3f4d9e1ab85f75738c73591da85eaf819209a887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
