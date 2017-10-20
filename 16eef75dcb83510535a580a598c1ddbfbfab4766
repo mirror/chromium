@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "33379f6f_d9d5a17f",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T12:58:11Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s keep things simple and remove them.",
+      "parentUuid": "215e7cab_51295997",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb0d94a3_e8f48c0b",
         "filename": "components/password_manager/core/browser/password_manager.cc",
         "patchSetId": 1
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "This is just a precaution to gracefully handle some forms if our heuristic fails to recognize some of the fields properly.",
       "parentUuid": "2eeb9573_bb535dc4",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 42
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95538e6_16dc7a3f",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T12:58:11Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep things simple and to remove these lines, I think that checking username value is enough.",
+      "parentUuid": "42679b5f_7f41a490",
       "range": {
         "startLine": 107,
         "startChar": 7,
