@@ -59,6 +59,48 @@
     },
     {
       "key": {
+        "uuid": "e04a9840_7d450f12",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-20T20:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d49ec92_e7c80ca9",
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d544ba8_0dfb7d0c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-20T20:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "964325be_fbbce511",
+      "range": {
+        "startLine": 981,
+        "startChar": 12,
+        "endLine": 981,
+        "endChar": 37
+      },
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc341735_f4edc04a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
         "patchSetId": 4
@@ -79,6 +121,30 @@
       "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1615bdc_57f6c1fd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-20T20:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc341735_f4edc04a",
+      "range": {
+        "startLine": 1025,
+        "startChar": 8,
+        "endLine": 1025,
+        "endChar": 33
+      },
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +171,30 @@
     },
     {
       "key": {
+        "uuid": "755f4d0a_e1153369",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-20T20:28:02Z",
+      "side": 1,
+      "message": "Done! Thanks :)",
+      "parentUuid": "bc030caf_8282137c",
+      "range": {
+        "startLine": 1743,
+        "startChar": 16,
+        "endLine": 1743,
+        "endChar": 41
+      },
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eddd8ef_41133191",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
         "patchSetId": 4
@@ -116,6 +206,24 @@
       "writtenOn": "2017-10-20T19:09:55Z",
       "side": 1,
       "message": "We always need to set mSystemLanguageTag after registering the receiver. Otherwise, it\u0027s possible the locale will change while the receiver is not registered, and mSystemLanguageTag will be wrong.",
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cb644e_7bfcea81",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-20T20:28:02Z",
+      "side": 1,
+      "message": "I think we should have it in the constructor as well as after registering the receiver.",
+      "parentUuid": "6eddd8ef_41133191",
       "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +244,24 @@
       "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c4d6c7_268c1a19",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-20T20:28:02Z",
+      "side": 1,
+      "message": "Now, this function will also be called when its currently attached to a window when WebContentsAccessibility is constructed. See ContentViewCore#getAccessibilityNodeProvider",
+      "parentUuid": "0ff352e4_729c4c09",
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
