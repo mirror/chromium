@@ -189,6 +189,30 @@
       "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5af8db6c_c66377ae",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-20T23:31:38Z",
+      "side": 1,
+      "message": "Done, got a little larger, and may conflict with yours, sorry, but I think it\u0027s a bit easier to read.",
+      "parentUuid": "4e8e9444_30e08a12",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 4
+      },
+      "revId": "baea18e92add8f44de66bc710594b23cce7ed7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
