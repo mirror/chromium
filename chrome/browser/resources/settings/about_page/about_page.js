@@ -325,6 +325,8 @@ Polymer({
           });
         }
         return this.i18nAdvanced('aboutUpgradeUpdating');
+      case UpdateStatus.DISABLED:
+        return '';
       default:
         function formatMessage(msg) {
           return parseHtmlSubset('<b>' + msg + '</b>', ['br', 'pre'])
@@ -339,7 +341,8 @@ Polymer({
           result += '<div>' + formatMessage(connectMessage) + '</div>';
 
         var helpUrl = "https://support.google.com/chrome/answer/111996";
-        result += '<a href="' + helpUrl + '" target="_blank">';
+        result += '<a href="' + helpUrl + '" target="_blank"> ' +
+            this.i18n('learnMore') + '</a>';
         return result;
     }
   },
