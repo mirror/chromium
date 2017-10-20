@@ -100,6 +100,7 @@ void GetSavePasswordDialogTitleTextAndLinkRange(
   // Check whether the registry controlled domains for user-visible URL (i.e.
   // the one seen in the omnibox) and the password form post-submit navigation
   // URL differs or not.
+  LOG(ERROR) << user_visible_url << " vs " << form_origin_url;
   if (!SameDomainOrHost(user_visible_url, form_origin_url)) {
     DCHECK_NE(PasswordTitleType::SAVE_ACCOUNT, dialog_type)
         << "Calls to save account should always happen on the same domain.";
