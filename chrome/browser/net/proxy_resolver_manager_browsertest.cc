@@ -17,6 +17,8 @@
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/interfaces/service_manager.mojom.h"
 
 namespace {
 
@@ -106,34 +108,6 @@ class TestServiceManagerListener
   DISALLOW_COPY_AND_ASSIGN(TestServiceManagerListener);
 };
 
-// Creates a ProxyResolverFactory on the IO thread that can then be used on the
-// UI thread.
-proxy_resolver::mojom::ProxyResolverFactoryPtr CreateResolverFactoryOnIOThread(
-    ProxyResolverManager* factory) {
-  base::RunLoop run_loop;
-  proxy_resolver::mojom::ProxyResolverFactoryPtrInfo resolver_factory_info;
-
-  content::BrowserThread::PostTaskAndReply(
-      content::BrowserThread::IO, FROM_HERE,
-      base::Bind(
-          [](ProxyResolverManager* factory,
-             mojo::InterfacePtrInfo<
-                 proxy_resolver::mojom::ProxyResolverFactory>*
-                 resolver_factory_info) {
-            // Getting the InterfacePtr to an InterfacePtrInfo allows it to be
-            // passed to another thread.
-            *resolver_factory_info =
-                factory->CreateFactoryInterface().PassInterface();
-          },
-          factory, &resolver_factory_info),
-      run_loop.QuitClosure());
-  run_loop.Run();
-
-  proxy_resolver::mojom::ProxyResolverFactoryPtr resolver_factory;
-  resolver_factory.Bind(std::move(resolver_factory_info));
-  return resolver_factory;
-}
-
 // Dummy consumer of a ProxyResolverFactory. It just calls CreateResolver, and
 // keeps Mojo objects alive until it's destroyed.
 class DumbProxyResolverFactoryRequestClient
@@ -176,31 +150,15 @@ class ProxyResolverManagerBrowserTest : public InProcessBrowserTest {
     listener_ =
         std::make_unique<TestServiceManagerListener>(service_manager_.get());
 
-    // Create the ProxyResolverManager.
-    {
-      base::RunLoop run_loop;
-      content::BrowserThread::PostTaskAndReply(
-          content::BrowserThread::IO, FROM_HERE,
-          base::Bind(
-              [](ProxyResolverManager** factory) {
-                *factory = ProxyResolverManager::GetInstance();
-                (*factory)->SetFactoryIdleTimeoutForTests(
-                    base::TimeDelta::FromMilliseconds(10));
-              },
-              &factory_),
-          run_loop.QuitClosure());
-      run_loop.Run();
-    }
+    ProxyResolverManager::GetInstance()->SetFactoryIdleTimeoutForTests(
+        base::TimeDelta::FromMilliseconds(10));
   }
 
   TestServiceManagerListener* listener() { return listener_.get(); }
 
-  ProxyResolverManager* factory() { return factory_; }
-
  private:
   mojo::InterfacePtr<service_manager::mojom::ServiceManager> service_manager_;
   std::unique_ptr<TestServiceManagerListener> listener_;
-  ProxyResolverManager* factory_ = nullptr;
 };
 
 // Ensures the proxy resolver service is started correctly and stopped when no
@@ -208,7 +166,7 @@ class ProxyResolverManagerBrowserTest : public InProcessBrowserTest {
 IN_PROC_BROWSER_TEST_F(ProxyResolverManagerBrowserTest, ServiceLifecycle) {
   // Set up the ProxyResolverFactory.
   proxy_resolver::mojom::ProxyResolverFactoryPtr resolver_factory =
-      CreateResolverFactoryOnIOThread(factory());
+      ProxyResolverManager::GetInstance()->CreateFactoryInterface();
 
   // Create a resolver, this should create and start the service.
   std::unique_ptr<DumbProxyResolverFactoryRequestClient> resolver_client1 =
@@ -248,7 +206,7 @@ IN_PROC_BROWSER_TEST_F(ProxyResolverManagerBrowserTest, ServiceLifecycle) {
 IN_PROC_BROWSER_TEST_F(ProxyResolverManagerBrowserTest, FactoryDestroyed) {
   // Set up a ProxyResolverFactory.
   proxy_resolver::mojom::ProxyResolverFactoryPtr resolver_factory =
-      CreateResolverFactoryOnIOThread(factory());
+      ProxyResolverManager::GetInstance()->CreateFactoryInterface();
 
   // Create a resolver, this should create and start the service.
   std::unique_ptr<DumbProxyResolverFactoryRequestClient> resolver_client1 =
@@ -279,7 +237,7 @@ IN_PROC_BROWSER_TEST_F(ProxyResolverManagerBrowserTest, FactoryDestroyed) {
 IN_PROC_BROWSER_TEST_F(ProxyResolverManagerBrowserTest, TwoFactoriesDestroyed) {
   // Set up a ProxyResolverFactory with one client.
   proxy_resolver::mojom::ProxyResolverFactoryPtr resolver_factory1 =
-      CreateResolverFactoryOnIOThread(factory());
+      ProxyResolverManager::GetInstance()->CreateFactoryInterface();
   std::unique_ptr<DumbProxyResolverFactoryRequestClient> resolver_client1 =
       std::make_unique<DumbProxyResolverFactoryRequestClient>(
           resolver_factory1.get());
@@ -289,7 +247,7 @@ IN_PROC_BROWSER_TEST_F(ProxyResolverManagerBrowserTest, TwoFactoriesDestroyed) {
 
   // Set up another ProxyResolverFactory with one client.
   proxy_resolver::mojom::ProxyResolverFactoryPtr resolver_factory2 =
-      CreateResolverFactoryOnIOThread(factory());
+      ProxyResolverManager::GetInstance()->CreateFactoryInterface();
   std::unique_ptr<DumbProxyResolverFactoryRequestClient> resolver_client2 =
       std::make_unique<DumbProxyResolverFactoryRequestClient>(
           resolver_factory2.get());
@@ -322,7 +280,7 @@ IN_PROC_BROWSER_TEST_F(ProxyResolverManagerBrowserTest,
                        DestroyAndCreateService) {
   // Set up the ProxyResolverFactory.
   proxy_resolver::mojom::ProxyResolverFactoryPtr resolver_factory =
-      CreateResolverFactoryOnIOThread(factory());
+      ProxyResolverManager::GetInstance()->CreateFactoryInterface();
 
   // Create a resolver, this should create and start the service.
   std::unique_ptr<DumbProxyResolverFactoryRequestClient> resolver_client =
