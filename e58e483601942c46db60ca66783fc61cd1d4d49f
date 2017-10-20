@@ -46,6 +46,30 @@
       "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428b88d7_e68152e4",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-20T20:50:17Z",
+      "side": 1,
+      "message": "generally, if only the owner of the webcontents needs a notification, it goes into webcontentsdelegate. WebContentsObserver is when multiple classes want to know when something happen, or when there\u0027s one but it\u0027s not the owner (and hence, delegate) of the webcontents.\n\nIn this case, it seems like Browser which is what owns the tabs can relay this to other code in src/chrome/browser, and you shouldn\u0027t have to add a new method.",
+      "parentUuid": "7d1f9a2b_311589f5",
+      "range": {
+        "startLine": 1461,
+        "startChar": 5,
+        "endLine": 1472,
+        "endChar": 1
+      },
+      "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
