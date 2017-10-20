@@ -22,6 +22,30 @@
       "revId": "917f6768d8c196a7031b59b59799d6a36d841106",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d452ebf2_b9b1c4aa",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T20:08:15Z",
+      "side": 1,
+      "message": "Yes, 4 here implies all transactions except the first because dooming starts with the second transaction.\nThis is how the create entry works. If two transactions are trying to create an entry at the same time only one succeeds and the other starts to read from the network. This is existing behavior and not changed by the recent CLs.\nSince we are restarting all of the transactions together only alternate ones succeed in creating the entry.\n\nBefore this change the value was 5 because we were not restarting the queued transactions on dooming and they were all sequentially becoming the headers transaction, dooming the previous entry and creating a new one thus all were successful.",
+      "parentUuid": "c933d1fa_02425eb6",
+      "range": {
+        "startLine": 1465,
+        "startChar": 28,
+        "endLine": 1465,
+        "endChar": 32
+      },
+      "revId": "917f6768d8c196a7031b59b59799d6a36d841106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
