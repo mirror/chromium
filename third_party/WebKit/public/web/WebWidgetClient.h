@@ -112,6 +112,10 @@ class WebWidgetClient {
   // displayed.
   virtual WebScreenInfo GetScreenInfo() { return WebScreenInfo(); }
 
+  // When this method gets called, WebWidgetClient implementation should
+  // reset the input method by cancelling any ongoing composition.
+  virtual void ResetInputMethod() {}
+
   // Requests to lock the mouse cursor. If true is returned, the success
   // result will be asynchronously returned via a single call to
   // WebWidget::didAcquirePointerLock() or

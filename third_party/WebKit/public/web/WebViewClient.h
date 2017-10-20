@@ -247,6 +247,7 @@ class WebViewClient : protected WebWidgetClient {
                      const WebScrollBoundaryBehavior& behavior) override {}
   void HasTouchEventHandlers(bool) override {}
   WebLayerTreeView* InitializeLayerTreeView() override { return nullptr; }
+  void ResetInputMethod() override {}
   WebScreenInfo GetScreenInfo() override { return WebScreenInfo(); }
   void SetTouchAction(WebTouchAction touch_action) override {}
   void ShowUnhandledTapUIIfNeeded(const WebTappedInfo& tapped_info) override {}

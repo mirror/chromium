@@ -2273,6 +2273,13 @@ blink::WebScreenInfo RenderWidget::GetScreenInfo() {
   return web_screen_info;
 }
 
+void RenderWidget::ResetInputMethod() {
+  ImeEventGuard guard(this);
+  Send(new InputHostMsg_ImeCancelComposition(routing_id()));
+
+  UpdateCompositionInfo(false /* not an immediate request */);
+}
+
 #if defined(OS_ANDROID)
 void RenderWidget::ShowUnhandledTapUIIfNeeded(
     const WebTappedInfo& tapped_info) {

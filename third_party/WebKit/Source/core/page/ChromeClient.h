@@ -321,6 +321,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void AjaxSucceeded(LocalFrame*) {}
 
   // Input method editor related functions.
+  virtual void ResetInputMethod(LocalFrame&) {}
   virtual void ShowVirtualKeyboardOnElementFocus(LocalFrame&) {}
 
   virtual void RegisterViewportLayers() const {}

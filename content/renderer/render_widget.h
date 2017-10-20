@@ -300,6 +300,7 @@ class CONTENT_EXPORT RenderWidget
   blink::WebScreenInfo GetScreenInfo() override;
   void DidHandleGestureEvent(const blink::WebGestureEvent& event,
                              bool event_cancelled) override;
+  void ResetInputMethod() override;
   void DidOverscroll(const blink::WebFloatSize& overscrollDelta,
                      const blink::WebFloatSize& accumulatedOverscroll,
                      const blink::WebFloatPoint& position,

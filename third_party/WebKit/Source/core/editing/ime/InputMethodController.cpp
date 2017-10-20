@@ -51,6 +51,7 @@
 #include "core/input_type_names.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 
@@ -1348,7 +1349,9 @@ WebTextInputType InputMethodController::TextInputType() const {
 }
 
 void InputMethodController::WillChangeFocus() {
-  FinishComposingText(kKeepSelection);
+  if (!FinishComposingText(kDoNotKeepSelection))
+    return;
+  GetFrame().GetChromeClient().ResetInputMethod(GetFrame());
 }
 
 void InputMethodController::Trace(blink::Visitor* visitor) {

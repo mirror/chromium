@@ -266,6 +266,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   blink::WebScreenInfo GetScreenInfo() override;
   void SetToolTipText(const blink::WebString&,
                       blink::WebTextDirection hint) override;
+  void ResetInputMethod() override;
   void SetTouchAction(cc::TouchAction touchAction) override;
   void ShowUnhandledTapUIIfNeeded(
       const blink::WebTappedInfo& tappedInfo) override;
