@@ -504,12 +504,13 @@ NSAttributedString* CreateClassifiedAttributedString(
       GetVerticalMargin() + kMaterialExtraVerticalImagePadding;
   if (isVerticalLayout)
     imageRect.origin.y += halfLineHeight;
-  [[cellData image] drawInRect:FlipIfRTL(imageRect, cellFrame)
-                      fromRect:NSZeroRect
-                     operation:NSCompositeSourceOver
-                      fraction:1.0
-                respectFlipped:YES
-                         hints:nil];
+  if ([cellData matchType] != AutocompleteMatchType::SEARCH_SUGGEST_TAIL)
+    [[cellData image] drawInRect:FlipIfRTL(imageRect, cellFrame)
+                        fromRect:NSZeroRect
+                       operation:NSCompositeSourceOver
+                        fraction:1.0
+                  respectFlipped:YES
+                           hints:nil];
 
   CGFloat left = kMaterialTextStartOffset + [tableView contentLeftPadding];
   NSPoint origin = NSMakePoint(left, GetVerticalMargin());

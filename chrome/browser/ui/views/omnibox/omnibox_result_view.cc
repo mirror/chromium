@@ -775,8 +775,9 @@ void OmniboxResultView::OnPaint(gfx::Canvas* canvas) {
   // NOTE: While animating the keyword match, both matches may be visible.
 
   if (!ShowOnlyKeywordMatch()) {
-    canvas->DrawImageInt(GetIcon().AsImageSkia(),
-                         GetMirroredXForRect(icon_bounds_), icon_bounds_.y());
+    if (match_.type != AutocompleteMatchType::SEARCH_SUGGEST_TAIL)
+      canvas->DrawImageInt(GetIcon().AsImageSkia(),
+                           GetMirroredXForRect(icon_bounds_), icon_bounds_.y());
     int x = GetMirroredXForRect(text_bounds_);
     mirroring_context_->Initialize(x, text_bounds_.width());
     InitContentsRenderTextIfNecessary();
