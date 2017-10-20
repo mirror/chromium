@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0591d9_22f0c28d",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller+protected.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-20T01:40:59Z",
+      "side": 1,
+      "message": "We could use a single animator, but that would mean we\u0027d need to pass it around as a parameter.",
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5192ae51_c38a32e0",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-20T01:40:59Z",
+      "side": 1,
+      "message": "This will move to the Omnibox class later on, but right now it depends on [self newOmniboxFrame]\nAlso, there are still some \"magic numbers\" for padding, I\u0027ll change that when fine tuning the animations.",
+      "range": {
+        "startLine": 1836,
+        "startChar": 14,
+        "endLine": 1836,
+        "endChar": 22
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
