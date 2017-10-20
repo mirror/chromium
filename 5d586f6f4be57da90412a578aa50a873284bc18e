@@ -16,6 +16,24 @@
       "revId": "5d586f6f4be57da90412a578aa50a873284bc18e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68280cf_c0a8b61f",
+        "filename": "base/process/process_metrics_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-20T03:08:27Z",
+      "side": 1,
+      "message": "Following lines were parts of GetSystemMemoryInfo() which has ScopedAllowIO. I moved following lines into a separate function.",
+      "parentUuid": "14dc4dc5_8edb0963",
+      "revId": "5d586f6f4be57da90412a578aa50a873284bc18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
