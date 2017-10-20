@@ -203,7 +203,7 @@ bool MixedContentNavigationThrottle::ShouldBlockNavigation(bool for_redirect) {
       allowed = !strict_mode;
       if (allowed) {
         frame_host_delegate->PassiveInsecureContentFound(handle_impl->GetURL());
-        frame_host_delegate->DidDisplayInsecureContent();
+        frame_host_delegate->DidDisplayMixedContent();
       }
       break;
 
@@ -224,8 +224,8 @@ bool MixedContentNavigationThrottle::ShouldBlockNavigation(bool for_redirect) {
               mixed_content_node->current_origin(), handle_impl->GetURL());
       if (allowed) {
         const GURL& origin_url = mixed_content_node->current_origin().GetURL();
-        frame_host_delegate->DidRunInsecureContent(origin_url,
-                                                   handle_impl->GetURL());
+        frame_host_delegate->DidRunMixedContent(origin_url,
+                                                handle_impl->GetURL());
         GetContentClient()->browser()->RecordURLMetric(
             "ContentSettings.MixedScript.RanMixedScript", origin_url);
         mixed_content_features_.insert(MIXED_CONTENT_BLOCKABLE_ALLOWED);
@@ -236,7 +236,7 @@ bool MixedContentNavigationThrottle::ShouldBlockNavigation(bool for_redirect) {
     case blink::WebMixedContentContextType::kShouldBeBlockable:
       allowed = !strict_mode;
       if (allowed)
-        frame_host_delegate->DidDisplayInsecureContent();
+        frame_host_delegate->DidDisplayMixedContent();
       break;
 
     case blink::WebMixedContentContextType::kNotMixedContent:
