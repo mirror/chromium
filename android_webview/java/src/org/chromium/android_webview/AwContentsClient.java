@@ -209,6 +209,9 @@ public abstract class AwContentsClient {
         // Pass the package name as application ID so that the intent from the
         // same application can be opened in the same tab.
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+        // Calling startActivity() from outside of an Activity context requires
+        // the FLAG_ACTIVITY_NEW_TASK flag.
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         try {
             context.startActivity(intent);
