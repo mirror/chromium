@@ -337,6 +337,9 @@ Polymer({
         var connectMessage = this.currentUpdateStatusEvent_.connectionTypes;
         if (connectMessage)
           result += '<div>' + formatMessage(connectMessage) + '</div>';
+
+        var helpUrl = "https://support.google.com/chrome/answer/111996";
+        result += '<a href="' + helpUrl + '" target="_blank">';
         return result;
     }
   },
