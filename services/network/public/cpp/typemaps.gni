@@ -5,4 +5,5 @@
 typemaps = [
   "//services/network/public/cpp/cookie_manager.typemap",
   "//services/network/public/cpp/http_request_headers.typemap",
+  "//services/network/public/cpp/url_loader_status.typemap",
 ]

@@ -42,6 +42,8 @@ include_rules = [
   "+ppapi",
   "+printing",
   "+sandbox",
+  "+services/network/public/cpp",
+  "+services/network/public/interfaces",
   "+services/proxy_resolver/public/interfaces",
   "+services/service_manager/embedder",
   "+skia",

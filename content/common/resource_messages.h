@@ -18,7 +18,6 @@
 #include "content/public/common/common_param_traits.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_request_body.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/service_worker_modes.h"
 #include "ipc/ipc_message_macros.h"
@@ -30,6 +29,7 @@
 #include "net/ssl/ssl_info.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/url_loader_status.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 
 #ifndef INTERNAL_CONTENT_COMMON_RESOURCE_MESSAGES_H_
@@ -290,7 +290,9 @@ IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequest)
 IPC_STRUCT_TRAITS_END()
 
 // Parameters for a ResourceMsg_RequestComplete
-IPC_STRUCT_TRAITS_BEGIN(content::ResourceRequestCompletionStatus)
+// NOTE THAT WE HAVE MOJO TYPEMAP in /services/network/public/cpp.
+// KEEP THEM IN SYNC.
+IPC_STRUCT_TRAITS_BEGIN(network::URLLoaderStatus)
   IPC_STRUCT_TRAITS_MEMBER(error_code)
   IPC_STRUCT_TRAITS_MEMBER(exists_in_cache)
   IPC_STRUCT_TRAITS_MEMBER(completion_time)
@@ -362,7 +364,7 @@ IPC_MESSAGE_CONTROL3(ResourceMsg_DataDownloaded,
 // Sent when the request has been completed.
 IPC_MESSAGE_CONTROL2(ResourceMsg_RequestComplete,
                      int /* request_id */,
-                     content::ResourceRequestCompletionStatus)
+                     network::URLLoaderStatus)
 
 // Resource messages sent from the renderer to the browser.
 

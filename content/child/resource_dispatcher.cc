@@ -38,12 +38,12 @@
 #include "content/public/child/resource_dispatcher_delegate.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/resource_request.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
+#include "services/network/public/cpp/url_loader_status.h"
 
 namespace content {
 
@@ -340,7 +340,7 @@ void ResourceDispatcher::FollowPendingRedirect(
 
 void ResourceDispatcher::OnRequestComplete(
     int request_id,
-    const ResourceRequestCompletionStatus& request_complete_data) {
+    const network::URLLoaderStatus& request_complete_data) {
   TRACE_EVENT0("loader", "ResourceDispatcher::OnRequestComplete");
 
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
@@ -780,7 +780,7 @@ void ResourceDispatcher::ContinueForNavigation(
 
   // Call OnComplete now too, as it won't get called on the client.
   // TODO(kinuko): Fill this properly.
-  ResourceRequestCompletionStatus completion_status;
+  network::URLLoaderStatus completion_status;
   completion_status.error_code = net::OK;
   completion_status.exists_in_cache = false;
   completion_status.completion_time = base::TimeTicks::Now();
