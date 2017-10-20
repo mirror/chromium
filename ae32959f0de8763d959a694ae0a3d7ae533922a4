@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9089f742_02117c3e",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-20T00:00:45Z",
+      "side": 1,
+      "message": "That\u0027s not true, though. They shut down synchronously in some cases, if no Bluetooth operations are running.",
+      "parentUuid": "be47729e_5f9e7044",
+      "range": {
+        "startLine": 20,
+        "startChar": 61,
+        "endLine": 20,
+        "endChar": 65
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d5348f_5ef7a664",
         "filename": "chromeos/components/tether/asynchronous_shutdown_object_container.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "658f6a83_d98f02e1",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-20T00:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d5348f_5ef7a664",
+      "range": {
+        "startLine": 22,
+        "startChar": 54,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c8fee81_21cdab07",
         "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cc9c4e_322b3c89",
+        "filename": "chromeos/components/tether/asynchronous_shutdown_object_container_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-20T00:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c8fee81_21cdab07",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d83db649_069ee8f4",
+        "filename": "chromeos/components/tether/tether_component_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-20T00:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd8d3306_f543d317",
+      "range": {
+        "startLine": 186,
+        "startChar": 72,
+        "endLine": 186,
+        "endChar": 73
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34aea548_e677dade",
         "filename": "chromeos/components/tether/tether_component_impl_unittest.cc",
         "patchSetId": 1
@@ -128,6 +224,30 @@
       "writtenOn": "2017-10-19T18:17:05Z",
       "side": 1,
       "message": "Why not inject theses all at the same time in the constructor? I\u0027m not seeing a need to consistently change these properties\u0027 values.",
+      "range": {
+        "startLine": 128,
+        "startChar": 33,
+        "endLine": 128,
+        "endChar": 48
+      },
+      "revId": "ae32959f0de8763d959a694ae0a3d7ae533922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404d3aa4_48ac95e5",
+        "filename": "chromeos/components/tether/tether_component_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-20T00:00:45Z",
+      "side": 1,
+      "message": "Not all of the container\u0027s contained objects are set here (we only set 3). Passing them to the constructor would be odd since it would require having only some of the objects be initialized in the constructor and some not (i.e., it would be a constructor specific to only one usage).",
+      "parentUuid": "34aea548_e677dade",
       "range": {
         "startLine": 128,
         "startChar": 33,
