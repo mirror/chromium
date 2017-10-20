@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da83851d_8c69d9b8",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T15:45:47Z",
+      "side": 1,
+      "message": "Originally I tried just always returning true if HasWrongProcessForURL is true as first thing in that function, but that broke the hosted apps scenario we discussed on chat, caught by AppApiTest.OpenWebPopupFromWebIframe (hosted app embeds non-app iframe, which opens non-app same-origin popup -- the popup has the \"wrong\" process type but has to stay in the app process to allow scripting with the iframe).  Limiting to just the racy siteless cases avoids this.  I think we might also need to keep returning false for webview guests no matter what.",
+      "range": {
+        "startLine": 1488,
+        "startChar": 0,
+        "endLine": 1492,
+        "endChar": 0
+      },
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51e7195_d94b2c59",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T15:45:47Z",
+      "side": 1,
+      "message": "This test shows how the race can happen via process reuse.  With --site-per-process, it hits the WRONG_LOCK CHECK, and without it, it hits the NO_LOCK check.",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879cc34c_08bb3207",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T15:45:47Z",
+      "side": 1,
+      "message": "This test happened to already simulate the race leading to WRONG_LOCK CHECK with ServiceWorkers, with --site-per-process.  I had to also fix it to handle process transfer during the cross-site redirect with --site-per-process.",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
