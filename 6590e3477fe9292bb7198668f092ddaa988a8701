@@ -16,6 +16,24 @@
       "revId": "6590e3477fe9292bb7198668f092ddaa988a8701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b322c6c0_14a1a415",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 1608,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-20T13:28:41Z",
+      "side": 1,
+      "message": "We were already failing it before unfortunately, I\u0027m skipping tests individually and getting rid of the blanket blink-contrib skips.\n\nhttps://wpt.fyi/content-security-policy/blink-contrib/style-blocked.sub.html",
+      "parentUuid": "2c447d64_6561c33f",
+      "revId": "6590e3477fe9292bb7198668f092ddaa988a8701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
