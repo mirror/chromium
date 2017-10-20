@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2cbdbd1_eeba1545",
+        "filename": "services/shape_detection/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-20T12:45:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this bot currently runs service_unittests, you\nmight need to add an entry for it in [1] (sth like [2]).\n\n[1] https://cs.chromium.org/chromium/src/testing/buildbot/chromium.win.json?type\u003dcs\u0026q\u003dservices_unittests\u0026l\u003d528\n[2] https://cs.chromium.org/chromium/src/testing/buildbot/chromium.win.json?type\u003dcs\u0026q\u003dservices_unittests\u0026l\u003d1540",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17853ea_48f53a23",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-20T12:45:35Z",
+      "side": 1,
+      "message": "Since this method pertains to FaceDetectionProviderImpl,\nperhaps move it to first in the file, near l.25.",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad9c869_c0e4fb5a",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-20T12:45:35Z",
+      "side": 1,
+      "message": "IIRC this type of make-my-thread-COM-MTA should only be\nmade once [1], so we might need to \na) make sure it\u0027s done in the ShapeDetectionService itself\nb) DCHECK there that it succeeded() [2]\nc) ideally, here we would just DCHECK() that we\u0027re\n indeed in an MTA thread, but can\u0027t find now the \n appropriate enchantment.\n\n[1] https://cs.chromium.org/chromium/src/base/win/scoped_com_initializer.h?type\u003dcs\u0026q\u003dbase::win::ScopedCOMInitializer\u0026l\u003d21\n[2] https://cs.chromium.org/chromium/src/base/win/scoped_com_initializer.h?type\u003dcs\u0026q\u003d+base::win::ScopedCOMInitializer+kMTA\u0026l\u003d46",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
