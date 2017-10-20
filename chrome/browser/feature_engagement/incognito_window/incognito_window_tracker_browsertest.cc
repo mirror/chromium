@@ -9,7 +9,6 @@
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h"
 #include "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -119,20 +118,18 @@ IN_PROC_BROWSER_TEST_F(IncognitoWindowTrackerBrowserTest, ShowPromo) {
   handler->AllowJavascriptForTesting();
   handler->HandleClearBrowsingDataForTest();
 
-  auto* widget =
-      feature_engagement::IncognitoWindowTrackerFactory::GetInstance()
-          ->GetForProfile(browser()->profile())
-          ->incognito_promo()
-          ->GetWidget();
+  auto* promo = feature_engagement::IncognitoWindowTrackerFactory::GetInstance()
+                    ->GetForProfile(browser()->profile())
+                    ->feature_promo_bubble();
 
-  EXPECT_TRUE(widget->IsVisible());
+  EXPECT_TRUE(promo);
 
   // Tracker::Dismissed() must be invoked when the promo is closed. This will
   // clear the flag for whether there is any in-product help being displayed.
   EXPECT_CALL(*feature_engagement_tracker_,
               Dismissed(IsFeature(kIPHIncognitoWindowFeature)));
 
-  widget->Close();
+  promo->ClosePromoBubble();
 }
 
 }  // namespace feature_engagement

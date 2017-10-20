@@ -6,15 +6,24 @@
 #define CHROME_BROWSER_UI_VIEWS_FEATURE_PROMOS_INCOGNITO_WINDOW_PROMO_BUBBLE_VIEW_H_
 
 #include "base/macros.h"
+#include "chrome/browser/feature_engagement/feature_promo_bubble.h"
+#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h"
+#include "ui/views/widget/widget_observer.h"
 
 // The IncognitoWindowPromoBubbleView is a bubble anchored to the right of the
 // App Menu Button. It draws users' attention to the App Menu Button. It is
 // created by the App Menu Button when prompted by the IncognitoWindowTracker.
-class IncognitoWindowPromoBubbleView : public FeaturePromoBubbleView {
+// It is owned by its own native widget.
+class IncognitoWindowPromoBubbleView
+    : public feature_engagement::FeaturePromoBubbleView {
  public:
   // Returns a raw pointer that is owned by its native widget.
   static IncognitoWindowPromoBubbleView* CreateOwned(views::View* anchor_view);
+
+  // FeaturePromoBubble:
+  void ShowPromoBubble(Browser* browser) override;
+  void ClosePromoBubble() override;
 
  private:
   // Anchors the bubble to |anchor_view|. The bubble widget and promo are
@@ -24,6 +33,15 @@ class IncognitoWindowPromoBubbleView : public FeaturePromoBubbleView {
 
   // Returns the string ID to display in the promo.
   int GetStringSpecifier();
+
+  // views::WidgetObserver:
+  void OnWidgetDestroying(views::Widget* widget) override;
+
+  IncognitoWindowPromoBubbleView* incognito_promo_ = nullptr;
+
+  // Observes the |incognito_promo_|'s Widget. Used to tell whether the promo
+  // is open and is called back when it closes.
+  ScopedObserver<views::Widget, WidgetObserver> incognito_promo_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(IncognitoWindowPromoBubbleView);
 };

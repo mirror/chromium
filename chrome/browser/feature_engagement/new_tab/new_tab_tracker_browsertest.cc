@@ -10,11 +10,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_window.h"
-#include "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h"
-#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
-#include "chrome/browser/ui/views/tabs/new_tab_button.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/interactive_test_utils.h"
@@ -38,6 +34,7 @@ MATCHER_P(IsFeature, feature, "") {
   return arg.name == feature.name;
 }
 
+// Mock the backend for displaying in-product help.
 class MockTracker : public Tracker {
  public:
   MockTracker() = default;
@@ -56,6 +53,7 @@ std::unique_ptr<KeyedService> BuildTestTrackerFactory(
   return base::MakeUnique<testing::StrictMock<MockTracker>>();
 }
 
+// Set up a test profile for the new tab In-Product Help (IPH) tracker.
 class NewTabTrackerBrowserTest : public InProcessBrowserTest {
  public:
   NewTabTrackerBrowserTest() = default;
@@ -87,7 +85,9 @@ class NewTabTrackerBrowserTest : public InProcessBrowserTest {
 
 }  // namespace
 
-IN_PROC_BROWSER_TEST_F(NewTabTrackerBrowserTest, TestShowPromo) {
+// Test that after meeting all the requirements, the new tab
+// In-Product Help (IPH) promo is visible.
+IN_PROC_BROWSER_TEST_F(NewTabTrackerBrowserTest, ShowPromo) {
   // Bypassing the 2 hour active session time requirement.
   EXPECT_CALL(*feature_engagement_tracker_,
               NotifyEvent(events::kNewTabSessionTimeMet));
@@ -113,24 +113,20 @@ IN_PROC_BROWSER_TEST_F(NewTabTrackerBrowserTest, TestShowPromo) {
       .WillRepeatedly(::testing::Return(false));
   chrome::FocusLocationBar(browser());
 
-  EXPECT_TRUE(BrowserView::GetBrowserViewForBrowser(browser())
-                  ->tabstrip()
-                  ->new_tab_button()
-                  ->new_tab_promo()
-                  ->GetWidget()
-                  ->IsVisible());
+  auto* new_tab_promo = feature_engagement::NewTabTrackerFactory::GetInstance()
+                            ->GetForProfile(browser()->profile())
+                            ->feature_promo_bubble();
+
+  EXPECT_TRUE(new_tab_promo);
 
   // Tracker::Dismissed() must be invoked when the promo is closed. This will
   // clear the flag for whether there is any in-product help being displayed.
   EXPECT_CALL(*feature_engagement_tracker_,
               Dismissed(IsFeature(kIPHNewTabFeature)));
 
-  BrowserView::GetBrowserViewForBrowser(browser())
-      ->tabstrip()
-      ->new_tab_button()
-      ->new_tab_promo()
-      ->GetWidget()
-      ->Close();
+  feature_engagement::NewTabTrackerFactory::GetInstance()
+      ->GetForProfile(browser()->profile())
+      ->CloseBubble();
 }
 
 }  // namespace feature_engagement
