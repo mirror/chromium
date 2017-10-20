@@ -295,6 +295,9 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   if (params->initial_cdm())
     SetCdm(params->initial_cdm());
 
+  // Report a false "EncrytpedEvent" here as a baseline.
+  UMA_HISTOGRAM_BOOLEAN("Media.EME.EncryptedEvent", false);
+
   // TODO(xhwang): When we use an external Renderer, many methods won't work,
   // e.g. GetCurrentFrameFromCompositor(). See http://crbug.com/434861
   audio_source_provider_ = new WebAudioSourceProviderImpl(
@@ -1176,8 +1179,7 @@ void WebMediaPlayerImpl::OnEncryptedMediaInitData(
     const std::vector<uint8_t>& init_data) {
   DCHECK(init_data_type != EmeInitDataType::UNKNOWN);
 
-  // TODO(xhwang): Update this UMA name. https://crbug.com/589251
-  UMA_HISTOGRAM_COUNTS("Media.EME.NeedKey", 1);
+  UMA_HISTOGRAM_BOOLEAN("Media.EME.EncryptedEvent", true);
 
   // Recreate the watch time reporter if necessary.
   const bool was_encrypted = is_encrypted_;
