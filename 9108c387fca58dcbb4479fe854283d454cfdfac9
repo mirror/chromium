@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "54059904_260fdd2b",
+        "filename": "components/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-20T13:33:31Z",
+      "side": 1,
+      "message": "OK, agreed, given the lack of other examples except Chrome version and Chrome OS platform version.",
+      "parentUuid": "77ba07d2_ff7b6075",
+      "range": {
+        "startLine": 905,
+        "startChar": 8,
+        "endLine": 905,
+        "endChar": 35
+      },
+      "revId": "9108c387fca58dcbb4479fe854283d454cfdfac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95525483_9596c75a",
         "filename": "components/policy/proto/chrome_device_policy.proto",
         "patchSetId": 5

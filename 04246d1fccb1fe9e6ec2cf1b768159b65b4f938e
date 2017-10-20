@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c42602_beb2d8f2",
+        "filename": "chromeos/settings/cros_settings_names.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-20T13:33:31Z",
+      "side": 1,
+      "message": "nit: s/Allowed/Required/? For consistency with the naming at the rest of the CL.",
+      "range": {
+        "startLine": 286,
+        "startChar": 19,
+        "endLine": 286,
+        "endChar": 26
+      },
+      "revId": "04246d1fccb1fe9e6ec2cf1b768159b65b4f938e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff28e2b_76d0a0f3",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 9831,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-20T13:33:31Z",
+      "side": 1,
+      "message": "nit: This is an untranslatable string, please escape it:\n\n  \u003cph name\u003d\"PRODUCT_NAME\"\u003e$1\u003cex\u003eGoogle Chrome\u003c/ex\u003e\u003c/ph\u003e",
+      "range": {
+        "startLine": 9831,
+        "startChar": 78,
+        "endLine": 9831,
+        "endChar": 84
+      },
+      "revId": "04246d1fccb1fe9e6ec2cf1b768159b65b4f938e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
