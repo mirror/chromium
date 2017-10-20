@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15dcfd48_dba1742d",
+        "filename": "tools/clang/plugins/ChromeClassTester.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-20T16:08:26Z",
+      "side": 0,
+      "message": "mention this change in the cl description too please",
+      "revId": "017a9d867cd706c0d4112edb08b506f6bd43664a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
