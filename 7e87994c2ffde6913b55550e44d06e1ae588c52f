@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52534527_59e1e1da",
+        "filename": "content/browser/bluetooth/bluetooth_device_chooser_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-20T21:54:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cbd6ae3_469a764d",
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60480490_dba0b141",
         "filename": "device/bluetooth/bluetooth_device_win.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3f2215f0_b233f06f",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-20T21:54:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60480490_dba0b141",
+      "range": {
+        "startLine": 217,
+        "startChar": 32,
+        "endLine": 217,
+        "endChar": 55
+      },
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7e1dae4_faf984dc",
         "filename": "device/bluetooth/bluetooth_device_win.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d598c3bf_8be60c3b",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-20T21:54:55Z",
+      "side": 1,
+      "message": "That\u0027s the idea, but I\u0027m all for something better.\n\nAll I\u0027ve figured out so far is that DN_DEVICE_DISCONNECTED seems to be the only relevant, and I\u0027m not sure if it ever reports true on a BLE device (I\u0027ve only seen it report false, but I could do more testing)\n\nIf we were using windows.devices.bluetooth.bluetoothledevice we could check ConnectionStatus.\n\nIf Windows essentially acts like it\u0027s always connected (from what I can tell), I\u0027m not sure what the use would be in returning false here.  There\u0027s no `connect` action we can take to make it true (only actions that implicitly trigger a connect...at least as far as I can tell, and that seems to comport with what gogerald@ said.",
+      "parentUuid": "a7e1dae4_faf984dc",
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13b766b_899e3d5a",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-20T21:54:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8e6a1db_c9c3acb8",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 34
+      },
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
