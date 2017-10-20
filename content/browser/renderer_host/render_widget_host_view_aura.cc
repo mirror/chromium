@@ -24,7 +24,6 @@
 #include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/gl_helper.h"
 #include "components/viz/common/quads/texture_mailbox.h"
-#include "components/viz/common/switches.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bad_message.h"
@@ -780,12 +779,6 @@ void RenderWidgetHostViewAura::FocusedNodeTouched(
       ui::OnScreenKeyboardDisplayManager::GetInstance();
   DCHECK(osk_display_manager);
   if (editable && host_->GetView() && host_->delegate()) {
-    if (keyboard_observer_) {
-      // It is possible to receive two consecutive calls to FocusedNodeTouched
-      // when the touched element is editable. Make sure to remove the current
-      // observer to avoid UaF (see https://crbug.com/775973).
-      osk_display_manager->RemoveObserver(keyboard_observer_.get());
-    }
     keyboard_observer_.reset(new WinScreenKeyboardObserver(
         this, location_dips_screen, device_scale_factor_, window_));
     virtual_keyboard_requested_ =
@@ -1613,8 +1606,8 @@ void RenderWidgetHostViewAura::OnMouseEvent(ui::MouseEvent* event) {
 
 viz::FrameSinkId RenderWidgetHostViewAura::FrameSinkIdAtPoint(
     viz::SurfaceHittestDelegate* delegate,
-    const gfx::PointF& point,
-    gfx::PointF* transformed_point) {
+    const gfx::Point& point,
+    gfx::Point* transformed_point) {
   DCHECK(device_scale_factor_ != 0.0f);
 
   // TODO: this shouldn't be used with aura-mus, so that the null check so
@@ -1626,7 +1619,7 @@ viz::FrameSinkId RenderWidgetHostViewAura::FrameSinkIdAtPoint(
 
   // The surface hittest happens in device pixels, so we need to convert the
   // |point| from DIPs to pixels before hittesting.
-  gfx::PointF point_in_pixels =
+  gfx::Point point_in_pixels =
       gfx::ConvertPointToPixel(device_scale_factor_, point);
   viz::SurfaceId id = delegated_frame_host_->SurfaceIdAtPoint(
       delegate, point_in_pixels, transformed_point);
@@ -1665,12 +1658,12 @@ void RenderWidgetHostViewAura::ProcessGestureEvent(
 }
 
 bool RenderWidgetHostViewAura::TransformPointToLocalCoordSpace(
-    const gfx::PointF& point,
+    const gfx::Point& point,
     const viz::SurfaceId& original_surface,
-    gfx::PointF* transformed_point) {
+    gfx::Point* transformed_point) {
   // Transformations use physical pixels rather than DIP, so conversion
   // is necessary.
-  gfx::PointF point_in_pixels =
+  gfx::Point point_in_pixels =
       gfx::ConvertPointToPixel(device_scale_factor_, point);
   // TODO: this shouldn't be used with aura-mus, so that the null check so
   // go away and become a DCHECK.
@@ -1684,9 +1677,9 @@ bool RenderWidgetHostViewAura::TransformPointToLocalCoordSpace(
 }
 
 bool RenderWidgetHostViewAura::TransformPointToCoordSpaceForView(
-    const gfx::PointF& point,
+    const gfx::Point& point,
     RenderWidgetHostViewBase* target_view,
-    gfx::PointF* transformed_point) {
+    gfx::Point* transformed_point) {
   if (target_view == this || !delegated_frame_host_) {
     *transformed_point = point;
     return true;
@@ -1716,8 +1709,8 @@ void RenderWidgetHostViewAura::ScheduleEmbed(
     ui::mojom::WindowTreeClientPtr client,
     base::OnceCallback<void(const base::UnguessableToken&)> callback) {
   DCHECK(IsMus());
-  aura::Env::GetInstance()->ScheduleEmbed(std::move(client),
-                                          std::move(callback));
+  aura::WindowPortMus::Get(window_)->ScheduleEmbed(std::move(client),
+                                                   std::move(callback));
 }
 
 void RenderWidgetHostViewAura::OnScrollEvent(ui::ScrollEvent* event) {
@@ -1941,13 +1934,9 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
     delegated_frame_host_client_ =
         base::MakeUnique<DelegatedFrameHostClientAura>(this);
   }
-
-  const bool enable_viz =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
   delegated_frame_host_ = base::MakeUnique<DelegatedFrameHost>(
       frame_sink_id_, delegated_frame_host_client_.get(),
-      enable_surface_synchronization_, enable_viz);
-
+      enable_surface_synchronization_);
   if (renderer_compositor_frame_sink_) {
     delegated_frame_host_->DidCreateNewRendererCompositorFrameSink(
         renderer_compositor_frame_sink_);

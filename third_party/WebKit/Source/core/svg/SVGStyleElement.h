@@ -51,7 +51,7 @@ class SVGStyleElement final : public SVGElement, public StyleElement {
 
   void DispatchPendingEvent();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   SVGStyleElement(Document&, bool created_by_parser);

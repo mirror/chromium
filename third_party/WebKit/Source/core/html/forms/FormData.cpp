@@ -68,7 +68,7 @@ class FormDataIterationSource final
     return true;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(form_data_);
     PairIterable<String, FormDataEntryValue>::IterationSource::Trace(visitor);
   }
@@ -93,7 +93,7 @@ FormData::FormData(HTMLFormElement* form) : encoding_(UTF8Encoding()) {
   }
 }
 
-void FormData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FormData) {
   visitor->Trace(entries_);
 }
 
@@ -214,9 +214,9 @@ String FormData::Decode(const CString& data) const {
   return Encoding().Decode(data.data(), data.length());
 }
 
-scoped_refptr<EncodedFormData> FormData::EncodeFormData(
+RefPtr<EncodedFormData> FormData::EncodeFormData(
     EncodedFormData::EncodingType encoding_type) {
-  scoped_refptr<EncodedFormData> form_data = EncodedFormData::Create();
+  RefPtr<EncodedFormData> form_data = EncodedFormData::Create();
   Vector<char> encoded_data;
   for (const auto& entry : Entries()) {
     FormDataEncoder::AddKeyValuePairAsFormData(
@@ -229,8 +229,8 @@ scoped_refptr<EncodedFormData> FormData::EncodeFormData(
   return form_data;
 }
 
-scoped_refptr<EncodedFormData> FormData::EncodeMultiPartFormData() {
-  scoped_refptr<EncodedFormData> form_data = EncodedFormData::Create();
+RefPtr<EncodedFormData> FormData::EncodeMultiPartFormData() {
+  RefPtr<EncodedFormData> form_data = EncodedFormData::Create();
   form_data->SetBoundary(FormDataEncoder::GenerateUniqueBoundaryString());
   Vector<char> encoded_data;
   for (const auto& entry : Entries()) {
@@ -312,7 +312,7 @@ FormData::StartIteration(ScriptState*, ExceptionState&) {
 
 // ----------------------------------------------------------------
 
-void FormData::Entry::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FormData::Entry) {
   visitor->Trace(blob_);
 }
 

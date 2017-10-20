@@ -89,6 +89,7 @@
 #import "ios/chrome/browser/ui/fullscreen_controller.h"
 #import "ios/chrome/browser/ui/open_in_controller.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
+#import "ios/chrome/browser/ui/prerender_delegate.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/web/external_app_launcher.h"
 #import "ios/chrome/browser/web/navigation_manager_util.h"
@@ -305,6 +306,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     _iOSCaptivePortalBlockingPageDelegate;
 @synthesize useGreyImageCache = useGreyImageCache_;
 @synthesize isPrerenderTab = _isPrerenderTab;
+@synthesize isLinkLoadingPrerenderTab = isLinkLoadingPrerenderTab_;
 @synthesize isVoiceSearchResultsTab = _isVoiceSearchResultsTab;
 @synthesize overscrollActionsController = _overscrollActionsController;
 @synthesize overscrollActionsControllerDelegate =
@@ -438,13 +440,19 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   return self.webState ? self.webState->GetNavigationManager() : nullptr;
 }
 
+- (void)setIsLinkLoadingPrerenderTab:(BOOL)isLinkLoadingPrerenderTab {
+  isLinkLoadingPrerenderTab_ = isLinkLoadingPrerenderTab;
+  [self setIsPrerenderTab:isLinkLoadingPrerenderTab];
+}
+
 - (void)setIsPrerenderTab:(BOOL)isPrerender {
   if (_isPrerenderTab == isPrerender)
     return;
 
   _isPrerenderTab = isPrerender;
 
-  self.webState->SetShouldSuppressDialogs(isPrerender);
+  self.webState->SetShouldSuppressDialogs(isPrerender &&
+                                          !isLinkLoadingPrerenderTab_);
 
   if (_isPrerenderTab)
     return;
@@ -778,11 +786,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (void)webState:(web::WebState*)webState
     didFinishNavigation:(web::NavigationContext*)navigation {
   if (!navigation->GetError()) {
-    bool is404Page = navigation->GetResponseHeaders() &&
-                     navigation->GetResponseHeaders()->response_code() == 404;
-    if (!is404Page) {
-      [self addCurrentEntryToHistoryDB];
-    }
+    [self addCurrentEntryToHistoryDB];
     [self countMainFrameLoad];
   }
 
@@ -1156,7 +1160,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (BOOL)webController:(CRWWebController*)webController
     shouldOpenExternalURL:(const GURL&)URL {
-  if (_isPrerenderTab) {
+  if (_isPrerenderTab && !isLinkLoadingPrerenderTab_) {
     [delegate_ discardPrerender];
     return NO;
   }
@@ -1326,6 +1330,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     didLoadPassKitObject:(NSData*)data {
   [self.passKitDialogProvider presentPassKitDialog:data];
 }
+
+#pragma mark - PrerenderDelegate
 
 - (void)discardPrerender {
   DCHECK(_isPrerenderTab);

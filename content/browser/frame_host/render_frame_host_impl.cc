@@ -568,9 +568,6 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
         frame_tree_node_->frame_tree_node_id());
   }
   ResetFeaturePolicy();
-
-  ax_tree_id_ = ui::AXTreeIDRegistry::GetInstance()->GetOrCreateAXTreeID(
-      GetProcess()->GetID(), routing_id_);
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
@@ -629,8 +626,6 @@ RenderFrameHostImpl::~RenderFrameHostImpl() {
   // Notify the FrameTree that this RFH is going away, allowing it to shut down
   // the corresponding RenderViewHost if it is no longer needed.
   frame_tree_->ReleaseRenderViewHostRef(render_view_host_);
-
-  ui::AXTreeIDRegistry::GetInstance()->RemoveAXTreeID(ax_tree_id_);
 }
 
 int RenderFrameHostImpl::GetRoutingID() {
@@ -638,7 +633,8 @@ int RenderFrameHostImpl::GetRoutingID() {
 }
 
 ui::AXTreeIDRegistry::AXTreeID RenderFrameHostImpl::GetAXTreeID() {
-  return ax_tree_id_;
+  return ui::AXTreeIDRegistry::GetInstance()->GetOrCreateAXTreeID(
+      GetProcess()->GetID(), routing_id_);
 }
 
 const base::UnguessableToken& RenderFrameHostImpl::GetOverlayRoutingToken() {
@@ -1093,11 +1089,9 @@ void RenderFrameHostImpl::SanitizeDataForUseInCspViolation(
 
   // There is no need to sanitize data when it is same-origin with the current
   // url of the renderer.
-  if (url::Origin::Create(*blocked_url)
-          .IsSameOriginWith(last_committed_origin_))
+  if (url::Origin(*blocked_url).IsSameOriginWith(last_committed_origin_))
     sanitize_blocked_url = false;
-  if (url::Origin::Create(source_location_url)
-          .IsSameOriginWith(last_committed_origin_))
+  if (url::Origin(source_location_url).IsSameOriginWith(last_committed_origin_))
     sanitize_source_location = false;
 
   // When a renderer tries to do a form submission, it already knows the url of
@@ -3123,8 +3117,7 @@ bool RenderFrameHostImpl::CanCommitOrigin(
     return true;
 
   // Standard URLs must match the reported origin.
-  if (url.IsStandard() &&
-      !origin.IsSamePhysicalOriginWith(url::Origin::Create(url)))
+  if (url.IsStandard() && !origin.IsSamePhysicalOriginWith(url::Origin(url)))
     return false;
 
   // A non-unique origin must be a valid URL, which allows us to safely do a

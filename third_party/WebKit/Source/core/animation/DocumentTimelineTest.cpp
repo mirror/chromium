@@ -51,9 +51,7 @@ class MockPlatformTiming : public DocumentTimeline::PlatformTiming {
   MOCK_METHOD1(WakeAfter, void(double));
   MOCK_METHOD0(ServiceOnNextFrame, void());
 
-  void Trace(blink::Visitor* visitor) {
-    DocumentTimeline::PlatformTiming::Trace(visitor);
-  }
+  DEFINE_INLINE_TRACE() { DocumentTimeline::PlatformTiming::Trace(visitor); }
 };
 
 class AnimationDocumentTimelineTest : public ::testing::Test {
@@ -389,7 +387,7 @@ TEST_F(AnimationDocumentTimelineTest, DelayBeforeAnimationStart) {
 }
 
 TEST_F(AnimationDocumentTimelineTest, UseAnimationAfterTimelineDeref) {
-  Animation* animation = timeline->Play(nullptr);
+  Animation* animation = timeline->Play(0);
   timeline.Clear();
   // Test passes if this does not crash.
   animation->setStartTime(0, false);
@@ -402,8 +400,7 @@ TEST_F(AnimationDocumentTimelineTest, PlayAfterDocumentDeref) {
   timeline = &document->Timeline();
   document = nullptr;
 
-  KeyframeEffect* keyframe_effect =
-      KeyframeEffect::Create(nullptr, nullptr, timing);
+  KeyframeEffect* keyframe_effect = KeyframeEffect::Create(0, nullptr, timing);
   // Test passes if this does not crash.
   timeline->Play(keyframe_effect);
 }

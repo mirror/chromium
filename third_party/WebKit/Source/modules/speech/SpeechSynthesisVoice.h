@@ -53,7 +53,7 @@ class SpeechSynthesisVoice final
     return platform_voice_.get();
   }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit SpeechSynthesisVoice(RefPtr<PlatformSpeechSynthesisVoice>);

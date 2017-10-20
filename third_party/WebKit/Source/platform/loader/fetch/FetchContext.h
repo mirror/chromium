@@ -88,7 +88,7 @@ class PLATFORM_EXPORT FetchContext
 
   virtual ~FetchContext() {}
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   virtual bool IsFrameFetchContext() { return false; }
 

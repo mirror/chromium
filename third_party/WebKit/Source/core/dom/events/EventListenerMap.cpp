@@ -205,12 +205,11 @@ void EventListenerMap::CopyEventListenersNotCreatedFromMarkupToTarget(
   }
 }
 
-void EventListenerMap::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventListenerMap) {
   visitor->Trace(entries_);
 }
 
-void EventListenerMap::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(EventListenerMap) {
   // Trace wrappers in entries_.
   for (auto& entry : entries_) {
     for (auto& listener : *entry.second) {

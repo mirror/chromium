@@ -19,7 +19,6 @@
 #include "chrome/browser/printing/cloud_print/privet_constants.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
-#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "ui/gfx/geometry/size.h"
@@ -94,7 +93,7 @@ void PrivetPrinterHandler::StartPrint(
           base::Bind(&PrivetPrinterHandler::PrintUpdateClient,
                      weak_ptr_factory_.GetWeakPtr(), callback, job_title,
                      print_data, ticket_json, capability, page_size))) {
-    callback.Run(base::Value(-1));
+    callback.Run(false, base::Value(-1));
   }
 }
 
@@ -121,14 +120,14 @@ void PrivetPrinterHandler::LocalPrinterCacheFlushed() {}
 void PrivetPrinterHandler::OnPrivetPrintingDone(
     const cloud_print::PrivetLocalPrintOperation* print_operation) {
   DCHECK(print_callback_);
-  print_callback_.Run(base::Value());
+  print_callback_.Run(true, base::Value());
 }
 
 void PrivetPrinterHandler::OnPrivetPrintingError(
     const cloud_print::PrivetLocalPrintOperation* print_operation,
     int http_code) {
   DCHECK(print_callback_);
-  print_callback_.Run(base::Value(http_code));
+  print_callback_.Run(false, base::Value(http_code));
 }
 
 void PrivetPrinterHandler::StartLister(
@@ -191,14 +190,14 @@ void PrivetPrinterHandler::OnGotCapabilities(
   std::unique_ptr<base::DictionaryValue> printer_info =
       std::make_unique<base::DictionaryValue>();
   FillPrinterDescription(name, *description, true, printer_info.get());
-  base::DictionaryValue printer_info_and_caps;
-  printer_info_and_caps.SetDictionary(printing::kPrinter,
-                                      std::move(printer_info));
+  std::unique_ptr<base::DictionaryValue> printer_info_and_caps =
+      std::make_unique<base::DictionaryValue>();
+  printer_info_and_caps->SetDictionary("printer", std::move(printer_info));
   std::unique_ptr<base::DictionaryValue> capabilities_copy =
       capabilities->CreateDeepCopy();
-  printer_info_and_caps.SetDictionary(printing::kSettingCapabilities,
-                                      std::move(capabilities_copy));
-  callback.Run(printing::ValidateCddForPrintPreview(printer_info_and_caps));
+  printer_info_and_caps->SetDictionary("capabilities",
+                                       std::move(capabilities_copy));
+  callback.Run(std::move(printer_info_and_caps));
   privet_capabilities_operation_.reset();
 }
 
@@ -211,7 +210,7 @@ void PrivetPrinterHandler::PrintUpdateClient(
     const gfx::Size& page_size,
     std::unique_ptr<cloud_print::PrivetHTTPClient> http_client) {
   if (!UpdateClient(std::move(http_client))) {
-    callback.Run(base::Value(-1));
+    callback.Run(false, base::Value(-1));
     return;
   }
   print_callback_ = callback;

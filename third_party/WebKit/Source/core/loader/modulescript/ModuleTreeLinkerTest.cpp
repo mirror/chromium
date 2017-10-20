@@ -30,7 +30,7 @@ class TestModuleTreeClient final : public ModuleTreeClient {
  public:
   TestModuleTreeClient() = default;
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(module_script_);
     ModuleTreeClient::Trace(visitor);
   }
@@ -52,11 +52,11 @@ class TestModuleTreeClient final : public ModuleTreeClient {
 
 class ModuleTreeLinkerTestModulator final : public DummyModulator {
  public:
-  ModuleTreeLinkerTestModulator(scoped_refptr<ScriptState> script_state)
+  ModuleTreeLinkerTestModulator(RefPtr<ScriptState> script_state)
       : script_state_(std::move(script_state)) {}
   ~ModuleTreeLinkerTestModulator() override {}
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   enum class ResolveResult { kFailure, kSuccess };
 
@@ -178,7 +178,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     return it->value;
   }
 
-  scoped_refptr<ScriptState> script_state_;
+  RefPtr<ScriptState> script_state_;
   HeapHashMap<KURL, Member<SingleModuleClient>> pending_clients_;
   HashMap<ScriptModule, Vector<ModuleRequest>> dependency_module_requests_map_;
   HeapHashMap<KURL, Member<ModuleScript>> module_map_;
@@ -187,7 +187,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
   bool instantiate_should_fail_ = false;
 };
 
-void ModuleTreeLinkerTestModulator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ModuleTreeLinkerTestModulator) {
   visitor->Trace(pending_clients_);
   visitor->Trace(module_map_);
   DummyModulator::Trace(visitor);
@@ -209,7 +209,7 @@ class ModuleTreeLinkerTest : public ::testing::Test {
 
 void ModuleTreeLinkerTest::SetUp() {
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(500, 500));
-  scoped_refptr<ScriptState> script_state =
+  RefPtr<ScriptState> script_state =
       ToScriptStateForMainWorld(&dummy_page_holder_->GetFrame());
   modulator_ = new ModuleTreeLinkerTestModulator(script_state);
 }
@@ -217,7 +217,7 @@ void ModuleTreeLinkerTest::SetUp() {
 TEST_F(ModuleTreeLinkerTest, FetchTreeNoDeps) {
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/root.js");
+  KURL url(kParsedURLString, "http://example.com/root.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);
@@ -238,7 +238,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeInstantiationFailure) {
 
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/root.js");
+  KURL url(kParsedURLString, "http://example.com/root.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);
@@ -263,7 +263,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeInstantiationFailure) {
 TEST_F(ModuleTreeLinkerTest, FetchTreePreviousInstantiationFailure) {
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/root.js");
+  KURL url(kParsedURLString, "http://example.com/root.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);
@@ -284,7 +284,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreePreviousInstantiationFailure) {
 TEST_F(ModuleTreeLinkerTest, FetchTreeWithSingleDependency) {
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/root.js");
+  KURL url(kParsedURLString, "http://example.com/root.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);
@@ -297,7 +297,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWithSingleDependency) {
       url, {"./dep1.js"}, ScriptModuleState::kUninstantiated);
   EXPECT_FALSE(client->WasNotifyFinished());
 
-  KURL url_dep1("http://example.com/dep1.js");
+  KURL url_dep1(kParsedURLString, "http://example.com/dep1.js");
 
   GetModulator()->ResolveDependentTreeFetch(
       url_dep1, ModuleTreeLinkerTestModulator::ResolveResult::kSuccess);
@@ -310,7 +310,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWithSingleDependency) {
 TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps) {
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/root.js");
+  KURL url(kParsedURLString, "http://example.com/root.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);
@@ -331,7 +331,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps) {
     url_dep_str.AppendNumber(i);
     url_dep_str.Append(".js");
 
-    KURL url_dep(url_dep_str.ToString());
+    KURL url_dep(kParsedURLString, url_dep_str.ToString());
     url_deps.push_back(url_dep);
   }
 
@@ -349,7 +349,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps) {
 TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/root.js");
+  KURL url(kParsedURLString, "http://example.com/root.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);
@@ -370,7 +370,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
     url_dep_str.AppendNumber(i);
     url_dep_str.Append(".js");
 
-    KURL url_dep(url_dep_str.ToString());
+    KURL url_dep(kParsedURLString, url_dep_str.ToString());
     url_deps.push_back(url_dep);
   }
 
@@ -405,7 +405,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
 TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/depth1.js");
+  KURL url(kParsedURLString, "http://example.com/depth1.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);
@@ -417,7 +417,7 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
   GetModulator()->ResolveSingleModuleScriptFetch(
       url, {"./depth2.js"}, ScriptModuleState::kUninstantiated);
 
-  KURL url_dep2("http://example.com/depth2.js");
+  KURL url_dep2(kParsedURLString, "http://example.com/depth2.js");
 
   GetModulator()->ResolveDependentTreeFetch(
       url_dep2, ModuleTreeLinkerTestModulator::ResolveResult::kSuccess);
@@ -430,7 +430,7 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
 TEST_F(ModuleTreeLinkerTest, FetchDependencyOfCyclicGraph) {
   ModuleTreeLinkerRegistry* registry = ModuleTreeLinkerRegistry::Create();
 
-  KURL url("http://example.com/a.js");
+  KURL url(kParsedURLString, "http://example.com/a.js");
   ModuleScriptFetchRequest module_request(url, ScriptFetchOptions());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, GetModulator(), client);

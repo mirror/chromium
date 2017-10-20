@@ -49,7 +49,7 @@ DateTimeChooserImpl::DateTimeChooserImpl(
     const DateTimeChooserParameters& parameters)
     : chrome_client_(chrome_client),
       client_(client),
-      popup_(nullptr),
+      popup_(0),
       parameters_(parameters),
       locale_(Locale::Create(parameters.locale)) {
   DCHECK(RuntimeEnabledFeatures::InputMultipleFieldsUIEnabled());
@@ -67,7 +67,7 @@ DateTimeChooserImpl* DateTimeChooserImpl::Create(
 
 DateTimeChooserImpl::~DateTimeChooserImpl() {}
 
-void DateTimeChooserImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DateTimeChooserImpl) {
   visitor->Trace(chrome_client_);
   visitor->Trace(client_);
   DateTimeChooser::Trace(visitor);
@@ -80,7 +80,7 @@ void DateTimeChooserImpl::EndChooser() {
 }
 
 AXObject* DateTimeChooserImpl::RootAXObject() {
-  return popup_ ? popup_->RootAXObject() : nullptr;
+  return popup_ ? popup_->RootAXObject() : 0;
 }
 
 static String ValueToDateTimeString(double value, AtomicString type) {

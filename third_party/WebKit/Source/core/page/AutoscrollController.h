@@ -66,7 +66,7 @@ class CORE_EXPORT AutoscrollController final
     : public GarbageCollected<AutoscrollController> {
  public:
   static AutoscrollController* Create(Page&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // Selection and drag-and-drop autoscroll.
   void Animate(double monotonic_frame_begin_time);

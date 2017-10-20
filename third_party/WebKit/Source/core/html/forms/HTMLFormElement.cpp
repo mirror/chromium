@@ -81,7 +81,7 @@ HTMLFormElement* HTMLFormElement::Create(Document& document) {
 
 HTMLFormElement::~HTMLFormElement() {}
 
-void HTMLFormElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLFormElement) {
   visitor->Trace(past_names_map_);
   visitor->Trace(radio_button_group_scope_);
   visitor->Trace(listed_elements_);
@@ -96,7 +96,7 @@ bool HTMLFormElement::MatchesValidityPseudoClasses() const {
 
 bool HTMLFormElement::IsValidElement() {
   return !CheckInvalidControlsAndCollectUnhandled(
-      nullptr, kCheckValidityDispatchNoEvent);
+      0, kCheckValidityDispatchNoEvent);
 }
 
 bool HTMLFormElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
@@ -594,7 +594,7 @@ void HTMLFormElement::CollectListedElements(
     ListedElement::List& elements) const {
   elements.clear();
   for (HTMLElement& element : Traversal<HTMLElement>::StartsAfter(root)) {
-    ListedElement* listed_element = nullptr;
+    ListedElement* listed_element = 0;
     if (element.IsFormControlElement())
       listed_element = ToHTMLFormControlElement(&element);
     else if (auto* object = ToHTMLObjectElementOrNull(element))
@@ -686,7 +686,7 @@ HTMLFormControlElement* HTMLFormElement::FindDefaultButton() const {
 
 bool HTMLFormElement::checkValidity() {
   return !CheckInvalidControlsAndCollectUnhandled(
-      nullptr, kCheckValidityDispatchInvalidEvent);
+      0, kCheckValidityDispatchInvalidEvent);
 }
 
 bool HTMLFormElement::CheckInvalidControlsAndCollectUnhandled(
@@ -723,7 +723,7 @@ bool HTMLFormElement::reportValidity() {
 Element* HTMLFormElement::ElementFromPastNamesMap(
     const AtomicString& past_name) {
   if (past_name.IsEmpty() || !past_names_map_)
-    return nullptr;
+    return 0;
   Element* element = past_names_map_->at(past_name);
 #if DCHECK_IS_ON()
   if (!element)

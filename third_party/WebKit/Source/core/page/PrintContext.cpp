@@ -307,7 +307,7 @@ bool PrintContext::IsFrameValid() const {
          !frame_->GetDocument()->GetLayoutViewItem().IsNull();
 }
 
-void PrintContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PrintContext) {
   visitor->Trace(frame_);
   visitor->Trace(linked_destinations_);
 }

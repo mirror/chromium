@@ -1918,12 +1918,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeMemexDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeMemexFeature)},
 #endif  // OS_ANDROID
-#if defined(OS_ANDROID)
-    {"enable-tab-modal-js-dialog-android",
-     flag_descriptions::kTabModalJsDialogName,
-     flag_descriptions::kTabModalJsDialogDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kTabModalJsDialog)},
-#endif  // OS_ANDROID
     {"in-product-help-demo-mode-choice",
      flag_descriptions::kInProductHelpDemoModeChoiceName,
      flag_descriptions::kInProductHelpDemoModeChoiceDescription, kOsAll,
@@ -3551,11 +3545,6 @@ const FeatureEntry kFeatureEntries[] = {
      kOsMac | kOsLinux | kOsCrOS | kOsAndroid,
      FEATURE_VALUE_TYPE(features::kNtlmV2Enabled)},
 #endif  // defined(OS_POSIX)
-
-    {"enable-module-scripts-import-meta-url",
-     flag_descriptions::kModuleScriptsImportMetaUrlName,
-     flag_descriptions::kModuleScriptsImportMetaUrlDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kModuleScriptsImportMetaUrl)},
 
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag

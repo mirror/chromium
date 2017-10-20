@@ -58,14 +58,14 @@ void SpeculationsPumpSession::AddedElementTokens(size_t count) {
 
 HTMLParserScheduler::HTMLParserScheduler(
     HTMLDocumentParser* parser,
-    scoped_refptr<WebTaskRunner> loading_task_runner)
+    RefPtr<WebTaskRunner> loading_task_runner)
     : parser_(parser),
       loading_task_runner_(std::move(loading_task_runner)),
       is_suspended_with_active_timer_(false) {}
 
 HTMLParserScheduler::~HTMLParserScheduler() {}
 
-void HTMLParserScheduler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLParserScheduler) {
   visitor->Trace(parser_);
 }
 

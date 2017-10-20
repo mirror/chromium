@@ -119,7 +119,7 @@ void MojoInterfaceInterceptor::stop() {
   test_api.ClearBinderForName(interface_name);
 }
 
-void MojoInterfaceInterceptor::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MojoInterfaceInterceptor) {
   EventTargetWithInlineData::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }

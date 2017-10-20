@@ -113,7 +113,7 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
 
   void TestTaskRunner() {
     EXPECT_TRUE(IsCurrentThread());
-    scoped_refptr<WebTaskRunner> task_runner =
+    RefPtr<WebTaskRunner> task_runner =
         TaskRunnerHelper::Get(TaskType::kUnspecedTimer, GlobalScope());
     EXPECT_TRUE(task_runner->RunsTasksInCurrentSequence());
     GetParentFrameTaskRunners()
@@ -124,7 +124,7 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
  private:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams> creation_params) final {
-    scoped_refptr<SecurityOrigin> security_origin =
+    RefPtr<SecurityOrigin> security_origin =
         SecurityOrigin::Create(creation_params->script_url);
     return new ThreadedWorkletGlobalScope(
         creation_params->script_url, creation_params->user_agent,
@@ -148,7 +148,7 @@ class ThreadedWorkletMessagingProxyForTest
   ~ThreadedWorkletMessagingProxyForTest() override {}
 
   void Start() {
-    KURL script_url("http://fake.url/");
+    KURL script_url(kParsedURLString, "http://fake.url/");
     std::unique_ptr<Vector<char>> cached_meta_data = nullptr;
     Vector<CSPHeaderAndType> content_security_policy_headers;
     String referrer_policy = "";
@@ -174,7 +174,7 @@ class ThreadedWorkletMessagingProxyForTest
     return WTF::MakeUnique<ThreadedWorkletThreadForTest>(WorkletObjectProxy());
   }
 
-  scoped_refptr<SecurityOrigin> security_origin_;
+  RefPtr<SecurityOrigin> security_origin_;
 };
 
 class ThreadedWorkletTest : public ::testing::Test {

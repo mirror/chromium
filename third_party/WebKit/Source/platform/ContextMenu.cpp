@@ -41,7 +41,7 @@ static const ContextMenuItem* FindItemWithAction(
       return sub_menu_item;
   }
 
-  return nullptr;
+  return 0;
 }
 
 const ContextMenuItem* ContextMenu::ItemWithAction(unsigned action) const {

@@ -26,6 +26,10 @@ UIImage* BrandedImageProvider::GetClearBrowsingDataSiteDataImage() {
   return nil;
 }
 
+UIImage* BrandedImageProvider::GetContextualSearchHeaderImage() {
+  return nil;
+}
+
 UIImage* BrandedImageProvider::GetSigninConfirmationSyncSettingsImage() {
   return nil;
 }

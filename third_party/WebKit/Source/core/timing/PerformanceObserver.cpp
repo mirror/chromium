@@ -123,7 +123,7 @@ void PerformanceObserver::Deliver() {
   callback_->call(this, entry_list, this);
 }
 
-void PerformanceObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PerformanceObserver) {
   ContextClient::Trace(visitor);
   visitor->Trace(execution_context_);
   visitor->Trace(callback_);
@@ -131,8 +131,7 @@ void PerformanceObserver::Trace(blink::Visitor* visitor) {
   visitor->Trace(performance_entries_);
 }
 
-void PerformanceObserver::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(PerformanceObserver) {
   visitor->TraceWrappers(callback_);
 }
 

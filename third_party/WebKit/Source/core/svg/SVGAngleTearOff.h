@@ -83,7 +83,7 @@ class SVGAngleTearOff final : public SVGPropertyTearOff<SVGAngle>,
   }
   void setValueAsString(const String&, ExceptionState&);
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   SVGAngleTearOff(SVGAngle*,

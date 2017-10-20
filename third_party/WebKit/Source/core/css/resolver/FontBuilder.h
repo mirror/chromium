@@ -64,8 +64,8 @@ class CORE_EXPORT FontBuilder {
   void SetWeight(FontSelectionValue);
 
   void SetFamilyDescription(const FontDescription::FamilyDescription&);
-  void SetFeatureSettings(scoped_refptr<FontFeatureSettings>);
-  void SetLocale(scoped_refptr<const LayoutLocale>);
+  void SetFeatureSettings(RefPtr<FontFeatureSettings>);
+  void SetLocale(RefPtr<const LayoutLocale>);
   void SetVariantCaps(FontDescription::FontVariantCaps);
   void SetVariantEastAsian(const FontVariantEastAsian);
   void SetVariantLigatures(const FontDescription::VariantLigatures&);
@@ -73,7 +73,7 @@ class CORE_EXPORT FontBuilder {
   void SetTextRendering(TextRenderingMode);
   void SetKerning(FontDescription::Kerning);
   void SetFontSmoothing(FontSmoothingMode);
-  void SetVariationSettings(scoped_refptr<FontVariationSettings>);
+  void SetVariationSettings(RefPtr<FontVariationSettings>);
 
   // FIXME: These need to just vend a Font object eventually.
   void UpdateFontDescription(FontDescription&,

@@ -502,7 +502,7 @@ static void RunAutofocusTask(ExecutionContext* context) {
 
   Document* document = ToDocument(context);
   if (Element* element = document->AutofocusElement()) {
-    document->SetAutofocusElement(nullptr);
+    document->SetAutofocusElement(0);
     element->focus();
   }
 }
@@ -524,7 +524,7 @@ class Document::NetworkStateObserver final
  public:
   explicit NetworkStateObserver(Document& document)
       : ContextLifecycleObserver(&document) {
-    online_observer_handle_ = GetNetworkStateNotifier().AddOnLineObserver(
+    GetNetworkStateNotifier().AddOnLineObserver(
         this,
         TaskRunnerHelper::Get(TaskType::kNetworking, GetExecutionContext()));
   }
@@ -545,16 +545,11 @@ class Document::NetworkStateObserver final
 
   void UnregisterAsObserver(ExecutionContext* context) {
     DCHECK(context);
-    online_observer_handle_ = nullptr;
+    GetNetworkStateNotifier().RemoveOnLineObserver(
+        this, TaskRunnerHelper::Get(TaskType::kNetworking, context));
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ContextLifecycleObserver::Trace(visitor);
-  }
-
- private:
-  std::unique_ptr<NetworkStateNotifier::NetworkStateObserverHandle>
-      online_observer_handle_;
+  DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
 };
 
 Document* Document::Create(const Document& document) {
@@ -569,7 +564,7 @@ Document* Document::Create(const Document& document) {
 
 Document::Document(const DocumentInit& initializer,
                    DocumentClassFlags document_classes)
-    : ContainerNode(nullptr, kCreateDocument),
+    : ContainerNode(0, kCreateDocument),
       TreeScope(*this),
       has_nodes_with_placeholder_style_(false),
       evaluate_media_queries_on_style_recalc_(false),
@@ -625,7 +620,7 @@ Document::Document(const DocumentInit& initializer,
       saw_elements_in_known_namespaces_(false),
       is_srcdoc_document_(initializer.ShouldTreatURLAsSrcdocDocument()),
       is_mobile_document_(false),
-      layout_view_(nullptr),
+      layout_view_(0),
       has_fullscreen_supplement_(false),
       load_event_delay_count_(0),
       load_event_delay_timer_(
@@ -794,7 +789,7 @@ bool Document::HasAppCacheManifest() const {
 
 Location* Document::location() const {
   if (!GetFrame())
-    return nullptr;
+    return 0;
 
   return domWindow()->location();
 }
@@ -1140,13 +1135,13 @@ LocalDOMWindow* Document::ExecutingWindow() const {
     return owning_window;
   if (HTMLImportsController* import = ImportsController())
     return import->Master()->domWindow();
-  return nullptr;
+  return 0;
 }
 
 LocalFrame* Document::ExecutingFrame() {
   LocalDOMWindow* window = ExecutingWindow();
   if (!window)
-    return nullptr;
+    return 0;
   return window->GetFrame();
 }
 
@@ -1536,7 +1531,7 @@ AtomicString Document::contentType() const {
 
 Element* Document::ElementFromPoint(int x, int y) const {
   if (GetLayoutViewItem().IsNull())
-    return nullptr;
+    return 0;
 
   return TreeScope::ElementFromPoint(x, y);
 }
@@ -1793,7 +1788,7 @@ FormController& Document::GetFormController() {
 
 DocumentState* Document::FormElementsState() const {
   if (!form_controller_)
-    return nullptr;
+    return 0;
   return form_controller_->FormElementsState();
 }
 
@@ -2834,7 +2829,7 @@ AXObjectCache* Document::ExistingAXObjectCache() const {
   // If the layoutObject is gone then we are in the process of destruction.
   // This method will be called before m_frame = nullptr.
   if (!AxObjectCacheOwner().GetLayoutView())
-    return nullptr;
+    return 0;
 
   return AxObjectCacheOwner().ax_object_cache_.Get();
 }
@@ -2842,7 +2837,7 @@ AXObjectCache* Document::ExistingAXObjectCache() const {
 AXObjectCache* Document::AxObjectCache() const {
   Settings* settings = GetSettings();
   if (!settings || !settings->GetAccessibilityEnabled())
-    return nullptr;
+    return 0;
 
   // Every document has its own AXObjectCache if accessibility is enabled,
   // except for page popups (such as select popups or context menus),
@@ -2853,7 +2848,7 @@ AXObjectCache* Document::AxObjectCache() const {
 
   // If the document has already been detached, do not make a new axObjectCache.
   if (!cache_owner.GetLayoutView())
-    return nullptr;
+    return 0;
 
   DCHECK(&cache_owner == this || !ax_object_cache_);
   if (!cache_owner.ax_object_cache_)
@@ -3024,7 +3019,7 @@ DocumentParser* Document::ImplicitOpen(
 
 HTMLElement* Document::body() const {
   if (!documentElement() || !IsHTMLHtmlElement(documentElement()))
-    return nullptr;
+    return 0;
 
   for (HTMLElement* child =
            Traversal<HTMLElement>::FirstChild(*documentElement());
@@ -3033,12 +3028,12 @@ HTMLElement* Document::body() const {
       return child;
   }
 
-  return nullptr;
+  return 0;
 }
 
 HTMLBodyElement* Document::FirstBodyElement() const {
   if (!documentElement() || !IsHTMLHtmlElement(documentElement()))
-    return nullptr;
+    return 0;
 
   for (HTMLElement* child =
            Traversal<HTMLElement>::FirstChild(*documentElement());
@@ -3047,7 +3042,7 @@ HTMLBodyElement* Document::FirstBodyElement() const {
       return body;
   }
 
-  return nullptr;
+  return 0;
 }
 
 void Document::setBody(HTMLElement* prp_new_body,
@@ -3098,7 +3093,7 @@ void Document::WillInsertBody() {
 HTMLHeadElement* Document::head() const {
   Node* de = documentElement();
   if (!de)
-    return nullptr;
+    return 0;
 
   return Traversal<HTMLHeadElement>::FirstChild(*de);
 }
@@ -3778,8 +3773,8 @@ void Document::ProcessBaseElement() {
 
   // Find the first href attribute in a base element and the first target
   // attribute in a base element.
-  const AtomicString* href = nullptr;
-  const AtomicString* target = nullptr;
+  const AtomicString* href = 0;
+  const AtomicString* target = 0;
   for (HTMLBaseElement* base = Traversal<HTMLBaseElement>::FirstWithin(*this);
        base && (!href || !target);
        base = Traversal<HTMLBaseElement>::Next(*base)) {
@@ -4814,13 +4809,13 @@ EventListener* Document::GetWindowAttributeEventListener(
     const AtomicString& event_type) {
   LocalDOMWindow* dom_window = domWindow();
   if (!dom_window)
-    return nullptr;
+    return 0;
   return dom_window->GetAttributeEventListener(event_type);
 }
 
 EventQueue* Document::GetEventQueue() const {
   if (!dom_window_)
-    return nullptr;
+    return 0;
   return dom_window_->GetEventQueue();
 }
 
@@ -5013,7 +5008,7 @@ void Document::AddListenerTypeIfNeeded(const AtomicString& event_type,
 
 HTMLFrameOwnerElement* Document::LocalOwner() const {
   if (!GetFrame())
-    return nullptr;
+    return 0;
   // FIXME: This probably breaks the attempts to layout after a load is finished
   // in implicitClose(), and probably tons of other things...
   return GetFrame()->DeprecatedLocalOwner();
@@ -5631,10 +5626,10 @@ void Document::setDesignMode(const String& value) {
 
 Document* Document::ParentDocument() const {
   if (!frame_)
-    return nullptr;
+    return 0;
   Frame* parent = frame_->Tree().Parent();
   if (!parent || !parent->IsLocalFrame())
-    return nullptr;
+    return 0;
   return ToLocalFrame(parent)->GetDocument();
 }
 
@@ -5913,7 +5908,7 @@ Color Document::ThemeColor() const {
 HTMLLinkElement* Document::LinkManifest() const {
   HTMLHeadElement* head = this->head();
   if (!head)
-    return nullptr;
+    return 0;
 
   // The first link element with a manifest rel must be used. Others are
   // ignored.
@@ -5926,7 +5921,7 @@ HTMLLinkElement* Document::LinkManifest() const {
     return link_element;
   }
 
-  return nullptr;
+  return 0;
 }
 
 void Document::SetFeaturePolicy(const String& feature_policy_header) {
@@ -5989,7 +5984,7 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
   if (!initializer.HasSecurityContext()) {
     // No source for a security context.
     // This can occur via document.implementation.createDocument().
-    cookie_url_ = KURL(g_empty_string);
+    cookie_url_ = KURL(kParsedURLString, g_empty_string);
     SetSecurityOrigin(SecurityOrigin::CreateUnique());
     InitContentSecurityPolicy();
     SetFeaturePolicy(g_empty_string);
@@ -6447,12 +6442,12 @@ void Document::exitPointerLock() {
 
 Element* Document::PointerLockElement() const {
   if (!GetPage() || GetPage()->GetPointerLockController().LockPending())
-    return nullptr;
+    return 0;
   if (Element* element = GetPage()->GetPointerLockController().GetElement()) {
     if (element->GetDocument() == this)
       return element;
   }
-  return nullptr;
+  return 0;
 }
 
 void Document::SuppressLoadEvent() {
@@ -6624,7 +6619,7 @@ DocumentLoader* Document::Loader() const {
 
 Node* EventTargetNodeForDocument(Document* doc) {
   if (!doc)
-    return nullptr;
+    return 0;
   Node* node = doc->FocusedElement();
   if (!node && doc->IsPluginDocument()) {
     PluginDocument* plugin_document = ToPluginDocument(doc);
@@ -7154,7 +7149,7 @@ service_manager::InterfaceProvider* Document::GetInterfaceProvider() {
   return &GetFrame()->GetInterfaceProvider();
 }
 
-void Document::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Document) {
   visitor->Trace(imports_controller_);
   visitor->Trace(doc_type_);
   visitor->Trace(implementation_);
@@ -7234,7 +7229,7 @@ void Document::RecordDeferredLoadReason(WouldLoadReason reason) {
   would_load_reason_ = reason;
 }
 
-void Document::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(Document) {
   // node_lists_ are traced in their corresponding NodeListsNodeData, keeping
   // them only alive for live nodes. Otherwise we would keep lists of dead
   // nodes alive that have not yet been invalidated.

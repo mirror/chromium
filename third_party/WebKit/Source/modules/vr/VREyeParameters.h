@@ -29,7 +29,7 @@ class VREyeParameters final : public GarbageCollected<VREyeParameters>,
 
   void Update(const device::mojom::blink::VREyeParametersPtr&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE()
 
  private:
   Member<DOMFloat32Array> offset_;

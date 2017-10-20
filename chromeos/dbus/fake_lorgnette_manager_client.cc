@@ -4,7 +4,8 @@
 
 #include "chromeos/dbus/fake_lorgnette_manager_client.h"
 
-#include <utility>
+#include <map>
+#include <string>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -22,34 +23,17 @@ void FakeLorgnetteManagerClient::Init(dbus::Bus* bus) {}
 
 void FakeLorgnetteManagerClient::ListScanners(
     const ListScannersCallback& callback) {
+  std::map<std::string, ScannerTableEntry> scanners;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(callback, !scanner_table_.empty(), scanner_table_));
+      FROM_HERE, base::Bind(callback, false, scanners));
 }
 
 void FakeLorgnetteManagerClient::ScanImageToString(
     std::string device_name,
     const ScanProperties& properties,
     const ScanImageToStringCallback& callback) {
-  auto it = scan_data_.find(
-      std::make_tuple(device_name, properties.mode, properties.resolution_dpi));
-  auto task = it != scan_data_.end()
-                  ? base::BindOnce(callback, true, it->second)
-                  : base::BindOnce(callback, false, std::string());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(task));
-}
-
-void FakeLorgnetteManagerClient::AddScannerTableEntry(
-    const std::string device_name,
-    const ScannerTableEntry& entry) {
-  scanner_table_[device_name] = entry;
-}
-
-void FakeLorgnetteManagerClient::AddScanData(const std::string& device_name,
-                                             const ScanProperties& properties,
-                                             const std::string data) {
-  scan_data_[std::make_tuple(device_name, properties.mode,
-                             properties.resolution_dpi)] = data;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, false, std::string()));
 }
 
 }  // namespace chromeos

@@ -98,12 +98,12 @@ void IDBObserver::unobserve(IDBDatabase* database,
     database->RemoveObservers(observer_ids_to_remove);
 }
 
-void IDBObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBObserver) {
   visitor->Trace(callback_);
   visitor->Trace(observer_ids_);
 }
 
-void IDBObserver::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(IDBObserver) {
   visitor->TraceWrappers(callback_);
   ScriptWrappable::TraceWrappers(visitor);
 }

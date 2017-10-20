@@ -55,7 +55,7 @@ bool EncodeAsImage(char* body,
 
 }  // namespace
 
-void InspectorAuditsAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorAuditsAgent) {
   visitor->Trace(network_agent_);
   InspectorBaseAgent::Trace(visitor);
 }

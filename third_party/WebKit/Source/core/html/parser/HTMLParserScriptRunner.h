@@ -97,8 +97,8 @@ class HTMLParserScriptRunner final
     return !!reentry_permit_->ScriptNestingLevel();
   }
 
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   HTMLParserScriptRunner(HTMLParserReentryPermit*,
@@ -128,7 +128,7 @@ class HTMLParserScriptRunner final
 
   void PossiblyFetchBlockedDocWriteScript(PendingScript*);
 
-  scoped_refptr<HTMLParserReentryPermit> reentry_permit_;
+  RefPtr<HTMLParserReentryPermit> reentry_permit_;
   Member<Document> document_;
   Member<HTMLParserScriptRunnerHost> host_;
 

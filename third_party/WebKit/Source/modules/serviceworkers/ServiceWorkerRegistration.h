@@ -82,7 +82,7 @@ class ServiceWorkerRegistration final
 
   ~ServiceWorkerRegistration() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   ServiceWorkerRegistration(

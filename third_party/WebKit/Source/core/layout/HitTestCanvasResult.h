@@ -19,7 +19,7 @@ class CORE_EXPORT HitTestCanvasResult final
   String GetId() const;
   Element* GetControl() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   HitTestCanvasResult(String id, Member<Element> control);

@@ -52,7 +52,7 @@ class CORE_EXPORT CSSStyleRule final : public CSSRule {
   // FIXME: Not CSSOM. Remove.
   StyleRule* GetStyleRule() const { return style_rule_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CSSStyleRule(StyleRule*, CSSStyleSheet*);

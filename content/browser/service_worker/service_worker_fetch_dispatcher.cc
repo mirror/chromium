@@ -371,7 +371,7 @@ class ServiceWorkerFetchDispatcher::ResponseCallback
                    dispatch_event_time);
   }
   void OnResponseBlob(const ServiceWorkerResponse& response,
-                      blink::mojom::BlobPtr body_as_blob,
+                      storage::mojom::BlobPtr body_as_blob,
                       base::Time dispatch_event_time) override {
     HandleResponse(fetch_dispatcher_, version_, fetch_event_id_, response,
                    nullptr /* body_as_stream */, std::move(body_as_blob),
@@ -403,7 +403,7 @@ class ServiceWorkerFetchDispatcher::ResponseCallback
       base::Optional<int> fetch_event_id,
       const ServiceWorkerResponse& response,
       blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
-      blink::mojom::BlobPtr body_as_blob,
+      storage::mojom::BlobPtr body_as_blob,
       ServiceWorkerFetchEventResult fetch_result,
       base::Time dispatch_event_time) {
     if (!version->FinishRequest(
@@ -624,7 +624,7 @@ void ServiceWorkerFetchDispatcher::DidFinish(
     ServiceWorkerFetchEventResult fetch_result,
     const ServiceWorkerResponse& response,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
-    blink::mojom::BlobPtr body_as_blob) {
+    storage::mojom::BlobPtr body_as_blob) {
   net_log_.EndEvent(net::NetLogEventType::SERVICE_WORKER_FETCH_EVENT);
   Complete(SERVICE_WORKER_OK, fetch_result, response, std::move(body_as_stream),
            std::move(body_as_blob));
@@ -635,7 +635,7 @@ void ServiceWorkerFetchDispatcher::Complete(
     ServiceWorkerFetchEventResult fetch_result,
     const ServiceWorkerResponse& response,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
-    blink::mojom::BlobPtr body_as_blob) {
+    storage::mojom::BlobPtr body_as_blob) {
   DCHECK(!fetch_callback_.is_null());
 
   did_complete_ = true;
@@ -685,10 +685,9 @@ bool ServiceWorkerFetchDispatcher::MaybeStartNavigationPreload(
   request.method = original_request->method();
   request.url = original_request->url();
   // TODO(horo): Set site_for_cookies to support Same-site Cookies.
-  request.request_initiator =
-      original_request->initiator().has_value()
-          ? original_request->initiator()
-          : url::Origin::Create(original_request->url());
+  request.request_initiator = original_request->initiator().has_value()
+                                  ? original_request->initiator()
+                                  : url::Origin(original_request->url());
   request.referrer = GURL(original_request->referrer());
   request.referrer_policy = original_info->GetReferrerPolicy();
   request.visibility_state = original_info->GetVisibilityState();

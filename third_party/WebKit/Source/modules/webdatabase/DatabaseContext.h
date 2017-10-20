@@ -48,7 +48,7 @@ class DatabaseContext final : public GarbageCollectedFinalized<DatabaseContext>,
   static DatabaseContext* Create(ExecutionContext*);
 
   ~DatabaseContext();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // For life-cycle management (inherited from ContextLifecycleObserver):
   void ContextDestroyed(ExecutionContext*) override;

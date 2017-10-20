@@ -30,7 +30,6 @@
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
-#import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #import "ios/chrome/common/material_timing.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
@@ -109,7 +108,6 @@ using ios::material::TimingFunction;
 
 @synthesize readingListModel = readingListModel_;
 @synthesize view = view_;
-@synthesize contentView = contentView_;
 @synthesize backgroundView = backgroundView_;
 @synthesize shadowView = shadowView_;
 @synthesize toolsPopupController = toolsPopupController_;
@@ -161,28 +159,6 @@ using ios::material::TimingFunction;
         UIViewAutoresizingFlexibleTopMargin;
 
     backgroundView_ = [[UIImageView alloc] initWithFrame:backgroundFrame];
-
-    [view_ addSubview:backgroundView_];
-    [view_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [backgroundView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                         UIViewAutoresizingFlexibleHeight];
-
-    contentView_ = [[UIView alloc] initWithFrame:viewFrame];
-    contentView_.translatesAutoresizingMaskIntoConstraints = NO;
-    [view_ addSubview:contentView_];
-    if (@available(iOS 11.0, *)) {
-      UILayoutGuide* safeArea = view_.safeAreaLayoutGuide;
-      [NSLayoutConstraint activateConstraints:@[
-        [contentView_.leadingAnchor
-            constraintEqualToAnchor:safeArea.leadingAnchor],
-        [contentView_.trailingAnchor
-            constraintEqualToAnchor:safeArea.trailingAnchor],
-        [contentView_.topAnchor constraintEqualToAnchor:view_.topAnchor],
-        [contentView_.bottomAnchor constraintEqualToAnchor:view_.bottomAnchor],
-      ]];
-    } else {
-      AddSameConstraints(view_, contentView_);
-    }
     toolsMenuButton_ =
         [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
                                                 style:style_];
@@ -190,7 +166,12 @@ using ios::material::TimingFunction;
                          action:@selector(showToolsMenu)
                forControlEvents:UIControlEventTouchUpInside];
     [toolsMenuButton_ setAutoresizingMask:autoresizingMask];
-    [contentView_ addSubview:toolsMenuButton_];
+
+    [view_ addSubview:backgroundView_];
+    [view_ addSubview:toolsMenuButton_];
+    [view_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [backgroundView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                                         UIViewAutoresizingFlexibleHeight];
 
     if (idiom == IPAD_IDIOM) {
       CGRect shareButtonFrame = LayoutRectGetRect(kShareMenuButtonFrame);
@@ -206,7 +187,7 @@ using ios::material::TimingFunction;
              forControlEvents:UIControlEventTouchUpInside];
       SetA11yLabelAndUiAutomationName(shareButton_, IDS_IOS_TOOLS_MENU_SHARE,
                                       kToolbarShareButtonIdentifier);
-      [contentView_ addSubview:shareButton_];
+      [view_ addSubview:shareButton_];
     }
 
     CGRect shadowFrame = kShadowViewFrame[idiom];
@@ -268,7 +249,7 @@ using ios::material::TimingFunction;
            forInitialState:UIControlStateNormal
           hasDisabledImage:NO
              synchronously:NO];
-      [contentView_ addSubview:stackButton_];
+      [view_ addSubview:stackButton_];
     }
     [self registerEventsForButton:toolsMenuButton_];
 
@@ -532,7 +513,7 @@ using ios::material::TimingFunction;
                              forKey:kToolbarTransitionAnimationKey];
 
   // Animate toolbar buttons
-  [self animateTransitionForButtonsInView:self.contentView
+  [self animateTransitionForButtonsInView:self.view
                      containerBeginBounds:beginBounds
                        containerEndBounds:endBounds
                           transitionStyle:style];

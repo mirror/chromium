@@ -87,7 +87,7 @@ void CSSFontSelector::FontCacheInvalidated() {
   DispatchInvalidationCallbacks();
 }
 
-scoped_refptr<FontData> CSSFontSelector::GetFontData(
+RefPtr<FontData> CSSFontSelector::GetFontData(
     const FontDescription& font_description,
     const AtomicString& family_name) {
   if (CSSSegmentedFontFace* face =
@@ -145,7 +145,7 @@ void CSSFontSelector::ReportNotDefGlyph() const {
   UseCounter::Count(document_, WebFeature::kFontShapingNotDefGlyphObserved);
 }
 
-void CSSFontSelector::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSFontSelector) {
   visitor->Trace(document_);
   visitor->Trace(font_face_cache_);
   visitor->Trace(clients_);

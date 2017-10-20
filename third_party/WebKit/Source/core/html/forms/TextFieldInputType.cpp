@@ -109,7 +109,7 @@ TextFieldInputType::TextFieldInputType(HTMLInputElement& element)
 
 TextFieldInputType::~TextFieldInputType() {}
 
-void TextFieldInputType::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextFieldInputType) {
   InputTypeView::Trace(visitor);
   InputType::Trace(visitor);
 }

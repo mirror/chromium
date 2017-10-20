@@ -45,14 +45,13 @@ void NodeListsNodeData::InvalidateCaches(const QualifiedName* attr_name) {
     cache.value->InvalidateCache();
 }
 
-void NodeListsNodeData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NodeListsNodeData) {
   visitor->Trace(child_node_list_);
   visitor->Trace(atomic_name_caches_);
   visitor->Trace(tag_collection_ns_caches_);
 }
 
-void NodeListsNodeData::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(NodeListsNodeData) {
   visitor->TraceWrappers(child_node_list_);
   for (const auto list : atomic_name_caches_.Values()) {
     visitor->TraceWrappers(list);

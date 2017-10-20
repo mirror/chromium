@@ -258,7 +258,7 @@ class ScheduledReload final : public ScheduledNavigation {
 
   KURL Url() const override { return frame_->GetDocument()->Url(); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(frame_);
     ScheduledNavigation::Trace(visitor);
   }
@@ -317,7 +317,7 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
 
   KURL Url() const override { return submission_->RequestURL(); }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(submission_);
     ScheduledNavigation::Trace(visitor);
   }
@@ -536,13 +536,12 @@ void NavigationScheduler::StartTimer() {
 
   // wrapWeakPersistent(this) is safe because a posted task is canceled when the
   // task handle is destroyed on the dtor of this NavigationScheduler.
-  navigate_task_handle_ = frame_->FrameScheduler()
-                              ->GetTaskRunner(TaskType::kUnspecedLoading)
-                              ->PostDelayedCancellableTask(
-                                  BLINK_FROM_HERE,
-                                  WTF::Bind(&NavigationScheduler::NavigateTask,
-                                            WrapWeakPersistent(this)),
-                                  TimeDelta::FromSecondsD(redirect_->Delay()));
+  navigate_task_handle_ =
+      frame_->FrameScheduler()->LoadingTaskRunner()->PostDelayedCancellableTask(
+          BLINK_FROM_HERE,
+          WTF::Bind(&NavigationScheduler::NavigateTask,
+                    WrapWeakPersistent(this)),
+          TimeDelta::FromSecondsD(redirect_->Delay()));
 
   probe::frameScheduledNavigation(frame_, redirect_.Get());
 }
@@ -557,7 +556,7 @@ void NavigationScheduler::Cancel() {
   redirect_.Clear();
 }
 
-void NavigationScheduler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigationScheduler) {
   visitor->Trace(frame_);
   visitor->Trace(redirect_);
 }

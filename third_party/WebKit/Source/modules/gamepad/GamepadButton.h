@@ -31,7 +31,7 @@ class GamepadButton final : public GarbageCollected<GamepadButton>,
   bool IsEqual(const device::GamepadButton&) const;
   void UpdateValuesFrom(const device::GamepadButton&);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   GamepadButton();

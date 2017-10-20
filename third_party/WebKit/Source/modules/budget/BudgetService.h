@@ -39,7 +39,7 @@ class BudgetService final : public GarbageCollectedFinalized<BudgetService>,
   ScriptPromise getBudget(ScriptState*);
   ScriptPromise reserve(ScriptState*, const AtomicString& operation);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   // Callbacks from the BudgetService to the blink layer.

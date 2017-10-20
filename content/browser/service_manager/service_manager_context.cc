@@ -211,8 +211,16 @@ class NullServiceProcessLauncherFactory
 void GetGeolocationRequestContextFromContentClient(
     base::OnceCallback<void(scoped_refptr<net::URLRequestContextGetter>)>
         callback) {
-  GetContentClient()->browser()->GetGeolocationRequestContext(
-      std::move(callback));
+  // TODO(amoylan): Confirm whether either of the following can be replaced with
+  // DCHECKs owing to lifetime guarantees on ContentClient or
+  // ContentBrowserClient:
+  if (GetContentClient() && GetContentClient()->browser()) {
+    GetContentClient()->browser()->GetGeolocationRequestContext(
+        std::move(callback));
+  } else {
+    std::move(callback).Run(
+        scoped_refptr<net::URLRequestContextGetter>(nullptr));
+  }
 }
 
 }  // namespace

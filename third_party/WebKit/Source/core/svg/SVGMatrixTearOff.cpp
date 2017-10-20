@@ -45,12 +45,11 @@ SVGMatrixTearOff::SVGMatrixTearOff(SVGTransformTearOff* transform)
   DCHECK(transform);
 }
 
-void SVGMatrixTearOff::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGMatrixTearOff) {
   visitor->Trace(context_transform_);
 }
 
-void SVGMatrixTearOff::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGMatrixTearOff) {
   visitor->TraceWrappers(context_transform_);
 }
 

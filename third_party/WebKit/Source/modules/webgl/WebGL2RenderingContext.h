@@ -47,9 +47,9 @@ class WebGL2RenderingContext : public WebGL2RenderingContextBase {
   void SetCanvasGetContextResult(RenderingContext&) final;
   void SetOffscreenCanvasGetContextResult(OffscreenRenderingContext&) final;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   WebGL2RenderingContext(

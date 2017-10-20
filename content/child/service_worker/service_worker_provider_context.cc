@@ -149,8 +149,7 @@ void ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope(
   *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New(
       state->registration->registration_id, state->registration->handle_id,
       state->registration->options->Clone(),
-      std::move(state->registration->host_ptr_info),
-      std::move(state->registration->request));
+      std::move(state->registration->host_ptr_info));
 
   if (state->installing)
     attrs->installing = state->installing->info();
@@ -188,12 +187,12 @@ void ServiceWorkerProviderContext::SetController(
     state->subresource_loader_factory = nullptr;
     return;
   }
-  blink::mojom::BlobRegistryPtr blob_registry_ptr;
+  storage::mojom::BlobRegistryPtr blob_registry_ptr;
   ChildThreadImpl::current()->GetConnector()->BindInterface(
       mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
-  auto blob_registry =
-      base::MakeRefCounted<base::RefCountedData<blink::mojom::BlobRegistryPtr>>(
-          std::move(blob_registry_ptr));
+  auto blob_registry = base::MakeRefCounted<
+      base::RefCountedData<storage::mojom::BlobRegistryPtr>>(
+      std::move(blob_registry_ptr));
   state->controller_connector =
       base::MakeRefCounted<ControllerServiceWorkerConnector>(
           container_host_.get());

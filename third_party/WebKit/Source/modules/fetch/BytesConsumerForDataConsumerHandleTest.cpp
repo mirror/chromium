@@ -61,7 +61,7 @@ class MockDataConsumerHandle final : public WebDataConsumerHandle {
                                                size_t*));
     MOCK_METHOD1(EndRead, WebDataConsumerHandle::Result(size_t));
 
-    void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_TRACE() {}
   };
 
   MockDataConsumerHandle() : proxy_(new MockReaderProxy) {}

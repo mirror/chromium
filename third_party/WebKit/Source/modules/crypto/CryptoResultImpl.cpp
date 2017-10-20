@@ -77,7 +77,7 @@ class CryptoResultImpl::Resolver final : public ScriptPromiseResolver {
     ScriptPromiseResolver::ContextDestroyed(destroyed_context);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(result_);
     ScriptPromiseResolver::Trace(visitor);
   }
@@ -131,7 +131,7 @@ CryptoResultImpl::~CryptoResultImpl() {
   DCHECK(!resolver_);
 }
 
-void CryptoResultImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CryptoResultImpl) {
   visitor->Trace(resolver_);
   CryptoResult::Trace(visitor);
 }

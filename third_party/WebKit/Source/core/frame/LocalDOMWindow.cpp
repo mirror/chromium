@@ -111,7 +111,7 @@ class PostMessageTimer final
  public:
   PostMessageTimer(LocalDOMWindow& window,
                    MessageEvent* event,
-                   scoped_refptr<SecurityOrigin> target_origin,
+                   RefPtr<SecurityOrigin> target_origin,
                    std::unique_ptr<SourceLocation> location,
                    UserGestureToken* user_gesture_token)
       : SuspendableTimer(window.document(), TaskType::kPostedMessage),
@@ -142,7 +142,7 @@ class PostMessageTimer final
   // Eager finalization is needed to promptly stop this timer object.
   // (see DOMTimer comment for more.)
   EAGERLY_FINALIZE();
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(event_);
     visitor->Trace(window_);
     SuspendableTimer::Trace(visitor);
@@ -165,9 +165,9 @@ class PostMessageTimer final
 
   Member<MessageEvent> event_;
   Member<LocalDOMWindow> window_;
-  scoped_refptr<SecurityOrigin> target_origin_;
+  RefPtr<SecurityOrigin> target_origin_;
   std::unique_ptr<SourceLocation> location_;
-  scoped_refptr<UserGestureToken> user_gesture_token_;
+  RefPtr<UserGestureToken> user_gesture_token_;
   bool disposal_allowed_;
 };
 
@@ -413,14 +413,13 @@ void LocalDOMWindow::EnqueueHashchangeEvent(const String& old_url,
 }
 
 void LocalDOMWindow::EnqueuePopstateEvent(
-    scoped_refptr<SerializedScriptValue> state_object) {
+    RefPtr<SerializedScriptValue> state_object) {
   // FIXME: https://bugs.webkit.org/show_bug.cgi?id=36202 Popstate event needs
   // to fire asynchronously
   DispatchEvent(PopStateEvent::Create(std::move(state_object), history()));
 }
 
-void LocalDOMWindow::StatePopped(
-    scoped_refptr<SerializedScriptValue> state_object) {
+void LocalDOMWindow::StatePopped(RefPtr<SerializedScriptValue> state_object) {
   if (!GetFrame())
     return;
 
@@ -609,7 +608,7 @@ Navigator* LocalDOMWindow::navigator() const {
 }
 
 void LocalDOMWindow::SchedulePostMessage(MessageEvent* event,
-                                         scoped_refptr<SecurityOrigin> target,
+                                         RefPtr<SecurityOrigin> target,
                                          Document* source) {
   // Allowing unbounded amounts of messages to build up for a suspended context
   // is problematic; consider imposing a limit or other restriction if this
@@ -675,7 +674,7 @@ void LocalDOMWindow::DispatchMessageEventWithOriginCheck(
     }
   }
 
-  KURL sender(static_cast<MessageEvent*>(event)->origin());
+  KURL sender(kParsedURLString, static_cast<MessageEvent*>(event)->origin());
   if (!document()->GetContentSecurityPolicy()->AllowConnectToSource(
           sender, RedirectStatus::kNoRedirect,
           SecurityViolationReportingPolicy::kSuppressReporting)) {
@@ -967,7 +966,7 @@ FloatSize LocalDOMWindow::GetViewportSize(
       page->GetSettings().GetViewportEnabled() && GetFrame()->IsMainFrame();
   bool affectedByScrollbars =
       scrollbar_inclusion == kExcludeScrollbars &&
-      !page->GetScrollbarTheme().UsesOverlayScrollbars();
+      !ScrollbarTheme::GetTheme().UsesOverlayScrollbars();
 
   if (affectedByScale || affectedByScrollbars)
     document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
@@ -1622,7 +1621,7 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
   return new_window;
 }
 
-void LocalDOMWindow::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalDOMWindow) {
   visitor->Trace(document_);
   visitor->Trace(screen_);
   visitor->Trace(history_);
@@ -1646,8 +1645,7 @@ void LocalDOMWindow::Trace(blink::Visitor* visitor) {
   Supplementable<LocalDOMWindow>::Trace(visitor);
 }
 
-void LocalDOMWindow::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(LocalDOMWindow) {
   visitor->TraceWrappers(custom_elements_);
   visitor->TraceWrappers(document_);
   visitor->TraceWrappers(modulator_);

@@ -812,12 +812,8 @@ fuzzer_test("color_transform_fuzzer") {
   sources = [
     "color_transform_fuzzer.cc",
   ]
-
-  dict = "//testing/libfuzzer/fuzzers/dicts/icc.dict"
-
   deps = [
     ":gfx",
   ]
-
-  libfuzzer_options = [ "max_len=4194304" ]
+  libfuzzer_options = [ "max_len=1024" ]
 }

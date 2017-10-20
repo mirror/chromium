@@ -51,6 +51,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   bool HasPopupNotifications() const override;
   bool IsQuietMode() const override;
   bool IsLockedState() const override;
+  bool HasClickedListener(const std::string& id) override;
   message_center::Notification* FindVisibleNotificationById(
       const std::string& id) override;
   const NotificationList::Notifications& GetVisibleNotifications() override;
@@ -76,8 +77,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
                               bool mark_notification_as_read) override;
   void DisplayedNotification(const std::string& id,
                              const DisplaySource source) override;
-  void SetNotifierSettingsProvider(
-      std::unique_ptr<NotifierSettingsProvider> provider) override;
+  void SetNotifierSettingsProvider(NotifierSettingsProvider* provider) override;
   NotifierSettingsProvider* GetNotifierSettingsProvider() override;
   void SetQuietMode(bool in_quiet_mode) override;
   void SetLockedState(bool locked) override;
@@ -91,6 +91,9 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   void OnBlockingStateChanged(NotificationBlocker* blocker) override;
 
   // message_center::NotifierSettingsObserver overrides:
+  void UpdateIconImage(const NotifierId& notifier_id,
+                       const gfx::Image& icon) override;
+  void NotifierGroupChanged() override;
   void NotifierEnabledChanged(const NotifierId& notifier_id,
                               bool enabled) override;
 
@@ -128,8 +131,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   base::ObserverList<MessageCenterObserver> observer_list_;
   std::unique_ptr<PopupTimersController> popup_timers_controller_;
   std::unique_ptr<base::OneShotTimer> quiet_mode_timer_;
-  // Null on !ChromeOS.
-  std::unique_ptr<NotifierSettingsProvider> settings_provider_;
+  NotifierSettingsProvider* settings_provider_;
   std::vector<NotificationBlocker*> blockers_;
   std::unique_ptr<ChangeQueue> notification_change_queue_;
 

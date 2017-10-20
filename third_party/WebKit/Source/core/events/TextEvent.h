@@ -77,7 +77,7 @@ class TextEvent final : public UIEvent {
   bool ShouldMatchStyle() const { return should_match_style_; }
   DocumentFragment* PastingFragment() const { return pasting_fragment_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   TextEvent();

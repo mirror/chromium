@@ -152,13 +152,12 @@ HTMLImportLoader* HTMLImportsController::LoaderFor(
   return nullptr;
 }
 
-void HTMLImportsController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLImportsController) {
   visitor->Trace(root_);
   visitor->Trace(loaders_);
 }
 
-void HTMLImportsController::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(HTMLImportsController) {
   visitor->TraceWrappers(root_);
 }
 

@@ -57,10 +57,9 @@ std::unique_ptr<base::ListValue> GetNetworkErrorData() {
   return error_list;
 }
 
-bool HandleWebUIRequestCallback(
-    BrowserContext* current_context,
-    const std::string& path,
-    const WebUIDataSource::GotDataCallback& callback) {
+bool HandleRequestCallback(BrowserContext* current_context,
+                           const std::string& path,
+                           const WebUIDataSource::GotDataCallback& callback) {
   if (path != kNetworkErrorDataFile)
     return false;
 
@@ -88,7 +87,7 @@ NetworkErrorsListingUI::NetworkErrorsListingUI(WebUI* web_ui)
                                IDR_NETWORK_ERROR_LISTING_JS);
   html_source->SetDefaultResource(IDR_NETWORK_ERROR_LISTING_HTML);
   html_source->SetRequestFilter(
-      base::Bind(&HandleWebUIRequestCallback,
+      base::Bind(&HandleRequestCallback,
                  web_ui->GetWebContents()->GetBrowserContext()));
 
   BrowserContext* browser_context =

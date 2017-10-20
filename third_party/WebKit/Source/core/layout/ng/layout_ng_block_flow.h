@@ -37,7 +37,9 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
   LayoutUnit FirstLineBoxBaseline() const override;
   LayoutUnit InlineBlockBaseline(LineDirectionMode) const override;
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  // TODO(eae): This should have a Paint method instead and run the full set of
+  // paint phases.
+  void PaintObject(const PaintInfo&, const LayoutPoint&) const override;
 
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation& location_in_container,
@@ -53,11 +55,8 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
   void SetCachedLayoutResult(const NGConstraintSpace&,
                              NGBreakToken*,
                              RefPtr<NGLayoutResult>);
-  // For testing only.
-  RefPtr<NGLayoutResult> CachedLayoutResultForTesting();
 
-  NGPaintFragment* PaintFragment() const { return paint_fragment_.get(); }
-  void SetPaintFragment(RefPtr<const NGPhysicalFragment>);
+  const NGPaintFragment* PaintFragment() const { return paint_fragment_.get(); }
 
  protected:
   bool IsOfType(LayoutObjectType) const override;
@@ -77,9 +76,7 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
 
   RefPtr<NGLayoutResult> cached_result_;
   RefPtr<const NGConstraintSpace> cached_constraint_space_;
-  std::unique_ptr<NGPaintFragment> paint_fragment_;
-
-  friend class NGBaseLayoutAlgorithmTest;
+  std::unique_ptr<const NGPaintFragment> paint_fragment_;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutNGBlockFlow, IsLayoutNGBlockFlow());

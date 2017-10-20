@@ -52,7 +52,7 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
   void UpdateViewportIntersectionsForSubtree(
       DocumentLifecycle::LifecycleState) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit RemoteFrameView(RemoteFrame*);

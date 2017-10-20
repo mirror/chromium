@@ -65,7 +65,7 @@ void CSSKeyframeRule::Reattach(StyleRuleBase*) {
   NOTREACHED();
 }
 
-void CSSKeyframeRule::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSKeyframeRule) {
   visitor->Trace(keyframe_);
   visitor->Trace(properties_cssom_wrapper_);
   CSSRule::Trace(visitor);

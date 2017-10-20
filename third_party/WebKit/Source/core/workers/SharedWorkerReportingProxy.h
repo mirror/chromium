@@ -41,7 +41,7 @@ class SharedWorkerReportingProxy final
   void WillDestroyWorkerGlobalScope() override {}
   void DidTerminateWorkerThread() override;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   // Not owned because this outlives the reporting proxy.

@@ -20,25 +20,25 @@ gfx::Rect FrameConnectorDelegate::ChildFrameRect() {
   return gfx::Rect();
 }
 
-gfx::PointF FrameConnectorDelegate::TransformPointToRootCoordSpace(
-    const gfx::PointF& point,
+gfx::Point FrameConnectorDelegate::TransformPointToRootCoordSpace(
+    const gfx::Point& point,
     const viz::SurfaceId& surface_id) {
-  return gfx::PointF();
+  return gfx::Point();
 }
 
 bool FrameConnectorDelegate::TransformPointToLocalCoordSpace(
-    const gfx::PointF& point,
+    const gfx::Point& point,
     const viz::SurfaceId& original_surface,
     const viz::SurfaceId& local_surface_id,
-    gfx::PointF* transformed_point) {
+    gfx::Point* transformed_point) {
   return false;
 }
 
 bool FrameConnectorDelegate::TransformPointToCoordSpaceForView(
-    const gfx::PointF& point,
+    const gfx::Point& point,
     RenderWidgetHostViewBase* target_view,
     const viz::SurfaceId& local_surface_id,
-    gfx::PointF* transformed_point) {
+    gfx::Point* transformed_point) {
   return false;
 }
 

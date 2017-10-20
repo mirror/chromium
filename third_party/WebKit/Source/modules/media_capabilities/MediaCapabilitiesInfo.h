@@ -29,7 +29,7 @@ class MediaCapabilitiesInfo final
   bool smooth() const;
   bool powerEfficient() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   MediaCapabilitiesInfo() = delete;

@@ -352,7 +352,7 @@ void HTMLViewSourceDocument::MaybeAddSpanForAnnotation(
   }
 }
 
-void HTMLViewSourceDocument::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLViewSourceDocument) {
   visitor->Trace(current_);
   visitor->Trace(tbody_);
   visitor->Trace(td_);

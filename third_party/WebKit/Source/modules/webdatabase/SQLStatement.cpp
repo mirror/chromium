@@ -60,7 +60,7 @@ SQLStatement::SQLStatement(Database* database,
   }
 }
 
-void SQLStatement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SQLStatement) {
   visitor->Trace(backend_);
   visitor->Trace(statement_callback_);
   visitor->Trace(statement_error_callback_);

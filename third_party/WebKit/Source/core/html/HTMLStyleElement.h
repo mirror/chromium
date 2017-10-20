@@ -44,7 +44,7 @@ class CORE_EXPORT HTMLStyleElement final : public HTMLElement,
   bool disabled() const;
   void setDisabled(bool);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   HTMLStyleElement(Document&, bool created_by_parser);

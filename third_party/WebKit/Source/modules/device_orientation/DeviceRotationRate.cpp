@@ -31,7 +31,7 @@ DeviceRotationRate::DeviceRotationRate(
     DeviceMotionData::RotationRate* rotation_rate)
     : rotation_rate_(rotation_rate) {}
 
-void DeviceRotationRate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DeviceRotationRate) {
   visitor->Trace(rotation_rate_);
 }
 

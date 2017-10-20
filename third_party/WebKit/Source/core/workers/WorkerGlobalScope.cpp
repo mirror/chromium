@@ -275,7 +275,7 @@ WorkerGlobalScope::LoadingScriptFromWorkerScriptLoader(
     String* out_source_code,
     std::unique_ptr<Vector<char>>* out_cached_meta_data) {
   ExecutionContext* execution_context = GetExecutionContext();
-  scoped_refptr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
+  RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
   script_loader->LoadSynchronously(
       *execution_context, script_url, WebURLRequest::kRequestContextScript,
       execution_context->GetSecurityContext().AddressSpace());
@@ -451,7 +451,7 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
 }
 
-void WorkerGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerGlobalScope) {
   visitor->Trace(location_);
   visitor->Trace(navigator_);
   visitor->Trace(event_queue_);
@@ -465,8 +465,7 @@ void WorkerGlobalScope::Trace(blink::Visitor* visitor) {
   Supplementable<WorkerGlobalScope>::Trace(visitor);
 }
 
-void WorkerGlobalScope::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WorkerGlobalScope) {
   EventTargetWithInlineData::TraceWrappers(visitor);
   Supplementable<WorkerGlobalScope>::TraceWrappers(visitor);
 }

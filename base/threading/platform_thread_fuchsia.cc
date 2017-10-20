@@ -6,7 +6,6 @@
 
 #include <pthread.h>
 #include <sched.h>
-#include <zircon/syscalls.h>
 
 #include "base/threading/platform_thread_internal_posix.h"
 #include "base/threading/thread_id_name_manager.h"
@@ -50,10 +49,8 @@ size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes) {
 
 // static
 void PlatformThread::SetName(const std::string& name) {
-  zx_status_t status = zx_object_set_property(CurrentId(), ZX_PROP_NAME,
-                                              name.data(), name.size());
-  DCHECK_EQ(status, ZX_OK);
-
+  // TODO(fuchsia): There's no system-level API to communicate a thread name
+  // (for the debugger, etc.), so for now only set to our internal mechanisms.
   ThreadIdNameManager::GetInstance()->SetName(PlatformThread::CurrentId(),
                                               name);
 }

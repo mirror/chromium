@@ -109,7 +109,7 @@ void ElementShadow::AppendShadowRoot(ShadowRoot& shadow_root) {
 
 void ElementShadow::Attach(const Node::AttachContext& context) {
   Node::AttachContext children_context(context);
-  children_context.resolved_style = nullptr;
+  children_context.resolved_style = 0;
 
   for (ShadowRoot* root = &YoungestShadowRoot(); root;
        root = root->OlderShadowRoot()) {
@@ -120,7 +120,7 @@ void ElementShadow::Attach(const Node::AttachContext& context) {
 
 void ElementShadow::Detach(const Node::AttachContext& context) {
   Node::AttachContext children_context(context);
-  children_context.resolved_style = nullptr;
+  children_context.resolved_style = 0;
 
   for (ShadowRoot* root = &YoungestShadowRoot(); root;
        root = root->OlderShadowRoot())
@@ -163,12 +163,12 @@ void ElementShadow::Distribute() {
     V0().Distribute();
 }
 
-void ElementShadow::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ElementShadow) {
   visitor->Trace(element_shadow_v0_);
   visitor->Trace(shadow_root_);
 }
 
-void ElementShadow::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(ElementShadow) {
   visitor->TraceWrappers(element_shadow_v0_);
   visitor->TraceWrappers(shadow_root_);
 }

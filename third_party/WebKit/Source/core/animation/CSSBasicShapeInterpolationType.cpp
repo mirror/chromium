@@ -45,14 +45,14 @@ class UnderlyingCompatibilityChecker
     : public CSSInterpolationType::CSSConversionChecker {
  public:
   static std::unique_ptr<UnderlyingCompatibilityChecker> Create(
-      scoped_refptr<NonInterpolableValue> underlying_non_interpolable_value) {
+      RefPtr<NonInterpolableValue> underlying_non_interpolable_value) {
     return WTF::WrapUnique(new UnderlyingCompatibilityChecker(
         std::move(underlying_non_interpolable_value)));
   }
 
  private:
   UnderlyingCompatibilityChecker(
-      scoped_refptr<NonInterpolableValue> underlying_non_interpolable_value)
+      RefPtr<NonInterpolableValue> underlying_non_interpolable_value)
       : underlying_non_interpolable_value_(
             std::move(underlying_non_interpolable_value)) {}
 
@@ -63,7 +63,7 @@ class UnderlyingCompatibilityChecker
         *underlying.non_interpolable_value);
   }
 
-  scoped_refptr<NonInterpolableValue> underlying_non_interpolable_value_;
+  RefPtr<NonInterpolableValue> underlying_non_interpolable_value_;
 };
 
 class InheritedShapeChecker
@@ -71,14 +71,14 @@ class InheritedShapeChecker
  public:
   static std::unique_ptr<InheritedShapeChecker> Create(
       CSSPropertyID property,
-      scoped_refptr<BasicShape> inherited_shape) {
+      RefPtr<BasicShape> inherited_shape) {
     return WTF::WrapUnique(
         new InheritedShapeChecker(property, std::move(inherited_shape)));
   }
 
  private:
   InheritedShapeChecker(CSSPropertyID property,
-                        scoped_refptr<BasicShape> inherited_shape)
+                        RefPtr<BasicShape> inherited_shape)
       : property_(property), inherited_shape_(std::move(inherited_shape)) {}
 
   bool IsValid(const StyleResolverState& state,
@@ -88,7 +88,7 @@ class InheritedShapeChecker
   }
 
   const CSSPropertyID property_;
-  scoped_refptr<BasicShape> inherited_shape_;
+  RefPtr<BasicShape> inherited_shape_;
 };
 
 }  // namespace
@@ -177,10 +177,9 @@ void CSSBasicShapeInterpolationType::ApplyStandardPropertyValue(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue* non_interpolable_value,
     StyleResolverState& state) const {
-  scoped_refptr<BasicShape> shape =
-      BasicShapeInterpolationFunctions::CreateBasicShape(
-          interpolable_value, *non_interpolable_value,
-          state.CssToLengthConversionData());
+  RefPtr<BasicShape> shape = BasicShapeInterpolationFunctions::CreateBasicShape(
+      interpolable_value, *non_interpolable_value,
+      state.CssToLengthConversionData());
   switch (CssProperty()) {
     case CSSPropertyShapeOutside:
       state.Style()->SetShapeOutside(

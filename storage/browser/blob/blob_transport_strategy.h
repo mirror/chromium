@@ -9,15 +9,13 @@
 #include "storage/browser/blob/blob_memory_controller.h"
 #include "storage/browser/storage_browser_export.h"
 
-namespace blink {
-namespace mojom {
-class DataElementBytes;
-}
-}  // namespace blink
-
 namespace storage {
 
 class BlobDataBuilder;
+
+namespace mojom {
+class DataElementBytes;
+}
 
 // This class is responsible for transporting bytes for an under-construction
 // blob, using a specified transport strategy. This is used by BlobRegistryImpl
@@ -38,7 +36,7 @@ class STORAGE_EXPORT BlobTransportStrategy {
 
   // Called once for each DataElementBytes in a blob. The |bytes| passed in must
   // outlive the BlobTransportStrategy instance.
-  virtual void AddBytesElement(blink::mojom::DataElementBytes* bytes) = 0;
+  virtual void AddBytesElement(mojom::DataElementBytes* bytes) = 0;
 
   // Called when quota has been allocated and transportation should begin.
   // Implementations will call the |result_callback_| when transportation has

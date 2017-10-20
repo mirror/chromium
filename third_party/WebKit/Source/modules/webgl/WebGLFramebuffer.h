@@ -59,7 +59,7 @@ class WebGLFramebuffer final : public WebGLContextObject {
                           GLenum target,
                           GLenum attachment) = 0;
 
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
 
    protected:
     WebGLAttachment();
@@ -105,8 +105,8 @@ class WebGLFramebuffer final : public WebGLContextObject {
 
   GLenum GetReadBuffer() const { return read_buffer_; }
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   explicit WebGLFramebuffer(WebGLRenderingContextBase*);

@@ -6,7 +6,6 @@
 
 #include <string>
 
-#include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -16,7 +15,6 @@
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_factory.mojom.h"
-#include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/load_flags.h"
 #include "net/base/mime_sniffer.h"
@@ -125,98 +123,6 @@ class FileElementReader : public net::UploadFileElementReader {
   DISALLOW_COPY_AND_ASSIGN(FileElementReader);
 };
 
-// A subclass of net::UploadElementReader to read data pipes.
-class DataPipeElementReader : public net::UploadElementReader {
- public:
-  DataPipeElementReader(mojo::ScopedDataPipeConsumerHandle data_pipe,
-                        blink::mojom::SizeGetterPtr size_getter)
-      : data_pipe_(std::move(data_pipe)),
-        handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
-        size_getter_(std::move(size_getter)),
-        weak_factory_(this) {
-    size_getter_->GetSize(base::Bind(&DataPipeElementReader::GetSizeCallback,
-                                     weak_factory_.GetWeakPtr()));
-    handle_watcher_.Watch(data_pipe_.get(), MOJO_HANDLE_SIGNAL_READABLE,
-                          base::Bind(&DataPipeElementReader::OnHandleReadable,
-                                     base::Unretained(this)));
-  }
-
-  ~DataPipeElementReader() override {}
-
- private:
-  void GetSizeCallback(uint64_t size) {
-    calculated_size_ = true;
-    size_ = size;
-    if (!init_callback_.is_null())
-      std::move(init_callback_).Run(net::OK);
-  }
-
-  void OnHandleReadable(MojoResult result) {
-    if (result == MOJO_RESULT_OK) {
-      int read = Read(buf_.get(), buf_length_, net::CompletionCallback());
-      DCHECK_GT(read, 0);
-      std::move(read_callback_).Run(read);
-    } else {
-      std::move(read_callback_).Run(net::ERR_FAILED);
-    }
-    buf_ = nullptr;
-    buf_length_ = 0;
-  }
-
-  // net::UploadElementReader implementation:
-  int Init(const net::CompletionCallback& callback) override {
-    if (calculated_size_)
-      return net::OK;
-
-    init_callback_ = std::move(callback);
-    return net::ERR_IO_PENDING;
-  }
-
-  uint64_t GetContentLength() const override { return size_; }
-
-  uint64_t BytesRemaining() const override { return size_ - bytes_read_; }
-
-  int Read(net::IOBuffer* buf,
-           int buf_length,
-           const net::CompletionCallback& callback) override {
-    if (!BytesRemaining())
-      return net::OK;
-
-    uint32_t num_bytes = buf_length;
-    MojoResult rv =
-        data_pipe_->ReadData(buf->data(), &num_bytes, MOJO_READ_DATA_FLAG_NONE);
-    if (rv == MOJO_RESULT_OK) {
-      bytes_read_ += num_bytes;
-      return num_bytes;
-    }
-
-    if (rv == MOJO_RESULT_SHOULD_WAIT) {
-      buf_ = buf;
-      buf_length_ = buf_length;
-      handle_watcher_.ArmOrNotify();
-      read_callback_ = std::move(callback);
-      return net::ERR_IO_PENDING;
-    }
-
-    return net::ERR_FAILED;
-  }
-
-  mojo::ScopedDataPipeConsumerHandle data_pipe_;
-  mojo::SimpleWatcher handle_watcher_;
-  scoped_refptr<net::IOBuffer> buf_;
-  int buf_length_ = 0;
-  blink::mojom::SizeGetterPtr size_getter_;
-  bool calculated_size_ = false;
-  uint64_t size_ = 0;
-  uint64_t bytes_read_ = 0;
-  net::CompletionCallback init_callback_;
-  net::CompletionCallback read_callback_;
-
-  base::WeakPtrFactory<DataPipeElementReader> weak_factory_;
-
-  DISALLOW_COPY_AND_ASSIGN(DataPipeElementReader);
-};
-
 // TODO: copied from content/browser/loader/upload_data_stream_builder.cc.
 std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
     ResourceRequestBody* body,
@@ -236,16 +142,7 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
         NOTIMPLEMENTED();
         break;
       case ResourceRequestBody::Element::TYPE_BLOB: {
-        NOTREACHED();
-        break;
-      }
-      case ResourceRequestBody::Element::TYPE_DATA_PIPE: {
-        blink::mojom::SizeGetterPtr size_getter;
-        mojo::ScopedDataPipeConsumerHandle data_pipe =
-            const_cast<storage::DataElement*>(&element)->ReleaseDataPipe(
-                &size_getter);
-        element_readers.push_back(std::make_unique<DataPipeElementReader>(
-            std::move(data_pipe), std::move(size_getter)));
+        NOTIMPLEMENTED();
         break;
       }
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
@@ -303,14 +200,6 @@ URLLoaderImpl::URLLoaderImpl(
             {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
     url_request_->set_upload(
         CreateUploadDataStream(request.request_body.get(), task_runner.get()));
-
-    if (request.enable_upload_progress) {
-      upload_progress_tracker_ = base::MakeUnique<UploadProgressTracker>(
-          FROM_HERE,
-          base::BindRepeating(&URLLoaderImpl::SendUploadProgress,
-                              base::Unretained(this)),
-          url_request_.get());
-    }
   }
 
   int load_flags = BuildLoadFlagsForRequest(request, false);
@@ -426,11 +315,6 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
     NotifyCompleted(net_error);
     // |this| may have been deleted.
     return;
-  }
-
-  if (upload_progress_tracker_) {
-    upload_progress_tracker_->OnUploadCompleted();
-    upload_progress_tracker_ = nullptr;
   }
 
   response_ = new ResourceResponse();
@@ -577,14 +461,6 @@ base::WeakPtr<URLLoaderImpl> URLLoaderImpl::GetWeakPtrForTests() {
 }
 
 void URLLoaderImpl::NotifyCompleted(int error_code) {
-  // Ensure sending the final upload progress message here, since
-  // OnResponseCompleted can be called without OnResponseStarted on cancellation
-  // or error cases.
-  if (upload_progress_tracker_) {
-    upload_progress_tracker_->OnUploadCompleted();
-    upload_progress_tracker_ = nullptr;
-  }
-
   if (consumer_handle_.is_valid())
     SendResponseToClient();
 
@@ -683,18 +559,6 @@ void URLLoaderImpl::UpdateBodyReadBeforePaused() {
             body_read_before_paused_);
   body_read_before_paused_ =
       pending_write_buffer_offset_ + total_written_bytes_;
-}
-
-void URLLoaderImpl::SendUploadProgress(const net::UploadProgress& progress) {
-  url_loader_client_->OnUploadProgress(
-      progress.position(), progress.size(),
-      base::BindOnce(&URLLoaderImpl::OnUploadProgressACK,
-                     weak_ptr_factory_.GetWeakPtr()));
-}
-
-void URLLoaderImpl::OnUploadProgressACK() {
-  if (upload_progress_tracker_)
-    upload_progress_tracker_->OnAckReceived();
 }
 
 }  // namespace content

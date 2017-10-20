@@ -48,18 +48,15 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
                              content::NotificationObserver,
                              base::trace_event::MemoryDumpProvider {
  public:
-  // These values are persisted to logs. Entries should not be renumbered and
-  // numeric values should never be reused.
   enum class Mode {
     // No profiling enabled.
-    kNone = 0,
+    kNone,
 
     // Only profile the browser and GPU processes.
-    kMinimal = 1,
+    kMinimal,
 
     // Profile all processes.
-    kAll = 2,
-    kCount
+    kAll,
   };
 
   // Returns the mode.
@@ -136,8 +133,7 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   // Sends the end of the data pipe to the profiling service.
   void AddClientToProfilingService(profiling::mojom::ProfilingClientPtr client,
-                                   base::ProcessId pid,
-                                   profiling::mojom::ProcessType process_type);
+                                   base::ProcessId pid);
 
   void GetOutputFileOnBlockingThread(base::ProcessId pid,
                                      base::FilePath dest,
@@ -160,9 +156,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // needed to symbolize the trace.
   std::unique_ptr<base::DictionaryValue> GetMetadataJSONForTrace();
 
-  // Reports the profiling mode.
-  void ReportMetrics();
-
   content::NotificationRegistrar registrar_;
   std::unique_ptr<service_manager::Connector> connector_;
   mojom::ProfilingServicePtr profiling_service_;
@@ -173,9 +166,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // Handle background triggers on high memory pressure. A trigger will call
   // |RequestProcessReport| on this instance.
   BackgroundProfilingTriggers background_triggers_;
-
-  // Every 24-hours, reports the profiling mode.
-  base::RepeatingTimer metrics_timer_;
 
   // The mode determines which processes should be profiled.
   Mode mode_;

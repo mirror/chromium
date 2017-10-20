@@ -352,15 +352,8 @@ bool OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial(
 int OmniboxFieldTrial::GetZeroSuggestRedirectToChromeExperimentId() {
   return base::GetFieldTrialParamByFeatureAsInt(
       omnibox::kZeroSuggestRedirectToChrome,
-      kZeroSuggestRedirectToChromeExperimentIdParam,
+      OmniboxFieldTrial::kZeroSuggestRedirectToChromeExperimentIdParam,
       /*default_value=*/-1);
-}
-
-// static
-std::string OmniboxFieldTrial::GetZeroSuggestRedirectToChromeServerAddress() {
-  return base::GetFieldTrialParamValueByFeature(
-      omnibox::kZeroSuggestRedirectToChrome,
-      kZeroSuggestRedirectToChromeServerAddressParam);
 }
 
 bool OmniboxFieldTrial::ShortcutsScoringMaxRelevance(
@@ -832,8 +825,6 @@ const char OmniboxFieldTrial::kUIVerticalMarginParam[] = "UIVerticalMargin";
 
 const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeExperimentIdParam[] =
     "ZeroSuggestRedirectToChromeExperimentID";
-const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeServerAddressParam[] =
-    "ZeroSuggestRedirectToChromeServerAddress";
 
 // static
 int OmniboxFieldTrial::kDefaultMinimumTimeBetweenSuggestQueriesMs = 100;

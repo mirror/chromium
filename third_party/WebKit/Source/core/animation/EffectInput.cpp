@@ -52,8 +52,8 @@ namespace blink {
 
 namespace {
 
-bool CompareKeyframes(const scoped_refptr<StringKeyframe>& a,
-                      const scoped_refptr<StringKeyframe>& b) {
+bool CompareKeyframes(const RefPtr<StringKeyframe>& a,
+                      const RefPtr<StringKeyframe>& b) {
   return a->Offset() < b->Offset();
 }
 
@@ -215,7 +215,7 @@ EffectModel* EffectInput::ConvertArrayForm(
   double last_offset = 0;
 
   for (const Dictionary& keyframe_dictionary : keyframe_dictionaries) {
-    scoped_refptr<StringKeyframe> keyframe = StringKeyframe::Create();
+    RefPtr<StringKeyframe> keyframe = StringKeyframe::Create();
 
     Nullable<double> offset;
     if (DictionaryHelper::Get(keyframe_dictionary, "offset", offset) &&
@@ -236,7 +236,7 @@ EffectModel* EffectInput::ConvertArrayForm(
     String timing_function_string;
     if (DictionaryHelper::Get(keyframe_dictionary, "easing",
                               timing_function_string)) {
-      scoped_refptr<TimingFunction> timing_function =
+      RefPtr<TimingFunction> timing_function =
           AnimationInputHelpers::ParseTimingFunction(
               timing_function_string, &element.GetDocument(), exception_state);
       if (!timing_function)
@@ -328,7 +328,7 @@ EffectModel* EffectInput::ConvertObjectForm(
   StringKeyframeVector keyframes;
 
   String timing_function_string;
-  scoped_refptr<TimingFunction> timing_function = nullptr;
+  RefPtr<TimingFunction> timing_function = nullptr;
   if (DictionaryHelper::Get(keyframe_dictionary, "easing",
                             timing_function_string)) {
     timing_function = AnimationInputHelpers::ParseTimingFunction(
@@ -365,7 +365,7 @@ EffectModel* EffectInput::ConvertObjectForm(
 
     size_t num_keyframes = values.size();
     for (size_t i = 0; i < num_keyframes; ++i) {
-      scoped_refptr<StringKeyframe> keyframe = StringKeyframe::Create();
+      RefPtr<StringKeyframe> keyframe = StringKeyframe::Create();
 
       if (!offset.IsNull())
         keyframe->SetOffset(offset.Get());

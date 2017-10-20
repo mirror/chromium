@@ -47,7 +47,7 @@ class WebGLShaderPrecisionFormat final
   GLint rangeMax() const;
   GLint precision() const;
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   WebGLShaderPrecisionFormat(GLint range_min, GLint range_max, GLint precision);

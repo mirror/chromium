@@ -47,7 +47,7 @@ class DictionaryTest : public GarbageCollectedFinalized<DictionaryTest>,
                             Dictionary iterable,
                             ExceptionState&) const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   DictionaryTest();

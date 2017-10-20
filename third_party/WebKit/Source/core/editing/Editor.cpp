@@ -339,13 +339,13 @@ bool Editor::CanCut() const {
 
 static HTMLImageElement* ImageElementFromImageDocument(Document* document) {
   if (!document)
-    return nullptr;
+    return 0;
   if (!document->IsImageDocument())
-    return nullptr;
+    return 0;
 
   HTMLElement* body = document->body();
   if (!body)
-    return nullptr;
+    return 0;
 
   return ToHTMLImageElementOrNull(body->firstChild());
 }
@@ -1825,7 +1825,7 @@ void Editor::ReplaceSelection(const String& text) {
                            InputEvent::InputType::kInsertReplacementText);
 }
 
-void Editor::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Editor) {
   visitor->Trace(frame_);
   visitor->Trace(last_edit_command_);
   visitor->Trace(undo_stack_);

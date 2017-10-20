@@ -13,7 +13,7 @@
 }
 
 #fixed {
-    position: absolute;
+    position: fixed;
     background: blue;
     left: 90px;
     width: 10px;
@@ -21,16 +21,22 @@
 }
 
 #scrolled {
+    position: relative;
     background: green;
     width: 80px;
     height: 500px;
 }
 </style>
-<div id='scroller'>
-    <div id='fixed'></div>
-    <div id='scrolled'></div>
+<div style="z-index: 1; position: absolute"></div>
+<div style="z-index: 0; perspective: 1000px; position: absolute;">
+    <div id='scroller'>
+        <div id='fixed'></div>
+        <div id='scrolled'></div>
+    </div>
 </div>
 <script>
-if (window.internals)
+if (window.internals) {
     window.internals.settings.setOverlayScrollbarsEnabled(true);
+    window.internals.settings.setPreferCompositingToLCDTextEnabled(true);
+}
 </script>

@@ -57,7 +57,7 @@ class CORE_EXPORT CSSFontFace final
 
   FontFace* GetFontFace() const { return font_face_; }
 
-  scoped_refptr<UnicodeRangeSet> Ranges() { return ranges_; }
+  RefPtr<UnicodeRangeSet> Ranges() { return ranges_; }
 
   void SetSegmentedFontFace(CSSSegmentedFontFace*);
   void ClearSegmentedFontFace() { segmented_font_face_ = nullptr; }
@@ -72,7 +72,7 @@ class CORE_EXPORT CSSFontFace final
   void FontLoaded(RemoteFontFaceSource*, LoadFinishReason);
   void DidBecomeVisibleFallback(RemoteFontFaceSource*);
 
-  scoped_refptr<SimpleFontData> GetFontData(const FontDescription&);
+  RefPtr<SimpleFontData> GetFontData(const FontDescription&);
 
   FontFace::LoadStatusType LoadStatus() const {
     return font_face_->LoadStatus();
@@ -84,12 +84,12 @@ class CORE_EXPORT CSSFontFace final
 
   bool HadBlankText() { return IsValid() && sources_.front()->HadBlankText(); }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   void SetLoadStatus(FontFace::LoadStatusType);
 
-  scoped_refptr<UnicodeRangeSet> ranges_;
+  RefPtr<UnicodeRangeSet> ranges_;
   Member<CSSSegmentedFontFace> segmented_font_face_;
   HeapDeque<Member<CSSFontFaceSource>> sources_;
   Member<FontFace> font_face_;

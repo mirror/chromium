@@ -68,7 +68,7 @@ DraggedIsolatedFileSystemImpl* DraggedIsolatedFileSystemImpl::From(
       Supplement<DataObject>::From(data_object, SupplementName()));
 }
 
-void DraggedIsolatedFileSystemImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DraggedIsolatedFileSystemImpl) {
   visitor->Trace(filesystems_);
   Supplement<DataObject>::Trace(visitor);
 }

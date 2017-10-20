@@ -30,7 +30,7 @@ StorageNamespaceController::StorageNamespaceController(WebViewClient* client)
 
 StorageNamespaceController::~StorageNamespaceController() {}
 
-void StorageNamespaceController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StorageNamespaceController) {
   Supplement<Page>::Trace(visitor);
   visitor->Trace(inspector_agent_);
 }

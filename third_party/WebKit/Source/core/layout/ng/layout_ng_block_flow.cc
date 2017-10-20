@@ -69,6 +69,8 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
         containing_block_size, fragment->Size());
   }
   fragment->SetOffset(physical_offset);
+
+  paint_fragment_ = WTF::MakeUnique<NGPaintFragment>(std::move(fragment));
 }
 
 void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
@@ -139,16 +141,6 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
     }
     if (!logical_top.IsAuto())
       static_block = ValueForLength(logical_top, container->LogicalHeight());
-
-    // Legacy static position is relative to padding box.
-    // Convert to border box.
-    NGBoxStrut border_strut =
-        ComputeBorders(*constraint_space, *container_style);
-    if (parent_style->IsLeftToRightDirection())
-      static_inline += border_strut.inline_start;
-    else
-      static_inline -= border_strut.inline_end;
-    static_block += border_strut.block_start;
   }
   if (!parent_style->IsLeftToRightDirection())
     static_inline = containing_block_logical_width - static_inline;
@@ -177,9 +169,9 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
   DCHECK(css_container->IsBox());
   NGOutOfFlowLayoutPart(NGBlockNode(ToLayoutBox(css_container)),
                         *constraint_space, *container_style, &container_builder)
-      .Run(/* update_legacy */ false);
+      .Run();
   RefPtr<NGLayoutResult> result = container_builder.ToBoxFragment();
-  // These are the unpositioned OOF descendants of the current OOF block.
+  // These are the OOF descendants of the current OOF block.
   for (NGOutOfFlowPositionedDescendant descendant :
        result->OutOfFlowPositionedDescendants())
     descendant.node.UseOldOutOfFlowPositioning();
@@ -206,6 +198,7 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
   }
   RefPtr<NGPhysicalFragment> child_fragment = fragment->Children()[0];
   DCHECK_EQ(fragment->Children()[0]->GetLayoutObject(), this);
+  paint_fragment_ = WTF::MakeUnique<NGPaintFragment>(child_fragment.get());
 }
 
 void LayoutNGBlockFlow::UpdateMargins(
@@ -314,22 +307,14 @@ void LayoutNGBlockFlow::SetCachedLayoutResult(
   cached_result_ = layout_result;
 }
 
-RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResultForTesting() {
-  return cached_result_;
-}
-
-void LayoutNGBlockFlow::SetPaintFragment(
-    RefPtr<const NGPhysicalFragment> fragment) {
-  paint_fragment_ = WTF::MakeUnique<NGPaintFragment>(std::move(fragment));
-}
-
-void LayoutNGBlockFlow::Paint(const PaintInfo& paint_info,
-                              const LayoutPoint& paint_offset) const {
-  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled() &&
-      PaintFragment())
-    NGBlockFlowPainter(*this).Paint(paint_info, paint_offset + Location());
+void LayoutNGBlockFlow::PaintObject(const PaintInfo& paint_info,
+                                    const LayoutPoint& paint_offset) const {
+  // TODO(eae): This logic should go in Paint instead and it should drive the
+  // full paint logic for LayoutNGBlockFlow.
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
+    NGBlockFlowPainter(*this).PaintContents(paint_info, paint_offset);
   else
-    LayoutBlockFlow::Paint(paint_info, paint_offset);
+    LayoutBlockFlow::PaintObject(paint_info, paint_offset);
 }
 
 bool LayoutNGBlockFlow::NodeAtPoint(
@@ -337,8 +322,7 @@ bool LayoutNGBlockFlow::NodeAtPoint(
     const HitTestLocation& location_in_container,
     const LayoutPoint& accumulated_offset,
     HitTestAction action) {
-  if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled() ||
-      !PaintFragment()) {
+  if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
     return LayoutBlockFlow::NodeAtPoint(result, location_in_container,
                                         accumulated_offset, action);
   }

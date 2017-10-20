@@ -78,9 +78,9 @@ class MIDIPort : public EventTargetWithInlineData,
   void SetState(midi::mojom::PortState);
   ConnectionState GetConnection() const { return connection_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(statechange);
 

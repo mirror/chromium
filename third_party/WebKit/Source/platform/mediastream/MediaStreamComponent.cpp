@@ -154,7 +154,7 @@ void MediaStreamComponent::AudioSourceProviderImpl::ProvideInput(
   web_audio_source_provider_->ProvideInput(web_audio_data, frames_to_process);
 }
 
-void MediaStreamComponent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaStreamComponent) {
   visitor->Trace(source_);
 }
 

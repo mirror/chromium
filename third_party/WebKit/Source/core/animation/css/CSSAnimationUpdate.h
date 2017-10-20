@@ -38,7 +38,7 @@ class NewCSSAnimation {
         style_rule(style_rule),
         style_rule_version(this->style_rule->Version()) {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(effect);
     visitor->Trace(style_rule);
   }
@@ -67,7 +67,7 @@ class UpdatedCSSAnimation {
         style_rule(style_rule),
         style_rule_version(this->style_rule->Version()) {}
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(animation);
     visitor->Trace(effect);
     visitor->Trace(style_rule);
@@ -132,9 +132,9 @@ class CSSAnimationUpdate final {
 
   void StartTransition(
       const PropertyHandle&,
-      scoped_refptr<const ComputedStyle> from,
-      scoped_refptr<const ComputedStyle> to,
-      scoped_refptr<const ComputedStyle> reversing_adjusted_start_value,
+      RefPtr<const ComputedStyle> from,
+      RefPtr<const ComputedStyle> to,
+      RefPtr<const ComputedStyle> reversing_adjusted_start_value,
       double reversing_shortening_factor,
       const InertEffect&);
   void UnstartTransition(const PropertyHandle&);
@@ -170,12 +170,12 @@ class CSSAnimationUpdate final {
    public:
     NewTransition();
     ~NewTransition();
-    void Trace(blink::Visitor* visitor) { visitor->Trace(effect); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(effect); }
 
     PropertyHandle property = HashTraits<blink::PropertyHandle>::EmptyValue();
-    scoped_refptr<const ComputedStyle> from;
-    scoped_refptr<const ComputedStyle> to;
-    scoped_refptr<const ComputedStyle> reversing_adjusted_start_value;
+    RefPtr<const ComputedStyle> from;
+    RefPtr<const ComputedStyle> to;
+    RefPtr<const ComputedStyle> reversing_adjusted_start_value;
     double reversing_shortening_factor;
     Member<const InertEffect> effect;
   };
@@ -242,7 +242,7 @@ class CSSAnimationUpdate final {
            updated_compositor_keyframes_.IsEmpty();
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(new_transitions_);
     visitor->Trace(new_animations_);
     visitor->Trace(suppressed_animations_);

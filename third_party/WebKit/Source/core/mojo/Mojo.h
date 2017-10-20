@@ -57,7 +57,7 @@ class Mojo final : public GarbageCollected<Mojo>, public ScriptWrappable {
                             MojoHandle*,
                             const String& scope);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 };
 
 }  // namespace blink

@@ -170,7 +170,7 @@ class CORE_EXPORT HTMLSelectElement final
 
   void ResetTypeAheadSessionForTesting();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit HTMLSelectElement(Document&);

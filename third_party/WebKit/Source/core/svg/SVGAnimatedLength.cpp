@@ -52,8 +52,7 @@ SVGParsingError SVGAnimatedLength::SetBaseValueAsString(const String& value) {
   return parse_status;
 }
 
-void SVGAnimatedLength::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGAnimatedLength) {
   SVGAnimatedProperty<SVGLength>::TraceWrappers(visitor);
   ScriptWrappable::TraceWrappers(visitor);
 }

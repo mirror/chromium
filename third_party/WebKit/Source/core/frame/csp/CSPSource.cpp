@@ -271,7 +271,7 @@ CSPSource::ExposeForNavigationalChecks() const {
   return source_expression;
 }
 
-void CSPSource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSPSource) {
   visitor->Trace(policy_);
 }
 

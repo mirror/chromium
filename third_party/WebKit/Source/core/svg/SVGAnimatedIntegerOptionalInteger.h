@@ -63,7 +63,7 @@ class SVGAnimatedIntegerOptionalInteger
   SVGAnimatedInteger* FirstInteger() { return first_integer_.Get(); }
   SVGAnimatedInteger* SecondInteger() { return second_integer_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   SVGAnimatedIntegerOptionalInteger(SVGElement* context_element,

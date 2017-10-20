@@ -112,12 +112,12 @@ void Attr::AttachToElement(Element* element,
   standalone_value_or_attached_local_name_ = attached_local_name;
 }
 
-void Attr::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Attr) {
   visitor->Trace(element_);
   Node::Trace(visitor);
 }
 
-void Attr::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(Attr) {
   visitor->TraceWrappers(element_);
   Node::TraceWrappers(visitor);
 }

@@ -74,7 +74,7 @@ class MODULES_EXPORT CryptoKey final
                              WebCryptoKeyUsageMask&,
                              CryptoResult*);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  protected:
   explicit CryptoKey(const WebCryptoKey&);

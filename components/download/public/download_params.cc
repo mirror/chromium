@@ -20,9 +20,7 @@ bool SchedulingParams::operator==(const SchedulingParams& rhs) const {
          priority == rhs.priority && cancel_time == rhs.cancel_time;
 }
 
-RequestParams::RequestParams() : method("GET"), fetch_error_body(false) {}
-
-RequestParams::RequestParams(const RequestParams& other) = default;
+RequestParams::RequestParams() : method("GET") {}
 
 DownloadParams::DownloadParams() : client(DownloadClient::INVALID) {}
 

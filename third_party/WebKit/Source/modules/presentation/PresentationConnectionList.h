@@ -43,7 +43,7 @@ class MODULES_EXPORT PresentationConnectionList final
   void DispatchConnectionAvailableEvent(PresentationConnection*);
   bool IsEmpty();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   // EventTarget implementation.

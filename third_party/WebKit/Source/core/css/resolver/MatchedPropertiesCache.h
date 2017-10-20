@@ -40,14 +40,14 @@ class CachedMatchedProperties final
     : public GarbageCollectedFinalized<CachedMatchedProperties> {
  public:
   HeapVector<MatchedProperties> matched_properties;
-  scoped_refptr<ComputedStyle> computed_style;
-  scoped_refptr<ComputedStyle> parent_computed_style;
+  RefPtr<ComputedStyle> computed_style;
+  RefPtr<ComputedStyle> parent_computed_style;
 
   void Set(const ComputedStyle&,
            const ComputedStyle& parent_style,
            const MatchedPropertiesVector&);
   void Clear();
-  void Trace(blink::Visitor* visitor) { visitor->Trace(matched_properties); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(matched_properties); }
 };
 
 // Specialize the HashTraits for CachedMatchedProperties to check for dead
@@ -112,7 +112,7 @@ class MatchedPropertiesCache {
   static bool IsCacheable(const StyleResolverState&);
   static bool IsStyleCacheable(const ComputedStyle&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   using Cache = HeapHashMap<unsigned,

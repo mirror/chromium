@@ -52,7 +52,7 @@ DocumentResource::DocumentResource(
 
 DocumentResource::~DocumentResource() {}
 
-void DocumentResource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentResource) {
   visitor->Trace(document_);
   Resource::Trace(visitor);
 }

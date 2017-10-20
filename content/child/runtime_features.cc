@@ -306,6 +306,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (base::FeatureList::IsEnabled(features::kCompositorTouchAction))
     WebRuntimeFeatures::EnableCompositorTouchAction(true);
 
+  if (base::FeatureList::IsEnabled(features::kSkipCompositingSmallScrollers))
+    WebRuntimeFeatures::EnableSkipCompositingSmallScrollers(true);
+
   if (base::FeatureList::IsEnabled(features::kGenericSensor)) {
     WebRuntimeFeatures::EnableGenericSensor(true);
     if (base::FeatureList::IsEnabled(features::kGenericSensorExtraClasses))
@@ -374,9 +377,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableModuleScriptsDynamicImport(
       base::FeatureList::IsEnabled(features::kModuleScriptsDynamicImport));
 
-  WebRuntimeFeatures::EnableModuleScriptsImportMetaUrl(
-      base::FeatureList::IsEnabled(features::kModuleScriptsImportMetaUrl));
-
   WebRuntimeFeatures::EnableOverflowIconsForMediaControls(
       base::FeatureList::IsEnabled(media::kOverflowIconsForMediaControls));
 
@@ -385,9 +385,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnableModernMediaControls(
       base::FeatureList::IsEnabled(media::kUseModernMediaControls));
-
-  WebRuntimeFeatures::EnableWorkStealingInScriptRunner(
-      base::FeatureList::IsEnabled(features::kWorkStealingInScriptRunner));
 
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.

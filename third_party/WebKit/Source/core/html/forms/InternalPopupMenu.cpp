@@ -75,10 +75,10 @@ class PopupMenuCSSFontSelector : public CSSFontSelector,
 
   // We don't override willUseFontData() for now because the old PopupListBox
   // only worked with fonts loaded when opening the popup.
-  scoped_refptr<FontData> GetFontData(const FontDescription&,
-                                      const AtomicString&) override;
+  RefPtr<FontData> GetFontData(const FontDescription&,
+                               const AtomicString&) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   PopupMenuCSSFontSelector(Document*, CSSFontSelector*);
@@ -97,7 +97,7 @@ PopupMenuCSSFontSelector::PopupMenuCSSFontSelector(
 
 PopupMenuCSSFontSelector::~PopupMenuCSSFontSelector() {}
 
-scoped_refptr<FontData> PopupMenuCSSFontSelector::GetFontData(
+RefPtr<FontData> PopupMenuCSSFontSelector::GetFontData(
     const FontDescription& description,
     const AtomicString& name) {
   return owner_font_selector_->GetFontData(description, name);
@@ -107,7 +107,7 @@ void PopupMenuCSSFontSelector::FontsNeedUpdate(FontSelector* font_selector) {
   DispatchInvalidationCallbacks();
 }
 
-void PopupMenuCSSFontSelector::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PopupMenuCSSFontSelector) {
   visitor->Trace(owner_font_selector_);
   CSSFontSelector::Trace(visitor);
   FontSelectorClient::Trace(visitor);
@@ -223,7 +223,7 @@ InternalPopupMenu::~InternalPopupMenu() {
   DCHECK(!popup_);
 }
 
-void InternalPopupMenu::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InternalPopupMenu) {
   visitor->Trace(chrome_client_);
   visitor->Trace(owner_element_);
   PopupMenu::Trace(visitor);
@@ -523,7 +523,7 @@ void InternalPopupMenu::Update() {
     return;
   }
 
-  scoped_refptr<SharedBuffer> data = SharedBuffer::Create();
+  RefPtr<SharedBuffer> data = SharedBuffer::Create();
   PagePopupClient::AddString("window.updateData = {\n", data.get());
   PagePopupClient::AddString("type: \"update\",\n", data.get());
   ItemIterationContext context(*owner_element_->GetComputedStyle(), data.get());

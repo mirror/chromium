@@ -43,7 +43,7 @@ class CORE_EXPORT InsertListCommand final : public CompositeEditCommand {
 
   bool PreservesTypingStyle() const override { return true; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   InsertListCommand(Document&, Type);

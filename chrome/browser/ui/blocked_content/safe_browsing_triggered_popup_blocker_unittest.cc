@@ -28,9 +28,6 @@
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 
-const char kNumBlockedHistogram[] =
-    "ContentSettings.Popups.StrongBlocker.NumBlocked";
-
 class TestConsoleLogger : public ConsoleLogger {
  public:
   TestConsoleLogger() {}
@@ -82,7 +79,7 @@ class SafeBrowsingTriggeredPopupBlockerTest
 
     auto console_logger = base::MakeUnique<TestConsoleLogger>();
     console_logger_ = console_logger.get();
-    popup_blocker_ = SafeBrowsingTriggeredPopupBlocker::MaybeCreate(
+    popup_blocker_ = base::MakeUnique<SafeBrowsingTriggeredPopupBlocker>(
         web_contents(), std::move(console_logger));
   }
 
@@ -115,11 +112,6 @@ class SafeBrowsingTriggeredPopupBlockerTest
 
   SafeBrowsingTriggeredPopupBlocker* popup_blocker() {
     return popup_blocker_.get();
-  }
-
-  void SimulateDeleteContents() {
-    DeleteContents();
-    popup_blocker_.reset();
   }
 
   void MarkUrlAsAbusiveWithLevel(const GURL& url,
@@ -219,12 +211,12 @@ TEST_F(SafeBrowsingTriggeredPopupBlockerTest, NoMatch_NoBlocking) {
   EXPECT_TRUE(console_logger()->messages().empty());
 }
 
-TEST_F(SafeBrowsingTriggeredPopupBlockerTest, NoFeature_NoCreating) {
-  EXPECT_NE(nullptr, SafeBrowsingTriggeredPopupBlocker::MaybeCreate(
-                         web_contents(), base::MakeUnique<ConsoleLogger>()));
-  ResetFeatureAndGet();
-  EXPECT_EQ(nullptr, SafeBrowsingTriggeredPopupBlocker::MaybeCreate(
-                         web_contents(), base::MakeUnique<ConsoleLogger>()));
+TEST_F(SafeBrowsingTriggeredPopupBlockerTest, NoFeature_NoBlocking) {
+  ResetFeatureAndGet()->InitAndDisableFeature(kAbusiveExperienceEnforce);
+  const GURL url("https://example.test/");
+  MarkUrlAsAbusiveEnforce(url);
+  NavigateAndCommit(url);
+  EXPECT_FALSE(popup_blocker()->ShouldApplyStrongPopupBlocker(nullptr));
 }
 
 TEST_F(SafeBrowsingTriggeredPopupBlockerTest, OnlyBlockOnMatchingUrls) {
@@ -318,13 +310,8 @@ TEST_F(SafeBrowsingTriggeredPopupBlockerTest, LogActions) {
   check_histogram(SafeBrowsingTriggeredPopupBlocker::Action::kBlocked, 2);
   histogram_tester.ExpectTotalCount(kActionHistogram, total_count);
 
-  // Only log the num blocked histogram after navigation.
-  histogram_tester.ExpectTotalCount(kNumBlockedHistogram, 0);
-
   // Navigate to a warn site.
   NavigateAndCommit(url_warn);
-  histogram_tester.ExpectBucketCount(kNumBlockedHistogram, 2, 1);
-
   check_histogram(SafeBrowsingTriggeredPopupBlocker::Action::kNavigation, 2);
   check_histogram(SafeBrowsingTriggeredPopupBlocker::Action::kWarningSite, 1);
   histogram_tester.ExpectTotalCount(kActionHistogram, total_count);
@@ -343,22 +330,6 @@ TEST_F(SafeBrowsingTriggeredPopupBlockerTest, LogActions) {
   EXPECT_FALSE(popup_blocker()->ShouldApplyStrongPopupBlocker(nullptr));
   check_histogram(SafeBrowsingTriggeredPopupBlocker::Action::kConsidered, 4);
   histogram_tester.ExpectTotalCount(kActionHistogram, total_count);
-
-  histogram_tester.ExpectTotalCount(kNumBlockedHistogram, 1);
-}
-
-TEST_F(SafeBrowsingTriggeredPopupBlockerTest, LogBlockMetricsOnClose) {
-  base::HistogramTester histogram_tester;
-  const GURL url_enforce("https://example.enforce/");
-  MarkUrlAsAbusiveEnforce(url_enforce);
-
-  NavigateAndCommit(url_enforce);
-  EXPECT_TRUE(popup_blocker()->ShouldApplyStrongPopupBlocker(nullptr));
-
-  histogram_tester.ExpectTotalCount(kNumBlockedHistogram, 0);
-  // Simulate deleting the web contents.
-  SimulateDeleteContents();
-  histogram_tester.ExpectUniqueSample(kNumBlockedHistogram, 1, 1);
 }
 
 TEST_F(SafeBrowsingTriggeredPopupBlockerTest, WarningMatch_OnlyLogs) {

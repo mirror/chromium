@@ -152,15 +152,14 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   MHTMLArchive* Archive() const override;
 
-  std::unique_ptr<WebURLLoader> CreateURLLoader(
-      const ResourceRequest&,
-      scoped_refptr<WebTaskRunner>) override;
+  std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
+                                                RefPtr<WebTaskRunner>) override;
 
   bool IsDetached() const override { return frozen_state_; }
 
   FetchContext* Detach() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   struct FrozenState;
@@ -180,7 +179,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   // FetchContext overrides:
   WebFrameScheduler* GetFrameScheduler() override;
-  scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
+  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:
   KURL GetSiteForCookies() const override;
@@ -215,8 +214,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   ContentSettingsClient* GetContentSettingsClient() const;
   Settings* GetSettings() const;
   String GetUserAgent() const;
-  scoped_refptr<SecurityOrigin> GetRequestorOrigin();
-  scoped_refptr<SecurityOrigin> GetRequestorOriginForFrameLoading();
+  RefPtr<SecurityOrigin> GetRequestorOrigin();
+  RefPtr<SecurityOrigin> GetRequestorOriginForFrameLoading();
   ClientHintsPreferences GetClientHintsPreferences() const;
   float GetDevicePixelRatio() const;
   bool ShouldSendClientHint(mojom::WebClientHintsType,

@@ -22,7 +22,7 @@ class GarbageCollectedScriptWrappable
   virtual ~GarbageCollectedScriptWrappable();
 
   const String& toString() const { return string_; }
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  private:
   String string_;

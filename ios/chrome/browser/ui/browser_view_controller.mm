@@ -2128,7 +2128,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 - (void)dismissPopups {
   [_toolbarCoordinator dismissToolsMenuPopup];
   [self.dispatcher hidePageInfo];
-  [_tabHistoryCoordinator dismissHistoryPopup];
   [self.tabTipBubblePresenter dismissAnimated:YES];
 }
 

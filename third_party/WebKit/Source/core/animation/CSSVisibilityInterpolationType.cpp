@@ -16,9 +16,8 @@ class CSSVisibilityNonInterpolableValue : public NonInterpolableValue {
  public:
   ~CSSVisibilityNonInterpolableValue() final {}
 
-  static scoped_refptr<CSSVisibilityNonInterpolableValue> Create(
-      EVisibility start,
-      EVisibility end) {
+  static RefPtr<CSSVisibilityNonInterpolableValue> Create(EVisibility start,
+                                                          EVisibility end) {
     return WTF::AdoptRef(new CSSVisibilityNonInterpolableValue(start, end));
   }
 

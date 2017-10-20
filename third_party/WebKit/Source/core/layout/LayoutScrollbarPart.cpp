@@ -117,12 +117,12 @@ void LayoutScrollbarPart::LayoutVerticalPart() {
   }
 }
 
-int LayoutScrollbarPart::CalcScrollbarThicknessUsing(SizeType size_type,
-                                                     const Length& length,
-                                                     int containing_length) {
+static int CalcScrollbarThicknessUsing(SizeType size_type,
+                                       const Length& length,
+                                       int containing_length) {
   if (!length.IsIntrinsicOrAuto() || (size_type == kMinSize && length.IsAuto()))
     return MinimumValueForLength(length, LayoutUnit(containing_length)).ToInt();
-  return scrollbar_->GetTheme().ScrollbarThickness();
+  return ScrollbarTheme::GetTheme().ScrollbarThickness();
 }
 
 void LayoutScrollbarPart::ComputeScrollbarWidth() {

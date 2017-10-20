@@ -23,7 +23,7 @@ class CORE_EXPORT IdleDeadline : public GarbageCollected<IdleDeadline>,
     return new IdleDeadline(deadline_seconds, callback_type);
   }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
   double timeRemaining() const;
 

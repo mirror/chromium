@@ -61,7 +61,7 @@ TestInterfaceOrTestInterfaceEmpty::TestInterfaceOrTestInterfaceEmpty(const TestI
 TestInterfaceOrTestInterfaceEmpty::~TestInterfaceOrTestInterfaceEmpty() = default;
 TestInterfaceOrTestInterfaceEmpty& TestInterfaceOrTestInterfaceEmpty::operator=(const TestInterfaceOrTestInterfaceEmpty&) = default;
 
-void TestInterfaceOrTestInterfaceEmpty::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TestInterfaceOrTestInterfaceEmpty) {
   visitor->Trace(test_interface_);
   visitor->Trace(test_interface_empty_);
 }

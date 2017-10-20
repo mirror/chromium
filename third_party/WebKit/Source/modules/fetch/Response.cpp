@@ -467,7 +467,7 @@ void Response::RefreshBody(ScriptState* script_state) {
       .Set(response.As<v8::Object>(), body_buffer);
 }
 
-void Response::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Response) {
   Body::Trace(visitor);
   visitor->Trace(response_);
   visitor->Trace(headers_);

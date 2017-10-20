@@ -138,11 +138,11 @@ sk_sp<SkShader> FETurbulence::CreateShader() const {
              ? SkPerlinNoiseShader::MakeFractalNoise(
                    SkFloatToScalar(base_frequency_x),
                    SkFloatToScalar(base_frequency_y), NumOctaves(),
-                   SkFloatToScalar(Seed()), StitchTiles() ? &size : nullptr)
+                   SkFloatToScalar(Seed()), StitchTiles() ? &size : 0)
              : SkPerlinNoiseShader::MakeTurbulence(
                    SkFloatToScalar(base_frequency_x),
                    SkFloatToScalar(base_frequency_y), NumOctaves(),
-                   SkFloatToScalar(Seed()), StitchTiles() ? &size : nullptr);
+                   SkFloatToScalar(Seed()), StitchTiles() ? &size : 0);
 }
 
 sk_sp<SkImageFilter> FETurbulence::CreateImageFilter() {

@@ -593,7 +593,8 @@ void InspectorPageAgent::GetResourceContentAfterResourcesContentLoaded(
   String content;
   bool base64_encoded;
   if (InspectorPageAgent::CachedResourceContent(
-          CachedResource(frame, KURL(url), inspector_resource_content_loader_),
+          CachedResource(frame, KURL(kParsedURLString, url),
+                         inspector_resource_content_loader_),
           &content, &base64_encoded))
     callback->sendSuccess(content, base64_encoded);
   else
@@ -632,7 +633,8 @@ void InspectorPageAgent::SearchContentAfterResourcesContentLoaded(
   String content;
   bool base64_encoded;
   if (!InspectorPageAgent::CachedResourceContent(
-          CachedResource(frame, KURL(url), inspector_resource_content_loader_),
+          CachedResource(frame, KURL(kParsedURLString, url),
+                         inspector_resource_content_loader_),
           &content, &base64_encoded)) {
     callback->sendFailure(Response::Error("No resource with given URL found"));
     return;
@@ -732,7 +734,7 @@ void InspectorPageAgent::WillCommitLoad(LocalFrame*, DocumentLoader* loader) {
 void InspectorPageAgent::FrameAttachedToParent(LocalFrame* frame) {
   Frame* parent_frame = frame->Tree().Parent();
   if (!parent_frame->IsLocalFrame())
-    parent_frame = nullptr;
+    parent_frame = 0;
   std::unique_ptr<SourceLocation> location =
       SourceLocation::CaptureWithFullStackTrace();
   GetFrontend()->frameAttached(
@@ -1022,7 +1024,7 @@ protocol::Response InspectorPageAgent::createIsolatedWorld(
   return Response::OK();
 }
 
-void InspectorPageAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorPageAgent) {
   visitor->Trace(inspected_frames_);
   visitor->Trace(inspector_resource_content_loader_);
   InspectorBaseAgent::Trace(visitor);

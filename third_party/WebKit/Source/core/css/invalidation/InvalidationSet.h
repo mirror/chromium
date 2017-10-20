@@ -223,7 +223,7 @@ class CORE_EXPORT InvalidationSet
 
 class CORE_EXPORT DescendantInvalidationSet final : public InvalidationSet {
  public:
-  static scoped_refptr<DescendantInvalidationSet> Create() {
+  static RefPtr<DescendantInvalidationSet> Create() {
     return WTF::AdoptRef(new DescendantInvalidationSet);
   }
 
@@ -233,8 +233,8 @@ class CORE_EXPORT DescendantInvalidationSet final : public InvalidationSet {
 
 class CORE_EXPORT SiblingInvalidationSet final : public InvalidationSet {
  public:
-  static scoped_refptr<SiblingInvalidationSet> Create(
-      scoped_refptr<DescendantInvalidationSet> descendants) {
+  static RefPtr<SiblingInvalidationSet> Create(
+      RefPtr<DescendantInvalidationSet> descendants) {
     return WTF::AdoptRef(new SiblingInvalidationSet(std::move(descendants)));
   }
 
@@ -258,20 +258,20 @@ class CORE_EXPORT SiblingInvalidationSet final : public InvalidationSet {
 
  private:
   explicit SiblingInvalidationSet(
-      scoped_refptr<DescendantInvalidationSet> descendants);
+      RefPtr<DescendantInvalidationSet> descendants);
 
   // Indicates the maximum possible number of siblings affected.
   unsigned max_direct_adjacent_selectors_;
 
   // Indicates the descendants of siblings.
-  scoped_refptr<DescendantInvalidationSet> sibling_descendant_invalidation_set_;
+  RefPtr<DescendantInvalidationSet> sibling_descendant_invalidation_set_;
 
   // Null if a given feature (class, attribute, id, pseudo-class) has only
   // a SiblingInvalidationSet and not also a DescendantInvalidationSet.
-  scoped_refptr<DescendantInvalidationSet> descendant_invalidation_set_;
+  RefPtr<DescendantInvalidationSet> descendant_invalidation_set_;
 };
 
-using InvalidationSetVector = Vector<scoped_refptr<InvalidationSet>>;
+using InvalidationSetVector = Vector<RefPtr<InvalidationSet>>;
 
 struct InvalidationLists {
   InvalidationSetVector descendants;

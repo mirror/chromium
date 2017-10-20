@@ -198,13 +198,13 @@ void NodeIterator::UpdateForNodeRemoval(Node& removed_node,
   }
 }
 
-void NodeIterator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NodeIterator) {
   visitor->Trace(reference_node_);
   visitor->Trace(candidate_node_);
   NodeIteratorBase::Trace(visitor);
 }
 
-void NodeIterator::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(NodeIterator) {
   NodeIteratorBase::TraceWrappers(visitor);
 }
 

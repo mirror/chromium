@@ -18,8 +18,8 @@ bool CSSShorthandPropertyAPIBorderRadius::ParseShorthand(
     const CSSParserContext& context,
     const CSSParserLocalContext& local_context,
     HeapVector<CSSProperty, 256>& properties) const {
-  CSSValue* horizontal_radii[4] = {nullptr};
-  CSSValue* vertical_radii[4] = {nullptr};
+  CSSValue* horizontal_radii[4] = {0};
+  CSSValue* vertical_radii[4] = {0};
 
   if (!CSSPropertyShapeUtils::ConsumeRadii(horizontal_radii, vertical_radii,
                                            range, context.Mode(),

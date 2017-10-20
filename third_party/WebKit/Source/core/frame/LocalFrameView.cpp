@@ -244,7 +244,7 @@ LocalFrameView::~LocalFrameView() {
 #endif
 }
 
-void LocalFrameView::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrameView) {
   visitor->Trace(frame_);
   visitor->Trace(parent_);
   visitor->Trace(fragment_anchor_);
@@ -605,7 +605,7 @@ LayoutViewItem LocalFrameView::GetLayoutViewItem() const {
 
 ScrollingCoordinator* LocalFrameView::GetScrollingCoordinator() const {
   Page* p = GetPage();
-  return p ? p->GetScrollingCoordinator() : nullptr;
+  return p ? p->GetScrollingCoordinator() : 0;
 }
 
 CompositorAnimationHost* LocalFrameView::GetCompositorAnimationHost() const {
@@ -656,7 +656,7 @@ FloatQuad LocalFrameView::LocalToVisibleContentQuad(
   return result;
 }
 
-scoped_refptr<WebTaskRunner> LocalFrameView::GetTimerTaskRunner() const {
+RefPtr<WebTaskRunner> LocalFrameView::GetTimerTaskRunner() const {
   return TaskRunnerHelper::Get(TaskType::kUnspecedTimer, frame_.Get());
 }
 
@@ -690,7 +690,7 @@ bool LocalFrameView::ShouldUseCustomScrollbars(
   Document* doc = frame_->GetDocument();
 
   // Try the <body> element first as a scrollbar source.
-  Element* body = doc ? doc->body() : nullptr;
+  Element* body = doc ? doc->body() : 0;
   if (body && body->GetLayoutObject() &&
       body->GetLayoutObject()->Style()->HasPseudoStyle(kPseudoIdScrollbar)) {
     custom_scrollbar_element = body;
@@ -698,7 +698,7 @@ bool LocalFrameView::ShouldUseCustomScrollbars(
   }
 
   // If the <body> didn't have a custom style, then the root element might.
-  Element* doc_element = doc ? doc->documentElement() : nullptr;
+  Element* doc_element = doc ? doc->documentElement() : 0;
   if (doc_element && doc_element->GetLayoutObject() &&
       doc_element->GetLayoutObject()->Style()->HasPseudoStyle(
           kPseudoIdScrollbar)) {
@@ -1254,10 +1254,10 @@ void LocalFrameView::UpdateLayout() {
         LayoutBox* root_layout_object =
             document->documentElement()
                 ? document->documentElement()->GetLayoutBox()
-                : nullptr;
+                : 0;
         LayoutBox* body_layout_object = root_layout_object && document->body()
                                             ? document->body()->GetLayoutBox()
-                                            : nullptr;
+                                            : 0;
         if (body_layout_object && body_layout_object->StretchesToViewport())
           body_layout_object->SetChildNeedsLayout();
         else if (root_layout_object &&
@@ -2197,7 +2197,7 @@ void LocalFrameView::ScrollbarExistenceMaybeChanged() {
   Element* custom_scrollbar_element = nullptr;
 
   bool uses_overlay_scrollbars =
-      GetPageScrollbarTheme().UsesOverlayScrollbars() &&
+      ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
   if (!uses_overlay_scrollbars && NeedsLayout())
@@ -2861,7 +2861,7 @@ void LocalFrameView::DidAttachDocument() {
 }
 
 void LocalFrameView::UpdateScrollCorner() {
-  scoped_refptr<ComputedStyle> corner_style;
+  RefPtr<ComputedStyle> corner_style;
   IntRect corner_rect = ScrollCornerRect();
   Document* doc = frame_->GetDocument();
 
@@ -4260,7 +4260,7 @@ void LocalFrameView::ComputeScrollbarExistence(
 
 void LocalFrameView::UpdateScrollbarEnabledState() {
   bool force_disabled =
-      GetPageScrollbarTheme().ShouldDisableInvisibleScrollbars() &&
+      ScrollbarTheme::GetTheme().ShouldDisableInvisibleScrollbars() &&
       ScrollbarsHidden();
 
   if (HorizontalScrollbar()) {
@@ -4343,7 +4343,7 @@ bool LocalFrameView::AdjustScrollbarExistence(
 
   Element* custom_scrollbar_element = nullptr;
   bool uses_overlay_scrollbars =
-      GetPageScrollbarTheme().UsesOverlayScrollbars() &&
+      ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
   if (!uses_overlay_scrollbars)
@@ -5538,13 +5538,6 @@ void LocalFrameView::SetAnimationHost(
 
 LayoutUnit LocalFrameView::CaretWidth() const {
   return LayoutUnit(GetChromeClient()->WindowToViewportScalar(1));
-}
-
-ScrollbarTheme& LocalFrameView::GetPageScrollbarTheme() const {
-  Page* page = frame_->GetPage();
-  DCHECK(page);
-
-  return page->GetScrollbarTheme();
 }
 
 }  // namespace blink

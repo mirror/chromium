@@ -266,11 +266,11 @@ bool ReplacementFragment::IsEmpty() const {
 }
 
 Node* ReplacementFragment::FirstChild() const {
-  return fragment_ ? fragment_->firstChild() : nullptr;
+  return fragment_ ? fragment_->firstChild() : 0;
 }
 
 Node* ReplacementFragment::LastChild() const {
-  return fragment_ ? fragment_->lastChild() : nullptr;
+  return fragment_ ? fragment_->lastChild() : 0;
 }
 
 void ReplacementFragment::RemoveNodePreservingChildren(ContainerNode* node) {
@@ -574,7 +574,7 @@ void ReplaceSelectionCommand::RemoveRedundantStylesAndKeepStyleSpanInline(
         } else if (new_inline_style
                        ->ExtractConflictingImplicitStyleOfAttributes(
                            html_element,
-                           EditingStyle::kPreserveWritingDirection, nullptr,
+                           EditingStyle::kPreserveWritingDirection, 0,
                            attributes,
                            EditingStyle::kDoNotExtractMatchingStyle)) {
           // e.g. <font size="3" style="font-size: 20px;"> is converted to <font
@@ -2043,7 +2043,7 @@ EphemeralRange ReplaceSelectionCommand::InsertedRange() const {
   return EphemeralRange(start_of_inserted_range_, end_of_inserted_range_);
 }
 
-void ReplaceSelectionCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ReplaceSelectionCommand) {
   visitor->Trace(start_of_inserted_content_);
   visitor->Trace(end_of_inserted_content_);
   visitor->Trace(insertion_style_);

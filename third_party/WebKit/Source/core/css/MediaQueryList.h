@@ -52,7 +52,7 @@ class CORE_EXPORT MediaQueryList final
  public:
   static MediaQueryList* Create(ExecutionContext*,
                                 MediaQueryMatcher*,
-                                scoped_refptr<MediaQuerySet>);
+                                RefPtr<MediaQuerySet>);
   ~MediaQueryList() override;
 
   String media() const;
@@ -74,7 +74,7 @@ class CORE_EXPORT MediaQueryList final
   bool MediaFeaturesChanged(
       HeapVector<Member<MediaQueryListListener>>* listeners_to_notify);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // From ScriptWrappable
   bool HasPendingActivity() const final;
@@ -86,14 +86,12 @@ class CORE_EXPORT MediaQueryList final
   ExecutionContext* GetExecutionContext() const override;
 
  private:
-  MediaQueryList(ExecutionContext*,
-                 MediaQueryMatcher*,
-                 scoped_refptr<MediaQuerySet>);
+  MediaQueryList(ExecutionContext*, MediaQueryMatcher*, RefPtr<MediaQuerySet>);
 
   bool UpdateMatches();
 
   Member<MediaQueryMatcher> matcher_;
-  scoped_refptr<MediaQuerySet> media_;
+  RefPtr<MediaQuerySet> media_;
   using ListenerList = HeapListHashSet<Member<MediaQueryListListener>>;
   ListenerList listeners_;
   bool matches_dirty_;

@@ -74,7 +74,7 @@ VisualViewport::~VisualViewport() {
   SendUMAMetrics();
 }
 
-void VisualViewport::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VisualViewport) {
   visitor->Trace(page_);
   ScrollableArea::Trace(visitor);
 }
@@ -670,7 +670,7 @@ IntRect VisualViewport::VisibleContentRect(
   return rect;
 }
 
-scoped_refptr<WebTaskRunner> VisualViewport::GetTimerTaskRunner() const {
+RefPtr<WebTaskRunner> VisualViewport::GetTimerTaskRunner() const {
   return TaskRunnerHelper::Get(TaskType::kUnspecedTimer, MainFrame());
 }
 
@@ -876,10 +876,6 @@ void VisualViewport::NotifyRootFrameViewport() const {
     return;
 
   root_frame_viewport->DidUpdateVisualViewport();
-}
-
-ScrollbarTheme& VisualViewport::GetPageScrollbarTheme() const {
-  return GetPage().GetScrollbarTheme();
 }
 
 String VisualViewport::DebugName(const GraphicsLayer* graphics_layer) const {

@@ -74,7 +74,7 @@ HTMLTokenizer::~HTMLTokenizer() {}
 
 void HTMLTokenizer::Reset() {
   state_ = HTMLTokenizer::kDataState;
-  token_ = nullptr;
+  token_ = 0;
   force_null_character_replacement_ = false;
   should_allow_cdata_ = false;
   additional_allowed_character_ = '\0';

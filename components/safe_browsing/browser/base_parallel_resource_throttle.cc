@@ -37,7 +37,7 @@ class BaseParallelResourceThrottle::URLLoaderThrottleHolder
       return;
 
     ScopedDelegateCall scoped_delegate_call(this);
-    owner_->MayDeferCancelResourceLoad();
+    owner_->CancelResourceLoad();
   }
 
   void Resume() override {
@@ -45,7 +45,7 @@ class BaseParallelResourceThrottle::URLLoaderThrottleHolder
       return;
 
     ScopedDelegateCall scoped_delegate_call(this);
-    owner_->ResumeResourceLoad();
+    owner_->Resume();
   }
 
   void Detach() {
@@ -105,12 +105,6 @@ BaseParallelResourceThrottle::~BaseParallelResourceThrottle() {
 }
 
 void BaseParallelResourceThrottle::WillStartRequest(bool* defer) {
-  throttle_in_band_ = true;
-  if (should_cancel_on_notification_) {
-    CancelResourceLoad();
-    return;
-  }
-
   content::ResourceRequest resource_request;
 
   net::HttpRequestHeaders full_headers;
@@ -131,35 +125,18 @@ void BaseParallelResourceThrottle::WillStartRequest(bool* defer) {
   url_loader_throttle_holder_->throttle()->WillStartRequest(resource_request,
                                                             defer);
   DCHECK(!*defer);
-  throttle_in_band_ = false;
 }
 
 void BaseParallelResourceThrottle::WillRedirectRequest(
     const net::RedirectInfo& redirect_info,
     bool* defer) {
-  throttle_in_band_ = true;
-  if (should_cancel_on_notification_) {
-    CancelResourceLoad();
-    return;
-  }
-
   url_loader_throttle_holder_->throttle()->WillRedirectRequest(redirect_info,
                                                                defer);
-  DCHECK(!*defer);
-  throttle_in_band_ = false;
 }
 
 void BaseParallelResourceThrottle::WillProcessResponse(bool* defer) {
-  throttle_in_band_ = true;
-  if (should_cancel_on_notification_) {
-    CancelResourceLoad();
-    return;
-  }
-
   url_loader_throttle_holder_->throttle()->WillProcessResponse(
       content::ResourceResponseHead(), defer);
-  if (!*defer)
-    throttle_in_band_ = false;
 }
 
 const char* BaseParallelResourceThrottle::GetNameForLogging() const {
@@ -173,22 +150,7 @@ bool BaseParallelResourceThrottle::MustProcessResponseBeforeReadingBody() {
 }
 
 void BaseParallelResourceThrottle::CancelResourceLoad() {
-  DCHECK(throttle_in_band_);
-  throttle_in_band_ = false;
   Cancel();
-}
-
-void BaseParallelResourceThrottle::ResumeResourceLoad() {
-  DCHECK(throttle_in_band_);
-  throttle_in_band_ = false;
-  Resume();
-}
-
-void BaseParallelResourceThrottle::MayDeferCancelResourceLoad() {
-  if (!throttle_in_band_)
-    should_cancel_on_notification_ = true;
-  else
-    CancelResourceLoad();
 }
 
 }  // namespace safe_browsing

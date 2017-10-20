@@ -61,7 +61,7 @@ class CORE_EXPORT HTMLImageElement final
                                                   unsigned height);
 
   ~HTMLImageElement() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   unsigned width();
   unsigned height();
@@ -158,7 +158,7 @@ class CORE_EXPORT HTMLImageElement final
   void DidMoveToNewDocument(Document& old_document) override;
 
   void DidAddUserAgentShadowRoot(ShadowRoot&) override;
-  scoped_refptr<ComputedStyle> CustomStyleForLayoutObject() override;
+  RefPtr<ComputedStyle> CustomStyleForLayoutObject() override;
 
  private:
   bool AreAuthorShadowsAllowed() const override { return false; }

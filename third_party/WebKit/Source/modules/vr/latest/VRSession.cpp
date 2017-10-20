@@ -129,7 +129,7 @@ void VRSession::OnBlur() {
   DispatchEvent(VRSessionEvent::Create(EventTypeNames::blur, this));
 }
 
-void VRSession::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRSession) {
   visitor->Trace(device_);
   EventTargetWithInlineData::Trace(visitor);
 }

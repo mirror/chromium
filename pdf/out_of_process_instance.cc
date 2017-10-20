@@ -1394,19 +1394,16 @@ pp::URLLoader OutOfProcessInstance::CreateURLLoader() {
   return CreateURLLoaderInternal();
 }
 
-void OutOfProcessInstance::ScheduleCallback(int id, base::TimeDelta delay) {
-  pp::CompletionCallback callback =
-      callback_factory_.NewCallback(&OutOfProcessInstance::OnClientTimerFired);
-  pp::Module::Get()->core()->CallOnMainThread(delay.InMilliseconds(), callback,
-                                              id);
-}
-
-void OutOfProcessInstance::ScheduleTouchTimerCallback(int id,
-                                                      base::TimeDelta delay) {
+void OutOfProcessInstance::ScheduleTouchTimerCallback(int id, int delay_in_ms) {
   pp::CompletionCallback callback = callback_factory_.NewCallback(
       &OutOfProcessInstance::OnClientTouchTimerFired);
-  pp::Module::Get()->core()->CallOnMainThread(delay.InMilliseconds(), callback,
-                                              id);
+  pp::Module::Get()->core()->CallOnMainThread(delay_in_ms, callback, id);
+}
+
+void OutOfProcessInstance::ScheduleCallback(int id, int delay_in_ms) {
+  pp::CompletionCallback callback =
+      callback_factory_.NewCallback(&OutOfProcessInstance::OnClientTimerFired);
+  pp::Module::Get()->core()->CallOnMainThread(delay_in_ms, callback, id);
 }
 
 void OutOfProcessInstance::SearchString(
@@ -1504,7 +1501,6 @@ void OutOfProcessInstance::DocumentLoadComplete(
                        document_features.has_attachments ? 1 : 0, 2);
   HistogramEnumeration("PDF.IsLinearized",
                        document_features.is_linearized ? 1 : 0, 2);
-  HistogramEnumeration("PDF.IsTagged", document_features.is_tagged ? 1 : 0, 2);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
@@ -1822,6 +1818,7 @@ void OutOfProcessInstance::HistogramEnumeration(const std::string& name,
                                                 int32_t boundary_value) {
   if (IsPrintPreview())
     return;
+
   uma_.HistogramEnumeration(name, sample, boundary_value);
 }
 

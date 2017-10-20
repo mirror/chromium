@@ -53,12 +53,12 @@ MojoResult MojoWatcher::cancel() {
   return MOJO_RESULT_OK;
 }
 
-void MojoWatcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MojoWatcher) {
   visitor->Trace(callback_);
   ContextLifecycleObserver::Trace(visitor);
 }
 
-void MojoWatcher::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(MojoWatcher) {
   visitor->TraceWrappers(callback_);
 }
 

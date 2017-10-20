@@ -482,7 +482,7 @@ class Internals final : public GarbageCollected<Internals>,
   ScriptPromise promiseCheckOverload(ScriptState*, Document*);
   ScriptPromise promiseCheckOverload(ScriptState*, Location*, long, long);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void setValueForUser(HTMLInputElement*, const String&);
 

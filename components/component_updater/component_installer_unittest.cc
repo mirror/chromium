@@ -285,7 +285,6 @@ TEST_F(ComponentInstallerTest, UnpackPathInstallSuccess) {
 
   const auto unpack_path = result().unpack_path;
   EXPECT_TRUE(base::DirectoryExists(unpack_path));
-  EXPECT_EQ(update_client::jebg_public_key, result().public_key);
 
   base::ScopedPathOverride scoped_path_override(DIR_COMPONENT_USER);
   base::FilePath base_dir;

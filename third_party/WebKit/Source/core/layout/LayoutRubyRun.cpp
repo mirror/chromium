@@ -63,14 +63,12 @@ LayoutRubyText* LayoutRubyRun::RubyText() const {
   // text, layout will have to be changed to handle them properly.
   DCHECK(!child || !child->IsRubyText() ||
          !child->IsFloatingOrOutOfFlowPositioned());
-  return child && child->IsRubyText() ? static_cast<LayoutRubyText*>(child)
-                                      : nullptr;
+  return child && child->IsRubyText() ? static_cast<LayoutRubyText*>(child) : 0;
 }
 
 LayoutRubyBase* LayoutRubyRun::RubyBase() const {
   LayoutObject* child = LastChild();
-  return child && child->IsRubyBase() ? static_cast<LayoutRubyBase*>(child)
-                                      : nullptr;
+  return child && child->IsRubyBase() ? static_cast<LayoutRubyBase*>(child) : 0;
 }
 
 LayoutRubyBase* LayoutRubyRun::RubyBaseSafe() {
@@ -134,7 +132,7 @@ void LayoutRubyRun::AddChild(LayoutObject* child, LayoutObject* before_child) {
     if (before_child == base)
       before_child = base->FirstChild();
     if (before_child && before_child->IsRubyText())
-      before_child = nullptr;
+      before_child = 0;
     DCHECK(!before_child || before_child->IsDescendantOf(base));
     base->AddChild(child, before_child);
   }

@@ -109,7 +109,7 @@ static void CallOnMainThreadFunction(WTF::MainThreadFunction function,
       CrossThreadBind(function, CrossThreadUnretained(context)));
 }
 
-Platform::Platform() : main_thread_(nullptr) {
+Platform::Platform() : main_thread_(0) {
   WTF::Partitions::Initialize(MaxObservedSizeFunction);
 }
 

@@ -637,15 +637,14 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
   }
 }
 
-void HTMLParserScriptRunner::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLParserScriptRunner) {
   visitor->Trace(document_);
   visitor->Trace(host_);
   visitor->Trace(parser_blocking_script_);
   visitor->Trace(scripts_to_execute_after_parsing_);
   PendingScriptClient::Trace(visitor);
 }
-void HTMLParserScriptRunner::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(HTMLParserScriptRunner) {
   visitor->TraceWrappers(parser_blocking_script_);
   for (const auto& member : scripts_to_execute_after_parsing_)
     visitor->TraceWrappers(member);

@@ -552,7 +552,7 @@ static HTMLElement* AdjacentEnclosingList(const VisiblePosition& pos,
       OutermostEnclosingList(adjacent_pos.DeepEquivalent().AnchorNode());
 
   if (!list_element)
-    return nullptr;
+    return 0;
 
   Element* previous_cell = EnclosingTableCell(pos.DeepEquivalent());
   Element* current_cell = EnclosingTableCell(adjacent_pos.DeepEquivalent());
@@ -562,7 +562,7 @@ static HTMLElement* AdjacentEnclosingList(const VisiblePosition& pos,
       previous_cell != current_cell ||
       EnclosingList(list_element) !=
           EnclosingList(pos.DeepEquivalent().AnchorNode()))
-    return nullptr;
+    return 0;
 
   return list_element;
 }
@@ -698,7 +698,7 @@ void InsertListCommand::MoveParagraphOverPositionIntoEmptyListItem(
                 editing_state, kPreserveSelection);
 }
 
-void InsertListCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InsertListCommand) {
   CompositeEditCommand::Trace(visitor);
 }
 

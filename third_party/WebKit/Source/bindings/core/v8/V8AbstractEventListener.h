@@ -111,8 +111,8 @@ class CORE_EXPORT V8AbstractEventListener : public EventListener {
   v8::Isolate* GetIsolate() const { return isolate_; }
   DOMWrapperWorld& World() const { return *world_; }
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   V8AbstractEventListener(bool is_attribute, DOMWrapperWorld&, v8::Isolate*);

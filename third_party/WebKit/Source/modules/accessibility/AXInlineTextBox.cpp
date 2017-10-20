@@ -134,7 +134,7 @@ String AXInlineTextBox::GetName(AXNameFrom& name_from,
 AXObject* AXInlineTextBox::ComputeParent() const {
   DCHECK(!IsDetached());
   if (!inline_text_box_ || !ax_object_cache_)
-    return nullptr;
+    return 0;
 
   LineLayoutText line_layout_text = inline_text_box_->GetLineLayoutItem();
   return ax_object_cache_->GetOrCreate(
@@ -174,7 +174,7 @@ AXObject* AXInlineTextBox::NextOnLine() const {
     return ax_object_cache_->GetOrCreate(next_on_line.get());
 
   if (!inline_text_box_->IsLast())
-    return nullptr;
+    return 0;
 
   return ParentObject()->NextOnLine();
 }
@@ -186,7 +186,7 @@ AXObject* AXInlineTextBox::PreviousOnLine() const {
     return ax_object_cache_->GetOrCreate(previous_on_line.get());
 
   if (!inline_text_box_->IsFirst())
-    return nullptr;
+    return 0;
 
   return ParentObject()->PreviousOnLine();
 }

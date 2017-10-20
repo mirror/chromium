@@ -132,7 +132,7 @@ class CORE_EXPORT ContentSecurityPolicy
 
   static ContentSecurityPolicy* Create() { return new ContentSecurityPolicy(); }
   ~ContentSecurityPolicy();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void BindToExecutionContext(ExecutionContext*);
   void SetupSelf(const SecurityOrigin&);

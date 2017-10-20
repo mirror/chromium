@@ -263,7 +263,7 @@ FrameLoader::~FrameLoader() {
   DCHECK(detached_);
 }
 
-void FrameLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FrameLoader) {
   visitor->Trace(frame_);
   visitor->Trace(progress_tracker_);
   visitor->Trace(document_loader_);
@@ -273,7 +273,7 @@ void FrameLoader::Trace(blink::Visitor* visitor) {
 void FrameLoader::Init() {
   ScriptForbiddenScope forbid_scripts;
 
-  ResourceRequest initial_request{KURL(g_empty_string)};
+  ResourceRequest initial_request(KURL(kParsedURLString, g_empty_string));
   initial_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   initial_request.SetFrameType(frame_->IsMainFrame()
                                    ? WebURLRequest::kFrameTypeTopLevel
@@ -476,7 +476,7 @@ void FrameLoader::DidFinishNavigation() {
 }
 
 Frame* FrameLoader::Opener() {
-  return Client() ? Client()->Opener() : nullptr;
+  return Client() ? Client()->Opener() : 0;
 }
 
 void FrameLoader::SetOpener(LocalFrame* opener) {
@@ -500,7 +500,7 @@ bool FrameLoader::AllowPlugins(ReasonForCallingAllowPlugins reason) {
 void FrameLoader::UpdateForSameDocumentNavigation(
     const KURL& new_url,
     SameDocumentNavigationSource same_document_navigation_source,
-    scoped_refptr<SerializedScriptValue> data,
+    RefPtr<SerializedScriptValue> data,
     HistoryScrollRestorationType scroll_restoration_type,
     FrameLoadType type,
     Document* initiating_document) {
@@ -540,13 +540,12 @@ void FrameLoader::DetachDocumentLoader(Member<DocumentLoader>& loader) {
   loader = nullptr;
 }
 
-void FrameLoader::LoadInSameDocument(
-    const KURL& url,
-    scoped_refptr<SerializedScriptValue> state_object,
-    FrameLoadType frame_load_type,
-    HistoryItem* history_item,
-    ClientRedirectPolicy client_redirect,
-    Document* initiating_document) {
+void FrameLoader::LoadInSameDocument(const KURL& url,
+                                     RefPtr<SerializedScriptValue> state_object,
+                                     FrameLoadType frame_load_type,
+                                     HistoryItem* history_item,
+                                     ClientRedirectPolicy client_redirect,
+                                     Document* initiating_document) {
   // If we have a state object, we cannot also be a new navigation.
   DCHECK(!state_object || frame_load_type == kFrameLoadTypeBackForward);
 
@@ -896,7 +895,7 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
   // Perform same document navigation.
   if (same_document_history_navigation || same_document_navigation) {
     DCHECK(history_item || !same_document_history_navigation);
-    scoped_refptr<SerializedScriptValue> state_object =
+    RefPtr<SerializedScriptValue> state_object =
         same_document_history_navigation ? history_item->StateObject()
                                          : nullptr;
 
@@ -1051,7 +1050,7 @@ void FrameLoader::CommitProvisionalLoad() {
   // Check if the destination page is allowed to access the previous page's
   // timing information.
   if (frame_->GetDocument()) {
-    scoped_refptr<SecurityOrigin> security_origin =
+    RefPtr<SecurityOrigin> security_origin =
         SecurityOrigin::Create(provisional_document_loader_->Url());
     provisional_document_loader_->GetTiming()
         .SetHasSameOriginAsPreviousDocument(
@@ -1234,7 +1233,7 @@ void FrameLoader::ProcessFragment(const KURL& url,
   Frame* boundary_frame =
       url.HasFragmentIdentifier()
           ? frame_->FindUnsafeParentScrollPropagationBoundary()
-          : nullptr;
+          : 0;
 
   // FIXME: Handle RemoteFrames
   if (boundary_frame && boundary_frame->IsLocalFrame()) {
@@ -1708,11 +1707,11 @@ std::unique_ptr<TracedValue> FrameLoader::ToTracedValue() const {
   traced_value->SetString("stateMachine", state_machine_.ToString());
   traced_value->SetString("provisionalDocumentLoaderURL",
                           provisional_document_loader_
-                              ? provisional_document_loader_->Url().GetString()
+                              ? provisional_document_loader_->Url()
                               : String());
-  traced_value->SetString(
-      "documentLoaderURL",
-      document_loader_ ? document_loader_->Url().GetString() : String());
+  traced_value->SetString("documentLoaderURL", document_loader_
+                                                   ? document_loader_->Url()
+                                                   : String());
   return traced_value;
 }
 

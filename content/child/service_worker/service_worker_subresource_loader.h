@@ -17,8 +17,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/redirect_info.h"
-#include "third_party/WebKit/common/blob/blob.mojom.h"
-#include "third_party/WebKit/common/blob/blob_registry.mojom.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_stream_handle.mojom.h"
 
@@ -26,6 +25,7 @@ namespace content {
 
 class ChildURLLoaderFactoryGetter;
 class ControllerServiceWorkerConnector;
+struct ServiceWorkerFetchRequest;
 
 // S13nServiceWorker:
 // A custom URLLoader implementation used by Service Worker controllees
@@ -35,7 +35,8 @@ class ControllerServiceWorkerConnector;
 class CONTENT_EXPORT ServiceWorkerSubresourceLoader
     : public mojom::URLLoader,
       public mojom::URLLoaderClient,
-      public mojom::ServiceWorkerFetchResponseCallback {
+      public mojom::ServiceWorkerFetchResponseCallback,
+      public ControllerServiceWorkerConnector::Observer {
  public:
   // See the comments for ServiceWorkerSubresourceLoaderFactory's ctor (below)
   // to see how each parameter is used.
@@ -50,23 +51,28 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
       scoped_refptr<ControllerServiceWorkerConnector> controller_connector,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter,
       const GURL& controller_origin,
-      scoped_refptr<base::RefCountedData<blink::mojom::BlobRegistryPtr>>
+      scoped_refptr<base::RefCountedData<storage::mojom::BlobRegistryPtr>>
           blob_registry);
 
   ~ServiceWorkerSubresourceLoader() override;
+
+  // ControllerServiceWorkerConnector::Observer overrdies:
+  void OnConnectionClosed() override;
 
  private:
   void DeleteSoon();
 
   void StartRequest(const ResourceRequest& resource_request);
+  void DispatchFetchEvent();
   void OnFetchEventFinished(blink::mojom::ServiceWorkerEventStatus status,
                             base::Time dispatch_event_time);
+  void SettleInflightFetchRequestIfNeeded();
 
   // mojom::ServiceWorkerFetchResponseCallback overrides:
   void OnResponse(const ServiceWorkerResponse& response,
                   base::Time dispatch_event_time) override;
   void OnResponseBlob(const ServiceWorkerResponse& response,
-                      blink::mojom::BlobPtr blob,
+                      storage::mojom::BlobPtr blob,
                       base::Time dispatch_event_time) override;
   void OnResponseStream(
       const ServiceWorkerResponse& response,
@@ -75,7 +81,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   void OnFallback(base::Time dispatch_event_time) override;
 
   void StartResponse(const ServiceWorkerResponse& response,
-                     blink::mojom::BlobPtr blob,
+                     storage::mojom::BlobPtr blob,
                      blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream);
 
   // mojom::URLLoader overrides:
@@ -120,6 +126,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
 
   scoped_refptr<ControllerServiceWorkerConnector> controller_connector_;
 
+  std::unique_ptr<ServiceWorkerFetchRequest> inflight_fetch_request_;
+
   // These are given by the constructor (as the params for
   // URLLoaderFactory::CreateLoaderAndStart).
   const int routing_id_;
@@ -129,11 +137,11 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   // To load a blob.
-  blink::mojom::BlobURLHandlePtr blob_url_handle_;
+  storage::mojom::BlobURLHandlePtr blob_url_handle_;
   GURL controller_origin_;
   mojom::URLLoaderPtr blob_loader_;
   mojo::Binding<mojom::URLLoaderClient> blob_client_binding_;
-  scoped_refptr<base::RefCountedData<blink::mojom::BlobRegistryPtr>>
+  scoped_refptr<base::RefCountedData<storage::mojom::BlobRegistryPtr>>
       blob_registry_;
 
   // For Blob loading and network fallback loading.
@@ -170,7 +178,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoaderFactory
       scoped_refptr<ControllerServiceWorkerConnector> controller_connector,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter,
       const GURL& controller_origin,
-      scoped_refptr<base::RefCountedData<blink::mojom::BlobRegistryPtr>>
+      scoped_refptr<base::RefCountedData<storage::mojom::BlobRegistryPtr>>
           blob_registry);
 
   ~ServiceWorkerSubresourceLoaderFactory() override;
@@ -195,7 +203,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoaderFactory
 
   GURL controller_origin_;
 
-  scoped_refptr<base::RefCountedData<blink::mojom::BlobRegistryPtr>>
+  scoped_refptr<base::RefCountedData<storage::mojom::BlobRegistryPtr>>
       blob_registry_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerSubresourceLoaderFactory);

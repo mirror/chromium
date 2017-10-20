@@ -61,11 +61,11 @@ class CORE_EXPORT CSSImageGeneratorValue : public CSSValue {
   void RemoveClient(const ImageResourceObserver*);
   // The |container_size| is the container size with subpixel snapping, where
   // the |logical_size| is without it. Both sizes include zoom.
-  scoped_refptr<Image> GetImage(const ImageResourceObserver&,
-                                const Document&,
-                                const ComputedStyle&,
-                                const IntSize& container_size,
-                                const LayoutSize* logical_size);
+  RefPtr<Image> GetImage(const ImageResourceObserver&,
+                         const Document&,
+                         const ComputedStyle&,
+                         const IntSize& container_size,
+                         const LayoutSize* logical_size);
 
   bool IsFixedSize() const;
   IntSize FixedSize(const Document&, const FloatSize& default_object_size);
@@ -77,7 +77,7 @@ class CORE_EXPORT CSSImageGeneratorValue : public CSSValue {
 
   CSSImageGeneratorValue* ValueWithURLsMadeAbsolute();
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 
@@ -88,14 +88,14 @@ class CORE_EXPORT CSSImageGeneratorValue : public CSSValue {
                   const Document&,
                   const ComputedStyle&,
                   const IntSize&);
-  void PutImage(const IntSize&, scoped_refptr<Image>);
+  void PutImage(const IntSize&, RefPtr<Image>);
   const ClientSizeCountMap& Clients() const { return clients_; }
 
   HashCountedSet<IntSize>
       sizes_;  // A count of how many times a given image size is in use.
   ClientSizeCountMap
       clients_;  // A map from LayoutObjects (with entry count) to image sizes.
-  HashMap<IntSize, scoped_refptr<Image>>
+  HashMap<IntSize, RefPtr<Image>>
       images_;  // A cache of Image objects by image size.
 
   // TODO(Oilpan): when/if we can make the layoutObject point directly to the

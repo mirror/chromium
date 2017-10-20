@@ -50,7 +50,7 @@ class DOMEditor final : public GarbageCollected<DOMEditor> {
  public:
   explicit DOMEditor(InspectorHistory*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   bool InsertBefore(ContainerNode* parent_node,
                     Node*,

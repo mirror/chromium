@@ -78,7 +78,7 @@ const AtomicString& SourceBufferList::InterfaceName() const {
   return EventTargetNames::SourceBufferList;
 }
 
-void SourceBufferList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SourceBufferList) {
   visitor->Trace(async_event_queue_);
   visitor->Trace(list_);
   EventTargetWithInlineData::Trace(visitor);

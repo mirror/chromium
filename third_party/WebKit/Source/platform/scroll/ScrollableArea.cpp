@@ -55,8 +55,10 @@ float ScrollableArea::MinFractionToStepWhenPaging() {
   return kMinFractionToStepWhenPaging;
 }
 
-int ScrollableArea::MaxOverlapBetweenPages() const {
-  return GetPageScrollbarTheme().MaxOverlapBetweenPages();
+int ScrollableArea::MaxOverlapBetweenPages() {
+  static int max_overlap_between_pages =
+      ScrollbarTheme::GetTheme().MaxOverlapBetweenPages();
+  return max_overlap_between_pages;
 }
 
 ScrollableArea::ScrollableArea()
@@ -434,12 +436,12 @@ void ScrollableArea::SetScrollbarOverlayColorTheme(
   scrollbar_overlay_color_theme_ = overlay_theme;
 
   if (Scrollbar* scrollbar = HorizontalScrollbar()) {
-    GetPageScrollbarTheme().UpdateScrollbarOverlayColorTheme(*scrollbar);
+    ScrollbarTheme::GetTheme().UpdateScrollbarOverlayColorTheme(*scrollbar);
     scrollbar->SetNeedsPaintInvalidation(kAllParts);
   }
 
   if (Scrollbar* scrollbar = VerticalScrollbar()) {
-    GetPageScrollbarTheme().UpdateScrollbarOverlayColorTheme(*scrollbar);
+    ScrollbarTheme::GetTheme().UpdateScrollbarOverlayColorTheme(*scrollbar);
     scrollbar->SetNeedsPaintInvalidation(kAllParts);
   }
 }
@@ -581,15 +583,15 @@ void ScrollableArea::FadeOverlayScrollbarsTimerFired(TimerBase*) {
 }
 
 void ScrollableArea::ShowOverlayScrollbars() {
-  if (!GetPageScrollbarTheme().UsesOverlayScrollbars())
+  if (!ScrollbarTheme::GetTheme().UsesOverlayScrollbars())
     return;
 
   SetScrollbarsHidden(false);
   needs_show_scrollbar_layers_ = true;
 
   const double time_until_disable =
-      GetPageScrollbarTheme().OverlayScrollbarFadeOutDelaySeconds() +
-      GetPageScrollbarTheme().OverlayScrollbarFadeOutDurationSeconds();
+      ScrollbarTheme::GetTheme().OverlayScrollbarFadeOutDelaySeconds() +
+      ScrollbarTheme::GetTheme().OverlayScrollbarFadeOutDurationSeconds();
 
   // If the overlay scrollbars don't fade out, don't do anything. This is the
   // case for the mock overlays used in tests and on Mac, where the fade-out is
@@ -680,7 +682,7 @@ void ScrollableArea::DidScroll(const gfx::ScrollOffset& offset) {
   SetScrollOffset(new_offset, kCompositorScroll);
 }
 
-void ScrollableArea::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScrollableArea) {
   visitor->Trace(scroll_animator_);
   visitor->Trace(programmatic_scroll_animator_);
 }

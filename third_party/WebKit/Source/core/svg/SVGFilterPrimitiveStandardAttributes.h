@@ -55,7 +55,7 @@ class SVGFilterPrimitiveStandardAttributes : public SVGElement {
   SVGAnimatedLength* height() const { return height_.Get(); }
   SVGAnimatedString* result() const { return result_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void PrimitiveAttributeChanged(const QualifiedName&);
   void Invalidate();

@@ -326,7 +326,7 @@ void MultipartParser::ParseTransportPadding(const char** bytes_pointer,
     ++(*bytes_pointer);
 }
 
-void MultipartParser::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MultipartParser) {
   visitor->Trace(client_);
 }
 

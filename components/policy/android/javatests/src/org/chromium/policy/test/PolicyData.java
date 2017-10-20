@@ -6,10 +6,10 @@ package org.chromium.policy.test;
 
 import android.os.Bundle;
 
-import org.json.JSONArray;
-import org.junit.Assert;
+import junit.framework.Assert;
 
 import org.chromium.base.Log;
+import org.json.JSONArray;
 
 /**
  * Helper class to transform Java types to {@link Bundle}s usable by the Policy system.

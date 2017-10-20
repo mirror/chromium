@@ -68,7 +68,7 @@ EventDispatchMediator* FocusEvent::CreateMediator() {
   return FocusEventDispatchMediator::Create(this);
 }
 
-void FocusEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FocusEvent) {
   visitor->Trace(related_target_);
   UIEvent::Trace(visitor);
 }

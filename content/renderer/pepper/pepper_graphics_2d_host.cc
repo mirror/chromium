@@ -381,6 +381,10 @@ float PepperGraphics2DHost::GetScale() const { return scale_; }
 
 bool PepperGraphics2DHost::IsAlwaysOpaque() const { return is_always_opaque_; }
 
+PPB_ImageData_Impl* PepperGraphics2DHost::ImageData() {
+  return image_data_.get();
+}
+
 gfx::Size PepperGraphics2DHost::Size() const {
   if (!image_data_.get())
     return gfx::Size();

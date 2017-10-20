@@ -304,8 +304,7 @@ void DevToolsFileHelper::AddFileSystem(
     scoped_refptr<SelectFileDialog> select_file_dialog = new SelectFileDialog(
         Bind(&DevToolsFileHelper::InnerAddFileSystem,
              weak_factory_.GetWeakPtr(), show_info_bar_callback),
-        Bind(&DevToolsFileHelper::FailedToAddFileSystem,
-             weak_factory_.GetWeakPtr()),
+        base::Closure(),
         web_contents_);
     select_file_dialog->Show(ui::SelectFileDialog::SELECT_FOLDER,
                              base::FilePath());
@@ -373,10 +372,8 @@ void DevToolsFileHelper::InnerAddFileSystem(
 void DevToolsFileHelper::AddUserConfirmedFileSystem(
     const base::FilePath& path,
     bool allowed) {
-  if (!allowed) {
-    FailedToAddFileSystem();
+  if (!allowed)
     return;
-  }
 
   std::string file_system_id = RegisterFileSystem(web_contents_, path);
   std::string file_system_path = path.AsUTF8Unsafe();
@@ -386,10 +383,6 @@ void DevToolsFileHelper::AddUserConfirmedFileSystem(
   base::DictionaryValue* file_systems_paths_value = update.Get();
   file_systems_paths_value->SetWithoutPathExpansion(
       file_system_path, base::MakeUnique<base::Value>());
-}
-
-void DevToolsFileHelper::FailedToAddFileSystem() {
-  delegate_->FailedToAddFileSystem();
 }
 
 std::vector<DevToolsFileHelper::FileSystem>

@@ -25,10 +25,10 @@ class SampledEffect : public GarbageCollectedFinalized<SampledEffect> {
 
   void Clear();
 
-  const Vector<scoped_refptr<Interpolation>>& Interpolations() const {
+  const Vector<RefPtr<Interpolation>>& Interpolations() const {
     return interpolations_;
   }
-  Vector<scoped_refptr<Interpolation>>& MutableInterpolations() {
+  Vector<RefPtr<Interpolation>>& MutableInterpolations() {
     return interpolations_;
   }
 
@@ -39,13 +39,13 @@ class SampledEffect : public GarbageCollectedFinalized<SampledEffect> {
   void RemoveReplacedInterpolations(const HashSet<PropertyHandle>&);
   void UpdateReplacedProperties(HashSet<PropertyHandle>&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   SampledEffect(KeyframeEffectReadOnly*);
 
   WeakMember<KeyframeEffectReadOnly> effect_;
-  Vector<scoped_refptr<Interpolation>> interpolations_;
+  Vector<RefPtr<Interpolation>> interpolations_;
   const unsigned sequence_number_;
   KeyframeEffectReadOnly::Priority priority_;
 };

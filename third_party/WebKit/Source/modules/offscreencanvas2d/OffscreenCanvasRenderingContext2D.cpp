@@ -44,7 +44,7 @@ OffscreenCanvasRenderingContext2D::OffscreenCanvasRenderingContext2D(
     canvas->SetDisableReadingFromCanvasTrue();
 }
 
-void OffscreenCanvasRenderingContext2D::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(OffscreenCanvasRenderingContext2D) {
   CanvasRenderingContext::Trace(visitor);
   BaseRenderingContext2D::Trace(visitor);
 }

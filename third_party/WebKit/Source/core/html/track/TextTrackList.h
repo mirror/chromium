@@ -73,9 +73,9 @@ class CORE_EXPORT TextTrackList final : public EventTargetWithInlineData {
 
   bool HasShowingTracks();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   explicit TextTrackList(HTMLMediaElement*);

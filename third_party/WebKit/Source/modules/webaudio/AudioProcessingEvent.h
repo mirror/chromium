@@ -56,7 +56,7 @@ class AudioProcessingEvent final : public Event {
 
   const AtomicString& InterfaceName() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   AudioProcessingEvent();

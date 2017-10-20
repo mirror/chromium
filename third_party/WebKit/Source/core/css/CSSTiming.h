@@ -32,7 +32,7 @@ class CSSTiming : public GarbageCollectedFinalized<CSSTiming>,
   double UpdateDurationBeforeFCP() const { return update_time_before_fcp_; }
 
   static CSSTiming& From(Document&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit CSSTiming(Document&);

@@ -48,9 +48,7 @@ class CookieStore final : public GarbageCollectedFinalized<CookieStore>,
                     const CookieStoreSetOptions&,
                     ExceptionState&);
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ContextLifecycleObserver::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
 
   // ActiveScriptWrappable
   void ContextDestroyed(ExecutionContext*) override;

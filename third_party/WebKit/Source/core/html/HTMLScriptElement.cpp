@@ -233,14 +233,13 @@ Element* HTMLScriptElement::CloneElementWithoutAttributesAndChildren() {
                                false);
 }
 
-void HTMLScriptElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLScriptElement) {
   visitor->Trace(loader_);
   HTMLElement::Trace(visitor);
   ScriptElementBase::Trace(visitor);
 }
 
-void HTMLScriptElement::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(HTMLScriptElement) {
   visitor->TraceWrappers(loader_);
   HTMLElement::TraceWrappers(visitor);
 }

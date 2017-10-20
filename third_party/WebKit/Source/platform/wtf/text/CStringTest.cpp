@@ -44,18 +44,17 @@ CString PrintedString(const CString& string) {
 TEST(CStringTest, NullStringConstructor) {
   CString string;
   EXPECT_TRUE(string.IsNull());
-  EXPECT_EQ(static_cast<const char*>(nullptr), string.data());
+  EXPECT_EQ(static_cast<const char*>(0), string.data());
   EXPECT_EQ(static_cast<size_t>(0), string.length());
 
-  CString string_from_char_pointer(static_cast<const char*>(nullptr));
+  CString string_from_char_pointer(static_cast<const char*>(0));
   EXPECT_TRUE(string_from_char_pointer.IsNull());
-  EXPECT_EQ(static_cast<const char*>(nullptr), string_from_char_pointer.data());
+  EXPECT_EQ(static_cast<const char*>(0), string_from_char_pointer.data());
   EXPECT_EQ(static_cast<size_t>(0), string_from_char_pointer.length());
 
-  CString string_from_char_and_length(static_cast<const char*>(nullptr), 0);
+  CString string_from_char_and_length(static_cast<const char*>(0), 0);
   EXPECT_TRUE(string_from_char_and_length.IsNull());
-  EXPECT_EQ(static_cast<const char*>(nullptr),
-            string_from_char_and_length.data());
+  EXPECT_EQ(static_cast<const char*>(0), string_from_char_and_length.data());
   EXPECT_EQ(static_cast<size_t>(0), string_from_char_and_length.length());
 }
 
@@ -143,11 +142,11 @@ TEST(CStringTest, Comparison) {
 
   // Comparison with a const char*.
   CString c;
-  const char* d = nullptr;
+  const char* d = 0;
   EXPECT_TRUE(c == d);
   EXPECT_FALSE(c != d);
   c = "c";
-  d = nullptr;
+  d = 0;
   EXPECT_FALSE(c == d);
   EXPECT_TRUE(c != d);
   c = CString();
@@ -175,7 +174,7 @@ TEST(CStringTest, Comparison) {
   EXPECT_TRUE(c == d);
   EXPECT_FALSE(c != d);
   c = "";
-  d = nullptr;
+  d = 0;
   EXPECT_FALSE(c == d);
   EXPECT_TRUE(c != d);
   c = CString();

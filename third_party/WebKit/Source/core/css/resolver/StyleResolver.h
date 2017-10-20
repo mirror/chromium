@@ -70,29 +70,29 @@ class CORE_EXPORT StyleResolver final
   ~StyleResolver();
   void Dispose();
 
-  scoped_refptr<ComputedStyle> StyleForElement(
+  RefPtr<ComputedStyle> StyleForElement(
       Element*,
       const ComputedStyle* parent_style = nullptr,
       const ComputedStyle* layout_parent_style = nullptr,
       RuleMatchingBehavior = kMatchAllRules);
 
-  static scoped_refptr<AnimatableValue> CreateAnimatableValueSnapshot(
+  static RefPtr<AnimatableValue> CreateAnimatableValueSnapshot(
       Element&,
       const ComputedStyle& base_style,
       const ComputedStyle* parent_style,
       CSSPropertyID,
       const CSSValue*);
 
-  scoped_refptr<ComputedStyle> PseudoStyleForElement(
+  RefPtr<ComputedStyle> PseudoStyleForElement(
       Element*,
       const PseudoStyleRequest&,
       const ComputedStyle* parent_style,
       const ComputedStyle* layout_parent_style);
 
-  scoped_refptr<ComputedStyle> StyleForPage(int page_index);
-  scoped_refptr<ComputedStyle> StyleForText(Text*);
+  RefPtr<ComputedStyle> StyleForPage(int page_index);
+  RefPtr<ComputedStyle> StyleForText(Text*);
 
-  static scoped_refptr<ComputedStyle> StyleForViewport(Document&);
+  static RefPtr<ComputedStyle> StyleForViewport(Document&);
 
   // TODO(esprehn): StyleResolver should probably not contain tree walking
   // state, instead we should pass a context object during recalcStyle.
@@ -145,12 +145,12 @@ class CORE_EXPORT StyleResolver final
 
   static bool HasAuthorBackground(const StyleResolverState&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit StyleResolver(Document&);
 
-  static scoped_refptr<ComputedStyle> InitialStyleForElement(Document&);
+  static RefPtr<ComputedStyle> InitialStyleForElement(Document&);
 
   // FIXME: This should probably go away, folded into FontBuilder.
   void UpdateFont(StyleResolverState&);

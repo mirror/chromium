@@ -7,7 +7,7 @@ package org.chromium.net;
 import android.content.Context;
 import android.os.ConditionVariable;
 
-import org.junit.Assert;
+import junit.framework.Assert;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;

@@ -92,8 +92,7 @@ class MemlogConnectionManager {
   void OnNewConnection(base::ProcessId pid,
                        mojom::ProfilingClientPtr client,
                        mojo::ScopedHandle sender_pipe_end,
-                       mojo::ScopedHandle receiver_pipe_end,
-                       mojom::ProcessType process_type);
+                       mojo::ScopedHandle receiver_pipe_end);
 
  private:
   struct Connection;
@@ -123,9 +122,6 @@ class MemlogConnectionManager {
   // messages.
   void OnConnectionComplete(base::ProcessId pid);
 
-  // Reports the ProcessTypes of the processes being profiled.
-  void ReportMetrics();
-
   // These thunks post the request back to the given thread.
   static void OnConnectionCompleteThunk(
       scoped_refptr<base::SequencedTaskRunner> main_loop,
@@ -141,9 +137,6 @@ class MemlogConnectionManager {
   // Maps process ID to the connection information for it.
   base::flat_map<base::ProcessId, std::unique_ptr<Connection>> connections_;
   base::Lock connections_lock_;
-
-  // Every 24-hours, reports the types of profiled processes.
-  base::RepeatingTimer metrics_timer_;
 
   // Must be last.
   base::WeakPtrFactory<MemlogConnectionManager> weak_factory_;

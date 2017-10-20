@@ -118,26 +118,25 @@ void SetBorderImageLengthBox(CSSPropertyID property,
 class CSSBorderImageLengthBoxNonInterpolableValue
     : public NonInterpolableValue {
  public:
-  static scoped_refptr<CSSBorderImageLengthBoxNonInterpolableValue> Create(
+  static RefPtr<CSSBorderImageLengthBoxNonInterpolableValue> Create(
       const SideTypes& side_types,
-      Vector<scoped_refptr<NonInterpolableValue>>&&
-          side_non_interpolable_values) {
+      Vector<RefPtr<NonInterpolableValue>>&& side_non_interpolable_values) {
     return WTF::AdoptRef(new CSSBorderImageLengthBoxNonInterpolableValue(
         side_types, std::move(side_non_interpolable_values)));
   }
 
-  scoped_refptr<CSSBorderImageLengthBoxNonInterpolableValue> Clone() {
+  RefPtr<CSSBorderImageLengthBoxNonInterpolableValue> Clone() {
     return WTF::AdoptRef(new CSSBorderImageLengthBoxNonInterpolableValue(
-        side_types_, Vector<scoped_refptr<NonInterpolableValue>>(
-                         side_non_interpolable_values_)));
+        side_types_,
+        Vector<RefPtr<NonInterpolableValue>>(side_non_interpolable_values_)));
   }
 
   const SideTypes& GetSideTypes() const { return side_types_; }
-  const Vector<scoped_refptr<NonInterpolableValue>>& SideNonInterpolableValues()
+  const Vector<RefPtr<NonInterpolableValue>>& SideNonInterpolableValues()
       const {
     return side_non_interpolable_values_;
   }
-  Vector<scoped_refptr<NonInterpolableValue>>& SideNonInterpolableValues() {
+  Vector<RefPtr<NonInterpolableValue>>& SideNonInterpolableValues() {
     return side_non_interpolable_values_;
   }
 
@@ -146,15 +145,14 @@ class CSSBorderImageLengthBoxNonInterpolableValue
  private:
   CSSBorderImageLengthBoxNonInterpolableValue(
       const SideTypes& side_types,
-      Vector<scoped_refptr<NonInterpolableValue>>&&
-          side_non_interpolable_values)
+      Vector<RefPtr<NonInterpolableValue>>&& side_non_interpolable_values)
       : side_types_(side_types),
         side_non_interpolable_values_(side_non_interpolable_values) {
     DCHECK_EQ(side_non_interpolable_values_.size(), kSideIndexCount);
   }
 
   const SideTypes side_types_;
-  Vector<scoped_refptr<NonInterpolableValue>> side_non_interpolable_values_;
+  Vector<RefPtr<NonInterpolableValue>> side_non_interpolable_values_;
 };
 
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(CSSBorderImageLengthBoxNonInterpolableValue);
@@ -220,8 +218,7 @@ InterpolationValue ConvertBorderImageLengthBox(const BorderImageLengthBox& box,
                                                double zoom) {
   std::unique_ptr<InterpolableList> list =
       InterpolableList::Create(kSideIndexCount);
-  Vector<scoped_refptr<NonInterpolableValue>> non_interpolable_values(
-      kSideIndexCount);
+  Vector<RefPtr<NonInterpolableValue>> non_interpolable_values(kSideIndexCount);
   const BorderImageLength* sides[kSideIndexCount] = {};
   sides[kSideTop] = &box.Top();
   sides[kSideRight] = &box.Right();
@@ -296,8 +293,7 @@ InterpolationValue CSSBorderImageLengthBoxInterpolationType::MaybeConvertValue(
   const CSSQuadValue& quad = ToCSSQuadValue(value);
   std::unique_ptr<InterpolableList> list =
       InterpolableList::Create(kSideIndexCount);
-  Vector<scoped_refptr<NonInterpolableValue>> non_interpolable_values(
-      kSideIndexCount);
+  Vector<RefPtr<NonInterpolableValue>> non_interpolable_values(kSideIndexCount);
   const CSSValue* sides[kSideIndexCount] = {};
   sides[kSideTop] = quad.Top();
   sides[kSideRight] = quad.Right();
@@ -377,15 +373,14 @@ void CSSBorderImageLengthBoxInterpolationType::Composite(
   InterpolationValue& underlying_value = underlying_value_owner.MutableValue();
   InterpolableList& underlying_list =
       ToInterpolableList(*underlying_value.interpolable_value);
-  Vector<scoped_refptr<NonInterpolableValue>>&
+  Vector<RefPtr<NonInterpolableValue>>&
       underlying_side_non_interpolable_values =
           ToCSSBorderImageLengthBoxNonInterpolableValue(
               *underlying_value.non_interpolable_value)
               .SideNonInterpolableValues();
   const InterpolableList& list = ToInterpolableList(*value.interpolable_value);
-  const Vector<scoped_refptr<NonInterpolableValue>>&
-      side_non_interpolable_values =
-          non_interpolable_value.SideNonInterpolableValues();
+  const Vector<RefPtr<NonInterpolableValue>>& side_non_interpolable_values =
+      non_interpolable_value.SideNonInterpolableValues();
 
   for (size_t i = 0; i < kSideIndexCount; i++) {
     switch (side_types.type[i]) {
@@ -415,7 +410,7 @@ void CSSBorderImageLengthBoxInterpolationType::ApplyStandardPropertyValue(
   const SideTypes& side_types =
       ToCSSBorderImageLengthBoxNonInterpolableValue(non_interpolable_value)
           ->GetSideTypes();
-  const Vector<scoped_refptr<NonInterpolableValue>>& non_interpolable_values =
+  const Vector<RefPtr<NonInterpolableValue>>& non_interpolable_values =
       ToCSSBorderImageLengthBoxNonInterpolableValue(non_interpolable_value)
           ->SideNonInterpolableValues();
   const InterpolableList& list = ToInterpolableList(interpolable_value);

@@ -66,7 +66,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
  public:
   static int PixelsPerLineStep(PlatformChromeClient*);
   static float MinFractionToStepWhenPaging();
-  int MaxOverlapBetweenPages() const;
+  static int MaxOverlapBetweenPages();
 
   // Convert a non-finite scroll value (Infinity, -Infinity, NaN) to 0 as
   // per http://dev.w3.org/csswg/cssom-view/#normalize-non_finite-values.
@@ -364,7 +364,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
 
   // Need to promptly let go of owned animator objects.
   EAGERLY_FINALIZE();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   virtual void ClearScrollableArea();
 
@@ -380,8 +380,6 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
   virtual void DidScroll(const gfx::ScrollOffset&);
 
   virtual void ScrollbarFrameRectChanged() {}
-
-  virtual ScrollbarTheme& GetPageScrollbarTheme() const = 0;
 
  protected:
   ScrollableArea();

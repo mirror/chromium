@@ -53,7 +53,7 @@ const String& HistoryItem::UrlString() const {
 }
 
 KURL HistoryItem::Url() const {
-  return KURL(url_string_);
+  return KURL(kParsedURLString, url_string_);
 }
 
 const Referrer& HistoryItem::GetReferrer() const {
@@ -117,7 +117,7 @@ void HistoryItem::ClearDocumentState() {
   document_state_vector_.clear();
 }
 
-void HistoryItem::SetStateObject(scoped_refptr<SerializedScriptValue> object) {
+void HistoryItem::SetStateObject(RefPtr<SerializedScriptValue> object) {
   state_object_ = std::move(object);
 }
 
@@ -138,7 +138,7 @@ void HistoryItem::SetFormInfoFromRequest(const ResourceRequest& request) {
   }
 }
 
-void HistoryItem::SetFormData(scoped_refptr<EncodedFormData> form_data) {
+void HistoryItem::SetFormData(RefPtr<EncodedFormData> form_data) {
   form_data_ = std::move(form_data);
 }
 
@@ -164,7 +164,7 @@ ResourceRequest HistoryItem::GenerateResourceRequest(
   return request;
 }
 
-void HistoryItem::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HistoryItem) {
   visitor->Trace(document_state_);
 }
 

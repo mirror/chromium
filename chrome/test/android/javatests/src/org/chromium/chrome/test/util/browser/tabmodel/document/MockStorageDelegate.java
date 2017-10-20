@@ -8,7 +8,7 @@ import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
 
-import org.junit.Assert;
+import junit.framework.Assert;
 
 import org.chromium.base.StreamUtil;
 import org.chromium.chrome.browser.TabState;

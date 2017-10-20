@@ -226,13 +226,16 @@ class ContextualSearchJsTest : public ChromeWebTest {
 
   void SetUp() override {
     ChromeWebTest::SetUp();
+    mockDelegate_ = [OCMockObject
+        niceMockForProtocol:@protocol(ContextualSearchControllerDelegate)];
     jsUnittestsAdditions_ = static_cast<JsContextualSearchAdditionsManager*>(
         [web_state()->GetJSInjectionReceiver()
             instanceOfClass:[JsContextualSearchAdditionsManager class]]);
     TestChromeBrowserState::Builder test_cbs_builder;
     chrome_browser_state_ = test_cbs_builder.Build();
     controller_ = [[ContextualSearchController alloc]
-        initWithBrowserState:chrome_browser_state_.get()];
+        initWithBrowserState:chrome_browser_state_.get()
+                    delegate:mockDelegate_];
     [controller_
         setPermissions:[[MockTouchToSearchPermissionsMediator alloc]
                            initWithBrowserState:chrome_browser_state_.get()]];
@@ -251,6 +254,8 @@ class ContextualSearchJsTest : public ChromeWebTest {
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
   __weak JsContextualSearchAdditionsManager* jsUnittestsAdditions_ = nil;
   ContextualSearchController* controller_;
+  id mockDelegate_;
+  id mockToolbarDelegate_;
 };
 
 // Test that ignored elements do not trigger CS when tapped.

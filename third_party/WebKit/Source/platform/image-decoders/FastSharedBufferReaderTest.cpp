@@ -42,7 +42,7 @@ namespace {
 
 RefPtr<SegmentReader> CopyToROBufferSegmentReader(RefPtr<SegmentReader> input) {
   SkRWBuffer rw_buffer;
-  const char* segment = nullptr;
+  const char* segment = 0;
   size_t position = 0;
   while (size_t length = input->GetSomeData(segment, position)) {
     rw_buffer.append(segment, length);

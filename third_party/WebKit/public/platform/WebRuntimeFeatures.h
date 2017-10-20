@@ -101,7 +101,6 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableModernMediaControls(bool);
   BLINK_PLATFORM_EXPORT static void EnableModuleScripts(bool);
   BLINK_PLATFORM_EXPORT static void EnableModuleScriptsDynamicImport(bool);
-  BLINK_PLATFORM_EXPORT static void EnableModuleScriptsImportMetaUrl(bool);
   BLINK_PLATFORM_EXPORT static void EnableMojoBlobs(bool);
   BLINK_PLATFORM_EXPORT static void EnableNavigatorContentUtils(bool);
   BLINK_PLATFORM_EXPORT static void EnableNetInfoDownlinkMax(bool);
@@ -135,6 +134,7 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableServiceWorkerNavigationPreload(bool);
   BLINK_PLATFORM_EXPORT static void EnableServiceWorkerScriptStreaming(bool);
   BLINK_PLATFORM_EXPORT static void EnableSharedWorker(bool);
+  BLINK_PLATFORM_EXPORT static void EnableSkipCompositingSmallScrollers(bool);
   BLINK_PLATFORM_EXPORT static void EnableSlimmingPaintV2(bool);
   BLINK_PLATFORM_EXPORT static void EnableTouchEventFeatureDetection(bool);
   BLINK_PLATFORM_EXPORT static void EnableTouchpadAndWheelScrollLatching(bool);
@@ -179,7 +179,6 @@ class WebRuntimeFeatures {
       bool);
   BLINK_PLATFORM_EXPORT static void EnableV8ContextSnapshot(bool);
   BLINK_PLATFORM_EXPORT static void EnableAutomationControlled(bool);
-  BLINK_PLATFORM_EXPORT static void EnableWorkStealingInScriptRunner(bool);
 
  private:
   WebRuntimeFeatures();

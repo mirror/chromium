@@ -49,7 +49,7 @@ bool UnwrapPlatformHandle(ScopedPlatformHandle handle,
   zx_handle_t handles[FDIO_MAX_HANDLES] = {};
   uint32_t info[FDIO_MAX_HANDLES] = {};
   zx_status_t result = fdio_transfer_fd(handle.get().as_fd(), 0, handles, info);
-  if (result > 0) {
+  if (result == ZX_OK) {
     // On success, the fd in |handle| has been transferred and is no longer
     // valid. Release from the ScopedPlatformHandle to avoid close()ing an
     // invalid handle.
@@ -59,12 +59,11 @@ bool UnwrapPlatformHandle(ScopedPlatformHandle handle,
     result = fdio_clone_fd(handle.get().as_fd(), 0, handles, info);
   }
 
-  if (result <= 0) {
+  if (result != ZX_OK) {
     DLOG(ERROR) << "fdio_transfer_fd(" << handle.get().as_fd()
                 << "): " << zx_status_get_string(result);
     return false;
   }
-  DCHECK_LE(result, FDIO_MAX_HANDLES);
 
   // We assume here that only the |PA_HND_TYPE| of the |info| really matters,
   // and that that is the same for all the underlying handles.

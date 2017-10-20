@@ -101,7 +101,7 @@ class Iterable {
     // false.  Otherwise: set |key| and |value| and return true.
     virtual bool Next(ScriptState*, KeyType&, ValueType&, ExceptionState&) = 0;
 
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
  private:
@@ -164,7 +164,7 @@ class Iterable {
       return next(script_state, exception_state);
     }
 
-    virtual void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_VIRTUAL_TRACE() {
       visitor->Trace(source_);
       Iterator::Trace(visitor);
     }

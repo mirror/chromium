@@ -30,8 +30,8 @@ class CORE_EXPORT FrameRequestCallbackCollection final
       : public GarbageCollectedFinalized<FrameCallback>,
         public TraceWrapperBase {
    public:
-    virtual void Trace(blink::Visitor* visitor) {}
-    virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
     virtual ~FrameCallback() = default;
     virtual void Invoke(double) = 0;
 
@@ -60,8 +60,8 @@ class CORE_EXPORT FrameRequestCallbackCollection final
     static V8FrameCallback* Create(V8FrameRequestCallback* callback) {
       return new V8FrameCallback(callback);
     }
-    void Trace(blink::Visitor*);
-    void TraceWrappers(const ScriptWrappableVisitor*) const;
+    DECLARE_TRACE();
+    DECLARE_TRACE_WRAPPERS();
     ~V8FrameCallback() override = default;
     void Invoke(double) override;
 
@@ -76,8 +76,8 @@ class CORE_EXPORT FrameRequestCallbackCollection final
 
   bool IsEmpty() const { return !callbacks_.size(); }
 
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   using CallbackList = HeapVector<TraceWrapperMember<FrameCallback>>;

@@ -19,7 +19,7 @@ class SVGTransformNonInterpolableValue : public NonInterpolableValue {
  public:
   virtual ~SVGTransformNonInterpolableValue() {}
 
-  static scoped_refptr<SVGTransformNonInterpolableValue> Create(
+  static RefPtr<SVGTransformNonInterpolableValue> Create(
       Vector<SVGTransformType>& transform_types) {
     return WTF::AdoptRef(new SVGTransformNonInterpolableValue(transform_types));
   }

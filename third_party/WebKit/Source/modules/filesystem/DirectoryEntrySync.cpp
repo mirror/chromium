@@ -76,7 +76,7 @@ void DirectoryEntrySync::removeRecursively(ExceptionState& exception_state) {
   helper->GetResult(exception_state);
 }
 
-void DirectoryEntrySync::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DirectoryEntrySync) {
   EntrySync::Trace(visitor);
 }
 

@@ -41,7 +41,7 @@ class FileSystemCallback
     : public GarbageCollectedFinalized<FileSystemCallback> {
  public:
   virtual ~FileSystemCallback() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void handleEvent(DOMFileSystem*) = 0;
 };
 

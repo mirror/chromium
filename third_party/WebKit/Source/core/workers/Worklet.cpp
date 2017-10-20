@@ -120,7 +120,7 @@ void Worklet::FetchAndInvokeScript(const KURL& module_url_record,
   // document's responsible event loop. In our implementation, we use the
   // document's UnspecedLoading task runner as that is what we commonly use for
   // module loading.
-  scoped_refptr<WebTaskRunner> outside_settings_task_runner =
+  RefPtr<WebTaskRunner> outside_settings_task_runner =
       TaskRunnerHelper::Get(TaskType::kUnspecedLoading, GetExecutionContext());
 
   // Step 8: "Let moduleResponsesMap be worklet's module responses map."
@@ -164,7 +164,7 @@ size_t Worklet::SelectGlobalScope() const {
   return 0u;
 }
 
-void Worklet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Worklet) {
   visitor->Trace(proxies_);
   visitor->Trace(module_responses_map_);
   ContextLifecycleObserver::Trace(visitor);

@@ -67,7 +67,7 @@ class CORE_EXPORT PerformanceMonitor final
                                         const String& text,
                                         double time,
                                         SourceLocation*) {}
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
   static void ReportGenericViolation(ExecutionContext*,
@@ -110,7 +110,7 @@ class CORE_EXPORT PerformanceMonitor final
   explicit PerformanceMonitor(LocalFrame*);
   ~PerformanceMonitor();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class PerformanceMonitorTest;

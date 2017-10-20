@@ -39,8 +39,8 @@ class WebGLRenderbufferAttachment final
  public:
   static WebGLFramebuffer::WebGLAttachment* Create(WebGLRenderbuffer*);
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DECLARE_VIRTUAL_TRACE();
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappers(renderbuffer_);
   }
 
@@ -66,7 +66,7 @@ WebGLFramebuffer::WebGLAttachment* WebGLRenderbufferAttachment::Create(
   return new WebGLRenderbufferAttachment(renderbuffer);
 }
 
-void WebGLRenderbufferAttachment::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLRenderbufferAttachment) {
   visitor->Trace(renderbuffer_);
   WebGLFramebuffer::WebGLAttachment::Trace(visitor);
 }
@@ -76,7 +76,7 @@ WebGLRenderbufferAttachment::WebGLRenderbufferAttachment(
     : renderbuffer_(renderbuffer) {}
 
 WebGLSharedObject* WebGLRenderbufferAttachment::Object() const {
-  return renderbuffer_->Object() ? renderbuffer_.Get() : nullptr;
+  return renderbuffer_->Object() ? renderbuffer_.Get() : 0;
 }
 
 bool WebGLRenderbufferAttachment::IsSharedObject(
@@ -112,10 +112,8 @@ class WebGLTextureAttachment final : public WebGLFramebuffer::WebGLAttachment {
                                                    GLint level,
                                                    GLint layer);
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
-    visitor->TraceWrappers(texture_);
-  }
+  DECLARE_VIRTUAL_TRACE();
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() { visitor->TraceWrappers(texture_); }
 
  private:
   WebGLTextureAttachment(WebGLTexture*,
@@ -148,7 +146,7 @@ WebGLFramebuffer::WebGLAttachment* WebGLTextureAttachment::Create(
   return new WebGLTextureAttachment(texture, target, level, layer);
 }
 
-void WebGLTextureAttachment::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLTextureAttachment) {
   visitor->Trace(texture_);
   WebGLFramebuffer::WebGLAttachment::Trace(visitor);
 }
@@ -160,7 +158,7 @@ WebGLTextureAttachment::WebGLTextureAttachment(WebGLTexture* texture,
     : texture_(texture), target_(target), level_(level), layer_(layer) {}
 
 WebGLSharedObject* WebGLTextureAttachment::Object() const {
-  return texture_->Object() ? texture_.Get() : nullptr;
+  return texture_->Object() ? texture_.Get() : 0;
 }
 
 bool WebGLTextureAttachment::IsSharedObject(WebGLSharedObject* object) const {
@@ -312,7 +310,7 @@ WebGLSharedObject* WebGLFramebuffer::GetAttachmentObject(
 WebGLFramebuffer::WebGLAttachment* WebGLFramebuffer::GetAttachment(
     GLenum attachment) const {
   const AttachmentMap::const_iterator it = attachments_.find(attachment);
-  return (it != attachments_.end()) ? it->value.Get() : nullptr;
+  return (it != attachments_.end()) ? it->value.Get() : 0;
 }
 
 void WebGLFramebuffer::RemoveAttachmentFromBoundFramebuffer(
@@ -539,13 +537,12 @@ GLenum WebGLFramebuffer::GetDrawBuffer(GLenum draw_buffer) {
   return GL_NONE;
 }
 
-void WebGLFramebuffer::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLFramebuffer) {
   visitor->Trace(attachments_);
   WebGLContextObject::Trace(visitor);
 }
 
-void WebGLFramebuffer::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WebGLFramebuffer) {
   for (const auto& attachment : attachments_) {
     visitor->TraceWrappers(attachment.value);
   }

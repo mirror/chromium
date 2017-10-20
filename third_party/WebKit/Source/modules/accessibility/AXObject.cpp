@@ -720,10 +720,10 @@ void AXObject::UpdateCachedAttributeValuesIfNeeded() const {
   last_modification_count_ = cache.ModificationCount();
   cached_background_color_ = ComputeBackgroundColor();
   cached_is_inert_or_aria_hidden_ = ComputeIsInertOrAriaHidden();
-  cached_is_descendant_of_leaf_node_ = !!LeafNodeAncestor();
-  cached_is_descendant_of_disabled_node_ = !!DisabledAncestor();
+  cached_is_descendant_of_leaf_node_ = (LeafNodeAncestor() != 0);
+  cached_is_descendant_of_disabled_node_ = (DisabledAncestor() != 0);
   cached_has_inherited_presentational_role_ =
-      !!InheritsPresentationalRoleFrom();
+      (InheritsPresentationalRoleFrom() != 0);
   cached_is_ignored_ = ComputeAccessibilityIsIgnored();
   cached_is_editable_root_ =
       GetNode() ? IsNativeTextControl() || IsRootEditableElement(*GetNode())
@@ -829,7 +829,7 @@ AXObject* AXObject::LeafNodeAncestor() const {
     return parent->LeafNodeAncestor();
   }
 
-  return nullptr;
+  return 0;
 }
 
 const AXObject* AXObject::AriaHiddenRoot() const {
@@ -838,13 +838,13 @@ const AXObject* AXObject::AriaHiddenRoot() const {
       return object;
   }
 
-  return nullptr;
+  return 0;
 }
 
 const AXObject* AXObject::InertRoot() const {
   const AXObject* object = this;
   if (!RuntimeEnabledFeatures::InertAttributeEnabled())
-    return nullptr;
+    return 0;
 
   while (object && !object->IsAXNodeObject())
     object = object->ParentObject();
@@ -858,7 +858,7 @@ const AXObject* AXObject::InertRoot() const {
     element = FlatTreeTraversal::ParentElement(*element);
   }
 
-  return nullptr;
+  return 0;
 }
 
 bool AXObject::DispatchEventToAOMEventListeners(Event& event,
@@ -1687,7 +1687,7 @@ const AXObject::AXObjectVector& AXObject::Children() {
 
 AXObject* AXObject::ParentObject() const {
   if (IsDetached())
-    return nullptr;
+    return 0;
 
   if (parent_)
     return parent_;
@@ -1700,7 +1700,7 @@ AXObject* AXObject::ParentObject() const {
 
 AXObject* AXObject::ParentObjectIfExists() const {
   if (IsDetached())
-    return nullptr;
+    return 0;
 
   if (parent_)
     return parent_;
@@ -1781,7 +1781,7 @@ Element* AXObject::GetElement() const {
 Document* AXObject::GetDocument() const {
   LocalFrameView* frame_view = DocumentFrameView();
   if (!frame_view)
-    return nullptr;
+    return 0;
 
   return frame_view->GetFrame().GetDocument();
 }
@@ -1792,7 +1792,7 @@ LocalFrameView* AXObject::DocumentFrameView() const {
     object = object->ParentObject();
 
   if (!object)
-    return nullptr;
+    return 0;
 
   return object->DocumentFrameView();
 }
@@ -2492,7 +2492,7 @@ std::ostream& operator<<(std::ostream& stream, const AXObject& obj) {
                 << obj.ComputedName();
 }
 
-void AXObject::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AXObject) {
   visitor->Trace(children_);
   visitor->Trace(parent_);
   visitor->Trace(cached_live_region_root_);

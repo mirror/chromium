@@ -54,9 +54,7 @@ class WebPepperSocketChannelClientProxy final
     impl->DidClose(status, code, reason);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    WebSocketChannelClient::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { WebSocketChannelClient::Trace(visitor); }
 
  private:
   explicit WebPepperSocketChannelClientProxy(WebPepperSocketImpl* impl)

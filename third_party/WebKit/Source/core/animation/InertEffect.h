@@ -47,13 +47,13 @@ class CORE_EXPORT InertEffect final : public AnimationEffectReadOnly {
                              const Timing&,
                              bool paused,
                              double inherited_time);
-  void Sample(Vector<scoped_refptr<Interpolation>>&) const;
+  void Sample(Vector<RefPtr<Interpolation>>&) const;
   EffectModel* Model() const { return model_.Get(); }
   bool Paused() const { return paused_; }
 
   bool IsInertEffect() const final { return true; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   void UpdateChildrenAndEffects() const override {}

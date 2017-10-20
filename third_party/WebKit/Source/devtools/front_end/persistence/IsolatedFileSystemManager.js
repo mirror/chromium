@@ -43,8 +43,6 @@ Persistence.IsolatedFileSystemManager = class extends Common.Object {
     this._progresses = new Map();
 
     InspectorFrontendHost.events.addEventListener(
-        InspectorFrontendHostAPI.Events.FailedToAddFileSystem, this._onFailedToAddFilesystem, this);
-    InspectorFrontendHost.events.addEventListener(
         InspectorFrontendHostAPI.Events.FileSystemRemoved, this._onFileSystemRemoved, this);
     InspectorFrontendHost.events.addEventListener(
         InspectorFrontendHostAPI.Events.FileSystemAdded, this._onFileSystemAdded, this);
@@ -97,10 +95,6 @@ Persistence.IsolatedFileSystemManager = class extends Common.Object {
 
   addFileSystem() {
     InspectorFrontendHost.addFileSystem('');
-  }
-
-  _onFailedToAddFilesystem() {
-    // TODO(dgozman): use it.
   }
 
   /**

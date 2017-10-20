@@ -21,7 +21,6 @@
 namespace gfx {
 class Display;
 class Point;
-class PointF;
 class Rect;
 class Size;
 }   // namespace gfx
@@ -41,7 +40,7 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // Converts a screen physical point to a screen DIP point.
   // The DPI scale is performed relative to the display containing the physical
   // point.
-  static gfx::PointF ScreenToDIPPoint(const gfx::PointF& pixel_point);
+  static gfx::Point ScreenToDIPPoint(const gfx::Point& pixel_point);
 
   // Converts a screen DIP point to a screen physical point.
   // The DPI scale is performed relative to the display containing the DIP

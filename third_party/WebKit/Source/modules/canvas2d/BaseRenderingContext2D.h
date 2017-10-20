@@ -268,7 +268,7 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   String textBaseline() const;
   void setTextBaseline(const String&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   enum DrawCallType {
     kStrokePath = 0,

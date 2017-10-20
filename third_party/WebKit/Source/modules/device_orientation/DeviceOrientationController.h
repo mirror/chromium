@@ -33,7 +33,7 @@ class MODULES_EXPORT DeviceOrientationController
   void SetOverride(DeviceOrientationData*);
   void ClearOverride();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit DeviceOrientationController(Document&);

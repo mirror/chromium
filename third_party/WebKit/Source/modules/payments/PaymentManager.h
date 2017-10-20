@@ -30,7 +30,7 @@ class MODULES_EXPORT PaymentManager final
   const String& userHint();
   void setUserHint(const String&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit PaymentManager(ServiceWorkerRegistration*);

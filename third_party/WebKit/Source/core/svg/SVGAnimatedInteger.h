@@ -60,9 +60,9 @@ class SVGAnimatedInteger : public SVGAnimatedProperty<SVGInteger>,
     parent_integer_optional_integer_ = number_optional_integer;
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   SVGAnimatedInteger(SVGElement* context_element,

@@ -34,7 +34,7 @@ uint32_t RTCRtpContributingSource::source() const {
   return source_;
 }
 
-void RTCRtpContributingSource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCRtpContributingSource) {
   visitor->Trace(receiver_);
 }
 

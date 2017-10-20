@@ -138,7 +138,7 @@ int Screen::availWidth() const {
   return page->GetChromeClient().GetScreenInfo().available_rect.width;
 }
 
-void Screen::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Screen) {
   DOMWindowClient::Trace(visitor);
   Supplementable<Screen>::Trace(visitor);
 }

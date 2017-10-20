@@ -182,10 +182,6 @@
       this._dispatchOnInspectorFrontendAPI('fileSystemAdded', ['', fileSystem]);
     }
 
-    failedToAddFileSystem() {
-      this._dispatchOnInspectorFrontendAPI('failedToAddFileSystem', []);
-    }
-
     /**
      * @param {!Array<string>} changedPaths
      * @param {!Array<string>} addedPaths

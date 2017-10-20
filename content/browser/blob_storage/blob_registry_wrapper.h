@@ -7,7 +7,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "content/public/browser/browser_thread.h"
-#include "third_party/WebKit/common/blob/blob_registry.mojom.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 
 namespace storage {
 class BlobRegistryImpl;
@@ -31,7 +31,8 @@ class BlobRegistryWrapper
       scoped_refptr<ChromeBlobStorageContext> blob_storage_context,
       scoped_refptr<storage::FileSystemContext> file_system_context);
 
-  void Bind(int process_id, blink::mojom::BlobRegistryRequest request);
+  void Bind(int process_id,
+            storage::mojom::BlobRegistryRequest request);
 
  private:
   BlobRegistryWrapper();

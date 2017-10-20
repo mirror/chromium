@@ -25,7 +25,7 @@ class ScreenScreenOrientation final
 
   static ScreenOrientation* orientation(ScriptState*, Screen&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   static const char* SupplementName();

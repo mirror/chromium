@@ -155,7 +155,7 @@ WebLocalFrameImpl* CreateLocalChild(
 // Helper for creating a remote child frame of a remote parent frame.
 WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame& parent,
                                       const WebString& name = WebString(),
-                                      scoped_refptr<SecurityOrigin> = nullptr,
+                                      RefPtr<SecurityOrigin> = nullptr,
                                       TestWebRemoteFrameClient* = nullptr);
 
 // Forces to use mocked overlay scrollbars instead of the default native theme
@@ -173,6 +173,7 @@ class UseMockScrollbarSettings {
             RuntimeEnabledFeatures::OverlayScrollbarsEnabled()) {
     Settings::SetMockScrollbarsEnabled(true);
     RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(true);
+    EXPECT_TRUE(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
   }
 
   UseMockScrollbarSettings(bool use_mock, bool use_overlay)
@@ -284,7 +285,7 @@ class WebViewHelper {
   // nullptr as the SecurityOrigin results in a frame with a unique security
   // origin.
   WebViewImpl* InitializeRemote(TestWebRemoteFrameClient* = nullptr,
-                                scoped_refptr<SecurityOrigin> = nullptr,
+                                RefPtr<SecurityOrigin> = nullptr,
                                 TestWebViewClient* = nullptr);
 
   // Load the 'Ahem' font to this WebView.

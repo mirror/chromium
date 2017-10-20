@@ -191,6 +191,7 @@ ProcessMemoryMetricsEmitter::~ProcessMemoryMetricsEmitter() {}
 
 void ProcessMemoryMetricsEmitter::ReceivedMemoryDump(
     bool success,
+    uint64_t dump_guid,
     memory_instrumentation::mojom::GlobalMemoryDumpPtr ptr) {
   memory_dump_in_progress_ = false;
   if (!success)

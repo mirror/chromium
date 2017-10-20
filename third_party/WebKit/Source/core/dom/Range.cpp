@@ -498,7 +498,7 @@ bool Range::intersectsNode(Node* ref_node, ExceptionState& exception_state) {
 static inline Node* HighestAncestorUnderCommonRoot(Node* node,
                                                    Node* common_root) {
   if (node == common_root)
-    return nullptr;
+    return 0;
 
   DCHECK(common_root->contains(node));
 
@@ -515,7 +515,7 @@ static inline Node* ChildOfCommonRootBeforeOffset(Node* container,
   DCHECK(common_root);
 
   if (!common_root->contains(container))
-    return nullptr;
+    return 0;
 
   if (container == common_root) {
     container = container->firstChild();
@@ -1518,12 +1518,12 @@ static inline void BoundaryTextNodesMerged(RangeBoundaryPoint& boundary,
   if (boundary.Container() == old_node.GetNode()) {
     Node* const previous_sibling = old_node.GetNode().previousSibling();
     DCHECK(previous_sibling);
-    boundary.Set(*previous_sibling, boundary.Offset() + offset, nullptr);
+    boundary.Set(*previous_sibling, boundary.Offset() + offset, 0);
   } else if (boundary.Container() == old_node.GetNode().parentNode() &&
              boundary.Offset() == static_cast<unsigned>(old_node.Index())) {
     Node* const previous_sibling = old_node.GetNode().previousSibling();
     DCHECK(previous_sibling);
-    boundary.Set(*previous_sibling, offset, nullptr);
+    boundary.Set(*previous_sibling, offset, 0);
   }
 }
 
@@ -1557,7 +1557,7 @@ static inline void BoundaryTextNodeSplit(RangeBoundaryPoint& boundary,
              boundary_offset > old_node.length()) {
     Node* const next_sibling = old_node.nextSibling();
     DCHECK(next_sibling);
-    boundary.Set(*next_sibling, boundary_offset - old_node.length(), nullptr);
+    boundary.Set(*next_sibling, boundary_offset - old_node.length(), 0);
   }
 }
 
@@ -1782,7 +1782,7 @@ void Range::RemoveFromSelectionIfInDifferentRoot(Document& old_document) {
   selection.ClearDocumentCachedRange();
 }
 
-void Range::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Range) {
   visitor->Trace(owner_document_);
   visitor->Trace(start_);
   visitor->Trace(end_);

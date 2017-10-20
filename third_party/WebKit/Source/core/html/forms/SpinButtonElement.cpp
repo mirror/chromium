@@ -210,9 +210,7 @@ bool SpinButtonElement::MatchesReadWritePseudoClass() const {
 
 void SpinButtonElement::StartRepeatingTimer() {
   press_starting_state_ = up_down_state_;
-  Page* page = GetDocument().GetPage();
-  DCHECK(page);
-  ScrollbarTheme& theme = page->GetScrollbarTheme();
+  ScrollbarTheme& theme = ScrollbarTheme::GetTheme();
   repeating_timer_.Start(theme.InitialAutoscrollTimerDelay(),
                          theme.AutoscrollTimerDelay(), BLINK_FROM_HERE);
 }
@@ -250,7 +248,7 @@ bool SpinButtonElement::ShouldRespondToMouseEvents() {
          spin_button_owner_->ShouldSpinButtonRespondToMouseEvents();
 }
 
-void SpinButtonElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SpinButtonElement) {
   visitor->Trace(spin_button_owner_);
   HTMLDivElement::Trace(visitor);
 }

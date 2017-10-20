@@ -26,7 +26,7 @@ class CSSRayValue : public CSSValue {
 
   bool Equals(const CSSRayValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSRayValue(const CSSPrimitiveValue& angle,

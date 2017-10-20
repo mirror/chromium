@@ -51,7 +51,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
 
  public:
   static HTMLVideoElement* Create(Document&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   bool HasPendingActivity() const final;
 
@@ -119,10 +119,10 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   KURL PosterImageURL() const override;
 
   // CanvasImageSource implementation
-  scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
-                                               AccelerationHint,
-                                               SnapshotReason,
-                                               const FloatSize&) override;
+  RefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
+                                        AccelerationHint,
+                                        SnapshotReason,
+                                        const FloatSize&) override;
   bool IsVideoElement() const override { return true; }
   bool WouldTaintOrigin(SecurityOrigin*) const override;
   FloatSize ElementSize(const FloatSize&) const override;

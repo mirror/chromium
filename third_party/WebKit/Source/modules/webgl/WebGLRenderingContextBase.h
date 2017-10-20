@@ -563,9 +563,9 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
 
   unsigned MaxVertexAttribs() const { return max_vertex_attribs_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   // Returns approximate gpu memory allocated per pixel.
   int ExternallyAllocatedBytesPerPixel() override;
@@ -579,7 +579,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     TraceWrapperMember<WebGLTexture> texture3d_binding_;
     TraceWrapperMember<WebGLTexture> texture2d_array_binding_;
 
-    void Trace(blink::Visitor*);
+    DECLARE_TRACE();
     // Wrappers are traced by parent since TextureUnitState is not a heap
     // object.
   };
@@ -822,7 +822,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     // This is only used for keeping the JS wrappers of extensions alive.
     virtual WebGLExtension* GetExtensionObjectIfAlreadyEnabled() = 0;
 
-    virtual void Trace(blink::Visitor* visitor) {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
 
    private:
     bool draft_;
@@ -865,12 +865,12 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
       return extension_;
     }
 
-    virtual void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_VIRTUAL_TRACE() {
       visitor->Trace(extension_);
       ExtensionTracker::Trace(visitor);
     }
 
-    virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
       visitor->TraceWrappers(extension_);
       ExtensionTracker::TraceWrappers(visitor);
     }

@@ -89,7 +89,7 @@ bool DeviceSingleWindowEventController::IsSameSecurityOriginAsMainFrame()
   return false;
 }
 
-void DeviceSingleWindowEventController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DeviceSingleWindowEventController) {
   visitor->Trace(document_);
   PlatformEventController::Trace(visitor);
 }

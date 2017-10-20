@@ -54,7 +54,7 @@ class CORE_EXPORT AXObjectCache
   static AXObjectCache* Create(Document&);
 
   virtual ~AXObjectCache();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   enum AXNotification {
     kAXActiveDescendantChanged,

@@ -49,7 +49,7 @@ class CORE_EXPORT ArrayBufferOrArrayBufferViewOrDictionary final {
   ArrayBufferOrArrayBufferViewOrDictionary(const ArrayBufferOrArrayBufferViewOrDictionary&);
   ~ArrayBufferOrArrayBufferViewOrDictionary();
   ArrayBufferOrArrayBufferViewOrDictionary& operator=(const ArrayBufferOrArrayBufferViewOrDictionary&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum class SpecificType {

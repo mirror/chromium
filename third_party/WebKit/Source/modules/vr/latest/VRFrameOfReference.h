@@ -33,7 +33,7 @@ class VRFrameOfReference final : public VRCoordinateSystem {
 
   Type type() const { return type_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   Member<VRStageBounds> bounds_;

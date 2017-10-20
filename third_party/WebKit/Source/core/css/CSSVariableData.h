@@ -22,14 +22,14 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
   USING_FAST_MALLOC(CSSVariableData);
 
  public:
-  static scoped_refptr<CSSVariableData> Create(const CSSParserTokenRange& range,
-                                               bool is_animation_tainted,
-                                               bool needs_variable_resolution) {
+  static RefPtr<CSSVariableData> Create(const CSSParserTokenRange& range,
+                                        bool is_animation_tainted,
+                                        bool needs_variable_resolution) {
     return WTF::AdoptRef(new CSSVariableData(range, is_animation_tainted,
                                              needs_variable_resolution));
   }
 
-  static scoped_refptr<CSSVariableData> CreateResolved(
+  static RefPtr<CSSVariableData> CreateResolved(
       const Vector<CSSParserToken>& resolved_tokens,
       Vector<String> backing_strings,
       bool is_animation_tainted) {

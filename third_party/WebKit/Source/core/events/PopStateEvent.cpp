@@ -87,12 +87,12 @@ const AtomicString& PopStateEvent::InterfaceName() const {
   return EventNames::PopStateEvent;
 }
 
-void PopStateEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PopStateEvent) {
   visitor->Trace(history_);
   Event::Trace(visitor);
 }
 
-void PopStateEvent::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(PopStateEvent) {
   visitor->TraceWrappers(state_);
   Event::TraceWrappers(visitor);
 }

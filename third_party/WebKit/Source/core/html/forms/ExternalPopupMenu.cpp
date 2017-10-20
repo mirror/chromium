@@ -70,11 +70,11 @@ ExternalPopupMenu::ExternalPopupMenu(LocalFrame& frame,
           TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &frame),
           this,
           &ExternalPopupMenu::DispatchEvent),
-      web_external_popup_menu_(nullptr) {}
+      web_external_popup_menu_(0) {}
 
 ExternalPopupMenu::~ExternalPopupMenu() {}
 
-void ExternalPopupMenu::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ExternalPopupMenu) {
   visitor->Trace(owner_element_);
   visitor->Trace(local_frame_);
   PopupMenu::Trace(visitor);
@@ -85,7 +85,7 @@ bool ExternalPopupMenu::ShowInternal() {
   // recreate the actual external popup everytime.
   if (web_external_popup_menu_) {
     web_external_popup_menu_->Close();
-    web_external_popup_menu_ = nullptr;
+    web_external_popup_menu_ = 0;
   }
 
   WebPopupMenuInfo info;
@@ -144,7 +144,7 @@ void ExternalPopupMenu::Hide() {
   if (!web_external_popup_menu_)
     return;
   web_external_popup_menu_->Close();
-  web_external_popup_menu_ = nullptr;
+  web_external_popup_menu_ = 0;
 }
 
 void ExternalPopupMenu::UpdateFromElement(UpdateReason reason) {
@@ -200,13 +200,13 @@ void ExternalPopupMenu::DidAcceptIndex(int index) {
     owner_element_->PopupDidHide();
     owner_element_->SelectOptionByPopup(popup_menu_item_index);
   }
-  web_external_popup_menu_ = nullptr;
+  web_external_popup_menu_ = 0;
 }
 
 // Android uses this function even for single SELECT.
 void ExternalPopupMenu::DidAcceptIndices(const WebVector<int>& indices) {
   if (!owner_element_) {
-    web_external_popup_menu_ = nullptr;
+    web_external_popup_menu_ = 0;
     return;
   }
 
@@ -226,13 +226,13 @@ void ExternalPopupMenu::DidAcceptIndices(const WebVector<int>& indices) {
     owner_element->SelectMultipleOptionsByPopup(list_indices);
   }
 
-  web_external_popup_menu_ = nullptr;
+  web_external_popup_menu_ = 0;
 }
 
 void ExternalPopupMenu::DidCancel() {
   if (owner_element_)
     owner_element_->PopupDidHide();
-  web_external_popup_menu_ = nullptr;
+  web_external_popup_menu_ = 0;
 }
 
 void ExternalPopupMenu::GetPopupMenuInfo(WebPopupMenuInfo& info,

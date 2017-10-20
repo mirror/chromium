@@ -89,10 +89,11 @@
     flex: auto;
     overflow: hidden;
     text-align: right;
+    color: #333 !important;
 }
 
-.toolbar-button.dark-text .toolbar-dropdown-arrow {
-    background-color: #333;
+.toolbar-button .toolbar-dropdown-arrow {
+    background-color: #333 !important;
 }
 
 .toolbar-has-glyph .toolbar-text {
@@ -123,10 +124,6 @@
 
 .toolbar-button:disabled {
     opacity: 0.5;
-}
-
-.toolbar-button.dark-text .toolbar-text{
-    color: #333 !important;
 }
 
 :not(.toolbar-render-as-links) .toolbar-button:enabled.hover:not(:active) .toolbar-glyph {

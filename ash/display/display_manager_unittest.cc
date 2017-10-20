@@ -1487,12 +1487,12 @@ TEST_F(DisplayManagerTest, DontRememberBestResolution) {
   display::ManagedDisplayInfo native_display_info =
       CreateDisplayInfo(display_id, gfx::Rect(0, 0, 1000, 500));
   display::ManagedDisplayInfo::ManagedDisplayModeList display_modes;
-  display_modes.push_back(
-      display::ManagedDisplayMode(gfx::Size(1000, 500), 58.0f, false, true));
-  display_modes.push_back(
-      display::ManagedDisplayMode(gfx::Size(800, 300), 59.0f, false, false));
-  display_modes.push_back(
-      display::ManagedDisplayMode(gfx::Size(400, 500), 60.0f, false, false));
+  display_modes.push_back(base::MakeRefCounted<display::ManagedDisplayMode>(
+      gfx::Size(1000, 500), 58.0f, false, true));
+  display_modes.push_back(base::MakeRefCounted<display::ManagedDisplayMode>(
+      gfx::Size(800, 300), 59.0f, false, false));
+  display_modes.push_back(base::MakeRefCounted<display::ManagedDisplayMode>(
+      gfx::Size(400, 500), 60.0f, false, false));
 
   native_display_info.SetManagedDisplayModes(display_modes);
 
@@ -1500,57 +1500,53 @@ TEST_F(DisplayManagerTest, DontRememberBestResolution) {
   display_info_list.push_back(native_display_info);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
 
-  display::ManagedDisplayMode expected_mode(gfx::Size(1000, 500), 0.0f, false,
-                                            false);
+  scoped_refptr<display::ManagedDisplayMode> mode;
+  scoped_refptr<display::ManagedDisplayMode> expected_mode(
+      new display::ManagedDisplayMode(gfx::Size(1000, 500), 0.0f, false,
+                                      false));
 
-  display::ManagedDisplayMode mode;
-  EXPECT_FALSE(
-      display_manager()->GetSelectedModeForDisplayId(display_id, &mode));
-  display::ManagedDisplayMode active_mode;
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  mode = display_manager()->GetSelectedModeForDisplayId(display_id);
+  EXPECT_FALSE(!!mode);
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
 
   // Unsupported resolution.
   display::test::SetDisplayResolution(display_manager(), display_id,
                                       gfx::Size(800, 4000));
-  EXPECT_FALSE(
-      display_manager()->GetSelectedModeForDisplayId(display_id, &mode));
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  mode = display_manager()->GetSelectedModeForDisplayId(display_id);
+  EXPECT_FALSE(!!mode);
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
 
   // Supported resolution.
   display::test::SetDisplayResolution(display_manager(), display_id,
                                       gfx::Size(800, 300));
-  EXPECT_TRUE(
-      display_manager()->GetSelectedModeForDisplayId(display_id, &mode));
-  EXPECT_EQ("800x300", mode.size().ToString());
-  EXPECT_EQ(59.0f, mode.refresh_rate());
-  EXPECT_FALSE(mode.native());
+  mode = display_manager()->GetSelectedModeForDisplayId(display_id);
+  EXPECT_TRUE(!!mode);
+  EXPECT_EQ("800x300", mode->size().ToString());
+  EXPECT_EQ(59.0f, mode->refresh_rate());
+  EXPECT_FALSE(mode->native());
 
   expected_mode =
-      display::ManagedDisplayMode(gfx::Size(800, 300), 0.0f, false, false);
+      new display::ManagedDisplayMode(gfx::Size(800, 300), 0.0f, false, false);
 
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
 
   // Best resolution.
   display::test::SetDisplayResolution(display_manager(), display_id,
                                       gfx::Size(1000, 500));
-  EXPECT_TRUE(
-      display_manager()->GetSelectedModeForDisplayId(display_id, &mode));
-  EXPECT_EQ("1000x500", mode.size().ToString());
-  EXPECT_EQ(58.0f, mode.refresh_rate());
-  EXPECT_TRUE(mode.native());
+  mode = display_manager()->GetSelectedModeForDisplayId(display_id);
+  EXPECT_TRUE(!!mode);
+  EXPECT_EQ("1000x500", mode->size().ToString());
+  EXPECT_EQ(58.0f, mode->refresh_rate());
+  EXPECT_TRUE(mode->native());
 
   expected_mode =
-      display::ManagedDisplayMode(gfx::Size(1000, 500), 0.0f, false, false);
+      new display::ManagedDisplayMode(gfx::Size(1000, 500), 0.0f, false, false);
 
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
 }
 
 TEST_F(DisplayManagerTest, ResolutionFallback) {
@@ -1558,12 +1554,12 @@ TEST_F(DisplayManagerTest, ResolutionFallback) {
   display::ManagedDisplayInfo native_display_info =
       CreateDisplayInfo(display_id, gfx::Rect(0, 0, 1000, 500));
   display::ManagedDisplayInfo::ManagedDisplayModeList display_modes;
-  display_modes.push_back(
-      display::ManagedDisplayMode(gfx::Size(1000, 500), 58.0f, false, true));
-  display_modes.push_back(
-      display::ManagedDisplayMode(gfx::Size(800, 300), 59.0f, false, false));
-  display_modes.push_back(
-      display::ManagedDisplayMode(gfx::Size(400, 500), 60.0f, false, false));
+  display_modes.push_back(base::MakeRefCounted<display::ManagedDisplayMode>(
+      gfx::Size(1000, 500), 58.0f, false, true));
+  display_modes.push_back(base::MakeRefCounted<display::ManagedDisplayMode>(
+      gfx::Size(800, 300), 59.0f, false, false));
+  display_modes.push_back(base::MakeRefCounted<display::ManagedDisplayMode>(
+      gfx::Size(400, 500), 60.0f, false, false));
 
   display::ManagedDisplayInfo::ManagedDisplayModeList copy = display_modes;
   native_display_info.SetManagedDisplayModes(copy);
@@ -1582,12 +1578,12 @@ TEST_F(DisplayManagerTest, ResolutionFallback) {
     new_display_info_list.push_back(new_native_display_info);
     display_manager()->OnNativeDisplaysChanged(new_display_info_list);
 
-    display::ManagedDisplayMode mode;
-    EXPECT_TRUE(
-        display_manager()->GetSelectedModeForDisplayId(display_id, &mode));
-    EXPECT_EQ("400x500", mode.size().ToString());
-    EXPECT_EQ(60.0f, mode.refresh_rate());
-    EXPECT_FALSE(mode.native());
+    scoped_refptr<display::ManagedDisplayMode> mode =
+        display_manager()->GetSelectedModeForDisplayId(display_id);
+    EXPECT_TRUE(!!mode);
+    EXPECT_EQ("400x500", mode->size().ToString());
+    EXPECT_EQ(60.0f, mode->refresh_rate());
+    EXPECT_FALSE(mode->native());
   }
   {
     // Best resolution should find itself on the resolutions list.
@@ -1601,12 +1597,12 @@ TEST_F(DisplayManagerTest, ResolutionFallback) {
     new_display_info_list.push_back(new_native_display_info);
     display_manager()->OnNativeDisplaysChanged(new_display_info_list);
 
-    display::ManagedDisplayMode mode;
-    EXPECT_TRUE(
-        display_manager()->GetSelectedModeForDisplayId(display_id, &mode));
-    EXPECT_EQ("1000x500", mode.size().ToString());
-    EXPECT_EQ(58.0f, mode.refresh_rate());
-    EXPECT_TRUE(mode.native());
+    scoped_refptr<display::ManagedDisplayMode> mode =
+        display_manager()->GetSelectedModeForDisplayId(display_id);
+    EXPECT_TRUE(!!mode);
+    EXPECT_EQ("1000x500", mode->size().ToString());
+    EXPECT_EQ(58.0f, mode->refresh_rate());
+    EXPECT_TRUE(mode->native());
   }
 }
 
@@ -1815,8 +1811,9 @@ TEST_F(DisplayManagerTest, UIScaleWithDisplayMode) {
   // Setup the display modes with UI-scale.
   display::ManagedDisplayInfo native_display_info =
       CreateDisplayInfo(display_id, gfx::Rect(0, 0, 1280, 800));
-  const display::ManagedDisplayMode base_mode(gfx::Size(1280, 800), 60.0f,
-                                              false, false);
+  const scoped_refptr<display::ManagedDisplayMode>& base_mode(
+      new display::ManagedDisplayMode(gfx::Size(1280, 800), 60.0f, false,
+                                      false));
   display::ManagedDisplayInfo::ManagedDisplayModeList mode_list =
       CreateInternalManagedDisplayModeList(base_mode);
   native_display_info.SetManagedDisplayModes(mode_list);
@@ -1825,11 +1822,9 @@ TEST_F(DisplayManagerTest, UIScaleWithDisplayMode) {
   display_info_list.push_back(native_display_info);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
 
-  display::ManagedDisplayMode expected_mode = base_mode;
-  display::ManagedDisplayMode active_mode;
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  scoped_refptr<display::ManagedDisplayMode> expected_mode = base_mode;
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
 
   display::test::ScopedSetInternalDisplayId set_internal(display_manager(),
                                                          display_id);
@@ -1837,84 +1832,78 @@ TEST_F(DisplayManagerTest, UIScaleWithDisplayMode) {
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 1.5f);
   EXPECT_EQ(1.0f, GetDisplayInfoAt(0).configured_ui_scale());
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 1.25f);
   EXPECT_EQ(1.0f, GetDisplayInfoAt(0).configured_ui_scale());
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 1.125f);
   EXPECT_EQ(1.125f, GetDisplayInfoAt(0).configured_ui_scale());
 
-  expected_mode = display::ManagedDisplayMode(
-      expected_mode.size(), expected_mode.refresh_rate(),
-      expected_mode.is_interlaced(), expected_mode.native(),
-      1.125f /* ui_scale */, expected_mode.device_scale_factor());
+  expected_mode = new display::ManagedDisplayMode(
+      expected_mode->size(), expected_mode->refresh_rate(),
+      expected_mode->is_interlaced(), expected_mode->native(),
+      1.125f /* ui_scale */, expected_mode->device_scale_factor());
 
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 0.8f);
   EXPECT_EQ(0.8f, GetDisplayInfoAt(0).configured_ui_scale());
 
-  expected_mode = display::ManagedDisplayMode(
-      expected_mode.size(), expected_mode.refresh_rate(),
-      expected_mode.is_interlaced(), expected_mode.native(),
-      0.8f /* ui_scale */, expected_mode.device_scale_factor());
+  expected_mode = new display::ManagedDisplayMode(
+      expected_mode->size(), expected_mode->refresh_rate(),
+      expected_mode->is_interlaced(), expected_mode->native(),
+      0.8f /* ui_scale */, expected_mode->device_scale_factor());
 
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 0.75f);
   EXPECT_EQ(0.8f, GetDisplayInfoAt(0).configured_ui_scale());
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 0.625f);
   EXPECT_EQ(0.625f, GetDisplayInfoAt(0).configured_ui_scale());
 
-  expected_mode = display::ManagedDisplayMode(
-      expected_mode.size(), expected_mode.refresh_rate(),
-      expected_mode.is_interlaced(), expected_mode.native(),
-      0.625f /* ui_scale */, expected_mode.device_scale_factor());
+  expected_mode = new display::ManagedDisplayMode(
+      expected_mode->size(), expected_mode->refresh_rate(),
+      expected_mode->is_interlaced(), expected_mode->native(),
+      0.625f /* ui_scale */, expected_mode->device_scale_factor());
 
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 0.6f);
   EXPECT_EQ(0.625f, GetDisplayInfoAt(0).configured_ui_scale());
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
   display::test::DisplayManagerTestApi(display_manager())
       .SetDisplayUIScale(display_id, 0.5f);
   EXPECT_EQ(0.5f, GetDisplayInfoAt(0).configured_ui_scale());
 
-  expected_mode = display::ManagedDisplayMode(
-      expected_mode.size(), expected_mode.refresh_rate(),
-      expected_mode.is_interlaced(), expected_mode.native(),
-      0.5f /* ui_scale */, expected_mode.device_scale_factor());
+  expected_mode = new display::ManagedDisplayMode(
+      expected_mode->size(), expected_mode->refresh_rate(),
+      expected_mode->is_interlaced(), expected_mode->native(),
+      0.5f /* ui_scale */, expected_mode->device_scale_factor());
 
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
 }
 
 // Tests that ResetInternalDisplayZoom() resets to the default 0.8f UI scale
 // defined for the 1.25x displays.
 TEST_F(DisplayManagerTest, ResetInternalDisplayZoomFor1_25x) {
   // Setup the display modes with UI-scale.
-  display::ManagedDisplayMode base_mode(
-      gfx::Size(1920, 1080), 60.0f, false /* is_interlaced */,
-      true /* native */, 1.0f /* ui_scale */, 1.25f /* device_scale_factor */);
+  const scoped_refptr<display::ManagedDisplayMode> base_mode(
+      new display::ManagedDisplayMode(gfx::Size(1920, 1080), 60.0f,
+                                      false /* is_interlaced */,
+                                      true /* native */, 1.0f /* ui_scale */,
+                                      1.25f /* device_scale_factor */));
   display::ManagedDisplayInfo::ManagedDisplayModeList mode_list =
       CreateInternalManagedDisplayModeList(base_mode);
 
@@ -1928,11 +1917,9 @@ TEST_F(DisplayManagerTest, ResetInternalDisplayZoomFor1_25x) {
   display_info_list.push_back(native_display_info);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
 
-  display::ManagedDisplayMode expected_mode = base_mode;
-  display::ManagedDisplayMode active_mode;
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(display_id, &active_mode));
-  EXPECT_TRUE(expected_mode.IsEquivalent(active_mode));
+  scoped_refptr<display::ManagedDisplayMode> expected_mode = base_mode;
+  EXPECT_TRUE(expected_mode->IsEquivalent(
+      display_manager()->GetActiveModeForDisplayId(display_id)));
 
   display::test::ScopedSetInternalDisplayId set_internal(display_manager(),
                                                          display_id);
@@ -1993,8 +1980,9 @@ TEST_F(DisplayManagerTest, FHD125DefaultsTo08UIScaling) {
       CreateDisplayInfo(display_id, gfx::Rect(0, 0, 1920, 1080));
   native_display_info.set_device_scale_factor(1.25);
 
-  const display::ManagedDisplayMode base_mode(gfx::Size(1920, 1080), 60.0f,
-                                              false, false);
+  const scoped_refptr<display::ManagedDisplayMode>& base_mode(
+      new display::ManagedDisplayMode(gfx::Size(1920, 1080), 60.0f, false,
+                                      false));
   display::ManagedDisplayInfo::ManagedDisplayModeList mode_list =
       CreateInternalManagedDisplayModeList(base_mode);
   native_display_info.SetManagedDisplayModes(mode_list);
@@ -2026,8 +2014,9 @@ TEST_F(DisplayManagerTest, FHD125DefaultsTo08UIScalingNoOverride) {
       CreateDisplayInfo(display_id, gfx::Rect(0, 0, 1920, 1080));
   native_display_info.set_device_scale_factor(1.25);
 
-  const display::ManagedDisplayMode base_mode(gfx::Size(1920, 1080), 60.0f,
-                                              false, false);
+  const scoped_refptr<display::ManagedDisplayMode>& base_mode(
+      new display::ManagedDisplayMode(gfx::Size(1920, 1080), 60.0f, false,
+                                      false));
   display::ManagedDisplayInfo::ManagedDisplayModeList mode_list =
       CreateInternalManagedDisplayModeList(base_mode);
   native_display_info.SetManagedDisplayModes(mode_list);
@@ -2053,18 +2042,17 @@ TEST_F(DisplayManagerTest, ResolutionChangeInUnifiedMode) {
   display::ManagedDisplayInfo info =
       display_manager()->GetDisplayInfo(unified_id);
   ASSERT_EQ(2u, info.display_modes().size());
-  EXPECT_EQ("400x200", info.display_modes()[0].size().ToString());
-  EXPECT_TRUE(info.display_modes()[0].native());
-  EXPECT_EQ("800x400", info.display_modes()[1].size().ToString());
-  EXPECT_FALSE(info.display_modes()[1].native());
+  EXPECT_EQ("400x200", info.display_modes()[0]->size().ToString());
+  EXPECT_TRUE(info.display_modes()[0]->native());
+  EXPECT_EQ("800x400", info.display_modes()[1]->size().ToString());
+  EXPECT_FALSE(info.display_modes()[1]->native());
   EXPECT_EQ(
       "400x200",
       display::Screen::GetScreen()->GetPrimaryDisplay().size().ToString());
-  display::ManagedDisplayMode active_mode;
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(unified_id, &active_mode));
-  EXPECT_EQ(1.0f, active_mode.ui_scale());
-  EXPECT_EQ("400x200", active_mode.size().ToString());
+  scoped_refptr<display::ManagedDisplayMode> active_mode =
+      display_manager()->GetActiveModeForDisplayId(unified_id);
+  EXPECT_EQ(1.0f, active_mode->ui_scale());
+  EXPECT_EQ("400x200", active_mode->size().ToString());
 
   EXPECT_TRUE(display::test::SetDisplayResolution(display_manager(), unified_id,
                                                   gfx::Size(800, 400)));
@@ -2072,21 +2060,19 @@ TEST_F(DisplayManagerTest, ResolutionChangeInUnifiedMode) {
       "800x400",
       display::Screen::GetScreen()->GetPrimaryDisplay().size().ToString());
 
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(unified_id, &active_mode));
-  EXPECT_EQ(1.0f, active_mode.ui_scale());
-  EXPECT_EQ("800x400", active_mode.size().ToString());
+  active_mode = display_manager()->GetActiveModeForDisplayId(unified_id);
+  EXPECT_EQ(1.0f, active_mode->ui_scale());
+  EXPECT_EQ("800x400", active_mode->size().ToString());
 
   // resolution change will not persist in unified desktop mode.
   UpdateDisplay("600x600, 200x200");
   EXPECT_EQ(
       "1200x600",
       display::Screen::GetScreen()->GetPrimaryDisplay().size().ToString());
-  EXPECT_TRUE(
-      display_manager()->GetActiveModeForDisplayId(unified_id, &active_mode));
-  EXPECT_EQ(1.0f, active_mode.ui_scale());
-  EXPECT_TRUE(active_mode.native());
-  EXPECT_EQ("1200x600", active_mode.size().ToString());
+  active_mode = display_manager()->GetActiveModeForDisplayId(unified_id);
+  EXPECT_EQ(1.0f, active_mode->ui_scale());
+  EXPECT_TRUE(active_mode->native());
+  EXPECT_EQ("1200x600", active_mode->size().ToString());
 }
 
 TEST_F(DisplayManagerTest, UpdateMouseCursorAfterRotateZoom) {
@@ -2569,10 +2555,10 @@ TEST_F(DisplayManagerTest, UnifiedDesktopWith2xDSF) {
   display::ManagedDisplayInfo info =
       display_manager()->GetDisplayInfo(screen->GetPrimaryDisplay().id());
   EXPECT_EQ(2u, info.display_modes().size());
-  EXPECT_EQ("1640x800", info.display_modes()[0].size().ToString());
-  EXPECT_EQ(2.0f, info.display_modes()[0].device_scale_factor());
-  EXPECT_EQ("1025x500", info.display_modes()[1].size().ToString());
-  EXPECT_EQ(1.0f, info.display_modes()[1].device_scale_factor());
+  EXPECT_EQ("1640x800", info.display_modes()[0]->size().ToString());
+  EXPECT_EQ(2.0f, info.display_modes()[0]->device_scale_factor());
+  EXPECT_EQ("1025x500", info.display_modes()[1]->size().ToString());
+  EXPECT_EQ(1.0f, info.display_modes()[1]->device_scale_factor());
 
   // For 1x, 400 + 500 / 800 * 100 = 1025.
   EXPECT_EQ("1025x500", screen->GetPrimaryDisplay().size().ToString());
@@ -2588,10 +2574,10 @@ TEST_F(DisplayManagerTest, UnifiedDesktopWith2xDSF) {
   UpdateDisplay("1200x800*2,1000x1000");
   info = display_manager()->GetDisplayInfo(screen->GetPrimaryDisplay().id());
   EXPECT_EQ(2u, info.display_modes().size());
-  EXPECT_EQ("2000x800", info.display_modes()[0].size().ToString());
-  EXPECT_EQ(2.0f, info.display_modes()[0].device_scale_factor());
-  EXPECT_EQ("2500x1000", info.display_modes()[1].size().ToString());
-  EXPECT_EQ(1.0f, info.display_modes()[1].device_scale_factor());
+  EXPECT_EQ("2000x800", info.display_modes()[0]->size().ToString());
+  EXPECT_EQ(2.0f, info.display_modes()[0]->device_scale_factor());
+  EXPECT_EQ("2500x1000", info.display_modes()[1]->size().ToString());
+  EXPECT_EQ(1.0f, info.display_modes()[1]->device_scale_factor());
 
   // For 2x, (800 / 1000 * 1000 + 1200) / 2 = 1000
   EXPECT_EQ("1000x400", screen->GetPrimaryDisplay().size().ToString());
@@ -2608,10 +2594,10 @@ TEST_F(DisplayManagerTest, UnifiedDesktopWith2xDSF) {
   UpdateDisplay("1200x800*2,1000x1000*2");
   info = display_manager()->GetDisplayInfo(screen->GetPrimaryDisplay().id());
   EXPECT_EQ(2u, info.display_modes().size());
-  EXPECT_EQ("2000x800", info.display_modes()[0].size().ToString());
-  EXPECT_EQ(2.0f, info.display_modes()[0].device_scale_factor());
-  EXPECT_EQ("2500x1000", info.display_modes()[1].size().ToString());
-  EXPECT_EQ(2.0f, info.display_modes()[1].device_scale_factor());
+  EXPECT_EQ("2000x800", info.display_modes()[0]->size().ToString());
+  EXPECT_EQ(2.0f, info.display_modes()[0]->device_scale_factor());
+  EXPECT_EQ("2500x1000", info.display_modes()[1]->size().ToString());
+  EXPECT_EQ(2.0f, info.display_modes()[1]->device_scale_factor());
 
   EXPECT_EQ("1000x400", screen->GetPrimaryDisplay().size().ToString());
   EXPECT_EQ("1000x400",
@@ -2626,10 +2612,10 @@ TEST_F(DisplayManagerTest, UnifiedDesktopWith2xDSF) {
   UpdateDisplay("1000x800*2,300x800");
   info = display_manager()->GetDisplayInfo(screen->GetPrimaryDisplay().id());
   EXPECT_EQ(2u, info.display_modes().size());
-  EXPECT_EQ("1300x800", info.display_modes()[0].size().ToString());
-  EXPECT_EQ(2.0f, info.display_modes()[0].device_scale_factor());
-  EXPECT_EQ("1300x800", info.display_modes()[1].size().ToString());
-  EXPECT_EQ(1.0f, info.display_modes()[1].device_scale_factor());
+  EXPECT_EQ("1300x800", info.display_modes()[0]->size().ToString());
+  EXPECT_EQ(2.0f, info.display_modes()[0]->device_scale_factor());
+  EXPECT_EQ("1300x800", info.display_modes()[1]->size().ToString());
+  EXPECT_EQ(1.0f, info.display_modes()[1]->device_scale_factor());
 
   EXPECT_EQ("650x400", screen->GetPrimaryDisplay().size().ToString());
   EXPECT_EQ("650x400",
@@ -2643,10 +2629,10 @@ TEST_F(DisplayManagerTest, UnifiedDesktopWith2xDSF) {
   // being 2x.
   UpdateDisplay("1000x800,300x800*2");
   EXPECT_EQ(2u, info.display_modes().size());
-  EXPECT_EQ("1300x800", info.display_modes()[0].size().ToString());
-  EXPECT_EQ(2.0f, info.display_modes()[0].device_scale_factor());
-  EXPECT_EQ("1300x800", info.display_modes()[1].size().ToString());
-  EXPECT_EQ(1.0f, info.display_modes()[1].device_scale_factor());
+  EXPECT_EQ("1300x800", info.display_modes()[0]->size().ToString());
+  EXPECT_EQ(2.0f, info.display_modes()[0]->device_scale_factor());
+  EXPECT_EQ("1300x800", info.display_modes()[1]->size().ToString());
+  EXPECT_EQ(1.0f, info.display_modes()[1]->device_scale_factor());
 
   EXPECT_EQ("1300x800", screen->GetPrimaryDisplay().size().ToString());
   EXPECT_EQ("1300x800",
@@ -3013,7 +2999,6 @@ TEST_F(DisplayManagerTest, DisconnectedInternalDisplayShouldUpdateDisplayInfo) {
           .SetId(external_id)
           .SetNativeMode(MakeDisplayMode())
           .AddMode(MakeDisplayMode())
-          .SetOrigin({0, 1000})
           .Build();
   // "Connectd display" has the current mode.
   external_snapshot->set_current_mode(external_snapshot->native_mode());
@@ -3034,58 +3019,12 @@ TEST_F(DisplayManagerTest, DisconnectedInternalDisplayShouldUpdateDisplayInfo) {
 
   bool has_default = false;
   for (auto& mode : display_info.display_modes()) {
-    if (mode.is_default()) {
+    if (mode->is_default()) {
       has_default = true;
-      EXPECT_EQ(1.6f, mode.device_scale_factor());
+      EXPECT_EQ(1.6f, mode->device_scale_factor());
     }
   }
   EXPECT_TRUE(has_default);
-}
-
-TEST_F(DisplayManagerTest, UpdateInternalDisplayNativeBounds) {
-  constexpr int64_t external_id = 123;
-  const int64_t internal_id =
-      display::test::DisplayManagerTestApi(display_manager())
-          .SetFirstDisplayAsInternalDisplay();
-  display::Screen* screen = display::Screen::GetScreen();
-  DCHECK(screen);
-  Shell* shell = Shell::Get();
-  display::DisplayChangeObserver observer(shell->display_configurator(),
-                                          display_manager());
-  display::DisplayConfigurator::DisplayStateList outputs;
-  std::unique_ptr<display::DisplaySnapshot> internal_snapshot =
-      display::FakeDisplaySnapshot::Builder()
-          .SetId(internal_id)
-          .SetType(display::DISPLAY_CONNECTION_TYPE_INTERNAL)
-          .SetDPI(210)  // 1.6f
-          .SetNativeMode(MakeDisplayMode())
-          .Build();
-  internal_snapshot->set_current_mode(internal_snapshot->native_mode());
-  outputs.push_back(internal_snapshot.get());
-
-  observer.GetStateForDisplayIds(outputs);
-  observer.OnDisplayModeChanged(outputs);
-  EXPECT_EQ(1u, display_manager()->GetNumDisplays());
-
-  internal_snapshot->set_origin({0, 1000});
-
-  std::unique_ptr<display::DisplaySnapshot> external_snapshot =
-      display::FakeDisplaySnapshot::Builder()
-          .SetId(external_id)
-          .SetNativeMode(MakeDisplayMode())
-          .AddMode(MakeDisplayMode())
-          .Build();
-  // "Connectd display" has the current mode.
-  external_snapshot->set_current_mode(external_snapshot->native_mode());
-  outputs.push_back(external_snapshot.get());
-
-  reset();
-  observer.GetStateForDisplayIds(outputs);
-  observer.OnDisplayModeChanged(outputs);
-
-  EXPECT_EQ(2u, display_manager()->GetNumDisplays());
-  EXPECT_TRUE(changed_metrics() &
-              display::DisplayObserver::DISPLAY_METRIC_BOUNDS);
 }
 
 // It's difficult to test with full stack due to crbug.com/771178.

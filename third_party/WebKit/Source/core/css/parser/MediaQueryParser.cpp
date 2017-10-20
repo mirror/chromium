@@ -10,18 +10,18 @@
 
 namespace blink {
 
-scoped_refptr<MediaQuerySet> MediaQueryParser::ParseMediaQuerySet(
+RefPtr<MediaQuerySet> MediaQueryParser::ParseMediaQuerySet(
     const String& query_string) {
   return ParseMediaQuerySet(
       CSSParserTokenRange(CSSTokenizer(query_string).TokenizeToEOF()));
 }
 
-scoped_refptr<MediaQuerySet> MediaQueryParser::ParseMediaQuerySet(
+RefPtr<MediaQuerySet> MediaQueryParser::ParseMediaQuerySet(
     CSSParserTokenRange range) {
   return MediaQueryParser(kMediaQuerySetParser).ParseImpl(range);
 }
 
-scoped_refptr<MediaQuerySet> MediaQueryParser::ParseMediaCondition(
+RefPtr<MediaQuerySet> MediaQueryParser::ParseMediaCondition(
     CSSParserTokenRange range) {
   return MediaQueryParser(kMediaConditionParser).ParseImpl(range);
 }
@@ -228,8 +228,7 @@ void MediaQueryParser::ProcessToken(const CSSParserToken& token) {
 }
 
 // The state machine loop
-scoped_refptr<MediaQuerySet> MediaQueryParser::ParseImpl(
-    CSSParserTokenRange range) {
+RefPtr<MediaQuerySet> MediaQueryParser::ParseImpl(CSSParserTokenRange range) {
   while (!range.AtEnd())
     ProcessToken(range.Consume());
 

@@ -98,8 +98,8 @@ class VRDisplay final : public EventTargetWithInlineData,
 
   void OnMagicWindowVSync(double timestamp);
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   friend class VRController;

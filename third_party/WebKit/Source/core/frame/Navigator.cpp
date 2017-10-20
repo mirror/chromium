@@ -113,12 +113,12 @@ Vector<String> Navigator::languages() {
   return languages;
 }
 
-void Navigator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Navigator) {
   DOMWindowClient::Trace(visitor);
   Supplementable<Navigator>::Trace(visitor);
 }
 
-void Navigator::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(Navigator) {
   ScriptWrappable::TraceWrappers(visitor);
   Supplementable<Navigator>::TraceWrappers(visitor);
 }

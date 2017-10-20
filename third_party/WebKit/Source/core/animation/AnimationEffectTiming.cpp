@@ -86,7 +86,7 @@ void AnimationEffectTiming::setEasing(String easing,
     parent_->UpdateSpecifiedTiming(timing);
 }
 
-void AnimationEffectTiming::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationEffectTiming) {
   AnimationEffectTimingReadOnly::Trace(visitor);
 }
 

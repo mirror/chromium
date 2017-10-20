@@ -283,7 +283,7 @@ void ServiceWorkerGlobalScope::DispatchExtendableEventWithRespondWith(
   wait_until_observer->DidDispatchEvent(false /* event_dispatch_failed */);
 }
 
-void ServiceWorkerGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ServiceWorkerGlobalScope) {
   visitor->Trace(clients_);
   visitor->Trace(registration_);
   WorkerGlobalScope::Trace(visitor);

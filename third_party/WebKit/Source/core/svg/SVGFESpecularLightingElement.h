@@ -50,7 +50,7 @@ class SVGFESpecularLightingElement final
   }
   SVGAnimatedString* in1() { return in1_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGFESpecularLightingElement(Document&);

@@ -45,7 +45,7 @@ class PresentationConnection : public EventTargetWithInlineData,
   const AtomicString& InterfaceName() const override;
   ExecutionContext* GetExecutionContext() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   const String& id() const { return id_; }
   const String& url() const { return url_; }
@@ -176,7 +176,7 @@ class ControllerPresentationConnection final
                                    const KURL&);
   ~ControllerPresentationConnection() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // WebPresentationConnection implementation.
   void Init() override;
@@ -207,7 +207,7 @@ class ReceiverPresentationConnection final : public PresentationConnection {
                                  const KURL&);
   ~ReceiverPresentationConnection() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void Init(
       mojom::blink::PresentationConnectionPtr controller_connection_ptr,

@@ -631,8 +631,7 @@ Background.prototype = {
     actionNode.doDefault();
 
     if (actionNode.role != RoleType.STATIC_TEXT &&
-        actionNode.role != RoleType.TEXT_FIELD &&
-        !actionNode.state[StateType.RICHLY_EDITABLE])
+        actionNode.role != RoleType.TEXT_FIELD)
       return;
 
     if (!selectionSpan)

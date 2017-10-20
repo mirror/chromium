@@ -279,7 +279,7 @@ void InvalidationSet::SetWholeSubtreeInvalid() {
 
 namespace {
 
-scoped_refptr<DescendantInvalidationSet> CreateSelfInvalidationSet() {
+RefPtr<DescendantInvalidationSet> CreateSelfInvalidationSet() {
   auto new_set = DescendantInvalidationSet::Create();
   new_set->SetInvalidatesSelf();
   return new_set;
@@ -350,7 +350,7 @@ void InvalidationSet::Show() const {
 #endif  // NDEBUG
 
 SiblingInvalidationSet::SiblingInvalidationSet(
-    scoped_refptr<DescendantInvalidationSet> descendants)
+    RefPtr<DescendantInvalidationSet> descendants)
     : InvalidationSet(kInvalidateSiblings),
       max_direct_adjacent_selectors_(1),
       descendant_invalidation_set_(std::move(descendants)) {}

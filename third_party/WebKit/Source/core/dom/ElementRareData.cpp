@@ -90,7 +90,7 @@ ElementRareData::EnsureResizeObserverData() {
   return *resize_observer_data_;
 }
 
-void ElementRareData::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(ElementRareData) {
   visitor->Trace(dataset_);
   visitor->Trace(class_list_);
   visitor->Trace(shadow_);
@@ -108,8 +108,7 @@ void ElementRareData::TraceAfterDispatch(blink::Visitor* visitor) {
   NodeRareData::TraceAfterDispatch(visitor);
 }
 
-void ElementRareData::TraceWrappersAfterDispatch(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS_AFTER_DISPATCH(ElementRareData) {
   if (attr_node_list_.Get()) {
     for (auto& attr : *attr_node_list_) {
       visitor->TraceWrappers(attr);

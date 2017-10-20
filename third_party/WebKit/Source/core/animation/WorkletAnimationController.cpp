@@ -44,7 +44,7 @@ void WorkletAnimationController::Update() {
   }
 }
 
-void WorkletAnimationController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkletAnimationController) {
   visitor->Trace(pending_animations_);
   visitor->Trace(compositor_animations_);
 }

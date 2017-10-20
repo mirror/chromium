@@ -37,12 +37,11 @@ namespace CSSPropertyParserHelpers {
 namespace {
 
 // Add CSSVariableData to variableData vector.
-bool AddCSSPaintArgument(
-    const Vector<CSSParserToken>& tokens,
-    Vector<scoped_refptr<CSSVariableData>>* const variable_data) {
+bool AddCSSPaintArgument(const Vector<CSSParserToken>& tokens,
+                         Vector<RefPtr<CSSVariableData>>* const variable_data) {
   CSSParserTokenRange token_range(tokens);
   if (!token_range.AtEnd()) {
-    scoped_refptr<CSSVariableData> unparsed_css_variable_data =
+    RefPtr<CSSVariableData> unparsed_css_variable_data =
         CSSVariableData::Create(token_range, false, false);
     if (unparsed_css_variable_data.get()) {
       variable_data->push_back(std::move(unparsed_css_variable_data));
@@ -1377,7 +1376,7 @@ static CSSValue* ConsumePaint(CSSParserTokenRange& args,
   // TODO(renjieliu): We may want to optimize the implementation by resolve
   // variables early if paint function is registered.
   Vector<CSSParserToken> argument_tokens;
-  Vector<scoped_refptr<CSSVariableData>> variable_data;
+  Vector<RefPtr<CSSVariableData>> variable_data;
   while (!args.AtEnd()) {
     if (args.Peek().GetType() != kCommaToken) {
       argument_tokens.AppendVector(ConsumeFunctionArgsOrNot(args));

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <head>
 <style>
+.composited {
+  transform: translatez(0);
+}
+
 .box {
   width: 100px;
   height: 100px;
@@ -8,6 +12,7 @@
 
 .behind {
   position: absolute;
+  z-index: 1;
   top: 100px;
   left: 100px;
   background-color: blue;
@@ -15,6 +20,7 @@
 
 .middle {
   position: absolute;
+  z-index: 1;
   top: 180px;
   left: 180px;
   background-color: lime;
@@ -22,6 +28,7 @@
 
 .middle2 {
   position: absolute;
+  z-index: 1;
   top: 260px;
   left: 260px;
   background-color: magenta;
@@ -29,6 +36,7 @@
 
 .top {
   position: absolute;
+  z-index: 1;
   top: 340px;
   left: 340px;
   background-color: cyan;
@@ -50,7 +58,7 @@ div:hover {
 </head>
 <body>
   <div class="clipper">
-    <div class="box behind"></div>
+    <div class="composited box behind"></div>
     <div class="box middle"></div>
     <div class="box middle2"></div>
     <div class="box top"></div>

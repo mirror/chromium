@@ -25,7 +25,6 @@
 #include "core/css/StyleChangeReason.h"
 #include "core/html/forms/TextControlElement.h"
 #include "core/layout/HitTestResult.h"
-#include "core/page/Page.h"
 #include "platform/scroll/ScrollbarTheme.h"
 
 namespace blink {
@@ -112,7 +111,7 @@ void LayoutTextControl::UpdateFromElement() {
 int LayoutTextControl::ScrollbarThickness() const {
   // FIXME: We should get the size of the scrollbar from the LayoutTheme
   // instead.
-  return GetDocument().GetPage()->GetScrollbarTheme().ScrollbarThickness();
+  return ScrollbarTheme::GetTheme().ScrollbarThickness();
 }
 
 void LayoutTextControl::ComputeLogicalHeight(

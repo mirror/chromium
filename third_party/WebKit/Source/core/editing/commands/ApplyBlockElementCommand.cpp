@@ -240,7 +240,7 @@ static const ComputedStyle* ComputedStyleOfEnclosingTextNode(
     const Position& position) {
   if (!position.IsOffsetInAnchor() || !position.ComputeContainerNode() ||
       !position.ComputeContainerNode()->IsTextNode())
-    return nullptr;
+    return 0;
   return position.ComputeContainerNode()->GetComputedStyle();
 }
 

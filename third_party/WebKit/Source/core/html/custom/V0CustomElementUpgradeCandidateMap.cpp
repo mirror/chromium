@@ -88,7 +88,7 @@ V0CustomElementUpgradeCandidateMap::TakeUpgradeCandidatesFor(
   return candidates;
 }
 
-void V0CustomElementUpgradeCandidateMap::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V0CustomElementUpgradeCandidateMap) {
   visitor->Trace(upgrade_candidates_);
   visitor->Trace(unresolved_definitions_);
   V0CustomElementObserver::Trace(visitor);

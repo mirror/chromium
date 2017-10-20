@@ -90,8 +90,8 @@ class CORE_EXPORT SVGMatrixTearOff final
 
   const AffineTransform& Value() const;
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   explicit SVGMatrixTearOff(const AffineTransform&);

@@ -37,7 +37,7 @@ class HeadersIterationSource final
     return true;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     PairIterable<String, String>::IterationSource::Trace(visitor);
   }
 
@@ -273,7 +273,7 @@ Headers::Headers()
 Headers::Headers(FetchHeaderList* header_list)
     : header_list_(header_list), guard_(kNoneGuard) {}
 
-void Headers::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Headers) {
   visitor->Trace(header_list_);
 }
 

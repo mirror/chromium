@@ -115,7 +115,7 @@ inline SVGFEConvolveMatrixElement::SVGFEConvolveMatrixElement(
   AddToPropertyMap(target_y_);
 }
 
-void SVGFEConvolveMatrixElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFEConvolveMatrixElement) {
   visitor->Trace(bias_);
   visitor->Trace(divisor_);
   visitor->Trace(in1_);

@@ -45,13 +45,12 @@ SVGAnimatedAngle::SVGAnimatedAngle(SVGElement* context_element)
 
 SVGAnimatedAngle::~SVGAnimatedAngle() {}
 
-void SVGAnimatedAngle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGAnimatedAngle) {
   visitor->Trace(orient_type_);
   SVGAnimatedProperty<SVGAngle>::Trace(visitor);
 }
 
-void SVGAnimatedAngle::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGAnimatedAngle) {
   SVGAnimatedProperty<SVGAngle>::TraceWrappers(visitor);
   ScriptWrappable::TraceWrappers(visitor);
 }

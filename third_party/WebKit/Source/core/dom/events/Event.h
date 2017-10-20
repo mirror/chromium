@@ -243,7 +243,7 @@ class CORE_EXPORT Event : public GarbageCollectedFinalized<Event>,
     return prevent_default_called_on_uncancelable_event_;
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   Event();

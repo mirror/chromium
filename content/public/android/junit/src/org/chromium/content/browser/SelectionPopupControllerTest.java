@@ -32,7 +32,6 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
-import org.chromium.ui.base.MenuSourceType;
 import org.chromium.ui.base.WindowAndroid;
 
 /**
@@ -131,7 +130,7 @@ public class SelectionPopupControllerTest {
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
                 /* isPasswordType = */ false, AMPHITHEATRE, /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_LONG_PRESS);
+                /* fromSelectionAdjustment = */ false);
 
         // adjustSelectionByCharacterOffset() should be called.
         order.verify(mWebContents)
@@ -146,7 +145,7 @@ public class SelectionPopupControllerTest {
                 /* isPasswordType = */ false, AMPHITHEATRE_FULL,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
+                /* fromSelectionAdjustment = */ true);
 
         order.verify(mView).startActionMode(
                 isA(FloatingActionModeCallback.class), eq(ActionMode.TYPE_FLOATING));
@@ -176,7 +175,7 @@ public class SelectionPopupControllerTest {
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
                 /* isPasswordType = */ false, AMPHITHEATRE, /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_LONG_PRESS);
+                /* fromSelectionAdjustment = */ false);
 
         // adjustSelectionByCharacterOffset() should be called.
         order.verify(mWebContents)
@@ -188,7 +187,7 @@ public class SelectionPopupControllerTest {
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
                 /* isPasswordType = */ false, MOUNTAIN, /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_LONG_PRESS);
+                /* fromSelectionAdjustment = */ false);
         order.verify(mWebContents)
                 .adjustSelectionByCharacterOffset(newResult.startAdjust, newResult.endAdjust, true);
         assertFalse(mController.isActionModeValid());
@@ -201,7 +200,7 @@ public class SelectionPopupControllerTest {
                 /* isPasswordType = */ false, AMPHITHEATRE_FULL,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
+                /* fromSelectionAdjustment = */ true);
 
         SelectionClient.Result returnResult = mController.getClassificationResult();
         assertEquals(-21, returnResult.startAdjust);
@@ -213,7 +212,7 @@ public class SelectionPopupControllerTest {
                 /* isPasswordType = */ false, MOUNTAIN_FULL,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
+                /* fromSelectionAdjustment = */ true);
 
         order.verify(mView).startActionMode(
                 isA(FloatingActionModeCallback.class), eq(ActionMode.TYPE_FLOATING));
@@ -235,13 +234,13 @@ public class SelectionPopupControllerTest {
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
                 /* isPasswordType = */ false, AMPHITHEATRE, /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_LONG_PRESS);
+                /* fromSelectionAdjustment = */ false);
 
         // Another long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
                 /* isPasswordType = */ false, MOUNTAIN, /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_LONG_PRESS);
+                /* fromSelectionAdjustment = */ false);
 
         // Then we done with the first classification.
         mController.getResultCallback().onClassified(result);
@@ -264,7 +263,7 @@ public class SelectionPopupControllerTest {
                 /* isPasswordType = */ false, AMPHITHEATRE_FULL,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
+                /* fromSelectionAdjustment = */ true);
 
         SelectionClient.Result returnResult = mController.getClassificationResult();
         assertEquals(-21, returnResult.startAdjust);
@@ -276,7 +275,7 @@ public class SelectionPopupControllerTest {
                 /* isPasswordType = */ false, MOUNTAIN_FULL,
                 /* canSelectAll = */ true,
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
-                MenuSourceType.MENU_SOURCE_ADJUST_SELECTION);
+                /* fromSelectionAdjustment = */ true);
 
         order.verify(mView).startActionMode(
                 isA(FloatingActionModeCallback.class), eq(ActionMode.TYPE_FLOATING));

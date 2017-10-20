@@ -9,7 +9,6 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
-#include "core/page/Page.h"
 #include "core/paint/PaintLayerScrollableArea.h"
 #include "core/testing/sim/SimDisplayItemList.h"
 #include "core/testing/sim/SimRequest.h"
@@ -87,10 +86,6 @@ class ScrollbarsTest : public ::testing::WithParamInterface<bool>,
         ->GetChromeClient()
         .LastSetCursorForTesting()
         .GetType();
-  }
-
-  ScrollbarTheme& GetScrollbarTheme() {
-    return GetDocument().GetPage()->GetScrollbarTheme();
   }
 };
 
@@ -203,6 +198,10 @@ TEST_P(ScrollbarsTest, CustomScrollbarsCauseLayoutOnExistenceChange) {
   // but remove this setting.
   ScopedRootLayerScrollingForTest turn_off_root_layer_scrolling(false);
 
+  // This test is specifically checking the behavior when overlay scrollbars
+  // are enabled.
+  DCHECK(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
+
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
@@ -234,11 +233,6 @@ TEST_P(ScrollbarsTest, CustomScrollbarsCauseLayoutOnExistenceChange) {
       GetDocument().View()->LayoutViewportScrollableArea();
 
   Compositor().BeginFrame();
-
-  // This test is specifically checking the behavior when overlay scrollbars
-  // are enabled.
-  DCHECK(GetScrollbarTheme().UsesOverlayScrollbars());
-
   ASSERT_FALSE(layout_viewport->VerticalScrollbar());
   ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
 
@@ -258,6 +252,10 @@ TEST_P(ScrollbarsTest, TransparentBackgroundUsesDarkOverlayColorTheme) {
   // but remove this setting.
   ScopedRootLayerScrollingForTest turn_off_root_layer_scrolling(false);
 
+  // This test is specifically checking the behavior when overlay scrollbars
+  // are enabled.
+  DCHECK(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
+
   WebView().Resize(WebSize(800, 600));
   WebView().SetBaseBackgroundColorOverride(SK_ColorTRANSPARENT);
   SimRequest request("https://example.com/test.html", "text/html");
@@ -271,10 +269,6 @@ TEST_P(ScrollbarsTest, TransparentBackgroundUsesDarkOverlayColorTheme) {
       "</style>");
   Compositor().BeginFrame();
 
-  // This test is specifically checking the behavior when overlay scrollbars
-  // are enabled.
-  DCHECK(GetScrollbarTheme().UsesOverlayScrollbars());
-
   ScrollableArea* layout_viewport =
       GetDocument().View()->LayoutViewportScrollableArea();
 
@@ -284,6 +278,10 @@ TEST_P(ScrollbarsTest, TransparentBackgroundUsesDarkOverlayColorTheme) {
 
 // Ensure overlay scrollbar change to display:none correctly.
 TEST_P(ScrollbarsTest, OverlayScrollbarChangeToDisplayNoneDynamically) {
+  // This test is specifically checking the behavior when overlay scrollbars
+  // are enabled.
+  DCHECK(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
+
   WebView().Resize(WebSize(200, 200));
   SimRequest request("https://example.com/test.html", "text/html");
   LoadURL("https://example.com/test.html");
@@ -302,10 +300,6 @@ TEST_P(ScrollbarsTest, OverlayScrollbarChangeToDisplayNoneDynamically) {
       "<div class='big'>"
       "</div>");
   Compositor().BeginFrame();
-
-  // This test is specifically checking the behavior when overlay scrollbars
-  // are enabled.
-  DCHECK(GetScrollbarTheme().UsesOverlayScrollbars());
 
   Document& document = GetDocument();
   Element* div = document.getElementById("div");
@@ -948,7 +942,7 @@ TEST_P(ScrollbarsTest,
   constexpr TimeDelta kMockOverlayFadeOutDelay =
       TimeDelta::FromMillisecondsD(kMockOverlayFadeOutDelayMs);
 
-  ScrollbarTheme& theme = GetScrollbarTheme();
+  ScrollbarTheme& theme = ScrollbarTheme::GetTheme();
   // This test relies on mock overlay scrollbars.
   ASSERT_TRUE(theme.IsMockTheme());
   ASSERT_TRUE(theme.UsesOverlayScrollbars());
@@ -979,10 +973,6 @@ TEST_P(ScrollbarsTest,
                                    "</div>",
                                    base_url);
   web_view_impl->UpdateAllLifecyclePhases();
-
-  // This test is specifically checking the behavior when overlay scrollbars
-  // are enabled.
-  DCHECK(GetScrollbarTheme().UsesOverlayScrollbars());
 
   WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
   Document* document =

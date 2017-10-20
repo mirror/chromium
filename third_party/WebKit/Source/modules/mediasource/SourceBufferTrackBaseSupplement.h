@@ -22,7 +22,7 @@ class SourceBufferTrackBaseSupplement
   static SourceBuffer* sourceBuffer(TrackBase&);
   static void SetSourceBuffer(TrackBase&, SourceBuffer*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   static SourceBufferTrackBaseSupplement& From(TrackBase&);

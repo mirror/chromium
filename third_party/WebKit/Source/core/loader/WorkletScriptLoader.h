@@ -54,7 +54,7 @@ class CORE_EXPORT WorkletScriptLoader final
   // after Client::notifyWorkletScriptLoadingFinished() is called.
   bool WasScriptLoadSuccessful() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   WorkletScriptLoader(ResourceFetcher*, Client*);

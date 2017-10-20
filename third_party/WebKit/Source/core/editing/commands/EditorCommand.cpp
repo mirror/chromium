@@ -510,7 +510,7 @@ static WritingDirection TextDirectionForSelection(
       CSSComputedStyleDeclaration* style =
           CSSComputedStyleDeclaration::Create(&n);
       const CSSValue* unicode_bidi =
-          style->GetPropertyCSSValue(GetCSSPropertyUnicodeBidiAPI());
+          style->GetPropertyCSSValue(CSSPropertyUnicodeBidi);
       if (!unicode_bidi || !unicode_bidi->IsIdentifierValue())
         continue;
 
@@ -546,7 +546,7 @@ static WritingDirection TextDirectionForSelection(
     CSSComputedStyleDeclaration* style =
         CSSComputedStyleDeclaration::Create(element);
     const CSSValue* unicode_bidi =
-        style->GetPropertyCSSValue(GetCSSPropertyUnicodeBidiAPI());
+        style->GetPropertyCSSValue(CSSPropertyUnicodeBidi);
     if (!unicode_bidi || !unicode_bidi->IsIdentifierValue())
       continue;
 
@@ -561,7 +561,7 @@ static WritingDirection TextDirectionForSelection(
     DCHECK(EditingStyleUtilities::IsEmbedOrIsolate(unicode_bidi_value))
         << unicode_bidi_value;
     const CSSValue* direction =
-        style->GetPropertyCSSValue(GetCSSPropertyDirectionAPI());
+        style->GetPropertyCSSValue(CSSPropertyDirection);
     if (!direction || !direction->IsIdentifierValue())
       continue;
 
@@ -620,7 +620,7 @@ static unsigned VerticalScrollDistance(LocalFrame& frame) {
                              frame.View()->VisibleHeight());
   return static_cast<unsigned>(
       max(max<int>(height * ScrollableArea::MinFractionToStepWhenPaging(),
-                   height - frame.View()->MaxOverlapBetweenPages()),
+                   height - ScrollableArea::MaxOverlapBetweenPages()),
           1));
 }
 
@@ -2029,7 +2029,7 @@ static bool ExecuteYank(LocalFrame& frame,
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   frame.GetEditor().InsertTextWithoutSendingTextEvent(
-      yank_string, false, nullptr, InputEvent::InputType::kInsertFromYank);
+      yank_string, false, 0, InputEvent::InputType::kInsertFromYank);
   frame.GetEditor().GetKillRing().SetToYankedState();
   return true;
 }
@@ -2054,7 +2054,7 @@ static bool ExecuteYankAndSelect(LocalFrame& frame,
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   frame.GetEditor().InsertTextWithoutSendingTextEvent(
-      frame.GetEditor().GetKillRing().Yank(), true, nullptr,
+      frame.GetEditor().GetKillRing().Yank(), true, 0,
       InputEvent::InputType::kInsertFromYank);
   frame.GetEditor().GetKillRing().SetToYankedState();
   return true;
@@ -2989,7 +2989,7 @@ bool Editor::ExecuteCommand(const String& command_name, const String& value) {
   return CreateCommand(command_name).Execute(value);
 }
 
-Editor::Command::Command() : command_(nullptr) {}
+Editor::Command::Command() : command_(0) {}
 
 Editor::Command::Command(const EditorInternalCommand* command,
                          EditorCommandSource source,

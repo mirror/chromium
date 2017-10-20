@@ -39,7 +39,7 @@ class MODULES_EXPORT BooleanOrString final {
   BooleanOrString(const BooleanOrString&);
   ~BooleanOrString();
   BooleanOrString& operator=(const BooleanOrString&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum class SpecificType {

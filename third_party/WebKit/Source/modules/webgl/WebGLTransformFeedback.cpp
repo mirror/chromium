@@ -149,15 +149,14 @@ void WebGLTransformFeedback::UnbindBuffer(WebGLBuffer* buffer) {
   }
 }
 
-void WebGLTransformFeedback::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLTransformFeedback) {
   visitor->Trace(bound_transform_feedback_buffer_);
   visitor->Trace(bound_indexed_transform_feedback_buffers_);
   visitor->Trace(program_);
   WebGLContextObject::Trace(visitor);
 }
 
-void WebGLTransformFeedback::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WebGLTransformFeedback) {
   visitor->TraceWrappers(bound_transform_feedback_buffer_);
   for (auto& buf : bound_indexed_transform_feedback_buffers_) {
     visitor->TraceWrappers(buf);

@@ -105,7 +105,7 @@ class XSLStyleSheet final : public StyleSheet {
   KURL BaseURL() const override { return final_url_; }
   bool IsLoading() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   XSLStyleSheet(Node* parent_node,

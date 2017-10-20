@@ -50,7 +50,7 @@ InertEffect::InertEffect(EffectModel* model,
       paused_(paused),
       inherited_time_(inherited_time) {}
 
-void InertEffect::Sample(Vector<scoped_refptr<Interpolation>>& result) const {
+void InertEffect::Sample(Vector<RefPtr<Interpolation>>& result) const {
   UpdateInheritedTime(inherited_time_, kTimingUpdateOnDemand);
   if (!IsInEffect()) {
     result.clear();
@@ -67,7 +67,7 @@ double InertEffect::CalculateTimeToEffectChange(bool, double, double) const {
   return std::numeric_limits<double>::infinity();
 }
 
-void InertEffect::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InertEffect) {
   visitor->Trace(model_);
   AnimationEffectReadOnly::Trace(visitor);
 }

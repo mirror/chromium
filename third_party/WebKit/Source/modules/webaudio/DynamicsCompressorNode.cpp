@@ -251,7 +251,7 @@ DynamicsCompressorNode* DynamicsCompressorNode::Create(
   return node;
 }
 
-void DynamicsCompressorNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DynamicsCompressorNode) {
   visitor->Trace(threshold_);
   visitor->Trace(knee_);
   visitor->Trace(ratio_);

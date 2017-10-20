@@ -105,8 +105,7 @@ void ForeignFetchRequestHandler::InitializeHandler(
     return;
 
   if (request->initiator().has_value() &&
-      request->initiator()->IsSameOriginWith(
-          url::Origin::Create(request->url()))) {
+      request->initiator()->IsSameOriginWith(url::Origin(request->url()))) {
     return;
   }
 

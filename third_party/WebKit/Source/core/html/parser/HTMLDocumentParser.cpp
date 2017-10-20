@@ -168,7 +168,7 @@ void HTMLDocumentParser::Dispose() {
     StopBackgroundParser();
 }
 
-void HTMLDocumentParser::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLDocumentParser) {
   visitor->Trace(tree_builder_);
   visitor->Trace(parser_scheduler_);
   visitor->Trace(xss_auditor_delegate_);
@@ -178,8 +178,7 @@ void HTMLDocumentParser::Trace(blink::Visitor* visitor) {
   HTMLParserScriptRunnerHost::Trace(visitor);
 }
 
-void HTMLDocumentParser::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(HTMLDocumentParser) {
   visitor->TraceWrappers(script_runner_);
 }
 

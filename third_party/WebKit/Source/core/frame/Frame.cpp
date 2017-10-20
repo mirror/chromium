@@ -63,7 +63,7 @@ Frame::~Frame() {
   DCHECK_EQ(lifecycle_.GetState(), FrameLifecycle::kDetached);
 }
 
-void Frame::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Frame) {
   visitor->Trace(tree_node_);
   visitor->Trace(page_);
   visitor->Trace(owner_);
@@ -77,7 +77,7 @@ void Frame::Detach(FrameDetachType type) {
   // By the time this method is called, the subclasses should have already
   // advanced to the Detaching state.
   DCHECK_EQ(lifecycle_.GetState(), FrameLifecycle::kDetaching);
-  client_->SetOpener(nullptr);
+  client_->SetOpener(0);
   // After this, we must no longer talk to the client since this clears
   // its owning reference back to our owning LocalFrame.
   client_->Detached(type);

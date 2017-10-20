@@ -428,7 +428,7 @@ WebURLRequest CreateURLRequestForNavigation(
     request.SetHTTPReferrer(web_referrer, common_params.referrer.policy);
     if (!web_referrer.IsEmpty()) {
       request.AddHTTPOriginIfNeeded(
-          WebSecurityOrigin(url::Origin::Create(common_params.referrer.url)));
+          WebSecurityOrigin(url::Origin(common_params.referrer.url)));
     }
   }
 
@@ -4626,6 +4626,10 @@ void RenderFrameImpl::DidCreateScriptContext(v8::Local<v8::Context> context,
     // We only allow these bindings to be installed when creating the main
     // world context of the main frame.
     blink::WebContextFeatures::EnableMojoJS(context, true);
+    // The test bindings are only needed by WebUI browser tests but the test
+    // runner does not currently inform the renderer if it is being started
+    // by a test.
+    blink::WebContextFeatures::EnableMojoJSTest(context, true);
   }
 
   for (auto& observer : observers_)
@@ -5133,8 +5137,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     if (params->origin.scheme() != url::kFileScheme ||
         !render_view_->GetWebkitPreferences()
              .allow_universal_access_from_file_urls) {
-      CHECK(params->origin.IsSamePhysicalOriginWith(
-          url::Origin::Create(params->url)))
+      CHECK(params->origin.IsSamePhysicalOriginWith(url::Origin(params->url)))
           << " url:" << params->url << " origin:" << params->origin;
     }
   }

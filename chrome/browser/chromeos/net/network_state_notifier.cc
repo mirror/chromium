@@ -108,13 +108,6 @@ bool ShouldConnectFailedNotificationBeShown(const std::string& error_name,
   return true;
 }
 
-const NetworkState* GetNetworkStateForGuid(const std::string& guid) {
-  return guid.empty() ? nullptr
-                      : NetworkHandler::Get()
-                            ->network_state_handler()
-                            ->GetNetworkStateFromGuid(guid);
-}
-
 }  // namespace
 
 const char NetworkStateNotifier::kNetworkConnectNotificationId[] =
@@ -163,7 +156,7 @@ void NetworkStateNotifier::ConnectFailed(const std::string& service_path,
       NetworkHandler::Get()->network_state_handler()->GetNetworkState(
           service_path);
   if (ShouldConnectFailedNotificationBeShown(error_name, network))
-    ShowNetworkConnectErrorForGuid(error_name, network ? network->guid() : "");
+    ShowNetworkConnectError(error_name, service_path);
 }
 
 void NetworkStateNotifier::DisconnectRequested(
@@ -289,30 +282,31 @@ void NetworkStateNotifier::UpdateCellularActivating(
                      weak_ptr_factory_.GetWeakPtr(), cellular->guid())));
 }
 
-void NetworkStateNotifier::ShowNetworkConnectErrorForGuid(
+void NetworkStateNotifier::ShowNetworkConnectError(
     const std::string& error_name,
-    const std::string& guid) {
-  const NetworkState* network = GetNetworkStateForGuid(guid);
-  if (!network) {
+    const std::string& service_path) {
+  if (service_path.empty()) {
     base::DictionaryValue shill_properties;
-    ShowConnectErrorNotification(error_name, "", shill_properties);
+    ShowConnectErrorNotification(error_name, service_path, shill_properties);
     return;
   }
   // Get the up-to-date properties for the network and display the error.
   NetworkHandler::Get()->network_configuration_handler()->GetShillProperties(
-      network->path(),
+      service_path,
       base::Bind(&NetworkStateNotifier::ConnectErrorPropertiesSucceeded,
                  weak_ptr_factory_.GetWeakPtr(), error_name),
       base::Bind(&NetworkStateNotifier::ConnectErrorPropertiesFailed,
-                 weak_ptr_factory_.GetWeakPtr(), error_name, network->path()));
+                 weak_ptr_factory_.GetWeakPtr(), error_name, service_path));
 }
 
-void NetworkStateNotifier::ShowMobileActivationErrorForGuid(
-    const std::string& guid) {
-  const NetworkState* cellular = GetNetworkStateForGuid(guid);
+void NetworkStateNotifier::ShowMobileActivationError(
+    const std::string& service_path) {
+  const NetworkState* cellular =
+      NetworkHandler::Get()->network_state_handler()->GetNetworkState(
+          service_path);
   if (!cellular || cellular->type() != shill::kTypeCellular) {
     NET_LOG(ERROR) << "ShowMobileActivationError without Cellular network: "
-                   << guid;
+                   << service_path;
     return;
   }
   message_center::MessageCenter::Get()->AddNotification(

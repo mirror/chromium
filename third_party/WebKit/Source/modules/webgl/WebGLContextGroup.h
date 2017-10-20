@@ -61,9 +61,9 @@ class WebGLContextGroup final : public GarbageCollected<WebGLContextGroup>,
   // created, in order to validate itself.
   uint32_t NumberOfContextLosses() const;
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(contexts_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(contexts_); }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   friend class WebGLObject;

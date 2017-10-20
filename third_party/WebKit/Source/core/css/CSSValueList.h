@@ -66,7 +66,7 @@ class CORE_EXPORT CSSValueList : public CSSValue {
   bool MayContainUrl() const;
   void ReResolveUrl(const Document&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  protected:
   CSSValueList(ClassType, ValueListSeparator);

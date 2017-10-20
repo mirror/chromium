@@ -62,7 +62,7 @@ class SVGGradientElement : public SVGElement, public SVGURIReference {
   const SVGGradientElement* ReferencedElement() const;
   void CollectCommonAttributes(GradientAttributes&) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   SVGGradientElement(const QualifiedName&, Document&);

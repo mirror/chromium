@@ -117,7 +117,7 @@ class PLATFORM_EXPORT MediaStreamSource final
   // destruction.  So this class is eagerly finalized to finalize |m_extraData|
   // promptly.
   EAGERLY_FINALIZE();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   MediaStreamSource(const String& id,

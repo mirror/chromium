@@ -105,7 +105,7 @@ void PrerenderHandle::Detach() {
   prerender_.Clear();
 }
 
-void PrerenderHandle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PrerenderHandle) {
   visitor->Trace(prerender_);
   ContextLifecycleObserver::Trace(visitor);
 }

@@ -2977,8 +2977,7 @@ bool WebGLImageConversion::PackImageData(
   params.alignment = 1;
   if (ComputeImageSizeInBytes(format, type, source_image_sub_rectangle.Width(),
                               source_image_sub_rectangle.Height(), depth,
-                              params, &packed_size, nullptr,
-                              nullptr) != GL_NO_ERROR)
+                              params, &packed_size, 0, 0) != GL_NO_ERROR)
     return false;
   data.resize(packed_size);
 
@@ -3012,8 +3011,7 @@ bool WebGLImageConversion::ExtractImageData(
   params.alignment = 1;
   if (ComputeImageSizeInBytes(format, type, source_image_sub_rectangle.Width(),
                               source_image_sub_rectangle.Height(), depth,
-                              params, &packed_size, nullptr,
-                              nullptr) != GL_NO_ERROR)
+                              params, &packed_size, 0, 0) != GL_NO_ERROR)
     return false;
   data.resize(packed_size);
 

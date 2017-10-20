@@ -35,7 +35,7 @@ class CORE_EXPORT StyleElement : public GarbageCollectedMixin {
  public:
   StyleElement(Document*, bool created_by_parser);
   virtual ~StyleElement();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   enum ProcessingResult { kProcessingSuccessful, kProcessingFatalError };

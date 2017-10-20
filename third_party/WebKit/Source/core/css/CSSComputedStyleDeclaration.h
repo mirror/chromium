@@ -23,7 +23,6 @@
 
 #include "core/CoreExport.h"
 #include "core/css/CSSStyleDeclaration.h"
-#include "core/css/properties/CSSPropertyAPI.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/RefPtr.h"
@@ -59,10 +58,10 @@ class CORE_EXPORT CSSComputedStyleDeclaration final
 
   MutableStylePropertySet* CopyProperties() const;
 
-  const CSSValue* GetPropertyCSSValue(const CSSPropertyAPI&) const;
+  const CSSValue* GetPropertyCSSValue(CSSPropertyID) const;
   const CSSValue* GetPropertyCSSValue(AtomicString custom_property_name) const;
-  std::unique_ptr<HashMap<AtomicString, scoped_refptr<CSSVariableData>>>
-  GetVariables() const;
+  std::unique_ptr<HashMap<AtomicString, RefPtr<CSSVariableData>>> GetVariables()
+      const;
 
   const CSSValue* GetFontSizeCSSValuePreferringKeyword() const;
   bool IsMonospaceFont() const;
@@ -74,7 +73,7 @@ class CORE_EXPORT CSSComputedStyleDeclaration final
   unsigned length() const override;
   String item(unsigned index) const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CSSComputedStyleDeclaration(Node*, bool allow_visited_style, const String&);

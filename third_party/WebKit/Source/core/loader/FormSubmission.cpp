@@ -147,7 +147,7 @@ inline FormSubmission::FormSubmission(SubmitMethod method,
                                       const AtomicString& target,
                                       const AtomicString& content_type,
                                       HTMLFormElement* form,
-                                      scoped_refptr<EncodedFormData> data,
+                                      RefPtr<EncodedFormData> data,
                                       const String& boundary,
                                       Event* event)
     : method_(method),
@@ -243,7 +243,7 @@ FormSubmission* FormSubmission::Create(HTMLFormElement* form,
   if (submit_button)
     submit_button->SetActivatedSubmit(false);
 
-  scoped_refptr<EncodedFormData> form_data;
+  RefPtr<EncodedFormData> form_data;
   String boundary;
 
   if (is_multi_part_form) {
@@ -271,7 +271,7 @@ FormSubmission* FormSubmission::Create(HTMLFormElement* form,
                             std::move(form_data), boundary, event);
 }
 
-void FormSubmission::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FormSubmission) {
   visitor->Trace(form_);
   visitor->Trace(event_);
 }

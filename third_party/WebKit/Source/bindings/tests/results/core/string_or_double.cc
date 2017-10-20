@@ -56,7 +56,7 @@ StringOrDouble::StringOrDouble(const StringOrDouble&) = default;
 StringOrDouble::~StringOrDouble() = default;
 StringOrDouble& StringOrDouble::operator=(const StringOrDouble&) = default;
 
-void StringOrDouble::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StringOrDouble) {
 }
 
 void V8StringOrDouble::ToImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value, StringOrDouble& impl, UnionTypeConversionMode conversionMode, ExceptionState& exceptionState) {

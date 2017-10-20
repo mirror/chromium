@@ -63,7 +63,7 @@ static bool operator!=(const PresentationAttributeCacheKey& a,
 struct PresentationAttributeCacheEntry final
     : public GarbageCollectedFinalized<PresentationAttributeCacheEntry> {
  public:
-  void Trace(blink::Visitor* visitor) { visitor->Trace(value); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(value); }
 
   PresentationAttributeCacheKey key;
   Member<StylePropertySet> value;

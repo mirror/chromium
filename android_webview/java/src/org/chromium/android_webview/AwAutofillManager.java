@@ -19,6 +19,7 @@ import java.lang.ref.WeakReference;
 /**
  * The class to call Android's AutofillManager.
  */
+// TODO(michaelbai): Extend this class to provide instrumentation test. http://crbug.com/717658.
 @TargetApi(Build.VERSION_CODES.O)
 public class AwAutofillManager {
     private static final String TAG = "AwAutofillManager";
@@ -41,67 +42,59 @@ public class AwAutofillManager {
     private AutofillManager mAutofillManager;
     private boolean mIsAutofillInputUIShowing;
     private AutofillInputUIMonitor mMonitor;
-    private boolean mDestroyed;
 
     public AwAutofillManager(Context context) {
-        if (AwContents.activityFromContext(context) == null) {
-            Log.w(TAG,
-                    "WebView autofill is disabled because WebView isn't created with "
-                            + "activity context.");
-            return;
-        }
         mAutofillManager = context.getSystemService(AutofillManager.class);
         mMonitor = new AutofillInputUIMonitor(this);
         mAutofillManager.registerCallback(mMonitor);
     }
 
     public void notifyVirtualValueChanged(View parent, int childId, AutofillValue value) {
-        if (isDestroyed() || mAutofillManager == null) return;
+        if (isDestroyed()) return;
         mAutofillManager.notifyValueChanged(parent, childId, value);
     }
 
     public void commit() {
-        if (isDestroyed() || mAutofillManager == null) return;
+        if (isDestroyed()) return;
         mAutofillManager.commit();
     }
 
     public void cancel() {
-        if (isDestroyed() || mAutofillManager == null) return;
+        if (isDestroyed()) return;
         mAutofillManager.cancel();
     }
 
     public void notifyVirtualViewEntered(View parent, int childId, Rect absBounds) {
-        if (isDestroyed() || mAutofillManager == null) return;
+        if (isDestroyed()) return;
         mAutofillManager.notifyViewEntered(parent, childId, absBounds);
     }
 
     public void notifyVirtualViewExited(View parent, int childId) {
-        if (isDestroyed() || mAutofillManager == null) return;
+        if (isDestroyed()) return;
         mAutofillManager.notifyViewExited(parent, childId);
     }
 
     public void requestAutofill(View parent, int virtualId, Rect absBounds) {
-        if (isDestroyed() || mAutofillManager == null) return;
+        if (isDestroyed()) return;
         mAutofillManager.requestAutofill(parent, virtualId, absBounds);
     }
 
     public boolean isAutofillInputUIShowing() {
-        if (isDestroyed() || mAutofillManager == null) return false;
+        if (isDestroyed()) return false;
         return mIsAutofillInputUIShowing;
     }
 
     public void destroy() {
-        if (isDestroyed() || mAutofillManager == null) return;
+        if (isDestroyed()) return;
         mAutofillManager.unregisterCallback(mMonitor);
         mAutofillManager = null;
-        mDestroyed = true;
     }
 
     private boolean isDestroyed() {
-        if (mDestroyed) {
+        if (mAutofillManager == null) {
             Log.w(TAG, "Application attempted to call on a destroyed AwAutofillManager",
                     new Throwable());
         }
-        return mDestroyed;
+        return mAutofillManager == null;
     }
 }

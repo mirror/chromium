@@ -401,7 +401,7 @@ class InspectorCSSAgent::SetStyleSheetTextAction final
     text_ = other->text_;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
   }
@@ -501,7 +501,7 @@ class InspectorCSSAgent::ModifyRuleAction final
     return nullptr;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     visitor->Trace(css_rule_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
@@ -557,7 +557,7 @@ class InspectorCSSAgent::SetElementStyleAction final
     return style_sheet_->SetText(text_, exception_state);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
   }
@@ -619,7 +619,7 @@ class InspectorCSSAgent::AddRuleAction final
     return result;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(style_sheet_);
     visitor->Trace(css_rule_);
     InspectorCSSAgent::StyleSheetAction::Trace(visitor);
@@ -983,7 +983,7 @@ Response InspectorCSSAgent::getMatchedStylesForNode(
 template <class CSSRuleCollection>
 static CSSKeyframesRule* FindKeyframesRule(CSSRuleCollection* css_rules,
                                            StyleRuleKeyframes* keyframes_rule) {
-  CSSKeyframesRule* result = nullptr;
+  CSSKeyframesRule* result = 0;
   for (unsigned j = 0; css_rules && j < css_rules->length() && !result; ++j) {
     CSSRule* css_rule = css_rules->item(j);
     if (css_rule->type() == CSSRule::kKeyframesRule) {
@@ -2310,17 +2310,17 @@ Response InspectorCSSAgent::getBackgroundColors(
   CSSComputedStyleDeclaration* computed_style_info =
       CSSComputedStyleDeclaration::Create(element, true);
   const CSSValue* font_size =
-      computed_style_info->GetPropertyCSSValue(GetCSSPropertyFontSizeAPI());
+      computed_style_info->GetPropertyCSSValue(CSSPropertyFontSize);
   *computed_font_size = font_size->CssText();
   const CSSValue* font_weight =
-      computed_style_info->GetPropertyCSSValue(GetCSSPropertyFontWeightAPI());
+      computed_style_info->GetPropertyCSSValue(CSSPropertyFontWeight);
   *computed_font_weight = font_weight->CssText();
 
   HTMLElement* body = element->GetDocument().body();
   CSSComputedStyleDeclaration* computed_style_body =
       CSSComputedStyleDeclaration::Create(body, true);
   const CSSValue* body_font_size =
-      computed_style_body->GetPropertyCSSValue(GetCSSPropertyFontSizeAPI());
+      computed_style_body->GetPropertyCSSValue(CSSPropertyFontSize);
   *computed_body_font_size = body_font_size->CssText();
 
   return Response::OK();
@@ -2394,7 +2394,7 @@ Response InspectorCSSAgent::takeCoverageDelta(
   return Response::OK();
 }
 
-void InspectorCSSAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorCSSAgent) {
   visitor->Trace(dom_agent_);
   visitor->Trace(inspected_frames_);
   visitor->Trace(network_agent_);

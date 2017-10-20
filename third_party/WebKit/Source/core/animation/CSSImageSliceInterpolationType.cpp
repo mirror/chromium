@@ -57,7 +57,7 @@ struct SliceTypes {
 
 class CSSImageSliceNonInterpolableValue : public NonInterpolableValue {
  public:
-  static scoped_refptr<CSSImageSliceNonInterpolableValue> Create(
+  static RefPtr<CSSImageSliceNonInterpolableValue> Create(
       const SliceTypes& types) {
     return WTF::AdoptRef(new CSSImageSliceNonInterpolableValue(types));
   }

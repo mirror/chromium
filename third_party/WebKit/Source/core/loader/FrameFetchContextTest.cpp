@@ -72,7 +72,7 @@ class StubLocalFrameClientWithParent final : public EmptyLocalFrameClient {
     return new StubLocalFrameClientWithParent(parent);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(parent_);
     EmptyLocalFrameClient::Trace(visitor);
   }
@@ -198,7 +198,7 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
  private:
   ResourceRequestBlockedReason CanRequestInternal(
       SecurityViolationReportingPolicy reporting_policy) {
-    KURL input_url("http://example.com/");
+    KURL input_url(kParsedURLString, "http://example.com/");
     ResourceRequest resource_request(input_url);
     resource_request.SetFetchCredentialsMode(
         WebURLRequest::kFetchCredentialsModeOmit);
@@ -240,9 +240,10 @@ class FrameFetchContextMockedLocalFrameClientTest
 class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
  public:
   FrameFetchContextModifyRequestTest()
-      : example_origin(SecurityOrigin::Create(KURL("https://example.test/"))),
+      : example_origin(SecurityOrigin::Create(
+            KURL(kParsedURLString, "https://example.test/"))),
         secure_origin(SecurityOrigin::Create(
-            KURL("https://secureorigin.test/image.png"))) {}
+            KURL(kParsedURLString, "https://secureorigin.test/image.png"))) {}
 
  protected:
   void ExpectUpgrade(const char* input, const char* expected) {
@@ -254,8 +255,8 @@ class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
                      WebURLRequest::RequestContext request_context,
                      WebURLRequest::FrameType frame_type,
                      const char* expected) {
-    KURL input_url(input);
-    KURL expected_url(expected);
+    KURL input_url(kParsedURLString, input);
+    KURL expected_url(kParsedURLString, expected);
 
     ResourceRequest resource_request(input_url);
     resource_request.SetRequestContext(request_context);
@@ -274,7 +275,7 @@ class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
   void ExpectUpgradeInsecureRequestHeader(const char* input,
                                           WebURLRequest::FrameType frame_type,
                                           bool should_prefer) {
-    KURL input_url(input);
+    KURL input_url(kParsedURLString, input);
 
     ResourceRequest resource_request(input_url);
     resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
@@ -299,7 +300,7 @@ class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
       const char* input,
       WebURLRequest::FrameType frame_type,
       const AtomicString& expected_required_csp) {
-    KURL input_url(input);
+    KURL input_url(kParsedURLString, input);
     ResourceRequest resource_request(input_url);
     resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
     resource_request.SetFrameType(frame_type);
@@ -322,8 +323,8 @@ class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
     document->GetFrame()->SetOwner(iframe);
   }
 
-  scoped_refptr<SecurityOrigin> example_origin;
-  scoped_refptr<SecurityOrigin> secure_origin;
+  RefPtr<SecurityOrigin> example_origin;
+  RefPtr<SecurityOrigin> secure_origin;
 };
 
 TEST_F(FrameFetchContextModifyRequestTest, UpgradeInsecureResourceRequests) {
@@ -505,7 +506,7 @@ class FrameFetchContextHintsTest : public FrameFetchContextTest {
       resource_width.is_set = true;
     }
 
-    KURL input_url(input);
+    KURL input_url(kParsedURLString, input);
     ResourceRequest resource_request(input_url);
 
     fetch_context->AddClientHintsIfNecessary(hints_preferences, resource_width,
@@ -775,7 +776,7 @@ TEST_F(FrameFetchContextTest, SetFirstPartyCookieAndRequestorOrigin) {
     FrameFetchContext::ProvideDocumentToContext(*fetch_context, document.Get());
 
     // Setup the test:
-    document->SetURL(KURL(test.document_url));
+    document->SetURL(KURL(kParsedURLString, test.document_url));
     document->SetSecurityOrigin(SecurityOrigin::Create(document->Url()));
 
     if (test.document_sandboxed)
@@ -784,8 +785,8 @@ TEST_F(FrameFetchContextTest, SetFirstPartyCookieAndRequestorOrigin) {
     ResourceRequest request("http://example.test/");
     request.SetFrameType(test.frame_type);
     if (strlen(test.requestor_origin) > 0) {
-      request.SetRequestorOrigin(
-          SecurityOrigin::Create(KURL(test.requestor_origin)));
+      request.SetRequestorOrigin(SecurityOrigin::Create(
+          KURL(kParsedURLString, test.requestor_origin)));
     }
 
     // Compare the populated |requestorOrigin| against |test.serializedOrigin|
@@ -1121,7 +1122,7 @@ TEST_F(FrameFetchContextTest, DidLoadResourceWhenDetached) {
 }
 
 TEST_F(FrameFetchContextTest, AddResourceTimingWhenDetached) {
-  scoped_refptr<ResourceTimingInfo> info =
+  RefPtr<ResourceTimingInfo> info =
       ResourceTimingInfo::Create("type", 0.3, false);
 
   dummy_page_holder = nullptr;
@@ -1185,7 +1186,7 @@ TEST_F(FrameFetchContextTest, PageDismissalEventBeingDispatchedWhenDetached) {
 }
 
 TEST_F(FrameFetchContextTest, UpdateTimingInfoForIFrameNavigationWhenDetached) {
-  scoped_refptr<ResourceTimingInfo> info =
+  RefPtr<ResourceTimingInfo> info =
       ResourceTimingInfo::Create("type", 0.3, false);
 
   dummy_page_holder = nullptr;
@@ -1211,7 +1212,7 @@ TEST_F(FrameFetchContextTest, AddConsoleMessageWhenDetached) {
 }
 
 TEST_F(FrameFetchContextTest, GetSecurityOriginWhenDetached) {
-  scoped_refptr<SecurityOrigin> origin =
+  RefPtr<SecurityOrigin> origin =
       SecurityOrigin::Create(KURL(NullURL(), "https://www.example.com"));
   document->SetSecurityOrigin(origin);
 
@@ -1258,7 +1259,7 @@ TEST_F(FrameFetchContextTest,
   KURL url(NullURL(), "https://www.example.com/hoge/fuga");
   ResourceRequest request(url);
   KURL document_url(NullURL(), "https://www2.example.com/foo/bar");
-  scoped_refptr<SecurityOrigin> origin = SecurityOrigin::Create(document_url);
+  RefPtr<SecurityOrigin> origin = SecurityOrigin::Create(document_url);
 
   document->SetSecurityOrigin(origin);
   document->SetURL(document_url);

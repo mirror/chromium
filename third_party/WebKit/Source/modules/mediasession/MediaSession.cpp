@@ -228,13 +228,13 @@ void MediaSession::DidReceiveAction(
   iter->value->call(this);
 }
 
-void MediaSession::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaSession) {
   visitor->Trace(metadata_);
   visitor->Trace(action_handlers_);
   ContextClient::Trace(visitor);
 }
 
-void MediaSession::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(MediaSession) {
   for (auto handler : action_handlers_.Values())
     visitor->TraceWrappers(handler);
 }

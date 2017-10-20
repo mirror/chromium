@@ -87,7 +87,7 @@ void PendingScript::MarkParserBlockingLoadStartTime() {
   parser_blocking_load_start_time_ = MonotonicallyIncreasingTime();
 }
 
-void PendingScript::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PendingScript) {
   visitor->Trace(element_);
   visitor->Trace(client_);
 }

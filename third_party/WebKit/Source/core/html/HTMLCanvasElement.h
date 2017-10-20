@@ -148,9 +148,9 @@ class CORE_EXPORT HTMLCanvasElement final
   CanvasRenderingContext* RenderingContext() const { return context_.Get(); }
 
   void EnsureUnacceleratedImageBuffer();
-  scoped_refptr<Image> CopiedImage(SourceDrawingBuffer,
-                                   AccelerationHint,
-                                   SnapshotReason);
+  RefPtr<Image> CopiedImage(SourceDrawingBuffer,
+                            AccelerationHint,
+                            SnapshotReason);
   void ClearCopiedImage();
 
   bool OriginClean() const;
@@ -189,10 +189,10 @@ class CORE_EXPORT HTMLCanvasElement final
   void PageVisibilityChanged() override;
 
   // CanvasImageSource implementation
-  scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
-                                               AccelerationHint,
-                                               SnapshotReason,
-                                               const FloatSize&) override;
+  RefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
+                                        AccelerationHint,
+                                        SnapshotReason,
+                                        const FloatSize&) override;
   bool WouldTaintOrigin(SecurityOrigin*) const override;
   FloatSize ElementSize(const FloatSize&) const override;
   bool IsCanvasElement() const override { return true; }
@@ -216,13 +216,13 @@ class CORE_EXPORT HTMLCanvasElement final
                                   const ImageBitmapOptions&) override;
 
   // OffscreenCanvasPlaceholder implementation.
-  void SetPlaceholderFrame(scoped_refptr<StaticBitmapImage>,
+  void SetPlaceholderFrame(RefPtr<StaticBitmapImage>,
                            WeakPtr<OffscreenCanvasFrameDispatcher>,
-                           scoped_refptr<WebTaskRunner>,
+                           RefPtr<WebTaskRunner>,
                            unsigned resource_id) override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   void CreateImageBufferUsingSurfaceForTesting(
       std::unique_ptr<ImageBufferSurface>);
@@ -332,7 +332,7 @@ class CORE_EXPORT HTMLCanvasElement final
 
   // FIXME: This is temporary for platforms that have to copy the image buffer
   // to render (and for CSSCanvasValue).
-  mutable scoped_refptr<Image> copied_image_;
+  mutable RefPtr<Image> copied_image_;
 
   // Used for OffscreenCanvas that controls this HTML canvas element
   std::unique_ptr<::blink::SurfaceLayerBridge> surface_layer_bridge_;

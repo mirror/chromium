@@ -72,9 +72,9 @@ class SVGPropertyTearOffBase
     attribute_name_ = attribute_name;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappersWithManualWriteBarrier(context_element_.Get());
   }
 
@@ -110,12 +110,12 @@ class SVGPropertyTearOff : public SVGPropertyTearOffBase {
 
   void SetTarget(Property* target) { target_ = target; }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(target_);
     SVGPropertyTearOffBase::Trace(visitor);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     SVGPropertyTearOffBase::TraceWrappers(visitor);
   }
 

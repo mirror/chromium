@@ -1029,7 +1029,7 @@ void PaymentRequest::OnUpdatePaymentDetailsFailure(const String& error) {
   ClearResolversAndCloseMojoConnection();
 }
 
-void PaymentRequest::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PaymentRequest) {
   visitor->Trace(options_);
   visitor->Trace(shipping_address_);
   visitor->Trace(show_resolver_);
@@ -1042,7 +1042,7 @@ void PaymentRequest::Trace(blink::Visitor* visitor) {
 
 void PaymentRequest::OnCompleteTimeoutForTesting() {
   complete_timer_.Stop();
-  OnCompleteTimeout(nullptr);
+  OnCompleteTimeout(0);
 }
 
 PaymentRequest::PaymentRequest(ExecutionContext* execution_context,

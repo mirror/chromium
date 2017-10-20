@@ -151,7 +151,7 @@ LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameImpl* frame) {
 
 LocalFrameClientImpl::~LocalFrameClientImpl() {}
 
-void LocalFrameClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrameClientImpl) {
   visitor->Trace(web_frame_);
   LocalFrameClient::Trace(visitor);
 }
@@ -335,7 +335,7 @@ void LocalFrameClientImpl::Detached(FrameDetachType type) {
 
   // Signal that no further communication with WebFrameClient should take
   // place at this point since we are no longer associated with the Page.
-  web_frame_->SetClient(nullptr);
+  web_frame_->SetClient(0);
 
   client->FrameDetached(static_cast<WebFrameClient::DetachType>(type));
 
@@ -893,7 +893,7 @@ WebRemotePlaybackClient* LocalFrameClientImpl::CreateWebRemotePlaybackClient(
 
 WebCookieJar* LocalFrameClientImpl::CookieJar() const {
   if (!web_frame_->Client())
-    return nullptr;
+    return 0;
   return web_frame_->Client()->CookieJar();
 }
 

@@ -27,7 +27,7 @@ class NavigatorPlugins final : public GarbageCollected<NavigatorPlugins>,
   static DOMMimeTypeArray* mimeTypes(Navigator&);
   static bool javaEnabled(Navigator&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit NavigatorPlugins(Navigator&);

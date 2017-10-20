@@ -27,7 +27,7 @@ class TrackDefaultList final : public GarbageCollected<TrackDefaultList>,
   unsigned length() const { return track_defaults_.size(); }
   TrackDefault* item(unsigned) const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   TrackDefaultList();

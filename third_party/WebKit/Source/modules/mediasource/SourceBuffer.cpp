@@ -1337,7 +1337,7 @@ void SourceBuffer::AppendError() {
   source_->EndOfStreamAlgorithm(WebMediaSource::kEndOfStreamStatusDecodeError);
 }
 
-void SourceBuffer::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SourceBuffer) {
   visitor->Trace(source_);
   visitor->Trace(track_defaults_);
   visitor->Trace(async_event_queue_);

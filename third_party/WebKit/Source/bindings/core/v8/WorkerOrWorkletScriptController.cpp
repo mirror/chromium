@@ -103,7 +103,7 @@ WorkerOrWorkletScriptController::WorkerOrWorkletScriptController(
       isolate_(isolate),
       execution_forbidden_(false),
       rejected_promises_(RejectedPromises::Create()),
-      execution_state_(nullptr) {
+      execution_state_(0) {
   DCHECK(isolate);
   world_ =
       DOMWrapperWorld::Create(isolate, DOMWrapperWorld::WorldType::kWorker);
@@ -387,7 +387,7 @@ void WorkerOrWorkletScriptController::RethrowExceptionFromImportedScript(
       V8ThrowException::CreateError(isolate_, error_message));
 }
 
-void WorkerOrWorkletScriptController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerOrWorkletScriptController) {
   visitor->Trace(global_scope_);
 }
 

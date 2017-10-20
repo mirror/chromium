@@ -165,7 +165,7 @@ void WebGLGetBufferSubDataAsyncCallback::Resolve() {
   context_->UnregisterGetBufferSubDataAsyncCallback(this);
 }
 
-void WebGLGetBufferSubDataAsyncCallback::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLGetBufferSubDataAsyncCallback) {
   visitor->Trace(context_);
   visitor->Trace(promise_resolver_);
   visitor->Trace(destination_array_buffer_view_);

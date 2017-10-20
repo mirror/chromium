@@ -153,7 +153,7 @@ class CORE_EXPORT OffscreenCanvas final
 
   FontSelector* GetFontSelector() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class OffscreenCanvasTest;

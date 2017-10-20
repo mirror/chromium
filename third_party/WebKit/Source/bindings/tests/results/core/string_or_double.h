@@ -39,7 +39,7 @@ class CORE_EXPORT StringOrDouble final {
   StringOrDouble(const StringOrDouble&);
   ~StringOrDouble();
   StringOrDouble& operator=(const StringOrDouble&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum class SpecificType {

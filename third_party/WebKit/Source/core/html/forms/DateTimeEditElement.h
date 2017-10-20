@@ -83,7 +83,7 @@ class DateTimeEditElement final : public HTMLDivElement,
   static DateTimeEditElement* Create(Document&, EditControlOwner&);
 
   ~DateTimeEditElement() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void AddField(DateTimeFieldElement*);
   bool AnyEditableFieldsHaveValues() const;
@@ -136,7 +136,7 @@ class DateTimeEditElement final : public HTMLDivElement,
   void UpdateUIState();
 
   // Element function.
-  scoped_refptr<ComputedStyle> CustomStyleForLayoutObject() override;
+  RefPtr<ComputedStyle> CustomStyleForLayoutObject() override;
   bool IsDateTimeEditElement() const override;
 
   // DateTimeFieldElement::FieldOwner functions.

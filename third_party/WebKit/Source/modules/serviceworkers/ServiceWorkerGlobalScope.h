@@ -110,7 +110,7 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
   DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(foreignfetch);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   // EventTarget

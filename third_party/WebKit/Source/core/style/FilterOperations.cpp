@@ -31,7 +31,7 @@ namespace blink {
 
 FilterOperations::FilterOperations() {}
 
-void FilterOperations::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FilterOperations) {
   visitor->Trace(operations_);
 }
 

@@ -27,13 +27,12 @@ void V8IntersectionObserverDelegate::Deliver(
   callback_->call(&observer, entries, &observer);
 }
 
-void V8IntersectionObserverDelegate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V8IntersectionObserverDelegate) {
   visitor->Trace(callback_);
   IntersectionObserverDelegate::Trace(visitor);
 }
 
-void V8IntersectionObserverDelegate::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(V8IntersectionObserverDelegate) {
   visitor->TraceWrappers(callback_);
   IntersectionObserverDelegate::TraceWrappers(visitor);
 }

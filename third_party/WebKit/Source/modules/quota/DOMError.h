@@ -58,7 +58,7 @@ class MODULES_EXPORT DOMError : public GarbageCollectedFinalized<DOMError>,
   const String& name() const { return name_; }
   const String& message() const { return message_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  protected:
   explicit DOMError(const String& name);

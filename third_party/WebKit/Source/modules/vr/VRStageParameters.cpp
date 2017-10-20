@@ -23,7 +23,7 @@ void VRStageParameters::Update(
   size_z_ = stage->sizeZ;
 }
 
-void VRStageParameters::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRStageParameters) {
   visitor->Trace(standing_transform_);
 }
 

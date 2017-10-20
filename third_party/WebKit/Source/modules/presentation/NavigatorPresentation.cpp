@@ -38,7 +38,7 @@ Presentation* NavigatorPresentation::presentation(Navigator& navigator) {
   return self.presentation_;
 }
 
-void NavigatorPresentation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorPresentation) {
   visitor->Trace(presentation_);
   Supplement<Navigator>::Trace(visitor);
 }

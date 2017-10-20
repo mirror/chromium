@@ -149,7 +149,7 @@ bool MatchedPropertiesCache::IsCacheable(const StyleResolverState& state) {
   return true;
 }
 
-void MatchedPropertiesCache::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MatchedPropertiesCache) {
   visitor->Trace(cache_);
 }
 

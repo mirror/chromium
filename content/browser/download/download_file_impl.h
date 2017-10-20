@@ -76,8 +76,7 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   void SetPotentialFileLength(int64_t length) override;
   const base::FilePath& FullPath() const override;
   bool InProgress() const override;
-  void Pause() override;
-  void Resume() override;
+  void WasPaused() override;
 
  protected:
   // For test class overrides.
@@ -348,11 +347,6 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   base::TimeDelta download_time_without_parallel_streams_;
 
   std::vector<DownloadItem::ReceivedSlice> received_slices_;
-
-  // Used to track whether the download is paused or not. This value is ignored
-  // when network service is disabled as download pause/resumption is handled
-  // by DownloadRequestCore in that case.
-  bool is_paused_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

@@ -23,7 +23,7 @@ class PaintSize : public GarbageCollectedFinalized<PaintSize>,
   int width() const { return size_.Width(); }
   int height() const { return size_.Height(); }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit PaintSize(IntSize size) : size_(size) {}

@@ -56,8 +56,8 @@
 // allocated, WebView and LocalFrameView are currently not. In terms of
 // ownership and control, the relationships stays the same, but the references
 // from the off-heap WebView to the on-heap Page is handled by a Persistent<>,
-// not a scoped_refptr<>. Similarly, the mutual strong references between the
-// on-heap LocalFrame and the off-heap LocalFrameView is through a RefPtr (from
+// not a RefPtr<>. Similarly, the mutual strong references between the on-heap
+// LocalFrame and the off-heap LocalFrameView is through a RefPtr (from
 // LocalFrame to LocalFrameView), and a Persistent refers to the LocalFrame in
 // the other direction.
 //
@@ -440,7 +440,7 @@ class ChromePluginPrintContext final : public ChromePrintContext {
 
   ~ChromePluginPrintContext() override {}
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(plugin_);
     ChromePrintContext::Trace(visitor);
   }
@@ -505,7 +505,7 @@ WebLocalFrame* WebLocalFrame::FrameForCurrentContext() {
   v8::Local<v8::Context> context =
       v8::Isolate::GetCurrent()->GetCurrentContext();
   if (context.IsEmpty())
-    return nullptr;
+    return 0;
   return FrameForContext(context);
 }
 
@@ -531,7 +531,7 @@ bool WebLocalFrameImpl::IsWebRemoteFrame() const {
 
 WebRemoteFrame* WebLocalFrameImpl::ToWebRemoteFrame() {
   NOTREACHED();
-  return nullptr;
+  return 0;
 }
 
 void WebLocalFrameImpl::Close() {
@@ -671,8 +671,8 @@ void WebLocalFrameImpl::ExecuteScriptInIsolatedWorld(
   HeapVector<ScriptSourceCode> sources =
       CreateSourcesVector(sources_in, num_sources);
   v8::HandleScope handle_scope(ToIsolate(GetFrame()));
-  GetFrame()->GetScriptController().ExecuteScriptInIsolatedWorld(
-      world_id, sources, nullptr);
+  GetFrame()->GetScriptController().ExecuteScriptInIsolatedWorld(world_id,
+                                                                 sources, 0);
 }
 
 void WebLocalFrameImpl::SetIsolatedWorldSecurityOrigin(
@@ -754,7 +754,7 @@ void WebLocalFrameImpl::RequestExecuteScriptAndReturnValue(
     WebScriptExecutionCallback* callback) {
   DCHECK(GetFrame());
 
-  scoped_refptr<DOMWrapperWorld> main_world = &DOMWrapperWorld::MainWorld();
+  RefPtr<DOMWrapperWorld> main_world = &DOMWrapperWorld::MainWorld();
   SuspendableScriptExecutor* executor = SuspendableScriptExecutor::Create(
       GetFrame(), std::move(main_world), CreateSourcesVector(&source, 1),
       user_gesture, callback);
@@ -798,8 +798,8 @@ void WebLocalFrameImpl::ExecuteScriptInIsolatedWorld(
     results->Swap(v8_results);
   } else {
     v8::HandleScope handle_scope(ToIsolate(GetFrame()));
-    GetFrame()->GetScriptController().ExecuteScriptInIsolatedWorld(
-        world_id, sources, nullptr);
+    GetFrame()->GetScriptController().ExecuteScriptInIsolatedWorld(world_id,
+                                                                   sources, 0);
   }
 }
 
@@ -814,7 +814,7 @@ void WebLocalFrameImpl::RequestExecuteScriptInIsolatedWorld(
   CHECK_GT(world_id, 0);
   CHECK_LT(world_id, DOMWrapperWorld::kEmbedderWorldIdLimit);
 
-  scoped_refptr<DOMWrapperWorld> isolated_world =
+  RefPtr<DOMWrapperWorld> isolated_world =
       DOMWrapperWorld::EnsureIsolatedWorld(ToIsolate(GetFrame()), world_id);
   SuspendableScriptExecutor* executor = SuspendableScriptExecutor::Create(
       GetFrame(), std::move(isolated_world),
@@ -1376,7 +1376,7 @@ WebPlugin* WebLocalFrameImpl::FocusedPluginIfInputMethodSupported() {
   WebPluginContainerImpl* container = GetFrame()->GetWebPluginContainer();
   if (container && container->SupportsInputMethod())
     return container->Plugin();
-  return nullptr;
+  return 0;
 }
 
 void WebLocalFrameImpl::DispatchBeforePrintEvent() {
@@ -1659,10 +1659,10 @@ WebLocalFrameImpl::WebLocalFrameImpl(
     : WebLocalFrame(scope),
       local_frame_client_(LocalFrameClientImpl::Create(this)),
       client_(client),
-      autofill_client_(nullptr),
+      autofill_client_(0),
       input_events_scale_factor_for_emulation_(1),
       interface_registry_(interface_registry),
-      web_dev_tools_frontend_(nullptr),
+      web_dev_tools_frontend_(0),
       input_method_controller_(*this),
       text_checker_client_(new TextCheckerClientImpl(this)),
       spell_check_panel_host_client_(nullptr),
@@ -1688,7 +1688,7 @@ WebLocalFrameImpl::~WebLocalFrameImpl() {
   g_frame_count--;
 }
 
-void WebLocalFrameImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebLocalFrameImpl) {
   visitor->Trace(local_frame_client_);
   visitor->Trace(frame_);
   visitor->Trace(dev_tools_agent_);
@@ -2060,7 +2060,7 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
   request.SetCheckForBrowserSideNavigation(false);
 
   FrameLoadRequest frame_request(
-      nullptr, request,
+      0, request,
       SubstituteData(data, mime_type, text_encoding, unreachable_url));
   DCHECK(frame_request.GetSubstituteData().IsValid());
   frame_request.SetReplacesCurrentItem(replace);

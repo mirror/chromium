@@ -437,18 +437,6 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void GetInterface(const std::string& interface_name,
                     mojo::ScopedMessagePipeHandle interface_pipe) override;
 
-  // Perform common checks that need to run before ContainerHost methods that
-  // come from a child process are handled.
-  // |scope| is checked if it is allowed to run a service worker.
-  // Returns true if all checks have passed.
-  // If anything looks wrong |callback| will run with an error
-  // message prefixed by |error_prefix| and |args|, and false is returned.
-  template <typename CallbackType, typename... Args>
-  bool CanServeContainerHostMethods(CallbackType* callback,
-                                    const GURL& scope,
-                                    const char* error_prefix,
-                                    Args... args);
-
   const std::string client_uuid_;
   const base::TimeTicks create_time_;
   int render_process_id_;
@@ -494,14 +482,14 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   scoped_refptr<ServiceWorkerVersion> running_hosted_version_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
 
-  // |dispatcher_host_| is expected to outlive |this| because it destroys
-  // |this| upon destruction. However, it may be null in several cases:
+  // |dispatcher_host_| can be null in several cases:
   // 1) In some tests.
   // 2) PlzNavigate and service worker startup pre-create a
   // ServiceWorkerProviderHost instance before there is a renderer assigned to
   // it. The dispatcher host is set once the instance starts hosting a
   // renderer.
   // 3) During cross-site transfer.
+  // 4) The dispatcher host can be destructed/removed before the provider host.
   base::WeakPtr<ServiceWorkerDispatcherHost> dispatcher_host_;
 
   bool allow_association_;

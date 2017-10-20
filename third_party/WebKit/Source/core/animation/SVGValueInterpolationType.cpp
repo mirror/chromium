@@ -14,7 +14,7 @@ class SVGValueNonInterpolableValue : public NonInterpolableValue {
  public:
   virtual ~SVGValueNonInterpolableValue() {}
 
-  static scoped_refptr<SVGValueNonInterpolableValue> Create(
+  static RefPtr<SVGValueNonInterpolableValue> Create(
       SVGPropertyBase* svg_value) {
     return WTF::AdoptRef(new SVGValueNonInterpolableValue(svg_value));
   }

@@ -60,8 +60,7 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "storage/common/blob_storage/blob_handle.h"
-#include "third_party/WebKit/common/blob/blob.mojom.h"
-#include "third_party/WebKit/common/blob/blob_registry.mojom.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
@@ -287,7 +286,7 @@ void AbortPendingEventCallbacks(T& callbacks, TArgs... args) {
   }
 }
 
-void GetBlobRegistry(blink::mojom::BlobRegistryRequest request) {
+void GetBlobRegistry(storage::mojom::BlobRegistryRequest request) {
   ChildThreadImpl::current()->GetConnector()->BindInterface(
       mojom::kBrowserServiceName, std::move(request));
 }
@@ -1033,7 +1032,7 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
   if (response.blob_uuid.size()) {
     // TODO(kinuko): Remove this hack once kMojoBlobs is enabled by default
     // and crbug.com/755523 is resolved.
-    blink::mojom::BlobPtr blob_ptr;
+    storage::mojom::BlobPtr blob_ptr;
     if (response.blob) {
       blob_ptr = response.blob->TakeBlobPtr();
       response.blob = nullptr;
@@ -1400,9 +1399,12 @@ void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
 
   // Register a registration and its version attributes with the dispatcher
   // living on the worker thread.
-  proxy_->SetRegistration(WebServiceWorkerRegistrationImpl::CreateHandle(
+  scoped_refptr<WebServiceWorkerRegistrationImpl> registration(
       dispatcher->GetOrCreateRegistrationForServiceWorkerGlobalScope(
-          std::move(info), attrs, io_thread_task_runner_)));
+          std::move(info), attrs, io_thread_task_runner_));
+
+  proxy_->SetRegistration(
+      WebServiceWorkerRegistrationImpl::CreateHandle(registration));
 }
 
 void ServiceWorkerContextClient::DispatchActivateEvent(

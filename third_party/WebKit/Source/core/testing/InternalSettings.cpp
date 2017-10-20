@@ -142,7 +142,7 @@ void InternalSettings::ResetToConsistentState() {
 
 Settings* InternalSettings::GetSettings() const {
   if (!GetPage())
-    return nullptr;
+    return 0;
   return &GetPage()->GetSettings();
 }
 
@@ -371,7 +371,7 @@ void InternalSettings::setDefaultVideoPosterURL(
   GetSettings()->SetDefaultVideoPosterURL(url);
 }
 
-void InternalSettings::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InternalSettings) {
   InternalSettingsGenerated::Trace(visitor);
   Supplement<Page>::Trace(visitor);
 }

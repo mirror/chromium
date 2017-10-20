@@ -163,7 +163,7 @@ class CORE_EXPORT EditingStyle final : public GarbageCollected<EditingStyle> {
 
   void SetProperty(CSSPropertyID, const String& value, bool important = false);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   EditingStyle() = default;

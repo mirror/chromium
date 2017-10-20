@@ -66,9 +66,7 @@ class MockWebSocketChannelClient
                     unsigned short,
                     const String&));
 
-  virtual void Trace(blink::Visitor* visitor) {
-    WebSocketChannelClient::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { WebSocketChannelClient::Trace(visitor); }
 };
 
 class MockWebSocketHandle : public WebSocketHandle {

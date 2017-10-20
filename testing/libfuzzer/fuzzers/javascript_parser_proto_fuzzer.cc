@@ -18,7 +18,7 @@ std::string protobuf_to_string(
     const javascript_parser_proto_fuzzer::Source& source_protobuf) {
   std::string source;
   for (const auto& token : source_protobuf.tokens()) {
-    source += token_to_string(token, 0) + std::string(" ");
+    source += token_to_string(token) + std::string(" ");
   }
   return source;
 }
@@ -26,7 +26,6 @@ std::string protobuf_to_string(
 extern "C" int LLVMFuzzerInitialize(int* argc, char*** argv) {
   v8::V8::InitializeICUDefaultLocation((*argv)[0]);
   v8::V8::InitializeExternalStartupData((*argv)[0]);
-  v8::V8::SetFlagsFromCommandLine(argc, *argv, true);
 
   v8::Platform* platform = v8::platform::CreateDefaultPlatform();
   v8::V8::InitializePlatform(platform);
@@ -47,7 +46,7 @@ DEFINE_BINARY_PROTO_FUZZER(
   v8::Context::Scope context_scope(context);
 
   std::string source_string = protobuf_to_string(source_protobuf);
-  v8::Local<v8::String> source_v8_string =
+  v8::Local<v8::String> source =
       v8::String::NewFromUtf8(isolate, source_string.c_str(),
                               v8::NewStringType::kNormal)
           .ToLocalChecked();
@@ -55,28 +54,9 @@ DEFINE_BINARY_PROTO_FUZZER(
   {
     v8::TryCatch try_catch(isolate);
 
-    if (source_protobuf.is_module()) {
-      v8::Local<v8::String> name =
-          v8::String::NewFromUtf8(isolate, "module.js",
-                                  v8::NewStringType::kNormal)
-              .ToLocalChecked();
-
-      v8::ScriptOrigin origin(
-          name, v8::Local<v8::Integer>(), v8::Local<v8::Integer>(),
-          v8::Local<v8::Boolean>(), v8::Local<v8::Integer>(),
-          v8::Local<v8::Value>(), v8::Local<v8::Boolean>(),
-          v8::Local<v8::Boolean>(), v8::True(isolate));
-      v8::ScriptCompiler::Source source(source_v8_string, origin);
-      v8::MaybeLocal<v8::Module> module =
-          v8::ScriptCompiler::CompileModule(isolate, &source);
-      // TODO(marja): Figure out a more elegant way to silence the warning.
-      module.IsEmpty();
-    } else {
-      v8::MaybeLocal<v8::Script> script =
-          v8::Script::Compile(context, source_v8_string);
-      // TODO(marja): Figure out a more elegant way to silence the warning.
-      script.IsEmpty();
-    }
+    v8::MaybeLocal<v8::Script> script = v8::Script::Compile(context, source);
+    // TODO(marja): Figure out a more elegant way to silence the warning.
+    script.IsEmpty();
 
     // TODO(crbug.com/775796): run the code once we find a way to avoid endless
     // loops.

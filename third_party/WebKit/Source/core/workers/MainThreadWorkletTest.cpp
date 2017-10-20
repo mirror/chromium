@@ -43,7 +43,7 @@ class MainThreadWorkletTest : public ::testing::Test {
   void SetUp() override {
     page_ = DummyPageHolder::Create();
     Document* document = page_->GetFrame().GetDocument();
-    document->SetURL(KURL("https://example.com/"));
+    document->SetURL(KURL(kParsedURLString, "https://example.com/"));
     document->UpdateSecurityOrigin(SecurityOrigin::Create(document->Url()));
     reporting_proxy_ =
         std::make_unique<MainThreadWorkletReportingProxyForTest>(document);
@@ -98,7 +98,7 @@ TEST_F(MainThreadWorkletTest, UseCounter) {
 }
 
 TEST_F(MainThreadWorkletTest, TaskRunner) {
-  scoped_refptr<WebTaskRunner> task_runner =
+  RefPtr<WebTaskRunner> task_runner =
       TaskRunnerHelper::Get(TaskType::kUnthrottled, global_scope_);
   EXPECT_TRUE(task_runner->RunsTasksInCurrentSequence());
 }

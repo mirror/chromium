@@ -188,7 +188,7 @@ class UseCounterObserverImpl final : public UseCounter::Observer {
     return true;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     UseCounter::Observer::Trace(visitor);
     visitor->Trace(resolver_);
   }
@@ -229,7 +229,7 @@ static WTF::Optional<DocumentMarker::MarkerTypes> MarkerTypesFrom(
 
 static SpellCheckRequester* GetSpellCheckRequester(Document* document) {
   if (!document || !document->GetFrame())
-    return nullptr;
+    return 0;
   return &document->GetFrame()->GetSpellChecker().GetSpellCheckRequester();
 }
 
@@ -296,10 +296,10 @@ LocalFrame* Internals::GetFrame() const {
 
 InternalSettings* Internals::settings() const {
   if (!document_)
-    return nullptr;
+    return 0;
   Page* page = document_->GetPage();
   if (!page)
-    return nullptr;
+    return 0;
   return InternalSettings::From(*page);
 }
 
@@ -383,11 +383,11 @@ Element* Internals::elementFromPoint(Document* doc,
   if (!doc) {
     exception_state.ThrowDOMException(kInvalidAccessError,
                                       "Must supply document to check");
-    return nullptr;
+    return 0;
   }
 
   if (doc->GetLayoutViewItem().IsNull())
-    return nullptr;
+    return 0;
 
   HitTestRequest::HitTestRequestType hit_type =
       HitTestRequest::kReadOnly | HitTestRequest::kActive;
@@ -491,7 +491,7 @@ Node* Internals::treeScopeRootNode(Node* node) {
 Node* Internals::parentTreeScope(Node* node) {
   DCHECK(node);
   const TreeScope* parent_tree_scope = node->GetTreeScope().ParentTreeScope();
-  return parent_tree_scope ? &parent_tree_scope->RootNode() : nullptr;
+  return parent_tree_scope ? &parent_tree_scope->RootNode() : 0;
 }
 
 unsigned short Internals::compareTreeScopePosition(
@@ -504,13 +504,13 @@ unsigned short Internals::compareTreeScopePosition(
           ? static_cast<const TreeScope*>(ToDocument(node1))
           : node1->IsShadowRoot()
                 ? static_cast<const TreeScope*>(ToShadowRoot(node1))
-                : nullptr;
+                : 0;
   const TreeScope* tree_scope2 =
       node2->IsDocumentNode()
           ? static_cast<const TreeScope*>(ToDocument(node2))
           : node2->IsShadowRoot()
                 ? static_cast<const TreeScope*>(ToShadowRoot(node2))
-                : nullptr;
+                : 0;
   if (!tree_scope1 || !tree_scope2) {
     exception_state.ThrowDOMException(
         kInvalidAccessError,
@@ -654,7 +654,7 @@ Node* Internals::nextSiblingInFlatTree(Node* node,
     exception_state.ThrowDOMException(
         kInvalidAccessError,
         "The node argument doesn't particite in the flat tree.");
-    return nullptr;
+    return 0;
   }
   return FlatTreeTraversal::NextSibling(*node);
 }
@@ -666,7 +666,7 @@ Node* Internals::firstChildInFlatTree(Node* node,
     exception_state.ThrowDOMException(
         kInvalidAccessError,
         "The node argument doesn't particite in the flat tree");
-    return nullptr;
+    return 0;
   }
   return FlatTreeTraversal::FirstChild(*node);
 }
@@ -678,7 +678,7 @@ Node* Internals::lastChildInFlatTree(Node* node,
     exception_state.ThrowDOMException(
         kInvalidAccessError,
         "The node argument doesn't particite in the flat tree.");
-    return nullptr;
+    return 0;
   }
   return FlatTreeTraversal::LastChild(*node);
 }
@@ -689,7 +689,7 @@ Node* Internals::nextInFlatTree(Node* node, ExceptionState& exception_state) {
     exception_state.ThrowDOMException(
         kInvalidAccessError,
         "The node argument doesn't particite in the flat tree.");
-    return nullptr;
+    return 0;
   }
   return FlatTreeTraversal::Next(*node);
 }
@@ -701,7 +701,7 @@ Node* Internals::previousInFlatTree(Node* node,
     exception_state.ThrowDOMException(
         kInvalidAccessError,
         "The node argument doesn't particite in the flat tree.");
-    return nullptr;
+    return 0;
   }
   return FlatTreeTraversal::Previous(*node);
 }
@@ -756,14 +756,14 @@ ShadowRoot* Internals::youngestShadowRoot(Element* host) {
   DCHECK(host);
   if (ElementShadow* shadow = host->Shadow())
     return &shadow->YoungestShadowRoot();
-  return nullptr;
+  return 0;
 }
 
 ShadowRoot* Internals::oldestShadowRoot(Element* host) {
   DCHECK(host);
   if (ElementShadow* shadow = host->Shadow())
     return &shadow->OldestShadowRoot();
-  return nullptr;
+  return 0;
 }
 
 ShadowRoot* Internals::youngerShadowRoot(Node* shadow,
@@ -772,7 +772,7 @@ ShadowRoot* Internals::youngerShadowRoot(Node* shadow,
   if (!shadow->IsShadowRoot()) {
     exception_state.ThrowDOMException(
         kInvalidAccessError, "The node provided is not a shadow root.");
-    return nullptr;
+    return 0;
   }
 
   return ToShadowRoot(shadow)->YoungerShadowRoot();
@@ -850,7 +850,7 @@ bool Internals::hasAutofocusRequest(Document* document) {
 }
 
 bool Internals::hasAutofocusRequest() {
-  return hasAutofocusRequest(nullptr);
+  return hasAutofocusRequest(0);
 }
 
 Vector<String> Internals::formControlStateOfHistoryItem(
@@ -1014,13 +1014,13 @@ DocumentMarker* Internals::MarkerAt(Node* node,
     exception_state.ThrowDOMException(
         kSyntaxError,
         "The marker type provided ('" + marker_type + "') is invalid.");
-    return nullptr;
+    return 0;
   }
 
   DocumentMarkerVector markers =
       node->GetDocument().Markers().MarkersFor(node, marker_types.value());
   if (markers.size() <= index)
-    return nullptr;
+    return 0;
   return markers[index];
 }
 
@@ -1426,7 +1426,7 @@ DOMPoint* Internals::touchPositionAdjustedToBestClickableNode(
   if (!document->GetFrame()) {
     exception_state.ThrowDOMException(kInvalidAccessError,
                                       "The document provided is invalid.");
-    return nullptr;
+    return 0;
   }
 
   document->UpdateStyleAndLayout();
@@ -1443,7 +1443,7 @@ DOMPoint* Internals::touchPositionAdjustedToBestClickableNode(
           HitTestRequest::kListBased,
       LayoutSize(radius));
 
-  Node* target_node = nullptr;
+  Node* target_node = 0;
   IntPoint adjusted_point;
 
   bool found_node = event_handler.BestClickableNodeForHitTestResult(
@@ -1451,7 +1451,7 @@ DOMPoint* Internals::touchPositionAdjustedToBestClickableNode(
   if (found_node)
     return DOMPoint::Create(adjusted_point.X(), adjusted_point.Y());
 
-  return nullptr;
+  return 0;
 }
 
 Node* Internals::touchNodeAdjustedToBestClickableNode(
@@ -1465,7 +1465,7 @@ Node* Internals::touchNodeAdjustedToBestClickableNode(
   if (!document->GetFrame()) {
     exception_state.ThrowDOMException(kInvalidAccessError,
                                       "The document provided is invalid.");
-    return nullptr;
+    return 0;
   }
 
   document->UpdateStyleAndLayout();
@@ -1482,7 +1482,7 @@ Node* Internals::touchNodeAdjustedToBestClickableNode(
           HitTestRequest::kListBased,
       LayoutSize(radius));
 
-  Node* target_node = nullptr;
+  Node* target_node = 0;
   IntPoint adjusted_point;
   document->GetFrame()->GetEventHandler().BestClickableNodeForHitTestResult(
       result, adjusted_point, target_node);
@@ -1500,7 +1500,7 @@ DOMPoint* Internals::touchPositionAdjustedToBestContextMenuNode(
   if (!document->GetFrame()) {
     exception_state.ThrowDOMException(kInvalidAccessError,
                                       "The document provided is invalid.");
-    return nullptr;
+    return 0;
   }
 
   document->UpdateStyleAndLayout();
@@ -1517,7 +1517,7 @@ DOMPoint* Internals::touchPositionAdjustedToBestContextMenuNode(
           HitTestRequest::kListBased,
       LayoutSize(radius));
 
-  Node* target_node = nullptr;
+  Node* target_node = 0;
   IntPoint adjusted_point;
 
   bool found_node = event_handler.BestContextMenuNodeForHitTestResult(
@@ -1539,7 +1539,7 @@ Node* Internals::touchNodeAdjustedToBestContextMenuNode(
   if (!document->GetFrame()) {
     exception_state.ThrowDOMException(kInvalidAccessError,
                                       "The document provided is invalid.");
-    return nullptr;
+    return 0;
   }
 
   document->UpdateStyleAndLayout();
@@ -1556,7 +1556,7 @@ Node* Internals::touchNodeAdjustedToBestContextMenuNode(
           HitTestRequest::kListBased,
       LayoutSize(radius));
 
-  Node* target_node = nullptr;
+  Node* target_node = 0;
   IntPoint adjusted_point;
   event_handler.BestContextMenuNodeForHitTestResult(result, adjusted_point,
                                                     target_node);
@@ -1582,7 +1582,7 @@ DOMRectReadOnly* Internals::bestZoomableAreaForTouchPoint(
   IntSize radius(width / 2, height / 2);
   IntPoint point(x + radius.Width(), y + radius.Height());
 
-  Node* target_node = nullptr;
+  Node* target_node = 0;
   IntRect zoomable_area;
   bool found_node =
       document->GetFrame()->GetEventHandler().BestZoomableAreaForTouchPoint(
@@ -1809,7 +1809,7 @@ static PaintLayer* FindLayerForGraphicsLayer(PaintLayer* search_root,
   GraphicsLayer* layer_for_scrolling =
       search_root->GetScrollableArea()
           ? search_root->GetScrollableArea()->LayerForScrolling()
-          : nullptr;
+          : 0;
   if (graphics_layer == layer_for_scrolling) {
     *layer_type = "scrolling";
     return search_root;
@@ -1831,7 +1831,7 @@ static PaintLayer* FindLayerForGraphicsLayer(PaintLayer* search_root,
   GraphicsLayer* layer_for_horizontal_scrollbar =
       search_root->GetScrollableArea()
           ? search_root->GetScrollableArea()->LayerForHorizontalScrollbar()
-          : nullptr;
+          : 0;
   if (graphics_layer == layer_for_horizontal_scrollbar) {
     *layer_type = "horizontalScrollbar";
     return search_root;
@@ -1840,7 +1840,7 @@ static PaintLayer* FindLayerForGraphicsLayer(PaintLayer* search_root,
   GraphicsLayer* layer_for_vertical_scrollbar =
       search_root->GetScrollableArea()
           ? search_root->GetScrollableArea()->LayerForVerticalScrollbar()
-          : nullptr;
+          : 0;
   if (graphics_layer == layer_for_vertical_scrollbar) {
     *layer_type = "verticalScrollbar";
     return search_root;
@@ -1849,7 +1849,7 @@ static PaintLayer* FindLayerForGraphicsLayer(PaintLayer* search_root,
   GraphicsLayer* layer_for_scroll_corner =
       search_root->GetScrollableArea()
           ? search_root->GetScrollableArea()->LayerForScrollCorner()
-          : nullptr;
+          : 0;
   if (graphics_layer == layer_for_scroll_corner) {
     *layer_type = "scrollCorner";
     return search_root;
@@ -1865,7 +1865,7 @@ static PaintLayer* FindLayerForGraphicsLayer(PaintLayer* search_root,
       return found_layer;
   }
 
-  return nullptr;
+  return 0;
 }
 
 // Given a vector of rects, merge those that are adjacent, leaving empty rects
@@ -1924,8 +1924,7 @@ static void AccumulateLayerRectList(PaintLayerCompositor* compositor,
     IntSize layer_offset;
     PaintLayer* paint_layer = FindLayerForGraphicsLayer(
         compositor->RootLayer(), graphics_layer, &layer_offset, &layer_type);
-    Node* node =
-        paint_layer ? paint_layer->GetLayoutObject().GetNode() : nullptr;
+    Node* node = paint_layer ? paint_layer->GetLayoutObject().GetNode() : 0;
     for (size_t i = 0; i < layer_rects.size(); ++i) {
       if (!layer_rects[i].IsEmpty()) {
         rects->Append(node, layer_type, layer_offset.Width(),
@@ -3131,7 +3130,7 @@ ScriptPromise Internals::promiseCheckOverload(ScriptState* script_state,
                              V8String(script_state->GetIsolate(), "done"));
 }
 
-void Internals::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Internals) {
   visitor->Trace(runtime_flags_);
   visitor->Trace(document_);
 }
@@ -3451,7 +3450,7 @@ bool Internals::setScrollbarVisibilityInScrollableArea(Node* node,
     scrollable_area->SetScrollbarsHidden(!visible);
     scrollable_area->GetScrollAnimator().SetScrollbarsVisibleForTesting(
         visible);
-    return scrollable_area->GetPageScrollbarTheme().UsesOverlayScrollbars();
+    return ScrollbarTheme::GetTheme().UsesOverlayScrollbars();
   }
   return false;
 }

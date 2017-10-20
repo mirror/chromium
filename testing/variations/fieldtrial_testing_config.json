@@ -2657,6 +2657,25 @@
             ]
         }
     ],
+    "RafAlignedTouchInput": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "RafAlignedTouchInput"
+                    ]
+                }
+            ]
+        }
+    ],
     "ReaderModeUI": [
         {
             "platforms": [
@@ -3772,24 +3791,6 @@
             ]
         }
     ],
-    "VoiceSearchOnLocalNtp": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "VoiceSearchOnLocalNtp"
-                    ]
-                }
-            ]
-        }
-    ],
     "VsyncAlignedInput": [
         {
             "platforms": [
@@ -3915,25 +3916,6 @@
                     "enable_features": [
                         "AsyncWheelEvents",
                         "TouchpadAndWheelScrollLatching"
-                    ]
-                }
-            ]
-        }
-    ],
-    "WorkStealingInScriptRunner": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "WorkStealingInScriptRunner"
                     ]
                 }
             ]

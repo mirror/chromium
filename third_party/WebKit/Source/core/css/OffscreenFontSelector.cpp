@@ -37,7 +37,7 @@ void OffscreenFontSelector::RegisterForInvalidationCallbacks(
 void OffscreenFontSelector::UnregisterForInvalidationCallbacks(
     FontSelectorClient* client) {}
 
-scoped_refptr<FontData> OffscreenFontSelector::GetFontData(
+RefPtr<FontData> OffscreenFontSelector::GetFontData(
     const FontDescription& font_description,
     const AtomicString& family_name) {
   if (CSSSegmentedFontFace* face =
@@ -93,7 +93,7 @@ void OffscreenFontSelector::FontFaceInvalidated() {
   FontCacheInvalidated();
 }
 
-void OffscreenFontSelector::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(OffscreenFontSelector) {
   visitor->Trace(execution_context_);
   visitor->Trace(font_face_cache_);
   FontSelector::Trace(visitor);

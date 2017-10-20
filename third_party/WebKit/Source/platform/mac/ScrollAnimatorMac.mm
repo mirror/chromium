@@ -68,16 +68,15 @@ bool SupportsContentAreaScrolledInDirection() {
   return global_supports_content_area_scrolled_in_direction;
 }
 
-blink::ScrollbarThemeMac* MacOverlayScrollbarTheme(
-    blink::ScrollbarTheme& scrollbar_theme) {
+blink::ScrollbarThemeMac* MacOverlayScrollbarTheme() {
+  blink::ScrollbarTheme& scrollbar_theme = blink::ScrollbarTheme::GetTheme();
   return !scrollbar_theme.IsMockTheme()
              ? static_cast<blink::ScrollbarThemeMac*>(&scrollbar_theme)
              : nil;
 }
 
 ScrollbarPainter ScrollbarPainterForScrollbar(blink::Scrollbar& scrollbar) {
-  if (blink::ScrollbarThemeMac* scrollbar_theme =
-          MacOverlayScrollbarTheme(scrollbar.GetTheme()))
+  if (blink::ScrollbarThemeMac* scrollbar_theme = MacOverlayScrollbarTheme())
     return scrollbar_theme->PainterForScrollbar(scrollbar);
 
   return nil;
@@ -963,8 +962,7 @@ void ScrollAnimatorMac::UpdateScrollerStyle() {
     return;
   }
 
-  blink::ScrollbarThemeMac* mac_theme =
-      MacOverlayScrollbarTheme(scrollable_area_->GetPageScrollbarTheme());
+  blink::ScrollbarThemeMac* mac_theme = MacOverlayScrollbarTheme();
   if (!mac_theme) {
     needs_scroller_style_update_ = false;
     return;

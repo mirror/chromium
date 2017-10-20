@@ -90,7 +90,7 @@ class PeriodicWave final : public GarbageCollectedFinalized<PeriodicWave>,
   // The number of ranges needed for the given sampling rate and FFT size.
   unsigned NumberOfRanges() const { return number_of_ranges_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit PeriodicWave(float sample_rate);

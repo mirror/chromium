@@ -62,7 +62,7 @@ class CORE_EXPORT FormData final
   static FormData* Create(const WTF::TextEncoding& encoding) {
     return new FormData(encoding);
   }
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   // FormData IDL interface.
   void append(const String& name, const String& value);
@@ -87,9 +87,9 @@ class CORE_EXPORT FormData final
   void append(const String& name, Blob*, const String& filename = String());
   String Decode(const CString& data) const;
 
-  scoped_refptr<EncodedFormData> EncodeFormData(
+  RefPtr<EncodedFormData> EncodeFormData(
       EncodedFormData::EncodingType = EncodedFormData::kFormURLEncoded);
-  scoped_refptr<EncodedFormData> EncodeMultiPartFormData();
+  RefPtr<EncodedFormData> EncodeMultiPartFormData();
 
  private:
   explicit FormData(const WTF::TextEncoding&);
@@ -112,7 +112,7 @@ class FormData::Entry : public GarbageCollectedFinalized<FormData::Entry> {
       : name_(name), value_(value) {}
   Entry(const CString& name, Blob* blob, const String& filename)
       : name_(name), blob_(blob), filename_(filename) {}
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   bool IsString() const { return !blob_; }
   bool isFile() const { return blob_; }

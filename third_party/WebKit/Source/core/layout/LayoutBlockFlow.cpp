@@ -965,7 +965,7 @@ LayoutUnit LayoutBlockFlow::AdjustBlockChildForPagination(
     BlockChildrenLayoutInfo& layout_info,
     bool at_before_side_of_block) {
   LayoutBlockFlow* child_block_flow =
-      child.IsLayoutBlockFlow() ? ToLayoutBlockFlow(&child) : nullptr;
+      child.IsLayoutBlockFlow() ? ToLayoutBlockFlow(&child) : 0;
 
   // See if we need a soft (unforced) break in front of this child, and set the
   // pagination strut in that case. An unforced break may come from two sources:
@@ -1604,7 +1604,7 @@ LayoutBlockFlow::MarginValues LayoutBlockFlow::MarginValuesForChild(
   LayoutUnit after_margin;
 
   LayoutBlockFlow* child_layout_block_flow =
-      child.IsLayoutBlockFlow() ? ToLayoutBlockFlow(&child) : nullptr;
+      child.IsLayoutBlockFlow() ? ToLayoutBlockFlow(&child) : 0;
 
   // If the child has the same directionality as we do, then we can just return
   // its margins in the same direction.
@@ -4486,13 +4486,12 @@ void LayoutBlockFlow::PositionDialog() {
     return;
   }
 
-  auto* scrollable_area = GetDocument().View()->LayoutViewportScrollableArea();
-  LayoutUnit top =
-      LayoutUnit((Style()->GetPosition() == EPosition::kFixed)
-                     ? 0
-                     : scrollable_area->ScrollOffsetInt().Height());
-
-  int visible_height = GetDocument().View()->Height();
+  LocalFrameView* frame_view = GetDocument().View();
+  LayoutUnit top = LayoutUnit((Style()->GetPosition() == EPosition::kFixed)
+                                  ? 0
+                                  : frame_view->ScrollOffsetInt().Height());
+  int visible_height =
+      frame_view->VisibleContentRect(kIncludeScrollbars).Height();
   if (Size().Height() < visible_height)
     top += (visible_height - Size().Height()) / 2;
   SetY(top);

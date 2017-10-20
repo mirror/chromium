@@ -53,9 +53,7 @@ class WorkerFetchContextHolder final
     return std::move(web_context_);
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    Supplement<WorkerClients>::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Supplement<WorkerClients>::Trace(visitor); }
 
  private:
   std::unique_ptr<WebWorkerFetchContext> web_context_;
@@ -219,7 +217,7 @@ SecurityOrigin* WorkerFetchContext::GetSecurityOrigin() const {
 
 std::unique_ptr<WebURLLoader> WorkerFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    scoped_refptr<WebTaskRunner> task_runner) {
+    RefPtr<WebTaskRunner> task_runner) {
   CountUsage(WebFeature::kOffMainThreadFetch);
   WrappedResourceRequest wrapped(request);
   return web_context_->CreateURLLoader(wrapped,
@@ -342,11 +340,11 @@ void WorkerFetchContext::SetFirstPartyCookieAndRequestorOrigin(
     out_request.SetRequestorOrigin(GetSecurityOrigin());
 }
 
-scoped_refptr<WebTaskRunner> WorkerFetchContext::GetLoadingTaskRunner() {
+RefPtr<WebTaskRunner> WorkerFetchContext::GetLoadingTaskRunner() {
   return loading_task_runner_;
 }
 
-void WorkerFetchContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerFetchContext) {
   visitor->Trace(global_scope_);
   visitor->Trace(subresource_filter_);
   visitor->Trace(resource_fetcher_);

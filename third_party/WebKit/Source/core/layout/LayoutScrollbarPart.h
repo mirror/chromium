@@ -104,9 +104,6 @@ class LayoutScrollbarPart final : public LayoutBlock {
 
   void ComputeScrollbarWidth();
   void ComputeScrollbarHeight();
-  int CalcScrollbarThicknessUsing(SizeType,
-                                  const Length&,
-                                  int containing_length);
 
   void SetNeedsPaintInvalidation();
 

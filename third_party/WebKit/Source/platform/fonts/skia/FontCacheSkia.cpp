@@ -110,7 +110,7 @@ AtomicString FontCache::GetFamilyNameForCharacter(
     bcp47_locales[locale_count++] = kAndroidColorEmojiLocale;
   SECURITY_DCHECK(locale_count <= kMaxLocales);
   sk_sp<SkTypeface> typeface(fm->matchFamilyStyleCharacter(
-      nullptr, SkFontStyle(), bcp47_locales, locale_count, c));
+      0, SkFontStyle(), bcp47_locales, locale_count, c));
   if (!typeface)
     return g_empty_atom;
 

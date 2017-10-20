@@ -733,7 +733,7 @@ void FontFace::InitCSSFontFace(const unsigned char* data, size_t size) {
   if (error_)
     return;
 
-  scoped_refptr<SharedBuffer> buffer = SharedBuffer::Create(data, size);
+  RefPtr<SharedBuffer> buffer = SharedBuffer::Create(data, size);
   BinaryDataFontFaceSource* source =
       new BinaryDataFontFaceSource(buffer.get(), ots_parse_message_);
   if (source->IsValid())
@@ -744,7 +744,7 @@ void FontFace::InitCSSFontFace(const unsigned char* data, size_t size) {
   css_font_face_->AddSource(source);
 }
 
-void FontFace::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FontFace) {
   visitor->Trace(style_);
   visitor->Trace(weight_);
   visitor->Trace(stretch_);

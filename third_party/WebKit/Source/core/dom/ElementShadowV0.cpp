@@ -164,7 +164,7 @@ void ElementShadowV0::Distribute() {
 
   for (ShadowRoot* root = &YoungestShadowRoot(); root;
        root = root->OlderShadowRoot()) {
-    HTMLShadowElement* shadow_insertion_point = nullptr;
+    HTMLShadowElement* shadow_insertion_point = 0;
     for (const auto& point : root->DescendantInsertionPoints()) {
       if (!point->IsActive())
         continue;
@@ -255,12 +255,11 @@ void ElementShadowV0::ClearDistribution() {
     root->SetShadowInsertionPointOfYoungerShadowRoot(nullptr);
 }
 
-void ElementShadowV0::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ElementShadowV0) {
   visitor->Trace(element_shadow_);
   visitor->Trace(node_to_insertion_points_);
 }
 
-void ElementShadowV0::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {}
+DEFINE_TRACE_WRAPPERS(ElementShadowV0) {}
 
 }  // namespace blink

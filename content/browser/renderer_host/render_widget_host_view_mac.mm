@@ -1530,12 +1530,12 @@ viz::FrameSinkId RenderWidgetHostViewMac::GetFrameSinkId() {
 
 viz::FrameSinkId RenderWidgetHostViewMac::FrameSinkIdAtPoint(
     viz::SurfaceHittestDelegate* delegate,
-    const gfx::PointF& point,
-    gfx::PointF* transformed_point) {
+    const gfx::Point& point,
+    gfx::Point* transformed_point) {
   // The surface hittest happens in device pixels, so we need to convert the
   // |point| from DIPs to pixels before hittesting.
   float scale_factor = ui::GetScaleFactorForNativeView(cocoa_view_);
-  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
+  gfx::Point point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
   viz::SurfaceId id =
       browser_compositor_->GetDelegatedFrameHost()->SurfaceIdAtPoint(
           delegate, point_in_pixels, transformed_point);
@@ -1596,13 +1596,13 @@ void RenderWidgetHostViewMac::ProcessGestureEvent(
 }
 
 bool RenderWidgetHostViewMac::TransformPointToLocalCoordSpace(
-    const gfx::PointF& point,
+    const gfx::Point& point,
     const viz::SurfaceId& original_surface,
-    gfx::PointF* transformed_point) {
+    gfx::Point* transformed_point) {
   // Transformations use physical pixels rather than DIP, so conversion
   // is necessary.
   float scale_factor = ui::GetScaleFactorForNativeView(cocoa_view_);
-  gfx::PointF point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
+  gfx::Point point_in_pixels = gfx::ConvertPointToPixel(scale_factor, point);
   if (!browser_compositor_->GetDelegatedFrameHost()
            ->TransformPointToLocalCoordSpace(point_in_pixels, original_surface,
                                              transformed_point))
@@ -1612,9 +1612,9 @@ bool RenderWidgetHostViewMac::TransformPointToLocalCoordSpace(
 }
 
 bool RenderWidgetHostViewMac::TransformPointToCoordSpaceForView(
-    const gfx::PointF& point,
+    const gfx::Point& point,
     RenderWidgetHostViewBase* target_view,
-    gfx::PointF* transformed_point) {
+    gfx::Point* transformed_point) {
   if (target_view == this) {
     *transformed_point = point;
     return true;
@@ -2325,15 +2325,12 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     NativeWebKeyboardEvent fakeEvent = event;
     fakeEvent.SetType(blink::WebInputEvent::kKeyUp);
     fakeEvent.skip_in_browser = true;
-    ui::LatencyInfo fake_event_latency_info = latency_info;
-    fake_event_latency_info.set_source_event_type(ui::SourceEventType::OTHER);
-    widgetHost->ForwardKeyboardEventWithLatencyInfo(fakeEvent,
-                                                    fake_event_latency_info);
+    widgetHost->ForwardKeyboardEventWithLatencyInfo(fakeEvent, latency_info);
     // Not checking |renderWidgetHostView_->render_widget_host_| here because
     // a key event with |skip_in_browser| == true won't be handled by browser,
     // thus it won't destroy the widget.
 
-    widgetHost->ForwardKeyboardEventWithCommands(event, fake_event_latency_info,
+    widgetHost->ForwardKeyboardEventWithCommands(event, latency_info,
                                                  &editCommands_);
 
     // Calling ForwardKeyboardEventWithCommands() could have destroyed the

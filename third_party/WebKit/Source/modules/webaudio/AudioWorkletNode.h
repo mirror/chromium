@@ -91,7 +91,7 @@ class AudioWorkletNode final : public AudioNode,
   // IDL
   AudioParamMap* parameters() const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   AudioWorkletNode(BaseAudioContext&,

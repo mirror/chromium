@@ -164,8 +164,8 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(readystatechange);
 
-  virtual void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   class BlobLoader;

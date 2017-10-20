@@ -1016,7 +1016,7 @@ const char* OperationToString(WebCryptoOperation op) {
     case kWebCryptoOperationUnwrapKey:
       return "unwrapKey";
   }
-  return nullptr;
+  return 0;
 }
 
 bool ParseAlgorithmDictionary(const String& algorithm_name,

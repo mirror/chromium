@@ -91,7 +91,7 @@ class DOMWebSocketWithMockChannel final : public DOMWebSocket {
     return channel_.Get();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(channel_);
     DOMWebSocket::Trace(visitor);
   }

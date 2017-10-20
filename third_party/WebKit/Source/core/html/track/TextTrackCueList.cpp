@@ -142,12 +142,11 @@ void TextTrackCueList::ValidateCueIndexes() {
   first_invalid_index_ = list_.size();
 }
 
-void TextTrackCueList::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrackCueList) {
   visitor->Trace(list_);
 }
 
-void TextTrackCueList::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(TextTrackCueList) {
   for (auto cue : list_) {
     visitor->TraceWrappers(cue);
   }

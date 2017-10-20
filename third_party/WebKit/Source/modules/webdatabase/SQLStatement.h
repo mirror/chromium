@@ -46,7 +46,7 @@ class SQLStatement final : public GarbageCollected<SQLStatement> {
   static SQLStatement* Create(Database*,
                               SQLStatementCallback*,
                               SQLStatementErrorCallback*);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   bool PerformCallback(SQLTransaction*);
 

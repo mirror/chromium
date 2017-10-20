@@ -1205,13 +1205,13 @@ IntSize LayoutBox::ScrolledContentOffset() const {
   return result;
 }
 
-LayoutRect LayoutBox::ClippingRect(const LayoutPoint& location) const {
+LayoutRect LayoutBox::ClippingRect() const {
   LayoutRect result = LayoutRect(LayoutRect::InfiniteIntRect());
   if (ShouldClipOverflow())
-    result = OverflowClipRect(location);
+    result = OverflowClipRect(LayoutPoint());
 
   if (HasClip())
-    result.Intersect(ClipRect(location));
+    result.Intersect(ClipRect(LayoutPoint()));
 
   return result;
 }
@@ -1332,7 +1332,7 @@ bool LayoutBox::ApplyBoxClips(
   // This won't work fully correctly for fixed-position elements, who should
   // receive CSS clip but for whom the current object is not in the containing
   // block chain.
-  LayoutRect clip_rect = ClippingRect(LayoutPoint());
+  LayoutRect clip_rect = ClippingRect();
 
   transform_state.Flatten();
   LayoutRect rect(transform_state.LastPlanarQuad().EnclosingBoundingBox());
@@ -5338,9 +5338,8 @@ LayoutUnit LayoutBox::BaselinePosition(
 PaintLayer* LayoutBox::EnclosingFloatPaintingLayer() const {
   const LayoutObject* curr = this;
   while (curr) {
-    PaintLayer* layer = curr->HasLayer() && curr->IsBox()
-                            ? ToLayoutBox(curr)->Layer()
-                            : nullptr;
+    PaintLayer* layer =
+        curr->HasLayer() && curr->IsBox() ? ToLayoutBox(curr)->Layer() : 0;
     if (layer && layer->IsSelfPaintingLayer())
       return layer;
     curr = curr->Parent();
@@ -5576,7 +5575,7 @@ LayoutObject* LayoutBox::SplitAnonymousBoxesAroundChild(
       MarkBoxForRelayoutAfterSplit(parent_box);
       parent_box->VirtualChildren()->InsertChildNode(
           parent_box, post_box, box_to_split->NextSibling());
-      box_to_split->MoveChildrenTo(post_box, before_child, nullptr, true);
+      box_to_split->MoveChildrenTo(post_box, before_child, 0, true);
 
       LayoutObject* child = post_box->SlowFirstChild();
       DCHECK(child);

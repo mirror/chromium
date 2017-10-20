@@ -292,8 +292,7 @@ class AudioRendererHostTest : public RenderViewHostTestHarness {
   }
 
   void Create() {
-    Create(kDefaultDeviceId, url::Origin::Create(GURL(kSecurityOrigin)), true,
-           true);
+    Create(kDefaultDeviceId, url::Origin(GURL(kSecurityOrigin)), true, true);
   }
 
   void Create(const std::string& device_id,
@@ -305,7 +304,7 @@ class AudioRendererHostTest : public RenderViewHostTestHarness {
                 device_id ==
                     MediaStreamManager::GetHMACForMediaDeviceID(
                         browser_context()->GetMediaDeviceIDSalt(),
-                        url::Origin::Create(GURL(kSecurityOrigin)),
+                        url::Origin(GURL(kSecurityOrigin)),
                         GetNondefaultIdExpectedToPassPermissionsCheck())
             ? media::OUTPUT_DEVICE_STATUS_OK
             : device_id == kBadDeviceId
@@ -351,7 +350,7 @@ class AudioRendererHostTest : public RenderViewHostTestHarness {
   }
 
   void CreateWithoutWaitingForAuth(const std::string& device_id) {
-    Create(device_id, url::Origin::Create(GURL(kSecurityOrigin)), false, false);
+    Create(device_id, url::Origin(GURL(kSecurityOrigin)), false, false);
   }
 
   void CreateWithInvalidRenderFrameId() {
@@ -381,7 +380,7 @@ class AudioRendererHostTest : public RenderViewHostTestHarness {
     std::string input_id = GetNondefaultInputId();
     std::string hashed_output_id = MediaStreamManager::GetHMACForMediaDeviceID(
         browser_context()->GetMediaDeviceIDSalt(),
-        url::Origin::Create(GURL(kSecurityOrigin)), output_id);
+        url::Origin(GURL(kSecurityOrigin)), output_id);
     // Set up association between input and output so that the output
     // device gets selected when using session id:
     audio_manager_->CreateDeviceAssociation(input_id, output_id);
@@ -549,12 +548,12 @@ TEST_F(AudioRendererHostTest, SimulateErrorAndClose) {
 }
 
 TEST_F(AudioRendererHostTest, CreateUnifiedStreamAndClose) {
-  CreateUnifiedStream(url::Origin::Create(GURL(kSecurityOrigin)));
+  CreateUnifiedStream(url::Origin(GURL(kSecurityOrigin)));
   Close();
 }
 
 TEST_F(AudioRendererHostTest, CreateUnauthorizedDevice) {
-  Create(kBadDeviceId, url::Origin::Create(GURL(kSecurityOrigin)), true, true);
+  Create(kBadDeviceId, url::Origin(GURL(kSecurityOrigin)), true, true);
   Close();
 }
 
@@ -563,8 +562,8 @@ TEST_F(AudioRendererHostTest, CreateAuthorizedDevice) {
   std::string id = GetNondefaultIdExpectedToPassPermissionsCheck();
   std::string hashed_id = MediaStreamManager::GetHMACForMediaDeviceID(
       browser_context()->GetMediaDeviceIDSalt(),
-      url::Origin::Create(GURL(kSecurityOrigin)), id);
-  Create(hashed_id, url::Origin::Create(GURL(kSecurityOrigin)), true, true);
+      url::Origin(GURL(kSecurityOrigin)), id);
+  Create(hashed_id, url::Origin(GURL(kSecurityOrigin)), true, true);
   Close();
 }
 
@@ -575,8 +574,7 @@ TEST_F(AudioRendererHostTest, CreateDeviceWithAuthorizationPendingIsError) {
 }
 
 TEST_F(AudioRendererHostTest, CreateInvalidDevice) {
-  Create(kInvalidDeviceId, url::Origin::Create(GURL(kSecurityOrigin)), true,
-         true);
+  Create(kInvalidDeviceId, url::Origin(GURL(kSecurityOrigin)), true, true);
   Close();
 }
 

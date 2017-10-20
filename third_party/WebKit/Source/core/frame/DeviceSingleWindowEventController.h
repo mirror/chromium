@@ -24,7 +24,7 @@ class CORE_EXPORT DeviceSingleWindowEventController
 
   // Inherited from DeviceEventControllerBase.
   void DidUpdateData() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // Inherited from LocalDOMWindow::EventListenerObserver.
   void DidAddEventListener(LocalDOMWindow*, const AtomicString&) override;

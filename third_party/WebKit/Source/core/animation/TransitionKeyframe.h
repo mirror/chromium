@@ -14,24 +14,23 @@ namespace blink {
 
 class CORE_EXPORT TransitionKeyframe : public Keyframe {
  public:
-  static scoped_refptr<TransitionKeyframe> Create(
-      const PropertyHandle& property) {
+  static RefPtr<TransitionKeyframe> Create(const PropertyHandle& property) {
     return WTF::AdoptRef(new TransitionKeyframe(property));
   }
   void SetValue(std::unique_ptr<TypedInterpolationValue> value) {
     value_ = std::move(value);
   }
-  void SetCompositorValue(scoped_refptr<AnimatableValue>);
+  void SetCompositorValue(RefPtr<AnimatableValue>);
   PropertyHandleSet Properties() const final;
 
   class PropertySpecificKeyframe : public Keyframe::PropertySpecificKeyframe {
    public:
-    static scoped_refptr<PropertySpecificKeyframe> Create(
+    static RefPtr<PropertySpecificKeyframe> Create(
         double offset,
-        scoped_refptr<TimingFunction> easing,
+        RefPtr<TimingFunction> easing,
         EffectModel::CompositeOperation composite,
         std::unique_ptr<TypedInterpolationValue> value,
-        scoped_refptr<AnimatableValue> compositor_value) {
+        RefPtr<AnimatableValue> compositor_value) {
       return WTF::AdoptRef(new PropertySpecificKeyframe(
           offset, std::move(easing), composite, std::move(value),
           std::move(compositor_value)));
@@ -42,13 +41,13 @@ class CORE_EXPORT TransitionKeyframe : public Keyframe {
     }
 
     bool IsNeutral() const final { return false; }
-    scoped_refptr<Keyframe::PropertySpecificKeyframe> NeutralKeyframe(
+    RefPtr<Keyframe::PropertySpecificKeyframe> NeutralKeyframe(
         double offset,
-        scoped_refptr<TimingFunction> easing) const final {
+        RefPtr<TimingFunction> easing) const final {
       NOTREACHED();
       return nullptr;
     }
-    scoped_refptr<Interpolation> CreateInterpolation(
+    RefPtr<Interpolation> CreateInterpolation(
         const PropertyHandle&,
         const Keyframe::PropertySpecificKeyframe& other) const final;
 
@@ -56,24 +55,24 @@ class CORE_EXPORT TransitionKeyframe : public Keyframe {
 
    private:
     PropertySpecificKeyframe(double offset,
-                             scoped_refptr<TimingFunction> easing,
+                             RefPtr<TimingFunction> easing,
                              EffectModel::CompositeOperation composite,
                              std::unique_ptr<TypedInterpolationValue> value,
-                             scoped_refptr<AnimatableValue> compositor_value)
+                             RefPtr<AnimatableValue> compositor_value)
         : Keyframe::PropertySpecificKeyframe(offset,
                                              std::move(easing),
                                              composite),
           value_(std::move(value)),
           compositor_value_(std::move(compositor_value)) {}
 
-    scoped_refptr<Keyframe::PropertySpecificKeyframe> CloneWithOffset(
+    RefPtr<Keyframe::PropertySpecificKeyframe> CloneWithOffset(
         double offset) const final {
       return Create(offset, easing_, composite_, value_->Clone(),
                     compositor_value_);
     }
 
     std::unique_ptr<TypedInterpolationValue> value_;
-    scoped_refptr<AnimatableValue> compositor_value_;
+    RefPtr<AnimatableValue> compositor_value_;
   };
 
  private:
@@ -87,16 +86,16 @@ class CORE_EXPORT TransitionKeyframe : public Keyframe {
 
   bool IsTransitionKeyframe() const final { return true; }
 
-  scoped_refptr<Keyframe> Clone() const final {
+  RefPtr<Keyframe> Clone() const final {
     return WTF::AdoptRef(new TransitionKeyframe(*this));
   }
 
-  scoped_refptr<Keyframe::PropertySpecificKeyframe>
-  CreatePropertySpecificKeyframe(const PropertyHandle&) const final;
+  RefPtr<Keyframe::PropertySpecificKeyframe> CreatePropertySpecificKeyframe(
+      const PropertyHandle&) const final;
 
   PropertyHandle property_;
   std::unique_ptr<TypedInterpolationValue> value_;
-  scoped_refptr<AnimatableValue> compositor_value_;
+  RefPtr<AnimatableValue> compositor_value_;
 };
 
 using TransitionPropertySpecificKeyframe =

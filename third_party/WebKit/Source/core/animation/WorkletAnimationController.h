@@ -35,7 +35,7 @@ class CORE_EXPORT WorkletAnimationController
 
   void Update();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   HeapHashSet<Member<WorkletAnimationBase>> pending_animations_;

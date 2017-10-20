@@ -57,7 +57,7 @@ class CORE_EXPORT StyleSheet : public GarbageCollectedFinalized<StyleSheet>,
   virtual bool IsLoading() const = 0;
   virtual bool IsCSSStyleSheet() const { return false; }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

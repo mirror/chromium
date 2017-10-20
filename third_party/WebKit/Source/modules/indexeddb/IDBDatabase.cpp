@@ -116,7 +116,7 @@ IDBDatabase::~IDBDatabase() {
     backend_->Close();
 }
 
-void IDBDatabase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBDatabase) {
   visitor->Trace(version_change_transaction_);
   visitor->Trace(transactions_);
   visitor->Trace(observers_);
@@ -126,7 +126,7 @@ void IDBDatabase::Trace(blink::Visitor* visitor) {
   ContextLifecycleObserver::Trace(visitor);
 }
 
-void IDBDatabase::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(IDBDatabase) {
   for (const auto& observer : observers_.Values()) {
     visitor->TraceWrappers(observer);
   }

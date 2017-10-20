@@ -48,6 +48,7 @@ class NotificationViewMDTest : public views::ViewsTestBase,
                           bool by_user) override;
   std::unique_ptr<ui::MenuModel> CreateMenuModel(
       const Notification& notification) override;
+  bool HasClickedListener(const std::string& notification_id) override;
   void ClickOnNotificationButton(const std::string& notification_id,
                                  int button_index) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
@@ -147,6 +148,11 @@ std::unique_ptr<ui::MenuModel> NotificationViewMDTest::CreateMenuModel(
   // For this test, this method should not be invoked.
   NOTREACHED();
   return nullptr;
+}
+
+bool NotificationViewMDTest::HasClickedListener(
+    const std::string& notification_id) {
+  return true;
 }
 
 void NotificationViewMDTest::ClickOnNotificationButton(

@@ -56,7 +56,7 @@ class MultipleFieldsTemporalInputTypeView final
   static MultipleFieldsTemporalInputTypeView* Create(HTMLInputElement&,
                                                      BaseTemporalInputType&);
   ~MultipleFieldsTemporalInputTypeView() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   MultipleFieldsTemporalInputTypeView(HTMLInputElement&,
@@ -96,8 +96,8 @@ class MultipleFieldsTemporalInputTypeView final
   // InputTypeView functions
   void Blur() final;
   void ClosePopupView() override;
-  scoped_refptr<ComputedStyle> CustomStyleForLayoutObject(
-      scoped_refptr<ComputedStyle>) override;
+  RefPtr<ComputedStyle> CustomStyleForLayoutObject(
+      RefPtr<ComputedStyle>) override;
   void CreateShadowSubtree() final;
   void DestroyShadowSubtree() final;
   void DisabledAttributeChanged() final;

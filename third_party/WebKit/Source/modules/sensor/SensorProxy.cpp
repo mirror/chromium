@@ -38,7 +38,7 @@ void SensorProxy::Dispose() {
   client_binding_.Close();
 }
 
-void SensorProxy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SensorProxy) {
   visitor->Trace(observers_);
   visitor->Trace(provider_);
   PageVisibilityObserver::Trace(visitor);

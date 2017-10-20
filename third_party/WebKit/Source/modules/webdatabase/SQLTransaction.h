@@ -63,7 +63,7 @@ class SQLTransaction final : public GarbageCollectedFinalized<SQLTransaction>,
                                 SQLTransactionErrorCallback*,
                                 bool read_only);
   ~SQLTransaction();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void PerformPendingCallback();
 

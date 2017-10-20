@@ -1276,50 +1276,11 @@ __gCrWeb.autofill.inferLabelFromNext = function(element) {
  * @return {string} The label of element.
  */
 __gCrWeb.autofill.inferLabelFromPlaceholder = function(element) {
-  if (!element) {
+  if (!element || !element.placeholder) {
     return '';
   }
 
-  return element.placeholder || element.getAttribute('placeholder') || '';
-};
-
-/**
-* Helper for |InferLabelForElement()| that infers a label, if possible, from
-* the value attribute when it is present and user has not typed in (if
-* element's value attribute is same as the element's value).
-*
-* It is based on the logic in
-*     string16 InferLabelFromValueAttr(const WebFormControlElement& element)
-* in chromium/src/components/autofill/content/renderer/form_autofill_util.cc.
-*
-* @param {FormControlElement} element An element to examine.
-* @return {string} The label of element.
-*/
-__gCrWeb.autofill.InferLabelFromValueAttr = function(element) {
-  if (!element || !element.value || !element.hasAttribute("value") ||
-      element.value != element.getAttribute("value")) {
-    return '';
-  }
-
-  return element.value;
-};
-
-/**
- * Helper for |InferLabelForElement()| that tests if an inferred label is valid
- * or not. A valid label is a label that does not only contains special
- * characters.
- *
- * It is based on the logic in
- *     bool IsLabelValid(base::StringPiece16 inferred_label,
- *         const std::vector<base::char16>& stop_words)
- * in chromium/src/components/autofill/content/renderer/form_autofill_util.cc.
- * The list of characters that are considered special is hard-coded in a regexp.
- *
- * @param {string} label An element to examine.
- * @return {boolean} Whether the label contains not special characters.
- */
-__gCrWeb.autofill.IsLabelValid = function(label) {
-  return label.search(/[^ *:()\u2013-]/) >= 0;
+  return element.placeholder;
 };
 
 /**
@@ -1707,25 +1668,25 @@ __gCrWeb.autofill.ancestorTagNames = function(element) {
  * in chromium/src/components/autofill/content/renderer/form_autofill_util.cc.
  *
  * @param {FormControlElement} element An element to examine.
- * @return {string} The inferred label of element, or '' if none could be found.
+ * @return {string} The label of element.
  */
 __gCrWeb.autofill.inferLabelForElement = function(element) {
   var inferredLabel;
   if (__gCrWeb.autofill.isCheckableElement(element)) {
     inferredLabel = __gCrWeb.autofill.inferLabelFromNext(element);
-    if (__gCrWeb.autofill.IsLabelValid(inferredLabel)) {
+    if (inferredLabel.length > 0) {
       return inferredLabel;
     }
   }
 
   inferredLabel = __gCrWeb.autofill.inferLabelFromPrevious(element);
-  if (__gCrWeb.autofill.IsLabelValid(inferredLabel)) {
+  if (inferredLabel.length > 0) {
     return inferredLabel;
   }
 
   // If we didn't find a label, check for the placeholder case.
   inferredLabel = __gCrWeb.autofill.inferLabelFromPlaceholder(element);
-  if (__gCrWeb.autofill.IsLabelValid(inferredLabel)) {
+  if (inferredLabel.length > 0) {
     return inferredLabel;
   }
 
@@ -1744,7 +1705,7 @@ __gCrWeb.autofill.inferLabelForElement = function(element) {
       inferredLabel = __gCrWeb.autofill.inferLabelFromDivTable(element);
     } else if (tagName === "TD") {
       inferredLabel = __gCrWeb.autofill.inferLabelFromTableColumn(element);
-      if (!__gCrWeb.autofill.IsLabelValid(inferredLabel))
+      if (inferredLabel.length === 0)
         inferredLabel = __gCrWeb.autofill.inferLabelFromTableRow(element);
     } else if (tagName === "DD") {
       inferredLabel = __gCrWeb.autofill.inferLabelFromDefinitionList(element);
@@ -1754,17 +1715,12 @@ __gCrWeb.autofill.inferLabelForElement = function(element) {
       break;
     }
 
-    if (__gCrWeb.autofill.IsLabelValid(inferredLabel)) {
-      return inferredLabel;
+    if (inferredLabel.length > 0) {
+      break;
     }
   }
-  // If we didn't find a label, check for the value attribute case.
-  inferredLabel = __gCrWeb.autofill.InferLabelFromValueAttr(element);
-  if (__gCrWeb.autofill.IsLabelValid(inferredLabel)) {
-    return inferredLabel;
-  }
 
-  return '';
+  return inferredLabel;
 };
 
 /**
@@ -1949,32 +1905,11 @@ __gCrWeb.autofill.nodeValue = function(node) {
  * used in src/components/autofill/content/renderer/form_autofill_util.h.
  * Newlines and tabs are stripped.
  *
- * Note: this method tries to match the behavior of Blink for the select
- * element. On Blink, a select element with a first option that is disabled and
- * not explicitly selected will automatically select the second element.
- * On WebKit, the disabled element is enabled until user interacts with it.
- * As the result of this method will be used by code written for Blink, match
- * the behavior on it.
- *
  * @param {Element} element An element to examine.
  * @return {string} The value for |element|.
  */
 __gCrWeb.autofill.value = function(element) {
-   var value = element.value;
-   if (__gCrWeb.autofill.isSelectElement(element)) {
-     if (element.options.length > 0 && element.selectedIndex == 0 &&
-         element.options[0].disabled &&
-         !element.options[0].hasAttribute('selected')) {
-       for (var i = 0; i < element.options.length; i++) {
-         if (!element.options[i].disabled ||
-             element.options[i].hasAttribute('selected')) {
-           value = element.options[i].value;
-           break;
-         }
-       }
-     }
-   }
-   return (value || '').replace(/[\n\t]/gm, '');
+  return (element.value || '').replace(/[\n\t]/gm, '');
 };
 
 /**

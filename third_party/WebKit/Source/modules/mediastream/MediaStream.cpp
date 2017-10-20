@@ -329,7 +329,7 @@ MediaStreamTrack* MediaStream::getTrackById(String id) {
       return iter->Get();
   }
 
-  return nullptr;
+  return 0;
 }
 
 MediaStream* MediaStream::clone(ScriptState* script_state) {
@@ -430,7 +430,7 @@ void MediaStream::RemoveTrackByComponent(MediaStreamComponent* component) {
   if (!GetExecutionContext())
     return;
 
-  MediaStreamTrackVector* tracks = nullptr;
+  MediaStreamTrackVector* tracks = 0;
   switch (component->Source()->GetType()) {
     case MediaStreamSource::kTypeAudio:
       tracks = &audio_tracks_;
@@ -489,7 +489,7 @@ URLRegistry& MediaStream::Registry() const {
   return MediaStreamRegistry::Registry();
 }
 
-void MediaStream::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaStream) {
   visitor->Trace(audio_tracks_);
   visitor->Trace(video_tracks_);
   visitor->Trace(descriptor_);

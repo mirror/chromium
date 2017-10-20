@@ -68,7 +68,7 @@ class MODULES_EXPORT ServiceWorkerContainer final
                                         NavigatorServiceWorker*);
   ~ServiceWorkerContainer();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   ServiceWorker* controller() { return controller_; }
   ScriptPromise ready(ScriptState*);

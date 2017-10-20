@@ -40,7 +40,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
                               const String& user_agent,
                               const String& source_code,
                               const String& referrer_policy);
-  void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
+  void PostMessageToWorkerGlobalScope(RefPtr<SerializedScriptValue>,
                                       Vector<MessagePortChannel>);
 
   // Implements ThreadedMessagingProxyBase.
@@ -50,7 +50,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
 
   // These methods come from worker context thread via
   // DedicatedWorkerObjectProxy and are called on the parent context thread.
-  void PostMessageToWorkerObject(scoped_refptr<SerializedScriptValue>,
+  void PostMessageToWorkerObject(RefPtr<SerializedScriptValue>,
                                  Vector<MessagePortChannel>);
   void DispatchErrorEvent(const String& error_message,
                           std::unique_ptr<SourceLocation>,
@@ -60,7 +60,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
     return *worker_object_proxy_.get();
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class DedicatedWorkerMessagingProxyForTest;

@@ -44,7 +44,7 @@ class CacheStorage final : public GarbageCollectedFinalized<CacheStorage>,
                       const CacheQueryOptions&,
                       ExceptionState&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   class Callbacks;

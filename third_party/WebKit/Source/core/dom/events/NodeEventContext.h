@@ -43,7 +43,7 @@ class CORE_EXPORT NodeEventContext {
  public:
   // FIXME: Use ContainerNode instead of Node.
   NodeEventContext(Node*, EventTarget* current_target);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   Node* GetNode() const { return node_.Get(); }
 

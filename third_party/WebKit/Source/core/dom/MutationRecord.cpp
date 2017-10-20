@@ -53,7 +53,7 @@ class ChildListRecord : public MutationRecord {
         previous_sibling_(previous_sibling),
         next_sibling_(next_sibling) {}
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(target_);
     visitor->Trace(added_nodes_);
     visitor->Trace(removed_nodes_);
@@ -62,7 +62,7 @@ class ChildListRecord : public MutationRecord {
     MutationRecord::Trace(visitor);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappers(target_);
     visitor->TraceWrappers(added_nodes_);
     visitor->TraceWrappers(removed_nodes_);
@@ -89,14 +89,14 @@ class RecordWithEmptyNodeLists : public MutationRecord {
   RecordWithEmptyNodeLists(Node* target, const String& old_value)
       : target_(target), old_value_(old_value) {}
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(target_);
     visitor->Trace(added_nodes_);
     visitor->Trace(removed_nodes_);
     MutationRecord::Trace(visitor);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappers(target_);
     visitor->TraceWrappers(added_nodes_);
     visitor->TraceWrappers(removed_nodes_);
@@ -159,12 +159,12 @@ class MutationRecordWithNullOldValue : public MutationRecord {
  public:
   MutationRecordWithNullOldValue(MutationRecord* record) : record_(record) {}
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(record_);
     MutationRecord::Trace(visitor);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     visitor->TraceWrappers(record_);
     MutationRecord::TraceWrappers(visitor);
   }

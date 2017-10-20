@@ -110,9 +110,9 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   }
   bool IsCreatedByParser() const { return created_by_parser_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   HTMLLinkElement(Document&, bool created_by_parser);
@@ -149,7 +149,7 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   void DidStopLinkPrerender() override;
   void DidSendLoadForLinkPrerender() override;
   void DidSendDOMContentLoadedForLinkPrerender() override;
-  scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
+  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   Member<LinkResource> link_;
   Member<LinkLoader> link_loader_;

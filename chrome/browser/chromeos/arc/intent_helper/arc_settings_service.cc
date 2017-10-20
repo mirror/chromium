@@ -8,7 +8,6 @@
 
 #include "ash/public/cpp/ash_pref_names.h"
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/gtest_prod_util.h"
 #include "base/json/json_writer.h"
 #include "base/memory/singleton.h"
@@ -17,7 +16,6 @@
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/network/network_handler.h"
@@ -542,19 +540,9 @@ void ArcSettingsServiceImpl::SyncSelectToSpeakEnabled() const {
 }
 
 void ArcSettingsServiceImpl::SyncSmsConnectEnabled() const {
-  // Only sync the preferences value if the feature flag is enabled, otherwise
-  // sync a 'false' value.
-  std::string action =
-      std::string("org.chromium.arc.intent_helper.SET_SMS_CONNECT_ENABLED");
-  if (!base::FeatureList::IsEnabled(features::kMultidevice)) {
-    const PrefService::Preference* pref =
-        registrar_.prefs()->FindPreference(prefs::kSmsConnectEnabled);
-    DCHECK(pref);
-    SendBoolValueSettingsBroadcast(false, pref->IsManaged(), action);
-    return;
-  }
-
-  SendBoolPrefSettingsBroadcast(prefs::kSmsConnectEnabled, action);
+  SendBoolPrefSettingsBroadcast(
+      prefs::kSmsConnectEnabled,
+      "org.chromium.arc.intent_helper.SET_SMS_CONNECT_ENABLED");
 }
 
 void ArcSettingsServiceImpl::SyncSpokenFeedbackEnabled() const {

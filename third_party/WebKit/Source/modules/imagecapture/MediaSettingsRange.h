@@ -29,7 +29,7 @@ class MediaSettingsRange final : public GarbageCollected<MediaSettingsRange>,
   double min() const { return min_; }
   double step() const { return step_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   MediaSettingsRange(double max, double min, double step)

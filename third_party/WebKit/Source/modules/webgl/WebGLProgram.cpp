@@ -88,7 +88,7 @@ WebGLShader* WebGLProgram::GetAttachedShader(GLenum type) {
     case GL_FRAGMENT_SHADER:
       return fragment_shader_;
     default:
-      return nullptr;
+      return 0;
   }
 }
 
@@ -141,13 +141,13 @@ void WebGLProgram::CacheInfoIfNeeded(WebGLRenderingContextBase* context) {
   info_valid_ = true;
 }
 
-void WebGLProgram::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLProgram) {
   visitor->Trace(vertex_shader_);
   visitor->Trace(fragment_shader_);
   WebGLSharedPlatform3DObject::Trace(visitor);
 }
 
-void WebGLProgram::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WebGLProgram) {
   visitor->TraceWrappers(vertex_shader_);
   visitor->TraceWrappers(fragment_shader_);
   WebGLSharedPlatform3DObject::TraceWrappers(visitor);

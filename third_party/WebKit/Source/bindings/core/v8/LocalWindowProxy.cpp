@@ -148,7 +148,7 @@ void LocalWindowProxy::Initialize() {
   V8ContextSnapshot::InstallRuntimeEnabledFeatures(context,
                                                    GetFrame()->GetDocument());
 
-  SecurityOrigin* origin = nullptr;
+  SecurityOrigin* origin = 0;
   if (world_->IsMainWorld()) {
     // ActivityLogger for main world is updated within updateDocumentInternal().
     UpdateDocumentInternal();
@@ -157,7 +157,7 @@ void LocalWindowProxy::Initialize() {
     ContentSecurityPolicy* csp =
         GetFrame()->GetDocument()->GetContentSecurityPolicy();
     context->AllowCodeGenerationFromStrings(csp->AllowEval(
-        nullptr, SecurityViolationReportingPolicy::kSuppressReporting,
+        0, SecurityViolationReportingPolicy::kSuppressReporting,
         ContentSecurityPolicy::kWillNotThrowException, g_empty_string));
     context->SetErrorMessageForCodeGenerationFromStrings(
         V8String(GetIsolate(), csp->EvalDisabledErrorMessage()));

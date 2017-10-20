@@ -59,9 +59,9 @@ class NodeIterator final : public GarbageCollected<NodeIterator>,
   // This function is called before any node is removed from the document tree.
   void NodeWillBeRemoved(Node&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   NodeIterator(Node*, unsigned what_to_show, V8NodeFilterCondition*);
@@ -80,7 +80,7 @@ class NodeIterator final : public GarbageCollected<NodeIterator>,
     Member<Node> node;
     bool is_pointer_before_node;
 
-    void Trace(blink::Visitor* visitor) { visitor->Trace(node); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(node); }
   };
 
   void UpdateForNodeRemoval(Node& node_to_be_removed, NodePointer&) const;

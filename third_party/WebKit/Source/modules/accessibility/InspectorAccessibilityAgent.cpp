@@ -249,7 +249,7 @@ void FillWidgetProperties(AXObject& ax_object,
 void FillWidgetStates(AXObject& ax_object,
                       protocol::Array<AXProperty>& properties) {
   AccessibilityRole role = ax_object.RoleValue();
-  const char* checked_prop_val = nullptr;
+  const char* checked_prop_val = 0;
   switch (ax_object.CheckedState()) {
     case kCheckedStateTrue:
       checked_prop_val = "true";
@@ -327,7 +327,7 @@ class SparseAttributeAXPropertyAdapter
                                    protocol::Array<AXProperty>& properties)
       : ax_object_(&ax_object), properties_(properties) {}
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(ax_object_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(ax_object_); }
 
  private:
   Member<AXObject> ax_object_;
@@ -726,7 +726,7 @@ void InspectorAccessibilityAgent::AddChildren(
   }
 }
 
-void InspectorAccessibilityAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorAccessibilityAgent) {
   visitor->Trace(page_);
   visitor->Trace(dom_agent_);
   InspectorBaseAgent::Trace(visitor);

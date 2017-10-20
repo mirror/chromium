@@ -245,9 +245,9 @@ content::GlobalRoutingID GetRenderViewHostID(content::RenderViewHost* rvh) {
   // per drag, even without the drag ever leaving the window.
   if (targetRWH != currentRWHForDrag_.get()) {
     if (currentRWHForDrag_) {
-      gfx::PointF transformedLeavePoint = gfx::PointF(viewPoint.x, viewPoint.y);
-      gfx::PointF transformedScreenPoint =
-          gfx::PointF(screenPoint.x, screenPoint.y);
+      gfx::Point transformedLeavePoint = gfx::Point(viewPoint.x, viewPoint.y);
+      gfx::Point transformedScreenPoint =
+          gfx::Point(screenPoint.x, screenPoint.y);
       content::RenderWidgetHostViewBase* rootView =
           static_cast<content::RenderWidgetHostViewBase*>(
               webContents_->GetRenderWidgetHostView());
@@ -258,9 +258,8 @@ content::GlobalRoutingID GetRenderViewHostID(content::RenderViewHost* rvh) {
           transformedLeavePoint, currentDragView, &transformedLeavePoint);
       rootView->TransformPointToCoordSpaceForView(
           transformedScreenPoint, currentDragView, &transformedScreenPoint);
-      currentRWHForDrag_->DragTargetDragLeave(
-          gfx::ToFlooredPoint(transformedLeavePoint),
-          gfx::ToFlooredPoint(transformedScreenPoint));
+      currentRWHForDrag_->DragTargetDragLeave(transformedLeavePoint,
+                                              transformedScreenPoint);
     }
     [self draggingEntered:info view:view];
   }

@@ -40,7 +40,7 @@ class RemoveNodePreservingChildrenCommand final : public CompositeEditCommand {
         node, should_assume_content_is_always_editable);
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   RemoveNodePreservingChildrenCommand(Node*,

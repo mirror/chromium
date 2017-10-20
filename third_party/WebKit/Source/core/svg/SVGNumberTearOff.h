@@ -51,7 +51,7 @@ class SVGNumberTearOff : public SVGPropertyTearOff<SVGNumber>,
   }
   static SVGNumberTearOff* CreateDetached();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   void setValue(float, ExceptionState&);
   float value() { return Target()->Value(); }

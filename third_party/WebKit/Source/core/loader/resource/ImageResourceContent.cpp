@@ -30,9 +30,7 @@ class NullImageResourceInfo final
  public:
   NullImageResourceInfo() {}
 
-  virtual void Trace(blink::Visitor* visitor) {
-    ImageResourceInfo::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ImageResourceInfo::Trace(visitor); }
 
  private:
   const KURL& Url() const override { return url_; }
@@ -68,7 +66,7 @@ class NullImageResourceInfo final
 
 }  // namespace
 
-ImageResourceContent::ImageResourceContent(scoped_refptr<blink::Image> image)
+ImageResourceContent::ImageResourceContent(RefPtr<blink::Image> image)
     : is_refetchable_data_from_disk_cache_(true), image_(std::move(image)) {
   DEFINE_STATIC_LOCAL(NullImageResourceInfo, null_info,
                       (new NullImageResourceInfo()));
@@ -76,7 +74,7 @@ ImageResourceContent::ImageResourceContent(scoped_refptr<blink::Image> image)
 }
 
 ImageResourceContent* ImageResourceContent::CreateLoaded(
-    scoped_refptr<blink::Image> image) {
+    RefPtr<blink::Image> image) {
   DCHECK(image);
   ImageResourceContent* content = new ImageResourceContent(std::move(image));
   content->content_status_ = ResourceStatus::kCached;
@@ -97,7 +95,7 @@ void ImageResourceContent::SetImageResourceInfo(ImageResourceInfo* info) {
   info_ = info;
 }
 
-void ImageResourceContent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageResourceContent) {
   visitor->Trace(info_);
   ImageObserver::Trace(visitor);
 }
@@ -187,7 +185,7 @@ void ImageResourceContent::DoResetAnimation() {
     image_->ResetAnimation();
 }
 
-scoped_refptr<const SharedBuffer> ImageResourceContent::ResourceBuffer() const {
+RefPtr<const SharedBuffer> ImageResourceContent::ResourceBuffer() const {
   if (image_)
     return image_->Data();
   return nullptr;
@@ -254,6 +252,26 @@ IntSize ImageResourceContent::IntrinsicSize(
   return image_->Size();
 }
 
+LayoutSize ImageResourceContent::ImageSize(
+    RespectImageOrientationEnum should_respect_image_orientation,
+    float multiplier) {
+  if (!image_)
+    return LayoutSize();
+
+  LayoutSize size(IntrinsicSize(should_respect_image_orientation));
+
+  if (multiplier == 1 || image_->HasRelativeSize())
+    return size;
+
+  // Don't let images that have a width/height >= 1 shrink below 1 when zoomed.
+  LayoutSize minimum_size(
+      size.Width() > LayoutUnit() ? LayoutUnit(1) : LayoutUnit(),
+      size.Height() > LayoutUnit() ? LayoutUnit(1) : LayoutUnit());
+  size.Scale(multiplier);
+  size.ClampToMinimumSize(minimum_size);
+  return size;
+}
+
 void ImageResourceContent::NotifyObservers(
     NotifyFinishOption notifying_finish_option,
     const IntRect* change_rect) {
@@ -292,7 +310,7 @@ void ImageResourceContent::NotifyObservers(
   }
 }
 
-scoped_refptr<Image> ImageResourceContent::CreateImage(bool is_multipart) {
+RefPtr<Image> ImageResourceContent::CreateImage(bool is_multipart) {
   if (info_->GetResponse().MimeType() == "image/svg+xml")
     return SVGImage::Create(this, is_multipart);
   return BitmapImage::Create(this, is_multipart);
@@ -393,7 +411,7 @@ void ImageResourceContent::AsyncLoadCompleted(const blink::Image* image) {
 }
 
 ImageResourceContent::UpdateImageResult ImageResourceContent::UpdateImage(
-    scoped_refptr<SharedBuffer> data,
+    RefPtr<SharedBuffer> data,
     ResourceStatus status,
     UpdateImageOption update_image_option,
     bool all_data_received,

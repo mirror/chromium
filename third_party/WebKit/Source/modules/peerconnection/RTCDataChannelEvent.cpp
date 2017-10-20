@@ -60,7 +60,7 @@ const AtomicString& RTCDataChannelEvent::InterfaceName() const {
   return EventNames::RTCDataChannelEvent;
 }
 
-void RTCDataChannelEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCDataChannelEvent) {
   visitor->Trace(channel_);
   Event::Trace(visitor);
 }

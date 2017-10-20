@@ -186,10 +186,6 @@ const base::Feature kModuleScripts{"ModuleScripts",
 const base::Feature kModuleScriptsDynamicImport{
     "ModuleScriptsDynamicImport", base::FEATURE_ENABLED_BY_DEFAULT};
 
-// ES6 Modules import.meta.url.
-const base::Feature kModuleScriptsImportMetaUrl{
-    "ModuleScriptsImportMetaUrl", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Resource fetch optimizations for workers. See crbug.com/443374
 const base::Feature kOffMainThreadFetch{"OffMainThreadFetch",
                                         base::FEATURE_ENABLED_BY_DEFAULT};
@@ -236,6 +232,10 @@ const base::Feature kPurgeAndSuspend {
 // RAF aligned mouse input events support.
 const base::Feature kRafAlignedMouseInputEvents{
     "RafAlignedMouseInput", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// RAF aligned touch input events support.
+const base::Feature kRafAlignedTouchInputEvents{
+    "RafAlignedTouchInput", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // If Pepper 3D Image Chromium is allowed, this feature controls whether it is
 // enabled.
@@ -287,6 +287,10 @@ const base::Feature kSignInProcessIsolation{"sign-in-process-isolation",
 // Launch bug: https://crbug.com/739418.
 const base::Feature kSitePerProcess{"site-per-process",
                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
+// An experiment for skipping compositing small scrollers.
+const base::Feature kSkipCompositingSmallScrollers{
+    "SkipCompositingSmallScrollers", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Paint invalidation based on slimming paint. See https://goo.gl/eQczQW
 const base::Feature kSlimmingPaintInvalidation{
@@ -411,10 +415,6 @@ const base::Feature kKeepAliveRendererForKeepaliveRequests{
 // Enables WebVR experimental rendering optimizations.
 const base::Feature kWebVRExperimentalRendering{
     "WebVRExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Enabled "work stealing" in the script runner.
-const base::Feature kWorkStealingInScriptRunner{
-    "WorkStealingInScriptRunner", base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_ANDROID)
 // Autofill Accessibility in Android.

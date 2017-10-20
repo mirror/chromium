@@ -208,7 +208,6 @@ component("browser") {
     "//base",
     "//base:i18n",
     "//base/third_party/dynamic_annotations",
-    "//mojo/public/cpp/bindings",
     "//net",
     "//services/network/public/cpp",
     "//sql",

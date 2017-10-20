@@ -171,7 +171,7 @@ void XSLTProcessor::reset() {
   parameters_.clear();
 }
 
-void XSLTProcessor::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XSLTProcessor) {
   visitor->Trace(stylesheet_);
   visitor->Trace(stylesheet_root_node_);
   visitor->Trace(document_);

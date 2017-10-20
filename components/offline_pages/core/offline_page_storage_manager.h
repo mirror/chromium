@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 
-#include <memory>
 #include <vector>
 
 #include "base/callback.h"
@@ -85,9 +84,6 @@ class OfflinePageStorageManager {
 
   // Sets the clock for testing.
   void SetClockForTesting(std::unique_ptr<base::Clock> clock);
-
-  // Resets the flag for storage usage reporting for testing purposes.
-  void ResetUsageReportingFlagForTesting();
 
  private:
   // Enum indicating how to clear the pages.

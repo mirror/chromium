@@ -33,7 +33,7 @@ class CORE_EXPORT RootFrameViewport final
     return new RootFrameViewport(visual_viewport, layout_viewport);
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void SetLayoutViewport(ScrollableArea&);
   ScrollableArea& LayoutViewport() const;
@@ -108,8 +108,7 @@ class CORE_EXPORT RootFrameViewport final
   FloatQuad LocalToVisibleContentQuad(const FloatQuad&,
                                       const LayoutObject*,
                                       unsigned = 0) const final;
-  scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final;
-  ScrollbarTheme& GetPageScrollbarTheme() const override;
+  RefPtr<WebTaskRunner> GetTimerTaskRunner() const final;
 
  private:
   RootFrameViewport(ScrollableArea& visual_viewport,

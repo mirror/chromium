@@ -47,7 +47,7 @@ static_assert(sizeof(TextRun) == sizeof(ExpectedTextRunSize),
 void TextRun::SetText(const String& string) {
   len_ = string.length();
   if (!len_) {
-    data_.characters8 = nullptr;
+    data_.characters8 = 0;
     is8_bit_ = true;
     return;
   }

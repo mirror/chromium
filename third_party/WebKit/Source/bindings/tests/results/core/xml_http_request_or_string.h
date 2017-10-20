@@ -41,7 +41,7 @@ class CORE_EXPORT XMLHttpRequestOrString final {
   XMLHttpRequestOrString(const XMLHttpRequestOrString&);
   ~XMLHttpRequestOrString();
   XMLHttpRequestOrString& operator=(const XMLHttpRequestOrString&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum class SpecificType {

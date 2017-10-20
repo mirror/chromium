@@ -38,7 +38,7 @@ namespace blink {
 class HTMLParserReentryPermit final
     : public RefCounted<HTMLParserReentryPermit> {
  public:
-  static scoped_refptr<HTMLParserReentryPermit> Create();
+  static RefPtr<HTMLParserReentryPermit> Create();
   ~HTMLParserReentryPermit() = default;
 
   unsigned ScriptNestingLevel() const { return script_nesting_level_; }

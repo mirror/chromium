@@ -22,8 +22,8 @@ class IntersectionObserverDelegate
   virtual void Deliver(const HeapVector<Member<IntersectionObserverEntry>>&,
                        IntersectionObserver&) = 0;
   virtual ExecutionContext* GetExecutionContext() const = 0;
-  virtual void Trace(blink::Visitor* visitor) {}
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
 };
 
 }  // namespace blink

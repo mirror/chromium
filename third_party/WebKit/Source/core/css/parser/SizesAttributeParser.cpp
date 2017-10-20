@@ -81,7 +81,7 @@ bool SizesAttributeParser::Parse(CSSParserTokenRange range) {
     if (!CalculateLengthInPixels(
             range.MakeSubRange(length_token_start, length_token_end), length))
       continue;
-    scoped_refptr<MediaQuerySet> media_condition =
+    RefPtr<MediaQuerySet> media_condition =
         MediaQueryParser::ParseMediaCondition(
             range.MakeSubRange(media_condition_start, length_token_start));
     if (!media_condition || !MediaConditionMatches(*media_condition))

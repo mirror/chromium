@@ -57,7 +57,7 @@ class MockResourceClient : public GarbageCollectedFinalized<MockResourceClient>,
   virtual void RemoveAsClient();
   virtual void Dispose();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  protected:
   Member<Resource> resource_;

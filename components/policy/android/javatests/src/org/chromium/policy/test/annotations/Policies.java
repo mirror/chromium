@@ -7,7 +7,7 @@ package org.chromium.policy.test.annotations;
 import android.content.Context;
 import android.os.Bundle;
 
-import org.junit.Assert;
+import junit.framework.Assert;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.test.BaseTestResult.PreTestHook;

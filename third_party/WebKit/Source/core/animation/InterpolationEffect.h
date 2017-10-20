@@ -31,10 +31,10 @@ class CORE_EXPORT InterpolationEffect {
 
   void GetActiveInterpolations(double fraction,
                                double iteration_duration,
-                               Vector<scoped_refptr<Interpolation>>&) const;
+                               Vector<RefPtr<Interpolation>>&) const;
 
-  void AddInterpolation(scoped_refptr<Interpolation> interpolation,
-                        scoped_refptr<TimingFunction> easing,
+  void AddInterpolation(RefPtr<Interpolation> interpolation,
+                        RefPtr<TimingFunction> easing,
                         double start,
                         double end,
                         double apply_from,
@@ -53,8 +53,8 @@ class CORE_EXPORT InterpolationEffect {
 
  private:
   struct InterpolationRecord {
-    InterpolationRecord(scoped_refptr<Interpolation> interpolation,
-                        scoped_refptr<TimingFunction> easing,
+    InterpolationRecord(RefPtr<Interpolation> interpolation,
+                        RefPtr<TimingFunction> easing,
                         double start,
                         double end,
                         double apply_from,
@@ -66,8 +66,8 @@ class CORE_EXPORT InterpolationEffect {
           apply_from_(apply_from),
           apply_to_(apply_to) {}
 
-    scoped_refptr<Interpolation> interpolation_;
-    scoped_refptr<TimingFunction> easing_;
+    RefPtr<Interpolation> interpolation_;
+    RefPtr<TimingFunction> easing_;
     double start_;
     double end_;
     double apply_from_;

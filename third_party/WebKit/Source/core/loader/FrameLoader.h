@@ -171,7 +171,7 @@ class CORE_EXPORT FrameLoader final {
 
   void UpdateForSameDocumentNavigation(const KURL&,
                                        SameDocumentNavigationSource,
-                                       scoped_refptr<SerializedScriptValue>,
+                                       RefPtr<SerializedScriptValue>,
                                        HistoryScrollRestorationType,
                                        FrameLoadType,
                                        Document*);
@@ -216,7 +216,7 @@ class CORE_EXPORT FrameLoader final {
 
   void DetachProvisionalDocumentLoader(DocumentLoader*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   static void SetReferrerForFrameRequest(FrameLoadRequest&);
 
@@ -244,7 +244,7 @@ class CORE_EXPORT FrameLoader final {
                  HistoryItem*);
 
   void LoadInSameDocument(const KURL&,
-                          scoped_refptr<SerializedScriptValue> state_object,
+                          RefPtr<SerializedScriptValue> state_object,
                           FrameLoadType,
                           HistoryItem*,
                           ClientRedirectPolicy,

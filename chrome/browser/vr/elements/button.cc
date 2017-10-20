@@ -57,6 +57,7 @@ void Button::OnStateUpdated(const gfx::PointF& position) {
 
   texture_->SetHovered(hovered);
   texture_->SetPressed(pressed);
+  UpdateTexture();
 }
 
 }  // namespace vr

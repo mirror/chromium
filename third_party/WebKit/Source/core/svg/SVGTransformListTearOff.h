@@ -60,7 +60,7 @@ class SVGTransformListTearOff final
   SVGTransformTearOff* createSVGTransformFromMatrix(SVGMatrixTearOff*) const;
   SVGTransformTearOff* consolidate(ExceptionState&);
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   SVGTransformListTearOff(SVGTransformList*,

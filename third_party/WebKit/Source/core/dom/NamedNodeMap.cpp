@@ -128,7 +128,7 @@ bool NamedNodeMap::NamedPropertyQuery(const AtomicString& name,
   return properties.Contains(name);
 }
 
-void NamedNodeMap::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NamedNodeMap) {
   visitor->Trace(element_);
 }
 

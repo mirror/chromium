@@ -58,7 +58,7 @@ class LayerRect final : public GarbageCollectedFinalized<LayerRect>,
   int associatedNodeOffsetY() const { return associated_node_offset_y_; }
   DOMRectReadOnly* layerRelativeRect() const { return rect_.Get(); }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(layer_associated_node_);
     visitor->Trace(rect_);
   }

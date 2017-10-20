@@ -30,8 +30,8 @@ class CORE_EXPORT OffscreenFontSelector : public FontSelector {
 
   void ReportNotDefGlyph() const override;
 
-  scoped_refptr<FontData> GetFontData(const FontDescription&,
-                                      const AtomicString&) override;
+  RefPtr<FontData> GetFontData(const FontDescription&,
+                               const AtomicString&) override;
   void WillUseFontData(const FontDescription&,
                        const AtomicString& family,
                        const String& text) override;
@@ -60,7 +60,7 @@ class CORE_EXPORT OffscreenFontSelector : public FontSelector {
     return execution_context_;
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit OffscreenFontSelector(ExecutionContext*);

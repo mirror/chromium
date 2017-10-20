@@ -64,7 +64,7 @@ class FileReaderSync final : public GarbageCollected<FileReaderSync>,
                     ExceptionState&);
   String readAsDataURL(ScriptState*, Blob*, ExceptionState&);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   explicit FileReaderSync(ExecutionContext*);

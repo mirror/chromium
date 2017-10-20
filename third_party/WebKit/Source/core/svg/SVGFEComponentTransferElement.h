@@ -34,7 +34,7 @@ class SVGFEComponentTransferElement final
   DECLARE_NODE_FACTORY(SVGFEComponentTransferElement);
   SVGAnimatedString* in1() { return in1_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGFEComponentTransferElement(Document&);

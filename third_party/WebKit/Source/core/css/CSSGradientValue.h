@@ -74,7 +74,7 @@ struct CSSGradientColorStop {
 
   bool IsCacheable() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   Member<const CSSPrimitiveValue> offset_;  // percentage | length | angle
   Member<const CSSValue> color_;
@@ -93,10 +93,10 @@ namespace cssvalue {
 
 class CSSGradientValue : public CSSImageGeneratorValue {
  public:
-  scoped_refptr<Image> GetImage(const ImageResourceObserver&,
-                                const Document&,
-                                const ComputedStyle&,
-                                const IntSize&);
+  RefPtr<Image> GetImage(const ImageResourceObserver&,
+                         const Document&,
+                         const ComputedStyle&,
+                         const IntSize&);
 
   void AddStop(const CSSGradientColorStop& stop) {
     stops_.push_back(stop);
@@ -119,7 +119,7 @@ class CSSGradientValue : public CSSImageGeneratorValue {
 
   void GetStopColors(Vector<Color>& stop_colors, const LayoutObject&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
   struct GradientDesc;
 
@@ -169,13 +169,13 @@ class CSSLinearGradientValue final : public CSSGradientValue {
   String CustomCSSText() const;
 
   // Create the gradient for a given size.
-  scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const IntSize&,
-                                         const LayoutObject&);
+  RefPtr<Gradient> CreateGradient(const CSSToLengthConversionData&,
+                                  const IntSize&,
+                                  const LayoutObject&);
 
   bool Equals(const CSSLinearGradientValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSLinearGradientValue(const CSSValue* first_x,
@@ -242,13 +242,13 @@ class CSSRadialGradientValue final : public CSSGradientValue {
   void SetEndVerticalSize(CSSPrimitiveValue* val) { end_vertical_size_ = val; }
 
   // Create the gradient for a given size.
-  scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const IntSize&,
-                                         const LayoutObject&);
+  RefPtr<Gradient> CreateGradient(const CSSToLengthConversionData&,
+                                  const IntSize&,
+                                  const LayoutObject&);
 
   bool Equals(const CSSRadialGradientValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSRadialGradientValue(const CSSValue* first_x,
@@ -308,13 +308,13 @@ class CSSConicGradientValue final : public CSSGradientValue {
   String CustomCSSText() const;
 
   // Create the gradient for a given size.
-  scoped_refptr<Gradient> CreateGradient(const CSSToLengthConversionData&,
-                                         const IntSize&,
-                                         const LayoutObject&);
+  RefPtr<Gradient> CreateGradient(const CSSToLengthConversionData&,
+                                  const IntSize&,
+                                  const LayoutObject&);
 
   bool Equals(const CSSConicGradientValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSConicGradientValue(const CSSValue* x,

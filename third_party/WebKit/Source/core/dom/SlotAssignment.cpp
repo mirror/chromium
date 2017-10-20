@@ -257,7 +257,7 @@ HTMLSlotElement* SlotAssignment::GetCachedFirstSlotWithoutAccessingNodeTree(
   return nullptr;
 }
 
-void SlotAssignment::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SlotAssignment) {
   visitor->Trace(slots_);
   visitor->Trace(slot_map_);
   visitor->Trace(owner_);

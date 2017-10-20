@@ -613,7 +613,7 @@ void ServiceWorkerURLRequestJob::CreateRequestBodyBlob(std::string* blob_uuid,
   *blob_size = request_body_blob_data_handle_->size();
 
   if (features::IsMojoBlobsEnabled()) {
-    blink::mojom::BlobPtr blob_ptr;
+    storage::mojom::BlobPtr blob_ptr;
     storage::BlobImpl::Create(base::MakeUnique<storage::BlobDataHandle>(
                                   *request_body_blob_data_handle_),
                               MakeRequest(&blob_ptr));
@@ -680,7 +680,7 @@ void ServiceWorkerURLRequestJob::DidDispatchFetchEvent(
     ServiceWorkerFetchEventResult fetch_result,
     const ServiceWorkerResponse& response,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
-    blink::mojom::BlobPtr body_as_blob,
+    storage::mojom::BlobPtr body_as_blob,
     const scoped_refptr<ServiceWorkerVersion>& version) {
   // Do not clear |fetch_dispatcher_| if it has dispatched a navigation preload
   // request to keep the mojom::URLLoader related objects in it, because the
@@ -871,7 +871,7 @@ bool ServiceWorkerURLRequestJob::IsFallbackToRendererNeeded() const {
           request_mode_ == FETCH_REQUEST_MODE_CORS_WITH_FORCED_PREFLIGHT) &&
          (!request()->initiator().has_value() ||
           !request()->initiator()->IsSameOriginWith(
-              url::Origin::Create(request()->url())));
+              url::Origin(request()->url())));
 }
 
 void ServiceWorkerURLRequestJob::SetResponseBodyType(ResponseBodyType type) {

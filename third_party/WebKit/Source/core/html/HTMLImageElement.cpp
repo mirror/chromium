@@ -77,7 +77,7 @@ class HTMLImageElement::ViewportChangeListener final
       element_->NotifyViewportChanged();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(element_);
     MediaQueryListListener::Trace(visitor);
   }
@@ -112,7 +112,7 @@ HTMLImageElement* HTMLImageElement::Create(Document& document,
 
 HTMLImageElement::~HTMLImageElement() {}
 
-void HTMLImageElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLImageElement) {
   visitor->Trace(image_loader_);
   visitor->Trace(listener_);
   visitor->Trace(form_);
@@ -799,7 +799,7 @@ void HTMLImageElement::SetLayoutDisposition(
   }
 }
 
-scoped_refptr<ComputedStyle> HTMLImageElement::CustomStyleForLayoutObject() {
+RefPtr<ComputedStyle> HTMLImageElement::CustomStyleForLayoutObject() {
   switch (layout_disposition_) {
     case LayoutDisposition::kPrimaryContent:  // Fall through.
     case LayoutDisposition::kCollapsed:

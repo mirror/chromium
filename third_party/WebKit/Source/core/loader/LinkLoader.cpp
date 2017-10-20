@@ -107,7 +107,7 @@ class LinkLoader::FinishObserver final
     resource_ = nullptr;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(loader_);
     visitor->Trace(resource_);
     blink::ResourceFinishObserver::Trace(visitor);
@@ -119,7 +119,7 @@ class LinkLoader::FinishObserver final
 };
 
 LinkLoader::LinkLoader(LinkLoaderClient* client,
-                       scoped_refptr<WebTaskRunner> task_runner)
+                       RefPtr<WebTaskRunner> task_runner)
     : client_(client) {
   DCHECK(client_);
 }
@@ -319,7 +319,7 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
     }
 
     // Preload only if media matches
-    scoped_refptr<MediaQuerySet> media_queries = MediaQuerySet::Create(media);
+    RefPtr<MediaQuerySet> media_queries = MediaQuerySet::Create(media);
     MediaQueryEvaluator evaluator(*media_values);
     if (!evaluator.Eval(*media_queries))
       return nullptr;
@@ -518,7 +518,7 @@ void LinkLoader::Abort() {
   }
 }
 
-void LinkLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LinkLoader) {
   visitor->Trace(finish_observer_);
   visitor->Trace(client_);
   visitor->Trace(prerender_);

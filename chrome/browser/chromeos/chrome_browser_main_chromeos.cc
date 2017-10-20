@@ -101,7 +101,6 @@
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
-#include "chrome/browser/notifications/message_center_settings_controller_chromeos.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
@@ -250,18 +249,6 @@ void GetSystemSlotOnIOThread(
   if (system_nss_slot) {
     callback.Run(std::move(system_nss_slot));
   }
-}
-
-// Verifies if shall signal to the platform that it can attempt owning
-// the tpm. This signal is sent on every boot after it has been initially
-// allowed by accepting EULA to make sure we are not stuck in interrupted
-// tpm initialization state.
-bool ShallAttemptTpmOwnership() {
-#if defined(GOOGLE_CHROME_BUILD)
-  return StartupUtils::IsEulaAccepted();
-#else
-  return true;
-#endif
 }
 
 }  // namespace
@@ -547,16 +534,6 @@ class SystemTokenCertDBInitializer {
     if (!tpm_is_ready.has_value() || !tpm_is_ready.value()) {
       VLOG(1) << "SystemTokenCertDBInitializer: TPM is not ready - not loading "
                  "system token.";
-      if (ShallAttemptTpmOwnership()) {
-        // Signal to cryptohome that it can attempt TPM ownership, if it
-        // haven't done that yet. The previous signal from EULA dialogue could
-        // have been lost if initialization was interrupted.
-        // We don't care about the result, and don't block waiting for it.
-        LOG(WARNING) << "Request attempting TPM ownership.";
-        DBusThreadManager::Get()->GetCryptohomeClient()->TpmCanAttemptOwnership(
-            EmptyVoidDBusMethodCallback());
-      }
-
       return;
     }
     VLOG(1)
@@ -880,10 +857,6 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
   // header of new-style notification.
   message_center::MessageCenter::Get()->SetProductOSName(
       l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_OS_NAME));
-
-  // Create and set the settings provider for the message center.
-  message_center::MessageCenter::Get()->SetNotifierSettingsProvider(
-      std::make_unique<MessageCenterSettingsControllerChromeOs>());
 
   // Register all installed components for regular update.
   base::PostTaskWithTraitsAndReplyWithResult(

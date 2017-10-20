@@ -472,8 +472,10 @@ void NotificationViewMD::ScrollRectToVisible(const gfx::Rect& rect) {
 }
 
 gfx::NativeCursor NotificationViewMD::GetCursor(const ui::MouseEvent& event) {
-  return clickable_ ? views::GetNativeHandCursor()
-                    : views::View::GetCursor(event);
+  if (clickable_ || controller()->HasClickedListener(notification_id()))
+    return views::GetNativeHandCursor();
+
+  return views::View::GetCursor(event);
 }
 
 void NotificationViewMD::OnMouseEntered(const ui::MouseEvent& event) {

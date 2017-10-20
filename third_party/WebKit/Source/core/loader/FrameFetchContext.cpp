@@ -177,13 +177,13 @@ struct FrameFetchContext::FrozenState final
   FrozenState(ReferrerPolicy referrer_policy,
               const String& outgoing_referrer,
               const KURL& url,
-              scoped_refptr<SecurityOrigin> security_origin,
-              scoped_refptr<const SecurityOrigin> parent_security_origin,
+              RefPtr<SecurityOrigin> security_origin,
+              RefPtr<const SecurityOrigin> parent_security_origin,
               const Optional<WebAddressSpace>& address_space,
               const ContentSecurityPolicy* content_security_policy,
               KURL site_for_cookies,
-              scoped_refptr<SecurityOrigin> requestor_origin,
-              scoped_refptr<SecurityOrigin> requestor_origin_for_frame_loading,
+              RefPtr<SecurityOrigin> requestor_origin,
+              RefPtr<SecurityOrigin> requestor_origin_for_frame_loading,
               const ClientHintsPreferences& client_hints_preferences,
               float device_pixel_ratio,
               const String& user_agent,
@@ -208,22 +208,20 @@ struct FrameFetchContext::FrozenState final
   const ReferrerPolicy referrer_policy;
   const String outgoing_referrer;
   const KURL url;
-  const scoped_refptr<SecurityOrigin> security_origin;
-  const scoped_refptr<const SecurityOrigin> parent_security_origin;
+  const RefPtr<SecurityOrigin> security_origin;
+  const RefPtr<const SecurityOrigin> parent_security_origin;
   const Optional<WebAddressSpace> address_space;
   const Member<const ContentSecurityPolicy> content_security_policy;
   const KURL site_for_cookies;
-  const scoped_refptr<SecurityOrigin> requestor_origin;
-  const scoped_refptr<SecurityOrigin> requestor_origin_for_frame_loading;
+  const RefPtr<SecurityOrigin> requestor_origin;
+  const RefPtr<SecurityOrigin> requestor_origin_for_frame_loading;
   const ClientHintsPreferences client_hints_preferences;
   const float device_pixel_ratio;
   const String user_agent;
   const bool is_main_frame;
   const bool is_svg_image_chrome_client;
 
-  void Trace(blink::Visitor* visitor) {
-    visitor->Trace(content_security_policy);
-  }
+  DEFINE_INLINE_TRACE() { visitor->Trace(content_security_policy); }
 };
 
 ResourceFetcher* FrameFetchContext::CreateFetcher(DocumentLoader* loader,
@@ -287,7 +285,7 @@ LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   return frame;
 }
 
-scoped_refptr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
+RefPtr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
   if (IsDetached())
     return FetchContext::GetLoadingTaskRunner();
   return TaskRunnerHelper::Get(TaskType::kNetworking, GetFrame());
@@ -559,7 +557,7 @@ void FrameFetchContext::DispatchDidDownloadData(unsigned long identifier,
 
   GetFrame()->Loader().Progress().IncrementProgress(identifier, data_length);
   probe::didReceiveData(GetFrame()->GetDocument(), identifier,
-                        MasterDocumentLoader(), nullptr, data_length);
+                        MasterDocumentLoader(), 0, data_length);
   probe::didReceiveEncodedDataLength(GetFrame()->GetDocument(), identifier,
                                      encoded_data_length);
 }
@@ -1091,7 +1089,7 @@ String FrameFetchContext::GetUserAgent() const {
   return GetFrame()->Loader().UserAgent();
 }
 
-scoped_refptr<SecurityOrigin> FrameFetchContext::GetRequestorOrigin() {
+RefPtr<SecurityOrigin> FrameFetchContext::GetRequestorOrigin() {
   if (IsDetached())
     return frozen_state_->requestor_origin;
 
@@ -1101,8 +1099,7 @@ scoped_refptr<SecurityOrigin> FrameFetchContext::GetRequestorOrigin() {
   return GetSecurityOrigin();
 }
 
-scoped_refptr<SecurityOrigin>
-FrameFetchContext::GetRequestorOriginForFrameLoading() {
+RefPtr<SecurityOrigin> FrameFetchContext::GetRequestorOriginForFrameLoading() {
   if (IsDetached())
     return frozen_state_->requestor_origin;
 
@@ -1158,7 +1155,7 @@ void FrameFetchContext::ParseAndPersistClientHints(
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
     const ResourceRequest& request,
-    scoped_refptr<WebTaskRunner> task_runner) {
+    RefPtr<WebTaskRunner> task_runner) {
   DCHECK(!IsDetached());
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
     WrappedResourceRequest webreq(request);
@@ -1203,7 +1200,7 @@ FetchContext* FrameFetchContext::Detach() {
   return this;
 }
 
-void FrameFetchContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FrameFetchContext) {
   visitor->Trace(document_loader_);
   visitor->Trace(document_);
   visitor->Trace(frozen_state_);

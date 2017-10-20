@@ -234,7 +234,7 @@ void Event::preventDefault() {
     prevent_default_called_during_passive_ = true;
 
     const LocalDOMWindow* window =
-        event_path_ ? event_path_->GetWindowEventContext().Window() : nullptr;
+        event_path_ ? event_path_->GetWindowEventContext().Window() : 0;
     if (window && handling_passive_ == PassiveMode::kPassive) {
       window->PrintErrorMessage(
           "Unable to preventDefault inside passive event listener invocation.");
@@ -376,7 +376,7 @@ void Event::setCancelBubble(ScriptState* script_state, bool cancel) {
     propagation_stopped_ = true;
 }
 
-void Event::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Event) {
   visitor->Trace(current_target_);
   visitor->Trace(target_);
   visitor->Trace(underlying_event_);

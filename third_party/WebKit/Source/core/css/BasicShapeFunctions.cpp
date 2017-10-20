@@ -281,15 +281,14 @@ static BasicShapeRadius CssValueToBasicShapeRadius(
   return BasicShapeRadius(ConvertToLength(state, ToCSSPrimitiveValue(radius)));
 }
 
-scoped_refptr<BasicShape> BasicShapeForValue(
-    const StyleResolverState& state,
-    const CSSValue& basic_shape_value) {
-  scoped_refptr<BasicShape> basic_shape;
+RefPtr<BasicShape> BasicShapeForValue(const StyleResolverState& state,
+                                      const CSSValue& basic_shape_value) {
+  RefPtr<BasicShape> basic_shape;
 
   if (basic_shape_value.IsBasicShapeCircleValue()) {
     const CSSBasicShapeCircleValue& circle_value =
         ToCSSBasicShapeCircleValue(basic_shape_value);
-    scoped_refptr<BasicShapeCircle> circle = BasicShapeCircle::Create();
+    RefPtr<BasicShapeCircle> circle = BasicShapeCircle::Create();
 
     circle->SetCenterX(
         ConvertToCenterCoordinate(state, circle_value.CenterX()));
@@ -301,7 +300,7 @@ scoped_refptr<BasicShape> BasicShapeForValue(
   } else if (basic_shape_value.IsBasicShapeEllipseValue()) {
     const CSSBasicShapeEllipseValue& ellipse_value =
         ToCSSBasicShapeEllipseValue(basic_shape_value);
-    scoped_refptr<BasicShapeEllipse> ellipse = BasicShapeEllipse::Create();
+    RefPtr<BasicShapeEllipse> ellipse = BasicShapeEllipse::Create();
 
     ellipse->SetCenterX(
         ConvertToCenterCoordinate(state, ellipse_value.CenterX()));
@@ -316,7 +315,7 @@ scoped_refptr<BasicShape> BasicShapeForValue(
   } else if (basic_shape_value.IsBasicShapePolygonValue()) {
     const CSSBasicShapePolygonValue& polygon_value =
         ToCSSBasicShapePolygonValue(basic_shape_value);
-    scoped_refptr<BasicShapePolygon> polygon = BasicShapePolygon::Create();
+    RefPtr<BasicShapePolygon> polygon = BasicShapePolygon::Create();
 
     polygon->SetWindRule(polygon_value.GetWindRule());
     const HeapVector<Member<CSSPrimitiveValue>>& values =
@@ -329,7 +328,7 @@ scoped_refptr<BasicShape> BasicShapeForValue(
   } else if (basic_shape_value.IsBasicShapeInsetValue()) {
     const CSSBasicShapeInsetValue& rect_value =
         ToCSSBasicShapeInsetValue(basic_shape_value);
-    scoped_refptr<BasicShapeInset> rect = BasicShapeInset::Create();
+    RefPtr<BasicShapeInset> rect = BasicShapeInset::Create();
 
     rect->SetTop(ConvertToLength(state, rect_value.Top()));
     rect->SetRight(ConvertToLength(state, rect_value.Right()));

@@ -102,7 +102,7 @@ void SplitElementCommand::DoReapply() {
   ExecuteApply();
 }
 
-void SplitElementCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SplitElementCommand) {
   visitor->Trace(element1_);
   visitor->Trace(element2_);
   visitor->Trace(at_child_);

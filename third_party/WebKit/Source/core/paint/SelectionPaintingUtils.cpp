@@ -58,7 +58,7 @@ RefPtr<ComputedStyle> GetUncachedSelectionStyle(Node* node) {
 Color SelectionColor(const Document& document,
                      const ComputedStyle& style,
                      Node* node,
-                     CSSPropertyID color_property,
+                     int color_property,
                      const GlobalPaintFlags global_paint_flags) {
   // If the element is unselectable, or we are only painting the selection,
   // don't override the foreground color with the selection foreground color.
@@ -147,12 +147,12 @@ TextPaintStyle SelectionPaintingUtils::SelectionPaintingStyle(
                                   CSSPropertyWebkitTextStrokeColor);
       selection_style.stroke_width = pseudo_style->TextStrokeWidth();
       selection_style.shadow =
-          uses_text_as_clip ? nullptr : pseudo_style->TextShadow();
+          uses_text_as_clip ? 0 : pseudo_style->TextShadow();
     }
 
     // Text shadows are disabled when printing. http://crbug.com/258321
     if (is_printing)
-      selection_style.shadow = nullptr;
+      selection_style.shadow = 0;
   }
 
   return selection_style;

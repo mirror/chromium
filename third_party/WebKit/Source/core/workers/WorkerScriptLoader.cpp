@@ -119,7 +119,7 @@ void WorkerScriptLoader::LoadAsynchronously(
   // to this object, while some of the callchain assumes that the client and
   // loader wouldn't be deleted within callbacks.
   // (E.g. see crbug.com/524694 for why we can't easily remove this protect)
-  scoped_refptr<WorkerScriptLoader> protect(this);
+  RefPtr<WorkerScriptLoader> protect(this);
   need_to_cancel_ = true;
   threadable_loader_ = ThreadableLoader::Create(
       execution_context, this, options, resource_loader_options);

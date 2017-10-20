@@ -163,7 +163,7 @@ class CORE_EXPORT ThreadableLoader
 
   virtual ~ThreadableLoader() {}
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   ThreadableLoader() {}

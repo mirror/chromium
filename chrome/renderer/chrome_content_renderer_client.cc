@@ -479,6 +479,8 @@ void ChromeContentRendererClient::RenderThreadStarted() {
     thread->RegisterExtension(extensions_v8::BenchmarkingExtension::Get());
   if (command_line->HasSwitch(switches::kEnableNetBenchmarking))
     thread->RegisterExtension(extensions_v8::NetBenchmarkingExtension::Get());
+  if (command_line->HasSwitch(switches::kInstantProcess))
+    thread->RegisterExtension(extensions_v8::SearchBoxExtension::Get());
 
   // chrome-search: and chrome-distiller: pages  should not be accessible by
   // normal content, and should also be unable to script anything but themselves
@@ -1697,6 +1699,6 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
       " will be distrusted %s. Once distrusted, users will be prevented from "
       "loading these resources. See https://g.co/chrome/symantecpkicerts for "
       "more information.",
-      url::Origin::Create(url).Serialize().c_str(), in_future_string);
+      url::Origin(url).Serialize().c_str(), in_future_string);
   return true;
 }

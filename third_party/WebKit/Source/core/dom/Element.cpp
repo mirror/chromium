@@ -2280,11 +2280,11 @@ void Element::UpdateCallbackSelectors(const ComputedStyle* old_style,
 }
 
 void Element::AddCallbackSelectors() {
-  UpdateCallbackSelectors(nullptr, GetComputedStyle());
+  UpdateCallbackSelectors(0, GetComputedStyle());
 }
 
 void Element::RemoveCallbackSelectors() {
-  UpdateCallbackSelectors(GetComputedStyle(), nullptr);
+  UpdateCallbackSelectors(GetComputedStyle(), 0);
 }
 
 ElementShadow* Element::Shadow() const {
@@ -2935,12 +2935,10 @@ void Element::blur() {
   CancelFocusAppearanceUpdate();
   if (AdjustedFocusedElementInTreeScope() == this) {
     Document& doc = GetDocument();
-    if (doc.GetPage()) {
-      doc.GetPage()->GetFocusController().SetFocusedElement(nullptr,
-                                                            doc.GetFrame());
-    } else {
+    if (doc.GetPage())
+      doc.GetPage()->GetFocusController().SetFocusedElement(0, doc.GetFrame());
+    else
       doc.ClearFocusedElement();
-    }
   }
 }
 
@@ -3376,7 +3374,7 @@ String Element::outerText() {
 }
 
 String Element::TextFromChildren() {
-  Text* first_text_node = nullptr;
+  Text* first_text_node = 0;
   bool found_multiple_text_nodes = false;
   unsigned total_length = 0;
 
@@ -4627,14 +4625,14 @@ void Element::LogUpdateAttributeIfIsolatedWorldAndInDocument(
   activity_logger->LogEvent("blinkSetAttribute", argv.size(), argv.data());
 }
 
-void Element::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Element) {
   if (HasRareData())
     visitor->Trace(GetElementRareData());
   visitor->Trace(element_data_);
   ContainerNode::Trace(visitor);
 }
 
-void Element::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(Element) {
   if (HasRareData()) {
     visitor->TraceWrappersWithManualWriteBarrier(GetElementRareData());
   }

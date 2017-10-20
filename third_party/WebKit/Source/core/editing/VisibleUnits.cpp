@@ -147,8 +147,7 @@ static PositionType CanonicalPosition(const PositionType& position) {
     return PositionType();
 
   // The new position should be in the same block flow element. Favor that.
-  Element* const original_block =
-      node ? EnclosingBlockFlowElement(*node) : nullptr;
+  Element* const original_block = node ? EnclosingBlockFlowElement(*node) : 0;
   const bool next_is_outside_original_block =
       !next_node->IsDescendantOf(original_block) && next_node != original_block;
   const bool prev_is_outside_original_block =
@@ -539,7 +538,7 @@ VisiblePosition StartOfBlock(const VisiblePosition& visible_position,
   Element* start_block =
       position.ComputeContainerNode()
           ? EnclosingBlock(position.ComputeContainerNode(), rule)
-          : nullptr;
+          : 0;
   return start_block ? VisiblePosition::FirstPositionInNode(*start_block)
                      : VisiblePosition();
 }
@@ -551,7 +550,7 @@ VisiblePosition EndOfBlock(const VisiblePosition& visible_position,
   Element* end_block =
       position.ComputeContainerNode()
           ? EnclosingBlock(position.ComputeContainerNode(), rule)
-          : nullptr;
+          : 0;
   return end_block ? VisiblePosition::LastPositionInNode(*end_block)
                    : VisiblePosition();
 }

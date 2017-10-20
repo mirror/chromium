@@ -252,7 +252,7 @@ void V0InsertionPoint::RemovedFrom(ContainerNode* insertion_point) {
 
   // host can be null when removedFrom() is called from ElementShadow
   // destructor.
-  ElementShadow* root_owner = root ? root->Owner() : nullptr;
+  ElementShadow* root_owner = root ? root->Owner() : 0;
 
   // Since this insertion point is no longer visible from the shadow subtree, it
   // need to clean itself up.
@@ -272,16 +272,16 @@ void V0InsertionPoint::RemovedFrom(ContainerNode* insertion_point) {
   HTMLElement::RemovedFrom(insertion_point);
 }
 
-void V0InsertionPoint::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(V0InsertionPoint) {
   visitor->Trace(distributed_nodes_);
   HTMLElement::Trace(visitor);
 }
 
 const V0InsertionPoint* ResolveReprojection(const Node* projected_node) {
   DCHECK(projected_node);
-  const V0InsertionPoint* insertion_point = nullptr;
+  const V0InsertionPoint* insertion_point = 0;
   const Node* current = projected_node;
-  ElementShadow* last_element_shadow = nullptr;
+  ElementShadow* last_element_shadow = 0;
   while (true) {
     ElementShadow* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
     if (!shadow || shadow->IsV1() || shadow == last_element_shadow)
@@ -302,7 +302,7 @@ void CollectDestinationInsertionPoints(
     const Node& node,
     HeapVector<Member<V0InsertionPoint>, 8>& results) {
   const Node* current = &node;
-  ElementShadow* last_element_shadow = nullptr;
+  ElementShadow* last_element_shadow = 0;
   while (true) {
     ElementShadow* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
     if (!shadow || shadow->IsV1() || shadow == last_element_shadow)

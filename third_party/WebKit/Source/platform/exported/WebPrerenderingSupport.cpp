@@ -32,14 +32,14 @@
 
 namespace blink {
 
-WebPrerenderingSupport* WebPrerenderingSupport::platform_ = nullptr;
+WebPrerenderingSupport* WebPrerenderingSupport::platform_ = 0;
 
 void WebPrerenderingSupport::Initialize(WebPrerenderingSupport* platform) {
   platform_ = platform;
 }
 
 void WebPrerenderingSupport::Shutdown() {
-  platform_ = nullptr;
+  platform_ = 0;
 }
 
 WebPrerenderingSupport* WebPrerenderingSupport::Current() {

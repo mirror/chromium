@@ -49,7 +49,7 @@ class IntersectionObserverDelegateImpl final
 
   ExecutionContext* GetExecutionContext() const override { return context_; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     IntersectionObserverDelegate::Trace(visitor);
     visitor->Trace(context_);
   }
@@ -351,7 +351,7 @@ void IntersectionObserver::Deliver() {
   delegate_->Deliver(entries, *this);
 }
 
-void IntersectionObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IntersectionObserver) {
   visitor->template RegisterWeakMembers<
       IntersectionObserver, &IntersectionObserver::ClearWeakMembers>(this);
   visitor->Trace(delegate_);
@@ -359,8 +359,7 @@ void IntersectionObserver::Trace(blink::Visitor* visitor) {
   visitor->Trace(entries_);
 }
 
-void IntersectionObserver::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(IntersectionObserver) {
   visitor->TraceWrappers(delegate_);
 }
 

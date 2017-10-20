@@ -73,7 +73,7 @@ SpeechSynthesis* DOMWindowSpeechSynthesis::speechSynthesis(
   return speech_synthesis_;
 }
 
-void DOMWindowSpeechSynthesis::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMWindowSpeechSynthesis) {
   visitor->Trace(speech_synthesis_);
   Supplement<LocalDOMWindow>::Trace(visitor);
 }

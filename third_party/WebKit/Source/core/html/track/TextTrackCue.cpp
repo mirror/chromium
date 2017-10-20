@@ -68,7 +68,7 @@ void TextTrackCue::SetTrack(TextTrack* track) {
 }
 
 Node* TextTrackCue::Owner() const {
-  return track_ ? track_->Owner() : nullptr;
+  return track_ ? track_->Owner() : 0;
 }
 
 void TextTrackCue::setId(const AtomicString& id) {
@@ -135,7 +135,7 @@ const AtomicString& TextTrackCue::InterfaceName() const {
   return EventTargetNames::TextTrackCue;
 }
 
-void TextTrackCue::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrackCue) {
   visitor->Trace(track_);
   EventTargetWithInlineData::Trace(visitor);
 }

@@ -20,7 +20,8 @@ class ResourceLoaderTest : public ::testing::Test {
 
  public:
   ResourceLoaderTest()
-      : foo_url_("https://foo.test"), bar_url_("https://bar.test"){};
+      : foo_url_(kParsedURLString, "https://foo.test"),
+        bar_url_(kParsedURLString, "https://bar.test") {};
 
   void SetUp() {
     context_ =

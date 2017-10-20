@@ -47,7 +47,7 @@ bool CSSFontStyleRangeValue::Equals(const CSSFontStyleRangeValue& other) const {
          *oblique_values_ == *other.oblique_values_;
 }
 
-void CSSFontStyleRangeValue::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSFontStyleRangeValue) {
   visitor->Trace(font_style_value_);
   visitor->Trace(oblique_values_);
   CSSValue::TraceAfterDispatch(visitor);

@@ -29,7 +29,7 @@ class ServiceWorkerClients final
   ScriptPromise openWindow(ScriptState*, const String& url);
   ScriptPromise claim(ScriptState*);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   ServiceWorkerClients();

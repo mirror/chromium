@@ -9,13 +9,10 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/strings/string_util.h"
-#include "content/common/renderer_host.mojom.h"
-#include "content/public/common/service_names.mojom.h"
-#include "content/renderer/render_thread_impl.h"
+#include "content/common/child_process_messages.h"
 #include "content/renderer/render_view_impl.h"
 #include "gin/handle.h"
 #include "gin/object_template_builder.h"
-#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
@@ -128,21 +125,31 @@ std::string StatsCollectionController::GetHistogram(
 
 std::string StatsCollectionController::GetBrowserHistogram(
     const std::string& histogram_name) {
-  std::string histogram_json;
-  RenderThreadImpl::current()->GetRendererHost()->GetBrowserHistogram(
-      histogram_name, &histogram_json);
+  RenderViewImpl *render_view_impl = NULL;
+  if (!CurrentRenderViewImpl(&render_view_impl)) {
+    NOTREACHED();
+    return std::string();
+  }
 
+  std::string histogram_json;
+  render_view_impl->Send(new ChildProcessHostMsg_GetBrowserHistogram(
+      histogram_name, &histogram_json));
   return histogram_json;
 }
 
 std::string StatsCollectionController::GetTabLoadTiming() {
   RenderViewImpl *render_view_impl = NULL;
-  bool result = CurrentRenderViewImpl(&render_view_impl);
-  DCHECK(result);
+  if (!CurrentRenderViewImpl(&render_view_impl)) {
+    NOTREACHED();
+    return std::string();
+  }
 
   StatsCollectionObserver* observer =
       render_view_impl->GetStatsCollectionObserver();
-  DCHECK(observer);
+  if (!observer) {
+    NOTREACHED();
+    return std::string();
+  }
 
   std::string tab_timing_json;
   ConvertLoadTimeToJSON(

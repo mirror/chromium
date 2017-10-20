@@ -63,7 +63,7 @@ class PLATFORM_EXPORT ResourceLoader final
                                 ResourceLoadScheduler*,
                                 Resource*);
   ~ResourceLoader() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void Start();
 

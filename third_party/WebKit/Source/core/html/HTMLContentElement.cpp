@@ -56,7 +56,7 @@ inline HTMLContentElement::HTMLContentElement(Document& document,
 
 HTMLContentElement::~HTMLContentElement() {}
 
-void HTMLContentElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLContentElement) {
   visitor->Trace(filter_);
   V0InsertionPoint::Trace(visitor);
 }

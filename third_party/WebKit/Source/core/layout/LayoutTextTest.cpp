@@ -28,22 +28,6 @@ class LayoutTextTest : public RenderingTest {
 
 const char kTacoText[] = "Los Compadres Taco Truck";
 
-// Helper class to run the same test code with and without LayoutNG
-class ParameterizedLayoutTextTest : public ::testing::WithParamInterface<bool>,
-                                    private ScopedLayoutNGForTest,
-                                    private ScopedLayoutNGPaintFragmentsForTest,
-                                    public LayoutTextTest {
- public:
-  ParameterizedLayoutTextTest()
-      : ScopedLayoutNGForTest(GetParam()),
-        ScopedLayoutNGPaintFragmentsForTest(GetParam()) {}
-
- protected:
-  bool LayoutNGEnabled() const { return GetParam(); }
-};
-
-INSTANTIATE_TEST_CASE_P(All, ParameterizedLayoutTextTest, ::testing::Bool());
-
 }  // namespace
 
 TEST_F(LayoutTextTest, WidthZeroFromZeroLength) {
@@ -112,7 +96,10 @@ TEST_F(LayoutTextTest, WidthLengthBeyondLength) {
   ASSERT_LE(width, 20.f);
 }
 
-TEST_P(ParameterizedLayoutTextTest, CaretMinMaxOffset) {
+TEST_F(LayoutTextTest, CaretMinMaxOffsetNG) {
+  ScopedLayoutNGForTest layout_ng(true);
+  ScopedLayoutNGPaintFragmentsForTest layout_ng_paint_fragments(true);
+
   SetBasicBody("foo");
   EXPECT_EQ(0, GetBasicText()->CaretMinOffset());
   EXPECT_EQ(3, GetBasicText()->CaretMaxOffset());
@@ -130,7 +117,10 @@ TEST_P(ParameterizedLayoutTextTest, CaretMinMaxOffset) {
   EXPECT_EQ(4, GetBasicText()->CaretMaxOffset());
 }
 
-TEST_P(ParameterizedLayoutTextTest, ResolvedTextLength) {
+TEST_F(LayoutTextTest, ResolvedTextLengthNG) {
+  ScopedLayoutNGForTest layout_ng(true);
+  ScopedLayoutNGPaintFragmentsForTest layout_ng_paint_fragments(true);
+
   SetBasicBody("foo");
   EXPECT_EQ(3u, GetBasicText()->ResolvedTextLength());
 
@@ -144,7 +134,7 @@ TEST_P(ParameterizedLayoutTextTest, ResolvedTextLength) {
   EXPECT_EQ(3u, GetBasicText()->ResolvedTextLength());
 }
 
-TEST_P(ParameterizedLayoutTextTest, ContainsCaretOffset) {
+TEST_F(LayoutTextTest, ContainsCaretOffset) {
   // This test records the behavior introduced in crrev.com/e3eb4e
   SetBasicBody(" foo   bar ");
   EXPECT_FALSE(GetBasicText()->ContainsCaretOffset(0));   // "| foo   bar "
@@ -159,10 +149,9 @@ TEST_P(ParameterizedLayoutTextTest, ContainsCaretOffset) {
   EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(9));    // " foo   ba|r "
   EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(10));   // " foo   bar| "
   EXPECT_FALSE(GetBasicText()->ContainsCaretOffset(11));  // " foo   bar |"
-  EXPECT_FALSE(GetBasicText()->ContainsCaretOffset(12));  // out of range
 }
 
-TEST_P(ParameterizedLayoutTextTest, ContainsCaretOffsetInPre) {
+TEST_F(LayoutTextTest, ContainsCaretOffsetInPre) {
   // These tests record the behavior introduced in crrev.com/e3eb4e
 
   SetBodyInnerHTML("<pre id='target'>foo   bar</pre>");
@@ -177,7 +166,7 @@ TEST_P(ParameterizedLayoutTextTest, ContainsCaretOffsetInPre) {
   EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(8));  // "foo   ba|r"
   EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(9));  // "foo   bar|"
 
-  SetBodyInnerHTML("<pre id='target'>foo\n</pre>");
+  SetBodyInnerHTML("<pre id='target'>foo\n</div>");
   EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(0));   // "|foo\n"
   EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(1));   // "f|oo\n"
   EXPECT_TRUE(GetBasicText()->ContainsCaretOffset(2));   // "fo|o\n"

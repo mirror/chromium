@@ -243,7 +243,7 @@ void ExecutionContext::RemoveURLFromMemoryCache(const KURL& url) {
   GetMemoryCache()->RemoveURLFromCache(url);
 }
 
-void ExecutionContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ExecutionContext) {
   visitor->Trace(public_url_manager_);
   visitor->Trace(pending_exceptions_);
   ContextLifecycleNotifier::Trace(visitor);

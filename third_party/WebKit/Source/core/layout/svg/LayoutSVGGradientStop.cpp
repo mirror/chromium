@@ -60,7 +60,7 @@ SVGGradientElement* LayoutSVGGradientStop::GradientElement() const {
   ContainerNode* parent_node = GetNode()->parentNode();
   DCHECK(parent_node);
   return IsSVGGradientElement(*parent_node) ? ToSVGGradientElement(parent_node)
-                                            : nullptr;
+                                            : 0;
 }
 
 }  // namespace blink

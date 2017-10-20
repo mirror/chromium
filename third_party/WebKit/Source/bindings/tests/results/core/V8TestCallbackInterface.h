@@ -26,7 +26,7 @@ class V8TestCallbackInterface final : public TestCallbackInterface {
 
   ~V8TestCallbackInterface() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void voidMethod() override;
   bool booleanMethod() override;

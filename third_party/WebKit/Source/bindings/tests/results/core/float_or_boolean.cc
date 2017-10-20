@@ -56,7 +56,7 @@ FloatOrBoolean::FloatOrBoolean(const FloatOrBoolean&) = default;
 FloatOrBoolean::~FloatOrBoolean() = default;
 FloatOrBoolean& FloatOrBoolean::operator=(const FloatOrBoolean&) = default;
 
-void FloatOrBoolean::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(FloatOrBoolean) {
 }
 
 void V8FloatOrBoolean::ToImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value, FloatOrBoolean& impl, UnionTypeConversionMode conversionMode, ExceptionState& exceptionState) {

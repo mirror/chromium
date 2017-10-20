@@ -39,7 +39,7 @@ class DOMParser final : public GarbageCollected<DOMParser>,
 
   Document* parseFromString(const String&, const String& type);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit DOMParser(Document&);

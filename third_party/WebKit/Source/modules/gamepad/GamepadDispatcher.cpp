@@ -23,7 +23,7 @@ GamepadDispatcher::GamepadDispatcher() {}
 
 GamepadDispatcher::~GamepadDispatcher() {}
 
-void GamepadDispatcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(GamepadDispatcher) {
   PlatformEventDispatcher::Trace(visitor);
 }
 

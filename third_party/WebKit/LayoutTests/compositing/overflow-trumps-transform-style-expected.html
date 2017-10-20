@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <style>
+#root {
+    transform-style: preserve-3d;
+}
+
 #transparent {
     overflow: hidden;
     width: 100px;
     height: 100px;
     background: red;
+    transform: translate3d(0,0,30px);
 }
 
 #child1 {
     width: 100px;
     height: 100px;
     background: green;
-    transform: translate(50px,0);
+    transform: translate3d(50px,0,-20px);
 }
 
 #child2 {
     width: 80px;
     height: 80px;
     background: black;
-    transform: translate(35px,-60px);
+    transform: translate3d(35px,-60px,-30px);
 }
 
 #sibling {
     width: 100px;
     height: 100px;
     background: blue;
-    transform: translate(25px,-50px);
-    position: relative;
-    z-index: -1;
+    transform: translate3d(25px,-50px,20px);
 }
 </style>
 <div id="root">

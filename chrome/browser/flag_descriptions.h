@@ -514,9 +514,6 @@ extern const char kModuleScriptsDescription[];
 extern const char kModuleScriptsDynamicImportName[];
 extern const char kModuleScriptsDynamicImportDescription[];
 
-extern const char kModuleScriptsImportMetaUrlName[];
-extern const char kModuleScriptsImportMetaUrlDescription[];
-
 extern const char kNewAudioRenderingMixingStrategyName[];
 extern const char kNewAudioRenderingMixingStrategyDescription[];
 
@@ -813,9 +810,6 @@ extern const char kSysInternalsDescription[];
 
 extern const char kTabAudioMutingName[];
 extern const char kTabAudioMutingDescription[];
-
-extern const char kTabModalJsDialogName[];
-extern const char kTabModalJsDialogDescription[];
 
 extern const char kTabsInCbdName[];
 extern const char kTabsInCbdDescription[];

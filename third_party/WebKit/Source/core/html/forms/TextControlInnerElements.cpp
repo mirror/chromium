@@ -73,11 +73,10 @@ EditingViewPortElement* EditingViewPortElement::Create(Document& document) {
   return element;
 }
 
-scoped_refptr<ComputedStyle>
-EditingViewPortElement::CustomStyleForLayoutObject() {
+RefPtr<ComputedStyle> EditingViewPortElement::CustomStyleForLayoutObject() {
   // FXIME: Move these styles to html.css.
 
-  scoped_refptr<ComputedStyle> style = ComputedStyle::Create();
+  RefPtr<ComputedStyle> style = ComputedStyle::Create();
   style->InheritFrom(OwnerShadowHost()->ComputedStyleRef());
 
   style->SetFlexGrow(1);
@@ -134,14 +133,14 @@ LayoutObject* TextControlInnerEditorElement::CreateLayoutObject(
   return new LayoutTextControlInnerEditor(this);
 }
 
-scoped_refptr<ComputedStyle>
+RefPtr<ComputedStyle>
 TextControlInnerEditorElement::CustomStyleForLayoutObject() {
   LayoutObject* parent_layout_object = OwnerShadowHost()->GetLayoutObject();
   if (!parent_layout_object || !parent_layout_object->IsTextControl())
     return OriginalStyleForLayoutObject();
   LayoutTextControlItem text_control_layout_item =
       LayoutTextControlItem(ToLayoutTextControl(parent_layout_object));
-  scoped_refptr<ComputedStyle> inner_editor_style =
+  RefPtr<ComputedStyle> inner_editor_style =
       text_control_layout_item.CreateInnerEditorStyle(
           text_control_layout_item.StyleRef());
   // Using StyleAdjuster::adjustComputedStyle updates unwanted style. We'd like

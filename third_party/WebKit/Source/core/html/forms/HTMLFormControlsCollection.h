@@ -53,7 +53,7 @@ class HTMLFormControlsCollection final : public HTMLCollection {
   HTMLElement* namedItem(const AtomicString& name) const override;
   void namedGetter(const AtomicString& name, RadioNodeListOrElement&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit HTMLFormControlsCollection(ContainerNode&);

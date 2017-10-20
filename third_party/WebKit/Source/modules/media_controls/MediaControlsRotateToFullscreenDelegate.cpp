@@ -271,7 +271,7 @@ MediaControlsRotateToFullscreenDelegate::ComputeScreenOrientation() const {
   return SimpleOrientation::kUnknown;
 }
 
-void MediaControlsRotateToFullscreenDelegate::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsRotateToFullscreenDelegate) {
   EventListener::Trace(visitor);
   visitor->Trace(video_element_);
   visitor->Trace(visibility_observer_);

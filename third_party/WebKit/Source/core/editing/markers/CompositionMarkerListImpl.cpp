@@ -64,7 +64,7 @@ bool CompositionMarkerListImpl::ShiftMarkers(const String&,
       &markers_, offset, old_length, new_length);
 }
 
-void CompositionMarkerListImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CompositionMarkerListImpl) {
   visitor->Trace(markers_);
   DocumentMarkerList::Trace(visitor);
 }

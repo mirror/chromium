@@ -26,7 +26,7 @@ class MODULES_EXPORT InspectorCacheStorageAgent final
   }
 
   ~InspectorCacheStorageAgent() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void requestCacheNames(const String& security_origin,
                          std::unique_ptr<RequestCacheNamesCallback>) override;

@@ -237,7 +237,7 @@ void WebFrame::AppendChild(WebFrame* child) {
 }
 
 void WebFrame::RemoveChild(WebFrame* child) {
-  child->parent_ = nullptr;
+  child->parent_ = 0;
 
   if (first_child_ == child)
     first_child_ = child->next_sibling_;
@@ -249,7 +249,7 @@ void WebFrame::RemoveChild(WebFrame* child) {
   else
     child->next_sibling_->previous_sibling_ = child->previous_sibling_;
 
-  child->previous_sibling_ = child->next_sibling_ = nullptr;
+  child->previous_sibling_ = child->next_sibling_ = 0;
 
   ToCoreFrame(*this)->Tree().InvalidateScopedChildCount();
   ToCoreFrame(*this)->GetPage()->DecrementSubframeCount();
@@ -300,7 +300,7 @@ bool WebFrame::IsLoading() const {
 
 WebFrame* WebFrame::FromFrame(Frame* frame) {
   if (!frame)
-    return nullptr;
+    return 0;
 
   if (frame->IsLocalFrame())
     return WebLocalFrameImpl::FromFrame(ToLocalFrame(*frame));
@@ -309,16 +309,16 @@ WebFrame* WebFrame::FromFrame(Frame* frame) {
 
 WebFrame::WebFrame(WebTreeScopeType scope)
     : scope_(scope),
-      parent_(nullptr),
-      previous_sibling_(nullptr),
-      next_sibling_(nullptr),
-      first_child_(nullptr),
-      last_child_(nullptr),
-      opener_(nullptr),
+      parent_(0),
+      previous_sibling_(0),
+      next_sibling_(0),
+      first_child_(0),
+      last_child_(0),
+      opener_(0),
       opened_frame_tracker_(new OpenedFrameTracker) {}
 
 WebFrame::~WebFrame() {
-  opened_frame_tracker_.reset(nullptr);
+  opened_frame_tracker_.reset(0);
 }
 
 void WebFrame::TraceFrame(Visitor* visitor, WebFrame* frame) {

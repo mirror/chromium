@@ -4,9 +4,18 @@
     <title>Animating transform on large tiled layer.</title>
     <style type="text/css">
         #box {
+            display: block;
             width: 1000px;
-            height: 1000px;
+            height: 2000px;
             background-color: green;
+            transform: translate3d(0, -1000px, 0);
+        }
+
+        #sandbox {
+            height: 1000px;
+            width: 1000px;
+            background-color: red;
+            overflow: hidden;
         }
     </style>
     <script type="text/javascript">
@@ -29,6 +38,8 @@
     <div id=description>
         The test passes if the box below turns green.
     </div>
-    <div id="box"><font style="opacity:0">ABC</font></div>
+    <div id=sandbox>
+        <div id="box"><font style="opacity:0">ABC</font></div>
+    </div>
 </body>
 </html>

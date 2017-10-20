@@ -43,7 +43,7 @@ class PLATFORM_EXPORT PlatformChromeClient
  public:
   PlatformChromeClient() {}
   virtual ~PlatformChromeClient() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   // Requests the host invalidate the contents.
   virtual void InvalidateRect(const IntRect& update_rect) = 0;

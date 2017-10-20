@@ -49,7 +49,7 @@ class CSSCounterValue : public CSSValue {
 
   String CustomCSSText() const;
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   CSSCounterValue(CSSCustomIdentValue* identifier,

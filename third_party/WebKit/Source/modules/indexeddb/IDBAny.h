@@ -71,7 +71,7 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
     return new IDBAny(values);
   }
   ~IDBAny();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
   void ContextWillBeDestroyed();
 
   enum Type {

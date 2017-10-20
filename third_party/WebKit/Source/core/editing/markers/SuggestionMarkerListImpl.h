@@ -40,7 +40,7 @@ class CORE_EXPORT SuggestionMarkerListImpl final : public DocumentMarkerList {
                     unsigned old_length,
                     unsigned new_length) final;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // SuggestionMarkerListImpl-specific
   bool RemoveMarkerByTag(int32_t tag);

@@ -48,8 +48,8 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
       ModuleTreeClient*);
 
   virtual ~ModuleTreeLinker() = default;
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
   bool IsFetching() const {
     return State::kFetchingSelf <= state_ && state_ < State::kFinished;

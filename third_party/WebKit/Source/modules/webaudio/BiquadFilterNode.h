@@ -59,7 +59,7 @@ class BiquadFilterNode final : public AudioNode {
                                   const BiquadFilterOptions&,
                                   ExceptionState&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   String type() const;
   void setType(const String&);

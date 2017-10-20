@@ -405,7 +405,7 @@
     },
     {
       name: "FeaturePolicyForEncryptedMedia",
-      status: "stable"
+      status: "experimental"
     },
     {
       name: "FetchRequestCache",
@@ -641,9 +641,6 @@
     },
     {
       name: "ModuleScriptsDynamicImport",
-    },
-    {
-      name: "ModuleScriptsImportMetaUrl",
     },
     {
       name: "MojoBlobs",
@@ -954,6 +951,9 @@
     {
       name: "SignatureBasedIntegrity",
       status: "experimental",
+    },
+    {
+      name: "SkipCompositingSmallScrollers",
     },
     {
       name: "SlimmingPaintStrictCullRectClipping",

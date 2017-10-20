@@ -122,7 +122,7 @@ IDBRequest::~IDBRequest() {
          ready_state_ == kEarlyDeath || !GetExecutionContext());
 }
 
-void IDBRequest::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(IDBRequest) {
   visitor->Trace(transaction_);
   visitor->Trace(source_);
   visitor->Trace(result_);

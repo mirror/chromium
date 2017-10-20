@@ -31,7 +31,7 @@ TopDocumentRootScrollerController* TopDocumentRootScrollerController::Create(
 TopDocumentRootScrollerController::TopDocumentRootScrollerController(Page& page)
     : page_(&page) {}
 
-void TopDocumentRootScrollerController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TopDocumentRootScrollerController) {
   visitor->Trace(viewport_apply_scroll_);
   visitor->Trace(global_root_scroller_);
   visitor->Trace(page_);

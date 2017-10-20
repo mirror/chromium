@@ -286,7 +286,7 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
   bool media_query_matches = true;
   LocalFrame* frame = LoadingFrame();
   if (!owner_->Media().IsEmpty() && frame) {
-    scoped_refptr<MediaQuerySet> media = MediaQuerySet::Create(owner_->Media());
+    RefPtr<MediaQuerySet> media = MediaQuerySet::Create(owner_->Media());
     MediaQueryEvaluator evaluator(frame);
     media_query_matches = evaluator.Eval(*media);
   }
@@ -406,7 +406,7 @@ void LinkStyle::OwnerRemoved() {
     ClearSheet();
 }
 
-void LinkStyle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LinkStyle) {
   visitor->Trace(sheet_);
   LinkResource::Trace(visitor);
   ResourceOwner<StyleSheetResource>::Trace(visitor);

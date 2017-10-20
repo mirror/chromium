@@ -39,7 +39,7 @@ namespace blink {
 
 InputTypeView::~InputTypeView() {}
 
-void InputTypeView::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InputTypeView) {
   visitor->Trace(element_);
 }
 
@@ -91,8 +91,8 @@ LayoutObject* InputTypeView::CreateLayoutObject(
   return LayoutObject::CreateObject(&GetElement(), style);
 }
 
-scoped_refptr<ComputedStyle> InputTypeView::CustomStyleForLayoutObject(
-    scoped_refptr<ComputedStyle> original_style) {
+RefPtr<ComputedStyle> InputTypeView::CustomStyleForLayoutObject(
+    RefPtr<ComputedStyle> original_style) {
   return original_style;
 }
 
@@ -182,7 +182,7 @@ bool InputTypeView::HasBadInput() const {
   return false;
 }
 
-void ClickHandlingState::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ClickHandlingState) {
   visitor->Trace(checked_radio_button);
   EventDispatchHandlingState::Trace(visitor);
 }

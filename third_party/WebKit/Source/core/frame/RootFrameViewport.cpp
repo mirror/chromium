@@ -116,7 +116,7 @@ FloatQuad RootFrameViewport::LocalToVisibleContentQuad(
   return viewport_quad;
 }
 
-scoped_refptr<WebTaskRunner> RootFrameViewport::GetTimerTaskRunner() const {
+RefPtr<WebTaskRunner> RootFrameViewport::GetTimerTaskRunner() const {
   return LayoutViewport().GetTimerTaskRunner();
 }
 
@@ -480,11 +480,7 @@ void RootFrameViewport::ClearScrollableArea() {
   VisualViewport().ClearScrollableArea();
 }
 
-ScrollbarTheme& RootFrameViewport::GetPageScrollbarTheme() const {
-  return LayoutViewport().GetPageScrollbarTheme();
-}
-
-void RootFrameViewport::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RootFrameViewport) {
   visitor->Trace(visual_viewport_);
   visitor->Trace(layout_viewport_);
   ScrollableArea::Trace(visitor);

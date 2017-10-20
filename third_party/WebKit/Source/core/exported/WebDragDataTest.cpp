@@ -41,6 +41,7 @@ TEST(WebDragDataTest, items) {
     FileMetadata metadata;
     metadata.length = 1234;
     KURL url(
+        ParsedURLStringTag(),
         "filesystem:http://example.com/isolated/hash/visible-non-native-file");
     data_object->Add(
         File::CreateForFileSystemFile(url, metadata, File::kIsUserVisible));
@@ -50,9 +51,9 @@ TEST(WebDragDataTest, items) {
   {
     FileMetadata metadata;
     metadata.length = 1234;
-    KURL url(
-        "filesystem:http://example.com/isolated/hash/"
-        "not-visible-non-native-file");
+    KURL url(ParsedURLStringTag(),
+             "filesystem:http://example.com/isolated/hash/"
+             "not-visible-non-native-file");
     data_object->Add(
         File::CreateForFileSystemFile(url, metadata, File::kIsNotUserVisible));
   }

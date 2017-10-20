@@ -49,7 +49,7 @@ class SVGAnimatedPreserveAspectRatio
     return new SVGAnimatedPreserveAspectRatio(context_element, attribute_name);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     SVGAnimatedProperty<SVGPreserveAspectRatio>::TraceWrappers(visitor);
     ScriptWrappable::TraceWrappers(visitor);
   }

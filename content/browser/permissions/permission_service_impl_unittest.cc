@@ -59,8 +59,7 @@ class TestPermissionManager : public MockPermissionManager {
 
 class PermissionServiceImplTest : public RenderViewHostTestHarness {
  public:
-  PermissionServiceImplTest()
-      : origin_(url::Origin::Create(GURL("https://www.google.com"))) {}
+  PermissionServiceImplTest() : origin_(GURL("https://www.google.com")) {}
 
   void SetUp() override {
     RenderViewHostTestHarness::SetUp();
@@ -188,4 +187,4 @@ TEST_F(PermissionServiceImplTest, RequestPermissionsWithFeaturePolicy) {
   EXPECT_EQ(PermissionStatus::GRANTED, result[1]);
 }
 
-}  // namespace content
+}  // namespace

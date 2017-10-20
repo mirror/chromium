@@ -173,7 +173,7 @@ void WorkerInspectorProxy::WriteTimelineStartedEvent(
                            tracing_session_id, InspectorId(), worker_thread_));
 }
 
-void WorkerInspectorProxy::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerInspectorProxy) {
   visitor->Trace(execution_context_);
 }
 

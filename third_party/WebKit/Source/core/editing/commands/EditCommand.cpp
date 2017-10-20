@@ -70,7 +70,7 @@ bool EditCommand::IsRenderedCharacter(const Position& position) {
   // Use NG offset mapping when LayoutNG is enabled.
   if (const NGOffsetMappingResult* mapping =
           GetNGOffsetMappingFor(node, offset_in_node)) {
-    return mapping->IsBeforeNonCollapsedCharacter(node, offset_in_node);
+    return mapping->IsNonCollapsedCharacter(node, offset_in_node);
   }
 
   // TODO(editing-dev): This doesn't handle first-letter correctly. Fix it.
@@ -102,7 +102,7 @@ void SimpleEditCommand::DoReapply() {
   DoApply(&editing_state);
 }
 
-void EditCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EditCommand) {
   visitor->Trace(document_);
   visitor->Trace(parent_);
 }

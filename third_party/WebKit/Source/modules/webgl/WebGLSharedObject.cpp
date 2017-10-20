@@ -51,13 +51,12 @@ gpu::gles2::GLES2Interface* WebGLSharedObject::GetAGLInterface() const {
   return context_group_->GetAGLInterface();
 }
 
-void WebGLSharedObject::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLSharedObject) {
   visitor->Trace(context_group_);
   WebGLObject::Trace(visitor);
 }
 
-void WebGLSharedObject::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WebGLSharedObject) {
   visitor->TraceWrappers(context_group_);
   WebGLObject::TraceWrappers(visitor);
 }

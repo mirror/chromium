@@ -193,7 +193,7 @@ InspectorDOMDebuggerAgent::InspectorDOMDebuggerAgent(
 
 InspectorDOMDebuggerAgent::~InspectorDOMDebuggerAgent() {}
 
-void InspectorDOMDebuggerAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InspectorDOMDebuggerAgent) {
   visitor->Trace(dom_agent_);
   visitor->Trace(dom_breakpoints_);
   InspectorBaseAgent::Trace(visitor);
@@ -656,7 +656,7 @@ InspectorDOMDebuggerAgent::PreparePauseOnNativeEventData(
 
 void InspectorDOMDebuggerAgent::DidFireWebGLError(const String& error_name) {
   std::unique_ptr<protocol::DictionaryValue> event_data =
-      PreparePauseOnNativeEventData(kWebglErrorFiredEventName, nullptr);
+      PreparePauseOnNativeEventData(kWebglErrorFiredEventName, 0);
   if (!event_data)
     return;
   if (!error_name.IsEmpty())
@@ -666,8 +666,7 @@ void InspectorDOMDebuggerAgent::DidFireWebGLError(const String& error_name) {
 
 void InspectorDOMDebuggerAgent::DidFireWebGLWarning() {
   PauseOnNativeEventIfNeeded(
-      PreparePauseOnNativeEventData(kWebglWarningFiredEventName, nullptr),
-      false);
+      PreparePauseOnNativeEventData(kWebglWarningFiredEventName, 0), false);
 }
 
 void InspectorDOMDebuggerAgent::DidFireWebGLErrorOrWarning(
@@ -685,7 +684,7 @@ void InspectorDOMDebuggerAgent::CancelNativeBreakpoint() {
 void InspectorDOMDebuggerAgent::ScriptExecutionBlockedByCSP(
     const String& directive_text) {
   std::unique_ptr<protocol::DictionaryValue> event_data =
-      PreparePauseOnNativeEventData(kScriptBlockedByCSPEventName, nullptr);
+      PreparePauseOnNativeEventData(kScriptBlockedByCSPEventName, 0);
   if (!event_data)
     return;
   event_data->setString("directiveText", directive_text);
@@ -770,8 +769,7 @@ void InspectorDOMDebuggerAgent::WillSendXMLHttpOrFetchNetworkRequest(
 
 void InspectorDOMDebuggerAgent::DidCreateCanvasContext() {
   PauseOnNativeEventIfNeeded(
-      PreparePauseOnNativeEventData(kCanvasContextCreatedEventName, nullptr),
-      true);
+      PreparePauseOnNativeEventData(kCanvasContextCreatedEventName, 0), true);
 }
 
 void InspectorDOMDebuggerAgent::DidAddBreakpoint() {

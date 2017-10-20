@@ -202,7 +202,8 @@ TEST_F(SecurityOriginTest, IsSecure) {
   };
 
   for (auto test : inputs)
-    EXPECT_EQ(test.is_secure, SecurityOrigin::IsSecure(KURL(test.url)))
+    EXPECT_EQ(test.is_secure,
+              SecurityOrigin::IsSecure(KURL(kParsedURLString, test.url)))
         << "URL: '" << test.url << "'";
 
   EXPECT_FALSE(SecurityOrigin::IsSecure(NullURL()));
@@ -214,7 +215,7 @@ TEST_F(SecurityOriginTest, IsSecureViaTrustworthy) {
                         "http://[::1]/"};
 
   for (const char* test : urls) {
-    KURL url(test);
+    KURL url(kParsedURLString, test);
     EXPECT_FALSE(SecurityOrigin::IsSecure(url));
     SecurityPolicy::AddOriginTrustworthyWhiteList(*SecurityOrigin::Create(url));
     EXPECT_TRUE(SecurityOrigin::IsSecure(url));
@@ -374,7 +375,7 @@ TEST_F(SecurityOriginTest, CanRequest) {
   for (size_t i = 0; i < WTF_ARRAY_LENGTH(tests); ++i) {
     RefPtr<SecurityOrigin> origin =
         SecurityOrigin::CreateFromString(tests[i].origin);
-    blink::KURL url(tests[i].url);
+    blink::KURL url(blink::kParsedURLString, tests[i].url);
     EXPECT_EQ(tests[i].can_request, origin->CanRequest(url));
     EXPECT_EQ(tests[i].can_request_no_suborigin,
               origin->CanRequestNoSuborigin(url));

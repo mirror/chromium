@@ -45,7 +45,7 @@ Prerender::Prerender(PrerenderClient* client,
 
 Prerender::~Prerender() {}
 
-void Prerender::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Prerender) {
   visitor->Trace(client_);
 }
 

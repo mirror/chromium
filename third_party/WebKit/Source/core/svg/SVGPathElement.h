@@ -49,7 +49,7 @@ class SVGPathElement final : public SVGGeometryElement {
 
   FloatRect GetBBox() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit SVGPathElement(Document&);

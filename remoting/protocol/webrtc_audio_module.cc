@@ -50,6 +50,10 @@ int32_t WebrtcAudioModule::ActiveAudioLayer(AudioLayer* audio_layer) const {
   return -1;
 }
 
+WebrtcAudioModule::ErrorCode WebrtcAudioModule::LastError() const {
+  return kAdmErrNone;
+}
+
 int32_t WebrtcAudioModule::RegisterAudioCallback(
     webrtc::AudioTransport* audio_transport) {
   base::AutoLock lock(lock_);
@@ -324,6 +328,11 @@ int32_t WebrtcAudioModule::RecordingChannel(ChannelType* channel) const {
 int32_t WebrtcAudioModule::PlayoutDelay(uint16_t* delay_ms) const {
   *delay_ms = 0;
   return 0;
+}
+
+int32_t WebrtcAudioModule::RecordingDelay(uint16_t* delay_ms) const {
+  NOTREACHED();
+  return -1;
 }
 
 int32_t WebrtcAudioModule::SetRecordingSampleRate(

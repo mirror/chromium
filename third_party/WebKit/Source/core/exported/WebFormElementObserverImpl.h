@@ -30,7 +30,7 @@ class CORE_EXPORT WebFormElementObserverImpl final
   // WebFormElementObserver implementation.
   void Disconnect() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   class ObserverCallback;

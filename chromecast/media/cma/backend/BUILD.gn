@@ -12,7 +12,7 @@ declare_args() {
   # ALSA version equal or later than 1.0.29 support this function.
   use_alsa_monotonic_raw_tstamps = use_alsa && !is_cast_desktop_build
 
-  system_owns_volume =
+  alsa_owns_volume =
       use_alsa && !enable_assistant && chromecast_branding != "google"
 }
 
@@ -60,13 +60,35 @@ source_set("cast_media_android_dummy") {
 cast_shared_library("libcast_media_1.0") {
   if (is_cast_desktop_build) {
     deps = [
-      "//chromecast/media/cma/backend/desktop",
+      ":default",
     ]
   } else {
     deps = [
       ":dummy",
     ]
   }
+}
+
+# Default implementation of media backend used on desktop.
+source_set("default") {
+  sources = [
+    "audio_decoder_default.cc",
+    "audio_decoder_default.h",
+    "cast_media_default.cc",
+    "media_pipeline_backend_default.cc",
+    "media_pipeline_backend_default.h",
+    "media_sink_default.cc",
+    "media_sink_default.h",
+    "video_decoder_default.cc",
+    "video_decoder_default.h",
+  ]
+
+  deps = [
+    "//base",
+    "//chromecast/base",
+    "//chromecast/public/media",
+    "//media",
+  ]
 }
 
 # Dummy implementation of media backend used on chromecast devices.
@@ -86,7 +108,7 @@ buildflag_header("audio_features") {
 
   flags = [
     "ALSA_MONOTONIC_RAW_TSTAMPS=$use_alsa_monotonic_raw_tstamps",
-    "SYSTEM_OWNS_VOLUME=$system_owns_volume",
+    "ALSA_OWNS_VOLUME=$alsa_owns_volume",
   ]
 }
 
@@ -114,10 +136,8 @@ source_set("audio") {
     "stream_mixer_input.h",
     "stream_mixer_input_impl.cc",
     "stream_mixer_input_impl.h",
-    "system_volume_control.h",
     "video_decoder_null.cc",
     "video_decoder_null.h",
-    "volume_control.cc",
     "volume_map.cc",
     "volume_map.h",
   ]
@@ -135,7 +155,7 @@ source_set("audio") {
   ]
 }
 
-test("cast_audio_backend_unittests") {
+source_set("unit_tests") {
   testonly = true
   sources = [
     "filter_group_unittest.cc",
@@ -165,6 +185,12 @@ test("cast_audio_backend_unittests") {
   if (is_fuchsia) {
     deps += [ "fuchsia:unit_tests" ]
   }
+}
+
+test("cast_audio_backend_unittests") {
+  deps = [
+    ":unit_tests",
+  ]
 }
 
 # This is separate from ":governor" because the associated unittest needs

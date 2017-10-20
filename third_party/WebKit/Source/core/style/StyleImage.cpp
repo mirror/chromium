@@ -16,9 +16,8 @@ StyleImage::~StyleImage() {
     InstanceCounters::DecrementCounter(InstanceCounters::kUACSSResourceCounter);
 }
 
-LayoutSize StyleImage::ApplyZoom(const LayoutSize& size,
-                                 float multiplier) const {
-  if (multiplier == 1.0f || ImageHasRelativeSize())
+LayoutSize StyleImage::ApplyZoom(const LayoutSize& size, float multiplier) {
+  if (multiplier == 1.0f)
     return size;
 
   LayoutUnit width(size.Width() * multiplier);

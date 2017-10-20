@@ -205,7 +205,7 @@ void MHTMLArchive::GenerateMHTMLPart(const String& boundary,
     string_builder.Append("\r\n");
   }
 
-  const char* content_encoding = nullptr;
+  const char* content_encoding = 0;
   if (encoding_policy == kUseBinaryEncoding)
     content_encoding = kBinary;
   else if (MIMETypeRegistry::IsSupportedJavaScriptMIMEType(
@@ -290,7 +290,7 @@ ArchiveResource* MHTMLArchive::SubresourceForURL(const KURL& url) const {
   return subresources_.at(url.GetString());
 }
 
-void MHTMLArchive::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MHTMLArchive) {
   visitor->Trace(main_resource_);
   visitor->Trace(subresources_);
 }

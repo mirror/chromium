@@ -67,7 +67,7 @@ SVGFilterPrimitiveStandardAttributes::SVGFilterPrimitiveStandardAttributes(
   AddToPropertyMap(result_);
 }
 
-void SVGFilterPrimitiveStandardAttributes::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFilterPrimitiveStandardAttributes) {
   visitor->Trace(x_);
   visitor->Trace(y_);
   visitor->Trace(width_);

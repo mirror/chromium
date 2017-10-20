@@ -6,6 +6,7 @@
 
 #include <Carbon/Carbon.h>  // kVK_Return
 
+#include "base/mac/foundation_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/strings/string16.h"
@@ -41,12 +42,8 @@ NSString* const kSaveTouchBarId = @"SAVE";
 class SavePendingPasswordViewControllerTest
     : public ManagePasswordsControllerTest {
  public:
-  void SetUpSavePendingState(
-      base::StringPiece username,
-      base::StringPiece password,
-      const std::vector<base::StringPiece>& other_passwords) {
-    ManagePasswordsControllerTest::SetUpSavePendingState(username, password,
-                                                         other_passwords);
+  void SetUpSavePendingState(bool empty_username) {
+    ManagePasswordsControllerTest::SetUpSavePendingState(empty_username);
     controller_.reset([[SavePendingPasswordViewController alloc]
         initWithDelegate:delegate()]);
     [controller_ view];
@@ -70,9 +67,12 @@ TEST_F(SavePendingPasswordViewControllerTest,
        ShouldSavePasswordAndDismissWhenSaveClicked) {
   profile()->GetPrefs()->SetBoolean(
       password_manager::prefs::kWasSignInPasswordPromoClicked, true);
-  SetUpSavePendingState("admin", "12345", {});
-  EXPECT_CALL(*ui_controller(), SavePassword(base::ASCIIToUTF16("admin"),
-                                             base::ASCIIToUTF16("12345")));
+  SetUpSavePendingState(false);
+  EXPECT_CALL(
+      *ui_controller(),
+      SavePassword(
+          GetModelAndCreateIfNull()->pending_password().username_value,
+          GetModelAndCreateIfNull()->pending_password().password_value));
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [controller().saveButton performClick:nil];
 
@@ -84,9 +84,11 @@ TEST_F(SavePendingPasswordViewControllerTest,
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnableUsernameCorrection);
-  SetUpSavePendingState("admin", "12345", {});
+  SetUpSavePendingState(false);
   EXPECT_TRUE(controller().usernameField.editable);
-  EXPECT_NSEQ(@"admin", [controller().usernameField stringValue]);
+  EXPECT_NSEQ(base::SysUTF16ToNSString(
+                  [delegate() model]->pending_password().username_value),
+              [controller().usernameField stringValue]);
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
@@ -94,9 +96,11 @@ TEST_F(SavePendingPasswordViewControllerTest,
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndDisableFeature(
       password_manager::features::kEnableUsernameCorrection);
-  SetUpSavePendingState("admin", "12345", {});
+  SetUpSavePendingState(false);
   EXPECT_FALSE(controller().usernameField.editable);
-  EXPECT_NSEQ(@"admin", [controller().usernameField stringValue]);
+  EXPECT_NSEQ(base::SysUTF16ToNSString(
+                  [delegate() model]->pending_password().username_value),
+              [controller().usernameField stringValue]);
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
@@ -106,14 +110,15 @@ TEST_F(SavePendingPasswordViewControllerTest,
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnableUsernameCorrection);
-  SetUpSavePendingState("admin", "12345", {});
+  SetUpSavePendingState(false);
 
   [controller().usernameField setStringValue:@"editedusername"];
   EXPECT_NSEQ(@"editedusername", [controller().usernameField stringValue]);
 
-  EXPECT_CALL(*ui_controller(),
-              SavePassword(base::SysNSStringToUTF16(@"editedusername"),
-                           base::ASCIIToUTF16("12345")));
+  EXPECT_CALL(
+      *ui_controller(),
+      SavePassword(base::SysNSStringToUTF16(@"editedusername"),
+                   [delegate() model]->pending_password().password_value));
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [controller().saveButton performClick:nil];
 
@@ -124,17 +129,37 @@ TEST_F(SavePendingPasswordViewControllerTest, SelectAnotherPassword) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnablePasswordSelection);
-  SetUpSavePendingState("username", "12345", {"111", "222"});
+  SetUpSavePendingState(false);
 
-  NSPopUpButton* passwordSelection = controller().passwordSelectionField;
-  ASSERT_TRUE(passwordSelection);
+  NSComboBox* passwordSelection =
+      base::mac::ObjCCastStrict<NSComboBox>(controller().passwordField);
+  EXPECT_FALSE(passwordSelection.editable);
   [passwordSelection selectItemAtIndex:1];
   base::string16 expected(3, gfx::RenderText::kPasswordReplacementChar);
   EXPECT_NSEQ(base::SysUTF16ToNSString(expected),
-              [passwordSelection titleOfSelectedItem]);
+              [passwordSelection stringValue]);
 
   EXPECT_CALL(*ui_controller(), SavePassword(base::ASCIIToUTF16("username"),
                                              base::ASCIIToUTF16("111")));
+  EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
+  [controller().saveButton performClick:nil];
+}
+
+TEST_F(SavePendingPasswordViewControllerTest, ViewAndEditPassword) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(
+      password_manager::features::kEnablePasswordSelection);
+  SetUpSavePendingState(false);
+
+  NSComboBox* passwordSelection =
+      base::mac::ObjCCastStrict<NSComboBox>(controller().passwordField);
+  [controller().eyeButton performClick:nil];
+  EXPECT_TRUE(passwordSelection.editable);
+  [passwordSelection setStringValue:@"password123"];
+
+  EXPECT_CALL(*ui_controller(),
+              SavePassword(base::ASCIIToUTF16("username"),
+                           base::ASCIIToUTF16("password123")));
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [controller().saveButton performClick:nil];
 }
@@ -143,12 +168,14 @@ TEST_F(SavePendingPasswordViewControllerTest, ViewAndSelectPassword) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnablePasswordSelection);
-  SetUpSavePendingState("username", "12345", {"111", "222"});
+  SetUpSavePendingState(false);
 
-  NSPopUpButton* passwordSelection = controller().passwordSelectionField;
+  NSComboBox* passwordSelection =
+      base::mac::ObjCCastStrict<NSComboBox>(controller().passwordField);
   [controller().eyeButton performClick:nil];
+  EXPECT_TRUE(passwordSelection.editable);
   [passwordSelection selectItemAtIndex:1];
-  EXPECT_NSEQ(@"111", [passwordSelection titleOfSelectedItem]);
+  EXPECT_NSEQ(@"111", [passwordSelection stringValue]);
 
   EXPECT_CALL(*ui_controller(), SavePassword(base::ASCIIToUTF16("username"),
                                              base::ASCIIToUTF16("111")));
@@ -156,29 +183,30 @@ TEST_F(SavePendingPasswordViewControllerTest, ViewAndSelectPassword) {
   [controller().saveButton performClick:nil];
 }
 
-TEST_F(SavePendingPasswordViewControllerTest, ViewSelectAndMaskPassword) {
+TEST_F(SavePendingPasswordViewControllerTest, ViewEditAndMaskPassword) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnablePasswordSelection);
-  SetUpSavePendingState("username", "12345", {"111", "222"});
+  SetUpSavePendingState(false);
 
-  NSPopUpButton* passwordSelection = controller().passwordSelectionField;
+  NSComboBox* passwordSelection =
+      base::mac::ObjCCastStrict<NSComboBox>(controller().passwordField);
   [controller().eyeButton performClick:nil];
-  [passwordSelection selectItemAtIndex:2];
+  EXPECT_TRUE(passwordSelection.editable);
+  [passwordSelection setStringValue:@"password123"];
   [controller().eyeButton performClick:nil];
-  base::string16 expected(3, gfx::RenderText::kPasswordReplacementChar);
-  EXPECT_NSEQ(base::SysUTF16ToNSString(expected),
-              [passwordSelection titleOfSelectedItem]);
+  EXPECT_FALSE(passwordSelection.editable);
 
-  EXPECT_CALL(*ui_controller(), SavePassword(base::ASCIIToUTF16("username"),
-                                             base::ASCIIToUTF16("222")));
+  EXPECT_CALL(*ui_controller(),
+              SavePassword(base::ASCIIToUTF16("username"),
+                           base::ASCIIToUTF16("password123")));
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [controller().saveButton performClick:nil];
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
        ShouldNeverAndDismissWhenNeverClicked) {
-  SetUpSavePendingState("username", "12345", {});
+  SetUpSavePendingState(false);
   EXPECT_CALL(*ui_controller(), SavePassword(_, _)).Times(0);
   EXPECT_CALL(*ui_controller(), NeverSavePassword());
   [controller().neverButton performClick:nil];
@@ -187,7 +215,7 @@ TEST_F(SavePendingPasswordViewControllerTest,
 }
 
 TEST_F(SavePendingPasswordViewControllerTest, ShouldDismissWhenCrossClicked) {
-  SetUpSavePendingState("username", "12345", {});
+  SetUpSavePendingState(false);
   EXPECT_CALL(*ui_controller(), SavePassword(_, _)).Times(0);
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [controller().closeButton performClick:nil];
@@ -197,14 +225,14 @@ TEST_F(SavePendingPasswordViewControllerTest, ShouldDismissWhenCrossClicked) {
 
 TEST_F(SavePendingPasswordViewControllerTest,
        ShouldShowUsernameRowWhenUsernameEmpty) {
-  SetUpSavePendingState("", "12345", {});
+  SetUpSavePendingState(true);
   EXPECT_TRUE(controller().usernameField);
 }
 
 TEST_F(SavePendingPasswordViewControllerTest, CloseBubbleAndHandleClick) {
   // A user may press mouse down, some navigation closes the bubble, mouse up
   // still sends the action.
-  SetUpSavePendingState("username", "12345", {});
+  SetUpSavePendingState(false);
   EXPECT_CALL(*ui_controller(), SavePassword(_, _)).Times(0);
   EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
   [delegate() setModel:nil];
@@ -214,7 +242,7 @@ TEST_F(SavePendingPasswordViewControllerTest, CloseBubbleAndHandleClick) {
 
 // Verifies the touch bar items.
 TEST_F(SavePendingPasswordViewControllerTest, TouchBar) {
-  SetUpSavePendingState("username", "12345", {});
+  SetUpSavePendingState(false);
   if (@available(macOS 10.12.2, *)) {
     base::test::ScopedFeatureList feature_list;
     feature_list.InitAndEnableFeature(features::kDialogTouchBar);

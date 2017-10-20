@@ -53,7 +53,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   ~LocalFrameClientImpl() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   WebLocalFrameImpl* GetWebFrame() const override;
 

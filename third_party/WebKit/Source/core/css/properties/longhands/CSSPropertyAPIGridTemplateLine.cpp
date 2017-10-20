@@ -6,7 +6,6 @@
 
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/properties/CSSPropertyGridUtils.h"
-#include "core/layout/LayoutObject.h"
 
 namespace blink {
 
@@ -16,12 +15,6 @@ const CSSValue* CSSPropertyAPIGridTemplateLine::ParseSingleValue(
     const CSSParserLocalContext&) const {
   return CSSPropertyGridUtils::ConsumeGridTemplatesRowsOrColumns(
       range, context.Mode());
-}
-
-bool CSSPropertyAPIGridTemplateLine::IsLayoutDependent(
-    const ComputedStyle* style,
-    LayoutObject* layout_object) const {
-  return layout_object && layout_object->IsLayoutGrid();
 }
 
 }  // namespace blink

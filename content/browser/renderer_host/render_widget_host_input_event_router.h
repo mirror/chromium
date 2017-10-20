@@ -18,7 +18,7 @@
 #include "components/viz/service/surfaces/surface_hittest_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_view_base_observer.h"
 #include "content/common/content_export.h"
-#include "ui/gfx/geometry/vector2d_conversions.h"
+#include "ui/gfx/geometry/vector2d.h"
 
 struct FrameHostMsg_HittestData_Params;
 
@@ -31,7 +31,6 @@ class WebTouchEvent;
 
 namespace gfx {
 class Point;
-class PointF;
 }
 
 namespace ui {
@@ -134,10 +133,6 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   RenderWidgetHostViewBase* FindEventTarget(RenderWidgetHostViewBase* root_view,
                                             const gfx::Point& point,
                                             gfx::Point* transformed_point);
-
-  RenderWidgetHostViewBase* FindEventTarget(RenderWidgetHostViewBase* root_view,
-                                            const gfx::PointF& point,
-                                            gfx::PointF* transformed_point);
 
   void RouteTouchscreenGestureEvent(RenderWidgetHostViewBase* root_view,
                                     blink::WebGestureEvent* event,

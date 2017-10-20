@@ -48,7 +48,6 @@ class DevToolsFileHelper {
     virtual ~Delegate() {}
     virtual void FileSystemAdded(const FileSystem& file_system) = 0;
     virtual void FileSystemRemoved(const std::string& file_system_path) = 0;
-    virtual void FailedToAddFileSystem() = 0;
     virtual void FilePathsChanged(
         const std::vector<std::string>& changed_paths,
         const std::vector<std::string>& added_paths,
@@ -134,7 +133,6 @@ class DevToolsFileHelper {
   void AddUserConfirmedFileSystem(
       const base::FilePath& path,
       bool allowed);
-  void FailedToAddFileSystem();
   void FileSystemPathsSettingChanged();
   void FilePathsChanged(const std::vector<std::string>& changed_paths,
                         const std::vector<std::string>& added_paths,

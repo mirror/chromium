@@ -175,7 +175,7 @@ void TextTrackLoader::GetNewCues(
     cue_parser_->GetNewCues(output_cues);
 }
 
-void TextTrackLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TextTrackLoader) {
   visitor->Trace(client_);
   visitor->Trace(cue_parser_);
   visitor->Trace(document_);

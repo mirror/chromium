@@ -91,12 +91,11 @@ class CORE_EXPORT WorkletGlobalScope
   // When script evaluation is done or any exception happens, it's notified to
   // the given WorkletPendingTasks via |outside_settings_task_runner| (i.e., the
   // parent frame's task runner).
-  void FetchAndInvokeScript(
-      const KURL& module_url_record,
-      WorkletModuleResponsesMap*,
-      WebURLRequest::FetchCredentialsMode,
-      scoped_refptr<WebTaskRunner> outside_settings_task_runner,
-      WorkletPendingTasks*);
+  void FetchAndInvokeScript(const KURL& module_url_record,
+                            WorkletModuleResponsesMap*,
+                            WebURLRequest::FetchCredentialsMode,
+                            RefPtr<WebTaskRunner> outside_settings_task_runner,
+                            WorkletPendingTasks*);
 
   WorkletModuleResponsesMapProxy* ModuleResponsesMapProxy() const;
   void SetModuleResponsesMapProxyForTesting(WorkletModuleResponsesMapProxy*);
@@ -107,8 +106,8 @@ class CORE_EXPORT WorkletGlobalScope
     return document_security_origin_.get();
   }
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   // Partial implementation of the "set up a worklet environment settings
@@ -119,7 +118,7 @@ class CORE_EXPORT WorkletGlobalScope
   // from the parent Document.
   WorkletGlobalScope(const KURL&,
                      const String& user_agent,
-                     scoped_refptr<SecurityOrigin> document_security_origin,
+                     RefPtr<SecurityOrigin> document_security_origin,
                      v8::Isolate*,
                      WorkerClients*,
                      WorkerReportingProxy&);
@@ -132,7 +131,7 @@ class CORE_EXPORT WorkletGlobalScope
   const String user_agent_;
 
   // Used for module fetch.
-  const scoped_refptr<SecurityOrigin> document_security_origin_;
+  const RefPtr<SecurityOrigin> document_security_origin_;
 
   Member<WorkletModuleResponsesMapProxy> module_responses_map_proxy_;
   // LocalDOMWindow::modulator_ workaround equivalent.

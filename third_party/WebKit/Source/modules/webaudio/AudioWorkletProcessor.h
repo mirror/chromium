@@ -48,8 +48,8 @@ class MODULES_EXPORT AudioWorkletProcessor
 
   const String& Name() const { return name_; }
 
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   AudioWorkletProcessor(AudioWorkletGlobalScope*, const String& name);

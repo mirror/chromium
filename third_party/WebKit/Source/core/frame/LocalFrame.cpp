@@ -215,7 +215,7 @@ LocalFrame::~LocalFrame() {
   DCHECK(!view_);
 }
 
-void LocalFrame::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LocalFrame) {
   visitor->Trace(probe_sink_);
   visitor->Trace(performance_monitor_);
   visitor->Trace(idleness_detector_);
@@ -1089,7 +1089,7 @@ void LocalFrame::MaybeAllowImagePlaceholder(FetchParameters& params) const {
 
 std::unique_ptr<WebURLLoader> LocalFrame::CreateURLLoader(
     const ResourceRequest& request,
-    scoped_refptr<WebTaskRunner> task_runner) {
+    RefPtr<WebTaskRunner> task_runner) {
   return Client()->CreateURLLoader(request, std::move(task_runner));
 }
 
@@ -1120,9 +1120,8 @@ void LocalFrame::SetViewportIntersectionFromParent(
   }
 }
 
-void LocalFrame::ForceSynchronousDocumentInstall(
-    const AtomicString& mime_type,
-    scoped_refptr<SharedBuffer> data) {
+void LocalFrame::ForceSynchronousDocumentInstall(const AtomicString& mime_type,
+                                                 RefPtr<SharedBuffer> data) {
   CHECK(loader_.StateMachine()->IsDisplayingInitialEmptyDocument());
   DCHECK(!Client()->IsLocalFrameClientImpl());
 

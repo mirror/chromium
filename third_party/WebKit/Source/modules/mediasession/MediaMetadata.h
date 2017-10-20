@@ -52,7 +52,7 @@ class MODULES_EXPORT MediaMetadata final
   // Called by MediaSession to associate or de-associate itself.
   void SetSession(MediaSession*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   MediaMetadata(ScriptState*, const MediaMetadataInit&, ExceptionState&);

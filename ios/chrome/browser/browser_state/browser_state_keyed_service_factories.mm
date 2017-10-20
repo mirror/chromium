@@ -24,8 +24,6 @@
 #include "ios/chrome/browser/history/top_sites_factory.h"
 #include "ios/chrome/browser/history/web_history_service_factory.h"
 #include "ios/chrome/browser/invalidation/ios_chrome_profile_invalidation_provider_factory.h"
-#include "ios/chrome/browser/language/language_model_factory.h"
-#include "ios/chrome/browser/language/url_language_histogram_factory.h"
 #include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
 #include "ios/chrome/browser/passwords/ios_chrome_password_store_factory.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
@@ -49,7 +47,6 @@
 #include "ios/chrome/browser/sync/ios_user_event_service_factory.h"
 #include "ios/chrome/browser/sync/sync_setup_service_factory.h"
 #include "ios/chrome/browser/translate/translate_accept_languages_factory.h"
-#include "ios/chrome/browser/translate/translate_ranker_factory.h"
 #include "ios/chrome/browser/ui/browser_list/browser_list_factory.h"
 #include "ios/chrome/browser/ui/browser_list/browser_list_session_service_factory.h"
 #include "ios/chrome/browser/undo/bookmark_undo_service_factory.h"
@@ -94,7 +91,6 @@ void EnsureBrowserStateKeyedServiceFactoriesBuilt() {
   ios::TopSitesFactory::GetInstance();
   ios::WebDataServiceFactory::GetInstance();
   ios::WebHistoryServiceFactory::GetInstance();
-  translate::TranslateRankerFactory::GetInstance();
   AuthenticationServiceFactory::GetInstance();
   BrowserListFactory::GetInstance();
   BrowserListSessionServiceFactory::GetInstance();
@@ -110,7 +106,6 @@ void EnsureBrowserStateKeyedServiceFactoriesBuilt() {
   IOSChromeProfileSyncServiceFactory::GetInstance();
   IOSUserEventServiceFactory::GetInstance();
   GoogleLogoServiceFactory::GetInstance();
-  LanguageModelFactory::GetInstance();
   OAuth2TokenServiceFactory::GetInstance();
   OverlayServiceFactory::GetInstance();
   ReadingListModelFactory::GetInstance();
@@ -120,5 +115,4 @@ void EnsureBrowserStateKeyedServiceFactoriesBuilt() {
   SyncSetupServiceFactory::GetInstance();
   TabRestoreServiceDelegateImplIOSFactory::GetInstance();
   TranslateAcceptLanguagesFactory::GetInstance();
-  UrlLanguageHistogramFactory::GetInstance();
 }

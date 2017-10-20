@@ -62,10 +62,11 @@ DisplayChangeObserver::GetInternalManagedDisplayModeList(
     const ManagedDisplayInfo& display_info,
     const DisplaySnapshot& output) {
   const DisplayMode* ui_native_mode = output.native_mode();
-  ManagedDisplayMode native_mode(ui_native_mode->size(),
-                                 ui_native_mode->refresh_rate(),
-                                 ui_native_mode->is_interlaced(), true, 1.0,
-                                 display_info.device_scale_factor());
+  scoped_refptr<ManagedDisplayMode> native_mode = new ManagedDisplayMode(
+      ui_native_mode->size(), ui_native_mode->refresh_rate(),
+      ui_native_mode->is_interlaced(), true, 1.0,
+      display_info.device_scale_factor());
+
   return CreateInternalManagedDisplayModeList(native_mode);
 }
 
@@ -73,18 +74,19 @@ DisplayChangeObserver::GetInternalManagedDisplayModeList(
 ManagedDisplayInfo::ManagedDisplayModeList
 DisplayChangeObserver::GetExternalManagedDisplayModeList(
     const DisplaySnapshot& output) {
-  using DisplayModeMap = std::map<std::pair<int, int>, ManagedDisplayMode>;
+  using DisplayModeMap =
+      std::map<std::pair<int, int>, scoped_refptr<ManagedDisplayMode>>;
   DisplayModeMap display_mode_map;
 
-  ManagedDisplayMode native_mode;
+  scoped_refptr<ManagedDisplayMode> native_mode = new ManagedDisplayMode();
   for (const auto& mode_info : output.modes()) {
     const std::pair<int, int> size(mode_info->size().width(),
                                    mode_info->size().height());
-    ManagedDisplayMode display_mode(
+    scoped_refptr<ManagedDisplayMode> display_mode = new ManagedDisplayMode(
         mode_info->size(), mode_info->refresh_rate(),
         mode_info->is_interlaced(), output.native_mode() == mode_info.get(),
         1.0, 1.0);
-    if (display_mode.native())
+    if (display_mode->native())
       native_mode = display_mode;
 
     // Add the display mode if it isn't already present and override interlaced
@@ -92,8 +94,8 @@ DisplayChangeObserver::GetExternalManagedDisplayModeList(
     auto display_mode_it = display_mode_map.find(size);
     if (display_mode_it == display_mode_map.end())
       display_mode_map.insert(std::make_pair(size, display_mode));
-    else if (display_mode_it->second.is_interlaced() &&
-             !display_mode.is_interlaced())
+    else if (display_mode_it->second->is_interlaced() &&
+             !display_mode->is_interlaced())
       display_mode_it->second = std::move(display_mode);
   }
 
@@ -102,23 +104,23 @@ DisplayChangeObserver::GetExternalManagedDisplayModeList(
     display_mode_list.push_back(std::move(display_mode_pair.second));
 
   if (output.native_mode()) {
-    const std::pair<int, int> size(native_mode.size().width(),
-                                   native_mode.size().height());
+    const std::pair<int, int> size(native_mode->size().width(),
+                                   native_mode->size().height());
     auto it = display_mode_map.find(size);
     DCHECK(it != display_mode_map.end())
         << "Native mode must be part of the mode list.";
 
     // If the native mode was replaced re-add it.
-    if (!it->second.native())
+    if (!it->second->native())
       display_mode_list.push_back(native_mode);
   }
 
-  if (native_mode.size().width() >= kMinimumWidthFor4K) {
+  if (native_mode->size().width() >= kMinimumWidthFor4K) {
     for (size_t i = 0; i < arraysize(kAdditionalDeviceScaleFactorsFor4k); ++i) {
-      ManagedDisplayMode mode(native_mode.size(), native_mode.refresh_rate(),
-                              native_mode.is_interlaced(), false /* native */,
-                              native_mode.ui_scale(),
-                              kAdditionalDeviceScaleFactorsFor4k[i]);
+      scoped_refptr<ManagedDisplayMode> mode = new ManagedDisplayMode(
+          native_mode->size(), native_mode->refresh_rate(),
+          native_mode->is_interlaced(), false /* native */,
+          native_mode->ui_scale(), kAdditionalDeviceScaleFactorsFor4k[i]);
       display_mode_list.push_back(mode);
     }
   }
@@ -160,10 +162,11 @@ MultipleDisplayState DisplayChangeObserver::GetStateForDisplayIds(
 
 bool DisplayChangeObserver::GetResolutionForDisplayId(int64_t display_id,
                                                       gfx::Size* size) const {
-  ManagedDisplayMode mode;
-  if (!display_manager_->GetSelectedModeForDisplayId(display_id, &mode))
+  scoped_refptr<ManagedDisplayMode> mode =
+      display_manager_->GetSelectedModeForDisplayId(display_id);
+  if (!mode)
     return false;
-  *size = mode.size();
+  *size = mode->size();
   return true;
 }
 
@@ -222,15 +225,7 @@ void DisplayChangeObserver::UpdateInternalDisplay(
         DCHECK_EQ(Display::InternalDisplayId(), state->display_id());
       Display::SetInternalDisplayId(state->display_id());
 
-      if (state->native_mode() &&
-          (!display_manager_->IsDisplayIdValid(state->display_id()) ||
-           !state->current_mode())) {
-        // Register the internal display info if
-        // 1) If it's not already registered. It'll be treated as
-        // new display in |UpdateDisplaysWith()|.
-        // 2) If it's not connected, because the display info will not
-        // be updated in |UpdateDisplaysWith()|, which will skips the
-        // disconnected displays.
+      if (state->native_mode()) {
         ManagedDisplayInfo new_info =
             CreateManagedDisplayInfo(state, state->native_mode());
         display_manager_->UpdateInternalDisplay(new_info);
@@ -253,10 +248,10 @@ ManagedDisplayInfo DisplayChangeObserver::CreateManagedDisplayInfo(
     if (dpi)
       device_scale_factor = FindDeviceScaleFactor(dpi);
   } else {
-    ManagedDisplayMode mode;
-    if (display_manager_->GetSelectedModeForDisplayId(state->display_id(),
-                                                      &mode)) {
-      device_scale_factor = mode.device_scale_factor();
+    scoped_refptr<ManagedDisplayMode> mode =
+        display_manager_->GetSelectedModeForDisplayId(state->display_id());
+    if (mode) {
+      device_scale_factor = mode->device_scale_factor();
     } else {
       // For monitors that are 40 inches and 4K or above, set
       // |device_scale_factor| to 2x. For margin purposes, 100 is subtracted

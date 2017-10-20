@@ -55,8 +55,18 @@ bool NotifierId::operator<(const NotifierId& other) const {
 Notifier::Notifier(const NotifierId& notifier_id,
                    const base::string16& name,
                    bool enabled)
-    : notifier_id(notifier_id), name(name), enabled(enabled) {}
+    : notifier_id(notifier_id),
+      name(name),
+      enabled(enabled) {
+}
 
-Notifier::~Notifier() {}
+Notifier::~Notifier() {
+}
+
+NotifierGroup::NotifierGroup(const base::string16& name,
+                             const base::string16& login_info)
+    : name(name), login_info(login_info) {}
+
+NotifierGroup::~NotifierGroup() {}
 
 }  // namespace message_center

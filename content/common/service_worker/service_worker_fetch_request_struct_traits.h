@@ -114,7 +114,7 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
     return request.blob_size;
   }
 
-  static blink::mojom::BlobPtr blob(
+  static storage::mojom::BlobPtr blob(
       const content::ServiceWorkerFetchRequest& request) {
     if (!request.blob)
       return nullptr;

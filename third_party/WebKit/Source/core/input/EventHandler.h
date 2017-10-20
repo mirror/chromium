@@ -82,7 +82,7 @@ class CORE_EXPORT EventHandler final
 
  public:
   explicit EventHandler(LocalFrame&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void Clear();
 

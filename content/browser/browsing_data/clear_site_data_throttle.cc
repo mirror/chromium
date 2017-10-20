@@ -354,7 +354,7 @@ bool ClearSiteDataThrottle::HandleHeader() {
     return false;
   }
 
-  url::Origin origin = url::Origin::Create(GetCurrentURL());
+  url::Origin origin(GetCurrentURL());
   if (origin.unique()) {
     delegate_->AddMessage(GetCurrentURL(), "Not supported for unique origins.",
                           CONSOLE_MESSAGE_LEVEL_ERROR);

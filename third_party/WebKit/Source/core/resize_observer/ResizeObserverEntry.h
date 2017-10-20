@@ -24,7 +24,7 @@ class ResizeObserverEntry final : public GarbageCollected<ResizeObserverEntry>,
   Element* target() const { return target_; }
   DOMRectReadOnly* contentRect() const { return content_rect_; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   Member<Element> target_;

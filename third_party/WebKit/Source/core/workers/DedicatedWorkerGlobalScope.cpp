@@ -58,7 +58,7 @@ const AtomicString& DedicatedWorkerGlobalScope::InterfaceName() const {
 
 void DedicatedWorkerGlobalScope::postMessage(
     ScriptState* script_state,
-    scoped_refptr<SerializedScriptValue> message,
+    RefPtr<SerializedScriptValue> message,
     const MessagePortArray& ports,
     ExceptionState& exception_state) {
   // Disentangle the port in preparation for sending it to the remote context.
@@ -75,7 +75,7 @@ DedicatedWorkerObjectProxy& DedicatedWorkerGlobalScope::WorkerObjectProxy()
   return static_cast<DedicatedWorkerThread*>(GetThread())->WorkerObjectProxy();
 }
 
-void DedicatedWorkerGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DedicatedWorkerGlobalScope) {
   WorkerGlobalScope::Trace(visitor);
 }
 

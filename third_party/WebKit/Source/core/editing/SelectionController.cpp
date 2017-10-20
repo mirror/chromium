@@ -69,7 +69,7 @@ SelectionController::SelectionController(LocalFrame& frame)
       mouse_down_allows_multi_click_(false),
       selection_state_(SelectionState::kHaveNotStartedSelection) {}
 
-void SelectionController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SelectionController) {
   visitor->Trace(frame_);
   visitor->Trace(original_base_in_flat_tree_);
   DocumentShutdownObserver::Trace(visitor);
@@ -600,10 +600,10 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
     if (str.IsEmpty() || str.SimplifyWhiteSpace().ContainsOnlyWhitespace())
       return false;
 
-    Element* const editable = new_selection.RootEditableElement();
-    if (editable && pos.DeepEquivalent() ==
-                        VisiblePositionInFlatTree::LastPositionInNode(*editable)
-                            .DeepEquivalent())
+    if (new_selection.RootEditableElement() &&
+        pos.DeepEquivalent() == VisiblePositionInFlatTree::LastPositionInNode(
+                                    *new_selection.RootEditableElement())
+                                    .DeepEquivalent())
       return false;
 
     visibility = HandleVisibility::kVisible;

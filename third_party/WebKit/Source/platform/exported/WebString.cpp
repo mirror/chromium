@@ -71,11 +71,11 @@ bool WebString::Is8Bit() const {
 }
 
 const WebLChar* WebString::Data8() const {
-  return !private_.IsNull() && Is8Bit() ? private_->Characters8() : nullptr;
+  return !private_.IsNull() && Is8Bit() ? private_->Characters8() : 0;
 }
 
 const WebUChar* WebString::Data16() const {
-  return !private_.IsNull() && !Is8Bit() ? private_->Characters16() : nullptr;
+  return !private_.IsNull() && !Is8Bit() ? private_->Characters16() : 0;
 }
 
 std::string WebString::Utf8(UTF8ConversionMode mode) const {

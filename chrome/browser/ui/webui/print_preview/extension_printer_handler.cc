@@ -19,7 +19,6 @@
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/printing/pwg_raster_converter.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "components/cloud_devices/common/cloud_device_description.h"
 #include "components/cloud_devices/common/printer_description.h"
 #include "device/base/device_client.h"
@@ -212,7 +211,7 @@ void ExtensionPrinterHandler::StartPrint(
 
   cloud_devices::CloudDeviceDescription ticket;
   if (!ticket.InitFromString(ticket_json)) {
-    WrapPrintCallback(callback, base::Value(kInvalidTicketPrintError));
+    WrapPrintCallback(callback, false, kInvalidTicketPrintError);
     return;
   }
 
@@ -278,7 +277,7 @@ void ExtensionPrinterHandler::DispatchPrintJob(
     const PrintCallback& callback,
     std::unique_ptr<extensions::PrinterProviderPrintJob> print_job) {
   if (print_job->document_path.empty() && !print_job->document_bytes) {
-    WrapPrintCallback(callback, base::Value(kInvalidDataPrintError));
+    WrapPrintCallback(callback, false, kInvalidDataPrintError);
     return;
   }
 
@@ -309,17 +308,15 @@ void ExtensionPrinterHandler::WrapGetCapabilityCallback(
     const base::DictionaryValue& capability) {
   std::unique_ptr<base::DictionaryValue> capabilities =
       std::make_unique<base::DictionaryValue>();
-  std::unique_ptr<base::DictionaryValue> cdd =
-      printing::ValidateCddForPrintPreview(capability);
-  // TODO (thestig): Remove call to Clone().
-  if (!cdd->empty())  // empty capability -> empty return dictionary
-    capabilities->SetPath({printing::kSettingCapabilities}, cdd->Clone());
+  if (!capability.empty())  // empty capability -> empty return dictionary
+    capabilities->SetPath({printing::kSettingCapabilities}, capability.Clone());
   callback.Run(std::move(capabilities));
 }
 
 void ExtensionPrinterHandler::WrapPrintCallback(const PrintCallback& callback,
-                                                const base::Value& status) {
-  callback.Run(status);
+                                                bool success,
+                                                const std::string& status) {
+  callback.Run(success, base::Value(status));
 }
 
 void ExtensionPrinterHandler::WrapGetPrinterInfoCallback(

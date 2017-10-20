@@ -80,10 +80,10 @@ class CORE_EXPORT StyleResolverState {
     return element_context_;
   }
 
-  void SetStyle(scoped_refptr<ComputedStyle>);
+  void SetStyle(RefPtr<ComputedStyle>);
   const ComputedStyle* Style() const { return style_.get(); }
   ComputedStyle* Style() { return style_.get(); }
-  scoped_refptr<ComputedStyle> TakeStyle();
+  RefPtr<ComputedStyle> TakeStyle();
 
   ComputedStyle& MutableStyleRef() const { return *style_; }
   const ComputedStyle& StyleRef() const { return MutableStyleRef(); }
@@ -128,10 +128,10 @@ class CORE_EXPORT StyleResolverState {
     return animation_pending_custom_properties_;
   }
 
-  void SetParentStyle(scoped_refptr<const ComputedStyle>);
+  void SetParentStyle(RefPtr<const ComputedStyle>);
   const ComputedStyle* ParentStyle() const { return parent_style_.get(); }
 
-  void SetLayoutParentStyle(scoped_refptr<const ComputedStyle>);
+  void SetLayoutParentStyle(RefPtr<const ComputedStyle>);
   const ComputedStyle* LayoutParentStyle() const {
     return layout_parent_style_.get();
   }
@@ -203,17 +203,17 @@ class CORE_EXPORT StyleResolverState {
   Member<Document> document_;
 
   // style_ is the primary output for each element's style resolve.
-  scoped_refptr<ComputedStyle> style_;
+  RefPtr<ComputedStyle> style_;
 
   CSSToLengthConversionData css_to_length_conversion_data_;
 
   // parent_style_ is not always just ElementResolveContext::ParentStyle(),
   // so we keep it separate.
-  scoped_refptr<const ComputedStyle> parent_style_;
+  RefPtr<const ComputedStyle> parent_style_;
   // This will almost-always be the same that parent_style_, except in the
   // presence of display: contents. This is the style against which we have to
   // do adjustment.
-  scoped_refptr<const ComputedStyle> layout_parent_style_;
+  RefPtr<const ComputedStyle> layout_parent_style_;
 
   CSSAnimationUpdate animation_update_;
   bool is_animation_interpolation_map_ready_;

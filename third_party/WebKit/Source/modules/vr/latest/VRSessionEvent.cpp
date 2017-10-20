@@ -24,7 +24,7 @@ const AtomicString& VRSessionEvent::InterfaceName() const {
   return EventNames::VRSessionEvent;
 }
 
-void VRSessionEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(VRSessionEvent) {
   visitor->Trace(session_);
   Event::Trace(visitor);
 }

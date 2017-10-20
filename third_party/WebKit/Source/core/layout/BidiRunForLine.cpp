@@ -144,7 +144,7 @@ void ConstructBidiRunsForLine(InlineBidiResolver& top_resolver,
     TextDirection direction;
     if (unicode_bidi == UnicodeBidi::kPlaintext) {
       direction = DeterminePlaintextDirectionality(
-          isolated_inline, is_new_uba_paragraph ? start_obj : nullptr);
+          isolated_inline, is_new_uba_paragraph ? start_obj : 0);
     } else {
       DCHECK(unicode_bidi == UnicodeBidi::kIsolate ||
              unicode_bidi == UnicodeBidi::kIsolateOverride);

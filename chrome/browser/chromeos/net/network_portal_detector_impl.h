@@ -29,10 +29,6 @@
 
 class NetworkingConfigTest;
 
-namespace base {
-class Value;
-}
-
 namespace net {
 class URLRequestContextGetter;
 }
@@ -219,9 +215,6 @@ class NetworkPortalDetectorImpl : public NetworkPortalDetector,
 
   // Connection state of the default network.
   std::string default_connection_state_;
-
-  // Proxy configuration of the default network.
-  std::unique_ptr<base::Value> default_proxy_config_;
 
   State state_ = STATE_IDLE;
   CaptivePortalStateMap portal_state_map_;

@@ -100,7 +100,7 @@ void SVGFilterGraphNodeMap::InvalidateDependentEffects(FilterEffect* effect) {
     InvalidateDependentEffects(effect_reference);
 }
 
-void SVGFilterGraphNodeMap::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFilterGraphNodeMap) {
   visitor->Trace(effect_renderer_);
   visitor->Trace(effect_references_);
 }

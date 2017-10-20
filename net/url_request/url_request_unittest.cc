@@ -2980,7 +2980,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
     req->set_site_for_cookies(test_server.GetURL(kHost, "/"));
-    req->set_initiator(url::Origin::Create(test_server.GetURL(kHost, "/")));
+    req->set_initiator(url::Origin(test_server.GetURL(kHost, "/")));
     req->Start();
     base::RunLoop().Run();
 
@@ -3016,7 +3016,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
     req->set_site_for_cookies(test_server.GetURL(kSubHost, "/"));
-    req->set_initiator(url::Origin::Create(test_server.GetURL(kSubHost, "/")));
+    req->set_initiator(url::Origin(test_server.GetURL(kSubHost, "/")));
     req->Start();
     base::RunLoop().Run();
 
@@ -3034,8 +3034,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
     req->set_site_for_cookies(test_server.GetURL(kCrossHost, "/"));
-    req->set_initiator(
-        url::Origin::Create(test_server.GetURL(kCrossHost, "/")));
+    req->set_initiator(url::Origin(test_server.GetURL(kCrossHost, "/")));
     req->Start();
     base::RunLoop().Run();
 
@@ -3054,8 +3053,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
     req->set_site_for_cookies(test_server.GetURL(kHost, "/"));
-    req->set_initiator(
-        url::Origin::Create(test_server.GetURL(kCrossHost, "/")));
+    req->set_initiator(url::Origin(test_server.GetURL(kCrossHost, "/")));
     req->set_method("GET");
     req->Start();
     base::RunLoop().Run();
@@ -3075,8 +3073,7 @@ TEST_F(URLRequestTest, SameSiteCookies) {
         test_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
     req->set_site_for_cookies(test_server.GetURL(kHost, "/"));
-    req->set_initiator(
-        url::Origin::Create(test_server.GetURL(kCrossHost, "/")));
+    req->set_initiator(url::Origin(test_server.GetURL(kCrossHost, "/")));
     req->set_method("POST");
     req->Start();
     base::RunLoop().Run();
@@ -3340,7 +3337,7 @@ TEST_F(URLRequestTest, CookieAgeMetrics) {
         http_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
     req->set_site_for_cookies(http_server.GetURL(kHost, "/"));
-    req->set_initiator(url::Origin::Create(http_server.GetURL(kHost, "/")));
+    req->set_initiator(url::Origin(http_server.GetURL(kHost, "/")));
     req->Start();
     base::RunLoop().Run();
     histograms.ExpectTotalCount("Cookie.AgeForNonSecureCrossSiteRequest", 0);
@@ -3354,8 +3351,7 @@ TEST_F(URLRequestTest, CookieAgeMetrics) {
         http_server.GetURL(kHost, "/echoheader?Cookie"), DEFAULT_PRIORITY, &d,
         TRAFFIC_ANNOTATION_FOR_TESTS));
     req->set_site_for_cookies(http_server.GetURL(kCrossHost, "/"));
-    req->set_initiator(
-        url::Origin::Create(http_server.GetURL(kCrossHost, "/")));
+    req->set_initiator(url::Origin(http_server.GetURL(kCrossHost, "/")));
     req->Start();
     base::RunLoop().Run();
     histograms.ExpectTotalCount("Cookie.AgeForNonSecureCrossSiteRequest", 1);
@@ -7260,7 +7256,7 @@ TEST_F(URLRequestTestHTTP, ProcessNelHeaderHttps) {
   base::RunLoop().Run();
 
   ASSERT_EQ(1u, nel_delegate.headers().size());
-  EXPECT_EQ(url::Origin::Create(request_url), nel_delegate.headers()[0].origin);
+  EXPECT_EQ(url::Origin(request_url), nel_delegate.headers()[0].origin);
   EXPECT_EQ("foo", nel_delegate.headers()[0].value);
 }
 
@@ -10440,8 +10436,6 @@ static CertStatus ExpectedCertStatusForFailedOnlineRevocationCheck() {
 #if defined(OS_WIN) || defined(OS_MACOSX)
   // Windows can return CERT_STATUS_UNABLE_TO_CHECK_REVOCATION but we don't
   // have that ability on other platforms.
-  // TODO(eroman): Should this also be the return value for
-  //               CertVerifyProcBuiltin?
   return CERT_STATUS_UNABLE_TO_CHECK_REVOCATION;
 #else
   return 0;
@@ -10456,8 +10450,8 @@ static CertStatus ExpectedCertStatusForFailedOnlineRevocationCheck() {
 // If it does not, then tests which rely on 'hard fail' behaviour should be
 // skipped.
 static bool SystemSupportsHardFailRevocationChecking() {
-#if defined(OS_WIN) || defined(USE_NSS_CERTS) || \
-    defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_WIN) || defined(USE_NSS_CERTS)
+  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   return true;
 #else
   return false;
@@ -10490,9 +10484,9 @@ static CertStatus ExpectedCertStatusForFailedOnlineEVRevocationCheck() {
 }
 
 static bool SystemSupportsOCSP() {
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
   // TODO(jnd): http://crbug.com/117478 - EV verification is not yet supported.
-  // TODO(crbug.com/776575): OCSP tests currently fail on Fuchsia.
+  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   return false;
 #else
   return true;
@@ -10500,8 +10494,8 @@ static bool SystemSupportsOCSP() {
 }
 
 static bool SystemSupportsOCSPStapling() {
-#if defined(USE_NSS_CERTS) || defined(OS_WIN) || \
-    defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(USE_NSS_CERTS) || defined(OS_WIN)
+  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   return true;
 #else
   return false;
@@ -10561,17 +10555,8 @@ TEST_F(HTTPSOCSPTest, Invalid) {
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
 
-#if defined(USE_BUILTIN_CERT_VERIFIER)
-  // TODO(649017): This test uses soft-fail revocation checking, but returns an
-  // invalid OCSP response (can't parse). CertVerifyProcBuiltin currently
-  // doesn't consider this a candidate for soft-fail (only considers
-  // network-level failures as skippable).
-  EXPECT_EQ(CERT_STATUS_UNABLE_TO_CHECK_REVOCATION,
-            cert_status & CERT_STATUS_UNABLE_TO_CHECK_REVOCATION);
-#else
   EXPECT_EQ(ExpectedCertStatusForFailedOnlineRevocationCheck(),
             cert_status & CERT_STATUS_ALL_ERRORS);
-#endif
 
   // Without a positive OCSP response, we shouldn't show the EV status.
   EXPECT_FALSE(cert_status & CERT_STATUS_IS_EV);
@@ -11231,17 +11216,10 @@ TEST_F(HTTPSHardFailTest, FailsOnOCSPInvalid) {
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
 
-#if defined(USE_BUILTIN_CERT_VERIFIER)
-  // TODO(crbug.com/649017): Should we consider invalid response as
-  //                         affirmatively revoked?
-  EXPECT_EQ(CERT_STATUS_UNABLE_TO_CHECK_REVOCATION,
-            cert_status & CERT_STATUS_UNABLE_TO_CHECK_REVOCATION);
-#else
-  EXPECT_EQ(CERT_STATUS_REVOKED, cert_status & CERT_STATUS_REVOKED);
-#endif
+  EXPECT_EQ(CERT_STATUS_REVOKED,
+            cert_status & CERT_STATUS_REVOKED);
 
   // Without a positive OCSP response, we shouldn't show the EV status.
-  EXPECT_FALSE(cert_status & CERT_STATUS_IS_EV);
   EXPECT_TRUE(cert_status & CERT_STATUS_REV_CHECKING_ENABLED);
 }
 

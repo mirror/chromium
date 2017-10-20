@@ -91,7 +91,7 @@ class MODULES_EXPORT DynamicsCompressorNode final : public AudioNode {
   static DynamicsCompressorNode* Create(BaseAudioContext*,
                                         const DynamicsCompressorOptions&,
                                         ExceptionState&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   AudioParam* threshold() const;
   AudioParam* knee() const;

@@ -63,7 +63,7 @@ DedicatedWorker::~DedicatedWorker() {
 }
 
 void DedicatedWorker::postMessage(ScriptState* script_state,
-                                  scoped_refptr<SerializedScriptValue> message,
+                                  RefPtr<SerializedScriptValue> message,
                                   const MessagePortArray& ports,
                                   ExceptionState& exception_state) {
   DCHECK(IsMainThread());
@@ -158,7 +158,7 @@ const AtomicString& DedicatedWorker::InterfaceName() const {
   return EventTargetNames::Worker;
 }
 
-void DedicatedWorker::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DedicatedWorker) {
   visitor->Trace(context_proxy_);
   AbstractWorker::Trace(visitor);
 }

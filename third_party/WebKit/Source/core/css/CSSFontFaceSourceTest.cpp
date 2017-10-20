@@ -15,7 +15,7 @@ namespace blink {
 
 class DummyFontFaceSource : public CSSFontFaceSource {
  public:
-  scoped_refptr<SimpleFontData> CreateFontData(
+  RefPtr<SimpleFontData> CreateFontData(
       const FontDescription&,
       const FontSelectionCapabilities&) override {
     return SimpleFontData::Create(
@@ -24,7 +24,7 @@ class DummyFontFaceSource : public CSSFontFaceSource {
 
   DummyFontFaceSource() {}
 
-  scoped_refptr<SimpleFontData> GetFontDataForSize(float size) {
+  RefPtr<SimpleFontData> GetFontDataForSize(float size) {
     FontDescription font_description;
     font_description.SetSizeAdjust(size);
     font_description.SetAdjustedSize(size);

@@ -37,7 +37,8 @@ RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
       histograms_(font->Url().ProtocolIsData()
                       ? FontLoadHistograms::kFromDataURL
                       : font->IsLoaded() ? FontLoadHistograms::kFromMemoryCache
-                                         : FontLoadHistograms::kFromUnknown),
+                                         : FontLoadHistograms::kFromUnknown,
+                  display_),
       is_intervention_triggered_(false) {
   DCHECK(face_);
   if (ShouldTriggerWebFontsIntervention()) {
@@ -76,7 +77,10 @@ void RemoteFontFaceSource::NotifyFinished(Resource* unused_resource) {
   histograms_.MaySetDataSource(font_->GetResponse().WasCached()
                                    ? FontLoadHistograms::kFromDiskCache
                                    : FontLoadHistograms::kFromNetwork);
-  histograms_.RecordRemoteFont(font_.Get());
+  histograms_.RecordRemoteFont(font_.Get(), is_intervention_triggered_);
+  histograms_.FontLoaded(!font_->IsSameOriginOrCORSSuccessful(),
+                         font_->GetStatus() == ResourceStatus::kLoadError,
+                         is_intervention_triggered_);
 
   custom_font_data_ = font_->GetCustomFontData();
 
@@ -127,7 +131,7 @@ void RemoteFontFaceSource::FontLoadLongLimitExceeded(FontResource*) {
   else if (display_ == kFontDisplayFallback)
     SwitchToFailurePeriod();
 
-  histograms_.LongLimitExceeded();
+  histograms_.LongLimitExceeded(is_intervention_triggered_);
 }
 
 void RemoteFontFaceSource::SwitchToSwapPeriod() {
@@ -173,7 +177,7 @@ bool RemoteFontFaceSource::IsLowPriorityLoadingAllowedForRemoteFont() const {
   return is_intervention_triggered_;
 }
 
-scoped_refptr<SimpleFontData> RemoteFontFaceSource::CreateFontData(
+RefPtr<SimpleFontData> RemoteFontFaceSource::CreateFontData(
     const FontDescription& font_description,
     const FontSelectionCapabilities& font_selection_capabilities) {
   if (period_ == kFailurePeriod || !IsValid())
@@ -195,8 +199,7 @@ scoped_refptr<SimpleFontData> RemoteFontFaceSource::CreateFontData(
       CustomFontData::Create());
 }
 
-scoped_refptr<SimpleFontData>
-RemoteFontFaceSource::CreateLoadingFallbackFontData(
+RefPtr<SimpleFontData> RemoteFontFaceSource::CreateLoadingFallbackFontData(
     const FontDescription& font_description) {
   // This temporary font is not retained and should not be returned.
   FontCachePurgePreventer font_cache_purge_preventer;
@@ -207,7 +210,7 @@ RemoteFontFaceSource::CreateLoadingFallbackFontData(
     NOTREACHED();
     return nullptr;
   }
-  scoped_refptr<CSSCustomFontData> css_font_data = CSSCustomFontData::Create(
+  RefPtr<CSSCustomFontData> css_font_data = CSSCustomFontData::Create(
       this, period_ == kBlockPeriod ? CSSCustomFontData::kInvisibleFallback
                                     : CSSCustomFontData::kVisibleFallback);
   return SimpleFontData::Create(temporary_font->PlatformData(), css_font_data);
@@ -248,7 +251,7 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
   face_->DidBeginLoad();
 }
 
-void RemoteFontFaceSource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemoteFontFaceSource) {
   visitor->Trace(face_);
   visitor->Trace(font_);
   visitor->Trace(font_selector_);
@@ -267,9 +270,22 @@ void RemoteFontFaceSource::FontLoadHistograms::FallbackFontPainted(
     blank_paint_time_ = CurrentTimeMS();
 }
 
-void RemoteFontFaceSource::FontLoadHistograms::LongLimitExceeded() {
+void RemoteFontFaceSource::FontLoadHistograms::FontLoaded(
+    bool is_cors_failed,
+    bool load_error,
+    bool is_intervention_triggered) {
+  if (!is_long_limit_exceeded_ && font_display_ == kFontDisplayAuto &&
+      !is_cors_failed && !load_error) {
+    RecordInterventionResult(is_intervention_triggered);
+  }
+}
+
+void RemoteFontFaceSource::FontLoadHistograms::LongLimitExceeded(
+    bool is_intervention_triggered) {
   is_long_limit_exceeded_ = true;
   MaySetDataSource(kFromNetwork);
+  if (font_display_ == kFontDisplayAuto)
+    RecordInterventionResult(is_intervention_triggered);
 }
 
 void RemoteFontFaceSource::FontLoadHistograms::RecordFallbackTime() {
@@ -283,7 +299,8 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordFallbackTime() {
 }
 
 void RemoteFontFaceSource::FontLoadHistograms::RecordRemoteFont(
-    const FontResource* font) {
+    const FontResource* font,
+    bool is_intervention_triggered) {
   DEFINE_STATIC_LOCAL(EnumerationHistogram, cache_hit_histogram,
                       ("WebFont.CacheHit", kCacheHitEnumMax));
   cache_hit_histogram.Count(DataSourceMetricsValue());
@@ -291,7 +308,7 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordRemoteFont(
   if (data_source_ == kFromDiskCache || data_source_ == kFromNetwork) {
     DCHECK_NE(load_start_time_, 0);
     int duration = static_cast<int>(CurrentTimeMS() - load_start_time_);
-    RecordLoadTimeHistogram(font, duration);
+    RecordLoadTimeHistogram(font, duration, is_intervention_triggered);
 
     enum { kCORSFail, kCORSSuccess, kCORSEnumMax };
     int cors_value =
@@ -317,7 +334,8 @@ void RemoteFontFaceSource::FontLoadHistograms::MaySetDataSource(
 
 void RemoteFontFaceSource::FontLoadHistograms::RecordLoadTimeHistogram(
     const FontResource* font,
-    int duration) {
+    int duration,
+    bool is_intervention_triggered) {
   CHECK_NE(kFromUnknown, data_source_);
 
   if (font->ErrorOccurred()) {
@@ -350,9 +368,31 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordLoadTimeHistogram(
     DEFINE_STATIC_LOCAL(
         CustomCountHistogram, missed_cache_under50k_histogram,
         ("WebFont.MissedCache.DownloadTime.1.10KBTo50KB", 0, 10000, 50));
+    // Breakdowns metrics to understand WebFonts intervention.
+    // Now we only cover this 10KBto50KB range because 70% of requests are
+    // covered in this range, and having metrics for all size cases cost.
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram,
+        missed_cache_and_intervention_triggered_under50k_histogram,
+        ("WebFont.MissedCacheAndInterventionTriggered."
+         "DownloadTime.1.10KBTo50KB",
+         0, 10000, 50));
+    DEFINE_STATIC_LOCAL(
+        CustomCountHistogram,
+        missed_cache_and_intervention_not_triggered_under50k_histogram,
+        ("WebFont.MissedCacheAndInterventionNotTriggered."
+         "DownloadTime.1.10KBTo50KB",
+         0, 10000, 50));
     under50k_histogram.Count(duration);
-    if (data_source_ == kFromNetwork)
+    if (data_source_ == kFromNetwork) {
       missed_cache_under50k_histogram.Count(duration);
+      if (is_intervention_triggered)
+        missed_cache_and_intervention_triggered_under50k_histogram.Count(
+            duration);
+      else
+        missed_cache_and_intervention_not_triggered_under50k_histogram.Count(
+            duration);
+    }
     return;
   }
   if (size < 100 * 1024) {
@@ -385,6 +425,27 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordLoadTimeHistogram(
   over1mb_histogram.Count(duration);
   if (data_source_ == kFromNetwork)
     missed_cache_over1mb_histogram.Count(duration);
+}
+
+void RemoteFontFaceSource::FontLoadHistograms::RecordInterventionResult(
+    bool is_triggered) {
+  CHECK_NE(kFromUnknown, data_source_);
+
+  // interventionResult takes 0-3 values.
+  int intervention_result = 0;
+  if (is_long_limit_exceeded_)
+    intervention_result |= 1 << 0;
+  if (is_triggered)
+    intervention_result |= 1 << 1;
+  const int kBoundary = 1 << 2;
+
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, intervention_histogram,
+                      ("WebFont.InterventionResult", kBoundary));
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, missed_cache_intervention_histogram,
+                      ("WebFont.InterventionResult.MissedCache", kBoundary));
+  intervention_histogram.Count(intervention_result);
+  if (data_source_ == kFromNetwork)
+    missed_cache_intervention_histogram.Count(intervention_result);
 }
 
 RemoteFontFaceSource::FontLoadHistograms::CacheHitMetrics

@@ -226,7 +226,6 @@ test("vr_common_unittests") {
     "test/ui_scene_manager_test.h",
     "ui_input_manager_unittest.cc",
     "ui_pixeltest.cc",
-    "ui_renderer_unittest.cc",
     "ui_scene_manager_unittest.cc",
     "ui_scene_unittest.cc",
     "vr_gl_util_unittest.cc",
@@ -266,14 +265,6 @@ test("vr_common_perftests") {
   if (is_android) {
     deps += [ "//ui/android:ui_java" ]
   }
-
-  # Needed for isolate script to execute
-  data = [
-    "//testing/scripts/common.py",
-    "//testing/xvfb.py",
-    "//testing/scripts/run_gtest_perf_test.py",
-    "//tools/perf/generate_legacy_perf_dashboard_json.py",
-  ]
 }
 
 source_set("vr_test_support") {

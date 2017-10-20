@@ -6,7 +6,7 @@ package org.chromium.content.browser.test.util;
 
 import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
-import org.junit.Assert;
+import junit.framework.Assert;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnEvaluateJavaScriptResultHelper;

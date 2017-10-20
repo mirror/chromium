@@ -108,7 +108,7 @@ void RTCRtpReceiver::SetContributingSourcesNeedsUpdating() {
   contributing_sources_needs_updating_ = true;
 }
 
-void RTCRtpReceiver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCRtpReceiver) {
   visitor->Trace(track_);
   visitor->Trace(streams_);
   visitor->Trace(contributing_sources_by_source_id_);

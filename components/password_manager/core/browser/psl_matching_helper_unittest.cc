@@ -177,8 +177,7 @@ TEST(PSLMatchingUtilsTest, GetMatchResultFederated) {
   for (const TestData& data : cases) {
     autofill::PasswordForm form;
     form.origin = GURL(data.form_origin);
-    form.federation_origin =
-        url::Origin::Create(GURL(data.form_federation_origin));
+    form.federation_origin = url::Origin(GURL(data.form_federation_origin));
     form.signon_realm = "federation://" + form.origin.host() + "/" +
                         form.federation_origin.host();
 
@@ -248,8 +247,7 @@ TEST(PSLMatchingUtilsTest, GetMatchResultFederatedPSL) {
   for (const TestData& data : cases) {
     autofill::PasswordForm form;
     form.origin = GURL(data.form_origin);
-    form.federation_origin =
-        url::Origin::Create(GURL(data.form_federation_origin));
+    form.federation_origin = url::Origin(GURL(data.form_federation_origin));
     form.signon_realm = "federation://" + form.origin.host() + "/" +
                         form.federation_origin.host();
 
