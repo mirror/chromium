@@ -16,6 +16,24 @@
       "revId": "8f9c714d934fbf1f2c5d5ff18e65ef1f9c6a78a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bbd743_100f4f63",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-20T23:27:43Z",
+      "side": 0,
+      "message": "This looks good for now. Let\u0027s see how much more we want mapping for (abspos, floats, list markers?) and unify as needed.",
+      "parentUuid": "69eacb23_bcf47b77",
+      "revId": "8f9c714d934fbf1f2c5d5ff18e65ef1f9c6a78a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
