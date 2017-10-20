@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90b3b236_5d0f0e4a",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-20T18:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceae7a08_872f1980",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcb77698_decff2c2",
         "filename": "ui/gl/test/gl_test_helper.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58991ef_0c0e4c68",
+        "filename": "ui/gl/test/gl_test_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-20T18:42:17Z",
+      "side": 1,
+      "message": "I thought about that, I preferred to be more explicit and make clear from the name of the method that an error is OK. In this way it\u0027s more clear from the caller POV when an error is admitted or not (for example, when we check the memory is initialized to zero, no error should be allowed).\nIf you feel strong about it, I\u0027m happy to do what you suggested though.",
+      "parentUuid": "bcb77698_decff2c2",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 72
+      },
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "6b7d4eb6_c7be1f15",
+        "filename": "ui/gl/test/gl_test_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-20T18:42:17Z",
+      "side": 1,
+      "message": "Nice, I didn\u0027t know about that.\nDone.",
+      "parentUuid": "3b96d5c8_6d1f16e8",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 57
+      },
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91b0908b_4636d3f0",
+        "filename": "ui/gl/test/gl_test_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-20T18:42:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ec1a7c3_05fe81d9",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 19
+      },
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed83164a_4933cd5d",
         "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
         "patchSetId": 6
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4adb8667_b6786ead",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-20T18:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed83164a_4933cd5d",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 5
+      },
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09d07aa7_d3ee6bf0",
         "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
         "patchSetId": 6
@@ -131,6 +251,24 @@
       "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4979e0_71fbd654",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-20T18:42:17Z",
+      "side": 1,
+      "message": "Done.\nIt\u0027s a little bit ugly because after git cl formatting it ends up being a ternary expression on four lines.",
+      "parentUuid": "09d07aa7_d3ee6bf0",
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
