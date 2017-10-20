@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a430ce0b_0800d273",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T01:45:16Z",
+      "side": 1,
+      "message": "Since this is the only case where we set |need_composition| to true, and after calling DoComposite() below, it falls through without doing any more work, why don\u0027t we just remove |need_composition| and return after calling DoComposite() ?",
+      "revId": "b61d6c3cb4f3c31a6468f8d18a4197a44d9aeeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c34df66_ff9b1f92",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T01:45:16Z",
+      "side": 1,
+      "message": "Accidental comment? This is the end of a function, not a namespace.",
+      "revId": "b61d6c3cb4f3c31a6468f8d18a4197a44d9aeeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5555a2_74c5f30c",
+        "filename": "components/printing/browser/print_manager_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T01:45:16Z",
+      "side": 1,
+      "message": "There\u0027s only 1 other caller. Just pass in false there?",
+      "range": {
+        "startLine": 24,
+        "startChar": 51,
+        "endLine": 24,
+        "endChar": 59
+      },
+      "revId": "b61d6c3cb4f3c31a6468f8d18a4197a44d9aeeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
