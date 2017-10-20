@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70aacbf8_b7f15c47",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-20T22:54:01Z",
+      "side": 1,
+      "message": "It seems like this would be easier and less flaky by going through content::ExecuteScript variants, instead of the extension.  WDYT?",
+      "revId": "a6660b1e50c5e84643f8ce54fbf0e832658b5430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
