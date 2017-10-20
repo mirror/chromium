@@ -12,12 +12,9 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
-#include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
-#include "services/service_manager/public/cpp/connector.h"
-#include "services/service_manager/public/interfaces/connector.mojom.h"
 
 namespace base {
 template <typename Type>
@@ -28,7 +25,8 @@ struct DefaultSingletonTraits;
 // ProxyResolverFactories that track the number of live ProxyResolvers, while
 // using the proxy resolver service to create ProxyResolvers (Which are out of
 // process on desktop, but in-process on Android). Starts and shuts down the
-// proxy resolver service as needed, to minimize resource usage.
+// proxy resolver service as needed, to minimize resource usage. May only be
+// used on the UI thread.
 class ProxyResolverManager {
  public:
   static ProxyResolverManager* GetInstance();
@@ -51,9 +49,6 @@ class ProxyResolverManager {
 
   ProxyResolverManager();
   ~ProxyResolverManager();
-
-  // Initializes the ServiceManager's connector if it hasn't been already.
-  void InitServiceManagerConnector();
 
   // Returns the proxy resolver factory, creating it if needed. On desktop,
   // creates a new utility process before creating it out of process. On
@@ -80,13 +75,9 @@ class ProxyResolverManager {
   // utility process.
   proxy_resolver::mojom::ProxyResolverFactoryPtr resolver_factory_;
 
-  std::unique_ptr<service_manager::Connector> service_manager_connector_;
-
   std::set<std::unique_ptr<ResolverFactoryChannel>> channels_;
 
   base::OneShotTimer idle_timer_;
-
-  base::ThreadChecker thread_checker_;
 
   base::TimeDelta factory_idle_timeout_;
 
