@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e08cdf65_ab0c59dd",
+        "filename": "chrome/browser/devtools/devtools_embedder_message_dispatcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-20T16:34:46Z",
+      "side": 1,
+      "message": "what are the possible values for type (though in general passing a type rather than a path feels safer)?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "5c0d3a2edc1108c7825890d9609f7ee6959e7f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
