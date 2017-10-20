@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72bfe0ef_6710f815",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T10:58:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this use @DisableIf.Device(type \u003d {UiDisableIf.TABLET})? (see https://cs.chromium.org/chromium/src/testing/android/docs/instrumentation.md?type\u003dcs\u0026l\u003d145)",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "f71439894169fa8fd582ebd573918444f781712b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
