@@ -22,6 +22,30 @@
       "revId": "20db4120ef357f3e0b34faaddc0a35fec03c6157",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba27be9_0b95faf4",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T01:33:01Z",
+      "side": 1,
+      "message": "Yeah previously the legacy IPC ServiceWorkerHostMsg_UnregisterServiceWorker uses several IDs:\n  - thread_id and request_id, to identify a specific request from a specific thread(SW thread or the main thread) in the renderer process. \n  - provider_id and registration_id, to tell the browser-side impl which sw registration should be unregistered. \nNow in the Mojo world, for this interface, in the renderer process we have already bound the caller end point on appropriate threads for both SW global scope context and SW client contexts, and in the browser process we have already bound the corresponding receiver end point with an instance of content::ServiceWorkerRegistrationHandle which corresponds with the specific context (old provider_id) and a specific registration (old registration_id). So now we can eliminate these IDs but just make Mojo call directly to the target.",
+      "parentUuid": "1681eb96_71e566d6",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "20db4120ef357f3e0b34faaddc0a35fec03c6157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
