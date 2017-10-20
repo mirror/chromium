@@ -529,6 +529,24 @@
     },
     {
       "key": {
+        "uuid": "66cfc6d4_aed9d7b8",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3970,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:17:16Z",
+      "side": 1,
+      "message": "I think we want to use a new SiteInstance rather than sharing, for consistency with other view source cases and with opening links in new tabs in general (https://crbug.com/699493#c4).",
+      "parentUuid": "8e3612ce_06ce78c6",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dfa36b5_9c8b582c",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 15
