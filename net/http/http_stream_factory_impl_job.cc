@@ -926,10 +926,14 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
   // connection this request can pool to.  If so, then go straight to using
   // that.
   if (CanUseExistingSpdySession()) {
-    existing_spdy_session_ =
+    SpdySession* spdy_session =
         session_->spdy_session_pool()->push_promise_index()->Find(
             spdy_session_key_, origin_url_);
-    if (!existing_spdy_session_) {
+    if (spdy_session) {
+      // Matching pushed stream found.
+      existing_spdy_session_ = spdy_session->GetWeakPtr();
+    } else {
+      // No matching pushed stream found.
       existing_spdy_session_ =
           session_->spdy_session_pool()->FindAvailableSession(
               spdy_session_key_, enable_ip_based_pooling_, net_log_);
@@ -1198,12 +1202,16 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
   // It is possible that a pushed stream has been opened by a server since last
   // time Job checked above.
   if (!existing_spdy_session_) {
-    existing_spdy_session_ =
+    SpdySession* spdy_session =
         session_->spdy_session_pool()->push_promise_index()->Find(
             spdy_session_key_, origin_url_);
-    // It is also possible that an HTTP/2 connection has been established since
-    // last time Job checked above.
-    if (!existing_spdy_session_) {
+    if (spdy_session) {
+      // Matching pushed stream found.
+      existing_spdy_session_ = spdy_session->GetWeakPtr();
+    } else {
+      // No matching pushed stream found.
+      // It is also possible that an HTTP/2 connection has been established
+      // since last time Job checked above.
       existing_spdy_session_ =
           session_->spdy_session_pool()->FindAvailableSession(
               spdy_session_key_, enable_ip_based_pooling_, net_log_);

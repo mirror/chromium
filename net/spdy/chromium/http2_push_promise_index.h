@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "net/base/net_export.h"
 #include "net/spdy/chromium/spdy_session_key.h"
 #include "url/gurl.h"
@@ -32,20 +31,22 @@ class NET_EXPORT Http2PushPromiseIndex {
 
   // Returns a session with |key| that has an unclaimed push stream for |url| if
   // such exists.  Returns nullptr otherwise.
-  base::WeakPtr<SpdySession> Find(const SpdySessionKey& key, const GURL& url);
+  SpdySession* Find(const SpdySessionKey& key, const GURL& url);
 
-  // (Un)registers a SpdySession with an unclaimed pushed stream for |url|.
+  // Registers a SpdySession with an unclaimed pushed stream for |url|.
   void RegisterUnclaimedPushedStream(const GURL& url,
-                                     base::WeakPtr<SpdySession> spdy_session);
+                                     SpdySession* spdy_session);
+  // Unregisters a SpdySession with an unclaimed pushed stream for |url|.
+  // Such an entry must exist.
   void UnregisterUnclaimedPushedStream(const GURL& url,
                                        SpdySession* spdy_session);
 
  private:
-  typedef std::vector<base::WeakPtr<SpdySession>> WeakSessionList;
-  typedef std::map<GURL, WeakSessionList> UnclaimedPushedStreamMap;
+  using SessionList = std::vector<SpdySession*>;
+  using UnclaimedPushedStreamMap = std::map<GURL, SessionList>;
 
   // A map of all SpdySessions owned by |this| that have an unclaimed pushed
-  // streams for a GURL.  Might contain invalid WeakPtr's.
+  // streams for a GURL.
   // A single SpdySession can only have at most one pushed stream for each GURL,
   // but it is possible that multiple SpdySessions have pushed streams for the
   // same GURL.

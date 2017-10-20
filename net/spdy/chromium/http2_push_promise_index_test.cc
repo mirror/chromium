@@ -4,6 +4,7 @@
 
 #include "net/spdy/chromium/http2_push_promise_index.h"
 
+#include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/privacy_mode.h"
@@ -71,20 +72,20 @@ TEST_F(Http2PushPromiseIndexTest, FindMultipleSessionsWithDifferentUrl) {
   EXPECT_FALSE(index_.Find(key1_, url1_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1.get());
 
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
+  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url2_, spdy_session2);
+  index_.RegisterUnclaimedPushedStream(url2_, spdy_session2.get());
 
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
+  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_));
+  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_));
 
   index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
 
   EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
+  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_));
 
   index_.UnregisterUnclaimedPushedStream(url2_, spdy_session2.get());
 
@@ -127,28 +128,28 @@ TEST_F(Http2PushPromiseIndexTest, MultipleSessionsForSingleUrl) {
   EXPECT_FALSE(index_.Find(key1_, url2_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1.get());
 
   // Note that Find() only uses its SpdySessionKey argument to verify proxy and
   // privacy mode.  Cross-origin pooling is supported, therefore HostPortPair of
   // SpdySessionKey does not matter.
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
+  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_));
+  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_));
   EXPECT_FALSE(index_.Find(key1_, url2_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session2);
+  index_.RegisterUnclaimedPushedStream(url1_, spdy_session2.get());
 
   // Find returns the first SpdySession if there are multiple for the same URL.
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
+  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_));
+  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_));
   EXPECT_FALSE(index_.Find(key1_, url2_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
   index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
 
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url1_).get());
+  EXPECT_EQ(spdy_session2.get(), index_.Find(key1_, url1_));
+  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url1_));
   EXPECT_FALSE(index_.Find(key1_, url2_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
