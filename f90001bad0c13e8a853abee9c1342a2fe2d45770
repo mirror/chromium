@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "93b365e4_1fdf6ade",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "DLOG since who knows what the last error code is at this point",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 9
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8d608c_44c18270",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "DPLOG logs the last error code, which is likely meaningless when the failing function returns an HRESULT. please use DLOG and add the hresult to the message.",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d17853ea_48f53a23",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 13
@@ -48,6 +94,74 @@
     },
     {
       "key": {
+        "uuid": "a27a652b_d55c37b4",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "many of these are unused. please make an iwyu pass on all files in this CL.",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ba0684_6c65394d",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a0c3aa_50776841",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "please document the boolean parameter",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f139cdb0_5c8f9d63",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "nit: \" protected:\"",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dad9c869_c0e4fb5a",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 13
@@ -64,6 +178,110 @@
         "startChar": 8,
         "endLine": 31,
         "endChar": 70
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3596f4_0f42b83a",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "i suggest moving this initialization out of the ctor and into a SetUp() override so that you can use ASSERT_* on the various things to cause immediate test failure.",
+      "parentUuid": "dad9c869_c0e4fb5a",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b84e5cd_904b0a51",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "nit: remove this",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a1fefb_180e1800",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "i don\u0027t see a benefit for this being a class member. why not \"auto impl \u003d ...\" in the test functions?",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463a836b_1262f3f4",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f542808_c12ce4fc",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "ValuesIn -\u003e Bool()",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 75
       },
       "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

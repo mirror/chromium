@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6636b51d_7fd44a35",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "are these used in the current cl? if not, please remove until needed.",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e516c0cf_37dff62f",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "std::move(factory)",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e2721e_6915fd68",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "methods in the .cc should be defined in the same order as their declarations in the .h.",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926ab2b6_21f7dd4e",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "nit: \" \u003d default;\" rather than \"{}\"",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c90052_0f06724b",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "the dtor for this class has no body. is there a need to provide an override here?",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc7f889_1e5797f7",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "i believe ComPtr is a movable smart pointer. if this is correct, please use the same conventions as with bsae::scoped_refptr -- std::move it when ownership is being passed to avoid refbumps. specifically, std::move(factory) here, and for callers of this function.",
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8417fcd_31284f54",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T13:05:25Z",
+      "side": 1,
+      "message": "std::move(factory)",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 39
+      },
+      "revId": "0643bc577b5e44de36696e7b953ea718fd6d8ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
