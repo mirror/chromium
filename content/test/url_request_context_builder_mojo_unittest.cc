@@ -7,7 +7,7 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/scoped_task_environment.h"
-#include "content/test/test_mojo_proxy_resolver_factory.h"
+#include "content/test/test_proxy_resolver_factory.h"
 #include "net/base/host_port_pair.h"
 #include "net/proxy/proxy_config.h"
 #include "net/proxy/proxy_config_service_fixed.h"
@@ -55,7 +55,7 @@ class URLRequestContextBuilderMojoTest : public PlatformTest {
   }
 
   base::test::ScopedTaskEnvironment task_environment_;
-  TestMojoProxyResolverFactory test_mojo_proxy_resolver_factory_;
+  TestProxyResolverFactory test_proxy_resolver_factory_;
   net::EmbeddedTestServer test_server_;
   URLRequestContextBuilderMojo builder_;
 };
@@ -67,7 +67,8 @@ TEST_F(URLRequestContextBuilderMojoTest, MojoProxyResolver) {
       std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateFromCustomPacURL(
               test_server_.GetURL(kPacPath))));
-  builder_.set_mojo_proxy_resolver_factory(&test_mojo_proxy_resolver_factory_);
+  builder_.SetMojoProxyResolverFactory(
+      test_proxy_resolver_factory_.CreateFactoryInterface());
 
   std::unique_ptr<net::URLRequestContext> context(builder_.Build());
   net::TestDelegate delegate;
@@ -80,7 +81,7 @@ TEST_F(URLRequestContextBuilderMojoTest, MojoProxyResolver) {
   EXPECT_EQ("Bar", delegate.data_received());
 
   // Make sure that the Mojo factory was used.
-  EXPECT_TRUE(test_mojo_proxy_resolver_factory_.resolver_created());
+  EXPECT_TRUE(test_proxy_resolver_factory_.resolver_created());
 }
 
 // Makes sure that pending PAC requests are correctly shut down during teardown.
@@ -95,7 +96,8 @@ TEST_F(URLRequestContextBuilderMojoTest, ShutdownWithHungRequest) {
       std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateFromCustomPacURL(
               test_server_.GetURL("/hung"))));
-  builder_.set_mojo_proxy_resolver_factory(&test_mojo_proxy_resolver_factory_);
+  builder_.SetMojoProxyResolverFactory(
+      test_proxy_resolver_factory_.CreateFactoryInterface());
 
   std::unique_ptr<net::URLRequestContext> context(builder_.Build());
   net::TestDelegate delegate;
