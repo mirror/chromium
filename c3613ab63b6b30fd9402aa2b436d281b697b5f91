@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd9f7cb0_95123464",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-20T23:21:12Z",
+      "side": 1,
+      "message": "looks like this should fit in the previous line?",
+      "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0cfff56_ab574097",
         "filename": "chrome/browser/resources/md_extensions/toggle_row.js",
         "patchSetId": 10
@@ -16,6 +33,41 @@
       "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ad7264c_6e570351",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-20T23:21:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0cfff56_ab574097",
+      "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b4c6eaa_d3e0888b",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-20T23:21:12Z",
+      "side": 1,
+      "message": "Have you double-checked that settings-toggle-button still works as expected? it\u0027s currently also using double-binding.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/controls/settings_toggle_button.html?type\u003dcs\u0026q\u003d%22%3Ccr-toggle%22\u0026sq\u003dpackage:chromium\u0026l\u003d65",
+      "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
