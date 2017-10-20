@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7ff47d3_b7fb8e52",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3017,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "All of the variables in the code refer to this feature as \"tab search\" and that\u0027s how I think of it, so would you mind changing these flag names and constants to \"search\" instead of \"searches\"? Alternatively, if you\u0027re trying to match these existing flags, then how about \"tab search suggestions\"?",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097e5e63_96a826aa",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. What map is this referring to?",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fbd8b3_4eb5f8fd",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "Can we use a range-based for loop here?\n\nThe following looks like a common pattern (https://cs.chromium.org/search/?q\u003dBrowserList::GetInstance):\n\nfor (auto* browser : *BrowserList::GetInstance()) {",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce137096_b507bb71",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "Remove empty line since the new method is part of the AutocompleteProviderClient overrides.",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dfe7a6_f4cc76ff",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2091,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "Enable",
+      "range": {
+        "startLine": 2091,
+        "startChar": 5,
+        "endLine": 2091,
+        "endChar": 13
+      },
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ab48a6_9ed12b2c",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "Move above the tail suggestions declarations to preserve the alphabetical ordering here.",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83441092_6a53e78d",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this as the shared logic is pretty straightforward. If you think it\u0027s necessary, can you update the reference to TabSearchProvider?",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05576f13_48b9a634",
+        "filename": "components/metrics/proto/omnibox_event.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "This should be removed now, I think?",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4659cdc7_8fdb5439",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "This needs a comment. Also, IsTabOpen looks like the dominant style for this type of method name (e.g. IsOffTheRecord above). Or perhaps IsTabOpenWithURL to match SwitchToTabWithURL.",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094b2d6a_02aa84bb",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "I assume \"bump\" here refers to the score increase? Since that part of this logic is the biggest unknown here in terms of how we want to treat that, I think we\u0027d be better off avoiding it in the name. How about ConvertOpenTabMatches or something along those lines?",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c684b6b4_8223504d",
+        "filename": "components/omnibox/browser/shortcuts_backend.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "Please add bug references to the TODOs in this CL (e.g. TODO(crbug.com/nnnnnn)), per recent discussions on chromium-dev.",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

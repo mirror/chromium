@@ -142,6 +142,58 @@
     },
     {
       "key": {
+        "uuid": "3bc5e57a_0637459d",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "\u003e If we don\u0027t close it, the user isn\u0027t likely go looking for it when they want to open something new. They will accumulate NTPs like they collect tabs today. I\u0027m not sure why we would want that.\n\nThey might. But then closing the tab if it has history could be destructive. And only closing the tab if it doesn\u0027t have history could be confusing. I think \"Open All\" in the bookmarks UI is instructive here. I use this very often and I\u0027m always slightly annoyed that it doesn\u0027t close the new tab I opened just before invoking it. But I suspect when developing that feature they found that there was no safe/reliable/not-confusing way to close a tab that the user had just opened.\n\nIf you\u0027ve figured out a way to only close the tab if it doesn\u0027t have history (see comment below about GetText().empty()) then ok. But if there\u0027s no simple solution to that question then I think we\u0027d be better off avoiding trying to do this in this CL.\n\n\u003e Regarding focusing, if we don\u0027t do this, the focus is still in the Omnibox. This is not what happens, for example, when we navigate to a URL.\n\nYeah, I think you\u0027re right. But as a counterexample, if you switch to an open tab via mouse click, the focus and state of the current tab is preserved. Again, I think you\u0027re right but I\u0027m not 100% sure and wanted to note that for further thought.",
+      "parentUuid": "ab019cd6_3be69385",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c31f0ab_df8a4c87",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "I assume this is for debugging purposes and can be removed now?",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36df644_e537867a",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "More than just a constant, this should be an i18n\u0027d template.",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d708c417_48f9f39e",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 5
@@ -171,6 +223,24 @@
       "side": 1,
       "message": "AFAICT, the conditional isn\u0027t even necessary before my change. It\u0027s only ever called with current tab and new foreground.\n\nAnd a note to myself, mostly: If this is needed for some reason, we\u0027ll have to handle that below if the tab search fails.",
       "parentUuid": "d708c417_48f9f39e",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eb2a28_000dbc50",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "\u003e AFAICT, the conditional isn\u0027t even necessary before my change. It\u0027s only ever called with current tab and new foreground.\n\nI don\u0027t think this is true. This method is called in a lot of different circumstances. If you\u0027re interested, you can test the one I\u0027m thinking of by middle-clicking on a tab search match. I believe it will switch to the open tab but then not revert the text field state. (Unless the loss of focus does it?)\n\nBut I\u0027m now realizing that the NEW_BACKGROUND_TAB case is more complicated than I\u0027d thought about. Leaving this alone instead of mucking with it in cases we don\u0027t fully understand yet seems reasonable.",
+      "parentUuid": "2d5eb030_2c20d2af",
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +311,24 @@
       "side": 1,
       "message": "No, you can build up a huge history, then go to chrome://newtab, then tab search, and this would close it. :(\n\nI guess I was hoping for something like \u0027if history is empty\u0027.",
       "parentUuid": "d3f51072_9633466b",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a755a3b_097c3c15",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T20:20:57Z",
+      "side": 1,
+      "message": "Good point. But GetText().empty() has the same problem, doesn\u0027t it?",
+      "parentUuid": "70dfdf0a_8263a836",
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
