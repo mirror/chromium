@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "277a0ec5_60561969",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T03:34:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c0c4a6a0_e2b963a6",
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8b6c220_e8dcc031",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9105078_e6d8a94b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T03:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8b6c220_e8dcc031",
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ef9f1e05_e7c3b99e",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T03:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc941b6_a351e060",
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246f745d_7a025fbb",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 3
@@ -82,6 +136,30 @@
       "writtenOn": "2017-10-20T02:45:15Z",
       "side": 1,
       "message": "Thank you very much! Pretty clean now! I\u0027ll also apply this to impl SWRegistrationObjectHost interface and other similar cases.\nI feel the naming is a bit too common:) \u0027IsReadyAsContainerHost\u0027 or something else better one?",
+      "range": {
+        "startLine": 445,
+        "startChar": 7,
+        "endLine": 445,
+        "endChar": 24
+      },
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4270008_057cb69c",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T03:34:09Z",
+      "side": 1,
+      "message": "Renamed to CanServeContainerHostMethods(). How does that sound?",
+      "parentUuid": "246f745d_7a025fbb",
       "range": {
         "startLine": 445,
         "startChar": 7,
