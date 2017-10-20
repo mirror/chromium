@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2504db62_471a9190",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T16:35:09Z",
+      "side": 1,
+      "message": "Would it be clearer to return a struct like the following? That way it\u0027s clear Loader/Client are returned by this function and we don\u0027t need |unused_url_loaders_|. \n\nstruct URLLoaderAndClient {\n  URLLoader;\n  URLLoaderClient;\n};",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6096bc0f_eb475b94",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T16:35:09Z",
+      "side": 1,
+      "message": "Used to keep URLLoaders alive during the test, if the test code itself doesn\u0027t keep a reference to them.",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aeb859f_1a459cd9",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T16:35:09Z",
+      "side": 1,
+      "message": "I\u0027m wondering if it\u0027s really useful to have these four lines in every test. In my experience (ServiceWorkerURLRequestJobTest) these turn into copy/paste code all over the test file which is hard to maintain.\n\nIf we want to keep them could we have helper functions like:\n\nExpectFetchEvent(url, method, 1 /* count */);\nExpectGetControllerCount(1);",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf4672f_2a9f868c",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T16:35:09Z",
+      "side": 1,
+      "message": "remove this todo now",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a1ca46_c5a29102",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T16:35:09Z",
+      "side": 1,
+      "message": "Remove this now that line 501 is here.",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
