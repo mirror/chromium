@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e4fe883_0c1163ae",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-20T00:28:26Z",
+      "side": 1,
+      "message": "I really don\u0027t want to depend on IndexedDBClassFactory in the operations classes.\n\nOur operations mostly follow the pattern that Gets are sometimes ok for the straight DB, buts sets are always on a TXN.",
+      "parentUuid": "e72fe67f_e07ca978",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c759d41d_6117d87c",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b752b7bb_5f025f6a",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-20T00:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c759d41d_6117d87c",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "732578d8_fd937ceb",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-20T00:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d16cfdf_b93c56e1",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49b277d9_66c36af6",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f2355bab_f253ad45",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-20T00:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b277d9_66c36af6",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e90949fc_a5d0ced7",
         "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-19T22:28:36Z",
       "side": 1,
       "message": "Not actionable, but just a warning that this irregularity adds to the system\u0027s complexity.",
+      "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac8badf4_7c5f990c",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-20T00:28:26Z",
+      "side": 1,
+      "message": "Removing.",
+      "parentUuid": "e90949fc_a5d0ced7",
       "revId": "9534eadd613fd1366d5abd54992363c1ab40fd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
