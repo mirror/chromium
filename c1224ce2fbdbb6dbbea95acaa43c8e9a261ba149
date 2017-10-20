@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9f7caf_8a264b56",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-20T20:50:06Z",
+      "side": 1,
+      "message": "I think the \"non-existent\" part was useful here, since sending an XHR to an existent resource doesn\u0027t result in this.  So either \"non-existent\" or \"a resource that wasn\u0027t included in the package\", or something like that.",
+      "revId": "c1224ce2fbdbb6dbbea95acaa43c8e9a261ba149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
