@@ -303,6 +303,11 @@ void WorkerThreadableLoader::Cancel() {
   DCHECK(!client_);
 }
 
+void WorkerThreadableLoader::Detach() {
+  // NOTREACHED
+  CHECK(false);
+}
+
 void WorkerThreadableLoader::DidStart(
     MainThreadLoaderHolder* main_thread_loader_holder) {
   DCHECK(!IsMainThread());
