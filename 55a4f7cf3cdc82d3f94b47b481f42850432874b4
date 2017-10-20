@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9addeb8d_49eac649",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/dnr_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-20T16:31:28Z",
+      "side": 1,
+      "message": "Currently I see this being defined in rule_indexing_unittest.cc, did you mean to move the definition here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 55,
+        "endLine": 23,
+        "endChar": 72
+      },
+      "revId": "55a4f7cf3cdc82d3f94b47b481f42850432874b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
