@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a18f535_553f7b6d",
+        "filename": "components/bookmarks/browser/titled_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T16:28:46Z",
+      "side": 1,
+      "message": "This should be using count() not walking thru the whole container if it\u0027s going to be written as EraseIf(). One is |m * log n| and one is |m * n| work. I would write a lambda here and use that personally.\n\nExcept.. std::set_intersection is |m + n| work so I\u0027m not clear why we\u0027d want to change this?",
+      "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
