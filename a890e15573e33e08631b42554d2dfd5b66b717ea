@@ -22,6 +22,30 @@
       "revId": "a890e15573e33e08631b42554d2dfd5b66b717ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b1bde3_9fd6cdaf",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-20T12:35:30Z",
+      "side": 1,
+      "message": "sure.\nJust as a note, there is already a comment for the definition of response_url_ in the header file.",
+      "parentUuid": "6aa5af89_641b4d28",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 15
+      },
+      "revId": "a890e15573e33e08631b42554d2dfd5b66b717ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

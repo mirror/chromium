@@ -16,6 +16,24 @@
       "revId": "70416cbe90251c9f94a7359553e56e4dac1c0c75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6bcf45_f530547f",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-20T12:35:30Z",
+      "side": 1,
+      "message": "Good point and I would prefer setting the response URL here. But I cannot get hold of the URL because the redirect_info_ is only set when a throttle deferred and the method itself does not provide me with anything. So unfortunately I simply do not have it there.\n\nI add at least a TODO to make it not be forgotten. Other than that I do not know how to resolve it at the moment.",
+      "parentUuid": "503cb071_daa8997d",
+      "revId": "70416cbe90251c9f94a7359553e56e4dac1c0c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
