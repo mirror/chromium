@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "abf934a5_0ec93734",
+        "filename": "ash/metrics/login_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-20T07:48:10Z",
+      "side": 1,
+      "message": "In general, histograms are more efficient than user actions; and also conveniently group the related metrics together, so that it\u0027s easy to see relative counts.  We tend to recommend user actions for analyses that are interested in looking at sequences of actions, and histograms for most other things.\n\nThat said, both of the advantages that I listed are relatively minor.  While I personally would use a histogram for measuring these, I\u0027d also be ok with y\u0027all using actions if you prefer.",
+      "parentUuid": "0ff8758e_3c70e6f2",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71254dcd_853940fb",
         "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
         "patchSetId": 6
