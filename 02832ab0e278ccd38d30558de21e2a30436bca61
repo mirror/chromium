@@ -52,6 +52,24 @@
       "revId": "02832ab0e278ccd38d30558de21e2a30436bca61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107e14aa_06de278a",
+        "filename": "content/public/network/ignore_errors_cert_verifier.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-20T15:26:58Z",
+      "side": 1,
+      "message": "jam@, given that //services/network doesn\u0027t depend on //content, do you think this CL can be landed so that we can try it for those timeout telemetry tests? Thanks!",
+      "parentUuid": "2c0bc486_aa394026",
+      "revId": "02832ab0e278ccd38d30558de21e2a30436bca61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
