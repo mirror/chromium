@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0c4a6a0_e2b963a6",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T03:02:54Z",
+      "side": 1,
+      "message": "Ah, probably not because when document_url() is empty we don\u0027t want to crash the renderer.. due to it being an existing bug.",
+      "parentUuid": "d6c59633_5c96364a",
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8b6c220_e8dcc031",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 3
