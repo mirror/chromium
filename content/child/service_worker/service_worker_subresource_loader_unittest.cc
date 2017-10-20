@@ -277,7 +277,8 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
     controller_connector_->OnContainerHostConnectionClosed();
   }
 
-  void TestRequest(std::unique_ptr<ResourceRequest> request) {
+  void TestRequest(std::unique_ptr<ResourceRequest> request,
+                   bool should_wait = true) {
     ServiceWorkerSubresourceLoaderFactory loader_factory(
         controller_connector_, loader_factory_getter_, request->url.GetOrigin(),
         base::MakeRefCounted<
@@ -286,6 +287,8 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
         mojo::MakeRequest(&url_loader_), 0, 0, mojom::kURLLoadOptionNone,
         *request, url_loader_client_->CreateInterfacePtr(),
         net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
+    if (!should_wait)
+      return;
     base::RunLoop().RunUntilIdle();
 
     EXPECT_EQ(request->url, fake_controller_.fetch_event_request().url);
@@ -336,6 +339,31 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, DropController) {
 
   // This should re-obtain the ControllerServiceWorker.
   TestRequest(CreateRequest(GURL("https://www.example.com/foo3.png")));
+  EXPECT_EQ(3, fake_controller_.fetch_event_count());
+  EXPECT_EQ(2, fake_container_host_.get_controller_service_worker_count());
+}
+
+TEST_F(ServiceWorkerSubresourceLoaderTest, DropController_InflightFetchEvent) {
+  TestRequest(CreateRequest(GURL("https://www.example.com/foo.png")));
+  url_loader_client_->Unbind();
+  EXPECT_EQ(1, fake_controller_.fetch_event_count());
+  EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+  TestRequest(CreateRequest(GURL("https://www.example.com/foo2.png")));
+  url_loader_client_->Unbind();
+  EXPECT_EQ(2, fake_controller_.fetch_event_count());
+  EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+
+  TestRequest(CreateRequest(GURL("https://www.example.com/foo3.png")),
+              false /* should_wait */);
+  EXPECT_EQ(2, fake_controller_.fetch_event_count());
+  EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+
+  // Drop the connection to the ControllerServiceWorker.
+  fake_controller_.CloseAllBindings();
+  base::RunLoop().RunUntilIdle();
+
+  // If connection is closed during fetch event, it's restarted and successfully
+  // finishes.
   EXPECT_EQ(3, fake_controller_.fetch_event_count());
   EXPECT_EQ(2, fake_container_host_.get_controller_service_worker_count());
 }
