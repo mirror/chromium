@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90d34624_32657b86",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-20T19:06:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf752c7_0ff4895e",
+      "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "145709ca_874b31c0",
         "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e81128d_b7d391c9",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-20T19:06:48Z",
+      "side": 1,
+      "message": "Not here, that would belong in theat_details_unittest. However, the way that code works, the tests need to wait for a separate thread to return the generated report but we skip that call when we discard that report. It basically means the tests try to wait for this call and timeout - but i haven\u0027t figured out a way to fix the tests to confirm that the call is skipped.\n\nHowever, I have done a bunch of manual testing confirming that the reports are dropped, and we also have confirmation in dev that no reports are being sent. LMK if you think i should invest in tightening up the tests to cover this before making this change.",
+      "parentUuid": "145709ca_874b31c0",
+      "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
