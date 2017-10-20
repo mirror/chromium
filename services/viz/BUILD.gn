@@ -1,0 +1,27 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//services/service_manager/public/service_manifest.gni")
+
+source_set("lib") {
+  sources = [
+    "viz_service.cc",
+    "viz_service.h",
+  ]
+
+  deps = [
+    "//base",
+    "//cc",
+    "//components/viz/service",
+    "//mojo/common:common_base",
+    "//services/service_manager/public/cpp",
+    "//services/ui/gpu",
+    "//services/ui/gpu/interfaces",
+  ]
+}
+
+service_manifest("manifest") {
+  name = "viz"
+  source = "manifest.json"
+}

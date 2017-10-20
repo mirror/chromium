@@ -445,6 +445,8 @@ ServiceManagerContext::ServiceManagerContext() {
       base::ASCIIToUTF16("Content Decryption Module Service");
 #endif
 
+  out_of_process_services["viz"] = base::ASCIIToUTF16("Visuals Service");
+
   for (const auto& service : out_of_process_services) {
     packaged_services_connection_->AddServiceRequestHandler(
         service.first, base::Bind(&QueryAndStartServiceInUtilityProcess,

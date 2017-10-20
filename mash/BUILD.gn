@@ -49,6 +49,7 @@ catalog("catalog") {
     "//services/ui:manifest",
     "//services/ui/demo:manifest",
     "//services/ui/ime/test_ime_driver:manifest",
+    "//services/viz:manifest",
 
     # TODO(rockot): It seems like a layering violation to have these service
     # names referenced here, but it's the most convenient thing to do for now,

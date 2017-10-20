@@ -15,6 +15,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/buffer.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/ws/gpu_client.h"
 #include "services/ui/ws/gpu_host_delegate.h"
 #include "ui/gfx/buffer_format_util.h"
@@ -33,7 +34,8 @@ const int32_t kInternalGpuChannelClientId = 2;
 
 }  // namespace
 
-DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
+DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate,
+                               service_manager::Connector* connector)
     : delegate_(delegate),
       next_client_id_(kInternalGpuChannelClientId + 1),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
@@ -41,13 +43,15 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
       gpu_thread_("GpuThread"),
       gpu_main_wait_(base::WaitableEvent::ResetPolicy::MANUAL,
                      base::WaitableEvent::InitialState::NOT_SIGNALED) {
-  // TODO(sad): Once GPU process is split, this would look like:
-  //   connector->BindInterface("gpu", &gpu_main_);
+  DCHECK(connector);
+  connector->BindInterface("viz", &gpu_main_);
+#if 0
   gpu_thread_.Start();
   gpu_thread_.task_runner()->PostTask(
       FROM_HERE,
       base::BindOnce(&DefaultGpuHost::InitializeGpuMain, base::Unretained(this),
                      base::Passed(MakeRequest(&gpu_main_))));
+#endif
 
   viz::mojom::GpuHostPtr gpu_host_proxy;
   gpu_host_binding_.Bind(mojo::MakeRequest(&gpu_host_proxy));
@@ -62,10 +66,12 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
 DefaultGpuHost::~DefaultGpuHost() {
   // Make sure |gpu_main_impl_| has been successfully created (i.e. the task
   // posted in the constructor to run InitializeGpuMain() has actually run).
+#if 0
   gpu_main_wait_.Wait();
   gpu_main_impl_->TearDown();
   gpu_thread_.task_runner()->DeleteSoon(FROM_HERE, std::move(gpu_main_impl_));
   gpu_thread_.Stop();
+#endif
 }
 
 void DefaultGpuHost::Add(mojom::GpuRequest request) {
