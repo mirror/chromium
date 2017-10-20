@@ -23,6 +23,12 @@ bool VideoEncodeAccelerator::TryToSetupEncodeOnSeparateThread(
   return false;
 }
 
+void VideoEncodeAccelerator::Flush(FlushCallback flush_callback) {
+  // TODO(owenlin): implements this https://crbug.com/755889.
+  NOTIMPLEMENTED();
+  std::move(flush_callback).Run(false);
+}
+
 }  // namespace media
 
 namespace std {
