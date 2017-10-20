@@ -335,6 +335,7 @@ class SmoothnessGpuRasterizationFiltersCases(_Smoothness):
   # With GPU Raster enabled on Mac, there's no reason to run this
   # benchmark in addition to SmoothnessFiltersCases.
   SUPPORTED_PLATFORMS = [
+      story_module.expectations.ALL_CHROMEOS,
       story_module.expectations.ALL_LINUX,
       story_module.expectations.ALL_MOBILE,
       story_module.expectations.ALL_WIN
