@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b6d71f_d749b94d",
+        "filename": "components/autofill/core/browser/address_normalization_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-20T15:25:20Z",
+      "side": 1,
+      "message": "Not sure about unretained here. The delegate\u0027s lifetime is tied to AddressNormalizationManager so it shouldn\u0027t be destroyed unless delegates_.clear() is called on line 96. But what if AddressNormalizationManager is destroyed for some reason?",
+      "revId": "1c10220c36f0f6fa83258fb7d59ecca8d86d6d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
