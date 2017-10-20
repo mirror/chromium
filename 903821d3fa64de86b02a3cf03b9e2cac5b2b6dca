@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7569a070_282941a9",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-20T14:50:46Z",
+      "side": 1,
+      "message": "Mention XHR as an example here (as it was doing before) as it is a legitimate way to request non-existent resource.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 72
+      },
+      "revId": "903821d3fa64de86b02a3cf03b9e2cac5b2b6dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
