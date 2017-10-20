@@ -16,6 +16,23 @@
       "revId": "1d53427b333a0fdf88b05228a8cc0f28a5e5f653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90aa0005_1b08ced2",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-10-20T02:16:12Z",
+      "side": 1,
+      "message": "In our case, shouldn\u0027t it actually be \"ended\"? The \"muted\" case is for when the direction of the \"m\u003d\" section changes to something that doesn\u0027t allow receiving media, but might change back, causing the track to become unmuted. But in the Plan B SDP case, where PeerConnectionObserver::OnRemoveTrack ends up called, the track isn\u0027t coming back at all; even if the same track ID appears in a subsequent remote description, a new object will be created.\n\nIn other words, we don\u0027t have to handle the \"muted\" case until we implement transceivers/unified plan.",
+      "revId": "1d53427b333a0fdf88b05228a8cc0f28a5e5f653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
