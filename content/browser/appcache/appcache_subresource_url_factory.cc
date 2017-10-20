@@ -141,7 +141,7 @@ void AppCacheSubresourceURLFactory::OnConnectionError() {
 void AppCacheSubresourceURLFactory::NotifyError(
     mojom::URLLoaderClientPtr client,
     int error_code) {
-  ResourceRequestCompletionStatus request_result;
+  network::URLLoaderStatus request_result;
   request_result.error_code = error_code;
   client->OnComplete(request_result);
 }

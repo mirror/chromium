@@ -20,13 +20,13 @@
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/resource_scheduler.h"
 #include "content/public/browser/global_request_id.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/common/resource_response.h"
 #include "mojo/public/c/system/data_pipe.h"
 #include "mojo/public/cpp/bindings/message.h"
 #include "net/base/mime_sniffer.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/url_loader_status.h"
 
 namespace content {
 namespace {
@@ -440,7 +440,7 @@ void MojoAsyncResourceHandler::OnResponseCompleted(
 
   DCHECK_NE(status.status(), net::URLRequestStatus::IO_PENDING);
 
-  ResourceRequestCompletionStatus request_complete_data;
+  network::URLLoaderStatus request_complete_data;
   request_complete_data.error_code = error_code;
   request_complete_data.exists_in_cache = request()->response_info().was_cached;
   request_complete_data.completion_time = base::TimeTicks::Now();

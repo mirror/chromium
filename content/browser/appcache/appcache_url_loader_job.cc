@@ -256,8 +256,7 @@ void AppCacheURLLoaderJob::OnStartLoadingResponseBody(
   client_->OnStartLoadingResponseBody(std::move(body));
 }
 
-void AppCacheURLLoaderJob::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
+void AppCacheURLLoaderJob::OnComplete(const network::URLLoaderStatus& status) {
   delivery_type_ = AWAITING_DELIVERY_ORDERS;
   if (status.error_code != net::OK && !received_response_) {
     if (sub_resource_handler_->MaybeLoadFallbackForResponse(nullptr)) {
@@ -397,7 +396,7 @@ void AppCacheURLLoaderJob::OnReadComplete(int result) {
     return;
   } else if (result < 0) {
     // TODO(ananta)
-    // Populate the relevant fields of the ResourceRequestCompletionStatus
+    // Populate the relevant fields of the network::URLLoaderStatus
     // structure.
     NotifyCompleted(result);
     AppCacheHistograms::CountResponseRetrieval(false, is_main_resource,
@@ -513,11 +512,11 @@ void AppCacheURLLoaderJob::NotifyCompleted(int error_code) {
       is_range_request() ? range_response_info_.get()
                          : (info_ ? info_->http_response_info() : nullptr);
 
-  ResourceRequestCompletionStatus request_complete_data;
+  network::URLLoaderStatus request_complete_data;
   request_complete_data.error_code = error_code;
 
   // TODO(ananta)
-  // Fill other details in the ResourceRequestCompletionStatus structure in
+  // Fill other details in the network::URLLoaderStatus structure in
   // case of an error.
   if (!request_complete_data.error_code) {
     request_complete_data.exists_in_cache = http_info->was_cached;
@@ -547,7 +546,7 @@ void AppCacheURLLoaderJob::HandleRedirectLimitHit() {
   if (sub_resource_handler_->MaybeLoadFallbackForResponse(nullptr)) {
     DisconnectFromNetworkLoader();
   } else {
-    ResourceRequestCompletionStatus result;
+    network::URLLoaderStatus result;
     result.error_code = net::ERR_FAILED;
     client_->OnComplete(result);
   }

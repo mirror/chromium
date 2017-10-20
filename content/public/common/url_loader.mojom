@@ -4,6 +4,8 @@
 
 module content.mojom;
 
+import "services/network/public/interfaces/url_loader.mojom";
+
 [Native]
 struct URLRequest;
 
@@ -15,9 +17,6 @@ struct SSLInfo;
 
 [Native]
 struct URLRequestRedirectInfo;
-
-[Native]
-struct URLLoaderStatus;
 
 // This enum corresponds to net::RequestPriority. See its comments for details.
 enum RequestPriority {
@@ -105,6 +104,6 @@ interface URLLoaderClient {
 
   // Called when the loading completes. No notification will be dispatched for
   // this client after this message arrives.
-  OnComplete(URLLoaderStatus completion_status);
+  OnComplete(network.mojom.URLLoaderStatus completion_status);
 };
 
