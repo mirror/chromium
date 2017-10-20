@@ -16,6 +16,24 @@
       "revId": "1d0ad0132281072bfb1a094314449e2fece4c5c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c2b57d_ed6d0f29",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-10-20T19:55:18Z",
+      "side": 1,
+      "message": "We don\u0027t. Thanks for catching.",
+      "parentUuid": "fe0d761b_f679617c",
+      "revId": "1d0ad0132281072bfb1a094314449e2fece4c5c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
