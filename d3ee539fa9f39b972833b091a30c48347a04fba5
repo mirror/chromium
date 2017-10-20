@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a9df21_e3f8562e",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T19:26:15Z",
+      "side": 1,
+      "message": "I was thinking about this some more last night and I think I get what problem you were seeing and why this hides it.\n\nNon-root renderpasses are marked has_transparent_background, so this causes it to skip all non-root render passes.\n\nThe occlusion in each renderpass is treated as being in the same coordinate space by the for loop, but the transform on the RenderPassDrawQuad pointing to a RenderPass would determine the coordinate space. So if you just added a quad in a non-root pass and then considered that as occluding quads in another pass without considering the RenderPassDrawQuad(s) involved, it would put occlusion in the wrong place.\n\nI think you should change this if to be if (!root render pass) instead to express that better for now.",
+      "revId": "d3ee539fa9f39b972833b091a30c48347a04fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e444eafa_02148b48",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T19:26:15Z",
+      "side": 1,
+      "message": "Then in regards to root vs non-root, for addressing this TODO: If the copy request is on the root pass, for instance, there\u0027s no need to worry about problems. It\u0027s only if there were things occluding this current pass that /won\u0027t draw into/ the current pass (but that can\u0027t happen for the root since everything draws into it).\n\nIt\u0027s possible we shouldn\u0027t bother at all with non-root render passes since they are somewhat rare though?",
+      "revId": "d3ee539fa9f39b972833b091a30c48347a04fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
