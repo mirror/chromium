@@ -175,6 +175,7 @@ Protocol.InspectorBackend = class {
 
 Protocol.InspectorBackend._ConnectionClosedErrorCode = -32000;
 Protocol.InspectorBackend.DevToolsStubErrorCode = -32015;
+Protocol.InspectorBackend.MethodNotFound = -32601;
 
 
 Protocol.inspectorBackend = new Protocol.InspectorBackend();
@@ -636,6 +637,7 @@ Protocol.InspectorBackend._AgentPrototype = class {
   dispatchResponse(messageObject, methodName, callback) {
     if (messageObject.error && messageObject.error.code !== Protocol.InspectorBackend._ConnectionClosedErrorCode &&
         messageObject.error.code !== Protocol.InspectorBackend.DevToolsStubErrorCode &&
+        messageObject.error.code !== Protocol.InspectorBackend.MethodNotFound &&
         !Protocol.InspectorBackend.Options.suppressRequestErrors) {
       var id = Protocol.InspectorBackend.Options.dumpInspectorProtocolMessages ? ' with id = ' + messageObject.id : '';
       console.error('Request ' + methodName + id + ' failed. ' + JSON.stringify(messageObject.error));
