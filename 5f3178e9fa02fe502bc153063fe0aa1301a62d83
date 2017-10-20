@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "011eee5c_91ba8a2f",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-20T02:06:53Z",
+      "side": 1,
+      "message": "I could understand benefit of using HasNonCollapsedText() over \nLinesBoundingBox(). I could not aware InlineBox dependency from here.\n\nLayoutText::LinesBoundingBox() are used in other places and we may want\nto adopt it to layout NG anyway.",
+      "revId": "5f3178e9fa02fe502bc153063fe0aa1301a62d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

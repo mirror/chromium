@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "652464d8_8d899493",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-20T02:06:53Z",
+      "side": 0,
+      "message": "Off topic: Since this conditional expression is too long, it is better to\ntransform it to named function.",
+      "revId": "fb336c787e5e91d43b51bc95cd0fc5f5ff899ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
