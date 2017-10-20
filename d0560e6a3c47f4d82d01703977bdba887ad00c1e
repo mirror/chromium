@@ -187,6 +187,30 @@
       "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf8755c_a7df92aa",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimationsTest.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-20T18:34:22Z",
+      "side": 1,
+      "message": "The latest patch is now checking the animation counts from the animation host, which is the count that we directly pass to the CompositorTimingHistory.",
+      "parentUuid": "810e2d27_54c922ba",
+      "range": {
+        "startLine": 1358,
+        "startChar": 63,
+        "endLine": 1358,
+        "endChar": 65
+      },
+      "revId": "d0560e6a3c47f4d82d01703977bdba887ad00c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
