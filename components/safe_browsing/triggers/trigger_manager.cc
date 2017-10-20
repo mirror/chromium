@@ -8,6 +8,7 @@
 #include "components/safe_browsing/base_ui_manager.h"
 #include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/features.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -60,11 +61,23 @@ bool CanSendReport(const SBErrorOptions& error_display_options,
   bool scout_check_ok = !TriggerNeedsScout(trigger_type) ||
                         error_display_options.is_scout_reporting_enabled;
 
-  // Reports are only sent for non-incoginito users who are allowed to modify
-  // the Extended Reporting setting and have opted-in to Extended Reporting.
-  return !error_display_options.is_off_the_record &&
-         error_display_options.is_extended_reporting_opt_in_allowed &&
-         error_display_options.is_extended_reporting_enabled && scout_check_ok;
+  // Reports are only sent if user prefs are set correctly - user must be
+  // allowed to modify the Extended Reporting setting and have opted-in to the
+  // right level of Extended Reporting. However, if the
+  // |kAdSamplerCollectButDontSendFeature| feature is enabled then we will
+  // overlook pref values to force the report to be created (which is safe
+  // because we ensure it will be discarded downstream).
+  bool skip_pref_check =
+      trigger_type == TriggerType::AD_SAMPLE &&
+      base::FeatureList::IsEnabled(kAdSamplerCollectButDontSendFeature);
+  bool pref_check_ok =
+      skip_pref_check ||
+      (error_display_options.is_extended_reporting_opt_in_allowed &&
+       error_display_options.is_extended_reporting_enabled && scout_check_ok);
+
+  // Check that the user is not in incognito and that their preferences are in
+  // the correct state.
+  return !error_display_options.is_off_the_record && pref_check_ok;
 }
 
 }  // namespace
@@ -111,13 +124,23 @@ bool TriggerManager::CanStartDataCollection(
   bool scout_check_ok = !TriggerNeedsScout(trigger_type) ||
                         error_display_options.is_scout_reporting_enabled;
 
-  // We start data collection as long as user is not incognito and is able to
-  // change the Extended Reporting opt-in, and the |trigger_type| has available
-  // quota. For some triggers we also require Scout or extended reporting opt-in
-  // in order to start data collection.
-  return !error_display_options.is_off_the_record &&
-         error_display_options.is_extended_reporting_opt_in_allowed &&
-         optin_required_check_ok && scout_check_ok &&
+  // Reports are only sent if user prefs are set correctly - user must be
+  // allowed to modify the Extended Reporting setting and have opted-in to the
+  // right level of Extended Reporting. However, if the
+  // |kAdSamplerCollectButDontSendFeature| feature is enabled then we will
+  // overlook pref values to force the report to be created (which is safe
+  // because we ensure it will be discarded downstream).
+  bool skip_pref_check =
+      trigger_type == TriggerType::AD_SAMPLE &&
+      base::FeatureList::IsEnabled(kAdSamplerCollectButDontSendFeature);
+  bool pref_check_ok =
+      skip_pref_check ||
+      (error_display_options.is_extended_reporting_opt_in_allowed &&
+       optin_required_check_ok && scout_check_ok);
+
+  // Check that the user is not incognito, their preferences are in the correct
+  // state, and the trigger has quota available.
+  return !error_display_options.is_off_the_record && pref_check_ok &&
          trigger_throttler_->TriggerCanFire(trigger_type);
 }
 
