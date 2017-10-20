@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ac6f460_09c46b61",
+        "filename": "content/browser/renderer_host/media/audio_output_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-20T14:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a736195_b68d3ee2",
+      "revId": "13fd703643822a5d5ce6e8f420efacf62ff2df0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8f42a90_2a8a3741",
         "filename": "media/audio/audio_output_controller.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "13fd703643822a5d5ce6e8f420efacf62ff2df0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6b3f8a_d13c3ea6",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-20T14:19:27Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this results in a smaller binary (due to not calling StringPrintf and not having inlined string constructor/destructor). I shortened the involved strings a bit to make sure :).",
+      "parentUuid": "c8f42a90_2a8a3741",
+      "revId": "13fd703643822a5d5ce6e8f420efacf62ff2df0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
