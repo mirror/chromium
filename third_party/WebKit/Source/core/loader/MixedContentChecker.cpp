@@ -366,7 +366,7 @@ bool MixedContentChecker::ShouldBlockFetch(
       allowed = !strict_mode;
       if (allowed) {
         content_settings_client->PassiveInsecureContentFound(url);
-        client->DidDisplayInsecureContent();
+        client->DidDisplayMixedContent();
       }
       break;
 
@@ -397,7 +397,7 @@ bool MixedContentChecker::ShouldBlockFetch(
                     settings && settings->GetAllowRunningOfInsecureContent(),
                     security_origin, url);
       if (allowed) {
-        client->DidRunInsecureContent(security_origin, url);
+        client->DidRunMixedContent(security_origin, url);
         UseCounter::Count(frame, WebFeature::kMixedContentBlockableAllowed);
       }
       break;
@@ -406,7 +406,7 @@ bool MixedContentChecker::ShouldBlockFetch(
     case WebMixedContentContextType::kShouldBeBlockable:
       allowed = !strict_mode;
       if (allowed)
-        client->DidDisplayInsecureContent();
+        client->DidDisplayMixedContent();
       break;
     case WebMixedContentContextType::kNotMixedContent:
       NOTREACHED();
@@ -469,7 +469,7 @@ bool MixedContentChecker::ShouldBlockFetchOnWorker(
                       settings->GetAllowRunningOfInsecureContent(),
                       global_scope->GetSecurityOrigin(), url);
     if (allowed) {
-      worker_fetch_context->DidRunInsecureContent(
+      worker_fetch_context->DidRunMixedContent(
           WebSecurityOrigin(global_scope->GetSecurityOrigin()), url);
       UseCounter::Count(global_scope,
                         WebFeature::kMixedContentBlockableAllowed);
@@ -547,7 +547,7 @@ bool MixedContentChecker::ShouldBlockWebSocket(
   }
 
   if (allowed)
-    client->DidRunInsecureContent(security_origin, url);
+    client->DidRunMixedContent(security_origin, url);
 
   if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
     LogToConsoleAboutWebSocket(frame, MainResourceUrlForFrame(mixed_frame), url,
