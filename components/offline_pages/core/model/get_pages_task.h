@@ -44,15 +44,15 @@ class GetPagesTask : public Task {
   // DB.
   static std::unique_ptr<GetPagesTask> CreateTaskMatchingClientIds(
       OfflinePageMetadataStoreSQL* store,
-      const MultipleOfflinePageItemCallback& callback,
-      const std::vector<ClientId>& client_ids);
+      const std::vector<ClientId>& client_ids,
+      const MultipleOfflinePageItemCallback& callback);
 
   // Creates |GetPagesTask| reading pages belonging to provided |name_space|
   // from DB.
   static std::unique_ptr<GetPagesTask> CreateTaskMatchingNamespace(
       OfflinePageMetadataStoreSQL* store,
-      const MultipleOfflinePageItemCallback& callback,
-      const std::string& name_space);
+      const std::string& name_space,
+      const MultipleOfflinePageItemCallback& callback);
 
   // Creates |GetPagesTask| reading pages removed on cache reset from DB.
   static std::unique_ptr<GetPagesTask>
@@ -73,8 +73,8 @@ class GetPagesTask : public Task {
   // from DB.
   static std::unique_ptr<GetPagesTask> CreateTaskMatchingRequestOrigin(
       OfflinePageMetadataStoreSQL* store,
-      const MultipleOfflinePageItemCallback& callback,
-      const std::string& request_origin);
+      const std::string& request_origin,
+      const MultipleOfflinePageItemCallback& callback);
 
   // Creates |GetPagesTask| reading pages matching provided |url| from DB.
   // The url will be matched against original URL and final URL. Fragments will
@@ -82,15 +82,15 @@ class GetPagesTask : public Task {
   // is necessary.
   static std::unique_ptr<GetPagesTask> CreateTaskMatchingUrl(
       OfflinePageMetadataStoreSQL* store,
-      const MultipleOfflinePageItemCallback& callback,
-      const GURL& url);
+      const GURL& url,
+      const MultipleOfflinePageItemCallback& callback);
 
   // Creates |GetPagesTask| reading a single page matching provided |offline_id|
   // from DB.
   static std::unique_ptr<GetPagesTask> CreateTaskMatchingOfflineId(
       OfflinePageMetadataStoreSQL* store,
-      const SingleOfflinePageItemCallback& callback,
-      int64_t offline_id);
+      int64_t offline_id,
+      const SingleOfflinePageItemCallback& callback);
 
   ~GetPagesTask() override;
 

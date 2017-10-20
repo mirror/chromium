@@ -261,8 +261,8 @@ std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingAllPages(
 // static
 std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingClientIds(
     OfflinePageMetadataStoreSQL* store,
-    const MultipleOfflinePageItemCallback& callback,
-    const std::vector<ClientId>& client_ids) {
+    const std::vector<ClientId>& client_ids,
+    const MultipleOfflinePageItemCallback& callback) {
   // Creates an instance of GetPagesTask, which wraps the client_ids argument in
   // a OnceClosure. It will then be used to execute.
   return std::unique_ptr<GetPagesTask>(new GetPagesTask(
@@ -272,8 +272,8 @@ std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingClientIds(
 // static
 std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingNamespace(
     OfflinePageMetadataStoreSQL* store,
-    const MultipleOfflinePageItemCallback& callback,
-    const std::string& name_space) {
+    const std::string& name_space,
+    const MultipleOfflinePageItemCallback& callback) {
   std::vector<std::string> namespaces = {name_space};
   return std::unique_ptr<GetPagesTask>(new GetPagesTask(
       store, base::BindOnce(&ReadPagesByMultipleNamespacesSync, namespaces),
@@ -309,8 +309,8 @@ GetPagesTask::CreateTaskMatchingPagesSupportedByDownloads(
 // static
 std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingRequestOrigin(
     OfflinePageMetadataStoreSQL* store,
-    const MultipleOfflinePageItemCallback& callback,
-    const std::string& request_origin) {
+    const std::string& request_origin,
+    const MultipleOfflinePageItemCallback& callback) {
   return std::unique_ptr<GetPagesTask>(new GetPagesTask(
       store, base::BindOnce(&ReadPagesByRequestOriginSync, request_origin),
       callback));
@@ -319,8 +319,8 @@ std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingRequestOrigin(
 // static
 std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingUrl(
     OfflinePageMetadataStoreSQL* store,
-    const MultipleOfflinePageItemCallback& callback,
-    const GURL& url) {
+    const GURL& url,
+    const MultipleOfflinePageItemCallback& callback) {
   return std::unique_ptr<GetPagesTask>(new GetPagesTask(
       store, base::BindOnce(&ReadPagesByUrlSync, url), callback));
 }
@@ -328,8 +328,8 @@ std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingUrl(
 // static
 std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingOfflineId(
     OfflinePageMetadataStoreSQL* store,
-    const SingleOfflinePageItemCallback& callback,
-    int64_t offline_id) {
+    int64_t offline_id,
+    const SingleOfflinePageItemCallback& callback) {
   return std::unique_ptr<GetPagesTask>(
       new GetPagesTask(store, base::BindOnce(&ReadPagesByOfflineId, offline_id),
                        base::Bind(&WrapInMultipleItemsCallback, callback)));
