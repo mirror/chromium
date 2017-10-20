@@ -74,7 +74,6 @@
 #include "components/certificate_transparency/ct_policy_manager.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/dom_distiller/core/distilled_page_prefs.h"
-#include "components/feature_engagement/features.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/gcm_driver/gcm_channel_status_syncer.h"
 #include "components/language/core/browser/url_language_histogram.h"
@@ -164,10 +163,6 @@
 
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
 #include "chrome/browser/ui/webui/local_discovery/local_discovery_ui.h"
-#endif
-
-#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-#include "chrome/browser/feature_engagement/session_duration_updater.h"
 #endif
 
 #if defined(OS_ANDROID)
@@ -520,10 +515,6 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   extensions::NtpOverriddenBubbleDelegate::RegisterPrefs(registry);
   extensions::RuntimeAPI::RegisterPrefs(registry);
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
-
-#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-  feature_engagement::SessionDurationUpdater::RegisterProfilePrefs(registry);
-#endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   PluginInfoMessageFilter::RegisterUserPrefs(registry);
