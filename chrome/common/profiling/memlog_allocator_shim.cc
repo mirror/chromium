@@ -39,6 +39,9 @@ constexpr int kSendBufferSize = 65536;
 // to provide sufficient parallelism to avoid lock overhead in ad-hoc testing.
 constexpr int kNumSendBuffers = 17;
 
+// If writing to the MemlogSenderPipe ever takes longer than 10s, just give up.
+constexpr int kTimeoutMs = 10000;
+
 // Functions set by a callback if the GC heap exists in the current process.
 // This function pointers can be used to hook or unhook the oilpan allocations.
 // It will be null in the browser process.
@@ -75,8 +78,14 @@ class SendBuffer {
 
  private:
   void SendCurrentBuffer() {
-    g_sender_pipe->Send(buffer_, used_);
+    MemlogSenderPipe::Result result = g_sender_pipe->Send(buffer_, used_, kTimeoutMs);
     used_ = 0;
+    if (result == MemlogSenderPipe::Result::kError)
+      StopAllocatorShimDangerous();
+    if (result == MemlogSenderPipe::Result::kTimeout) {
+      StopAllocatorShimDangerous();
+      // TODO(erikchen): Emit a histogram.
+    }
   }
 
   base::Lock lock_;
@@ -91,10 +100,13 @@ SendBuffer* g_send_buffers = nullptr;
 
 // "address" is the address in question, which is used to select which send
 // buffer to use.
-void DoSend(const void* address, const void* data, size_t size) {
+void DoSend(const void* address,
+            const void* data,
+            size_t size,
+            SendBuffer* send_buffers) {
   base::trace_event::AllocationRegister::AddressHasher hasher;
   int bin_to_use = hasher(address) % kNumSendBuffers;
-  g_send_buffers[bin_to_use].Send(data, size);
+  send_buffers[bin_to_use].Send(data, size);
 }
 
 #if BUILDFLAG(USE_ALLOCATOR_SHIM)
@@ -250,13 +262,17 @@ void StopAllocatorShimDangerous() {
     g_hook_gc_alloc(nullptr);
     g_hook_gc_free(nullptr);
   }
+
+  if (g_sender_pipe)
+    g_sender_pipe->Close();
 }
 
 void AllocatorShimLogAlloc(AllocatorType type,
                            void* address,
                            size_t sz,
                            const char* context) {
-  if (!g_send_buffers)
+  SendBuffer* send_buffers = g_send_buffers;
+  if (!send_buffers)
     return;
   if (UNLIKELY(g_prevent_reentrancy.Pointer()->Get()))
     return;
@@ -308,14 +324,15 @@ void AllocatorShimLogAlloc(AllocatorType type,
       message_end += context_len;
     }
 
-    DoSend(address, message, message_end - message);
+    DoSend(address, message, message_end - message, send_buffers);
   }
 
   g_prevent_reentrancy.Pointer()->Set(false);
 }
 
 void AllocatorShimLogFree(void* address) {
-  if (!g_send_buffers)
+  SendBuffer* send_buffers = g_send_buffers;
+  if (!send_buffers)
     return;
   if (UNLIKELY(g_prevent_reentrancy.Pointer()->Get()))
     return;
@@ -326,21 +343,26 @@ void AllocatorShimLogFree(void* address) {
     free_packet.op = kFreePacketType;
     free_packet.address = (uint64_t)address;
 
-    DoSend(address, &free_packet, sizeof(FreePacket));
+    DoSend(address, &free_packet, sizeof(FreePacket), send_buffers);
   }
 
   g_prevent_reentrancy.Pointer()->Set(false);
 }
 
 void AllocatorShimFlushPipe(uint32_t barrier_id) {
-  if (!g_send_buffers)
+  SendBuffer* send_buffers = g_send_buffers;
+  if (!send_buffers)
     return;
   for (int i = 0; i < kNumSendBuffers; i++)
-    g_send_buffers[i].Flush();
+    send_buffers[i].Flush();
 
   BarrierPacket barrier;
   barrier.barrier_id = barrier_id;
-  g_sender_pipe->Send(&barrier, sizeof(barrier));
+  MemlogSenderPipe::Result result = g_sender_pipe->Send(&barrier, sizeof(barrier), kTimeoutMs);
+  if (result != MemlogSenderPipe::Result::kSuccess) {
+    StopAllocatorShimDangerous();
+    // TODO(erikchen): Emit a histogram.
+  }
 }
 
 void SetGCHeapAllocationHookFunctions(SetGCAllocHookFunction hook_alloc,
