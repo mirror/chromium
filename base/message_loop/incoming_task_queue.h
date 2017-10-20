@@ -18,6 +18,7 @@
 namespace base {
 
 class MessageLoop;
+class PostTaskTest;
 
 namespace internal {
 
@@ -26,7 +27,49 @@ namespace internal {
 // threads and together with MessageLoop ensures clean shutdown.
 class BASE_EXPORT IncomingTaskQueue
     : public RefCountedThreadSafe<IncomingTaskQueue> {
+ private:
+  class InitialTaskQueuePolicy;
+  class DelayedTaskQueuePolicy;
+  class DeferredTaskQueuePolicy;
+
  public:
+  template <typename TaskQueuePolicy, typename TaskQueueType>
+  class RemoveOnlyQueue {
+   public:
+    RemoveOnlyQueue(IncomingTaskQueue* outer) : policy_(&queue_, outer) {}
+
+    const PendingTask& Peek() { return policy_.Peek(); }
+
+    PendingTask Pop() { return policy_.Pop(); }
+
+    bool HasTasks() { return policy_.HasTasks(); }
+
+    bool Clear() { return policy_.Clear(); }
+
+   protected:
+    TaskQueueType queue_;
+    TaskQueuePolicy policy_;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(RemoveOnlyQueue);
+  };
+
+  template <typename TaskQueuePolicy, typename TaskQueueType>
+  class Queue : public RemoveOnlyQueue<TaskQueuePolicy, TaskQueueType> {
+   public:
+    Queue(IncomingTaskQueue* outer)
+        : RemoveOnlyQueue<TaskQueuePolicy, TaskQueueType>(outer) {}
+
+    void Push(PendingTask pending_task) {
+      // The |this| reference is currently required due to the fact that the
+      // superclass is a template.
+      this->policy_.Push(std::move(pending_task));
+    }
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(Queue);
+  };
+
   explicit IncomingTaskQueue(MessageLoop* message_loop);
 
   // Appends a task to the incoming queue. Posting of all tasks is routed though
@@ -44,11 +87,6 @@ class BASE_EXPORT IncomingTaskQueue
   // Returns true if the message loop is "idle". Provided for testing.
   bool IsIdleForTesting();
 
-  // Loads tasks from the |incoming_queue_| into |*work_queue|. Must be called
-  // from the thread that is running the loop. Returns the number of tasks that
-  // require high resolution timers.
-  int ReloadWorkQueue(TaskQueue* work_queue);
-
   // Disconnects |this| from the parent message loop.
   void WillDestroyCurrentMessageLoop();
 
@@ -59,8 +97,74 @@ class BASE_EXPORT IncomingTaskQueue
   // Runs |pending_task|.
   void RunTask(PendingTask* pending_task);
 
+  RemoveOnlyQueue<InitialTaskQueuePolicy, TaskQueue>& initial_tasks() {
+    return initial_tasks_;
+  }
+
+  Queue<DelayedTaskQueuePolicy, DelayedTaskQueue>& delayed_tasks() {
+    return delayed_tasks_;
+  }
+
+  Queue<DeferredTaskQueuePolicy, TaskQueue>& deferred_tasks() {
+    return deferred_tasks_;
+  }
+
+  bool HasPendingHighResolutionTasks();
+
  private:
+  friend class base::PostTaskTest;
   friend class RefCountedThreadSafe<IncomingTaskQueue>;
+
+  class InitialTaskQueuePolicy {
+   public:
+    InitialTaskQueuePolicy(TaskQueue* queue, IncomingTaskQueue* outer);
+    void Push(PendingTask pending_task);
+    const PendingTask& Peek();
+    PendingTask Pop();
+    bool HasTasks();
+    bool Clear();
+
+   private:
+    void ReloadFromIncomingQueue();
+
+    TaskQueue* const queue_;
+    IncomingTaskQueue* const outer_;
+
+    DISALLOW_COPY_AND_ASSIGN(InitialTaskQueuePolicy);
+  };
+
+  class DelayedTaskQueuePolicy {
+   public:
+    DelayedTaskQueuePolicy(DelayedTaskQueue* queue, IncomingTaskQueue* outer);
+    void Push(PendingTask pending_task);
+    const PendingTask& Peek();
+    PendingTask Pop();
+    bool HasTasks();
+    bool Clear();
+
+   private:
+    DelayedTaskQueue* const queue_;
+    IncomingTaskQueue* const outer_;
+
+    DISALLOW_COPY_AND_ASSIGN(DelayedTaskQueuePolicy);
+  };
+
+  class DeferredTaskQueuePolicy {
+   public:
+    DeferredTaskQueuePolicy(TaskQueue* queue, IncomingTaskQueue* outer);
+    void Push(PendingTask pending_task);
+    const PendingTask& Peek();
+    PendingTask Pop();
+    bool HasTasks();
+    bool Clear();
+
+   private:
+    TaskQueue* const queue_;
+    IncomingTaskQueue* const outer_;
+
+    DISALLOW_COPY_AND_ASSIGN(DeferredTaskQueuePolicy);
+  };
+
   virtual ~IncomingTaskQueue();
 
   // Adds a task to |incoming_queue_|. The caller retains ownership of
@@ -73,8 +177,10 @@ class BASE_EXPORT IncomingTaskQueue
   // should call ScheduleWork() on the message loop.
   bool PostPendingTaskLockRequired(PendingTask* pending_task);
 
-  // Wakes up the message loop and schedules work.
-  void ScheduleWork();
+  // Loads tasks from the |incoming_queue_| into |*work_queue|. Must be called
+  // from the thread that is running the loop. Returns the number of tasks that
+  // require high resolution timers.
+  int ReloadWorkQueue(TaskQueue* work_queue);
 
   // Checks calls made only on the MessageLoop thread.
   SEQUENCE_CHECKER(sequence_checker_);
@@ -84,6 +190,15 @@ class BASE_EXPORT IncomingTaskQueue
   // True if we always need to call ScheduleWork when receiving a new task, even
   // if the incoming queue was not empty.
   const bool always_schedule_work_;
+
+  RemoveOnlyQueue<InitialTaskQueuePolicy, TaskQueue> initial_tasks_;
+  Queue<DelayedTaskQueuePolicy, DelayedTaskQueue> delayed_tasks_;
+  Queue<DeferredTaskQueuePolicy, TaskQueue> deferred_tasks_;
+
+  // How many high resolution tasks are in the pending task queue. This value
+  // increases by N every time we call ReloadWorkQueue() and decreases by 1
+  // every time we call RunTask() if the task needs a high resolution timer.
+  int pending_high_res_tasks_ = 0;
 
   // Lock that protects |message_loop_| to prevent it from being deleted while
   // a request is made to schedule work.
