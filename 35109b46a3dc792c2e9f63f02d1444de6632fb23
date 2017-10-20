@@ -140,6 +140,30 @@
       "revId": "35109b46a3dc792c2e9f63f02d1444de6632fb23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10962175_ff45f066",
+        "filename": "chrome/browser/android/preferences/prefs_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T10:51:46Z",
+      "side": 1,
+      "message": "What I meant was: there is an arraysize() macro defined in base/macros.h that is preferable to doing this yourself (because it will fail to compile if you accidentally use it e.g. on a pointer).",
+      "parentUuid": "ac3edaf8_4be0375c",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 70
+      },
+      "revId": "35109b46a3dc792c2e9f63f02d1444de6632fb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
