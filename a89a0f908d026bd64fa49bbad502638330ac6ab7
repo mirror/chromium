@@ -22,6 +22,30 @@
       "revId": "a89a0f908d026bd64fa49bbad502638330ac6ab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be5bda7_d1a5a286",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-20T15:03:01Z",
+      "side": 1,
+      "message": "These views are part of the XML, so they\u0027re inflated automatically and set in #onFinishInflate(). At that point, we could probably check whether FeatureUtilities.isChromeHome() is true or false and remove the unneeded views. Or we could remove the views from XML and programatically add them or inflate a ViewStub if the \u0027G\u0027 is used.\n\nThat said, we\u0027re already doing some behavior modification/view removing in this block, and it\u0027s rather simple, so I think it fits well here. Eventually (hopefully soon...) we will unfork our UI and we\u0027ll be able to clean up the XML and code substantially.",
+      "parentUuid": "ec83e213_f7bc170b",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 54
+      },
+      "revId": "a89a0f908d026bd64fa49bbad502638330ac6ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
