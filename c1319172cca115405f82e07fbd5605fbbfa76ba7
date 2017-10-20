@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0141687d_fa64fa2e",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-10-20T20:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cbe95ad_312376ab",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ef17c6_b2a5f640",
         "filename": "chrome/browser/chromeos/file_system_provider/operations/operation.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627aa2be_173f3f38",
+        "filename": "chrome/browser/chromeos/file_system_provider/operations/operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-10-20T20:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ef17c6_b2a5f640",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "53e4e6cf_f950a2ad",
+        "filename": "chrome/browser/chromeos/file_system_provider/operations/operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-10-20T20:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a515f082_b47a1f7d",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c27312d0_ad7364d7",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7782e04_fc8a34ce",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-10-20T20:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c27312d0_ad7364d7",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "17a8959e_78417a93",
+        "filename": "chrome/browser/chromeos/file_system_provider/registry_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-10-20T20:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c5c3d95_1d2e6963",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62763eba_9f1c02d7",
         "filename": "chrome/browser/chromeos/file_system_provider/service.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a97095_560ad076",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-10-20T20:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62763eba_9f1c02d7",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
