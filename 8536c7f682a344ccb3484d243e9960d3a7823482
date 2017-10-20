@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2720d4_0fe5ad87",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-20T15:02:45Z",
+      "side": 1,
+      "message": "I think this needs more documentation: what reads this, why is it safe, etc.",
+      "revId": "8536c7f682a344ccb3484d243e9960d3a7823482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
