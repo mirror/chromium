@@ -105,6 +105,24 @@
       "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a8c175_65956d81",
+        "filename": "components/bookmarks/browser/titled_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:10:14Z",
+      "side": 1,
+      "message": "Hm, I took equivalent to mean the output, not the implementation.\n\nIn http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4562.html#container.erasure.erase_if it says\n\n\"Effects: Equivalent to: c.erase(remove_if(c.begin(), c.end(), pred), c.end());\"\n\n+jyasskin is it ok to assume erase_if\u0027s order?",
+      "parentUuid": "26645dc2_bf39e8ed",
+      "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
