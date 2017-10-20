@@ -163,8 +163,10 @@ void TestLayerTreeHostBase::PerformImplSideInvalidation() {
   DCHECK(host_impl()->recycle_tree());
 
   host_impl()->CreatePendingTree();
+  ImageAnimationController::Invalidations animated_images;
   host_impl()->sync_tree()->InvalidateRegionForImages(
-      host_impl()->tile_manager()->TakeImagesToInvalidateOnSyncTree());
+      host_impl()->tile_manager()->TakeImagesToInvalidateOnSyncTree(),
+      animated_images);
   pending_layer_ = old_pending_layer_;
   old_pending_layer_ = nullptr;
 }

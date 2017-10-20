@@ -297,14 +297,15 @@ void LayerTreeImpl::BuildLayerListForTesting() {
 }
 
 void LayerTreeImpl::InvalidateRegionForImages(
-    const PaintImageIdFlatSet& images_to_invalidate) {
+    const PaintImageIdFlatSet& checkered_images,
+    const ImageAnimationController::Invalidations& animated_images) {
   DCHECK(IsSyncTree());
 
-  if (images_to_invalidate.empty())
+  if (checkered_images.empty() && animated_images.empty())
     return;
 
   for (auto* picture_layer : picture_layers_)
-    picture_layer->InvalidateRegionForImages(images_to_invalidate);
+    picture_layer->InvalidateRegionForImages(checkered_images, animated_images);
 }
 
 bool LayerTreeImpl::IsRootLayer(const LayerImpl* layer) const {

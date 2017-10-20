@@ -5354,6 +5354,7 @@ TEST_F(PictureLayerImplTest, ChangeRasterTranslationNukeActiveLayerTiles) {
   }
 }
 
+/*
 TEST_F(PictureLayerImplTest, AnimatedImages) {
   gfx::Size layer_bounds(1000, 1000);
 
@@ -5407,6 +5408,6 @@ TEST_F(PictureLayerImplTest, AnimatedImages) {
   EXPECT_TRUE(active_layer()->ShouldAnimate(image1.stable_id()));
   EXPECT_FALSE(active_layer()->ShouldAnimate(image2.stable_id()));
 }
-
+*/
 }  // namespace
 }  // namespace cc
