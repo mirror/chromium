@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e8ccce_b57bcb2c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2302,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T23:01:25Z",
+      "side": 1,
+      "message": "nit: No need for this DCHECK. The next line will crash anyway. How about this?:\nLoadTimingTabHelper::FromWebState(tab.webState)-\u003eReportLoadTime();",
+      "range": {
+        "startLine": 2302,
+        "startChar": 14,
+        "endLine": 2302,
+        "endChar": 15
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538c87f7_be5f5135",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3906,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T23:01:25Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3906,
+        "startChar": 31,
+        "endLine": 3906,
+        "endChar": 43
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a893a027_78835261",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3931,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T23:01:25Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3931,
+        "startChar": 2,
+        "endLine": 3931,
+        "endChar": 21
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2307b1_795dcbb5",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3933,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T23:01:25Z",
+      "side": 1,
+      "message": "Should we check transition type to make sure that only TYPED and GENERATED are measured?",
+      "range": {
+        "startLine": 3933,
+        "startChar": 9,
+        "endLine": 3933,
+        "endChar": 34
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cc4527_91361f0e",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T23:01:25Z",
+      "side": 1,
+      "message": "nit: A predeclaration should be sufficient",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d48b0c0_50b639ad",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T23:01:25Z",
+      "side": 1,
+      "message": "nit: This include is already present in the header.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a90b60c_a5852712",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T23:01:25Z",
+      "side": 1,
+      "message": "nit: Move initialization before constructor?",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "5e0d56725d6bee051b1a136c7aadab908cd49516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
