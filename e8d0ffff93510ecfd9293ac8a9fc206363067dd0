@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bd3cd2a_b724899a",
+        "filename": "components/data_use_measurement/core/data_use_measurement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-20T14:57:35Z",
+      "side": 1,
+      "message": "\u003e\u003d and get rid of the -1 to make it a bit simpler to read?\n\nalso: I might just comment that the value - (value_kb \u003c\u003c 10) bit is the bytes that were rounded away.",
+      "revId": "e8d0ffff93510ecfd9293ac8a9fc206363067dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
