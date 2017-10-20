@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3925cfda_6aecb964",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-20T08:48:34Z",
+      "side": 1,
+      "message": "This is essentially what the comment below says (and explains further in the parenthesis.) You should probably update that comment as well to make it more clear what cases is supposed to be handled (i.e it\u0027s non-obvious from the comment I think that inline SVG should return a title.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "01593a257f4b17c32e3853234e1d9cf5a810e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb27668_ef93e531",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-20T08:48:34Z",
+      "side": 1,
+      "message": "I think you could just check if \u0027this\u0027 is the document element (and \u003csvg\u003e just to be 100% sure.)",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 66
+      },
+      "revId": "01593a257f4b17c32e3853234e1d9cf5a810e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
