@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1558099c_91548311",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-10-20T21:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91b41375_7185f287",
+      "range": {
+        "startLine": 22,
+        "startChar": 55,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba42fd25_a45bb598",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "702681e4_a10a96e3",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-10-20T21:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba42fd25_a45bb598",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 79
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f71294_3edd7fe1",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98eb379d_9ec33f2b",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-10-20T21:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30f71294_3edd7fe1",
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "acc8ab18_933c298c",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-10-20T21:34:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "615da869_baa9407f",
+      "range": {
+        "startLine": 148,
+        "startChar": 9,
+        "endLine": 148,
+        "endChar": 22
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "505497bc_6267ed51",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
         "patchSetId": 4
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ae445edb_2e8e856b",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-10-20T21:34:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "505497bc_6267ed51",
+      "range": {
+        "startLine": 151,
+        "startChar": 14,
+        "endLine": 151,
+        "endChar": 29
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb364d2c_5fd4133b",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
         "patchSetId": 4
@@ -131,6 +245,30 @@
       "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e54d6c_5cd461f6",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-10-20T21:34:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb364d2c_5fd4133b",
+      "range": {
+        "startLine": 152,
+        "startChar": 11,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
