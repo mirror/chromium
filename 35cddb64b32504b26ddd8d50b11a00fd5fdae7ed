@@ -34,6 +34,24 @@
       "revId": "35cddb64b32504b26ddd8d50b11a00fd5fdae7ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39188e3a_652b465c",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-20T17:40:39Z",
+      "side": 1,
+      "message": "Sounds reasonable!",
+      "parentUuid": "3583c8a5_b98e7850",
+      "revId": "35cddb64b32504b26ddd8d50b11a00fd5fdae7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
