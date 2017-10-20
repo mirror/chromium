@@ -729,8 +729,6 @@ void IOThread::SetUpProxyConfigService(
     if (command_line.HasSwitch(switches::kSingleProcess)) {
       LOG(ERROR) << "Cannot use V8 Proxy resolver in single process mode.";
     } else {
-      builder->SetMojoProxyResolverFactory(
-          ProxyResolverManager::GetInstance()->CreateFactoryInterface());
 #if defined(OS_CHROMEOS)
       builder->SetDhcpFetcherFactory(
           base::MakeUnique<chromeos::DhcpProxyScriptFetcherFactoryChromeos>());

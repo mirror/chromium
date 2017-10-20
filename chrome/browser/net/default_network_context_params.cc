@@ -10,6 +10,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/net/proxy_resolver_manager.h"
 #include "chrome/common/channel_info.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service.h"
@@ -17,6 +18,7 @@
 #include "components/version_info/version_info.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/user_agent.h"
+#include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
 
 content::mojom::NetworkContextParamsPtr CreateDefaultNetworkContextParams() {
   content::mojom::NetworkContextParamsPtr network_context_params =
@@ -33,6 +35,9 @@ content::mojom::NetworkContextParamsPtr CreateDefaultNetworkContextParams() {
   quic_user_agent_id.push_back(' ');
   quic_user_agent_id.append(content::BuildOSCpuInfo());
   network_context_params->quic_user_agent_id = quic_user_agent_id;
+
+  network_context_params->proxy_resolver_factory =
+      ProxyResolverManager::GetInstance()->CreateFactoryInterface();
 
   bool http_09_on_non_default_ports_enabled = false;
   const base::Value* value =
