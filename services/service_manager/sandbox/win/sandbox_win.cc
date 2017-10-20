@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_win.h"
+#include "services/service_manager/sandbox/win/sandbox_win.h"
 
 #include <stddef.h>
 
@@ -40,11 +40,7 @@
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/sandbox/switches.h"
 
-#if !defined(NACL_WIN64)
-#include "ui/gfx/win/direct_write.h" // nogncheck: unused #ifdef NACL_WIN64
-#endif  // !defined(NACL_WIN64)
-
-namespace content {
+namespace service_manager {
 namespace {
 
 sandbox::BrokerServices* g_broker_services = NULL;
@@ -138,7 +134,9 @@ const wchar_t* const kTroublesomeDlls[] = {
 // Adds the policy rules for the path and path\ with the semantic |access|.
 // If |children| is set to true, we need to add the wildcard rules to also
 // apply the rule to the subfiles and subfolders.
-bool AddDirectory(int path, const wchar_t* sub_dir, bool children,
+bool AddDirectory(int path,
+                  const wchar_t* sub_dir,
+                  bool children,
                   sandbox::TargetPolicy::Semantics access,
                   sandbox::TargetPolicy* policy) {
   base::FilePath directory;
@@ -240,7 +238,7 @@ base::string16 PrependWindowsSessionPath(const base::char16* object) {
 
     CHECK(::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY, &token));
     CHECK(::GetTokenInformation(token, TokenSessionId, &session_id,
-        sizeof(session_id), &session_id_length));
+                                sizeof(session_id), &session_id_length));
     CloseHandle(token);
     if (session_id)
       s_session_id = session_id;
@@ -267,9 +265,8 @@ bool ShouldSetJobLevel(const base::CommandLine& cmd_line) {
 
   // ...or there is a job but the JOB_OBJECT_LIMIT_BREAKAWAY_OK limit is set.
   JOBOBJECT_EXTENDED_LIMIT_INFORMATION job_info = {};
-  if (!::QueryInformationJobObject(NULL,
-                                   JobObjectExtendedLimitInformation, &job_info,
-                                   sizeof(job_info), NULL)) {
+  if (!::QueryInformationJobObject(NULL, JobObjectExtendedLimitInformation,
+                                   &job_info, sizeof(job_info), NULL)) {
     NOTREACHED() << "QueryInformationJobObject failed. " << GetLastError();
     return true;
   }
@@ -438,13 +435,13 @@ sandbox::ResultCode AddPolicyForSandboxedProcess(
 #ifndef OFFICIAL_BUILD
 base::win::IATPatchFunction g_iat_patch_duplicate_handle;
 
-typedef BOOL (WINAPI *DuplicateHandleFunctionPtr)(HANDLE source_process_handle,
-                                                  HANDLE source_handle,
-                                                  HANDLE target_process_handle,
-                                                  LPHANDLE target_handle,
-                                                  DWORD desired_access,
-                                                  BOOL inherit_handle,
-                                                  DWORD options);
+typedef BOOL(WINAPI* DuplicateHandleFunctionPtr)(HANDLE source_process_handle,
+                                                 HANDLE source_handle,
+                                                 HANDLE target_process_handle,
+                                                 LPHANDLE target_handle,
+                                                 DWORD desired_access,
+                                                 BOOL inherit_handle,
+                                                 DWORD options);
 
 DuplicateHandleFunctionPtr g_iat_orig_duplicate_handle;
 
@@ -468,18 +465,17 @@ void CheckDuplicateHandle(HANDLE handle) {
   // Get the object basic information.
   OBJECT_BASIC_INFORMATION basic_info;
   size = sizeof(basic_info);
-  error = g_QueryObject(handle, ObjectBasicInformation, &basic_info, size,
-                        &size);
+  error =
+      g_QueryObject(handle, ObjectBasicInformation, &basic_info, size, &size);
   CHECK(NT_SUCCESS(error));
 
-  CHECK(!(basic_info.GrantedAccess & WRITE_DAC)) <<
-      kDuplicateHandleWarning;
+  CHECK(!(basic_info.GrantedAccess & WRITE_DAC)) << kDuplicateHandleWarning;
 
   if (0 == _wcsicmp(type_info->Name.Buffer, L"Process")) {
     const ACCESS_MASK kDangerousMask =
         ~static_cast<DWORD>(PROCESS_QUERY_LIMITED_INFORMATION | SYNCHRONIZE);
-    CHECK(!(basic_info.GrantedAccess & kDangerousMask)) <<
-        kDuplicateHandleWarning;
+    CHECK(!(basic_info.GrantedAccess & kDangerousMask))
+        << kDuplicateHandleWarning;
   }
 }
 
@@ -507,12 +503,9 @@ BOOL WINAPI DuplicateHandlePatch(HANDLE source_process_handle,
     // We need a handle with permission to check the job object.
     if (ERROR_ACCESS_DENIED == ::GetLastError()) {
       HANDLE temp_handle;
-      CHECK(g_iat_orig_duplicate_handle(::GetCurrentProcess(),
-                                        target_process_handle,
-                                        ::GetCurrentProcess(),
-                                        &temp_handle,
-                                        PROCESS_QUERY_INFORMATION,
-                                        FALSE, 0));
+      CHECK(g_iat_orig_duplicate_handle(
+          ::GetCurrentProcess(), target_process_handle, ::GetCurrentProcess(),
+          &temp_handle, PROCESS_QUERY_INFORMATION, FALSE, 0));
       base::win::ScopedHandle process(temp_handle);
       CHECK(::IsProcessInJob(process.Get(), NULL, &is_in_job));
     }
@@ -525,8 +518,8 @@ BOOL WINAPI DuplicateHandlePatch(HANDLE source_process_handle,
     // Duplicate the handle again, to get the final permissions.
     HANDLE temp_handle;
     CHECK(g_iat_orig_duplicate_handle(target_process_handle, *target_handle,
-                                      ::GetCurrentProcess(), &temp_handle,
-                                      0, FALSE, DUPLICATE_SAME_ACCESS));
+                                      ::GetCurrentProcess(), &temp_handle, 0,
+                                      FALSE, DUPLICATE_SAME_ACCESS));
     base::win::ScopedHandle handle(temp_handle);
 
     // Callers use CHECK macro to make sure we get the right stack.
@@ -581,30 +574,6 @@ sandbox::ResultCode SetJobMemoryLimit(const base::CommandLine& cmd_line,
 
 }  // namespace
 
-bool InitializeSandbox(service_manager::SandboxType sandbox_type,
-                       sandbox::SandboxInterfaceInfo* sandbox_info) {
-  sandbox::BrokerServices* broker_services = sandbox_info->broker_services;
-  if (broker_services) {
-    if (!InitBrokerServices(broker_services))
-      return false;
-
-    // IMPORTANT: This piece of code needs to run as early as possible in the
-    // process because it will initialize the sandbox broker, which requires the
-    // process to swap its window station. During this time all the UI will be
-    // broken. This has to run before threads and windows are created.
-    if (!service_manager::IsUnsandboxedSandboxType(sandbox_type)) {
-      // Precreate the desktop and window station used by the renderers.
-      scoped_refptr<sandbox::TargetPolicy> policy =
-          broker_services->CreatePolicy();
-      sandbox::ResultCode result = policy->CreateAlternateDesktop(true);
-      CHECK(sandbox::SBOX_ERROR_FAILED_TO_SWITCH_BACK_WINSTATION != result);
-    }
-    return true;
-  }
-
-  return service_manager::IsUnsandboxedSandboxType(sandbox_type) ||
-         InitTargetServices(sandbox_info->target_services);
-}
 sandbox::ResultCode SetJobLevel(const base::CommandLine& cmd_line,
                                 sandbox::JobLevel job_level,
                                 uint32_t ui_exceptions,
@@ -720,7 +689,7 @@ bool InitTargetServices(sandbox::TargetServices* target_services) {
   return sandbox::SBOX_ALL_OK == result;
 }
 
-sandbox::ResultCode StartSandboxedProcessInternal(
+sandbox::ResultCode StartSandboxedProcess(
     base::CommandLine* cmd_line,
     const std::string& process_type,
     const base::HandlesToInheritVector& handles_to_inherit,
@@ -882,4 +851,4 @@ sandbox::ResultCode StartSandboxedProcessInternal(
   return sandbox::SBOX_ALL_OK;
 }
 
-}  // namespace content
+}  // namespace service_manager
