@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cbe95ad_312376ab",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-20T18:05:22Z",
+      "side": 1,
+      "message": "Update the comment. Now it can be an extension or a native provider such as SMB.",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ef17c6_b2a5f640",
+        "filename": "chrome/browser/chromeos/file_system_provider/operations/operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-20T18:05:22Z",
+      "side": 1,
+      "message": "I think everything in this file is about dispatching a javascript event to an extension. So I think all these should remain extension_id.",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a515f082_b47a1f7d",
+        "filename": "chrome/browser/chromeos/file_system_provider/operations/operation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-20T18:05:22Z",
+      "side": 1,
+      "message": "This one obviously has to stay provider_id.",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27312d0_ad7364d7",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-20T18:05:22Z",
+      "side": 1,
+      "message": "Update the comment.",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5c3d95_1d2e6963",
+        "filename": "chrome/browser/chromeos/file_system_provider/registry_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-20T18:05:22Z",
+      "side": 1,
+      "message": "Update the comment so it doesn\u0027t only say extension.",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62763eba_9f1c02d7",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-20T18:05:22Z",
+      "side": 1,
+      "message": "Update the comment.",
+      "revId": "c1319172cca115405f82e07fbd5605fbbfa76ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
