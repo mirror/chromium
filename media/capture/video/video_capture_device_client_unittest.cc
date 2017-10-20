@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "media/base/limits.h"
+#include "media/capture/video/mock_video_frame_receiver.h"
 #include "media/capture/video/video_capture_buffer_pool_impl.h"
 #include "media/capture/video/video_capture_buffer_tracker_factory_impl.h"
 #include "media/capture/video/video_capture_jpeg_decoder.h"
@@ -30,43 +31,11 @@ namespace media {
 
 namespace {
 
-class MockVideoCaptureController : public VideoFrameReceiver {
- public:
-  MOCK_METHOD1(MockOnNewBufferHandle, void(int buffer_id));
-  MOCK_METHOD3(
-      MockOnFrameReadyInBuffer,
-      void(int buffer_id,
-           std::unique_ptr<media::VideoCaptureDevice::Client::Buffer::
-                               ScopedAccessPermission>* buffer_read_permission,
-           const gfx::Size&));
-  MOCK_METHOD0(OnError, void());
-  MOCK_METHOD1(OnLog, void(const std::string& message));
-  MOCK_METHOD1(OnBufferRetired, void(int buffer_id));
-  MOCK_METHOD0(OnStarted, void());
-  MOCK_METHOD0(OnStartedUsingGpuDecode, void());
-
-  void OnNewBufferHandle(
-      int buffer_id,
-      std::unique_ptr<media::VideoCaptureDevice::Client::Buffer::HandleProvider>
-          handle_provider) override {
-    MockOnNewBufferHandle(buffer_id);
-  }
-
-  void OnFrameReadyInBuffer(
-      int32_t buffer_id,
-      int frame_feedback_id,
-      std::unique_ptr<
-          media::VideoCaptureDevice::Client::Buffer::ScopedAccessPermission>
-          buffer_read_permission,
-      media::mojom::VideoFrameInfoPtr frame_info) override {
-    MockOnFrameReadyInBuffer(buffer_id, &buffer_read_permission,
-                             frame_info->coded_size);
-  }
-};
-
 std::unique_ptr<media::VideoCaptureJpegDecoder> ReturnNullPtrAsJpecDecoder() {
   return nullptr;
 }
+
+}  // namespace
 
 // Test fixture for testing a unit consisting of an instance of
 // VideoCaptureDeviceClient connected to a partly-mocked instance of
@@ -80,7 +49,7 @@ class VideoCaptureDeviceClientTest : public ::testing::Test {
         new media::VideoCaptureBufferPoolImpl(
             base::MakeUnique<media::VideoCaptureBufferTrackerFactoryImpl>(),
             1));
-    auto controller = base::MakeUnique<MockVideoCaptureController>();
+    auto controller = base::MakeUnique<MockVideoFrameReceiver>();
     controller_ = controller.get();
     device_client_ = base::MakeUnique<media::VideoCaptureDeviceClient>(
         std::move(controller), buffer_pool,
@@ -89,14 +58,12 @@ class VideoCaptureDeviceClientTest : public ::testing::Test {
   ~VideoCaptureDeviceClientTest() override {}
 
  protected:
-  MockVideoCaptureController* controller_;
+  MockVideoFrameReceiver* controller_;
   std::unique_ptr<media::VideoCaptureDeviceClient> device_client_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceClientTest);
 };
-
-}  // namespace
 
 // A small test for reference and to verify VideoCaptureDeviceClient is
 // minimally functional.
