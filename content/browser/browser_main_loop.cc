@@ -739,7 +739,12 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
   }
   {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:NetworkChangeNotifier");
-    network_change_notifier_.reset(net::NetworkChangeNotifier::Create());
+    // Skip creating a global singleton NetworkChangeNotifier if NetworkService
+    // is running in process, because NetworkService will create its own.
+    if (!(parsed_command_line_.HasSwitch(switches::kSingleProcess) &&
+          base::FeatureList::IsEnabled(features::kNetworkService))) {
+      network_change_notifier_.reset(net::NetworkChangeNotifier::Create());
+    }
   }
   {
     TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:MediaFeatures");
