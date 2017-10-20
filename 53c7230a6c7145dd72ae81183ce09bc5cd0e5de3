@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9a16576_cfcaab99",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-20T08:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07f70110_0494d96d",
+      "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4079ceb5_d66d3c07",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T07:36:40Z",
       "side": 1,
       "message": "What we\u0027d like to do here is conceptually:\n\n  |event|\u0027s return value \u003d either of\n      null or\n      undefined or\n      string (e.g. ToString(return_value) )\n\nThis code looks a little different.  What we need to do are:\n\n  a) Convert |return_value| to one of null, undefined or string.\n  b) Store the converted return value into event-\u003ereturnValue().\n\nI\u0027m not sure what the value of event-\u003ereturnValue() would be if we didn\u0027t perform setReturnValue, so I\u0027d recommend to always call event-\u003esetReturnValue even if the return value is null or undefined.",
+      "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a70b6f7_d7d2c21c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-20T08:05:28Z",
+      "side": 1,
+      "message": "So, event-\u003ereturnValue() actually can be set in the listener function and maybe different than the return value of the listener function. The spec says to only assign event-\u003ereturnValue \u003d return_value when it\u0027s not set/empty. \n\nThe test case here shows the scenario where event\u0027s returnValue should be different than the listener function\u0027s return value:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/html/browsers/browsing-the-web/unloading-documents/beforeunload-canceling.html?sq\u003dpackage:chromium\u0026l\u003d138\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/html/browsers/browsing-the-web/unloading-documents/beforeunload-canceling-1.html?l\u003d21",
+      "parentUuid": "4079ceb5_d66d3c07",
       "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67aa564c_a7cff3ca",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-20T08:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb1f8e0c_dfb6a240",
+      "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
