@@ -1544,6 +1544,19 @@
       "input_view": "inputview.html#id=m17n:gu_phone&language=gu&passwordLayout=us-ltr&name=keyboard_gujarati_phonetic"
     },
     {
+      "name": "__MSG_keyboard_gujarati_new_phonetic__",
+      "type": "ime",
+      "id": "vkd_gu_phone2",
+      "description": "",
+      "language": [
+        "gu"
+      ],
+      "layouts": [
+        "us"
+      ],
+      "input_view": "inputview.html#id=m17n:gu_phone2&language=gu&passwordLayout=us-ltr&name=keyboard_gujarati_new_phonetic"
+    },
+    {
       "name": "__MSG_keyboard_devanagari_phonetic__",
       "type": "ime",
       "id": "vkd_deva_phone",
@@ -1556,6 +1569,32 @@
         "us"
       ],
       "input_view": "inputview.html#id=m17n:deva_phone&language=hi&passwordLayout=us-ltr&name=keyboard_devanagari_phonetic"
+    },
+    {
+      "name": "__MSG_keyboard_hindi_phonetic__",
+      "type": "ime",
+      "id": "vkd_hi_phone",
+      "description": "",
+      "language": [
+        "hi"
+      ],
+      "layouts": [
+        "us"
+      ],
+      "input_view": "inputview.html#id=m17n:hi_phone&language=hi&passwordLayout=us-ltr&name=keyboard_hindi_phonetic"
+    },
+    {
+      "name": "__MSG_keyboard_marathi_phonetic__",
+      "type": "ime",
+      "id": "vkd_mr_phone",
+      "description": "",
+      "language": [
+        "mr"
+      ],
+      "layouts": [
+        "us"
+      ],
+      "input_view": "inputview.html#id=m17n:mr_phone&language=mr&passwordLayout=us-ltr&name=keyboard_marathi_phonetic"
     },
     {
       "name": "__MSG_keyboard_kannada_phonetic__",
