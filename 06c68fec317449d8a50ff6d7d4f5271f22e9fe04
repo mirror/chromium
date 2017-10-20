@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c1f0bc_82548c47",
+        "filename": "chromeos/dbus/debug_daemon_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-20T17:29:09Z",
+      "side": 1,
+      "message": "This class already relies on multiple \u0027delete this\u0027 calls, which is fragile. I would suggest making |data| a member, setting it (or not in this case), and adding a method like RunCallbackAndDestroy(bool success) which invokes the callback with |data_| and deletes this.",
+      "revId": "06c68fec317449d8a50ff6d7d4f5271f22e9fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
