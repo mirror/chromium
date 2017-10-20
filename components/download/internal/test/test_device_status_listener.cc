@@ -8,7 +8,9 @@ namespace download {
 namespace test {
 
 TestDeviceStatusListener::TestDeviceStatusListener()
-    : DeviceStatusListener(base::TimeDelta(), base::TimeDelta()),
+    : DeviceStatusListener(base::TimeDelta(),
+                           base::TimeDelta(),
+                           base::TimeDelta()),
       weak_ptr_factory_(this) {}
 
 TestDeviceStatusListener::~TestDeviceStatusListener() {

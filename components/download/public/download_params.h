@@ -86,8 +86,13 @@ struct SchedulingParams {
   // The suggested priority.  Non-UI priorities may not be honored by the
   // DownloadService based on internal criteria and settings.
   Priority priority;
+
   NetworkRequirements network_requirements;
   BatteryRequirements battery_requirements;
+
+  // When BatteryRequirements is BATTERY_SENSITIVE, the minimum battery
+  // percentage for download to start. Valid range is [0, 100].
+  int optimal_battery_percentage;
 };
 
 // The parameters describing how to build the request when starting a download.
