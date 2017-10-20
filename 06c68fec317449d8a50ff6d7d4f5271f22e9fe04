@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c6afeaa0_fd91cae1",
+        "filename": "chrome/browser/metrics/perf/perf_output.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1151970
+      },
+      "writtenOn": "2017-10-20T19:23:30Z",
+      "side": 1,
+      "message": "result.value_or(std::string()) ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 72
+      },
+      "revId": "06c68fec317449d8a50ff6d7d4f5271f22e9fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c73d6b_7806ede9",
+        "filename": "chrome/browser/metrics/perf/perf_output.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1151970
+      },
+      "writtenOn": "2017-10-20T19:23:30Z",
+      "side": 1,
+      "message": "if (perf_data_pipe_reader.release()) ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "06c68fec317449d8a50ff6d7d4f5271f22e9fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93c1f0bc_82548c47",
         "filename": "chromeos/dbus/debug_daemon_client.cc",
         "patchSetId": 1
