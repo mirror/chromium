@@ -168,6 +168,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void OnContentFrameAvailable();
   void OnWebVRFrameAvailable();
   void ScheduleWebVrFrameTimeout();
+  void OnWebVrTimeoutImminent();
   void OnWebVrFrameTimedOut();
 
   int64_t GetPredictedFrameTimeNanos();
@@ -283,6 +284,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   AndroidVSyncHelper vsync_helper_;
 
   base::CancelableCallback<void()> webvr_frame_timeout_;
+  base::CancelableCallback<void()> webvr_spinner_timeout_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 

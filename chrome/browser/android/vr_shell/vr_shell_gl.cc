@@ -92,6 +92,7 @@ static constexpr base::TimeDelta kWebVRFenceCheckTimeout =
     base::TimeDelta::FromMicroseconds(2000);
 
 static constexpr int kWebVrInitialFrameTimeoutSeconds = 5;
+static constexpr int kWebVrSpinnerTimeoutSeconds = 2;
 
 static constexpr gfx::PointF kOutOfBoundsPoint = {-0.5f, -0.5f};
 
@@ -410,6 +411,7 @@ void VrShellGl::OnWebVRFrameAvailable() {
     ScheduleWebVrFrameTimeout();
   } else {
     webvr_frame_timeout_.Cancel();
+    webvr_spinner_timeout_.Cancel();
   }
 }
 
@@ -419,8 +421,14 @@ void VrShellGl::ScheduleWebVrFrameTimeout() {
   // screens correctly. For now just ensure we receive a first frame.
   if (webvr_frames_received_ > 0) {
     webvr_frame_timeout_.Cancel();
+    webvr_spinner_timeout_.Cancel();
     return;
   }
+  webvr_spinner_timeout_.Reset(
+      base::Bind(&VrShellGl::OnWebVrTimeoutImminent, base::Unretained(this)));
+  task_runner_->PostDelayedTask(
+      FROM_HERE, webvr_spinner_timeout_.callback(),
+      base::TimeDelta::FromSeconds(kWebVrSpinnerTimeoutSeconds));
   webvr_frame_timeout_.Reset(
       base::Bind(&VrShellGl::OnWebVrFrameTimedOut, base::Unretained(this)));
   task_runner_->PostDelayedTask(
@@ -430,6 +438,10 @@ void VrShellGl::ScheduleWebVrFrameTimeout() {
 
 void VrShellGl::OnWebVrFrameTimedOut() {
   ui_->OnWebVrTimedOut();
+}
+
+void VrShellGl::OnWebVrTimeoutImminent() {
+  ui_->OnWebVrTimeoutImminent();
 }
 
 void VrShellGl::GvrInit(gvr_context* gvr_api) {
@@ -742,10 +754,11 @@ void VrShellGl::HandleControllerAppButtonActivity(
                                   base::Unretained(ui_.get()), direction));
       }
     }
-    if (direction == vr::UiInterface::NONE)
+    if (direction == vr::UiInterface::NONE) {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(&vr::UiInterface::OnAppButtonClicked,
                                 base::Unretained(ui_.get())));
+    }
   }
 }
 
@@ -1061,7 +1074,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(
 }
 
 bool VrShellGl::ShouldDrawWebVr() {
-  return web_vr_mode_ && ui_->ShouldRenderWebVr();
+  return web_vr_mode_ && ui_->ShouldRenderWebVr() && webvr_frames_received_ > 0;
 }
 
 void VrShellGl::DrawWebVr() {
@@ -1092,6 +1105,7 @@ void VrShellGl::OnPause() {
   controller_->OnPause();
   gvr_api_->PauseTracking();
   webvr_frame_timeout_.Cancel();
+  webvr_spinner_timeout_.Cancel();
 }
 
 void VrShellGl::OnResume() {
@@ -1109,7 +1123,6 @@ void VrShellGl::OnResume() {
 
 void VrShellGl::SetWebVrMode(bool enabled) {
   web_vr_mode_ = enabled;
-
   if (web_vr_mode_ && submit_client_) {
     ScheduleWebVrFrameTimeout();
   } else {
