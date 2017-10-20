@@ -70,6 +70,30 @@
       "revId": "344f597509006b5e0e9101e0272dff6a0338167a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02de2d45_47b6bfb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-20T08:50:16Z",
+      "side": 1,
+      "message": "hasShown is indeed more accurate in this code path.  Even if the user has completed the search engine promo this session, we don\u0027t want to show another promo.  We want to throttle the number of promos shown, not necessarily the number that have been shown and completed.\n\nIf we just showed a search engine promo and they were able to complete it at this point, we wouldn\u0027t want to show another promo here (albeit that is extremely unlikely as it was shown in roughly the previous UI loop).",
+      "parentUuid": "7b167037_efc2f488",
+      "range": {
+        "startLine": 501,
+        "startChar": 12,
+        "endLine": 504,
+        "endChar": 13
+      },
+      "revId": "344f597509006b5e0e9101e0272dff6a0338167a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
