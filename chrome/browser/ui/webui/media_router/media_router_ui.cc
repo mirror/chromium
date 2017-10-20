@@ -50,12 +50,17 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/constants.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
 #include "third_party/icu/source/i18n/unicode/coll.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/web_dialogs/web_dialog_delegate.h"
@@ -177,6 +182,62 @@ class MediaRouterUI::UIIssuesObserver : public IssuesObserver {
   MediaRouterUI* ui_;
 
   DISALLOW_COPY_AND_ASSIGN(UIIssuesObserver);
+};
+
+// A class which calls a fullscreen function and then deletes itself if and when
+// the WebContents is loaded.
+class MediaRouterUI::WebContentsFullscreenOnLoadedObserver
+    : public content::WebContentsObserver {
+ public:
+  explicit WebContentsFullscreenOnLoadedObserver(
+      content::WebContents* web_contents)
+      : content::WebContentsObserver() {
+    // If the webcontents is loading, start listening, otherwise just call the
+    // fullscreen function.
+    if (web_contents->IsLoading()) {
+      Observe(web_contents);
+    } else {
+      FullScreenFirstVideoElement(web_contents);
+      DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+      content::BrowserThread::DeleteSoon(content::BrowserThread::UI, FROM_HERE,
+                                         this);
+    }
+  }
+  ~WebContentsFullscreenOnLoadedObserver() override{};
+
+  void DidStopLoading() override {
+    FullScreenFirstVideoElement(web_contents());
+    delete this;
+  }
+
+  void DidStartNavigation(
+      content::NavigationHandle* navigation_handle) override {
+    // If the user takes over and navigates away from the file, stop listening.
+    // (It is possible however for this listener to be created before the
+    // navigation to the requested file triggers, so provided we're still on a
+    // file, go ahead and keep listening).
+    if (!navigation_handle->GetURL().SchemeIsFile()) {
+      delete this;
+    }
+  }
+
+  void WebContentsDestroyed() override {
+    // If the WebContents is destroyed we will never trigger and need to clean
+    // up.
+    delete this;
+  }
+
+  // Sends a requests for full screen to the web contents targeted at the first
+  // video element.
+  void FullScreenFirstVideoElement(content::WebContents* web_contents) {
+    if (!web_contents->GetLastCommittedURL().SchemeIsFile()) {
+      // The user has navigated before the casting started. Do not attempt to
+      // fullscreen.
+      return;
+    }
+
+    web_contents->GetMainFrame()->RequestFullscreenVideoElement();
+  }
 };
 
 MediaRouterUI::UIMediaRoutesObserver::UIMediaRoutesObserver(
@@ -505,8 +566,9 @@ bool MediaRouterUI::CreateRoute(const MediaSink::Id& sink_id,
     SessionID::id_type tab_id = SessionTabHelper::IdForTab(tab_contents);
     source_id = MediaSourceForTab(tab_id).id();
 
-    SetLocalFileRouteParameters(sink_id, &origin, &route_response_callbacks,
-                                &timeout, &incognito);
+    SetLocalFileRouteParameters(sink_id, &origin, tab_contents,
+                                &route_response_callbacks, &timeout,
+                                &incognito);
   } else if (!SetRouteParameters(sink_id, cast_mode, &source_id, &origin,
                                  &route_response_callbacks, &timeout,
                                  &incognito)) {
@@ -610,6 +672,7 @@ bool MediaRouterUI::SetRouteParameters(
 bool MediaRouterUI::SetLocalFileRouteParameters(
     const MediaSink::Id& sink_id,
     url::Origin* origin,
+    content::WebContents* tab_contents,
     std::vector<MediaRouteResponseCallback>* route_response_callbacks,
     base::TimeDelta* timeout,
     bool* incognito) {
@@ -628,6 +691,10 @@ bool MediaRouterUI::SetLocalFileRouteParameters(
 
   route_response_callbacks->push_back(base::BindOnce(
       &MediaRouterUI::MaybeReportFileInformation, weak_factory_.GetWeakPtr()));
+
+  route_response_callbacks->push_back(
+      base::BindOnce(&MediaRouterUI::FullScreenFirstVideoElement,
+                     weak_factory_.GetWeakPtr(), tab_contents));
 
   *timeout = GetRouteRequestTimeout(MediaCastMode::LOCAL_FILE);
   *incognito = Profile::FromWebUI(web_ui())->IsOffTheRecord();
@@ -809,6 +876,14 @@ void MediaRouterUI::MaybeReportCastingSource(MediaCastMode cast_mode,
                                              const RouteRequestResult& result) {
   if (result.result_code() == RouteRequestResult::OK)
     MediaRouterMetrics::RecordMediaRouterCastingSource(cast_mode);
+}
+
+void MediaRouterUI::FullScreenFirstVideoElement(
+    content::WebContents* web_contents,
+    const RouteRequestResult& result) {
+  if (result.result_code() == RouteRequestResult::OK) {
+    new WebContentsFullscreenOnLoadedObserver(web_contents);
+  }
 }
 
 void MediaRouterUI::MaybeReportFileInformation(

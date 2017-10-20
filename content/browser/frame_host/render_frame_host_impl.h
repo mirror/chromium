@@ -205,6 +205,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   bool IsBeforeUnloadHangMonitorDisabledForTesting() override;
   bool GetSuddenTerminationDisablerState(
       blink::WebSuddenTerminationDisablerType disabler_type) override;
+  void RequestFullscreenVideoElement() override;
 
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
 

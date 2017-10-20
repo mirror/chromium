@@ -1581,6 +1581,10 @@ IPC_MESSAGE_ROUTED3(FrameHostMsg_SmartClipDataExtracted,
                     base::string16 /* text */,
                     base::string16 /* html */)
 
+// Requests the browser enter "tab fullscreen" mode for the for the first video
+// element in the frame.
+IPC_MESSAGE_ROUTED0(FrameMsg_RequestFullscreenVideoElement)
+
 // Puts the browser into "tab fullscreen" mode for the sending renderer.
 // See the comment in chrome/browser/ui/browser.h for more details.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_ToggleFullscreen, bool /* enter_fullscreen */)
