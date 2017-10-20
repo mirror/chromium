@@ -169,7 +169,7 @@ String SVGElement::title() const {
   // According to spec, we should not return titles when hovering over root
   // <svg> elements (those <title> elements are the title of the document, not a
   // tooltip) so we instantly return.
-  if (IsOutermostSVGSVGElement())
+  if (IsOutermostSVGSVGElement() && parentNode()->IsDocumentNode())
     return String();
 
   if (InUseShadowTree()) {
