@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8d433209_26a4802b",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-20T17:53:10Z",
+      "side": 1,
+      "message": "Right, it\u0027s the \"logically impossible\" part I am not clear on.\n\nCould multiple clients exist such that, for example, a timer closes a notification when it expires and a click closes a notification by the user, in the same frame such that this gets called twice with the same id? If there is a layer that makes that logically impossible, then DCHECK is correct. If that is an unlikely edge case, we should still handle it, and not DCHECK.\n\nEither way we should document the expectations in the NotificationPlatformBridgeDelegate declaration.",
+      "parentUuid": "a52c1a61_f0133ef8",
+      "revId": "0b82f66b14355394d55041d9f42ae0f4a2430436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f92ca190_7cadd7f5",
         "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
         "patchSetId": 5
