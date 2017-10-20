@@ -14,11 +14,13 @@ def PostUploadHook(cl, change, output_api):
   """git cl upload will call this hook after the issue is created/modified.
 
   This hook adds an extra try bot list to the CL description in order to run
-  the Mac GPU bots in addition to the usual CQ try bots.
+  the Mac GPU and windows 10 bots in addition to the usual CQ try bots.
   """
   return output_api.EnsureCQIncludeTrybotsAreAdded(
     cl,
     [
-      'master.tryserver.chromium.mac:mac_optional_gpu_tests_rel'
+      'master.tryserver.chromium.mac:mac_optional_gpu_tests_rel',
+      'master.tryserver.chromium.win:win10_chromium_x64_rel_ng',
+      'master.tryserver.chromium.win:win_optional_gpu_tests_rel'
     ],
-    'Automatically added optional Mac GPU tests to run on CQ.')
+    'Automatically added optional GPU tests to run on CQ.')
