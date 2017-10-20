@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd8e7a39_e31bc1cf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_margin_strut.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "b5d27210_6f677ab3",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a8bb936_8024324c",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_break_token.h",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8363ac4_7fbb5713",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_break_token.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8bb936_8024324c",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "8d5b172d_039b5df9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "Added comment that this is a copy here for immutability purposes.",
+      "parentUuid": "f9e374f4_c89c1381",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37b93a9a_9bfff721",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 21
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "e0b2e2a9_57419082",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37b93a9a_9bfff721",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c62eb49_a454bdff",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_child_iterator.h",
         "patchSetId": 21
@@ -98,6 +170,24 @@
       "writtenOn": "2017-10-17T18:28:49Z",
       "side": 1,
       "message": "Should this take a block break token as well or is break_token_ sufficient?",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edee434a_0e6c9916",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_child_iterator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "It really only needs to take an inline break token,\n\ninlines are the only thing where multiple fragments can belong in the same parent fragment.",
+      "parentUuid": "6c62eb49_a454bdff",
       "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

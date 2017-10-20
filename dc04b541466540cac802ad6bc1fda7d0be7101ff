@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b15b16f0_b0a0f57c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "Ack, resolved in separate patch. :)",
+      "parentUuid": "3e267e5c_3b286e54",
+      "revId": "dc04b541466540cac802ad6bc1fda7d0be7101ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18df1193_7740842c",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
         "patchSetId": 23
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cac4c61e_15710dd9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "Yeah, I couldn\u0027t work out how to fix this regression in this patchset. Conceptually the new fragment tree is correct, but I think copying back the data is wrong at the moment?\n\n\u003e NGColumnLayoutAlgorithm uncondtionally creates NGBlockLayoutAlgorithm objects for its children. \n\nI think ^ is still correct. I think this is just a copying back issue.",
+      "parentUuid": "18df1193_7740842c",
+      "revId": "dc04b541466540cac802ad6bc1fda7d0be7101ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0482b99_a1e2e98c",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.cc",
         "patchSetId": 23
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-18T15:46:20Z",
       "side": 1,
       "message": "Before, line box was always in visible coordinates. Does this patch change it to place floats etc.?",
+      "revId": "dc04b541466540cac802ad6bc1fda7d0be7101ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9440aa76_c61c9088",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "No, this is so that it has the same constructor as NGFragmentBuilder so it can be used in the NGLayoutAlgorithm template.\n\nWe can optionally remove the \"container_builder_\" field on NGLayoutAlgorithm, and move it up to each of the sub-classes.\n\nThoughts?",
+      "parentUuid": "e0482b99_a1e2e98c",
       "revId": "dc04b541466540cac802ad6bc1fda7d0be7101ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

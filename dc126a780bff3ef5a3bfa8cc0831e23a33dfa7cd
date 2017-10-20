@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59f0b42d_e616a08d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "@kojii, does this make sense? I couldn\u0027t think of a way were this would be noticeable. Not sure what other engines do here.",
+      "range": {
+        "startLine": 602,
+        "startChar": 28,
+        "endLine": 602,
+        "endChar": 54
+      },
+      "revId": "dc126a780bff3ef5a3bfa8cc0831e23a33dfa7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f899d9f8_ec02b610",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "I\u0027ve mostly disabled fragmentation support for this at the moment, which is why there are a bunch a new multi-col DCHECK crashes, and failures. We need to look at this separately I think.",
+      "range": {
+        "startLine": 375,
+        "startChar": 6,
+        "endLine": 375,
+        "endChar": 37
+      },
+      "revId": "dc126a780bff3ef5a3bfa8cc0831e23a33dfa7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19dad07_1424c539",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-20T17:08:48Z",
+      "side": 1,
+      "message": "@kojii - The block algorithm will now append empty line-boxes in the fragment tree, which is why this is needed.\n\nWe need to add any PositionedFloats from an empty line-box NGLayoutResult, but don\u0027t necessarily have to add the empty line-box fragment. Thoughts?",
+      "range": {
+        "startLine": 1296,
+        "startChar": 8,
+        "endLine": 1296,
+        "endChar": 38
+      },
+      "revId": "dc126a780bff3ef5a3bfa8cc0831e23a33dfa7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
