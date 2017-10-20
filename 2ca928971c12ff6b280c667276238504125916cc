@@ -1,0 +1,279 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6be4251c_f3a4e806",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "Don\u0027t forget to update this comment.",
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0028583_f77c2fb0",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: s/to/with/\n\n(Could be misread as injecting an iframe into some other web tab.)",
+      "range": {
+        "startLine": 35,
+        "startChar": 60,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a5f7f2_6f4556c7",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: with a",
+      "range": {
+        "startLine": 43,
+        "startChar": 44,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2eef954_705ec3e2",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: s/is/are/",
+      "range": {
+        "startLine": 68,
+        "startChar": 31,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb4e821_86325652",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "How does this pass, by the way?  I don\u0027t see an exception for about:blank in your throttle.",
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b709cf7b_a2d15748",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: from a",
+      "range": {
+        "startLine": 86,
+        "startChar": 40,
+        "endLine": 86,
+        "endChar": 45
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec47a78_042a7430",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: would",
+      "range": {
+        "startLine": 86,
+        "startChar": 19,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555d56ce_7daeeecd",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: Remove TODO, since it\u0027s already done.  (Plus the TODO above kind of covers the intention of changing it later.)",
+      "range": {
+        "startLine": 196,
+        "startChar": 5,
+        "endLine": 196,
+        "endChar": 18
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568bf038_dbe19201",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: with a",
+      "range": {
+        "startLine": 205,
+        "startChar": 23,
+        "endLine": 205,
+        "endChar": 28
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b1beeb_9a6ce73a",
+        "filename": "content/browser/frame_host/webui_navigation_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "Let\u0027s leave this last block out, and just have:\nTODO(nasko): Verify the SiteInstance is different once https://crbug.com/NNNN is fixed.\n\n(Do we have a bug filed for this process sharing issue?  Neither 776900 nor 776887 seem to cover it, and it\u0027s high priority to fix.)",
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2995f2_6c57344f",
+        "filename": "content/browser/frame_host/webui_navigation_throttle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "Thanks-- the comment is much improved.",
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474c73e5_5f338a72",
+        "filename": "content/browser/frame_host/webui_navigation_throttle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "These bugs tend to be high severity, because you still need a renderer exploit.  Maybe we can just say \"it can be used as an easy step towards a sandbox escape.\"",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdfdfb3_303e995f",
+        "filename": "content/browser/frame_host/webui_navigation_throttle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T21:52:31Z",
+      "side": 1,
+      "message": "nit: in a",
+      "range": {
+        "startLine": 22,
+        "startChar": 73,
+        "endLine": 22,
+        "endChar": 75
+      },
+      "revId": "2ca928971c12ff6b280c667276238504125916cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
