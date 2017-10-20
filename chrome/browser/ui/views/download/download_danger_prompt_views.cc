@@ -46,6 +46,7 @@ class DownloadDangerPromptViews : public DownloadDangerPrompt,
   DownloadDangerPromptViews(content::DownloadItem* item,
                             bool show_context,
                             const OnDone& done);
+  ~DownloadDangerPromptViews() override;
 
   // DownloadDangerPrompt:
   void InvokeActionForTesting(Action action) override;
@@ -124,6 +125,11 @@ DownloadDangerPromptViews::DownloadDangerPromptViews(
       item->GetBrowserContext()));
   chrome::RecordDialogCreation(
       chrome::DialogIdentifier::DOWNLOAD_DANGER_PROMPT);
+}
+
+DownloadDangerPromptViews::~DownloadDangerPromptViews() {
+  if (download_)
+    download_->RemoveObserver(this);
 }
 
 // DownloadDangerPrompt methods:
