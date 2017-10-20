@@ -200,6 +200,9 @@ InterfaceProvider* Platform::GetInterfaceProvider() {
   return InterfaceProvider::GetEmptyInterfaceProvider();
 }
 
+void Platform::AddConnectionFilter(
+    std::unique_ptr<service_manager::BinderRegistry>) {}
+
 std::unique_ptr<WebMIDIAccessor> Platform::CreateMIDIAccessor(
     WebMIDIAccessorClient*) {
   return nullptr;

@@ -22,13 +22,13 @@
 #include "content/common/file_utilities.mojom.h"
 #include "content/common/origin_trials/trial_policy_impl.h"
 #include "content/common/possibly_associated_interface_ptr.h"
-#include "content/common/web_database.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
 #include "content/renderer/top_level_blame_context.h"
 #include "content/renderer/webpublicsuffixlist_impl.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBFactory.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
+#include "third_party/WebKit/public/web/web_database.mojom.h"
 
 namespace IPC {
 class SyncMessageFilter;
@@ -200,6 +200,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   blink::WebString ConvertIDNToUnicode(const blink::WebString& host) override;
   service_manager::Connector* GetConnector() override;
   blink::InterfaceProvider* GetInterfaceProvider() override;
+  void AddConnectionFilter(
+      std::unique_ptr<service_manager::BinderRegistry>) override;
   void StartListening(blink::WebPlatformEventType,
                       blink::WebPlatformEventListener*) override;
   void StopListening(blink::WebPlatformEventType) override;
@@ -275,7 +277,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   void InitializeWebDatabaseHostIfNeeded();
 
   // Return the mojo interface for making WebDatabaseHost calls.
-  mojom::WebDatabaseHost& GetWebDatabaseHost();
+  blink::mojom::WebDatabaseHost& GetWebDatabaseHost();
 
   std::unique_ptr<blink::WebThread> main_thread_;
   std::unique_ptr<service_manager::Connector> connector_;
@@ -333,8 +335,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   // deprecate this.
   scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
 
-  mojom::WebDatabaseHostPtrInfo web_database_host_info_;
-  scoped_refptr<mojom::ThreadSafeWebDatabaseHostPtr> web_database_host_;
+  blink::mojom::WebDatabaseHostPtrInfo web_database_host_info_;
+  scoped_refptr<blink::mojom::ThreadSafeWebDatabaseHostPtr> web_database_host_;
 
   mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
 
