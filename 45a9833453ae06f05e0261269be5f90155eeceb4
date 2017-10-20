@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caad8356_837975b8",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2828,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-20T20:14:06Z",
+      "side": 1,
+      "message": "I\u0027m curious whether adding\n\n  libfuzzer_options \u003d [ \"only_ascii\u003d1\" ]\n\nwould be useful here",
+      "range": {
+        "startLine": 2828,
+        "startChar": 13,
+        "endLine": 2828,
+        "endChar": 33
+      },
+      "revId": "45a9833453ae06f05e0261269be5f90155eeceb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
