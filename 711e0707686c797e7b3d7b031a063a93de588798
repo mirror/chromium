@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "348e3fb5_fa30999d",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-20T15:43:46Z",
+      "side": 1,
+      "message": "What\u0027s \"void Log(...)\" for?",
+      "revId": "711e0707686c797e7b3d7b031a063a93de588798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
