@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a18ef3e5_478864de",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-20T07:34:34Z",
+      "side": 1,
+      "message": "IsEmpty() is not necessary - IsEmpty() is checking if it is \"\".\n(WTF String\u0027s IsEmpty() seems implying either IsNull() or \"\")",
+      "revId": "1dbf11b290eaf24dee702ccec3164e47880a9703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9942af00_e4fecb7b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-20T07:34:34Z",
+      "side": 1,
+      "message": "I think this function should return from here, you already event-\u003epreventDefault() for\nthis case on line 179.",
+      "revId": "1dbf11b290eaf24dee702ccec3164e47880a9703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
