@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "e478fc57_77ab7a39",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-20T20:01:03Z",
+      "side": 1,
+      "message": "i know that this is from the original comment, but this isn\u0027t accurate anymore, is it? i think that ToS is shown as part of OOBE.",
+      "range": {
+        "startLine": 22,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9295e7ff_dbeeb1ca",
         "filename": "components/session_manager/session_manager_types.h",
         "patchSetId": 5
