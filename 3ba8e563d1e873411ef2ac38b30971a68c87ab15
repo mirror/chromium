@@ -22,6 +22,30 @@
       "revId": "3ba8e563d1e873411ef2ac38b30971a68c87ab15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0674e5d_2d91a6b5",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T18:29:51Z",
+      "side": 1,
+      "message": "Good point. I can fix it in another CL.\n\nThere is actually a bug that Download.Time use start_tick_ in download_item_impl.cc, but loading from history db sets it to 0, so download resumption completion will record one hour in the metric. \n\nWe should compare the time downloading the data to the total size, however there is no such things in db, we have starting time and end time but those are just timestamps, there could be void in the middle.",
+      "parentUuid": "b239b8f3_a763b489",
+      "range": {
+        "startLine": 268,
+        "startChar": 33,
+        "endLine": 268,
+        "endChar": 69
+      },
+      "revId": "3ba8e563d1e873411ef2ac38b30971a68c87ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
