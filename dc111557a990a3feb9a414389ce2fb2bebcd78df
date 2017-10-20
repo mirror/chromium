@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b0449ee_b647f462",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-20T18:53:32Z",
+      "side": 1,
+      "message": "In the case of synchronous NotifyFinished(), this (and probably other callers of SetResource(FooResource::Fetch(...))) causes slight behavior change: GetResource() was null previously, and it\u0027s non-null now.\n\nPreviously, the call order was:\n1. ScriptResource::Fetch() -\u003e ResourceFetcher::RequestResource()\n2. Inside SetResource():\n2a. Set ResourceOwner::resource_\n2b. AddClient() -\u003e possibly synchronous NotifyFinished()\n3. Just after SetResource() call.\n\nAnd, if NotifyFinished() calls ClearResource() (this is the case here, see WorkletScriptLoader::NotifyFinished() below), ResourceOwner::GetResource() returns null in Step 3.\n\nAfter this CL, the call order would be:\n\n1. Inside ScriptResource::Fetch():\n1a. ResourceFetcher::RequestResource()\n1b. AddClient() -\u003e possibly synchronous NotifyFinished()\n2. Inside SetResource(), set ResourceOwner::resource_\n3. Just after SetResource() call.\n\nClearResource() in NotifyFinished() is done in Step 1b BEFORE SetResource() (to non-null) in Step 2, and thus ResourceOwner::GetResource() returns non-null in Step 3.\n\nCandidate fixes would be (I don\u0027t have a good idea for now though):\n- Fix ResourceClient-side code to handle the new call order correctly (but I feel this can complicates the logic further),\n- Make AddClient() always async, or\n- Keep the old call order ... but how? the code like below would keep the old call order, but AddClient() calls would be de-centralized (ResourceFetcher::RequestResource() and ResourceOwner have separate AddClient() call sites).\nResourceOwner::FetchAndSetResource(params, fetcher, client) {\n  resource_ \u003d FooResource::Fetch(params, fetcher, nullptr);\n  client-\u003eAddClient(resource_, fetcher-\u003eGetTaskRunner());\n}",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
