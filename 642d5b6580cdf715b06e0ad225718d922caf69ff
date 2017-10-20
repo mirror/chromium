@@ -46,6 +46,30 @@
       "revId": "642d5b6580cdf715b06e0ad225718d922caf69ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53052e9_17dd644e",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-20T19:02:41Z",
+      "side": 1,
+      "message": "To summarize offline discussion: this would require a custom comparator for NSString equality so keeping as-is.",
+      "parentUuid": "666a6143_bbdb74b8",
+      "range": {
+        "startLine": 78,
+        "startChar": 78,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "642d5b6580cdf715b06e0ad225718d922caf69ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
