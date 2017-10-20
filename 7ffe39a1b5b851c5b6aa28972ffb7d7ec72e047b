@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833eb52b_f9ad23c9",
+        "filename": "chrome/browser/ui/tab_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T01:00:30Z",
+      "side": 1,
+      "message": "remove (unused)",
+      "revId": "7ffe39a1b5b851c5b6aa28972ffb7d7ec72e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4aca22b_a68d738d",
+        "filename": "chrome/browser/ui/tab_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T01:00:30Z",
+      "side": 1,
+      "message": "i think this can go too",
+      "revId": "7ffe39a1b5b851c5b6aa28972ffb7d7ec72e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
