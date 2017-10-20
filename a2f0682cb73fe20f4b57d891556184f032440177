@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b09b136_28a6699f",
+        "filename": "cc/base/simple_region.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-20T22:51:10Z",
+      "side": 1,
+      "message": "Oopsie. Done.",
+      "parentUuid": "e8758e3c_eab63015",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "a2f0682cb73fe20f4b57d891556184f032440177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f316ff3b_0c01cf44",
         "filename": "cc/base/simple_region.cc",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "a2f0682cb73fe20f4b57d891556184f032440177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719113d4_76bcf7b1",
+        "filename": "cc/base/simple_region.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-20T22:51:10Z",
+      "side": 1,
+      "message": "That\u0027s much better. Thanks!.\nYeah, I\u0027d be happy to add that in base after this.",
+      "parentUuid": "f316ff3b_0c01cf44",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "a2f0682cb73fe20f4b57d891556184f032440177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
