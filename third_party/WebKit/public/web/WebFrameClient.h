@@ -619,7 +619,7 @@ class BLINK_EXPORT WebFrameClient {
 
   // This frame has displayed inactive content (such as an image) from an
   // insecure source.  Inactive content cannot spread to other frames.
-  virtual void DidDisplayInsecureContent() {}
+  virtual void DidDisplayMixedContent() {}
 
   // This frame contains a form that submits to an insecure target url.
   virtual void DidContainInsecureFormAction() {}
@@ -627,8 +627,8 @@ class BLINK_EXPORT WebFrameClient {
   // The indicated security origin has run active content (such as a
   // script) from an insecure source.  Note that the insecure content can
   // spread to other frames in the same origin.
-  virtual void DidRunInsecureContent(const WebSecurityOrigin&,
-                                     const WebURL& insecure_url) {}
+  virtual void DidRunMixedContent(const WebSecurityOrigin&,
+                                  const WebURL& insecure_url) {}
 
   // A reflected XSS was encountered in the page and suppressed.
   virtual void DidDetectXSS(const WebURL&, bool did_block_entire_page) {}
