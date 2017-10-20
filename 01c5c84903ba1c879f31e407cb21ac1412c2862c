@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "8975a32e_a29f0c0b",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T23:48:13Z",
+      "side": 1,
+      "message": "BTW, can we convert the string to a C++ struct so that it can be handled easily everywhere? Or otherwise, the downstream code have to do the deserialization by themselves. You can use json_value_converter.cc to do this",
+      "revId": "01c5c84903ba1c879f31e407cb21ac1412c2862c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d2342c1_41dfde6d",
         "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
         "patchSetId": 7
