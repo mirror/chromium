@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6c4708c_fac01642",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15793362_716fecd5",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24d9be22_b59205ec",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ThumbnailProviderImpl.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "23baa98a_6e077817",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "I don\u0027t know why it is previously removed. But it seems that the asserts should still hold with the new changes. So I will just keep these asserts",
+      "parentUuid": "24d9be22_b59205ec",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "067bf772_f5b0071e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailDiskStorageTest.java",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-20T19:42:21Z",
       "side": 1,
       "message": "For future reference: This call (and the new code it invokes) is what fixed the CL from previous iterations.",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e58ab68_2a1bf368",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailDiskStorageTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "I added some comments here to explain why we call this",
+      "parentUuid": "067bf772_f5b0071e",
       "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "44982315_2a615391",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78455dc8_a5f9835e",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d37d3f2b_7e414e56",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a73e5c_1d2f4f46",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d37d3f2b_7e414e56",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "a3e611a6_2fb5bcd6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c84583_6930f050",
+      "range": {
+        "startLine": 73,
+        "startChar": 34,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aabc321_fa2af55c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
         "patchSetId": 2
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "3a0a4367_8bca2108",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aabc321_fa2af55c",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a5c9fcc_5d2f7606",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
         "patchSetId": 2
@@ -147,6 +285,24 @@
       "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398a262f_fcac24f3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-20T21:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a5c9fcc_5d2f7606",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
