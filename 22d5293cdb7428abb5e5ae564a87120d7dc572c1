@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd536b7a_9893a854",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-20T10:45:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30fb3f70_3e7a02d4",
+      "range": {
+        "startLine": 304,
+        "startChar": 30,
+        "endLine": 304,
+        "endChar": 57
+      },
+      "revId": "22d5293cdb7428abb5e5ae564a87120d7dc572c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43c90241_13b61b66",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6cc355f8_e234db37",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-20T10:45:58Z",
+      "side": 1,
+      "message": "\u003e You should disable editing for all the credentials from the CM API. For that you can use PasswordFormManager::GetCredentialSource(). But you need to pull this information into the model.\n\u003e We want to merge back only the part which hides the label. I suggest that you split your CL.\nWill move it to another CL.",
+      "parentUuid": "43c90241_13b61b66",
+      "range": {
+        "startLine": 494,
+        "startChar": 6,
+        "endLine": 494,
+        "endChar": 33
+      },
+      "revId": "22d5293cdb7428abb5e5ae564a87120d7dc572c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bbaa137_170c120a",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "22d5293cdb7428abb5e5ae564a87120d7dc572c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdd02df_7effb0a6",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-20T10:45:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bbaa137_170c120a",
+      "range": {
+        "startLine": 578,
+        "startChar": 9,
+        "endLine": 578,
+        "endChar": 36
+      },
+      "revId": "22d5293cdb7428abb5e5ae564a87120d7dc572c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
