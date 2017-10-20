@@ -66,6 +66,7 @@ class GpuClient : public mojom::Gpu {
   const gpu::GpuFeatureInfo* gpu_feature_info_;
   viz::ServerGpuMemoryBufferManager* gpu_memory_buffer_manager_;
   viz::mojom::GpuService* gpu_service_;
+  EstablishGpuChannelCallback establish_callback_;
 
   base::WeakPtrFactory<GpuClient> weak_factory_;
 
