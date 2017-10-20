@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00e75141_2b3de1e7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlDivElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:12:46Z",
+      "side": 1,
+      "message": "ditto -- and below, I guess :)",
+      "revId": "ed319bf7388bf602a8fa118f89a744e3bda9e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5e8902_06f3e5d5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlDivElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:12:46Z",
+      "side": 1,
+      "message": "These macros are no longer okay to use.",
+      "revId": "ed319bf7388bf602a8fa118f89a744e3bda9e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5021df7a_6741a2bf",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:12:46Z",
+      "side": 1,
+      "message": "nit: 1.0f",
+      "revId": "ed319bf7388bf602a8fa118f89a744e3bda9e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc0a4ca_50c869fd",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:12:46Z",
+      "side": 1,
+      "message": "Maybe 36 should be added as a const value?",
+      "revId": "ed319bf7388bf602a8fa118f89a744e3bda9e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2611c0e_b55668a5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T10:12:46Z",
+      "side": 1,
+      "message": "As above, maybe this should be added as a const value?",
+      "revId": "ed319bf7388bf602a8fa118f89a744e3bda9e3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
