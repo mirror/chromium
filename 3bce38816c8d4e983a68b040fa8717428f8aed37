@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c95a7ee6_088b95fd",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T20:43:59Z",
+      "side": 1,
+      "message": "Forgot to update the comment.",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 13
+      },
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17c83d7_b89658fa",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T20:43:59Z",
+      "side": 1,
+      "message": "If ENABLE_CDM_STORAGE_ID set, this case results in a compile error that ComputeStorageId() is unused. I could make a dummy call to it here rather than returning the empty vector, WDYT?",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 20
+      },
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
