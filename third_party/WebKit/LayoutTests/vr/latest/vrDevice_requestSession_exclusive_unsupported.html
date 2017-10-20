@@ -6,27 +6,30 @@
 <script src="file:///gen/device/vr/vr_service.mojom.js"></script>
 <script src="../resources/mock-vr-service.js"></script>
 <script src="../resources/test-constants.js"></script>
+<canvas id="webgl-canvas"></canvas>
+<script src="../resources/presentation-setup.js"></script>
 <script>
 let fakeDisplays = fakeVRDisplays();
-
 vr_test( (t) => {
-  return navigator.vr.requestDevice().then( (pixel) => {
+  return navigator.vr.requestDevice().then( (magicWindowOnly) => {
+    runWithUserGesture( () => {
 
-    return pixel.supportsSession().then( () => {
-      t.step( () => {
-        assert_unreached("supportsSession unexpectedly allowed non-exclusive session without an output context");
-      });
-    }).catch( () => {
-      // Expected result
+      magicWindowOnly.requestSession({ exclusive: true }).then(() => {
+        assert_unreached("requestSession resolved unexpectedly");
+      }).catch((e) => {
+        assert_equals(e.name, "NotSupportedError");
+        t.done();
+      })
+
+      //TODO: Add magicWindowOnly.requestSession({ exclusive: false })
+
     });
   }, (err) => {
     t.step( () => {
       assert_unreached("requestDevice rejected");
     });
-  }).then( () => {
-    t.done();
   });
-}, [fakeDisplays["Pixel"]],
-"supportsSession properly identifies supported non-exclusive sessions");
+}, [fakeDisplays["FakeMagicWindowOnly"]],
+"supportsSession properly creates or rejects exclusive sessions");
 
 </script>

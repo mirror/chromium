@@ -12,8 +12,7 @@
 let fakeDisplays = fakeVRDisplays();
 
 vr_test( (t) => {
-  return navigator.vr.getDevices().then( (devices) => {
-    let pixel = devices[0];
+  return navigator.vr.requestDevice().then( (pixel) => {
     runWithUserGesture( () => {
       pixel.requestSession({ exclusive: true }).then( (session) => {
 
@@ -67,7 +66,7 @@ vr_test( (t) => {
     });
   }, (err) => {
     t.step( () => {
-      assert_unreached("getDevices rejected");
+      assert_unreached("requestDevice rejected");
     });
   });
 }, [fakeDisplays["Pixel"]],
