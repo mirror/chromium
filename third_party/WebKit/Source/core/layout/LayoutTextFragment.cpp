@@ -243,4 +243,32 @@ bool LayoutTextFragment::ContainsCaretOffset(int text_offset) const {
   return *mapping.GetCharacterBefore(*node, dom_offset) != kNewlineCharacter;
 }
 
+bool LayoutTextFragment::IsBeforeNonCollapsedCharacter(
+    unsigned text_offset) const {
+  if (!ShouldUseNGAlternatives())
+    return LayoutText::IsBeforeNonCollapsedCharacter(text_offset);
+
+  if (text_offset >= FragmentLength())
+    return false;
+  const Node* node = AssociatedTextNode();
+  if (!node)
+    return false;
+  return GetNGOffsetMapping().IsBeforeNonCollapsedCharacter(
+      *node, text_offset + Start());
+}
+
+bool LayoutTextFragment::IsAfterNonCollapsedCharacter(
+    unsigned text_offset) const {
+  if (!ShouldUseNGAlternatives())
+    return LayoutText::IsAfterNonCollapsedCharacter(text_offset);
+
+  if (!text_offset)
+    return false;
+  const Node* node = AssociatedTextNode();
+  if (!node)
+    return false;
+  return GetNGOffsetMapping().IsAfterNonCollapsedCharacter(
+      *node, text_offset + Start());
+}
+
 }  // namespace blink
