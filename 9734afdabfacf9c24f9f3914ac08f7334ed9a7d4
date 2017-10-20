@@ -22,6 +22,30 @@
       "revId": "9734afdabfacf9c24f9f3914ac08f7334ed9a7d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072e9e03_747cf6c4",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-20T15:14:39Z",
+      "side": 1,
+      "message": "\u003e Did you test the CL manually?\nPardon. Didn\u0027t test since I renamed the method.",
+      "parentUuid": "6d74a184_197f4830",
+      "range": {
+        "startLine": 493,
+        "startChar": 5,
+        "endLine": 493,
+        "endChar": 41
+      },
+      "revId": "9734afdabfacf9c24f9f3914ac08f7334ed9a7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
