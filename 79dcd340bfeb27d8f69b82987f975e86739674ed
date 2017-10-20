@@ -45,6 +45,30 @@
       "revId": "79dcd340bfeb27d8f69b82987f975e86739674ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9c8a59_0d718033",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/BookmarkTestUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-20T16:08:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba84da38_471c879b",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "79dcd340bfeb27d8f69b82987f975e86739674ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

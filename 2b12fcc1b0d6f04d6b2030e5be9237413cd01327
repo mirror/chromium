@@ -69,6 +69,30 @@
       "revId": "2b12fcc1b0d6f04d6b2030e5be9237413cd01327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc3688e_c9582c9c",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/BookmarkTestUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-20T16:08:35Z",
+      "side": 0,
+      "message": "Quote commit message on https://crrev.com/c/698277:\n\n  BookmarkTest is modified so that it only kicks off partner bookmark\n  reading and waiting for its completion when needed on paths not\n  existing in production. This way, the lazy reading path in production\n  can be tested.\n\nkickOffReading was either called in the production logic, or explicitly called in some tests when the production logic is bypassed.\n\nSince kickOffReading is called in runAfterBookmarkModelLoaded now, I have to use pollUiThread(isBookmarkModelLoaded) instead of runAfterBookmarkModelLoaded so that the lazy reading path is still tested.",
+      "parentUuid": "bb47a4bd_42448734",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 74
+      },
+      "revId": "2b12fcc1b0d6f04d6b2030e5be9237413cd01327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
