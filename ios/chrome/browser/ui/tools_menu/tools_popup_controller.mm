@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
@@ -44,6 +45,7 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
 @end
 
 @implementation ToolsPopupController
+@synthesize baseViewController = _baseViewController;
 @synthesize isCurrentPageBookmarked = _isCurrentPageBookmarked;
 
 - (instancetype)initWithConfiguration:(ToolsMenuConfiguration*)configuration
@@ -193,6 +195,7 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
       break;
     case TOOLS_SETTINGS_ITEM:
       base::RecordAction(UserMetricsAction("MobileMenuSettings"));
+      [self.dispatcher showSettingsFromViewController:self.baseViewController];
       break;
     case TOOLS_RELOAD_ITEM:
       base::RecordAction(UserMetricsAction("MobileMenuReload"));

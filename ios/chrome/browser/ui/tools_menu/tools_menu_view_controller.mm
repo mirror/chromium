@@ -592,7 +592,14 @@ NS_INLINE void AnimateInViews(NSArray* views,
         // menu, is no longer supported.
         DCHECK([menuItem tag] < 0);
         [_delegate commandWasSelected:[menuItem tag]];
-        [menuItem executeCommandWithDispatcher:self.dispatcher];
+
+        // If a selector exists, the menuItem will handled the dispatching.
+        // Otherwise, the dispatching should be handled by |_delegate|.
+        // This was done so that a baseViewController can be sent with
+        // with dispatch command.
+        if ([menuItem selector]) {
+          [menuItem executeCommandWithDispatcher:self.dispatcher];
+        }
       });
 }
 
