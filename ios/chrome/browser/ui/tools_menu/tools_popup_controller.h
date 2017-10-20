@@ -21,6 +21,9 @@ extern NSString* const kToolsMenuTableViewId;
 // view with a table view of menu items.
 @interface ToolsPopupController : PopupMenuController
 
+// The view controller from which to present other view controllers.
+@property(nonatomic, weak) UIViewController* baseViewController;
+
 @property(nonatomic, assign) BOOL isCurrentPageBookmarked;
 
 // Initializes the popup with the given |configuration|, a set of information
