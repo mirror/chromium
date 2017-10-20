@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a3390c7b_eafbee01",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-20T09:14:11Z",
+      "side": 1,
+      "message": "Yeah since we have C++11 there is effectively no need anymore (other than documentation) for base singleton, as C++11 initialization  of local static gives the same semantic. scottmg@ did a mass conversion in various folders a while back (e.g., https://chromium.googlesource.com/chromium/src/+/6ece5aec616aa4d8d06359e426ac154904aabe5b), this is when I learned it.\n\nIf you are really really concerned about performance, base::LazyInstance::Leaky is slightly more efficient (although I suspect not in a measurable way) because it inlines the storage in the global variable and removes one layer of pointers.\nBut in practice, unless you are doing something really performance critical (e.g. a singleton accessed in an allocator or in the fast path or compositing) it\u0027s not really worth the trouble of extra code and this works just fine :)",
+      "parentUuid": "c4819815_d84e59bc",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "aa4c0cb3e6f17ecc038fdd279f1af90a81584576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "788fd86c_fb787df5",
         "filename": "third_party/WebKit/Source/core/dom/Document.h",
         "patchSetId": 2
