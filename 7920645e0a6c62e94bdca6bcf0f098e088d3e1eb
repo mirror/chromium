@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aac83445_e736f6f7",
+        "filename": "ash/public/interfaces/window_actions.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T23:00:22Z",
+      "side": 1,
+      "message": "Add description.",
+      "revId": "7920645e0a6c62e94bdca6bcf0f098e088d3e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e5ebf8_835f090b",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T23:00:22Z",
+      "side": 1,
+      "message": "This will be hit for mushrome as well, which has ash in process. I think you want GetAshConfig() \u003d\u003d MASH.",
+      "range": {
+        "startLine": 719,
+        "startChar": 4,
+        "endLine": 719,
+        "endChar": 64
+      },
+      "revId": "7920645e0a6c62e94bdca6bcf0f098e088d3e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f48b40c_6a1ecef6",
+        "filename": "ui/aura/mus/window_manager_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T23:00:22Z",
+      "side": 1,
+      "message": "Add comment that window is never null.",
+      "range": {
+        "startLine": 264,
+        "startChar": 5,
+        "endLine": 264,
+        "endChar": 70
+      },
+      "revId": "7920645e0a6c62e94bdca6bcf0f098e088d3e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4635b26e_c0d3e4d2",
+        "filename": "ui/aura/mus/window_tree_host_mus_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T23:00:22Z",
+      "side": 1,
+      "message": "optional: make constant for this (in this function).",
+      "range": {
+        "startLine": 46,
+        "startChar": 40,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "7920645e0a6c62e94bdca6bcf0f098e088d3e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebf264e_d9bf9a91",
+        "filename": "ui/aura/mus/window_tree_host_mus_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T23:00:22Z",
+      "side": 1,
+      "message": "Swap order (expected, actual).",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 58
+      },
+      "revId": "7920645e0a6c62e94bdca6bcf0f098e088d3e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
