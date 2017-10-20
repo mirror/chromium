@@ -16,6 +16,24 @@
       "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defed03f_cccc2c10",
+        "filename": "components/bookmarks/browser/titled_url_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-20T16:48:19Z",
+      "side": 1,
+      "message": "\u003e This should be using count() not walking thru the whole container if it\u0027s going to be written as EraseIf(). One is |m * log n| and one is |m * n| work.\n\nIt sounds like you assumed \u0027IsNotIn\u0027 did a binary search? It doesn\u0027t. \u0027IsNotIn\u0027 is an object that keeps state, and only searches from the last call to it until the value exceeds what it\u0027s looking for. Overall, it\u0027s O(m + n).\n\n\u003e I would write a lambda here and use that personally.\n\nI considered this, but I didn\u0027t like how the keeping state worked. We\u0027d have to create an iterator externally and pass it by reference. It was quite unsightly.\n\n\u003e Except.. std::set_intersection is |m + n| work so I\u0027m not clear why we\u0027d want to change this?\n\nThe advantage of in-place intersection over \u0027create a new container\u0027 is that, if you don\u0027t need to keep the original container, then it doesn\u0027t have to allocate and construct a new one. This is both a speed improvement, as well as a memory fragmentation improvement.",
+      "parentUuid": "6a18f535_553f7b6d",
+      "revId": "63b73119e7515adcbdc979ca5c0f370344738d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
