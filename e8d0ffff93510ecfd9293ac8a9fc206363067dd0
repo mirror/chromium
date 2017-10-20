@@ -16,6 +16,24 @@
       "revId": "e8d0ffff93510ecfd9293ac8a9fc206363067dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a27d188_522e7ee2",
+        "filename": "components/data_use_measurement/core/data_use_measurement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-20T17:54:36Z",
+      "side": 1,
+      "message": "Heh!  It\u0027s actually written wrong.  It should be\nRandInt(0, (1 \u003c\u003c 10) - 1)\n\nI had that originally but must have messed it up while cleaning up the code.  \u003csigh\u003e\n\nFixed.  Comment added.",
+      "parentUuid": "4bd3cd2a_b724899a",
+      "revId": "e8d0ffff93510ecfd9293ac8a9fc206363067dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
