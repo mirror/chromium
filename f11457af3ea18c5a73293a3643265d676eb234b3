@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74f1f971_77fa0925",
+        "filename": "components/download/in_progress_metadata/download_entry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-20T22:13:39Z",
+      "side": 1,
+      "message": "I think we might end up not needing this class. We can directly deal with proto too i.e. change the fields of proto directly, depends on the callsite and how many places we use this. But if we do, we have to write some conversion functions between the proto and this class.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "f11457af3ea18c5a73293a3643265d676eb234b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
