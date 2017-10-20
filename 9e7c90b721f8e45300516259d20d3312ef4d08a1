@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f43fc2_eedefcad",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-20T05:08:58Z",
+      "side": 1,
+      "message": "Could we just make this IsForWindowedApp? I think it would make sense to always do this for apps that are running in a window.",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "9e7c90b721f8e45300516259d20d3312ef4d08a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f628a5_1e117505",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-20T05:08:58Z",
+      "side": 1,
+      "message": "Nit: maybe this could be OpenInNewTab as it is both opening a new tab and then navigating in it.",
+      "range": {
+        "startLine": 239,
+        "startChar": 36,
+        "endLine": 239,
+        "endChar": 46
+      },
+      "revId": "9e7c90b721f8e45300516259d20d3312ef4d08a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
