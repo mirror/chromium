@@ -347,6 +347,10 @@ template("proto_library") {
 
     if (defined(invoker.extra_configs)) {
       configs += invoker.extra_configs
+      configs -= [
+        "//build/config/coverage:default_coverage",
+        "//build/config/sanitizers:default_sanitizer_flags",
+      ]
     }
 
     public_configs = [ "//third_party/protobuf:using_proto" ]
