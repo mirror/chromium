@@ -10,6 +10,7 @@
 #include "ui/message_center/notification.h"
 #include "ui/message_center/views/message_center_controller.h"
 #include "ui/message_center/views/message_view.h"
+#include "ui/message_center/views/message_view_factory.h"
 
 namespace arc {
 
@@ -17,18 +18,29 @@ ArcNotificationDelegate::ArcNotificationDelegate(
     base::WeakPtr<ArcNotificationItem> item)
     : item_(item) {
   DCHECK(item_);
+
+  if (!message_center::MessageViewFactory::HasCustomNotificationViewFactory()) {
+    message_center::MessageViewFactory::SetCustomNotificationViewFactory(
+        base::Bind(&ArcNotificationDelegate::CreateCustomMessageView));
+  }
 }
 
 ArcNotificationDelegate::~ArcNotificationDelegate() = default;
 
+// static
 std::unique_ptr<message_center::MessageView>
 ArcNotificationDelegate::CreateCustomMessageView(
     message_center::MessageCenterController* controller,
     const message_center::Notification& notification) {
-  DCHECK(item_);
-  DCHECK_EQ(item_->GetNotificationId(), notification.id());
+  DCHECK_EQ(notification.notifier_id().type,
+            message_center::NotifierId::ARC_APPLICATION);
+  auto* arc_delegate =
+      static_cast<ArcNotificationDelegate*>(notification.delegate());
+  DCHECK(arc_delegate->item_);
+  DCHECK_EQ(arc_delegate->item_->GetNotificationId(), notification.id());
 
-  auto view = std::make_unique<ArcNotificationContentView>(item_.get());
+  auto view =
+      std::make_unique<ArcNotificationContentView>(arc_delegate->item_.get());
   auto content_view_delegate = view->CreateContentViewDelegate();
   return std::make_unique<ArcNotificationView>(std::move(view),
                                                std::move(content_view_delegate),
