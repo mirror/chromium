@@ -20,7 +20,8 @@ AuditorResult::AuditorResult(Type type,
          type == AuditorResult::Type::RESULT_IGNORE ||
          type == AuditorResult::Type::ERROR_FATAL ||
          type == AuditorResult::Type::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE ||
-         type == AuditorResult::Type::ERROR_MERGE_FAILED);
+         type == AuditorResult::Type::ERROR_MERGE_FAILED ||
+         type == AuditorResult::Type::ERROR_ANNOTATIONS_XML_UPDATE);
   DCHECK(!message.empty() || type == AuditorResult::Type::RESULT_OK ||
          type == AuditorResult::Type::RESULT_IGNORE ||
          type == AuditorResult::Type::ERROR_MISSING_TAG_USED ||
@@ -146,6 +147,14 @@ std::string AuditorResult::ToText() const {
           "functions.",
           file_path_.c_str(), line_);
 
+    case AuditorResult::Type::ERROR_ANNOTATIONS_XML_UPDATE:
+      DCHECK(details_.size());
+      return base::StringPrintf(
+          "'tools/traffic_annotation/summary/annotation.xml' file requires "
+          "update. It is recommend to run traffic_annotation_auditor "
+          "locally to do the updates automatically, but you can also apply "
+          "the following edit(s) to it manually:\n%s",
+          details_[0].c_str());
     default:
       return std::string();
   }
