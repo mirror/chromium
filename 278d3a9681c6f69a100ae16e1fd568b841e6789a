@@ -94,6 +94,23 @@
       "revId": "278d3a9681c6f69a100ae16e1fd568b841e6789a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f432d8c_7a769a22",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-20T07:00:45Z",
+      "side": 1,
+      "message": "Could you add a comment to explain |text_offset| \u003d\u003d DOM offset here?\nAnd, LayoutText.h?",
+      "revId": "278d3a9681c6f69a100ae16e1fd568b841e6789a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
