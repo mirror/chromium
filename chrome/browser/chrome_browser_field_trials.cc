@@ -217,6 +217,8 @@ ChromeBrowserFieldTrials::~ChromeBrowserFieldTrials() {
 }
 
 void ChromeBrowserFieldTrials::SetupFieldTrials() {
+  base::TimeTicks start_time = base::TimeTicks::Now();
+
   // Field trials that are shared by all platforms.
   InstantiateDynamicTrials();
 
@@ -225,6 +227,9 @@ void ChromeBrowserFieldTrials::SetupFieldTrials() {
 #else
   chrome::SetupDesktopFieldTrials();
 #endif
+
+  UMA_HISTOGRAM_TIMES("Variations.SeedProcessingTime",
+                      base::TimeTicks::Now() - start_time);
 }
 
 void ChromeBrowserFieldTrials::SetupFeatureControllingFieldTrials(
