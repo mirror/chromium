@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "37f666de_105595bc",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T17:46:18Z",
+      "side": 1,
+      "message": "I intentionally pass Size by value rather than by reference since I presume that the qualities that make this desirable for base::StringPiece apply for Size (which has only two int fields) as well.",
+      "parentUuid": "b34e3813_12b485f8",
+      "range": {
+        "startLine": 224,
+        "startChar": 53,
+        "endLine": 224,
+        "endChar": 62
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60c91e57_3a9589a7",
         "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
         "patchSetId": 8
