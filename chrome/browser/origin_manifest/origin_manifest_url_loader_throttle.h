@@ -16,10 +16,6 @@ namespace content {
 class SimpleURLLoader;
 }  // namespace content
 
-namespace url {
-class Origin;
-}
-
 class OriginManifestURLLoaderThrottle : public content::URLLoaderThrottle {
  public:
   ~OriginManifestURLLoaderThrottle() override;
@@ -31,16 +27,14 @@ class OriginManifestURLLoaderThrottle : public content::URLLoaderThrottle {
                         bool* defer) override;
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
                            bool* defer) override;
-  void WillProcessResponse(const content::ResourceResponseHead& response_head,
+  void WillProcessResponse(const GURL& response_url,
+                           const content::ResourceResponseHead& response_head,
                            bool* defer) override;
 
   void OnBodyAsString(std::unique_ptr<std::string> response_body);
 
  protected:
   OriginManifestURLLoaderThrottle();
-
-  std::unique_ptr<url::Origin> origin_;
-  // std::unique_ptr<net::URLFetcher> url_fetcher_;
 
   std::unique_ptr<content::SimpleURLLoader> url_loader_;
   std::unique_ptr<content::mojom::NetworkService> network_service_;
