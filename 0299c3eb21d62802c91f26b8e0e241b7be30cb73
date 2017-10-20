@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7826e402_9bcbfc3b",
+        "filename": "ui/base/ui_base_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T14:36:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure who started this trend, but how about putting this in features.h? That way the features namespace makes some sort of sense.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 68
+      },
+      "revId": "0299c3eb21d62802c91f26b8e0e241b7be30cb73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
