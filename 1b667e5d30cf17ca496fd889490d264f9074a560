@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f84cedbb_eb7a336c",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-20T12:04:19Z",
+      "side": 1,
+      "message": "I think it should. Let me DCHECK it though with a comment. I also just found net::GetValueForKeyInQuery which simplifies this a lot.",
+      "parentUuid": "13ec0f66_f77ec217",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37bf685f_d6afeb30",
         "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9036abf_f0a01fd9",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-20T12:04:19Z",
+      "side": 1,
+      "message": "Actually I think info.threat_entries_size() is an int:\nhttps://cs.chromium.org/chromium/src/out/Debug/gen/components/safe_browsing/db/safebrowsing.pb.h?rcl\u003de5688a783d801b8714f43feb8dd66e47245e144b\u0026l\u003d314",
+      "parentUuid": "37bf685f_d6afeb30",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "03d9edcf_1b9afe2a",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-20T12:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2cc3bfa_b8128396",
+      "range": {
+        "startLine": 84,
+        "startChar": 10,
+        "endLine": 84,
+        "endChar": 75
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa6a375a_0bda5fde",
         "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "eee9b632_64dd614f",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-20T12:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa6a375a_0bda5fde",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f553ff5c_c23945ba",
         "filename": "components/safe_browsing/db/v4_embedded_test_server_util.h",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9697382a_9fca3d2f",
+        "filename": "components/safe_browsing/db/v4_embedded_test_server_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-20T12:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f553ff5c_c23945ba",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "1b667e5d30cf17ca496fd889490d264f9074a560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
