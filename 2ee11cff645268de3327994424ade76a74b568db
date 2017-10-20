@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a0fdcbf_5a141c67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-20T14:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5abe2c1_eb71eb5e",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b8b624_184d8fb6",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4752ec36_28fb7e14",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-20T14:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b8b624_184d8fb6",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42588f41_ca9a75d9",
         "filename": "base/trace_event/memory_dump_request_args.h",
         "patchSetId": 2
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-18T03:57:26Z",
       "side": 1,
       "message": "Do we still need both these structs to have struct traits?",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 46
+      },
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bc383b_e489c587",
+        "filename": "base/trace_event/memory_dump_request_args.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-20T14:06:16Z",
+      "side": 1,
+      "message": "So the Global one doesn\u0027t need struct traits anymore but when I tried to change the code from  FooStruct to handling FooStructPtr everywhere I got into such a mess a decided to start by just structtraiting the Global one so it was a less invasive change to the rest of the code.",
+      "parentUuid": "42588f41_ca9a75d9",
       "range": {
         "startLine": 64,
         "startChar": 1,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f36e7ab6_8e5be7b2",
+        "filename": "base/trace_event/memory_dump_request_args.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-20T14:06:16Z",
+      "side": 1,
+      "message": "Done, bug here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d776726",
+      "parentUuid": "d0f0bb5e_34b2a7af",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c83d7e65_46edb16a",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-18T03:57:26Z",
       "side": 1,
       "message": "uncomment?",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b7ec61_3e26c6ec",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-20T14:06:16Z",
+      "side": 1,
+      "message": "oops... I should have had more coffee before uploading this CL clearly, thanks for catching, fixed :)",
+      "parentUuid": "c83d7e65_46edb16a",
       "revId": "2ee11cff645268de3327994424ade76a74b568db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "0a636e9e_e50eb578",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-20T14:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e50fade_c13ee4dc",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "046d2220_a6ba4046",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
         "patchSetId": 2
@@ -121,6 +235,24 @@
       "writtenOn": "2017-10-18T03:57:26Z",
       "side": 1,
       "message": "added twice",
+      "revId": "2ee11cff645268de3327994424ade76a74b568db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900630ef_7090ff97",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-10-20T14:06:16Z",
+      "side": 1,
+      "message": "Thanks, done, also sorted.",
+      "parentUuid": "046d2220_a6ba4046",
       "revId": "2ee11cff645268de3327994424ade76a74b568db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
