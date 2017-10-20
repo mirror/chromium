@@ -88,6 +88,24 @@
       "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d2d4dd_d463c0f8",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-20T22:07:25Z",
+      "side": 1,
+      "message": "That\u0027s right. We only want the one reason. I could return a struct that has both a reason and an action (prevent default, etc), but since this is still the only instance, I would prefer keeping it this way.",
+      "parentUuid": "2082bfca_57f2a6f7",
+      "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
