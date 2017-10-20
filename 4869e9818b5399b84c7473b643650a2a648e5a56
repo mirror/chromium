@@ -171,6 +171,24 @@
       "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0f16be_bb661f45",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-20T23:23:19Z",
+      "side": 1,
+      "message": "Nothing blocking, but Ed was traveling today, so I don\u0027t expect any progress until next week.",
+      "parentUuid": "6d011c13_ee3edbcc",
+      "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
