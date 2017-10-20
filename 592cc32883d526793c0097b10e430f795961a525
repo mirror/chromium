@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4122a4a_28682fc3",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-20T16:02:30Z",
+      "side": 1,
+      "message": "\u003e ?\n\n(see previous)",
+      "parentUuid": "78c8b351_8dd7b5ad",
+      "range": {
+        "startLine": 171,
+        "startChar": 29,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4d42371_a9857c52",
         "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "592cc32883d526793c0097b10e430f795961a525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609a70ed_20b3c591",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-20T16:02:30Z",
+      "side": 1,
+      "message": "\u003e Isn\u0027t the padding zero anyway? (Does \u003cbutton\u003e come with some default padding?)\n\nNo (Yes).",
+      "parentUuid": "d4d42371_a9857c52",
+      "range": {
+        "startLine": 209,
+        "startChar": 13,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1132f8fb_75f3a157",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-20T16:02:30Z",
+      "side": 1,
+      "message": "\u003e Reducing the width affects the background gradient, which \"hides\" the title text. It\u0027s visible in the screenshots on the bug. So I think this needs to keep its width.\n\nAdded it back--though this makes the outline larger again.",
+      "parentUuid": "5a0395bf_bd4e6d14",
+      "range": {
+        "startLine": 213,
+        "startChar": 29,
+        "endLine": 213,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a3a81c_6a55aca0",
         "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "592cc32883d526793c0097b10e430f795961a525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f4e5d4_31eda511",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-20T16:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54a3a81c_6a55aca0",
+      "range": {
+        "startLine": 226,
+        "startChar": 57,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "592cc32883d526793c0097b10e430f795961a525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

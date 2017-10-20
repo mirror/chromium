@@ -22,6 +22,30 @@
       "revId": "9d0681551b79c909c1980a03343772fdef50a10f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31432541_6ad7ed19",
+        "filename": "chrome/browser/resources/local_ntp/most_visited_single.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-20T16:02:30Z",
+      "side": 0,
+      "message": "\u003e What did this do?\n\nThis prevented the thumbnail (whose corners were not rounded) from overlapping the tile border (rounded). However, it also hid the top and right parts of the X\u0027s focus ring.\n\nInstead, I allow the overflow to be visible, but round the bottom of the thumbnail.",
+      "parentUuid": "0c632856_5cc8558f",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "9d0681551b79c909c1980a03343772fdef50a10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
