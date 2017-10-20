@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c4209d32_a20e80ea",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-20T21:35:57Z",
+      "side": 1,
+      "message": "You are right, my change seems like a noop. The proper setting should already be set up during requesting print preview. Removed it now.\n\nMaybe line 1805-1810 misled me into thinking |kSettingPreviewModifiable| may not be proper inited. Looks like this line section can be replaced with line 1806-1808.",
+      "parentUuid": "3e01f641_af329dd7",
+      "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97c48c1b_16f85e8d",
         "filename": "printing/print_settings_conversion.cc",
         "patchSetId": 3
