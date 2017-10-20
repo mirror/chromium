@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac3706e_74020fbd",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T21:06:41Z",
+      "side": 1,
+      "message": "nit: mention RTL somewhere in the comment to make it clear that the intention is to handle RIGHT key wrap under RTL.",
+      "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d804eba0_ae3b2bcd",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T21:06:41Z",
+      "side": 1,
+      "message": "Isn\u0027t this CheckSelectionAtExpandArrow() ?",
+      "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1ef287_bb19aa9d",
+        "filename": "ui/views/focus/focus_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T21:06:41Z",
+      "side": 1,
+      "message": "Why do we need to change this? Can we just put base::i18n::SetICUDefaultLocale call before FocusManagerTest::SetUp()?",
+      "revId": "af7fd040acc787618681f831c9530b02c2afa65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
