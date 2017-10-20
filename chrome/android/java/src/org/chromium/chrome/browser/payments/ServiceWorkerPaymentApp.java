@@ -49,7 +49,10 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      * basic-card payment instrument.
      */
     public static class Capabilities {
+        // Stores mojom::BasicCardNetwork.
         private int[] mSupportedCardNetworks;
+
+        // Stores mojom::BasicCardType.
         private int[] mSupportedCardTypes;
 
         Capabilities(int[] supportedCardNetworks, int[] supportedCardTypes) {
@@ -82,7 +85,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      * @param icon                           The drawable icon of the payment app.
      * @param methodNames                    A set of payment method names supported by the payment
      *                                       app.
-     * @param capabilities                   A set of capabilities of the payment methods in this
+     * @param capabilities                   A set of capabilities of the payment instruments in this
      *                                       payment app (only valid for basic-card payment method
      *                                       for now).
      * @param preferredRelatedApplicationIds A set of preferred related application Ids.
