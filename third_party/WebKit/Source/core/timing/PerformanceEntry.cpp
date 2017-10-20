@@ -27,7 +27,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 #include "core/timing/PerformanceEntry.h"
 
 #include "bindings/core/v8/ScriptValue.h"
@@ -36,7 +35,7 @@
 namespace blink {
 
 namespace {
-static size_t max_index = 0;
+static std::atomic_int g_next_index(0);
 }
 
 PerformanceEntry::PerformanceEntry(const String& name,
@@ -47,9 +46,8 @@ PerformanceEntry::PerformanceEntry(const String& name,
       entry_type_(entry_type),
       start_time_(start_time),
       duration_(finish_time - start_time),
-      entry_type_enum_(ToEntryTypeEnum(entry_type)) {
-  index_ = ++max_index;
-}
+      entry_type_enum_(ToEntryTypeEnum(entry_type)),
+      index_(g_next_index.fetch_add(1, std::memory_order_relaxed)) {}
 
 PerformanceEntry::~PerformanceEntry() {}
 
