@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07f70110_0494d96d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-20T07:36:40Z",
+      "side": 1,
+      "message": "If |!is_attribute|, there is nothing we\u0027d like to do.  So let\u0027s return early at this point.  If it turned out that we need to handle the |!is_attribute| case in the same way, we can simply remove the early return in another CL.",
+      "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4079ceb5_d66d3c07",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-20T07:36:40Z",
+      "side": 1,
+      "message": "What we\u0027d like to do here is conceptually:\n\n  |event|\u0027s return value \u003d either of\n      null or\n      undefined or\n      string (e.g. ToString(return_value) )\n\nThis code looks a little different.  What we need to do are:\n\n  a) Convert |return_value| to one of null, undefined or string.\n  b) Store the converted return value into event-\u003ereturnValue().\n\nI\u0027m not sure what the value of event-\u003ereturnValue() would be if we didn\u0027t perform setReturnValue, so I\u0027d recommend to always call event-\u003esetReturnValue even if the return value is null or undefined.",
+      "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1f8e0c_dfb6a240",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-20T07:36:40Z",
+      "side": 1,
+      "message": "I\u0027d prefer |else if| here, then we no longer need to think about the complicated beforeunload condition.\n\nOr \"early return\" on line 186 makes sense to me.",
+      "revId": "53c7230a6c7145dd72ae81183ce09bc5cd0e5de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
