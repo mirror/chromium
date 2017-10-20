@@ -210,7 +210,8 @@ XMLPUBFUN int XMLCALL
 XMLPUBFUN int XMLCALL
 	xmlCharEncInFunc		(xmlCharEncodingHandler *handler,
 					 xmlBufferPtr out,
-					 xmlBufferPtr in);
+					 xmlBufferPtr in,
+					 int flush);
 XMLPUBFUN int XMLCALL
 	xmlCharEncFirstLine		(xmlCharEncodingHandler *handler,
 					 xmlBufferPtr out,
