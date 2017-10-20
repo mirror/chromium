@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b2e918_a8e4294f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2844,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-20T22:32:17Z",
+      "side": 1,
+      "message": "nit: It\u0027s typically preferred to omit trailing commas for UMA enum labels, given how those are used in the UI.",
+      "range": {
+        "startLine": 2844,
+        "startChar": 53,
+        "endLine": 2844,
+        "endChar": 54
+      },
+      "revId": "bd0791b3c61becefeaffc65710c2814bee43cdb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334abd4d_e9b3c719",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15250,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-20T22:32:17Z",
+      "side": 1,
+      "message": "It looks like you\u0027re adding a new top-level category.  Is there an existing top-level category that would be appropriate for these metrics?",
+      "range": {
+        "startLine": 15250,
+        "startChar": 17,
+        "endLine": 15250,
+        "endChar": 36
+      },
+      "revId": "bd0791b3c61becefeaffc65710c2814bee43cdb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
