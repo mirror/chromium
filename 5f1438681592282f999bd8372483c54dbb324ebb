@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2662d8d_d3601951",
+        "filename": "ui/aura/mus/window_tree_host_mus_init_params.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T17:17:29Z",
+      "side": 1,
+      "message": "wrap in |\u0027s?",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 66
+      },
+      "revId": "5f1438681592282f999bd8372483c54dbb324ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed373e0_a98d4df3",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T17:17:29Z",
+      "side": 1,
+      "message": "How about adding that there is a root Window per display?",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 64
+      },
+      "revId": "5f1438681592282f999bd8372483c54dbb324ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279b9529_e01af0a9",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T17:17:29Z",
+      "side": 1,
+      "message": "Similarly how about adding here there is a *single* root Window that spans all the displays?",
+      "range": {
+        "startLine": 86,
+        "startChar": 68,
+        "endLine": 86,
+        "endChar": 76
+      },
+      "revId": "5f1438681592282f999bd8372483c54dbb324ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
