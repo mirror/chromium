@@ -70,7 +70,8 @@ const gfx::FontList& DefaultTypographyProvider::GetFont(int context,
 SkColor DefaultTypographyProvider::GetColor(
     int context,
     int style,
-    const ui::NativeTheme& theme) const {
+    const ui::NativeTheme& native_theme,
+    const ui::ThemeProvider* theme_provider) const {
   ui::NativeTheme::ColorId color_id =
       ui::NativeTheme::kColorId_LabelEnabledColor;
   if (context == style::CONTEXT_BUTTON_MD) {
@@ -92,7 +93,7 @@ SkColor DefaultTypographyProvider::GetColor(
   } else if (style == style::STYLE_DISABLED) {
     color_id = ui::NativeTheme::kColorId_LabelDisabledColor;
   }
-  return theme.GetSystemColor(color_id);
+  return native_theme.GetSystemColor(color_id);
 }
 
 int DefaultTypographyProvider::GetLineHeight(int context, int style) const {

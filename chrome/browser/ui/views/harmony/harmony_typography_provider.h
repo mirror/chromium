@@ -25,7 +25,8 @@ class HarmonyTypographyProvider : public views::TypographyProvider {
   const gfx::FontList& GetFont(int context, int style) const override;
   SkColor GetColor(int context,
                    int style,
-                   const ui::NativeTheme& theme) const override;
+                   const ui::NativeTheme& native_theme,
+                   const ui::ThemeProvider* theme_provider) const override;
   int GetLineHeight(int context, int style) const override;
 
  private:

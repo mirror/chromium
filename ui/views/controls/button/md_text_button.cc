@@ -243,12 +243,13 @@ void MdTextButton::UpdatePadding() {
 }
 
 void MdTextButton::UpdateColors() {
-  ui::NativeTheme* theme = GetNativeTheme();
+  ui::NativeTheme* native_theme = GetNativeTheme();
+  const ui::ThemeProvider* theme_provider = GetThemeProvider();
   bool is_disabled = state() == STATE_DISABLED;
   SkColor enabled_text_color = style::GetColor(
       label()->text_context(),
       is_prominent_ ? style::STYLE_DIALOG_BUTTON_DEFAULT : style::STYLE_PRIMARY,
-      theme);
+      native_theme, theme_provider);
   if (!explicitly_set_normal_color()) {
     const auto colors = explicitly_set_colors();
     LabelButton::SetEnabledTextColors(enabled_text_color);
@@ -257,9 +258,10 @@ void MdTextButton::UpdateColors() {
     // the basis for calculating the stroke color. enabled_text_color isn't used
     // since a descendant could have overridden the label enabled color.
     if (is_disabled && !is_prominent_) {
-      LabelButton::SetTextColor(STATE_DISABLED,
-                                style::GetColor(label()->text_context(),
-                                                style::STYLE_DISABLED, theme));
+      LabelButton::SetTextColor(
+          STATE_DISABLED,
+          style::GetColor(label()->text_context(), style::STYLE_DISABLED,
+                          native_theme, theme_provider));
     }
     set_explicitly_set_colors(colors);
   }
@@ -271,12 +273,12 @@ void MdTextButton::UpdateColors() {
 
   SkColor text_color = label()->enabled_color();
   SkColor bg_color =
-      theme->GetSystemColor(ui::NativeTheme::kColorId_DialogBackground);
+      native_theme->GetSystemColor(ui::NativeTheme::kColorId_DialogBackground);
 
   if (bg_color_override_) {
     bg_color = *bg_color_override_;
   } else if (is_prominent_) {
-    bg_color = theme->GetSystemColor(
+    bg_color = native_theme->GetSystemColor(
         ui::NativeTheme::kColorId_ProminentButtonColor);
     if (is_disabled) {
       bg_color = color_utils::BlendTowardOppositeLuma(
@@ -285,8 +287,8 @@ void MdTextButton::UpdateColors() {
   }
 
   if (state() == STATE_PRESSED) {
-    SkColor shade =
-        theme->GetSystemColor(ui::NativeTheme::kColorId_ButtonPressedShade);
+    SkColor shade = native_theme->GetSystemColor(
+        ui::NativeTheme::kColorId_ButtonPressedShade);
     bg_color = color_utils::GetResultingPaintColor(shade, bg_color);
   }
 

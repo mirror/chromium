@@ -26,11 +26,14 @@ const gfx::FontList& GetFont(int context, int style) {
   return LayoutProvider::Get()->GetTypographyProvider().GetFont(context, style);
 }
 
-SkColor GetColor(int context, int style, const ui::NativeTheme* theme) {
+SkColor GetColor(int context,
+                 int style,
+                 const ui::NativeTheme* native_theme,
+                 const ui::ThemeProvider* theme_provider) {
   ValidateContextAndStyle(context, style);
-  DCHECK(theme);
-  return LayoutProvider::Get()->GetTypographyProvider().GetColor(context, style,
-                                                                 *theme);
+  DCHECK(native_theme);
+  return LayoutProvider::Get()->GetTypographyProvider().GetColor(
+      context, style, *native_theme, theme_provider);
 }
 
 int GetLineHeight(int context, int style) {

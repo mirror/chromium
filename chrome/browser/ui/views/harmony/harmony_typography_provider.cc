@@ -147,9 +147,12 @@ const gfx::FontList& HarmonyTypographyProvider::GetFont(int context,
 SkColor HarmonyTypographyProvider::GetColor(
     int context,
     int style,
-    const ui::NativeTheme& theme) const {
-  if (ShouldIgnoreHarmonySpec(theme))
-    return GetHarmonyTextColorForNonStandardNativeTheme(context, style, theme);
+    const ui::NativeTheme& native_theme,
+    const ui::ThemeProvider* theme_provider) const {
+  if (ShouldIgnoreHarmonySpec(native_theme)) {
+    return GetHarmonyTextColorForNonStandardNativeTheme(context, style,
+                                                        native_theme);
+  }
 
   if (context == views::style::CONTEXT_BUTTON_MD) {
     switch (style) {
