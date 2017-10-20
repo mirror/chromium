@@ -22,6 +22,30 @@
       "revId": "d090a7f8bd90ac5e6a7fa271dd864d6e4f98e16f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4f5e0f_4696d401",
+        "filename": "headless/lib/virtual_time_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-20T10:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "616332b2_5855fa8c",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 68
+      },
+      "revId": "d090a7f8bd90ac5e6a7fa271dd864d6e4f98e16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
