@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0406d19d_19015b51",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-20T15:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e6c0dad_3af31939",
+      "range": {
+        "startLine": 917,
+        "startChar": 2,
+        "endLine": 918,
+        "endChar": 31
+      },
+      "revId": "d4f7350652ba24b5ca2c24c703f01f196a74ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05911b58_2a5ddb64",
         "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5a0d0850_419c1466",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-20T15:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05911b58_2a5ddb64",
+      "range": {
+        "startLine": 972,
+        "startChar": 0,
+        "endLine": 975,
+        "endChar": 21
+      },
+      "revId": "d4f7350652ba24b5ca2c24c703f01f196a74ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "455dda3d_8bba53bf",
         "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-20T14:19:24Z",
       "side": 1,
       "message": "remove this and make sure the above statement blocks.\n\nYou may need to use a trick with domautomationcontroller and a function wrapping window.history.pushState with a dummy return value. Hints: https://cs.chromium.org/chromium/src/chrome/browser/ui/views/payments/payment_request_browsertest_base.cc?rcl\u003dbc00f85ea66ad1630735d808923aac9858446955\u0026l\u003d264",
+      "range": {
+        "startLine": 1023,
+        "startChar": 2,
+        "endLine": 1024,
+        "endChar": 31
+      },
+      "revId": "d4f7350652ba24b5ca2c24c703f01f196a74ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f697840_00740ff1",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-20T15:11:47Z",
+      "side": 1,
+      "message": "It seems like it works without the need to do this :)",
+      "parentUuid": "455dda3d_8bba53bf",
       "range": {
         "startLine": 1023,
         "startChar": 2,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7c3ed2d7_e68a6879",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-20T15:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92b409f6_dedcc43d",
+      "range": {
+        "startLine": 1081,
+        "startChar": 1,
+        "endLine": 1083,
+        "endChar": 21
+      },
+      "revId": "d4f7350652ba24b5ca2c24c703f01f196a74ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b756a68_3283d33a",
         "filename": "components/payments/content/payment_request_web_contents_manager.cc",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "d4f7350652ba24b5ca2c24c703f01f196a74ff04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0f26ca_8d094f03",
+        "filename": "components/payments/content/payment_request_web_contents_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-20T15:11:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b756a68_3283d33a",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "d4f7350652ba24b5ca2c24c703f01f196a74ff04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
