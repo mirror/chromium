@@ -16,6 +16,24 @@
       "revId": "f6980f79c3c6549f4f0e0509102d850c330626ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb872ea_99a3c9e4",
+        "filename": "cc/layers/video_frame_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-20T00:12:11Z",
+      "side": 1,
+      "message": "Got it, thanks!",
+      "parentUuid": "18be15ca_0a612142",
+      "revId": "f6980f79c3c6549f4f0e0509102d850c330626ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
