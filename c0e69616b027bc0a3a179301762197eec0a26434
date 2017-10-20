@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "704ce637_983965b3",
+        "filename": "components/safe_browsing/db/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T01:08:58Z",
+      "side": 1,
+      "message": "you probably need to dep on safebrowsing_proto also.",
+      "range": {
+        "startLine": 562,
+        "startChar": 6,
+        "endLine": 562,
+        "endChar": 34
+      },
+      "revId": "c0e69616b027bc0a3a179301762197eec0a26434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
