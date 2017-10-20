@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff6ee857_80fd89b2",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-20T18:17:24Z",
+      "side": 1,
+      "message": "Curious: Is there a reason you push CSSRayInterpolationType ahead of CSSPathInterpolationType? If not, I\u0027ll be nit-picky and say it\u0027d be nice to have them alphabetical :).",
+      "revId": "5dfbd92446f7d9fbd7b4454b161fc9b1f394ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69934510_f3676982",
+        "filename": "third_party/WebKit/Source/core/animation/CSSRayInterpolationType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-20T18:17:24Z",
+      "side": 1,
+      "message": "Nit; please remove include if it\u0027s not used.",
+      "revId": "5dfbd92446f7d9fbd7b4454b161fc9b1f394ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a48e61_9c384ea5",
+        "filename": "third_party/WebKit/Source/core/animation/CSSRayInterpolationType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-20T18:17:24Z",
+      "side": 1,
+      "message": "Is there a reason this is not in an non-namespace but the above/below are?",
+      "revId": "5dfbd92446f7d9fbd7b4454b161fc9b1f394ebde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
