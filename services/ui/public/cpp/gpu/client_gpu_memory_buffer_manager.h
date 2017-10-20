@@ -49,6 +49,11 @@ class ClientGpuMemoryBufferManager : public gpu::GpuMemoryBufferManager {
       gfx::BufferFormat format,
       gfx::BufferUsage usage,
       gpu::SurfaceHandle surface_handle) override;
+  std::unique_ptr<gfx::GpuMemoryBuffer> CreateFromHandle(
+      const gfx::GpuMemoryBufferHandle& handle,
+      const gfx::Size& size,
+      gfx::BufferFormat format,
+      gfx::BufferUsage usage) override;
   void SetDestructionSyncToken(gfx::GpuMemoryBuffer* buffer,
                                const gpu::SyncToken& sync_token) override;
 

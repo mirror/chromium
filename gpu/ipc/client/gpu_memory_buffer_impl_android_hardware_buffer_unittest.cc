@@ -1,0 +1,43 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
+#include "gpu/ipc/client/gpu_memory_buffer_impl_test_template.h"
+
+namespace gpu {
+namespace {
+
+INSTANTIATE_TYPED_TEST_CASE_P(GpuMemoryBufferImplAndroidHardwareBuffer,
+                              GpuMemoryBufferImplTest,
+                              GpuMemoryBufferImplAndroidHardwareBuffer);
+
+void BufferDestroyed(bool* destroyed, const gpu::SyncToken& sync_token) {
+  *destroyed = true;
+}
+
+TEST(GpuMemoryBufferImplAndroidHardwareBuffer, Create) {
+  const gfx::GpuMemoryBufferId kBufferId(1);
+
+  gfx::Size buffer_size(8, 8);
+
+  auto usage = gfx::BufferUsage::SCANOUT;
+  for (auto format : gfx::GetBufferFormatsForTesting()) {
+    if (!GpuMemoryBufferImplAndroidHardwareBuffer::IsConfigurationSupported(
+            format, usage))
+      continue;
+    bool destroyed = false;
+    std::unique_ptr<GpuMemoryBufferImplAndroidHardwareBuffer> buffer(
+        GpuMemoryBufferImplAndroidHardwareBuffer::Create(
+            kBufferId, buffer_size, format, usage,
+            base::Bind(&BufferDestroyed, base::Unretained(&destroyed))));
+    ASSERT_TRUE(buffer);
+    EXPECT_EQ(buffer->GetFormat(), format);
+
+    // Check if destruction callback is executed when deleting the buffer.
+    buffer.reset();
+    ASSERT_TRUE(destroyed);
+  }}
+
+}  // namespace
+}  // namespace gpu

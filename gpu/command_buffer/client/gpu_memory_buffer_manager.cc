@@ -12,4 +12,12 @@ GpuMemoryBufferManager::GpuMemoryBufferManager() {
 GpuMemoryBufferManager::~GpuMemoryBufferManager() {
 }
 
+std::unique_ptr<gfx::GpuMemoryBuffer> GpuMemoryBufferManager::CreateFromHandle(
+    const gfx::GpuMemoryBufferHandle& handle,
+    const gfx::Size& size,
+    gfx::BufferFormat format,
+    gfx::BufferUsage usage) {
+  return nullptr;
+}
+
 }  // namespace gpu
