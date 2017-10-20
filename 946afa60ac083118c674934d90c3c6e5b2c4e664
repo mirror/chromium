@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "888efa2f_b388ee80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T14:53:18Z",
+      "side": 1,
+      "message": "Per offline discussion, holding on to the resources is okay.",
+      "parentUuid": "379475b5_518d24f9",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "946afa60ac083118c674934d90c3c6e5b2c4e664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30534944_9d36259b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
         "patchSetId": 1
@@ -63,6 +87,24 @@
       "revId": "946afa60ac083118c674934d90c3c6e5b2c4e664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1d6589_983abf0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T14:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30534944_9d36259b",
+      "revId": "946afa60ac083118c674934d90c3c6e5b2c4e664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
