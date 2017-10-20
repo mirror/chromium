@@ -53,6 +53,93 @@
     },
     {
       "key": {
+        "uuid": "66041a49_ff6d2328",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/BatteryStatusListenerAndroid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "All of this should probably go in PowerMonitor/some PowerUtils in base?",
+      "parentUuid": "66561d27_3f0dd869",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f9d82f_84511c1e",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "It still might be nice to have a way to turn this off, especially if we\u0027re cherry picking?",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 71
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f52c1b_febcd191",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "Ah I misunderstood I thought we polled.  This just throttles how often we can ask the battery layer.  This would look cleaner inside the battery listener I think?",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 42
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4077a6_3960a792",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem much like a listener at this point.  Should the polling code go inside here?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03b927f5_399a0a99",
         "filename": "components/download/internal/scheduler/device_status_listener.h",
         "patchSetId": 3
@@ -67,6 +154,29 @@
       "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fb274a9_744d06d5",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "If this is 0, should we just disable the battery monitoring and assume the battery level is at 100%?",
+      "range": {
+        "startLine": 43,
+        "startChar": 32,
+        "endLine": 43,
+        "endChar": 77
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -121,6 +231,29 @@
     },
     {
       "key": {
+        "uuid": "b9661281_1f85740e",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "Do we need a new BATTERY_CHARGING enum?",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a7d01d9_8862fa59",
         "filename": "components/download/public/download_params.h",
         "patchSetId": 3
@@ -132,6 +265,52 @@
       "writtenOn": "2017-10-20T17:32:28Z",
       "side": 1,
       "message": "Would it be clearer to just write:\nint optimal_battery_percentage \u003d 50;\n\nthen the default is obvious?",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3523efd8_d50f8225",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "If we end up adding a new param, we have to add it to the serialization layer in Model.",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 33
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88efc31d_cfac800e",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T18:07:33Z",
+      "side": 1,
+      "message": "Do we want this or should this just be a hidden part of BATTERY_SENSITIVE?",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 33
+      },
       "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
