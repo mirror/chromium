@@ -68,6 +68,21 @@ std::unique_ptr<Distance> DistanceProtoToIdl(const mri::Distance& distance) {
   return distance_result;
 }
 
+std::unique_ptr<DirectionAngles> DirectionAnglesProtoToIdl(
+    const mri::DirectionAngles& direction_angles) {
+  std::unique_ptr<DirectionAngles> direction_angles_result =
+      std::make_unique<DirectionAngles>();
+  if (direction_angles.has_yaw()) {
+    direction_angles_result->yaw =
+        std::make_unique<double>(direction_angles.yaw());
+  }
+  if (direction_angles.has_pitch()) {
+    direction_angles_result->pitch =
+        std::make_unique<double>(direction_angles.pitch());
+  }
+  return direction_angles_result;
+}
+
 EntityType EntityTypeProtoToIdl(const mri::Entity& entity) {
   if (entity.has_type()) {
     switch (entity.type()) {
@@ -99,6 +114,16 @@ Entity EntityProtoToIdl(const mri::Entity& entity) {
 
   if (entity.has_depth())
     entity_result.depth = DistanceProtoToIdl(entity.depth());
+
+  if (entity.has_gaze_angles())
+    entity_result.gaze_angles = DirectionAnglesProtoToIdl(entity.gaze_angles());
+
+  if (entity.has_track_id())
+    entity_result.track_id = std::make_unique<int>(entity.track_id());
+
+  if (entity.has_looking_at_camera_confidence_3d())
+    entity_result.looking_at_camera_confidence3d =
+        std::make_unique<double>(entity.looking_at_camera_confidence_3d());
 
   return entity_result;
 }

@@ -83,6 +83,11 @@ message FramePerception {
   repeated Entity entity = 5;
 }
 
+message DirectionAngles {
+  optional double yaw = 1;
+  optional double pitch = 2;
+}
+
 message Entity {
   // A unique id associated with the detected entity, which can be used to track
   // the entity over time.
@@ -105,6 +110,13 @@ message Entity {
 
   // Perpendicular distance (depth) from the camera plane to the entity.
   optional Distance depth = 5;
+
+  // Track id
+  optional uint32 track_id = 6;
+
+  // If entity is a person, the gaze information.
+  optional DirectionAngles gaze_angles = 7;
+  optional double looking_at_camera_confidence_3d = 8;
 }
 
 message BoundingBox {
