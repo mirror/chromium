@@ -200,13 +200,19 @@ class DataReductionProxyConfig
 
   bool secure_proxy_allowed() const;
 
+  bool InsecureProxiesAllowed() const;
+
   std::vector<DataReductionProxyServer> GetProxiesForHttp() const;
+
+  void OnInsecureProxyAllowedStatusChange(bool insecure_proxies_allowed);
 
  protected:
   virtual base::TimeTicks GetTicksNow() const;
 
   // Updates the Data Reduction Proxy configurator with the current config.
-  void UpdateConfigForTesting(bool enabled, bool restricted);
+  void UpdateConfigForTesting(bool enabled,
+                              bool secure_proxies_allowed,
+                              bool insecure_proxies_allowed);
 
   // Returns true if the default bypass rules should be added. Virtualized for
   // testing.
@@ -335,6 +341,9 @@ class DataReductionProxyConfig
   // Set to true if the captive portal probe for the current network has been
   // blocked.
   bool is_captive_portal_;
+
+  // Set to true if insecure data saver proxies are allowed.
+  bool insecure_proxies_allowed_;
 
   base::WeakPtrFactory<DataReductionProxyConfig> weak_factory_;
 
