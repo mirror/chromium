@@ -1675,6 +1675,7 @@
                             'gab+watch@chromium.org',
                             'robliao+watch@chromium.org'],
     'base_win': ['grt+watch@chromium.org',
+                 'robliao+watch@chromium.org',
                  'wfh+watch@chromium.org'],
     'battery_status': ['timvolodine@chromium.org'],
     'binary_size': ['agrieve+watch@chromium.org',
