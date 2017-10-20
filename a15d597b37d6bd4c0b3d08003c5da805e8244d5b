@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "e7fdab3d_703f2364",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-20T22:39:58Z",
+      "side": 1,
+      "message": "Again, I am not sure if this is an issue. The task can fail only during shutdown, at which point it probably doesn\u0027t matter. Will ping an owner and confirm though.",
+      "parentUuid": "5dc13893_773f150a",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d82854b_dc544d31",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
