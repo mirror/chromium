@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb4730ed_4176b88f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-20T01:22:28Z",
+      "side": 1,
+      "message": "The content may have changed while we were loading, so this could be out of date.",
+      "revId": "cd30476095056466301e67161f1adfdd226112f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac79ba4_82e99a18",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace_diff/WorkspaceDiff.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-20T01:22:28Z",
+      "side": 1,
+      "message": "I changed the order here because the current copy might have changed after we finished getting the original content.",
+      "revId": "cd30476095056466301e67161f1adfdd226112f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
