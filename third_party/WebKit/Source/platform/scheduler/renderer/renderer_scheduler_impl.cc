@@ -1730,6 +1730,12 @@ void RendererSchedulerImpl::RemovePendingNavigation(NavigatingFrameType type) {
   }
 }
 
+void RendererSchedulerImpl::SetPendingDomStorageMessageCount(
+    int pending_count) {
+  for (auto* web_view_scheduler : main_thread_only().web_view_schedulers)
+    web_view_scheduler->SetPendingDomStorageMessageCount(pending_count);
+}
+
 std::unique_ptr<base::SingleSampleMetric>
 RendererSchedulerImpl::CreateMaxQueueingTimeMetric() {
   return base::SingleSampleMetricsFactory::Get()->CreateCustomCountsMetric(
