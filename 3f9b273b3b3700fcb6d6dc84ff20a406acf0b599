@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf880e67_3b432752",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T16:07:28Z",
+      "side": 1,
+      "message": "Braces required since the body of this conditional is \u003e 1 line.",
+      "revId": "3f9b273b3b3700fcb6d6dc84ff20a406acf0b599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1afbaeaf_07964d9b",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T16:07:28Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "3f9b273b3b3700fcb6d6dc84ff20a406acf0b599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
