@@ -4,7 +4,10 @@
 
 #include "chrome/browser/ui/webui/print_preview/print_preview_handler.h"
 
+#include "base/base64.h"
 #include "base/containers/flat_set.h"
+#include "base/json/json_writer.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -20,6 +23,10 @@
 namespace printing {
 
 namespace {
+
+const char kDummyPrinterName[] = "DefaultPrinter";
+const char kDummyInitiatorName[] = "TestInitiator";
+const char kTestData[] = "abc";
 
 struct PrinterInfo {
   std::string id;
@@ -57,6 +64,65 @@ PrinterInfo GetEmptyPrinterInfo() {
   empty_printer.capabilities.SetKey("printer",
                                     empty_printer.basic_info.Clone());
   return empty_printer;
+}
+
+base::Value GetPrintTicket(printing::PrinterType type, bool cloud) {
+  base::Value::DictStorage ticket;
+
+  // Letter
+  base::Value::DictStorage media_size;
+  media_size["is_default"] = std::make_unique<base::Value>(true);
+  media_size["width_microns"] = std::make_unique<base::Value>(215900);
+  media_size["height_microns"] = std::make_unique<base::Value>(279400);
+  ticket["mediaSize"] = std::make_unique<base::Value>(media_size);
+
+  ticket["pageCount"] = std::make_unique<base::Value>(1);
+  ticket["landscape"] = std::make_unique<base::Value>(false);
+  ticket["color"] = std::make_unique<base::Value>(2);  // color printing
+  ticket["headerFooterEnabled"] = std::make_unique<base::Value>(false);
+  ticket["marginsType"] = std::make_unique<base::Value>(0);  // default margins
+  ticket["duplex"] = std::make_unique<base::Value>(1);       // LONG_EDGE
+  ticket["copies"] = std::make_unique<base::Value>(1);
+  ticket["collate"] = std::make_unique<base::Value>(false);
+  ticket["shouldPrintBackgrounds"] = std::make_unique<base::Value>(false);
+  ticket["shouldPrintSelectionOnly"] = std::make_unique<base::Value>(false);
+  ticket["previewModifiable"] = std::make_unique<base::Value>(false);
+  ticket["printToPDF"] =
+      std::make_unique<base::Value>(!cloud && type == printing::kPdfPrinter);
+  ticket["printWithCloudPrint"] = std::make_unique<base::Value>(cloud);
+  ticket["printWithPrivet"] =
+      std::make_unique<base::Value>(!cloud && type == printing::kPrivetPrinter);
+  ticket["printWithExtension"] = std::make_unique<base::Value>(
+      !cloud && type == printing::kExtensionPrinter);
+  ticket["rasterizePDF"] = std::make_unique<base::Value>(false);
+  ticket["scaleFactor"] = std::make_unique<base::Value>(100);
+  ticket["dpiHorizontal"] = std::make_unique<base::Value>(600);
+  ticket["dpiVertical"] = std::make_unique<base::Value>(600);
+  ticket["deviceName"] = std::make_unique<base::Value>(kDummyPrinterName);
+  ticket["fitToPageEnabled"] = std::make_unique<base::Value>(true);
+  ticket["pageWidth"] = std::make_unique<base::Value>(215900);
+  ticket["pageHeight"] = std::make_unique<base::Value>(279400);
+  ticket["showSystemDialog"] = std::make_unique<base::Value>(false);
+  ticket["OpenPDFInPreview"] = std::make_unique<base::Value>(false);
+
+  if (cloud)
+    ticket["cloudPrintID"] = std::make_unique<base::Value>(kDummyPrinterName);
+
+  if (type == printing::kPrivetPrinter || type == printing::kExtensionPrinter) {
+    base::Value::DictStorage capabilities;
+    capabilities["duplex"] = std::make_unique<base::Value>(true);  // non-empty
+    std::string caps_string;
+    base::JSONWriter::Write(base::Value(capabilities), &caps_string);
+    ticket["capabilities"] = std::make_unique<base::Value>(caps_string);
+    base::Value::DictStorage print_ticket;
+    print_ticket["version"] = std::make_unique<base::Value>("1.0");
+    print_ticket["print"] = std::make_unique<base::Value>();
+    std::string ticket_string;
+    base::JSONWriter::Write(base::Value(print_ticket), &ticket_string);
+    ticket["ticket"] = std::make_unique<base::Value>(ticket_string);
+  }
+
+  return base::Value(ticket);
 }
 
 class TestPrinterHandler : public PrinterHandler {
@@ -131,7 +197,12 @@ class FakePrintPreviewUI : public PrintPreviewUI {
 
   void GetPrintPreviewDataForIndex(
       int index,
-      scoped_refptr<base::RefCountedBytes>* data) const override {}
+      scoped_refptr<base::RefCountedBytes>* data) const override {
+    std::vector<unsigned char> test_data;
+    for (size_t i = 0; i < arraysize(kTestData) - 1; i++)
+      test_data.push_back(kTestData[i]);
+    *data = base::RefCountedBytes::TakeVector(&test_data);
+  }
 
   int GetAvailableDraftPageCount() const override { return 1; }
 
@@ -163,6 +234,8 @@ class TestPrintPreviewHandler : public PrintPreviewHandler {
             *called_for_type_.begin() == printer_type);
   }
 
+  bool NotCalled() { return called_for_type_.size() == 0; }
+
   void reset_calls() { called_for_type_.clear(); }
 
  private:
@@ -171,9 +244,6 @@ class TestPrintPreviewHandler : public PrintPreviewHandler {
 
   DISALLOW_COPY_AND_ASSIGN(TestPrintPreviewHandler);
 };
-
-const char kDummyPrinterName[] = "DefaultPrinter";
-const char kDummyInitiatorName[] = "TestInitiator";
 
 }  // namespace
 
@@ -436,5 +506,68 @@ TEST_F(PrintPreviewHandlerTest, GetPrinterCapabilities) {
     bool success = true;
     ASSERT_TRUE(data.arg2()->GetAsBoolean(&success));
     EXPECT_FALSE(success);
+  }
+}
+
+TEST_F(PrintPreviewHandlerTest, Print) {
+  // Initial settings first to enable javascript.
+  base::ListValue list_args;
+  list_args.AppendString("test-callback-id-0");
+  handler()->HandleGetInitialSettings(&list_args);
+
+  // In response to get initial settings, the initial settings are sent back
+  // and a use-cloud-print event is dispatched.
+  ASSERT_EQ(2u, web_ui()->call_data().size());
+
+  // Verify initial settings were sent.
+  ValidateInitialSettings(*web_ui()->call_data().back(),
+                          printing::kDummyPrinterName,
+                          printing::kDummyInitiatorName);
+
+  // The four printer types
+  const printing::PrinterType types[] = {
+      printing::kPrivetPrinter, printing::kExtensionPrinter,
+      printing::kPdfPrinter, printing::kLocalPrinter};
+  for (size_t i = 0; i <= arraysize(types); i++) {
+    // Also check cloud print. Use dummy type value of Privet (will be ignored).
+    bool cloud = i == arraysize(types);
+    printing::PrinterType type = cloud ? printing::kPrivetPrinter : types[i];
+    handler()->reset_calls();
+    base::ListValue args;
+    std::string callback_id_in =
+        "test-callback-id-" + base::UintToString(i + 1);
+    args.AppendString(callback_id_in);
+    base::Value print_ticket = printing::GetPrintTicket(type, cloud);
+    std::string json;
+    base::JSONWriter::Write(print_ticket, &json);
+    args.AppendString(json);
+    handler()->HandlePrint(&args);
+
+    // Verify correct PrinterHandler was called or that no handler was requested
+    // for local and cloud printers.
+    if (cloud || type == printing::kLocalPrinter) {
+      EXPECT_TRUE(handler()->NotCalled());
+    } else {
+      EXPECT_TRUE(handler()->CalledOnlyForType(type));
+    }
+
+    // Verify print succeeded.
+    const content::TestWebUI::CallData& data = *web_ui()->call_data().back();
+    EXPECT_EQ("cr.webUIResponse", data.function_name());
+    std::string callback_id;
+    ASSERT_TRUE(data.arg1()->GetAsString(&callback_id));
+    EXPECT_EQ(callback_id_in, callback_id);
+    bool success = false;
+    ASSERT_TRUE(data.arg2()->GetAsBoolean(&success));
+    EXPECT_TRUE(success);
+
+    // For cloud print, should also get the encoded data back as a string.
+    if (cloud) {
+      std::string print_data;
+      ASSERT_TRUE(data.arg3()->GetAsString(&print_data));
+      std::string expected_data;
+      base::Base64Encode(printing::kTestData, &expected_data);
+      EXPECT_EQ(print_data, expected_data);
+    }
   }
 }
