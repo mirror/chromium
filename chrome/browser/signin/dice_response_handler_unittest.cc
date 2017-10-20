@@ -133,6 +133,7 @@ class DiceResponseHandlerTest : public testing::Test,
     signin_client_.SetURLRequestContext(request_context_getter_.get());
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
     SigninManager::RegisterProfilePrefs(pref_service_.registry());
+    signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
     account_tracker_service_.Initialize(&signin_client_);
     account_reconcilor_.AddObserver(this);
   }
@@ -380,6 +381,42 @@ TEST_F(DiceResponseHandlerTest, SignoutMainAccount) {
       dice_params.signout_info.gaia_id[0]));
   EXPECT_FALSE(token_service_.RefreshTokenIsAvailable(kSecondaryGaiaID));
   EXPECT_FALSE(signin_manager_.IsAuthenticated());
+  EXPECT_EQ("", finish_token_fetch_gaia_id_);
+  EXPECT_EQ("", finish_token_fetch_email_);
+  // Check that the reconcilor was not blocked.
+  EXPECT_EQ(0, reconcilor_blocked_count_);
+  EXPECT_EQ(0, reconcilor_unblocked_count_);
+}
+
+TEST_F(DiceResponseHandlerTest, MigrationSignout) {
+  signin::ScopedAccountConsistencyDiceMigration scoped_dice_migration;
+  const char kSecondaryGaiaID[] = "secondary_account";
+  DiceResponseParams dice_params = MakeDiceParams(DiceAction::SIGNOUT);
+  dice_params.signout_info.gaia_id.push_back(kSecondaryGaiaID);
+  dice_params.signout_info.email.push_back("other@gmail.com");
+  dice_params.signout_info.session_index.push_back(1);
+  // User is signed in to Chrome, and has some refresh token for a secondary
+  // account.
+  signin_manager_.SignIn(dice_params.signout_info.gaia_id[0],
+                         dice_params.signout_info.email[0], "password");
+  token_service_.UpdateCredentials(dice_params.signout_info.gaia_id[0],
+                                   "token1");
+  token_service_.UpdateCredentials(kSecondaryGaiaID, "token2");
+  EXPECT_TRUE(token_service_.RefreshTokenIsAvailable(
+      dice_params.signout_info.gaia_id[0]));
+  EXPECT_TRUE(token_service_.RefreshTokenIsAvailable(kSecondaryGaiaID));
+  EXPECT_TRUE(signin_manager_.IsAuthenticated());
+  // Receive signout response for all accounts.
+  dice_response_handler_.ProcessDiceHeader(
+      dice_params, base::MakeUnique<TestProcessDiceHeaderObserver>(this));
+  EXPECT_EQ("", start_token_fetch_gaia_id_);
+  EXPECT_EQ("", start_token_fetch_email_);
+
+  // User is not signed out from Chrome, only the secondary token is deleted.
+  EXPECT_TRUE(token_service_.RefreshTokenIsAvailable(
+      dice_params.signout_info.gaia_id[0]));
+  EXPECT_FALSE(token_service_.RefreshTokenIsAvailable(kSecondaryGaiaID));
+  EXPECT_TRUE(signin_manager_.IsAuthenticated());
   EXPECT_EQ("", finish_token_fetch_gaia_id_);
   EXPECT_EQ("", finish_token_fetch_email_);
   // Check that the reconcilor was not blocked.
