@@ -17,6 +17,15 @@ class MediaControlsResourceLoader
  public:
   static void InjectMediaControlsUAStyleSheet();
 
+  // This stylesheet is injected into the Media Controls shadow DOM tree and
+  // contains elements that should not be present in the UA stylesheet (e.g.
+  // animations).
+  static String GetShadowStyleSheet();
+
+  // The timeline specific stylesheet is inserted into the timeline DOM tree
+  // and contains loading animations.
+  static String GetShadowTimelineStyleSheet();
+
   String GetUAStyleSheet() override;
 
   MediaControlsResourceLoader();

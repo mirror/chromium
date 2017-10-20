@@ -79,13 +79,7 @@ MediaControlSliderElement::MediaControlSliderElement(
   resize_observer_->observe(this);
 }
 
-void MediaControlSliderElement::SetupBarSegments() {
-  DCHECK((segment_highlight_after_ && segment_highlight_before_) ||
-         (!segment_highlight_after_ && !segment_highlight_before_));
-
-  if (segment_highlight_after_ || segment_highlight_before_)
-    return;
-
+Element* MediaControlSliderElement::GetTrackElement() {
   // The timeline element has a shadow root with the following
   // structure:
   //
@@ -93,7 +87,17 @@ void MediaControlSliderElement::SetupBarSegments() {
   //   - div
   //     - div::-webkit-slider-runnable-track#track
   ShadowRoot& shadow_root = Shadow()->OldestShadowRoot();
-  Element* track = shadow_root.getElementById(AtomicString("track"));
+  return shadow_root.getElementById(AtomicString("track"));
+}
+
+void MediaControlSliderElement::SetupBarSegments() {
+  DCHECK((segment_highlight_after_ && segment_highlight_before_) ||
+         (!segment_highlight_after_ && !segment_highlight_before_));
+
+  if (segment_highlight_after_ || segment_highlight_before_)
+    return;
+
+  Element* track = GetTrackElement();
   DCHECK(track);
   track->SetShadowPseudoId("-internal-media-controls-segmented-track");
 
