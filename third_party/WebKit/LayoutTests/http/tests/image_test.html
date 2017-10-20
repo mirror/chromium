@@ -1,0 +1,118 @@
+<style>
+canvas { border: 1px solid black; }
+.value1 {
+  background-color: #ffff80;
+}
+.value2 {
+  background-color: #ff8080;
+}
+</style>
+<p id="title"></p>
+<img id="img0" onload="console.log('load'); onLoad()" onerror="console.log('error')">
+<table id="table" border="1">
+</table>
+
+<script>
+var url2 = 'http://127.0.0.1:8000/resources/slow-image-dimensions2.php?sleep=2000&name=../../../images/resources/lenna.png&mimeType=image/jpeg&flag=' + Math.random();
+var url1 = 'http://127.0.0.1:8000/resources/slow-image-dimensions2.php?sleep=2000&name=../../../images/resources/dice.png&mimeType=image/jpeg&flag=' + Math.random();
+
+t0 = performance.now();
+
+function appendCell(td, value, value1, value2) {
+  td.appendChild(document.createTextNode(value));
+  if (value == value1) {
+    td.setAttribute('class', 'value1');
+  }
+  if (value == value2) {
+    td.setAttribute('class', 'value2');
+  }
+}
+
+function doTest(name) {
+  window.offsetTop;
+  document.getElementById('title').innerText = name;
+  var tr = document.createElement('tr');
+  var td;
+
+  td = document.createElement('th');
+  td.appendChild(document.createTextNode(name));
+  tr.appendChild(td);
+
+  td = document.createElement('td');
+  td.appendChild(document.createTextNode(performance.now() - t0));
+  tr.appendChild(td);
+
+  td = document.createElement('td');
+  appendCell(td, img0.width, 320, 256);
+  tr.appendChild(td);
+
+  td = document.createElement('td');
+  appendCell(td, img0.naturalWidth, 320, 256);
+  tr.appendChild(td);
+
+  td = document.createElement('td');
+  appendCell(td, img0.currentSrc, url1, url2);
+  tr.appendChild(td);
+
+  td = document.createElement('td');
+  appendCell(td, img0.complete, -1, -1);
+  tr.appendChild(td);
+
+  var canvas = document.createElement('canvas');
+  canvas.setAttribute('width', '64');
+  canvas.setAttribute('height', '64');
+  canvas.getContext('2d').drawImage(img0, 0, 0);
+  td = document.createElement('td');
+  td.appendChild(canvas);
+  tr.appendChild(td);
+
+  document.getElementById("table").appendChild(tr);
+}
+
+doTest("[1] Just before img.src is set");
+img0.src = url1;
+doTest("[1] Just after img.src is set (sync)");
+setTimeout(function() {
+  doTest("[1] Just after img.src is set (async)");
+}, 0);
+setTimeout(function() {
+  doTest("[1] Response is not yet received");
+}, 1000);
+setTimeout(function() {
+  doTest("[1] Response is received");
+}, 3000);
+setTimeout(function() {
+  doTest("[1] dimensions are available");
+}, 5000);
+setTimeout(function() {
+  doTest("[1] A part of pixels is availabe");
+}, 7000);
+
+function onLoad() {
+  doTest("[1] onload()");
+
+  img0.onload = function() {
+    doTest("[2] onload()");
+  };
+
+doTest("[2] Just before img.src is set");
+img0.src = url2;
+doTest("[2] Just after img.src is set (sync)");
+setTimeout(function() {
+  doTest("[2] Just after img.src is set (async)");
+}, 0);
+setTimeout(function() {
+  doTest("[2] Response is not yet received");
+}, 1000);
+setTimeout(function() {
+  doTest("[2] Response is received");
+}, 3000);
+setTimeout(function() {
+  doTest("[2] dimensions are available");
+}, 5000);
+setTimeout(function() {
+  doTest("[2] A part of pixels is availabe");
+}, 7000);
+}
+
+</script>
