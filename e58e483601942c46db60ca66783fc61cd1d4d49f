@@ -70,6 +70,30 @@
       "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7e4adf_41749578",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-20T21:33:23Z",
+      "side": 1,
+      "message": "That\u0027s fair, but right now AFAICT, if the WebContentsImpl calls OnAudioStateChanged on the Browser, the Browser has no way of telling which WebContents called it, so wouldn\u0027t know which TabSpecificContentSettings to inform of the state change, unless we change the method signature to include a WebContents* in the args.",
+      "parentUuid": "428b88d7_e68152e4",
+      "range": {
+        "startLine": 1461,
+        "startChar": 5,
+        "endLine": 1472,
+        "endChar": 1
+      },
+      "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
