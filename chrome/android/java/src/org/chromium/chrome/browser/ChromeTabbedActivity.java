@@ -396,7 +396,29 @@ public class ChromeTabbedActivity
             // 'Move to other window' command from CTA2).
             return LaunchIntentDispatcher.dispatchToTabbedActivity(this, intent);
         }
+        @LaunchIntentDispatcher.Action
+        int action = maybeDispatchCustomTabIntent(intent);
+        if (action != LaunchIntentDispatcher.Action.CONTINUE) {
+            return action;
+        }
         return super.maybeDispatchLaunchIntent(intent);
+    }
+
+    // Some apps save custom tab intents, so on upgrade we end up with VIEW custom tab intents
+    // sent to .Main activity (which doesn't handle VIEW intents anymore). This function attempts
+    // to dispatch 'intent' to a custom tab in such situations.
+    private @LaunchIntentDispatcher.Action int maybeDispatchCustomTabIntent(Intent intent) {
+        // The following checks that:
+        // 1. This is .Main alias (and not some CTA subclass). We can't check exactly, but
+        //    checking class for ChromeTabbedActivity gets us sufficiently close.
+        // 2. 'intent' looks like a custom tab intent and was sent to .Main alias.
+        if (getClass().equals(ChromeTabbedActivity.class)
+                && Intent.ACTION_VIEW.equals(intent.getAction())
+                && intent.hasCategory(Intent.CATEGORY_BROWSABLE)
+                && MAIN_LAUNCHER_ACTIVITY_NAME.equals(intent.getComponent().getClassName())) {
+            return LaunchIntentDispatcher.dispatchToCustomTabActivity(this, intent);
+        }
+        return LaunchIntentDispatcher.Action.CONTINUE;
     }
 
     @Override
@@ -466,6 +488,17 @@ public class ChromeTabbedActivity
 
     @Override
     public void onNewIntent(Intent intent) {
+        @LaunchIntentDispatcher.Action
+        int action = maybeDispatchCustomTabIntent(intent);
+        if (action != LaunchIntentDispatcher.Action.CONTINUE) {
+            // Change our position in the activity stack to make sure back button sends user
+            // to the activity that started the custom tab.
+            if ((intent.getFlags() & Intent.FLAG_ACTIVITY_NEW_TASK) != 0) {
+                moveTaskToBack(true);
+            }
+            // Intent was dispatched to CustomTabActivity, consume it.
+            return;
+        }
         mIntentHandlingTimeMs = SystemClock.uptimeMillis();
         super.onNewIntent(intent);
     }
