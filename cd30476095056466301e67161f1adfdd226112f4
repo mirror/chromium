@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "96b07908_c1bebdf8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-20T05:42:42Z",
+      "side": 1,
+      "message": "I am with pavel on this one, I think we should do something like: project.setRequestFileContentHandler(...) and we can set it here in setEnableInterception() or _onProjectAdded(). This will allow us to be lazy and only make a network request when requestfileContent is requested on the project.",
+      "parentUuid": "3fd6f78a_1124d7ad",
+      "revId": "cd30476095056466301e67161f1adfdd226112f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb4730ed_4176b88f",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
         "patchSetId": 1
