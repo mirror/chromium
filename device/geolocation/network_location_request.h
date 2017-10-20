@@ -46,8 +46,12 @@ class NetworkLocationRequest : private net::URLFetcherDelegate {
                          LocationResponseCallback callback);
   ~NetworkLocationRequest() override;
 
-  // Makes a new request. Returns true if the new request was successfully
-  // started. In all cases, any currently pending request will be canceled.
+  // Makes a new request using the specified |wifi_data|. Returns true if the
+  // new request was successfully started. In all cases, any currently pending
+  // request will be canceled. The specified |wifi_data| and |wifi_timestamp|
+  // are passed back to the client upon completion, via
+  // LocationResponseCallback's |wifi_data| and |position.timestamp|
+  // respectively.
   bool MakeRequest(const WifiData& wifi_data,
                    const base::Time& wifi_timestamp,
                    const net::PartialNetworkTrafficAnnotationTag&
