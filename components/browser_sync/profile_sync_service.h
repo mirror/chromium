@@ -237,6 +237,7 @@ class ProfileSyncService : public syncer::SyncServiceBase,
     scoped_refptr<net::URLRequestContextGetter> url_request_context;
     std::string debug_identifier;
     version_info::Channel channel = version_info::Channel::UNKNOWN;
+    syncer::ModelTypeStoreFactory model_type_store_factory;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(InitParams);
@@ -881,6 +882,8 @@ class ProfileSyncService : public syncer::SyncServiceBase,
   // An object that lets us check whether sync is currently allowed on this
   // platform.
   PlatformSyncAllowedProvider platform_sync_allowed_provider_;
+
+  syncer::ModelTypeStoreFactory model_type_store_factory_;
 
   // This weak factory invalidates its issued pointers when Sync is disabled.
   base::WeakPtrFactory<ProfileSyncService> sync_enabled_weak_factory_;

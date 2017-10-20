@@ -177,6 +177,7 @@ ProfileSyncService::ProfileSyncService(InitParams init_params)
       network_resources_(new syncer::HttpBridgeNetworkResources),
       start_behavior_(init_params.start_behavior),
       passphrase_prompt_triggered_by_version_(false),
+      model_type_store_factory_(init_params.model_type_store_factory),
       sync_enabled_weak_factory_(this),
       weak_factory_(this) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -236,7 +237,10 @@ void ProfileSyncService::Initialize() {
                  syncer::ModelTypeSet(syncer::SESSIONS)));
 
   const syncer::ModelTypeStoreFactory& store_factory =
-      GetModelTypeStoreFactory(syncer::DEVICE_INFO, base_directory_);
+      model_type_store_factory_.is_null()
+          ? GetModelTypeStoreFactory(syncer::DEVICE_INFO, base_directory_)
+          : model_type_store_factory_;
+
   device_info_sync_bridge_ = std::make_unique<DeviceInfoSyncBridge>(
       local_device_.get(), store_factory,
       base::BindRepeating(
