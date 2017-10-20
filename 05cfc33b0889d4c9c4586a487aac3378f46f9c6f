@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82cebd69_5e794d06",
+        "filename": "third_party/WebKit/Source/core/animation/CSSOffsetRotateInterpolationType.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-20T14:29:42Z",
+      "side": 1,
+      "message": "Not with private constructors.\n\nCSS...NonInterpolableValue, Underlying...Checker, Inherited...Checker\ncurrently have private constructors.",
+      "parentUuid": "2afa313f_f0463a06",
+      "revId": "05cfc33b0889d4c9c4586a487aac3378f46f9c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc8212df_8c16bc8a",
         "filename": "third_party/WebKit/Source/core/animation/CSSTextIndentInterpolationType.cpp",
         "patchSetId": 4
