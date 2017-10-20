@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "6d021546_929f2537",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T20:59:19Z",
+      "side": 1,
+      "message": "Each time we call BindInterface, we create a new service instance (Maybe in the same process, no clue), or at least that\u0027s the case for NetworkService, so I assume it\u0027s the case here, too.  I\u0027m not sure we want to create multiple independent ProxyServiceFactories out of process?  Would that result in one process per NetworkContext?",
+      "parentUuid": "66fb8119_e04d49b2",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "418b52f9_d37b8b98",
         "filename": "chrome/browser/net/proxy_resolver_manager.h",
         "patchSetId": 27
