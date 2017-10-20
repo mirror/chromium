@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "32601d7e_2ce9f522",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-20T07:08:20Z",
+      "side": 1,
+      "message": "nit: remove the last t?",
+      "range": {
+        "startLine": 12,
+        "startChar": 40,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "bb00d2e91e54c0d5b5c63f6b948cf160cc403098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0a1b5f3_37a4309d",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 6
