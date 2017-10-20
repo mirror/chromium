@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adbbe1c3_6fb56be5",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/preferred-width-computed-after-layout.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-20T09:54:58Z",
+      "side": 0,
+      "message": "Any special reason to remove the onload\u003drunTests()?\nDunno if it\u0027s strictly needed or not, but we usually wait for onload to run the tests. :-)\nIf at some point we add images to the test, this will be needed for example.",
+      "revId": "ade8feff6d736f7a25c8e0483122262da0a29185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6c2e84_934ea532",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-20T09:54:58Z",
+      "side": 0,
+      "message": "Really nice to get this code removed.",
+      "revId": "ade8feff6d736f7a25c8e0483122262da0a29185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
