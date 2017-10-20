@@ -546,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "cf08f11c_e6abdf54",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3980,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T19:33:28Z",
+      "side": 1,
+      "message": "Oh, I see.  Yeah, this goes beyond what I\u0027m familiar with.  It does look like we might need more of it, like the delegate_-\u003eWebContentsCreated call (which calls AttachTabHelpers and makes the new tab show in the task manager).  I\u0027m not sure if there\u0027s more we need.\n\nMaybe sky@\u0027s comments about the browser_commands.cc code will help, or we can ask nick@ (who has looked at CreateNewWindow in the past)?",
+      "parentUuid": "c535de0e_23463c11",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "721d4a80_628d8f0a",
         "filename": "net/test/embedded_test_server/default_handlers.cc",
         "patchSetId": 15

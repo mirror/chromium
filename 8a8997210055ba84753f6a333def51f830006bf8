@@ -34,6 +34,24 @@
       "revId": "8a8997210055ba84753f6a333def51f830006bf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9367de7d_a10e0416",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T19:33:28Z",
+      "side": 0,
+      "message": "I think it\u0027s worth getting sky@\u0027s thoughts on this (and comparing to the new code you\u0027ve added in WebContentsImpl::ViewSource).",
+      "parentUuid": "e58fc4ca_ff432524",
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

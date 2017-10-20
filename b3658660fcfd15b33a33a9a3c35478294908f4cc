@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78f0b33_7d99f604",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 3994,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T19:33:28Z",
+      "side": 1,
+      "message": "Let\u0027s include a comment saying that view_source_contents may be deleted by the delegate in AddNewContents, so don\u0027t use it afterwards (similar to the comment in CreateNewWindow).",
+      "revId": "b3658660fcfd15b33a33a9a3c35478294908f4cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
