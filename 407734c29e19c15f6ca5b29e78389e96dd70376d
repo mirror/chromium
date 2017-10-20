@@ -22,6 +22,30 @@
       "revId": "407734c29e19c15f6ca5b29e78389e96dd70376d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12307483_8ce08a10",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-20T04:48:31Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "277e81bf_f9bbee51",
+      "range": {
+        "startLine": 29,
+        "startChar": 75,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "407734c29e19c15f6ca5b29e78389e96dd70376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
