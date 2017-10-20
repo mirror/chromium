@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a8a3a88_3f158bb9",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-20T22:02:36Z",
+      "side": 1,
+      "message": "I\u0027m controlling the actual inclusion of the provider because there doesn\u0027t seem to be any way to have it default do nothing. If most-visited is not enabled, it will do contextual search.\n\nSo my thought was to control it with this flag and use the following command-line flags to turn it on:\n\n--force-fieldtrials\u003dOmniboxBundledExperimentV1/foo/ --force-fieldtrial-params\u003dOmniboxBundledExperimentV1.foo:ZeroSuggest/true\n\nBut this doesn\u0027t seem to work. Is there something obviously wrong with that formulation that you can see?",
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
