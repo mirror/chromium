@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab90fde_462a8477",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "If this is unused, please remove it.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46c0031_c297c0fe",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 2369,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Add `// fallthrough` to make it clear the omitted `break` is intentional (here and for kGestureScrollBegin)",
+      "range": {
+        "startLine": 2369,
+        "startChar": 6,
+        "endLine": 2369,
+        "endChar": 7
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e55407_d5d66dad",
+        "filename": "third_party/WebKit/LayoutTests/LeakExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Why does the test leak? We shouldn\u0027t commit a leaky test/CL.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 131
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5d44c4_fc2aaa2d",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Why is it flaky?",
+      "range": {
+        "startLine": 650,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 110
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20841c89_dc345a7d",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Blink LayoutTest style is to omit \u003chtml\u003e \u003chead\u003e and \u003cbody\u003e tags. See https://chromium.googlesource.com/chromium/src/+/master/docs/testing/writing_layout_tests.md",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 5
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc5c0ea_a8cd6340",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Does the body have to be scrollable? And if so, should it be horizontally scrollable too?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaea12a7_7aaacc65",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Check for the internals object before calling.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe6d68c_60be4203",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "This should be didCallDistributeScrollHandler",
+      "range": {
+        "startLine": 145,
+        "startChar": 36,
+        "endLine": 145,
+        "endChar": 70
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9781118e_485d5849",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Should only do this if we have chrome.gpuBenchmarking (generally we make the test loadable and testable manually but it\u0027d be a little difficult in this case...)",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 33
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a93fac7_de30bcfc",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "This is separate from whether we have a customization (i.e. if the REF is off, has_scroll_customization_for_gesture is true which is misleading). It would be more clear to include it in the if below.",
+      "range": {
+        "startLine": 648,
+        "startChar": 6,
+        "endLine": 648,
+        "endChar": 59
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545a0af0_d30ec1fd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 33
+      },
+      "lineNbr": 26051,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-20T19:45:28Z",
+      "side": 1,
+      "message": "Is this change intentional?",
+      "range": {
+        "startLine": 26051,
+        "startChar": 2,
+        "endLine": 26051,
+        "endChar": 39
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
