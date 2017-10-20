@@ -126,6 +126,30 @@
     },
     {
       "key": {
+        "uuid": "f2855097_d45c7aee",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-20T23:26:04Z",
+      "side": 1,
+      "message": "It only happens in tests. So I think there might be some problem with the test environment setup. I reverted it back to OnWindowDestroying() function here, and fixed the failed unittests.\nBasically I added a new SplitViewTestWindowDelegate class for split view related tests. The window\u0027s visibility is changed to false when it\u0027s destroying so that it can\u0027t be activated any more, so that MruWindowTracker can get a correct window list. \n\nFurther more, I created a new bug crbug.com/777017 to fix the underlying issues.",
+      "parentUuid": "a76be05d_f8604716",
+      "range": {
+        "startLine": 341,
+        "startChar": 26,
+        "endLine": 341,
+        "endChar": 43
+      },
+      "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e904ef33_eb9d13b3",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 1
@@ -229,6 +253,24 @@
       "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115b7c3a_f4fdf7dd",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-20T23:26:04Z",
+      "side": 1,
+      "message": "I see. Done.",
+      "parentUuid": "f86dd548_46bb037c",
+      "revId": "4d5afda0c950b425f27c46d4e1aa4de2100595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
