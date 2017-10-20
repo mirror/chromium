@@ -276,7 +276,9 @@ message via `LOG(ERROR)`.
 *** note
 **NOTE:** Messages will only be read and dispatched from a pipe as long as the
 object which binds it (*i.e.* the `mojo::Binding` in the above example) remains
-alive.
+alive. Any tasks that were scheduled by the binding to process incoming messages
+are dropped after the binding is torn down, so there's no race between tearing
+down a binding and receiving messages.
 ***
 
 ### Receiving Responses
