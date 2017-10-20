@@ -184,7 +184,6 @@ HttpCache::Writers::TransactionMap::iterator
 HttpCache::Writers::EraseTransaction(TransactionMap::iterator it, int result) {
   Transaction* transaction = it->first;
   transaction->WriterAboutToBeRemovedFromEntry(result);
-
   TransactionMap::iterator return_it = all_writers_.erase(it);
 
   if (all_writers_.empty() && next_state_ == State::NONE) {
@@ -200,10 +199,11 @@ HttpCache::Writers::EraseTransaction(TransactionMap::iterator it, int result) {
 
   if (active_transaction_ == transaction) {
     active_transaction_ = nullptr;
-  } else {
-    // If waiting for read, remove it from the map.
-    waiting_for_read_.erase(transaction);
+    return return_it;
   }
+
+  // If waiting for read, remove it from the map.
+  waiting_for_read_.erase(transaction);
   return return_it;
 }
 
@@ -547,6 +547,7 @@ void HttpCache::Writers::OnDataReceived(int result) {
     TransactionSet make_readers;
     for (auto& writer : all_writers_) {
       make_readers.insert(writer.first);
+      writer.first->WriteModeTransactionAboutToBecomeReader();
     }
     all_writers_.clear();
     network_transaction_.reset();
@@ -599,7 +600,7 @@ void HttpCache::Writers::ProcessWaitingForReadTransactions(int result) {
     it = waiting_for_read_.erase(it);
 
     // If its response completion or failure, this transaction needs to be
-    // removed.
+    // removed from writers.
     if (result <= 0)
       EraseTransaction(transaction, result);
   }
