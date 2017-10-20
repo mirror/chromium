@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f51b7ce3_f2fa3f10",
+        "filename": "third_party/WebKit/Source/platform/graphics/ScopedInterpolationQuality.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-20T14:28:50Z",
+      "side": 1,
+      "message": "This can be inferred on the fly by comparing  previous_interpolation_quality_ with interpolation_quality/context.ImageInterpolationQuality(), but maybe it\u0027s clearer this way.",
+      "revId": "8c641a1478695dc67709611af81414e77ad6370e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
