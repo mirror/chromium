@@ -22,6 +22,30 @@
       "revId": "5c0d3a2edc1108c7825890d9609f7ee6959e7f51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2f5a97_3bae8e6e",
+        "filename": "chrome/browser/devtools/devtools_embedder_message_dispatcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T16:41:21Z",
+      "side": 1,
+      "message": "Type is an arbitrary string that client uses to specify how it is going to use the file system (to store user snippets, to map files to network resources, to cache content, etc.). It does not affect the security of the system, nothing in the browser logic depends on the \u0027type\u0027. It is only stored in the preferences next to the folder.\n\nUpon subsequent DevTools opening, filesystems are reported to the new front-end, it will now report the type of the fs along with the fs itself. DevTools would know why filesystem was added and would behave accordingly. Basically, we\u0027d like type to be stored in the same preference as the path to avoid redundancy and the need to sync preferences across devtools and the browser.",
+      "parentUuid": "e08cdf65_ab0c59dd",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "5c0d3a2edc1108c7825890d9609f7ee6959e7f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
