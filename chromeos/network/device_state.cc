@@ -35,8 +35,16 @@ bool DeviceState::PropertyChanged(const std::string& key,
   // All property values get stored in |properties_|.
   properties_.SetKey(key, value.Clone());
 
+  if (key == shill::kNameProperty && type() == shill::kTypeCellular &&
+      !name().empty()) {
+    // For Cellular the name may be set from home_provider_name, do not
+    // overwrite that in ManagedStatePropertyChanged().
+    return true;
+  }
+
   if (ManagedStatePropertyChanged(key, value))
     return true;
+
   if (key == shill::kAddressProperty) {
     return GetStringValue(key, value, &mac_address_);
   } else if (key == shill::kScanningProperty) {
@@ -48,8 +56,26 @@ bool DeviceState::PropertyChanged(const std::string& key,
   } else if (key == shill::kProviderRequiresRoamingProperty) {
     return GetBooleanValue(key, value, &provider_requires_roaming_);
   } else if (key == shill::kHomeProviderProperty) {
-    return shill_property_util::GetHomeProviderFromProperty(
-        value, &home_provider_id_);
+    if (type() != shill::kTypeCellular)
+      return false;
+    const base::Value* name_value = value.FindKey(shill::kOperatorNameKey);
+    std::string operator_name = name_value->GetString();
+    if (!operator_name.empty()) {
+      set_name(operator_name);
+      const base::Value* country_value =
+          value.FindKey(shill::kOperatorCountryKey);
+      std::string country = country_value ? country_value->GetString() : "";
+      if (!country.empty()) {
+        home_provider_id_ = base::StringPrintf("%s (%s)", operator_name.c_str(),
+                                               country.c_str());
+      } else {
+        home_provider_id_ = operator_name;
+      }
+    } else {
+      const base::Value* code = value.FindKey(shill::kOperatorCodeKey);
+      if (code)
+        home_provider_id_ = code->GetString();
+    }
   } else if (key == shill::kTechnologyFamilyProperty) {
     return GetStringValue(key, value, &technology_family_);
   } else if (key == shill::kCarrierProperty) {
