@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e62c19dc_11d9202b",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-20T16:01:35Z",
+      "side": 1,
+      "message": "That\u0027s right, the reason I was doing it this way was because with the gzip header, the server attempts to decompress before it is passed to the collector, but at the time I did not realize that this would pretty much make compression useless since the data is already encrypted. What I can do is not add the gzip header when the data is encrypted, and just manually run Gzip::Uncompress server side after decrypting it. Thanks for catching this.",
+      "parentUuid": "e60f31f9_1ca7709f",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 45
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3cd1060_3e2334f4",
         "filename": "components/metrics/net/net_metrics_log_uploader.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T01:50:35Z",
       "side": 1,
       "message": "I\u0027m wondering if rather than retrying immediately, we should just wait for ReportingService to call UploadLog again with it\u0027s current retry logic?  We probably would want to include the state you are using to decide this (was_https \u0026 error_code) in the ReportingInfo for the retry.",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 63
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e2ebc0_99aa7790",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-20T16:01:35Z",
+      "side": 1,
+      "message": "This came up for Finch in the design doc discussion (cc\u0027d you there now), and the decision was to retry immediately over HTTP after an HTTP failure. Since the changes are very similar for UMA, I thought it would be the same. Do you think in the UMA case it makes more sense to wait for the scheduler?",
+      "parentUuid": "d3cd1060_3e2334f4",
       "range": {
         "startLine": 253,
         "startChar": 2,
