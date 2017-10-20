@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39c5bfc_ff63f9df",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T07:01:10Z",
+      "side": 1,
+      "message": "This pattern (especially giving an ID from the caller) seems a bit uncommon, did you consider base::observer_list or other patterns but didn\u0027t want to use them?",
+      "revId": "1633d6db8d7a8b1ec3a2104dcf4b1c330234f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a68b74a_b113591d",
+        "filename": "content/child/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T07:01:10Z",
+      "side": 1,
+      "message": "nit: this is controller connector, maybe just \u0027AddConnectionErrorHandler\u0027 / \u0027RemoveConnectionErrorHandle\u0027 would be fine.\n\n(Also please add brief comments)",
+      "revId": "1633d6db8d7a8b1ec3a2104dcf4b1c330234f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550315f4_1d131fc2",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T07:01:10Z",
+      "side": 1,
+      "message": "I slightly prefer splitting this into StartRequest() and TestRequest(), where StartRequest() returns after CreateLoaderAndStart and TestRequest() calls it.\n\nAlso maybe rename TestRequest to... StartRequestAndCheckController?",
+      "revId": "1633d6db8d7a8b1ec3a2104dcf4b1c330234f88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
