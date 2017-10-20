@@ -307,9 +307,9 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   void TransitionToCommittedForNewPage() override {}
 
   bool NavigateBackForward(int offset) const override { return false; }
-  void DidDisplayInsecureContent() override {}
+  void DidDisplayMixedContent() override {}
   void DidContainInsecureFormAction() override {}
-  void DidRunInsecureContent(SecurityOrigin*, const KURL&) override {}
+  void DidRunMixedContent(SecurityOrigin*, const KURL&) override {}
   void DidDetectXSS(const KURL&, bool) override {}
   void DidDispatchPingLoader(const KURL&) override {}
   void DidDisplayContentWithCertificateErrors(const KURL&) override {}

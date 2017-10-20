@@ -104,10 +104,10 @@ void WorkerFetchContextImpl::DidDisplayContentWithCertificateErrors(
                                                                url));
 }
 
-void WorkerFetchContextImpl::DidRunInsecureContent(
+void WorkerFetchContextImpl::DidRunMixedContent(
     const blink::WebSecurityOrigin& origin,
     const blink::WebURL& url) {
-  Send(new FrameHostMsg_DidRunInsecureContent(
+  Send(new FrameHostMsg_DidRunMixedContent(
       parent_frame_id_, GURL(origin.ToString().Utf8()), url));
 }
 

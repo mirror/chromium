@@ -59,8 +59,8 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   void DidRunContentWithCertificateErrors(const blink::WebURL& url) override;
   void DidDisplayContentWithCertificateErrors(
       const blink::WebURL& url) override;
-  void DidRunInsecureContent(const blink::WebSecurityOrigin&,
-                             const blink::WebURL& insecure_url) override;
+  void DidRunMixedContent(const blink::WebSecurityOrigin&,
+                          const blink::WebURL& insecure_url) override;
   void SetApplicationCacheHostID(int id) override;
   int ApplicationCacheHostID() const override;
   void SetSubresourceFilterBuilder(
