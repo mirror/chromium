@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba6303af_db953a86",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-20T22:59:00Z",
+      "side": 1,
+      "message": "Add a comment as to why the NEAR is needed.",
+      "revId": "b90007f3eaadb679491cf3d4697894265d75f6a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
