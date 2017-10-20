@@ -47,6 +47,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/download/in_progress_metadata/in_progress_metadata_cache.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
@@ -219,7 +220,14 @@ ChromeDownloadManagerDelegate::ChromeDownloadManagerDelegate(Profile* profile)
           base::CreateSequencedTaskRunnerWithTraits(
               {base::MayBlock(), base::TaskPriority::BACKGROUND,
                base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  if (!profile_->GetPath().empty()) {
+    base::FilePath metadata_dir =
+        profile_->GetPath().Append(chrome::kDownloadMetadataStoreFilename);
+    download_metadata_cache_.reset(
+        new download::InProgressMetadataCache(metadata_dir));
+  }
+}
 
 ChromeDownloadManagerDelegate::~ChromeDownloadManagerDelegate() {
   // If a DownloadManager was set for this, Shutdown() must be called.
@@ -494,6 +502,11 @@ void ChromeDownloadManagerDelegate::ChooseSavePath(
       can_save_as_complete,
       download_prefs_.get(),
       callback);
+}
+
+download::InProgressMetadataCache*
+ChromeDownloadManagerDelegate::GetMetadataCache() {
+  return download_metadata_cache_.get();
 }
 
 void ChromeDownloadManagerDelegate::SanitizeSavePackageResourceName(

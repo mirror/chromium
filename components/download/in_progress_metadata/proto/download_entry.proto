@@ -1,0 +1,42 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+package metadata_pb;
+
+// TODO: Comments in each of these.
+message ResumptionCounts {
+  optional int64 retry_count = 1;
+  optional int64 total_bytes_transferred = 2;
+}
+
+message ResumptionConfig {
+  optional int64 retries_allowed = 1;
+  optional int64 bytes_wasted_allowed = 2;
+  optional int64 percentage_file_wasted_allowed = 3;
+  optional bool reset_after_interaction = 4;
+  optional bool can_auto_resume_on_metered_networks = 5;
+}
+
+message ResumptionParams {
+  optional ResumptionCounts resumption_total = 1;
+  optional ResumptionCounts resumption_after_interaction = 2;
+  optional ResumptionConfig resumption_config = 3;
+}
+
+// Stores various in-progress metadata related to a download.
+message DownloadEntry {
+  optional string guid = 1;
+  optional string request_origin = 2;
+  optional ResumptionParams resumption_params = 3;
+  optional int64 received_bytes = 4;
+}
+
+// Contains a list of entries.
+message DownloadEntries {
+  repeated DownloadEntry entries = 1;
+}
