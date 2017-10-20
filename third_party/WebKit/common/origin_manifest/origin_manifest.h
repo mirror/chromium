@@ -1,0 +1,51 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef THIRD_PARTY_WEBKIT_COMMON_ORIGIN_MANIFEST_ORIGIN_MANIFEST_H_
+#define THIRD_PARTY_WEBKIT_COMMON_ORIGIN_MANIFEST_ORIGIN_MANIFEST_H_
+
+#include <string>
+#include <vector>
+
+#include "third_party/WebKit/common/common_export.h"
+
+namespace blink {
+
+enum class ActivationType {
+  kFallback,
+  kBaseline,
+};
+
+class BLINK_COMMON_EXPORT OriginManifest {
+ public:
+  // TODO(mkwst) This is dumb and we should stop replicating everything
+  // everywhere. I'd love to reuse content_security_policy.mojom but dependency
+  // restrictions do not let me. We should find a way to do it anyway.
+  enum class ContentSecurityPolicyType {
+    kReport,
+    kEnforce,
+  };
+
+  struct ContentSecurityPolicy {
+    std::string policy;
+    ContentSecurityPolicyType disposition;
+  };
+
+  void AddContentSecurityPolicy(std::string policy,
+                                ContentSecurityPolicyType disposition,
+                                ActivationType is_fallback);
+
+  // Returns all CSPs that should be enforced. That is when |has_csp_header| is
+  // true only baseline CSPs are returned. All CSPs otherwise.
+  const std::vector<ContentSecurityPolicy> GetContentSecurityPolicies(
+      bool has_csp_header);
+
+ private:
+  std::vector<ContentSecurityPolicy> csp_baseline_;
+  std::vector<ContentSecurityPolicy> csp_fallback_;
+};
+
+}  // namespace blink
+
+#endif  // THIRD_PARTY_WEBKIT_COMMON_ORIGIN_MANIFEST_ORIGIN_MANIFEST_H_
