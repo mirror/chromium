@@ -27,13 +27,9 @@ def main(args):
   if options.gyp_condition in gyp_defines:
     print 'Found matching condition in GYP_DEFINES. Execute: %s' % (
         ' '.join(script_args))
-    subprocess.check_call(script_args)
-  else:
-    print ('Not found "%s" condition in GYP_DEFINES="%s". '
-           'Skip script execution.' %
-           (options.gyp_condition, gyp_defines))
+    return subprocess.call(script_args)
   return 0
 
 
 if __name__ == '__main__':
-  main(sys.argv[1:])
+  sys.exit(main(sys.argv[1:]))
