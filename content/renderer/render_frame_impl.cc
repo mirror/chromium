@@ -3038,11 +3038,15 @@ RenderFrameImpl::CreateWorkerFetchContext() {
       ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
           web_provider);
   mojom::ServiceWorkerWorkerClientRequest service_worker_client_request;
+  mojom::ServiceWorkerContainerHostPtrInfo
+      service_worker_container_host_for_worker;
   // Some sandboxed iframes are not allowed to use service worker so don't have
   // a real service worker provider, so the provider context is null.
   if (provider->context()) {
     service_worker_client_request =
         provider->context()->CreateWorkerClientRequest();
+    service_worker_container_host_for_worker =
+        provider->context()->CreateContainerHostCopy();
   }
 
   ChildURLLoaderFactoryGetter* url_loader_factory_getter =
@@ -3051,6 +3055,7 @@ RenderFrameImpl::CreateWorkerFetchContext() {
   std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context =
       base::MakeUnique<WorkerFetchContextImpl>(
           std::move(service_worker_client_request),
+          std::move(service_worker_container_host_for_worker),
           url_loader_factory_getter->GetClonedInfo());
 
   worker_fetch_context->set_parent_frame_id(routing_id_);

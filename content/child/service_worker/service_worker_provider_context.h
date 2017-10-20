@@ -125,6 +125,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // ServiceWorkerProviderContext.
   mojom::ServiceWorkerWorkerClientRequest CreateWorkerClientRequest();
 
+  mojom::ServiceWorkerContainerHostPtrInfo CreateContainerHostCopy();
+
   // Called when ServiceWorkerNetworkProvider is destructed. This function
   // severs the Mojo binding to the browser-side ServiceWorkerProviderHost. The
   // reason ServiceWorkerNetworkProvider is special compared to the other
