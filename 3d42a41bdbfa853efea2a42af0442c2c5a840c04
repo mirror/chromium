@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b859d6_be532d66",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T10:40:09Z",
+      "side": 1,
+      "message": "ngh. I tested this on a 10.10 VM and it was fine. Probably Apple fixed it in a 10.10 point release that the bots don\u0027t have in the waterfall. 10.11 is fine in the waterfall. (macOS apps didn\u0027t start getting proper RTL support until 10.12 anyway).",
+      "revId": "3d42a41bdbfa853efea2a42af0442c2c5a840c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
