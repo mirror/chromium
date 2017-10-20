@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "56c0f845_b052b944",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-20T14:30:53Z",
+      "side": 1,
+      "message": "nit: description is out of date.",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 66
+      },
+      "revId": "8c641a1478695dc67709611af81414e77ad6370e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f51b7ce3_f2fa3f10",
         "filename": "third_party/WebKit/Source/platform/graphics/ScopedInterpolationQuality.h",
         "patchSetId": 3
