@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c64815e5_1ea15ea7",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-20T16:27:56Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "range": {
+        "startLine": 8,
+        "startChar": 18,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c0545e_782ca23f",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-20T16:27:56Z",
+      "side": 1,
+      "message": "This sounds a bit vague, how about something like \"Exit the highlighter mode if it is currently enabled\"",
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34569335_97ed49dc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-20T16:27:56Z",
+      "side": 1,
+      "message": "I always feel uneasy about cloning state across an async channel. The potential for a harmful race is low or nonexistent here, but the extra state creates extra cognitive load. \nI think you can just call Exit, since the controller would do a similar check anyway.",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 306,
+        "endChar": 39
+      },
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823551dc_5d83540d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-20T16:27:56Z",
+      "side": 1,
+      "message": "Is there a reason you cannot use existing methods to achieve this? Similar to the test above (lines #251-253, #291-294)",
+      "range": {
+        "startLine": 299,
+        "startChar": 28,
+        "endLine": 299,
+        "endChar": 48
+      },
+      "revId": "d5c4640a6f79719dd97e6c0ef709736031820791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
