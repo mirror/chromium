@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e60f31f9_1ca7709f",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-20T01:50:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you compress before you encrypt?  Encrypted data shouldn\u0027t be compressible?",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 45
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cd1060_3e2334f4",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-20T01:50:35Z",
+      "side": 1,
+      "message": "I\u0027m wondering if rather than retrying immediately, we should just wait for ReportingService to call UploadLog again with it\u0027s current retry logic?  We probably would want to include the state you are using to decide this (was_https \u0026 error_code) in the ReportingInfo for the retry.",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 63
+      },
+      "revId": "ba7286139672fc723bfcb6f75192b606ad1d54c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
