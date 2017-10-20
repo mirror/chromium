@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "628cf41c_8212923a",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-10-20T20:45:47Z",
+      "side": 1,
+      "message": "This may not always work, i.e. if Chrome is running in multi-process mode but we decide to run network service in-process to limit processes because of device constraints.\n\nCan NetworkChangeNotifier gain a method to check if it\u0027s already created or not, and then this code can call it?",
+      "revId": "e0ef525fcb91e4b3f5ba35ec8368b4a88d9e4e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfba38b3_950978ee",
         "filename": "content/network/network_service_impl.cc",
         "patchSetId": 9
