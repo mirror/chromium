@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff4a0a7e_d14748b3",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 3511,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae43e157_39833fa3",
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c94c1c3_65fbc7d7",
         "filename": "chrome/browser/media/cdm_storage_id.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T21:25:41Z",
       "side": 1,
       "message": "There are a lot of if/defs in this file. Maybe we can check ENABLE_CDM_STORAGE_ID in \npepper_platform_verification_message_filter.cc so that cdm_storage_id.* will only be compiled when enable_cdm_storage_id is true (similar to how we treat cdm_storage_id_key.*). Then we can remove one layer of if/def in this file.",
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4712cc33_2b9c7f55",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Since I have to move code from pepper here as part of adding it for mojo, I\u0027ll do this as part of that CL.",
+      "parentUuid": "3c94c1c3_65fbc7d7",
       "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3bc8b551_d0453bbc",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c95a7ee6_088b95fd",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 13
+      },
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48cc56ac_0be5ae8a",
         "filename": "chrome/browser/media/cdm_storage_id.cc",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363071d5_fe5cc5ef",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48cc56ac_0be5ae8a",
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ed48949d_2568a5f1",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a29eac_41973f0f",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 20
+      },
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4ef6a84_e0a75656",
         "filename": "chrome/browser/media/cdm_storage_id_key.cc",
         "patchSetId": 3
@@ -137,6 +239,24 @@
       "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c16deb_adf9b530",
+        "filename": "chrome/browser/media/cdm_storage_id_key.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ef6a84_e0a75656",
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "79295497_776774f5",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c68e1e9_67bb9a53",
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "351373d3_0214deaf",
         "filename": "media/media_options.gni",
         "patchSetId": 3
@@ -171,6 +309,24 @@
       "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ac9de2_d696d035",
+        "filename": "media/media_options.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-20T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "351373d3_0214deaf",
+      "revId": "3bce38816c8d4e983a68b040fa8717428f8aed37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
