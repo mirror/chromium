@@ -988,6 +988,30 @@
     },
     {
       "key": {
+        "uuid": "a53a896c_ba32d14b",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "ExternalApplicationState is very broad term and this class does not hold \"state\" of the application. The class holds very specific information, in particular \"whether or not the launch of the application should be blocked\". That\u0027s the only bit of information this class gives to the client and we should try to find a name to reflect that.",
+      "parentUuid": "626a2c85_a35cf239",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e6ac97d_2ec47124",
         "filename": "ios/chrome/browser/web/external_app_launching_state.h",
         "patchSetId": 7
@@ -1388,6 +1412,30 @@
     },
     {
       "key": {
+        "uuid": "747f5fd9_4af64dc1",
+        "filename": "ios/chrome/browser/web/external_app_launching_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Sorry, then how about\nif (!_lastAppLaunchTime || -_lastAppLaunchTime.timeIntervalSinceNow \u003e MAX_SECONDS_BETWEEN_CONSECUTIVE_LAUNCHES) {\n\nSetting |interval| to a bigger value than MAX_SECONDS_BETWEEN_CONSECUTIVE_LAUNCHES if _lastAppLaunchTime is null may put some overhead on code readability.",
+      "parentUuid": "828aebc4_bc36ed06",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b524f6b_17bee529",
         "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
         "patchSetId": 7
@@ -1503,6 +1551,30 @@
       "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7121193_dacefe04",
+        "filename": "ios/chrome/browser/web/external_app_launching_state_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Sorry, I meant comments for the methods which required per Style Guide.",
+      "parentUuid": "58e347b9_15154dfa",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 73
+      },
+      "revId": "2107768ab1ad1541cbe04e813d4fa9b7b8d67a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

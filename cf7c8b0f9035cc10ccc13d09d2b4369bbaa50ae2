@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "318340a3_619c4a34",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "nit: s/running/launching",
+      "range": {
+        "startLine": 19,
+        "startChar": 72,
+        "endLine": 19,
+        "endChar": 79
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d318af7_a78632bc",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "nit: s/toURL/URL ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 36,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea365645_9e78c2b4",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "From Coding Guidelines for Cocoa: \"Make the word before the argument describe the argument.\"\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH\n\nWith that how about requestToOpenURL:?",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ad960e_2c711890",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "nit: Maybe s/fromURL/sourcePageURL ?",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f55fe6_5be9a637",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Do we need this method now? Would it be better to inline the call? I think Peter can explain more about the danger of parametrized UMA calls (I remember Louis explained me the drawbacks, but I don\u0027t remember anything).",
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c683b5d_8b5a328b",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Would it be better to inline UMA macro?",
+      "range": {
+        "startLine": 267,
+        "startChar": 24,
+        "endLine": 267,
+        "endChar": 55
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399b8028_904dbfcc",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Do you want to create local variables for the strings to improve the formatting?",
+      "range": {
+        "startLine": 307,
+        "startChar": 50,
+        "endLine": 307,
+        "endChar": 51
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aae63c1_462ef13a",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Would it be better to early return if self is nil? Also weakSelf is referred 2 times in this block, so it is better to create strongSelf variable ([weakSelf openURL:appURL linkClicked:YES] can release self)",
+      "range": {
+        "startLine": 316,
+        "startChar": 30,
+        "endLine": 316,
+        "endChar": 38
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be7483b_5abf5905",
+        "filename": "ios/chrome/browser/web/external_app_launcher_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\"\nhttp://go/unit-test-practices#public-apis\n\nIf ExternalAppLauncher is not testable, it means that it is better to write the new code in a separate class.",
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1570fa4f_b2f2e9f1",
+        "filename": "ios/chrome/browser/web/external_application_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Optional nit: adding comma after last item will make the code more maintainable",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a693e20f_9457dd3d",
+        "filename": "ios/chrome/browser/web/external_application_state.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "Please make it extern to avoid naming collisions during the linking.",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 61
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5ca51c_81692e39",
+        "filename": "ios/chrome/browser/web/external_application_state_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "EXPECT_EQ takes first argument as an expected value and second as an actual value.",
+      "range": {
+        "startLine": 18,
+        "startChar": 34,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72b4408_db98f455",
+        "filename": "ios/chrome/browser/web/external_application_state_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T22:46:57Z",
+      "side": 1,
+      "message": "This is going to block the test for 35 seconds. And a unit test should run in milliseconds. How about injecting timeout value into ExternalApplicationState via initializer?",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 75
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
