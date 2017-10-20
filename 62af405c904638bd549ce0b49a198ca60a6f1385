@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceae7a08_872f1980",
+        "filename": "ui/gl/gl_image_io_surface_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-20T11:50:21Z",
+      "side": 1,
+      "message": "\"return format \u003d\u003d gfx::BufferFormat::YUV_420_BIPLANAR ? 1 : 0\"?",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec1a7c3_05fe81d9",
+        "filename": "ui/gl/test/gl_test_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-20T11:50:21Z",
+      "side": 1,
+      "message": "LE?",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 19
+      },
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d07aa7_d3ee6bf0",
+        "filename": "ui/ozone/gl/gl_image_ozone_native_pixmap_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-20T11:50:21Z",
+      "side": 1,
+      "message": "maybe \"return X ? 1 : 0\" here too",
+      "revId": "62af405c904638bd549ce0b49a198ca60a6f1385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
