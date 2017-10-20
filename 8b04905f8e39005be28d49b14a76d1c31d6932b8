@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "095c8b77_2443bc06",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-20T17:23:44Z",
+      "side": 1,
+      "message": "What you have is thread safe and the described circumstance isn\u0027t possible. You are invalidating all WeakPtrs and then passing encoder_ to encoder_task_runner_ for deletion. This allows you to be safe without having to wait for the thread to stop.\n\nThe only issue could occur in the future is if someone adds code which posts tasks to encoder task runner from the encoder task runner while using base::Unretained() instead of a WeakPtrFactory.",
+      "parentUuid": "b913fb5e_d190ee73",
+      "range": {
+        "startLine": 258,
+        "startChar": 17,
+        "endLine": 258,
+        "endChar": 49
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c58881e6_37bd17c7",
         "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
         "patchSetId": 15
