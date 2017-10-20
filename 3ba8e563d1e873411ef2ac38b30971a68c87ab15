@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b239b8f3_a763b489",
+        "filename": "content/browser/download/download_stats.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:49:49Z",
+      "side": 1,
+      "message": "Should we do this for Download.Time as well?",
+      "range": {
+        "startLine": 268,
+        "startChar": 33,
+        "endLine": 268,
+        "endChar": 69
+      },
+      "revId": "3ba8e563d1e873411ef2ac38b30971a68c87ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
