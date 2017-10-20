@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d719603d_3840ce8d",
+        "filename": "components/viz/service/display/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T16:32:30Z",
+      "side": 1,
+      "message": "nit: I\u0027d maybe say platform-specific implementation details should live, rather than \"of this\" cuz the impl of display itself is here.",
+      "revId": "a3310e204fa9a1d4b37a25c4b974e9703ced8842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
