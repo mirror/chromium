@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_piece.h"
 #include "content/browser/media/audio_stream_monitor.h"
 #include "content/browser/media/capture/audio_mirroring_manager.h"
 #include "content/browser/media/media_internals.h"
@@ -34,7 +35,7 @@ class AudioOutputDelegateImpl::ControllerEventHandler
   void OnControllerPlaying() override;
   void OnControllerPaused() override;
   void OnControllerError() override;
-  void OnLog(const std::string& message) override;
+  void OnLog(base::StringPiece message) override;
 
   base::WeakPtr<AudioOutputDelegateImpl> delegate_;
   const int stream_id_;  // Retained separately for logging.
@@ -73,10 +74,10 @@ void AudioOutputDelegateImpl::ControllerEventHandler::OnControllerError() {
 }
 
 void AudioOutputDelegateImpl::ControllerEventHandler::OnLog(
-    const std::string& message) {
-  std::ostringstream oss;
-  oss << "[stream_id=" << stream_id_ << "] " << message;
-  const std::string out_message = oss.str();
+    base::StringPiece message) {
+  const std::string out_message =
+      base::StringPrintf("[stream_id=%d] %.*s", stream_id,
+                         static_cast<int>(message.size()), message.data());
   content::MediaStreamManager::SendMessageToNativeLog(out_message);
   DVLOG(1) << out_message;
 }
