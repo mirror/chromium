@@ -206,7 +206,8 @@ static bool PointWithScrollAndZoomIfPossible(const Document& document,
 
   FloatPoint point_in_document(point);
   point_in_document.Scale(frame->PageZoomFactor(), frame->PageZoomFactor());
-  point_in_document.Move(frame_view->GetScrollOffset());
+  auto* scrollable_area = frame_view->LayoutViewportScrollableArea();
+  point_in_document.Move(scrollable_area->GetScrollOffset());
   IntPoint rounded_point_in_document = RoundedIntPoint(point_in_document);
 
   if (!frame_view->VisibleContentRect().Contains(rounded_point_in_document))
