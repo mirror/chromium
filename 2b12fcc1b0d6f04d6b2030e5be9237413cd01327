@@ -22,6 +22,30 @@
       "revId": "2b12fcc1b0d6f04d6b2030e5be9237413cd01327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f87ddfe_1776fcab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-20T15:03:49Z",
+      "side": 0,
+      "message": "runAfterBookmarkModelLoaded is called in BookmarkAdapter#onDataSetChanged(). Even though BookmarkWidgetService is not covered in tests, I manually tested it. When kickOffReading is removed here, without calling kickOffReading inside runAfterBookmarkModelLoaded, the widget would be blank until bookmark is used. With this CL, the widget works correctly.",
+      "parentUuid": "2d17b109_de62dac6",
+      "range": {
+        "startLine": 322,
+        "startChar": 33,
+        "endLine": 322,
+        "endChar": 47
+      },
+      "revId": "2b12fcc1b0d6f04d6b2030e5be9237413cd01327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
