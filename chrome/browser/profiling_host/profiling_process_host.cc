@@ -300,6 +300,7 @@ void ProfilingProcessHost::AddClientToProfilingService(
   int fds[2];
   pipe(fds);
   PCHECK(fcntl(fds[0], F_SETFL, O_NONBLOCK) == 0);
+  PCHECK(fcntl(fds[1], F_SETFL, O_NONBLOCK) == 0);
   PCHECK(fcntl(fds[0], F_SETNOSIGPIPE, 1) == 0);
   PCHECK(fcntl(fds[1], F_SETNOSIGPIPE, 1) == 0);
 
@@ -310,7 +311,9 @@ void ProfilingProcessHost::AddClientToProfilingService(
   // Writes to the data_channel must be atomic to ensure that the profiling
   // process can demux the messages. We accomplish this by making writes
   // synchronous, and protecting the write() itself with a Lock.
-  mojo::edk::PlatformChannelPair data_channel(true /* client_is_blocking */);
+  // On Windows, this calls CreateNamedPipeW with output and input buffer size
+  // suggestions of 4096. Perhaps this should be increased to 65536.
+  mojo::edk::PlatformChannelPair data_channel(false /* client_is_blocking */);
 
   // Passes the client_for_profiling directly to the profiling process.
   // The client process can not start sending data until the pipe is ready,
