@@ -38,6 +38,14 @@ public class ChromeFileProvider extends FileProvider {
     private static Uri sFileUri;
 
     /**
+     * Gets the authority string for content URI generation.
+     * @param context Activity context that is used to access package manager.
+     */
+    public static String getAuthority(Context context) {
+        return context.getPackageName() + AUTHORITY_SUFFIX;
+    }
+
+    /**
      * Returns an unique uri to identify the file to be shared and block access to it till
      * notifyFileReady is called.
      *
@@ -46,7 +54,7 @@ public class ChromeFileProvider extends FileProvider {
      * @param context Activity context that is used to access package manager.
      */
     public static Uri generateUriAndBlockAccess(final Context context) {
-        String authority = context.getPackageName() + AUTHORITY_SUFFIX;
+        String authority = getAuthority(context);
         String fileName = BLOCKED_FILE_PREFIX + String.valueOf(System.nanoTime());
         Uri blockingUri = new Uri.Builder()
                                   .scheme(UrlConstants.CONTENT_SCHEME)

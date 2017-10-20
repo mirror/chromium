@@ -1296,12 +1296,17 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     private void triggerShare(
             final Tab currentTab, final boolean shareDirectly, boolean isIncognito) {
-        final Activity mainActivity = this;
-        WebContents webContents = currentTab.getWebContents();
-
         RecordHistogram.recordBooleanHistogram(
                 "OfflinePages.SharedPageWasOffline", OfflinePageUtils.isOfflinePage(currentTab));
+
         boolean canShareOfflinePage = OfflinePageBridge.isPageSharingEnabled();
+        if (canShareOfflinePage && OfflinePageUtils.isOfflinePage(currentTab)) {
+            OfflinePageUtils.shareOfflinePage(this, currentTab);
+            return;
+        }
+
+        final Activity mainActivity = this;
+        WebContents webContents = currentTab.getWebContents();
 
         // Share an empty blockingUri in place of screenshot file. The file ready notification is
         // sent by onScreenshotReady call below when the file is written.
@@ -1313,15 +1318,11 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                         .setShareDirectly(shareDirectly)
                         .setSaveLastUsed(!shareDirectly)
                         .setScreenshotUri(blockingUri);
-        if (canShareOfflinePage) {
-            OfflinePageUtils.shareOfflinePage(builder, currentTab);
+        ShareHelper.share(builder.build());
+        if (shareDirectly) {
+            RecordUserAction.record("MobileMenuDirectShare");
         } else {
-            ShareHelper.share(builder.build());
-            if (shareDirectly) {
-                RecordUserAction.record("MobileMenuDirectShare");
-            } else {
-                RecordUserAction.record("MobileMenuShare");
-            }
+            RecordUserAction.record("MobileMenuShare");
         }
 
         if (blockingUri == null) return;
