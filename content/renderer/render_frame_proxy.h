@@ -18,6 +18,10 @@
 #include "third_party/WebKit/public/web/WebRemoteFrameClient.h"
 #include "url/origin.h"
 
+#if defined(USE_AURA)
+#include "content/renderer/mus/mus_embedded_frame_delegate.h"
+#endif
+
 namespace blink {
 struct WebRect;
 }
@@ -64,6 +68,9 @@ class MusEmbeddedFrame;
 // RenderFrame is created for it.
 class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
                                         public IPC::Sender,
+#if defined(USE_AURA)
+                                        public MusEmbeddedFrameDelegate,
+#endif
                                         public blink::WebRemoteFrameClient {
  public:
   // This method should be used to create a RenderFrameProxy, which will replace
@@ -135,9 +142,6 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   RenderWidget* render_widget() { return render_widget_; }
 
 #if defined(USE_AURA)
-  // Called when mus determines the FrameSinkId.
-  void OnMusFrameSinkIdAllocated(const viz::FrameSinkId& frame_sink_id);
-
   void SetMusEmbeddedFrame(
       std::unique_ptr<MusEmbeddedFrame> mus_embedded_frame);
 #endif
@@ -204,6 +208,14 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnSetFocusedFrame();
   void OnWillEnterFullscreen();
   void OnSetHasReceivedUserGesture();
+
+#if defined(USE_AURA)
+  // MusEmbeddedFrameDelegate
+  void OnMusEmbeddedFrameSurfaceChanged(
+      const viz::SurfaceInfo& surface_info) override;
+  void OnMusEmbeddedFrameSinkIdAllocated(
+      const viz::FrameSinkId& frame_sink_id) override;
+#endif
 
   // The routing ID by which this RenderFrameProxy is known.
   const int routing_id_;
