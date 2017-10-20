@@ -234,10 +234,12 @@ void SkiaPaintCanvas::drawBitmap(const SkBitmap& bitmap,
   }
 }
 
-void SkiaPaintCanvas::drawTextBlob(sk_sp<SkTextBlob> blob,
-                                   SkScalar x,
-                                   SkScalar y,
-                                   const PaintFlags& flags) {
+void SkiaPaintCanvas::drawTextBlob(
+    sk_sp<SkTextBlob> blob,
+    SkScalar x,
+    SkScalar y,
+    const PaintFlags& flags,
+    const std::vector<PaintTypeface>& used_typefaces) {
   SkPaint paint = flags.ToSkPaint();
   canvas_->drawTextBlob(blob.get(), x, y, paint);
 }

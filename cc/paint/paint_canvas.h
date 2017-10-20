@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_image.h"
+#include "cc/paint/paint_typeface.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
@@ -139,10 +140,12 @@ class CC_PAINT_EXPORT PaintCanvas {
     drawBitmap(bitmap, left, top, nullptr);
   }
 
-  virtual void drawTextBlob(sk_sp<SkTextBlob> blob,
-                            SkScalar x,
-                            SkScalar y,
-                            const PaintFlags& flags) = 0;
+  virtual void drawTextBlob(
+      sk_sp<SkTextBlob> blob,
+      SkScalar x,
+      SkScalar y,
+      const PaintFlags& flags,
+      const std::vector<PaintTypeface>& used_typefaces) = 0;
 
   // Unlike SkCanvas::drawPicture, this only plays back the PaintRecord and does
   // not add an additional clip.  This is closer to SkPicture::playback.

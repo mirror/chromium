@@ -279,7 +279,8 @@ class PLATFORM_EXPORT FontCache {
   // Implemented on skia platforms.
   sk_sp<SkTypeface> CreateTypeface(const FontDescription&,
                                    const FontFaceCreationParams&,
-                                   CString& name);
+                                   CString& name,
+                                   PaintTypeface&);
 
 #if defined(OS_ANDROID) || defined(OS_LINUX)
   static AtomicString GetFamilyNameForCharacter(SkFontMgr*,

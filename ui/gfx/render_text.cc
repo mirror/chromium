@@ -241,7 +241,7 @@ void SkiaTextRenderer::DrawPosText(const SkPoint* pos,
   static_assert(sizeof(*pos) == 2 * sizeof(*run_buffer.pos), "");
   memcpy(run_buffer.pos, pos, glyph_count * sizeof(*pos));
 
-  canvas_skia_->drawTextBlob(builder.make(), 0, 0, flags_);
+  canvas_skia_->drawTextBlob(builder.make(), 0, 0, flags_, {});
 }
 
 void SkiaTextRenderer::DrawUnderline(int x, int y, int width) {

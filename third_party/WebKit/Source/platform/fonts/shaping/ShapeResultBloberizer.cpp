@@ -62,7 +62,8 @@ void ShapeResultBloberizer::CommitPendingBlob() {
   if (!builder_run_count_)
     return;
 
-  blobs_.emplace_back(builder_.make(), builder_rotation_);
+  blobs_.emplace_back(builder_.make(), builder_rotation_,
+                      std::move(paint_typefaces_));
   builder_run_count_ = 0;
 }
 
