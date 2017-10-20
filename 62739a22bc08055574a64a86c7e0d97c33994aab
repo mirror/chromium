@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c0c42b_c0e6faaa",
+        "filename": "components/cronet/ios/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-20T22:58:46Z",
+      "side": 1,
+      "message": "Sorry, I was wrong. I checked and this should depends on \":cronet_framework\". This is one of those case where we need to allow depending on the target creating the framework without having link dependency.\n\nThe +bundle target is there to automatically copy the generated bundle into the final application bundle Frameworks sub-directory.\n\nThis also mean that you cannot add \"visibility\" to the target that creates the bundle.",
+      "revId": "62739a22bc08055574a64a86c7e0d97c33994aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bc22d5_01dc9e1b",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-20T22:58:46Z",
+      "side": 1,
+      "message": "ditto, this should be \":web_view\", not the +bundle nor +link secondary targets.",
+      "revId": "62739a22bc08055574a64a86c7e0d97c33994aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
