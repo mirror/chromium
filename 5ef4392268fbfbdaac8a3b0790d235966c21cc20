@@ -16,6 +16,24 @@
       "revId": "5ef4392268fbfbdaac8a3b0790d235966c21cc20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736b9e69_dacae2f7",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-20T20:24:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8d868fe_75f7f967",
+      "revId": "5ef4392268fbfbdaac8a3b0790d235966c21cc20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
