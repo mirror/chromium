@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac327dc_071139bd",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "This is not related to your CL, but could you consider renaming it to something like params.selection_start_offset, in a separate CL?",
+      "range": {
+        "startLine": 162,
+        "startChar": 40,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee0ccda_870737fc",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "The current class is quite hard to read.\n\nHow about structurizing this as:\n\nclass SmartSelectionMetricsLogger {\n  static interface Adapter {\n    void logSelectionStarted(int start);\n    void logSelectionModified(int lastStartOffset, int lastEndOffset, SelectionClient.Result result);\n    void logSelectionAction(int lastStartOffset, int lastEndOffset, int action);\n    void ...;\n  }\n\n  private static class AdapterImpl implements Adapter { // all the reflection logic goes in here\n    \n  }\n\n  public static SmartSelectionMetricsLogger create(Context context) { return create(context, new AdapterImpl(); }\n  public static SmartSelectionMetricsLogger create(Context context, Adapter adapter) {...}\n}\n\nAnd have test mock out Adapter.",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5903d20f_1b07a242",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "mBreakIterator?",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 45
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3483b7d7_7bb20661",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "Could you just pass Context here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 53,
+        "endLine": 56,
+        "endChar": 76
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6fc0be_baeb296e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "how about renaming this as hasSelectionStarted()?",
+      "range": {
+        "startLine": 98,
+        "startChar": 13,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665913be_48dba06b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "Could you guard all of these with DEBUG constant? We probably don\u0027t want to spam developers with these logs.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d035dd0_2a172042",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "initialize default values?",
+      "range": {
+        "startLine": 156,
+        "startChar": 38,
+        "endLine": 156,
+        "endChar": 48
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba89a769_c742cfc8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-20T19:23:40Z",
+      "side": 1,
+      "message": "Do you just want to avoid counting a non-word?\nHow about punctuations?\nCould you add unit tests around this?\nOr can you just copy whatever Android is doing?",
+      "range": {
+        "startLine": 266,
+        "startChar": 17,
+        "endLine": 266,
+        "endChar": 29
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
