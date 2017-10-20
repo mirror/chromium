@@ -345,6 +345,8 @@ void BluetoothDeviceWin::UpdateGattServices(
     const std::vector<
         std::unique_ptr<BluetoothTaskManagerWin::ServiceRecordState>>&
         service_state) {
+  SetGattServicesDiscoveryComplete(false);
+
   // First, remove no longer exist GATT service.
   {
     std::vector<std::string> to_be_removed_services;

@@ -108,11 +108,13 @@ void BluetoothRemoteGattServiceWin::GattCharacteristicDiscoveryComplete(
   discovery_completed_included_charateristics_.insert(
       characteristic->GetIdentifier());
   adapter_->NotifyGattCharacteristicAdded(characteristic);
+  SetDiscoveryComplete(true);
   NotifyGattDiscoveryCompleteForServiceIfNecessary();
 }
 
 void BluetoothRemoteGattServiceWin::Update() {
   DCHECK(ui_task_runner_->RunsTasksInCurrentSequence());
+  SetDiscoveryComplete(false);
 
   task_manager_->PostGetGattIncludedCharacteristics(
       service_path_, service_uuid_, service_attribute_handle_,

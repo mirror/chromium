@@ -9,7 +9,8 @@
 
 namespace device {
 
-BluetoothRemoteGattService::BluetoothRemoteGattService() {}
+BluetoothRemoteGattService::BluetoothRemoteGattService()
+    : discovery_complete_(false) {}
 
 BluetoothRemoteGattService::~BluetoothRemoteGattService() {}
 
@@ -25,6 +26,14 @@ BluetoothRemoteGattService::GetCharacteristicsByUUID(
     }
   }
   return result;
+}
+
+bool BluetoothRemoteGattService::IsDiscoveryComplete() const {
+  return discovery_complete_;
+}
+
+void BluetoothRemoteGattService::SetDiscoveryComplete(bool complete) {
+  discovery_complete_ = complete;
 }
 
 }  // namespace device
