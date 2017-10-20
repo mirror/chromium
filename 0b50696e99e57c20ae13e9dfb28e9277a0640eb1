@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7a2683_9e18243c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-20T13:46:31Z",
+      "side": 1,
+      "message": "nit: number of paints to use before switching global scopes.",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 73
+      },
+      "revId": "0b50696e99e57c20ae13e9dfb28e9277a0640eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2dc6f0_5a15ba0f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-20T13:46:31Z",
+      "side": 1,
+      "message": "nit: returns the next global scope to switch to.",
+      "range": {
+        "startLine": 60,
+        "startChar": 19,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "0b50696e99e57c20ae13e9dfb28e9277a0640eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
