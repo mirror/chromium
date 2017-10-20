@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "7885074e_d2a2f492",
+        "filename": "chrome/android/java/res/layout/infobar_expandable_compact_content.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T12:02:15Z",
+      "side": 1,
+      "message": "Should this be a TextViewWithClickableSpans?",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 9
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cfcd52_abb04ddd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ExpandableInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T12:02:15Z",
+      "side": 1,
+      "message": "Why do we need this again?",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45b28657_1ab94e66",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 3
@@ -13,6 +59,93 @@
       "writtenOn": "2017-10-20T08:11:08Z",
       "side": 1,
       "message": "+ellenpli, haraken\n\nFrom backend implementation\u0027s perspective:\n- When near-OOM is detected, we pauses JavaScript execution\n- When the user declines the intervention, we resumes JavaScript execution\n\nIt might be better to say \"Resume\" or something?",
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ff5de7_9e86fa66",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3290,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T12:02:15Z",
+      "side": 1,
+      "message": "+1 -- See also https://docs.google.com/presentation/d/1UViKMdt8oTZMx1QHaXN2W823a3mndu5RuQ5sKwEJOoQ/edit#slide\u003did.g280ea70aba_0_16.",
+      "parentUuid": "45b28657_1ab94e66",
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a7075d_ceeee001",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T12:02:15Z",
+      "side": 1,
+      "message": "This part you would remove before committing, right? :D",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 37
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5d40f4_471b37e2",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T12:02:15Z",
+      "side": 1,
+      "message": "Nit: Or maybe make that a NOTREACHED() in an else branch below.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf277cfd_7b0f2cbf",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T12:02:15Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 38
+      },
       "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
