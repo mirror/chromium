@@ -313,8 +313,10 @@ RefPtr<ComputedStyle> LayoutTextControlSingleLine::CreateInnerEditorStyle(
   int computed_line_height =
       LineHeight(true, kHorizontalLine, kPositionOfInteriorLineBoxes).ToInt();
   // Do not allow line-height to be smaller than our default.
-  if (text_block_style->FontSize() >= computed_line_height)
-    text_block_style->SetLineHeight(ComputedStyle::InitialLineHeight());
+  if (text_block_style->FontSize() >= computed_line_height) {
+    text_block_style->SetLineHeight(
+        ComputedStyleInitialFunctions::InitialLineHeight());
+  }
 
   // We'd like to remove line-height if it's unnecessary because
   // overflow:scroll clips editing text by line-height.
@@ -327,8 +329,10 @@ RefPtr<ComputedStyle> LayoutTextControlSingleLine::CreateInnerEditorStyle(
   // TODO(tkent): This should be done during layout.
   if (logical_height.IsPercentOrCalc() ||
       (logical_height.IsFixed() &&
-       logical_height.GetFloatValue() > computed_line_height))
-    text_block_style->SetLineHeight(ComputedStyle::InitialLineHeight());
+       logical_height.GetFloatValue() > computed_line_height)) {
+    text_block_style->SetLineHeight(
+        ComputedStyleInitialFunctions::InitialLineHeight());
+  }
 
   text_block_style->SetDisplay(EDisplay::kBlock);
   text_block_style->SetUnique();
