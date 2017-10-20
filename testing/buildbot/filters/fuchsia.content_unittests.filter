@@ -10,6 +10,10 @@
 -DownloadFile/DownloadFileTestWithRename.RenameWithErrorRetry/0
 -DownloadFile/DownloadFileTestWithRename.RenameWithErrorRetry/1
 
+# Failing, https://crbug.com/776599.
+-NetworkServiceNetworkChangeTest.NetworkChangeManagerRequest
+-NetworkServiceTest.NetworkChangeManagerRequest
+
 # https://crbug.com/761214
 -RendererAudioOutputStreamFactoryIntegrationTest.StreamIntegrationTest
 
