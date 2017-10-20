@@ -34,6 +34,24 @@
       "revId": "5f3178e9fa02fe502bc153063fe0aa1301a62d83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767e9db7_c2c4b952",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-20T05:49:24Z",
+      "side": 1,
+      "message": "My point is even if this patch replace one |LinesBoundingBox()| by\n|HasNonCollapsedText()|, we also have another |BoundingBoxLogicalHeight()|.\n\nHence, this function still have |LinesBoundingBox()|. Also,\nHasNonCollapseText() may be different from Rect.height !\u003d 0, e.g. using\ntiny font size.\n\nMy proposal is just leave as is, and change if we don\u0027t have\nNG version of LinesBoundingBox().\n\nSince Paint also uses LinesBoundingBox(), I think we need to have\nNG version of this.",
+      "parentUuid": "c3590b30_4f2e7d86",
+      "revId": "5f3178e9fa02fe502bc153063fe0aa1301a62d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
