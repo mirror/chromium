@@ -22,6 +22,23 @@
       "revId": "1fcfec68de96b1788340b5d27a87db8fd86f493b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75abb0ea_0de36199",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-20T21:17:23Z",
+      "side": 1,
+      "message": "DCHECK(second)? Or skip if it\u0027s null. GetNestedSingleDrawingOp accesses it unconditionally, so it would be nice to have some sort of a guard here.",
+      "revId": "1fcfec68de96b1788340b5d27a87db8fd86f493b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
