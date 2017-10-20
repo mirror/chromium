@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb23e858_cb1af5ac",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-20T21:28:08Z",
+      "side": 1,
+      "message": "Needs a nullcheck",
+      "range": {
+        "startLine": 1975,
+        "startChar": 25,
+        "endLine": 1975,
+        "endChar": 0
+      },
+      "revId": "ece488f7c2bac9dbe97eec7bec227a98eb6cc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0249144f_90f7c690",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-20T21:28:08Z",
+      "side": 1,
+      "message": "You\u0027ll need to add a nullcheck here before the DCHECK.",
+      "revId": "ece488f7c2bac9dbe97eec7bec227a98eb6cc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378a1e5c_1c58bbab",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-20T21:28:08Z",
+      "side": 1,
+      "message": "nullopt",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 13
+      },
+      "revId": "ece488f7c2bac9dbe97eec7bec227a98eb6cc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
