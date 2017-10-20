@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9df0b20_665ca863",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-20T21:11:14Z",
+      "side": 0,
+      "message": "Thanks for this cleanup Shimi!",
+      "range": {
+        "startLine": 1309,
+        "startChar": 20,
+        "endLine": 1309,
+        "endChar": 37
+      },
+      "revId": "bad9216b09675b779257edfd4dac5da0529645c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
