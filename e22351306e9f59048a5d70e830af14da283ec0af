@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c844d3_6fbcd4ea",
+        "filename": "ui/gl/DEPS",
+        "patchSetId": 21
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-20T01:53:58Z",
+      "side": 1,
+      "message": "no longer need this dependency - removing.",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "e22351306e9f59048a5d70e830af14da283ec0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
