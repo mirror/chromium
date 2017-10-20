@@ -300,7 +300,8 @@ std::unique_ptr<views::Combobox> CreatePasswordDropdownView(
 void BuildCredentialRows(views::GridLayout* layout,
                          views::View* username_field,
                          views::View* password_field,
-                         views::ToggleImageButton* password_view_button) {
+                         views::ToggleImageButton* password_view_button,
+                         bool is_non_federated_credential) {
   // Username row.
   BuildColumnSet(layout, DOUBLE_VIEW_COLUMN_SET_USERNAME);
   layout->StartRow(0, DOUBLE_VIEW_COLUMN_SET_USERNAME);
@@ -309,7 +310,9 @@ void BuildCredentialRows(views::GridLayout* layout,
       views::style::CONTEXT_LABEL, views::style::STYLE_PRIMARY));
   username_label->SetHorizontalAlignment(gfx::HorizontalAlignment::ALIGN_RIGHT);
   std::unique_ptr<views::Label> password_label(new views::Label(
-      l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_PASSWORD_LABEL),
+      is_non_federated_credential
+          ? l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_PASSWORD_LABEL)
+          : base::string16(),
       views::style::CONTEXT_LABEL, views::style::STYLE_PRIMARY));
   password_label->SetHorizontalAlignment(gfx::HorizontalAlignment::ALIGN_RIGHT);
   int labels_width = std::max(username_label->GetPreferredSize().width(),
@@ -449,8 +452,8 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   // View:
   gfx::Size CalculatePreferredSize() const override;
 
-  void CreateAndSetLayout();
-  void CreatePasswordField();
+  void CreateAndSetLayout(bool is_non_federated_credential);
+  void CreatePasswordField(bool is_non_federated_credential);
   void TogglePasswordVisibility();
   void UpdateUsernameAndPasswordInModel();
 
@@ -484,19 +487,21 @@ ManagePasswordsBubbleView::PendingView::PendingView(
   // Create credentials row.
   const autofill::PasswordForm& password_form =
       parent_->model()->pending_password();
+  const bool is_non_federated_credential =
+      password_form.federation_origin.unique();
   if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnableUsernameCorrection)) {
+          password_manager::features::kEnableUsernameCorrection) &&
+      is_non_federated_credential) {
     username_field_ = CreateUsernameEditable(password_form).release();
   } else {
     username_field_ = CreateUsernameLabel(password_form).release();
   }
 
-  CreatePasswordField();
+  CreatePasswordField(is_non_federated_credential);
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection) &&
-      !parent_->model()->hide_eye_icon() &&
-      parent_->model()->pending_password().federation_origin.unique()) {
+      !parent_->model()->hide_eye_icon() && is_non_federated_credential) {
     password_view_button_ = CreatePasswordViewButton(this).release();
   }
 
@@ -507,7 +512,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
       this,
       l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_BUBBLE_BLACKLIST_BUTTON));
 
-  CreateAndSetLayout();
+  CreateAndSetLayout(is_non_federated_credential);
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnableUsernameCorrection) &&
       parent_->model()->pending_password().username_value.empty()) {
@@ -548,7 +553,8 @@ gfx::Size ManagePasswordsBubbleView::PendingView::CalculatePreferredSize()
                        this, kDesiredBubbleWidth));
 }
 
-void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
+void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout(
+    bool is_non_federated_credential) {
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
 
@@ -556,7 +562,7 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
       password_dropdown_ ? static_cast<views::View*>(password_dropdown_)
                          : static_cast<views::View*>(password_label_);
   BuildCredentialRows(layout, username_field_, password_field,
-                      password_view_button_);
+                      password_view_button_, is_non_federated_credential);
   layout->AddPaddingRow(
       0, ChromeLayoutProvider::Get()->GetDistanceMetric(
              views::DISTANCE_DIALOG_CONTENT_MARGIN_BOTTOM_CONTROL));
@@ -568,13 +574,15 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
   layout->AddView(never_button_);
 }
 
-void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
+void ManagePasswordsBubbleView::PendingView::CreatePasswordField(
+    bool is_non_federated_credential) {
   const bool enable_password_selection = base::FeatureList::IsEnabled(
       password_manager::features::kEnablePasswordSelection);
   const autofill::PasswordForm& password_form =
       parent_->model()->pending_password();
   if (enable_password_selection &&
-      password_form.all_possible_passwords.size() > 1) {
+      password_form.all_possible_passwords.size() > 1 &&
+      is_non_federated_credential) {
     password_dropdown_ = CreatePasswordDropdownView(password_form).release();
   } else {
     password_label_ =
@@ -894,7 +902,8 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
         parent_->model()->pending_password();
     BuildCredentialRows(layout, CreateUsernameLabel(password_form).release(),
                         CreatePasswordLabel(password_form, false).release(),
-                        nullptr);
+                        nullptr, /* password_view_button */
+                        true /* is_non_federated_credential */);
   }
   layout->AddPaddingRow(
       0, layout_provider->GetDistanceMetric(
