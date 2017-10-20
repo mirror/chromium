@@ -117,6 +117,13 @@ void CSSStyleSheetResource::DidAddClient(ResourceClient* c) {
           referrer_policy_header, kDoNotSupportReferrerPolicyLegacyKeywords,
           &referrer_policy);
     }
+
+    if (!IsUnusedPreload()) {
+      if (Data())
+        SetDecodedSheetText(DecodedText());
+      ClearData();
+    }
+
     static_cast<StyleSheetResourceClient*>(c)->SetCSSStyleSheet(
         GetResourceRequest().Url(), GetResponse().Url(), referrer_policy,
         Encoding(), this);
@@ -155,8 +162,11 @@ void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
 
 void CSSStyleSheetResource::NotifyFinished() {
   // Decode the data to find out the encoding and cache the decoded sheet text.
-  if (Data())
-    SetDecodedSheetText(DecodedText());
+  if (!IsUnusedPreload()) {
+    if (Data())
+      SetDecodedSheetText(DecodedText());
+    ClearData();
+  }
 
   ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
   String referrer_policy_header =
@@ -173,13 +183,6 @@ void CSSStyleSheetResource::NotifyFinished() {
     c->SetCSSStyleSheet(GetResourceRequest().Url(), GetResponse().Url(),
                         referrer_policy, Encoding(), this);
   }
-
-  // Clear raw bytes as now we have the full decoded sheet text.
-  // We wait for all LinkStyle::setCSSStyleSheet to run (at least once)
-  // as SubresourceIntegrity checks require raw bytes.
-  // Note that LinkStyle::setCSSStyleSheet can be called from didAddClient too,
-  // but is safe as we should have a cached ResourceIntegrityDisposition.
-  ClearData();
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
