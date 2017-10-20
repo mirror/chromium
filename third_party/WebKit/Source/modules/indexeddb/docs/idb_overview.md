@@ -14,7 +14,7 @@ IDB's storage hierarchy is as follows:
 5. An *index* is a collection of *index entries*, which are essentially *(index
    key, primary key)* pairs.
 
-![IndexedDB storage hierarchy overview](./idb_overview.svg)
+![IndexedDB storage hierarchy overview](idb_overview.svg)
 
 *** aside
 This image embeds the data needed for editing using [draw.io](https://github.com/jgraph/drawio).
