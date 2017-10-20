@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b17bf3ba_5f180893",
+        "filename": "third_party/WebKit/Source/core/events/PageTransitionEventInit.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-20T20:39:35Z",
+      "side": 1,
+      "message": "That link does not seem to point to a related topic anymore",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 89
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5853fcb2_68d55853",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-20T20:39:35Z",
+      "side": 1,
+      "message": "This check is currently redundant this there is no effect to resetting at the moment (i.e. no on change observers), unlike the other setters in this class where there is an action if we set.\n\nI am OK with leaving it to be consistent with the rest",
+      "range": {
+        "startLine": 451,
+        "startChar": 2,
+        "endLine": 451,
+        "endChar": 37
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3aac81_d918b3e7",
+        "filename": "third_party/WebKit/Source/core/page/Page.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-20T20:39:35Z",
+      "side": 1,
+      "message": "Is there a place to add some unit tests for those functions?",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 24
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f5ac3a_72c3a41e",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-20T20:39:35Z",
+      "side": 1,
+      "message": "This list seems incomplete, there is no states describing when the tab is foregrounded or backgorunded and active? I am assuming we will initially rely on Unknown state for those for now?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a14054_2636e971",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-20T20:39:35Z",
+      "side": 1,
+      "message": "Can a page be in the discarded state? Would\u0027t it be already discarded? Or is this going to be used to store last_state?",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
