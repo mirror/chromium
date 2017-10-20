@@ -2,6 +2,176 @@
   "comments": [
     {
       "key": {
+        "uuid": "b20fe716_de2ce671",
+        "filename": "content/browser/devtools/devtools_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "nit: you can use std::make_unique() now.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4e1dbc_d97d39af",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "is this still needed?",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013560c6_43419b42",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "s/int32_t/size_t/ for the two above.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcbc7b5_fb41ce8c",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "The above two are actually just ints.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab9ae1e_d15d5ffd",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "s/whandle/fd/",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c46a1b_1c4a9499",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "size_t",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9619479_844ad5fa",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b73e1c8_1e93439b",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "rhandle \u003d\u003e fd_in or fd_read?",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca68da0_c69417bb",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "How did we end up depenting on guts of HttpConnection here? Would it be possible to use just some variation of IOBuffer from net/base/io_buffer.h, or, perhaps, just a std::string or vector?",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c32d5e6_8afae7c5",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T17:53:09Z",
+      "side": 1,
+      "message": "fd_in or fd_read.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed03e5a_49f53b7e",
         "filename": "content/browser/devtools/devtools_pipe_handler.cc",
         "patchSetId": 5
