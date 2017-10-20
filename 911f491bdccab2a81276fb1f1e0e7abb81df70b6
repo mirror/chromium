@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "4b16fda8_d4d612d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-20T22:11:24Z",
+      "side": 1,
+      "message": "Explain the motivation for this CL before this line. This way the reader can understand why this change is large and may be able to factor out some of the backgrounding in 1-5 below.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6381dea7_4fc359f4",
         "filename": "chrome/browser/feature_engagement/bookmark/bookmark_tracker_factory.cc",
         "patchSetId": 19
@@ -53,6 +76,30 @@
       "writtenOn": "2017-10-20T20:52:42Z",
       "side": 1,
       "message": "Someone told me this helpful tip once:\n\n  Whenever you write \"new Foo\" in your code: Think again. Can it be std::unique_ptr\u003c...\u003e? What\u0027s the expected lifetime?",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "911f491bdccab2a81276fb1f1e0e7abb81df70b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d107d2_f059b6f5",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-20T22:11:24Z",
+      "side": 1,
+      "message": "On this note, it seems like this can continue remaining inlined with this object. Feel free to indicate otherwise.",
+      "parentUuid": "e65a330c_d6e42294",
       "range": {
         "startLine": 24,
         "startChar": 10,

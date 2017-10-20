@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40589fd_9bbc1373",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-20T22:11:24Z",
+      "side": 0,
+      "message": "Should we delete value in profiles that have this set?",
+      "range": {
+        "startLine": 96,
+        "startChar": 36,
+        "endLine": 96,
+        "endChar": 60
+      },
+      "revId": "951703819f48f8fbaca6f63e05f6f285c0cd7ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
