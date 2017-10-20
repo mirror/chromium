@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0a4f71a1_b168d160",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T16:06:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "11c2ce26_e7a154e7",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c1555a5_770d3ee9",
         "filename": "content/network/cookie_manager_impl.cc",
         "patchSetId": 9
@@ -93,6 +117,30 @@
       "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d204fa_036b2f8d",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T16:06:31Z",
+      "side": 1,
+      "message": "Thanks! The test file seems to have them :)",
+      "parentUuid": "39f9f5ba_5f124794",
+      "range": {
+        "startLine": 40,
+        "startChar": 55,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "Hmmm.  I\u0027m willing if you want (just ask again) but from my perspective the cookie priority is just one of many cookie attributes, and I\u0027m not sure why it should be privileged over expiration time, last access time, or same site flags, or value?  Or should we have tests to make sure none of those matter?",
       "parentUuid": "7f3ef736_3baac003",
+      "range": {
+        "startLine": 916,
+        "startChar": 52,
+        "endLine": 916,
+        "endChar": 74
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb13fb52_af9c5c7f",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T16:06:31Z",
+      "side": 1,
+      "message": "What I sometimes do in tests like this is randomize the attributes that should not matter. If we introduce a bug where the attributes start to matter but they happen to have values that end up with the deletion being performed in the same way as the test is currently written, it\u0027s not going to catch that bug. But it\u0027s better than nothing.\n\nIt\u0027s probably cleaner to have a separate test though (maybe just one in total, not just one for each of those attributes).\n\nI won\u0027t insist, since this test coverage is pretty detailed AND better than what we had in BrowsingDataFilterBuilderImpl anyways. But I think it\u0027s valuable to explicitly document that we delete cookies based on domain and time, but not other attributes, in case that ever changes.\n\nYou could also just add a TODO :)",
+      "parentUuid": "d4b271fd_cecdbc86",
       "range": {
         "startLine": 916,
         "startChar": 52,
