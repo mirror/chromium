@@ -22,6 +22,30 @@
       "revId": "c18aa97ceb337e474909cea1c90da78223cf33cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c04cfb_8fc9482d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10724,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-20T02:02:56Z",
+      "side": 1,
+      "message": "Ah, great catch! Yes this affects the analysis. We additionally only log this on pages where the strong popup blocker is enabled (which we learn from via safe browsing). Added this to the summary.",
+      "parentUuid": "9bfbae48_e6d171b7",
+      "range": {
+        "startLine": 10723,
+        "startChar": 0,
+        "endLine": 10724,
+        "endChar": 76
+      },
+      "revId": "c18aa97ceb337e474909cea1c90da78223cf33cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
