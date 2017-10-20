@@ -15,6 +15,7 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/cursor_manager_test_api.h"
+#include "base/command_line.h"
 #include "base/synchronization/waitable_event.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -23,6 +24,7 @@
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
@@ -118,6 +120,12 @@ class RootWindowTransformersTest : public AshTestBase {
   RootWindowTransformersTest() {}
   ~RootWindowTransformersTest() override {}
 
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        ::switches::kEnableMultiDisplayMirroring);
+    AshTestBase::SetUp();
+  }
+
   float GetStoredUIScale(int64_t id) {
     return display_manager()->GetDisplayInfo(id).GetEffectiveUIScale();
   }
@@ -127,7 +135,9 @@ class RootWindowTransformersTest : public AshTestBase {
     DCHECK(display_manager()->IsInMirrorMode());
     const display::ManagedDisplayInfo& mirror_display_info =
         display_manager()->GetDisplayInfo(
-            display_manager()->mirroring_display_id());
+            display_manager()->is_multi_display_mirroring_enabled()
+                ? display_manager()->GetMirroringDisplayIdList()[0]
+                : display_manager()->mirroring_display_id());
     const display::ManagedDisplayInfo& source_display_info =
         display_manager()->GetDisplayInfo(
             display::Screen::GetScreen()->GetPrimaryDisplay().id());
