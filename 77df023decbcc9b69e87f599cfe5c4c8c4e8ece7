@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a94158f8_e5f903ad",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_deviceconnect.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-20T16:51:44Z",
+      "side": 1,
+      "message": "Ah, I should have clarified this! The `deviceconnect` and `devicedisconnect` events have been removed in the latest version of the explainer and replaced with a single `devicechange` event. (The old events have the potential to expose the exact number of connected devices, which this API change is explicitly trying to avoid.)\n\nFor the sake of keeping the change focused I don\u0027t think you need to remove them this CL, but we should make a point of following up with a CL that does remove them soon after.",
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2e1e5b0_bcd549f7",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_zero_devices.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-20T16:51:44Z",
+      "side": 1,
+      "message": "Nit: This should be `device` now.",
+      "range": {
+        "startLine": 13,
+        "startChar": 45,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6a9c2c_8cec4026",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_no_gesture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-20T16:51:44Z",
+      "side": 1,
+      "message": "Nit: You probably intended to remove this. :)",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42fdf3f_0cb785a0",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-20T16:51:44Z",
+      "side": 1,
+      "message": "Not a problem, but color me surprised that resolver-\u003eResolve() actually ends up returning a `null` in Javascript. (But that appears to be what your tests show.)",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417f44e8_132660d4",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-20T16:51:44Z",
+      "side": 1,
+      "message": "Realizing now that the original naming of this function was bad. :P While you\u0027re renaming it maybe change to \"ResolveDeviceRequest\" or something similarly more descriptive?",
+      "range": {
+        "startLine": 138,
+        "startChar": 9,
+        "endLine": 138,
+        "endChar": 24
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
