@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4e0c980_d5ff1626",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-20T21:36:14Z",
+      "side": 1,
+      "message": "This might be a dumb question:\nis calling ConnectivityManager.bindProcessToNetwork() the only way to cause process bound to a network, or a not-null default network for versions \u003c M? \n\nIf in QUIC layer, we bind sockets to default network explicitly by calling DatagramClientSocket::ConnectUsingDefaultNetwork(const IPEndPoint\u0026 address), would that bind process to network or set process default network not null?",
+      "revId": "656f1a2a31f6a40643c2e31a56649f8d665b63d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e13cfb8_d80c60c4",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-20T21:36:14Z",
+      "side": 1,
+      "message": "The way you disable connection migration is to turn off the knob in the constructor of QuicStreamFactory. Is that guaranteed that the app can only ConnectivityManager.bindProcessToNetwork() before a HttpNetworkSession(which constructs QuicStreamFactory) is constructed?",
+      "range": {
+        "startLine": 742,
+        "startChar": 63,
+        "endLine": 742,
+        "endChar": 0
+      },
+      "revId": "656f1a2a31f6a40643c2e31a56649f8d665b63d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
