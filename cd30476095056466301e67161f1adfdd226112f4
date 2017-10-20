@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3fd6f78a_1124d7ad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T05:08:51Z",
+      "side": 1,
+      "message": "What\u0027s wrong with my proposal of going through the NetworkPersistenceManager when fetching content in WorkspaceDiff?",
+      "parentUuid": "3a1365b9_3ec6d022",
+      "revId": "cd30476095056466301e67161f1adfdd226112f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb4730ed_4176b88f",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
         "patchSetId": 1
