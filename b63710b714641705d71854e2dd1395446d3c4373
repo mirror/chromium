@@ -207,6 +207,23 @@
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5923d89a_11393e8b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-10-20T22:55:13Z",
+      "side": 1,
+      "message": "Any reason this was moved?",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
