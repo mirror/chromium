@@ -347,6 +347,7 @@ jumbo_source_set("unit_tests") {
     "commands/ApplyStyleCommandTest.cpp",
     "commands/CompositeEditCommandTest.cpp",
     "commands/DeleteSelectionCommandTest.cpp",
+    "commands/IndentOutdentCommandTest.cpp",
     "commands/InsertIncrementalTextCommandTest.cpp",
     "commands/InsertListCommandTest.cpp",
     "commands/InsertTextCommandTest.cpp",
