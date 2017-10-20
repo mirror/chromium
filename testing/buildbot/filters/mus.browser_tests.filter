@@ -37,3 +37,4 @@
 
 # content::WaitForChildFrameSurfaceReady unsupported, https://crbug.com/774269.
 -WebViewTests/WebViewTest.ReloadAfterCrash/1
+-PDFExtensionTest.ContextMenuCoordinates
