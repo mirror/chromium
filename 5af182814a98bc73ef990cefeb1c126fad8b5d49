@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "0f78de78_6dbb7fdb",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-20T19:17:09Z",
+      "side": 1,
+      "message": "Note that I didn\u0027t move the opener flags logic up the stack to CreateNewWindow().  There are several code paths that call into CreateWithOpener(), including Create() and Clone(), so moving this code seemed too risky.",
+      "parentUuid": "c091b15d_a283dc31",
+      "range": {
+        "startLine": 693,
+        "startChar": 1,
+        "endLine": 711,
+        "endChar": 3
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca831e21_8d94cf82",
         "filename": "content/public/browser/web_contents.h",
         "patchSetId": 16
