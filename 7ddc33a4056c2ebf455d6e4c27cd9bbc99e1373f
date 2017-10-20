@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "519d2c5f_8fc04346",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T00:19:24Z",
+      "side": 1,
+      "message": "The emoji is cute... but I don\u0027t think it adds anything, and risks odd behaviour in outdated version control tools. Even when I\u0027m actually fixing emoji bugs in Chrome I try to avoid putting them in CL descriptions (like http://crrev.com/c/720581 :). But, Chrome still has emoji bugs - e.g. http://crbug.com/566954 is a renderer crash triggered by emoji -- you don\u0027t want your CL description to be the cause of someone being unable to view the git log.",
+      "revId": "7ddc33a4056c2ebf455d6e4c27cd9bbc99e1373f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
