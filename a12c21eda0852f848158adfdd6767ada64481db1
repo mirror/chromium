@@ -68,6 +68,29 @@
       "revId": "a12c21eda0852f848158adfdd6767ada64481db1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbb952bc_bfd0cc42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ConfirmSyncDataStateMachineDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T17:04:00Z",
+      "side": 1,
+      "message": "You could maybe extract this to a shared method that takes a dialog tag and a newly created DialogFragment (and refactor the two dialog fragments to have a shared base class).",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 146,
+        "endChar": 45
+      },
+      "revId": "a12c21eda0852f848158adfdd6767ada64481db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
