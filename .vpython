@@ -27,11 +27,23 @@ python_version: "2.7"
 # Used by:
 #   third_party/catapult
 #
-# This version must be compatible with the version range specified by
-# //third_party/catapult/telemetry/telemetry/internal/util/external_modules.py
+# Currently, Catapult requires version 1.2.1 to work (crbug.com/762005).
+#
+# Windows Python distributions come with their own version of "psutil".
 wheel: <
   name: "infra/python/wheels/psutil/${platform}_${py_python}_${py_abi}"
-  version: "version:5.2.2"
+  version: "version:1.2.1"
+  match_tag: <
+    abi: "cp27mu"
+    platform: "manylinux1_i686"
+  >
+  match_tag: <
+    abi: "cp27mu"
+    platform: "manylinux1_x86_64"
+  >
+  match_tag: <
+    platform: "macosx_10_6_intel"
+  >
 >
 
 # Used by:
