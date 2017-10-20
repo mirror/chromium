@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9a387a9_ae8e4603",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-20T01:53:06Z",
+      "side": 1,
+      "message": "Could you put file names of failure layout tests in this comment to\nhelp further investigation?\n\nIf all layout test passed, we can just use EphemeralRange ctor without\nswapping start and end. Then ask ClusterFuzz to find the case.",
+      "revId": "afa64ddb3447f2a0f28faa4e630f95e8ba579e57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
