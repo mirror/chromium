@@ -22,8 +22,9 @@ class Textfield;
 class BookmarkAppConfirmationView : public views::DialogDelegateView,
                                     public views::TextfieldController {
  public:
-  BookmarkAppConfirmationView(const WebApplicationInfo& web_app_info,
-                              chrome::ShowBookmarkAppDialogCallback callback);
+  BookmarkAppConfirmationView(
+      const WebApplicationInfo& web_app_info,
+      chrome::AppInstallationAcceptanceCallback callback);
   ~BookmarkAppConfirmationView() override;
 
  private:
@@ -46,9 +47,6 @@ class BookmarkAppConfirmationView : public views::DialogDelegateView,
   void ContentsChanged(views::Textfield* sender,
                        const base::string16& new_contents) override;
 
-  // Update the state of the Add button.
-  void UpdateAddButtonState();
-
   // Get the trimmed contents of the title text field.
   base::string16 GetTrimmedTitle() const;
 
@@ -56,7 +54,7 @@ class BookmarkAppConfirmationView : public views::DialogDelegateView,
   WebApplicationInfo web_app_info_;
 
   // The callback to be invoked when the dialog is completed.
-  chrome::ShowBookmarkAppDialogCallback callback_;
+  chrome::AppInstallationAcceptanceCallback callback_;
 
   // Checkbox to launch as a window.
   views::Checkbox* open_as_window_checkbox_;
