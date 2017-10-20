@@ -1,0 +1,266 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c4ad3b_1787ff89",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystemManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "let\u0027s move this in the _onFileSystemAdded, after awaited _this._innerAddFileSystem",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153d014c_b7503d8e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "you shouldn\u0027t need this unless the setting is enabled",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c8b937_bc0e189e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "@jsdoc",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf6d94e_7755c850",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "blaise: \"We can remove projects too!\"",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 10
+      },
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1995353a_87212be1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "this._projects are probably not needed as well",
+      "range": {
+        "startLine": 93,
+        "startChar": 16,
+        "endLine": 93,
+        "endChar": 25
+      },
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf817c6e_60fefe38",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "nit: you can just store domain\u003c-\u003eproject relation in a map (since you listen to ProjectAdded/ProjectRemoved it should be easy to update)",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b3130f_c81203d3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "i\u0027d kill the assert",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbd1a11_d70bdfdd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "the whole ignoreProjects thing is no longer needed: you can just ignore everything marked as \"overrides\"\n\nAlternatively: persistence.setAutomappingEnabled(value) that you call whenever you want",
+      "range": {
+        "startLine": 371,
+        "startChar": 4,
+        "endLine": 371,
+        "endChar": 51
+      },
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9358b3_d23f6761",
+        "filename": "third_party/WebKit/Source/devtools/front_end/source_frame/UISourceCodeFrame.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "make sure that current UISourceCode\u0027s project is a network one",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13d8c8c_2e78d831",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "Let\u0027s expose tryAddProject that always adds all of its UISourceCodes.\n\nAnd keep addUISourceCode private",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d13b35_7a9207e2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesNavigator.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "blaise: \"this is extracted into persistnece and persistencemanager, like getActiveTarget or something like that. This should clean this up\"",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604c52f9_649afe85",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesNavigator.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "nit: inverted",
+      "range": {
+        "startLine": 225,
+        "startChar": 4,
+        "endLine": 225,
+        "endChar": 19
+      },
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01532162_cc969857",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesNavigator.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "drop the cast",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b869c4cc_09072991",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesNavigator.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-20T19:28:49Z",
+      "side": 1,
+      "message": "var inspectedPageDomain \u003d Persistence.NetworkPersistenceManager.inspectedPageDomain();\nif (!inspectedPageDomain) {\n  Persistence.isolatedFileSystemManager.removeFileSystem(fileSystem);\n  return;\n}\n\nvar existingProject \u003d Persistence.networkPersistenceManager.projectForDomain(inspectedPageDomain);\nif (existingProject) {\n  console.assert(existingProject !\u003d\u003d project, \u0027WTF?!\u0027);\n  Persistence.isolatedFileSystemManager.removeFileSystem(fileSystem);\n  return;\n}\n\n\nPersistence.networkPersistenceManager.addFileSystemProject(inspectedPageDomain, project);",
+      "revId": "122b9bca60ab9301bd4cd9d48b72ffb92661033c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
