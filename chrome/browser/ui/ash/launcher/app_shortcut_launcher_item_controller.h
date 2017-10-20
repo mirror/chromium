@@ -24,9 +24,9 @@ namespace extensions {
 class Extension;
 }
 
-// Item controller for an app shortcut. Shortcuts track app and launcher ids,
-// but do not have any associated windows (opening a shortcut will replace the
-// item with the appropriate ash::ShelfItemDelegate type).
+// Item controller for an app shortcut. Shortcuts track app and launcher ids.
+// Launching the associated app may replace this instance with a different
+// ShelfItemDelegate.
 class AppShortcutLauncherItemController : public ash::ShelfItemDelegate {
  public:
   ~AppShortcutLauncherItemController() override;
