@@ -182,7 +182,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
       const Referrer& dest_referrer,
       FrameMsg_Navigate_Type::Value navigation_type,
       PreviewsState previews_state,
-      const base::TimeTicks& navigation_start) const;
+      const base::TimeTicks& navigation_start,
+      base::Optional<url::Origin> initiator_origin) const;
   StartNavigationParams ConstructStartNavigationParams() const;
   RequestNavigationParams ConstructRequestNavigationParams(
       const FrameNavigationEntry& frame_entry,

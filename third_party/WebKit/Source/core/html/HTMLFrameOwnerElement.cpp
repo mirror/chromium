@@ -272,8 +272,9 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
   UpdateContainerPolicy();
 
   if (ContentFrame()) {
-    ContentFrame()->Navigate(GetDocument(), url, replace_current_item,
-                             UserGestureStatus::kNone);
+    ContentFrame()->Navigate(GetDocument(),
+                             SecurityOrigin::Create(GetDocument().Url()), url,
+                             replace_current_item, UserGestureStatus::kNone);
     return true;
   }
 
@@ -291,6 +292,8 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     return false;
 
   ResourceRequest request(url);
+  request.SetRequestorOrigin(SecurityOrigin::Create(GetDocument().Url()));
+
   ReferrerPolicy policy = ReferrerPolicyAttribute();
   if (policy != kReferrerPolicyDefault) {
     request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(

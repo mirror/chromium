@@ -480,7 +480,9 @@ void HTMLFormElement::ScheduleFormSubmission(FormSubmission* submission) {
   if (target_frame->IsLocalFrame()) {
     ToLocalFrame(target_frame)
         ->GetNavigationScheduler()
-        .ScheduleFormSubmission(&GetDocument(), submission);
+        .ScheduleFormSubmission(&GetDocument(),
+                                SecurityOrigin::Create(GetDocument().Url()),
+                                submission);
   } else {
     FrameLoadRequest frame_load_request =
         submission->CreateFrameLoadRequest(&GetDocument());

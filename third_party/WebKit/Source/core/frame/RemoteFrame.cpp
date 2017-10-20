@@ -51,10 +51,13 @@ void RemoteFrame::Trace(blink::Visitor* visitor) {
 }
 
 void RemoteFrame::Navigate(Document& origin_document,
+                           scoped_refptr<SecurityOrigin> requestor_origin,
                            const KURL& url,
                            bool replace_current_item,
                            UserGestureStatus user_gesture_status) {
-  FrameLoadRequest frame_request(&origin_document, ResourceRequest(url));
+  ResourceRequest resource_request(url);
+  resource_request.SetRequestorOrigin(requestor_origin);
+  FrameLoadRequest frame_request(&origin_document, resource_request);
   frame_request.SetReplacesCurrentItem(replace_current_item);
   frame_request.GetResourceRequest().SetHasUserGesture(
       user_gesture_status == UserGestureStatus::kActive);

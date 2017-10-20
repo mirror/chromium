@@ -115,17 +115,25 @@ class ScheduledURLNavigation : public ScheduledNavigation {
   ScheduledURLNavigation(Reason reason,
                          double delay,
                          Document* origin_document,
+                         scoped_refptr<SecurityOrigin> requestor_origin,
                          const KURL& url,
                          bool replaces_current_item,
                          bool is_location_change)
       : ScheduledNavigation(reason,
                             delay,
                             origin_document,
+                            requestor_origin,
                             replaces_current_item,
                             is_location_change),
         url_(url),
         should_check_main_world_content_security_policy_(
             kCheckContentSecurityPolicy) {
+    if (url.GetString().Utf8() == "https://bayden.com/echoformatted.aspx") {
+      if (!requestor_origin || requestor_origin->Host() != "webdbg.com") {
+        CHECK(0);
+      }
+    }
+
     if (ContentSecurityPolicy::ShouldBypassMainWorld(origin_document)) {
       should_check_main_world_content_security_policy_ =
           kDoNotCheckContentSecurityPolicy;
@@ -135,7 +143,9 @@ class ScheduledURLNavigation : public ScheduledNavigation {
   void Fire(LocalFrame* frame) override {
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
-    FrameLoadRequest request(OriginDocument(), ResourceRequest(url_), "_self",
+    ResourceRequest resource_request(Url());
+    resource_request.SetRequestorOrigin(RequestorOrigin());
+    FrameLoadRequest request(OriginDocument(), resource_request, "_self",
                              should_check_main_world_content_security_policy_);
     request.SetReplacesCurrentItem(ReplacesCurrentItem());
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
@@ -157,13 +167,15 @@ class ScheduledURLNavigation : public ScheduledNavigation {
 
 class ScheduledRedirect final : public ScheduledURLNavigation {
  public:
-  static ScheduledRedirect* Create(double delay,
-                                   Document* origin_document,
-                                   const KURL& url,
-                                   Document::HttpRefreshType http_refresh_type,
-                                   bool replaces_current_item) {
-    return new ScheduledRedirect(delay, origin_document, url, http_refresh_type,
-                                 replaces_current_item);
+  static ScheduledRedirect* Create(
+      double delay,
+      Document* origin_document,
+      scoped_refptr<SecurityOrigin> requestor_origin,
+      const KURL& url,
+      Document::HttpRefreshType http_refresh_type,
+      bool replaces_current_item) {
+    return new ScheduledRedirect(delay, origin_document, url, requestor_origin,
+                                 http_refresh_type, replaces_current_item);
   }
 
   bool ShouldStartTimer(LocalFrame* frame) override {
@@ -173,7 +185,9 @@ class ScheduledRedirect final : public ScheduledURLNavigation {
   void Fire(LocalFrame* frame) override {
     std::unique_ptr<UserGestureIndicator> gesture_indicator =
         CreateUserGestureIndicator();
-    FrameLoadRequest request(OriginDocument(), ResourceRequest(Url()), "_self");
+    ResourceRequest resource_request(Url());
+    resource_request.SetRequestorOrigin(RequestorOrigin());
+    FrameLoadRequest request(OriginDocument(), resource_request, "_self");
     request.SetReplacesCurrentItem(ReplacesCurrentItem());
     if (EqualIgnoringFragmentIdentifier(frame->GetDocument()->Url(),
                                         request.GetResourceRequest().Url())) {
@@ -203,11 +217,13 @@ class ScheduledRedirect final : public ScheduledURLNavigation {
   ScheduledRedirect(double delay,
                     Document* origin_document,
                     const KURL& url,
+                    scoped_refptr<SecurityOrigin> requestor_origin,
                     Document::HttpRefreshType http_refresh_type,
                     bool replaces_current_item)
       : ScheduledURLNavigation(ToReason(http_refresh_type),
                                delay,
                                origin_document,
+                               requestor_origin,
                                url,
                                replaces_current_item,
                                false) {
@@ -217,20 +233,24 @@ class ScheduledRedirect final : public ScheduledURLNavigation {
 
 class ScheduledFrameNavigation final : public ScheduledURLNavigation {
  public:
-  static ScheduledFrameNavigation* Create(Document* origin_document,
-                                          const KURL& url,
-                                          bool replaces_current_item) {
-    return new ScheduledFrameNavigation(origin_document, url,
+  static ScheduledFrameNavigation* Create(
+      Document* origin_document,
+      scoped_refptr<SecurityOrigin> requestor_origin,
+      const KURL& url,
+      bool replaces_current_item) {
+    return new ScheduledFrameNavigation(origin_document, requestor_origin, url,
                                         replaces_current_item);
   }
 
  private:
   ScheduledFrameNavigation(Document* origin_document,
+                           scoped_refptr<SecurityOrigin> requestor_origin,
                            const KURL& url,
                            bool replaces_current_item)
       : ScheduledURLNavigation(Reason::kFrameNavigation,
                                0.0,
                                origin_document,
+                               requestor_origin,
                                url,
                                replaces_current_item,
                                !url.ProtocolIsJavaScript()) {}
@@ -249,6 +269,7 @@ class ScheduledReload final : public ScheduledNavigation {
         kFrameLoadTypeReload, KURL(), ClientRedirectPolicy::kClientRedirect);
     if (resource_request.IsNull())
       return;
+    resource_request.SetRequestorOrigin(RequestorOrigin());
     FrameLoadRequest request = FrameLoadRequest(nullptr, resource_request);
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
@@ -264,8 +285,16 @@ class ScheduledReload final : public ScheduledNavigation {
   }
 
  private:
+  // TODO(arthursonzogni): It don't seems right that a reload doesn't have an
+  // |origin_document| and a |requestor_origin|. A document can ask another one
+  // to reload. For instance `iframe.contentWindow.location.reload()`.
   explicit ScheduledReload(LocalFrame* frame)
-      : ScheduledNavigation(Reason::kReload, 0.0, nullptr, true, true),
+      : ScheduledNavigation(Reason::kReload,
+                            0.0,
+                            /* origin_document = */ nullptr,
+                            /* requestor_origin = */ nullptr,
+                            true,
+                            true),
         frame_(frame) {}
 
   Member<LocalFrame> frame_;
@@ -273,8 +302,11 @@ class ScheduledReload final : public ScheduledNavigation {
 
 class ScheduledPageBlock final : public ScheduledNavigation {
  public:
-  static ScheduledPageBlock* Create(Document* origin_document, int reason) {
-    return new ScheduledPageBlock(origin_document, reason);
+  static ScheduledPageBlock* Create(
+      Document* origin_document,
+      scoped_refptr<SecurityOrigin> requestor_origin,
+      int reason) {
+    return new ScheduledPageBlock(origin_document, requestor_origin, reason);
   }
 
   void Fire(LocalFrame* frame) override {
@@ -284,10 +316,13 @@ class ScheduledPageBlock final : public ScheduledNavigation {
   KURL Url() const override { return KURL(); }
 
  private:
-  ScheduledPageBlock(Document* origin_document, int reason)
+  ScheduledPageBlock(Document* origin_document,
+                     scoped_refptr<SecurityOrigin> requestor_origin,
+                     int reason)
       : ScheduledNavigation(Reason::kPageBlock,
                             0.0,
                             origin_document,
+                            requestor_origin,
                             true,
                             true),
         reason_(reason) {}
@@ -297,10 +332,12 @@ class ScheduledPageBlock final : public ScheduledNavigation {
 
 class ScheduledFormSubmission final : public ScheduledNavigation {
  public:
-  static ScheduledFormSubmission* Create(Document* document,
-                                         FormSubmission* submission,
-                                         bool replaces_current_item) {
-    return new ScheduledFormSubmission(document, submission,
+  static ScheduledFormSubmission* Create(
+      Document* document,
+      scoped_refptr<SecurityOrigin> requestor_origin,
+      FormSubmission* submission,
+      bool replaces_current_item) {
+    return new ScheduledFormSubmission(document, requestor_origin, submission,
                                        replaces_current_item);
   }
 
@@ -324,6 +361,7 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
 
  private:
   ScheduledFormSubmission(Document* document,
+                          scoped_refptr<SecurityOrigin> requestor_origin,
                           FormSubmission* submission,
                           bool replaces_current_item)
       : ScheduledNavigation(submission->Method() == FormSubmission::kGetMethod
@@ -331,6 +369,7 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
                                 : Reason::kFormSubmissionPost,
                             0,
                             document,
+                            requestor_origin,
                             replaces_current_item,
                             true),
         submission_(submission) {
@@ -407,8 +446,11 @@ void NavigationScheduler::ScheduleRedirect(
 
   // We want a new back/forward list item if the refresh timeout is > 1 second.
   if (!redirect_ || delay <= redirect_->Delay()) {
-    Schedule(ScheduledRedirect::Create(delay, frame_->GetDocument(), url,
-                                       http_refresh_type, delay <= 1));
+    scoped_refptr<SecurityOrigin> requestor_origin =
+        SecurityOrigin::Create(frame_->GetDocument()->Url());
+    Schedule(ScheduledRedirect::Create(delay, frame_->GetDocument(),
+                                       requestor_origin, url, http_refresh_type,
+                                       delay <= 1));
   }
 }
 
@@ -430,9 +472,11 @@ bool NavigationScheduler::MustReplaceCurrentItem(LocalFrame* target_frame) {
          !ToLocalFrame(parent_frame)->Loader().AllAncestorsAreComplete();
 }
 
-void NavigationScheduler::ScheduleFrameNavigation(Document* origin_document,
-                                                  const KURL& url,
-                                                  bool replaces_current_item) {
+void NavigationScheduler::ScheduleFrameNavigation(
+    Document* origin_document,
+    scoped_refptr<SecurityOrigin> requestor_origin,
+    const KURL& url,
+    bool replaces_current_item) {
   if (!ShouldScheduleNavigation(url))
     return;
 
@@ -456,21 +500,26 @@ void NavigationScheduler::ScheduleFrameNavigation(Document* origin_document,
     }
   }
 
-  Schedule(ScheduledFrameNavigation::Create(origin_document, url,
-                                            replaces_current_item));
+  Schedule(ScheduledFrameNavigation::Create(origin_document, requestor_origin,
+                                            url, replaces_current_item));
 }
 
-void NavigationScheduler::SchedulePageBlock(Document* origin_document,
-                                            int reason) {
+void NavigationScheduler::SchedulePageBlock(
+    Document* origin_document,
+    scoped_refptr<SecurityOrigin> requestor_origin,
+    int reason) {
   DCHECK(frame_->GetPage());
-  Schedule(ScheduledPageBlock::Create(origin_document, reason));
+  Schedule(
+      ScheduledPageBlock::Create(origin_document, requestor_origin, reason));
 }
 
-void NavigationScheduler::ScheduleFormSubmission(Document* document,
-                                                 FormSubmission* submission) {
+void NavigationScheduler::ScheduleFormSubmission(
+    Document* document,
+    scoped_refptr<SecurityOrigin> requestor_origin,
+    FormSubmission* submission) {
   DCHECK(frame_->GetPage());
-  Schedule(ScheduledFormSubmission::Create(document, submission,
-                                           MustReplaceCurrentItem(frame_)));
+  Schedule(ScheduledFormSubmission::Create(
+      document, requestor_origin, submission, MustReplaceCurrentItem(frame_)));
 }
 
 void NavigationScheduler::ScheduleReload() {

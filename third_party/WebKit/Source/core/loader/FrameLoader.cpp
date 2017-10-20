@@ -822,8 +822,6 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
                        FrameLoadType frame_load_type,
                        HistoryItem* history_item,
                        HistoryLoadType history_load_type) {
-  DCHECK(frame_->GetDocument());
-
   if (IsBackForwardLoadType(frame_load_type) && !frame_->IsNavigationAllowed())
     return;
 

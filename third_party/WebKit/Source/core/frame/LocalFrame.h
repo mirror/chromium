@@ -109,6 +109,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   ~LocalFrame() override;
   virtual void Trace(blink::Visitor*);
   void Navigate(Document& origin_document,
+                scoped_refptr<SecurityOrigin> requestor_origin,
                 const KURL&,
                 bool replace_current_item,
                 UserGestureStatus) override;
