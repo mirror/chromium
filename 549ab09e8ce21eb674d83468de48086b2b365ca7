@@ -70,6 +70,30 @@
       "revId": "549ab09e8ce21eb674d83468de48086b2b365ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673ce731_5a738f18",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-20T01:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "040c8143_6f41b5d7",
+      "range": {
+        "startLine": 118,
+        "startChar": 18,
+        "endLine": 118,
+        "endChar": 50
+      },
+      "revId": "549ab09e8ce21eb674d83468de48086b2b365ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
