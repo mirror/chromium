@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15793362_716fecd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "Nit: I think is related to the Pair\u003cString, Integer\u003e on line 218 below?",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d9be22_b59205ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "Nit: In the previous version of the CL this section was removed between these two patch sets:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/577720/5..6/chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java#b143\n\nBut maybe we want to keep it around?",
+      "range": {
+        "startLine": 211,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067bf772_f5b0071e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailDiskStorageTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "For future reference: This call (and the new code it invokes) is what fixed the CL from previous iterations.",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78455dc8_a5f9835e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "Nit: Remove these two new constants? I don\u0027t think we need them anymore?",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37d3f2b_7e414e56",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "Nit: This part of the change doesn\u0027t add a ton of value I think? It\u0027s only used here, so maybe we could just keep the lambda as is?",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c84583_6930f050",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "Nit, could we keep this as a lambda? Seems unnecessary to change back to Runnable?\n(same with the other ones below)",
+      "range": {
+        "startLine": 73,
+        "startChar": 34,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aabc321_fa2af55c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "Nit: Keep lambda?",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5c9fcc_5d2f7606",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/ThumbnailProviderImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-20T19:42:21Z",
+      "side": 1,
+      "message": "Nit: Remove?",
+      "revId": "46ebae4b22128923366869a3d60c65a37e429a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
