@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "5a91868d_e83d625f",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-20T23:15:15Z",
+      "side": 1,
+      "message": "So here\u0027s my thought process. Most (if not all) of the fields in WebMediaPlayerParams are simple, as in, they are either just set, and the creation of those fields have no side effects. However, VideoFrameCompositor is being created here, and it\u0027s creation has a lot of effects. I don\u0027t want that to get buried in WebMediaPlayerParams.",
+      "parentUuid": "e239f4db_f5a2eb34",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "decb023c_898cfb30",
         "filename": "media/blink/webmediaplayer_params.h",
         "patchSetId": 4
@@ -318,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "e434a552_d60cc800",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-20T23:15:15Z",
+      "side": 1,
+      "message": "Ah I think I see what you are saying. Yeah, I don\u0027t think it matters.",
+      "parentUuid": "612de69a_056bd688",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2d4ad38_1d28b577",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 4
@@ -438,6 +474,24 @@
       "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e27e9b_0a86ffd6",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-20T23:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a44f49_f64a74a3",
+      "revId": "760eb75c0863725bb58302ffec1ed8d6fe25c620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

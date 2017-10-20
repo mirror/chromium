@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e72e442_a511a1db",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-20T23:15:15Z",
+      "side": 1,
+      "message": "I did that in a newer patch.",
+      "parentUuid": "cc96e876_d9b7770f",
+      "revId": "2914736af34148f9d04e26f2d168e9daaaddd3a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4daa4f60_d412d684",
         "filename": "media/blink/webmediaplayer_impl.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "2914736af34148f9d04e26f2d168e9daaaddd3a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2101a146_68507d91",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-20T23:15:15Z",
+      "side": 1,
+      "message": "Yes, I thought I fixed something with it, but I was wrong. Reverting.",
+      "parentUuid": "4daa4f60_d412d684",
+      "revId": "2914736af34148f9d04e26f2d168e9daaaddd3a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
