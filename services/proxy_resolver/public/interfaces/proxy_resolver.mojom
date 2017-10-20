@@ -56,6 +56,13 @@ interface ProxyResolverFactory {
   CreateResolver(string pac_script,
                  ProxyResolver& resolver,
                  ProxyResolverFactoryRequestClient client);
+
+  // Optional callback for when a proxy resolver is destroyed. Lets the factory,
+  // which may be in a different process from the resolvers it creates, release
+  // resources when there are no outstanding resolvers. When the
+  // ProxyResolverFactory is disconnected, it's safe to assume all created
+  // ProxyResolvers are no longer in use.
+  OnResolverDestroyed();
 };
 
 interface ProxyResolverFactoryRequestClient {
