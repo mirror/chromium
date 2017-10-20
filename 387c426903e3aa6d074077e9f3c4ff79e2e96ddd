@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "053506f0_3352ef9d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-ui/break-on-set-timeout-with-syntax-error.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-20T15:49:01Z",
+      "side": 1,
+      "message": "Could you remove this HTML, it looks unused in this test?",
+      "revId": "387c426903e3aa6d074077e9f3c4ff79e2e96ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd462f6a_e5f9311b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-ui/debugger-inline-values-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-20T15:49:01Z",
+      "side": 1,
+      "message": "This color looks scary.",
+      "range": {
+        "startLine": 4,
+        "startChar": 27,
+        "endLine": 4,
+        "endChar": 28
+      },
+      "revId": "387c426903e3aa6d074077e9f3c4ff79e2e96ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
