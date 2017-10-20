@@ -17,19 +17,17 @@ namespace tabs {
 
 // Nomenclature:
 // Tabs _glow_ under two different circumstances, when they are _hovered_ (by
-// the mouse) and when they are _alerted_ (to show that the tab's title has
-// changed).
+// the mouse) and when they are set to _pulsed_.
 
-// The state of alerting (to show a title change on an unselected, pinned tab).
-// This is more complicated than a simple on/off since we want to allow the
-// alert glow to go through a full rise-hold-fall cycle to avoid flickering (or
-// always holding).
-enum AlertState {
-  kAlertNone = 0,  // Obj-C initializes to this.
-  kAlertRising,
-  kAlertHolding,
-  kAlertFalling,
-  kAlertOff
+// The state of pulsing is more complicated than a simple on/off since we want
+// to allow the pulse glow to go through a full rise-hold-fall cycle to avoid
+// flickering (or always holding).
+enum PulseState {
+  kPulseNone = 0,  // Obj-C initializes to this.
+  kPulseRising,
+  kPulseHolding,
+  kPulseFalling,
+  kPulseOff
 };
 
 // When the window doesn't have focus then we want to draw the button with a
@@ -60,14 +58,14 @@ const SkColor kDefaultTabTextColor = SkColorSetARGB(0xA0, 0x00, 0x00, 0x00);
   BOOL closing_;
 
   BOOL isMouseInside_;  // Is the mouse hovering over?
-  BOOL isInfiniteAlert_;  // Valid only when alertState_ != kAlertNone.
-  tabs::AlertState alertState_;
+  BOOL isPulsing_;
+  tabs::PulseState pulseState_;
 
   CGFloat hoverAlpha_;  // How strong the hover glow is.
   NSTimeInterval hoverHoldEndTime_;  // When the hover glow will begin dimming.
 
-  CGFloat alertAlpha_;  // How strong the alert glow is.
-  NSTimeInterval alertHoldEndTime_;  // When the hover glow will begin dimming.
+  CGFloat pulseAlpha_;               // How strong the pulse glow is.
+  NSTimeInterval pulseHoldEndTime_;  // When the pulse glow will begin dimming.
 
   NSTimeInterval lastGlowUpdate_;  // Time either glow was last updated.
 
@@ -95,7 +93,7 @@ const SkColor kDefaultTabTextColor = SkColorSetARGB(0xA0, 0x00, 0x00, 0x00);
 @property(assign, nonatomic) NSCellStateValue state;
 
 @property(assign, nonatomic) CGFloat hoverAlpha;
-@property(assign, nonatomic) CGFloat alertAlpha;
+@property(assign, nonatomic) CGFloat pulseAlpha;
 
 // Determines if the tab is in the process of animating closed. It may still
 // be visible on-screen, but should not respond to/initiate any events. Upon
@@ -114,18 +112,9 @@ const SkColor kDefaultTabTextColor = SkColorSetARGB(0xA0, 0x00, 0x00, 0x00);
 // Enables/Disables tracking regions for the tab.
 - (void)setTrackingEnabled:(BOOL)enabled;
 
-// Begin showing an "alert" glow (shown to call attention to an unselected
-// pinned tab whose title changed). This glow cycles once and automatically
-// stops.
-- (void)startOnceAlert;
-
-// Begin showing an "alert" glow (shown to call attention to an alert dialog).
-// This glow cycles until stopped by -cancelAlert.
-- (void)startInfiniteAlert;
-
-// Stop showing the "alert" glow; this won't immediately wipe out any glow, but
-// will make it fade away.
-- (void)cancelAlert;
+// Starts/Stops a pulse animation.
+- (void)startPulse;
+- (void)stopPulse;
 
 // Returns the width of the largest part of the tab that is available for the
 // user to click to select/activate the tab.
