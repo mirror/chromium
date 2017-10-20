@@ -275,6 +275,8 @@ TEST_F(ManagePasswordsBubbleModelTest, CloseWithoutInteraction) {
 TEST_F(ManagePasswordsBubbleModelTest, ClickSave) {
   PretendPasswordWaiting();
 
+  EXPECT_FALSE(model()->disable_editing());
+
   EXPECT_CALL(*GetStore(), RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
   EXPECT_CALL(*controller(), SavePassword(GetPendingPassword().username_value,
                                           GetPendingPassword().password_value));
@@ -667,4 +669,37 @@ TEST_F(ManagePasswordsBubbleModelTest, EyeIcon) {
       }
     }
   }
+}
+
+/*TEST_F(ManagePasswordsBubbleModelTest, DisableEditing_FederatedCredential) {
+  autofill::PasswordForm form = GetPendingPassword();
+  form.federation_origin = url::Origin::Create(GURL("https://google.com/"));
+  EXPECT_CALL(*controller(), GetPendingPassword()).WillOnce(ReturnRef(form));
+  password_manager::InteractionsStats stats = GetTestStats();
+  EXPECT_CALL(*controller(), GetCurrentInteractionStats())
+      .WillOnce(Return(&stats));
+
+  EXPECT_CALL(*GetStore(), AddSiteStatsImpl(_));
+
+  EXPECT_CALL(*controller(), BubbleIsManualFallbackForSaving())
+      .WillOnce(Return(false));
+  SetUpWithState(password_manager::ui::PENDING_PASSWORD_STATE,
+                 ManagePasswordsBubbleModel::AUTOMATIC);
+}*/
+
+TEST_F(ManagePasswordsBubbleModelTest, DisableEditing_CredentialManagementAPI) {
+  autofill::PasswordForm form = GetPendingPassword();
+  EXPECT_CALL(*controller(), GetPendingPassword()).WillOnce(ReturnRef(form));
+  password_manager::InteractionsStats stats = GetTestStats();
+  EXPECT_CALL(*controller(), GetCurrentInteractionStats())
+      .WillOnce(Return(&stats));
+  EXPECT_CALL(*controller(), BubbleIsManualFallbackForSaving())
+      .WillOnce(Return(false));
+
+  EXPECT_CALL(*controller(), GetCredentialSource())
+      .WillOnce(Return(password_manager::metrics_util::CredentialSourceType::
+                           kCredentialManagementAPI));
+  SetUpWithState(password_manager::ui::PENDING_PASSWORD_STATE,
+                 ManagePasswordsBubbleModel::AUTOMATIC);
+  EXPECT_TRUE(model()->disable_editing());
 }
