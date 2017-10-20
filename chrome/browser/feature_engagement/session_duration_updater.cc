@@ -6,26 +6,36 @@
 
 #include "base/observer_list.h"
 #include "base/time/time.h"
-#include "chrome/browser/feature_engagement/tracker_factory.h"
+#include "base/timer/elapsed_timer.h"
+#include "base/values.h"
 #include "chrome/common/pref_names.h"
-#include "components/feature_engagement/public/event_constants.h"
-#include "components/feature_engagement/public/feature_constants.h"
-#include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
+#include "components/prefs/scoped_user_pref_update.h"
 
 namespace feature_engagement {
 
-SessionDurationUpdater::SessionDurationUpdater(PrefService* pref_service)
-    : duration_tracker_observer_(this), pref_service_(pref_service) {
+SessionDurationUpdater::SessionDurationUpdater(
+    PrefService* pref_service,
+    const char* observed_session_time_perf_key)
+    : duration_tracker_observer_(this),
+      pref_service_(pref_service),
+      observed_session_time_perf_key_(observed_session_time_perf_key) {
   AddDurationTrackerObserver();
 }
 
 SessionDurationUpdater::~SessionDurationUpdater() = default;
 
-// static
-void SessionDurationUpdater::RegisterProfilePrefs(
-    user_prefs::PrefRegistrySyncable* registry) {
-  registry->RegisterIntegerPref(prefs::kObservedSessionTime, 0);
+base::TimeDelta SessionDurationUpdater::GetActiveSessionElapsedTime() {
+  const base::DictionaryValue* dict =
+      pref_service_->GetDictionary(prefs::kObservedSessionTime);
+  const double stored_value =
+      dict->HasKey(observed_session_time_perf_key_)
+          ? dict->FindKey(observed_session_time_perf_key_)->GetDouble()
+          : 0L;
+  base::TimeDelta elapsed_time = base::TimeDelta::FromSeconds(stored_value);
+  return !elapsed_timer_ || !is_session_active_
+             ? elapsed_time
+             : elapsed_time + elapsed_timer_->Elapsed();
 }
 
 void SessionDurationUpdater::AddObserver(Observer* observer) {
@@ -35,8 +45,13 @@ void SessionDurationUpdater::AddObserver(Observer* observer) {
   // DesktopSessionDurationTracker if another feature is added after
   // SessionDurationUpdater was removed.
   if (!duration_tracker_observer_.IsObserving(
-          metrics::DesktopSessionDurationTracker::Get()))
+          metrics::DesktopSessionDurationTracker::Get())) {
+    if (!is_session_active_) {
+      elapsed_timer_.reset(new base::ElapsedTimer());
+      is_session_active_ = true;
+    }
     AddDurationTrackerObserver();
+  }
 }
 
 void SessionDurationUpdater::RemoveObserver(Observer* observer) {
@@ -44,8 +59,16 @@ void SessionDurationUpdater::RemoveObserver(Observer* observer) {
   // If all the observer Features have removed themselves due to their active
   // time limits have been reached, the SessionDurationUpdater removes itself
   // as an observer of DesktopSessionDurationTracker.
-  if (!observer_list_.might_have_observers())
+  if (!observer_list_.might_have_observers()) {
+    elapsed_timer_.reset();
+    is_session_active_ = false;
     RemoveDurationTrackerObserver();
+  }
+}
+
+void SessionDurationUpdater::OnSessionStarted(base::TimeTicks session_start) {
+  elapsed_timer_.reset(new base::ElapsedTimer());
+  is_session_active_ = true;
 }
 
 void SessionDurationUpdater::OnSessionEnded(base::TimeDelta elapsed) {
@@ -58,12 +81,22 @@ void SessionDurationUpdater::OnSessionEnded(base::TimeDelta elapsed) {
 
   base::TimeDelta elapsed_session_time;
 
-  elapsed_session_time +=
-      base::TimeDelta::FromMinutes(
-          pref_service_->GetInteger(prefs::kObservedSessionTime)) +
-      elapsed;
-  pref_service_->SetInteger(prefs::kObservedSessionTime,
-                            elapsed_session_time.InMinutes());
+  const base::DictionaryValue* dict =
+      pref_service_->GetDictionary(prefs::kObservedSessionTime);
+  const double stored_value =
+      dict->HasKey(observed_session_time_perf_key_)
+          ? dict->FindKey(observed_session_time_perf_key_)->GetDouble()
+          : 0L;
+
+  elapsed_session_time += base::TimeDelta::FromSeconds(stored_value) + elapsed;
+
+  DictionaryPrefUpdate update(pref_service_, prefs::kObservedSessionTime);
+  update->SetKey(
+      observed_session_time_perf_key_,
+      base::Value(static_cast<double>(elapsed_session_time.InSeconds())));
+
+  elapsed_timer_.reset();
+  is_session_active_ = false;
 
   for (Observer& observer : observer_list_)
     observer.OnSessionEnded(elapsed_session_time);
