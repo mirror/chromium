@@ -137,6 +137,8 @@ TEST_F(DiscoveryNetworkMonitorTest, RefreshIndependentOfChangeObserver) {
 }
 
 TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithoutRefresh) {
+  scoped_task_environment.RunUntilIdle();
+
   fake_network_info = fake_ethernet_info;
 
   auto check_network_id = [](const std::string& network_id) {

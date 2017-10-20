@@ -100,6 +100,11 @@ DiscoveryNetworkMonitor::DiscoveryNetworkMonitor()
   DETACH_FROM_SEQUENCE(sequence_checker_);
   AddObserver(metric_observer_.get());
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          base::IgnoreResult(&DiscoveryNetworkMonitor::UpdateNetworkInfo),
+          base::Unretained(this)));
 }
 
 DiscoveryNetworkMonitor::~DiscoveryNetworkMonitor() {
