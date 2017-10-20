@@ -667,16 +667,30 @@ TEST_F(FocusManagerTest, ImplicitlyStoresFocus) {
 
 namespace  {
 
-class FocusManagerArrowKeyTraversalTest : public FocusManagerTest {
+class FocusManagerArrowKeyTraversalTest
+    : public FocusManagerTest,
+      public testing::WithParamInterface<bool> {
  public:
   FocusManagerArrowKeyTraversalTest()
-      : previous_arrow_key_traversal_enabled_(false) {
-  }
+      : previous_arrow_key_traversal_enabled_(false) {}
   ~FocusManagerArrowKeyTraversalTest() override {}
 
   // FocusManagerTest overrides:
   void SetUp() override {
-    FocusManagerTest::SetUp();
+    views::ViewsTestBase::SetUp();
+
+    if (testing::UnitTest::GetInstance()->current_test_info()->value_param()) {
+      is_rtl_ = GetParam();
+      base::i18n::SetICUDefaultLocale(is_rtl_ ? "he" : "en");
+    }
+    Widget* widget = new Widget;
+    Widget::InitParams params = CreateParams(Widget::InitParams::TYPE_WINDOW);
+    params.delegate = this;
+    params.bounds = gfx::Rect(0, 0, 1024, 768);
+    widget->Init(params);
+
+    FocusManagerTest::InitContentView();
+    widget->Show();
 
     previous_arrow_key_traversal_enabled_ =
       FocusManager::arrow_key_traversal_enabled();
@@ -687,15 +701,21 @@ class FocusManagerArrowKeyTraversalTest : public FocusManagerTest {
     FocusManagerTest::TearDown();
   }
 
+  bool is_rtl_ = false;
+
  private:
   bool previous_arrow_key_traversal_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(FocusManagerArrowKeyTraversalTest);
 };
 
+// Instantiate the Boolean which is used to toggle RTL in
+// the parameterized tests.
+INSTANTIATE_TEST_CASE_P(, FocusManagerArrowKeyTraversalTest, testing::Bool());
+
 }  // namespace
 
-TEST_F(FocusManagerArrowKeyTraversalTest, ArrowKeyTraversal) {
+TEST_P(FocusManagerArrowKeyTraversalTest, ArrowKeyTraversal) {
   FocusManager* focus_manager = GetFocusManager();
   const ui::KeyEvent left_key(ui::ET_KEY_PRESSED, ui::VKEY_LEFT, ui::EF_NONE);
   const ui::KeyEvent right_key(ui::ET_KEY_PRESSED, ui::VKEY_RIGHT, ui::EF_NONE);
@@ -725,9 +745,9 @@ TEST_F(FocusManagerArrowKeyTraversalTest, ArrowKeyTraversal) {
   // Turn on arrow key traversal.
   FocusManager::set_arrow_key_traversal_enabled(true);
   v[0]->RequestFocus();
-  focus_manager->OnKeyEvent(right_key);
+  focus_manager->OnKeyEvent(is_rtl_ ? left_key : right_key);
   EXPECT_EQ(v[1], focus_manager->GetFocusedView());
-  focus_manager->OnKeyEvent(left_key);
+  focus_manager->OnKeyEvent(is_rtl_ ? right_key : left_key);
   EXPECT_EQ(v[0], focus_manager->GetFocusedView());
   focus_manager->OnKeyEvent(down_key);
   EXPECT_EQ(v[1], focus_manager->GetFocusedView());
