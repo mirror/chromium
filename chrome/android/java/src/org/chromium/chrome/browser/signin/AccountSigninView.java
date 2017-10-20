@@ -142,6 +142,7 @@ public class AccountSigninView extends FrameLayout {
     private TextView mSigninAccountEmail;
     private TextView mSigninPersonalizeServiceDescription;
     private TextView mSigninSettingsControl;
+    private ConfirmSyncDataStateMachine mConfirmSyncDataStateMachine;
 
     public AccountSigninView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -273,9 +274,14 @@ public class AccountSigninView extends FrameLayout {
             triggerUpdateAccounts();
             return;
         }
-        if (visibility == View.INVISIBLE && mGooglePlayServicesUpdateErrorHandler != null) {
+        if (visibility != View.INVISIBLE) return;
+        if (mGooglePlayServicesUpdateErrorHandler != null) {
             mGooglePlayServicesUpdateErrorHandler.cancelDialog();
             mGooglePlayServicesUpdateErrorHandler = null;
+        }
+        if (mConfirmSyncDataStateMachine != null) {
+            mConfirmSyncDataStateMachine.cancel();
+            mConfirmSyncDataStateMachine = null;
         }
     }
 
@@ -362,10 +368,11 @@ public class AccountSigninView extends FrameLayout {
                 && (mAccountNames.isEmpty()
                            || mAccountNames.get(accountToSelect)
                                       .equals(oldAccountNames.get(oldSelectedAccount)));
-        if (selectedAccountChanged) {
+        if (selectedAccountChanged && mConfirmSyncDataStateMachine != null) {
             // Any dialogs that may have been showing are now invalid (they were created
             // for the previously selected account).
-            ConfirmSyncDataStateMachine.cancelAllDialogs(mDelegate.getFragmentManager());
+            mConfirmSyncDataStateMachine.cancel();
+            mConfirmSyncDataStateMachine = null;
         }
 
         if (shouldJumpToConfirmationScreen) {
@@ -557,18 +564,20 @@ public class AccountSigninView extends FrameLayout {
     private void showConfirmSigninPagePreviousAccountCheck(long seedingStartTime) {
         RecordHistogram.recordTimesHistogram("Signin.AndroidAccountSigninViewSeedingTime",
                 SystemClock.elapsedRealtime() - seedingStartTime, TimeUnit.MILLISECONDS);
-        ConfirmSyncDataStateMachine.run(PrefServiceBridge.getInstance().getSyncLastAccountName(),
-                mSelectedAccountName, ImportSyncType.PREVIOUS_DATA_FOUND,
-                mDelegate.getFragmentManager(), getContext(),
+        mConfirmSyncDataStateMachine = new ConfirmSyncDataStateMachine(
+                PrefServiceBridge.getInstance().getSyncLastAccountName(), mSelectedAccountName,
+                ImportSyncType.PREVIOUS_DATA_FOUND, mDelegate.getFragmentManager(), getContext(),
                 new ConfirmImportSyncDataDialog.Listener() {
                     @Override
                     public void onConfirm(boolean wipeData) {
+                        mConfirmSyncDataStateMachine = null;
                         SigninManager.wipeSyncUserDataIfRequired(wipeData).then(
                                 (Void v) -> showConfirmSigninPage());
                     }
 
                     @Override
                     public void onCancel() {
+                        mConfirmSyncDataStateMachine = null;
                         setButtonsEnabled(true);
                         onSigninConfirmationCancel();
                     }
