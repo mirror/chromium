@@ -33,6 +33,29 @@
       "revId": "38cfdae3a468c554c6ede613d74d39d7d670b565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15ec772_acd27d36",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2558,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-20T17:13:35Z",
+      "side": 1,
+      "message": "Hm, since this is an unclaimed pushed stream, I do not think ERR_SPDY_PROTOCOL_ERROR actually gets anywhere.  SpdyStream::OnClose() sets response_status_ to this value, but that never gets read, because there is no SpdyHttpStream object associated with this stream.\n\nI would prefer not to record ERR_SPDY_PROTOCOL_ERROR to NetLog, because it would be incorrect: not claiming a pushed stream is not a protocol error.",
+      "range": {
+        "startLine": 2558,
+        "startChar": 4,
+        "endLine": 2558,
+        "endChar": 23
+      },
+      "revId": "38cfdae3a468c554c6ede613d74d39d7d670b565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
