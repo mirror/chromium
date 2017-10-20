@@ -33,13 +33,38 @@ import javax.annotation.Nullable;
  * @see https://w3c.github.io/webpayments-payment-handler/
  */
 public class ServiceWorkerPaymentApp extends PaymentInstrument implements PaymentApp {
+    private final static String BASIC_CARD_PAYMENT_METHOD = "basic-card";
+
     private final WebContents mWebContents;
     private final long mRegistrationId;
     private final Drawable mIcon;
     private final Set<String> mMethodNames;
+    private final Capabilities[] mCapabilities;
     private final boolean mCanPreselect;
     private final Set<String> mPreferredRelatedApplicationIds;
     private final boolean mIsIncognito;
+
+    /**
+     * This class represents capabilities of a payment instrument. It is currently only used for
+     * basic-card payment instrument.
+     */
+    public static class Capabilities {
+        private int[] mSupportedCardNetworks;
+        private int[] mSupportedCardTypes;
+
+        Capabilities(int[] supportedCardNetworks, int[] supportedCardTypes) {
+            mSupportedCardNetworks = supportedCardNetworks;
+            mSupportedCardTypes = supportedCardTypes;
+        }
+
+        int[] getSupportedCardNetworks() {
+            return mSupportedCardNetworks;
+        }
+
+        int[] getSupportedCardTypes() {
+            return mSupportedCardTypes;
+        }
+    }
 
     /**
      * Build a service worker payment app instance per origin.
@@ -57,11 +82,14 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      * @param icon                           The drawable icon of the payment app.
      * @param methodNames                    A set of payment method names supported by the payment
      *                                       app.
+     * @param capabilities                   A set of capabilities of the payment methods in this
+     *                                       payment app (only valid for basic-card payment method
+     *                                       for now).
      * @param preferredRelatedApplicationIds A set of preferred related application Ids.
      */
     public ServiceWorkerPaymentApp(WebContents webContents, long registrationId, URI scope,
             String label, @Nullable String sublabel, @Nullable String tertiarylabel,
-            @Nullable Drawable icon, String[] methodNames,
+            @Nullable Drawable icon, String[] methodNames, Capabilities[] capabilities,
             String[] preferredRelatedApplicationIds) {
         super(scope.toString(), label, sublabel, tertiarylabel, icon);
         mWebContents = webContents;
@@ -77,6 +105,8 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             mMethodNames.add(methodNames[i]);
         }
 
+        mCapabilities = capabilities;
+
         mPreferredRelatedApplicationIds = new HashSet<>();
         Collections.addAll(mPreferredRelatedApplicationIds, preferredRelatedApplicationIds);
 
@@ -89,6 +119,17 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     public void getInstruments(Map<String, PaymentMethodData> methodDataMap, String origin,
             String iframeOrigin, byte[][] unusedCertificateChain,
             Map<String, PaymentDetailsModifier> modifiers, final InstrumentsCallback callback) {
+        if (methodDataMap.containsKey(BASIC_CARD_PAYMENT_METHOD)
+                && mMethodNames.contains(BASIC_CARD_PAYMENT_METHOD)) {
+            if (!matchBasiccardCapabilities(methodDataMap.get(BASIC_CARD_PAYMENT_METHOD))) {
+                new Handler().post(() -> {
+                    List<PaymentInstrument> instruments = new ArrayList();
+                    callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
+                });
+                return;
+            }
+        }
+
         if (mIsIncognito) {
             new Handler().post(() -> {
                 List<PaymentInstrument> instruments = new ArrayList();
@@ -107,6 +148,54 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
                     }
                     callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
                 });
+    }
+
+    private boolean matchBasiccardCapabilities(PaymentMethodData methodData) {
+        if (methodData.supportedTypes.length == 0 && methodData.supportedNetworks.length == 0) {
+            return true;
+        }
+        if (mCapabilities.length == 0) return false;
+
+        Set<Integer> methodSupportedTypes = new HashSet<>();
+        for (int i = 0; i < methodData.supportedTypes.length; i++) {
+            methodSupportedTypes.add(methodData.supportedTypes[i]);
+        }
+        Set<Integer> methodSupportedNetworks = new HashSet<>();
+        for (int i = 0; i < methodData.supportedNetworks.length; i++) {
+            methodSupportedNetworks.add(methodData.supportedNetworks[i]);
+        }
+
+        int j = 0;
+        for (; j < mCapabilities.length; j++) {
+            if (!methodSupportedTypes.isEmpty()) {
+                int[] supportedTypes = mCapabilities[j].getSupportedCardTypes();
+
+                Set<Integer> capabilitiesSupportedCardTypes = new HashSet<>();
+                for (int i = 0; i < supportedTypes.length; i++) {
+                    capabilitiesSupportedCardTypes.add(supportedTypes[i]);
+                }
+
+                capabilitiesSupportedCardTypes.retainAll(methodSupportedTypes);
+                if (capabilitiesSupportedCardTypes.isEmpty()) continue;
+            }
+
+            if (!methodSupportedNetworks.isEmpty()) {
+                int[] supportedNetworks = mCapabilities[j].getSupportedCardNetworks();
+
+                Set<Integer> capabilitiesSupportedCardNetworks = new HashSet<>();
+                for (int i = 0; i < supportedNetworks.length; i++) {
+                    capabilitiesSupportedCardNetworks.add(supportedNetworks[i]);
+                }
+
+                capabilitiesSupportedCardNetworks.retainAll(methodSupportedNetworks);
+                if (capabilitiesSupportedCardNetworks.isEmpty()) continue;
+            }
+
+            break;
+        }
+        if (j >= mCapabilities.length) return false;
+
+        return true;
     }
 
     @Override
