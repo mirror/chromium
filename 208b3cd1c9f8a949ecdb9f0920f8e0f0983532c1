@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a213bb30_2978859e",
+        "filename": "base/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-20T04:03:44Z",
+      "side": 1,
+      "message": "nit: Use TimeDelta?",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 7
+      },
+      "revId": "208b3cd1c9f8a949ecdb9f0920f8e0f0983532c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d9ba92_9af8ee29",
+        "filename": "base/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-20T04:03:44Z",
+      "side": 1,
+      "message": "nit: Use TimeTick as it is guaranteed that monotonically non-decreasing?",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 8
+      },
+      "revId": "208b3cd1c9f8a949ecdb9f0920f8e0f0983532c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
