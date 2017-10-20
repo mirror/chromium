@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20e965d7_afc98bc6",
+        "filename": "chrome/browser/ui/cocoa/location_bar/find_bar_decoration.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T00:19:54Z",
+      "side": 1,
+      "message": "Where is this initialized?",
+      "revId": "c3e3bb0ccd0ce0f32d04a463bcb663caae179b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590bba33_48c58e9a",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T00:19:54Z",
+      "side": 1,
+      "message": "nit: \"size of the location bar border\" (or \"size of its border\")\n\nIt\u0027s the same difference since they\u0027re both 1dip, but I gave you the location bar constant below.",
+      "range": {
+        "startLine": 270,
+        "startChar": 17,
+        "endLine": 270,
+        "endChar": 44
+      },
+      "revId": "c3e3bb0ccd0ce0f32d04a463bcb663caae179b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d687f663_c57f5c5b",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T00:19:54Z",
+      "side": 1,
+      "message": "nit: const int",
+      "revId": "c3e3bb0ccd0ce0f32d04a463bcb663caae179b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

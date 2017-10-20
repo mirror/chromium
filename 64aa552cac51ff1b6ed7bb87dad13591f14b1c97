@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb3077dc_a1b5a19f",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T00:19:54Z",
+      "side": 0,
+      "message": "Are we not overlapping in the no-location-bar case now? I think that\u0027s probably correct, but I wanted to make sure it\u0027s intentional.",
+      "range": {
+        "startLine": 224,
+        "startChar": 49,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "64aa552cac51ff1b6ed7bb87dad13591f14b1c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
