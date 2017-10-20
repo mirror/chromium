@@ -355,6 +355,7 @@ void TypedURLSyncBridge::OnURLVisited(HistoryBackend* history_backend,
 
   if (!change_processor()->IsTrackingMetadata())
     return;  // Sync processor not yet ready, don't sync.
+
   if (!ShouldSyncVisit(row.typed_count(), transition))
     return;
 
