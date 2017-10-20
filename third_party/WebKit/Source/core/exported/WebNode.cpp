@@ -45,6 +45,7 @@
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutObject.h"
 #include "platform/wtf/PtrUtil.h"
