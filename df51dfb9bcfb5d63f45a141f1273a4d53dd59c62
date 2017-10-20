@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4faff4_3e31ea9a",
+        "filename": "chrome/browser/chrome_content_browser_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T00:07:28Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like any of this code has dependencies on the rest of the file. How about moving to it\u0027s own chromeos specific file, chrome_content_browser_client_browsertest_chromeos?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "df51dfb9bcfb5d63f45a141f1273a4d53dd59c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d65e7b_54dd4449",
+        "filename": "chrome/browser/chrome_content_browser_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T00:07:28Z",
+      "side": 1,
+      "message": "optional: move into for loop.",
+      "range": {
+        "startLine": 73,
+        "startChar": 3,
+        "endLine": 73,
+        "endChar": 59
+      },
+      "revId": "df51dfb9bcfb5d63f45a141f1273a4d53dd59c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119dc3d3_da674cb8",
+        "filename": "chrome/browser/chrome_content_browser_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T00:07:28Z",
+      "side": 1,
+      "message": "And this is a test:)",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 58
+      },
+      "revId": "df51dfb9bcfb5d63f45a141f1273a4d53dd59c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5eb4f1_9efe53c6",
+        "filename": "chrome/browser/chrome_content_browser_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T00:07:28Z",
+      "side": 1,
+      "message": "ASSERT_FALSE(pids.empty()) (easier to read)",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 29
+      },
+      "revId": "df51dfb9bcfb5d63f45a141f1273a4d53dd59c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8f3eab_b8b8bacd",
+        "filename": "chrome/browser/chrome_content_browser_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T00:07:28Z",
+      "side": 1,
+      "message": "We are guaranteed at least ash and mus have launched because we block during startup waiting for mus, right? It may be worth a comment to this effect.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 3
+      },
+      "revId": "df51dfb9bcfb5d63f45a141f1273a4d53dd59c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
