@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2e5552_ec70fa74",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T20:52:10Z",
+      "side": 1,
+      "message": "Can you rebase on top of Mikhail\u0027s change where he\u0027s done some work to reuse fakes between tests?\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/728741",
+      "revId": "9f01ea144f4531f59377d9e305a82c9f6a57e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f933c46_55fa5b1b",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T20:52:10Z",
+      "side": 1,
+      "message": "Call this |provider_| and I think the tests will be more readable.",
+      "range": {
+        "startLine": 132,
+        "startChar": 46,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "9f01ea144f4531f59377d9e305a82c9f6a57e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2d5455_473ffe90",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T20:52:10Z",
+      "side": 1,
+      "message": "It\u0027s confusing to use this callback more than once. Can you create separate callbacks in the test function instead of using a class variable like this?",
+      "revId": "9f01ea144f4531f59377d9e305a82c9f6a57e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
