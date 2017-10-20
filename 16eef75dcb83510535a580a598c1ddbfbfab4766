@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43aa06df_e14bb4bc",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T11:52:32Z",
+      "side": 1,
+      "message": "Could you please add some comment with explanation what does this function do?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219681da_0a8b0f88",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T11:52:32Z",
+      "side": 1,
+      "message": "Why do we need this? Nowadays most submissions are done with JavaScript, action is not so important. If there is no any specific reason I\u0027d prefer to keep things simple and not to remove these lines.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0d94a3_e8f48c0b",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T11:52:32Z",
+      "side": 1,
+      "message": "Nit: remove this checking, without it it has the same meeaning (username_element and username_value are empty or non-empty simultaneously)",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eeb9573_bb535dc4",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T11:52:32Z",
+      "side": 1,
+      "message": "What\u0027s the usecase for checking password_element and _value?",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 42
+      },
+      "revId": "16eef75dcb83510535a580a598c1ddbfbfab4766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
