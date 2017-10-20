@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277e81bf_f9bbee51",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_global_scope_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-20T02:23:36Z",
+      "side": 0,
+      "message": "Can you keep this comment? TaskRunnerHelper::Get(WorkerThread) can be called from the main thread and \"this\" worker thread.",
+      "range": {
+        "startLine": 29,
+        "startChar": 75,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "407734c29e19c15f6ca5b29e78389e96dd70376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
