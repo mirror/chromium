@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5c3e8889_54a8a0ac",
+        "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-20T23:35:15Z",
+      "side": 1,
+      "message": "Is this really a good idea?\n\nAs I\u0027m cleaning up the implementation, we always grab all of these fields internally, and then at the last minute we only copy through the ones the caller requested.\n\nI think it would be preferable to either:\n1. Have all the fields be present, but make the Results itself Optional\u003c\u003e, so that the refresh callback either returns a Results with a value, or without, depending on whether it was able to sample the process.\n2. Have the fields all be Optional, but set to no-value when a value is unavailable (and follow-up with patches to do the same throughout TaskManager) so that we can eliminate all the code that works with \"sentinel\" values to represent unavailable data.\n\nWDYT?",
+      "parentUuid": "9e332d1a_69a3921f",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "7ab2c0be1add4e9529061279b6f6be90a0d544dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97ebb61c_c56a576f",
         "filename": "chrome/browser/task_manager/sampling/shared_sampler.h",
         "patchSetId": 2
