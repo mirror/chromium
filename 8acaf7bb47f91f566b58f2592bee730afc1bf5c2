@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53a6355e_f80387da",
+        "filename": "chrome/browser/net/proxy_resolver_manager.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T19:56:35Z",
+      "side": 1,
+      "message": "This was inherited from the old code.  Is there any reason to prefer one approach over another here?  This seems to be the more common pattern.",
+      "parentUuid": "9c465955_df3ace97",
+      "range": {
+        "startLine": 104,
+        "startChar": 13,
+        "endLine": 104,
+        "endChar": 14
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bcc72d8_41c6be33",
         "filename": "chrome/browser/net/proxy_resolver_manager.h",
         "patchSetId": 27
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f65b94c4_35ababc7",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T19:56:35Z",
+      "side": 1,
+      "message": "Fixed (We do still need connector, for service_manager_connector_, though I\u0027m removing it in the next CL).",
+      "parentUuid": "9bcc72d8_41c6be33",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1a55759_e2c4b315",
         "filename": "chrome/browser/net/proxy_resolver_manager.h",
         "patchSetId": 27
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-20T19:09:37Z",
       "side": 1,
       "message": "I find the ResolverFactoryChannel a bit confusing. I understand why it\u0027s there (tracking the number of ProxyResolver bound by the factory so we can clean up the factory when none are left), but the bookkeeping and proxying by locally binding a proxy_resolver::mojom::ProxyResolverFactory that forwards to the actual factory seems complicated.\nI wonder if the bookkeeping could not be done by the actual ProxyResolverfactoryImpl. It could use non strong bindings to the Proxyresolvers and detect when one is disconnected, and when none is left disconnect its end of the pipe (or cleaner, it could have a client interface that notifies the client when no connection is left and let it decide what it wants to do, in our case run the timer and disconnect our end of the pipe if no new connection happened).\nJust a thought, may be this would not end up being that much simpler?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c492c808_1bbfaccd",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T19:56:35Z",
+      "side": 1,
+      "message": "I don\u0027t think that works - if a ProxyResolverFactoryImpl disconnects itself when there are no proxies, there could be another in-flight request to it that fails.  If it tells us it has no connections left, we don\u0027t know if we\u0027ve tried to initiate a new once since it failed, so we again risk causing a request to fail.\n\nIf we gave each connection attempt an increasing id, and it told us the last id it had seen, that would work, but I\u0027m not a fan of adding ids to the API.\n\nI agree it\u0027s confusing, but I don\u0027t currently see a simpler option that\u0027s as robust.",
+      "parentUuid": "e1a55759_e2c4b315",
       "range": {
         "startLine": 27,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2540614b_c5a8bba4",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T19:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "418b52f9_d37b8b98",
+      "range": {
+        "startLine": 58,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4319090_89c4c0a6",
         "filename": "content/network/proxy_resolver_factory_mojo_unittest.cc",
         "patchSetId": 27
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "00afe484_bb7c246f",
+        "filename": "content/network/proxy_resolver_factory_mojo_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T19:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4319090_89c4c0a6",
+      "range": {
+        "startLine": 430,
+        "startChar": 45,
+        "endLine": 430,
+        "endChar": 59
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf0caff8_4440506f",
         "filename": "content/test/test_mojo_proxy_resolver_factory.h",
         "patchSetId": 27
@@ -137,6 +257,30 @@
       "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee03cc6_5c118dcf",
+        "filename": "content/test/test_mojo_proxy_resolver_factory.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T19:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf0caff8_4440506f",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
