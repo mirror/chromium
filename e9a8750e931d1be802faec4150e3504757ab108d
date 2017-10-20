@@ -22,6 +22,30 @@
       "revId": "e9a8750e931d1be802faec4150e3504757ab108d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6144b835_43424f55",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-20T22:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df77315_13f748c0",
+      "range": {
+        "startLine": 380,
+        "startChar": 3,
+        "endLine": 380,
+        "endChar": 104
+      },
+      "revId": "e9a8750e931d1be802faec4150e3504757ab108d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
