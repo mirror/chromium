@@ -46,6 +46,23 @@
       "revId": "0b7c3787c9df2f2c6587b837886962eebbb2ef59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f71c2c5_19609fce",
+        "filename": "content/test/data/empty_worker.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T15:46:44Z",
+      "side": 1,
+      "message": "Just FYI this empty event listener is unnecessary for functionality purposes.",
+      "revId": "0b7c3787c9df2f2c6587b837886962eebbb2ef59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
