@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b133048_7d7c19e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-20T17:34:15Z",
+      "side": 1,
+      "message": "making these visible and not final makes me worried a bit.\n\nAny way to either change the below constructor logic to make it possible have these as final or add a isCustomTabIntent(), isHerbIntent() that are package protected?",
+      "range": {
+        "startLine": 84,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
