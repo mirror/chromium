@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "d9313b0f_fbd1bda3",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-20T12:31:07Z",
+      "side": 1,
+      "message": "I was being overly conservative and clearing delegates out defensively.  I can remove it and put it back later if something breaks.",
+      "parentUuid": "cdb03b44_c84d90f4",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20234903_5ee68eba",
         "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
         "patchSetId": 3
@@ -53,6 +77,30 @@
       "writtenOn": "2017-10-20T11:43:56Z",
       "side": 1,
       "message": "Cl description says \"from TabSwitcher to BVC\", but this looks like it\u0027s the case where the BVC is visible and then it animates away such that the switcher is shown -- what I would call \"dismissing the BVC\". What am I missing?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 41
+      },
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1cb8b7_4cd7d472",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-20T12:31:07Z",
+      "side": 1,
+      "message": "You\u0027re not missing anything, the animator is even named the \"BVC to TabSwitcher animator.\"  Updated the CL description.",
+      "parentUuid": "20234903_5ee68eba",
       "range": {
         "startLine": 195,
         "startChar": 0,
@@ -175,6 +223,30 @@
     },
     {
       "key": {
+        "uuid": "9eb0b47d_17744e3a",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-20T12:31:07Z",
+      "side": 1,
+      "message": "This solves a circular dependency problem for me, so let\u0027s try it.  I am doing a bit of sanity checking on the supplied tabSwitcher.",
+      "parentUuid": "7d3acaeb_6854e1a5",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 79
+      },
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "612bccd3_69d966a2",
         "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
         "patchSetId": 3
@@ -189,6 +261,24 @@
       "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2a646e_9de15d6a",
+        "filename": "ios/chrome/browser/ui/main/transitions/bvc_container_to_tab_switcher_animator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-20T12:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "612bccd3_69d966a2",
+      "revId": "390b4c2144be6101ad7c72d87b603a6bb0387a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
