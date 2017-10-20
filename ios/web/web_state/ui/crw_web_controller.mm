@@ -1811,10 +1811,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (void)loadCurrentURL {
-  // If the content view doesn't exist, the tab has either been evicted, or
-  // never displayed. Bail, and let the URL be loaded when the tab is shown.
-  if (!_containerView)
-    return;
+  [self ensureContainerViewCreated];
 
   // Reset current WebUI if one exists.
   [self clearWebUI];
