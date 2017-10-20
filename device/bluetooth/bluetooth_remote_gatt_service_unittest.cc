@@ -23,6 +23,33 @@ namespace device {
 class BluetoothRemoteGattServiceTest : public BluetoothTest {};
 #endif
 
+#if defined(OS_MACOSX) || defined(OS_WIN)
+TEST_F(BluetoothRemoteGattServiceTest, IsDiscoveryComplete) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  StartLowEnergyDiscoverySession();
+  BluetoothDevice* device = SimulateLowEnergyDevice(1);
+  device->CreateGattConnection(GetGattConnectionCallback(Call::EXPECTED),
+                               GetConnectErrorCallback(Call::NOT_EXPECTED));
+  SimulateGattConnection(device);
+  base::RunLoop().RunUntilIdle();
+  SimulateGattServicesDiscovered(
+      device, std::vector<std::string>(
+                  {kTestUUIDGenericAccess, kTestUUIDGenericAccess}));
+  base::RunLoop().RunUntilIdle();
+  BluetoothRemoteGattService* service = device->GetGattServices()[0];
+
+  EXPECT_FALSE(service->IsDiscoveryComplete());
+  service->SetDiscoveryComplete(true);
+  EXPECT_TRUE(service->IsDiscoveryComplete());
+  service->SetDiscoveryComplete(false);
+  EXPECT_FALSE(service->IsDiscoveryComplete());
+}
+#endif  // defined(OS_MACOSX) || defined(OS_WIN)
+
 #if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 TEST_F(BluetoothRemoteGattServiceTest, GetIdentifier) {
   if (!PlatformSupportsLowEnergy()) {
