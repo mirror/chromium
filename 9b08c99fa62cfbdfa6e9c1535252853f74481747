@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "753e8719_13863904",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1644,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T04:34:03Z",
+      "side": 1,
+      "message": "Done, with the check for 10.9 using base::mac::IsOS10_9() (we remove that function when deprecating old versions, so that will give a signal to remove later on too).",
+      "parentUuid": "f78bc684_d7f02a09",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a84102e7_60fff29f",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83a590b_04dcf3a0",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3950,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T04:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a84102e7_60fff29f",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
