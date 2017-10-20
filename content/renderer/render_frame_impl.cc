@@ -4560,18 +4560,17 @@ void RenderFrameImpl::DidLoadResourceFromMemoryCache(
       response.MimeType().Utf8(), WebURLRequestToResourceType(request)));
 }
 
-void RenderFrameImpl::DidDisplayInsecureContent() {
-  Send(new FrameHostMsg_DidDisplayInsecureContent(routing_id_));
+void RenderFrameImpl::DidDisplayMixedContent() {
+  Send(new FrameHostMsg_DidDisplayMixedContent(routing_id_));
 }
 
 void RenderFrameImpl::DidContainInsecureFormAction() {
   Send(new FrameHostMsg_DidContainInsecureFormAction(routing_id_));
 }
 
-void RenderFrameImpl::DidRunInsecureContent(
-    const blink::WebSecurityOrigin& origin,
-    const blink::WebURL& target) {
-  Send(new FrameHostMsg_DidRunInsecureContent(
+void RenderFrameImpl::DidRunMixedContent(const blink::WebSecurityOrigin& origin,
+                                         const blink::WebURL& target) {
+  Send(new FrameHostMsg_DidRunMixedContent(
       routing_id_, GURL(origin.ToString().Utf8()), target));
   GetContentClient()->renderer()->RecordRapporURL(
       "ContentSettings.MixedScript.RanMixedScript",

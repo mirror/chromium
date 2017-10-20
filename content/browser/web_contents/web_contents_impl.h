@@ -556,9 +556,9 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                          WindowOpenDisposition disposition,
                          const gfx::Rect& initial_rect,
                          bool user_gesture) override;
-  void DidDisplayInsecureContent() override;
-  void DidRunInsecureContent(const GURL& security_origin,
-                             const GURL& target_url) override;
+  void DidDisplayMixedContent() override;
+  void DidRunMixedContent(const GURL& security_origin,
+                          const GURL& target_url) override;
   void PassiveInsecureContentFound(const GURL& resource_url) override;
   bool ShouldAllowRunningInsecureContent(content::WebContents* web_contents,
                                          bool allowed_per_prefs,
@@ -1065,11 +1065,11 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                                         const std::string& http_request,
                                         const std::string& mime_type,
                                         ResourceType resource_type);
-  void OnDidDisplayInsecureContent(RenderFrameHostImpl* source);
+  void OnDidDisplayMixedContent(RenderFrameHostImpl* source);
   void OnDidContainInsecureFormAction(RenderFrameHostImpl* source);
-  void OnDidRunInsecureContent(RenderFrameHostImpl* source,
-                               const GURL& security_origin,
-                               const GURL& target_url);
+  void OnDidRunMixedContent(RenderFrameHostImpl* source,
+                            const GURL& security_origin,
+                            const GURL& target_url);
   void OnDidDisplayContentWithCertificateErrors(RenderFrameHostImpl* source,
                                                 const GURL& url);
   void OnDidRunContentWithCertificateErrors(RenderFrameHostImpl* source,

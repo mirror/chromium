@@ -667,9 +667,9 @@ void LocalFrameClientImpl::DidAccessInitialDocument() {
     web_frame_->Client()->DidAccessInitialDocument();
 }
 
-void LocalFrameClientImpl::DidDisplayInsecureContent() {
+void LocalFrameClientImpl::DidDisplayMixedContent() {
   if (web_frame_->Client())
-    web_frame_->Client()->DidDisplayInsecureContent();
+    web_frame_->Client()->DidDisplayMixedContent();
 }
 
 void LocalFrameClientImpl::DidContainInsecureFormAction() {
@@ -677,11 +677,11 @@ void LocalFrameClientImpl::DidContainInsecureFormAction() {
     web_frame_->Client()->DidContainInsecureFormAction();
 }
 
-void LocalFrameClientImpl::DidRunInsecureContent(SecurityOrigin* origin,
-                                                 const KURL& insecure_url) {
+void LocalFrameClientImpl::DidRunMixedContent(SecurityOrigin* origin,
+                                              const KURL& insecure_url) {
   if (web_frame_->Client()) {
-    web_frame_->Client()->DidRunInsecureContent(WebSecurityOrigin(origin),
-                                                insecure_url);
+    web_frame_->Client()->DidRunMixedContent(WebSecurityOrigin(origin),
+                                             insecure_url);
   }
 }
 
