@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b1e3db1_5dc50786",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-20T15:59:14Z",
+      "side": 1,
+      "message": "As Dominic pointed out and I sadly missed in my review, this must not be static.\nFirst of all, it introduced static destructors and violated the style guide [1]. Second, the sharing of the map is unclear (one per process, which might correspond to multiple renderers).\n\nA better options would be to make the caller (PasswordAutofillAgent) own the map, and either pass it here by a pointer, or move the caching logic to PAA as you, Maxim, suggested yourself.\n\n[1] https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables",
+      "range": {
+        "startLine": 501,
+        "startChar": 2,
+        "endLine": 501,
+        "endChar": 8
+      },
+      "revId": "41c0196d6fa13c8d8d87fa840b306da752f2bc4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
