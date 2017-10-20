@@ -280,6 +280,17 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
         mojo::MakeRequest(&watch_time_recorder_provider_));
   }
 
+  // TODO(lethalantidote): Use a seperate task_runner. https://crbug/753605.
+  // Threaded compositing isn't enabled universally yet, hence the check on
+  // compositor_task_runner.
+  scoped_refptr<base::SingleThreadTaskRunner>
+      video_frame_compositor_task_runner =
+          base::FeatureList::IsEnabled(media::kUseSurfaceLayerForVideo)
+              ? render_thread->GetMediaThreadTaskRunner()
+              : render_thread->compositor_task_runner()
+              ? render_thread->compositor_task_runner()
+              : base::ThreadTaskRunnerHandle::Get();
+
   DCHECK(layer_tree_view);
   std::unique_ptr<media::WebMediaPlayerParams> params(
       new media::WebMediaPlayerParams(
@@ -291,6 +302,7 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           audio_renderer_sink, render_thread->GetMediaThreadTaskRunner(),
           render_thread->GetWorkerTaskRunner(),
           render_thread->compositor_task_runner(),
+          std::move(video_frame_compositor_task_runner),
           base::Bind(&v8::Isolate::AdjustAmountOfExternalAllocatedMemory,
                      base::Unretained(blink::MainThreadIsolate())),
           initial_cdm, media_surface_manager_, request_routing_token_cb_,
@@ -301,14 +313,23 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           base::Bind(&MediaFactory::CreateVideoDecodeStatsRecorder,
                      base::Unretained(this)),
           base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
-          base::BindRepeating(
-              &PostMediaContextProviderToCallback,
-              RenderThreadImpl::current()->GetCompositorMainThreadTaskRunner()),
           RenderThreadImpl::current()->SharedMainThreadContextProvider()));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
-      std::move(factory_selector), url_index_.get(), std::move(params));
+      std::move(factory_selector), url_index_.get(),
+      base::MakeUnique<media::VideoFrameCompositor>(
+          params->video_frame_compositor_task_runner(),
+          base::FeatureList::IsEnabled(media::kUseSurfaceLayerForVideo)
+              ? blink::WebVideoFrameSubmitter::Create(
+                  base::BindRepeating(
+                      &PostMediaContextProviderToCallback,
+                      RenderThreadImpl::current()
+                      ->GetCompositorMainThreadTaskRunner()),
+                  RenderThreadImpl::current()->GetSharedBitmapManager(),
+                  RenderThreadImpl::current()->GetGpuMemoryBufferManager())
+              : nullptr),
+      std::move(params));
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   media_player->SetMediaPlayerManager(GetMediaPlayerManager());

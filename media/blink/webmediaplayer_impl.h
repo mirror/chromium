@@ -105,6 +105,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       WebMediaPlayerDelegate* delegate,
       std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
       UrlIndex* url_index,
+      std::unique_ptr<VideoFrameCompositor> compositor,
       std::unique_ptr<WebMediaPlayerParams> params);
   ~WebMediaPlayerImpl() override;
 
@@ -546,6 +547,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   scoped_refptr<base::TaskRunner> worker_task_runner_;
   std::unique_ptr<MediaLog> media_log_;
 
+  std::unique_ptr<VideoFrameCompositor>
+      compositor_;  // Deleted on |vfc_task_runner_|.
+
   // |pipeline_controller_| owns an instance of Pipeline.
   PipelineController pipeline_controller_;
 
@@ -660,8 +664,6 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // kEnableSurfaceLayerForVideo is enabled, the media thread. This task runner
   // posts tasks for the |compositor_| on the correct thread.
   scoped_refptr<base::SingleThreadTaskRunner> vfc_task_runner_;
-  std::unique_ptr<VideoFrameCompositor>
-      compositor_;  // Deleted on |vfc_task_runner_|.
   PaintCanvasVideoRenderer video_renderer_;
 
   // The compositor layer for displaying the video content when using composited
