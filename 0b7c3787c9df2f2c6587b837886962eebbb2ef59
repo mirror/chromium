@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce7d66e_96ed365e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:19:59Z",
+      "side": 1,
+      "message": "I don\u0027t follow. Subdirectory-scoped workers are perfectly valid. Maybe you just need to make a fetch from that subdirectory to activate it?\n\nI\u0027d like us not to unnecessarily add things to the top-level test/data/ directory to keep things tidier.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "0b7c3787c9df2f2c6587b837886962eebbb2ef59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
