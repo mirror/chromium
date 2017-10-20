@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "202f648b_b0cd8fda",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T15:34:19Z",
+      "side": 1,
+      "message": "I propose removing this function, and instead creating a HC::T::WriterConvertedToReader which can be called any time a transaction with a WRITE bit is placed into the readers queue.\n\nI realize that yesterday I said I was okay with the mode not being updated on HC::T, but since we\u0027re currently changing it in some places (e.g., by calling IsInReaders) and not others, I\u0027d rather be consistent.",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18b762af_cbfa4425",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 19
@@ -84,6 +107,30 @@
       "side": 1,
       "message": "I am not sure if we want to skip a transaction and go to the next one because we are maintaining a FIFO variant all the way from when add_to_entry_queue -\u003e headers_transaction -\u003e done_headers_queue -\u003e writers/readers.\n\nEven in the original code if a writer \u003d\u003e reader \u003d\u003e writer came in, we were processing the reader first.",
       "parentUuid": "3bdbb9a8_39111667",
+      "range": {
+        "startLine": 1086,
+        "startChar": 6,
+        "endLine": 1086,
+        "endChar": 12
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c67b84a2_8b630948",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T15:34:19Z",
+      "side": 1,
+      "message": "This is worth discussing in a meeting, though I can see it being in a followup CL.\n\nWhat\u0027s the purpose of maintaining a FIFO invariant in done_headers_queue? Everything in done_headers_queue is in agreement that they will use the same response body. As it is, two parallel writers might finish in a different order from which they started.\n\nIf something fails, then we might abort a writer that otherwise would have been restarted. But that seems fine with me.",
+      "parentUuid": "c29e73ba_8d5e0ca1",
       "range": {
         "startLine": 1086,
         "startChar": 6,
