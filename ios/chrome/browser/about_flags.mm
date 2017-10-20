@@ -193,7 +193,11 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"safe_area_compatible_toolbar",
      flag_descriptions::kSafeAreaCompatibleToolbarName,
      flag_descriptions::kSafeAreaCompatibleToolbarDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kSafeAreaCompatibleToolbar)}};
+     FEATURE_VALUE_TYPE(kSafeAreaCompatibleToolbar)},
+    {"property_animations_toolbar",
+     flag_descriptions::kPropertyAnimationsToolbarName,
+     flag_descriptions::kPropertyAnimationsToolbarDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(kPropertyAnimationsToolbar)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
