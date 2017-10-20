@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa5b1c4d_d5246d0a",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapingLineBreakerPerfTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-20T00:48:25Z",
+      "side": 1,
+      "message": "Just checking -- this will destroy the previous result on the heap each time through. Is that ok perf-measurement-wise? Else we could do something like allow accumulating a vector of them, and destroy separately outside of the measured lap. Probably not a big deal but wanted to ask.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 78
+      },
+      "revId": "5ab38470636509d3e2a567f887fad2b3582b336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
