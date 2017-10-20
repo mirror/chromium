@@ -212,6 +212,10 @@ typedef ScopedRuntimeEnabledFeatureForTest<
     RuntimeEnabledFeatures::SignatureBasedIntegrityEnabled,
     RuntimeEnabledFeatures::SetSignatureBasedIntegrityEnabled>
     ScopedSignatureBasedIntegrityForTest;
+typedef ScopedRuntimeEnabledFeatureForTest<
+    RuntimeEnabledFeatures::TurnOff2DAndOpacityCompositorAnimationsEnabled,
+    RuntimeEnabledFeatures::SetTurnOff2DAndOpacityCompositorAnimationsEnabled>
+    ScopedTurnOff2DAndOpacityCompositorAnimationForTest;
 }  // namespace blink
 
 #endif  // RuntimeEnabledFeaturesTestHelpers_h
