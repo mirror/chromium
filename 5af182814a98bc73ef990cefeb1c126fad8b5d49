@@ -355,6 +355,30 @@
       "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bf5001_c5f4e166",
+        "filename": "third_party/WebKit/public/web/WebSandboxFlags.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-20T21:59:23Z",
+      "side": 1,
+      "message": "This flag controls whether a sandboxed frame can start/reconnect a presentation. The receiver flags control what the presented document can do.  Maybe I can rename to kPresentationController (to reflect how the spec talks about these cases) in a followup?",
+      "parentUuid": "ff2b6c1b_1ed0ca83",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "5af182814a98bc73ef990cefeb1c126fad8b5d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
