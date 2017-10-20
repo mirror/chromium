@@ -23,6 +23,15 @@
 
 namespace media {
 
+namespace {
+
+// MediaService will be destroyed after a delay of |kServiceIdleTimeout| since
+// it became idle (no service connected). This helps reduce service connection
+// time in cases like refreshing page.
+constexpr base::TimeDelta kServiceIdleTimeout = base::TimeDelta::FromSeconds(5);
+
+}  // namespace
+
 MediaService::MediaService(std::unique_ptr<MojoMediaClient> mojo_media_client)
     : mojo_media_client_(std::move(mojo_media_client)) {
   DCHECK(mojo_media_client_);
@@ -37,7 +46,8 @@ void MediaService::OnStart() {
 
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(
       base::Bind(&service_manager::ServiceContext::RequestQuit,
-                 base::Unretained(context()))));
+                 base::Unretained(context())),
+      kServiceIdleTimeout));
   mojo_media_client_->Initialize(context()->connector(), ref_factory_.get());
 }
 
