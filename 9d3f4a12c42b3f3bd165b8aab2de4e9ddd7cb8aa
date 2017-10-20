@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d5593d_bef0f223",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-20T21:06:20Z",
+      "side": 1,
+      "message": "We generally avoid one-off namespaces. Since this is an enum class, the names are already going to be scoped, so I don\u0027t think it needs one anyways.",
+      "revId": "9d3f4a12c42b3f3bd165b8aab2de4e9ddd7cb8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ff744f_2db61a00",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-20T21:06:20Z",
+      "side": 1,
+      "message": "... but if the namespace is dropped, this could be a little more descriptive like MacShareMenuServices.",
+      "revId": "9d3f4a12c42b3f3bd165b8aab2de4e9ddd7cb8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
