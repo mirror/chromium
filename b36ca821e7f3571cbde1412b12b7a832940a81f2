@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d91bc83_1ed8ee7e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/chromium/keepalive-preflight.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-20T13:07:24Z",
+      "side": 1,
+      "message": "Maybe use promise_rejects(t, new TypeError(), fetch(...), \u0027fetch should fail\u0027) ?",
+      "revId": "b36ca821e7f3571cbde1412b12b7a832940a81f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6ec486_3e2367d3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fetch/chromium/keepalive-preflight.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-20T13:07:24Z",
+      "side": 1,
+      "message": "Tiny English nit: idiomatic English would be either \"at the moment\" or \"at this time\".",
+      "revId": "b36ca821e7f3571cbde1412b12b7a832940a81f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fb715e_e4243bfd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-10-20T13:07:24Z",
+      "side": 1,
+      "message": "\"with no client\" ?",
+      "revId": "b36ca821e7f3571cbde1412b12b7a832940a81f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
