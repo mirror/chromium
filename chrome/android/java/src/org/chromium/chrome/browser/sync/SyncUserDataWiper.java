@@ -4,12 +4,10 @@
 
 package org.chromium.chrome.browser.sync;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Promise;
 import org.chromium.chrome.browser.bookmarks.BookmarkModel;
 import org.chromium.chrome.browser.browsing_data.BrowsingDataType;
 import org.chromium.chrome.browser.browsing_data.TimePeriod;
-import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksShim;
 import org.chromium.chrome.browser.preferences.privacy.BrowsingDataBridge;
 import org.chromium.chrome.browser.preferences.privacy.BrowsingDataBridge.OnClearBrowsingDataListener;
 
@@ -31,9 +29,6 @@ public class SyncUserDataWiper {
      */
     public static Promise<Void> wipeSyncUserData() {
         final Promise<Void> promise = new Promise<>();
-
-        // Partner bookmarks need to be loaded explicitly so that BookmarkModel can be loaded.
-        PartnerBookmarksShim.kickOffReading(ContextUtils.getApplicationContext());
 
         final BookmarkModel model = new BookmarkModel();
         model.runAfterBookmarkModelLoaded(new Runnable() {
