@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cc4ac572_59d94073",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-20T17:46:15Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand why we have this. Seems like either we are only going to handle custom tab intents, in which case we can do an actual check for custom tab intent. Or we want to be able to dispatch any VIEW intent with .Main hardcoded, in which case the dispatcher code should handle non-custom tab stuff?\n\nIn general, maybe if we get an intent that\u0027s not custom tab and that we can\u0027t handle we should probably kill CTA and start ChromeLauncherActivity with that intent?",
+      "range": {
+        "startLine": 418,
+        "startChar": 19,
+        "endLine": 418,
+        "endChar": 46
+      },
+      "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b133048_7d7c19e2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 2
@@ -18,6 +41,29 @@
         "startChar": 12,
         "endLine": 84,
         "endChar": 30
+      },
+      "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7add3511_8a507c9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-20T17:46:15Z",
+      "side": 1,
+      "message": "I think we are going to change this metric (I think this is used by TTFMP) by moving work into constructor...",
+      "range": {
+        "startLine": 158,
+        "startChar": 9,
+        "endLine": 158,
+        "endChar": 0
       },
       "revId": "a804b51e5b515c55ce7cfb76a110fb244d04f728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
