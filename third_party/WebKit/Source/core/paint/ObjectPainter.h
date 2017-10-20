@@ -50,20 +50,21 @@ class ObjectPainter : public ObjectPainterBase {
   // We compute paint offsets during the pre-paint tree walk (PrePaintTreeWalk).
   // This check verifies that the paint offset computed during pre-paint matches
   // the actual paint offset during paint.
-  void CheckPaintOffset(const PaintInfo& paint_info,
-                        const LayoutPoint& paint_offset) {
+  // TODO(wangxianzhu): Eventually we should remove this method when we remove
+  // the |paint_offset| parameter from all painter methods for SPv2.
+  void CheckPaintOffset(const LayoutPoint& adjusted_paint_offset) {
 #if DCHECK_IS_ON()
     // For now this works for SPv2 only because of complexities of paint
     // invalidation containers in SPv1.
     if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-      DoCheckPaintOffset(paint_info, paint_offset);
+      DoCheckPaintOffset(adjusted_paint_offset);
 #endif
   }
 
  private:
 
 #if DCHECK_IS_ON()
-  void DoCheckPaintOffset(const PaintInfo&, const LayoutPoint& paint_offset);
+  void DoCheckPaintOffset(const LayoutPoint& adjusted_paint_offset);
 #endif
 
   const LayoutObject& layout_object_;

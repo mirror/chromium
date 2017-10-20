@@ -14,7 +14,7 @@ namespace blink {
 
 void InlinePainter::Paint(const PaintInfo& paint_info,
                           const LayoutPoint& paint_offset) {
-  ObjectPainter(layout_inline_).CheckPaintOffset(paint_info, paint_offset);
+  ObjectPainter(layout_inline_).CheckPaintOffset(paint_offset);
   if (paint_info.phase == PaintPhase::kForeground && paint_info.IsPrinting())
     ObjectPainter(layout_inline_)
         .AddPDFURLRectIfNeeded(paint_info, paint_offset);
