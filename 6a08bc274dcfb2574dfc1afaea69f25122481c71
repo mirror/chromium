@@ -36,6 +36,75 @@
     },
     {
       "key": {
+        "uuid": "964325be_fbbce511",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-10-20T18:42:38Z",
+      "side": 1,
+      "message": "Although I may be wrong, I don\u0027t think it\u0027s ok to create this eagerly? It seems like it should only be created from getAccessibilityNodeProvider() and just call onAttachedToWindow if it\u0027s not null at this point.",
+      "range": {
+        "startLine": 981,
+        "startChar": 12,
+        "endLine": 981,
+        "endChar": 37
+      },
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc341735_f4edc04a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-10-20T18:42:38Z",
+      "side": 1,
+      "message": "And then null check here too.",
+      "range": {
+        "startLine": 1025,
+        "startChar": 8,
+        "endLine": 1025,
+        "endChar": 33
+      },
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc030caf_8282137c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-10-20T18:42:38Z",
+      "side": 1,
+      "message": "This is now:\n\nif null: create if allowed\nif !enabled: enable\nreturn mWCA,getAccessibilityNodeProvider()\n\nIf that\u0027s correct, maybe simplify?\n\nAlso, if the above is true, you\u0027d need to call onAttachedToWindow after creating, if currently attached.",
+      "range": {
+        "startLine": 1743,
+        "startChar": 16,
+        "endLine": 1743,
+        "endChar": 41
+      },
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ff352e4_729c4c09",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
         "patchSetId": 4
