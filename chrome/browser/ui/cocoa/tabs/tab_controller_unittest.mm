@@ -69,11 +69,11 @@
                                    pressure:1.0];
   [window postEvent:up atStart:YES];
 }
-- (void)commandDispatch:(TabStripModel::ContextMenuCommand)command
-          forController:(TabController*)controller {
+- (void)command:(TabStripModel::ContextMenuCommand)command
+    dispatchForController:(TabController*)controller {
 }
-- (BOOL)isCommandEnabled:(TabStripModel::ContextMenuCommand)command
-           forController:(TabController*)controller {
+- (BOOL)isCommand:(TabStripModel::ContextMenuCommand)command
+    enabledForController:(TabController*)controller {
   return NO;
 }
 - (ui::SimpleMenuModel*)contextMenuModelForController:(TabController*)controller
@@ -83,6 +83,11 @@
   model->AddItem(2, base::ASCIIToUTF16("Allays"));
   model->AddItem(3, base::ASCIIToUTF16("Chromium"));
   return model;
+}
+- (void)command:(TabStripModel::ContextMenuCommand)command
+    isHighlightedForController:(TabController*)controller {
+}
+- (void)contextMenuClosedForController:(TabController*)controller {
 }
 - (id<TabDraggingEventTarget>)dragController {
   return dragController_.get();

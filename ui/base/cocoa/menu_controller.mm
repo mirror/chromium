@@ -332,6 +332,14 @@ NSString* const kMenuControllerMenuDidCloseNotification =
   return isMenuOpen_;
 }
 
+- (void)menu:(NSMenu*)menu willHighlightItem:(NSMenuItem*)item {
+  if (!item)
+    return;
+
+  NSInteger modelIndex = [item tag];
+  model_->HighlightChangedTo(modelIndex);
+}
+
 - (void)menuWillOpen:(NSMenu*)menu {
   isMenuOpen_ = YES;
   model_->MenuWillShow();

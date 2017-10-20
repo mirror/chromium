@@ -17,16 +17,22 @@
 - (void)closeTab:(id)sender;
 
 // Dispatch context menu commands for the given tab controller.
-- (void)commandDispatch:(TabStripModel::ContextMenuCommand)command
-          forController:(TabController*)controller;
-// Returns YES if the specificed command should be enabled for the given
+- (void)command:(TabStripModel::ContextMenuCommand)command
+    dispatchForController:(TabController*)controller;
+
+// Returns YES if the specified command should be enabled for the given
 // controller.
-- (BOOL)isCommandEnabled:(TabStripModel::ContextMenuCommand)command
-           forController:(TabController*)controller;
+- (BOOL)isCommand:(TabStripModel::ContextMenuCommand)command
+    enabledForController:(TabController*)controller;
 
 // Returns a context menu model for a given controller. Caller owns the result.
 - (ui::SimpleMenuModel*)contextMenuModelForController:(TabController*)controller
     menuDelegate:(ui::SimpleMenuModel::Delegate*)delegate;
+
+- (void)command:(TabStripModel::ContextMenuCommand)command
+    isHighlightedForController:(TabController*)controller;
+
+- (void)contextMenuClosedForController:(TabController*)controller;
 
 // Returns a weak reference to the controller that manages dragging of tabs.
 - (id<TabDraggingEventTarget>)dragController;

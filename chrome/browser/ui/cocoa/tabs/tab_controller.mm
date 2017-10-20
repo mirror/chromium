@@ -66,12 +66,20 @@ class MenuDelegate : public ui::SimpleMenuModel::Delegate {
   bool IsCommandIdEnabled(int command_id) const override {
     TabStripModel::ContextMenuCommand command =
         static_cast<TabStripModel::ContextMenuCommand>(command_id);
-    return [target_ isCommandEnabled:command forController:owner_];
+    return [target_ isCommand:command enabledForController:owner_];
   }
   void ExecuteCommand(int command_id, int event_flags) override {
     TabStripModel::ContextMenuCommand command =
         static_cast<TabStripModel::ContextMenuCommand>(command_id);
-    [target_ commandDispatch:command forController:owner_];
+    [target_ command:command dispatchForController:owner_];
+  }
+  void CommandIdHighlighted(int command_id) override {
+    TabStripModel::ContextMenuCommand command =
+        static_cast<TabStripModel::ContextMenuCommand>(command_id);
+    [target_ command:command isHighlightedForController:owner_];
+  }
+  void MenuClosed(ui::SimpleMenuModel* source) override {
+    [target_ contextMenuClosedForController:owner_];
   }
 
  private:
@@ -359,6 +367,14 @@ static const CGFloat kTabElementYOrigin = 6;
   else
     showingAttentionIndicator_ &= ~AttentionType::kBlockedWebContents;
   [self updateIconWithToastAnimation:NO];
+}
+
+- (void)startPulse {
+  [[self tabView] startPulse];
+}
+
+- (void)stopPulse {
+  [[self tabView] stopPulse];
 }
 
 - (void)titleChangedNotLoading {

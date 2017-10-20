@@ -961,8 +961,12 @@ CGFloat LineWidthFromContext(CGContextRef context) {
     }
   }
 
-  if (nextUpdate < kNoUpdate)
-    [self performSelector:_cmd withObject:nil afterDelay:nextUpdate];
+  if (nextUpdate < kNoUpdate) {
+    [self performSelector:_cmd
+               withObject:nil
+               afterDelay:nextUpdate
+                  inModes:@[ NSRunLoopCommonModes ]];
+  }
 
   [self resetLastGlowUpdateTime];
   [self setNeedsDisplay:YES];
