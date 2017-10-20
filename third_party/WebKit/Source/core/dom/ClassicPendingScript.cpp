@@ -17,27 +17,47 @@
 
 namespace blink {
 
-ClassicPendingScript* ClassicPendingScript::Create(ScriptElementBase* element,
-                                                   ScriptResource* resource) {
-  return new ClassicPendingScript(element, resource, TextPosition());
+ClassicPendingScript* ClassicPendingScript::Fetch(ScriptElementBase* element,
+                                                  FetchParameters& params,
+                                                  ResourceFetcher* fetcher) {
+  ClassicPendingScript* pending_script =
+      new ClassicPendingScript(element, TextPosition(), true);
+  ScriptResource* resource = ScriptResource::Fetch(params, fetcher);
+  if (!resource)
+    return nullptr;
+  pending_script->SetResource(resource);
+  pending_script->CheckState();
+  return pending_script;
+}
+
+ClassicPendingScript* ClassicPendingScript::CreateForTest(
+    ScriptElementBase* element,
+    ScriptResource* resource) {
+  DCHECK(resource);
+  ClassicPendingScript* pending_script =
+      new ClassicPendingScript(element, TextPosition(), true);
+  pending_script->SetResource(resource);
+  pending_script->CheckState();
+  return pending_script;
 }
 
 ClassicPendingScript* ClassicPendingScript::Create(
     ScriptElementBase* element,
     const TextPosition& starting_position) {
-  return new ClassicPendingScript(element, nullptr, starting_position);
+  ClassicPendingScript* pending_script =
+      new ClassicPendingScript(element, starting_position, false);
+  pending_script->CheckState();
+  return pending_script;
 }
 
 ClassicPendingScript::ClassicPendingScript(
     ScriptElementBase* element,
-    ScriptResource* resource,
-    const TextPosition& starting_position)
+    const TextPosition& starting_position,
+    bool is_external)
     : PendingScript(element, starting_position),
-      ready_state_(resource ? kWaitingForResource : kReady),
+      ready_state_(is_external ? kWaitingForResource : kReady),
       integrity_failure_(false),
       is_currently_streaming_(false) {
-  CheckState();
-  SetResource(resource);
   MemoryCoordinator::Instance().RegisterClient(this);
 }
 
