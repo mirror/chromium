@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "939ba2e6_c0c2a6fd",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-20T20:51:19Z",
+      "side": 1,
+      "message": "Is this comment still valid after the implementation of the notification to the transaction that it\u0027s being transitioned to being a reader?",
+      "range": {
+        "startLine": 317,
+        "startChar": 34,
+        "endLine": 317,
+        "endChar": 35
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a99f7f4_0eb869c4",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-20T20:51:19Z",
+      "side": 1,
+      "message": "This implies to me that the only reason to save network transaction info is for statistics, but I thought that sometimes the HC transaction needed to recreate the network transaction.  Am I confused?  Or is it only the original creator that needs to re-create?",
+      "range": {
+        "startLine": 644,
+        "startChar": 6,
+        "endLine": 644,
+        "endChar": 49
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fbb0da_36366f06",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-20T20:51:19Z",
+      "side": 1,
+      "message": "Why make this the creating transaction rather than the last transaction to touch the network transaction?  (Either when the network transaction completes or the last writer is killed.)  I\u0027d imagine this would produce more reliable statistics, but it might also require more interfaces Writers-\u003eTransaction and/or shifting the network statistic recording into Writers.\n\nSuggestion, possibly worthwhile talking about in an F2F.",
+      "range": {
+        "startLine": 603,
+        "startChar": 5,
+        "endLine": 603,
+        "endChar": 15
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a276000_0b86dcf1",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2723,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-20T20:51:19Z",
+      "side": 1,
+      "message": "nitty nit: I feel like \"Idle\" and \"waiting\" should have the same capitalization here, since neither is starting the sentence.",
+      "range": {
+        "startLine": 2723,
+        "startChar": 60,
+        "endLine": 2723,
+        "endChar": 61
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6309c8_2d22849f",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2849,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-20T20:51:19Z",
+      "side": 1,
+      "message": "IIUC, this paragraph uses two different meanings of the word \"writer\"; the first one is the writing transaction, and the second one is the underlying instance of HttpCache::Writers.  If I\u0027m understanding this correctly, would you update the comment to make that distinction clear?  (If not, just let me know what I got wrong.)",
+      "range": {
+        "startLine": 2849,
+        "startChar": 17,
+        "endLine": 2849,
+        "endChar": 20
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
