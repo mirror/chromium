@@ -39,7 +39,6 @@ InspectorFrontendHostAPI.Events = {
   EnterInspectElementMode: Symbol('enterInspectElementMode'),
   EvaluateForTestInFrontend: Symbol('evaluateForTestInFrontend'),
   EyeDropperPickedColor: Symbol('eyeDropperPickedColor'),
-  FailedToAddFileSystem: Symbol('failedToAddFileSystem'),
   FileSystemsLoaded: Symbol('fileSystemsLoaded'),
   FileSystemRemoved: Symbol('fileSystemRemoved'),
   FileSystemAdded: Symbol('fileSystemAdded'),
@@ -74,10 +73,9 @@ InspectorFrontendHostAPI.EventDescriptors = [
   [InspectorFrontendHostAPI.Events.EnterInspectElementMode, 'enterInspectElementMode', []],
   [InspectorFrontendHostAPI.Events.EvaluateForTestInFrontend, 'evaluateForTestInFrontend', ['callId', 'script']],
   [InspectorFrontendHostAPI.Events.EyeDropperPickedColor, 'eyeDropperPickedColor', ['color']],
-  [InspectorFrontendHostAPI.Events.FailedToAddFileSystem, 'failedToAddFileSystem', []],
   [InspectorFrontendHostAPI.Events.FileSystemsLoaded, 'fileSystemsLoaded', ['fileSystems']],
   [InspectorFrontendHostAPI.Events.FileSystemRemoved, 'fileSystemRemoved', ['fileSystemPath']],
-  [InspectorFrontendHostAPI.Events.FileSystemAdded, 'fileSystemAdded', ['errorMessage', 'fileSystem']],
+  [InspectorFrontendHostAPI.Events.FileSystemAdded, 'fileSystemAdded', ['errorMessage', 'fileSystem', 'type']],
   [
     InspectorFrontendHostAPI.Events.FileSystemFilesChangedAddedRemoved, 'fileSystemFilesChangedAddedRemoved',
     ['changed', 'added', 'removed']
@@ -100,9 +98,9 @@ InspectorFrontendHostAPI.EventDescriptors = [
 
 InspectorFrontendHostAPI.prototype = {
   /**
-   * @param {string=} fileSystemPath
+   * @param {string=} type
    */
-  addFileSystem(fileSystemPath) {},
+  addFileSystem(type) {},
 
   /**
    * @param {string} url
