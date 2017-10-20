@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe0d761b_f679617c",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-20T17:20:27Z",
+      "side": 1,
+      "message": "Do we need this dimension set? It seems to conflict with the bot-id arguments below",
+      "revId": "1d0ad0132281072bfb1a094314449e2fece4c5c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
