@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4258946_41bc0c76",
+        "filename": "chrome/profiling/memlog_receiver_pipe_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-20T22:10:27Z",
+      "side": 0,
+      "message": "I don\u0027t follow this race condition. If receiver_ is null, How can posting a task to it do anything other than crash?",
+      "revId": "aca4628837ddab2bfd45fca4108c623999ad57de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
