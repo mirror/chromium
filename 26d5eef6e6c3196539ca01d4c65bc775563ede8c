@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d51ecca_d1a8eb4f",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-20T14:02:06Z",
+      "side": 1,
+      "message": "Small (unrelated) note: The following is the recommended way of handling this replacement, which will ensure proper handling regarding escaping or IPv6 hostnames\n\nGURL video_url \u003d https_server-\u003eGetURL(GetParam().host, GetParam().path);\n\n... \"appendEmbedToDOM(\u0027\" + video_url.spec() + \"\u0027,\u0027\" ...\n\nhttps://cs.chromium.org/chromium/src/net/test/embedded_test_server/embedded_test_server.h?rcl\u003db320a1bb07a05c28d56a0b80e307d3dfdc169ca9\u0026l\u003d174",
+      "revId": "26d5eef6e6c3196539ca01d4c65bc775563ede8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
