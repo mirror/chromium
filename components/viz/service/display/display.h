@@ -139,6 +139,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   std::unique_ptr<DirectRenderer> renderer_;
   SoftwareRenderer* software_renderer_ = nullptr;
   std::vector<ui::LatencyInfo> stored_latency_info_;
+  std::vector<Surface::PresentedCallback> presented_callbacks_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Display);
