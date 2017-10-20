@@ -36,6 +36,142 @@
     },
     {
       "key": {
+        "uuid": "cc8a4f9d_1df9f259",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "optional: Consider making this a private static method in LoginMetricsRecorder. This would significantly shorten most of the lines and might make wrapping look better.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a153337_75ccd2bd",
+        "filename": "ash/metrics/login_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "nit: I would append \u003d 0 to the first item in each of these enums to emphasize that the values matter.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff8758e_3c70e6f2",
+        "filename": "ash/metrics/login_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "Why is there a single centralized enum histogram for this, rather than individual UserMetricsActions in each piece of UI code?\n\nisherman, is there a strong metrics-reason to do it this way rather than just counting the raw clicks in the UI code?",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71254dcd_853940fb",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ if you can",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53c8512_696119ea",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "nit: document why you have to spin run loop",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4502018_53a6ff92",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "optional nit: You might be able to remove the LoginMetricsRecorder:: prefix here. C++ argument dependent name lookups are confusing, though, so I\u0027m not 100% sure. Alternately you could add a SetAuthMethod() test helper function to LoginMetricsRecorderTest, which would shorten these lines.\n\nDitto for adding a helper ExpectBucketCount(const std::string\u0026 name, LoginMetricsRecorder::AuthMethod method, int count) or similar. You would need multiple overloaded copies for LockScreenUserClickTarget but it would let you move the ugly static casts into the helper functions.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b69996_7aa7edde",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "nit: events",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735e0a6e_5e4acb2e",
+        "filename": "ash/metrics/user_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "Why do you need the HasInstance() check? This object is owned by Shell, so it seems unlikely anyone could access it without a Shell instance. If you must do this, document why.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb69ab47_bc6a65fa",
         "filename": "ash/metrics/user_metrics_recorder.h",
         "patchSetId": 6
@@ -47,6 +183,23 @@
       "writtenOn": "2017-10-19T23:17:40Z",
       "side": 1,
       "message": "nit: Document what it does.\n  // Record interesting user clicks on lock screen.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a70e402_d5ecdfc4",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T01:18:27Z",
+      "side": 1,
+      "message": "instead of a \"default\" case, how about having one for kCancel that does nothing, and no default? Then the compiler will remind us if we add a new button",
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
