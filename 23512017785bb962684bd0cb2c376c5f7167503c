@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ffd07dc_0a639331",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-20T23:41:35Z",
+      "side": 1,
+      "message": "Also check CPCT?",
+      "range": {
+        "startLine": 386,
+        "startChar": 14,
+        "endLine": 386,
+        "endChar": 18
+      },
+      "revId": "23512017785bb962684bd0cb2c376c5f7167503c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
