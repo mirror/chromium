@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f008a7_b1303a8e",
+        "filename": "tools/gn/command_gen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-20T18:00:34Z",
+      "side": 1,
+      "message": "I wouldn\u0027t mention goma here; I think \"-j\" is sufficient.",
+      "revId": "737fb0d5d947847070311bb8440a2c9c42e1b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
