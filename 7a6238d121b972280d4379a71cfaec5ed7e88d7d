@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec608fae_784fdc90",
+        "filename": "ui/gfx/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-20T02:03:12Z",
+      "side": 1,
+      "message": "There\u0027s an ICC profile dict in fuzzer/dicts already ...\n\nhttps://cs.chromium.org/chromium/src/testing/libfuzzer/fuzzers/dicts/icc.dict?q\u003dicc.dict\u0026sq\u003dpackage:chromium\u0026l\u003d1\n\nWe could just use that?",
+      "revId": "7a6238d121b972280d4379a71cfaec5ed7e88d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
