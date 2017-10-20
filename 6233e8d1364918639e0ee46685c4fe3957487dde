@@ -22,6 +22,30 @@
       "revId": "6233e8d1364918639e0ee46685c4fe3957487dde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ba5ea7_5012f677",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-20T16:28:43Z",
+      "side": 1,
+      "message": "I have no idea!\n\nI created the revert as a starting point (not landing), I\u0027ll update it when I know what\u0027s going on, including updating the description.",
+      "parentUuid": "d36644bc_27a2d6c5",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "6233e8d1364918639e0ee46685c4fe3957487dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
