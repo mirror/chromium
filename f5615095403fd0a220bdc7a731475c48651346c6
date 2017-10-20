@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a51108_1ff43810",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-20T18:33:07Z",
+      "side": 1,
+      "message": "Please make sure to teardown for symmetry, as shown in the other tests using this pattern. This helps developers debugging tests in --single-process mode.",
+      "revId": "f5615095403fd0a220bdc7a731475c48651346c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4720ca8_649a427f",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-20T18:33:07Z",
+      "side": 1,
+      "message": "You can delete this now",
+      "revId": "f5615095403fd0a220bdc7a731475c48651346c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c750894b_cdfaab7c",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-20T18:33:07Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f5615095403fd0a220bdc7a731475c48651346c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
