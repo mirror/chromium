@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "4ef84083_793c910b",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-20T20:32:47Z",
+      "side": 1,
+      "message": "Just find xiyuan\u0027s response after sending out, tks",
+      "parentUuid": "be571d39_997e0ec3",
+      "range": {
+        "startLine": 22,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9295e7ff_dbeeb1ca",
         "filename": "components/session_manager/session_manager_types.h",
         "patchSetId": 5
