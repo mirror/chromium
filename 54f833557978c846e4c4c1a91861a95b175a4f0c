@@ -22,6 +22,30 @@
       "revId": "54f833557978c846e4c4c1a91861a95b175a4f0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e97c48_1cfec50b",
+        "filename": "chrome/browser/ui/views/task_manager_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-20T00:35:21Z",
+      "side": 1,
+      "message": "\u003e Can the clients of these functions call Show/HideTaskManager in the other file? If not, can these two delegate to those two instead?\n\nThe only client of this actually *is* the mac-specific version of Show/HideTaskManager :). Perhaps that would good to put in a comment here, since it\u0027s quite subtle. E.g., above the function,\n\n// Note these are used by the Mac version of Show/HideTaskManager if it decides\n// to show the views TaskManager rather than the Cocoa version.",
+      "parentUuid": "2abb7451_8c0588bf",
+      "range": {
+        "startLine": 391,
+        "startChar": 37,
+        "endLine": 391,
+        "endChar": 57
+      },
+      "revId": "54f833557978c846e4c4c1a91861a95b175a4f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
