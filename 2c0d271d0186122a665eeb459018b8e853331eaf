@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05410a38_ae0fcef6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T09:54:10Z",
+      "side": 1,
+      "message": "Would it make sense to include this into MediaControlOverlayPlayButtonElement? This might remove the need for MediaControlButtonPanelElement as we already have MediaControlPanelElement?",
+      "revId": "2c0d271d0186122a665eeb459018b8e853331eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdeeac4_7c708b05",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T09:54:10Z",
+      "side": 1,
+      "message": "Could we avoid creating the `play_button_` when not in modern mode?",
+      "revId": "2c0d271d0186122a665eeb459018b8e853331eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4bc8e8_b881b202",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T09:54:10Z",
+      "side": 1,
+      "message": "My understanding is that the -internal-media-controls-play-button is a container (the circle) and -internal-media-controls-play-button-internal might include the actual play/pause icon. Though, we might want to mention this somewhere as not every reader will have the context.",
+      "revId": "2c0d271d0186122a665eeb459018b8e853331eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba857a9d_457fee81",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-20T09:54:10Z",
+      "side": 1,
+      "message": "Maybe there should be a class comment to help readers understand why it\u0027s different from PlayButtonElement. My understanding is that it\u0027s an overlay but the overlay is the only play element for the new media controls.",
+      "revId": "2c0d271d0186122a665eeb459018b8e853331eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
