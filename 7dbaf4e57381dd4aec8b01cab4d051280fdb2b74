@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24082e55_f86a6079",
+        "filename": "third_party/WebKit/public/web/WebPresentationReceiverFlags.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-20T22:21:29Z",
+      "side": 1,
+      "message": "These are what a presentation receiver should NOT be able to do, right? For someone, like me, unfamiliar with what these flags mean, could we add a quick code comment here like:\n\n  // Disable popups, modals, and top-level navigation for presentation receivers.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "7dbaf4e57381dd4aec8b01cab4d051280fdb2b74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
