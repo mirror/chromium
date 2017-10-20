@@ -353,6 +353,29 @@
     },
     {
       "key": {
+        "uuid": "defb36e7_a84b7285",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3935,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T22:52:32Z",
+      "side": 1,
+      "message": "Is there any point in doing any of this function if delegate_ is null? It also looks like you\u0027ll leak view_source_contents if you get to the end of the function and delegate_ is null.",
+      "range": {
+        "startLine": 3935,
+        "startChar": 2,
+        "endLine": 3935,
+        "endChar": 59
+      },
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6af32ac_8e3dcc1b",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 15
@@ -420,6 +443,29 @@
       "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1781226_7d5b7a17",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T22:52:32Z",
+      "side": 1,
+      "message": "If this branch is hit will view_source_contents be leaked (I realize this comment applies to the original code as well).?",
+      "range": {
+        "startLine": 3955,
+        "startChar": 4,
+        "endLine": 3955,
+        "endChar": 10
+      },
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

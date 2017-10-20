@@ -52,6 +52,47 @@
       "revId": "8a8997210055ba84753f6a333def51f830006bf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8d4335_b1978a2e",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T22:52:32Z",
+      "side": 0,
+      "message": "I don\u0027t think the else branch is exactly the same. It looks like NEW_FOREGROUND_TAB when used with a browser that doesn\u0027t have a tabstrip will search for a tabbed browser. The code nere creates a new one.",
+      "parentUuid": "9367de7d_a10e0416",
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bd62bc_df587223",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T22:52:32Z",
+      "side": 0,
+      "message": "I don\u0027t see this in the new code?",
+      "range": {
+        "startLine": 1262,
+        "startChar": 2,
+        "endLine": 1263,
+        "endChar": 62
+      },
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
