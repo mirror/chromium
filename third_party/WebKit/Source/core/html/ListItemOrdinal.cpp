@@ -276,7 +276,8 @@ void ListItemOrdinal::ItemInsertedOrRemoved(
     return;
 
   Node* list_node = EnclosingList(item_node);
-  CHECK(list_node);
+  if (!list_node)
+    return;
 
   bool is_list_reversed = false;
   if (auto* o_list_element = ToHTMLOListElementOrNull(list_node)) {
