@@ -1318,8 +1318,12 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
     return;
   }
 
-  needs_horizontal_scrollbar = Box().ScrollsOverflowX();
-  needs_vertical_scrollbar = Box().ScrollsOverflowY();
+  if (Layer()->IsRootLayer() && Box().GetDocument().Printing()) {
+    needs_horizontal_scrollbar = needs_vertical_scrollbar = false;
+  } else {
+    needs_horizontal_scrollbar = Box().ScrollsOverflowX();
+    needs_vertical_scrollbar = Box().ScrollsOverflowY();
+  }
 
   // Don't add auto scrollbars if the box contents aren't visible.
   if (Box().HasAutoHorizontalScrollbar()) {
