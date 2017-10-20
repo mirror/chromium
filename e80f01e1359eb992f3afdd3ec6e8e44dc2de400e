@@ -16,6 +16,24 @@
       "revId": "e80f01e1359eb992f3afdd3ec6e8e44dc2de400e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea6d516_c77de4d3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-20T00:11:30Z",
+      "side": 1,
+      "message": "Default value for max scale when the chart is [yet] empty.",
+      "parentUuid": "607fc7e5_6c49f97e",
+      "revId": "e80f01e1359eb992f3afdd3ec6e8e44dc2de400e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
