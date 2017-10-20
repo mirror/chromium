@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "04c37cf9_e1ecdec2",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-20T08:30:28Z",
+      "side": 1,
+      "message": "It has overridden in face_detection_impl_win.cc[1], do we still need new provider for win?\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/724745/10/services/shape_detection/face_detection_impl_win.cc#57",
+      "parentUuid": "8878fcfe_9739dd69",
+      "revId": "2656bec5b8d575abda7bc684fcd369afae119090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "102c6c20_84aab5a4",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 4
