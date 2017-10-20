@@ -16,6 +16,24 @@
       "revId": "e0a09dae1c075ddf39163aab2f82315ca0580f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0aef60_e849c84c",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-20T23:47:59Z",
+      "side": 1,
+      "message": "I think the primary reason here would be that we don\u0027t know whether the StateSaver is in effect or not (i.e we\u0027d need to check before potentially pushing a new state and changing the interpolation quality, which of course would be an option in this case.)",
+      "parentUuid": "aa4de68b_c367b370",
+      "revId": "e0a09dae1c075ddf39163aab2f82315ca0580f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
