@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d19f0e7_3bf414cf",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done.\n\nDecryptSpecifics will LOG(ERROR) if it fails to decrypt. I don\u0027t think we need to log here in addition to that.",
+      "parentUuid": "94561628_7591b302",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3592d0a4_03f964da",
         "filename": "components/sync/engine_impl/model_type_worker.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6610eea4_cf5b4184",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3592d0a4_03f964da",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01961d3e_bc316fbf",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "The code works correctly just because syncer keeps asking for commit contribution and sends it to server until all contributors say they have nothing left. But you are right, it is absolutely not obvious from looking at this particular line.",
+      "parentUuid": "59702496_efb5f89e",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "920c8dd1_af4b6c64",
         "filename": "components/sync/engine_impl/model_type_worker.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e426042d_3976174b",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "920c8dd1_af4b6c64",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3ae4df81_928fbabb",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "It is.",
+      "parentUuid": "80f217f3_67703d41",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47afce95_9733d270",
         "filename": "components/sync/engine_impl/model_type_worker.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8d0c86_3be02d22",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "I converted \"if\" into DCHECK.\n\nWorkerEntityTracker shares responsibility of tracking commit data during commit and updates data during GU. They used to interleave and now they are completely separate. It would be better to create two separate datastructures for it. In this change I want to make interaction with processor work.",
+      "parentUuid": "47afce95_9733d270",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "47ac4be1_295709a3",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49102d5c_dee95c97",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5134a2b_2e5f299c",
         "filename": "components/sync/engine_impl/model_type_worker.cc",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-20T00:31:44Z",
       "side": 1,
       "message": "I think this continue is against our style guide. Can you rewrite this as DCHECK(entity) \u003c\u003c \"Blah\"",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1360ba3_a19d26ca",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "We receive client_tag_hash from network. Removing this check would mean we trust the server.",
+      "parentUuid": "b5134a2b_2e5f299c",
       "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7b2f8a97_e65c016e",
+        "filename": "components/sync/engine_impl/model_type_worker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d664f8af_eb2e0305",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfefde43_d026b476",
         "filename": "components/sync/engine_impl/model_type_worker.h",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787dd88a_55f87988",
+        "filename": "components/sync/engine_impl/model_type_worker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfefde43_d026b476",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ea89aed3_3c7bccfc",
+        "filename": "components/sync/test/engine/mock_model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57a25d0_77ba3ae7",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0988128e_10c5a714",
         "filename": "components/sync/test/engine/mock_model_type_worker.cc",
         "patchSetId": 1
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "7574600c_3671c0ba",
+        "filename": "components/sync/test/engine/mock_model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0988128e_10c5a714",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba82fe6_54eee506",
         "filename": "components/sync/test/engine/mock_model_type_worker.cc",
         "patchSetId": 1
@@ -220,6 +436,24 @@
       "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857a9847_47d80402",
+        "filename": "components/sync/test/engine/mock_model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-20T22:07:44Z",
+      "side": 1,
+      "message": "Changed it to ASSERT_FALSE. It will return early and the test will fail expectations about commit response.",
+      "parentUuid": "cba82fe6_54eee506",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
