@@ -380,6 +380,12 @@ FloatRect Font::SelectionRectForText(const TextRun& run,
       FloatRect(point.X() + range.start, point.Y(), range.Width(), height));
 }
 
+FloatRect Font::SmallestBoundingBox(const TextRun& run) const {
+  FontCachePurgePreventer purge_preventer;
+  CachingWordShaper shaper(*this);
+  return shaper.GetBoundingBox(run);
+}
+
 int Font::OffsetForPosition(const TextRun& run,
                             float x_float,
                             bool include_partial_glyphs) const {

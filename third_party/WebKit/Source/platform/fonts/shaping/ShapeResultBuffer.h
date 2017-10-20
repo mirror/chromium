@@ -49,6 +49,8 @@ class PLATFORM_EXPORT ShapeResultBuffer {
                                           unsigned from,
                                           unsigned to);
 
+  FloatRect GetBoundingBox() const;
+
   struct RunFontData {
     SimpleFontData* font_data_;
     size_t glyph_count_;

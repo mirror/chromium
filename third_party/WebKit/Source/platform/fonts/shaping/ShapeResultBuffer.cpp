@@ -8,9 +8,38 @@
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/geometry/FloatPoint.h"
+#include "platform/geometry/FloatRect.h"
 #include "platform/text/TextDirection.h"
 
 namespace blink {
+
+FloatRect ShapeResultBuffer::GetBoundingBox() const {
+  FloatRect ret(0, 0, 0, 0);
+
+  float width = 0.0;
+
+  for (unsigned j = 0; j < results_.size(); j++) {
+    const RefPtr<const ShapeResult> result = results_[j];
+
+    const FloatRect& rb = result->Bounds();
+
+    // Expand the bounding box to include this ShapeResult.
+    float minx = std::min(ret.X(), rb.X() + width);
+    float miny = std::min(ret.Y(), rb.Y());
+    float maxx = std::max(ret.MaxX(), rb.MaxX() + width);
+    float maxy = std::max(ret.MaxY(), rb.MaxY());
+
+    ret.SetX(minx);
+    ret.SetY(miny);
+    ret.SetWidth(maxx - minx);
+    ret.SetHeight(maxy - miny);
+
+    // We have to move Width() forward, since spaces have no bounding glyph.
+    width += result->Width();
+  }
+
+  return ret;
+}
 
 // TODO(eae): This is a bit of a hack to allow reuse of the implementation
 // for both ShapeResultBuffer and single ShapeResult use cases. Ideally the
