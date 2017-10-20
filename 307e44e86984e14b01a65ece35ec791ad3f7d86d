@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2db61d8c_bbf00465",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-20T19:21:02Z",
+      "side": 1,
+      "message": "Yes, last suggestion could fix the problem. Please check if my change, and comments make sense.\n\nI am not sure how to write test coverage for this. Looks like it is not easy to do.",
+      "parentUuid": "aad36485_8655293d",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "307e44e86984e14b01a65ece35ec791ad3f7d86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f71c66db_81effac0",
         "filename": "ash/wm/lock_state_controller_unittest.cc",
         "patchSetId": 2
