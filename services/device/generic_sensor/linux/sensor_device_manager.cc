@@ -40,8 +40,8 @@ void SensorDeviceManager::Start(Delegate* delegate) {
 
   DeviceMonitorLinux* monitor = DeviceMonitorLinux::GetInstance();
   observer_.Add(monitor);
-  monitor->Enumerate(
-      base::Bind(&SensorDeviceManager::OnDeviceAdded, base::Unretained(this)));
+  monitor->Enumerate(base::BindOnce(&SensorDeviceManager::OnDeviceAdded,
+                                    base::Unretained(this)));
 
   task_runner_->PostTask(
       FROM_HERE,

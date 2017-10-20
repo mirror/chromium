@@ -82,7 +82,7 @@ void DeviceMonitorLinux::RemoveObserver(Observer* observer) {
   monitor_watch_controller_.reset();
 }
 
-void DeviceMonitorLinux::Enumerate(const EnumerateCallback& callback) {
+void DeviceMonitorLinux::Enumerate(EnumerateCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   ScopedUdevEnumeratePtr enumerate(udev_enumerate_new(udev_.get()));
 
@@ -103,7 +103,7 @@ void DeviceMonitorLinux::Enumerate(const EnumerateCallback& callback) {
     ScopedUdevDevicePtr device(
         udev_device_new_from_syspath(udev_.get(), udev_list_entry_get_name(i)));
     if (device)
-      callback.Run(device.get());
+      std::move(callback).Run(device.get());
   }
 }
 
