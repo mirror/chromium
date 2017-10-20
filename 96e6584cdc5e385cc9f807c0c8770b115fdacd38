@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "79dbffd1_613fa5f6",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-20T19:01:51Z",
+      "side": 1,
+      "message": "I changed eventSender\u0027s API to support providing deltas for gestureScrollBegin and gestureScrollEnd.\n\nAlternatively, I could modify the test touch-scroll-customization.html which was failing due to this root cause and migrate it to using gpuBenchmarking.pointerActionSequence API (the same as the newly added test scroll-customization-property.html). But I think the fact that eventSender.gestureScrollBegin forces the deltas to 0 is not correct.\n\nThe tests should be fine now and lines 196-198 are removed.",
+      "parentUuid": "16acd499_82a4121c",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d365ccb_7eb53ac5",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 26

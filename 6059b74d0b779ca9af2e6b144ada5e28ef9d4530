@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efcfa355_44507798",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-20T19:01:51Z",
+      "side": 1,
+      "message": "Opps :P. I kind of copied code from TouchAction and did not really pay attention to method not necessarily being needed. Thanks for catching it.",
+      "parentUuid": "4d3f6b0b_120488c6",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ff0542a_72433745",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 32
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9e42a80f_f3e446b9",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-20T19:01:51Z",
+      "side": 1,
+      "message": "I guess as things are right now we can set the \u0027scroll-customization\u0027 style for unattached elements. So this should be fine.",
+      "parentUuid": "dee446ec_9b00c2b3",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed59553_96a273a5",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 32
@@ -65,6 +101,30 @@
       "writtenOn": "2017-10-06T14:15:47Z",
       "side": 1,
       "message": "Why is this needed?",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 76
+      },
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c1ba56_61fca4b4",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-20T19:01:51Z",
+      "side": 1,
+      "message": "Without this line the test fails. I believe the style is not setup properly. If we remove this line and instead load the tests after window.onload they pass. But dropping this line does not setup the style properly.",
+      "parentUuid": "3ed59553_96a273a5",
       "range": {
         "startLine": 32,
         "startChar": 19,
