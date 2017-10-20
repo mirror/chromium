@@ -176,14 +176,12 @@
     }
 
     /**
-     * @param {!{fileSystemName: string, rootURL: string, fileSystemPath: string}} fileSystem
+     * @param {?string} error
+     * @param {?{fileSystemName: string, rootURL: string, fileSystemPath: string}} fileSystem
+     * @param {string} requestId
      */
-    fileSystemAdded(fileSystem) {
-      this._dispatchOnInspectorFrontendAPI('fileSystemAdded', ['', fileSystem]);
-    }
-
-    failedToAddFileSystem() {
-      this._dispatchOnInspectorFrontendAPI('failedToAddFileSystem', []);
+    fileSystemAdded(error, fileSystem, type) {
+      this._dispatchOnInspectorFrontendAPI('fileSystemAdded', [error, fileSystem, type]);
     }
 
     /**
@@ -532,10 +530,10 @@
 
     /**
      * @override
-     * @param {string=} fileSystemPath
+     * @param {string=} type
      */
-    addFileSystem(fileSystemPath) {
-      DevToolsAPI.sendMessageToEmbedder('addFileSystem', [fileSystemPath || ''], null);
+    addFileSystem(type) {
+      DevToolsAPI.sendMessageToEmbedder('addFileSystem', [type || ''], null);
     }
 
     /**
