@@ -158,23 +158,36 @@ cr.define('extension_navigation_helper_tests', function() {
     });
 
     test(assert(TestNames.SupportedRoutes), function() {
-      function testRedirect(url, redirected) {
+      function normalizeUrl(url) {
+        const CANONICAL_PATH_REGEX = /(^\/)([\/-\w]+)(\/$)/;
+        return location.pathname.replace(CANONICAL_PATH_REGEX, '$1$2');
+      }
+
+      // If it should not redirect, leave newUrl as undefined.
+      function testIfRedirected(url, newUrl) {
         history.pushState({}, '', url);
         const testNavigationHelper = new extensions.NavigationHelper();
-        expectEquals(redirected, window.location.href !== url);
+        expectEquals(
+            normalizeUrl(window.location.href), normalizeUrl(newUrl || url));
       }
 
       loadTimeData.overrideValues({isGuest: false});
-      testRedirect('chrome://extensions/', false);
-      testRedirect('chrome://extensions/shortcuts', false);
-      testRedirect('chrome://extensions/fake-route', true);
+      testIfRedirected('chrome://extensions');
+      testIfRedirected('chrome://extensions/');
+      testIfRedirected('chrome://extensions/shortcuts');
+      testIfRedirected('chrome://extensions/shortcuts/');
+      testIfRedirected('chrome://extensions/fake-route', 'chrome://extensions');
       // Test trailing slash works.
-      testRedirect('chrome://extensions/shortcuts/', false);
+
+      // Test legacy paths
+      testIfRedirected(
+          'chrome://extensions/configureCommands',
+          'chrome://extensions/shortcuts');
 
       loadTimeData.overrideValues({isGuest: true});
-      testRedirect('chrome://extensions/', false);
-      testRedirect('chrome://extensions/shortcuts', true);
-      testRedirect('chrome://extensions/fake-route', true);
+      testIfRedirected('chrome://extensions/');
+      testIfRedirected('chrome://extensions/shortcuts', 'chrome://extensions');
+      testIfRedirected('chrome://extensions/fake-route', 'chrome://extensions');
     });
   });
 
