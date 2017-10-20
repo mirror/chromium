@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df6a867_f87ad09e",
+        "filename": "tools/perf/page_sets/system_health/system_health_story.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-20T15:27:13Z",
+      "side": 1,
+      "message": "nit: I think you should be able to do .split(\u0027:\u0027, 2) and keep the earlier syntax",
+      "revId": "c3c6a80d2c0bedfa26c3d47eb060cd3df06d468c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
