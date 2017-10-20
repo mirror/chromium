@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "772df54b_32de7111",
+        "filename": "chrome/browser/ui/views/feature_promos/bookmark_promo_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-20T01:00:29Z",
+      "side": 1,
+      "message": "I don\u0027t understand what you are saying in the first part. The triggering logic goes to the feature tracker after a user action. The tracker checks if we should show the promo. If so, this means that the tracker has to show the promo. The tracker is on the components side which is why I created the interface feature_promo_bubble.h to have this method that the views implementations will implement. This is to allow the tracker to call ShowPromoBubble. Also I wanted to call browser on ShowPromoBubble in case the user has multiple windows with the same profile open, so I want to only show the promo only for the current active browser\n\n\nI believe that it should go straight into OnWidgetDestroying which will null out the reference.",
+      "parentUuid": "8afd2bc3_59d66dc3",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "a11095ae8e07929cb349221760366c19c7f319d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9647b124_8715fc6e",
         "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "a11095ae8e07929cb349221760366c19c7f319d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8447ef92_35bc21b6",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-20T01:00:29Z",
+      "side": 1,
+      "message": "It would be false if for example:\n\n-\u003eshow promo, then close it which goes into this function and removes it from observation.\n-\u003e call CloseBubble on the NewTabPromoBubbleView",
+      "parentUuid": "9647b124_8715fc6e",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "a11095ae8e07929cb349221760366c19c7f319d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

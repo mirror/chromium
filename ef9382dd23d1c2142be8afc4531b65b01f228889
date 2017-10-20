@@ -22,6 +22,30 @@
       "revId": "ef9382dd23d1c2142be8afc4531b65b01f228889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37fcb86_5e3f618c",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-20T01:00:29Z",
+      "side": 1,
+      "message": "All in product help triggering logic for feature promos are triggered through user action. That seems to me that the browser must be active at that time. If a browser is minimized, the browser is not active nor will it show a promo.\n\nI.e. click on omnibox -\u003e show new tab promo\nclear browsing data history -\u003e show incognito window promo\n\nFeature trackers are per profile I believe, unless I misunderstood something during the implementation.",
+      "parentUuid": "fc54dee4_ce1a0c7b",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 1
+      },
+      "revId": "ef9382dd23d1c2142be8afc4531b65b01f228889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
