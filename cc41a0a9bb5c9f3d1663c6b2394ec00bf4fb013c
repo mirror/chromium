@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a1bee50_5acbe1df",
+        "filename": "chrome/browser/local_discovery/service_discovery_client_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-10-20T20:50:07Z",
+      "side": 1,
+      "message": "Why do you need this visibility change?",
+      "revId": "cc41a0a9bb5c9f3d1663c6b2394ec00bf4fb013c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
