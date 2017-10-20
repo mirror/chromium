@@ -327,8 +327,9 @@ bool OmniboxFieldTrial::InZeroSuggestMostVisitedWithoutSerpFieldTrial(
     return true;
 
   return false;
-#else
-  return false;
+#elif defined(OS_IOS)
+  // iOS defaults to MostVisitedWithoutSERP
+  return variant.empty();
 #endif
 }
 
