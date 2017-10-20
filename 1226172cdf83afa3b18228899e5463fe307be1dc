@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "a1dddab4_cc5fbb4f",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T20:29:32Z",
+      "side": 1,
+      "message": "Agree this is confusing. The ToS shown on OOBE is called Eula. And we have two other possible ToS after login (before user avatar picker):\n- ARC ToS for regular user (if OOBE opt-in is enabled);\n- Public session ToS if admin set one;\n\nThe old comment is probably referring to public session ToS.",
+      "parentUuid": "e478fc57_77ab7a39",
+      "range": {
+        "startLine": 22,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9295e7ff_dbeeb1ca",
         "filename": "components/session_manager/session_manager_types.h",
         "patchSetId": 5
