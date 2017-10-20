@@ -16,6 +16,24 @@
       "revId": "97fabdbe4aa75b032fd80853ed32d1cda530f426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8695be47_ed98a00c",
+        "filename": "third_party/WebKit/common/blob/size_getter.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-20T17:08:54Z",
+      "side": 1,
+      "message": "Hmm, it wasn\u0027t really used in storage either (at least not for anything storage specific), so it felt wrong leaving it there too. services/network seems like the best location for this file indeed, as that seems to be what it is introduced for?\n\nNot sure simplifying/moving DataElement there as well makes sense. Hopefully one day all the blob stuff will move to blink, which would also include moving DataElement to blink (as it is used extensively in blob internals). But it might indeed make sense to fork the network service parts of it to services/network, so we don\u0027t end up in this currently confusing state where some DataElement types are only valid in a network service context, and other DataElement types are only valid in the blob use case...",
+      "parentUuid": "6ac1d5af_cea94a1b",
+      "revId": "97fabdbe4aa75b032fd80853ed32d1cda530f426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
