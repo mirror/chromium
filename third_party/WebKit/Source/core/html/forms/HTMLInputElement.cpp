@@ -296,7 +296,8 @@ bool HTMLInputElement::ShouldShowFocusRingOnMouseFocus() const {
 }
 
 void HTMLInputElement::UpdateFocusAppearance(
-    SelectionBehaviorOnFocus selection_behavior) {
+    SelectionBehaviorOnFocus selection_behavior,
+    const FocusOptions& options) {
   if (IsTextField()) {
     switch (selection_behavior) {
       case SelectionBehaviorOnFocus::kReset:
@@ -312,13 +313,14 @@ void HTMLInputElement::UpdateFocusAppearance(
     // FrameSelection::revealSelection().  It doesn't scroll correctly in a
     // case of RangeSelection. crbug.com/443061.
     GetDocument().EnsurePaintLocationDataValidForNode(this);
-    if (GetLayoutObject()) {
-      GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+    if (!options.preventScroll()) {
+      if (GetLayoutObject())
+        GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+      if (GetDocument().GetFrame())
+        GetDocument().GetFrame()->Selection().RevealSelection();
     }
-    if (GetDocument().GetFrame())
-      GetDocument().GetFrame()->Selection().RevealSelection();
   } else {
-    TextControlElement::UpdateFocusAppearance(selection_behavior);
+    TextControlElement::UpdateFocusAppearance(selection_behavior, options);
   }
 }
 
