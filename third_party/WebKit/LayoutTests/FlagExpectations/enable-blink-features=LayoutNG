@@ -6638,7 +6638,7 @@ crbug.com/591099 http/tests/devtools/appcache/appcache-manifest-with-non-existin
 crbug.com/591099 http/tests/devtools/appcache/appcache-swap.html [ Crash Failure Timeout ]
 crbug.com/591099 http/tests/devtools/audits2/audits2-limited-run.js [ Crash ]
 crbug.com/591099 http/tests/devtools/audits2/audits2-successful-run.js [ Crash Timeout ]
-crbug.com/591099 http/tests/devtools/bindings/livelocation-main-frame-navigated.html [ Failure Timeout ]
+crbug.com/591099 http/tests/devtools/bindings/livelocation-main-frame-navigated.js [ Failure Timeout ]
 crbug.com/591099 http/tests/devtools/components/viewport-datagrid.html [ Failure ]
 crbug.com/591099 http/tests/devtools/console/command-line-api.js [ Crash ]
 crbug.com/591099 http/tests/devtools/console/console-format.html [ Crash Failure ]
