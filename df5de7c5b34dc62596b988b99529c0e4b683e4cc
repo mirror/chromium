@@ -16,6 +16,24 @@
       "revId": "df5de7c5b34dc62596b988b99529c0e4b683e4cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd41cad7_f37d14bf",
+        "filename": "components/password_manager/core/browser/resources/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T11:07:43Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve changed here. I\u0027ll do this in another CL for all other OWNER files.",
+      "parentUuid": "fa28ab2e_c1bf996a",
+      "revId": "df5de7c5b34dc62596b988b99529c0e4b683e4cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

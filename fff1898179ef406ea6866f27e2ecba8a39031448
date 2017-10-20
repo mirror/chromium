@@ -16,6 +16,24 @@
       "revId": "fff1898179ef406ea6866f27e2ecba8a39031448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10658be4_5213547c",
+        "filename": "components/password_manager/core/browser/resources/password_manager_internals.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-20T11:07:43Z",
+      "side": 0,
+      "message": "For some reasons components/resources doesn\u0027t contain js/html/css resouces from components.\nI\u0027ve done in the same way as for signin (https://cs.chromium.org/chromium/src/components/signin/core/browser/resources/signin_internals.js) and sync internals (https://cs.chromium.org/chromium/src/components/sync/driver/resources/sync_index.js) resources.\n\nI\u0027m ok with either of these options. Should I move to components/resources ?",
+      "parentUuid": "0e29e47b_a56d46d6",
+      "revId": "fff1898179ef406ea6866f27e2ecba8a39031448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
