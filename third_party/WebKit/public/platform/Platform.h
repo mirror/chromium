@@ -436,6 +436,13 @@ class BLINK_PLATFORM_EXPORT Platform {
   // WebFrameClient::SuddenTerminationDisablerChanged.
   virtual void SuddenTerminationChanged(bool enabled) {}
 
+  // Increase/decrease the process refcount. The process won't shut itself
+  // down until this refcount reaches 0. The browser might still shut down the
+  // renderer through fast shutdown. See SuddenTerminationChanged to disable
+  // that.
+  virtual void AddRefProcess() {}
+  virtual void ReleaseRefProcess() {}
+
   // System --------------------------------------------------------------
 
   // Returns a value such as "en-US".
