@@ -16,6 +16,24 @@
       "revId": "dcfc3cda5ff48d4bc216e2ab11b5021509a51ed4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225981fd_29f72140",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-10-20T17:34:44Z",
+      "side": 0,
+      "message": "Sure, but we don\u0027t have any coverage on iOS10 on CQ or main waterfall right now.  We can fix it by changing some iOS11 configs to iOS10 then.",
+      "parentUuid": "6252ccd8_92c6f545",
+      "revId": "dcfc3cda5ff48d4bc216e2ab11b5021509a51ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
