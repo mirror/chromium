@@ -1,0 +1,337 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0463173_e4342e32",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "nit: The\n\n(i.e. \"The X file requires update\", or just \"X requires update\")",
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ea36e5_edfb9602",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "annotation*s*",
+      "range": {
+        "startLine": 153,
+        "startChar": 55,
+        "endLine": 153,
+        "endChar": 56
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710cc6e6_8c5ab760",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "How?",
+      "range": {
+        "startLine": 154,
+        "startChar": 38,
+        "endLine": 154,
+        "endChar": 68
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d19beb_a960824b",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "typo: -ed",
+      "range": {
+        "startLine": 154,
+        "startChar": 34,
+        "endLine": 154,
+        "endChar": 35
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554e137b_27f9a4d4",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "typo: do",
+      "range": {
+        "startLine": 156,
+        "startChar": 35,
+        "endLine": 156,
+        "endChar": 36
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327864f0_693a19d0",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "So just errors?",
+      "range": {
+        "startLine": 409,
+        "startChar": 21,
+        "endLine": 409,
+        "endChar": 29
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26324c7_f106c0a1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "This is pretty fragile (we don\u0027t allow extra spaces, line breaks, single quotes etc.\n\nPlease add at least a TODO to use a real XML parser.",
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76d3dc5_6861dde8",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "an \u0027id\u0027 tag in the XML line",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6c5c41_684d3c7e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "for the \u0027id\u0027 tag in the XML line",
+      "range": {
+        "startLine": 48,
+        "startChar": 52,
+        "endLine": 48,
+        "endChar": 76
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348ab41b_e517f7b1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "Iterates and adds\nOR\nIterate and add\n\n(Preferably use imperative for code comments, and indicative for method descriptions)",
+      "range": {
+        "startLine": 144,
+        "startChar": 57,
+        "endLine": 144,
+        "endChar": 58
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ebc073_e25399b2",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "typo: computation",
+      "range": {
+        "startLine": 148,
+        "startChar": 7,
+        "endLine": 148,
+        "endChar": 16
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856e276f_9633985e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "Please use std::remove_if instead of doing this manually.",
+      "range": {
+        "startLine": 309,
+        "startChar": 2,
+        "endLine": 309,
+        "endChar": 64
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbe62b6_4cc1e68a",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "Is \"item\" necessary here? We don\u0027t look for it in GetAnnotationID().",
+      "range": {
+        "startLine": 310,
+        "startChar": 27,
+        "endLine": 310,
+        "endChar": 31
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0c3090_6288d541",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "Since we have old_id and new_id below, I\u0027d suggest just spelling out \"index\" rather than \"idx\" for it to be more readable.",
+      "range": {
+        "startLine": 325,
+        "startChar": 13,
+        "endLine": 325,
+        "endChar": 16
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9c55de_800c7762",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-20T15:50:58Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 361,
+        "endChar": 24
+      },
+      "revId": "47ec63ff644c5c44b9895bb05038bac2a390f465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
