@@ -16,6 +16,24 @@
       "revId": "6fb5b1b1ae61a301b53ed3b2db64099f134fe059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d7bb0a_d2d07635",
+        "filename": "pdf/pdfium/fuzzers/dicts/pdf_formcalc.dict",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-20T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "754e0566_d486f3ed",
+      "revId": "6fb5b1b1ae61a301b53ed3b2db64099f134fe059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
