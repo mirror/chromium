@@ -15,6 +15,7 @@ typedef int int32_t;
 typedef unsigned int uint32_t;
 typedef __int64 int64_t;
 typedef unsigned __int64 uint64_t;
+// These are #undefed at the end of the file
 #define ntohl(x) _byteswap_ulong (x)
 #define ntohs(x) _byteswap_ushort (x)
 #define htonl(x) _byteswap_ulong (x)
@@ -190,5 +191,13 @@ class OTSContext {
 };
 
 }  // namespace ots
+
+#if defined(_WIN32)
+// Avoid polluting the global namespace
+#undef ntohl
+#undef ntohs
+#undef htonl
+#undef htons
+#endif
 
 #endif  // OPENTYPE_SANITISER_H_
