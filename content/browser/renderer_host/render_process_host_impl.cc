@@ -172,6 +172,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
+#include "device/gamepad/gamepad_haptics_listener.h"
 #include "device/gamepad/gamepad_monitor.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gpu_switches.h"
@@ -1855,6 +1856,8 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(base::Bind(&hyphenation::HyphenationImpl::Create),
                          hyphenation::HyphenationImpl::GetTaskRunner());
 #endif
+
+  registry->AddInterface(base::Bind(&device::GamepadHapticsListener::Create));
 
   registry->AddInterface(base::Bind(&device::GamepadMonitor::Create));
 

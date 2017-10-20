@@ -59,6 +59,139 @@ bool StructTraits<device::mojom::GamepadButtonDataView, device::GamepadButton>::
 }
 
 // static
+device::mojom::GamepadHapticActuatorType
+EnumTraits<device::mojom::GamepadHapticActuatorType,
+           device::GamepadHapticActuatorType>::
+    ToMojom(device::GamepadHapticActuatorType input) {
+  switch (input) {
+    case device::GamepadHapticActuatorType::kVibration:
+      return device::mojom::GamepadHapticActuatorType::
+          GamepadHapticActuatorTypeVibration;
+    case device::GamepadHapticActuatorType::kDualRumble:
+      return device::mojom::GamepadHapticActuatorType::
+          GamepadHapticActuatorTypeDualRumble;
+  }
+
+  NOTREACHED();
+  return device::mojom::GamepadHapticActuatorType::
+      GamepadHapticActuatorTypeVibration;
+}
+
+// static
+bool EnumTraits<device::mojom::GamepadHapticActuatorType,
+                device::GamepadHapticActuatorType>::
+    FromMojom(device::mojom::GamepadHapticActuatorType input,
+              device::GamepadHapticActuatorType* output) {
+  switch (input) {
+    case device::mojom::GamepadHapticActuatorType::
+        GamepadHapticActuatorTypeVibration:
+      *output = device::GamepadHapticActuatorType::kVibration;
+      return true;
+    case device::mojom::GamepadHapticActuatorType::
+        GamepadHapticActuatorTypeDualRumble:
+      *output = device::GamepadHapticActuatorType::kDualRumble;
+      return true;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
+// static
+device::mojom::GamepadHapticEffectType EnumTraits<
+    device::mojom::GamepadHapticEffectType,
+    device::GamepadHapticEffectType>::ToMojom(device::GamepadHapticEffectType
+                                                  input) {
+  switch (input) {
+    case device::GamepadHapticEffectType::kDualRumble:
+      return device::mojom::GamepadHapticEffectType::
+          GamepadHapticEffectTypeDualRumble;
+  }
+
+  NOTREACHED();
+  return device::mojom::GamepadHapticEffectType::
+      GamepadHapticEffectTypeDualRumble;
+}
+
+// static
+bool EnumTraits<device::mojom::GamepadHapticEffectType,
+                device::GamepadHapticEffectType>::
+    FromMojom(device::mojom::GamepadHapticEffectType input,
+              device::GamepadHapticEffectType* output) {
+  switch (input) {
+    case device::mojom::GamepadHapticEffectType::
+        GamepadHapticEffectTypeDualRumble:
+      *output = device::GamepadHapticEffectType::kDualRumble;
+      return true;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
+// static
+device::mojom::GamepadHapticsResult EnumTraits<
+    device::mojom::GamepadHapticsResult,
+    device::GamepadHapticsResult>::ToMojom(device::GamepadHapticsResult input) {
+  switch (input) {
+    case device::GamepadHapticsResult::kError:
+      return device::mojom::GamepadHapticsResult::GamepadHapticsResultError;
+    case device::GamepadHapticsResult::kComplete:
+      return device::mojom::GamepadHapticsResult::GamepadHapticsResultComplete;
+    case device::GamepadHapticsResult::kPreempted:
+      return device::mojom::GamepadHapticsResult::GamepadHapticsResultPreempted;
+    case device::GamepadHapticsResult::kInvalidParameter:
+      return device::mojom::GamepadHapticsResult::
+          GamepadHapticsResultInvalidParameter;
+    case device::GamepadHapticsResult::kNotSupported:
+      return device::mojom::GamepadHapticsResult::
+          GamepadHapticsResultNotSupported;
+  }
+
+  NOTREACHED();
+  return device::mojom::GamepadHapticsResult::GamepadHapticsResultError;
+}
+
+// static
+bool EnumTraits<device::mojom::GamepadHapticsResult,
+                device::GamepadHapticsResult>::
+    FromMojom(device::mojom::GamepadHapticsResult input,
+              device::GamepadHapticsResult* output) {
+  switch (input) {
+    case device::mojom::GamepadHapticsResult::GamepadHapticsResultError:
+      *output = device::GamepadHapticsResult::kError;
+      return true;
+    case device::mojom::GamepadHapticsResult::GamepadHapticsResultComplete:
+      *output = device::GamepadHapticsResult::kComplete;
+      return true;
+    case device::mojom::GamepadHapticsResult::GamepadHapticsResultPreempted:
+      *output = device::GamepadHapticsResult::kPreempted;
+      return true;
+    case device::mojom::GamepadHapticsResult::
+        GamepadHapticsResultInvalidParameter:
+      *output = device::GamepadHapticsResult::kInvalidParameter;
+      return true;
+    case device::mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported:
+      *output = device::GamepadHapticsResult::kNotSupported;
+      return true;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
+// static
+bool StructTraits<device::mojom::GamepadHapticActuatorDataView,
+                  device::GamepadHapticActuator>::
+    Read(device::mojom::GamepadHapticActuatorDataView data,
+         device::GamepadHapticActuator* out) {
+  if (!data.ReadType(&out->type)) {
+    return false;
+  }
+  return true;
+}
+
+// static
 void StructTraits<device::mojom::GamepadPoseDataView,
                   device::GamepadPose>::SetToNull(device::GamepadPose* out) {
   memset(out, 0, sizeof(device::GamepadPose));
@@ -184,6 +317,10 @@ bool StructTraits<device::mojom::GamepadDataView, device::Gamepad>::Read(
   // static_cast is safe when "data.ReadButtons(&buttons)" above returns true.
   out->buttons_length = static_cast<unsigned>(buttons.size());
 
+  if (!data.ReadVibrationActuator(&out->vibration_actuator)) {
+    return false;
+  }
+
   memset(out->mapping, 0, sizeof(out->mapping));
   base::span<uint16_t> mapping(reinterpret_cast<uint16_t*>(out->mapping),
                                device::Gamepad::kMappingLengthCap);
@@ -202,6 +339,19 @@ bool StructTraits<device::mojom::GamepadDataView, device::Gamepad>::Read(
   out->hand = hand;
 
   out->display_id = data.display_id();
+
+  return true;
+}
+
+// static
+bool StructTraits<device::mojom::GamepadEffectParametersDataView,
+                  device::GamepadEffectParameters>::
+    Read(device::mojom::GamepadEffectParametersDataView data,
+         device::GamepadEffectParameters* out) {
+  out->duration = data.duration();
+  out->start_delay = data.start_delay();
+  out->strong_magnitude = data.strong_magnitude();
+  out->weak_magnitude = data.weak_magnitude();
 
   return true;
 }
