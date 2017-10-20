@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4699039c_7c63b9e8",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_terms_of_service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T23:31:19Z",
+      "side": 1,
+      "message": "Worth adding a comment saying that this is loaded as a data URL in a \u003cwebview\u003e to ensure the content from the web does not load within the privileged WebUI process.",
+      "revId": "64cdd5bdfb3fe3abecd42625491a22edb657283d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
