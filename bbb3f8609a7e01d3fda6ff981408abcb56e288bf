@@ -16,6 +16,24 @@
       "revId": "bbb3f8609a7e01d3fda6ff981408abcb56e288bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361db760_25e0cfeb",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-20T18:55:10Z",
+      "side": 1,
+      "message": "Formatter insists on this. Switched the operands to work around it.",
+      "parentUuid": "40894ca5_1522b886",
+      "revId": "bbb3f8609a7e01d3fda6ff981408abcb56e288bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
