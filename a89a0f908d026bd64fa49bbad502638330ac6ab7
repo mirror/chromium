@@ -46,6 +46,30 @@
       "revId": "a89a0f908d026bd64fa49bbad502638330ac6ab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8084d9e7_d9e41ae9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-20T15:13:50Z",
+      "side": 1,
+      "message": "\u003e These views are part of the XML, so they\u0027re inflated automatically and set in #onFinishInflate(). At that point, we could probably check whether FeatureUtilities.isChromeHome() is true or false and remove the unneeded views. Or we could remove the views from XML and programatically add them or inflate a ViewStub if the \u0027G\u0027 is used.\n\nYes, that is what I was thinking, so we would never instantiate the views at all (which creates some memory pressure / unnecessary churn even if we drop them immediately).\n\n\u003e That said, we\u0027re already doing some behavior modification/view removing in this block, and it\u0027s rather simple, so I think it fits well here. Eventually (hopefully soon...) we will unfork our UI and we\u0027ll be able to clean up the XML and code substantially.\n\nYou mean enable Chrome Home unconditionally on phones? That could take a bit...",
+      "parentUuid": "0be5bda7_d1a5a286",
+      "range": {
+        "startLine": 381,
+        "startChar": 8,
+        "endLine": 381,
+        "endChar": 54
+      },
+      "revId": "a89a0f908d026bd64fa49bbad502638330ac6ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
