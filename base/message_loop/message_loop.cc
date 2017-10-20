@@ -238,11 +238,22 @@ void MessageLoop::SetNestableTasksAllowed(bool allowed) {
     // loop that does not go through RunLoop::Run().
     pump_->ScheduleWork();
   }
-  nestable_tasks_allowed_ = allowed;
+
+  if (allowed)
+    ++num_tasks_allowed_on_stack_;
+  else
+    --num_tasks_allowed_on_stack_;
+  DCHECK_GE(num_tasks_allowed_on_stack_, 0);
 }
 
 bool MessageLoop::NestableTasksAllowed() const {
-  return nestable_tasks_allowed_ || run_loop_client_->ProcessingTasksAllowed();
+  // One nestable task is allowed per nested Run(true) call. In order to support
+  // calling NestableTasksAllowed() prior to the first Run() call. Assume the
+  // first call is allowed to process application tasks (i.e. that
+  // |num_tasks_on_stack_ == 0| implies NestableTasksAllowed()) -- this
+  // assumption is verified by a DCHECK in MessageLoop::Run().
+  return num_tasks_on_stack_ < num_tasks_allowed_on_stack_ ||
+         num_tasks_on_stack_ == 0;
 }
 
 // TODO(gab): Migrate TaskObservers to RunLoop as part of separating concerns
@@ -277,17 +288,11 @@ std::unique_ptr<MessageLoop> MessageLoop::CreateUnbound(
 
 MessageLoop::MessageLoop(Type type, MessagePumpFactoryCallback pump_factory)
     : type_(type),
-#if defined(OS_WIN)
-      in_high_res_mode_(false),
-#endif
-      nestable_tasks_allowed_(true),
       pump_factory_(std::move(pump_factory)),
-      current_pending_task_(nullptr),
       incoming_task_queue_(new internal::IncomingTaskQueue(this)),
       unbound_task_runner_(
           new internal::MessageLoopTaskRunner(incoming_task_queue_)),
-      task_runner_(unbound_task_runner_),
-      thread_id_(kInvalidThreadId) {
+      task_runner_(unbound_task_runner_) {
   // If type is TYPE_CUSTOM non-null pump_factory must be given.
   DCHECK(type_ != TYPE_CUSTOM || !pump_factory_.is_null());
 }
@@ -339,8 +344,13 @@ void MessageLoop::ClearTaskRunnerForTesting() {
   thread_task_runner_handle_.reset();
 }
 
-void MessageLoop::Run() {
+void MessageLoop::Run(bool application_tasks_allowed) {
   DCHECK_EQ(this, current());
+  // NestableTasksAllowed() assumes the first Run() call on the stack is always
+  // allowed to process application tasks.
+  DCHECK(application_tasks_allowed || num_tasks_allowed_on_stack_ > 0);
+  if (application_tasks_allowed)
+    ++num_tasks_allowed_on_stack_;
   pump_->Run(this);
 }
 
@@ -381,9 +391,7 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
 void MessageLoop::RunTask(PendingTask* pending_task) {
   DCHECK(NestableTasksAllowed());
   current_pending_task_ = pending_task;
-
-  // Execute the task and assume the worst: It is probably not reentrant.
-  nestable_tasks_allowed_ = false;
+  ++num_tasks_on_stack_;
 
   TRACE_TASK_EXECUTION("MessageLoop::RunTask", *pending_task);
 
@@ -393,9 +401,8 @@ void MessageLoop::RunTask(PendingTask* pending_task) {
   for (auto& observer : task_observers_)
     observer.DidProcessTask(*pending_task);
 
-  nestable_tasks_allowed_ = true;
-
   current_pending_task_ = nullptr;
+  --num_tasks_on_stack_;
 }
 
 bool MessageLoop::DeferOrRunPendingTask(PendingTask pending_task) {
