@@ -519,6 +519,10 @@ CommonNavigationParams MakeCommonNavigationParams(
                                      info.source_location.column_number);
   }
 
+  DCHECK(!info.url_request.RequestorOrigin().IsNull());
+  base::Optional<url::Origin> initiator_origin =
+      base::Optional<url::Origin>(info.url_request.RequestorOrigin());
+
   CSPDisposition should_check_main_world_csp =
       info.should_check_main_world_content_security_policy ==
               blink::kWebContentSecurityPolicyDispositionCheck
@@ -535,7 +539,7 @@ CommonNavigationParams MakeCommonNavigationParams(
       static_cast<PreviewsState>(info.url_request.GetPreviewsState()),
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
       GetRequestBodyForWebURLRequest(info.url_request), source_location,
-      should_check_main_world_csp);
+      initiator_origin, should_check_main_world_csp);
 }
 
 WebFrameLoadType ReloadFrameLoadTypeFor(
@@ -3572,7 +3576,6 @@ void RenderFrameImpl::DidStartProvisionalLoad(
     info.source_location = pending_navigation_info_->source_location;
 
     pending_navigation_info_.reset(nullptr);
-
     BeginNavigation(info);
   }
 
@@ -6152,6 +6155,9 @@ void RenderFrameImpl::NavigateInternal(
     }
   }
 
+  if (common_params.initiator_origin)
+    request.SetRequestorOrigin(common_params.initiator_origin.value());
+
   // Used to determine whether this frame is actually loading a request as part
   // of a history navigation.
   bool has_history_navigation_in_frame = false;
@@ -6468,7 +6474,8 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
     request.SetSiteForCookies(request.Url());
   else
     request.SetSiteForCookies(frame_document.SiteForCookies());
-  request.SetRequestorOrigin(frame_document.GetSecurityOrigin());
+  // if (request.RequestorOrigin().IsNull())
+  // request.SetRequestorOrigin(frame_document.GetSecurityOrigin());
 
   // Note: At this stage, the goal is to apply all the modifications the
   // renderer wants to make to the request, and then send it to the browser, so
@@ -6510,10 +6517,6 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
          GetRequestContextFrameTypeForWebURLRequest(info.url_request) ==
              REQUEST_CONTEXT_FRAME_TYPE_NESTED);
 
-  DCHECK(!info.url_request.RequestorOrigin().IsNull());
-  base::Optional<url::Origin> initiator_origin =
-      base::Optional<url::Origin>(info.url_request.RequestorOrigin());
-
   int load_flags = GetLoadFlagsForWebURLRequest(info.url_request);
 
   // Requests initiated via devtools can have caching disabled.
@@ -6535,7 +6538,7 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           blink::WebURLRequest::ServiceWorkerMode::kAll,
       GetRequestContextTypeForWebURLRequest(info.url_request),
       GetMixedContentContextTypeForWebURLRequest(info.url_request),
-      is_form_submission, initiator_origin);
+      is_form_submission);
 
   if (!info.form.IsNull()) {
     WebSearchableFormData web_searchable_form_data(info.form);

@@ -252,7 +252,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
 
   CommonNavigationParams common_params = entry.ConstructCommonNavigationParams(
       frame_entry, request_body, dest_url, dest_referrer, navigation_type,
-      previews_state, navigation_start);
+      previews_state, navigation_start, initiator);
 
   RequestNavigationParams request_params =
       entry.ConstructRequestNavigationParams(
@@ -273,7 +273,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
                             false,  // skip_service_worker
                             REQUEST_CONTEXT_TYPE_LOCATION,
                             blink::WebMixedContentContextType::kBlockable,
-                            is_form_submission, initiator),
+                            is_form_submission),
       request_params, browser_initiated,
       false,  // from_begin_navigation
       &frame_entry, &entry));

@@ -67,10 +67,15 @@ class CORE_EXPORT NavigationScheduler final
 
   void ScheduleRedirect(double delay, const KURL&, Document::HttpRefreshType);
   void ScheduleFrameNavigation(Document*,
+                               scoped_refptr<SecurityOrigin> requestor_origin,
                                const KURL&,
                                bool replaces_current_item = true);
-  void SchedulePageBlock(Document*, int reason);
-  void ScheduleFormSubmission(Document*, FormSubmission*);
+  void SchedulePageBlock(Document*,
+                         scoped_refptr<SecurityOrigin> requestor_origin,
+                         int reason);
+  void ScheduleFormSubmission(Document*,
+                              scoped_refptr<SecurityOrigin> requestor_origin,
+                              FormSubmission*);
   void ScheduleReload();
 
   void StartTimer();

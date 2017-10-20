@@ -359,6 +359,7 @@ void HTMLAnchorElement::HandleClick(Event* event) {
   ResourceRequest request(completed_url);
   request.SetUIStartTime(
       (event->PlatformTimeStamp() - TimeTicks()).InSecondsF());
+  request.SetRequestorOrigin(SecurityOrigin::Create(GetDocument().Url()));
   request.SetInputPerfMetricReportPolicy(
       InputToLoadPerfMetricReportPolicy::kReportLink);
 
@@ -376,7 +377,6 @@ void HTMLAnchorElement::HandleClick(Event* event) {
 
   if (hasAttribute(downloadAttr)) {
     request.SetRequestContext(WebURLRequest::kRequestContextDownload);
-    request.SetRequestorOrigin(SecurityOrigin::Create(GetDocument().Url()));
     frame->Client()->DownloadURL(request, FastGetAttribute(downloadAttr));
   } else {
     request.SetRequestContext(WebURLRequest::kRequestContextHyperlink);

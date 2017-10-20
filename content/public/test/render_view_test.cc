@@ -528,6 +528,7 @@ void RenderViewTest::Reload(const GURL& url) {
       FrameMsg_UILoadMetricsReportType::NO_REPORT, GURL(), GURL(),
       PREVIEWS_UNSPECIFIED, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(),
+      base::Optional<url::Origin>() /* initiator_origin */
       CSPDisposition::CHECK /* should_check_main_world_csp */);
   RenderViewImpl* impl = static_cast<RenderViewImpl*>(view_);
   TestRenderFrame* frame =

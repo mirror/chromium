@@ -53,6 +53,7 @@ CommonNavigationParams::CommonNavigationParams(
     std::string method,
     const scoped_refptr<ResourceRequestBody>& post_data,
     base::Optional<SourceLocation> source_location,
+    base::Optional<url::Origin> initiator_origin,
     CSPDisposition should_check_main_world_csp)
     : url(url),
       referrer(referrer),
@@ -69,6 +70,7 @@ CommonNavigationParams::CommonNavigationParams(
       method(method),
       post_data(post_data),
       source_location(source_location),
+      initiator_origin(initiator_origin),
       should_check_main_world_csp(should_check_main_world_csp) {
   // |method != "POST"| should imply absence of |post_data|.
   if (method != "POST" && post_data) {
@@ -98,16 +100,14 @@ BeginNavigationParams::BeginNavigationParams(
     bool skip_service_worker,
     RequestContextType request_context_type,
     blink::WebMixedContentContextType mixed_content_context_type,
-    bool is_form_submission,
-    const base::Optional<url::Origin>& initiator_origin)
+    bool is_form_submission)
     : headers(headers),
       load_flags(load_flags),
       has_user_gesture(has_user_gesture),
       skip_service_worker(skip_service_worker),
       request_context_type(request_context_type),
       mixed_content_context_type(mixed_content_context_type),
-      is_form_submission(is_form_submission),
-      initiator_origin(initiator_origin) {}
+      is_form_submission(is_form_submission) {}
 
 BeginNavigationParams::BeginNavigationParams(
     const BeginNavigationParams& other) = default;

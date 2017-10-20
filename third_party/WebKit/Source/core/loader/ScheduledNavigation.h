@@ -14,6 +14,7 @@ class Document;
 class LocalFrame;
 class UserGestureIndicator;
 class UserGestureToken;
+class SecurityOrigin;
 
 class ScheduledNavigation
     : public GarbageCollectedFinalized<ScheduledNavigation> {
@@ -33,6 +34,7 @@ class ScheduledNavigation
   ScheduledNavigation(Reason,
                       double delay,
                       Document* origin_document,
+                      scoped_refptr<SecurityOrigin> requestor_origin,
                       bool replaces_current_item,
                       bool is_location_change);
   virtual ~ScheduledNavigation();
@@ -56,11 +58,13 @@ class ScheduledNavigation
 
  protected:
   void ClearUserGesture() { user_gesture_token_ = nullptr; }
+  scoped_refptr<SecurityOrigin> RequestorOrigin() const;
 
  private:
   Reason reason_;
   double delay_;
   Member<Document> origin_document_;
+  scoped_refptr<SecurityOrigin> requestor_origin_;
   bool replaces_current_item_;
   bool is_location_change_;
   scoped_refptr<UserGestureToken> user_gesture_token_;
