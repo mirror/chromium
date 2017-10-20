@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "components/machine_intelligence/generic_logistic_regression_inference.h"
+#include "base/memory/ptr_util.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -47,7 +48,8 @@ class GenericLogisticRegressionInferenceTest : public testing::Test {
 };
 
 TEST_F(GenericLogisticRegressionInferenceTest, BaseTest) {
-  auto predictor = GenericLogisticRegressionInference(GetProto());
+  auto predictor = base::MakeUnique<GenericLogisticRegressionInference>();
+  predictor->SetProtoForTesting(GetProto());
 
   RankerExample example;
   auto& features = *example.mutable_features();
@@ -56,12 +58,12 @@ TEST_F(GenericLogisticRegressionInferenceTest, BaseTest) {
   features[scalar3_name_].set_float_value(0.666f);
   features[one_hot_name_].set_string_value(one_hot_elem1_name_);
 
-  float score = predictor.PredictScore(example);
+  float score = predictor->PredictScore(example);
   float expected_score =
       Sigmoid(bias_ + 1.0f * scalar1_weight_ + 42.0f * scalar2_weight_ +
               0.666f * scalar3_weight_ + elem1_weight_);
   EXPECT_NEAR(expected_score, score, epsilon_);
-  EXPECT_EQ(expected_score >= threshold_, predictor.PredictDecision(example));
+  EXPECT_EQ(expected_score >= threshold_, predictor->PredictDecision(example));
 }
 
 TEST_F(GenericLogisticRegressionInferenceTest, UnknownElement) {
@@ -69,8 +71,9 @@ TEST_F(GenericLogisticRegressionInferenceTest, UnknownElement) {
   auto& features = *example.mutable_features();
   features[one_hot_name_].set_string_value("Unknown element");
 
-  auto predictor = GenericLogisticRegressionInference(GetProto());
-  float score = predictor.PredictScore(example);
+  auto predictor = base::MakeUnique<GenericLogisticRegressionInference>();
+  predictor->SetProtoForTesting(GetProto());
+  float score = predictor->PredictScore(example);
   float expected_score = Sigmoid(bias_ + one_hot_default_weight_);
   EXPECT_NEAR(expected_score, score, epsilon_);
 }
@@ -78,8 +81,9 @@ TEST_F(GenericLogisticRegressionInferenceTest, UnknownElement) {
 TEST_F(GenericLogisticRegressionInferenceTest, MissingFeatures) {
   RankerExample example;
 
-  auto predictor = GenericLogisticRegressionInference(GetProto());
-  float score = predictor.PredictScore(example);
+  auto predictor = base::MakeUnique<GenericLogisticRegressionInference>();
+  predictor->SetProtoForTesting(GetProto());
+  float score = predictor->PredictScore(example);
   // Missing features will use default weights for one_hot features and drop
   // scalar features.
   float expected_score = Sigmoid(bias_ + one_hot_default_weight_);
@@ -96,8 +100,9 @@ TEST_F(GenericLogisticRegressionInferenceTest, UnknownFeatures) {
   // All features except this one will be ignored.
   features[one_hot_name_].set_string_value(one_hot_elem2_name_);
 
-  auto predictor = GenericLogisticRegressionInference(GetProto());
-  float score = predictor.PredictScore(example);
+  auto predictor = base::MakeUnique<GenericLogisticRegressionInference>();
+  predictor->SetProtoForTesting(GetProto());
+  float score = predictor->PredictScore(example);
   // Unknown features will be ignored.
   float expected_score = Sigmoid(bias_ + elem2_weight_);
   EXPECT_NEAR(expected_score, score, epsilon_);
@@ -110,7 +115,9 @@ TEST_F(GenericLogisticRegressionInferenceTest, Threshold) {
   // decision is as expected.
 
   auto proto = GetProto();
-  auto threshold_calculator = GenericLogisticRegressionInference(proto);
+  auto threshold_calculator =
+      base::MakeUnique<GenericLogisticRegressionInference>();
+  threshold_calculator->SetProtoForTesting(proto);
 
   RankerExample example;
   auto& features = *example.mutable_features();
@@ -118,36 +125,38 @@ TEST_F(GenericLogisticRegressionInferenceTest, Threshold) {
   features[scalar2_name_].set_int32_value(2);
   features[one_hot_name_].set_string_value(one_hot_elem1_name_);
 
-  float threshold = threshold_calculator.PredictScore(example);
+  float threshold = threshold_calculator->PredictScore(example);
   proto.set_threshold(threshold);
 
   // Setting the model with the calculated threshold.
-  auto predictor = GenericLogisticRegressionInference(proto);
+  auto predictor = base::MakeUnique<GenericLogisticRegressionInference>();
+  predictor->SetProtoForTesting(proto);
 
   // Adding small positive contribution from scalar3 to tip the decision the
   // positive side of the threshold.
   features[scalar3_name_].set_float_value(0.01f);
-  float score = predictor.PredictScore(example);
+  float score = predictor->PredictScore(example);
   // The score is now greater than, but still near the threshold. The
   // decision should be positive.
   EXPECT_LT(threshold, score);
   EXPECT_NEAR(threshold, score, epsilon_);
-  EXPECT_TRUE(predictor.PredictDecision(example));
+  EXPECT_TRUE(predictor->PredictDecision(example));
 
   // A small negative contribution from scalar3 should tip the decision the
   // other way.
   features[scalar3_name_].set_float_value(-0.01f);
-  score = predictor.PredictScore(example);
+  score = predictor->PredictScore(example);
   EXPECT_GT(threshold, score);
   EXPECT_NEAR(threshold, score, epsilon_);
-  EXPECT_FALSE(predictor.PredictDecision(example));
+  EXPECT_FALSE(predictor->PredictDecision(example));
 }
 
 TEST_F(GenericLogisticRegressionInferenceTest, NoThreshold) {
   auto proto = GetProto();
   // When no threshold is specified, we use the default of 0.5.
   proto.clear_threshold();
-  auto predictor = GenericLogisticRegressionInference(proto);
+  auto predictor = base::MakeUnique<GenericLogisticRegressionInference>();
+  predictor->SetProtoForTesting(proto);
 
   RankerExample example;
   auto& features = *example.mutable_features();
@@ -155,26 +164,26 @@ TEST_F(GenericLogisticRegressionInferenceTest, NoThreshold) {
   // to be zero, and the post-sigmoid score to be 0.5 if this is the only active
   // feature.
   features[one_hot_name_].set_string_value(one_hot_elem3_name_);
-  float score = predictor.PredictScore(example);
+  float score = predictor->PredictScore(example);
   EXPECT_NEAR(0.5f, score, epsilon_);
 
   // Adding small contribution from scalar3 to tip the decision on one side or
   // the other of the threshold.
   features[scalar3_name_].set_float_value(0.01f);
-  score = predictor.PredictScore(example);
+  score = predictor->PredictScore(example);
   // The score is now greater than, but still near 0.5. The decision should be
   // positive.
   EXPECT_LT(0.5f, score);
   EXPECT_NEAR(0.5f, score, epsilon_);
-  EXPECT_TRUE(predictor.PredictDecision(example));
+  EXPECT_TRUE(predictor->PredictDecision(example));
 
   features[scalar3_name_].set_float_value(-0.01f);
-  score = predictor.PredictScore(example);
+  score = predictor->PredictScore(example);
   // The score is now lower than, but near 0.5. The decision should be
   // negative.
   EXPECT_GT(0.5f, score);
   EXPECT_NEAR(0.5f, score, epsilon_);
-  EXPECT_FALSE(predictor.PredictDecision(example));
+  EXPECT_FALSE(predictor->PredictDecision(example));
 }
 
 }  // namespace machine_intelligence

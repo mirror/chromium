@@ -4,6 +4,10 @@
 
 static_library("machine_intelligence") {
   sources = [
+    "assist_ranker_service.h",
+    "assist_ranker_service_impl.cc",
+    "assist_ranker_service_impl.h",
+    "binary_classifer.h",
     "generic_logistic_regression_inference.cc",
     "generic_logistic_regression_inference.h",
     "ranker_example_util.cc",
@@ -12,6 +16,8 @@ static_library("machine_intelligence") {
     "ranker_model.h",
     "ranker_model_loader.cc",
     "ranker_model_loader.h",
+    "ranker_predictor.cc",
+    "ranker_predictor.h",
     "ranker_url_fetcher.cc",
     "ranker_url_fetcher.h",
   ]

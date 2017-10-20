@@ -5,7 +5,9 @@
 #include "components/machine_intelligence/generic_logistic_regression_inference.h"
 
 #include "base/logging.h"
+#include "components/machine_intelligence/proto/ranker_model.pb.h"
 #include "components/machine_intelligence/ranker_example_util.h"
+#include "components/machine_intelligence/ranker_model.h"
 
 namespace machine_intelligence {
 
@@ -15,9 +17,19 @@ float Sigmoid(float x) {
   return 1.0f / (1.0f + exp(-x));
 }
 
-GenericLogisticRegressionInference::GenericLogisticRegressionInference(
-    GenericLogisticRegressionModel model_proto)
-    : proto_(std::move(model_proto)) {}
+GenericLogisticRegressionInference::GenericLogisticRegressionInference() {}
+
+void GenericLogisticRegressionInference::Initialize() {
+  // FIXME remove the explicit contextual_search layer in the proto.
+  proto_ = ranker_model_->proto()
+               .contextual_search()
+               .generic_logistic_regression_model();
+}
+
+void GenericLogisticRegressionInference::SetProtoForTesting(
+    const GenericLogisticRegressionModel& proto) {
+  proto_ = proto;
+}
 
 float GenericLogisticRegressionInference::PredictScore(
     const RankerExample& example) {

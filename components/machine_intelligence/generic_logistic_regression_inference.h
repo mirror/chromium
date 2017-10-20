@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_MACHINE_INTELLIGENCE_GENERIC_LOGISTIC_REGRESSION_INFERENCE_H_
 #define COMPONENTS_MACHINE_INTELLIGENCE_GENERIC_LOGISTIC_REGRESSION_INFERENCE_H_
 
+#include "components/machine_intelligence/binary_classifier.h"
 #include "components/machine_intelligence/proto/generic_logistic_regression_model.pb.h"
 #include "components/machine_intelligence/proto/ranker_example.pb.h"
 
@@ -13,21 +14,25 @@ namespace machine_intelligence {
 float Sigmoid(float x);
 
 // Implements inference for a GenericLogisticRegressionModel.
-class GenericLogisticRegressionInference {
+class GenericLogisticRegressionInference : public BinaryClassifier {
  public:
-  explicit GenericLogisticRegressionInference(
-      GenericLogisticRegressionModel model_proto);
+  GenericLogisticRegressionInference();
+  // BinaryClassifier...
   // Returns a score between 0 and 1 give a RankerExample.
-  float PredictScore(const RankerExample& example);
+  float PredictScore(const RankerExample& example) override;
   // Returns a boolean decision given a RankerExample. Uses the same logic as
   // PredictScore, and then applies the model decision threshold.
-  bool PredictDecision(const RankerExample& example);
+  bool PredictDecision(const RankerExample& example) override;
+
+  void SetProtoForTesting(const GenericLogisticRegressionModel& proto);
 
  private:
+  // Sets the internal proto.
+  void Initialize() override;
   // Returns the decision threshold. If no threshold is specified in the proto,
   // use 0.5.
   float GetThreshold();
-  const GenericLogisticRegressionModel proto_;
+  GenericLogisticRegressionModel proto_;
 };
 
 }  // namespace machine_intelligence
