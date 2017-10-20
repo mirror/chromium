@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2986ee1_df336b46",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/interaction/.gitkeep",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-20T20:10:00Z",
+      "side": 1,
+      "message": "Yeah it does work, just saw it as a pattern in the repo. I\u0027ll remove.",
+      "parentUuid": "7d69c614_bfcae5fa",
+      "revId": "14d7360ae1b41b7466a5cd02f03b0ad687d2fee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46c1766e_84d2b3c7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/interaction/focus/cross-frame-focus.html",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "14d7360ae1b41b7466a5cd02f03b0ad687d2fee3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af60af8_6d038fad",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/interaction/focus/cross-frame-focus.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-20T20:10:00Z",
+      "side": 1,
+      "message": "Josh Matthews: Done, i\u0027ve used the wptserve .sub.html feature.\n\nTakayoshi Kochi:\nWhat I want is to have a different origin than the page itself. The bug I\u0027m trying to cover only fails when out of process in chrome, if the iframe ends up in the same process, it passes.\n\nAs far as I understand the relative path will never be cross-origin in this case.",
+      "parentUuid": "887c66b7_679527d3",
+      "revId": "14d7360ae1b41b7466a5cd02f03b0ad687d2fee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
