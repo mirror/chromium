@@ -140,7 +140,7 @@ void WebrtcFrameSchedulerSimple::OnKeyFrameRequested() {
   DCHECK(thread_checker_.CalledOnValidThread());
   encoder_ready_ = true;
   key_frame_request_ = true;
-  ScheduleNextFrame(base::TimeTicks::Now());
+  ScheduleNextFrame(Now());
 }
 
 void WebrtcFrameSchedulerSimple::OnChannelParameters(int packet_loss,
@@ -152,7 +152,7 @@ void WebrtcFrameSchedulerSimple::OnChannelParameters(int packet_loss,
 
 void WebrtcFrameSchedulerSimple::OnTargetBitrateChanged(int bandwidth_kbps) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks now = Now();
   pacing_bucket_.UpdateRate(bandwidth_kbps * 1000 / 8, now);
   encoder_bitrate_.SetBandwidthEstimate(bandwidth_kbps, now);
   ScheduleNextFrame(now);
@@ -174,7 +174,7 @@ void WebrtcFrameSchedulerSimple::Pause(bool pause) {
   if (paused_) {
     capture_timer_.Stop();
   } else {
-    ScheduleNextFrame(base::TimeTicks::Now());
+    ScheduleNextFrame(Now());
   }
 }
 
@@ -183,7 +183,7 @@ bool WebrtcFrameSchedulerSimple::OnFrameCaptured(
     WebrtcVideoEncoder::FrameParams* params_out) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks now = Now();
 
   // Null |frame| indicates a capturer error.
   if (!frame) {
@@ -257,7 +257,7 @@ void WebrtcFrameSchedulerSimple::OnFrameEncoded(
   DCHECK(frame_pending_);
   frame_pending_ = false;
 
-  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks now = Now();
 
   if (frame_stats) {
     // Calculate |send_pending_delay| before refilling |pacing_bucket_|.
@@ -284,6 +284,10 @@ void WebrtcFrameSchedulerSimple::OnFrameEncoded(
     frame_stats->rtt_estimate = rtt_estimate_;
     frame_stats->bandwidth_estimate_kbps = pacing_bucket_.rate() * 8 / 1000;
   }
+}
+
+void WebrtcFrameSchedulerSimple::SetCurrentTimeForTest(base::TimeTicks now) {
+  now_ = now;
 }
 
 void WebrtcFrameSchedulerSimple::ScheduleNextFrame(base::TimeTicks now) {
@@ -319,9 +323,13 @@ void WebrtcFrameSchedulerSimple::ScheduleNextFrame(base::TimeTicks now) {
 void WebrtcFrameSchedulerSimple::CaptureNextFrame() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!frame_pending_);
-  last_capture_started_time_ = base::TimeTicks::Now();
+  last_capture_started_time_ = Now();
   frame_pending_ = true;
   capture_callback_.Run();
+}
+
+base::TimeTicks WebrtcFrameSchedulerSimple::Now() {
+  return now_.is_null() ? base::TimeTicks::Now() : now_;
 }
 
 }  // namespace protocol

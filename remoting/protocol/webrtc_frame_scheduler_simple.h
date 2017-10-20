@@ -41,6 +41,9 @@ class WebrtcFrameSchedulerSimple : public VideoChannelStateObserver,
   void OnFrameEncoded(const WebrtcVideoEncoder::EncodedFrame* encoded_frame,
                       HostFrameStats* frame_stats) override;
 
+  // Allows unit-tests to fake the current time.
+  void SetCurrentTimeForTest(base::TimeTicks now);
+
  private:
   // Helper class used to calculate target encoder bitrate.
   class EncoderBitrateFilter {
@@ -64,6 +67,13 @@ class WebrtcFrameSchedulerSimple : public VideoChannelStateObserver,
 
   void ScheduleNextFrame(base::TimeTicks now);
   void CaptureNextFrame();
+
+  // Returns the current time according to base::TimeTicks::Now(),
+  // or a fake time was provided by a unit-test.
+  base::TimeTicks Now();
+
+  // Non-null if a fake current time is set by unit-test.
+  base::TimeTicks now_;
 
   base::Closure capture_callback_;
   bool paused_ = false;
