@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f430e0ba_e7e6ad62",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/clientXY-in-zoom-and-scroll.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-20T15:56:25Z",
+      "side": 1,
+      "message": "I think it is useful here that we should have a virtual layout test suite for the mouse fractional coordinates.\n\nFor pointerevents it is fine to be experimental as I expect us to ship that but the old mouse events is likely more work/interop risk.",
+      "revId": "6278854bc9d21b28c78841bf19b28d932da8079e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
