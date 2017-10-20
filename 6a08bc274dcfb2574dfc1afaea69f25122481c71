@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30390902_b6b40daa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-20T18:28:52Z",
+      "side": 1,
+      "message": "We don\u0027t want to create a WebContentsAccessibility here - I\u0027d prefer\nto just leave the existing code that creates it on demand",
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d49ec92_e7c80ca9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-20T18:28:52Z",
+      "side": 1,
+      "message": "We don\u0027t want to create a WebContentsAccessibility here - I\u0027d prefer\nto just leave the existing code that creates it on demand",
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff352e4_729c4c09",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-20T18:28:52Z",
+      "side": 1,
+      "message": "What if it\u0027s already attached to the window when WebContentsAccessibility is constructed?",
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
