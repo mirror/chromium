@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffabeee_b3d2c506",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T19:41:52Z",
+      "side": 1,
+      "message": "nit: I think this part of is unnecessary.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 56
+      },
+      "revId": "285c75e607da7394c921863a12e698e8d0703fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab7aa9d_cb573efa",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T19:41:52Z",
+      "side": 1,
+      "message": "nit: Maybe better to just make this\ncanNavigate_ \u003d params.scroll_boundary_behavior.x \u003d\u003d\n      cc::ScrollBoundaryBehavior::ScrollBoundaryBehaviorType::\n          kScrollBoundaryBehaviorTypeAuto",
+      "revId": "285c75e607da7394c921863a12e698e8d0703fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b169b6_bb872b68",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_history_swiper_unit_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T19:41:52Z",
+      "side": 1,
+      "message": "We should also have a testcase for type None.",
+      "range": {
+        "startLine": 574,
+        "startChar": 21,
+        "endLine": 574,
+        "endChar": 55
+      },
+      "revId": "285c75e607da7394c921863a12e698e8d0703fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177ef7db_3897ac34",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-20T19:41:52Z",
+      "side": 1,
+      "message": "nit: I would suggest not using Event in the name of this method as it is not\nan event. e.g., processedOverscroll sounds more appropriate.",
+      "range": {
+        "startLine": 1522,
+        "startChar": 15,
+        "endLine": 1522,
+        "endChar": 39
+      },
+      "revId": "285c75e607da7394c921863a12e698e8d0703fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
