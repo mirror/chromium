@@ -110,11 +110,8 @@ GpuMemoryBufferFactoryNativePixmap::CreateImageForGpuMemoryBuffer(
       return nullptr;
     }
   } else {
-    for (const auto& fd : handle.native_pixmap_handle.fds) {
-      // Close the fd by wrapping it in a ScopedFD and letting it fall
-      // out of scope.
-      base::ScopedFD scoped_fd(fd.fd);
-    }
+    auto scoped_fds = gfx::TakeFilesFromHandle(handle.native_pixmap_handle);
+    scoped_fds.clear();
   }
 
   scoped_refptr<gl::GLImageNativePixmap> image(
