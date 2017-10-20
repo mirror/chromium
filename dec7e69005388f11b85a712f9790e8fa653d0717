@@ -22,6 +22,30 @@
       "revId": "dec7e69005388f11b85a712f9790e8fa653d0717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4924961f_4a0ef68c",
+        "filename": "chrome/browser/vr/elements/vector_icon.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-20T18:40:17Z",
+      "side": 1,
+      "message": "Ah, good point. I have a WIP CL with this broken out. I\u0027ll share, but as you say, this ctor will probably need to change.",
+      "parentUuid": "d31d8c70_bd966bab",
+      "range": {
+        "startLine": 24,
+        "startChar": 71,
+        "endLine": 24,
+        "endChar": 75
+      },
+      "revId": "dec7e69005388f11b85a712f9790e8fa653d0717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
