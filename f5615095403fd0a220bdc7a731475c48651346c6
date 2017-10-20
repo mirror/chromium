@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "110f169d_13abb765",
+        "filename": "chrome/renderer/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-20T18:36:19Z",
+      "side": 1,
+      "message": "Huh, this suggests this test is kind of in the wrong place. (Not a new in this change, so ok.)",
+      "revId": "f5615095403fd0a220bdc7a731475c48651346c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8696c39_2b4d0934",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-20T18:36:19Z",
+      "side": 1,
+      "message": "std::make_unique\u003cnet::EmbeddedTestServer\u003e insteda",
+      "range": {
+        "startLine": 156,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 39
+      },
+      "revId": "f5615095403fd0a220bdc7a731475c48651346c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecaf7918_ae2fdda4",
+        "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-20T18:36:19Z",
+      "side": 1,
+      "message": "std::make_unique\u003cnet::MockCertVerifier\u003e()",
+      "range": {
+        "startLine": 157,
+        "startChar": 28,
+        "endLine": 157,
+        "endChar": 55
+      },
+      "revId": "f5615095403fd0a220bdc7a731475c48651346c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a51108_1ff43810",
         "filename": "chrome/renderer/chrome_content_renderer_client_browsertest.cc",
         "patchSetId": 2
