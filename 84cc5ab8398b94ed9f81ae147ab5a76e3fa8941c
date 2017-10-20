@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bbb1487_c07d5637",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-20T14:34:15Z",
+      "side": 1,
+      "message": "\u003e delegate_ can\u0027t be null\n\nremoved.",
+      "parentUuid": "e7c01439_955c70f9",
+      "range": {
+        "startLine": 301,
+        "startChar": 9,
+        "endLine": 301,
+        "endChar": 18
+      },
+      "revId": "84cc5ab8398b94ed9f81ae147ab5a76e3fa8941c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1c23bf_86d49f8f",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "84cc5ab8398b94ed9f81ae147ab5a76e3fa8941c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc150fb9_e7312466",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-20T14:34:15Z",
+      "side": 1,
+      "message": "\u003e This is excessive because !pending_password_.federation_origin.unique() implies kCredentialManagementAPI\noh, I see. then, tests are ready.",
+      "parentUuid": "ba1c23bf_86d49f8f",
+      "range": {
+        "startLine": 304,
+        "startChar": 8,
+        "endLine": 304,
+        "endChar": 53
+      },
+      "revId": "84cc5ab8398b94ed9f81ae147ab5a76e3fa8941c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
