@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
+#include "cc/test/test_context_provider.h"
 #include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_capturer_source.h"
 #include "media/base/limits.h"
@@ -46,13 +47,18 @@ ACTION_P(RunClosure, closure) {
 }  // namespace
 
 class CanvasCaptureHandlerTest
-    : public TestWithParam<testing::tuple<bool, int, int>> {
+    : public TestWithParam<testing::tuple<bool /* opaque */,
+                                          int /* width */,
+                                          int /* height */,
+                                          bool /* texture */>> {
  public:
   CanvasCaptureHandlerTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
   void SetUp() override {
+    context_provider_ = cc::TestContextProvider::Create();
+    context_provider_->BindToCurrentThread();
     canvas_capture_handler_ = CanvasCaptureHandler::CreateCanvasCaptureHandler(
         blink::WebSize(kTestCanvasCaptureWidth, kTestCanvasCaptureHeight),
         kTestCanvasCaptureFramesPerSecond,
@@ -80,11 +86,20 @@ class CanvasCaptureHandlerTest
   void OnRunning(bool state) { DoOnRunning(state); }
 
   // Verify returned frames.
-  static sk_sp<SkImage> GenerateTestImage(bool opaque, int width, int height) {
+  sk_sp<SkImage> GenerateTestImage(bool opaque,
+                                   int width,
+                                   int height,
+                                   bool texture_backed) {
     SkBitmap testBitmap;
     testBitmap.allocN32Pixels(width, height, opaque);
     testBitmap.eraseARGB(kTestAlphaValue, 30, 60, 200);
-    return SkImage::MakeFromBitmap(testBitmap);
+    sk_sp<SkImage> bitmap_image = SkImage::MakeFromBitmap(testBitmap);
+    if (!texture_backed)
+      return bitmap_image;
+
+    sk_sp<SkImage> tex_image =
+        bitmap_image->makeTextureImage(context_provider_->GrContext(), nullptr);
+    return tex_image;
   }
 
   void OnVerifyDeliveredFrame(
@@ -120,6 +135,7 @@ class CanvasCaptureHandlerTest
   }
 
   blink::WebMediaStreamTrack track_;
+  scoped_refptr<cc::TestContextProvider> context_provider_;
   // The Class under test. Needs to be scoped_ptr to force its destruction.
   std::unique_ptr<CanvasCaptureHandler> canvas_capture_handler_;
 
@@ -185,14 +201,15 @@ TEST_P(CanvasCaptureHandlerTest, GetFormatsStartAndStop) {
       .Times(1)
       .WillOnce(RunClosure(quit_closure));
   source->StartCapture(
-      params, base::Bind(&CanvasCaptureHandlerTest::OnDeliverFrame,
-                         base::Unretained(this)),
+      params,
+      base::Bind(&CanvasCaptureHandlerTest::OnDeliverFrame,
+                 base::Unretained(this)),
       base::Bind(&CanvasCaptureHandlerTest::OnRunning, base::Unretained(this)));
   canvas_capture_handler_->SendNewFrame(
       GenerateTestImage(testing::get<0>(GetParam()),
                         testing::get<1>(GetParam()),
-                        testing::get<2>(GetParam()))
-          .get());
+                        testing::get<2>(GetParam()), false),
+      nullptr);
   run_loop.Run();
 
   source->StopCapture();
@@ -202,7 +219,7 @@ TEST_P(CanvasCaptureHandlerTest, GetFormatsStartAndStop) {
 TEST_P(CanvasCaptureHandlerTest, VerifyFrame) {
   const bool opaque_frame = testing::get<0>(GetParam());
   const bool width = testing::get<1>(GetParam());
-  const bool height = testing::get<1>(GetParam());
+  const bool height = testing::get<2>(GetParam());
   InSequence s;
   media::VideoCapturerSource* const source =
       GetVideoCapturerSource(static_cast<MediaStreamVideoCapturerSource*>(
@@ -213,11 +230,14 @@ TEST_P(CanvasCaptureHandlerTest, VerifyFrame) {
   EXPECT_CALL(*this, DoOnRunning(true)).Times(1);
   media::VideoCaptureParams params;
   source->StartCapture(
-      params, base::Bind(&CanvasCaptureHandlerTest::OnVerifyDeliveredFrame,
-                         base::Unretained(this), opaque_frame, width, height),
+      params,
+      base::Bind(&CanvasCaptureHandlerTest::OnVerifyDeliveredFrame,
+                 base::Unretained(this), opaque_frame, width, height),
       base::Bind(&CanvasCaptureHandlerTest::OnRunning, base::Unretained(this)));
   canvas_capture_handler_->SendNewFrame(
-      GenerateTestImage(opaque_frame, width, height).get());
+      GenerateTestImage(opaque_frame, width, height,
+                        testing::get<3>(GetParam())),
+      nullptr);
   run_loop.RunUntilIdle();
 }
 
@@ -240,6 +260,7 @@ INSTANTIATE_TEST_CASE_P(
                        ::testing::Values(kTestCanvasCaptureFrameEvenSize,
                                          kTestCanvasCaptureFrameOddSize),
                        ::testing::Values(kTestCanvasCaptureFrameEvenSize,
-                                         kTestCanvasCaptureFrameOddSize)));
+                                         kTestCanvasCaptureFrameOddSize),
+                       ::testing::Bool()));
 
 }  // namespace content
