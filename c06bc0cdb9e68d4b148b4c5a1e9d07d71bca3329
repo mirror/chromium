@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "788a47b6_1d990071",
+        "filename": "components/download/internal/android/battery_status_listener_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20a6419d_e0ebb003",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c4419f_f39f2420",
         "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/BatteryStatusListenerAndroid.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6aad39d_58459168",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/BatteryStatusListenerAndroid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "c5c4419f_f39f2420",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "662e5231_605a4124",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/BatteryStatusListenerAndroid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Yeah, I agree, there are two other places in code base doing this. I can do the refactor in other CL.\n\nWe can\u0027t depend on chrome, so power monitor or some util class in base is a good place to share this.",
+      "parentUuid": "66041a49_ff6d2328",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3f9d82f_84511c1e",
         "filename": "components/download/internal/scheduler/device_status_listener.cc",
         "patchSetId": 3
@@ -82,6 +136,30 @@
       "writtenOn": "2017-10-20T18:07:33Z",
       "side": 1,
       "message": "It still might be nice to have a way to turn this off, especially if we\u0027re cherry picking?",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 71
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b2a3f6_b6612610",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "This is not polling. Is turning off on 0 still needed?",
+      "parentUuid": "d3f9d82f_84511c1e",
       "range": {
         "startLine": 176,
         "startChar": 6,
@@ -117,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "064ac2e5_78045f3b",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "19f52c1b_febcd191",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 42
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba4077a6_3960a792",
         "filename": "components/download/internal/scheduler/device_status_listener.h",
         "patchSetId": 3
@@ -128,6 +230,30 @@
       "writtenOn": "2017-10-20T18:07:33Z",
       "side": 1,
       "message": "This doesn\u0027t seem much like a listener at this point.  Should the polling code go inside here?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1bddac_c90c046b",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Moved throttling variables and power monitor hooks to this class now.",
+      "parentUuid": "ba4077a6_3960a792",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -180,6 +306,48 @@
     },
     {
       "key": {
+        "uuid": "ee76879f_df4ba1b8",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "I guess if we don\u0027t poll, this is fine?",
+      "parentUuid": "9fb274a9_744d06d5",
+      "range": {
+        "startLine": 43,
+        "startChar": 32,
+        "endLine": 43,
+        "endChar": 77
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1b219b_180827f0",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "03b927f5_399a0a99",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "294d9c2a_e5d822cf",
         "filename": "components/download/internal/scheduler/device_status_listener.h",
         "patchSetId": 3
@@ -197,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "d4e54de4_c876ea85",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "294d9c2a_e5d822cf",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aafd3747_4e0ff66f",
         "filename": "components/download/internal/test/test_device_status_listener.cc",
         "patchSetId": 3
@@ -208,6 +394,24 @@
       "writtenOn": "2017-10-20T17:32:28Z",
       "side": 1,
       "message": "no .h file in the CL?",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd99bf7_854caef5",
+        "filename": "components/download/internal/test/test_device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "This is a fake implementation. Should be fine.",
+      "parentUuid": "aafd3747_4e0ff66f",
       "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -231,6 +435,24 @@
     },
     {
       "key": {
+        "uuid": "0ebff890_42217706",
+        "filename": "components/download/internal/test/test_device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5db16733_9c2643d8",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9661281_1f85740e",
         "filename": "components/download/public/download_params.h",
         "patchSetId": 3
@@ -242,6 +464,30 @@
       "writtenOn": "2017-10-20T18:07:33Z",
       "side": 1,
       "message": "Do we need a new BATTERY_CHARGING enum?",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9247829_1c6c7931",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Since optimal_battery_percentage is removed from this struct, won\u0027t change this for now.",
+      "parentUuid": "b9661281_1f85740e",
       "range": {
         "startLine": 39,
         "startChar": 13,
@@ -307,6 +553,72 @@
       "message": "Do we want this or should this just be a hidden part of BATTERY_SENSITIVE?",
       "range": {
         "startLine": 93,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 33
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6c523f_00d4beea",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done. This is moved as a const value to device_status.cc. Since this might be cherry picked, we can move it back to here and add to persistence layer later if needed.",
+      "parentUuid": "88efc31d_cfac800e",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 33
+      },
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efbfcde1_ff948099",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Done, we move this to be hidden part for now. Since expose it as params here needs to change the persistence layer as well.",
+      "parentUuid": "7a7d01d9_8862fa59",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba85ee6b_c3eb89f4",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-20T22:22:05Z",
+      "side": 1,
+      "message": "Ah, my bad, I\u0027ll make this a hidden part for now, don\u0027t want to make this CL even larger..",
+      "parentUuid": "3523efd8_d50f8225",
+      "range": {
+        "startLine": 95,
         "startChar": 2,
         "endLine": 95,
         "endChar": 33
