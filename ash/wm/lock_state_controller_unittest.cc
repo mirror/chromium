@@ -9,6 +9,7 @@
 
 #include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
+#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shutdown_controller.h"
 #include "ash/shutdown_reason.h"
@@ -1016,6 +1017,18 @@ TEST_F(LockStateControllerTest, CancelClamshellDisplayOffAfterLock) {
   EXPECT_FALSE(power_button_controller_->TriggerDisplayOffTimerForTesting());
   EXPECT_FALSE(power_manager_client_->backlights_forced_off());
   UnlockScreen();
+}
+
+// Test that on LOGGED_IN_NOT_ACTIVE session state, power button press should
+// not start lock animation sequence, instead it should directly start shutdown
+// animation sequence. This is because on LOGGED_IN_NOT_ACTIVE state, login UI
+// hasn't been hidden yet (crbug.com/772586).
+TEST_F(LockStateControllerTest, LoggedInNotActive) {
+  GetSessionControllerClient()->SetSessionState(
+      session_manager::SessionState::LOGGED_IN_NOT_ACTIVE);
+  PressPowerButton();
+  ExpectShutdownAnimationStarted();
+  ReleasePowerButton();
 }
 
 }  // namespace ash
