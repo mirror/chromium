@@ -10,19 +10,18 @@
 let fakeDisplays = fakeVRDisplays();
 
 vr_test( (t) => {
-  return navigator.vr.getDevices().then( (devices) => {
+  return navigator.vr.requestDevice().then( (devices) => {
     t.step( () => {
-      assert_true(devices != null);
-      assert_equals(devices.length, 0);
-    }, "getDevices returned correct results");
+      assert_true(devices == null);
+    }, "requestDevice returned correct results");
   }, (err) => {
     t.step( () => {
-      assert_unreached("getDevices rejected");
+      assert_unreached("requestDevice rejected");
     });
   }).then( () => {
     t.done();
   });
 }, [],
-"navigator.vr.getDevices properly returns zero devices");
+"navigator.vr.requestDevice properly returns zero devices");
 
 </script>

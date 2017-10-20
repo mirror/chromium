@@ -10,33 +10,23 @@
 let fakeDisplays = fakeVRDisplays();
 
 vr_test( (t) => {
-  return navigator.vr.getDevices().then( (devices) => {
-    let pixel = devices[0];
-    let magicWindowOnly = devices[1];
+  return navigator.vr.requestDevice().then( (magicWindowOnly) => {
 
-    return pixel.supportsSession({ exclusive: true }).then( () => {
-      // Expected result
-    }).catch( () => {
+    return magicWindowOnly.supportsSession({ exclusive: true }).then( () => {
       t.step( () => {
-        assert_unreached("supportsSession unexpectedly rejected exclusive");
+        assert_unreached("supportsSession unexpectedly allowed exclusive");
       });
-    }).then( () => {
-      return magicWindowOnly.supportsSession({ exclusive: true }).then( () => {
-        t.step( () => {
-          assert_unreached("supportsSession unexpectedly allowed exclusive");
-        });
-      }).catch( () => {
-        // Expected result
-      });
+    }).catch( () => {
+      // Expected result
     });
   }, (err) => {
     t.step( () => {
-      assert_unreached("getDevices rejected");
+      assert_unreached("requestDevice rejected");
     });
   }).then( () => {
     t.done();
   });
-}, [fakeDisplays["Pixel"], fakeDisplays["FakeMagicWindowOnly"]],
+}, [fakeDisplays["FakeMagicWindowOnly"]],
 "supportsSession properly identifies supported exclusive sessions");
 
 </script>
