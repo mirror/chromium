@@ -64,6 +64,8 @@ class PLATFORM_EXPORT CachingWordShaper final {
 
   GlyphData EmphasisMarkGlyphData(const TextRun&) const;
 
+  FloatRect GetBoundingBox(const TextRun&) const;
+
  private:
   ShapeCache* GetShapeCache() const;
 

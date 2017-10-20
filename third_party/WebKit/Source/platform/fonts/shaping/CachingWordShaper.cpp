@@ -103,6 +103,12 @@ CharacterRange CachingWordShaper::GetCharacterRange(const TextRun& run,
   return buffer.GetCharacterRange(run.Direction(), total_width, from, to);
 }
 
+FloatRect CachingWordShaper::GetBoundingBox(const TextRun& run) const {
+  ShapeResultBuffer buffer;
+  ShapeResultsForRun(GetShapeCache(), &font_, run, &buffer);
+  return buffer.GetBoundingBox();
+}
+
 Vector<CharacterRange> CachingWordShaper::IndividualCharacterRanges(
     const TextRun& run) {
   ShapeResultBuffer buffer;
