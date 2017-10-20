@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cbd6ae3_469a764d",
+        "filename": "content/browser/bluetooth/bluetooth_device_chooser_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-20T17:57:55Z",
+      "side": 1,
+      "message": "This change will disrupt other platforms.  It would cause non LE devices to appear.\n\nIf it\u0027s not connected, right now Windows will reconnect it seems.  But, windows should also hopefully notice the advertising packets from the non-connected device and then be added to the chooser later once we\u0027re monitoring ad packets.\n\nI\u0027d be OK with a windows only #if defined here while we wait to get the correct Windows support for noticing AD packets.",
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60480490_dba0b141",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-20T17:57:55Z",
+      "side": 1,
+      "message": "Seems this will eventually cause a  BluetoothDeviceWin::DisconnectGatt call to be made, which will need to be implemented.\n\nIdeally we can remove this method from BluetoothDeviceWin and use  BluetoothDevice::CreateGattConnection instead (but then CreateGattConnectionImpl needs implementing)",
+      "range": {
+        "startLine": 217,
+        "startChar": 32,
+        "endLine": 217,
+        "endChar": 55
+      },
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e1dae4_faf984dc",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-20T17:57:55Z",
+      "side": 1,
+      "message": "So, the idea here is that for any LE device on Windows we\u0027d always report that it\u0027s connected?  Are we able to ask Windows if an LE device is connected?",
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e6a1db_c9c3acb8",
+        "filename": "device/bluetooth/bluetooth_device_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-20T17:57:55Z",
+      "side": 1,
+      "message": "I\u0027m concerned we may not actually have discovered all GATT attributes at this point. E.g. the call on line 368 BluetoothRemoteGattServiceWin...)-\u003eUpdate() is async... it should eventually result in BluetoothRemoteGattServiceWin::NotifyGattDiscoveryCompleteForServiceIfNecessary ... and that should probably bubble up to a new method in device that then checks that all services have been discovered and sets discovery complete.\n\nIf we call this method too early we\u0027ll have race conditions and e.g. web bluetooth code that connects and tries to access services it knows a device has will be told that they don\u0027t exist. (They simply haven\u0027t been discovered yet).  I think it\u0027s likely that the call below to adapter_-\u003eNotifyGattServicesDiscovered(this) is premature.",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 34
+      },
+      "revId": "7e87994c2ffde6913b55550e44d06e1ae588c52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
