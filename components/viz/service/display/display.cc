@@ -264,8 +264,12 @@ bool Display::DrawAndSwap() {
   // Run callbacks early to allow pipelining.
   for (const auto& id_entry : aggregator_->previous_contained_surfaces()) {
     Surface* surface = surface_manager_->GetSurfaceForId(id_entry.first);
-    if (surface)
+    if (surface) {
+      Surface::PresentedCallback callback;
+      if (surface->TakePresentedCallback(&callback))
+        presented_callbacks_.push_back(std::move(callback));
       surface->RunDrawCallback();
+    }
   }
 
   frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
@@ -381,6 +385,14 @@ void Display::DidReceiveTextureInUseResponses(
     const gpu::TextureInUseResponses& responses) {
   if (renderer_)
     renderer_->DidReceiveTextureInUseResponses(responses);
+}
+
+void Display::UpdateVSyncParameters(base::TimeTicks timebase,
+                                    base::TimeDelta interval) {
+  for (auto& callback : presented_callbacks_) {
+    std::move(callback).Run(timebase, interval, 0);
+  }
+  presented_callbacks_.clear();
 }
 
 void Display::SetNeedsRedrawRect(const gfx::Rect& damage_rect) {

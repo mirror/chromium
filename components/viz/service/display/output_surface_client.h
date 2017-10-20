@@ -29,6 +29,9 @@ class VIZ_SERVICE_EXPORT OutputSurfaceClient {
   virtual void DidReceiveTextureInUseResponses(
       const gpu::TextureInUseResponses& responses) = 0;
 
+  virtual void UpdateVSyncParameters(base::TimeTicks timebase,
+                                     base::TimeDelta interval) = 0;
+
  protected:
   virtual ~OutputSurfaceClient() {}
 };
