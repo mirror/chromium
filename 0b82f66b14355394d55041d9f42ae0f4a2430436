@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fbd6d5ac_0e34e146",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-20T19:29:38Z",
+      "side": 1,
+      "message": "OK, I added docs to NPBDelegate. This is triggered by the native notification system (in the case of cros, this is ash/message center) when the notification actually closes. The situation you describe might mean that ash has to drop one of the two events that would cause the close because the first one already made the notification go away.",
+      "parentUuid": "8d433209_26a4802b",
+      "revId": "0b82f66b14355394d55041d9f42ae0f4a2430436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f92ca190_7cadd7f5",
         "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
         "patchSetId": 5
