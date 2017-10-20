@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c648c2e_c5d314db",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T14:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "146ef277_cf13276f",
+      "range": {
+        "startLine": 794,
+        "startChar": 6,
+        "endLine": 794,
+        "endChar": 16
+      },
+      "revId": "ec1e7f0cfc1e91f812a0f966e96178a0bb93b3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc0b5a38_185c2bff",
         "filename": "third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "30bdb628_c61edcc1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T14:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc0b5a38_185c2bff",
+      "range": {
+        "startLine": 182,
+        "startChar": 39,
+        "endLine": 182,
+        "endChar": 43
+      },
+      "revId": "ec1e7f0cfc1e91f812a0f966e96178a0bb93b3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea48be6_60e41408",
         "filename": "third_party/WebKit/Source/devtools/front_end/host/InspectorFrontendHostAPI.js",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "ec1e7f0cfc1e91f812a0f966e96178a0bb93b3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2bac55_b99c611d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/host/InspectorFrontendHostAPI.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-20T14:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ea48be6_60e41408",
+      "range": {
+        "startLine": 78,
+        "startChar": 103,
+        "endLine": 78,
+        "endChar": 107
+      },
+      "revId": "ec1e7f0cfc1e91f812a0f966e96178a0bb93b3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
