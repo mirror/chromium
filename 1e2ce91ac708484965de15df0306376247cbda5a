@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc941b6_a351e060",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-20T02:03:18Z",
+      "side": 1,
+      "message": "nit: would it be better to say \"Returns true if all checks are passing.\" explicitly?",
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
