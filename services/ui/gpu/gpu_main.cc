@@ -116,6 +116,7 @@ GpuMain::~GpuMain() {
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
   if (io_thread_)
     io_thread_->Stop();
+  gpu_service_.reset();
 }
 
 void GpuMain::SetLogMessagesForHost(LogMessages log_messages) {
