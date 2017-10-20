@@ -24,8 +24,8 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @UsedByReflection("ThreadedInputConnectionFactory.java")
 public class ThreadedInputConnectionProxyView extends View {
-    private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final String TAG = "cr_ImeProxy";
+    private static final boolean DEBUG_LOGS = true;
 
     private final Handler mImeThreadHandler;
     private final View mContainerView;

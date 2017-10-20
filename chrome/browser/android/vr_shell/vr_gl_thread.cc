@@ -125,6 +125,13 @@ void VrGLThread::ToggleCardboardGamepad(bool enabled) {
       base::Bind(&VrShell::ToggleCardboardGamepad, weak_vr_shell_, enabled));
 }
 
+void VrGLThread::CommitText(std::string& text, int new_cursor_position) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::CommitText, weak_vr_shell_, text,
+                            new_cursor_position));
+}
+
 void VrGLThread::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(

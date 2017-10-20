@@ -90,6 +90,9 @@ class VrShell : device::GvrGamepadDataProvider,
                       bool touched);
   void OnPause(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void OnResume(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
+  void ShowSoftInput(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj);
+  void CommitText(std::string text, int new_cursor_position);
   void SetSurface(JNIEnv* env,
                   const base::android::JavaParamRef<jobject>& obj,
                   const base::android::JavaParamRef<jobject>& surface);

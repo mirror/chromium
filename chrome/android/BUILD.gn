@@ -306,6 +306,9 @@ android_library("chrome_java") {
     deps += [
       "//device/vr:java",
       "//third_party/gvr-android-sdk:gvr_common_java",
+#      "//third_party/gvr-android-sdk:gvr_audio_java",
+#      "//third_party/gvr-android-sdk:libgvr_audio",
+      "//third_party/vr_keyboard:keyboard_java",
     ]
   }
   srcjar_deps += [ ":chrome_vr_android_java_enums_srcjar" ]

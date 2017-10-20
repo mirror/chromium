@@ -48,6 +48,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void ForceExitVr() override;
   void OnContentPaused(bool enabled) override;
   void ToggleCardboardGamepad(bool enabled) override;
+  void CommitText(std::string& text, int new_cursor_position) override;
 
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;

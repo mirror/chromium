@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser.input;
+package org.chromium.chrome.browser.vr_shell;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -12,8 +12,11 @@ import android.os.ResultReceiver;
 import android.os.StrictMode;
 import android.view.View;
 import android.view.inputmethod.CursorAnchorInfo;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 
+import org.chromium.content.browser.input.ChromiumInputMethodManager;
 import org.chromium.base.Log;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,82 +25,69 @@ import java.lang.reflect.Method;
 /**
  * Wrapper around Android's InputMethodManager
  */
-public class InputMethodManagerWrapper implements ChromiumInputMethodManager {
+public class VrInputMethodManager implements ChromiumInputMethodManager {
     private static final boolean DEBUG_LOGS = true;
-    private static final String TAG = "cr_IMM";
+    private static final String TAG = "cr_VrIme";
 
     private final Context mContext;
 
-    public InputMethodManagerWrapper(Context context) {
+    private InputConnection mConnection;
+
+    public VrInputMethodManager(Context context) {
         if (DEBUG_LOGS) Log.i(TAG, "Constructor");
         mContext = context;
-    }
-
-    private InputMethodManager getInputMethodManager() {
-        return (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        VrShellDelegate.setInputMethodManager(this);
     }
 
     @Override
     public void restartInput(View view) {
         if (DEBUG_LOGS) Log.i(TAG, "restartInput");
-        getInputMethodManager().restartInput(view);
+        // Call View.onCreateInputConnection
+        EditorInfo outAttrs = new EditorInfo();
+        mConnection = view.onCreateInputConnection(outAttrs);
     }
 
     @Override
     public void showSoftInput(View view, int flags, ResultReceiver resultReceiver) {
         if (DEBUG_LOGS) Log.i(TAG, "showSoftInput");
-        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();  // crbug.com/616283
-        try {
-            getInputMethodManager().showSoftInput(view, flags, resultReceiver);
-        } finally {
-            StrictMode.setThreadPolicy(oldPolicy);
-        }
+        EditorInfo outAttrs = new EditorInfo();
+        mConnection = view.onCreateInputConnection(outAttrs);
+        // Call native showSoftInput
+        VrShellDelegate.showSoftInput();
     }
 
     @Override
     public boolean isActive(View view) {
-        final boolean active = getInputMethodManager().isActive(view);
-        if (DEBUG_LOGS) Log.i(TAG, "isActive: " + active);
-        return active;
+        if (DEBUG_LOGS) Log.i(TAG, "isActive: ");
+        return false;
     }
 
     @Override
     public boolean hideSoftInputFromWindow(IBinder windowToken, int flags,
             ResultReceiver resultReceiver) {
         if (DEBUG_LOGS) Log.i(TAG, "hideSoftInputFromWindow");
-        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();  // crbug.com/616283
-        try {
-            return getInputMethodManager().hideSoftInputFromWindow(
-                    windowToken, flags, resultReceiver);
-        } finally {
-            StrictMode.setThreadPolicy(oldPolicy);
-        }
+        return false;
     }
 
+    @Override
     public void updateSelection(View view, int selStart, int selEnd,
             int candidatesStart, int candidatesEnd) {
         if (DEBUG_LOGS) {
             Log.i(TAG, "updateSelection: SEL [%d, %d], COM [%d, %d]", selStart, selEnd,
                     candidatesStart, candidatesEnd);
         }
-        getInputMethodManager().updateSelection(view, selStart, selEnd, candidatesStart,
-                candidatesEnd);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void updateCursorAnchorInfo(View view, CursorAnchorInfo cursorAnchorInfo) {
         if (DEBUG_LOGS) Log.i(TAG, "updateCursorAnchorInfo");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getInputMethodManager().updateCursorAnchorInfo(view, cursorAnchorInfo);
-        }
     }
 
     @Override
     public void updateExtractedText(
             View view, int token, android.view.inputmethod.ExtractedText text) {
         if (DEBUG_LOGS) Log.d(TAG, "updateExtractedText");
-        getInputMethodManager().updateExtractedText(view, token, text);
     }
 
     @Override
@@ -105,19 +95,18 @@ public class InputMethodManagerWrapper implements ChromiumInputMethodManager {
         // On N and above, this is not needed.
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) return;
         if (DEBUG_LOGS) Log.i(TAG, "notifyUserAction");
-        InputMethodManager manager = getInputMethodManager();
-        try {
-            Method method = InputMethodManager.class.getMethod("notifyUserAction");
-            method.invoke(manager);
-        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException e) {
-            if (DEBUG_LOGS) Log.i(TAG, "notifyUserAction failed");
-            return;
-        }
     }
 
     @Override
     public boolean isVr() {
-      return false;
+      return true;
+    }
+
+    /* package */ void commitText(String text, int newCursorPosition) {
+        if (DEBUG_LOGS) Log.i(TAG, "commitText: " + text);
+        if (mConnection != null) {
+          Log.i(TAG, "mConnection != null");
+          mConnection.commitText(text, newCursorPosition);
+        }
     }
 }

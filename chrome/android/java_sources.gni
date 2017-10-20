@@ -1213,6 +1213,9 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/vr_shell/VrCoreVersionChecker.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrDaydreamApi.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrFeedbackStatus.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/VrInputMethodManager.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/VrInputConnection.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/VrInputConnectionFactory.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
   "java/src/org/chromium/chrome/browser/vr_shell/OnExitVrRequestListener.java",
@@ -1371,6 +1374,8 @@ chrome_vr_java_sources = [
   "java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
   "java/src/org/chromium/chrome/browser/vr_shell/VrWindowAndroid.java",
   "java/src/org/chromium/chrome/browser/vr_shell/OnDispatchTouchEventCallback.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/keyboard/BuildConstants.java",
+  "java/src/org/chromium/chrome/browser/vr_shell/keyboard/GvrKeyboardLoaderClient.java",
 ]
 
 chrome_test_java_sources = [

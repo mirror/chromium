@@ -27,10 +27,10 @@ public interface ChromiumBaseInputConnection extends InputConnection {
         @VisibleForTesting
         Handler getHandler();
 
-        void onWindowFocusChanged(boolean gainFocus);
-        void onViewFocusChanged(boolean gainFocus);
-        void onViewAttachedToWindow();
-        void onViewDetachedFromWindow();
+        public void onWindowFocusChanged(boolean gainFocus);
+        public void onViewFocusChanged(boolean gainFocus);
+        public void onViewAttachedToWindow();
+        public void onViewDetachedFromWindow();
     }
 
     /**
@@ -48,30 +48,30 @@ public interface ChromiumBaseInputConnection extends InputConnection {
      *                       selection.
      * @param replyToRequest True when the update was made in a reply to IME's request.
      */
-    void updateStateOnUiThread(String text, int selectionStart, int selectionEnd,
+    public void updateStateOnUiThread(String text, int selectionStart, int selectionEnd,
             int compositionStart, int compositionEnd, boolean singleLine, boolean replyToRequest);
 
     /**
      * Send key event on UI thread.
      * @param event A key event.
      */
-    boolean sendKeyEventOnUiThread(KeyEvent event);
+    public boolean sendKeyEventOnUiThread(KeyEvent event);
 
     /**
      * Call this when restartInput() is called.
      */
-    void onRestartInputOnUiThread();
+    public void onRestartInputOnUiThread();
 
     /**
      * @return The {@link Handler} used for this InputConnection.
      */
     @Override
     @VisibleForTesting
-    Handler getHandler();
+    public Handler getHandler();
 
     /**
      * Unblock thread function if needed, e.g. we found that we will
      * never get state update.
      */
-    void unblockOnUiThread();
+    public void unblockOnUiThread();
 }

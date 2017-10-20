@@ -140,6 +140,9 @@ public class VrShellDelegate
     private boolean mNeedsAnimationCancel;
     private boolean mCancellingEntryAnimation;
 
+    // Keyboard related.
+    private VrInputMethodManager mInputMethodManager = null;
+
     // Whether or not the VR Device ON flow succeeded. If this is true it means the user has a VR
     // headset on, but we haven't switched into VR mode yet.
     // See further documentation here: https://developers.google.com/vr/daydream/guides/vr-entry
@@ -868,6 +871,26 @@ public class VrShellDelegate
         assert !mInVr;
         mNeedsAnimationCancel = false;
         mVrDaydreamApi.launchVrHomescreen();
+    }
+
+    /* package */ static void showSoftInput() {
+      if (sInstance != null) {
+          sInstance.mVrShell.showSoftInput();
+      }
+    }
+
+    /* package */ static void setInputMethodManager(VrInputMethodManager manager) {
+      Log.e(TAG, "lolk setInputMethodManager");
+      if (sInstance != null) {
+          sInstance.mInputMethodManager = manager;
+      }
+    }
+
+    /* package */ static void commitText(String text, int newCursorPosition) {
+      Log.e(TAG, "lolk VrShellDelegate commit text: " + text);
+      if (sInstance != null && sInstance.mInputMethodManager != null) {
+          sInstance.mInputMethodManager.commitText(text, newCursorPosition);
+      }
     }
 
     /**

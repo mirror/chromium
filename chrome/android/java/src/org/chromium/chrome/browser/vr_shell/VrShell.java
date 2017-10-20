@@ -90,4 +90,6 @@ public interface VrShell {
      * Should be called when the density changes. Updates UI in response to the new density.
      */
     void onDensityChanged(float oldDpi, float newDpi);
+
+    void showSoftInput();
 }

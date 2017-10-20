@@ -235,6 +235,7 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   main_content->set_draw_phase(kPhaseForeground);
   main_content->SetSize(kContentWidth, kContentHeight);
   main_content->SetVisible(false);
+  main_content->SetTranslate(0.0, 1, 0);
   main_content->set_corner_radius(kContentCornerRadius);
   main_content->SetTransitionedProperties({BOUNDS});
   main_content_ = main_content.get();

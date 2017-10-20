@@ -139,6 +139,7 @@ import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.util.ChromeFileProvider;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.vr_shell.VrInputMethodManager;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.webapps.AddToHomescreenManager;
 import org.chromium.chrome.browser.widget.ControlContainer;
@@ -2242,7 +2243,12 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * Called when VR mode is entered using this activity. 2D UI components that steal focus or
      * draw over VR contents should be hidden in this call.
      */
-    public void onEnterVr() {}
+    public void onEnterVr() {
+        Tab currentTab = getActivityTab();
+        if (currentTab == null) return;
+        currentTab.setInputConnectionFactoryForVr();
+        currentTab.setInputMethodManager(new VrInputMethodManager(this));
+    }
 
     /**
      * Called when VR mode using this activity is exited. Any state set for VR should be restored

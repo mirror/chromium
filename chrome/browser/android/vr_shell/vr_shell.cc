@@ -378,6 +378,21 @@ void VrShell::OnResume(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   PollMediaAccessFlag();
 }
 
+void VrShell::ShowSoftInput(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj) {
+  LOG(ERROR) << "lolk VrShell::ShowSoftInput";
+  PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::ShowSoftInput,
+                                       gl_thread_->GetVrShellGl()));
+}
+
+void VrShell::CommitText(std::string text, int new_cursor_position) {
+  LOG(ERROR) << "lolk VrShell commit text: " << text.c_str();
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaLocalRef<jstring> jstring_text =
+      base::android::ConvertUTF8ToJavaString(env, text);
+  Java_VrShellImpl_commitText(env, j_vr_shell_, jstring_text,
+                              new_cursor_position);
+}
+
 void VrShell::SetSurface(JNIEnv* env,
                          const JavaParamRef<jobject>& obj,
                          const JavaParamRef<jobject>& surface) {

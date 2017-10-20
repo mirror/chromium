@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import com.google.vr.ndk.base.AndroidCompat;
 import com.google.vr.ndk.base.GvrLayout;
 
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -62,6 +63,10 @@ import org.chromium.ui.display.VirtualDisplayAndroid;
 @JNINamespace("vr_shell")
 public class VrShellImpl
         extends GvrLayout implements VrShell, SurfaceHolder.Callback, FullscreenListener {
+//    static {
+//        System.loadLibrary("gvr_audio");
+//    }
+
     private static final String TAG = "VrShellImpl";
     private static final float INCHES_TO_METERS = 0.0254f;
 
@@ -417,6 +422,19 @@ public class VrShellImpl
                 model.getTabAt(i).updateWindowAndroid(window);
             }
         }
+    }
+
+    @Override
+    public void showSoftInput() {
+        if (mNativeVrShell != 0) {
+          nativeShowSoftInput(mNativeVrShell);
+        }
+    }
+
+    @CalledByNative
+    public void commitText(String text, int newCursorPosition) {
+      Log.e("crvrshell", "lolk VrShellImpl commit text: " + text);
+      VrShellDelegate.commitText(text, newCursorPosition);
     }
 
     // Exits VR, telling the user to remove their headset, and returning to Chromium.
@@ -837,6 +855,7 @@ public class VrShellImpl
     private native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
     private native void nativeOnPause(long nativeVrShell);
     private native void nativeOnResume(long nativeVrShell);
+    private native void nativeShowSoftInput(long nativeVrShell);
     private native void nativeOnLoadProgressChanged(long nativeVrShell, double progress);
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeVrShell, WebContents webContents, int width, int height);

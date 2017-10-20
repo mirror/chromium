@@ -35,6 +35,9 @@ class GlBrowserInterface {
   virtual void ForceExitVr() = 0;
   virtual void OnContentPaused(bool enabled) = 0;
   virtual void ToggleCardboardGamepad(bool enabled) = 0;
+
+  // Keyboard
+  virtual void CommitText(std::string& text, int new_cursor_position) = 0;
 };
 
 }  // namespace vr_shell

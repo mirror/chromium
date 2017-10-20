@@ -90,6 +90,7 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.vr_shell.VrInputConnectionFactory;
 import org.chromium.chrome.browser.widget.PulseDrawable;
 import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
@@ -103,6 +104,8 @@ import org.chromium.components.sync.SyncConstants;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.crypto.CipherFactory;
+import org.chromium.content.browser.input.ChromiumInputMethodManager;
+import org.chromium.content.browser.input.ImeAdapter;
 import org.chromium.content_public.browser.ChildProcessImportance;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
@@ -3273,6 +3276,21 @@ public class Tab
         Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
         tracker.dismissed(FeatureConstants.MEDIA_DOWNLOAD_FEATURE);
         nativeMediaDownloadInProductHelpDismissed(mNativeTabAndroid);
+    }
+
+    public void setInputMethodManager(ChromiumInputMethodManager manager) {
+        if (mContentViewCore != null) {
+          ImeAdapter adapter = mContentViewCore.getImeAdapterForTest();
+          adapter.setInputMethodManagerWrapperForTest(manager);
+        }
+    }
+
+    public void setInputConnectionFactoryForVr() {
+        if (mContentViewCore != null) {
+            Log.e(TAG, "lolk setInputConnectionFactoryForVr");
+            ImeAdapter adapter = mContentViewCore.getImeAdapterForTest();
+            adapter.setInputConnectionFactory(new VrInputConnectionFactory());
+        }
     }
 
     private native void nativeInit();

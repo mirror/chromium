@@ -73,7 +73,7 @@ import java.util.List;
 @JNINamespace("content")
 public class ImeAdapter {
     private static final String TAG = "cr_Ime";
-    private static final boolean DEBUG_LOGS = false;
+    private static final boolean DEBUG_LOGS = true;
 
     private static final float SUGGESTION_HIGHLIGHT_BACKGROUND_TRANSPARENCY = 0.4f;
 
@@ -84,7 +84,7 @@ public class ImeAdapter {
     private static final int DEFAULT_SUGGESTION_SPAN_COLOR = 0x88C8C8C8;
 
     private long mNativeImeAdapterAndroid;
-    private InputMethodManagerWrapper mInputMethodManagerWrapper;
+    private ChromiumInputMethodManager mInputMethodManagerWrapper;
     private ChromiumBaseInputConnection mInputConnection;
     private ChromiumBaseInputConnection.Factory mInputConnectionFactory;
 
@@ -159,7 +159,7 @@ public class ImeAdapter {
      *                InputMethodManager.
      */
     public ImeAdapter(
-            WebContents webContents, View containerView, InputMethodManagerWrapper wrapper) {
+            WebContents webContents, View containerView, ChromiumInputMethodManager wrapper) {
         mWebContents = webContents;
         mContainerView = containerView;
         mInputMethodManagerWrapper = wrapper;
@@ -228,6 +228,7 @@ public class ImeAdapter {
      */
     public ChromiumBaseInputConnection onCreateInputConnection(
             EditorInfo outAttrs, boolean allowKeyboardLearning) {
+        Log.e(TAG, "onCreateInputConnection");
         // InputMethodService evaluates fullscreen mode even when the new input connection is
         // null. This makes sure IME doesn't enter fullscreen mode or open custom UI.
         outAttrs.imeOptions = EditorInfo.IME_FLAG_NO_FULLSCREEN | EditorInfo.IME_FLAG_NO_EXTRACT_UI;
@@ -274,7 +275,7 @@ public class ImeAdapter {
      * @param immw InputMethodManagerWrapper that should be used to call InputMethodManager.
      */
     @VisibleForTesting
-    public void setInputMethodManagerWrapperForTest(InputMethodManagerWrapper immw) {
+    public void setInputMethodManagerWrapperForTest(ChromiumInputMethodManager immw) {
         mInputMethodManagerWrapper = immw;
         if (mCursorAnchorInfoController != null) {
             mCursorAnchorInfoController.setInputMethodManagerWrapperForTest(immw);
@@ -282,7 +283,7 @@ public class ImeAdapter {
     }
 
     @VisibleForTesting
-    void setInputConnectionFactory(ChromiumBaseInputConnection.Factory factory) {
+    public void setInputConnectionFactory(ChromiumBaseInputConnection.Factory factory) {
         mInputConnectionFactory = factory;
     }
 
@@ -691,7 +692,7 @@ public class ImeAdapter {
         if (mNodeEditable) mWebContents.dismissTextHandles();
     }
 
-    boolean sendCompositionToNative(
+    public boolean sendCompositionToNative(
             CharSequence text, int newCursorPosition, boolean isCommit, int unicodeFromKeyEvent) {
         if (!isValid()) return false;
 
@@ -961,7 +962,7 @@ public class ImeAdapter {
     private void onConnectedToRenderProcess() {
         if (DEBUG_LOGS) Log.i(TAG, "onConnectedToRenderProcess");
         mIsConnected = true;
-        createInputConnectionFactory();
+        //createInputConnectionFactory();
         resetAndHideKeyboard();
     }
 
