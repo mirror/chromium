@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4bf876a_88a6f6f2",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-20T23:16:22Z",
+      "side": 1,
+      "message": "Sorry, that\u0027s all of them. :(",
+      "parentUuid": "575caa9f_36f632a7",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 360,
+        "endChar": 11
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "140504c6_5453464f",
         "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c14690_139bebbd",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-20T23:16:22Z",
+      "side": 1,
+      "message": "Nope, it will DCHECK on DCHECK(!done_.is_null()); in the constructor as the default constructor is the null function.",
+      "parentUuid": "140504c6_5453464f",
+      "range": {
+        "startLine": 377,
+        "startChar": 14,
+        "endLine": 377,
+        "endChar": 18
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4ab9a663_30ddc1ae",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-20T23:16:22Z",
+      "side": 1,
+      "message": "They need to outlive download_ or I have potential use after frees outside ShowDialog (ReturnRef is used, they\u0027re not being copied).",
+      "parentUuid": "54c7b7f3_e2e6a8fd",
+      "range": {
+        "startLine": 383,
+        "startChar": 13,
+        "endLine": 383,
+        "endChar": 26
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91254b3a_fb3bf392",
         "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562a18d2_abb194a5",
+        "filename": "chrome/browser/download/download_danger_prompt_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-20T23:16:22Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "91254b3a_fb3bf392",
+      "range": {
+        "startLine": 384,
+        "startChar": 23,
+        "endLine": 384,
+        "endChar": 39
+      },
+      "revId": "6b4f07cafb55fa8ad5df68c0d3139d046ccfbf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
