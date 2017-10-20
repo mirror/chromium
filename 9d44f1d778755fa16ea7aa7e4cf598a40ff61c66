@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d0b7aa_f4712382",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-20T20:21:01Z",
+      "side": 1,
+      "message": "nit: Could you please add a \"Public methods\" #pragma mark section here?",
+      "revId": "9d44f1d778755fa16ea7aa7e4cf598a40ff61c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c19673_e886d6c3",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-20T20:21:01Z",
+      "side": 1,
+      "message": "nit: Please move to the \"Helper methods\" section.",
+      "range": {
+        "startLine": 276,
+        "startChar": 2,
+        "endLine": 276,
+        "endChar": 56
+      },
+      "revId": "9d44f1d778755fa16ea7aa7e4cf598a40ff61c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
