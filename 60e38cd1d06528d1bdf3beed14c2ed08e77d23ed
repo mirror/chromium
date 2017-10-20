@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "409cb1cc_89102123",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Yea, last_sqs is a better name.",
+      "parentUuid": "809c6870_dd969a8c",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "153f53d7_2507e421",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190df982_e12c4671",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153f53d7_2507e421",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d26610e_d80202f1",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "sorry for being careless here.",
+      "parentUuid": "5dbd9d2e_61f8658c",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f03287cf_29da8e6d",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b968a4_4f91ebdf",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03287cf_29da8e6d",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c8573600_6f2f377b",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "067abd08_55f7288e",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1948997d_92f960d3",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ae7f84_c4158aa5",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1948997d_92f960d3",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "83d4be3c_4dde4f17",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaedfe81_2fa3bd60",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ff6a5f_15aa7927",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0e5ed6_86dc7d87",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5ff6a5f_15aa7927",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "4fb9f61d_cdc7efe3",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29f3cf5_2c3ee0af",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25f0fc13_426f6ae7",
         "filename": "components/viz/service/display/display_unittest.cc",
         "patchSetId": 8
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-19T20:45:08Z",
       "side": 1,
       "message": "is it worth verifying that the correct quad was removed in these test cases? What if it did occlusion back to front by accident, for example? :) i think this would pass",
+      "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01948521_3dbc0d79",
+        "filename": "components/viz/service/display/display_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-20T17:20:34Z",
+      "side": 1,
+      "message": "okay, i think so. I will add it for all tests.",
+      "parentUuid": "25f0fc13_426f6ae7",
       "revId": "60e38cd1d06528d1bdf3beed14c2ed08e77d23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
