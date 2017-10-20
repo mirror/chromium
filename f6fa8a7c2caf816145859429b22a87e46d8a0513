@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "3709cd70_f2691f49",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "Note that sammc has a CL in flight which might help: https://chromium-review.googlesource.com/c/chromium/src/+/725062",
+      "parentUuid": "a61c504d_07d3ddec",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d456980_025a2219",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 19
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "668151a4_c0c3aa3a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2897,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "I guess an alternative would be to force an isolated request here--but AFAIK, there\u0027s no good way to tell that from here.",
+      "parentUuid": "a30f5fe5_5e443232",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a77f525_aed7bd7b",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 19
@@ -98,6 +134,30 @@
       "writtenOn": "2017-10-13T22:26:31Z",
       "side": 1,
       "message": "nit: is?",
+      "range": {
+        "startLine": 2898,
+        "startChar": 57,
+        "endLine": 2898,
+        "endChar": 59
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daaa9414_60a88034",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "Not much of a choice unfortunately...",
+      "parentUuid": "9a77f525_aed7bd7b",
       "range": {
         "startLine": 2898,
         "startChar": 57,
@@ -247,6 +307,58 @@
     },
     {
       "key": {
+        "uuid": "483846a3_31d0228c",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "Creation of new windows can fail: in that case, we won\u0027t have a provider ptr to pass down. What we should probably do is make the entire reply struct optional, but that\u0027s best left for a separate CL.",
+      "parentUuid": "ad30021d_c6bc4f36",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35da1a25_d0edaab9",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "Maybe add a comment that this can be unset if we\u0027re asking the renderer to create a view with a remote main frame?\n\nWe should probably take advantage of the fact that Mojo lets us give a bit more structure to these messages, but again, something for another CL.",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ee623a_3b94f15c",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "Does this need to be nullable? Seems like it shouldn\u0027t ever fail (because we shouldn\u0027t be sending a CreateFrame message otherwise)",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7862c05b_d243206c",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 19
@@ -258,6 +370,24 @@
       "writtenOn": "2017-10-13T22:26:31Z",
       "side": 1,
       "message": "nit: interfaces_provider?",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40254d7f_bae46207",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "Super nit: interface_provider with no \u0027s\u0027 for consistency. Same comment applies throughout the rest of this CL.",
+      "parentUuid": "7862c05b_d243206c",
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -281,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "94e73c8c_46cd59c5",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "This is to make it movable (since this value needs to be plumbed through the various layers and the handle ultimately moved out at the end).\n\nOne other thing to consider is to just pass the creation params by pointer so the object can be mutated... if I were writing this CL, that\u0027s probably what I\u0027d do. The move ctor for this isn\u0027t particularly cheap (it\u0027s essentially a copy, with the exception of |interfaces|) and it also requires that the compiler emit more code to destroy the instances that are passed by value.\n\n(The second part is really just a personal opinion, and is likely to be at least somewhat controversial \u003d)",
+      "parentUuid": "84cb2566_2a0b2f31",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "120915d1_86b7ee03",
         "filename": "content/test/test_render_frame.cc",
         "patchSetId": 19
@@ -292,6 +440,64 @@
       "writtenOn": "2017-10-12T20:07:32Z",
       "side": 1,
       "message": "nit nit: I guess while you\u0027re making this change, might as well update to std::make_unique? I noticed a few other places too",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03e6553_ae36bfc6",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "FWIW, I think jbroman is slowly going through and cleaning this up.",
+      "parentUuid": "120915d1_86b7ee03",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e20bef9_2df7d44b",
+        "filename": "content/test/test_render_frame_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "Might help to have a comment here, this is a pretty long list of params \u003d)",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d2bfcf_ec5bb1e1",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T09:14:37Z",
+      "side": 1,
+      "message": "At least for other instances where this has come up, we\u0027ve called it an \"Isolated\" request. It might be nice to be consistent with that terminology here as well (see mojo::MakeIsolatedRequest)",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 32
+      },
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
