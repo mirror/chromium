@@ -803,10 +803,8 @@ void ManagedNetworkConfigurationHandlerImpl::GetDeviceStateProperties(
     const std::string& service_path,
     base::DictionaryValue* properties) {
   std::string connection_state;
-  properties->GetStringWithoutPathExpansion(
-      shill::kStateProperty, &connection_state);
-  if (!NetworkState::StateIsConnected(connection_state))
-    return;
+  properties->GetStringWithoutPathExpansion(shill::kStateProperty,
+                                            &connection_state);
 
   // Get the IPConfig properties from the device and store them in "IPConfigs"
   // (plural) in the properties dictionary. (Note: Shill only provides a single
@@ -817,7 +815,8 @@ void ManagedNetworkConfigurationHandlerImpl::GetDeviceStateProperties(
   const DeviceState* device_state =
       network_state_handler_->GetDeviceState(device);
   if (!device_state) {
-    NET_LOG_ERROR("GetDeviceProperties: no device: " + device, service_path);
+    NET_LOG(ERROR) << "GetDeviceStateProperties: no device: " << device
+                   << " For: " << service_path;
     return;
   }
 
@@ -827,11 +826,35 @@ void ManagedNetworkConfigurationHandlerImpl::GetDeviceStateProperties(
                        base::Value(device_state->mac_address()));
   }
 
-  // Convert IPConfig dictionary to a ListValue.
+  // Build a list of IPConfigs.
   auto ip_configs = std::make_unique<base::ListValue>();
-  for (base::DictionaryValue::Iterator iter(device_state->ip_configs());
-       !iter.IsAtEnd(); iter.Advance()) {
-    ip_configs->Append(iter.value().CreateDeepCopy());
+
+  const NetworkState* network =
+      network_state_handler_->GetNetworkState(service_path);
+  if (device_state->ip_configs().empty() && network) {
+    // Shill may not provide IPConfigs for external Cellular devices
+    // (dongles), so build a dictionary of ipv4 properties from cached
+    // NetworkState properties (crbug.com/739314).
+    NET_LOG(DEBUG)
+        << "GetDeviceStateProperties: Setting IPv4 properties from network: "
+        << service_path;
+    base::DictionaryValue ipv4_dict;
+    ipv4_dict.SetKey(shill::kAddressProperty,
+                     base::Value(network->ip_address()));
+    ipv4_dict.SetKey(shill::kGatewayProperty, base::Value(network->gateway()));
+    base::ListValue name_servers;
+    name_servers.AppendStrings(network->dns_servers());
+    ipv4_dict.SetKey(shill::kNameServersProperty, std::move(name_servers));
+    ipv4_dict.SetKey(shill::kPrefixlenProperty,
+                     base::Value(network->prefix_length()));
+    ipv4_dict.SetKey(
+        shill::kWebProxyAutoDiscoveryUrlProperty,
+        base::Value(network->web_proxy_auto_discovery_url().spec()));
+    ip_configs->GetList().push_back(std::move(ipv4_dict));
+  } else {
+    // Convert the DeviceState IPConfigs dictionary to a ListValue.
+    for (const auto iter : device_state->ip_configs().DictItems())
+      ip_configs->GetList().push_back(iter.second.Clone());
   }
   properties->SetWithoutPathExpansion(shill::kIPConfigsProperty,
                                       std::move(ip_configs));

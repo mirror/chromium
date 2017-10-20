@@ -74,6 +74,7 @@ class CHROMEOS_EXPORT NetworkState : public ManagedState {
   const std::string& ip_address() const { return ip_address_; }
   const std::string& gateway() const { return gateway_; }
   const std::vector<std::string>& dns_servers() const { return dns_servers_; }
+  int prefix_length() const { return prefix_length_; }
   const GURL& web_proxy_auto_discovery_url() const {
     return web_proxy_auto_discovery_url_;
   }
