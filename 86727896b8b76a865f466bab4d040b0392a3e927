@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58a3fd04_54c5044c",
+        "filename": "build/toolchain/win/rc/rc.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-20T17:58:06Z",
+      "side": 1,
+      "message": "Ok, figured it out. To send utf-8-converted output to clang, I tell clang to read from stdin (\u0027-\u0027) instead of from the original file. But the file\u0027s directory is on the directory search path, so I need to pass -Idirname(input). My bug was that I added this -I flag after all the other -I flags, so the `#include \"resource.h\"` in chrome/installer/gcapi/gcapi_test.rc then picked up third_party/icu/source/common\\\\resource.h instead of c/i/gcapi/resource.h, which confused everyone. Fixed. While here, also prefixed the last two error messages emitted by rc.py with \"rc.py:\" and changed tool_wrapper.py to not pass shell\u003dTrue for rc.py on Windows -- it doesn\u0027t seem necessary for anything.",
+      "revId": "86727896b8b76a865f466bab4d040b0392a3e927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
