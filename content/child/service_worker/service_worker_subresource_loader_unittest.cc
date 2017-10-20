@@ -383,6 +383,31 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, DropController) {
   }
 }
 
+TEST_F(ServiceWorkerSubresourceLoaderTest, DropController_InflightFetchEvent) {
+  TestRequest(CreateRequest(GURL("https://www.example.com/foo.png")));
+  url_loader_client_->Unbind();
+  EXPECT_EQ(1, fake_controller_.fetch_event_count());
+  EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+  TestRequest(CreateRequest(GURL("https://www.example.com/foo2.png")));
+  url_loader_client_->Unbind();
+  EXPECT_EQ(2, fake_controller_.fetch_event_count());
+  EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+
+  TestRequest(CreateRequest(GURL("https://www.example.com/foo3.png")),
+              false /* should_wait */);
+  EXPECT_EQ(2, fake_controller_.fetch_event_count());
+  EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+
+  // Drop the connection to the ControllerServiceWorker.
+  fake_controller_.CloseAllBindings();
+  base::RunLoop().RunUntilIdle();
+
+  // If connection is closed during fetch event, it's restarted and successfully
+  // finishes.
+  EXPECT_EQ(3, fake_controller_.fetch_event_count());
+  EXPECT_EQ(2, fake_container_host_.get_controller_service_worker_count());
+}
+
 TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
   // Construct the Stream to respond with.
   const char kResponseBody[] = "Here is sample text for the Stream.";
