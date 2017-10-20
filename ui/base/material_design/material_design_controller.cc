@@ -38,8 +38,6 @@ bool MaterialDesignController::is_mode_initialized_ = false;
 MaterialDesignController::Mode MaterialDesignController::mode_ =
     MaterialDesignController::MATERIAL_NORMAL;
 
-bool MaterialDesignController::include_secondary_ui_ = false;
-
 // static
 void MaterialDesignController::Initialize() {
   TRACE_EVENT0("startup", "MaterialDesignController::InitializeMode");
@@ -68,9 +66,6 @@ void MaterialDesignController::Initialize() {
     }
     SetMode(DefaultMode());
   }
-
-  include_secondary_ui_ = base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kExtendMdToSecondaryUi);
 }
 
 // static
@@ -81,7 +76,7 @@ MaterialDesignController::Mode MaterialDesignController::GetMode() {
 
 // static
 bool MaterialDesignController::IsSecondaryUiMaterial() {
-  return include_secondary_ui_;
+  return base::FeatureList::IsEnabled(features::kSecondaryUiMd);
 }
 
 // static
