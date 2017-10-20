@@ -19,6 +19,10 @@
 #include "services/viz/privileged/interfaces/gl/gpu_host.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 
+namespace service_manager {
+class Connector;
+}
+
 namespace viz {
 class ServerGpuMemoryBufferManager;
 }
@@ -54,7 +58,8 @@ class GpuHost {
 
 class DefaultGpuHost : public GpuHost, public viz::mojom::GpuHost {
  public:
-  explicit DefaultGpuHost(GpuHostDelegate* delegate);
+  DefaultGpuHost(GpuHostDelegate* delegate,
+                 service_manager::Connector* connector);
   ~DefaultGpuHost() override;
 
  private:
