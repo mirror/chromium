@@ -33,6 +33,26 @@ const base::FilePath kAnnotationsXmlPath =
         .Append(FILE_PATH_LITERAL("summary"))
         .Append(FILE_PATH_LITERAL("annotations.xml"));
 
+// Extracts annotation id from a line of XML. Expects to have the line in the
+// following form: <item id="..." .../>
+std::string GetAnnotationID(const std::string& xml_line) {
+  std::string::size_type start = xml_line.find("id=\"");
+  if (start == std::string::npos || start + 4 >= xml_line.length()) {
+    LOG(ERROR) << "Could not find 'id' tag in XML Line: " << xml_line;
+    return "";
+  }
+
+  start += 4;
+  std::string::size_type end = xml_line.find("\"", start);
+  if (end == std::string::npos) {
+    LOG(ERROR) << "Could not find closing quotation for 'id' tag in XML Line: "
+               << xml_line;
+    return "";
+  }
+
+  return xml_line.substr(start, end - start);
+}
+
 }  // namespace
 
 TrafficAnnotationExporter::ReportItem::ReportItem()
@@ -49,7 +69,10 @@ TrafficAnnotationExporter::ReportItem::~ReportItem() {}
 
 TrafficAnnotationExporter::TrafficAnnotationExporter(
     const base::FilePath& source_path)
-    : source_path_(source_path), modified_(false) {}
+    : source_path_(source_path), modified_(false) {
+  all_supported_platforms_.push_back("linux");
+  all_supported_platforms_.push_back("windows");
+}
 
 TrafficAnnotationExporter::~TrafficAnnotationExporter() {}
 
@@ -118,16 +141,19 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
 
   std::set<int> current_platform_hashcodes;
 
-  // Iterate current annotations and add/update.
+  // Iterate annotations extracted from the code, and add/update them in the
+  // reported list.
   for (AnnotationInstance annotation : annotations) {
-    // Source tag is not used in computing the hashcode, as we don't need
-    // sensitivity to changes in source location (filepath, line number,
-    // and function).
+    // Compute a hashcode for the annotation. Source field is not used in this
+    // compution as we don't need sensitivity to changes in source location,
+    // i.e. filepath, line number and function.
     std::string content;
     annotation.proto.clear_source();
     google::protobuf::TextFormat::PrintToString(annotation.proto, &content);
     int content_hash_code = TrafficAnnotationAuditor::ComputeHashValue(content);
 
+    // If annotation unique id is already in the reported list, just check if
+    // platform is correct.
     if (base::ContainsKey(report_items_, annotation.proto.unique_id())) {
       ReportItem* current = &report_items_[annotation.proto.unique_id()];
       if (!base::ContainsValue(current->os_list, platform)) {
@@ -135,10 +161,12 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
         modified_ = true;
       }
     } else {
+      // If annotation is new, add it and assume it is on all platforms. Tests
+      // running on other platforms will request updating this if required.
       ReportItem new_item;
       new_item.unique_id_hash_code = annotation.unique_id_hash_code;
       new_item.content_hash_code = content_hash_code;
-      new_item.os_list.push_back(platform);
+      new_item.os_list = all_supported_platforms_;
       report_items_[annotation.proto.unique_id()] = new_item;
       modified_ = true;
     }
@@ -161,7 +189,7 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
     if (!base::ContainsKey(report_items_, item.second)) {
       ReportItem new_item;
       new_item.unique_id_hash_code = item.first;
-      new_item.os_list.push_back("all");
+      new_item.os_list = all_supported_platforms_;
       report_items_[item.second] = new_item;
       modified_ = true;
     }
@@ -182,7 +210,7 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
   return CheckReportItems();
 }
 
-bool TrafficAnnotationExporter::SaveAnnotationsXML() {
+std::string TrafficAnnotationExporter::GenerateSerializedXML() {
   XmlWriter writer;
   writer.StartWriting();
   writer.StartElement("annotations");
@@ -215,6 +243,12 @@ bool TrafficAnnotationExporter::SaveAnnotationsXML() {
   std::string xml_content = writer.GetWrittenString();
   // Add comment before annotation tag (and after xml version).
   xml_content.insert(xml_content.find("<annotations>"), kXmlComment);
+
+  return xml_content;
+}
+
+bool TrafficAnnotationExporter::SaveAnnotationsXML() {
+  std::string xml_content = GenerateSerializedXML();
 
   return base::WriteFile(source_path_.Append(kAnnotationsXmlPath),
                          xml_content.c_str(), xml_content.length()) != -1;
@@ -255,4 +289,80 @@ bool TrafficAnnotationExporter::CheckReportItems() {
     }
   }
   return true;
+}
+
+std::string TrafficAnnotationExporter::GetRequiredUpdates() {
+  std::string old_xml;
+  if (!base::ReadFileToString(
+          base::MakeAbsoluteFilePath(source_path_.Append(kAnnotationsXmlPath)),
+          &old_xml)) {
+    return "Could not generate required changes.";
+  }
+  std::string new_xml = GenerateSerializedXML();
+
+  std::vector<std::string> old_lines = base::SplitString(
+      old_xml, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::vector<std::string> new_lines = base::SplitString(
+      new_xml, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  // Prune header and footer lines.
+  for (int i = 0; i < static_cast<int>(old_lines.size()); i++) {
+    if (old_lines[i].find("item id=") == std::string::npos) {
+      old_lines.erase(old_lines.begin() + i);
+      i--;
+    }
+  }
+  for (int i = 0; i < static_cast<int>(new_lines.size()); i++) {
+    if (new_lines[i].find("item id=") == std::string::npos) {
+      old_lines.erase(new_lines.begin() + i);
+      i--;
+    }
+  }
+
+  std::string differences;
+
+  // Find line by line diffences between the old and new contents.
+  size_t old_idx = 0;
+  size_t new_idx = 0;
+  while (old_idx < old_lines.size() || new_idx < new_lines.size()) {
+    // Equal, pass.
+    if (old_lines[old_idx] == new_lines[new_idx]) {
+      old_idx++;
+      new_idx++;
+      continue;
+    } else {
+      // Extract ids.
+      std::string old_id = GetAnnotationID(old_lines[old_idx]);
+      std::string new_id = GetAnnotationID(new_lines[new_idx]);
+
+      if (old_id.empty() || new_id.empty()) {
+        return "Unexpected error in comparing old and new Annotation.xml "
+               "files.";
+      }
+
+      if (old_id == new_id) {
+        // Update.
+        differences += base::StringPrintf("\tUpdate line: '%s' --> '%s'\n",
+                                          old_lines[old_idx].c_str(),
+                                          new_lines[new_idx].c_str());
+        old_idx++;
+        new_idx++;
+      } else if (old_id < new_id) {
+        // Remove
+        differences += base::StringPrintf("\tRemove line: '%s'\n",
+                                          old_lines[old_idx].c_str());
+        old_idx++;
+      } else {
+        // Add
+        differences += base::StringPrintf("\tAdd line: '%s'\n",
+                                          new_lines[new_idx].c_str());
+        new_idx++;
+      }
+    }
+  }
+
+  // Drop trailing '\n'
+  if (!differences.empty())
+    differences.pop_back();
+  return differences;
 }
