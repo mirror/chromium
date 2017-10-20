@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3f19d18_9833822c",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-20T18:18:38Z",
+      "side": 1,
+      "message": "Existing web UI does not bold this, we should probably fix it.",
+      "parentUuid": "fcc47358_204c0554",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dcf51d8_63bc3d29",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ac2c954_f5307d9b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-20T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dcf51d8_63bc3d29",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6ff0921_017dc066",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-19T22:22:13Z",
       "side": 1,
       "message": "Can we set the default font color to SK_ColorWHITE so we don\u0027t need to specify the override color in both styles to the same value?",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab0cbba_2b532650",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-20T18:18:38Z",
+      "side": 1,
+      "message": "I looked at the FontList and didn\u0027t find a place to set the color there. \ntext_style in RangeStyleInfo has some pre-defined color associated with different text style, but doesn\u0027t seems to have white color.\n\nI added another create_style lambda to make the code look clean.  Please take a look since I\u0027m new to lambda:)",
+      "parentUuid": "b6ff0921_017dc066",
       "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "56b6e5c7_6f03bc60",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-20T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08780aca_c358383b",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b992f6_76c08f00",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "05e6fb67_5ad271de",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-20T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7b992f6_76c08f00",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea9a22db_61e5ad75",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5bf1a2_286a8a6f",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-20T18:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea9a22db_61e5ad75",
+      "revId": "fb2862274a98722c6df6e4eea338ef47084e459c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
