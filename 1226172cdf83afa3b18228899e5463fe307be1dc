@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e79351ac_1c370e37",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-20T20:29:58Z",
+      "side": 1,
+      "message": "done, thanks",
+      "parentUuid": "01657964_3d517a22",
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e478fc57_77ab7a39",
         "filename": "components/session_manager/session_manager_types.h",
         "patchSetId": 5
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "be571d39_997e0ec3",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-20T20:29:58Z",
+      "side": 1,
+      "message": "I am not pretty sure of this. Looks like for new user, ToS is shown after user session initialization: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/session/user_session_manager.cc?q\u003duser_session_man\u0026sq\u003dpackage:chromium\u0026l\u003d1400\n\nAnd now even Google play ToS is shown in this stage. So the comment should be fine.",
+      "parentUuid": "e478fc57_77ab7a39",
+      "range": {
+        "startLine": 22,
+        "startChar": 59,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9295e7ff_dbeeb1ca",
         "filename": "components/session_manager/session_manager_types.h",
         "patchSetId": 5
@@ -80,6 +122,24 @@
       "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61414384_f27d16be",
+        "filename": "components/session_manager/session_manager_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-20T20:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9295e7ff_dbeeb1ca",
+      "revId": "1226172cdf83afa3b18228899e5463fe307be1dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
