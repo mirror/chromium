@@ -75,6 +75,8 @@ Workspace.UISourceCode = class extends Common.Object {
     this._workingCopy = null;
     /** @type {?function() : string} */
     this._workingCopyGetter = null;
+    /** @type {?Promise<?string>} */
+    this._originalContentPromise = null;
   }
 
   /**
@@ -237,9 +239,11 @@ Workspace.UISourceCode = class extends Common.Object {
       var fulfill;
       this._requestContentPromise = new Promise(x => fulfill = x);
       this._project.requestFileContent(this, content => {
-        this._contentLoaded = true;
-        this._content = content;
-        fulfill(content);
+        if (!this._contentLoaded) {
+          this._contentLoaded = true;
+          this._content = content;
+        }
+        fulfill(this._content);
       });
     }
     return this._requestContentPromise;
@@ -297,10 +301,19 @@ Workspace.UISourceCode = class extends Common.Object {
    * @return {!Promise<?string>}
    */
   requestOriginalContent() {
+    if (this._originalContentPromise)
+      return this._originalContentPromise;
     var callback;
     var promise = new Promise(fulfill => callback = fulfill);
     this._project.requestFileContent(this, callback);
     return promise;
+  }
+
+  /**
+   * @param {!Promise<?string>} originalContentPromise
+   */
+  setOriginalContentPromise(originalContentPromise) {
+    this._originalContentPromise = originalContentPromise;
   }
 
   /**
