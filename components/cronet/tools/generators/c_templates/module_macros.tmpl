@@ -1,0 +1,14 @@
+
+{%- macro declare_c_params(prefix, parameters) %}
+{%-   for param in parameters -%}
+{{param.kind|c_wrapper_type}} {{prefix}}{{param.name}}
+{%- if not loop.last %}, {% endif %}
+{%-   endfor %}
+{%- endmacro %}
+
+{%- macro forward_c_params(prefix, parameters) %}
+{%-   for param in parameters -%}
+{{prefix}}{{param.name}}
+{%- if not loop.last %}, {% endif %}
+{%-   endfor %}
+{%- endmacro %}
