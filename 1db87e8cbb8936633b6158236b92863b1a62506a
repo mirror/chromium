@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91ccc02_55afded5",
+        "filename": "ui/display/mojo/display_constants.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T20:04:27Z",
+      "side": 1,
+      "message": "This enum isn\u0027t actually usable as a bitmask, due to mojo\u0027s struct enum validation. What is the intent here?",
+      "revId": "1db87e8cbb8936633b6158236b92863b1a62506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1108d972_f490891c",
+        "filename": "ui/display/types/display_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T20:04:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure if _LAST actually makes sense here: is this supposed to be a bitmask or not?\n\nThis will cause IPC to reject messages that | together virtual with any other flag.",
+      "revId": "1db87e8cbb8936633b6158236b92863b1a62506a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
