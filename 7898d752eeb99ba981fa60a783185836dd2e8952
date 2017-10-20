@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "15e01e6a_472bd165",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-20T05:11:17Z",
+      "side": 1,
+      "message": "As discussed offline, currently we cannot determine what \u0027zh\u0027 stands for exactly, so using it to increase the score of other Chinese language sounds fair to me.\nLet\u0027s leave as is.",
+      "parentUuid": "4cb17eb9_6dacd8ac",
+      "range": {
+        "startLine": 52,
+        "startChar": 47,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7fc394_2c692629",
         "filename": "components/language/core/browser/heuristic_language_model.cc",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae6b1dd_d2b096eb",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-20T05:11:17Z",
+      "side": 1,
+      "message": "Yes it\u0027s good.",
+      "parentUuid": "fc24004d_e8738fd7",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "6c48ae39_5102f5ec",
+        "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-20T05:11:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be3816d2_9ef25556",
+      "range": {
+        "startLine": 26,
+        "startChar": 42,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2ca20f_68a78ef5",
         "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
         "patchSetId": 2
@@ -178,6 +250,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "dc2ca20f_68a78ef5",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "7898d752eeb99ba981fa60a783185836dd2e8952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "511559e0_5572b9b6",
+        "filename": "components/language/core/browser/heuristic_language_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-20T05:11:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88fa52cb_a5e1bb84",
       "range": {
         "startLine": 70,
         "startChar": 31,
