@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d0d8dfc_2815592a",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "Might be worthwhile hoisting this to a helper function, like IsWebContentsForemost.",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8edea69_1caf537f",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "DCHECK(!dialog_)",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1c8687_b5750f7a",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "DCHECK(!pending_dialog_)",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7b7790_d473ab10",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "Suggest putting this in a helper function, since it happens in two places.",
+      "range": {
+        "startLine": 250,
+        "startChar": 1,
+        "endLine": 250,
+        "endChar": 6
+      },
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353bb6ec_b7021c4b",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "callback.md claims that Reset() isn\u0027t necessary. \"Note that the moved-from base::Callback becomes null, as if its Reset() method had been called, and its is_null() method will return true.\"  (It would be nice if the move ctor declaration in the .h file had a comment to this effect too ... )",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0cbde9_21144391",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "Ditto here about Reset maybe not being necessary.",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8843aeb6_331fe95f",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "You might want to clarify in this comment what happens to the alert dialog (it remains visible, but the renderer is unblocked?). Otherwise it\u0027s hard to suss out the behavior contrast between alert() and confirm().",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bed52ee_e7e2e97b",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-20T20:18:01Z",
+      "side": 1,
+      "message": "In the confirm() case, if |dialog_| and |dialog_callback_| are initially not-null, and subsequently |dialog_| becomes null due to WeakPtr invalidation, is it possible that dialog_callback_ remains not-null? If so does that corner case matter? (note: this question is based solely on the text of the comments here).",
+      "revId": "3ed9413b56b5f3a63694580573490a5a75abb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
