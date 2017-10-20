@@ -27,6 +27,7 @@ bool StructTraits<viz::mojom::RenderPassDataView,
     return false;
   }
   (*out)->id = data.id();
+  (*out)->color_temperature = data.color_temperature();
   // RenderPass ids are never zero.
   if (!(*out)->id)
     return false;

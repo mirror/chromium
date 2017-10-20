@@ -46,6 +46,8 @@ class CC_EXPORT RenderSurfaceImpl {
   // reflection.
   gfx::RectF DrawableContentRect() const;
 
+  float ColorTemperature() const;
+
   void SetDrawOpacity(float opacity) {
     draw_properties_.draw_opacity = opacity;
   }
