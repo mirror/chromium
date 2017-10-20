@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e820f4d1_23214a52",
+        "filename": "components/viz/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "this would let any viz code include viz/test ?",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5d8a62_628fa895",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "comment pls",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2af8fa_e966075b",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "\"kills\" or \"will kill\"",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4673bec7_d73ae13d",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "nit: RemoteTest instead of MojoTest?",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a00c9bc_27f6bae9",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "This bool seems to exist only for dchecks inside the class, so it\u0027s a bit odd to unit test it to me. Should we check the frame_sink_manager_impl_/ptr_ instead?",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590498ac_0051a790",
+        "filename": "components/viz/test/mock_compositor_frame_sink_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "nit: Bind or Create or something other than Get?",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ed9246_f2daf10a",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "Use ScopedContextLock pls",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9321dd8_84ef3290",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-20T21:52:47Z",
+      "side": 1,
+      "message": "btw I was reading code around here lately and Get() can return null fwiw, maybe not with viz I guess...? :)",
+      "revId": "665cc1c61b60d91cbf8b6a8e8704ec776fc9e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
