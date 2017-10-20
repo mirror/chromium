@@ -84,6 +84,9 @@ NSColor* DimTextColor(BOOL is_dark_theme) {
              ? skia::SkColorToSRGBNSColor(SkColorSetA(SK_ColorWHITE, 0x7F))
              : skia::SkColorToSRGBNSColor(SkColorSetRGB(0x64, 0x64, 0x64));
 }
+NSColor* InvisibleTextColor() {
+  return skia::SkColorToSRGBNSColor(SK_ColorTRANSPARENT);
+}
 NSColor* PositiveTextColor() {
   return skia::SkColorToSRGBNSColor(SkColorSetRGB(0x3d, 0x94, 0x00));
 }
@@ -350,6 +353,10 @@ NSAttributedString* CreateClassifiedAttributedString(
       [attributedString addAttribute:NSForegroundColorAttributeName
                                value:DimTextColor(is_dark_theme)
                                range:range];
+    } else if (0 != (i->style & ACMatchClassification::INVISIBLE)) {
+      [attributedString addAttribute:NSForegroundColorAttributeName
+                               value:InvisibleTextColor()
+                               range:range];
     }
   }
 
@@ -504,12 +511,13 @@ NSAttributedString* CreateClassifiedAttributedString(
       GetVerticalMargin() + kMaterialExtraVerticalImagePadding;
   if (isVerticalLayout)
     imageRect.origin.y += halfLineHeight;
-  [[cellData image] drawInRect:FlipIfRTL(imageRect, cellFrame)
-                      fromRect:NSZeroRect
-                     operation:NSCompositeSourceOver
-                      fraction:1.0
-                respectFlipped:YES
-                         hints:nil];
+  if ([cellData matchType] != AutocompleteMatchType::SEARCH_SUGGEST_TAIL)
+    [[cellData image] drawInRect:FlipIfRTL(imageRect, cellFrame)
+                        fromRect:NSZeroRect
+                       operation:NSCompositeSourceOver
+                        fraction:1.0
+                  respectFlipped:YES
+                           hints:nil];
 
   CGFloat left = kMaterialTextStartOffset + [tableView contentLeftPadding];
   NSPoint origin = NSMakePoint(left, GetVerticalMargin());

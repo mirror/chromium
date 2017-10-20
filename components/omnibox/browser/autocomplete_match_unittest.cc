@@ -133,40 +133,44 @@ TEST(AutocompleteMatchTest, InlineNontailPrefix) {
       {"1234567890123456",
        // should just shift the NONE
        {{0, ACMatchClassification::NONE}},
-       {{0, ACMatchClassification::DIM}, {8, ACMatchClassification::NONE}}},
+       {{0, ACMatchClassification::INVISIBLE},
+        {8, ACMatchClassification::NONE}}},
       {"1234567890123456",
        // should just shift the NONE
        {{0, ACMatchClassification::NONE}, {10, ACMatchClassification::MATCH}},
-       {{0, ACMatchClassification::DIM},
+       {{0, ACMatchClassification::INVISIBLE},
         {8, ACMatchClassification::NONE},
         {10, ACMatchClassification::MATCH}}},
       {"1234567890123456",
        // should nuke NONE
        {{0, ACMatchClassification::NONE}, {8, ACMatchClassification::MATCH}},
-       {{0, ACMatchClassification::DIM}, {8, ACMatchClassification::MATCH}}},
+       {{0, ACMatchClassification::INVISIBLE},
+        {8, ACMatchClassification::MATCH}}},
       {"1234567890123456",
        // should nuke NONE and shift MATCH
        {{0, ACMatchClassification::NONE}, {4, ACMatchClassification::MATCH}},
-       {{0, ACMatchClassification::DIM}, {8, ACMatchClassification::MATCH}}},
+       {{0, ACMatchClassification::INVISIBLE},
+        {8, ACMatchClassification::MATCH}}},
       {"1234567890123456",
        // should nuke NONE, shift MATCH and preserve NONE
        {{0, ACMatchClassification::NONE},
         {4, ACMatchClassification::MATCH},
         {12, ACMatchClassification::NONE}},
-       {{0, ACMatchClassification::DIM},
+       {{0, ACMatchClassification::INVISIBLE},
         {8, ACMatchClassification::MATCH},
         {12, ACMatchClassification::NONE}}},
       {"12345678",
-       // should have only DIM when done
+       // should have only INVISIBLE when done
        {{0, ACMatchClassification::NONE}, {4, ACMatchClassification::MATCH}},
-       {{0, ACMatchClassification::DIM}}},
+       {{0, ACMatchClassification::INVISIBLE}}},
       {"1234567890123456",
        // should nuke several classifications and shift MATCH
        {{0, ACMatchClassification::NONE},
         {1, ACMatchClassification::NONE},
         {2, ACMatchClassification::NONE},
         {4, ACMatchClassification::MATCH}},
-       {{0, ACMatchClassification::DIM}, {8, ACMatchClassification::MATCH}}},
+       {{0, ACMatchClassification::INVISIBLE},
+        {8, ACMatchClassification::MATCH}}},
       {"1234567190123456",
        // should do nothing since prefix doesn't match
        {{0, ACMatchClassification::NONE}, {4, ACMatchClassification::MATCH}},
@@ -190,9 +194,9 @@ TEST(AutocompleteMatchTest, InlineTailPrefix) {
   } cases[] = {
       {"90123456",
        "1234567890123456",
-       // should prepend DIM and offset rest
+       // should prepend INVISIBLE and offset rest
        {{0, ACMatchClassification::NONE}, {2, ACMatchClassification::MATCH}},
-       {{0, ACMatchClassification::DIM},
+       {{0, ACMatchClassification::INVISIBLE},
         {8, ACMatchClassification::NONE},
         {10, ACMatchClassification::MATCH}}},
   };

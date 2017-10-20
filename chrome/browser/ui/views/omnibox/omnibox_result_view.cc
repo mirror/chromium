@@ -238,6 +238,8 @@ OmniboxResultView::~OmniboxResultView() {
 SkColor OmniboxResultView::GetColor(
     ResultViewState state,
     ColorKind kind) const {
+  if (kind == INVISIBLE_TEXT)
+    return SK_ColorTRANSPARENT;
   for (size_t i = 0; i < arraysize(kTranslationTable); ++i) {
     if (kTranslationTable[i].state == state &&
         kTranslationTable[i].kind == kind) {
@@ -538,6 +540,8 @@ std::unique_ptr<gfx::RenderText> OmniboxResultView::CreateClassifiedRenderText(
     } else if (force_dim ||
         (classifications[i].style & ACMatchClassification::DIM)) {
       color_kind = DIMMED_TEXT;
+    } else if (classifications[i].style & ACMatchClassification::INVISIBLE) {
+      color_kind = INVISIBLE_TEXT;
     }
     render_text->ApplyColor(GetColor(GetState(), color_kind), current_range);
   }
@@ -775,8 +779,9 @@ void OmniboxResultView::OnPaint(gfx::Canvas* canvas) {
   // NOTE: While animating the keyword match, both matches may be visible.
 
   if (!ShowOnlyKeywordMatch()) {
-    canvas->DrawImageInt(GetIcon().AsImageSkia(),
-                         GetMirroredXForRect(icon_bounds_), icon_bounds_.y());
+    if (match_.type != AutocompleteMatchType::SEARCH_SUGGEST_TAIL)
+      canvas->DrawImageInt(GetIcon().AsImageSkia(),
+                           GetMirroredXForRect(icon_bounds_), icon_bounds_.y());
     int x = GetMirroredXForRect(text_bounds_);
     mirroring_context_->Initialize(x, text_bounds_.width());
     InitContentsRenderTextIfNecessary();
