@@ -38,4 +38,13 @@ TEST_F(WindowTreeHostMusTest, SetHitTestMask) {
   ASSERT_FALSE(window_tree()->last_hit_test_mask().has_value());
 }
 
+TEST_F(WindowTreeHostMusTest, PerformWmAction) {
+  std::unique_ptr<WindowTreeHostMus> window_tree_host_mus =
+      std::make_unique<WindowTreeHostMus>(
+          CreateInitParamsForTopLevel(window_tree_client_impl()));
+
+  window_tree_host_mus->PerformWmAction("test-action");
+  EXPECT_EQ(window_tree()->last_wm_action(), "test-action");
+}
+
 }  // namespace aura
