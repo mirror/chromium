@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d2b7c6f1_196108b3",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-20T04:23:39Z",
+      "side": 1,
+      "message": "I think ephemeral is pretty confusing here. The notification itself is no more short-lived than any other notification. I don\u0027t think the lifetime semantics of the notification\u0027s handler (which are actually undefined, but must be longer than the notification) are the best way to describe the kind of notification. I\u0027m not married to \"simple\", but I don\u0027t want to wind up calling DisplayEphemeralNotification in a bunch of places. I think it makes more sense to reference the fact that the notification is somewhat of a singleton (each source of this type only shows one notification at a time), or that it\u0027s Chrome itself and not some third party that\u0027s ultimately the source.",
+      "parentUuid": "9b542281_9c22a678",
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211b149a_44b93f3a",
         "filename": "chrome/browser/notifications/notification_display_service.cc",
         "patchSetId": 4
@@ -71,6 +89,30 @@
       "side": 1,
       "message": "|by_user| can also be set to false for other reasons, notably when the notification expires. That\u0027s my only concern about these changes, the rest looks fine.",
       "parentUuid": "211b149a_44b93f3a",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "e80115b34e2708c978a5bebdf1c0f582418c2e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b75a226_88986f57",
+        "filename": "chrome/browser/notifications/notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-20T04:23:39Z",
+      "side": 1,
+      "message": "I actually can no longer remember why I wrote that, apparently my memory lasts less than 10 days. I think it\u0027s only in the MessageCenterDisplayService that this is true and we can fix this by changing NativeNotificationDisplayService::DoClose to pass the OnClose along in both the native bridge and MC cases.",
+      "parentUuid": "97466609_33d52597",
       "range": {
         "startLine": 40,
         "startChar": 4,
