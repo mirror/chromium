@@ -25,7 +25,8 @@ class IMEBridgeImpl : public IMEBridge {
         current_input_context_(ui::TEXT_INPUT_TYPE_NONE,
                                ui::TEXT_INPUT_MODE_DEFAULT,
                                0),
-        candidate_window_handler_(NULL) {}
+        candidate_window_handler_(NULL),
+        candidate_window_visibility_handler_(NULL) {}
 #else
   IMEBridgeImpl()
       : input_context_handler_(NULL),
@@ -82,6 +83,18 @@ class IMEBridgeImpl : public IMEBridge {
       const override {
     return candidate_window_handler_;
   }
+
+  // IMEBridge override.
+  void SetCandidateWindowVisibilityHandler(
+      chromeos::IMECandidateWindowHandlerInterface* handler) override {
+    candidate_window_visibility_handler_ = handler;
+  }
+
+  // IMEBridge override.
+  chromeos::IMECandidateWindowHandlerInterface*
+  GetCandidateWindowVisibilityHandler() const override {
+    return candidate_window_visibility_handler_;
+  }
 #endif
 
  private:
@@ -91,6 +104,8 @@ class IMEBridgeImpl : public IMEBridge {
 
 #if defined(OS_CHROMEOS)
   chromeos::IMECandidateWindowHandlerInterface* candidate_window_handler_;
+  chromeos::IMECandidateWindowHandlerInterface*
+      candidate_window_visibility_handler_;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(IMEBridgeImpl);
