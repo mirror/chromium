@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36d693b6_adf39d62",
+        "filename": "media/video/video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-20T09:17:53Z",
+      "side": 1,
+      "message": "Has discussed with Kuang-Che offline. We add an argument to the |flush_done_callback| to indicate the flush is complete or not (cancelled).",
+      "parentUuid": "ba7f0782_e9891cb9",
+      "revId": "85d753d142f3c180f27fdc509f7ac54a0f80b61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3411006_de9ebb75",
         "filename": "media/video/video_encode_accelerator.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "47c602bc_f9ab7bb7",
+        "filename": "media/video/video_encode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-20T09:17:53Z",
+      "side": 1,
+      "message": "It is not optional. We just haven\u0027t implement it in all subclasses.",
+      "parentUuid": "c3411006_de9ebb75",
+      "revId": "85d753d142f3c180f27fdc509f7ac54a0f80b61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5869347_c019e435",
         "filename": "media/video/video_encode_accelerator.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "85d753d142f3c180f27fdc509f7ac54a0f80b61c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02259a6_afbfcc80",
+        "filename": "media/video/video_encode_accelerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-20T09:17:53Z",
+      "side": 1,
+      "message": "Done. However I mixed up the CLs while rebasing. Please find the change in\nhttps://chromium-review.googlesource.com/c/chromium/src/+/616525",
+      "parentUuid": "d5869347_c019e435",
+      "revId": "85d753d142f3c180f27fdc509f7ac54a0f80b61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
