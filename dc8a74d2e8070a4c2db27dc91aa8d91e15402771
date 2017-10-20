@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e37a9ad_27ac99bd",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-20T14:18:53Z",
+      "side": 1,
+      "message": "This change doesn\u0027t seem related to Geolocation.",
+      "range": {
+        "startLine": 279,
+        "startChar": 29,
+        "endLine": 279,
+        "endChar": 64
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9245816_13801c4e",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-20T14:18:53Z",
+      "side": 1,
+      "message": "nit: reflow this text?",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 23
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e635b8d_cc1fe9d3",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-20T14:18:53Z",
+      "side": 1,
+      "message": "nit: shouldn\u0027t this be if(enabled) ? \nSame in l.178.",
+      "range": {
+        "startLine": 160,
+        "startChar": 8,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e668d9_06a45d2f",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-20T14:18:53Z",
+      "side": 1,
+      "message": "Same comment, shouldn\u0027t we add be adding a new\nfeaturePolicyEntry (as opposed to removing the\nEncryptedMedia one). This might be intended, but\nthen it\u0027d probably should be noted in the CL\ndescription.",
+      "range": {
+        "startLine": 407,
+        "startChar": 29,
+        "endLine": 407,
+        "endChar": 41
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
