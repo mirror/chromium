@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b4d1f9e_a176b4bd",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "nit: comma after \"enabled\".",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 17
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e31ad7_4267cd30",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "No change for now, but we should plan the overall set of flags we\u0027re using for the Q4 work so we can keep them to a minimum.",
+      "range": {
+        "startLine": 67,
+        "startChar": 18,
+        "endLine": 67,
+        "endChar": 48
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf0591d9_22f0c28d",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller+protected.h",
         "patchSetId": 2
@@ -13,6 +59,115 @@
       "writtenOn": "2017-10-20T01:40:59Z",
       "side": 1,
       "message": "We could use a single animator, but that would mean we\u0027d need to pass it around as a parameter.",
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344c7ba3_b8b19c93",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "Why can\u0027t these be synthesized?",
+      "range": {
+        "startLine": 728,
+        "startChar": 27,
+        "endLine": 728,
+        "endChar": 50
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3d6c72_f2627f2e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "This method name reads like it\u0027s a property (since it\u0027s a noun phrase), but it looks like it modifies an existing property instead. Maybe \u0027configureFadeInAnimation\u0027?",
+      "range": {
+        "startLine": 844,
+        "startChar": 8,
+        "endLine": 844,
+        "endChar": 39
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c467c5ff_db87ac85",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "My assumption was that this method wouldn\u0027t directly manipulate any views, just configure the animator that could do that. Maybe there should be a comment explaining why view frames are being set here?",
+      "range": {
+        "startLine": 847,
+        "startChar": 4,
+        "endLine": 847,
+        "endChar": 17
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53569548_1d2c17a8",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "Maybe this is easier to read (here and above):\n\nbutton.frame \u003d CGRectOffset(button.frame, -kButtonFadeOutXOffset, 0);\n\n(it\u0027s hard to see immediately from the CGRectMake that only the x-origin is changing).",
+      "range": {
+        "startLine": 855,
+        "startChar": 21,
+        "endLine": 855,
+        "endChar": 31
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7d3fba_91041029",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "extra newline.",
       "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -35,6 +190,29 @@
         "startChar": 14,
         "endLine": 1836,
         "endChar": 22
+      },
+      "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcb0f90_4c751d38",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T12:17:37Z",
+      "side": 1,
+      "message": "General note: I don\u0027t think it\u0027s necessary to weakify in cases like this as a default. If the weakified view is retained by the animator, that\u0027s not really a problem.",
+      "range": {
+        "startLine": 2281,
+        "startChar": 19,
+        "endLine": 2281,
+        "endChar": 33
       },
       "revId": "53d3e707f378836eeb0ee038aba5a56528100c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
