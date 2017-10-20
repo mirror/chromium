@@ -353,17 +353,18 @@ void WidgetInputHandlerManager::DidHandleInputEventAndOverscroll(
       ack_state == INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING ||
       ack_state == INPUT_EVENT_ACK_STATE_NOT_CONSUMED) {
     DCHECK(!overscroll_params);
-    InputEventDispatchType dispatch_type = callback.is_null()
-                                               ? DISPATCH_TYPE_NON_BLOCKING
-                                               : DISPATCH_TYPE_BLOCKING;
-
-    HandledEventCallback handled_event =
-        base::BindOnce(&WidgetInputHandlerManager::HandledInputEvent, this,
-                       std::move(callback));
+    InputEventDispatchType dispatch_type = DISPATCH_TYPE_NON_BLOCKING;
+    HandledEventCallback handled_event;
+    if (!callback.is_null() &&
+        ack_state == INPUT_EVENT_ACK_STATE_NOT_CONSUMED) {
+      dispatch_type = DISPATCH_TYPE_BLOCKING;
+      handled_event =
+          base::BindOnce(&WidgetInputHandlerManager::HandledInputEvent, this,
+                         std::move(callback));
+    }
     input_event_queue_->HandleEvent(std::move(input_event), latency_info,
                                     dispatch_type, ack_state,
                                     std::move(handled_event));
-    return;
   }
   if (callback) {
     std::move(callback).Run(
