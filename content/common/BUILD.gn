@@ -410,6 +410,7 @@ source_set("common") {
     "//ppapi/features",
     "//sandbox",
     "//sandbox:sandbox_features",
+    "//services/network/public/cpp:cpp",
     "//services/network/public/interfaces:interfaces",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager",

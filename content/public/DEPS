@@ -2,6 +2,7 @@ include_rules = [
   "-content",
 
   "+services/network/public/interfaces",
+  "+services/network/public/cpp",
   "+services/service_manager/public",
   "+services/service_manager/sandbox",
 

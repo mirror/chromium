@@ -51,8 +51,7 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;
-  void OnComplete(
-      const ResourceRequestCompletionStatus& completion_status) override;
+  void OnComplete(const network::URLLoaderStatus& completion_status) override;
 
   // Called when there is a connection error on the upstream pipe used for the
   // actual request.

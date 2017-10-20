@@ -10,6 +10,7 @@ mojom("interfaces") {
     "fetch_api.mojom",
     "http_request_headers.mojom",
     "restricted_cookie_manager.mojom",
+    "url_loader.mojom",
   ]
 
   public_deps = [

@@ -12,7 +12,7 @@
 #include "content/child/site_isolation_stats_gatherer.h"
 #include "content/common/resource_messages.h"
 #include "content/public/child/request_peer.h"
-#include "content/public/common/resource_request_completion_status.h"
+#include "services/network/public/cpp/url_loader_status.h"
 
 namespace content {
 
@@ -61,7 +61,7 @@ URLResponseBodyConsumer::URLResponseBodyConsumer(
 URLResponseBodyConsumer::~URLResponseBodyConsumer() {}
 
 void URLResponseBodyConsumer::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
+    const network::URLLoaderStatus& status) {
   if (has_been_cancelled_)
     return;
   has_received_completion_ = true;
