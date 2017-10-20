@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bc51153f_32ee241e",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-20T22:41:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07fd495f_ece4aabd",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c442d4e_57166e1c",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -725,6 +743,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffd70e9_ae33f5f6",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-20T22:41:22Z",
+      "side": 1,
+      "message": "I\u0027ve decided this doesn\u0027t matter to me.  I don\u0027t really understand why the language supports both - there doesn\u0027t seem to be chromium consensus on one vs the other.\n\nIf I print out or log a failure status code now, I don\u0027t know if I\u0027ll be able to tie the value back to the status code, which would be sad.  If I pass this error value around as an UMA histogram, are they tied to a consistent value?  Do these still have an integer value underneath?  Are they assigned in order of definition?\n\nOtherwise, this is just a silly c++ ism to me.  :)  Moving on.",
+      "parentUuid": "998bfa72_f427d299",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
