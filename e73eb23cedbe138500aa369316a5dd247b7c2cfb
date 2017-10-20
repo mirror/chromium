@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "07fd495f_ece4aabd",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "ping. as it is now, this will return false on success, no?",
+      "parentUuid": "12f7a8ee_2d4fa6dd",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c442d4e_57166e1c",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -604,6 +622,24 @@
     },
     {
       "key": {
+        "uuid": "32eb47f8_343eb187",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31d9562d_94c716cc",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ff59a3_106443fa",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 6
@@ -668,6 +704,24 @@
       "side": 1,
       "message": "I do want kImeSuccess to have a 0 value.  And these are only for ease of debugging/logging - which I think integer values are easier for.  I find \"Ime\" just helps with readability, as there will be multiple independent support modules in whitelist, and these return status codes are all in the whitelist namespace.\n\nI don\u0027t need to explicitly set a value for any beyond kImeSuccess \u003d 0 though.  They will be assigned incrementally after the first.  Removed further.",
       "parentUuid": "369ac098_f90010ee",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998bfa72_f427d299",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "sorry, but i\u0027m going to push on this a little further. why does kImeSuccess need to be zero and why do callers care? the only place i see where it\u0027s expected to be zero on success has the logic backwards, doesn\u0027t it. i think it would be more obvious whether callers have it right or wrong with \"enum class\" and no automatic int conversion. feel free to push back if i\u0027m not understanding the reasons!",
+      "parentUuid": "372b0821_9681e2a6",
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -951,6 +1005,24 @@
       "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa9bfb9_e3539998",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b55b5a4c_d35b57a6",
+      "revId": "e73eb23cedbe138500aa369316a5dd247b7c2cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

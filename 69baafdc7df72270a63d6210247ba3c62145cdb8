@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "307925e3_0db7b2e3",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "kGuidLength is the length of a single guid, not the length of the array, no? i think you need a new kMicrosoftImeGuidsLength that\u0027s initialized to arraysize(kMicrosoftImeGuidsLength) somewhere.",
+      "range": {
+        "startLine": 70,
+        "startChar": 62,
+        "endLine": 70,
+        "endChar": 73
+      },
+      "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0b7c74_9a39e1ff",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "curious: does it work if you try this:\nconstexpr const wchar_t* kMicrosoftImeGuids[] \u003d {",
+      "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb789c02_a009b5d8",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "i think this will run wcslen during dynamic initialization, which isn\u0027t so good. wdyt of just hardcoding the constant (along with a comment explaining it) and putting an assert() at a convenient place that the constant matches reality? you could use the enum hack to specify the constant.",
+      "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a438f3_1d9c77f1",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "does this need to be accessible outside of the implementation?",
+      "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07388e91_852345b7",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-20T06:36:06Z",
+      "side": 1,
+      "message": "ha, but now the braces aren\u0027t needed since getting rid of \"whitelist::\" shrunk the line!",
+      "revId": "69baafdc7df72270a63d6210247ba3c62145cdb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
