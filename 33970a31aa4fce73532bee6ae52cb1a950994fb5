@@ -16,6 +16,24 @@
       "revId": "33970a31aa4fce73532bee6ae52cb1a950994fb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7481369_5b0ff3ea",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifierTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-20T07:48:35Z",
+      "side": 1,
+      "message": "I decreased the precision, also changed the random generator in tests to a constant one, to avoid any possible future flaky tests.",
+      "parentUuid": "46a4d20a_c670a616",
+      "revId": "33970a31aa4fce73532bee6ae52cb1a950994fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
