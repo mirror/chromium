@@ -107,9 +107,11 @@
 #include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
 #include "chrome/browser/ui/sync/sync_promo_ui.h"
 #include "chrome/browser/ui/tab_contents/chrome_web_contents_view_delegate.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/chrome_web_ui_controller_factory.h"
 #include "chrome/browser/ui/webui/log_web_ui_url.h"
 #include "chrome/browser/usb/usb_tab_helper.h"
@@ -2255,7 +2257,34 @@ void ChromeContentBrowserClient::AllowCertificateError(
 
   SSLErrorHandler::HandleSSLError(
       web_contents, cert_error, ssl_info, request_url, strict_enforcement,
-      expired_previous_decision, std::move(cert_reporter), callback);
+      expired_previous_decision, std::move(cert_reporter),
+      base::Bind(
+          [](const base::Callback<void(content::CertificateRequestResultType)>&
+                 callback,
+             content::WebContents* web_contents,
+             content::CertificateRequestResultType type) {
+            if (type != CERTIFICATE_REQUEST_RESULT_TYPE_CONTINUE) {
+              callback.Run(type);
+              return;
+            }
+
+            Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
+            if (browser && browser->is_app()) {
+              TabStripModel* tab_strip = browser->tab_strip_model();
+              WebContents* contents =
+                  tab_strip->DetachWebContentsAt(tab_strip->active_index());
+              Profile* profile = Profile::FromBrowserContext(
+                  web_contents->GetBrowserContext());
+              Browser* b = chrome::FindTabbedBrowser(profile, false);
+              b = b ? b
+                    : new Browser(
+                          Browser::CreateParams(browser->profile(), true));
+              b->tab_strip_model()->AppendWebContents(contents, true);
+              b->window()->Show();
+            }
+            callback.Run(type);
+          },
+          callback, web_contents));
 }
 
 void ChromeContentBrowserClient::SelectClientCertificate(
