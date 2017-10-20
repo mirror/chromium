@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4cac1a6_cea58ec9",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-20T17:52:41Z",
+      "side": 1,
+      "message": "this is better - I still am not 100% sure this is what we want though.\n\nFor example, if LoadSeed on 156 fails, then this method will just stop and no processing will be done. Which means if something bad happens and our LoadSeed failure rate goes up, then this metric will look like it\u0027s doing better!\n\nOn the other hand, looking at the data we see it\u0027s very rare (\u003e99.5% of the time success). And we do want to capture both the reading and the processing.\n\nSo you have the option of measuring both Loading and Processing separately. Or just leaving it like this, and having to verify that the loading success rate is constant if you\u0027re comparing trends in this metric. \nEither way seems ok to me since the failure rate is quite low.",
+      "revId": "ddb0ac658afff6f32d191c514779dcd756d43340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4587f3_e3c0cfe4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 89656,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-20T17:52:41Z",
+      "side": 1,
+      "message": "If we leave this metric, I would change this to mention that if the loading fails, we will still emit this metric and no processing will be done.",
+      "revId": "ddb0ac658afff6f32d191c514779dcd756d43340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
