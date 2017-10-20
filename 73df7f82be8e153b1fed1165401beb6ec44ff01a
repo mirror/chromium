@@ -117,6 +117,30 @@
       "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c951f69_6f1ba308",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32491,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-20T16:48:08Z",
+      "side": 1,
+      "message": "Great, I never thought about two layers of suffixes and never heard of ordering\u003dprefix. I\u0027ll take a deeper look into this. Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d776834 to track this work.",
+      "parentUuid": "5a8363f6_8f0c6f37",
+      "range": {
+        "startLine": 32484,
+        "startChar": 0,
+        "endLine": 32491,
+        "endChar": 12
+      },
+      "revId": "73df7f82be8e153b1fed1165401beb6ec44ff01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
