@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c449c81_24d2fcdb",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-20T22:12:54Z",
+      "side": 1,
+      "message": "What about adding a test to verify initial click on icon disables welcome bubble?",
+      "revId": "e95e720ead8a275ee67bfa91071d197e04ede7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87d4c7b_17693425",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-20T22:12:54Z",
+      "side": 1,
+      "message": "Consider adding a comment that PaletteTray will control when the bubble is hidden.",
+      "revId": "e95e720ead8a275ee67bfa91071d197e04ede7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de571470_47cc022a",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-20T22:12:54Z",
+      "side": 1,
+      "message": "Short doc",
+      "revId": "e95e720ead8a275ee67bfa91071d197e04ede7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f064f27_c0329797",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-20T22:12:54Z",
+      "side": 1,
+      "message": "nit: bubble_shown()",
+      "revId": "e95e720ead8a275ee67bfa91071d197e04ede7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698151ba_4079ad0d",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-20T22:12:54Z",
+      "side": 1,
+      "message": "I wonder if this would read better if it was next to ShowIfNeeded()",
+      "revId": "e95e720ead8a275ee67bfa91071d197e04ede7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
