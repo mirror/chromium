@@ -2682,6 +2682,10 @@ const char kVrCustomTabBrowsingDescription[] =
     "Allow browsing with a VR headset in a Custom Tab if available for this "
     "device.";
 
+const char kVrLaunchIntentName[] = "Enable VR intents";
+const char kVrLaunchIntentDescription[] =
+    "Allow intents to launch Chrome in VR mode.";
+
 const char kWebVrAutopresentName[] = "Enable WebVr auto presentation";
 const char kWebVrAutopresentDescription[] =
     "Allows auto presentation of WebVr content from trusted first-party apps";
