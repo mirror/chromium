@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a29150_36c2b19d",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T08:43:29Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed: RepeatingCallback is implicitly convertible to OnceCallback?",
+      "revId": "687613ef24335589ae501c08328f9bb572071f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
