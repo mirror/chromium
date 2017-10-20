@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0b6b3b_af71936f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-20T20:19:03Z",
+      "side": 1,
+      "message": "optional nit: no { } is needed here. Up to you.",
+      "revId": "030ef8c4c95f767786d00ac6f0b32c70a4de72fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
