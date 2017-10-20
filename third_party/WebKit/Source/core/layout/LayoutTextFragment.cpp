@@ -217,11 +217,11 @@ unsigned LayoutTextFragment::ResolvedTextLength() const {
   if (!node)
     return 0;
   const NGOffsetMappingResult& mapping = GetNGOffsetMapping();
-  const unsigned start = mapping.GetTextContentOffset(*node, Start());
-  const unsigned end =
+  Optional<unsigned> start = mapping.GetTextContentOffset(*node, Start());
+  Optional<unsigned> end =
       mapping.GetTextContentOffset(*node, Start() + FragmentLength());
-  DCHECK_LE(start, end);
-  return end - start;
+  DCHECK_LE(*start, *end);
+  return *end - *start;
 }
 
 bool LayoutTextFragment::ContainsCaretOffset(int text_offset) const {

@@ -109,11 +109,12 @@ NGMappingUnitRange NGOffsetMappingResult::GetMappingUnitsForDOMOffsetRange(
   return {result_begin, result_end};
 }
 
-size_t NGOffsetMappingResult::GetTextContentOffset(const Node& node,
-                                                   unsigned offset) const {
+Optional<unsigned> NGOffsetMappingResult::GetTextContentOffset(
+    const Node& node,
+    unsigned offset) const {
   const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
   if (!unit)
-    return kNotFound;
+    return {};
   return unit->ConvertDOMOffsetToTextContent(offset);
 }
 
@@ -175,10 +176,10 @@ bool NGOffsetMappingResult::IsAfterNonCollapsedCharacter(
 Optional<UChar> NGOffsetMappingResult::GetCharacterBefore(
     const Node& node,
     unsigned offset) const {
-  const size_t text_content_offset = GetTextContentOffset(node, offset);
-  if (text_content_offset == kNotFound || !text_content_offset)
+  Optional<unsigned> text_content_offset = GetTextContentOffset(node, offset);
+  if (!text_content_offset || !*text_content_offset)
     return {};
-  return text_[text_content_offset - 1];
+  return text_[*text_content_offset - 1];
 }
 
 }  // namespace blink
