@@ -25,6 +25,57 @@
     },
     {
       "key": {
+        "uuid": "f243033c_ffcbae02",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "Can you add parentheses or intermediate variables as I don\u0027t recall what the * applies to",
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a93c50_6add1a5f",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "don\u0027t need new line",
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd6d59b_08aec4f9",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "FindServiceWorkerRegistrationHandle for consistency with above",
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1c2e554_2ae56b9a",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 5
@@ -105,6 +156,30 @@
       "writtenOn": "2017-10-20T07:43:43Z",
       "side": 1,
       "message": "This function is moved from SWDispatcherHost class because this is just used by SWProviderHost class. Currently its\u0027 implementation is still depending on SWDispatcherHost but finally we\u0027ll eliminate this dependency.",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 30
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6e53db_db612c0a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "CreateServiceWorkerRegistrationObjectInfo",
+      "parentUuid": "63c6923a_e5922487",
       "range": {
         "startLine": 239,
         "startChar": 2,
@@ -209,6 +284,40 @@
     },
     {
       "key": {
+        "uuid": "53a2eda5_c6282ed4",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "could you add parens please (here and below)",
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8e795b_86de716b",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "When is this |info| used? Can you remove the statement or add a comment about why it\u0027s needed?",
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35216077_3183f40b",
         "filename": "content/child/service_worker/service_worker_handle_reference.h",
         "patchSetId": 5
@@ -295,6 +404,81 @@
         "endLine": 91,
         "endChar": 30
       },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb92c353_a4bb5fb0",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "Can you add a comment about |sender| in the meantime?\n\nAlso it\u0027s a bit late but can you change ThreadSafeSender to scoped_refptr, and plumb that through to ServiceWorkerHandleReference::Adopt, which takes ownership of the pointer?",
+      "parentUuid": "35be6d5f_e8f125a3",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52920267_fddeee62",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "Create() should take a scoped_refptr for Sender as it takes ownership",
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382459d3_be42b8a3",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "We can remove this line 24 now that we actually have the service workers inside (yay!)",
+      "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f973d9a2_5d685273",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T18:10:49Z",
+      "side": 1,
+      "message": "might just say:\n\n// Corresponds to ServiceWorkerRegistration#{installing,waiting,active}",
       "revId": "8a6d90dc0394acfa55c1bd00bf27cc37073fd4fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
