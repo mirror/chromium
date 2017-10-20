@@ -10,6 +10,7 @@
 #include "base/threading/thread.h"
 #include "build/build_config.h"
 #include "content/public/test/test_host_resolver.h"
+#include "net/base/network_change_notifier.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -138,6 +139,10 @@ class BrowserTestBase : public testing::Test {
   // When using the network process, update the host resolver rules that were
   // added in SetUpOnMainThread.
   void InitializeNetworkProcess();
+
+  // Disables the global singleton net::NetworkChangeNotifier. Tests should use
+  // ScopedMockNetworkChangeNotifier.
+  net::NetworkChangeNotifier::DisableForTest disable_for_test_;
 
   // Testing server, started on demand.
   std::unique_ptr<net::SpawnedTestServer> spawned_test_server_;
