@@ -5,6 +5,7 @@
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "components/variations/variations_associated_data.h"
@@ -134,8 +135,9 @@ void DesktopSessionDurationTracker::StartSession() {
   session_start_ = base::TimeTicks::Now();
   StartTimer(inactivity_timeout_);
 
-  for (Observer& observer : observer_list_)
+  for (Observer& observer : observer_list_) {
     observer.OnSessionStarted(session_start_);
+  }
 }
 
 void DesktopSessionDurationTracker::EndSession(
@@ -150,8 +152,9 @@ void DesktopSessionDurationTracker::EndSession(
   if (delta < kZeroTime)
     delta = kZeroTime;
 
-  for (Observer& observer : observer_list_)
+  for (Observer& observer : observer_list_) {
     observer.OnSessionEnded(delta);
+  }
 
   DVLOG(4) << "Logging session length of " << delta.InSeconds() << " seconds.";
 

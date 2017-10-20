@@ -160,9 +160,9 @@ class ObserverListBase
 
   void Clear();
 
- protected:
   size_t size() const { return observers_.size(); }
 
+ protected:
   void Compact();
 
  private:

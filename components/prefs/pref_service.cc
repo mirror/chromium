@@ -10,7 +10,6 @@
 #include "base/bind.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
-#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/single_thread_task_runner.h"
@@ -285,7 +284,6 @@ bool PrefService::IsUserModifiablePreference(
 const base::DictionaryValue* PrefService::GetDictionary(
     const std::string& path) const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
   const base::Value* value = GetPreferenceValue(path);
   if (!value) {
     NOTREACHED() << "Trying to read an unregistered pref: " << path;
@@ -295,6 +293,7 @@ const base::DictionaryValue* PrefService::GetDictionary(
     NOTREACHED();
     return NULL;
   }
+
   return static_cast<const base::DictionaryValue*>(value);
 }
 
