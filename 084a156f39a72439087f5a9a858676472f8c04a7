@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29f4e1e6_88d25dd8",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-20T02:13:47Z",
+      "side": 1,
+      "message": "so if the experiment is enabled, then we will completely switch over the snapshot signal to image/css loading? rather than take whichever comes first/last?",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc2b2ae_df2956f8",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-20T02:13:47Z",
+      "side": 1,
+      "message": "Do we also want to mark quality depending on ratio of images/css resources received?",
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fd7a4a_e8855295",
+        "filename": "sdch/open-vcdiff",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-20T02:13:47Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "084a156f39a72439087f5a9a858676472f8c04a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
