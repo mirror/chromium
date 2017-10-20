@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a042283a_57602354",
+        "filename": "content/browser/interface_provider_filtering.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T08:28:02Z",
+      "side": 1,
+      "message": "This is safe as always written; however, it\u0027s unfortunate that we can\u0027t assert that the StringPiece is bound to an object with static storage... otherwise, this would be somewhat dubious.\n\nPerhaps just passing a raw const char* would even be preferable for indicating that.",
+      "range": {
+        "startLine": 48,
+        "startChar": 46,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "d53766b46e270489d884b639b43b1bf4c4fc8943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
