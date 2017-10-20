@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Cookie Store Tests (testMetaHttpEquivSetCookie) promise_test: Unhandled rejection with value: object "TypeError: cookieStore.get is not a function"
+Harness: the test ran to completion.
+
