@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e84b618f_5cda7d9a",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-20T01:58:11Z",
+      "side": 1,
+      "message": "My feeling is that a virtual function makes it easier. You can override it in test case.\nBut it\u0027s up to you.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "e3638e24fcce45a57c6dd8cb1a1c8e71fd02c48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aae8da4_49504b17",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-20T01:58:11Z",
+      "side": 1,
+      "message": "Maybe fake_now_for_test_: this name is way too generic.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 23
+      },
+      "revId": "e3638e24fcce45a57c6dd8cb1a1c8e71fd02c48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3041147_a96c57c8",
+        "filename": "remoting/protocol/webrtc_frame_scheduler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-20T01:58:11Z",
+      "side": 1,
+      "message": "Uppercase?",
+      "range": {
+        "startLine": 74,
+        "startChar": 50,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "e3638e24fcce45a57c6dd8cb1a1c8e71fd02c48c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
