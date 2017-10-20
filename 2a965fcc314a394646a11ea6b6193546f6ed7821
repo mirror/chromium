@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a5a4032_a4526106",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T21:39:06Z",
+      "side": 1,
+      "message": "How did we pick this order?",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692223c2_c06dd9ab",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T21:39:06Z",
+      "side": 1,
+      "message": "Do you need to check \"!cloud\" like on lines 94 and 96?",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b0902c_e108fe80",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T21:39:06Z",
+      "side": 1,
+      "message": "Is it possible to drop this and do the following? With |kTestData| as const unsigned char.\n\n*data \u003d base::MakeRefCounted\u003cRefCountedBytes\u003e(kTestData, sizeof(kTestData))",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162dbee4_c4471441",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T21:39:06Z",
+      "side": 1,
+      "message": "empty()",
+      "range": {
+        "startLine": 236,
+        "startChar": 45,
+        "endLine": 236,
+        "endChar": 56
+      },
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b440059_e7a9815f",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T21:39:06Z",
+      "side": 1,
+      "message": "Are we doing the same initialization, down to the ValidateInitialSettings() call, in every test? Can we make an initialization method in PrintPreviewHandlerTest, and call that ever at the beginning of every test, or in the PrintPreviewHandlerTest ctor?",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7378de_e6d1082a",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T21:39:06Z",
+      "side": 1,
+      "message": "Why not just have GetPrintTicket() return the JSON?",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e74be8_aae7e42d",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T21:39:06Z",
+      "side": 1,
+      "message": "We also have very similar blocks to this one in every test. Add another helper method?",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
