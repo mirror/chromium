@@ -1,0 +1,623 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4738e04_c1ba7eb9",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "You can probably split this into a \"cleanup\" CL.",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca64e37_6e1d4856",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "kTestOrigin",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755476f4_bde73529",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "If I understand this right, you\u0027re trying to cover the federated case in the Manage bubble, but still give the Pending and Automatic cases the simple case. Since you\u0027re only using the fact that this is a vector in one place, I would make \"test_password_form\" and \"test_federated_form\" versions, and pass them both into the Manage case.",
+      "range": {
+        "startLine": 53,
+        "startChar": 48,
+        "endLine": 53,
+        "endChar": 59
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d75c2f_e677753e",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_view_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "This can also go into the \"cleanup\" CL",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72454802_955d8e26",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "I think this is larger than most existing bubbles. LayoutProvider::GetSnappedDialogWidth is using 320, I would dedup with that.",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f106495_d782f4b9",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "I think this metric is analogous to the one you added, so rename it to DISTANCE_MODAL_DIALOG_PREFERRED_WIDTH. At this point we should just admit to coercing the dialogs to the size we want.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d90f3b_145022b0",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "delete \"Preferred\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76de4513_3c3ad821",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "ColumnSetType? Also comment what these enum values mean.",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d134c9_d37e5b3b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "change \"id\" to be more descriptive",
+      "range": {
+        "startLine": 42,
+        "startChar": 60,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff77260_f6d70f69",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Put this sentence last and say like, \"Otherwise the columns are 50/50.\"",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 70
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee5e59c_3a4c4b80",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "\"between_column_padding\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9976ac_102176b6",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Make these constexpr ints, and name like \"kUndoButtonTag\".",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718e3faa_62bc825a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "This can maybe go into the \"cleanup\" CL.",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 29
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe2f694_c7f6fba4",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Use an else block",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 10
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790be575_fc809915",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "I think a DCHECK(sender-\u003etag() \u003d\u003d kDeleteButton || sender-\u003etag() \u003d\u003d kUndoButton) would it clearer why this works.",
+      "range": {
+        "startLine": 433,
+        "startChar": 2,
+        "endLine": 433,
+        "endChar": 10
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b469cdc0_8627b91a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Don\u0027t use CONTEXT_DEPRECATED_SMALL, pick an appropriate context. Body text?",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accd2662_dce97e95",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "nit: no braces on single line block",
+      "range": {
+        "startLine": 465,
+        "startChar": 4,
+        "endLine": 465,
+        "endChar": 5
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1935ccbe_7bb8eef8",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Refresh twice?",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 11
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11ff682_cc8f6b6b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "This name can be a little more specific, \"ResetLayout\" maybe?",
+      "range": {
+        "startLine": 479,
+        "startChar": 36,
+        "endLine": 479,
+        "endChar": 43
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a8b86b_c000936b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Only create the column sets you need, perhaps by checking to see if they don\u0027t exist via GetColumnSet inside PasswordRow::AddToLayout.",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ff6f60_877b1c86",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Conceptually I think you want DISTANCE_CONTROL_LIST_VERTICAL, but the mock looks like it wants 8pt between rows, not 12pt (though I didn\u0027t measure). Maybe ask Alan if that\u0027s what he really wants?",
+      "range": {
+        "startLine": 495,
+        "startChar": 13,
+        "endLine": 495,
+        "endChar": 46
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd8235c_0142186e",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Can you just pass in the action directly (i.e. this method takes a PasswordAction instead of a bool)?",
+      "range": {
+        "startLine": 517,
+        "startChar": 27,
+        "endLine": 517,
+        "endChar": 34
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b63858c_fa35f1e4",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "nit: const int",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fca5eb_0674a22e",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Rename this to be type-of-control-agnostic (maybe \"OnManageClicked\").",
+      "range": {
+        "startLine": 547,
+        "startChar": 10,
+        "endLine": 547,
+        "endChar": 29
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc36249_db3cd37a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "This should be in its own file, though if you delete the old version of the dialog that\u0027ll probably happen naturally.",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22af179a_cdf2b821",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Prefix this block with \"// LocationBarBubbleDelegateView:\"",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be38f191_fb4b353b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "This should be in its own block, with \"// views::ButtonListener:\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a6c9e9_9d03abaa",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Delete the old ManageView. I don\u0027t care if it changes the layout pre-Harmony.",
+      "range": {
+        "startLine": 933,
+        "startChar": 35,
+        "endLine": 933,
+        "endChar": 48
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9606ee77_d3baff17",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-20T01:28:27Z",
+      "side": 1,
+      "message": "Can you have this code look for your new bubble and grab its WebContents instead? Even though that\u0027s not so nice, it\u0027s better than adding the global.",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
