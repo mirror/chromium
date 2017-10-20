@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b28657_1ab94e66",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3290,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-20T08:11:08Z",
+      "side": 1,
+      "message": "+ellenpli, haraken\n\nFrom backend implementation\u0027s perspective:\n- When near-OOM is detected, we pauses JavaScript execution\n- When the user declines the intervention, we resumes JavaScript execution\n\nIt might be better to say \"Resume\" or something?",
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
