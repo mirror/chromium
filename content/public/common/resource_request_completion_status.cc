@@ -2,19 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/common/resource_request_completion_status.h"
+#include "services/network/public/cpp/url_loader_status.h"
 
 #include "net/base/net_errors.h"
-
-namespace content {
-
-ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() = default;
-ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
-    const ResourceRequestCompletionStatus& status) = default;
-
-ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(int error_code)
-    : error_code(error_code), completion_time(base::TimeTicks::Now()) {}
-
-ResourceRequestCompletionStatus::~ResourceRequestCompletionStatus() = default;
-
-}  // namespace content

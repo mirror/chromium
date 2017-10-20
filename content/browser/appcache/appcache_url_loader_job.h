@@ -99,7 +99,7 @@ class CONTENT_EXPORT AppCacheURLLoaderJob : public AppCacheJob,
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;
-  void OnComplete(const ResourceRequestCompletionStatus& status) override;
+  void OnComplete(const network::URLLoaderStatus& status) override;
 
   void set_main_resource_loader_callback(LoaderCallback callback) {
     main_resource_loader_callback_ = std::move(callback);
