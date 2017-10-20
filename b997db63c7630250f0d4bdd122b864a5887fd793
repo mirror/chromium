@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b762af_cbfa4425",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "Please comment this bool:\n\ne.g., something like:  /* is_exclusive \u003d */ !is_partial",
+      "range": {
+        "startLine": 858,
+        "startChar": 50,
+        "endLine": 858,
+        "endChar": 62
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdbb9a8_39111667",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "Rather than return, should we continue iterating through done_headers_queue and see if any other write transaction might be able to start?",
+      "range": {
+        "startLine": 1086,
+        "startChar": 6,
+        "endLine": 1086,
+        "endChar": 12
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99387b04_7b6f8b89",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "s/be a reader/readers/",
+      "range": {
+        "startLine": 317,
+        "startChar": 7,
+        "endLine": 317,
+        "endChar": 18
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd826758_e7651931",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "s/will have a/will still have its/",
+      "range": {
+        "startLine": 317,
+        "startChar": 23,
+        "endLine": 317,
+        "endChar": 32
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8c25c8_9548f62e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2826,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "I\u0027d rather we check this before calling SetupEntryForRead as code like this makes the function more of a MaybeSetupEntryForRead.",
+      "range": {
+        "startLine": 2826,
+        "startChar": 1,
+        "endLine": 2826,
+        "endChar": 43
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fad54a_d6ac5330",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 3330,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "this change is unnecessary",
+      "range": {
+        "startLine": 3328,
+        "startChar": 0,
+        "endLine": 3330,
+        "endChar": 75
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a34894_5b12c40c",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "s/would be/are/",
+      "range": {
+        "startLine": 1385,
+        "startChar": 18,
+        "endLine": 1385,
+        "endChar": 26
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60460422_e6c4f444",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2235,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "this is a keyword that I\u0027d rather avoid using. How about current_request?",
+      "range": {
+        "startLine": 2235,
+        "startChar": 21,
+        "endLine": 2235,
+        "endChar": 25
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e772af_ec686674",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "optional nit: MockHttpRequest* this_request \u003d i \u003d\u003d 1 ? \u0026read_only_request : \u0026request;",
+      "range": {
+        "startLine": 2234,
+        "startChar": 0,
+        "endLine": 2238,
+        "endChar": 0
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775bb64b_b147fe5f",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "braces around this",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 13
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69025bc_064aca0a",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "This can go.",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 51
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55a5204_291a586e",
+        "filename": "net/http/mock_http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-20T14:45:27Z",
+      "side": 1,
+      "message": "optional nit: prefer return entry ? entry-\u003ereaders.size() : 0; here and below",
+      "range": {
+        "startLine": 738,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 11
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
