@@ -36,3 +36,7 @@ int BookmarkPromoBubbleView::GetStringSpecifier() {
 
   return kTextIds[text_specifier];
 }
+
+void BookmarkPromoBubbleView::ShowPromoBubble() {}
+
+void BookmarkPromoBubbleView::ClosePromoBubble() {}

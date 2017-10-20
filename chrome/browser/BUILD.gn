@@ -3216,6 +3216,7 @@ split_static_library("browser") {
       "feature_engagement/bookmark/bookmark_tracker.h",
       "feature_engagement/bookmark/bookmark_tracker_factory.cc",
       "feature_engagement/bookmark/bookmark_tracker_factory.h",
+      "feature_engagement/feature_promo_bubble.h",
       "feature_engagement/feature_tracker.cc",
       "feature_engagement/feature_tracker.h",
       "feature_engagement/incognito_window/incognito_window_tracker.cc",
