@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.annotation.Nullable;
+import android.support.test.filters.LargeTest;
 import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
 import android.view.View;
@@ -32,7 +33,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -154,8 +154,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @LargeTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome
     @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
@@ -177,8 +176,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @LargeTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome(false)
     public void testTileGridAppearance_Full() throws IOException, InterruptedException {
@@ -199,8 +197,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @LargeTest
     @RetryOnFailure
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome
@@ -216,8 +213,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @LargeTest
     @RetryOnFailure
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome(false)
@@ -391,11 +387,6 @@ public class TileGridLayoutTest {
     private TileGridLayout renderTiles(List<SiteSuggestion> siteSuggestions)
             throws IOException, InterruptedException {
         return renderTiles(siteSuggestions, Collections.emptyList());
-    }
-
-    private SiteSuggestion makeSuggestionFromDataIndex(int dataIndex) {
-        return createSiteSuggestion(FAKE_MOST_VISITED_TITLES[dataIndex],
-                mTestServerRule.getServer().getURL(FAKE_MOST_VISITED_URLS[dataIndex]));
     }
 
     private SiteSection createSiteSection(
