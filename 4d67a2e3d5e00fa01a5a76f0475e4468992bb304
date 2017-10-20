@@ -1,0 +1,265 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bfab846_004ead79",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "Since it looks weird to see “define the section read-only” for Linux bot not for macOS, when the whole point of it is to be read-only, you can leave a comment here saying that the linker invocation directed by the BUILD.gn file is responsible for making it read-only.",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070d10c3_467822d9",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "Blank line before this, so it doesn’t mush with the above.",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e669676f_caddcc8c",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "const void* (or const char* if you really want “byte,” but I suspect you want to pass pointers to arbitrary types to this thing.)",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7a5d73_b8ef08bc",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "Are these for testing only? (If so, they shouldn’t be here, they should be restricted to the test or a test utility.)\n\nHow about AssertMemoryIsReadOnly()?",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5ab655_3635a85f",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "This is base::g_writers, which isn’t a very descriptive or useful name. It ought to be a static class variable.\n\nFor that matter, it’s probably better to put the functions above into the class as static functions, to give them clearer naming at point of use.",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425aca44_7ff4661c",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "I expected g_writers to be atomic, rather than non-atomic with a lock. Any reason you didn’t do that?",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2183fa_13a74bad",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "This results in a module initializer and finalizer (static constructor/destructor) if T needs one. We can’t have that. You’ll need to come up with a pattern that ensures that T is safe as a naked object at static duration, or one that reserves storage in the protected_memory section but doesn’t construct objects until the point of first use, and doesn’t destroy them at all.",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c368c46_2ba129df",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "I’d prefer to see a usage pattern that used a scoper to ensure that SetReadOnly() gets called.\n\nIf possible, it’d be nice if that were the only publicly-accessible interface to SetReadWrite().",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f649dba4_ad4f2680",
+        "filename": "base/memory/protected_memory_cfi.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "No (c)\n\n(follow the example in the other header file)",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d17ab8a_567a7bb1",
+        "filename": "base/memory/protected_memory_cfi.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "Capitalize",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074f7045_94c4009b",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "Do we need to burn TWO file descriptors for this? It seems like you could do this just as easily writing to /dev/null, reading from /dev/zero, etc.\n\nFor that matter, you can easily find a syscall that’ll give you EFAULT without having to burn any FDs at all. Perhaps there aren’t any that you can restrict to a single-byte read or write, though. I can think of several syscalls that fit this pattern without any FDs off the top of my head, but none that work with byte-level granularity. (Doesn’t mean that there aren’t any, though.) Even so, since protections are applied on a per-page basis, you’d be fine with, say, clock_gettime() provided that you ensure that (timespec*)ptr and (timespec*)ptr + 1 are both on the same page. You could easily adjust ptr to make it so if it wasn’t.\n\n(I’m not asserting that clock_gettime() is the best example. You’d want to choose a syscall that a libc is minimally likely to mess around with. I know that times() is a bad example for this reason.)",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d893c5ce_570a55ad",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "We don’t really need to close the FDs at exit, do we?",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bd7b73_fac48c68",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "HANDLE_EINTR the write() too. You should also check its return value, otherwise you may end up waiting forever on the read() (depends on the implementation).",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2721f75_3f1aac21",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "This won’t account for the component\u003dshared_library build when protected_memory sections exist outside of libbase. These functions will find and report exclusively on the protected_memory section in libbase.",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15332c80_8732f96a",
+        "filename": "build/config/mac/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-20T21:59:02Z",
+      "side": 1,
+      "message": "Rather than doing this here, is there a way to move it closer to the .h and .cc files in base, such that anyone that depends on base gets this?",
+      "revId": "4d67a2e3d5e00fa01a5a76f0475e4468992bb304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
