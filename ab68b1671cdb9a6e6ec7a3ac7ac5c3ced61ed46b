@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "48d310a0_2c8f560a",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T20:50:28Z",
+      "side": 1,
+      "message": "const ref for |text| and |bold_start| ?\ni.e.\n  const std::string16\u0026 text,\n  const base::Optional\u003cint\u003e\u0026 bold_start,",
+      "revId": "ab68b1671cdb9a6e6ec7a3ac7ac5c3ced61ed46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd462188_3bd0c0fd",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 5
@@ -19,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "19cbcfc3_aa6d90cc",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T20:50:28Z",
+      "side": 1,
+      "message": "nit: Do we need to set custom font for normal text? If not, consider this:\n  if (is_bold) {\n    style.custom_font \u003d label-\u003eGetDefaultFontList().Derive(...);\n  }",
+      "revId": "ab68b1671cdb9a6e6ec7a3ac7ac5c3ced61ed46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "016a7ec3_6f6dff3f",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 5
@@ -30,6 +64,40 @@
       "writtenOn": "2017-10-20T18:24:52Z",
       "side": 1,
       "message": "false /*bold*/\ntrue /*bold*/",
+      "revId": "ab68b1671cdb9a6e6ec7a3ac7ac5c3ced61ed46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b614bd1_686c40ce",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T20:50:28Z",
+      "side": 1,
+      "message": "What happens if *bold_start \u003d\u003d 0 ? Maybe we should validate and bail on bad rang in |add_style|.",
+      "revId": "ab68b1671cdb9a6e6ec7a3ac7ac5c3ced61ed46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15038404_cd0aa2d0",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-20T20:50:28Z",
+      "side": 1,
+      "message": "Similar here, what happens if *bold_start + bold_length + 1 \u003d\u003d text.legnth()?",
       "revId": "ab68b1671cdb9a6e6ec7a3ac7ac5c3ced61ed46b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
