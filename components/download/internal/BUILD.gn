@@ -70,6 +70,7 @@ static_library("internal") {
 
   deps = [
     "//base",
+    "//components/download/in_progress_metadata",
     "//components/download/internal/proto",
     "//components/download/public",
     "//components/leveldb_proto",

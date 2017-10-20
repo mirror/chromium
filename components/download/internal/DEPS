@@ -1,5 +1,6 @@
 include_rules = [
   "-components/download/content",
+  "+components/download/in_progress",
   "-content",
   "+components/leveldb_proto",
   "+base",
