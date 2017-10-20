@@ -10,6 +10,7 @@
 #include "core/input_type_names.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebSize.h"
 
 namespace blink {
 
