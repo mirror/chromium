@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f39f0852_caa6e50d",
+        "filename": "ios/web/public/web_state/ui/crw_web_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-20T21:47:34Z",
+      "side": 1,
+      "message": "This API is deprecated and we should not change it. But the bigger problem is making changes in CRWWebController. We don\u0027t have *any* tests to verify that changes do not bring regressions. I do see a bug (probably a crash) with this CL because CloseWebState() call may happen on web state which is being destructed. But there is also a chance of introducing other bugs because certain code will now execute asynchronously. shouldAllowLoadWithNavigationAction: is in pretty bad shape and I don\u0027t think we can reason well about the implication of these changes.\n\nIt would be fine to accept the risky patch if the purpose of a change is a bug fix. But it does not look like this change fixes any bugs. What will happen if we do not land this CL?",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "0ece1e60b387c65319f17189e8b0bb6505940ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
