@@ -1589,6 +1589,8 @@ leveldb::Slice MakeSlice(const base::StringPiece& s) {
 namespace leveldb {
 
 Env* Env::Default() {
+  VLOG(1) << "< XXXXXXXXXXXXXXXXXX Returning Default Env. XXXXXXXXXXXXXXXXXXX";
+  fprintf(stderr, "XXX Returned default env XXX\n");
   return leveldb_env::default_env.Pointer();
 }
 
