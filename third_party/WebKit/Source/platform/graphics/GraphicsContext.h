@@ -497,6 +497,29 @@ class PLATFORM_EXPORT GraphicsContext {
   unsigned has_meta_data_ : 1;
 };
 
+class ScopedInterpolationQuality {
+ public:
+  ScopedInterpolationQuality(GraphicsContext& context,
+                             InterpolationQuality interpolation_quality)
+      : context_(context),
+        previous_interpolation_quality_(context.ImageInterpolationQuality()),
+        interpolation_quality_changed_(previous_interpolation_quality_ !=
+                                       interpolation_quality) {
+    if (interpolation_quality_changed_)
+      context_.SetImageInterpolationQuality(interpolation_quality);
+  }
+
+  ~ScopedInterpolationQuality() {
+    if (interpolation_quality_changed_)
+      context_.SetImageInterpolationQuality(previous_interpolation_quality_);
+  }
+
+ private:
+  GraphicsContext& context_;
+  const InterpolationQuality previous_interpolation_quality_;
+  const bool interpolation_quality_changed_;
+};
+
 }  // namespace blink
 
 #endif  // GraphicsContext_h

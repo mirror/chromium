@@ -242,12 +242,10 @@ void Image::DrawTiledBorder(GraphicsContext& ctxt,
 
   // TODO(cavalcantii): see crbug.com/662507.
   if ((h_rule == kRoundTile) || (v_rule == kRoundTile)) {
-    InterpolationQuality previous_interpolation_quality =
-        ctxt.ImageInterpolationQuality();
-    ctxt.SetImageInterpolationQuality(kInterpolationLow);
+    ScopedInterpolationQuality interpolation_quality_scope(ctxt,
+                                                           kInterpolationLow);
     DrawPattern(ctxt, src_rect, tile_scale_factor, pattern_phase, op, dst_rect,
                 FloatSize());
-    ctxt.SetImageInterpolationQuality(previous_interpolation_quality);
   } else {
     DrawPattern(ctxt, src_rect, tile_scale_factor, pattern_phase, op, dst_rect,
                 spacing);
