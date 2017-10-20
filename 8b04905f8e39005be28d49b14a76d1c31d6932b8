@@ -1,0 +1,285 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "296ddcba_0ce3f1f2",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "Please note that we block until the encoded result is ready.",
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92b3d71_29e29929",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "Can we use OnTaskRunnerDeleter as the deleter of the encoder_ unique_ptr?",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 67
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb94f9f_7e88fd9a",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "Is it possible that a task runs on |encoder_task_runner_| after |encoder_| is deleted?",
+      "range": {
+        "startLine": 258,
+        "startChar": 17,
+        "endLine": 258,
+        "endChar": 49
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58881e6_37bd17c7",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "It\u0027s probably worth noting that currently we support only encoding I420 input buffers.",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 59
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372707c1_0e540bf6",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "You can drop the static declaration for the variables in anonymous namespace.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84316e52_13ef1b1e",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "nit: Usually we name a constant kThisIsAConstant.",
+      "range": {
+        "startLine": 20,
+        "startChar": 20,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1385c2b0_ebb54b1b",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "|height| and |width| are of type unsigned int, and here you only take the lower two bytes. Should we check for truncation error?",
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca74aea6_1288d0f5",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "i \u003d 0",
+      "range": {
+        "startLine": 250,
+        "startChar": 14,
+        "endLine": 250,
+        "endChar": 18
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac529133_1ef179c4",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "j \u003d 0, same for other places below.",
+      "range": {
+        "startLine": 259,
+        "startChar": 16,
+        "endLine": 259,
+        "endChar": 20
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26506c41_1e04f0c9",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "Is this TODO still needed?",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 327,
+        "endChar": 59
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42256053_2fe67bbd",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "Please update the comment.",
+      "range": {
+        "startLine": 23,
+        "startChar": 51,
+        "endLine": 23,
+        "endChar": 64
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f801a9_fbc6474d",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "VaapiWrapper::CodecMode::kEncodeJpeg",
+      "range": {
+        "startLine": 24,
+        "startChar": 44,
+        "endLine": 24,
+        "endChar": 55
+      },
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b968fcc8_502a0449",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-20T04:32:41Z",
+      "side": 1,
+      "message": "Do we need to vaDestroyBuffer(...) here?",
+      "revId": "8b04905f8e39005be28d49b14a76d1c31d6932b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
