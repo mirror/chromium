@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7be7cef_3c3248aa",
+        "filename": "cc/input/page_scale_animation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-20T20:32:57Z",
+      "side": 1,
+      "message": "root_layer: 2368.000000,23290.000000\nviewport:   2400.000000,1306.000000\n\nIf I resize the window the root_layer width stays 32.0 lower than the viewport width, until the horizontal scrollbar appears.  At this point the root_layer width stays at 1922.0 while the viewport width continues to decrease.",
+      "parentUuid": "919da09d_a78ef414",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "7182501025f46a5a1f63f54db1804dadc39ee9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691b8a59_156e6640",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "7182501025f46a5a1f63f54db1804dadc39ee9b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa73c2cf_40f9cbc2",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-20T20:32:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "691b8a59_156e6640",
+      "range": {
+        "startLine": 543,
+        "startChar": 13,
+        "endLine": 543,
+        "endChar": 35
+      },
+      "revId": "7182501025f46a5a1f63f54db1804dadc39ee9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
