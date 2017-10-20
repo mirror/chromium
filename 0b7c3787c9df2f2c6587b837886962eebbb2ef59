@@ -22,6 +22,30 @@
       "revId": "0b7c3787c9df2f2c6587b837886962eebbb2ef59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1cd6fe6_9fa28ccf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T15:45:41Z",
+      "side": 1,
+      "message": "I think this is about how navigator.serviceWorker.ready only resolves when the calling document is inside the scope of an active service worker. So if you\u0027re calling from \"test/data/doc.html\" and the service worker\u0027s scope is \"test/data/foo\" the promise won\u0027t resolve.\n\nThere are some ways to get around it. One possibility is making the test document/iframe in \"test/data/foo\". Another is doing something like:\n\nregister().then(reg \u003d\u003e {\n  return new Promise(resolve \u003d\u003e {\n    let worker \u003d reg.installing;\n    worker.addEventListener(\u0027statechange\u0027, e \u003d\u003e {\n      if (worker.state \u003d\u003d \u0027active\u0027)\n        resolve();\n    });\n  });\n});\n\n(That assumes you know reg.active doesn\u0027t already exist, ie it\u0027s a new registration.)",
+      "parentUuid": "5ce7d66e_96ed365e",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "0b7c3787c9df2f2c6587b837886962eebbb2ef59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
