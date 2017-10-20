@@ -59,15 +59,47 @@ class MockObserver : public DeviceStatusListener::Observer {
   MOCK_METHOD1(OnDeviceStatusChanged, void(const DeviceStatus&));
 };
 
+class TestBatteryStatusListener : public BatteryStatusListener {
+ public:
+  TestBatteryStatusListener() = default;
+  ~TestBatteryStatusListener() override = default;
+
+  void set_battery_percentage(int battery_percentage) {
+    battery_percentage_ = battery_percentage;
+  }
+
+  // BatteryStatusListener implementation.
+  int GetBatteryPercentage() override { return battery_percentage_; }
+
+ private:
+  int battery_percentage_ = 0;
+  DISALLOW_COPY_AND_ASSIGN(TestBatteryStatusListener);
+};
+
 // Test target that only loads default implementation of NetworkStatusListener.
 class TestDeviceStatusListener : public DeviceStatusListener {
  public:
   explicit TestDeviceStatusListener()
-      : DeviceStatusListener(base::TimeDelta(), base::TimeDelta()) {}
+      : DeviceStatusListener(base::TimeDelta(),
+                             base::TimeDelta(),
+                             base::TimeDelta()) {}
 
-  void BuildNetworkStatusListener() override {
+  void BuildPlatformListeners() override {
     network_listener_ = base::MakeUnique<NetworkStatusListenerImpl>();
+    auto battery_listener = base::MakeUnique<TestBatteryStatusListener>();
+    test_battery_listener_ = battery_listener.get();
+    battery_listener_ = std::move(battery_listener);
   }
+
+  TestBatteryStatusListener* test_battery_listener() {
+    DCHECK(test_battery_listener_);
+    return test_battery_listener_;
+  }
+
+ private:
+  TestBatteryStatusListener* test_battery_listener_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestDeviceStatusListener);
 };
 
 class DeviceStatusListenerTest : public testing::Test {
@@ -93,8 +125,12 @@ class DeviceStatusListenerTest : public testing::Test {
     power_source_->GeneratePowerStateEvent(on_battery_power);
   }
 
+  void ChangeBatteryPercentage(int percentage) {
+    listener_->test_battery_listener()->set_battery_percentage(percentage);
+  }
+
  protected:
-  std::unique_ptr<DeviceStatusListener> listener_;
+  std::unique_ptr<TestDeviceStatusListener> listener_;
   MockObserver mock_observer_;
 
   // Needed for network change notifier and power monitor.
@@ -110,12 +146,17 @@ TEST_F(DeviceStatusListenerTest, InitialNoOptState) {
   SimulateBatteryChange(true); /* Not charging. */
   EXPECT_EQ(DeviceStatus(), listener_->CurrentDeviceStatus());
 
+  const int kInitialBatteryPercentage = 45;
   listener_->Start(&mock_observer_);
+  ChangeBatteryPercentage(kInitialBatteryPercentage);
 
   // We are in no opt state, don't notify the observer.
   EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(_)).Times(0);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(DeviceStatus(), listener_->CurrentDeviceStatus());
+  const DeviceStatus& status = listener_->CurrentDeviceStatus();
+  EXPECT_EQ(BatteryStatus::NOT_CHARGING, status.battery_status);
+  EXPECT_EQ(kInitialBatteryPercentage, status.battery_percentage);
+  EXPECT_EQ(NetworkStatus::DISCONNECTED, status.network_status);
 }
 
 // Ensures the observer is notified when network condition changes.
@@ -160,6 +201,7 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
 // Ensures the observer is notified when battery condition changes.
 TEST_F(DeviceStatusListenerTest, NotifyObserverBatteryChange) {
   InSequence s;
+  ChangeNetworkType(ConnectionType::CONNECTION_4G);
   SimulateBatteryChange(false); /* Charging. */
   EXPECT_EQ(DeviceStatus(), listener_->CurrentDeviceStatus());
 
@@ -179,9 +221,13 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverBatteryChange) {
       .Times(1)
       .RetiresOnSaturation();
   SimulateBatteryChange(true); /* Not charging. */
+  const int kBatteryPercentage = 70;
+  ChangeBatteryPercentage(kBatteryPercentage);
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(BatteryStatus::NOT_CHARGING,
             listener_->CurrentDeviceStatus().battery_status);
+  EXPECT_EQ(kBatteryPercentage,
+            listener_->CurrentDeviceStatus().battery_percentage);
 
   listener_->Stop();
 };

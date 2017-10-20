@@ -8,11 +8,16 @@
 
 namespace download {
 
+namespace {
+const int kDefaultOptimalBatteryPercentage = 50;
+}  // namespace
+
 SchedulingParams::SchedulingParams()
     : cancel_time(base::Time::Max()),
       priority(Priority::DEFAULT),
       network_requirements(NetworkRequirements::NONE),
-      battery_requirements(BatteryRequirements::BATTERY_INSENSITIVE) {}
+      battery_requirements(BatteryRequirements::BATTERY_INSENSITIVE),
+      optimal_battery_percentage(kDefaultOptimalBatteryPercentage) {}
 
 bool SchedulingParams::operator==(const SchedulingParams& rhs) const {
   return network_requirements == rhs.network_requirements &&
