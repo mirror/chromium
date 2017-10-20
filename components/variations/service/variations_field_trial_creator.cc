@@ -148,6 +148,8 @@ bool VariationsFieldTrialCreator::CreateTrialsFromSeed(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   CHECK(!create_trials_from_seed_called_);
 
+  SCOPED_UMA_HISTOGRAM_TIMER("Variations.SeedProcessingTime");
+
   create_trials_from_seed_called_ = true;
 
   VariationsSeed seed;
