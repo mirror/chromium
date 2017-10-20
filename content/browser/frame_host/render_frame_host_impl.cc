@@ -2551,6 +2551,10 @@ void RenderFrameHostImpl::OnAccessibilitySnapshotResponse(
   }
 }
 
+void RenderFrameHostImpl::RequestFullscreenVideoElement() {
+  Send(new FrameMsg_RequestFullscreenVideoElement(routing_id_));
+}
+
 // TODO(alexmos): When the allowFullscreen flag is known in the browser
 // process, use it to double-check that fullscreen can be entered here.
 void RenderFrameHostImpl::OnToggleFullscreen(bool enter_fullscreen) {
