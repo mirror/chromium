@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "faf6352a_eaed9cef",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T19:25:24Z",
+      "side": 1,
+      "message": "Added a function HC::T::WriteModeTransactionAboutToBecomeReader.\nIt is being called in two places:\n- writer converted to reader - Realized it is important to call in this place to be able to save network transaction statistics for the transaction that created the network transaction.\n- done_headers_queue transaction with write mode becoming a reader",
+      "parentUuid": "202f648b_b0cd8fda",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b762af_cbfa4425",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 19
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "This is worth discussing in a meeting, though I can see it being in a followup CL.\n\nWhat\u0027s the purpose of maintaining a FIFO invariant in done_headers_queue? Everything in done_headers_queue is in agreement that they will use the same response body. As it is, two parallel writers might finish in a different order from which they started.\n\nIf something fails, then we might abort a writer that otherwise would have been restarted. But that seems fine with me.",
       "parentUuid": "c29e73ba_8d5e0ca1",
+      "range": {
+        "startLine": 1086,
+        "startChar": 6,
+        "endLine": 1086,
+        "endChar": 12
+      },
+      "revId": "b997db63c7630250f0d4bdd122b864a5887fd793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28fce8a9_d85cd491",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T19:25:24Z",
+      "side": 1,
+      "message": "I agree its candidate for a different CL since its more of an optimization that will affect only those rare scenarios where a write mode transaction \u003d\u003e read mode \u003d\u003e write mode transaction arrive in that order.",
+      "parentUuid": "c67b84a2_8b630948",
       "range": {
         "startLine": 1086,
         "startChar": 6,

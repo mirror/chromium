@@ -46,6 +46,30 @@
       "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db30f7c4_08753a6e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-20T19:25:24Z",
+      "side": 0,
+      "message": "Reverted this check after Josh\u0027s latest feedback.",
+      "parentUuid": "00615e32_fa3b7c71",
+      "range": {
+        "startLine": 405,
+        "startChar": 29,
+        "endLine": 405,
+        "endChar": 34
+      },
+      "revId": "bb98ba8a036994e5db091a34be3e40bf281bf392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
