@@ -81,6 +81,8 @@ class VIEWS_EXPORT Combobox : public View,
 
   ui::ComboboxModel* model() const { return model_; }
 
+  void SetTooltipText(const base::string16& tooltip_text);
+
   // Set the accessible name of the combobox.
   void SetAccessibleName(const base::string16& name);
 
@@ -99,6 +101,9 @@ class VIEWS_EXPORT Combobox : public View,
   void OnPaint(gfx::Canvas* canvas) override;
   void OnFocus() override;
   void OnBlur() override;
+  View* GetTooltipHandlerForPoint(const gfx::Point& p) override;
+  bool GetTooltipText(const gfx::Point& p,
+                      base::string16* tooltip) const override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   bool HandleAccessibleAction(const ui::AXActionData& action_data) override;
   void Layout() override;
@@ -180,6 +185,9 @@ class VIEWS_EXPORT Combobox : public View,
 
   // True when the selection is visually denoted as invalid.
   bool invalid_;
+
+  // The text shown in a tooltip.
+  base::string16 tooltip_text_;
 
   // The accessible name of this combobox.
   base::string16 accessible_name_;

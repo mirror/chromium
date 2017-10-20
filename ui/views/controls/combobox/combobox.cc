@@ -516,6 +516,13 @@ bool Combobox::SelectValue(const base::string16& value) {
   return false;
 }
 
+void Combobox::SetTooltipText(const base::string16& tooltip_text) {
+  tooltip_text_ = tooltip_text;
+  if (accessible_name_.empty())
+    accessible_name_ = tooltip_text_;
+  TooltipTextChanged();
+}
+
 void Combobox::SetAccessibleName(const base::string16& name) {
   accessible_name_ = name;
 }
@@ -756,6 +763,19 @@ void Combobox::OnBlur() {
   SchedulePaint();
   if (UseMd())
     FocusRing::Uninstall(this);
+}
+
+View* Combobox::GetTooltipHandlerForPoint(const gfx::Point& p) {
+  return CanProcessEventsWithinSubtree() && HitTestPoint(p) ? this : nullptr;
+}
+
+bool Combobox::GetTooltipText(const gfx::Point& p,
+                              base::string16* tooltip) const {
+  if (tooltip_text_.empty())
+    return false;
+
+  *tooltip = tooltip_text_;
+  return true;
 }
 
 void Combobox::GetAccessibleNodeData(ui::AXNodeData* node_data) {
