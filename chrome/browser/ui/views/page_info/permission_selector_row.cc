@@ -9,6 +9,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
 #include "chrome/browser/ui/page_info/permission_menu_model.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/page_info/non_accessible_image_view.h"
 #include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
@@ -16,6 +17,7 @@
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/models/combobox_model.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/text_utils.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/combobox/combobox.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
@@ -183,6 +185,9 @@ class PermissionCombobox : public views::Combobox,
   void UpdateSelectedIndex(bool use_default);
 
  private:
+  // views:: Combobox:
+  gfx::Size GetContentSize() const override;
+
   // views::ComboboxListener:
   void OnPerformAction(Combobox* combobox) override;
 
@@ -214,6 +219,35 @@ void PermissionCombobox::UpdateSelectedIndex(bool use_default) {
 
 void PermissionCombobox::OnPerformAction(Combobox* combobox) {
   model_->OnPerformAction(combobox->selected_index());
+}
+
+gfx::Size PermissionCombobox::GetContentSize() const {
+  gfx::Size original_size = Combobox::GetContentSize();
+  if (!ui::MaterialDesignController::IsSecondaryUiMaterial())
+    return original_size;
+
+  const gfx::FontList& font_list = GetFontList();
+  // If in Harmony, the width of each combobox menu item should all be the same
+  // unless it exceeds the maximum.
+  const int maximum_width = ChromeLayoutProvider::Get()->GetDistanceMetric(
+      views::DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH);
+  int majority_width = 0;
+  for (int i = 0; i < model_->GetItemCount(); ++i) {
+    // Assume |PermissionCombobox| does not use an item separator.
+    int current_item_width =
+        gfx::GetStringWidth(model_->GetItemAt(i), font_list);
+
+    if (current_item_width > maximum_width) {
+      // Allow currently selected menu items exceeding the maximum width to
+      // assume their full size.
+      if (i == model_->GetCheckedIndex())
+        return gfx::Size(current_item_width, original_size.height());
+      // Otherwise if it's not selected, ignore it.
+      continue;
+    }
+    majority_width = std::max(majority_width, current_item_width);
+  }
+  return gfx::Size(majority_width, original_size.height());
 }
 
 }  // namespace internal

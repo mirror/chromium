@@ -118,6 +118,10 @@ class VIEWS_EXPORT Combobox : public View,
     size_to_largest_label_ = size_to_largest_label;
   }
 
+  // Finds the size of the largest menu label or, for STYLE_ACTION, the size of
+  // the selected label.
+  virtual gfx::Size GetContentSize() const;
+
  private:
   friend class test::ComboboxTestApi;
 
@@ -149,10 +153,6 @@ class VIEWS_EXPORT Combobox : public View,
 
   // Returns the size of the disclosure arrow.
   gfx::Size ArrowSize() const;
-
-  // Finds the size of the largest menu label or, for STYLE_ACTION, the size of
-  // the selected label.
-  gfx::Size GetContentSize() const;
 
   // Handles the clicking event.
   void HandleClickEvent();
