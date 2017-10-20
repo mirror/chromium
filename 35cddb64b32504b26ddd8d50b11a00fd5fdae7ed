@@ -16,6 +16,24 @@
       "revId": "35cddb64b32504b26ddd8d50b11a00fd5fdae7ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3583c8a5_b98e7850",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-20T17:39:35Z",
+      "side": 1,
+      "message": "Realistically speaking, I think these are all the easy to enable ones. The remaining ones have potential perf implications (such as forcing out-of-lining), and so I\u0027d be OK with just reusing this flag to gradual shuffle more warnings down the pipeline. The way I imagine this working is something like this:\n\n1. Create a set of warnings to enable called warning_set.\n2. Clang plugin updated to enforce warning_set in Blink mode.\n3. Fix existing code / roll plugin.\n4. Enable flag by default once step 3 is complete.\n5. Update Clang plugin to always warn for warning_set.\n6. Roll plugin again.\n\nSo it\u0027s a bit of a multi-step process, but I don\u0027t anticipate making more than 2-3 iterations. Since there\u0027s value in getting the easy ones in still, I\u0027d rather get those unblocked first and deal with the ones with perf-implications separately afterwards.",
+      "parentUuid": "02e23c60_1626794f",
+      "revId": "35cddb64b32504b26ddd8d50b11a00fd5fdae7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
