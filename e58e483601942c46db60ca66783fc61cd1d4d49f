@@ -94,6 +94,30 @@
       "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dd407a_44050372",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-20T21:35:39Z",
+      "side": 1,
+      "message": "I\u0027m cool with adding a WebContents* source to the OnAudioStateChanged call.",
+      "parentUuid": "cb7e4adf_41749578",
+      "range": {
+        "startLine": 1461,
+        "startChar": 5,
+        "endLine": 1472,
+        "endChar": 1
+      },
+      "revId": "e58e483601942c46db60ca66783fc61cd1d4d49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
