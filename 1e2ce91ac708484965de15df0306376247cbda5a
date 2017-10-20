@@ -50,6 +50,29 @@
       "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246f745d_7a025fbb",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-20T02:45:15Z",
+      "side": 1,
+      "message": "Thank you very much! Pretty clean now! I\u0027ll also apply this to impl SWRegistrationObjectHost interface and other similar cases.\nI feel the naming is a bit too common:) \u0027IsReadyAsContainerHost\u0027 or something else better one?",
+      "range": {
+        "startLine": 445,
+        "startChar": 7,
+        "endLine": 445,
+        "endChar": 24
+      },
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
