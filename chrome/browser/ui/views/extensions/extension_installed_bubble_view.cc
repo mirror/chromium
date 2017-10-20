@@ -286,7 +286,7 @@ void ExtensionInstalledBubbleView::OnSignInLinkClicked() {
   chrome::ShowBrowserSignin(
       browser(),
       signin_metrics::AccessPoint::ACCESS_POINT_EXTENSION_INSTALL_BUBBLE);
-  CloseBubble(BUBBLE_CLOSE_NAVIGATED);
+  CloseBubble(BUBBLE_CLOSE_FOCUS_LOST);
 }
 
 void ExtensionInstalledBubbleView::LinkClicked(views::Link* source,
