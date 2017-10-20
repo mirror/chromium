@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3d1dee2a_e124ecb5",
+        "filename": "chrome/browser/extensions/api/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-20T21:29:52Z",
+      "side": 1,
+      "message": "Unfortunately, this violates layering. Nothing outside views code should depend on views.  We\u0027ll need to restructure this.",
+      "parentUuid": "6e7bbb02_a3046133",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 35
+      },
+      "revId": "a533b6dc097f7a6dca331af8ed610cb601d7ae10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e27cb9c5_2a3e947c",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 2
