@@ -22,6 +22,30 @@
       "revId": "55a4f7cf3cdc82d3f94b47b481f42850432874b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb883053_d796c035",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/dnr_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-20T20:01:52Z",
+      "side": 1,
+      "message": "This is based off of https://chromium-review.googlesource.com/c/chromium/src/+/717718 which does that.",
+      "parentUuid": "9addeb8d_49eac649",
+      "range": {
+        "startLine": 23,
+        "startChar": 55,
+        "endLine": 23,
+        "endChar": 72
+      },
+      "revId": "55a4f7cf3cdc82d3f94b47b481f42850432874b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
