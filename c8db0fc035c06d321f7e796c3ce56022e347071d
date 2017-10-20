@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "3707e2a3_f22c753b",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T18:04:54Z",
+      "side": 1,
+      "message": "That is fair comment. I would prefer consistency so, and generally in the rest of the code pace (or the parts I\u0027m familiar with) we return a const\u0026 for gfx::Sizes.",
+      "parentUuid": "37f666de_105595bc",
+      "range": {
+        "startLine": 224,
+        "startChar": 53,
+        "endLine": 224,
+        "endChar": 62
+      },
+      "revId": "c8db0fc035c06d321f7e796c3ce56022e347071d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60c91e57_3a9589a7",
         "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
         "patchSetId": 8
