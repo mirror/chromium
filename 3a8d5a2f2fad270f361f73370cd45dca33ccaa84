@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1503816c_359089f3",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-20T10:00:35Z",
+      "side": 1,
+      "message": "nit: Please write a comment specifying what criteria are used to find the username field and how the arguments are involved.",
+      "range": {
+        "startLine": 438,
+        "startChar": 0,
+        "endLine": 438,
+        "endChar": 30
+      },
+      "revId": "3a8d5a2f2fad270f361f73370cd45dca33ccaa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d647d6_17cf2d9c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-20T10:00:35Z",
+      "side": 1,
+      "message": "nit: It would be helpful to comment why we don\u0027t cache that there was no username field found.",
+      "range": {
+        "startLine": 508,
+        "startChar": 6,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "3a8d5a2f2fad270f361f73370cd45dca33ccaa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2458ca4d_57f22973",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1937,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-20T10:00:35Z",
+      "side": 1,
+      "message": "In general, I welcome the test. But I don\u0027t understand how it\u0027s related to the goal of this CL, which is just caching the results (not fixing the way they are computed).",
+      "range": {
+        "startLine": 1936,
+        "startChar": 5,
+        "endLine": 1937,
+        "endChar": 29
+      },
+      "revId": "3a8d5a2f2fad270f361f73370cd45dca33ccaa84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
