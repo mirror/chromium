@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a5012f97_2fed0d9f",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T00:35:08Z",
+      "side": 1,
+      "message": "If we want this to be a generic security throttle, then we couldn\u0027t limit its creation to WebUI subframes.  :)  That bit would discourage other people from adding general checks here.\n\nMy preference would be to make this one specific to WebUI.  It\u0027s already written that way, it avoids adding another throttle on most navigations, and it keeps this class small and focused.\n\nI can see that it might be helpful to have a generic security one at some point, but we can refactor this one if there\u0027s benefit to coalescing several of them later.  (I admit I\u0027m also not a fan of SecurityPropertiesNavigationThrottle as a name, because it\u0027s very long and \"properties\" seems kind of ambiguous to me.)",
+      "parentUuid": "ac1792db_51492a5b",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c97c35b0_f12f2c3c",
         "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
         "patchSetId": 3
@@ -118,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "db548292_bd05c534",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T00:35:08Z",
+      "side": 1,
+      "message": "Interesting...  I didn\u0027t realize this was about the target frame.  Sure, let\u0027s clarify the comments and add some tests, and that will be fine.",
+      "parentUuid": "beddad4e_e0b313fa",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "359d1e53_b9c34e8c",
         "filename": "content/browser/frame_host/security_properties_navigation_throttle.h",
         "patchSetId": 3
@@ -147,6 +183,24 @@
       "side": 1,
       "message": "Since this is targeted at subframes and we don\u0027t want subframes to be navigating to web content, I don\u0027t think it matters what process they commit in.\nI think my comment is not as clear as it can be.",
       "parentUuid": "359d1e53_b9c34e8c",
+      "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e368399_335bca62",
+        "filename": "content/browser/frame_host/security_properties_navigation_throttle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-20T00:35:08Z",
+      "side": 1,
+      "message": "Sure, some rephrasing here will help.  From your other reply, it sounds like it\u0027s worth covering the fact that this only applies to navigations that target subframes of WebUI pages.  (Links that go to web pages in the main frame in a new process are still ok.)\n\nI think it\u0027s also worth giving some explanation for why we consider this unsafe, since people will look here when the throttle blocks their feature.  :)",
+      "parentUuid": "ded6943a_0ce0b3c2",
       "revId": "6b3ac0f7fc3db97a4104b99afe519639b8e0d821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
