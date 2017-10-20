@@ -404,6 +404,13 @@ void GLES2Implementation::SignalQuery(uint32_t query,
                  callback));
 }
 
+void GLES2Implementation::FetchNativeSyncPointFd(
+    const base::Callback<void(int32_t)>& callback) {
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  gpu_control_->FetchNativeSyncPointFd(callback);
+}
+
 void GLES2Implementation::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {
   TRACE_EVENT1("gpu", "GLES2Implementation::SetAggressivelyFreeResources",

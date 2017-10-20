@@ -125,6 +125,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
                       unsigned internalformat) override;
   void DestroyImage(int32_t id) override;
   void SignalQuery(uint32_t query_id, const base::Closure& callback) override;
+  void FetchNativeSyncPointFd(
+      const base::Callback<void(int32_t)>& callback) override;
   void SetLock(base::Lock*) override;
   void EnsureWorkVisible() override;
   CommandBufferNamespace GetNamespaceID() const override;

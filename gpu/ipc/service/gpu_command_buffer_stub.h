@@ -189,6 +189,7 @@ class GPU_EXPORT GpuCommandBufferStub
   void OnSignalSyncToken(const SyncToken& sync_token, uint32_t id);
   void OnSignalAck(uint32_t id);
   void OnSignalQuery(uint32_t query, uint32_t id);
+  void OnFetchNativeSyncPointFd(uint32_t fetch_id);
 
   void OnWaitSyncTokenCompleted(const SyncToken& sync_token);
 

@@ -92,6 +92,10 @@ IPC_STRUCT_BEGIN(GpuCommandBufferMsg_SwapBuffersCompleted_Params)
   IPC_STRUCT_MEMBER(gfx::SwapResult, result)
 IPC_STRUCT_END()
 
+IPC_STRUCT_BEGIN(GpuCommandBufferMsg_SyncPointFd_Return)
+  IPC_STRUCT_MEMBER(base::FileDescriptor, sync_fd)
+IPC_STRUCT_END()
+
 //------------------------------------------------------------------------------
 // GPU Channel Messages
 // These are messages from a renderer process to the GPU process.
@@ -257,5 +261,13 @@ IPC_SYNC_MESSAGE_ROUTED2_1(GpuCommandBufferMsg_CreateStreamTexture,
 
 // Start or stop VSync sygnal production on GPU side (Windows only).
 IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_SetNeedsVSync, bool /* needs_vsync */)
+
+// Get a sync token file descriptor
+IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_FetchNativeSyncPointFd, uint32_t /* fetch_id */);
+
+// Response to FetchNativeSyncPointFd
+IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_FetchNativeSyncPointFdComplete,
+                    uint32_t /* fetch_id */,
+                    GpuCommandBufferMsg_SyncPointFd_Return);
 
 #endif  // GPU_IPC_COMMON_GPU_MESSAGES_H_
