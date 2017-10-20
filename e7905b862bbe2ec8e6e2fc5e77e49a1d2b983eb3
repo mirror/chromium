@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3c9e8b6_22808ae4",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T09:47:36Z",
+      "side": 1,
+      "message": "nit: end the comment with period",
+      "revId": "e7905b862bbe2ec8e6e2fc5e77e49a1d2b983eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea8dd5d_e9074e6f",
+        "filename": "content/browser/appcache/appcache_request_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T09:47:36Z",
+      "side": 1,
+      "message": "nit: double space before \u0027inherited\u0027",
+      "revId": "e7905b862bbe2ec8e6e2fc5e77e49a1d2b983eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e99a821_390c7497",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T09:47:36Z",
+      "side": 1,
+      "message": "\u0027network library based impl\u0027 this wasn\u0027t too clear to me at first, maybe also say \u0027(i.e. when NetworkService is not enabled)\u0027 ?",
+      "revId": "e7905b862bbe2ec8e6e2fc5e77e49a1d2b983eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e53418a_07592540",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T09:47:36Z",
+      "side": 1,
+      "message": "NetworkService loading: (for consistency)",
+      "revId": "e7905b862bbe2ec8e6e2fc5e77e49a1d2b983eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e09da8_25be8e36",
+        "filename": "content/browser/appcache/appcache_request_handler.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-20T09:47:36Z",
+      "side": 1,
+      "message": "nit: impl. -\u003e impl,",
+      "revId": "e7905b862bbe2ec8e6e2fc5e77e49a1d2b983eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
