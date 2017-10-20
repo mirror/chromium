@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bf21626_5cbdc0ef",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-20T02:46:18Z",
+      "side": 1,
+      "message": "this will effectively double the bandwidth requirement when night mode is on. there\u0027s no need for that and it will result in a huge performance degradation on bandwidth limited devices. also, it prevents us from adding hw support. This needs to be done as a quad property to be efficient.",
+      "revId": "f0a499bf262a4e81f688ec4c9518d6b76e2be930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68ff13d_0b03367a",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-20T02:46:18Z",
+      "side": 1,
+      "message": "it doesn\u0027t make sense to use a separate color matrix for this. we should integrate with the existing color matrix if possible. if that\u0027s hard then using a full matrix here is overkill as only two values in that matrix will ever be set.",
+      "revId": "f0a499bf262a4e81f688ec4c9518d6b76e2be930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
