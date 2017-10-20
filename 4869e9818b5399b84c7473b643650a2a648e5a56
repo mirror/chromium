@@ -153,6 +153,24 @@
       "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d011c13_ee3edbcc",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5242,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-20T11:47:53Z",
+      "side": 1,
+      "message": "Contextual Search shouldn\u0027t be a factor. Any other barriers to this moving forward?",
+      "parentUuid": "6dbc218d_2f8cb5e6",
+      "revId": "4869e9818b5399b84c7473b643650a2a648e5a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
