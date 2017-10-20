@@ -37,7 +37,8 @@
   }
 
   function setServiceWorker() {
-    navigator.serviceWorker.register('service_worker/worker.js').then(success_);
+    navigator.serviceWorker.register('/empty_worker.js');
+    navigator.serviceWorker.ready.then(success_);
   }
 
   function hasServiceWorker() {
