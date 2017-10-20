@@ -338,8 +338,12 @@ Polymer({
         if (connectMessage)
           result += '<div>' + formatMessage(connectMessage) + '</div>';
 
-        var helpUrl = "https://support.google.com/chrome/answer/111996";
-        result += '<a href="' + helpUrl + '" target="_blank">';
+        if (this.currentUpdateStatusEvent_.status == UpdateStatus.FAILED) {
+          var helpUrl = 'https://support.google.com/chrome?p=update_error';
+          result += '<a href="' + helpUrl + '" target="_blank">' +
+              this.i18n('learnMore') + '</a>';
+        }
+
         return result;
     }
   },
