@@ -112,6 +112,13 @@ bool InputMethodEngine::SetCandidateWindowVisible(bool visible,
     return false;
   }
 
+  if (window_visible_ != visible) {
+    IMECandidateWindowHandlerInterface* visibility_handler =
+        ui::IMEBridge::Get()->GetCandidateWindowVisibilityHandler();
+    if (visibility_handler)
+      visibility_handler->OnCandidateWindowVisibilityChanged(visible);
+  }
+
   window_visible_ = visible;
   IMECandidateWindowHandlerInterface* cw_handler =
       ui::IMEBridge::Get()->GetCandidateWindowHandler();
