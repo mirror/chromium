@@ -261,11 +261,15 @@ bool Display::DrawAndSwap() {
     return false;
   }
 
-  // Run callbacks early to allow pipelining.
+  // Run callbacks early to allow pipelining and collect presented callbacks.
   for (const auto& id_entry : aggregator_->previous_contained_surfaces()) {
     Surface* surface = surface_manager_->GetSurfaceForId(id_entry.first);
-    if (surface)
+    if (surface) {
+      Surface::PresentedCallback callback;
+      if (surface->TakePresentedCallback(&callback))
+        presented_callbacks_.push_back(std::move(callback));
       surface->RunDrawCallback();
+    }
   }
 
   frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
@@ -375,6 +379,12 @@ void Display::DidReceiveSwapBuffersAck() {
     scheduler_->DidReceiveSwapBuffersAck();
   if (renderer_)
     renderer_->SwapBuffersComplete();
+
+  // TODO(penghuang): Use the accurate time from GPU. https://crbug.com/776877
+  base::TimeTicks time = base::TimeTicks::Now();
+  for (auto& callback : presented_callbacks_)
+    std::move(callback).Run(time, BeginFrameArgs::DefaultInterval(), 0);
+  presented_callbacks_.clear();
 }
 
 void Display::DidReceiveTextureInUseResponses(

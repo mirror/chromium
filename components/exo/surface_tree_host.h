@@ -12,8 +12,6 @@
 #include "components/exo/surface.h"
 #include "components/exo/surface_delegate.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
-#include "ui/aura/window_observer.h"
-#include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace aura {
@@ -35,9 +33,7 @@ class LayerTreeFrameSinkHolder;
 // This class provides functionality for hosting a surface tree. The surface
 // tree is hosted in the |host_window_|.
 class SurfaceTreeHost : public SurfaceDelegate,
-                        public aura::WindowObserver,
                         public viz::BeginFrameObserverBase,
-                        public ui::CompositorVSyncManager::Observer,
                         public ui::ContextFactoryObserver {
  public:
   SurfaceTreeHost(const std::string& window_name,
@@ -65,6 +61,13 @@ class SurfaceTreeHost : public SurfaceDelegate,
   // the surface is being scheduled for a draw.
   void DidReceiveCompositorFrameAck();
 
+  void DidPresentCompositorFrame(uint32_t presentation_token,
+                                 base::TimeTicks time,
+                                 base::TimeDelta refresh,
+                                 uint32_t flags);
+
+  void DidDiscardCompositorFrame(uint32_t presentation_token);
+
   // Called when the begin frame source has changed.
   void SetBeginFrameSource(viz::BeginFrameSource* begin_frame_source);
 
@@ -86,19 +89,9 @@ class SurfaceTreeHost : public SurfaceDelegate,
   bool IsSurfaceSynchronized() const override;
   void OnSetFrame(SurfaceFrameType type) override {}
 
-  // Overridden from aura::WindowObserver:
-  void OnWindowAddedToRootWindow(aura::Window* window) override;
-  void OnWindowRemovingFromRootWindow(aura::Window* window,
-                                      aura::Window* new_root) override;
-  void OnWindowDestroying(aura::Window* window) override;
-
   // Overridden from cc::BeginFrameObserverBase:
   bool OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) override;
   void OnBeginFrameSourcePausedChanged(bool paused) override {}
-
-  // Overridden from ui::CompositorVSyncManager::Observer:
-  void OnUpdateVSyncParameters(base::TimeTicks timebase,
-                               base::TimeDelta interval) override;
 
   // Overridden from ui::ContextFactoryObserver:
   void OnLostResources() override;
@@ -125,6 +118,11 @@ class SurfaceTreeHost : public SurfaceDelegate,
   std::list<Surface::FrameCallback> frame_callbacks_;
   std::list<Surface::FrameCallback> active_frame_callbacks_;
 
+  using PresentationCallbacks = std::list<Surface::PresentationCallback>;
+  PresentationCallbacks presentation_callbacks_;
+  base::flat_map<uint32_t, PresentationCallbacks>
+      active_presentation_callbacks_;
+#if 0
   // These lists contains the callbacks to notify the client when surface
   // contents have been presented. These callbacks move to
   // |presentation_callbacks_| when Commit() is called. Later they are moved to
@@ -132,9 +130,11 @@ class SurfaceTreeHost : public SurfaceDelegate,
   // scheduled to be drawn and then moved to |swapped_presentation_callbacks_|
   // after receiving VSync parameters update for the previous frame. They fire
   // at the next VSync parameters update after that.
-  std::list<Surface::PresentationCallback> presentation_callbacks_;
   std::list<Surface::PresentationCallback> swapping_presentation_callbacks_;
   std::list<Surface::PresentationCallback> swapped_presentation_callbacks_;
+#endif
+
+  uint32_t presentation_token_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceTreeHost);
 };
