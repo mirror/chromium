@@ -108,7 +108,7 @@ function getRealValue(shape, degree, usePathObject) {
     context.stroke();
     context.restore();
 
-    return container.scrollTop;
+    return Math.round(container.scrollTop);
 }
 
 function scrollTest(shape, degree, usePathObject, expectedValue) {
@@ -118,7 +118,7 @@ function scrollTest(shape, degree, usePathObject, expectedValue) {
     for (var i = 0; i < classes.length; i++) {
         canvas.className = classes[i];
         window.testValue = getRealValue(shape, degree, usePathObject);
-        shouldBe("testValue", String(expectedValue + offset[i]));
+        shouldBe("testValue", expectedValue + offset[i]);
     }
 }
 
@@ -131,9 +131,9 @@ scrollTest(CStar, 0, false, 150);
 debug("");
 
 debug("Test case 2: scrollPathIntoView() / CTM != identity");
-scrollTest(CRect, 20, false, 136);
-scrollTest(CCapsule, 42, false, 127);
-scrollTest(CCurve, 63, false, 133);
+scrollTest(CRect, 20, false, 135);
+scrollTest(CCapsule, 42, false, 126);
+scrollTest(CCurve, 63, false, 132);
 scrollTest(CStar, 40, false, 160);
 debug("");
 
@@ -145,9 +145,9 @@ scrollTest(CStar, 0, true, 150);
 debug("");
 
 debug("Test case 4: scrollPathIntoView(path2d) / CTM != identity");
-scrollTest(CRect, 20, true, 136);
-scrollTest(CCapsule, 42, true, 127);
-scrollTest(CCurve, 63, true, 133);
+scrollTest(CRect, 20, true, 135);
+scrollTest(CCapsule, 42, true, 126);
+scrollTest(CCurve, 63, true, 132);
 scrollTest(CStar, 40, true, 160);
 debug("");
 
