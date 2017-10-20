@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "d581f1fe_08ad6a27",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_always_resolves.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "While this assert is valid during normal use, I think it should only ever return null during this test since we aren\u0027t using mocking.",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2c164a_a286dc56",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_two_devices.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: It looks like you change between either receiving \"device\" and later just re-assigning it to \"pixel\", or just receiving \"pixel\". I\u0027m fine with either, but be consistent between tests.",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2e1e5b0_bcd549f7",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_zero_devices.html",
         "patchSetId": 2
@@ -58,6 +104,167 @@
         "startChar": 6,
         "endLine": 25,
         "endChar": 13
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f961255_7f57fbfc",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_unsupported.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: TODO(ldap):",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee7b670_5764ba29",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this return is necessary?",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fff8a72_91075b2f",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: I believe the standard approach we\u0027ve settled on is:\n\n.then(resolve_callback, reject_callback)\n\ninstead of:\n\n.then(resolve_callback).catch(reject_callback)",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a76c7d_15323336",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: Unnecessary return?",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8941a8bb_8ca167d9",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: Same as before",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7051e073_f46692e6",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_non_exclusive.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09e9a21_f37832f9",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_non_exclusive.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-20T17:23:56Z",
+      "side": 1,
+      "message": "Nit: Ditto",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 12
       },
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
