@@ -1,5 +1,6 @@
 include_rules = [
+  "+mojo/edk/embedder",
+  "+mojo/public/cpp",
   "+gpu/ipc/common",
   "+ipc",
-  "-media/base/media_export.h",
 ]
