@@ -682,6 +682,14 @@ static inline int NumDescendantsThatDrawContent(LayerImpl* layer) {
   return num_descendants_that_draw_content;
 }
 
+static inline float ColorTemperature(Layer* layer) {
+  return layer->color_temperature();
+}
+
+static inline float ColorTemperature(LayerImpl* layer) {
+  return layer->test_properties()->color_temperature;
+}
+
 static inline float EffectiveOpacity(Layer* layer) {
   return layer->EffectiveOpacity();
 }
@@ -821,9 +829,11 @@ bool ShouldCreateRenderSurface(LayerType* layer,
       num_descendants_that_draw_content > 0 &&
       (layer->DrawsContent() || num_descendants_that_draw_content > 1);
 
+  const bool has_color_temperature = ColorTemperature(layer) > 0.0f;
   bool may_have_transparency = EffectiveOpacity(layer) != 1.f ||
                                HasPotentiallyRunningOpacityAnimation(layer);
-  if (may_have_transparency && ShouldFlattenTransform(layer) &&
+  if ((may_have_transparency || has_color_temperature) &&
+      ShouldFlattenTransform(layer) &&
       at_least_two_layers_in_subtree_draw_content) {
     TRACE_EVENT_INSTANT0(
         "cc", "PropertyTreeBuilder::ShouldCreateRenderSurface opacity",
@@ -949,6 +959,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   EffectNode* node = effect_tree_.back();
 
   node->stable_id = layer->id();
+  node->color_temperature = ColorTemperature(layer);
   node->opacity = Opacity(layer);
   node->blend_mode = BlendMode(layer);
   node->unscaled_mask_target_size = layer->bounds();

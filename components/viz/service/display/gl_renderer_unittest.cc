@@ -210,9 +210,9 @@ class GLRendererShaderPixelTest : public cc::GLRendererPixelTest {
   void TestShadersWithPrecisionAndBlend(TexCoordPrecision precision,
                                         BlendMode blend_mode) {
     TestShader(ProgramKey::RenderPass(precision, SAMPLER_TYPE_2D, blend_mode,
-                                      NO_AA, NO_MASK, false, false));
+                                      NO_AA, NO_MASK, false, false, false));
     TestShader(ProgramKey::RenderPass(precision, SAMPLER_TYPE_2D, blend_mode,
-                                      USE_AA, NO_MASK, false, false));
+                                      USE_AA, NO_MASK, false, false, false));
   }
 
   void TestShadersWithPrecisionAndSampler(TexCoordPrecision precision,
@@ -269,13 +269,17 @@ class GLRendererShaderPixelTest : public cc::GLRendererPixelTest {
     }
 
     TestShader(ProgramKey::RenderPass(precision, sampler, blend_mode, NO_AA,
-                                      HAS_MASK, mask_for_background, false));
+                                      HAS_MASK, mask_for_background, false,
+                                      false));
     TestShader(ProgramKey::RenderPass(precision, sampler, blend_mode, NO_AA,
-                                      HAS_MASK, mask_for_background, true));
+                                      HAS_MASK, mask_for_background, true,
+                                      false));
     TestShader(ProgramKey::RenderPass(precision, sampler, blend_mode, USE_AA,
-                                      HAS_MASK, mask_for_background, false));
+                                      HAS_MASK, mask_for_background, false,
+                                      false));
     TestShader(ProgramKey::RenderPass(precision, sampler, blend_mode, USE_AA,
-                                      HAS_MASK, mask_for_background, true));
+                                      HAS_MASK, mask_for_background, true,
+                                      false));
   }
 };
 
@@ -449,7 +453,7 @@ class GLRendererShaderTest : public GLRendererTest {
                              BlendMode blend_mode) {
     const Program* program = renderer_->GetProgramIfInitialized(
         ProgramKey::RenderPass(precision, SAMPLER_TYPE_2D, blend_mode, NO_AA,
-                               NO_MASK, false, false));
+                               NO_MASK, false, false, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }
@@ -458,7 +462,7 @@ class GLRendererShaderTest : public GLRendererTest {
                                         BlendMode blend_mode) {
     const Program* program = renderer_->GetProgramIfInitialized(
         ProgramKey::RenderPass(precision, SAMPLER_TYPE_2D, blend_mode, NO_AA,
-                               NO_MASK, false, true));
+                               NO_MASK, false, true, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }
@@ -466,9 +470,9 @@ class GLRendererShaderTest : public GLRendererTest {
   void TestRenderPassMaskProgram(TexCoordPrecision precision,
                                  SamplerType sampler,
                                  BlendMode blend_mode) {
-    const Program* program =
-        renderer_->GetProgramIfInitialized(ProgramKey::RenderPass(
-            precision, sampler, blend_mode, NO_AA, HAS_MASK, false, false));
+    const Program* program = renderer_->GetProgramIfInitialized(
+        ProgramKey::RenderPass(precision, sampler, blend_mode, NO_AA, HAS_MASK,
+                               false, false, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }
@@ -476,9 +480,9 @@ class GLRendererShaderTest : public GLRendererTest {
   void TestRenderPassMaskColorMatrixProgram(TexCoordPrecision precision,
                                             SamplerType sampler,
                                             BlendMode blend_mode) {
-    const Program* program =
-        renderer_->GetProgramIfInitialized(ProgramKey::RenderPass(
-            precision, sampler, blend_mode, NO_AA, HAS_MASK, false, true));
+    const Program* program = renderer_->GetProgramIfInitialized(
+        ProgramKey::RenderPass(precision, sampler, blend_mode, NO_AA, HAS_MASK,
+                               false, true, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }
@@ -487,7 +491,7 @@ class GLRendererShaderTest : public GLRendererTest {
                                BlendMode blend_mode) {
     const Program* program = renderer_->GetProgramIfInitialized(
         ProgramKey::RenderPass(precision, SAMPLER_TYPE_2D, blend_mode, USE_AA,
-                               NO_MASK, false, false));
+                               NO_MASK, false, false, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }
@@ -496,7 +500,7 @@ class GLRendererShaderTest : public GLRendererTest {
                                           BlendMode blend_mode) {
     const Program* program = renderer_->GetProgramIfInitialized(
         ProgramKey::RenderPass(precision, SAMPLER_TYPE_2D, blend_mode, USE_AA,
-                               NO_MASK, false, true));
+                               NO_MASK, false, true, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }
@@ -504,9 +508,9 @@ class GLRendererShaderTest : public GLRendererTest {
   void TestRenderPassMaskProgramAA(TexCoordPrecision precision,
                                    SamplerType sampler,
                                    BlendMode blend_mode) {
-    const Program* program =
-        renderer_->GetProgramIfInitialized(ProgramKey::RenderPass(
-            precision, sampler, blend_mode, USE_AA, HAS_MASK, false, false));
+    const Program* program = renderer_->GetProgramIfInitialized(
+        ProgramKey::RenderPass(precision, sampler, blend_mode, USE_AA, HAS_MASK,
+                               false, false, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }
@@ -514,9 +518,9 @@ class GLRendererShaderTest : public GLRendererTest {
   void TestRenderPassMaskColorMatrixProgramAA(TexCoordPrecision precision,
                                               SamplerType sampler,
                                               BlendMode blend_mode) {
-    const Program* program =
-        renderer_->GetProgramIfInitialized(ProgramKey::RenderPass(
-            precision, sampler, blend_mode, USE_AA, HAS_MASK, false, true));
+    const Program* program = renderer_->GetProgramIfInitialized(
+        ProgramKey::RenderPass(precision, sampler, blend_mode, USE_AA, HAS_MASK,
+                               false, true, false));
     EXPECT_PROGRAM_VALID(program);
     EXPECT_EQ(program, renderer_->current_program_);
   }

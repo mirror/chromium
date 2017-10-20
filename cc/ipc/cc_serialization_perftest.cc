@@ -285,6 +285,7 @@ class CCSerializationPerfTest : public testing::Test {
     SkScalar arbitrary_sigma = SkFloatToScalar(2.0f);
     gfx::ColorSpace arbitrary_color_space = gfx::ColorSpace::CreateXYZD50();
     int root_id = 14;
+    float color_temperature = 0.f;
 
     FilterOperations arbitrary_filters1;
     arbitrary_filters1.Append(
@@ -297,10 +298,10 @@ class CCSerializationPerfTest : public testing::Test {
         FilterOperation::CreateBrightnessFilter(arbitrary_float2));
 
     std::unique_ptr<viz::RenderPass> pass_in = viz::RenderPass::Create();
-    pass_in->SetAll(root_id, arbitrary_rect1, arbitrary_rect2,
-                    arbitrary_matrix1, arbitrary_filters2, arbitrary_filters1,
-                    arbitrary_color_space, arbitrary_bool1, arbitrary_bool1,
-                    arbitrary_bool1, arbitrary_bool1);
+    pass_in->SetAll(root_id, color_temperature, arbitrary_rect1,
+                    arbitrary_rect2, arbitrary_matrix1, arbitrary_filters2,
+                    arbitrary_filters1, arbitrary_color_space, arbitrary_bool1,
+                    arbitrary_bool1, arbitrary_bool1, arbitrary_bool1);
 
     // Texture quads
     for (uint32_t i = 0; i < 10; ++i) {
