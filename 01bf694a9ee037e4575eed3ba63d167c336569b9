@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b238be07_ea322d76",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 0,
+      "message": "Could you preserve this comment (e.g. by adding before param definition)?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "01bf694a9ee037e4575eed3ba63d167c336569b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4536dfb_8f47bc94",
+        "filename": "components/ntp_snippets/remote/request_throttler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 0,
+      "message": "That\u0027s impressive what people do with these feature params. :)",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "01bf694a9ee037e4575eed3ba63d167c336569b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "151f15d7_3525369d",
+        "filename": "components/ntp_snippets/user_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 0,
+      "message": "can\u0027t you replace this with params array?",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 54
+      },
+      "revId": "01bf694a9ee037e4575eed3ba63d167c336569b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

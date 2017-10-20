@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e363d26c_047336aa",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 1,
+      "message": "Can\u0027t you avoid this type of initialization?\n\nhttps://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "7fccdda251faaf1a25cee176e7ee3c9752c849a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d315a9_709b37e9",
+        "filename": "components/ntp_snippets/bookmarks/bookmark_suggestions_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 1,
+      "message": "I am not sure how you decide whether to separate them with newlines (for BreakingNews, you did so, while here - you don\u0027t). I feel like with new lines they are easier to read.",
+      "range": {
+        "startLine": 34,
+        "startChar": 75,
+        "endLine": 34,
+        "endChar": 76
+      },
+      "revId": "7fccdda251faaf1a25cee176e7ee3c9752c849a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a22a3a7_99d6ca0f",
+        "filename": "components/ntp_snippets/features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 1,
+      "message": "could you define this before using them (i.e. above Option)?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 32
+      },
+      "revId": "7fccdda251faaf1a25cee176e7ee3c9752c849a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff75cf33_3ae62529",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 1,
+      "message": "/*default_value\u003d*/",
+      "range": {
+        "startLine": 19,
+        "startChar": 63,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "7fccdda251faaf1a25cee176e7ee3c9752c849a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789870d6_eaed2f5b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 1,
+      "message": "Should you replace these as well?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 75
+      },
+      "revId": "7fccdda251faaf1a25cee176e7ee3c9752c849a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cccdf44_18c89dfa",
+        "filename": "components/ntp_snippets/user_classifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-20T07:18:31Z",
+      "side": 1,
+      "message": "delete?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "7fccdda251faaf1a25cee176e7ee3c9752c849a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
