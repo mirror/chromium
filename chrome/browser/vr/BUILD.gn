@@ -161,33 +161,31 @@ source_set("vr_common_source") {
   ]
 }
 
-# TODO(773882) - Temporary workaround since this static library isn't consumed
-# on Windows, and it is causing build errors on the bots.
-if (!is_win) {
-  static_library("vr_common") {
-    public_deps = [
-      ":vr_common_source",
-    ]
+static_library("vr_common") {
+  public_deps = [
+    ":vr_common_source",
+  ]
 
-    deps = [
-      "//base",
-      "//cc/animation",
-      "//cc/paint",
-      "//chrome/app:generated_resources",
-      "//chrome/browser/resources:vr_shell_resources",
-      "//components/security_state/core",
-      "//components/strings",
-      "//components/toolbar",
-      "//components/url_formatter",
-      "//components/vector_icons",
-      "//components/vector_icons",
-      "//skia",
-      "//ui/base",
-      "//ui/display",
-      "//ui/gl",
-      "//ui/gl/init",
-    ]
-  }
+  deps = [
+    "//base",
+    "//cc/animation",
+    "//cc/paint",
+    "//chrome/app:generated_resources",
+    "//chrome/browser/resources:vr_shell_resources",
+    "//components/security_state/core",
+    "//components/strings",
+    "//components/toolbar",
+    "//components/url_formatter",
+    "//components/vector_icons",
+    "//components/vector_icons",
+    "//device/vr:mojo_bindings",
+    "//device/vr:vr",
+    "//skia",
+    "//ui/base",
+    "//ui/display",
+    "//ui/gl",
+    "//ui/gl/init",
+  ]
 }
 
 test("vr_common_unittests") {
