@@ -15,12 +15,12 @@ interface CdmStorage {
     kFailure   // Unable to open file.
   };
 
-  // Opens the file specified by |file_name| for read or write. Can be called
-  // multiple times for different files, or for the same file if the first one
+  // Opens the file specified by |file_name| for read. Can be called multiple
+  // times for different files, or for the same file if the first one
   // has been closed. If successful, kSuccess will be returned, |file| can
-  // be used to access the contents, and |releaser| should be closed when
+  // be used to access the contents, and |cdm_file| should be closed when
   // access to the file is no longer needed (i.e. file closed). On failure,
-  // |status| <> kSuccess and |file| and |releaser| are null.
+  // |status| <> kSuccess and |file| and |cdm_file| are null.
   // - If the file is already opened by another CDM instance, kInUse will
   //   be returned in |status|.
   // - |file_name| must not contain forward slash ('/') or backslash ('\'),
@@ -31,11 +31,19 @@ interface CdmStorage {
   Open(string file_name)
     => (Status status,
         mojo.common.mojom.File? file,
-        associated CdmFileReleaser? releaser);
+        associated CdmFile? cdm_file);
 };
 
 // Provides a way to keep track of the file opened. When the connection to this
 // object is broken, it is assumed that the file has been closed and that no
 // more operations will be performed on it.
-interface CdmFileReleaser {
+interface CdmFile {
+
+  // Writes |data| to the file. Returns true if successful, false otherwise.
+  // This is implemented in the browser as the CDM process can't set the
+  // length of the file due to sandbox restrictions.
+//Write(array<uint8> data) => (bool success);
+
+    OpenFileForWrite() => (mojo.common.mojom.File? file);
+    DoneWriting() => (mojo.common.mojom.File? file);
 };
