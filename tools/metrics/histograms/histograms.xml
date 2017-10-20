@@ -95031,6 +95031,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WheelScrolling.WasLatched" enum="BooleanLatched">
+  <owner>sahel@chromium.org</owner>
+  <summary>
+    False if processing the unconsumed wheel event generates a gesture scroll
+    begin event.
+  </summary>
+</histogram>
+
 <histogram name="Win8.PageLoad" enum="Win8PageLoadType">
   <owner>zturner@chromium.org</owner>
   <summary>
