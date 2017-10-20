@@ -52,7 +52,6 @@
 #include "printing/units.h"
 #include "third_party/pdfium/public/fpdf_annot.h"
 #include "third_party/pdfium/public/fpdf_attachment.h"
-#include "third_party/pdfium/public/fpdf_catalog.h"
 #include "third_party/pdfium/public/fpdf_edit.h"
 #include "third_party/pdfium/public/fpdf_ext.h"
 #include "third_party/pdfium/public/fpdf_flatten.h"
@@ -91,10 +90,9 @@ const uint32_t kPendingPageColor = 0xFFEEEEEE;
 const uint32_t kFormHighlightColor = 0xFFE4DD;
 const int32_t kFormHighlightAlpha = 100;
 
-constexpr int kMaxPasswordTries = 3;
+const int32_t kMaxPasswordTries = 3;
 
-constexpr base::TimeDelta kTouchLongPressTimeout =
-    base::TimeDelta::FromMilliseconds(300);
+const int32_t kTouchLongPressTimeoutMs = 300;
 
 // See Table 3.20 in
 // http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf
@@ -107,8 +105,7 @@ const int32_t kLoadingTextVerticalOffset = 50;
 
 // The maximum amount of time we'll spend doing a paint before we give back
 // control of the thread.
-constexpr base::TimeDelta kMaxProgressivePaintTime =
-    base::TimeDelta::FromMilliseconds(300);
+const int32_t kMaxProgressivePaintTimeMs = 300;
 
 // The maximum amount of time we'll spend doing the first paint. This is less
 // than the above to keep things smooth if the user is scrolling quickly. This
@@ -121,8 +118,7 @@ constexpr base::TimeDelta kMaxProgressivePaintTime =
 // the final painting can start.
 // The scrollbar will always be responsive since it is managed by a separate
 // process.
-constexpr base::TimeDelta kMaxInitialProgressivePaintTime =
-    base::TimeDelta::FromMilliseconds(250);
+const int32_t kMaxInitialProgressivePaintTimeMs = 250;
 
 PDFiumEngine* g_engine_for_fontmapper = nullptr;
 
@@ -696,6 +692,7 @@ PDFiumEngine::PDFiumEngine(PDFEngine::Client* client)
     : client_(client),
       current_zoom_(1.0),
       current_rotation_(0),
+      password_tries_remaining_(0),
       doc_(nullptr),
       form_(nullptr),
       defer_page_unload_(false),
@@ -705,14 +702,21 @@ PDFiumEngine::PDFiumEngine(PDFEngine::Client* client)
       in_form_text_area_(false),
       editable_form_text_area_(false),
       mouse_left_button_down_(false),
+      next_page_to_search_(-1),
+      last_page_to_search_(-1),
+      last_character_index_to_search_(-1),
       permissions_(0),
       permissions_handler_revision_(-1),
       fpdf_availability_(nullptr),
+      next_formfill_timer_id_(0),
+      next_touch_timer_id_(0),
       last_page_mouse_down_(-1),
       most_visible_page_(-1),
       called_do_document_action_(false),
       render_grayscale_(false),
-      render_annots_(true) {
+      render_annots_(true),
+      progressive_paint_timeout_(0),
+      getting_password_(false) {
   find_factory_.Initialize(this);
   password_factory_.Initialize(this);
 
@@ -1085,9 +1089,9 @@ void PDFiumEngine::Paint(const pp::Rect& rect,
 
       if (progressive == -1) {
         progressive = StartPaint(index, dirty_in_screen);
-        progressive_paint_timeout_ = kMaxInitialProgressivePaintTime;
+        progressive_paint_timeout_ = kMaxInitialProgressivePaintTimeMs;
       } else {
-        progressive_paint_timeout_ = kMaxProgressivePaintTime;
+        progressive_paint_timeout_ = kMaxProgressivePaintTimeMs;
       }
 
       progressive_paints_[progressive].painted_ = true;
@@ -1281,7 +1285,6 @@ void PDFiumEngine::FinishLoadingDocument() {
     document_features.has_attachments = (FPDFDoc_GetAttachmentCount(doc_) > 0);
     document_features.is_linearized =
         (FPDFAvail_IsLinearized(fpdf_availability_) == PDF_LINEARIZED);
-    document_features.is_tagged = FPDFCatalog_IsTagged(doc_);
     client_->DocumentLoadComplete(document_features);
   }
 }
@@ -2716,14 +2719,12 @@ void PDFiumEngine::SetGrayscale(bool grayscale) {
 }
 
 void PDFiumEngine::OnCallback(int id) {
-  auto it = formfill_timers_.find(id);
-  if (it == formfill_timers_.end())
+  if (!formfill_timers_.count(id))
     return;
 
-  it->second.timer_callback(id);
-  it = formfill_timers_.find(id);  // The callback might delete the timer.
-  if (it != formfill_timers_.end())
-    client_->ScheduleCallback(id, it->second.timer_period);
+  formfill_timers_[id].second(id);
+  if (formfill_timers_.count(id))  // The callback might delete the timer.
+    client_->ScheduleCallback(id, formfill_timers_[id].first);
 }
 
 void PDFiumEngine::OnTouchTimerCallback(int id) {
@@ -3936,7 +3937,7 @@ bool PDFiumEngine::IsPointInEditableFormTextArea(FPDF_PAGE page,
 void PDFiumEngine::ScheduleTouchTimer(const pp::TouchInputEvent& evt) {
   touch_timers_[++next_touch_timer_id_] = evt;
   client_->ScheduleTouchTimerCallback(next_touch_timer_id_,
-                                      kTouchLongPressTimeout);
+                                      kTouchLongPressTimeoutMs);
 }
 
 void PDFiumEngine::KillTouchTimer(int timer_id) {
@@ -3994,13 +3995,9 @@ int PDFiumEngine::Form_SetTimer(FPDF_FORMFILLINFO* param,
                                 int elapse,
                                 TimerCallback timer_func) {
   PDFiumEngine* engine = static_cast<PDFiumEngine*>(param);
-  base::TimeDelta elapse_time = base::TimeDelta::FromMilliseconds(elapse);
-  engine->formfill_timers_.emplace(
-      std::piecewise_construct,
-      std::forward_as_tuple(++engine->next_formfill_timer_id_),
-      std::forward_as_tuple(elapse_time, timer_func));
-  engine->client_->ScheduleCallback(engine->next_formfill_timer_id_,
-                                    elapse_time);
+  engine->formfill_timers_[++engine->next_formfill_timer_id_] =
+      std::pair<int, TimerCallback>(elapse, timer_func);
+  engine->client_->ScheduleCallback(engine->next_formfill_timer_id_, elapse);
   return engine->next_formfill_timer_id_;
 }
 
@@ -4239,8 +4236,8 @@ void PDFiumEngine::Form_GotoPage(IPDF_JSPLATFORM* param, int page_number) {
 
 FPDF_BOOL PDFiumEngine::Pause_NeedToPauseNow(IFSDK_PAUSE* param) {
   PDFiumEngine* engine = static_cast<PDFiumEngine*>(param);
-  return base::Time::Now() - engine->last_progressive_start_time_ >
-         engine->progressive_paint_timeout_;
+  return (base::Time::Now() - engine->last_progressive_start_time_)
+             .InMilliseconds() > engine->progressive_paint_timeout_;
 }
 
 void PDFiumEngine::SetCaretPosition(const pp::Point& position) {
@@ -4282,10 +4279,6 @@ void PDFiumEngine::SetSelectionBounds(const pp::Point& base,
                                    ? RangeSelectionDirection::Left
                                    : RangeSelectionDirection::Right;
 }
-
-PDFiumEngine::FormFillTimerData::FormFillTimerData(base::TimeDelta period,
-                                                   TimerCallback callback)
-    : timer_period(period), timer_callback(callback) {}
 
 ScopedUnsupportedFeature::ScopedUnsupportedFeature(PDFiumEngine* engine)
     : old_engine_(g_engine_for_unsupported) {

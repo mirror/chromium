@@ -139,7 +139,7 @@ WebFrameWidgetImpl::WebFrameWidgetImpl(WebWidgetClient* client,
 
 WebFrameWidgetImpl::~WebFrameWidgetImpl() {}
 
-void WebFrameWidgetImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebFrameWidgetImpl) {
   visitor->Trace(local_root_);
   visitor->Trace(mouse_capture_node_);
   WebFrameWidgetBase::Trace(visitor);
@@ -787,7 +787,7 @@ void WebFrameWidgetImpl::HandleMouseDown(LocalFrame& main_frame,
   // If there is a popup open, close it as the user is clicking on the page
   // (outside of the popup). We also save it so we can prevent a click on an
   // element from immediately reopening the same popup.
-  scoped_refptr<WebPagePopupImpl> page_popup;
+  RefPtr<WebPagePopupImpl> page_popup;
   if (event.button == WebMouseEvent::Button::kLeft) {
     page_popup = view_impl->GetPagePopup();
     view_impl->HidePopups();

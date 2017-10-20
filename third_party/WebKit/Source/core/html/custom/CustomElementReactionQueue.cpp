@@ -14,7 +14,7 @@ CustomElementReactionQueue::CustomElementReactionQueue() : index_(0u) {}
 
 CustomElementReactionQueue::~CustomElementReactionQueue() {}
 
-void CustomElementReactionQueue::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CustomElementReactionQueue) {
   visitor->Trace(reactions_);
 }
 

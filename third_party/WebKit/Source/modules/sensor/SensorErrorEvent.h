@@ -28,7 +28,7 @@ class SensorErrorEvent : public Event {
 
   ~SensorErrorEvent() override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   const AtomicString& InterfaceName() const override;
 

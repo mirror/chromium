@@ -580,7 +580,7 @@ void DocumentMarkerController::InvalidateRectsForAllTextMatchMarkers() {
   }
 }
 
-void DocumentMarkerController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentMarkerController) {
   visitor->Trace(markers_);
   visitor->Trace(document_);
   SynchronousMutationObserver::Trace(visitor);

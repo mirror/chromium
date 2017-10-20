@@ -35,7 +35,7 @@
 
 namespace blink {
 
-scoped_refptr<AnimatableValue> AnimatableValue::Interpolate(
+RefPtr<AnimatableValue> AnimatableValue::Interpolate(
     const AnimatableValue* left,
     const AnimatableValue* right,
     double fraction) {

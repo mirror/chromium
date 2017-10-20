@@ -33,7 +33,7 @@ class CORE_EXPORT AnimationEffectTimingReadOnly
 
   virtual bool IsAnimationEffectTiming() const { return false; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   Member<AnimationEffectReadOnly> parent_;

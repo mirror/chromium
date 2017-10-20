@@ -228,20 +228,20 @@ TEST_P(ScrollingCoordinatorTest, fastFractionalScrollingDiv) {
 
 static WebLayer* WebLayerFromElement(Element* element) {
   if (!element)
-    return nullptr;
+    return 0;
   LayoutObject* layout_object = element->GetLayoutObject();
   if (!layout_object || !layout_object->IsBoxModelObject())
-    return nullptr;
+    return 0;
   PaintLayer* layer = ToLayoutBoxModelObject(layout_object)->Layer();
   if (!layer)
-    return nullptr;
+    return 0;
   if (!layer->HasCompositedLayerMapping())
-    return nullptr;
+    return 0;
   CompositedLayerMapping* composited_layer_mapping =
       layer->GetCompositedLayerMapping();
   GraphicsLayer* graphics_layer = composited_layer_mapping->MainGraphicsLayer();
   if (!graphics_layer)
-    return nullptr;
+    return 0;
   return graphics_layer->PlatformLayer();
 }
 

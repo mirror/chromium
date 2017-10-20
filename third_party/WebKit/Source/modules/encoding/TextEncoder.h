@@ -57,7 +57,7 @@ class TextEncoder final : public GarbageCollectedFinalized<TextEncoder>,
   String encoding() const;
   NotShared<DOMUint8Array> encode(const String&);
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   TextEncoder(const WTF::TextEncoding&);

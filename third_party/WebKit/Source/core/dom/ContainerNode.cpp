@@ -635,13 +635,13 @@ void ContainerNode::WillRemoveChildren() {
       ChildFrameDisconnector::kDescendantsOnly);
 }
 
-void ContainerNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ContainerNode) {
   visitor->Trace(first_child_);
   visitor->Trace(last_child_);
   Node::Trace(visitor);
 }
 
-void ContainerNode::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(ContainerNode) {
   visitor->TraceWrappers(first_child_);
   visitor->TraceWrappers(last_child_);
   Node::TraceWrappers(visitor);
@@ -793,7 +793,7 @@ void ContainerNode::RemoveChildren(SubtreeModificationAction action) {
       ScriptForbiddenScope forbid_script;
 
       while (Node* child = first_child_) {
-        RemoveBetween(nullptr, child->nextSibling(), *child);
+        RemoveBetween(0, child->nextSibling(), *child);
         NotifyNodeRemoved(*child);
       }
     }

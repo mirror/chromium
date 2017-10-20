@@ -51,7 +51,7 @@ class SVGAnimatedString : public SVGAnimatedProperty<SVGString>,
   virtual void setBaseVal(const String&, ExceptionState&);
   virtual String animVal();
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   SVGAnimatedString(SVGElement* context_element,

@@ -1328,7 +1328,7 @@ void StyleEngine::CollectMatchingUserRules(
   }
 }
 
-void StyleEngine::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleEngine) {
   visitor->Trace(document_);
   visitor->Trace(user_style_sheets_);
   visitor->Trace(active_user_style_sheets_);
@@ -1351,7 +1351,7 @@ void StyleEngine::Trace(blink::Visitor* visitor) {
   FontSelectorClient::Trace(visitor);
 }
 
-void StyleEngine::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(StyleEngine) {
   for (const auto& sheet : user_style_sheets_) {
     visitor->TraceWrappers(sheet.second);
   }

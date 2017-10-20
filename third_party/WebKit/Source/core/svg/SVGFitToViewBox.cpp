@@ -64,7 +64,7 @@ SVGFitToViewBox::SVGFitToViewBox(SVGElement* element)
   element->AddToPropertyMap(preserve_aspect_ratio_);
 }
 
-void SVGFitToViewBox::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFitToViewBox) {
   visitor->Trace(view_box_);
   visitor->Trace(preserve_aspect_ratio_);
 }

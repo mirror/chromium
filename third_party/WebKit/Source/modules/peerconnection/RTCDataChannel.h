@@ -113,7 +113,7 @@ class MODULES_EXPORT RTCDataChannel final
   // ScriptWrappable
   bool HasPendingActivity() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   // WebRTCDataChannelHandlerClient
   void DidChangeReadyState(WebRTCDataChannelHandlerClient::ReadyState) override;

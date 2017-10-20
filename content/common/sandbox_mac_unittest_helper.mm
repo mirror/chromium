@@ -156,8 +156,10 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_test_runner) {
     return -1;
   }
 
-  service_manager::SandboxMac::Warmup(sandbox_type);
-  if (!service_manager::SandboxMac::Enable(sandbox_type, base::FilePath())) {
+  service_manager::Sandbox::SandboxWarmup(sandbox_type);
+
+  if (!service_manager::Sandbox::EnableSandbox(sandbox_type,
+                                               base::FilePath())) {
     LOG(ERROR) << "Failed to initialize sandbox " << sandbox_type;
     return -1;
   }

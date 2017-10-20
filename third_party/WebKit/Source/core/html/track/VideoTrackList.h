@@ -25,9 +25,7 @@ class CORE_EXPORT VideoTrackList final : public TrackListBase<VideoTrack> {
 
   void TrackSelected(WebMediaPlayer::TrackId selected_track_id);
 
-  void Trace(blink::Visitor* visitor) {
-    TrackListBase<VideoTrack>::Trace(visitor);
-  }
+  DEFINE_INLINE_TRACE() { TrackListBase<VideoTrack>::Trace(visitor); }
 
  private:
   explicit VideoTrackList(HTMLMediaElement&);

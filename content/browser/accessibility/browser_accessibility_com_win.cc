@@ -1902,13 +1902,12 @@ void BrowserAccessibilityComWin::UpdateStep3FireEvents(
       FireNativeEvent(IA2_EVENT_TEXT_INSERTED);
     }
 
-    // Changing a static text node can affect the IA2 hypertext of its parent
-    // and, if the node is in a simple text control, the hypertext of the text
-    // control itself.
+    // Changing a static text node can affect the IAccessibleText hypertext
+    // of the parent node, so force an update on the parent.
     BrowserAccessibilityComWin* parent =
         ToBrowserAccessibilityComWin(owner()->PlatformGetParent());
-    if (parent && (parent->owner()->HasState(ui::AX_STATE_EDITABLE) ||
-                   owner()->IsTextOnlyObject())) {
+    if (parent && owner()->IsTextOnlyObject() &&
+        name() != old_win_attributes_->name) {
       parent->owner()->UpdatePlatformAttributes();
     }
   }
@@ -2356,8 +2355,6 @@ bool BrowserAccessibilityComWin::IsListBoxOptionOrMenuListOption() {
 }
 
 void BrowserAccessibilityComWin::FireNativeEvent(LONG win_event_type) const {
-  if (owner()->PlatformIsChildOfLeaf())
-    return;
   (new BrowserAccessibilityEventWin(BrowserAccessibilityEvent::FromTreeChange,
                                     ui::AX_EVENT_NONE, win_event_type, owner()))
       ->Fire();

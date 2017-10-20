@@ -67,12 +67,12 @@ class NodeMutationObserverData final
     registry_.EraseAt(registry_.Find(registration));
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(registry_);
     visitor->Trace(transient_registry_);
   }
 
-  void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_TRACE_WRAPPERS() {
     for (auto registration : registry_) {
       visitor->TraceWrappers(registration);
     }
@@ -150,13 +150,13 @@ class NodeRareData : public GarbageCollectedFinalized<NodeRareData>,
     kConnectedFrameCountBits = 10,  // Must fit Page::maxNumberOfFrames.
   };
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
   void FinalizeGarbageCollectedObject();
 
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
-  void TraceWrappersAfterDispatch(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE_WRAPPERS();
+  DECLARE_TRACE_WRAPPERS_AFTER_DISPATCH();
 
  protected:
   explicit NodeRareData(NodeRenderingData* node_layout_data)

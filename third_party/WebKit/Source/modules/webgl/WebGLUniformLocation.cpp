@@ -44,7 +44,7 @@ WebGLProgram* WebGLUniformLocation::Program() const {
   // If the program has been linked again, then this UniformLocation is no
   // longer valid.
   if (program_->LinkCount() != link_count_)
-    return nullptr;
+    return 0;
   return program_;
 }
 
@@ -55,7 +55,7 @@ GLint WebGLUniformLocation::Location() const {
   return location_;
 }
 
-void WebGLUniformLocation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLUniformLocation) {
   visitor->Trace(program_);
 }
 

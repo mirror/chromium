@@ -23,7 +23,7 @@ class MouseWheelEventManager final
 
  public:
   explicit MouseWheelEventManager(LocalFrame&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void Clear();
 

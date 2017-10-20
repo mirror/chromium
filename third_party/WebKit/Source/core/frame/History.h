@@ -60,12 +60,12 @@ class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
   void forward(ScriptState*, ExceptionState&);
   void go(ScriptState*, int delta, ExceptionState&);
 
-  void pushState(scoped_refptr<SerializedScriptValue>,
+  void pushState(RefPtr<SerializedScriptValue>,
                  const String& title,
                  const String& url,
                  ExceptionState&);
 
-  void replaceState(scoped_refptr<SerializedScriptValue> data,
+  void replaceState(RefPtr<SerializedScriptValue> data,
                     const String& title,
                     const String& url,
                     ExceptionState& exception_state) {
@@ -79,7 +79,7 @@ class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
   bool stateChanged() const;
   bool IsSameAsCurrentState(SerializedScriptValue*) const;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   FRIEND_TEST_ALL_PREFIXES(HistoryTest, CanChangeToURL);
@@ -94,7 +94,7 @@ class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
 
   KURL UrlForState(const String& url);
 
-  void StateObjectAdded(scoped_refptr<SerializedScriptValue>,
+  void StateObjectAdded(RefPtr<SerializedScriptValue>,
                         const String& title,
                         const String& url,
                         HistoryScrollRestorationType,
@@ -105,7 +105,7 @@ class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
 
   bool ShouldThrottleStateObjectChanges();
 
-  scoped_refptr<SerializedScriptValue> last_state_object_requested_;
+  RefPtr<SerializedScriptValue> last_state_object_requested_;
   struct {
     int count;
     TimeTicks last_updated;

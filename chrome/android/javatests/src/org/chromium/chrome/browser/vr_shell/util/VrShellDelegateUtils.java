@@ -5,7 +5,7 @@
 package org.chromium.chrome.browser.vr_shell.util;
 
 import org.chromium.base.ThreadUtils;
-import org.chromium.chrome.browser.vr_shell.TestVrShellDelegate;
+import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -19,13 +19,12 @@ public class VrShellDelegateUtils {
      * This is necessary in case acquiring the instance causes the delegate
      * to be constructed, which must happen on the UI thread.
      */
-    public static TestVrShellDelegate getDelegateInstance() {
-        final AtomicReference<TestVrShellDelegate> delegate =
-                new AtomicReference<TestVrShellDelegate>();
+    public static VrShellDelegate getDelegateInstance() {
+        final AtomicReference<VrShellDelegate> delegate = new AtomicReference<VrShellDelegate>();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                delegate.set(TestVrShellDelegate.getInstance());
+                delegate.set(VrShellDelegate.getInstanceForTesting());
             }
         });
         return delegate.get();

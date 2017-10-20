@@ -16,7 +16,7 @@ ServiceWorkerContentSettingsProxyImpl::ServiceWorkerContentSettingsProxyImpl(
     const GURL& script_url,
     base::WeakPtr<ServiceWorkerContextCore> context,
     blink::mojom::WorkerContentSettingsProxyRequest request)
-    : origin_(url::Origin::Create(script_url)),
+    : origin_(script_url),
       context_(context),
       binding_(this, std::move(request)) {}
 

@@ -46,7 +46,7 @@ class PasswordsListViewControllerTest : public ManagePasswordsControllerTest {
   }
 
   void SetUpPendingState(const autofill::PasswordForm* form) {
-    ManagePasswordsControllerTest::SetUpSavePendingState();
+    ManagePasswordsControllerTest::SetUpSavePendingState(false);
     controller_.reset([[PasswordsListViewController alloc]
         initWithModelAndForm:GetModelAndCreateIfNull()
                         form:form]);

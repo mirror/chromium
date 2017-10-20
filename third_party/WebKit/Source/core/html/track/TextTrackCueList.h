@@ -57,8 +57,8 @@ class TextTrackCueList final : public GarbageCollected<TextTrackCueList>,
   }
   void ValidateCueIndexes();
 
-  void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   TextTrackCueList();

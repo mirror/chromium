@@ -42,7 +42,7 @@ void XSLImportRule::SetXSLStyleSheet(const String& href,
                                      const KURL& base_url,
                                      const String& sheet) {
   if (style_sheet_)
-    style_sheet_->SetParentStyleSheet(nullptr);
+    style_sheet_->SetParentStyleSheet(0);
 
   style_sheet_ = XSLStyleSheet::Create(this, href, base_url);
 
@@ -102,7 +102,7 @@ void XSLImportRule::LoadSheet() {
   SetXSLStyleSheet(abs_href, resource->GetResponse().Url(), resource->Sheet());
 }
 
-void XSLImportRule::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(XSLImportRule) {
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(style_sheet_);
 }

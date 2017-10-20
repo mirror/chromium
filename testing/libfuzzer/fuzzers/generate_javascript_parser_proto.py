@@ -58,7 +58,7 @@ def GenerateConversionContents(words):
         if (part > max_part):
           max_part = part
         building_string += ('token_to_string(token.inner_tokens(' + str(part) +
-                            '), depth)')
+                            '))')
       first = False
     if max_part >= 0:
         contents += ('      if (token.inner_tokens().size() < ' +
@@ -100,8 +100,7 @@ def main(argv):
                   '}\n'
                   '\n'
                   'message Source {\n'
-                  '  required bool is_module = 1;\n'
-                  '  repeated Token tokens = 2;\n'
+                  '  repeated Token tokens = 1;\n'
                   '}\n')
 
   proto_contents = proto_header + GenerateProtoContents(words) + proto_footer
@@ -115,14 +114,9 @@ def main(argv):
       '#include "testing/libfuzzer/fuzzers/'
       'javascript_parser_proto_to_string.h"\n'
       '\n'
-      '// Bound calls to token_to_string to prevent memory usage from growing\n'
-      '// too much.\n'
-      'const int kMaxRecursiveDepth = 10;\n'
-      '\n'
       'std::string token_to_string(\n'
-      '    const javascript_parser_proto_fuzzer::Token& token, int depth)'
+      '    const javascript_parser_proto_fuzzer::Token& token)'
       ' {\n'
-      '  if (++depth == kMaxRecursiveDepth) return std::string("");\n'
       '  switch(token.value()) {\n')
 
   conversion_footer = ('    default: break;\n'

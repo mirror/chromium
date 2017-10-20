@@ -4,9 +4,14 @@
 
 #include "device/geolocation/geolocation_delegate.h"
 
+#include "device/geolocation/access_token_store.h"
 #include "device/geolocation/location_provider.h"
 
 namespace device {
+
+scoped_refptr<AccessTokenStore> GeolocationDelegate::CreateAccessTokenStore() {
+  return nullptr;
+}
 
 std::unique_ptr<LocationProvider>
 GeolocationDelegate::OverrideSystemLocationProvider() {

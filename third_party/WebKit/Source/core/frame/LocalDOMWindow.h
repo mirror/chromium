@@ -108,8 +108,8 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   LocalFrame* GetFrame() const { return ToLocalFrame(DOMWindow::GetFrame()); }
 
-  virtual void Trace(blink::Visitor*);
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   Document* InstallNewDocument(const String& mime_type,
                                const DocumentInit&,
@@ -303,10 +303,10 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   void EnqueueDocumentEvent(Event*);
   void EnqueuePageshowEvent(PageshowEventPersistence);
   void EnqueueHashchangeEvent(const String& old_url, const String& new_url);
-  void EnqueuePopstateEvent(scoped_refptr<SerializedScriptValue>);
+  void EnqueuePopstateEvent(RefPtr<SerializedScriptValue>);
   void DispatchWindowLoadEvent();
   void DocumentWasClosed();
-  void StatePopped(scoped_refptr<SerializedScriptValue>);
+  void StatePopped(RefPtr<SerializedScriptValue>);
 
   // FIXME: This shouldn't be public once LocalDOMWindow becomes
   // ExecutionContext.
@@ -325,7 +325,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   // Protected DOMWindow overrides.
   void SchedulePostMessage(MessageEvent*,
-                           scoped_refptr<SecurityOrigin> target,
+                           RefPtr<SecurityOrigin> target,
                            Document* source) override;
 
  private:
@@ -374,7 +374,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   mutable Member<ApplicationCache> application_cache_;
 
   Member<DOMWindowEventQueue> event_queue_;
-  scoped_refptr<SerializedScriptValue> pending_state_object_;
+  RefPtr<SerializedScriptValue> pending_state_object_;
 
   HeapHashSet<Member<PostMessageTimer>> post_message_timers_;
   HeapHashSet<WeakMember<EventListenerObserver>> event_listener_observers_;

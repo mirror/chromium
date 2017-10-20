@@ -59,7 +59,7 @@ class BackgroundHTMLParser {
     WeakPtr<HTMLDocumentParser> parser;
     std::unique_ptr<XSSAuditor> xss_auditor;
     std::unique_ptr<TextResourceDecoder> decoder;
-    scoped_refptr<TokenizedChunkQueue> tokenized_chunk_queue;
+    RefPtr<TokenizedChunkQueue> tokenized_chunk_queue;
     // outstandingTokenLimit must be greater than or equal to
     // pendingTokenLimit
     size_t outstanding_token_limit;
@@ -71,7 +71,7 @@ class BackgroundHTMLParser {
   // thread: it must first be initialized by calling init(), and free by
   // calling stop().
   static WeakPtr<BackgroundHTMLParser> Create(std::unique_ptr<Configuration>,
-                                              scoped_refptr<WebTaskRunner>);
+                                              RefPtr<WebTaskRunner>);
   void Init(const KURL& document_url,
             std::unique_ptr<CachedDocumentParameters>,
             const MediaValuesCached::MediaValuesCachedData&);
@@ -100,8 +100,7 @@ class BackgroundHTMLParser {
   void ForcePlaintextForTextDocument();
 
  private:
-  BackgroundHTMLParser(std::unique_ptr<Configuration>,
-                       scoped_refptr<WebTaskRunner>);
+  BackgroundHTMLParser(std::unique_ptr<Configuration>, RefPtr<WebTaskRunner>);
   ~BackgroundHTMLParser();
 
   void AppendDecodedBytes(const String&);
@@ -137,8 +136,8 @@ class BackgroundHTMLParser {
   std::unique_ptr<TokenPreloadScanner> preload_scanner_;
   std::unique_ptr<TextResourceDecoder> decoder_;
   DocumentEncodingData last_seen_encoding_data_;
-  scoped_refptr<WebTaskRunner> loading_task_runner_;
-  scoped_refptr<TokenizedChunkQueue> tokenized_chunk_queue_;
+  RefPtr<WebTaskRunner> loading_task_runner_;
+  RefPtr<TokenizedChunkQueue> tokenized_chunk_queue_;
 
   // Index into |m_pendingTokens| of the last <meta> csp token found. Will be
   // |TokenizedChunk::noPendingToken| if none have been found.

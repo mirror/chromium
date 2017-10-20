@@ -366,7 +366,7 @@ EventDispatchMediator* TouchEvent::CreateMediator() {
   return TouchEventDispatchMediator::Create(this);
 }
 
-void TouchEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(TouchEvent) {
   visitor->Trace(touches_);
   visitor->Trace(target_touches_);
   visitor->Trace(changed_touches_);

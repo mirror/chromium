@@ -78,9 +78,9 @@ void HTMLImageFallbackHelper::CreateAltTextShadowTree(Element& element) {
   alt_text->AppendChild(text);
 }
 
-scoped_refptr<ComputedStyle> HTMLImageFallbackHelper::CustomStyleForAltText(
+RefPtr<ComputedStyle> HTMLImageFallbackHelper::CustomStyleForAltText(
     Element& element,
-    scoped_refptr<ComputedStyle> new_style) {
+    RefPtr<ComputedStyle> new_style) {
   // If we have an author shadow root or have not created the UA shadow root
   // yet, bail early. We can't use ensureUserAgentShadowRoot() here because that
   // would alter the DOM tree during style recalc.

@@ -225,7 +225,7 @@ void SVGTreeScopeResources::NotifyResourceAvailable(const AtomicString& id) {
   }
 }
 
-void SVGTreeScopeResources::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGTreeScopeResources) {
   visitor->Trace(pending_resources_);
   visitor->Trace(tree_scope_);
 }

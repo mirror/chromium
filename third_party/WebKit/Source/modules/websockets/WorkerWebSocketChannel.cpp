@@ -154,7 +154,7 @@ void WorkerWebSocketChannel::Disconnect() {
   bridge_.Clear();
 }
 
-void WorkerWebSocketChannel::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerWebSocketChannel) {
   visitor->Trace(bridge_);
   WebSocketChannel::Trace(visitor);
 }
@@ -358,7 +358,7 @@ void MainChannelClient::ContextDestroyed(WorkerThreadLifecycleContext*) {
   bridge_ = nullptr;
 }
 
-void MainChannelClient::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MainChannelClient) {
   visitor->Trace(main_channel_);
   WebSocketChannelClient::Trace(visitor);
   WorkerThreadLifecycleObserver::Trace(visitor);
@@ -510,7 +510,7 @@ void Bridge::Disconnect() {
   worker_global_scope_.Clear();
 }
 
-void Bridge::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Bridge) {
   visitor->Trace(client_);
   visitor->Trace(worker_global_scope_);
 }

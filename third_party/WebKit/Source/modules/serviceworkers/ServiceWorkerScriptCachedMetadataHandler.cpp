@@ -24,7 +24,7 @@ ServiceWorkerScriptCachedMetadataHandler::
 ServiceWorkerScriptCachedMetadataHandler::
     ~ServiceWorkerScriptCachedMetadataHandler() {}
 
-void ServiceWorkerScriptCachedMetadataHandler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ServiceWorkerScriptCachedMetadataHandler) {
   visitor->Trace(worker_global_scope_);
   CachedMetadataHandler::Trace(visitor);
 }

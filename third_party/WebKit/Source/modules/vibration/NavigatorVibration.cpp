@@ -185,7 +185,7 @@ void NavigatorVibration::ContextDestroyed(ExecutionContext*) {
   }
 }
 
-void NavigatorVibration::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorVibration) {
   visitor->Trace(controller_);
   Supplement<Navigator>::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);

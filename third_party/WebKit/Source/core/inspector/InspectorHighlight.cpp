@@ -84,7 +84,7 @@ void PathBuilder::AppendPathElement(const PathElement* path_element) {
       break;
     // The points member will contain no values.
     case kPathElementCloseSubpath:
-      AppendPathCommandAndPoints("Z", nullptr, 0);
+      AppendPathCommandAndPoints("Z", 0, 0);
       break;
   }
 }

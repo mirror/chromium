@@ -1251,11 +1251,21 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
     layout->StartRow(1, 0);
     layout->AddView(lock_button_);
   } else if (!is_guest) {
-    close_all_windows_button_ = new BackgroundColorHoverButton(
-        this, l10n_util::GetStringUTF16(IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON),
-        gfx::CreateVectorIcon(kCloseAllIcon, kIconSize, gfx::kChromeIconGrey));
-    layout->StartRow(1, 0);
-    layout->AddView(close_all_windows_button_);
+    int num_browsers = 0;
+    for (auto* browser : *BrowserList::GetInstance()) {
+      if (browser->profile()->GetOriginalProfile() ==
+          browser_->profile()->GetOriginalProfile())
+        num_browsers++;
+    }
+    if (num_browsers > 1) {
+      close_all_windows_button_ = new BackgroundColorHoverButton(
+          this,
+          l10n_util::GetStringUTF16(IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON),
+          gfx::CreateVectorIcon(kCloseAllIcon, kIconSize,
+                                gfx::kChromeIconGrey));
+      layout->StartRow(1, 0);
+      layout->AddView(close_all_windows_button_);
+    }
   }
 
   layout->StartRowWithPadding(1, 0, 0, vertical_spacing);

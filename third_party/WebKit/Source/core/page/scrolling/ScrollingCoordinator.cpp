@@ -102,7 +102,7 @@ ScrollingCoordinator::~ScrollingCoordinator() {
   DCHECK(!page_);
 }
 
-void ScrollingCoordinator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScrollingCoordinator) {
   visitor->Trace(page_);
   visitor->Trace(horizontal_scrollbars_);
   visitor->Trace(vertical_scrollbars_);
@@ -718,7 +718,7 @@ static void ProjectRectsToGraphicsLayerSpace(
     flags |= kTraverseDocumentBoundaries;
   PaintLayer* root_layer = main_frame->ContentLayoutItem().Layer();
   LayoutGeometryMap geometry_map(flags);
-  geometry_map.PushMappingsToAncestor(root_layer, nullptr);
+  geometry_map.PushMappingsToAncestor(root_layer, 0);
   LayerFrameMap layer_child_frame_map;
   MakeLayerChildFrameMap(main_frame, &layer_child_frame_map);
   ProjectRectsToGraphicsLayerSpaceRecursive(

@@ -33,8 +33,8 @@ class CORE_EXPORT ScriptedIdleTaskController
   }
   ~ScriptedIdleTaskController();
 
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
   using CallbackId = int;
 
@@ -43,8 +43,8 @@ class CORE_EXPORT ScriptedIdleTaskController
   class IdleTask : public GarbageCollectedFinalized<IdleTask>,
                    public TraceWrapperBase {
    public:
-    virtual void Trace(blink::Visitor* visitor) {}
-    virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {}
+    DEFINE_INLINE_VIRTUAL_TRACE() {}
+    DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
     virtual ~IdleTask() = default;
     virtual void invoke(IdleDeadline*) = 0;
   };
@@ -58,8 +58,8 @@ class CORE_EXPORT ScriptedIdleTaskController
     }
     ~V8IdleTask() = default;
     void invoke(IdleDeadline*) override;
-    void Trace(blink::Visitor*);
-    void TraceWrappers(const ScriptWrappableVisitor*) const;
+    DECLARE_TRACE();
+    DECLARE_TRACE_WRAPPERS();
 
    private:
     explicit V8IdleTask(V8IdleRequestCallback*);

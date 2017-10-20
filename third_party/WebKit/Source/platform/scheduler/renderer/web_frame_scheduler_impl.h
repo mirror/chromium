@@ -30,9 +30,10 @@ namespace scheduler {
 class RendererSchedulerImpl;
 class MainThreadTaskQueue;
 class TaskQueue;
+class WebTaskRunnerImpl;
 class WebViewSchedulerImpl;
 
-class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
+class WebFrameSchedulerImpl : public WebFrameScheduler {
  public:
   WebFrameSchedulerImpl(RendererSchedulerImpl* renderer_scheduler,
                         WebViewSchedulerImpl* parent_web_view_scheduler,
@@ -54,7 +55,12 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetCrossOrigin(bool cross_origin) override;
   bool IsCrossOrigin() const override;
   WebFrameScheduler::FrameType GetFrameType() const override;
-  RefPtr<WebTaskRunner> GetTaskRunner(TaskType) override;
+  RefPtr<WebTaskRunner> LoadingTaskRunner() override;
+  RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
+  RefPtr<WebTaskRunner> ThrottleableTaskRunner() override;
+  RefPtr<WebTaskRunner> DeferrableTaskRunner() override;
+  RefPtr<WebTaskRunner> PausableTaskRunner() override;
+  RefPtr<WebTaskRunner> UnpausableTaskRunner() override;
   WebViewScheduler* GetWebViewScheduler() override;
   void WillNavigateBackForwardSoon() override;
   void DidStartProvisionalLoad(bool is_main_frame) override;
@@ -73,16 +79,6 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
   bool has_active_connection() const { return active_connection_count_; }
 
   void OnTraceLogEnabled();
-
-  // TODO(hajimehoshi): Some tests like RendererSchedulerImplTest depends on
-  // these functions. These are public or a lot of FORWARD_DECLARE_TEST and
-  // FRIEND_TEST_ALL_PREFIXES would be required. Fix the tests not to use these.
-  RefPtr<WebTaskRunner> LoadingTaskRunner();
-  RefPtr<WebTaskRunner> LoadingControlTaskRunner();
-  RefPtr<WebTaskRunner> ThrottleableTaskRunner();
-  RefPtr<WebTaskRunner> DeferrableTaskRunner();
-  RefPtr<WebTaskRunner> PausableTaskRunner();
-  RefPtr<WebTaskRunner> UnpausableTaskRunner();
 
  private:
   friend class WebViewSchedulerImpl;
@@ -124,6 +120,12 @@ class PLATFORM_EXPORT WebFrameSchedulerImpl : public WebFrameScheduler {
       throttleable_queue_enabled_voter_;
   std::unique_ptr<TaskQueue::QueueEnabledVoter> deferrable_queue_enabled_voter_;
   std::unique_ptr<TaskQueue::QueueEnabledVoter> pausable_queue_enabled_voter_;
+  RefPtr<WebTaskRunnerImpl> loading_web_task_runner_;
+  RefPtr<WebTaskRunnerImpl> loading_control_web_task_runner_;
+  RefPtr<WebTaskRunnerImpl> throttleable_web_task_runner_;
+  RefPtr<WebTaskRunnerImpl> deferrable_web_task_runner_;
+  RefPtr<WebTaskRunnerImpl> pausable_web_task_runner_;
+  RefPtr<WebTaskRunnerImpl> unpausable_web_task_runner_;
   RendererSchedulerImpl* renderer_scheduler_;        // NOT OWNED
   WebViewSchedulerImpl* parent_web_view_scheduler_;  // NOT OWNED
   base::trace_event::BlameContext* blame_context_;   // NOT OWNED

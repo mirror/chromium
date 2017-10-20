@@ -33,7 +33,7 @@ class Bluetooth final : public GarbageCollectedFinalized<Bluetooth>,
   mojom::blink::WebBluetoothService* Service() { return service_.get(); }
 
   // Interface required by Garbage Collection:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   Bluetooth();

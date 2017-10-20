@@ -90,7 +90,7 @@ ResourceLoader::ResourceLoader(ResourceFetcher* fetcher,
 
 ResourceLoader::~ResourceLoader() {}
 
-void ResourceLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ResourceLoader) {
   visitor->Trace(fetcher_);
   visitor->Trace(scheduler_);
   visitor->Trace(resource_);

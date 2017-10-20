@@ -46,7 +46,7 @@ RemoteFrameClientImpl* RemoteFrameClientImpl::Create(
   return new RemoteFrameClientImpl(web_frame);
 }
 
-void RemoteFrameClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemoteFrameClientImpl) {
   visitor->Trace(web_frame_);
   RemoteFrameClient::Trace(visitor);
 }
@@ -131,10 +131,9 @@ unsigned RemoteFrameClientImpl::BackForwardLength() {
   return 2;
 }
 
-void RemoteFrameClientImpl::ForwardPostMessage(
-    MessageEvent* event,
-    scoped_refptr<SecurityOrigin> target,
-    LocalFrame* source_frame) const {
+void RemoteFrameClientImpl::ForwardPostMessage(MessageEvent* event,
+                                               RefPtr<SecurityOrigin> target,
+                                               LocalFrame* source_frame) const {
   if (web_frame_->Client()) {
     web_frame_->Client()->ForwardPostMessage(
         WebLocalFrameImpl::FromFrame(source_frame), web_frame_,

@@ -199,6 +199,7 @@ class MessageCenterViewTest : public AshTestBase,
                           bool by_user) override;
   std::unique_ptr<ui::MenuModel> CreateMenuModel(
       const Notification& notification) override;
+  bool HasClickedListener(const std::string& notification_id) override;
   void ClickOnNotificationButton(const std::string& notification_id,
                                  int button_index) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
@@ -384,6 +385,11 @@ std::unique_ptr<ui::MenuModel> MessageCenterViewTest::CreateMenuModel(
   // For this test, this method should not be invoked.
   NOTREACHED();
   return nullptr;
+}
+
+bool MessageCenterViewTest::HasClickedListener(
+    const std::string& notification_id) {
+  return true;
 }
 
 void MessageCenterViewTest::ClickOnNotificationButton(
@@ -903,8 +909,8 @@ TEST_F(MessageCenterViewTest, CheckModeWithRemovingNotificationDuringLock) {
 }
 
 TEST_F(MessageCenterViewTest, LockScreen) {
-  // Plain button bar height (56)
-  const int kLockedMessageCenterViewHeight = 56;
+  // Plain button bar height (56) + border (2)
+  const int kLockedMessageCenterViewHeight = 58;
 
   EXPECT_TRUE(GetNotificationView(kNotificationId1)->IsDrawn());
   EXPECT_TRUE(GetNotificationView(kNotificationId2)->IsDrawn());
@@ -981,8 +987,8 @@ TEST_F(MessageCenterViewTest, LockScreen) {
 }
 
 TEST_F(MessageCenterViewTest, NoNotification) {
-  // Plain button bar height (56) + Empty view (96)
-  const int kEmptyMessageCenterViewHeight = 152;
+  // Plain button bar height (56) + border (2) + Empty view (96)
+  const int kEmptyMessageCenterViewHeight = 154;
 
   GetMessageCenterView()->SizeToPreferredSize();
   EXPECT_NE(kEmptyMessageCenterViewHeight, GetMessageCenterView()->height());

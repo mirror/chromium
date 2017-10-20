@@ -58,7 +58,7 @@ class ComputedStyle;
 
 class ClickHandlingState final : public EventDispatchHandlingState {
  public:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   bool checked;
   bool indeterminate;
@@ -73,7 +73,7 @@ class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
 
  public:
   virtual ~InputTypeView();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   virtual bool SizeShouldIncludeDecoration(int default_size,
                                            int& preferred_size) const;
@@ -101,8 +101,8 @@ class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
 
   virtual void SubtreeHasChanged();
   virtual LayoutObject* CreateLayoutObject(const ComputedStyle&) const;
-  virtual scoped_refptr<ComputedStyle> CustomStyleForLayoutObject(
-      scoped_refptr<ComputedStyle>);
+  virtual RefPtr<ComputedStyle> CustomStyleForLayoutObject(
+      RefPtr<ComputedStyle>);
   virtual TextDirection ComputedTextDirection();
   virtual void StartResourceLoading();
   virtual void ClosePopupView();

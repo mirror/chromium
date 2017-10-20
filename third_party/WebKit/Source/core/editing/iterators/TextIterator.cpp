@@ -842,7 +842,7 @@ Document* TextIteratorAlgorithm<Strategy>::OwnerDocument() const {
     return &text_state_.PositionNode()->GetDocument();
   if (end_container_)
     return &end_container_->GetDocument();
-  return nullptr;
+  return 0;
 }
 
 template <typename Strategy>
@@ -853,7 +853,7 @@ Node* TextIteratorAlgorithm<Strategy>::GetNode() const {
       return node;
     return Strategy::ChildAt(*node, StartOffsetInCurrentContainer());
   }
-  return nullptr;
+  return 0;
 }
 
 template <typename Strategy>

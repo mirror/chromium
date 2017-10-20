@@ -122,7 +122,7 @@ void MediaControlsWindowEventListener::handleEvent(
   callback_();
 }
 
-void MediaControlsWindowEventListener::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsWindowEventListener) {
   EventListener::Trace(visitor);
   visitor->Trace(media_controls_);
 }

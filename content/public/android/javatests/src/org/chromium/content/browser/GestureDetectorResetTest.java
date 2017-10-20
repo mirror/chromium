@@ -9,7 +9,8 @@ import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 
-import org.junit.Assert;
+import junit.framework.Assert;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;

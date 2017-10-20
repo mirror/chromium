@@ -60,13 +60,12 @@ void ElementIntersectionObserverData::DeactivateAllIntersectionObservers(
       .RemoveTrackedObserversForRoot(node);
 }
 
-void ElementIntersectionObserverData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ElementIntersectionObserverData) {
   visitor->Trace(intersection_observers_);
   visitor->Trace(intersection_observations_);
 }
 
-void ElementIntersectionObserverData::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(ElementIntersectionObserverData) {
   for (auto& entry : intersection_observations_) {
     visitor->TraceWrappers(entry.key);
   }

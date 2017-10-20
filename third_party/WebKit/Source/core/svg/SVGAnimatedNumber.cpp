@@ -44,13 +44,12 @@ void SVGAnimatedNumber::SynchronizeAttribute() {
   SVGAnimatedProperty<SVGNumber>::SynchronizeAttribute();
 }
 
-void SVGAnimatedNumber::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGAnimatedNumber) {
   visitor->Trace(parent_number_optional_number_);
   SVGAnimatedProperty<SVGNumber>::Trace(visitor);
 }
 
-void SVGAnimatedNumber::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGAnimatedNumber) {
   SVGAnimatedProperty<SVGNumber>::TraceWrappers(visitor);
   ScriptWrappable::TraceWrappers(visitor);
 }

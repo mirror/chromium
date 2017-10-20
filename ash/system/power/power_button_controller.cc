@@ -195,7 +195,8 @@ void PowerButtonController::PowerButtonEventReceived(
   }
 
   // Handle tablet power button behavior.
-  if (button_type_ == ButtonType::NORMAL && tablet_controller_) {
+  if (button_type_ == ButtonType::NORMAL && tablet_controller_ &&
+      tablet_controller_->ShouldHandlePowerButtonEvents()) {
     tablet_controller_->OnPowerButtonEvent(down, timestamp);
     return;
   }
@@ -209,8 +210,6 @@ void PowerButtonController::OnAccelerometerUpdated(
   // Tablet power button behavior (excepts |force_clamshell_power_button_|) and
   // power button screenshot accelerator are enabled on devices that can enter
   // tablet mode, which must have seen accelerometer data before user actions.
-  if (!enable_tablet_mode_)
-    return;
   if (!force_clamshell_power_button_ && !tablet_controller_) {
     tablet_controller_ = std::make_unique<TabletPowerButtonController>(
         display_controller_.get(), tick_clock_.get());
@@ -247,7 +246,6 @@ void PowerButtonController::ProcessCommandLine() {
   button_type_ = cl->HasSwitch(switches::kAuraLegacyPowerButton)
                      ? ButtonType::LEGACY
                      : ButtonType::NORMAL;
-  enable_tablet_mode_ = cl->HasSwitch(switches::kAshEnableTabletMode);
   force_clamshell_power_button_ =
       cl->HasSwitch(switches::kForceClamshellPowerButton);
 }

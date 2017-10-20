@@ -6,7 +6,6 @@
 #define CHROME_BROWSER_UI_WEBUI_CHROMEOS_LOGIN_NETWORK_STATE_INFORMER_H_
 
 #include <map>
-#include <memory>
 #include <string>
 
 #include "base/cancelable_callback.h"
@@ -21,10 +20,6 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_service.h"
-
-namespace base {
-class Value;
-}
 
 namespace chromeos {
 
@@ -84,6 +79,7 @@ class NetworkStateInformer
 
   State state() const { return state_; }
   std::string network_path() const { return network_path_; }
+  std::string network_type() const { return network_type_; }
 
   static const char* StatusString(State state);
 
@@ -93,13 +89,14 @@ class NetworkStateInformer
   ~NetworkStateInformer() override;
 
   bool UpdateState();
-  bool UpdateProxyConfig();
+
   void UpdateStateAndNotify();
+
   void SendStateToObservers(NetworkError::ErrorReason reason);
 
   State state_;
   std::string network_path_;
-  std::unique_ptr<base::Value> proxy_config_;
+  std::string network_type_;
 
   base::ObserverList<NetworkStateInformerObserver> observers_;
   content::NotificationRegistrar registrar_;

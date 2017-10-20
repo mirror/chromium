@@ -23,7 +23,7 @@ class RemoteDOMWindow final : public DOMWindow {
   ExecutionContext* GetExecutionContext() const override;
 
   // DOMWindow overrides:
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   void blur() override;
 
   void FrameDetached();
@@ -31,7 +31,7 @@ class RemoteDOMWindow final : public DOMWindow {
  protected:
   // Protected DOMWindow overrides:
   void SchedulePostMessage(MessageEvent*,
-                           scoped_refptr<SecurityOrigin> target,
+                           RefPtr<SecurityOrigin> target,
                            Document* source) override;
 
  private:

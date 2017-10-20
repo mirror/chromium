@@ -38,7 +38,7 @@ class CORE_EXPORT AccessibleNodeList
   unsigned length() const;
   void setLength(unsigned);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   void NotifyChanged();

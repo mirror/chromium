@@ -729,9 +729,9 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
   //
   // See https://fetch.spec.whatwg.org/#http-redirect-fetch.
   if (cors_flag_) {
-    scoped_refptr<SecurityOrigin> original_origin =
+    RefPtr<SecurityOrigin> original_origin =
         SecurityOrigin::Create(original_url);
-    scoped_refptr<SecurityOrigin> new_origin = SecurityOrigin::Create(new_url);
+    RefPtr<SecurityOrigin> new_origin = SecurityOrigin::Create(new_url);
     if (!original_origin->IsSameSchemeHostPort(new_origin.get()))
       security_origin_ = SecurityOrigin::CreateUnique();
   }
@@ -1253,7 +1253,7 @@ void DocumentThreadableLoader::LoadRequestSync(
   if (!client_)
     return;
 
-  if (scoped_refptr<const SharedBuffer> data = resource->ResourceBuffer()) {
+  if (RefPtr<const SharedBuffer> data = resource->ResourceBuffer()) {
     data->ForEachSegment([this](const char* segment, size_t segment_size,
                                 size_t segment_offset) -> bool {
       HandleReceivedData(segment, segment_size);
@@ -1331,7 +1331,7 @@ ExecutionContext* DocumentThreadableLoader::GetExecutionContext() const {
   return loading_context_->GetExecutionContext();
 }
 
-void DocumentThreadableLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentThreadableLoader) {
   visitor->Trace(resource_);
   visitor->Trace(loading_context_);
   ThreadableLoader::Trace(visitor);

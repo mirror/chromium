@@ -36,7 +36,7 @@ class RTCRtpReceiver final : public GarbageCollectedFinalized<RTCRtpReceiver>,
   MediaStreamVector streams() const;
   void UpdateSourcesIfNeeded();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
 #if DCHECK_IS_ON()

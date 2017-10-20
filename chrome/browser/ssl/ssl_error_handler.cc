@@ -113,6 +113,13 @@ bool IsSuperfish(const scoped_refptr<net::X509Certificate>& cert) {
   return false;
 }
 
+// Records an UMA histogram for whether the Superfish certificate was present in
+// the certificate chain.
+void RecordSuperfishUMA(const scoped_refptr<net::X509Certificate>& cert) {
+  UMA_HISTOGRAM_BOOLEAN("interstitial.ssl_error_handler.superfish",
+                        IsSuperfish(cert));
+}
+
 // Adds a message to console after navigation commits and then, deletes itself.
 // Also deletes itself if the navigation is stopped.
 class CommonNameMismatchRedirectObserver
@@ -574,11 +581,8 @@ void SSLErrorHandler::HandleSSLError(
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   bool hard_override_disabled =
       !profile->GetPrefs()->GetBoolean(prefs::kSSLErrorOverrideAllowed);
-  bool is_superfish_cert = IsSuperfish(ssl_info.cert);
-  UMA_HISTOGRAM_BOOLEAN("interstitial.ssl_error_handler.superfish",
-                        is_superfish_cert);
-  bool is_superfish =
-      base::FeatureList::IsEnabled(kSuperfishInterstitial) && is_superfish_cert;
+  bool is_superfish = base::FeatureList::IsEnabled(kSuperfishInterstitial) &&
+                      IsSuperfish(ssl_info.cert);
   int options_mask = CalculateOptionsMask(
       cert_error, hard_override_disabled, should_ssl_errors_be_fatal,
       is_superfish, expired_previous_decision);
@@ -681,6 +685,8 @@ SSLErrorHandler::~SSLErrorHandler() {
 
 void SSLErrorHandler::StartHandlingError() {
   RecordUMA(HANDLE_ALL);
+
+  RecordSuperfishUMA(ssl_info_.cert);
 
   if (ssl_errors::ErrorInfo::NetErrorToErrorType(cert_error_) ==
       ssl_errors::ErrorInfo::CERT_DATE_INVALID) {

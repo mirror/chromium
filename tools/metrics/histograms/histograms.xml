@@ -2861,16 +2861,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Ash.PowerButtonScreenshot.DelayBetweenAccelKeyPressed"
-    units="ms">
-  <owner>warx@chromium.org</owner>
-  <summary>
-    Record the delay when power button and volume down key are both pressed,
-    which indicates user might want to use accelerator to take screenshot. This
-    will help us determine the best chord delay among metrics.
-  </summary>
-</histogram>
-
 <histogram name="Ash.Rotation.AnimationSmoothness" units="%">
   <owner>wutao@chromium.org</owner>
   <summary>
@@ -8955,12 +8945,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="ChromeOS.DetachableBase.PairResult"
-    enum="DetachableBasePairResult">
-  <owner>kitching@google.com</owner>
-  <summary>Result of a Chrome OS detachable base pair operation.</summary>
-</histogram>
-
 <histogram name="ChromeOS.DetachableBase.ROUpdateMetric"
     enum="DetachableBaseROUpdateResult">
   <owner>kitching@google.com</owner>
@@ -10729,17 +10713,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     for the duration of its first document load. This time is measured from the
     first navigation commit to the time either the WebContents is destroyed or
     when a new navigation commits.
-  </summary>
-</histogram>
-
-<histogram name="ContentSettings.Popups.StrongBlocker.NumBlocked"
-    units="popups">
-  <owner>csharrison@chromium.org</owner>
-  <summary>
-    The total number of popups blocked by the strong blocker for a given page
-    load. Logged when the page is navigated away from, or the tab is closed.
-    Only logged for pages which are triggered for strong popup blocking, aka
-    abusive experience enforcement.
   </summary>
 </histogram>
 
@@ -15842,11 +15815,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="DomDistiller.InfoBarUsage" enum="BooleanUsage">
   <owner>mdjones@chromium.org</owner>
-  <summary>
-    &quot;Used&quot; is recorded when the user clicks the infobar to enter
-    Reader Mode. &quot;Not Used&quot; is recorded when the user clicks the close
-    button. If there's no user action, nothing is recorded.
-  </summary>
+  <summary>Records if the infobar was used or closed.</summary>
 </histogram>
 
 <histogram name="DomDistiller.LongArticleScoreNMF.Negative" units="score">
@@ -20208,9 +20177,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Event.Latency.TouchToFirstScrollUpdateSwapBegin"
     units="microseconds">
-  <obsolete>
-    Replaced by Event.Latency.ScrollBegin.Touch.TimeToScrollUpdateSwapBegin2.
-  </obsolete>
   <owner>tdresser@chromium.org</owner>
   <summary>
     Time between initial creation of a touch event and the start of the frame
@@ -20240,9 +20206,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Event.Latency.TouchToScrollUpdateSwapBegin"
     units="microseconds">
-  <obsolete>
-    Replaced by Event.Latency.ScrollUpdate.Touch.TimeToScrollUpdateSwapBegin2.
-  </obsolete>
   <owner>tdresser@chromium.org</owner>
   <summary>
     Time between initial creation of a touch event and start of the frame swap
@@ -32316,15 +32279,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>cancelKeyRequest result using the Clear Key key system.</summary>
 </histogram>
 
-<histogram name="Media.EME.ClearKey.CreateCdm" enum="BooleanSuccess">
-  <owner>xhwang@chromium.org</owner>
-  <summary>
-    Whether the CDM instance for Clear Key key system is created successfully.
-    Reported each time a CDM instance creation is attempted, usually as a result
-    of Javascript call of createMediaKeys().
-  </summary>
-</histogram>
-
 <histogram name="Media.EME.ClearKey.CreateCdmTime" units="ms">
   <owner>xhwang@chromium.org</owner>
   <summary>
@@ -32442,15 +32396,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>cancelKeyRequest result using an unknown key system.</summary>
 </histogram>
 
-<histogram name="Media.EME.Unknown.CreateCdm" enum="BooleanSuccess">
-  <owner>xhwang@chromium.org</owner>
-  <summary>
-    Whether the CDM instance for an unknown key system is created successfully.
-    Reported each time a CDM instance creation is attempted, usually as a result
-    of Javascript call of createMediaKeys().
-  </summary>
-</histogram>
-
 <histogram name="Media.EME.Unknown.CreateCdmTime" units="ms">
   <owner>xhwang@chromium.org</owner>
   <summary>
@@ -32516,15 +32461,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </obsolete>
   <owner>xhwang@chromium.org</owner>
   <summary>cancelKeyRequest result using the Widevine key system.</summary>
-</histogram>
-
-<histogram name="Media.EME.Widevine.CreateCdm" enum="BooleanSuccess">
-  <owner>xhwang@chromium.org</owner>
-  <summary>
-    Whether the CDM instance for Widevine key system is created successfully.
-    Reported each time a CDM instance creation is attempted, usually as a result
-    of Javascript call of createMediaKeys().
-  </summary>
 </histogram>
 
 <histogram name="Media.EME.Widevine.CreateCdmTime" units="ms">
@@ -52205,22 +52141,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="OfflinePages.ClearStoragePreRunUsage" units="bytes">
-  <obsolete>
-    Deprecated in Oct 2017 and replaced by OfflinePages.ClearStoragePreRunUsage2
-    as it was reporting data in bytes instead of the expected MiB.
-  </obsolete>
+<histogram name="OfflinePages.ClearStoragePreRunUsage" units="MiB">
   <owner>petewil@chromium.org</owner>
   <summary>
     The total storage size used by all offline pages from a specific client
-    namespace.
-  </summary>
-</histogram>
-
-<histogram name="OfflinePages.ClearStoragePreRunUsage2" units="KiB">
-  <owner>carlosk@chromium.org</owner>
-  <summary>
-    The total disk storage size used by all offline pages from a specific client
     namespace.
   </summary>
 </histogram>
@@ -54197,25 +54121,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Counts the number of times the user clicked on the later button of the
     outdated upgrade bubble, before clicking on the reinstall button in the same
     Chrome session.
-  </summary>
-</histogram>
-
-<histogram name="OutOfProcessHeapProfiling.ProfiledProcess.Type"
-    enum="OutOfProcessHeapProfilingProcessType">
-  <owner>erikchen@chromium.org</owner>
-  <summary>
-    One metric is emitted every 24-hours after Chrome is launched for every
-    process that is being profiled. The timer is reset if Chrome exits.
-  </summary>
-</histogram>
-
-<histogram name="OutOfProcessHeapProfiling.ProfilingMode"
-    enum="OutOfProcessHeapProfilingMode">
-  <owner>erikchen@chromium.org</owner>
-  <summary>
-    One metric is emitted every 24-hours after Chrome is launched for every
-    Chrome instance that is using out of process heap profiling. The timer is
-    reset if Chrome exits.
   </summary>
 </histogram>
 
@@ -58296,13 +58201,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PDF.IsTagged" enum="BooleanIsTagged">
-  <owner>hnakashima@chromium.org</owner>
-  <summary>
-    Tracks documents opened in the PDF viewer that are Tagged PDFs.
-  </summary>
-</histogram>
-
 <histogram name="PDF.LoadStatus" enum="ChromePDFViewerLoadStatus">
   <owner>tommycli@chromium.org</owner>
   <summary>
@@ -60503,29 +60401,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Each sample is the result code of a TPM command issued through tcsd. Success
     is 0.  For the other error codes, see /usr/include/tss/tpm_error.h.
   </summary>
-</histogram>
-
-<histogram name="Platform.TPM.FirmwareUpdate.Attempts" units="attempts">
-  <owner>mnissler@chromium.org</owner>
-  <summary>
-    Number of attempts until a successful TPM firmware update. This is the total
-    sum of attempts, i.e. number of failed attempts + 1 for the final successful
-    attempt. Note that we're not in a position to report UMA after failed
-    attempts, so this will only be reported by devices that eventually see a
-    successful attempt.
-  </summary>
-</histogram>
-
-<histogram name="Platform.TPM.FirmwareUpdate.Result"
-    enum="TPMFirmwareUpdateResult">
-  <owner>mnissler@chromium.org</owner>
-  <summary>Status of a complete TPM firmware update attempt.</summary>
-</histogram>
-
-<histogram name="Platform.TPM.FirmwareUpdate.Status"
-    enum="TPMFirmwareUpdateStatus">
-  <owner>mnissler@chromium.org</owner>
-  <summary>Exit status of the TPM firmware updater script.</summary>
 </histogram>
 
 <histogram name="Platform.TPM.VersionFingerprint" enum="TPMVersionFingerprint">
@@ -65114,9 +64989,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Profile.NewAvatarMenu.Signin"
     enum="ProfileNewAvatarMenuSignin">
-  <obsolete>
-    Deprecated 2017-10-19. No longer tracked. Feature removed.
-  </obsolete>
   <owner>mlerman@chromium.org</owner>
   <summary>
     Tracks user interactions with the signin bubble that appears in the New
@@ -92461,9 +92333,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebFont.InterventionResult" enum="WebFontInterventionResult">
-  <obsolete>
-    Deprecated 10/2017. Related field trial has finished rolling out.
-  </obsolete>
   <owner>toyoshim@chromium.org</owner>
   <owner>kenjibaheux@chromium.org</owner>
   <summary>
@@ -93956,38 +93825,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="WebRTC.Video.DroppedFrames.Capturer" units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped by a capturer for a sent video stream.
-    Recorded when a stream is removed.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Video.DroppedFrames.Encoder" units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped by an encoder's internal rate limiter for a
-    sent video stream. Recorded when a stream is removed.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Video.DroppedFrames.EncoderQueue" units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped because encoder queue is full for a sent
-    video stream. Recorded when a stream is removed.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Video.DroppedFrames.Ratelimiter" units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped by a WebRTC rate limiter (in MediaOpt) for a
-    sent video stream. Recorded when a stream is removed.
-  </summary>
-</histogram>
-
 <histogram name="WebRTC.Video.DuplicatedPacketsInPercent" units="%">
   <owner>asapersson@chromium.org</owner>
   <summary>
@@ -94435,41 +94272,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The average QP (quantizer value) per frame for a received VP8 screenshare
     stream. Recorded when a stream is removed.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Video.Screenshare.DroppedFrames.Capturer"
-    units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped by a capturer for a sent screenshare stream.
-    Recorded when a stream is removed.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Video.Screenshare.DroppedFrames.Encoder" units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped by an encoder's internal rate limiter for a
-    sent screenshare stream. Recorded when a stream is removed.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Video.Screenshare.DroppedFrames.EncoderQueue"
-    units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped because encoder queue is full for a sent
-    screenshare stream. Recorded when a stream is removed.
-  </summary>
-</histogram>
-
-<histogram name="WebRTC.Video.Screenshare.DroppedFrames.Ratelimiter"
-    units="frames">
-  <owner>ilnik@chromium.org</owner>
-  <summary>
-    Total number of frames dropped by a WebRTC rate limiter (in MediaOpt) for a
-    sent screenshare stream. Recorded when a stream is removed.
   </summary>
 </histogram>
 
@@ -97067,8 +96869,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="A VideoCapture GPU command buffer context"/>
   <suffix name="WebGL" label="A WebGL GPU command buffer context"/>
   <suffix name="Media" label="The media worker command buffer context"/>
-  <suffix name="MusClient" label="A mus client command buffer context"/>
-  <suffix name="UICompositor" label="The UI compositor command buffer context"/>
   <suffix name="BlimpRenderCompositor"
       label="BlimpCompositor compositor command buffer context">
     <obsolete>
@@ -102007,7 +101807,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="OfflinePages.Background.TimeToStart"/>
   <affected-histogram name="OfflinePages.Background.TimeToStart.Svelte"/>
   <affected-histogram name="OfflinePages.ClearStoragePreRunUsage"/>
-  <affected-histogram name="OfflinePages.ClearStoragePreRunUsage2"/>
   <affected-histogram name="OfflinePages.DeletePage.AccessCount"/>
   <affected-histogram name="OfflinePages.DeletePage.LastOpenToCreated"/>
   <affected-histogram name="OfflinePages.DeletePage.PageSize"/>
@@ -106134,9 +105933,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram_suffixes name="WebFontMissedCacheAndInterventionTriggeredOrNot"
     separator="." ordering="prefix">
-  <obsolete>
-    Deprecated 10/2017. Related field trial has finished rolling out.
-  </obsolete>
   <owner>toyoshim@chromium.org</owner>
   <suffix name="MissedCacheAndInterventionNotTriggered"
       label="On missed cache and intervention not triggered"/>

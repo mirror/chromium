@@ -29,7 +29,7 @@ class CORE_EXPORT AudioTrack final
   }
 
   ~AudioTrack() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   bool enabled() const { return enabled_; }
   void setEnabled(bool);

@@ -14,8 +14,8 @@ namespace vr {
 
 // This class represents a one-way binding that propagates a change from a
 // source/model property to a sink/view. This is inappropriate for use in the
-// case of, say, an editor view like a text field where changes must also be
-// propagated back to the model.
+// case of, say, an editor view like a text field where changes must alse be
+// propegated back to the model.
 //
 // IMPORTANT: it is assumed that a Binding instance will outlive the model to
 // which it is bound. This class in not appropriate for use with models that
@@ -31,13 +31,12 @@ class Binding : public BindingBase {
   // This function will check if the getter is producing a different value than
   // when it was last polled. If so, it will pass that value to the provided
   // setter. NB: this assumes that T is copyable.
-  bool Update() override {
+  void Update() override {
     T current_value = getter_.Run();
-    if (last_value_ && current_value == last_value_.value())
-      return false;
-    last_value_ = current_value;
-    setter_.Run(current_value);
-    return true;
+    if (!last_value_ || current_value != last_value_.value()) {
+      last_value_ = current_value;
+      setter_.Run(current_value);
+    }
   }
 
  private:

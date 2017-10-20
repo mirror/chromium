@@ -45,7 +45,7 @@ class CORE_EXPORT DedicatedWorker final
   ~DedicatedWorker() override;
 
   void postMessage(ScriptState*,
-                   scoped_refptr<SerializedScriptValue> message,
+                   RefPtr<SerializedScriptValue> message,
                    const MessagePortArray&,
                    ExceptionState&);
   static bool CanTransferArrayBuffersAndImageBitmaps() { return true; }
@@ -60,7 +60,7 @@ class CORE_EXPORT DedicatedWorker final
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   DedicatedWorker(ExecutionContext*, const KURL& script_url);
@@ -84,7 +84,7 @@ class CORE_EXPORT DedicatedWorker final
   const KURL script_url_;
   const Member<DedicatedWorkerMessagingProxy> context_proxy_;
 
-  scoped_refptr<WorkerScriptLoader> script_loader_;
+  RefPtr<WorkerScriptLoader> script_loader_;
 };
 
 }  // namespace blink

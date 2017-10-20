@@ -369,7 +369,7 @@ void AudioHandler::PullInputs(size_t frames_to_process) {
 
   // Process all of the AudioNodes connected to our inputs.
   for (auto& input : inputs_)
-    input->Pull(nullptr, frames_to_process);
+    input->Pull(0, frames_to_process);
 }
 
 bool AudioHandler::InputsAreSilent() {
@@ -562,7 +562,7 @@ AudioHandler& AudioNode::Handler() const {
   return *handler_;
 }
 
-void AudioNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AudioNode) {
   visitor->Trace(context_);
   visitor->Trace(connected_nodes_);
   visitor->Trace(connected_params_);

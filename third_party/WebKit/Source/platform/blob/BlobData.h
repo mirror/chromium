@@ -39,7 +39,7 @@
 #include "platform/wtf/ThreadSafeRefCounted.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 #include "platform/wtf/text/WTFString.h"
-#include "third_party/WebKit/common/blob/blob.mojom-blink.h"
+#include "storage/public/interfaces/blobs.mojom-blink.h"
 
 namespace blink {
 
@@ -237,10 +237,11 @@ class PLATFORM_EXPORT BlobDataHandle
     return WTF::AdoptRef(new BlobDataHandle(uuid, type, size));
   }
 
-  static RefPtr<BlobDataHandle> Create(const String& uuid,
-                                       const String& type,
-                                       long long size,
-                                       mojom::blink::BlobPtrInfo blob_info) {
+  static RefPtr<BlobDataHandle> Create(
+      const String& uuid,
+      const String& type,
+      long long size,
+      storage::mojom::blink::BlobPtrInfo blob_info) {
     if (blob_info.is_valid()) {
       return WTF::AdoptRef(
           new BlobDataHandle(uuid, type, size, std::move(blob_info)));
@@ -256,7 +257,7 @@ class PLATFORM_EXPORT BlobDataHandle
 
   ~BlobDataHandle();
 
-  mojom::blink::BlobPtr CloneBlobPtr();
+  storage::mojom::blink::BlobPtr CloneBlobPtr();
 
  private:
   BlobDataHandle();
@@ -265,7 +266,7 @@ class PLATFORM_EXPORT BlobDataHandle
   BlobDataHandle(const String& uuid,
                  const String& type,
                  long long size,
-                 mojom::blink::BlobPtrInfo);
+                 storage::mojom::blink::BlobPtrInfo);
 
   const String uuid_;
   const String type_;
@@ -275,7 +276,7 @@ class PLATFORM_EXPORT BlobDataHandle
   // Blob interface from multiple threads store a InterfacePtrInfo combined with
   // a mutex, and make sure any access to the mojo interface is done protected
   // by the mutex.
-  mojom::blink::BlobPtrInfo blob_info_;
+  storage::mojom::blink::BlobPtrInfo blob_info_;
   Mutex blob_info_mutex_;
 };
 

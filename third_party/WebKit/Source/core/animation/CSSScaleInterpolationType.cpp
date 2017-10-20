@@ -87,13 +87,12 @@ class CSSScaleNonInterpolableValue : public NonInterpolableValue {
  public:
   ~CSSScaleNonInterpolableValue() final {}
 
-  static scoped_refptr<CSSScaleNonInterpolableValue> Create(
-      const Scale& scale) {
+  static RefPtr<CSSScaleNonInterpolableValue> Create(const Scale& scale) {
     return WTF::AdoptRef(
         new CSSScaleNonInterpolableValue(scale, scale, false, false));
   }
 
-  static scoped_refptr<CSSScaleNonInterpolableValue> Merge(
+  static RefPtr<CSSScaleNonInterpolableValue> Merge(
       const CSSScaleNonInterpolableValue& start,
       const CSSScaleNonInterpolableValue& end) {
     return WTF::AdoptRef(new CSSScaleNonInterpolableValue(

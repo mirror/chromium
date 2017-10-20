@@ -143,7 +143,7 @@ ImageBitmap* WebGLRenderingContext::TransferToImageBitmap(
 void WebGLRenderingContext::RegisterContextExtensions() {
   // Register extensions.
   static const char* const kBothPrefixes[] = {
-      "", "WEBKIT_", nullptr,
+      "", "WEBKIT_", 0,
   };
 
   RegisterExtension<ANGLEInstancedArrays>(angle_instanced_arrays_);
@@ -184,7 +184,7 @@ void WebGLRenderingContext::RegisterContextExtensions() {
                                       kBothPrefixes);
 }
 
-void WebGLRenderingContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLRenderingContext) {
   visitor->Trace(angle_instanced_arrays_);
   visitor->Trace(ext_blend_min_max_);
   visitor->Trace(ext_color_buffer_half_float_);
@@ -216,8 +216,7 @@ void WebGLRenderingContext::Trace(blink::Visitor* visitor) {
   WebGLRenderingContextBase::Trace(visitor);
 }
 
-void WebGLRenderingContext::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WebGLRenderingContext) {
   // Extensions are managed base WebGLRenderingContextBase.
   WebGLRenderingContextBase::TraceWrappers(visitor);
 }

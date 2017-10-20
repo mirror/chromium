@@ -188,7 +188,7 @@ void WebDocumentLoaderImpl::ResetSourceLocation() {
   DocumentLoader::SetSourceLocation(nullptr);
 }
 
-void WebDocumentLoaderImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebDocumentLoaderImpl) {
   DocumentLoader::Trace(visitor);
 }
 

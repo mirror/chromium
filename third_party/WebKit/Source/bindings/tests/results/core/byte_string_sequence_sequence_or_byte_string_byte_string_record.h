@@ -39,7 +39,7 @@ class CORE_EXPORT ByteStringSequenceSequenceOrByteStringByteStringRecord final {
   ByteStringSequenceSequenceOrByteStringByteStringRecord(const ByteStringSequenceSequenceOrByteStringByteStringRecord&);
   ~ByteStringSequenceSequenceOrByteStringByteStringRecord();
   ByteStringSequenceSequenceOrByteStringByteStringRecord& operator=(const ByteStringSequenceSequenceOrByteStringByteStringRecord&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   enum class SpecificType {

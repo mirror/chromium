@@ -49,6 +49,8 @@ class CupsPrintJobNotificationDelegate
       item_->CloseNotificationByUser();
   }
 
+  bool HasClickedListener() override { return true; }
+
   void ButtonClick(int button_index) override {
     item_->ClickOnNotificationButton(button_index);
   }
@@ -84,7 +86,6 @@ CupsPrintJobNotification::CupsPrintJobNotification(
                                  kCupsPrintJobNotificationId),
       message_center::RichNotificationData(),
       new CupsPrintJobNotificationDelegate(this));
-  notification_->set_clickable(true);
   UpdateNotification();
 }
 

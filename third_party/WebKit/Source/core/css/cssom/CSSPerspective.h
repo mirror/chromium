@@ -42,7 +42,7 @@ class CORE_EXPORT CSSPerspective final : public CSSTransformComponent {
   const DOMMatrix* AsMatrix(ExceptionState&) const final;
   const CSSFunctionValue* ToCSSValue() const final;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(length_);
     CSSTransformComponent::Trace(visitor);
   }

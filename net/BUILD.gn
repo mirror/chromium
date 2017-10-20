@@ -1846,7 +1846,7 @@ component("net") {
     }
 
     # Use getifaddrs() on POSIX platforms, except Linux and Android.
-    if (!is_posix || is_linux || is_android || is_fuchsia) {
+    if (!is_posix || is_linux || is_android) {
       sources -= [
         "base/network_interfaces_getifaddrs.cc",
         "base/network_interfaces_getifaddrs.h",
@@ -1981,7 +1981,6 @@ component("net") {
 
     if (is_fuchsia) {
       sources += [
-        "base/network_interfaces_fuchsia.cc",
         "base/platform_mime_util_fuchsia.cc",
         "cert/cert_database_fuchsia.cc",
         "cert/test_root_certs_fuchsia.cc",
@@ -2492,8 +2491,6 @@ static_library("test_support") {
     "base/load_timing_info_test_util.h",
     "base/mock_file_stream.cc",
     "base/mock_file_stream.h",
-    "base/mock_network_change_notifier.cc",
-    "base/mock_network_change_notifier.h",
     "base/test_completion_callback.cc",
     "base/test_completion_callback.h",
     "cert/mock_cert_verifier.cc",
@@ -4634,6 +4631,8 @@ test("net_unittests") {
     "base/lookup_string_in_fixed_set_unittest.cc",
     "base/mime_sniffer_unittest.cc",
     "base/mime_util_unittest.cc",
+    "base/mock_network_change_notifier.cc",
+    "base/mock_network_change_notifier.h",
     "base/net_string_util_unittest.cc",
     "base/network_activity_monitor_unittest.cc",
     "base/network_change_notifier_unittest.cc",
@@ -5527,8 +5526,8 @@ test("net_unittests") {
     ]
   }
 
-  # Use getifaddrs() on POSIX platforms, except Linux, Android and Fuchsia.
-  if (!is_posix || is_linux || is_android || is_fuchsia) {
+  # Use getifaddrs() on POSIX platforms, except Linux and Android.
+  if (!is_posix || is_linux || is_android) {
     sources -= [ "base/network_interfaces_getifaddrs_unittest.cc" ]
   }
 

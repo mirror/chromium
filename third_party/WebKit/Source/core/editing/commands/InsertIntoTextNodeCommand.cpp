@@ -73,7 +73,7 @@ void InsertIntoTextNodeCommand::DoUnapply() {
   node_->deleteData(offset_, text_.length(), IGNORE_EXCEPTION_FOR_TESTING);
 }
 
-void InsertIntoTextNodeCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(InsertIntoTextNodeCommand) {
   visitor->Trace(node_);
   SimpleEditCommand::Trace(visitor);
 }

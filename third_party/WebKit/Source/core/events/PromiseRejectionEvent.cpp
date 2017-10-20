@@ -62,12 +62,11 @@ bool PromiseRejectionEvent::CanBeDispatchedInWorld(
   return world_ && world_->GetWorldId() == world.GetWorldId();
 }
 
-void PromiseRejectionEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PromiseRejectionEvent) {
   Event::Trace(visitor);
 }
 
-void PromiseRejectionEvent::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(PromiseRejectionEvent) {
   visitor->TraceWrappers(promise_);
   visitor->TraceWrappers(reason_);
 }

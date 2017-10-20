@@ -82,8 +82,8 @@ static const char kUnsupportedHashFunctionIntegrity[] =
 class SubresourceIntegrityTest : public ::testing::Test {
  public:
   SubresourceIntegrityTest()
-      : sec_url("https://example.test:443"),
-        insec_url("http://example.test:80") {}
+      : sec_url(kParsedURLString, "https://example.test:443"),
+        insec_url(kParsedURLString, "http://example.test:80") {}
 
  protected:
   virtual void SetUp() {
@@ -445,8 +445,8 @@ TEST_F(SubresourceIntegrityTest, Parsing) {
       "07yMK81ytlg0MPaIrPAjcHqba5csorDWtKg==",
       IntegrityAlgorithm::kSha512);
 
-  ExpectParseMultipleHashes("", nullptr, 0);
-  ExpectParseMultipleHashes("    ", nullptr, 0);
+  ExpectParseMultipleHashes("", 0, 0);
+  ExpectParseMultipleHashes("    ", 0, 0);
 
   const IntegrityMetadata valid_sha384_and_sha512[] = {
       IntegrityMetadata(

@@ -44,7 +44,7 @@ SVGGraphicsElement::SVGGraphicsElement(const QualifiedName& tag_name,
 
 SVGGraphicsElement::~SVGGraphicsElement() {}
 
-void SVGGraphicsElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGGraphicsElement) {
   visitor->Trace(transform_);
   SVGElement::Trace(visitor);
   SVGTests::Trace(visitor);
@@ -152,7 +152,7 @@ SVGElement* SVGGraphicsElement::nearestViewportElement() const {
 }
 
 SVGElement* SVGGraphicsElement::farthestViewportElement() const {
-  SVGElement* farthest = nullptr;
+  SVGElement* farthest = 0;
   for (Element* current = ParentOrShadowHostElement(); current;
        current = current->ParentOrShadowHostElement()) {
     if (IsViewportElement(*current))

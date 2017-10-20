@@ -194,8 +194,7 @@ class PendingPrintRequests {
 
   // Completes the request with the provided request id. It runs the request
   // callback and removes the request from the set.
-  bool Complete(int request_id,
-                api::printer_provider_internal::PrintError error);
+  bool Complete(int request_id, bool success, const std::string& result);
 
   // Runs all pending callbacks with ERROR_FAILED and clears the set of
   // pending requests.
@@ -246,18 +245,19 @@ class PrinterProviderAPIImpl : public PrinterProviderAPI,
  private:
   // PrinterProviderAPI implementation:
   void DispatchGetPrintersRequested(
-      const GetPrintersCallback& callback) override;
+      const PrinterProviderAPI::GetPrintersCallback& callback) override;
   void DispatchGetCapabilityRequested(
       const std::string& printer_id,
-      const GetCapabilityCallback& callback) override;
-  void DispatchPrintRequested(const PrinterProviderPrintJob& job,
-                              const PrintCallback& callback) override;
+      const PrinterProviderAPI::GetCapabilityCallback& callback) override;
+  void DispatchPrintRequested(
+      const PrinterProviderPrintJob& job,
+      const PrinterProviderAPI::PrintCallback& callback) override;
   const PrinterProviderPrintJob* GetPrintJob(const Extension* extension,
                                              int request_id) const override;
   void DispatchGetUsbPrinterInfoRequested(
       const std::string& extension_id,
       scoped_refptr<UsbDevice> device,
-      const GetPrinterInfoCallback& callback) override;
+      const PrinterProviderAPI::GetPrinterInfoCallback& callback) override;
 
   // PrinterProviderInternalAPIObserver implementation:
   void OnGetPrintersResult(
@@ -434,9 +434,9 @@ int PendingPrintRequests::Add(
   return last_request_id_;
 }
 
-bool PendingPrintRequests::Complete(
-    int request_id,
-    api::printer_provider_internal::PrintError error) {
+bool PendingPrintRequests::Complete(int request_id,
+                                    bool success,
+                                    const std::string& response) {
   auto it = pending_requests_.find(request_id);
   if (it == pending_requests_.end())
     return false;
@@ -444,15 +444,7 @@ bool PendingPrintRequests::Complete(
   PrinterProviderAPI::PrintCallback callback = it->second.callback;
   pending_requests_.erase(it);
 
-  base::Value error_value;
-  if (error != api::printer_provider_internal::PRINT_ERROR_OK) {
-    const std::string error_str =
-        error == api::printer_provider_internal::PRINT_ERROR_NONE
-            ? PrinterProviderAPI::GetDefaultPrintError()
-            : api::printer_provider_internal::ToString(error);
-    error_value = base::Value(error_str);
-  }
-  callback.Run(error_value);
+  callback.Run(success, response);
   return true;
 }
 
@@ -466,10 +458,9 @@ const PrinterProviderPrintJob* PendingPrintRequests::GetPrintJob(
 }
 
 void PendingPrintRequests::FailAll() {
-  for (auto& request : pending_requests_) {
-    request.second.callback.Run(
-        base::Value(PrinterProviderAPI::GetDefaultPrintError()));
-  }
+  for (auto& request : pending_requests_)
+    request.second.callback.Run(false,
+                                PrinterProviderAPI::GetDefaultPrintError());
   pending_requests_.clear();
 }
 
@@ -552,7 +543,7 @@ void PrinterProviderAPIImpl::DispatchGetPrintersRequested(
 
 void PrinterProviderAPIImpl::DispatchGetCapabilityRequested(
     const std::string& printer_id,
-    const GetCapabilityCallback& callback) {
+    const PrinterProviderAPI::GetCapabilityCallback& callback) {
   std::string extension_id;
   std::string internal_printer_id;
   if (!ParsePrinterId(printer_id, &extension_id, &internal_printer_id)) {
@@ -586,18 +577,18 @@ void PrinterProviderAPIImpl::DispatchGetCapabilityRequested(
 
 void PrinterProviderAPIImpl::DispatchPrintRequested(
     const PrinterProviderPrintJob& job,
-    const PrintCallback& callback) {
+    const PrinterProviderAPI::PrintCallback& callback) {
   std::string extension_id;
   std::string internal_printer_id;
   if (!ParsePrinterId(job.printer_id, &extension_id, &internal_printer_id)) {
-    callback.Run(base::Value(GetDefaultPrintError()));
+    callback.Run(false, PrinterProviderAPI::GetDefaultPrintError());
     return;
   }
 
   EventRouter* event_router = EventRouter::Get(browser_context_);
   if (!event_router->ExtensionHasEventListener(
           extension_id, api::printer_provider::OnPrintRequested::kEventName)) {
-    callback.Run(base::Value(GetDefaultPrintError()));
+    callback.Run(false, PrinterProviderAPI::GetDefaultPrintError());
     return;
   }
 
@@ -610,8 +601,8 @@ void PrinterProviderAPIImpl::DispatchPrintRequested(
   if (!ticket_value ||
       !api::printer_provider::PrintJob::Ticket::Populate(*ticket_value,
                                                          &print_job.ticket)) {
-    callback.Run(base::Value(api::printer_provider::ToString(
-        api::printer_provider::PRINT_ERROR_INVALID_TICKET)));
+    callback.Run(false, api::printer_provider::ToString(
+                            api::printer_provider::PRINT_ERROR_INVALID_TICKET));
     return;
   }
 
@@ -643,7 +634,7 @@ const PrinterProviderPrintJob* PrinterProviderAPIImpl::GetPrintJob(
 void PrinterProviderAPIImpl::DispatchGetUsbPrinterInfoRequested(
     const std::string& extension_id,
     scoped_refptr<UsbDevice> device,
-    const GetPrinterInfoCallback& callback) {
+    const PrinterProviderAPI::GetPrinterInfoCallback& callback) {
   EventRouter* event_router = EventRouter::Get(browser_context_);
   if (!event_router->ExtensionHasEventListener(
           extension_id,
@@ -698,7 +689,13 @@ void PrinterProviderAPIImpl::OnPrintResult(
     const Extension* extension,
     int request_id,
     api::printer_provider_internal::PrintError error) {
-  pending_print_requests_[extension->id()].Complete(request_id, error);
+  const std::string error_str =
+      error == api::printer_provider_internal::PRINT_ERROR_NONE
+          ? PrinterProviderAPI::GetDefaultPrintError()
+          : api::printer_provider_internal::ToString(error);
+  pending_print_requests_[extension->id()].Complete(
+      request_id, error == api::printer_provider_internal::PRINT_ERROR_OK,
+      error_str);
 }
 
 void PrinterProviderAPIImpl::OnGetUsbPrinterInfoResult(

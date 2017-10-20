@@ -18,7 +18,7 @@ class CSSUnsetValue : public CSSValue {
 
   bool Equals(const CSSUnsetValue&) const { return true; }
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 

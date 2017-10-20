@@ -53,9 +53,6 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   void UnregisterClientProcess(mojom::ClientProcess*);
   void RequestGlobalMemoryDump(const base::trace_event::MemoryDumpRequestArgs&,
                                const RequestGlobalMemoryDumpCallback&) override;
-  void RequestGlobalMemoryDumpAndAppendToTrace(
-      const base::trace_event::MemoryDumpRequestArgs&,
-      const RequestGlobalMemoryDumpAndAppendToTraceCallback&) override;
   void GetVmRegionsForHeapProfiler(
       const GetVmRegionsForHeapProfilerCallback&) override;
 
@@ -70,8 +67,6 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
  private:
   using OSMemDumpMap =
       std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr>;
-  using RequestGlobalMemoryDumpInternalCallback =
-      base::Callback<void(bool, uint64_t, mojom::GlobalMemoryDumpPtr)>;
   friend std::default_delete<CoordinatorImpl>;  // For testing
   friend class CoordinatorImplTest;             // For testing
 
@@ -79,12 +74,10 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   struct QueuedMemoryDumpRequest {
     QueuedMemoryDumpRequest(
         const base::trace_event::MemoryDumpRequestArgs& args,
-        const RequestGlobalMemoryDumpInternalCallback& callback,
-        bool add_to_trace);
+        const RequestGlobalMemoryDumpCallback callback);
     ~QueuedMemoryDumpRequest();
     const base::trace_event::MemoryDumpRequestArgs args;
-    const RequestGlobalMemoryDumpInternalCallback callback;
-    const bool add_to_trace;
+    const RequestGlobalMemoryDumpCallback callback;
 
     bool wants_mmaps() const {
       return args.level_of_detail ==
@@ -149,11 +142,6 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
     const mojom::ClientProcessPtr client;
     const mojom::ProcessType process_type;
   };
-
-  void RequestGlobalMemoryDumpInternal(
-      const base::trace_event::MemoryDumpRequestArgs& args,
-      bool add_to_trace,
-      const RequestGlobalMemoryDumpInternalCallback& callback);
 
   // Callback of RequestChromeMemoryDump.
   void OnChromeMemoryDumpResponse(

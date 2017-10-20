@@ -58,7 +58,7 @@ TransitionInterpolation::GetInterpolatedValue() const {
       type_, CurrentInterpolableValue().Clone(), CurrentNonInterpolableValue());
 }
 
-scoped_refptr<AnimatableValue>
+RefPtr<AnimatableValue>
 TransitionInterpolation::GetInterpolatedCompositorValue() const {
   return AnimatableValue::Interpolate(compositor_start_.get(),
                                       compositor_end_.get(), cached_fraction_);

@@ -30,7 +30,7 @@ class CORE_EXPORT ReportingObserver final
   void observe();
   void disconnect();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit ReportingObserver(ExecutionContext*, V8ReportingObserverCallback*);

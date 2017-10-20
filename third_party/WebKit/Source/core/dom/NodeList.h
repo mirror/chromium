@@ -48,7 +48,7 @@ class CORE_EXPORT NodeList : public GarbageCollectedFinalized<NodeList>,
 
   virtual Node* VirtualOwnerNode() const { return 0; }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   NodeList() {}

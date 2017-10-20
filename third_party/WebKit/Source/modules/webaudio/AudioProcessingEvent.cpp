@@ -69,7 +69,7 @@ const AtomicString& AudioProcessingEvent::InterfaceName() const {
   return EventNames::AudioProcessingEvent;
 }
 
-void AudioProcessingEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AudioProcessingEvent) {
   visitor->Trace(input_buffer_);
   visitor->Trace(output_buffer_);
   Event::Trace(visitor);

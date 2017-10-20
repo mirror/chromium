@@ -67,8 +67,7 @@ std::unique_ptr<Vector<char>> CreateVectorFromMemoryRegion(
 class WorkerThreadableLoader::AsyncTaskForwarder final
     : public WorkerThreadableLoader::TaskForwarder {
  public:
-  explicit AsyncTaskForwarder(
-      scoped_refptr<WebTaskRunner> worker_loading_task_runner)
+  explicit AsyncTaskForwarder(RefPtr<WebTaskRunner> worker_loading_task_runner)
       : worker_loading_task_runner_(std::move(worker_loading_task_runner)) {
     DCHECK(IsMainThread());
   }
@@ -87,7 +86,7 @@ class WorkerThreadableLoader::AsyncTaskForwarder final
   void Abort() override { DCHECK(IsMainThread()); }
 
  private:
-  scoped_refptr<WebTaskRunner> worker_loading_task_runner_;
+  RefPtr<WebTaskRunner> worker_loading_task_runner_;
 };
 
 struct WorkerThreadableLoader::TaskWithLocation final {
@@ -108,7 +107,7 @@ struct WorkerThreadableLoader::TaskWithLocation final {
 class WorkerThreadableLoader::WaitableEventWithTasks final
     : public ThreadSafeRefCounted<WaitableEventWithTasks> {
  public:
-  static scoped_refptr<WaitableEventWithTasks> Create() {
+  static RefPtr<WaitableEventWithTasks> Create() {
     return WTF::AdoptRef(new WaitableEventWithTasks);
   }
 
@@ -162,8 +161,7 @@ class WorkerThreadableLoader::WaitableEventWithTasks final
 class WorkerThreadableLoader::SyncTaskForwarder final
     : public WorkerThreadableLoader::TaskForwarder {
  public:
-  explicit SyncTaskForwarder(
-      scoped_refptr<WaitableEventWithTasks> event_with_tasks)
+  explicit SyncTaskForwarder(RefPtr<WaitableEventWithTasks> event_with_tasks)
       : event_with_tasks_(std::move(event_with_tasks)) {
     DCHECK(IsMainThread());
   }
@@ -187,7 +185,7 @@ class WorkerThreadableLoader::SyncTaskForwarder final
   }
 
  private:
-  scoped_refptr<WaitableEventWithTasks> event_with_tasks_;
+  RefPtr<WaitableEventWithTasks> event_with_tasks_;
 };
 
 WorkerThreadableLoader::WorkerThreadableLoader(
@@ -231,14 +229,13 @@ void WorkerThreadableLoader::Start(const ResourceRequest& original_request) {
         worker_global_scope_->OutgoingReferrer()));
   }
 
-  scoped_refptr<WaitableEventWithTasks> event_with_tasks;
+  RefPtr<WaitableEventWithTasks> event_with_tasks;
   if (blocking_behavior_ == kLoadSynchronously)
     event_with_tasks = WaitableEventWithTasks::Create();
 
   WorkerThread* worker_thread = worker_global_scope_->GetThread();
-  scoped_refptr<WebTaskRunner> worker_loading_task_runner =
-      TaskRunnerHelper::Get(TaskType::kUnspecedLoading,
-                            worker_global_scope_.Get());
+  RefPtr<WebTaskRunner> worker_loading_task_runner = TaskRunnerHelper::Get(
+      TaskType::kUnspecedLoading, worker_global_scope_.Get());
   parent_frame_task_runners_->Get(TaskType::kUnspecedLoading)
       ->PostTask(
           BLINK_FROM_HERE,
@@ -411,14 +408,14 @@ void WorkerThreadableLoader::DidReceiveResourceTiming(
   DCHECK(!IsMainThread());
   if (!client_)
     return;
-  scoped_refptr<ResourceTimingInfo> info(
+  RefPtr<ResourceTimingInfo> info(
       ResourceTimingInfo::Adopt(std::move(timing_data)));
   WorkerGlobalScopePerformance::performance(*worker_global_scope_)
       ->AddResourceTiming(*info);
   client_->DidReceiveResourceTiming(*info);
 }
 
-void WorkerThreadableLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerThreadableLoader) {
   visitor->Trace(worker_global_scope_);
   ThreadableLoader::Trace(visitor);
 }
@@ -426,12 +423,12 @@ void WorkerThreadableLoader::Trace(blink::Visitor* visitor) {
 void WorkerThreadableLoader::MainThreadLoaderHolder::CreateAndStart(
     WorkerThreadableLoader* worker_loader,
     ThreadableLoadingContext* loading_context,
-    scoped_refptr<WebTaskRunner> worker_loading_task_runner,
+    RefPtr<WebTaskRunner> worker_loading_task_runner,
     WorkerThreadLifecycleContext* worker_thread_lifecycle_context,
     std::unique_ptr<CrossThreadResourceRequestData> request,
     const ThreadableLoaderOptions& options,
     const ResourceLoaderOptions& resource_loader_options,
-    scoped_refptr<WaitableEventWithTasks> event_with_tasks) {
+    RefPtr<WaitableEventWithTasks> event_with_tasks) {
   DCHECK(IsMainThread());
   TaskForwarder* forwarder;
   if (event_with_tasks)
@@ -628,8 +625,7 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::ContextDestroyed(
   Cancel();
 }
 
-void WorkerThreadableLoader::MainThreadLoaderHolder::Trace(
-    blink::Visitor* visitor) {
+DEFINE_TRACE(WorkerThreadableLoader::MainThreadLoaderHolder) {
   visitor->Trace(forwarder_);
   visitor->Trace(main_thread_loader_);
   WorkerThreadLifecycleObserver::Trace(visitor);

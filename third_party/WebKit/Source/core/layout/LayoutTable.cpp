@@ -131,7 +131,7 @@ static inline void ResetSectionPointerIfNotBefore(LayoutTableSection*& ptr,
   while (o && o != ptr)
     o = o->PreviousSibling();
   if (!o)
-    ptr = nullptr;
+    ptr = 0;
 }
 
 static inline bool NeedsTableSection(LayoutObject* object) {
@@ -224,7 +224,7 @@ void LayoutTable::AddChild(LayoutObject* child, LayoutObject* before_child) {
 
   if (before_child && !before_child->IsTableSection() &&
       NeedsTableSection(before_child))
-    before_child = nullptr;
+    before_child = 0;
 
   LayoutTableSection* section =
       LayoutTableSection::CreateAnonymousWithParent(this);
@@ -1282,7 +1282,7 @@ LayoutTableSection* LayoutTable::SectionAbove(
   RecalcSectionsIfNeeded();
 
   if (section == head_)
-    return nullptr;
+    return 0;
 
   LayoutObject* prev_section =
       section == foot_ ? LastChild() : section->PreviousSibling();

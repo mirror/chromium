@@ -49,7 +49,7 @@ namespace blink {
 const int kInvalidPort = 0;
 const int kMaxAllowedPort = 65535;
 
-static URLSecurityOriginMap* g_url_origin_map = nullptr;
+static URLSecurityOriginMap* g_url_origin_map = 0;
 
 static SecurityOrigin* GetOriginFromMap(const KURL& url) {
   if (g_url_origin_map)
@@ -76,7 +76,7 @@ KURL SecurityOrigin::ExtractInnerURL(const KURL& url) {
     return *url.InnerURL();
   // FIXME: Update this callsite to use the innerURL member function when
   // we finish implementing it.
-  return KURL(url.GetPath());
+  return KURL(kParsedURLString, url.GetPath());
 }
 
 void SecurityOrigin::SetMap(URLSecurityOriginMap* map) {
@@ -598,7 +598,8 @@ bool SecurityOrigin::AreSameSchemeHostPort(const KURL& a, const KURL& b) {
 
 const KURL& SecurityOrigin::UrlWithUniqueSecurityOrigin() {
   DCHECK(IsMainThread());
-  DEFINE_STATIC_LOCAL(const KURL, unique_security_origin_url, ("data:,"));
+  DEFINE_STATIC_LOCAL(const KURL, unique_security_origin_url,
+                      (kParsedURLString, "data:,"));
   return unique_security_origin_url;
 }
 

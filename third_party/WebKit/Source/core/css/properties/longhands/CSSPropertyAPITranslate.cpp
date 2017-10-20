@@ -8,7 +8,6 @@
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "core/css/parser/CSSPropertyParser.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/layout/LayoutObject.h"
 
 namespace blink {
 
@@ -38,12 +37,6 @@ const CSSValue* CSSPropertyAPITranslate::ParseSingleValue(
   }
 
   return list;
-}
-
-bool CSSPropertyAPITranslate::IsLayoutDependent(
-    const ComputedStyle* style,
-    LayoutObject* layout_object) const {
-  return layout_object && layout_object->IsBox();
 }
 
 }  // namespace blink

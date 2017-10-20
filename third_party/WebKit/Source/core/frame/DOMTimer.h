@@ -61,7 +61,7 @@ class CORE_EXPORT DOMTimer final : public GarbageCollectedFinalized<DOMTimer>,
   // destruction (when lazily swept), but some of its members (m_action) may
   // already have been finalized & must not be accessed.
   EAGERLY_FINALIZE();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void Stop() override;
 
@@ -83,12 +83,12 @@ class CORE_EXPORT DOMTimer final : public GarbageCollectedFinalized<DOMTimer>,
            int timeout_id);
   void Fired() override;
 
-  scoped_refptr<WebTaskRunner> TimerTaskRunner() const override;
+  RefPtr<WebTaskRunner> TimerTaskRunner() const override;
 
   int timeout_id_;
   int nesting_level_;
   Member<ScheduledAction> action_;
-  scoped_refptr<UserGestureToken> user_gesture_token_;
+  RefPtr<UserGestureToken> user_gesture_token_;
 };
 
 }  // namespace blink

@@ -50,8 +50,8 @@ class CORE_EXPORT CSSFontFaceSource
   virtual bool IsLoaded() const { return true; }
   virtual bool IsValid() const { return true; }
 
-  scoped_refptr<SimpleFontData> GetFontData(const FontDescription&,
-                                            const FontSelectionCapabilities&);
+  RefPtr<SimpleFontData> GetFontData(const FontDescription&,
+                                     const FontSelectionCapabilities&);
 
   virtual bool IsLocalFontAvailable(const FontDescription&) { return false; }
   virtual void BeginLoadIfNeeded() {}
@@ -61,18 +61,18 @@ class CORE_EXPORT CSSFontFaceSource
   // For UMA reporting
   virtual bool HadBlankText() { return false; }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   CSSFontFaceSource() = default;
-  virtual scoped_refptr<SimpleFontData> CreateFontData(
+  virtual RefPtr<SimpleFontData> CreateFontData(
       const FontDescription&,
       const FontSelectionCapabilities&) = 0;
   void PruneTable();
 
  private:
   using FontDataTable = HashMap<FontCacheKey,
-                                scoped_refptr<SimpleFontData>,
+                                RefPtr<SimpleFontData>,
                                 FontCacheKeyHash,
                                 FontCacheKeyTraits>;
 

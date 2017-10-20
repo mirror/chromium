@@ -68,7 +68,7 @@ class HTMLParserScheduler final
  public:
   static HTMLParserScheduler* Create(
       HTMLDocumentParser* parser,
-      scoped_refptr<WebTaskRunner> loading_task_runner) {
+      RefPtr<WebTaskRunner> loading_task_runner) {
     return new HTMLParserScheduler(parser, std::move(loading_task_runner));
   }
   ~HTMLParserScheduler();
@@ -91,16 +91,16 @@ class HTMLParserScheduler final
 
   void Detach();  // Clear active tasks if any.
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
-  HTMLParserScheduler(HTMLDocumentParser*, scoped_refptr<WebTaskRunner>);
+  HTMLParserScheduler(HTMLDocumentParser*, RefPtr<WebTaskRunner>);
 
   bool ShouldYield(const SpeculationsPumpSession&, bool starting_script) const;
   void ContinueParsing();
 
   Member<HTMLDocumentParser> parser_;
-  scoped_refptr<WebTaskRunner> loading_task_runner_;
+  RefPtr<WebTaskRunner> loading_task_runner_;
 
   TaskHandle cancellable_continue_parse_task_handle_;
   bool is_suspended_with_active_timer_;

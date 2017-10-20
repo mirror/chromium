@@ -84,8 +84,7 @@ SVGRectTearOff* SVGRectTearOff::CreateDetached(const FloatRect& rect) {
                 QualifiedName::Null());
 }
 
-void SVGRectTearOff::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGRectTearOff) {
   SVGPropertyTearOff<SVGRect>::TraceWrappers(visitor);
   ScriptWrappable::TraceWrappers(visitor);
 }

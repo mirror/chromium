@@ -69,13 +69,13 @@ class FileChooserClient : public GarbageCollectedMixin {
   FileChooser* NewFileChooser(const WebFileChooserParams&);
 
  private:
-  scoped_refptr<FileChooser> chooser_;
+  RefPtr<FileChooser> chooser_;
 };
 
 class FileChooser : public RefCounted<FileChooser> {
  public:
-  static scoped_refptr<FileChooser> Create(FileChooserClient*,
-                                           const WebFileChooserParams&);
+  static RefPtr<FileChooser> Create(FileChooserClient*,
+                                    const WebFileChooserParams&);
   ~FileChooser();
 
   void DisconnectClient() { client_ = 0; }

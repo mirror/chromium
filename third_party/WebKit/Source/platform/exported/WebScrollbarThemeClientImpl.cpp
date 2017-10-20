@@ -32,11 +32,11 @@ namespace blink {
 WebScrollbarThemeClientImpl::WebScrollbarThemeClientImpl(
     WebScrollbar& scrollbar)
     : scrollbar_(scrollbar) {
-  ScrollbarTheme::DeprecatedStaticGetTheme().RegisterScrollbar(*this);
+  ScrollbarTheme::GetTheme().RegisterScrollbar(*this);
 }
 
 WebScrollbarThemeClientImpl::~WebScrollbarThemeClientImpl() {
-  ScrollbarTheme::DeprecatedStaticGetTheme().UnregisterScrollbar(*this);
+  ScrollbarTheme::GetTheme().UnregisterScrollbar(*this);
 }
 
 int WebScrollbarThemeClientImpl::X() const {

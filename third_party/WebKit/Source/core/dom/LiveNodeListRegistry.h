@@ -46,7 +46,7 @@ class CORE_EXPORT LiveNodeListRegistry {
     return mask_ & MaskForInvalidationType(type);
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   static inline unsigned MaskForInvalidationType(

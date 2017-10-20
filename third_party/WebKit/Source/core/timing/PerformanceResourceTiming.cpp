@@ -346,7 +346,7 @@ void PerformanceResourceTiming::BuildJSONValue(ScriptState* script_state,
   builder.Add("serverTiming", serverTiming);
 }
 
-void PerformanceResourceTiming::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PerformanceResourceTiming) {
   visitor->Trace(serverTiming_);
   PerformanceEntry::Trace(visitor);
 }

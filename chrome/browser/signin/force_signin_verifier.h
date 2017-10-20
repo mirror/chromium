@@ -60,7 +60,7 @@ class ForceSigninVerifier
 
   virtual bool ShouldSendRequest();
 
-  // Show the warning dialog before signing out user and closing associated
+  // Show the warning dialog before signing out user and closing assoicated
   // browser window.
   virtual void ShowDialog();
 

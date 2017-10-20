@@ -65,7 +65,7 @@ WebURL GetAvailabilityUrl(const WebURL& source, bool is_source_supported) {
   String encoded_source =
       WTF::Base64URLEncode(source_string.data(), source_string.length());
 
-  return KURL("remote-playback://" + encoded_source);
+  return KURL(kParsedURLString, "remote-playback://" + encoded_source);
 }
 
 bool IsBackgroundAvailabilityMonitoringDisabled() {
@@ -590,7 +590,7 @@ void RemotePlayback::MaybeStartListeningForAvailability() {
   is_listening_ = true;
 }
 
-void RemotePlayback::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemotePlayback) {
   visitor->Trace(availability_callbacks_);
   visitor->Trace(prompt_promise_resolver_);
   visitor->Trace(media_element_);
@@ -598,8 +598,7 @@ void RemotePlayback::Trace(blink::Visitor* visitor) {
   ContextLifecycleObserver::Trace(visitor);
 }
 
-void RemotePlayback::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(RemotePlayback) {
   for (auto callback : availability_callbacks_.Values())
     visitor->TraceWrappers(callback);
   EventTargetWithInlineData::TraceWrappers(visitor);

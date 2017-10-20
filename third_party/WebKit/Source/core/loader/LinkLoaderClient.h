@@ -41,7 +41,7 @@ namespace blink {
 class CORE_EXPORT LinkLoaderClient : public GarbageCollectedMixin {
  public:
   virtual ~LinkLoaderClient() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual bool ShouldLoadLink() = 0;
 
@@ -54,7 +54,7 @@ class CORE_EXPORT LinkLoaderClient : public GarbageCollectedMixin {
   virtual void DidSendLoadForLinkPrerender() = 0;
   virtual void DidSendDOMContentLoadedForLinkPrerender() = 0;
 
-  virtual scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() = 0;
+  virtual RefPtr<WebTaskRunner> GetLoadingTaskRunner() = 0;
 };
 
 }  // namespace blink

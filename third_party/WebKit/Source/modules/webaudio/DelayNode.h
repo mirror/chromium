@@ -45,7 +45,7 @@ class DelayNode final : public AudioNode {
   static DelayNode* Create(BaseAudioContext*,
                            const DelayOptions&,
                            ExceptionState&);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   AudioParam* delayTime();
 
  private:

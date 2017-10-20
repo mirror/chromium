@@ -6,7 +6,6 @@
 #define CONTENT_BROWSER_DEVTOOLS_WORKER_DEVTOOLS_AGENT_HOST_H_
 
 #include "base/macros.h"
-#include "base/unguessable_token.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/common/content_export.h"
 #include "ipc/ipc_listener.h"
@@ -43,8 +42,7 @@ class CONTENT_EXPORT WorkerDevToolsAgentHost : public DevToolsAgentHostImpl,
   bool IsTerminated();
 
  protected:
-  WorkerDevToolsAgentHost(const base::UnguessableToken& devtools_worker_token,
-                          WorkerId worker_id);
+  explicit WorkerDevToolsAgentHost(WorkerId worker_id);
   ~WorkerDevToolsAgentHost() override;
 
   enum WorkerState {

@@ -68,7 +68,7 @@ class Iteration final : public GarbageCollectedFinalized<Iteration> {
   bool IsValid() const { return is_valid_; }
   const String& Value() const { return value_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   bool is_set_;
@@ -85,7 +85,7 @@ class ReaderFunction : public ScriptFunction {
     return self->BindToV8Function();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(iteration_);
     ScriptFunction::Trace(visitor);
   }

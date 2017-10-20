@@ -206,7 +206,3 @@ src:*third_party/sqlite/*
 src:*third_party/webrtc/*
 src:*third_party/yasm/*
 src:*v8/*
-
-######### Uncategorized
-
-src:*native_client/*

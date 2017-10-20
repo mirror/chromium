@@ -2093,7 +2093,7 @@ test("base_unittests") {
     "message_loop/message_loop_unittest.cc",
     "message_loop/message_pump_glib_unittest.cc",
     "message_loop/message_pump_io_ios_unittest.cc",
-    "message_loop/message_pump_mac_unittest.mm",
+    "message_loop/message_pump_mac_unittest.cc",
     "metrics/bucket_ranges_unittest.cc",
     "metrics/field_trial_params_unittest.cc",
     "metrics/field_trial_unittest.cc",
@@ -2822,25 +2822,6 @@ if (is_android) {
       "test/android/java/src/org/chromium/base/TestSystemMessageHandler.java",
     ]
   }
-}
-
-# Keep the list of fuzzer_tests in alphabetical order.
-fuzzer_test("base64_decode_fuzzer") {
-  sources = [
-    "base64_decode_fuzzer.cc",
-  ]
-  deps = [
-    "//base",
-  ]
-}
-
-fuzzer_test("base64_encode_fuzzer") {
-  sources = [
-    "base64_encode_fuzzer.cc",
-  ]
-  deps = [
-    "//base",
-  ]
 }
 
 fuzzer_test("base_json_correctness_fuzzer") {

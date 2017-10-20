@@ -162,6 +162,7 @@ class ScreenshotGrabberNotificationDelegate
         NOTREACHED() << "Unhandled button index " << button_index;
     }
   }
+  bool HasClickedListener() override { return success_; }
 
  private:
   ~ScreenshotGrabberNotificationDelegate() override {}
@@ -589,7 +590,6 @@ void ChromeScreenshotGrabber::OnReadScreenshotFileForPreviewCompleted(
       optional_field,
       new ScreenshotGrabberNotificationDelegate(success, GetProfile(),
                                                 screenshot_path));
-  notification.set_clickable(success);
   if (message_center::IsNewStyleNotificationEnabled()) {
     notification.set_accent_color(
         message_center::kSystemNotificationColorNormal);

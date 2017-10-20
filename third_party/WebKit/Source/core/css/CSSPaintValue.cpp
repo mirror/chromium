@@ -18,9 +18,8 @@ CSSPaintValue::CSSPaintValue(CSSCustomIdentValue* name)
       name_(name),
       paint_image_generator_observer_(new Observer(this)) {}
 
-CSSPaintValue::CSSPaintValue(
-    CSSCustomIdentValue* name,
-    Vector<scoped_refptr<CSSVariableData>>& variable_data)
+CSSPaintValue::CSSPaintValue(CSSCustomIdentValue* name,
+                             Vector<RefPtr<CSSVariableData>>& variable_data)
     : CSSPaintValue(name) {
   argument_variable_data_.swap(variable_data);
 }
@@ -43,12 +42,11 @@ String CSSPaintValue::GetName() const {
   return name_->Value();
 }
 
-scoped_refptr<Image> CSSPaintValue::GetImage(
-    const ImageResourceObserver& client,
-    const Document& document,
-    const ComputedStyle&,
-    const IntSize& container_size,
-    const LayoutSize* logical_size) {
+RefPtr<Image> CSSPaintValue::GetImage(const ImageResourceObserver& client,
+                                      const Document& document,
+                                      const ComputedStyle&,
+                                      const IntSize& container_size,
+                                      const LayoutSize* logical_size) {
   if (!generator_) {
     generator_ = CSSPaintImageGenerator::Create(
         GetName(), document, paint_image_generator_observer_);
@@ -118,7 +116,7 @@ bool CSSPaintValue::Equals(const CSSPaintValue& other) const {
          CustomCSSText() == other.CustomCSSText();
 }
 
-void CSSPaintValue::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSPaintValue) {
   visitor->Trace(name_);
   visitor->Trace(generator_);
   visitor->Trace(paint_image_generator_observer_);

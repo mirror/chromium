@@ -11,7 +11,6 @@
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
-#include "core/paint/compositing/CompositingLayerPropertyUpdater.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 
 namespace blink {
@@ -206,8 +205,6 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
 
     InvalidatePaintLayerOptimizationsIfNeeded(object, context);
   }
-
-  CompositingLayerPropertyUpdater::Update(object);
 
   for (const LayoutObject* child = object.SlowFirstChild(); child;
        child = child->NextSibling()) {

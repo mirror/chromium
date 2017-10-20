@@ -47,13 +47,12 @@ unsigned NodeIteratorBase::AcceptNode(Node* node,
   return filter_->acceptNode(node, exception_state);
 }
 
-void NodeIteratorBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NodeIteratorBase) {
   visitor->Trace(root_);
   visitor->Trace(filter_);
 }
 
-void NodeIteratorBase::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(NodeIteratorBase) {
   visitor->TraceWrappers(filter_);
 }
 

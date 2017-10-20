@@ -485,7 +485,7 @@ using ios::material::TimingFunction;
   SetA11yLabelAndUiAutomationName(_omniBox, IDS_ACCNAME_LOCATION, @"Address");
 
   // Resize the container to match the available area.
-  [self.contentView addSubview:_webToolbar];
+  [self.view addSubview:_webToolbar];
   [_webToolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                    UIViewAutoresizingFlexibleTopMargin];
   [_webToolbar setFrame:[self specificControlsArea]];

@@ -47,9 +47,6 @@ const char kSRTPromptTrial[] = "SRTPromptFieldTrial";
 const base::Feature kInBrowserCleanerUIFeature{
     "InBrowserCleanerUI", base::FEATURE_ENABLED_BY_DEFAULT};
 
-extern const base::Feature kRebootPromptDialogFeature{
-    "RebootPromptDialog", base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kCleanerDownloadFeature{"DownloadCleanupToolByBitness",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -114,14 +111,6 @@ std::string GetIncomingSRTSeed() {
 
 std::string GetSRTFieldTrialGroupName() {
   return base::FieldTrialList::FindFullName(kSRTPromptTrial);
-}
-
-bool IsRebootPromptModal() {
-  constexpr char kIsModalParam[] = "modal_reboot_prompt";
-  return base::FeatureList::IsEnabled(kRebootPromptDialogFeature) &&
-         base::GetFieldTrialParamByFeatureAsBool(kRebootPromptDialogFeature,
-                                                 kIsModalParam,
-                                                 /*default_value=*/false);
 }
 
 void RecordSRTPromptHistogram(SRTPromptHistogramValue value) {

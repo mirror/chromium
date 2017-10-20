@@ -265,7 +265,7 @@ void AudioParamHandler::CalculateFinalValues(float* values,
 
     // Render audio from this output.
     AudioBus* connection_bus =
-        output->Pull(nullptr, AudioUtilities::kRenderQuantumFrames);
+        output->Pull(0, AudioUtilities::kRenderQuantumFrames);
 
     // Sum, with unity-gain.
     summing_bus->SumFrom(*connection_bus);
@@ -351,7 +351,7 @@ AudioParam* AudioParam::Create(BaseAudioContext& context,
                         max_value);
 }
 
-void AudioParam::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AudioParam) {
   visitor->Trace(context_);
 }
 

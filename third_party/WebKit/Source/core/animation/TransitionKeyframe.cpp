@@ -12,7 +12,7 @@
 namespace blink {
 
 void TransitionKeyframe::SetCompositorValue(
-    scoped_refptr<AnimatableValue> compositor_value) {
+    RefPtr<AnimatableValue> compositor_value) {
   DCHECK_EQ(
       CompositorAnimations::IsCompositableProperty(property_.CssProperty()),
       static_cast<bool>(compositor_value.get()));
@@ -25,7 +25,7 @@ PropertyHandleSet TransitionKeyframe::Properties() const {
   return result;
 }
 
-scoped_refptr<Keyframe::PropertySpecificKeyframe>
+RefPtr<Keyframe::PropertySpecificKeyframe>
 TransitionKeyframe::CreatePropertySpecificKeyframe(
     const PropertyHandle& property) const {
   DCHECK(property == property_);
@@ -33,7 +33,7 @@ TransitionKeyframe::CreatePropertySpecificKeyframe(
                                           value_->Clone(), compositor_value_);
 }
 
-scoped_refptr<Interpolation>
+RefPtr<Interpolation>
 TransitionKeyframe::PropertySpecificKeyframe::CreateInterpolation(
     const PropertyHandle& property,
     const Keyframe::PropertySpecificKeyframe& other_super_class) const {

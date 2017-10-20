@@ -357,7 +357,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
     callback(false);
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  protected:
   ~ChromeClient() override {}

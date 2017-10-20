@@ -143,7 +143,7 @@ void BackgroundFetchRegistration::Dispose() {
   observer_binding_.Close();
 }
 
-void BackgroundFetchRegistration::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BackgroundFetchRegistration) {
   visitor->Trace(registration_);
   visitor->Trace(icons_);
   EventTargetWithInlineData::Trace(visitor);

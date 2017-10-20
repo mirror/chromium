@@ -200,10 +200,6 @@ void WebRuntimeFeatures::EnableModuleScriptsDynamicImport(bool enable) {
   RuntimeEnabledFeatures::SetModuleScriptsDynamicImportEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableModuleScriptsImportMetaUrl(bool enable) {
-  RuntimeEnabledFeatures::SetModuleScriptsImportMetaUrlEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnableMojoBlobs(bool enable) {
   RuntimeEnabledFeatures::SetMojoBlobsEnabled(enable);
 }
@@ -282,6 +278,10 @@ void WebRuntimeFeatures::EnablePreloadDefaultIsMetadata(bool enable) {
 
 void WebRuntimeFeatures::EnableScriptedSpeech(bool enable) {
   RuntimeEnabledFeatures::SetScriptedSpeechEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableSkipCompositingSmallScrollers(bool enable) {
+  RuntimeEnabledFeatures::SetSkipCompositingSmallScrollersEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableSlimmingPaintV2(bool enable) {
@@ -468,10 +468,6 @@ void WebRuntimeFeatures::EnableV8ContextSnapshot(bool enable) {
 
 void WebRuntimeFeatures::EnableAutomationControlled(bool enable) {
   RuntimeEnabledFeatures::SetAutomationControlledEnabled(enable);
-}
-
-void WebRuntimeFeatures::EnableWorkStealingInScriptRunner(bool enable) {
-  RuntimeEnabledFeatures::SetWorkStealingInScriptRunnerEnabled(enable);
 }
 
 }  // namespace blink

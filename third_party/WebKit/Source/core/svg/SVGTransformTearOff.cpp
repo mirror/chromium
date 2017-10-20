@@ -47,13 +47,12 @@ SVGTransformTearOff::SVGTransformTearOff(
 
 SVGTransformTearOff::~SVGTransformTearOff() {}
 
-void SVGTransformTearOff::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGTransformTearOff) {
   visitor->Trace(matrix_tearoff_);
   SVGPropertyTearOff<SVGTransform>::Trace(visitor);
 }
 
-void SVGTransformTearOff::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGTransformTearOff) {
   SVGPropertyTearOff<SVGTransform>::TraceWrappers(visitor);
   ScriptWrappable::TraceWrappers(visitor);
 }

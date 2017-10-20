@@ -61,8 +61,7 @@ SVGTransformTearOff* SVGTransformListTearOff::consolidate(
   return CreateItemTearOff(Target()->Consolidate());
 }
 
-void SVGTransformListTearOff::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGTransformListTearOff) {
   SVGListPropertyTearOffHelper<SVGTransformListTearOff,
                                SVGTransformList>::TraceWrappers(visitor);
   ScriptWrappable::TraceWrappers(visitor);

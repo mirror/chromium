@@ -356,7 +356,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&,
-      scoped_refptr<WebTaskRunner>) = 0;
+      RefPtr<WebTaskRunner>) = 0;
 
   virtual void AnnotatedRegionsChanged() = 0;
 

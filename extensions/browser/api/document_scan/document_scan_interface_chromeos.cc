@@ -4,8 +4,6 @@
 
 #include "extensions/browser/api/document_scan/document_scan_interface_chromeos.h"
 
-#include <vector>
-
 #include "base/base64.h"
 #include "base/bind.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -18,20 +16,18 @@ const char kImageScanFailedError[] = "Image scan failed";
 const char kScannerImageMimeTypePng[] = "image/png";
 const char kPngImageDataUrlPrefix[] = "data:image/png;base64,";
 
-chromeos::LorgnetteManagerClient* GetLorgnetteManagerClient() {
-  DCHECK(chromeos::DBusThreadManager::IsInitialized());
-  return chromeos::DBusThreadManager::Get()->GetLorgnetteManagerClient();
-}
-
 }  // namespace
 
 namespace extensions {
 
 namespace api {
 
-DocumentScanInterfaceChromeos::DocumentScanInterfaceChromeos() = default;
+DocumentScanInterfaceChromeos::DocumentScanInterfaceChromeos()
+    : lorgnette_manager_client_(nullptr) {
+}
 
-DocumentScanInterfaceChromeos::~DocumentScanInterfaceChromeos() = default;
+DocumentScanInterfaceChromeos::~DocumentScanInterfaceChromeos() {
+}
 
 void DocumentScanInterfaceChromeos::ListScanners(
     const ListScannersResultsCallback& callback) {
@@ -113,6 +109,16 @@ void DocumentScanInterfaceChromeos::OnScanCompleted(
   std::string image_url(std::string(kPngImageDataUrlPrefix) + image_base64);
 
   callback.Run(image_url, kScannerImageMimeTypePng, error_string);
+}
+
+chromeos::LorgnetteManagerClient*
+DocumentScanInterfaceChromeos::GetLorgnetteManagerClient() {
+  if (!lorgnette_manager_client_) {
+    lorgnette_manager_client_ =
+        chromeos::DBusThreadManager::Get()->GetLorgnetteManagerClient();
+    CHECK(lorgnette_manager_client_);
+  }
+  return lorgnette_manager_client_;
 }
 
 // static

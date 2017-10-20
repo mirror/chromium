@@ -104,8 +104,7 @@ static String InitiatorFor(const StringImpl* tag_impl) {
 
 static bool MediaAttributeMatches(const MediaValuesCached& media_values,
                                   const String& attribute_value) {
-  scoped_refptr<MediaQuerySet> media_queries =
-      MediaQuerySet::Create(attribute_value);
+  RefPtr<MediaQuerySet> media_queries = MediaQuerySet::Create(attribute_value);
   MediaQueryEvaluator media_query_evaluator(media_values);
   return media_query_evaluator.Eval(*media_queries);
 }
@@ -139,7 +138,7 @@ class TokenPreloadScanner::StartTagScanner {
     }
     if (!Match(tag_impl_, inputTag) && !Match(tag_impl_, linkTag) &&
         !Match(tag_impl_, scriptTag) && !Match(tag_impl_, videoTag))
-      tag_impl_ = nullptr;
+      tag_impl_ = 0;
   }
 
   enum URLReplacement { kAllowURLReplacement, kDisallowURLReplacement };

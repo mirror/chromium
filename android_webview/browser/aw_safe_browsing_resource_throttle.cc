@@ -100,7 +100,7 @@ void AwSafeBrowsingResourceThrottle::StartDisplayingBlockingPageHelper(
 
 void AwSafeBrowsingResourceThrottle::CancelResourceLoad() {
   SetCancelledBySafeBrowsing(request_);
-  BaseResourceThrottle::CancelResourceLoad();
+  Cancel();
 }
 
 AwSafeBrowsingParallelResourceThrottle::AwSafeBrowsingParallelResourceThrottle(
@@ -122,7 +122,7 @@ AwSafeBrowsingParallelResourceThrottle::
 
 void AwSafeBrowsingParallelResourceThrottle::CancelResourceLoad() {
   SetCancelledBySafeBrowsing(request_);
-  BaseParallelResourceThrottle::CancelResourceLoad();
+  Cancel();
 }
 
 }  // namespace android_webview

@@ -119,8 +119,7 @@ ScriptCustomElementDefinition::ScriptCustomElementDefinition(
     attribute_changed_callback_.Set(isolate, attribute_changed_callback);
 }
 
-void ScriptCustomElementDefinition::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(ScriptCustomElementDefinition) {
   visitor->TraceWrappers(constructor_.Cast<v8::Value>());
   visitor->TraceWrappers(connected_callback_.Cast<v8::Value>());
   visitor->TraceWrappers(disconnected_callback_.Cast<v8::Value>());

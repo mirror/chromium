@@ -43,7 +43,7 @@ std::pair<EventTarget*, StringImpl*> EventTargetKey(const Event* event) {
 ScriptedAnimationController::ScriptedAnimationController(Document* document)
     : document_(document), callback_collection_(document), suspend_count_(0) {}
 
-void ScriptedAnimationController::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptedAnimationController) {
   visitor->Trace(document_);
   visitor->Trace(callback_collection_);
   visitor->Trace(event_queue_);
@@ -51,8 +51,7 @@ void ScriptedAnimationController::Trace(blink::Visitor* visitor) {
   visitor->Trace(per_frame_events_);
 }
 
-void ScriptedAnimationController::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(ScriptedAnimationController) {
   visitor->TraceWrappers(callback_collection_);
 }
 

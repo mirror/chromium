@@ -125,7 +125,7 @@ class CORE_EXPORT DocumentLoader
   void DidObserveLoadingBehavior(WebLoadingBehaviorFlag);
   void UpdateForSameDocumentNavigation(const KURL&,
                                        SameDocumentNavigationSource,
-                                       scoped_refptr<SerializedScriptValue>,
+                                       RefPtr<SerializedScriptValue>,
                                        HistoryScrollRestorationType,
                                        FrameLoadType,
                                        Document*);
@@ -215,7 +215,7 @@ class CORE_EXPORT DocumentLoader
 
   void LoadFailed(const ResourceError&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   DocumentLoader(LocalFrame*,
@@ -358,7 +358,7 @@ class CORE_EXPORT DocumentLoader
 
   // Used to protect against reentrancy into dataReceived().
   bool in_data_received_;
-  scoped_refptr<SharedBuffer> data_buffer_;
+  RefPtr<SharedBuffer> data_buffer_;
 };
 
 DECLARE_WEAK_IDENTIFIER_MAP(DocumentLoader);

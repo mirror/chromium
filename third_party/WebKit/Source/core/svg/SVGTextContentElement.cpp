@@ -91,7 +91,7 @@ SVGTextContentElement::SVGTextContentElement(const QualifiedName& tag_name,
   AddToPropertyMap(length_adjust_);
 }
 
-void SVGTextContentElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGTextContentElement) {
   visitor->Trace(text_length_);
   visitor->Trace(length_adjust_);
   SVGGraphicsElement::Trace(visitor);
@@ -306,7 +306,7 @@ SVGTextContentElement* SVGTextContentElement::ElementFromLineLayoutItem(
   SVGElement* element = ToSVGElement(line_layout_item.GetNode());
   DCHECK(element);
   return IsSVGTextContentElement(*element) ? ToSVGTextContentElement(element)
-                                           : nullptr;
+                                           : 0;
 }
 
 }  // namespace blink

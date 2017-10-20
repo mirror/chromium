@@ -56,9 +56,9 @@ class CORE_EXPORT MediaQueryParser {
   WTF_MAKE_NONCOPYABLE(MediaQueryParser);
 
  public:
-  static scoped_refptr<MediaQuerySet> ParseMediaQuerySet(const String&);
-  static scoped_refptr<MediaQuerySet> ParseMediaQuerySet(CSSParserTokenRange);
-  static scoped_refptr<MediaQuerySet> ParseMediaCondition(CSSParserTokenRange);
+  static RefPtr<MediaQuerySet> ParseMediaQuerySet(const String&);
+  static RefPtr<MediaQuerySet> ParseMediaQuerySet(CSSParserTokenRange);
+  static RefPtr<MediaQuerySet> ParseMediaCondition(CSSParserTokenRange);
 
  private:
   enum ParserType {
@@ -69,7 +69,7 @@ class CORE_EXPORT MediaQueryParser {
   MediaQueryParser(ParserType);
   virtual ~MediaQueryParser();
 
-  scoped_refptr<MediaQuerySet> ParseImpl(CSSParserTokenRange);
+  RefPtr<MediaQuerySet> ParseImpl(CSSParserTokenRange);
 
   void ProcessToken(const CSSParserToken&);
 
@@ -95,7 +95,7 @@ class CORE_EXPORT MediaQueryParser {
   State state_;
   ParserType parser_type_;
   MediaQueryData media_query_data_;
-  scoped_refptr<MediaQuerySet> query_set_;
+  RefPtr<MediaQuerySet> query_set_;
   MediaQueryBlockWatcher block_watcher_;
 
   const static State kReadRestrictor;

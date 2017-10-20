@@ -290,7 +290,7 @@ void EventHandlerRegistry::NotifyDidAddOrRemoveEventHandlerTarget(
   }
 }
 
-void EventHandlerRegistry::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventHandlerRegistry) {
   visitor->Trace(page_);
   visitor->template RegisterWeakMembers<
       EventHandlerRegistry, &EventHandlerRegistry::ClearWeakMembers>(this);
@@ -326,8 +326,7 @@ void EventHandlerRegistry::DocumentDetached(Document& document) {
     for (const auto& event_target : *targets) {
       if (Node* node = event_target.key->ToNode()) {
         for (Document* doc = &node->GetDocument(); doc;
-             doc = doc->LocalOwner() ? &doc->LocalOwner()->GetDocument()
-                                     : nullptr) {
+             doc = doc->LocalOwner() ? &doc->LocalOwner()->GetDocument() : 0) {
           if (doc == &document) {
             targets_to_remove.push_back(event_target.key);
             break;

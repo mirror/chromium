@@ -174,6 +174,8 @@ class TestKeyboardLayoutDelegate : public KeyboardLayoutDelegate {
 
 }  // namespace
 
+// Test parameter indicates if the new window behavior for the accessibility
+// keyboard should be used.
 class KeyboardControllerTest : public testing::Test,
                                public KeyboardControllerObserver {
  public:

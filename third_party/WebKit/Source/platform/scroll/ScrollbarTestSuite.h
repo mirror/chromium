@@ -105,16 +105,12 @@ class MockScrollableArea : public GarbageCollectedFinalized<MockScrollableArea>,
 
   void SetIsPopup() { chrome_client_->SetIsPopup(true); }
 
-  ScrollbarTheme& GetPageScrollbarTheme() const override {
-    return ScrollbarTheme::DeprecatedStaticGetTheme();
-  }
-
   using ScrollableArea::ShowOverlayScrollbars;
   using ScrollableArea::HorizontalScrollbarNeedsPaintInvalidation;
   using ScrollableArea::VerticalScrollbarNeedsPaintInvalidation;
   using ScrollableArea::ClearNeedsPaintInvalidationForScrollControls;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(chrome_client_);
     ScrollableArea::Trace(visitor);
   }

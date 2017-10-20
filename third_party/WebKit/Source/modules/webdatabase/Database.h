@@ -56,8 +56,8 @@ class Database final : public GarbageCollectedFinalized<Database>,
 
  public:
   virtual ~Database();
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
   bool OpenAndVerifyVersion(bool set_version_in_new_database,
                             DatabaseError&,

@@ -136,7 +136,7 @@ Animation::Animation(ExecutionContext* execution_context,
   if (content_) {
     if (content_->GetAnimation()) {
       content_->GetAnimation()->cancel();
-      content_->GetAnimation()->setEffect(nullptr);
+      content_->GetAnimation()->setEffect(0);
     }
     content_->Attach(this);
   }
@@ -498,7 +498,7 @@ void Animation::setEffect(AnimationEffectReadOnly* new_effect) {
     // FIXME: This logic needs to be updated once groups are implemented
     if (new_effect->GetAnimation()) {
       new_effect->GetAnimation()->cancel();
-      new_effect->GetAnimation()->setEffect(nullptr);
+      new_effect->GetAnimation()->setEffect(0);
     }
     new_effect->Attach(this);
     SetOutdated();
@@ -1262,7 +1262,7 @@ void Animation::RejectAndResetPromiseMaybeAsync(AnimationPromise* promise) {
   }
 }
 
-void Animation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Animation) {
   visitor->Trace(content_);
   visitor->Trace(timeline_);
   visitor->Trace(pending_finished_event_);

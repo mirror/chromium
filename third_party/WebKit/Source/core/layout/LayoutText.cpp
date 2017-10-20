@@ -245,7 +245,7 @@ void LayoutText::RemoveAndDestroyTextBoxes() {
 
 void LayoutText::WillBeDestroyed() {
   if (SecureTextTimer* secure_text_timer =
-          g_secure_text_timers ? g_secure_text_timers->Take(this) : nullptr)
+          g_secure_text_timers ? g_secure_text_timers->Take(this) : 0)
     delete secure_text_timer;
 
   RemoveAndDestroyTextBoxes();
@@ -1105,7 +1105,7 @@ void LayoutText::ComputePreferredLogicalWidths(
   TextDirection text_direction = style_to_use.Direction();
   if ((Is8Bit() && text_direction == TextDirection::kLtr) ||
       IsOverride(style_to_use.GetUnicodeBidi())) {
-    run = nullptr;
+    run = 0;
   } else {
     TextRun text_run(GetText());
     BidiStatus status(text_direction, false);
@@ -1611,7 +1611,7 @@ void LayoutText::SecureText(UChar mask) {
   int last_typed_character_offset_to_reveal = -1;
   UChar revealed_text;
   SecureTextTimer* secure_text_timer =
-      g_secure_text_timers ? g_secure_text_timers->at(this) : nullptr;
+      g_secure_text_timers ? g_secure_text_timers->at(this) : 0;
   if (secure_text_timer && secure_text_timer->IsActive()) {
     last_typed_character_offset_to_reveal =
         secure_text_timer->LastTypedCharacterOffset();
@@ -1920,11 +1920,11 @@ int LayoutText::CaretMinOffset() const {
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return 0;
-    Optional<unsigned> candidate =
+    const unsigned candidate =
         GetNGOffsetMapping().StartOfNextNonCollapsedCharacter(*GetNode(), 0);
     // Align with the legacy behavior that 0 is returned if the entire node
     // contains only collapsed whitespaces.
-    return candidate ? *candidate : 0;
+    return candidate == TextLength() ? 0 : candidate;
   }
 
   InlineTextBox* box = FirstTextBox();
@@ -1942,12 +1942,12 @@ int LayoutText::CaretMaxOffset() const {
     DCHECK(!IsTextFragment());
     if (!GetNode())
       return TextLength();
-    Optional<unsigned> candidate =
+    const unsigned candidate =
         GetNGOffsetMapping().EndOfLastNonCollapsedCharacter(*GetNode(),
                                                             TextLength());
     // Align with the legacy behavior that |TextLength()| is returned if the
     // entire node contains only collapsed whitespaces.
-    return candidate ? *candidate : TextLength();
+    return candidate == 0u ? TextLength() : candidate;
   }
 
   InlineTextBox* box = LastTextBox();
@@ -1986,21 +1986,7 @@ bool LayoutText::HasNonCollapsedText() const {
 }
 
 bool LayoutText::ContainsCaretOffset(int text_offset) const {
-  DCHECK_GE(text_offset, 0);
-  if (ShouldUseNGAlternatives()) {
-    // ::first-letter handling should be done by LayoutTextFragment override.
-    DCHECK(!IsTextFragment());
-    if (!GetNode())
-      return false;
-    const NGOffsetMappingResult& mapping = GetNGOffsetMapping();
-    if (mapping.IsBeforeNonCollapsedCharacter(*GetNode(), text_offset))
-      return true;
-    if (!mapping.IsAfterNonCollapsedCharacter(*GetNode(), text_offset))
-      return false;
-    return *mapping.GetCharacterBefore(*GetNode(), text_offset) !=
-           kNewlineCharacter;
-  }
-
+  // TODO(crbug.com/771398): Add LayoutNG alternative.
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
     if (text_offset < static_cast<int>(box->Start()) &&
         !ContainsReversedText()) {

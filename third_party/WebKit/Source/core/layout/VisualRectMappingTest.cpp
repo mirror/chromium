@@ -109,7 +109,7 @@ TEST_F(VisualRectMappingTest, LayoutText) {
 }
 
 TEST_F(VisualRectMappingTest, LayoutInline) {
-  GetDocument().SetBaseURLOverride(KURL("http://test.com"));
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<div id='container' style='overflow: scroll; width: 50px; height: 50px'>"
@@ -144,7 +144,7 @@ TEST_F(VisualRectMappingTest, LayoutInline) {
 }
 
 TEST_F(VisualRectMappingTest, LayoutView) {
-  GetDocument().SetBaseURLOverride(KURL("http://test.com"));
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<div id=frameContainer>"
@@ -188,7 +188,7 @@ TEST_F(VisualRectMappingTest, LayoutView) {
 }
 
 TEST_F(VisualRectMappingTest, LayoutViewSubpixelRounding) {
-  GetDocument().SetBaseURLOverride(KURL("http://test.com"));
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<div id=frameContainer style='position: relative; left: 0.5px'>"
@@ -216,7 +216,7 @@ TEST_F(VisualRectMappingTest, LayoutViewSubpixelRounding) {
 }
 
 TEST_F(VisualRectMappingTest, LayoutViewDisplayNone) {
-  GetDocument().SetBaseURLOverride(KURL("http://test.com"));
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<div id=frameContainer>"
@@ -875,7 +875,7 @@ TEST_F(VisualRectMappingTest, PerspectivePlusScroll) {
   transform.FlattenTo2d();
 
   LayoutRect output(transform.MapRect(FloatRect(originalRect)));
-  output.Intersect(container->ClippingRect(LayoutPoint()));
+  output.Intersect(container->ClippingRect());
   CheckVisualRect(*target, *target->View(), originalRect, output, false, false);
 }
 

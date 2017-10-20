@@ -145,7 +145,7 @@ void SyncManager::GetRegistrationsCallback(
   }
 }
 
-void SyncManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SyncManager) {
   visitor->Trace(registration_);
 }
 

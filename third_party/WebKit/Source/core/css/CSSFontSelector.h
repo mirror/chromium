@@ -51,8 +51,8 @@ class CORE_EXPORT CSSFontSelector : public FontSelector {
 
   void ReportNotDefGlyph() const override;
 
-  scoped_refptr<FontData> GetFontData(const FontDescription&,
-                                      const AtomicString&) override;
+  RefPtr<FontData> GetFontData(const FontDescription&,
+                               const AtomicString&) override;
   void WillUseFontData(const FontDescription&,
                        const AtomicString& family,
                        const String& text) override;
@@ -78,7 +78,7 @@ class CORE_EXPORT CSSFontSelector : public FontSelector {
   }
   void UpdateGenericFontFamilySettings(Document&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit CSSFontSelector(Document*);

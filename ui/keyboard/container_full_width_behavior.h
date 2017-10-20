@@ -8,7 +8,6 @@
 #include "ui/aura/window.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/keyboard/container_behavior.h"
-#include "ui/keyboard/keyboard_export.h"
 #include "ui/wm/core/window_animations.h"
 
 namespace keyboard {
@@ -17,7 +16,7 @@ namespace keyboard {
 // or hide animation finishes.
 constexpr int kFullWidthKeyboardAnimationDistance = 30;
 
-class KEYBOARD_EXPORT ContainerFullWidthBehavior : public ContainerBehavior {
+class ContainerFullWidthBehavior : public ContainerBehavior {
  public:
   ~ContainerFullWidthBehavior() override;
 
@@ -29,9 +28,6 @@ class KEYBOARD_EXPORT ContainerFullWidthBehavior : public ContainerBehavior {
       aura::Window* window,
       ui::ScopedLayerAnimationSettings* animation_settings) override;
   void InitializeShowAnimationStartingState(aura::Window* container) override;
-  const gfx::Rect AdjustSetBoundsRequest(
-      const gfx::Rect& display_bounds,
-      const gfx::Rect& requested_bounds) const override;
 };
 
 }  // namespace keyboard

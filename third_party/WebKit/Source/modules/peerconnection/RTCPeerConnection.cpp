@@ -425,7 +425,7 @@ bool RTCPeerConnection::EventWrapper::Setup() {
   return true;
 }
 
-void RTCPeerConnection::EventWrapper::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCPeerConnection::EventWrapper) {
   visitor->Trace(event_);
 }
 
@@ -445,7 +445,7 @@ RTCPeerConnection* RTCPeerConnection::Create(
   WebRTCConfiguration configuration =
       ParseConfiguration(context, rtc_configuration, exception_state);
   if (exception_state.HadException())
-    return nullptr;
+    return 0;
 
   // Make sure no certificates have expired.
   if (configuration.certificates.size() > 0) {
@@ -456,7 +456,7 @@ RTCPeerConnection* RTCPeerConnection::Create(
       if (expires <= now) {
         exception_state.ThrowDOMException(kInvalidAccessError,
                                           "Expired certificate(s).");
-        return nullptr;
+        return 0;
       }
     }
   }
@@ -466,14 +466,14 @@ RTCPeerConnection* RTCPeerConnection::Create(
       context, media_constraints, media_error_state);
   if (media_error_state.HadException()) {
     media_error_state.RaiseException(exception_state);
-    return nullptr;
+    return 0;
   }
 
   RTCPeerConnection* peer_connection = new RTCPeerConnection(
       context, configuration, constraints, exception_state);
   peer_connection->SuspendIfNeeded();
   if (exception_state.HadException())
-    return nullptr;
+    return 0;
 
   return peer_connection;
 }
@@ -1749,7 +1749,7 @@ void RTCPeerConnection::RecordRapporMetrics() {
         *document, HostsUsingFeatures::Feature::kRTCPeerConnectionDataChannel);
 }
 
-void RTCPeerConnection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RTCPeerConnection) {
   visitor->Trace(local_streams_);
   visitor->Trace(tracks_);
   visitor->Trace(rtp_senders_);

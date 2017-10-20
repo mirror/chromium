@@ -145,11 +145,10 @@ class CORE_EXPORT RuleFeatureSet {
   // SiblingInvalidationSet.
   // When both are needed, we store the SiblingInvalidationSet, and use it to
   // hold the DescendantInvalidationSet.
-  using InvalidationSetMap =
-      HashMap<AtomicString, scoped_refptr<InvalidationSet>>;
+  using InvalidationSetMap = HashMap<AtomicString, RefPtr<InvalidationSet>>;
   using PseudoTypeInvalidationSetMap =
       HashMap<CSSSelector::PseudoType,
-              scoped_refptr<InvalidationSet>,
+              RefPtr<InvalidationSet>,
               WTF::IntHash<unsigned>,
               WTF::UnsignedWithZeroKeyHashTraits<unsigned>>;
 
@@ -261,17 +260,17 @@ class CORE_EXPORT RuleFeatureSet {
 
   void UpdateRuleSetInvalidation(const InvalidationSetFeatures&);
 
-  static InvalidationSet& StoredInvalidationSet(scoped_refptr<InvalidationSet>&,
+  static InvalidationSet& StoredInvalidationSet(RefPtr<InvalidationSet>&,
                                                 InvalidationType,
                                                 PositionType);
   static InvalidationSet& EnsureInvalidationSet(
-      HashMap<AtomicString, scoped_refptr<InvalidationSet>>&,
+      HashMap<AtomicString, RefPtr<InvalidationSet>>&,
       const AtomicString& key,
       InvalidationType,
       PositionType);
   static InvalidationSet& EnsureInvalidationSet(
       HashMap<CSSSelector::PseudoType,
-              scoped_refptr<InvalidationSet>,
+              RefPtr<InvalidationSet>,
               WTF::IntHash<unsigned>,
               WTF::UnsignedWithZeroKeyHashTraits<unsigned>>&,
       CSSSelector::PseudoType key,
@@ -283,9 +282,9 @@ class CORE_EXPORT RuleFeatureSet {
   InvalidationSetMap attribute_invalidation_sets_;
   InvalidationSetMap id_invalidation_sets_;
   PseudoTypeInvalidationSetMap pseudo_invalidation_sets_;
-  scoped_refptr<SiblingInvalidationSet> universal_sibling_invalidation_set_;
-  scoped_refptr<DescendantInvalidationSet> nth_invalidation_set_;
-  scoped_refptr<DescendantInvalidationSet> type_rule_invalidation_set_;
+  RefPtr<SiblingInvalidationSet> universal_sibling_invalidation_set_;
+  RefPtr<DescendantInvalidationSet> nth_invalidation_set_;
+  RefPtr<DescendantInvalidationSet> type_rule_invalidation_set_;
   MediaQueryResultList viewport_dependent_media_query_results_;
   MediaQueryResultList device_dependent_media_query_results_;
 

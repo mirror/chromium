@@ -84,7 +84,7 @@ class ListAttributeTargetObserver : public IdTargetObserver {
  public:
   static ListAttributeTargetObserver* Create(const AtomicString& id,
                                              HTMLInputElement*);
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   void IdTargetChanged() override;
 
  private:
@@ -129,7 +129,7 @@ HTMLInputElement* HTMLInputElement::Create(Document& document,
   return input_element;
 }
 
-void HTMLInputElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLInputElement) {
   visitor->Trace(input_type_);
   visitor->Trace(input_type_view_);
   visitor->Trace(list_attribute_target_observer_);
@@ -1783,7 +1783,7 @@ ListAttributeTargetObserver::ListAttributeTargetObserver(
                        id),
       element_(element) {}
 
-void ListAttributeTargetObserver::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ListAttributeTargetObserver) {
   visitor->Trace(element_);
   IdTargetObserver::Trace(visitor);
 }
@@ -1893,7 +1893,7 @@ bool HTMLInputElement::SupportsAutofocus() const {
   return input_type_->IsInteractiveContent();
 }
 
-scoped_refptr<ComputedStyle> HTMLInputElement::CustomStyleForLayoutObject() {
+RefPtr<ComputedStyle> HTMLInputElement::CustomStyleForLayoutObject() {
   return input_type_view_->CustomStyleForLayoutObject(
       OriginalStyleForLayoutObject());
 }

@@ -47,7 +47,7 @@ struct SameSizeAsNodeRareData {
 static_assert(sizeof(NodeRareData) == sizeof(SameSizeAsNodeRareData),
               "NodeRareData should stay small");
 
-void NodeRareData::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(NodeRareData) {
   visitor->Trace(mutation_observer_data_);
   // Do not keep empty NodeListsNodeData objects around.
   if (node_lists_ && node_lists_->IsEmpty())
@@ -56,14 +56,14 @@ void NodeRareData::TraceAfterDispatch(blink::Visitor* visitor) {
     visitor->Trace(node_lists_);
 }
 
-void NodeRareData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NodeRareData) {
   if (is_element_rare_data_)
     static_cast<ElementRareData*>(this)->TraceAfterDispatch(visitor);
   else
     TraceAfterDispatch(visitor);
 }
 
-void NodeRareData::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(NodeRareData) {
   if (is_element_rare_data_)
     static_cast<const ElementRareData*>(this)->TraceWrappersAfterDispatch(
         visitor);
@@ -71,8 +71,7 @@ void NodeRareData::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
     TraceWrappersAfterDispatch(visitor);
 }
 
-void NodeRareData::TraceWrappersAfterDispatch(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS_AFTER_DISPATCH(NodeRareData) {
   visitor->TraceWrappers(node_lists_);
   visitor->TraceWrappers(mutation_observer_data_);
 }

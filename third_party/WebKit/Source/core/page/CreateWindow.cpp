@@ -396,7 +396,7 @@ DOMWindow* CreateWindow(const String& url_string,
   DCHECK(active_frame);
 
   KURL completed_url = url_string.IsEmpty()
-                           ? KURL(g_empty_string)
+                           ? KURL(kParsedURLString, g_empty_string)
                            : first_frame.GetDocument()->CompleteURL(url_string);
   if (!completed_url.IsEmpty() && !completed_url.IsValid()) {
     UseCounter::Count(active_frame, WebFeature::kWindowOpenWithInvalidURL);
@@ -520,7 +520,7 @@ void CreateWindowForRequest(const FrameLoadRequest& request,
   }
 
   // TODO(japhet): Form submissions on RemoteFrames don't work yet.
-  FrameLoadRequest new_request(nullptr, request.GetResourceRequest());
+  FrameLoadRequest new_request(0, request.GetResourceRequest());
   new_request.SetForm(request.Form());
   if (new_frame->IsLocalFrame())
     ToLocalFrame(new_frame)->Loader().Load(new_request);

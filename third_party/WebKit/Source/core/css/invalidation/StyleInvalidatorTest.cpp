@@ -37,8 +37,7 @@ TEST_F(StyleInvalidatorTest, ScheduleOnDocumentNode) {
 
   unsigned before_count = GetStyleEngine().StyleForElementCount();
 
-  scoped_refptr<DescendantInvalidationSet> set =
-      DescendantInvalidationSet::Create();
+  RefPtr<DescendantInvalidationSet> set = DescendantInvalidationSet::Create();
   set->AddTagName("div");
   set->AddTagName("span");
 

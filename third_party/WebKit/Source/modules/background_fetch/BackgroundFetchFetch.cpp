@@ -15,7 +15,7 @@ Request* BackgroundFetchFetch::request() const {
   return request_;
 }
 
-void BackgroundFetchFetch::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(BackgroundFetchFetch) {
   visitor->Trace(request_);
 }
 

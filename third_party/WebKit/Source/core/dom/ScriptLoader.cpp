@@ -110,7 +110,7 @@ ScriptLoader::ScriptLoader(ScriptElementBase* element,
 
 ScriptLoader::~ScriptLoader() {}
 
-void ScriptLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ScriptLoader) {
   visitor->Trace(element_);
   visitor->Trace(resource_);
   visitor->Trace(pending_script_);
@@ -119,7 +119,7 @@ void ScriptLoader::Trace(blink::Visitor* visitor) {
   PendingScriptClient::Trace(visitor);
 }
 
-void ScriptLoader::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(ScriptLoader) {
   visitor->TraceWrappers(pending_script_);
   visitor->TraceWrappers(module_tree_client_);
 }
@@ -847,7 +847,7 @@ ScriptLoader::ExecuteScriptResult ScriptLoader::DoExecuteScript(
                   script->GetScriptType() == ScriptType::kModule ||
                   is_imported_script
               ? context_document
-              : nullptr);
+              : 0);
 
   // 4. "Let old script element be the value to which the script element's
   //     node document's currentScript object was most recently set."

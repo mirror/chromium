@@ -58,7 +58,7 @@ class SVGAnimatedLength : public SVGAnimatedProperty<SVGLength>,
     return &CurrentValue()->AsCSSPrimitiveValue();
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   SVGAnimatedLength(SVGElement* context_element,

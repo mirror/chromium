@@ -15,11 +15,9 @@ class NGOutOfFlowLayoutPartTest : public RenderingTest {
  public:
   NGOutOfFlowLayoutPartTest() {
     RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
-    RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(true);
   };
   ~NGOutOfFlowLayoutPartTest() {
     RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
-    RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(false);
   };
 };
 
@@ -69,8 +67,8 @@ TEST_F(NGOutOfFlowLayoutPartTest, FixedInsideAbs) {
   LayoutNGBlockFlow* block_flow = ToLayoutNGBlockFlow(rel->GetLayoutObject());
   RefPtr<NGConstraintSpace> space =
       NGConstraintSpace::CreateFromLayoutObject(*block_flow);
-  RefPtr<NGLayoutResult> result = block_flow->CachedLayoutResultForTesting();
-  EXPECT_TRUE(result);
+  NGBlockNode node(block_flow);
+  RefPtr<NGLayoutResult> result = node.Layout(*space);
   EXPECT_EQ(result->OutOfFlowPositionedDescendants().size(), (size_t)2);
 
   // Test the final result.
@@ -82,6 +80,83 @@ TEST_F(NGOutOfFlowLayoutPartTest, FixedInsideAbs) {
   EXPECT_EQ(fixed_2->OffsetTop(), LayoutUnit(9));
 };
 
+TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode1) {
+  SetBodyInnerHTML(
+      R"HTML(
+    <style>
+      #container {
+        position: relative;
+        writing-mode: horizontal-tb;
+        width: 200px;
+        height: 400px;
+      }
+      #abs-child {
+        position: absolute;
+        top: 10px;
+        writing-mode: vertical-rl;
+        width: auto;
+        height: 30px;
+      }
+    </style>
+    <div id="container">
+      <div id="abs-child"></div>
+    </div>
+    )HTML");
+
+  LayoutNGBlockFlow* block_flow =
+      ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
+  NGBlockNode node(block_flow);
+  RefPtr<NGConstraintSpace> space =
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+
+  RefPtr<const NGPhysicalFragment> fragment =
+      node.Layout(*space)->PhysicalFragment();
+  EXPECT_EQ(NGPhysicalSize(LayoutUnit(200), LayoutUnit(400)), fragment->Size());
+
+  fragment = ToNGPhysicalBoxFragment(fragment.get())->Children()[0];
+  EXPECT_EQ(NGPhysicalSize(LayoutUnit(0), LayoutUnit(30)), fragment->Size());
+  EXPECT_EQ(NGPhysicalOffset(LayoutUnit(0), LayoutUnit(10)),
+            fragment->Offset());
+};
+
+TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode2) {
+  SetBodyInnerHTML(
+      R"HTML(
+    <style>
+      #container {
+        position: relative;
+        writing-mode: horizontal-tb;
+        width: 200px;
+        height: 400px;
+      }
+      #abs-child {
+        position: absolute;
+        top: 10px;
+        writing-mode: vertical-rl;
+        width: 20%;
+        height: 30px;
+      }
+    </style>
+    <div id="container">
+      <div id="abs-child"></div>
+    </div>
+    )HTML");
+
+  LayoutNGBlockFlow* block_flow =
+      ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
+  NGBlockNode node(block_flow);
+  RefPtr<NGConstraintSpace> space =
+      NGConstraintSpace::CreateFromLayoutObject(*block_flow);
+
+  RefPtr<const NGPhysicalFragment> fragment =
+      node.Layout(*space)->PhysicalFragment();
+  EXPECT_EQ(NGPhysicalSize(LayoutUnit(200), LayoutUnit(400)), fragment->Size());
+
+  fragment = ToNGPhysicalBoxFragment(fragment.get())->Children()[0];
+  EXPECT_EQ(NGPhysicalSize(LayoutUnit(40), LayoutUnit(30)), fragment->Size());
+  EXPECT_EQ(NGPhysicalOffset(LayoutUnit(0), LayoutUnit(10)),
+            fragment->Offset());
+};
 
 }  // namespace
 }  // namespace blink

@@ -150,7 +150,7 @@ bool DOMWindow::IsInsecureScriptAccess(LocalDOMWindow& calling_window,
   return true;
 }
 
-void DOMWindow::postMessage(scoped_refptr<SerializedScriptValue> message,
+void DOMWindow::postMessage(RefPtr<SerializedScriptValue> message,
                             const MessagePortArray& ports,
                             const String& target_origin,
                             LocalDOMWindow* source,
@@ -162,7 +162,7 @@ void DOMWindow::postMessage(scoped_refptr<SerializedScriptValue> message,
 
   // Compute the target origin.  We need to do this synchronously in order
   // to generate the SyntaxError exception correctly.
-  scoped_refptr<SecurityOrigin> target;
+  RefPtr<SecurityOrigin> target;
   if (target_origin == "/") {
     if (!source_document)
       return;
@@ -445,7 +445,7 @@ InputDeviceCapabilitiesConstants* DOMWindow::GetInputDeviceCapabilities() {
   return input_capabilities_;
 }
 
-void DOMWindow::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMWindow) {
   visitor->Trace(frame_);
   visitor->Trace(window_proxy_manager_);
   visitor->Trace(input_capabilities_);
@@ -453,7 +453,7 @@ void DOMWindow::Trace(blink::Visitor* visitor) {
   EventTargetWithInlineData::Trace(visitor);
 }
 
-void DOMWindow::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(DOMWindow) {
   visitor->TraceWrappers(location_);
   EventTargetWithInlineData::TraceWrappers(visitor);
 }

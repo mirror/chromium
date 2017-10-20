@@ -53,7 +53,7 @@ class VTTParserClient : public GarbageCollectedMixin {
   virtual void NewCuesParsed() = 0;
   virtual void FileFailedToParse() = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 // Implementation of the WebVTT parser algorithm.
@@ -109,7 +109,7 @@ class VTTParser final : public GarbageCollectedFinalized<VTTParser> {
   // Transfers ownership of last parsed cues to caller.
   void GetNewCues(HeapVector<Member<TextTrackCue>>&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   VTTParser(VTTParserClient*, Document&);

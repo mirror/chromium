@@ -37,7 +37,7 @@ ExecutionContext* Clipboard::GetExecutionContext() const {
   return ContextLifecycleObserver::GetExecutionContext();
 }
 
-void Clipboard::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Clipboard) {
   EventTargetWithInlineData::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
 }

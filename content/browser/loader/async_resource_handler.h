@@ -74,7 +74,6 @@ class CONTENT_EXPORT AsyncResourceHandler : public ResourceHandler,
   int CalculateEncodedBodyLengthToReport();
   void RecordHistogram();
   void SendUploadProgress(const net::UploadProgress& progress);
-  static void InitializeResourceBufferConstants();
 
   scoped_refptr<ResourceBuffer> buffer_;
   ResourceDispatcherHostImpl* rdh_;

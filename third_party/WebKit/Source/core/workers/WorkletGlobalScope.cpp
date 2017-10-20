@@ -27,7 +27,7 @@ namespace blink {
 WorkletGlobalScope::WorkletGlobalScope(
     const KURL& url,
     const String& user_agent,
-    scoped_refptr<SecurityOrigin> document_security_origin,
+    RefPtr<SecurityOrigin> document_security_origin,
     v8::Isolate* isolate,
     WorkerClients* worker_clients,
     WorkerReportingProxy& reporting_proxy)
@@ -102,7 +102,7 @@ void WorkletGlobalScope::FetchAndInvokeScript(
     const KURL& module_url_record,
     WorkletModuleResponsesMap* module_responses_map,
     WebURLRequest::FetchCredentialsMode credentials_mode,
-    scoped_refptr<WebTaskRunner> outside_settings_task_runner,
+    RefPtr<WebTaskRunner> outside_settings_task_runner,
     WorkletPendingTasks* pending_tasks) {
   DCHECK(IsContextThread());
   if (!module_responses_map_proxy_) {
@@ -159,7 +159,7 @@ KURL WorkletGlobalScope::CompleteURL(const String& url) const {
   return KURL(BaseURL(), url);
 }
 
-void WorkletGlobalScope::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkletGlobalScope) {
   visitor->Trace(module_responses_map_proxy_);
   visitor->Trace(modulator_);
   ExecutionContext::Trace(visitor);
@@ -167,8 +167,7 @@ void WorkletGlobalScope::Trace(blink::Visitor* visitor) {
   WorkerOrWorkletGlobalScope::Trace(visitor);
 }
 
-void WorkletGlobalScope::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WorkletGlobalScope) {
   visitor->TraceWrappers(modulator_);
 }
 

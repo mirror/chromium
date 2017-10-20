@@ -7,16 +7,15 @@
 
 #include "ui/aura/window.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
-#include "ui/keyboard/keyboard_export.h"
 #include "ui/wm/core/window_animations.h"
 
 namespace keyboard {
 
 // Represents and encapsulates how the keyboard container should visually behave
 // within the workspace window.
-class KEYBOARD_EXPORT ContainerBehavior {
+class ContainerBehavior {
  public:
-  virtual ~ContainerBehavior() {}
+  virtual ~ContainerBehavior(){};
 
   // Apply changes to the animation settings to animate the keyboard container
   // showing.
@@ -34,10 +33,6 @@ class KEYBOARD_EXPORT ContainerBehavior {
   // animation.
   virtual void InitializeShowAnimationStartingState(
       aura::Window* container) = 0;
-
-  virtual const gfx::Rect AdjustSetBoundsRequest(
-      const gfx::Rect& display_bounds,
-      const gfx::Rect& requested_bounds) const = 0;
 };
 
 }  // namespace keyboard

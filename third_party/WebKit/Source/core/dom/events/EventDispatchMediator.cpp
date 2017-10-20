@@ -41,7 +41,7 @@ EventDispatchMediator* EventDispatchMediator::Create(Event* event) {
 
 EventDispatchMediator::EventDispatchMediator(Event* event) : event_(event) {}
 
-void EventDispatchMediator::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventDispatchMediator) {
   visitor->Trace(event_);
 }
 

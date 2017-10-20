@@ -97,12 +97,12 @@ static std::unique_ptr<TextCodec> NewStreamingTextDecoderWindowsLatin1(
 }
 
 void TextCodecLatin1::RegisterCodecs(TextCodecRegistrar registrar) {
-  registrar("windows-1252", NewStreamingTextDecoderWindowsLatin1, nullptr);
+  registrar("windows-1252", NewStreamingTextDecoderWindowsLatin1, 0);
 
   // ASCII and Latin-1 both decode as Windows Latin-1 although they retain
   // unique identities.
-  registrar("ISO-8859-1", NewStreamingTextDecoderWindowsLatin1, nullptr);
-  registrar("US-ASCII", NewStreamingTextDecoderWindowsLatin1, nullptr);
+  registrar("ISO-8859-1", NewStreamingTextDecoderWindowsLatin1, 0);
+  registrar("US-ASCII", NewStreamingTextDecoderWindowsLatin1, 0);
 }
 
 String TextCodecLatin1::Decode(const char* bytes,

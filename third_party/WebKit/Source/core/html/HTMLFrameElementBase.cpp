@@ -164,8 +164,7 @@ void HTMLFrameElementBase::ParseAttribute(
   }
 }
 
-scoped_refptr<SecurityOrigin> HTMLFrameElementBase::GetOriginForFeaturePolicy()
-    const {
+RefPtr<SecurityOrigin> HTMLFrameElementBase::GetOriginForFeaturePolicy() const {
   // Sandboxed frames have a unique origin.
   if (GetSandboxFlags() & kSandboxOrigin)
     return SecurityOrigin::CreateUnique();

@@ -178,15 +178,14 @@ bool SVGScriptElement::IsAnimatableAttribute(const QualifiedName& name) const {
 }
 #endif
 
-void SVGScriptElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGScriptElement) {
   visitor->Trace(loader_);
   SVGElement::Trace(visitor);
   SVGURIReference::Trace(visitor);
   ScriptElementBase::Trace(visitor);
 }
 
-void SVGScriptElement::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(SVGScriptElement) {
   visitor->TraceWrappers(loader_);
   SVGElement::TraceWrappers(visitor);
 }

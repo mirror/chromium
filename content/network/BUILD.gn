@@ -39,8 +39,6 @@ source_set("network_sources") {
     "cookie_manager_impl.h",
     "http_server_properties_pref_delegate.cc",
     "http_server_properties_pref_delegate.h",
-    "network_change_manager_impl.cc",
-    "network_change_manager_impl.h",
     "network_context.cc",
     "network_context.h",
     "network_service_impl.cc",
@@ -65,8 +63,6 @@ source_set("network_sources") {
     "throttling/throttling_network_transaction_factory.h",
     "throttling/throttling_upload_data_stream.cc",
     "throttling/throttling_upload_data_stream.h",
-    "upload_progress_tracker.cc",
-    "upload_progress_tracker.h",
     "url_loader_impl.cc",
     "url_loader_impl.h",
   ]

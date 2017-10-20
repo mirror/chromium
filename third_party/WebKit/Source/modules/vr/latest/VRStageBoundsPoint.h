@@ -21,7 +21,7 @@ class VRStageBoundsPoint final : public GarbageCollected<VRStageBoundsPoint>,
   double x() const { return x_; }
   double z() const { return z_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   double x_;

@@ -14,14 +14,14 @@
 namespace blink {
 
 WorkerShadowPage::WorkerShadowPage(Client* client)
-    : client_(client),
-      web_view_(WebViewImpl::Create(nullptr, kWebPageVisibilityStateVisible)),
+    : web_view_(WebViewImpl::Create(nullptr, kWebPageVisibilityStateVisible)),
       main_frame_(WebLocalFrameImpl::CreateMainFrame(web_view_,
                                                      this,
                                                      nullptr,
                                                      nullptr,
                                                      g_empty_atom,
-                                                     WebSandboxFlags::kNone)) {
+                                                     WebSandboxFlags::kNone)),
+      client_(client) {
   DCHECK(IsMainThread());
 
   // TODO(http://crbug.com/363843): This needs to find a better way to
@@ -48,8 +48,8 @@ void WorkerShadowPage::Initialize(const KURL& script_url) {
   CString content("");
   RefPtr<SharedBuffer> buffer(
       SharedBuffer::Create(content.data(), content.length()));
-  main_frame_->GetFrame()->Loader().Load(FrameLoadRequest(
-      nullptr, ResourceRequest(script_url), SubstituteData(buffer)));
+  main_frame_->GetFrame()->Loader().Load(
+      FrameLoadRequest(0, ResourceRequest(script_url), SubstituteData(buffer)));
 }
 
 void WorkerShadowPage::SetContentSecurityPolicyAndReferrerPolicy(
@@ -81,10 +81,6 @@ std::unique_ptr<blink::WebURLLoader> WorkerShadowPage::CreateURLLoader(
   DCHECK(IsMainThread());
   // TODO(yhirano): Stop using Platform::CreateURLLoader() here.
   return Platform::Current()->CreateURLLoader(request, task_runner);
-}
-
-WebString WorkerShadowPage::GetInstrumentationToken() {
-  return client_->GetInstrumentationToken();
 }
 
 bool WorkerShadowPage::WasInitialized() const {

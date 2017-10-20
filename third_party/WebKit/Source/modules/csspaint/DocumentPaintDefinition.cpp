@@ -25,7 +25,7 @@ bool DocumentPaintDefinition::RegisterAdditionalPaintDefinition(
   return true;
 }
 
-void DocumentPaintDefinition::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentPaintDefinition) {
   visitor->Trace(paint_definition_);
 }
 

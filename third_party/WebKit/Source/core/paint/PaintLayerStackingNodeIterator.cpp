@@ -79,7 +79,7 @@ PaintLayerStackingNode* PaintLayerStackingNodeIterator::Next() {
     remaining_children_ &= ~kPositiveZOrderChildren;
   }
 
-  return nullptr;
+  return 0;
 }
 
 PaintLayerStackingNode* PaintLayerStackingNodeReverseIterator::Next() {
@@ -117,7 +117,7 @@ PaintLayerStackingNode* PaintLayerStackingNodeReverseIterator::Next() {
     SetIndexToLastItem();
   }
 
-  return nullptr;
+  return 0;
 }
 
 void PaintLayerStackingNodeReverseIterator::SetIndexToLastItem() {

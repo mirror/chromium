@@ -11,13 +11,13 @@ namespace blink {
 void InterpolationEffect::GetActiveInterpolations(
     double fraction,
     double iteration_duration,
-    Vector<scoped_refptr<Interpolation>>& result) const {
+    Vector<RefPtr<Interpolation>>& result) const {
   size_t existing_size = result.size();
   size_t result_index = 0;
 
   for (const auto& record : interpolations_) {
     if (fraction >= record.apply_from_ && fraction < record.apply_to_) {
-      scoped_refptr<Interpolation> interpolation = record.interpolation_;
+      RefPtr<Interpolation> interpolation = record.interpolation_;
       double record_length = record.end_ - record.start_;
       double local_fraction =
           record_length ? (fraction - record.start_) / record_length : 0.0;

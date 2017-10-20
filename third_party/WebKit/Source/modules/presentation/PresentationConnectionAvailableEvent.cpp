@@ -26,7 +26,7 @@ const AtomicString& PresentationConnectionAvailableEvent::InterfaceName()
   return EventNames::PresentationConnectionAvailableEvent;
 }
 
-void PresentationConnectionAvailableEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PresentationConnectionAvailableEvent) {
   visitor->Trace(connection_);
   Event::Trace(visitor);
 }

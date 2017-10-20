@@ -85,7 +85,7 @@ class CreateFileHelper final : public AsyncFileSystemCallbacks {
     int code_;
     Member<File> file_;
 
-    void Trace(blink::Visitor* visitor) { visitor->Trace(file_); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(file_); }
 
    private:
     CreateFileResult() : failed_(false), code_(0) {}
@@ -207,12 +207,12 @@ FileWriterSync* DOMFileSystemSync::CreateWriter(
                                  std::move(callbacks));
   if (error_code != FileError::kOK) {
     FileError::ThrowDOMException(exception_state, error_code);
-    return nullptr;
+    return 0;
   }
   return file_writer;
 }
 
-void DOMFileSystemSync::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMFileSystemSync) {
   DOMFileSystemBase::Trace(visitor);
   visitor->Trace(root_entry_);
 }

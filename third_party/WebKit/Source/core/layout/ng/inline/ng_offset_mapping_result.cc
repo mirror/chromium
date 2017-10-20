@@ -117,43 +117,56 @@ size_t NGOffsetMappingResult::GetTextContentOffset(const Node& node,
   return unit->ConvertDOMOffsetToTextContent(offset);
 }
 
-Optional<unsigned> NGOffsetMappingResult::StartOfNextNonCollapsedCharacter(
+unsigned NGOffsetMappingResult::StartOfNextNonCollapsedCharacter(
     const Node& node,
     unsigned offset) const {
   const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
-  if (!unit)
-    return {};
+  if (!unit) {
+    // It is possible for a fully collapsed whitespace text node to not have a
+    // LayoutObject, in which case it is not in the offset mapping.
+    if (node.IsTextNode())
+      return ToText(node).length();
+    NOTREACHED() << node << "@" << offset;
+    return offset;
+  }
 
+  unsigned fallback = offset;
   while (unit != units_.end() && unit->GetOwner() == node) {
     if (unit->DOMEnd() > offset &&
         unit->GetType() != NGOffsetMappingUnitType::kCollapsed)
       return std::max(offset, unit->DOMStart());
+    fallback = unit->DOMEnd();
     ++unit;
   }
-  return {};
+  return fallback;
 }
 
-Optional<unsigned> NGOffsetMappingResult::EndOfLastNonCollapsedCharacter(
+unsigned NGOffsetMappingResult::EndOfLastNonCollapsedCharacter(
     const Node& node,
     unsigned offset) const {
   const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
-  if (!unit)
-    return {};
+  if (!unit) {
+    // It is possible for a fully collapsed whitespace text node to not have a
+    // LayoutObject, in which case it is not in the offset mapping.
+    DCHECK(node.IsTextNode()) << node << "@" << offset;
+    return 0;
+  }
 
+  unsigned fallback = offset;
   while (unit->GetOwner() == node) {
     if (unit->DOMStart() < offset &&
         unit->GetType() != NGOffsetMappingUnitType::kCollapsed)
       return std::min(offset, unit->DOMEnd());
+    fallback = unit->DOMStart();
     if (unit == units_.begin())
       break;
     --unit;
   }
-  return {};
+  return fallback;
 }
 
-bool NGOffsetMappingResult::IsBeforeNonCollapsedCharacter(
-    const Node& node,
-    unsigned offset) const {
+bool NGOffsetMappingResult::IsNonCollapsedCharacter(const Node& node,
+                                                    unsigned offset) const {
   const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
   return unit && offset < unit->DOMEnd() &&
          unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
@@ -170,15 +183,6 @@ bool NGOffsetMappingResult::IsAfterNonCollapsedCharacter(
       GetMappingUnitForDOMOffset(node, offset - 1);
   return unit && offset > unit->DOMStart() &&
          unit->GetType() != NGOffsetMappingUnitType::kCollapsed;
-}
-
-Optional<UChar> NGOffsetMappingResult::GetCharacterBefore(
-    const Node& node,
-    unsigned offset) const {
-  const size_t text_content_offset = GetTextContentOffset(node, offset);
-  if (text_content_offset == kNotFound || !text_content_offset)
-    return {};
-  return text_[text_content_offset - 1];
 }
 
 }  // namespace blink

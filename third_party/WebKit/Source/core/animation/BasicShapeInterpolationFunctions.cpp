@@ -14,12 +14,11 @@ namespace blink {
 
 class BasicShapeNonInterpolableValue : public NonInterpolableValue {
  public:
-  static scoped_refptr<NonInterpolableValue> Create(
-      BasicShape::ShapeType type) {
+  static RefPtr<NonInterpolableValue> Create(BasicShape::ShapeType type) {
     return WTF::AdoptRef(new BasicShapeNonInterpolableValue(type));
   }
-  static scoped_refptr<NonInterpolableValue> CreatePolygon(WindRule wind_rule,
-                                                           size_t size) {
+  static RefPtr<NonInterpolableValue> CreatePolygon(WindRule wind_rule,
+                                                    size_t size) {
     return WTF::AdoptRef(new BasicShapeNonInterpolableValue(wind_rule, size));
   }
 
@@ -215,10 +214,10 @@ std::unique_ptr<InterpolableValue> CreateNeutralValue() {
   return std::move(list);
 }
 
-scoped_refptr<BasicShape> CreateBasicShape(
+RefPtr<BasicShape> CreateBasicShape(
     const InterpolableValue& interpolable_value,
     const CSSToLengthConversionData& conversion_data) {
-  scoped_refptr<BasicShapeCircle> circle = BasicShapeCircle::Create();
+  RefPtr<BasicShapeCircle> circle = BasicShapeCircle::Create();
   const InterpolableList& list = ToInterpolableList(interpolable_value);
   circle->SetCenterX(
       CreateCoordinate(*list.Get(kCircleCenterXIndex), conversion_data));
@@ -290,10 +289,10 @@ std::unique_ptr<InterpolableValue> CreateNeutralValue() {
   return std::move(list);
 }
 
-scoped_refptr<BasicShape> CreateBasicShape(
+RefPtr<BasicShape> CreateBasicShape(
     const InterpolableValue& interpolable_value,
     const CSSToLengthConversionData& conversion_data) {
-  scoped_refptr<BasicShapeEllipse> ellipse = BasicShapeEllipse::Create();
+  RefPtr<BasicShapeEllipse> ellipse = BasicShapeEllipse::Create();
   const InterpolableList& list = ToInterpolableList(interpolable_value);
   ellipse->SetCenterX(
       CreateCoordinate(*list.Get(kEllipseCenterXIndex), conversion_data));
@@ -416,10 +415,10 @@ std::unique_ptr<InterpolableValue> CreateNeutralValue() {
   return std::move(list);
 }
 
-scoped_refptr<BasicShape> CreateBasicShape(
+RefPtr<BasicShape> CreateBasicShape(
     const InterpolableValue& interpolable_value,
     const CSSToLengthConversionData& conversion_data) {
-  scoped_refptr<BasicShapeInset> inset = BasicShapeInset::Create();
+  RefPtr<BasicShapeInset> inset = BasicShapeInset::Create();
   const InterpolableList& list = ToInterpolableList(interpolable_value);
   inset->SetTop(LengthInterpolationFunctions::CreateLength(
       *list.Get(kInsetTopIndex), nullptr, conversion_data, kValueRangeAll));
@@ -480,11 +479,11 @@ std::unique_ptr<InterpolableValue> CreateNeutralValue(
   return std::move(list);
 }
 
-scoped_refptr<BasicShape> CreateBasicShape(
+RefPtr<BasicShape> CreateBasicShape(
     const InterpolableValue& interpolable_value,
     const BasicShapeNonInterpolableValue& non_interpolable_value,
     const CSSToLengthConversionData& conversion_data) {
-  scoped_refptr<BasicShapePolygon> polygon = BasicShapePolygon::Create();
+  RefPtr<BasicShapePolygon> polygon = BasicShapePolygon::Create();
   polygon->SetWindRule(non_interpolable_value.GetWindRule());
   const InterpolableList& list = ToInterpolableList(interpolable_value);
   size_t size = non_interpolable_value.size();
@@ -569,7 +568,7 @@ bool BasicShapeInterpolationFunctions::ShapesAreCompatible(
       ToBasicShapeNonInterpolableValue(b));
 }
 
-scoped_refptr<BasicShape> BasicShapeInterpolationFunctions::CreateBasicShape(
+RefPtr<BasicShape> BasicShapeInterpolationFunctions::CreateBasicShape(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue& untyped_non_interpolable_value,
     const CSSToLengthConversionData& conversion_data) {

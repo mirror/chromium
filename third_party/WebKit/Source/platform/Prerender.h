@@ -62,7 +62,7 @@ class PLATFORM_EXPORT Prerender final
   }
 
   ~Prerender();
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void Dispose();
 

@@ -133,7 +133,7 @@ constexpr int kChosenObjectTag = CONTENT_SETTINGS_NUM_TYPES;
 // NOTE: This assumes that there will never be more than one page info
 // bubble shown, and that the one that is shown is associated with the current
 // window. This matches the behaviour in Views: see PageInfoBubbleView.
-PageInfoBubbleController* g_page_info_bubble = nullptr;
+bool g_is_bubble_showing = false;
 
 // Takes in the parent window, which should be a BrowserWindow, and gets the
 // proper anchor point for the bubble. The returned point is in screen
@@ -227,10 +227,6 @@ NSPoint AnchorPointForWindow(NSWindow* parent) {
 @end
 
 @implementation PageInfoBubbleController
-
-+ (PageInfoBubbleController*)getPageInfoBubbleForTest {
-  return g_page_info_bubble;
-}
 
 - (CGFloat)defaultWindowWidth {
   return kDefaultWindowWidth;
@@ -629,12 +625,6 @@ bool IsInternalURL(const GURL& url) {
 // Layout all of the controls in the window. This should be called whenever
 // the content has changed.
 - (void)performLayout {
-  // Skip layout if the bubble is closing.
-  InfoBubbleWindow* bubbleWindow =
-      base::mac::ObjCCastStrict<InfoBubbleWindow>([self window]);
-  if ([bubbleWindow isClosing])
-    return;
-
   // Make the content at least as wide as the permissions view.
   CGFloat contentWidth =
       std::max([self defaultWindowWidth], NSWidth([permissionsView_ frame]));
@@ -1437,18 +1427,18 @@ PageInfoUIBridge::PageInfoUIBridge(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
       web_contents_(web_contents),
       bubble_controller_(nil) {
-  DCHECK(!g_page_info_bubble);
+  DCHECK(!g_is_bubble_showing);
+  g_is_bubble_showing = true;
 }
 
 PageInfoUIBridge::~PageInfoUIBridge() {
-  DCHECK(g_page_info_bubble);
-  g_page_info_bubble = nullptr;
+  DCHECK(g_is_bubble_showing);
+  g_is_bubble_showing = false;
 }
 
 void PageInfoUIBridge::set_bubble_controller(
     PageInfoBubbleController* controller) {
   bubble_controller_ = controller;
-  g_page_info_bubble = controller;
 }
 
 void PageInfoUIBridge::SetIdentityInfo(
@@ -1497,7 +1487,7 @@ void ShowPageInfoDialogImpl(Browser* browser,
   // Don't show the bubble if it's already being shown. Since this method is
   // called each time the location icon is clicked, each click toggles the
   // bubble in and out.
-  if (g_page_info_bubble)
+  if (g_is_bubble_showing)
     return;
 
   // Create the bridge. This will be owned by the bubble controller.
@@ -1505,7 +1495,7 @@ void ShowPageInfoDialogImpl(Browser* browser,
   NSWindow* parent = browser->window()->GetNativeWindow();
 
   // Create the bubble controller. It will dealloc itself when it closes,
-  // resetting |g_page_info_bubble|.
+  // resetting |g_is_bubble_showing|.
   PageInfoBubbleController* bubble_controller =
       [[PageInfoBubbleController alloc] initWithParentWindow:parent
                                             pageInfoUIBridge:bridge

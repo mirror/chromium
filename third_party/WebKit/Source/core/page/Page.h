@@ -68,7 +68,6 @@ class PluginsChangedObserver;
 class PointerLockController;
 class ScopedPagePauser;
 class ScrollingCoordinator;
-class ScrollbarTheme;
 class SmoothScrollSequencer;
 class Settings;
 class ConsoleMessageStorage;
@@ -294,7 +293,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   void AcceptLanguagesChanged();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void LayerTreeViewInitialized(WebLayerTreeView&, LocalFrameView*);
   void WillCloseLayerTreeView(WebLayerTreeView&, LocalFrameView*);
@@ -302,8 +301,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   void WillBeDestroyed();
 
   void RegisterPluginsChangedObserver(PluginsChangedObserver*);
-
-  ScrollbarTheme& GetScrollbarTheme() const;
 
  private:
   friend class ScopedPagePauser;

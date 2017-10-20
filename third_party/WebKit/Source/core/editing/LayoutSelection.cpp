@@ -675,7 +675,7 @@ void LayoutSelection::InvalidatePaintForSelection() {
   }
 }
 
-void LayoutSelection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(LayoutSelection) {
   visitor->Trace(frame_selection_);
 }
 

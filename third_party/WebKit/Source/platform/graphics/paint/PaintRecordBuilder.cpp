@@ -60,7 +60,7 @@ PaintRecordBuilder::~PaintRecordBuilder() {
 sk_sp<PaintRecord> PaintRecordBuilder::EndRecording() {
   context_->BeginRecording(bounds_);
   paint_controller_->CommitNewDisplayItems();
-  paint_controller_->GetPaintArtifact().Replay(*context_);
+  paint_controller_->GetPaintArtifact().Replay(bounds_, *context_);
   return context_->EndRecording();
 }
 
@@ -71,7 +71,8 @@ void PaintRecordBuilder::EndRecording(
     canvas.drawPicture(EndRecording());
   } else {
     paint_controller_->CommitNewDisplayItems();
-    paint_controller_->GetPaintArtifact().Replay(canvas, property_tree_state);
+    paint_controller_->GetPaintArtifact().Replay(bounds_, canvas,
+                                                 property_tree_state);
   }
 }
 

@@ -64,7 +64,7 @@ class InspectorStyle final : public GarbageCollectedFinalized<InspectorStyle> {
   bool StyleText(String* result);
   bool TextForRange(const SourceRange&, String* result);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   InspectorStyle(CSSStyleDeclaration*,
@@ -90,7 +90,7 @@ class InspectorStyleSheetBase
     virtual void StyleSheetChanged(InspectorStyleSheetBase*) = 0;
   };
   virtual ~InspectorStyleSheetBase() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   String Id() { return id_; }
 
@@ -134,7 +134,7 @@ class InspectorStyleSheet : public InspectorStyleSheetBase {
                                      InspectorResourceContainer*);
 
   ~InspectorStyleSheet() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   String FinalURL();
   bool SetText(const String&, ExceptionState&) override;
@@ -261,7 +261,7 @@ class InspectorStyleSheetForInlineStyle final : public InspectorStyleSheetBase {
   CSSStyleDeclaration* InlineStyle();
   CSSRuleSourceData* RuleSourceData();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   InspectorStyle* GetInspectorStyle(CSSStyleDeclaration*) override;

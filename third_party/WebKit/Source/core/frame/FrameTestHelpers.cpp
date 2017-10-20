@@ -220,11 +220,10 @@ WebLocalFrameImpl* CreateLocalChild(WebRemoteFrame& parent,
   return frame;
 }
 
-WebRemoteFrameImpl* CreateRemoteChild(
-    WebRemoteFrame& parent,
-    const WebString& name,
-    scoped_refptr<SecurityOrigin> security_origin,
-    TestWebRemoteFrameClient* client) {
+WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame& parent,
+                                      const WebString& name,
+                                      RefPtr<SecurityOrigin> security_origin,
+                                      TestWebRemoteFrameClient* client) {
   auto owned_client = CreateDefaultClientIfNeeded(client);
   auto* frame = ToWebRemoteFrameImpl(parent.CreateRemoteChild(
       WebTreeScopeType::kDocument, name, WebSandboxFlags::kNone,
@@ -299,7 +298,7 @@ WebViewImpl* WebViewHelper::InitializeAndLoad(
 
 WebViewImpl* WebViewHelper::InitializeRemote(
     TestWebRemoteFrameClient* web_remote_frame_client,
-    scoped_refptr<SecurityOrigin> security_origin,
+    RefPtr<SecurityOrigin> security_origin,
     TestWebViewClient* web_view_client) {
   Reset();
 

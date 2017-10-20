@@ -56,7 +56,7 @@ class CORE_EXPORT WorkerScriptLoader final
   USING_FAST_MALLOC(WorkerScriptLoader);
 
  public:
-  static scoped_refptr<WorkerScriptLoader> Create() {
+  static RefPtr<WorkerScriptLoader> Create() {
     return WTF::AdoptRef(new WorkerScriptLoader());
   }
 

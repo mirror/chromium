@@ -53,8 +53,7 @@ V8NodeFilterCondition::V8NodeFilterCondition(v8::Local<v8::Value> filter,
 
 V8NodeFilterCondition::~V8NodeFilterCondition() {}
 
-void V8NodeFilterCondition::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(V8NodeFilterCondition) {
   visitor->TraceWrappers(filter_.Cast<v8::Value>());
 }
 

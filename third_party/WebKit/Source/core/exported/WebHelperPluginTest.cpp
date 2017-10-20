@@ -82,7 +82,7 @@ TEST_F(WebHelperPluginTest, CreateFailsWithPlaceholder) {
 
   plugin_.reset(WebHelperPlugin::Create(
       "hello", helper_.WebView()->MainFrame()->ToWebLocalFrame()));
-  EXPECT_EQ(nullptr, plugin_.get());
+  EXPECT_EQ(0, plugin_.get());
 }
 
 }  // namespace

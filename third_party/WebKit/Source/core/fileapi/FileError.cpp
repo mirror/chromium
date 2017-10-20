@@ -113,7 +113,7 @@ const char* ErrorCodeToMessage(ErrorCode code) {
   // default message is used.
   switch (code) {
     case kOK:
-      return nullptr;
+      return 0;
     case kSecurityErr:
       return kSecurityErrorMessage;
     case kNotFoundErr:
@@ -131,16 +131,16 @@ const char* ErrorCodeToMessage(ErrorCode code) {
     case kSyntaxErr:
       return kSyntaxErrorMessage;
     case kInvalidModificationErr:
-      return nullptr;
+      return 0;
     case kQuotaExceededErr:
       return kQuotaExceededErrorMessage;
     case kTypeMismatchErr:
-      return nullptr;
+      return 0;
     case kPathExistsErr:
       return kPathExistsErrorMessage;
     default:
       NOTREACHED();
-      return nullptr;
+      return 0;
   }
 }
 

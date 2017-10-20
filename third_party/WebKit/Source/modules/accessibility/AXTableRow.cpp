@@ -100,7 +100,7 @@ bool AXTableRow::ComputeAccessibilityIsIgnored(
 AXObject* AXTableRow::ParentTable() const {
   AXObject* parent = ParentObjectUnignored();
   if (!parent || !parent->IsAXTable())
-    return nullptr;
+    return 0;
 
   return parent;
 }
@@ -109,7 +109,7 @@ AXObject* AXTableRow::HeaderObject() {
   AXObjectVector headers;
   HeaderObjectsForRow(headers);
   if (!headers.size())
-    return nullptr;
+    return 0;
 
   return headers[0].Get();
 }

@@ -33,7 +33,7 @@ class CORE_EXPORT DOMArrayBufferBase
     return v8::Local<v8::Object>();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   explicit DOMArrayBufferBase(RefPtr<WTF::ArrayBuffer> buffer)

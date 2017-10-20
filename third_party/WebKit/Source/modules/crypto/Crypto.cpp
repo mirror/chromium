@@ -82,7 +82,7 @@ SubtleCrypto* Crypto::subtle() {
   return subtle_crypto_.Get();
 }
 
-void Crypto::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Crypto) {
   visitor->Trace(subtle_crypto_);
 }
 

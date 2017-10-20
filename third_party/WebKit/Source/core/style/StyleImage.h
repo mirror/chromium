@@ -97,7 +97,7 @@ class CORE_EXPORT StyleImage : public GarbageCollectedFinalized<StyleImage> {
   // so that it can persist beyond a navigation.
   void FlagAsUserAgentResource();
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   StyleImage()
@@ -116,7 +116,7 @@ class CORE_EXPORT StyleImage : public GarbageCollectedFinalized<StyleImage> {
 
   bool is_ua_css_resource_ = false;
 
-  LayoutSize ApplyZoom(const LayoutSize&, float multiplier) const;
+  static LayoutSize ApplyZoom(const LayoutSize&, float multiplier);
   LayoutSize ImageSizeForSVGImage(SVGImage*,
                                   float multiplier,
                                   const LayoutSize& default_object_size) const;

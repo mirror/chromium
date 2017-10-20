@@ -69,6 +69,10 @@ typedef ScopedRuntimeEnabledFeatureForTest<
     RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled>
     ScopedOverlayScrollbarsForTest;
 typedef ScopedRuntimeEnabledFeatureForTest<
+    RuntimeEnabledFeatures::SkipCompositingSmallScrollersEnabled,
+    RuntimeEnabledFeatures::SetSkipCompositingSmallScrollersEnabled>
+    ScopedSkipCompositingSmallScrollersForTest;
+typedef ScopedRuntimeEnabledFeatureForTest<
     RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled,
     RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled>
     ScopedExperimentalCanvasFeaturesForTest;

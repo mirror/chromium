@@ -410,13 +410,11 @@ public class CustomTabActivity extends ChromeActivity {
         // This cannot be done before because we want to do the reparenting only
         // when we have compositor related controllers.
         if (mUsingHiddenTab) {
-            TabReparentingParams params =
-                    (TabReparentingParams) AsyncTabParamsManager.remove(mMainTab.getId());
             mMainTab.attachAndFinishReparenting(this,
                     new CustomTabDelegateFactory(mIntentDataProvider.shouldEnableUrlBarHiding(),
                             mIntentDataProvider.isOpenedByChrome(),
                             getFullscreenManager().getBrowserVisibilityDelegate()),
-                    (params == null ? null : params.getFinalizeCallback()));
+                    (TabReparentingParams) AsyncTabParamsManager.remove(mMainTab.getId()));
         }
 
         LayoutManager layoutDriver = new CustomTabLayoutManager(getCompositorViewHolder());

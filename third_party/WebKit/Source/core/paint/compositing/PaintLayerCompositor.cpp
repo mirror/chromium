@@ -925,12 +925,8 @@ bool PaintLayerCompositor::CanBeComposited(const PaintLayer* layer) const {
 // z-order hierarchy.
 bool PaintLayerCompositor::ClipsCompositingDescendants(
     const PaintLayer* layer) const {
-  if (!layer->HasCompositingDescendant())
-    return false;
-  if (!layer->GetLayoutObject().IsBox())
-    return false;
-  const LayoutBox& box = ToLayoutBox(layer->GetLayoutObject());
-  return box.ShouldClipOverflow() || box.HasClip();
+  return layer->HasCompositingDescendant() &&
+         layer->GetLayoutObject().HasClipRelatedProperty();
 }
 
 // If an element has composited negative z-index children, those children paint
@@ -1305,7 +1301,7 @@ void PaintLayerCompositor::DetachRootLayer() {
       Page* page = frame.GetPage();
       if (!page)
         return;
-      page->GetChromeClient().AttachRootGraphicsLayer(nullptr, &frame);
+      page->GetChromeClient().AttachRootGraphicsLayer(0, &frame);
       break;
     }
     case kRootLayerPendingAttachViaChromeClient:

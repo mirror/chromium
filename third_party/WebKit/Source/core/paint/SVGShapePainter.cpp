@@ -90,8 +90,7 @@ void SVGShapePainter::Paint(const PaintInfo& paint_info) {
               GraphicsContextStateSaver state_saver(
                   paint_context.GetPaintInfo().context, false);
               AffineTransform non_scaling_transform;
-              const AffineTransform* additional_paint_server_transform =
-                  nullptr;
+              const AffineTransform* additional_paint_server_transform = 0;
 
               if (layout_svg_shape_.HasNonScalingStroke()) {
                 non_scaling_transform =

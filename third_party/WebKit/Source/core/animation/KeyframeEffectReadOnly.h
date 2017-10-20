@@ -80,7 +80,7 @@ class CORE_EXPORT KeyframeEffectReadOnly : public AnimationEffectReadOnly {
     compositor_animation_ids_ = compositor_animation_ids;
   }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   void DowngradeToNormal() { priority_ = kDefaultPriority; }
 

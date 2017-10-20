@@ -31,7 +31,7 @@ class MediaElementEventListener final : public EventListener {
   MediaElementEventListener(HTMLMediaElement*, MediaStream*);
   void UpdateSources(ExecutionContext*);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   // EventListener implementation.
@@ -133,7 +133,7 @@ void MediaElementEventListener::UpdateSources(ExecutionContext* context) {
   }
 }
 
-void MediaElementEventListener::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaElementEventListener) {
   visitor->Trace(media_element_);
   visitor->Trace(media_stream_);
   visitor->Trace(sources_);

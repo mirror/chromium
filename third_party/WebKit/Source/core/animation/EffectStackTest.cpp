@@ -113,7 +113,7 @@ TEST_F(AnimationEffectStackTest, ElementAnimationsSorted) {
   Play(MakeKeyframeEffect(MakeEffectModel(CSSPropertyFontSize, "2px")), 15);
   Play(MakeKeyframeEffect(MakeEffectModel(CSSPropertyFontSize, "3px")), 5);
   ActiveInterpolationsMap result = EffectStack::ActiveInterpolations(
-      &element->GetElementAnimations()->GetEffectStack(), nullptr, nullptr,
+      &element->GetElementAnimations()->GetEffectStack(), 0, 0,
       KeyframeEffectReadOnly::kDefaultPriority);
   EXPECT_EQ(1u, result.size());
   EXPECT_EQ(GetFontSizeValue(result), 3);
@@ -130,8 +130,8 @@ TEST_F(AnimationEffectStackTest, NewAnimations) {
   new_animations.push_back(inert1);
   new_animations.push_back(inert2);
   ActiveInterpolationsMap result = EffectStack::ActiveInterpolations(
-      &element->GetElementAnimations()->GetEffectStack(), &new_animations,
-      nullptr, KeyframeEffectReadOnly::kDefaultPriority);
+      &element->GetElementAnimations()->GetEffectStack(), &new_animations, 0,
+      KeyframeEffectReadOnly::kDefaultPriority);
   EXPECT_EQ(2u, result.size());
   EXPECT_EQ(GetFontSizeValue(result), 3);
   EXPECT_EQ(GetZIndexValue(result), 4);
@@ -144,7 +144,7 @@ TEST_F(AnimationEffectStackTest, CancelledAnimations) {
   cancelled_animations.insert(animation);
   Play(MakeKeyframeEffect(MakeEffectModel(CSSPropertyZIndex, "2")), 0);
   ActiveInterpolationsMap result = EffectStack::ActiveInterpolations(
-      &element->GetElementAnimations()->GetEffectStack(), nullptr,
+      &element->GetElementAnimations()->GetEffectStack(), 0,
       &cancelled_animations, KeyframeEffectReadOnly::kDefaultPriority);
   EXPECT_EQ(1u, result.size());
   EXPECT_EQ(GetZIndexValue(result), 2);
@@ -154,14 +154,14 @@ TEST_F(AnimationEffectStackTest, ClearedEffectsRemoved) {
   Animation* animation =
       Play(MakeKeyframeEffect(MakeEffectModel(CSSPropertyFontSize, "1px")), 10);
   ActiveInterpolationsMap result = EffectStack::ActiveInterpolations(
-      &element->GetElementAnimations()->GetEffectStack(), nullptr, nullptr,
+      &element->GetElementAnimations()->GetEffectStack(), 0, 0,
       KeyframeEffectReadOnly::kDefaultPriority);
   EXPECT_EQ(1u, result.size());
   EXPECT_EQ(GetFontSizeValue(result), 1);
 
-  animation->setEffect(nullptr);
+  animation->setEffect(0);
   result = EffectStack::ActiveInterpolations(
-      &element->GetElementAnimations()->GetEffectStack(), nullptr, nullptr,
+      &element->GetElementAnimations()->GetEffectStack(), 0, 0,
       KeyframeEffectReadOnly::kDefaultPriority);
   EXPECT_EQ(0u, result.size());
 }

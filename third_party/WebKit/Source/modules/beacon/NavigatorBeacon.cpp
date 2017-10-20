@@ -25,7 +25,7 @@ NavigatorBeacon::NavigatorBeacon(Navigator& navigator)
 
 NavigatorBeacon::~NavigatorBeacon() {}
 
-void NavigatorBeacon::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(NavigatorBeacon) {
   Supplement<Navigator>::Trace(visitor);
 }
 

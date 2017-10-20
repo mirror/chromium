@@ -91,7 +91,7 @@ class PLATFORM_EXPORT PlatformSpeechSynthesizer
   // m_webSpeechSynthesizerClient. Eagerly releasing WebSpeechSynthesizer
   // prevents such unsafe accesses.
   EAGERLY_FINALIZE();
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  protected:
   explicit PlatformSpeechSynthesizer(PlatformSpeechSynthesizerClient*);

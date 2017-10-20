@@ -48,7 +48,7 @@ class HashChangeEvent final : public Event {
     return EventNames::HashChangeEvent;
   }
 
-  virtual void Trace(blink::Visitor* visitor) { Event::Trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Event::Trace(visitor); }
 
  private:
   HashChangeEvent() {}

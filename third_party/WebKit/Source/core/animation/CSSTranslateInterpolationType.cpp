@@ -30,7 +30,7 @@ class InheritedTranslateChecker
   ~InheritedTranslateChecker() {}
 
   static std::unique_ptr<InheritedTranslateChecker> Create(
-      scoped_refptr<TranslateTransformOperation> inherited_translate) {
+      RefPtr<TranslateTransformOperation> inherited_translate) {
     return WTF::WrapUnique(
         new InheritedTranslateChecker(std::move(inherited_translate)));
   }
@@ -48,10 +48,10 @@ class InheritedTranslateChecker
 
  private:
   InheritedTranslateChecker(
-      scoped_refptr<TranslateTransformOperation> inherited_translate)
+      RefPtr<TranslateTransformOperation> inherited_translate)
       : inherited_translate_(std::move(inherited_translate)) {}
 
-  scoped_refptr<TransformOperation> inherited_translate_;
+  RefPtr<TransformOperation> inherited_translate_;
 };
 
 enum TranslateComponentIndex : unsigned {
@@ -208,7 +208,7 @@ void CSSTranslateInterpolationType::ApplyStandardPropertyValue(
           *list.Get(kTranslateZ), nullptr, conversion_data, kValueRangeAll)
           .Pixels();
 
-  scoped_refptr<TranslateTransformOperation> result =
+  RefPtr<TranslateTransformOperation> result =
       TranslateTransformOperation::Create(x, y, z,
                                           TransformOperation::kTranslate3D);
   state.Style()->SetTranslate(std::move(result));

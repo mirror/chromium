@@ -37,7 +37,7 @@ class CORE_EXPORT ScrollManager
 
  public:
   explicit ScrollManager(LocalFrame&);
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   void Clear();
 

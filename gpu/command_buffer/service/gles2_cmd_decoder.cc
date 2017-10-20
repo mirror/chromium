@@ -1678,13 +1678,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                      GLint* params,
                      GLsizei params_size);
 
-  // Wrapper for glGetSynciv.
-  void DoGetSynciv(GLuint sync_id,
-                   GLenum pname,
-                   GLsizei num_values,
-                   GLsizei* length,
-                   GLint* values);
-
   // Helper for DoGetTexParameter{f|i}v.
   void GetTexParameterImpl(
       GLenum target, GLenum pname, GLfloat* fparams, GLint* iparams,
@@ -3248,8 +3241,6 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
       feature_info_->feature_flags().is_swiftshader_for_webgl) {
     group_ = NULL;  // Must not destroy ContextGroup if it is not initialized.
     Destroy(true);
-    LOG(ERROR) << "ContextResult::kFatalFailure: "
-                  "fail_if_major_perf_caveat + swiftshader";
     return gpu::ContextResult::kFatalFailure;
   }
 
@@ -3285,8 +3276,6 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
     if (!supported) {
       Destroy(true);
-      LOG(ERROR) << "ContextResult::kFatalFailure: "
-                    "native gmb format not supported";
       return gpu::ContextResult::kFatalFailure;
     }
   }
@@ -3300,9 +3289,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
   if (feature_info_->IsWebGL2OrES3Context()) {
     if (!feature_info_->IsES3Capable()) {
+      LOG(ERROR) << "ES3 is blacklisted/disabled/unsupported by driver.";
       Destroy(true);
-      LOG(ERROR) << "ContextResult::kFatalFailure: "
-                    "ES3 is blacklisted/disabled/unsupported by driver.";
       return gpu::ContextResult::kFatalFailure;
     }
     feature_info_->EnableES3Validators();
@@ -3637,9 +3625,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     // of the frame buffers is okay.
     if (!ResizeOffscreenFramebuffer(
             gfx::Size(state_.viewport_width, state_.viewport_height))) {
+      LOG(ERROR) << "Could not allocate offscreen buffer storage.";
       Destroy(true);
-      LOG(ERROR) << "ContextResult::kFatalFailure: "
-                    "Could not allocate offscreen buffer storage.";
       return gpu::ContextResult::kFatalFailure;
     }
     if (!offscreen_single_buffer_) {
@@ -3652,11 +3639,9 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
           offscreen_saved_color_texture_.get());
       if (offscreen_saved_frame_buffer_->CheckStatus() !=
           GL_FRAMEBUFFER_COMPLETE) {
+        LOG(ERROR) << "Offscreen saved FBO was incomplete.";
         bool was_lost = CheckResetStatus();
         Destroy(true);
-        LOG(ERROR) << (was_lost ? "ContextResult::kTransientFailure: "
-                                : "ContextResult::kFatalFailure: ")
-                   << "Offscreen saved FBO was incomplete.";
         return was_lost ? gpu::ContextResult::kTransientFailure
                         : gpu::ContextResult::kFatalFailure;
       }
@@ -3722,13 +3707,9 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
   if (workarounds().gl_clear_broken) {
     DCHECK(!clear_framebuffer_blit_.get());
     LOCAL_COPY_REAL_GL_ERRORS_TO_WRAPPER("glClearWorkaroundInit");
-    clear_framebuffer_blit_ =
-        std::make_unique<ClearFramebufferResourceManager>(this);
-    if (LOCAL_PEEK_GL_ERROR("glClearWorkaroundInit") != GL_NO_ERROR) {
-      LOG(ERROR) << "ContextResult::kFatalFailure: "
-                    "glClearWorkaroundInit failed";
+    clear_framebuffer_blit_.reset(new ClearFramebufferResourceManager(this));
+    if (LOCAL_PEEK_GL_ERROR("glClearWorkaroundInit") != GL_NO_ERROR)
       return gpu::ContextResult::kFatalFailure;
-    }
   }
 
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
@@ -3742,30 +3723,22 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
   }
 
   if (attrib_helper.enable_oop_rasterization) {
-    if (!features().chromium_raster_transport) {
-      LOG(ERROR) << "ContextResult::kFatalFailure: "
-                    "chromium_raster_transport not present";
+    if (!features().chromium_raster_transport)
       return gpu::ContextResult::kFatalFailure;
-    }
     sk_sp<const GrGLInterface> interface(
         CreateGrGLInterface(gl_version_info()));
     // TODO(enne): if this or gr_context creation below fails in practice for
     // different reasons than the ones the renderer would fail on for gpu
     // raster, expose this in gpu::Capabilities so the renderer can handle it.
-    if (!interface) {
-      LOG(ERROR) << "ContextResult::kFatalFailure: "
-                    "GrGLInterface creation failed";
+    if (!interface)
       return gpu::ContextResult::kFatalFailure;
-    }
 
     gr_context_ = sk_sp<GrContext>(
         GrContext::Create(kOpenGL_GrBackend,
                           reinterpret_cast<GrBackendContext>(interface.get())));
     if (!gr_context_) {
+      LOG(ERROR) << "Could not create GrContext";
       bool was_lost = CheckResetStatus();
-      LOG(ERROR) << (was_lost ? "ContextResult::kTransientFailure: "
-                              : "ContextResult::kFatalFailure: ")
-                 << "Could not create GrContext";
       return was_lost ? gpu::ContextResult::kTransientFailure
                       : gpu::ContextResult::kFatalFailure;
     }
@@ -7242,19 +7215,6 @@ void GLES2DecoderImpl::DoGetProgramiv(GLuint program_id,
     return;
   }
   program->GetProgramiv(pname, params);
-}
-
-void GLES2DecoderImpl::DoGetSynciv(GLuint sync_id,
-                                   GLenum pname,
-                                   GLsizei num_values,
-                                   GLsizei* length,
-                                   GLint* values) {
-  GLsync service_sync = 0;
-  if (!group_->GetSyncServiceId(sync_id, &service_sync)) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glGetSynciv", "invalid sync id");
-    return;
-  }
-  glGetSynciv(service_sync, pname, num_values, nullptr, values);
 }
 
 void GLES2DecoderImpl::DoGetBufferParameteri64v(GLenum target,

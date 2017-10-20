@@ -46,7 +46,7 @@ inline HTMLIFrameElement::HTMLIFrameElement(Document& document)
 
 DEFINE_NODE_FACTORY(HTMLIFrameElement)
 
-void HTMLIFrameElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLIFrameElement) {
   visitor->Trace(sandbox_);
   HTMLFrameElementBase::Trace(visitor);
   Supplementable<HTMLIFrameElement>::Trace(visitor);
@@ -207,8 +207,8 @@ void HTMLIFrameElement::ParseAttribute(
 Vector<WebParsedFeaturePolicyDeclaration>
 HTMLIFrameElement::ConstructContainerPolicy(Vector<String>* messages,
                                             bool* old_syntax) const {
-  scoped_refptr<SecurityOrigin> src_origin = GetOriginForFeaturePolicy();
-  scoped_refptr<SecurityOrigin> self_origin = GetDocument().GetSecurityOrigin();
+  RefPtr<SecurityOrigin> src_origin = GetOriginForFeaturePolicy();
+  RefPtr<SecurityOrigin> self_origin = GetDocument().GetSecurityOrigin();
   Vector<WebParsedFeaturePolicyDeclaration> container_policy =
       ParseFeaturePolicyAttribute(allow_, self_origin, src_origin, messages,
                                   old_syntax);

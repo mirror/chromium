@@ -537,7 +537,7 @@ double PerformanceTiming::IntegerMillisecondsToMonotonicTime(
       ToDoubleSeconds(integer_milliseconds));
 }
 
-void PerformanceTiming::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PerformanceTiming) {
   DOMWindowClient::Trace(visitor);
 }
 

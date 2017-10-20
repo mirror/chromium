@@ -565,19 +565,21 @@ void V4LocalDatabaseManager::DatabaseReadyForUpdates(
     const std::vector<ListIdentifier>& stores_to_reset) {
   if (enabled_) {
     v4_database_->ResetStores(stores_to_reset);
-    UpdateListClientStates(GetStoreStateMap());
+    UpdateListClientStates(v4_database_->GetStoreStateMap());
 
     // The database is ready to process updates. Schedule them now.
-    v4_update_protocol_manager_->ScheduleNextUpdate(GetStoreStateMap());
+    v4_update_protocol_manager_->ScheduleNextUpdate(
+        v4_database_->GetStoreStateMap());
   }
 }
 
 void V4LocalDatabaseManager::DatabaseUpdated() {
   if (enabled_) {
-    v4_update_protocol_manager_->ScheduleNextUpdate(GetStoreStateMap());
+    v4_update_protocol_manager_->ScheduleNextUpdate(
+        v4_database_->GetStoreStateMap());
 
     v4_database_->RecordFileSizeHistograms();
-    UpdateListClientStates(GetStoreStateMap());
+    UpdateListClientStates(v4_database_->GetStoreStateMap());
 
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
@@ -712,10 +714,6 @@ StoresToCheck V4LocalDatabaseManager::GetStoresForFullHashRequests() {
     stores_for_full_hash.insert(it.list_id());
   }
   return stores_for_full_hash;
-}
-
-std::unique_ptr<StoreStateMap> V4LocalDatabaseManager::GetStoreStateMap() {
-  return v4_database_->GetStoreStateMap();
 }
 
 // Returns the SBThreatType corresponding to a given SafeBrowsing list.
@@ -985,8 +983,12 @@ bool V4LocalDatabaseManager::AreAnyStoresAvailableNow(
 void V4LocalDatabaseManager::UpdateListClientStates(
     const std::unique_ptr<StoreStateMap>& store_state_map) {
   list_client_states_.clear();
-  V4ProtocolManagerUtil::GetListClientStatesFromStoreStateMap(
-      store_state_map, &list_client_states_);
+  std::transform(
+      store_state_map->begin(), store_state_map->end(),
+      std::back_inserter(list_client_states_),
+      [](const std::map<ListIdentifier, std::string>::value_type& pair) {
+        return pair.second;
+      });
 }
 
 }  // namespace safe_browsing

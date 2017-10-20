@@ -32,14 +32,12 @@
 #include "cc/base/switches.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/switches.h"
-#include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/child_process_security_policy_impl.h"
-#include "content/browser/compositor/surface_utils.h"
 #include "content/browser/fileapi/browser_file_system_helper.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/dip_util.h"
@@ -392,18 +390,14 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
                    weak_factory_.GetWeakPtr())));
   }
 
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableNewContentRenderingTimeout)) {
-    new_content_rendering_timeout_.reset(new TimeoutMonitor(
-        base::Bind(&RenderWidgetHostImpl::ClearDisplayedGraphics,
-                   weak_factory_.GetWeakPtr())));
-  }
+  new_content_rendering_timeout_.reset(new TimeoutMonitor(
+      base::Bind(&RenderWidgetHostImpl::ClearDisplayedGraphics,
+                 weak_factory_.GetWeakPtr())));
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   enable_surface_synchronization_ =
       command_line.HasSwitch(switches::kEnableSurfaceSynchronization);
-  enable_viz_ = command_line.HasSwitch(switches::kEnableViz);
 
   delegate_->RenderWidgetCreated(this);
 }
@@ -1086,10 +1080,6 @@ void RenderWidgetHostImpl::LogHangMonitorUnresponsive() {
 void RenderWidgetHostImpl::StartNewContentRenderingTimeout(
     uint32_t next_source_id) {
   current_content_source_id_ = next_source_id;
-
-  if (!new_content_rendering_timeout_)
-    return;
-
   // It is possible for a compositor frame to arrive before the browser is
   // notified about the page being committed, in which case no timer is
   // necessary.
@@ -2605,12 +2595,6 @@ void RenderWidgetHostImpl::RequestCompositionUpdates(bool immediate_request,
 void RenderWidgetHostImpl::RequestCompositorFrameSink(
     viz::mojom::CompositorFrameSinkRequest request,
     viz::mojom::CompositorFrameSinkClientPtr client) {
-  if (enable_viz_) {
-    GetHostFrameSinkManager()->CreateCompositorFrameSink(
-        view_->GetFrameSinkId(), std::move(request), std::move(client));
-    return;
-  }
-
   if (compositor_frame_sink_binding_.is_bound())
     compositor_frame_sink_binding_.Close();
   compositor_frame_sink_binding_.Bind(
@@ -2720,8 +2704,7 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
 
   // After navigation, if a frame belonging to the new page is received, stop
   // the timer that triggers clearing the graphics of the last page.
-  if (new_content_rendering_timeout_ &&
-      last_received_content_source_id_ >= current_content_source_id_ &&
+  if (last_received_content_source_id_ >= current_content_source_id_ &&
       new_content_rendering_timeout_->IsRunning()) {
     new_content_rendering_timeout_->Stop();
   }

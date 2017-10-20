@@ -33,7 +33,7 @@ class MockFontResourceClient final
     return font_load_long_limit_exceeded_called_;
   }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(resource_);
     FontResourceClient::Trace(visitor);
   }

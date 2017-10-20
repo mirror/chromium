@@ -15,7 +15,7 @@ class CSSFontVariationSettingsNonInterpolableValue
  public:
   ~CSSFontVariationSettingsNonInterpolableValue() final {}
 
-  static scoped_refptr<CSSFontVariationSettingsNonInterpolableValue> Create(
+  static RefPtr<CSSFontVariationSettingsNonInterpolableValue> Create(
       Vector<AtomicString> tags) {
     return WTF::AdoptRef(
         new CSSFontVariationSettingsNonInterpolableValue(std::move(tags)));
@@ -91,7 +91,7 @@ class InheritedFontVariationSettingsChecker
         state.ParentStyle()->GetFontDescription().VariationSettings());
   }
 
-  scoped_refptr<const FontVariationSettings> settings_;
+  RefPtr<const FontVariationSettings> settings_;
 };
 
 static InterpolationValue ConvertFontVariationSettings(
@@ -201,8 +201,7 @@ void CSSFontVariationSettingsInterpolationType::ApplyStandardPropertyValue(
   const Vector<AtomicString>& tags = GetTags(*non_interpolable_value);
   DCHECK_EQ(numbers.length(), tags.size());
 
-  scoped_refptr<FontVariationSettings> settings =
-      FontVariationSettings::Create();
+  RefPtr<FontVariationSettings> settings = FontVariationSettings::Create();
   size_t length = numbers.length();
   for (size_t i = 0; i < length; ++i) {
     settings->Append(FontVariationAxis(

@@ -60,7 +60,7 @@ class SVGRectTearOff : public SVGPropertyTearOff<SVGRect>,
   float width() { return Target()->Width(); }
   float height() { return Target()->Height(); }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  private:
   SVGRectTearOff(SVGRect*,

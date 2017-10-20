@@ -12,7 +12,7 @@ NextProto NextProtoFromString(base::StringPiece proto_string) {
   if (proto_string == "h2") {
     return kProtoHTTP2;
   }
-  if (proto_string == "quic" || proto_string == "hq")
+  if (proto_string == "quic")
     return kProtoQUIC;
 
   return kProtoUnknown;

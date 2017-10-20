@@ -6,7 +6,8 @@ package org.chromium.chrome.browser.payments;
 
 import android.support.test.filters.MediumTest;
 
-import org.junit.Assert;
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

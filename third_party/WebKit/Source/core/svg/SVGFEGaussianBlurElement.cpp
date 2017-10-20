@@ -39,7 +39,7 @@ inline SVGFEGaussianBlurElement::SVGFEGaussianBlurElement(Document& document)
   AddToPropertyMap(in1_);
 }
 
-void SVGFEGaussianBlurElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGFEGaussianBlurElement) {
   visitor->Trace(std_deviation_);
   visitor->Trace(in1_);
   SVGFilterPrimitiveStandardAttributes::Trace(visitor);

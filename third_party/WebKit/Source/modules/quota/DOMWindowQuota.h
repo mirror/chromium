@@ -48,7 +48,7 @@ class DOMWindowQuota final : public GarbageCollected<DOMWindowQuota>,
   static DeprecatedStorageInfo* webkitStorageInfo(LocalDOMWindow&);
   DeprecatedStorageInfo* webkitStorageInfo() const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit DOMWindowQuota(LocalDOMWindow&);

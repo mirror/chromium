@@ -51,7 +51,7 @@ class MODULES_EXPORT ExtendableMessageEvent final : public ExtendableEvent {
 
   const AtomicString& InterfaceName() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   ExtendableMessageEvent(const AtomicString& type,

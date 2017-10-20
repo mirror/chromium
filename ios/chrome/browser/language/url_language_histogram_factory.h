@@ -19,10 +19,6 @@ namespace language {
 class UrlLanguageHistogram;
 }
 
-namespace user_prefs {
-class PrefRegistrySyncable;
-}
-
 class UrlLanguageHistogramFactory : public BrowserStateKeyedServiceFactory {
  public:
   static UrlLanguageHistogramFactory* GetInstance();
@@ -38,8 +34,6 @@ class UrlLanguageHistogramFactory : public BrowserStateKeyedServiceFactory {
   // BrowserStateKeyedServiceFactory implementation.
   std::unique_ptr<KeyedService> BuildServiceInstanceFor(
       web::BrowserState* context) const override;
-  void RegisterBrowserStatePrefs(
-      user_prefs::PrefRegistrySyncable* registry) override;
 
   DISALLOW_COPY_AND_ASSIGN(UrlLanguageHistogramFactory);
 };

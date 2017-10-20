@@ -57,7 +57,7 @@ class MediaKeyStatusMap::MapEntry final
     return a->KeyId()->ByteLength() < b->KeyId()->ByteLength();
   }
 
-  virtual void Trace(blink::Visitor* visitor) { visitor->Trace(key_id_); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(key_id_); }
 
  private:
   MapEntry(WebData key_id, const String& status)
@@ -90,7 +90,7 @@ class MapIterationSource final
     return true;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(map_);
     PairIterable<ArrayBufferOrArrayBufferView, String>::IterationSource::Trace(
         visitor);
@@ -152,7 +152,7 @@ MediaKeyStatusMap::StartIteration(ScriptState*, ExceptionState&) {
   return new MapIterationSource(this);
 }
 
-void MediaKeyStatusMap::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaKeyStatusMap) {
   visitor->Trace(entries_);
 }
 

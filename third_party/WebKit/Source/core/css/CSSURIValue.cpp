@@ -58,7 +58,7 @@ AtomicString CSSURIValue::FragmentIdentifier() const {
 }
 
 KURL CSSURIValue::AbsoluteUrl() const {
-  return KURL(absolute_url_);
+  return KURL(kParsedURLString, absolute_url_);
 }
 
 bool CSSURIValue::IsLocal(const Document& document) const {
@@ -75,7 +75,7 @@ bool CSSURIValue::Equals(const CSSURIValue& other) const {
   return absolute_url_ == other.absolute_url_;
 }
 
-void CSSURIValue::TraceAfterDispatch(blink::Visitor* visitor) {
+DEFINE_TRACE_AFTER_DISPATCH(CSSURIValue) {
   visitor->Trace(proxy_);
   CSSValue::TraceAfterDispatch(visitor);
 }

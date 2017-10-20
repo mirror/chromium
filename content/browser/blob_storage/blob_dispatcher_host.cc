@@ -158,7 +158,6 @@ void BlobDispatcherHost::OnRegisterBlob(
         break;
       }
       case storage::DataElement::TYPE_UNKNOWN:
-      case storage::DataElement::TYPE_DATA_PIPE:
       case storage::DataElement::TYPE_DISK_CACHE_ENTRY: {
         NOTREACHED();  // Should have been caught by IPC deserialization.
         break;

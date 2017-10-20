@@ -75,7 +75,7 @@ class ImageResource::ImageResourceInfoImpl final
   ImageResourceInfoImpl(ImageResource* resource) : resource_(resource) {
     DCHECK(resource_);
   }
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(resource_);
     ImageResourceInfo::Trace(visitor);
   }
@@ -240,7 +240,7 @@ ImageResource::~ImageResource() {
   RESOURCE_LOADING_DVLOG(1) << "~ImageResource " << this;
 }
 
-void ImageResource::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageResource) {
   visitor->Trace(multipart_parser_);
   visitor->Trace(content_);
   Resource::Trace(visitor);
@@ -312,7 +312,7 @@ void ImageResource::AllClientsAndObserversRemoved() {
   Resource::AllClientsAndObserversRemoved();
 }
 
-scoped_refptr<const SharedBuffer> ImageResource::ResourceBuffer() const {
+RefPtr<const SharedBuffer> ImageResource::ResourceBuffer() const {
   if (Data())
     return Data();
   return GetContent()->ResourceBuffer();
@@ -685,7 +685,7 @@ ResourcePriority ImageResource::PriorityFromObservers() {
 }
 
 void ImageResource::UpdateImage(
-    scoped_refptr<SharedBuffer> shared_buffer,
+    RefPtr<SharedBuffer> shared_buffer,
     ImageResourceContent::UpdateImageOption update_image_option,
     bool all_data_received) {
   bool is_multipart = !!multipart_parser_;

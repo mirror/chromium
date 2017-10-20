@@ -38,12 +38,12 @@ ParentFrameTaskRunners::ParentFrameTaskRunners(LocalFrame* frame)
   }
 }
 
-scoped_refptr<WebTaskRunner> ParentFrameTaskRunners::Get(TaskType type) {
+RefPtr<WebTaskRunner> ParentFrameTaskRunners::Get(TaskType type) {
   MutexLocker lock(task_runners_mutex_);
   return task_runners_.at(type);
 }
 
-void ParentFrameTaskRunners::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ParentFrameTaskRunners) {
   ContextLifecycleObserver::Trace(visitor);
 }
 

@@ -37,12 +37,14 @@ SimpleTransientElement::SimpleTransientElement(const base::TimeDelta& timeout)
 
 SimpleTransientElement::~SimpleTransientElement() {}
 
-bool SimpleTransientElement::OnBeginFrame(
+void SimpleTransientElement::OnBeginFrame(
     const base::TimeTicks& time,
     const gfx::Vector3dF& head_direction) {
+  super::OnBeginFrame(time, head_direction);
+
   // Do nothing if we're not going to be visible.
   if (GetTargetOpacity() != opacity_when_visible())
-    return false;
+    return;
 
   // SetVisible may have been called during initialization which means that the
   // last frame time would be zero.
@@ -50,11 +52,8 @@ bool SimpleTransientElement::OnBeginFrame(
     set_visible_time_ = last_frame_time();
 
   base::TimeDelta duration = time - set_visible_time_;
-  if (duration >= timeout_) {
+  if (duration >= timeout_)
     super::SetVisible(false);
-    return true;
-  }
-  return false;
 }
 
 ShowUntilSignalTransientElement::ShowUntilSignalTransientElement(
@@ -67,33 +66,30 @@ ShowUntilSignalTransientElement::ShowUntilSignalTransientElement(
 
 ShowUntilSignalTransientElement::~ShowUntilSignalTransientElement() {}
 
-bool ShowUntilSignalTransientElement::OnBeginFrame(
+void ShowUntilSignalTransientElement::OnBeginFrame(
     const base::TimeTicks& time,
     const gfx::Vector3dF& head_direction) {
+  super::OnBeginFrame(time, head_direction);
+
   // Do nothing if we're not going to be visible.
   if (GetTargetOpacity() != opacity_when_visible())
-    return false;
+    return;
 
   // SetVisible may have been called during initialization which means that the
   // last frame time would be zero.
   if (set_visible_time_.is_null())
     set_visible_time_ = last_frame_time();
 
-  bool set_invisible = false;
-
   base::TimeDelta duration = time - set_visible_time_;
   if (duration > timeout_) {
     callback_.Run(TransientElementHideReason::kTimeout);
-    set_invisible = true;
-  } else if (duration >= min_duration_ && signaled_) {
-    callback_.Run(TransientElementHideReason::kSignal);
-    set_invisible = true;
-  }
-  if (set_invisible) {
     super::SetVisible(false);
-    return true;
+  } else if (duration >= min_duration_) {
+    if (signaled_) {
+      super::SetVisible(false);
+      callback_.Run(TransientElementHideReason::kSignal);
+    }
   }
-  return false;
 }
 
 void ShowUntilSignalTransientElement::Signal() {

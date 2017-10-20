@@ -62,13 +62,12 @@ void StyleSheetCollection::AppendSheetForList(StyleSheet* sheet) {
   style_sheets_for_style_sheet_list_.push_back(sheet);
 }
 
-void StyleSheetCollection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleSheetCollection) {
   visitor->Trace(active_author_style_sheets_);
   visitor->Trace(style_sheets_for_style_sheet_list_);
 }
 
-void StyleSheetCollection::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(StyleSheetCollection) {
   for (auto sheet : style_sheets_for_style_sheet_list_) {
     visitor->TraceWrappers(sheet);
   }

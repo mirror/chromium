@@ -47,7 +47,7 @@ class V0CustomElementDefinition final
     return callbacks_.Get();
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   V0CustomElementDefinition(const V0CustomElementDescriptor&,

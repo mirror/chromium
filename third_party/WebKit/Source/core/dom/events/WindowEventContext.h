@@ -47,7 +47,7 @@ class WindowEventContext : public GarbageCollected<WindowEventContext> {
   EventTarget* Target() const;
   bool HandleLocalEvents(Event&);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   Member<LocalDOMWindow> window_;

@@ -12,13 +12,28 @@
 #include "media/gpu/vt_video_decode_accelerator_mac.h"
 #include "sandbox/mac/seatbelt.h"
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"
-#include "services/service_manager/sandbox/sandbox.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "ui/gl/init/gl_factory.h"
 
 namespace content {
 
 namespace {
+
+// NOTE: This function is the exact code for the entry point of mac sandbox
+// once it moves to service_manager/sandbox.
+bool InitializeSandboxInternal(service_manager::SandboxType sandbox_type,
+                               const base::FilePath& allowed_dir,
+                               base::OnceClosure hook) {
+  // Warm up APIs before turning on the sandbox.
+  service_manager::Sandbox::SandboxWarmup(sandbox_type);
+
+  // Execute the post warmup callback.
+  if (!hook.is_null())
+    std::move(hook).Run();
+
+  // Actually sandbox the process.
+  return service_manager::Sandbox::EnableSandbox(sandbox_type, allowed_dir);
+}
 
 // Helper method to make a closure from a closure.
 base::OnceClosure MaybeWrapWithGPUSandboxHook(
@@ -77,24 +92,23 @@ bool GetSandboxInfoFromCommandLine(service_manager::SandboxType* sandbox_type,
 
 bool InitializeSandbox(service_manager::SandboxType sandbox_type,
                        const base::FilePath& allowed_dir) {
-  return service_manager::Sandbox::Initialize(
+  return InitializeSandboxInternal(
       sandbox_type, allowed_dir,
       MaybeWrapWithGPUSandboxHook(sandbox_type, base::OnceClosure()));
 }
 
-bool InitializeSandbox(base::OnceClosure post_warmup_hook) {
+bool InitializeSandboxWithPostWarmupHook(base::OnceClosure hook) {
   service_manager::SandboxType sandbox_type =
       service_manager::SANDBOX_TYPE_INVALID;
   base::FilePath allowed_dir;
   return !GetSandboxInfoFromCommandLine(&sandbox_type, &allowed_dir) ||
-         service_manager::Sandbox::Initialize(
+         InitializeSandboxInternal(
              sandbox_type, allowed_dir,
-             MaybeWrapWithGPUSandboxHook(sandbox_type,
-                                         std::move(post_warmup_hook)));
+             MaybeWrapWithGPUSandboxHook(sandbox_type, std::move(hook)));
 }
 
 bool InitializeSandbox() {
-  return InitializeSandbox(base::OnceClosure());
+  return InitializeSandboxWithPostWarmupHook(base::OnceClosure());
 }
 
 }  // namespace content

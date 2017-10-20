@@ -5,6 +5,5 @@ include_rules = [
   "+sql",
   "+third_party/leveldatabase",
   "+third_party/sqlite",
-  "+third_party/WebKit/common",
   "+third_party/WebKit/public/platform",
 ]

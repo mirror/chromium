@@ -117,13 +117,6 @@ class BackgroundFetchDelegateProxy::Core
                            fetch_request.url, traffic_annotation, headers);
   }
 
-  void Abort(const std::string& job_unique_id) {
-    DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-    if (delegate_)
-      delegate_->Abort(job_unique_id);
-  }
-
   // BackgroundFetchDelegate::Client implementation:
   void OnDownloadUpdated(const std::string& guid,
                          uint64_t bytes_downloaded) override;
@@ -241,12 +234,10 @@ void BackgroundFetchDelegateProxy::UpdateUI(const std::string& title) {
   // TODO(delphick): Update the user interface with |title|.
 }
 
-void BackgroundFetchDelegateProxy::Abort(const std::string& job_unique_id) {
+void BackgroundFetchDelegateProxy::Abort() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&Core::Abort, ui_core_ptr_, job_unique_id));
+  // TODO(delphick): Abort all in-progress downloads.
 }
 
 void BackgroundFetchDelegateProxy::DidStartRequest(

@@ -12,8 +12,7 @@
 
 namespace resource_coordinator {
 
-class ProcessCoordinationUnitImpl : public CoordinationUnitBase,
-                                    public mojom::ProcessCoordinationUnit {
+class ProcessCoordinationUnitImpl : public CoordinationUnitBase {
  public:
   ProcessCoordinationUnitImpl(
       const CoordinationUnitID& id,
@@ -21,12 +20,6 @@ class ProcessCoordinationUnitImpl : public CoordinationUnitBase,
   ~ProcessCoordinationUnitImpl() override;
 
   // CoordinationUnitBase implementation.
-  // mojom::ProcessCoordinationUnit implementation.
-  void SetCPUUsage(double cpu_usage) override;
-  void SetExpectedTaskQueueingDuration(base::TimeDelta duration) override;
-  void SetLaunchTime(base::Time launch_time) override;
-  void SetPID(int64_t pid) override;
-
   std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) const override;
 

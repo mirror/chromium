@@ -50,7 +50,7 @@ class SVGPointListTearOff final
                                    property_is_anim_val, attribute_name);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     SVGListPropertyTearOffHelper<SVGPointListTearOff,
                                  SVGPointList>::TraceWrappers(visitor);
     ScriptWrappable::TraceWrappers(visitor);

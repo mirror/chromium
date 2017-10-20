@@ -20,8 +20,7 @@ AnimatorDefinition::AnimatorDefinition(v8::Isolate* isolate,
 
 AnimatorDefinition::~AnimatorDefinition() {}
 
-void AnimatorDefinition::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(AnimatorDefinition) {
   visitor->TraceWrappers(constructor_.Cast<v8::Value>());
   visitor->TraceWrappers(animate_.Cast<v8::Value>());
 }

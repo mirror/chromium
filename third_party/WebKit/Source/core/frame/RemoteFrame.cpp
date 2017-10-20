@@ -44,7 +44,7 @@ RemoteFrame::~RemoteFrame() {
   DCHECK(!view_);
 }
 
-void RemoteFrame::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemoteFrame) {
   visitor->Trace(view_);
   visitor->Trace(security_context_);
   Frame::Trace(visitor);

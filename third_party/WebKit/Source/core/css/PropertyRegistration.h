@@ -39,19 +39,19 @@ class CORE_EXPORT PropertyRegistration
     return interpolation_types_;
   }
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(initial_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(initial_); }
 
  private:
   PropertyRegistration(const AtomicString& name,
                        const CSSSyntaxDescriptor&,
                        bool inherits,
                        const CSSValue* initial,
-                       scoped_refptr<CSSVariableData> initial_variable_data);
+                       RefPtr<CSSVariableData> initial_variable_data);
 
   const CSSSyntaxDescriptor syntax_;
   const bool inherits_;
   const Member<const CSSValue> initial_;
-  const scoped_refptr<CSSVariableData> initial_variable_data_;
+  const RefPtr<CSSVariableData> initial_variable_data_;
   const InterpolationTypes interpolation_types_;
 };
 

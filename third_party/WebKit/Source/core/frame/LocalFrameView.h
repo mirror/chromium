@@ -478,7 +478,7 @@ class CORE_EXPORT LocalFrameView final
   FloatQuad LocalToVisibleContentQuad(const FloatQuad&,
                                       const LayoutObject*,
                                       unsigned = 0) const final;
-  scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final;
+  RefPtr<WebTaskRunner> GetTimerTaskRunner() const final;
 
   LayoutRect ScrollIntoView(const LayoutRect& rect_in_content,
                             const ScrollAlignment& align_x,
@@ -689,7 +689,7 @@ class CORE_EXPORT LocalFrameView final
 
   bool IsLocalFrameView() const override { return true; }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
   void NotifyPageThatContentAreaWillPaint() const;
 
   // Returns the scrollable area for the frame. For the root frame, this will
@@ -728,25 +728,24 @@ class CORE_EXPORT LocalFrameView final
 
   void BeginLifecycleUpdates();
 
-  void SetPreTranslation(
-      scoped_refptr<TransformPaintPropertyNode> pre_translation) {
+  void SetPreTranslation(RefPtr<TransformPaintPropertyNode> pre_translation) {
     pre_translation_ = std::move(pre_translation);
   }
   TransformPaintPropertyNode* PreTranslation() const {
     return pre_translation_.get();
   }
-  void SetScrollNode(scoped_refptr<ScrollPaintPropertyNode> scroll_node) {
+  void SetScrollNode(RefPtr<ScrollPaintPropertyNode> scroll_node) {
     scroll_node_ = std::move(scroll_node);
   }
   ScrollPaintPropertyNode* ScrollNode() const { return scroll_node_.get(); }
   void SetScrollTranslation(
-      scoped_refptr<TransformPaintPropertyNode> scroll_translation) {
+      RefPtr<TransformPaintPropertyNode> scroll_translation) {
     scroll_translation_ = std::move(scroll_translation);
   }
   TransformPaintPropertyNode* ScrollTranslation() const {
     return scroll_translation_.get();
   }
-  void SetContentClip(scoped_refptr<ClipPaintPropertyNode> content_clip) {
+  void SetContentClip(RefPtr<ClipPaintPropertyNode> content_clip) {
     content_clip_ = std::move(content_clip);
   }
   ClipPaintPropertyNode* ContentClip() const { return content_clip_.get(); }
@@ -877,8 +876,6 @@ class CORE_EXPORT LocalFrameView final
     DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
     return paint_artifact_compositor_.get();
   }
-
-  ScrollbarTheme& GetPageScrollbarTheme() const override;
 
  protected:
   // Scroll the content via the compositor.
@@ -1091,7 +1088,7 @@ class CORE_EXPORT LocalFrameView final
 
   LayoutSize size_;
 
-  typedef HashSet<scoped_refptr<LayoutEmbeddedObject>> EmbeddedObjectSet;
+  typedef HashSet<RefPtr<LayoutEmbeddedObject>> EmbeddedObjectSet;
   EmbeddedObjectSet part_update_set_;
 
   Member<LocalFrame> frame_;
@@ -1205,13 +1202,13 @@ class CORE_EXPORT LocalFrameView final
   //     +---[ scrollTranslation ]    Frame scrolling.
   // TODO(trchen): These will not be needed once settings->rootLayerScrolls() is
   // enabled.
-  scoped_refptr<TransformPaintPropertyNode> pre_translation_;
-  scoped_refptr<TransformPaintPropertyNode> scroll_translation_;
-  scoped_refptr<ScrollPaintPropertyNode> scroll_node_;
+  RefPtr<TransformPaintPropertyNode> pre_translation_;
+  RefPtr<TransformPaintPropertyNode> scroll_translation_;
+  RefPtr<ScrollPaintPropertyNode> scroll_node_;
   // The content clip clips the document (= LayoutView) but not the scrollbars.
   // TODO(trchen): This will not be needed once settings->rootLayerScrolls() is
   // enabled.
-  scoped_refptr<ClipPaintPropertyNode> content_clip_;
+  RefPtr<ClipPaintPropertyNode> content_clip_;
   // The property tree state that should be used for painting contents. These
   // properties are either created by this LocalFrameView or are inherited from
   // an ancestor.

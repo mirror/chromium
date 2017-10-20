@@ -71,13 +71,12 @@ void HTMLTemplateElement::DidMoveToNewDocument(Document& old_document) {
   GetDocument().EnsureTemplateDocument().AdoptIfNeeded(*content_);
 }
 
-void HTMLTemplateElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLTemplateElement) {
   visitor->Trace(content_);
   HTMLElement::Trace(visitor);
 }
 
-void HTMLTemplateElement::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(HTMLTemplateElement) {
   visitor->TraceWrappers(content_);
   HTMLElement::TraceWrappers(visitor);
 }

@@ -32,14 +32,14 @@ class TexturedElement : public UiElement {
   static void SetInitializedForTesting();
 
  protected:
+  void UpdateTexture();
+
   virtual UiTexture* GetTexture() const = 0;
   virtual void UpdateElementSize();
 
-  bool PrepareToDraw() final;
+  void PrepareToDraw() final;
 
  private:
-  bool UpdateTexture();
-
   void Flush(SkSurface* surface);
   void OnSetMode() override;
 

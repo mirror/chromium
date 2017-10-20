@@ -49,7 +49,7 @@ class SVGAnimatedNumberList final : public SVGAnimatedProperty<SVGNumberList>,
     return new SVGAnimatedNumberList(context_element, attribute_name);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     SVGAnimatedProperty<SVGNumberList>::TraceWrappers(visitor);
     ScriptWrappable::TraceWrappers(visitor);
   }

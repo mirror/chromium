@@ -167,7 +167,7 @@ void CSSSelectorWatch::WatchCSSSelectors(const Vector<String>& selectors) {
   GetSupplementable()->GetStyleEngine().WatchedSelectorsChanged();
 }
 
-void CSSSelectorWatch::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CSSSelectorWatch) {
   visitor->Trace(watched_callback_selectors_);
   Supplement<Document>::Trace(visitor);
 }

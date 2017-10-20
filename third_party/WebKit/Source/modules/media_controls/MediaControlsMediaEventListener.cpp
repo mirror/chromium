@@ -224,7 +224,7 @@ void MediaControlsMediaEventListener::OnRemotePlaybackAvailabilityChanged() {
   media_controls_->RefreshCastButtonVisibility();
 }
 
-void MediaControlsMediaEventListener::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaControlsMediaEventListener) {
   EventListener::Trace(visitor);
   visitor->Trace(media_controls_);
 }

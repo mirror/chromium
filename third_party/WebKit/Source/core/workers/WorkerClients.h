@@ -50,7 +50,7 @@ class CORE_EXPORT WorkerClients final : public GarbageCollected<WorkerClients>,
  public:
   static WorkerClients* Create() { return new WorkerClients; }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     Supplementable<WorkerClients>::Trace(visitor);
   }
 

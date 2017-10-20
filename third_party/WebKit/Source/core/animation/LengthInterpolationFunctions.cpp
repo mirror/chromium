@@ -17,14 +17,13 @@ namespace blink {
 class CSSLengthNonInterpolableValue : public NonInterpolableValue {
  public:
   ~CSSLengthNonInterpolableValue() final { NOTREACHED(); }
-  static scoped_refptr<CSSLengthNonInterpolableValue> Create(
-      bool has_percentage) {
+  static RefPtr<CSSLengthNonInterpolableValue> Create(bool has_percentage) {
     DEFINE_STATIC_REF(CSSLengthNonInterpolableValue, singleton,
                       WTF::AdoptRef(new CSSLengthNonInterpolableValue()));
     DCHECK(singleton);
     return has_percentage ? singleton : nullptr;
   }
-  static scoped_refptr<CSSLengthNonInterpolableValue> Merge(
+  static RefPtr<CSSLengthNonInterpolableValue> Merge(
       const NonInterpolableValue* a,
       const NonInterpolableValue* b) {
     return Create(HasPercentage(a) || HasPercentage(b));
@@ -135,7 +134,7 @@ bool LengthInterpolationFunctions::NonInterpolableValuesAreCompatible(
 
 void LengthInterpolationFunctions::Composite(
     std::unique_ptr<InterpolableValue>& underlying_interpolable_value,
-    scoped_refptr<NonInterpolableValue>& underlying_non_interpolable_value,
+    RefPtr<NonInterpolableValue>& underlying_non_interpolable_value,
     double underlying_fraction,
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue* non_interpolable_value) {

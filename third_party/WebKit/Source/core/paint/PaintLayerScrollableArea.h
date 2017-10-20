@@ -488,9 +488,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
 
   uint64_t Id() const;
 
-  ScrollbarTheme& GetPageScrollbarTheme() const override;
-
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit PaintLayerScrollableArea(PaintLayer&);
@@ -554,9 +552,6 @@ class CORE_EXPORT PaintLayerScrollableArea final
   }
 
   bool ComputeNeedsCompositedScrolling(const bool, const PaintLayer*);
-
-  IntRect CornerRect(const IntRect& bounds) const;
-
   PaintLayer& layer_;
 
   PaintLayer* next_topmost_scroll_child_;

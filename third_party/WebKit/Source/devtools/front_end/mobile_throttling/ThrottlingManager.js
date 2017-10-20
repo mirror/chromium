@@ -117,7 +117,6 @@ MobileThrottling.ThrottlingManager = class extends Common.Object {
     button.setTitle(Common.UIString('Throttling'));
     button.setGlyph('');
     button.turnIntoSelect();
-    button.setDarkText();
 
     /** @type {!MobileThrottling.ConditionsList} */
     var options = [];

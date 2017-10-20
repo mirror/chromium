@@ -64,7 +64,7 @@ Polymer({
    */
   updateLocalizedContent: function(event) {
     // This forces frame to reload.
-    this.screen.loadEulaToWebview_(this.$.crosEulaFrame);
+    this.$.crosEulaFrame.src = this.$.crosEulaFrame.src;
   },
 
   /**

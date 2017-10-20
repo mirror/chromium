@@ -29,8 +29,7 @@ namespace blink {
 //   placeholders for displaying them.
 class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  public:
-  explicit NGPaintFragment(RefPtr<const NGPhysicalFragment>,
-                           bool stop_at_block_layout_root = false);
+  explicit NGPaintFragment(RefPtr<const NGPhysicalFragment>);
 
   const NGPhysicalFragment& PhysicalFragment() const {
     return *physical_fragment_;
@@ -67,7 +66,7 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
 
-  void PopulateDescendants(bool stop_at_block_layout_root = false);
+  void PopulateDescendants();
 
   RefPtr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;

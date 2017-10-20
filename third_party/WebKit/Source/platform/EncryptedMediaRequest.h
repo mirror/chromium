@@ -30,7 +30,7 @@ class EncryptedMediaRequest
   virtual void RequestSucceeded(WebContentDecryptionModuleAccess*) = 0;
   virtual void RequestNotSupported(const WebString& error_message) = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
 }  // namespace blink

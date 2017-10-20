@@ -205,7 +205,7 @@ void CompositeEditCommand::ApplyCommandToComposite(
     return;
   }
   if (command->IsSimpleEditCommand()) {
-    command->SetParent(nullptr);
+    command->SetParent(0);
     EnsureUndoStep()->Append(ToSimpleEditCommand(command));
   }
   commands_.push_back(command);
@@ -873,7 +873,7 @@ void CompositeEditCommand::DeleteInsignificantText(Text* text_node,
       if (++sorted_text_boxes_position < sorted_text_boxes.size())
         box = sorted_text_boxes[sorted_text_boxes_position];
       else
-        box = nullptr;
+        box = 0;
     }
   }
 
@@ -2017,7 +2017,7 @@ bool CompositeEditCommand::IsNodeVisiblyContainedWithin(
   return start_is_visually_same && end_is_visually_same;
 }
 
-void CompositeEditCommand::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CompositeEditCommand) {
   visitor->Trace(commands_);
   visitor->Trace(starting_selection_);
   visitor->Trace(ending_selection_);

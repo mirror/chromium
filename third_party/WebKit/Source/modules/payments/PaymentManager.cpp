@@ -38,7 +38,7 @@ void PaymentManager::setUserHint(const String& user_hint) {
   manager_->SetUserHint(user_hint_);
 }
 
-void PaymentManager::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PaymentManager) {
   visitor->Trace(registration_);
   visitor->Trace(instruments_);
 }

@@ -51,7 +51,7 @@ class UnderlyingFilterListChecker
     : public CSSInterpolationType::CSSConversionChecker {
  public:
   static std::unique_ptr<UnderlyingFilterListChecker> Create(
-      scoped_refptr<NonInterpolableList> non_interpolable_list) {
+      RefPtr<NonInterpolableList> non_interpolable_list) {
     return WTF::WrapUnique(
         new UnderlyingFilterListChecker(std::move(non_interpolable_list)));
   }
@@ -73,11 +73,10 @@ class UnderlyingFilterListChecker
   }
 
  private:
-  UnderlyingFilterListChecker(
-      scoped_refptr<NonInterpolableList> non_interpolable_list)
+  UnderlyingFilterListChecker(RefPtr<NonInterpolableList> non_interpolable_list)
       : non_interpolable_list_(std::move(non_interpolable_list)) {}
 
-  scoped_refptr<NonInterpolableList> non_interpolable_list_;
+  RefPtr<NonInterpolableList> non_interpolable_list_;
 };
 
 class InheritedFilterListChecker
@@ -113,7 +112,7 @@ InterpolationValue ConvertFilterList(const FilterOperations& filter_operations,
   size_t length = filter_operations.size();
   std::unique_ptr<InterpolableList> interpolable_list =
       InterpolableList::Create(length);
-  Vector<scoped_refptr<NonInterpolableValue>> non_interpolable_values(length);
+  Vector<RefPtr<NonInterpolableValue>> non_interpolable_values(length);
   for (size_t i = 0; i < length; i++) {
     InterpolationValue filter_result =
         FilterInterpolationFunctions::MaybeConvertFilter(
@@ -177,7 +176,7 @@ InterpolationValue CSSFilterListInterpolationType::MaybeConvertValue(
   size_t length = list.length();
   std::unique_ptr<InterpolableList> interpolable_list =
       InterpolableList::Create(length);
-  Vector<scoped_refptr<NonInterpolableValue>> non_interpolable_values(length);
+  Vector<RefPtr<NonInterpolableValue>> non_interpolable_values(length);
   for (size_t i = 0; i < length; i++) {
     InterpolationValue item_result =
         FilterInterpolationFunctions::MaybeConvertCSSFilter(list.Item(i));

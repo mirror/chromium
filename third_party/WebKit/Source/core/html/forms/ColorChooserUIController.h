@@ -52,7 +52,7 @@ class CORE_EXPORT ColorChooserUIController
   }
 
   ~ColorChooserUIController() override;
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
   virtual void OpenUI();
 

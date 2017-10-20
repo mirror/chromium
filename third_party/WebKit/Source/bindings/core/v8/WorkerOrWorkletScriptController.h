@@ -90,7 +90,7 @@ class CORE_EXPORT WorkerOrWorkletScriptController
     return rejected_promises_.get();
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   bool IsContextInitialized() const {
     return script_state_ && !!script_state_->PerContextData();

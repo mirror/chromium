@@ -75,7 +75,7 @@ MediaQueryList* MediaQueryMatcher::MatchMedia(const String& query) {
   if (!document_)
     return nullptr;
 
-  scoped_refptr<MediaQuerySet> media = MediaQuerySet::Create(query);
+  RefPtr<MediaQuerySet> media = MediaQuerySet::Create(query);
   return MediaQueryList::Create(document_, this, media);
 }
 
@@ -130,7 +130,7 @@ void MediaQueryMatcher::ViewportChanged() {
   document_->EnqueueMediaQueryChangeListeners(listeners_to_notify);
 }
 
-void MediaQueryMatcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MediaQueryMatcher) {
   visitor->Trace(document_);
   visitor->Trace(evaluator_);
   visitor->Trace(media_lists_);

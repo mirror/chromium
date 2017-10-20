@@ -5,11 +5,19 @@
 #ifndef CONTENT_GPU_GPU_SANDBOX_HOOK_LINUX_H_
 #define CONTENT_GPU_GPU_SANDBOX_HOOK_LINUX_H_
 
-#include "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h"
+#include "base/callback.h"
+
+namespace sandbox {
+namespace bpf_dsl {
+
+class Policy;
+
+}  // namespace bpf_dsl
+}  // namespace sandbox
 
 namespace content {
 
-SandboxSeccompBPF::PreSandboxHook GetGpuProcessPreSandboxHook(
+base::OnceCallback<bool(sandbox::bpf_dsl::Policy*)> GetGpuProcessPreSandboxHook(
     bool use_amd_specific_policies);
 
 }  // namespace content

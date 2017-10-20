@@ -63,7 +63,7 @@ class GlobalConfirmInfoBarWithInfoBarDisabledTest
   ~GlobalConfirmInfoBarWithInfoBarDisabledTest() override = default;
 
  protected:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
+  void SetUpDefaultCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitch(infobars::switches::kDisableInfoBars);
   }
 

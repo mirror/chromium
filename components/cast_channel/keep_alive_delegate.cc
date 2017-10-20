@@ -148,11 +148,7 @@ void KeepAliveDelegate::SendKeepAliveMessageComplete(const char* message_type,
     logger_->LogSocketEventWithRv(socket_->id(), ChannelEvent::PING_WRITE_ERROR,
                                   rv);
     OnError(ChannelError::CAST_SOCKET_ERROR);
-    return;
   }
-
-  if (liveness_timer_)
-    liveness_timer_->Reset();
 }
 
 void KeepAliveDelegate::LivenessTimeout() {

@@ -81,7 +81,7 @@ class ElementAnimations : public GarbageCollectedFinalized<ElementAnimations> {
   void UpdateBaseComputedStyle(const ComputedStyle*);
   void ClearBaseComputedStyle();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   bool IsAnimationStyleChange() const;
@@ -90,7 +90,7 @@ class ElementAnimations : public GarbageCollectedFinalized<ElementAnimations> {
   CSSAnimations css_animations_;
   AnimationCountedSet animations_;
   bool animation_style_change_;
-  scoped_refptr<ComputedStyle> base_computed_style_;
+  RefPtr<ComputedStyle> base_computed_style_;
 
   // CSSAnimations checks if a style change is due to animation.
   friend class CSSAnimations;

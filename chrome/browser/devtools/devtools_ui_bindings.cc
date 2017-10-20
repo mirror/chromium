@@ -1183,10 +1183,6 @@ void DevToolsUIBindings::FileSystemRemoved(
                      &file_system_path_value, NULL, NULL);
 }
 
-void DevToolsUIBindings::FailedToAddFileSystem() {
-  CallClientFunction("DevToolsAPI.failedToAddFileSystem", NULL, NULL, NULL);
-}
-
 void DevToolsUIBindings::FilePathsChanged(
     const std::vector<std::string>& changed_paths,
     const std::vector<std::string>& added_paths,
@@ -1280,7 +1276,7 @@ void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
     // documents.
     content::ChildProcessSecurityPolicy::GetInstance()->GrantOrigin(
         web_contents_->GetMainFrame()->GetProcess()->GetID(),
-        url::Origin::Create(extension->url()));
+        url::Origin(extension->url()));
 
     std::unique_ptr<base::DictionaryValue> extension_info(
         new base::DictionaryValue());

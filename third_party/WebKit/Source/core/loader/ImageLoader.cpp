@@ -137,7 +137,7 @@ class ImageLoader::Task {
   WeakPersistent<ImageLoader> loader_;
   BypassMainWorldBehavior should_bypass_main_world_csp_;
   UpdateFromElementBehavior update_behavior_;
-  scoped_refptr<ScriptState> script_state_;
+  RefPtr<ScriptState> script_state_;
   WeakPtrFactory<Task> weak_factory_;
   ReferrerPolicy referrer_policy_;
   KURL request_url_;
@@ -236,7 +236,7 @@ void ImageLoader::RejectPendingDecodes(UpdateType update_type) {
   }
 }
 
-void ImageLoader::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageLoader) {
   visitor->Trace(image_content_);
   visitor->Trace(image_resource_for_image_document_);
   visitor->Trace(element_);
@@ -670,7 +670,7 @@ LayoutImageResource* ImageLoader::GetLayoutImageResource() {
   LayoutObject* layout_object = element_->GetLayoutObject();
 
   if (!layout_object)
-    return nullptr;
+    return 0;
 
   // We don't return style generated image because it doesn't belong to the
   // ImageLoader. See <https://bugs.webkit.org/show_bug.cgi?id=42840>
@@ -684,7 +684,7 @@ LayoutImageResource* ImageLoader::GetLayoutImageResource() {
   if (layout_object->IsVideo())
     return ToLayoutVideo(layout_object)->ImageResource();
 
-  return nullptr;
+  return 0;
 }
 
 void ImageLoader::UpdateLayoutObject() {
@@ -813,7 +813,7 @@ void ImageLoader::DecodeRequest::NotifyDecodeDispatched() {
   state_ = kDispatched;
 }
 
-void ImageLoader::DecodeRequest::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageLoader::DecodeRequest) {
   visitor->Trace(resolver_);
   visitor->Trace(loader_);
 }

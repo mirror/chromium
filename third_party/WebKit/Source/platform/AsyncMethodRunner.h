@@ -109,7 +109,7 @@ class AsyncMethodRunner final
 
   bool IsActive() const { return timer_.IsActive(); }
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(object_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(object_); }
 
  private:
   AsyncMethodRunner(TargetClass* object, TargetMethod method)

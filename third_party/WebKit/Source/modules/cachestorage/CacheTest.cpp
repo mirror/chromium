@@ -84,7 +84,7 @@ class ScopedFetcherForTests final
 
   int FetchCount() const { return fetch_count_; }
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     visitor->Trace(response_);
     GlobalFetch::ScopedFetcher::Trace(visitor);
   }
@@ -105,9 +105,9 @@ class ErrorWebCacheForTests : public WebServiceWorkerCache {
  public:
   ErrorWebCacheForTests(const WebServiceWorkerCacheError error)
       : error_(error),
-        expected_url_(nullptr),
-        expected_query_params_(nullptr),
-        expected_batch_operations_(nullptr) {}
+        expected_url_(0),
+        expected_query_params_(0),
+        expected_batch_operations_(0) {}
 
   std::string GetAndClearLastErrorWebCacheMethodCalled() {
     std::string old = last_error_web_cache_method_called_;
@@ -257,7 +257,7 @@ class CacheStorageTest : public ::testing::Test {
     DummyExceptionStateForTesting exception_state;
     Request* request = Request::Create(GetScriptState(), url, exception_state);
     EXPECT_FALSE(exception_state.HadException());
-    return exception_state.HadException() ? nullptr : request;
+    return exception_state.HadException() ? 0 : request;
   }
 
   // Convenience methods for testing the returned promises.
@@ -480,7 +480,7 @@ TEST_F(CacheStorageTest, BatchOperationArguments) {
 
   WebServiceWorkerResponse web_response;
   std::vector<KURL> url_list;
-  url_list.push_back(KURL(url));
+  url_list.push_back(KURL(kParsedURLString, url));
   web_response.SetURLList(url_list);
   Response* response = Response::Create(GetScriptState(), web_response);
 
@@ -562,7 +562,7 @@ TEST_F(CacheStorageTest, MatchResponseTest) {
 
   WebServiceWorkerResponse web_response;
   std::vector<KURL> url_list;
-  url_list.push_back(KURL(response_url));
+  url_list.push_back(KURL(kParsedURLString, response_url));
   web_response.SetURLList(url_list);
   web_response.SetResponseType(network::mojom::FetchResponseType::kDefault);
 
@@ -606,8 +606,8 @@ TEST_F(CacheStorageTest, KeysResponseTest) {
   expected_urls[1] = url2;
 
   WebVector<WebServiceWorkerRequest> web_requests(size_t(2));
-  web_requests[0].SetURL(KURL(url1));
-  web_requests[1].SetURL(KURL(url2));
+  web_requests[0].SetURL(KURL(kParsedURLString, url1));
+  web_requests[1].SetURL(KURL(kParsedURLString, url2));
 
   Cache* cache = CreateCache(fetcher, new KeysTestCache(web_requests));
 
@@ -660,9 +660,11 @@ TEST_F(CacheStorageTest, MatchAllAndBatchResponseTest) {
   expected_urls[1] = url2;
 
   WebVector<WebServiceWorkerResponse> web_responses(size_t(2));
-  web_responses[0].SetURLList(std::vector<KURL>({KURL(url1)}));
+  web_responses[0].SetURLList(
+      std::vector<KURL>({KURL(kParsedURLString, url1)}));
   web_responses[0].SetResponseType(network::mojom::FetchResponseType::kDefault);
-  web_responses[1].SetURLList(std::vector<KURL>({KURL(url2)}));
+  web_responses[1].SetURLList(
+      std::vector<KURL>({KURL(kParsedURLString, url2)}));
   web_responses[1].SetResponseType(network::mojom::FetchResponseType::kDefault);
 
   Cache* cache =

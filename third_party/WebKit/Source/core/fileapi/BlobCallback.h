@@ -40,7 +40,7 @@ class Blob;
 class BlobCallback : public GarbageCollectedFinalized<BlobCallback> {
  public:
   virtual ~BlobCallback() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
   virtual void handleEvent(Blob*) = 0;
 };
 

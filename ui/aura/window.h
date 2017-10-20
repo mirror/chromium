@@ -228,9 +228,6 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // NULL.
   static void ConvertPointToTarget(const Window* source,
                                    const Window* target,
-                                   gfx::PointF* point);
-  static void ConvertPointToTarget(const Window* source,
-                                   const Window* target,
                                    gfx::Point* point);
   static void ConvertRectToTarget(const Window* source,
                                   const Window* target,

@@ -106,7 +106,7 @@ void ClipboardPromise::HandleWriteText(const String& data) {
   script_promise_resolver_->Resolve();
 }
 
-void ClipboardPromise::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ClipboardPromise) {
   visitor->Trace(script_promise_resolver_);
   ContextLifecycleObserver::Trace(visitor);
 }

@@ -112,7 +112,7 @@ class CORE_EXPORT InspectorTraceEvents : public InspectorAgent {
 
   void PaintTiming(Document*, const char* name, double timestamp);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   Member<CoreProbeSink> instrumenting_agents_;

@@ -18,10 +18,9 @@ namespace {
 
 using MemoryStrategy = BlobMemoryController::Strategy;
 
-bool CalculateBlobMemorySize(
-    const std::vector<blink::mojom::DataElementPtr>& elements,
-    size_t* shortcut_bytes,
-    uint64_t* total_bytes) {
+bool CalculateBlobMemorySize(const std::vector<mojom::DataElementPtr>& elements,
+                             size_t* shortcut_bytes,
+                             uint64_t* total_bytes) {
   DCHECK(shortcut_bytes);
   DCHECK(total_bytes);
 
@@ -47,12 +46,12 @@ bool CalculateBlobMemorySize(
   return true;
 }
 
-class BlobURLHandleImpl final : public blink::mojom::BlobURLHandle {
+class BlobURLHandleImpl final : public mojom::BlobURLHandle {
  public:
-  static blink::mojom::BlobURLHandlePtr Create(
+  static mojom::BlobURLHandlePtr Create(
       base::WeakPtr<BlobStorageContext> context,
       const GURL& url) {
-    blink::mojom::BlobURLHandlePtr ptr;
+    mojom::BlobURLHandlePtr ptr;
     mojo::MakeStrongBinding(
         base::WrapUnique(new BlobURLHandleImpl(context, url)),
         mojo::MakeRequest(&ptr));
@@ -81,7 +80,7 @@ class BlobRegistryImpl::BlobUnderConstruction {
                         const std::string& uuid,
                         const std::string& content_type,
                         const std::string& content_disposition,
-                        std::vector<blink::mojom::DataElementPtr> elements,
+                        std::vector<mojom::DataElementPtr> elements,
                         mojo::ReportBadMessageCallback bad_message_callback)
       : blob_registry_(blob_registry),
         builder_(uuid),
@@ -175,7 +174,7 @@ class BlobRegistryImpl::BlobUnderConstruction {
   BlobDataBuilder builder_;
 
   // Elements as passed in to Register.
-  std::vector<blink::mojom::DataElementPtr> elements_;
+  std::vector<mojom::DataElementPtr> elements_;
 
   // Callback to report a BadMessage on the binding on which Register was
   // called.
@@ -425,19 +424,18 @@ BlobRegistryImpl::BlobRegistryImpl(
 
 BlobRegistryImpl::~BlobRegistryImpl() {}
 
-void BlobRegistryImpl::Bind(blink::mojom::BlobRegistryRequest request,
+void BlobRegistryImpl::Bind(mojom::BlobRegistryRequest request,
                             std::unique_ptr<Delegate> delegate) {
   DCHECK(delegate);
   bindings_.AddBinding(this, std::move(request), std::move(delegate));
 }
 
-void BlobRegistryImpl::Register(
-    blink::mojom::BlobRequest blob,
-    const std::string& uuid,
-    const std::string& content_type,
-    const std::string& content_disposition,
-    std::vector<blink::mojom::DataElementPtr> elements,
-    RegisterCallback callback) {
+void BlobRegistryImpl::Register(mojom::BlobRequest blob,
+                                const std::string& uuid,
+                                const std::string& content_type,
+                                const std::string& content_disposition,
+                                std::vector<mojom::DataElementPtr> elements,
+                                RegisterCallback callback) {
   if (uuid.empty() || context_->registry().HasEntry(uuid) ||
       base::ContainsKey(blobs_under_construction_, uuid)) {
     bindings_.ReportBadMessage("Invalid UUID passed to BlobRegistry::Register");
@@ -493,7 +491,7 @@ void BlobRegistryImpl::Register(
   std::move(callback).Run();
 }
 
-void BlobRegistryImpl::GetBlobFromUUID(blink::mojom::BlobRequest blob,
+void BlobRegistryImpl::GetBlobFromUUID(mojom::BlobRequest blob,
                                        const std::string& uuid) {
   if (uuid.empty()) {
     bindings_.ReportBadMessage(
@@ -507,7 +505,7 @@ void BlobRegistryImpl::GetBlobFromUUID(blink::mojom::BlobRequest blob,
   BlobImpl::Create(context_->GetBlobDataFromUUID(uuid), std::move(blob));
 }
 
-void BlobRegistryImpl::RegisterURL(blink::mojom::BlobPtr blob,
+void BlobRegistryImpl::RegisterURL(mojom::BlobPtr blob,
                                    const GURL& url,
                                    RegisterURLCallback callback) {
   Delegate* delegate = bindings_.dispatch_context().get();
@@ -518,14 +516,14 @@ void BlobRegistryImpl::RegisterURL(blink::mojom::BlobPtr blob,
     return;
   }
 
-  blink::mojom::Blob* blob_ptr = blob.get();
+  mojom::Blob* blob_ptr = blob.get();
   blob_ptr->GetInternalUUID(base::BindOnce(
       &BlobRegistryImpl::RegisterURLWithUUID, weak_ptr_factory_.GetWeakPtr(),
       url, std::move(blob), std::move(callback)));
 }
 
 void BlobRegistryImpl::RegisterURLWithUUID(const GURL& url,
-                                           blink::mojom::BlobPtr blob,
+                                           mojom::BlobPtr blob,
                                            RegisterURLCallback callback,
                                            const std::string& uuid) {
   // |blob| is unused, but is passed here to be kept alive until

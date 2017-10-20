@@ -56,16 +56,15 @@ void AppendPrintersAndRunCallbackIfDone(base::ListValue* printers_out,
 }
 
 // Callback for PrinterProviderAPI::DispatchPrintRequested calls.
-// It fills the out params based on |status| and runs |callback|.
+// It copies |value| to |*result| and runs |callback|.
 void RecordPrintResultAndRunCallback(bool* result_success,
                                      std::string* result_status,
                                      const base::Closure& callback,
-                                     const base::Value& status) {
-  bool success = status.is_none();
-  std::string status_str = success ? "OK" : status.GetString();
+                                     bool success,
+                                     const std::string& status) {
   *result_success = success;
-  *result_status = status_str;
-  if (callback)
+  *result_status = status;
+  if (!callback.is_null())
     callback.Run();
 }
 

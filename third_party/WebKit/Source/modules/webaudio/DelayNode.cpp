@@ -104,7 +104,7 @@ AudioParam* DelayNode::delayTime() {
   return delay_time_;
 }
 
-void DelayNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DelayNode) {
   visitor->Trace(delay_time_);
   AudioNode::Trace(visitor);
 }

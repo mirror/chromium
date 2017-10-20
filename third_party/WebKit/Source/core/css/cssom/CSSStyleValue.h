@@ -65,7 +65,7 @@ class CORE_EXPORT CSSStyleValue
     return result ? result->CssText() : "";
   }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   static String StyleValueTypeToString(StyleValueType);

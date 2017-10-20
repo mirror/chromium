@@ -49,7 +49,7 @@ DocumentLoadTiming::DocumentLoadTiming(DocumentLoader& document_loader)
       has_same_origin_as_previous_document_(false),
       document_loader_(document_loader) {}
 
-void DocumentLoadTiming::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DocumentLoadTiming) {
   visitor->Trace(document_loader_);
 }
 
@@ -139,7 +139,7 @@ void DocumentLoadTiming::AddRedirect(const KURL& redirecting_url,
 
   // Check if the redirected url is allowed to access the redirecting url's
   // timing information.
-  scoped_refptr<SecurityOrigin> redirected_security_origin =
+  RefPtr<SecurityOrigin> redirected_security_origin =
       SecurityOrigin::Create(redirected_url);
   has_cross_origin_redirect_ |=
       !redirected_security_origin->CanRequest(redirecting_url);

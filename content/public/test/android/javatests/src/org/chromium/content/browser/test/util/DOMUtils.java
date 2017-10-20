@@ -9,7 +9,7 @@ import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 import android.graphics.Rect;
 import android.util.JsonReader;
 
-import org.junit.Assert;
+import junit.framework.Assert;
 
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.WebContents;

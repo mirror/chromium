@@ -115,11 +115,11 @@ Image* CSSImageGeneratorValue::GetImage(const ImageResourceObserver* client,
 }
 
 void CSSImageGeneratorValue::PutImage(const IntSize& size,
-                                      scoped_refptr<Image> image) {
+                                      RefPtr<Image> image) {
   images_.insert(size, std::move(image));
 }
 
-scoped_refptr<Image> CSSImageGeneratorValue::GetImage(
+RefPtr<Image> CSSImageGeneratorValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,

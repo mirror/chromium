@@ -18,9 +18,9 @@ class HTMLImageFallbackHelper {
 
  public:
   static void CreateAltTextShadowTree(Element&);
-  static scoped_refptr<ComputedStyle> CustomStyleForAltText(
+  static RefPtr<ComputedStyle> CustomStyleForAltText(
       Element&,
-      scoped_refptr<ComputedStyle> new_style);
+      RefPtr<ComputedStyle> new_style);
 };
 
 }  // namespace blink

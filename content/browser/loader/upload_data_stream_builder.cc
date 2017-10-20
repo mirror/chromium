@@ -120,7 +120,6 @@ std::unique_ptr<net::UploadDataStream> UploadDataStreamBuilder::Build(
       }
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:
       case ResourceRequestBody::Element::TYPE_BYTES_DESCRIPTION:
-      case ResourceRequestBody::Element::TYPE_DATA_PIPE:
       case ResourceRequestBody::Element::TYPE_UNKNOWN:
         NOTREACHED();
         break;

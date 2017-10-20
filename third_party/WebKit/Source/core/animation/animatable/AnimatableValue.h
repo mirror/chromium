@@ -42,9 +42,9 @@ class CORE_EXPORT AnimatableValue : public RefCounted<AnimatableValue> {
  public:
   virtual ~AnimatableValue() {}
 
-  static scoped_refptr<AnimatableValue> Interpolate(const AnimatableValue*,
-                                                    const AnimatableValue*,
-                                                    double fraction);
+  static RefPtr<AnimatableValue> Interpolate(const AnimatableValue*,
+                                             const AnimatableValue*,
+                                             double fraction);
   bool IsDouble() const { return GetType() == kTypeDouble; }
   bool IsFilterOperations() const { return GetType() == kTypeFilterOperations; }
   bool IsTransform() const { return GetType() == kTypeTransform; }
@@ -63,12 +63,12 @@ class CORE_EXPORT AnimatableValue : public RefCounted<AnimatableValue> {
     kTypeUnknown,
   };
 
-  virtual scoped_refptr<AnimatableValue> InterpolateTo(const AnimatableValue*,
-                                                       double fraction) const {
+  virtual RefPtr<AnimatableValue> InterpolateTo(const AnimatableValue*,
+                                                double fraction) const {
     NOTREACHED();
     return nullptr;
   }
-  static scoped_refptr<AnimatableValue> DefaultInterpolateTo(
+  static RefPtr<AnimatableValue> DefaultInterpolateTo(
       const AnimatableValue* left,
       const AnimatableValue* right,
       double fraction) {
@@ -76,8 +76,8 @@ class CORE_EXPORT AnimatableValue : public RefCounted<AnimatableValue> {
   }
 
   template <class T>
-  static scoped_refptr<T> TakeConstRef(const T* value) {
-    return scoped_refptr<T>(const_cast<T*>(value));
+  static RefPtr<T> TakeConstRef(const T* value) {
+    return RefPtr<T>(const_cast<T*>(value));
   }
 
  private:

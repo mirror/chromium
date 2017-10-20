@@ -49,7 +49,7 @@ class CSSFontFaceRule final : public CSSRule {
 
   StyleRuleFontFace* StyleRule() const { return font_face_rule_.Get(); }
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   CSSFontFaceRule(StyleRuleFontFace*, CSSStyleSheet* parent);

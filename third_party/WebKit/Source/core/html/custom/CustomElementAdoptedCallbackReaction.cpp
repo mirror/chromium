@@ -19,7 +19,7 @@ CustomElementAdoptedCallbackReaction::CustomElementAdoptedCallbackReaction(
   DCHECK(definition->HasAdoptedCallback());
 }
 
-void CustomElementAdoptedCallbackReaction::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CustomElementAdoptedCallbackReaction) {
   CustomElementReaction::Trace(visitor);
   visitor->Trace(old_owner_);
   visitor->Trace(new_owner_);

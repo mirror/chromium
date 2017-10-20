@@ -11,8 +11,6 @@
 #include "base/path_service.h"
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_scheduler/task_scheduler.h"
-#import "base/test/ios/wait_util.h"
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/data_driven_test.h"
 #import "components/autofill/ios/browser/autofill_agent.h"
@@ -61,9 +59,35 @@ base::FilePath GetIOSOutputDirectory(
 // TODO(crbug.com/762970): Reduce the amount of failing tests.
 const std::set<std::string>& FailingTestData() {
   static std::set<std::string> failing_tests = {
+      "016_misc_phones.html",
+      "017_checkout_advanceautoparts.com.html",
+      "018_checkout_ae.com.html",
+      "020_checkout_cafepress.com.html",
+      "025_checkout_hsn.com.html",
+      "028_checkout_jr.com.html",
+      "030_checkout_lowes.com.html",
+      "031_checkout_macys.com.html",
+      "034_checkout_overstock.com.html",
+      "040_checkout_urbanoutfitters.com.html",
+      "049_register_ebay.com.html",
+      "059_register_macys.com.html",
+      "062_register_newegg.com.html",
+      "063_register_officedepot.com.html",
+      "066_register_rediff.com.html",
+      "079_crbug_52198.html",
+      "086_crbug_98269.html",
+      "098_register_epson.com.mx.html",
+      "102_checkout_m_macys.com.html",
+      "103_checkout_peapod.com.html",
+      "110_checkout_harryanddavid.com.html",
+      "113_guest_checkout_peapod.com.html",
       "115_checkout_walgreens.com.html",
       "116_cc_checkout_walgreens.com.html",
+      "130_bug_465576.html",
+      "131_bug_465587.html",
       "137_bug_555010.html",
+      "144_cc_checkout_m_jcp.com.html",
+      "146_checkout_store.scholastic.com.html",
   };
   return failing_tests;
 }
@@ -146,18 +170,12 @@ void FormStructureBrowserTest::SetUp() {
 void FormStructureBrowserTest::TearDown() {
   [autofillController_ detachFromWebState];
 
-  // TODO(crbug.com/776330): remove this manual sync.
-  // This is a workaround to manually sync the tasks posted by
-  // |CRWCertVerificationController verifyTrust:completionHandler:|.
-  // |WaitForBackgroundTasks| currently fails to wait for completion of them.
-  base::test::ios::SpinRunLoopWithMinDelay(base::TimeDelta::FromSecondsD(0.1));
   ChromeWebTest::TearDown();
 }
 
 void FormStructureBrowserTest::GenerateResults(const std::string& input,
                                                std::string* output) {
   LoadHtml(input);
-  base::TaskScheduler::GetInstance()->FlushForTesting();
   AutofillManager* autofill_manager =
       AutofillDriverIOS::FromWebState(web_state())->autofill_manager();
   ASSERT_NE(nullptr, autofill_manager);

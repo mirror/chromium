@@ -75,7 +75,7 @@ bool CanvasFontCache::GetFontUsingDefaultStyle(const String& font_string,
   if (!parsed_style)
     return false;
 
-  scoped_refptr<ComputedStyle> font_style =
+  RefPtr<ComputedStyle> font_style =
       ComputedStyle::Clone(*default_font_style_.get());
   document_->EnsureStyleResolver().ComputeFont(font_style.get(), *parsed_style);
   fonts_resolved_using_default_style_.insert(font_string,
@@ -153,7 +153,7 @@ void CanvasFontCache::PruneAll() {
   fonts_resolved_using_default_style_.clear();
 }
 
-void CanvasFontCache::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CanvasFontCache) {
   visitor->Trace(fetched_fonts_);
   visitor->Trace(document_);
 }

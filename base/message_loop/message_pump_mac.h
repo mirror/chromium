@@ -322,8 +322,6 @@ class BASE_EXPORT ScopedPumpMessagesInPrivateModes {
   ScopedPumpMessagesInPrivateModes();
   ~ScopedPumpMessagesInPrivateModes();
 
-  int GetModeMaskForTest();
-
  private:
   DISALLOW_COPY_AND_ASSIGN(ScopedPumpMessagesInPrivateModes);
 };

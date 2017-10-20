@@ -120,7 +120,7 @@ bool ContentDecryptionModuleResultPromise::IsValidToFulfillPromise() {
   return GetExecutionContext() && !GetExecutionContext()->IsContextDestroyed();
 }
 
-void ContentDecryptionModuleResultPromise::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ContentDecryptionModuleResultPromise) {
   visitor->Trace(resolver_);
   ContentDecryptionModuleResult::Trace(visitor);
 }

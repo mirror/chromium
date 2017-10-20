@@ -47,7 +47,7 @@ class CORE_EXPORT CSSIdentifierValue : public CSSValue {
     return CssValueIDToPlatformEnum<T>(value_id_);
   }
 
-  void TraceAfterDispatch(blink::Visitor*);
+  DECLARE_TRACE_AFTER_DISPATCH();
 
  private:
   explicit CSSIdentifierValue(CSSValueID);

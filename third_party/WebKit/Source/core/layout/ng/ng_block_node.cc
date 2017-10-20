@@ -139,26 +139,14 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
 
   layout_result =
       LayoutWithAlgorithm(Style(), *this, box_, constraint_space, break_token);
-  LayoutNGBlockFlow* block_flow =
-      box_->IsLayoutNGBlockFlow() ? ToLayoutNGBlockFlow(box_) : nullptr;
-  if (block_flow) {
-    block_flow->SetCachedLayoutResult(constraint_space, break_token,
-                                      layout_result);
+  if (box_->IsLayoutNGBlockFlow()) {
+    ToLayoutNGBlockFlow(box_)->SetCachedLayoutResult(
+        constraint_space, break_token, layout_result);
   }
 
   if (layout_result->Status() == NGLayoutResult::kSuccess &&
-      layout_result->UnpositionedFloats().IsEmpty()) {
-    DCHECK(layout_result->PhysicalFragment());
-
-    // If this node has inline children, enable LayoutNGPaintFragmets.
-    if (block_flow && FirstChild().IsInline()) {
-      block_flow->SetPaintFragment(layout_result->PhysicalFragment());
-    }
-
-    // TODO(kojii): Even when we paint fragments, there seem to be some data we
-    // need to copy to LayoutBox. Review if we can minimize the copy.
+      layout_result->UnpositionedFloats().IsEmpty())
     CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
-  }
 
   return layout_result;
 }
@@ -250,13 +238,8 @@ NGLayoutInputNode NGBlockNode::FirstChild() {
   auto* child = GetLayoutObjectForFirstChildNode(block);
   if (!child)
     return nullptr;
-  if (AreNGBlockFlowChildrenInline(block)) {
-    // TODO(kojii): Invalidate PrepareLayout() more efficiently.
-    NGInlineNode node(block);
-    node.InvalidatePrepareLayout();
-    node.PrepareLayout();
-    return node;
-  }
+  if (AreNGBlockFlowChildrenInline(block))
+    return NGInlineNode(block);
   return NGBlockNode(ToLayoutBox(child));
 }
 
@@ -345,7 +328,7 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
       intrinsic_block_size +=
           PreviouslyUsedBlockSpace(constraint_space, physical_fragment);
     }
-    block->LayoutPositionedObjects(/* relayout_children */ false);
+    block->LayoutPositionedObjects(true);
 
     if (flow_thread) {
       UpdateLegacyMultiColumnFlowThread(*this, flow_thread, constraint_space,
@@ -543,7 +526,6 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
   // TODO(kojii): Implement use_first_line_style.
   NGFragmentBuilder builder(*this, box_->Style(), writing_mode,
                             box_->StyleRef().Direction());
-  builder.SetBoxType(NGPhysicalFragment::NGBoxType::kOldLayoutRoot);
   builder.SetInlineSize(box_size.inline_size);
   builder.SetBlockSize(box_size.block_size);
 

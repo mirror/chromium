@@ -111,6 +111,9 @@ void NetworkStateInformer::Init() {
   network_portal_detector::GetInstance()->AddAndFireObserver(this);
 
   registrar_.Add(this,
+                 chrome::NOTIFICATION_LOGIN_PROXY_CHANGED,
+                 content::NotificationService::AllSources());
+  registrar_.Add(this,
                  chrome::NOTIFICATION_SESSION_STARTED,
                  content::NotificationService::AllSources());
 }
@@ -141,6 +144,8 @@ void NetworkStateInformer::Observe(
     const content::NotificationDetails& details) {
   if (type == chrome::NOTIFICATION_SESSION_STARTED)
     registrar_.RemoveAll();
+  else if (type == chrome::NOTIFICATION_LOGIN_PROXY_CHANGED)
+    SendStateToObservers(NetworkError::ERROR_REASON_PROXY_CONFIG_CHANGED);
   else
     NOTREACHED() << "Unknown notification: " << type;
 }
@@ -173,44 +178,30 @@ bool NetworkStateInformer::UpdateState() {
       NetworkHandler::Get()->network_state_handler()->DefaultNetwork();
   State new_state = GetStateForDefaultNetwork();
   std::string new_network_path;
-  if (default_network)
+  std::string new_network_type;
+  if (default_network) {
     new_network_path = default_network->path();
+    new_network_type = default_network->type();
+  }
 
-  if (new_state == state_ && new_network_path == network_path_)
-    return false;
-
+  bool updated = (new_state != state_) ||
+      (new_network_path != network_path_) ||
+      (new_network_type != network_type_);
   state_ = new_state;
   network_path_ = new_network_path;
-  proxy_config_.reset();
+  network_type_ = new_network_type;
 
-  if (state_ == ONLINE) {
+  if (updated && state_ == ONLINE) {
     for (NetworkStateInformerObserver& observer : observers_)
       observer.OnNetworkReady();
   }
 
-  return true;
-}
-
-bool NetworkStateInformer::UpdateProxyConfig() {
-  const NetworkState* default_network =
-      NetworkHandler::Get()->network_state_handler()->DefaultNetwork();
-  if (!default_network)
-    return false;
-
-  if (proxy_config_ && *proxy_config_ == default_network->proxy_config())
-    return false;
-  proxy_config_ =
-      std::make_unique<base::Value>(default_network->proxy_config().Clone());
-  return true;
+  return updated;
 }
 
 void NetworkStateInformer::UpdateStateAndNotify() {
-  bool state_changed = UpdateState();
-  bool proxy_config_changed = UpdateProxyConfig();
-  if (state_changed)
+  if (UpdateState())
     SendStateToObservers(NetworkError::ERROR_REASON_NETWORK_STATE_CHANGED);
-  else if (proxy_config_changed)
-    SendStateToObservers(NetworkError::ERROR_REASON_PROXY_CONFIG_CHANGED);
   else
     SendStateToObservers(NetworkError::ERROR_REASON_UPDATE);
 }

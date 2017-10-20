@@ -31,7 +31,12 @@ class FakeWebFrameScheduler : public WebFrameScheduler {
   WebFrameScheduler::FrameType GetFrameType() const override {
     return WebFrameScheduler::FrameType::kSubframe;
   }
-  RefPtr<WebTaskRunner> GetTaskRunner(TaskType) override { return nullptr; }
+  RefPtr<WebTaskRunner> ThrottleableTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> DeferrableTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> PausableTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> UnpausableTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> LoadingTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> LoadingControlTaskRunner() override { return nullptr; }
   WebViewScheduler* GetWebViewScheduler() override { return nullptr; }
   void DidStartLoading(unsigned long identifier) override {}
   void DidStopLoading(unsigned long identifier) override {}

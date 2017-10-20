@@ -169,7 +169,7 @@ EventHandler::EventHandler(LocalFrame& frame)
           this,
           &EventHandler::ActiveIntervalTimerFired) {}
 
-void EventHandler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EventHandler) {
   visitor->Trace(frame_);
   visitor->Trace(selection_controller_);
   visitor->Trace(capturing_mouse_events_node_);
@@ -757,8 +757,7 @@ void EventHandler::HandleMouseLeaveEvent(const WebMouseEvent& event) {
   Page* page = frame_->GetPage();
   if (page)
     page->GetChromeClient().ClearToolTip(*frame_);
-  HandleMouseMoveOrLeaveEvent(event, Vector<WebMouseEvent>(), nullptr, false,
-                              true);
+  HandleMouseMoveOrLeaveEvent(event, Vector<WebMouseEvent>(), 0, false, true);
 }
 
 WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
@@ -781,11 +780,11 @@ WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
   // Mouse states need to be reset when mouse move with no button down.
   // This is for popup/context_menu opened at mouse_down event and
   // mouse_release is not handled in page.
-  // crbug.com/527582
+  // crbug/527582
   if (mouse_event.button == WebPointerProperties::Button::kNoButton &&
       !(mouse_event.GetModifiers() &
         WebInputEvent::Modifiers::kRelativeMotionEvent)) {
-    mouse_event_manager_->ClearDragHeuristicState();
+    mouse_event_manager_->HandleMouseReleaseEventUpdateStates();
     if (event_handler_will_reset_capturing_mouse_events_node_)
       capturing_mouse_events_node_ = nullptr;
   }
@@ -1377,7 +1376,7 @@ bool EventHandler::BestClickableNodeForHitTestResult(
   // will be adjusted towards nearby nodes. This leads to things like textarea
   // scrollbars being untouchable.
   if (result.GetScrollbar()) {
-    target_node = nullptr;
+    target_node = 0;
     return false;
   }
 
@@ -1764,7 +1763,7 @@ WebInputEventResult EventHandler::SendContextMenuEvent(
       override_target_node ? override_target_node : mev.InnerNode();
   return mouse_event_manager_->DispatchMouseEvent(
       UpdateMouseEventTargetNode(target_node), EventTypeNames::contextmenu,
-      event, mev.GetHitTestResult().CanvasRegionId(), nullptr);
+      event, mev.GetHitTestResult().CanvasRegionId(), 0);
 }
 
 static bool ShouldShowContextMenuAtSelection(const FrameSelection& selection) {

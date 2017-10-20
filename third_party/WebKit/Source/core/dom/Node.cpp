@@ -2667,7 +2667,7 @@ bool Node::HasMediaControlAncestor() const {
   return false;
 }
 
-void Node::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(Node) {
   visitor->Trace(parent_or_shadow_host_node_);
   visitor->Trace(previous_);
   visitor->Trace(next_);
@@ -2681,7 +2681,7 @@ void Node::Trace(blink::Visitor* visitor) {
   EventTarget::Trace(visitor);
 }
 
-void Node::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(Node) {
   visitor->TraceWrappers(parent_or_shadow_host_node_);
   visitor->TraceWrappers(previous_);
   visitor->TraceWrappers(next_);

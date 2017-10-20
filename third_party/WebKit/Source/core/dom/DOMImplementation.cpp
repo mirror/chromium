@@ -285,7 +285,7 @@ Document* DOMImplementation::createDocument(const String& type,
   return HTMLDocument::Create(init);
 }
 
-void DOMImplementation::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DOMImplementation) {
   visitor->Trace(document_);
 }
 

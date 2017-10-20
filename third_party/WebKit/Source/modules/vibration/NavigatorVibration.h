@@ -64,7 +64,7 @@ class MODULES_EXPORT NavigatorVibration final
 
   VibrationController* Controller(LocalFrame&);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   static const char* SupplementName();

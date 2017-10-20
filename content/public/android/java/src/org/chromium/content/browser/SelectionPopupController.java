@@ -48,7 +48,6 @@ import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.DeviceFormFactor;
-import org.chromium.ui.base.MenuSourceType;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
@@ -261,7 +260,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @CalledByNative
     public void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
             boolean isPasswordType, String selectionText, boolean canSelectAll,
-            boolean canRichlyEdit, boolean shouldSuggest, @MenuSourceType int sourceType) {
+            boolean canRichlyEdit, boolean shouldSuggest, boolean fromSelectionAdjustment) {
         mSelectionRect.set(left, top, right, bottom);
         mEditable = isEditable;
         mLastSelectedText = selectionText;
@@ -272,7 +271,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mUnselectAllOnDismiss = true;
         if (hasSelection()) {
             // From selection adjustment, show menu directly.
-            if (sourceType == MenuSourceType.MENU_SOURCE_ADJUST_SELECTION) {
+            if (fromSelectionAdjustment) {
                 showActionModeOrClearOnFailure();
                 return;
             }

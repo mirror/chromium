@@ -85,8 +85,8 @@ class CORE_EXPORT IntersectionObserver final
     return observations_;
   }
 
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   explicit IntersectionObserver(IntersectionObserverDelegate&,

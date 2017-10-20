@@ -17,10 +17,6 @@ namespace language {
 class UrlLanguageHistogram;
 }
 
-namespace user_prefs {
-class PrefRegistrySyncable;
-}
-
 class UrlLanguageHistogramFactory : public BrowserContextKeyedServiceFactory {
  public:
   static UrlLanguageHistogramFactory* GetInstance();
@@ -36,8 +32,6 @@ class UrlLanguageHistogramFactory : public BrowserContextKeyedServiceFactory {
   // BrowserContextKeyedServiceFactory overrides.
   KeyedService* BuildServiceInstanceFor(
       content::BrowserContext* context) const override;
-  void RegisterProfilePrefs(
-      user_prefs::PrefRegistrySyncable* registry) override;
 
   DISALLOW_COPY_AND_ASSIGN(UrlLanguageHistogramFactory);
 };

@@ -72,7 +72,7 @@ class SMILTimeContainer : public GarbageCollectedFinalized<SMILTimeContainer> {
   // Advance the animation timeline a single frame.
   void AdvanceFrameForTesting();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   explicit SMILTimeContainer(SVGSVGElement& owner);

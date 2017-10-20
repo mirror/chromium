@@ -530,10 +530,6 @@ UI.ToolbarButton = class extends UI.ToolbarItem {
     this.element.style.backgroundImage = 'url(' + iconURL + ')';
   }
 
-  setDarkText() {
-    this.element.classList.add('dark-text');
-  }
-
   /**
    * @param {number=} width
    */
@@ -549,8 +545,6 @@ UI.ToolbarButton = class extends UI.ToolbarItem {
    * @param {!Event} event
    */
   _clicked(event) {
-    if (!this._enabled)
-      return;
     this.dispatchEventToListeners(UI.ToolbarButton.Events.Click, event);
     event.consume();
   }
@@ -559,8 +553,6 @@ UI.ToolbarButton = class extends UI.ToolbarItem {
    * @param {!Event} event
    */
   _mouseDown(event) {
-    if (!this._enabled)
-      return;
     this.dispatchEventToListeners(UI.ToolbarButton.Events.MouseDown, event);
   }
 
@@ -568,8 +560,6 @@ UI.ToolbarButton = class extends UI.ToolbarItem {
    * @param {!Event} event
    */
   _mouseUp(event) {
-    if (!this._enabled)
-      return;
     this.dispatchEventToListeners(UI.ToolbarButton.Events.MouseUp, event);
   }
 };

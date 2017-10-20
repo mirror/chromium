@@ -47,7 +47,7 @@ class CORE_EXPORT InspectorAgent
  public:
   InspectorAgent() {}
   virtual ~InspectorAgent() {}
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   virtual void Restore() {}
   virtual void DidCommitLoadForLocalFrame(LocalFrame*) {}
@@ -91,7 +91,7 @@ class InspectorBaseAgent : public InspectorAgent,
     instrumenting_agents_ = nullptr;
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(instrumenting_agents_);
     InspectorAgent::Trace(visitor);
   }

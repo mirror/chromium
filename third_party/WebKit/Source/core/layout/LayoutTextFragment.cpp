@@ -182,14 +182,13 @@ int LayoutTextFragment::CaretMinOffset() const {
   if (!node)
     return 0;
 
-  Optional<unsigned> candidate =
+  const unsigned candidate =
       GetNGOffsetMapping().StartOfNextNonCollapsedCharacter(*node, Start());
-  DCHECK(!candidate || *candidate >= Start());
+  DCHECK_GE(candidate, Start());
   // Align with the legacy behavior that 0 is returned if the entire layout
   // object contains only collapsed whitespaces.
-  const bool fully_collapsed =
-      !candidate || *candidate >= Start() + FragmentLength();
-  return fully_collapsed ? 0 : *candidate - Start();
+  const unsigned adjusted = candidate - Start();
+  return adjusted == FragmentLength() ? 0 : adjusted;
 }
 
 int LayoutTextFragment::CaretMaxOffset() const {
@@ -200,13 +199,12 @@ int LayoutTextFragment::CaretMaxOffset() const {
   if (!node)
     return 0;
 
-  Optional<unsigned> candidate =
+  const unsigned candidate =
       GetNGOffsetMapping().EndOfLastNonCollapsedCharacter(
           *node, Start() + FragmentLength());
   // Align with the legacy behavior that FragmentLength() is returned if the
   // entire layout object contains only collapsed whitespaces.
-  const bool fully_collapsed = !candidate || *candidate <= Start();
-  return fully_collapsed ? FragmentLength() : *candidate - Start();
+  return candidate <= Start() ? FragmentLength() : candidate - Start();
 }
 
 unsigned LayoutTextFragment::ResolvedTextLength() const {
@@ -222,27 +220,6 @@ unsigned LayoutTextFragment::ResolvedTextLength() const {
       mapping.GetTextContentOffset(*node, Start() + FragmentLength());
   DCHECK_LE(start, end);
   return end - start;
-}
-
-bool LayoutTextFragment::ContainsCaretOffset(int text_offset) const {
-  if (!ShouldUseNGAlternatives())
-    return LayoutText::ContainsCaretOffset(text_offset);
-
-  DCHECK_GE(text_offset, 0);
-  if (text_offset > static_cast<int>(FragmentLength()))
-    return false;
-  const Node* node = AssociatedTextNode();
-  if (!node)
-    return false;
-  const unsigned dom_offset = text_offset + Start();
-  const NGOffsetMappingResult& mapping = GetNGOffsetMapping();
-  if (mapping.IsBeforeNonCollapsedCharacter(*node, dom_offset))
-    return true;
-  if (text_offset == 0)
-    return false;
-  if (!mapping.IsAfterNonCollapsedCharacter(*node, dom_offset))
-    return false;
-  return *mapping.GetCharacterBefore(*node, dom_offset) != kNewlineCharacter;
 }
 
 }  // namespace blink

@@ -142,7 +142,7 @@ class CanvasRenderingContext2DTest : public ::testing::Test {
    public:
     static WrapGradients* Create() { return new WrapGradients; }
 
-    void Trace(blink::Visitor* visitor) {
+    DEFINE_INLINE_TRACE() {
       visitor->Trace(opaque_gradient_);
       visitor->Trace(alpha_gradient_);
     }

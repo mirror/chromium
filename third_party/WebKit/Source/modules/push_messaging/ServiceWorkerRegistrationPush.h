@@ -27,7 +27,7 @@ class ServiceWorkerRegistrationPush final
   static PushManager* pushManager(ServiceWorkerRegistration&);
   PushManager* pushManager();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit ServiceWorkerRegistrationPush(ServiceWorkerRegistration*);

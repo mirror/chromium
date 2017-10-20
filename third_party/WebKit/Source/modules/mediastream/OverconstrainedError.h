@@ -23,7 +23,7 @@ class OverconstrainedError final
   const String& constraint() const { return constraint_; }
   const String& message() const { return message_; }
 
-  void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_TRACE() {}
 
  private:
   OverconstrainedError(const String& constraint, const String& message);

@@ -83,7 +83,7 @@ void PaintLayerResourceInfo::InvalidateFilterChain() {
   last_effect_ = nullptr;
 }
 
-void PaintLayerResourceInfo::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PaintLayerResourceInfo) {
   visitor->Trace(last_effect_);
   SVGResourceClient::Trace(visitor);
 }

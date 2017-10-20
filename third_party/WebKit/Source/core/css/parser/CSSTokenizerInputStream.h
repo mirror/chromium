@@ -74,7 +74,7 @@ class CSSTokenizerInputStream {
  private:
   size_t offset_;
   const size_t string_length_;
-  const scoped_refptr<StringImpl> string_;
+  const RefPtr<StringImpl> string_;
 };
 
 }  // namespace blink

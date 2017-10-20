@@ -88,7 +88,7 @@ void ElementAnimations::RestartAnimationOnCompositor() {
     entry.key->RestartAnimationOnCompositor();
 }
 
-void ElementAnimations::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ElementAnimations) {
   visitor->Trace(css_animations_);
   visitor->Trace(effect_stack_);
   visitor->Trace(animations_);

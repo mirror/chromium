@@ -53,7 +53,7 @@ class SVGAnimatedTransformList final
                                         css_property_id);
   }
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
     SVGAnimatedProperty<SVGTransformList>::TraceWrappers(visitor);
     ScriptWrappable::TraceWrappers(visitor);
   }

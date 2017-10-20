@@ -357,7 +357,6 @@ void V4GetHashProtocolManager::GetFullHashes(
 
 void V4GetHashProtocolManager::GetFullHashesWithApis(
     const GURL& url,
-    const std::vector<std::string>& list_client_states,
     ThreatMetadataForApiCallback api_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(url.SchemeIs(url::kHttpScheme) || url.SchemeIs(url::kHttpsScheme));
@@ -375,7 +374,11 @@ void V4GetHashProtocolManager::GetFullHashesWithApis(
         GetChromeUrlApiId(), prefix);
   }
 
-  GetFullHashes(full_hash_to_store_and_hash_prefixes, list_client_states,
+  // This is a special method that is called from SafeBrowsingDatabaseManager
+  // that may not be PVer4 so it does not have any notion of lists being synced,
+  // therefore |list_client_states| is empty.
+  GetFullHashes(full_hash_to_store_and_hash_prefixes,
+                {} /* list_client_states */,
                 base::Bind(&V4GetHashProtocolManager::OnFullHashForApi,
                            base::Unretained(this), api_callback, full_hashes));
 }

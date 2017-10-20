@@ -247,7 +247,7 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
     cloned_ancestor = cloned_child;
   }
 
-  MoveRemainingSiblingsToNewParent(start_node, nullptr, cloned_ancestor,
+  MoveRemainingSiblingsToNewParent(start_node, 0, cloned_ancestor,
                                    editing_state);
   if (editing_state->IsAborted())
     return;
@@ -264,7 +264,7 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
          ancestor && ancestor != top_blockquote;
          ancestor = ancestor->parentElement(),
         cloned_parent = cloned_parent->parentElement()) {
-      MoveRemainingSiblingsToNewParent(ancestor->nextSibling(), nullptr,
+      MoveRemainingSiblingsToNewParent(ancestor->nextSibling(), 0,
                                        cloned_parent, editing_state);
       if (editing_state->IsAborted())
         return;

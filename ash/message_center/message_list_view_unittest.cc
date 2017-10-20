@@ -185,6 +185,9 @@ class MessageListViewTest : public AshTestBase,
     NOTREACHED();
     return nullptr;
   }
+  bool HasClickedListener(const std::string& notification_id) override {
+    return false;
+  }
   void ClickOnNotificationButton(const std::string& notification_id,
                                  int button_index) override {}
   void ClickOnSettingsButton(const std::string& notification_id) override {}

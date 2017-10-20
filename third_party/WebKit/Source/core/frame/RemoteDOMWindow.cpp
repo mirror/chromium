@@ -14,7 +14,7 @@ ExecutionContext* RemoteDOMWindow::GetExecutionContext() const {
   return nullptr;
 }
 
-void RemoteDOMWindow::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(RemoteDOMWindow) {
   DOMWindow::Trace(visitor);
 }
 
@@ -29,7 +29,7 @@ void RemoteDOMWindow::FrameDetached() {
 }
 
 void RemoteDOMWindow::SchedulePostMessage(MessageEvent* event,
-                                          scoped_refptr<SecurityOrigin> target,
+                                          RefPtr<SecurityOrigin> target,
                                           Document* source) {
   GetFrame()->Client()->ForwardPostMessage(event, std::move(target),
                                            source->GetFrame());

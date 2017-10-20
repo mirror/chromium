@@ -172,9 +172,7 @@ class HTMLElementEquivalent : public GarbageCollected<HTMLElementEquivalent> {
   virtual bool ValueIsPresentInStyle(HTMLElement*, StylePropertySet*) const;
   virtual void AddToStyle(Element*, EditingStyle*) const;
 
-  virtual void Trace(blink::Visitor* visitor) {
-    visitor->Trace(identifier_value_);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(identifier_value_); }
 
  protected:
   HTMLElementEquivalent(CSSPropertyID);
@@ -189,7 +187,7 @@ class HTMLElementEquivalent : public GarbageCollected<HTMLElementEquivalent> {
 };
 
 HTMLElementEquivalent::HTMLElementEquivalent(CSSPropertyID id)
-    : property_id_(id), tag_name_(nullptr) {}
+    : property_id_(id), tag_name_(0) {}
 
 HTMLElementEquivalent::HTMLElementEquivalent(CSSPropertyID id,
                                              const HTMLQualifiedName& tag_name)
@@ -241,9 +239,7 @@ class HTMLTextDecorationEquivalent final : public HTMLElementEquivalent {
   bool PropertyExistsInStyle(const StylePropertySet*) const override;
   bool ValueIsPresentInStyle(HTMLElement*, StylePropertySet*) const override;
 
-  virtual void Trace(blink::Visitor* visitor) {
-    HTMLElementEquivalent::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { HTMLElementEquivalent::Trace(visitor); }
 
  private:
   HTMLTextDecorationEquivalent(CSSValueID primitive_value,
@@ -298,9 +294,7 @@ class HTMLAttributeEquivalent : public HTMLElementEquivalent {
   virtual const CSSValue* AttributeValueAsCSSValue(Element*) const;
   inline const QualifiedName& AttributeName() const { return attr_name_; }
 
-  virtual void Trace(blink::Visitor* visitor) {
-    HTMLElementEquivalent::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { HTMLElementEquivalent::Trace(visitor); }
 
  protected:
   HTMLAttributeEquivalent(CSSPropertyID,
@@ -356,9 +350,7 @@ class HTMLFontSizeEquivalent final : public HTMLAttributeEquivalent {
   }
   const CSSValue* AttributeValueAsCSSValue(Element*) const override;
 
-  virtual void Trace(blink::Visitor* visitor) {
-    HTMLAttributeEquivalent::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { HTMLAttributeEquivalent::Trace(visitor); }
 
  private:
   HTMLFontSizeEquivalent();
@@ -489,7 +481,7 @@ void EditingStyle::Init(Node* node, PropertiesToInclude properties_to_include) {
             EditingStyleUtilities::BackgroundColorValueInEffect(node))
       mutable_style_->SetProperty(CSSPropertyBackgroundColor, value->CssText());
     if (const CSSValue* value = computed_style_at_position->GetPropertyCSSValue(
-            GetCSSPropertyWebkitTextDecorationsInEffectAPI()))
+            CSSPropertyWebkitTextDecorationsInEffect))
       mutable_style_->SetProperty(CSSPropertyTextDecoration, value->CssText());
   }
 
@@ -1368,8 +1360,7 @@ void EditingStyle::MergeStyleFromRulesForSerialization(Element* element) {
         continue;
       if (ToCSSPrimitiveValue(value).IsPercentage()) {
         if (const CSSValue* computed_property_value =
-                computed_style_for_element->GetPropertyCSSValue(
-                    CSSPropertyAPI::Get(property.Id())))
+                computed_style_for_element->GetPropertyCSSValue(property.Id()))
           from_computed_style->AddRespectingCascade(
               CSSProperty(property.Id(), *computed_property_value));
       }
@@ -1502,7 +1493,7 @@ int EditingStyle::LegacyFontSize(Document* document) const {
                                     kAlwaysUseLegacyFontSize);
 }
 
-void EditingStyle::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(EditingStyle) {
   visitor->Trace(mutable_style_);
 }
 

@@ -40,7 +40,7 @@ bool ImageElementBase::IsSVGSource() const {
   return CachedImage() && CachedImage()->GetImage()->IsSVGImage();
 }
 
-scoped_refptr<Image> ImageElementBase::GetSourceImageForCanvas(
+RefPtr<Image> ImageElementBase::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint,
     SnapshotReason,
@@ -55,7 +55,7 @@ scoped_refptr<Image> ImageElementBase::GetSourceImageForCanvas(
     return nullptr;
   }
 
-  scoped_refptr<Image> source_image;
+  RefPtr<Image> source_image;
   if (CachedImage()->GetImage()->IsSVGImage()) {
     UseCounter::Count(GetElement().GetDocument(), WebFeature::kSVGInCanvas2D);
     SVGImage* svg_image = ToSVGImage(CachedImage()->GetImage());

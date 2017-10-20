@@ -64,7 +64,7 @@ class DOMStringMap : public GarbageCollected<DOMStringMap>,
   }
   bool NamedPropertyQuery(const AtomicString&, ExceptionState&);
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   DOMStringMap() {}

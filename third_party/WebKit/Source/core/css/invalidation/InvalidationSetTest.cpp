@@ -10,7 +10,7 @@ namespace blink {
 
 // Once we setWholeSubtreeInvalid, we should not keep the HashSets.
 TEST(InvalidationSetTest, SubtreeInvalid_AddBefore) {
-  scoped_refptr<InvalidationSet> set = DescendantInvalidationSet::Create();
+  RefPtr<InvalidationSet> set = DescendantInvalidationSet::Create();
   set->AddClass("a");
   set->SetWholeSubtreeInvalid();
 
@@ -19,7 +19,7 @@ TEST(InvalidationSetTest, SubtreeInvalid_AddBefore) {
 
 // Don't (re)create HashSets if we've already setWholeSubtreeInvalid.
 TEST(InvalidationSetTest, SubtreeInvalid_AddAfter) {
-  scoped_refptr<InvalidationSet> set = DescendantInvalidationSet::Create();
+  RefPtr<InvalidationSet> set = DescendantInvalidationSet::Create();
   set->SetWholeSubtreeInvalid();
   set->AddTagName("a");
 
@@ -28,10 +28,8 @@ TEST(InvalidationSetTest, SubtreeInvalid_AddAfter) {
 
 // No need to keep the HashSets when combining with a wholeSubtreeInvalid set.
 TEST(InvalidationSetTest, SubtreeInvalid_Combine_1) {
-  scoped_refptr<DescendantInvalidationSet> set1 =
-      DescendantInvalidationSet::Create();
-  scoped_refptr<DescendantInvalidationSet> set2 =
-      DescendantInvalidationSet::Create();
+  RefPtr<DescendantInvalidationSet> set1 = DescendantInvalidationSet::Create();
+  RefPtr<DescendantInvalidationSet> set2 = DescendantInvalidationSet::Create();
 
   set1->AddId("a");
   set2->SetWholeSubtreeInvalid();
@@ -45,10 +43,8 @@ TEST(InvalidationSetTest, SubtreeInvalid_Combine_1) {
 // No need to add HashSets from combining set when we already have
 // wholeSubtreeInvalid.
 TEST(InvalidationSetTest, SubtreeInvalid_Combine_2) {
-  scoped_refptr<DescendantInvalidationSet> set1 =
-      DescendantInvalidationSet::Create();
-  scoped_refptr<DescendantInvalidationSet> set2 =
-      DescendantInvalidationSet::Create();
+  RefPtr<DescendantInvalidationSet> set1 = DescendantInvalidationSet::Create();
+  RefPtr<DescendantInvalidationSet> set2 = DescendantInvalidationSet::Create();
 
   set1->SetWholeSubtreeInvalid();
   set2->AddAttribute("a");
@@ -60,7 +56,7 @@ TEST(InvalidationSetTest, SubtreeInvalid_Combine_2) {
 }
 
 TEST(InvalidationSetTest, SubtreeInvalid_AddCustomPseudoBefore) {
-  scoped_refptr<InvalidationSet> set = DescendantInvalidationSet::Create();
+  RefPtr<InvalidationSet> set = DescendantInvalidationSet::Create();
   set->SetCustomPseudoInvalid();
   ASSERT_FALSE(set->IsEmpty());
 
@@ -75,7 +71,7 @@ TEST(InvalidationSetTest, SelfInvalidationSet_Combine) {
   self_set->Combine(*self_set);
   EXPECT_TRUE(self_set->IsSelfInvalidationSet());
 
-  scoped_refptr<InvalidationSet> set = DescendantInvalidationSet::Create();
+  RefPtr<InvalidationSet> set = DescendantInvalidationSet::Create();
   EXPECT_FALSE(set->InvalidatesSelf());
   set->Combine(*self_set);
   EXPECT_TRUE(set->InvalidatesSelf());
@@ -83,7 +79,7 @@ TEST(InvalidationSetTest, SelfInvalidationSet_Combine) {
 
 #ifndef NDEBUG
 TEST(InvalidationSetTest, ShowDebug) {
-  scoped_refptr<InvalidationSet> set = DescendantInvalidationSet::Create();
+  RefPtr<InvalidationSet> set = DescendantInvalidationSet::Create();
   set->Show();
 }
 #endif  // NDEBUG

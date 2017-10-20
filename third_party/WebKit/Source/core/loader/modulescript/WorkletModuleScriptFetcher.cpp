@@ -14,7 +14,7 @@ WorkletModuleScriptFetcher::WorkletModuleScriptFetcher(
   DCHECK(module_responses_map_proxy_);
 }
 
-void WorkletModuleScriptFetcher::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WorkletModuleScriptFetcher) {
   visitor->Trace(module_responses_map_proxy_);
   ModuleScriptFetcher::Trace(visitor);
 }

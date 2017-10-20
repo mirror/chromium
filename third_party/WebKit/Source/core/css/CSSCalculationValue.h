@@ -90,7 +90,7 @@ class CSSCalcExpressionNode : public GarbageCollected<CSSCalcExpressionNode> {
   virtual CSSPrimitiveValue::UnitType TypeWithCalcResolved() const = 0;
   bool IsInteger() const { return is_integer_; }
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
  protected:
   CSSCalcExpressionNode(CalculationCategory category, bool is_integer)
@@ -116,7 +116,7 @@ class CORE_EXPORT CSSCalcValue : public GarbageCollected<CSSCalcValue> {
   static CSSCalcExpressionNode* CreateExpressionNode(double pixels,
                                                      double percent);
 
-  scoped_refptr<CalculationValue> ToCalcValue(
+  RefPtr<CalculationValue> ToCalcValue(
       const CSSToLengthConversionData& conversion_data) const {
     PixelsAndPercent value(0, 0);
     expression_->AccumulatePixelsAndPercent(conversion_data, value);
@@ -140,7 +140,7 @@ class CORE_EXPORT CSSCalcValue : public GarbageCollected<CSSCalcValue> {
   String CustomCSSText() const;
   bool Equals(const CSSCalcValue&) const;
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(expression_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(expression_); }
 
  private:
   CSSCalcValue(CSSCalcExpressionNode* expression, ValueRange range)

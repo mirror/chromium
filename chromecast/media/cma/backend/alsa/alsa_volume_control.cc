@@ -218,7 +218,7 @@ AlsaVolumeControl::AlsaVolumeControl(Delegate* delegate)
 
 AlsaVolumeControl::~AlsaVolumeControl() = default;
 
-float AlsaVolumeControl::GetRoundtripVolume(float volume) {
+float AlsaVolumeControl::VolumeThroughAlsa(float volume) {
   if (volume_range_max_ == volume_range_min_) {
     return 0.0f;
   }
@@ -312,7 +312,7 @@ void AlsaVolumeControl::OnFileCanWriteWithoutBlocking(int fd) {
 }
 
 void AlsaVolumeControl::OnVolumeOrMuteChanged() {
-  delegate_->OnSystemVolumeOrMuteChange(GetVolume(), IsMuted());
+  delegate_->OnAlsaVolumeOrMuteChange(GetVolume(), IsMuted());
 }
 
 // static
@@ -325,12 +325,6 @@ int AlsaVolumeControl::VolumeOrMuteChangeCallback(snd_mixer_elem_t* elem,
       snd_mixer_elem_get_callback_private(elem));
   instance->OnVolumeOrMuteChanged();
   return 0;
-}
-
-// static
-std::unique_ptr<SystemVolumeControl> SystemVolumeControl::Create(
-    Delegate* delegate) {
-  return std::make_unique<AlsaVolumeControl>(delegate);
 }
 
 }  // namespace media

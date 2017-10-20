@@ -126,14 +126,13 @@ void WebGLVertexArrayObjectBase::UnbindBuffer(WebGLBuffer* buffer) {
   UpdateAttribBufferBoundStatus();
 }
 
-void WebGLVertexArrayObjectBase::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(WebGLVertexArrayObjectBase) {
   visitor->Trace(bound_element_array_buffer_);
   visitor->Trace(array_buffer_list_);
   WebGLContextObject::Trace(visitor);
 }
 
-void WebGLVertexArrayObjectBase::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(WebGLVertexArrayObjectBase) {
   visitor->TraceWrappers(bound_element_array_buffer_);
   for (size_t i = 0; i < array_buffer_list_.size(); ++i) {
     visitor->TraceWrappers(array_buffer_list_[i]);

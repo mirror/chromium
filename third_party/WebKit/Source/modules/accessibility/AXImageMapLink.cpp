@@ -123,7 +123,7 @@ void AXImageMapLink::GetRelativeBounds(
   *out_container = AxObjectCache().GetOrCreate(layout_object);
 }
 
-void AXImageMapLink::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AXImageMapLink) {
   AXNodeObject::Trace(visitor);
 }
 

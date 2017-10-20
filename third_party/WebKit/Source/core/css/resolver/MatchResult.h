@@ -41,7 +41,7 @@ struct CORE_EXPORT MatchedProperties {
   MatchedProperties();
   ~MatchedProperties();
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
   Member<StylePropertySet> properties;
 

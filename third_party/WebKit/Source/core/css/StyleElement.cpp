@@ -153,7 +153,7 @@ StyleElement::ProcessingResult StyleElement::CreateSheet(Element& element,
   // If type is empty or CSS, this is a CSS style sheet.
   const AtomicString& type = this->type();
   if (IsCSS(element, type) && passes_content_security_policy_checks) {
-    scoped_refptr<MediaQuerySet> media_queries = MediaQuerySet::Create(media());
+    RefPtr<MediaQuerySet> media_queries = MediaQuerySet::Create(media());
 
     loading_ = true;
     TextPosition start_position =
@@ -196,7 +196,7 @@ void StyleElement::StartLoadingDynamicSheet(Document& document) {
   document.GetStyleEngine().AddPendingSheet(style_engine_context_);
 }
 
-void StyleElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleElement) {
   visitor->Trace(sheet_);
 }
 

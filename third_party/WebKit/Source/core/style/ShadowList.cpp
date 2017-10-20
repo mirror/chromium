@@ -68,9 +68,8 @@ RefPtr<ShadowList> ShadowList::Blend(const ShadowList* from,
 
   size_t max_length = std::max(from_length, to_length);
   for (size_t i = 0; i < max_length; ++i) {
-    const ShadowData* from_shadow =
-        i < from_length ? &from->Shadows()[i] : nullptr;
-    const ShadowData* to_shadow = i < to_length ? &to->Shadows()[i] : nullptr;
+    const ShadowData* from_shadow = i < from_length ? &from->Shadows()[i] : 0;
+    const ShadowData* to_shadow = i < to_length ? &to->Shadows()[i] : 0;
     if (!from_shadow)
       from_shadow = to_shadow->Style() == kInset ? &default_inset_shadow_data
                                                  : &default_shadow_data;

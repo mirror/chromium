@@ -92,7 +92,7 @@ V8LazyEventListener* CreateAttributeEventListener(
   String source_url = frame->GetDocument()->Url().GetString();
 
   return V8LazyEventListener::Create(name.LocalName(), event_parameter_name,
-                                     value, source_url, position, nullptr,
+                                     value, source_url, position, 0,
                                      ToIsolate(frame));
 }
 

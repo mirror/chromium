@@ -91,6 +91,15 @@ void ClientProcessImpl::OnChromeMemoryDumpDone(
     callback.Run(false, dump_guid, nullptr);
     return;
   }
+  // SUMMARY_ONLY dumps should just return the summarized result in the
+  // ProcessMemoryDumpCallback. These shouldn't be added to the trace to
+  // avoid confusing trace consumers.
+  if (req_args.dump_type != base::trace_event::MemoryDumpType::SUMMARY_ONLY) {
+    bool added_to_trace = tracing_observer_->AddChromeDumpToTraceIfEnabled(
+        req_args, process_memory_dump.get());
+    success = success && added_to_trace;
+  }
+
   callback.Run(success, dump_guid, std::move(process_memory_dump));
 }
 
@@ -104,9 +113,8 @@ void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
     return;
   }
 
-  coordinator_->RequestGlobalMemoryDumpAndAppendToTrace(
-      args,
-      mojom::Coordinator::RequestGlobalMemoryDumpAndAppendToTraceCallback());
+  coordinator_->RequestGlobalMemoryDump(
+      args, mojom::Coordinator::RequestGlobalMemoryDumpCallback());
 }
 
 void ClientProcessImpl::EnableHeapProfiling(

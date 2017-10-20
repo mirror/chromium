@@ -18,7 +18,7 @@
 #include <vector>
 
 #include "base/strings/string16.h"
-#include "base/time/time.h"
+
 #include "ppapi/c/dev/pp_cursor_type_dev.h"
 #include "ppapi/c/dev/ppp_printing_dev.h"
 #include "ppapi/c/ppb_input_event.h"
@@ -67,8 +67,6 @@ class PDFEngine {
     // Whether the document is linearized (see Appendix F "Linearized PDF" of
     // PDF Reference 1.7).
     bool is_linearized = false;
-    // Whether the PDF is Tagged (see 10.7 "Tagged PDF" in PDF Reference 1.7).
-    bool is_tagged = false;
   };
 
   // The interface that's provided to the rendering engine.
@@ -155,11 +153,12 @@ class PDFEngine {
     // Creates and returns new URL loader for partial document requests.
     virtual pp::URLLoader CreateURLLoader() = 0;
 
-    // Calls the client's OnCallback() function in |delay| with the given |id|.
-    virtual void ScheduleCallback(int id, base::TimeDelta delay) = 0;
-    // Calls the client's OnTouchTimerCallback() function in |delay| with the
-    // given |id|.
-    virtual void ScheduleTouchTimerCallback(int id, base::TimeDelta delay) = 0;
+    // Calls the client's OnCallback() function in |delay_in_ms| with the given
+    // |id|.
+    virtual void ScheduleCallback(int id, int delay_in_ms) = 0;
+    // Calls the client's OnTouchTimerCallback() function in |delay_in_ms| with
+    // the given |id|.
+    virtual void ScheduleTouchTimerCallback(int id, int delay_in_ms) = 0;
 
     // Searches the given string for "term" and returns the results.  Unicode-
     // aware.

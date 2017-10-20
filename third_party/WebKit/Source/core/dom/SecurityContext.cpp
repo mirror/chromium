@@ -41,7 +41,7 @@ SecurityContext::SecurityContext()
 
 SecurityContext::~SecurityContext() {}
 
-void SecurityContext::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SecurityContext) {
   visitor->Trace(content_security_policy_);
 }
 

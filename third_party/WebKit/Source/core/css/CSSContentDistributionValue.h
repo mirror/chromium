@@ -38,7 +38,7 @@ class CSSContentDistributionValue : public CSSValue {
 
   bool Equals(const CSSContentDistributionValue&) const;
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 

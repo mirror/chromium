@@ -64,7 +64,7 @@ class CSSSegmentedFontFace final
   void RemoveFontFace(FontFace*);
   bool IsEmpty() const { return font_faces_.IsEmpty(); }
 
-  scoped_refptr<FontData> GetFontData(const FontDescription&);
+  RefPtr<FontData> GetFontData(const FontDescription&);
 
   bool CheckFont(const String&) const;
   void Match(const String&, HeapVector<Member<FontFace>>&) const;
@@ -74,7 +74,7 @@ class CSSSegmentedFontFace final
     return approximate_character_count_;
   }
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   CSSSegmentedFontFace(FontSelectionCapabilities);
@@ -86,7 +86,7 @@ class CSSSegmentedFontFace final
 
   FontSelectionCapabilities font_selection_capabilities_;
   HashMap<FontCacheKey,
-          scoped_refptr<SegmentedFontData>,
+          RefPtr<SegmentedFontData>,
           FontCacheKeyHash,
           FontCacheKeyTraits>
       font_data_table_;

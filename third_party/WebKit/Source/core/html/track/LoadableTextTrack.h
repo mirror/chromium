@@ -51,7 +51,7 @@ class LoadableTextTrack final : public TextTrack {
 
   bool IsDefault() const override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit LoadableTextTrack(HTMLTrackElement*);

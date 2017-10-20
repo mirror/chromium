@@ -14,7 +14,7 @@ class CORE_EXPORT CSSDefaultNonInterpolableValue : public NonInterpolableValue {
  public:
   ~CSSDefaultNonInterpolableValue() final {}
 
-  static scoped_refptr<CSSDefaultNonInterpolableValue> Create(
+  static RefPtr<CSSDefaultNonInterpolableValue> Create(
       const CSSValue* css_value) {
     return WTF::AdoptRef(new CSSDefaultNonInterpolableValue(css_value));
   }

@@ -53,7 +53,7 @@ class HTMLTrackElement final : public HTMLElement,
 
   TextTrack* track();
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit HTMLTrackElement(Document&);

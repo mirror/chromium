@@ -507,7 +507,7 @@ bool FrameSerializer::ShouldAddURL(const KURL& url) {
 void FrameSerializer::AddToResources(
     const String& mime_type,
     ResourceHasCacheControlNoStoreHeader has_cache_control_no_store_header,
-    scoped_refptr<const SharedBuffer> data,
+    RefPtr<const SharedBuffer> data,
     const KURL& url) {
   if (delegate_.ShouldSkipResource(has_cache_control_no_store_header))
     return;
@@ -536,7 +536,7 @@ void FrameSerializer::AddImageToResources(ImageResourceContent* image,
                "type", "image", "url", url.ElidedString().Utf8().data());
   double image_start_time = MonotonicallyIncreasingTime();
 
-  scoped_refptr<const SharedBuffer> data = image->GetImage()->Data();
+  RefPtr<const SharedBuffer> data = image->GetImage()->Data();
   AddToResources(image->GetResponse().MimeType(),
                  image->HasCacheControlNoStoreHeader()
                      ? kHasCacheControlNoStoreHeader
@@ -562,7 +562,7 @@ void FrameSerializer::AddFontToResources(FontResource* font) {
   if (!font || !font->IsLoaded() || !font->ResourceBuffer())
     return;
 
-  scoped_refptr<const SharedBuffer> data(font->ResourceBuffer());
+  RefPtr<const SharedBuffer> data(font->ResourceBuffer());
 
   AddToResources(font->GetResponse().MimeType(),
                  font->HasCacheControlNoStoreHeader()

@@ -36,7 +36,7 @@ void ProvideAudioOutputDeviceClientTo(LocalFrame& frame,
       frame, AudioOutputDeviceClient::SupplementName(), client);
 }
 
-void AudioOutputDeviceClient::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AudioOutputDeviceClient) {
   Supplement<LocalFrame>::Trace(visitor);
 }
 

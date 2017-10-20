@@ -19,7 +19,7 @@ class VisualViewportScrollEvent final : public Event {
 
   void DoneDispatchingEventAtCurrentTarget() override;
 
-  virtual void Trace(blink::Visitor* visitor) { Event::Trace(visitor); }
+  DEFINE_INLINE_VIRTUAL_TRACE() { Event::Trace(visitor); }
 
  private:
   VisualViewportScrollEvent();

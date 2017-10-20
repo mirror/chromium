@@ -109,7 +109,7 @@ class PresentationConnection::Message final
   Message(RefPtr<BlobDataHandle> blob_data_handle)
       : type(kMessageTypeBlob), blob_data_handle(std::move(blob_data_handle)) {}
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(array_buffer); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(array_buffer); }
 
   MessageType type;
   String text;
@@ -144,9 +144,7 @@ class PresentationConnection::BlobLoader final
 
   void Cancel() { loader_->Cancel(); }
 
-  void Trace(blink::Visitor* visitor) {
-    visitor->Trace(presentation_connection_);
-  }
+  DEFINE_INLINE_TRACE() { visitor->Trace(presentation_connection_); }
 
  private:
   Member<PresentationConnection> presentation_connection_;
@@ -274,7 +272,7 @@ ControllerPresentationConnection::ControllerPresentationConnection(
 
 ControllerPresentationConnection::~ControllerPresentationConnection() = default;
 
-void ControllerPresentationConnection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ControllerPresentationConnection) {
   visitor->Trace(controller_);
   PresentationConnection::Trace(visitor);
 }
@@ -378,7 +376,7 @@ void ReceiverPresentationConnection::DoTerminate() {
   receiver_->Terminate();
 }
 
-void ReceiverPresentationConnection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ReceiverPresentationConnection) {
   visitor->Trace(receiver_);
   PresentationConnection::Trace(visitor);
 }
@@ -418,7 +416,7 @@ void PresentationConnection::ContextDestroyed(ExecutionContext*) {
   connection_binding_.Close();
 }
 
-void PresentationConnection::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PresentationConnection) {
   visitor->Trace(blob_loader_);
   visitor->Trace(messages_);
   EventTargetWithInlineData::Trace(visitor);

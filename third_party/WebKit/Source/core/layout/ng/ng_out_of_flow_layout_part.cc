@@ -46,7 +46,7 @@ NGOutOfFlowLayoutPart::NGOutOfFlowLayoutPart(
   icb_size_ = container_space.InitialContainingBlockSize();
 }
 
-void NGOutOfFlowLayoutPart::Run(bool update_legacy) {
+void NGOutOfFlowLayoutPart::Run() {
   Vector<NGOutOfFlowPositionedDescendant> descendant_candidates;
   container_builder_->GetAndClearOutOfFlowDescendantCandidates(
       &descendant_candidates);
@@ -58,8 +58,6 @@ void NGOutOfFlowLayoutPart::Run(bool update_legacy) {
         RefPtr<NGLayoutResult> result = LayoutDescendant(
             candidate.node, candidate.static_position, &offset);
         container_builder_->AddChild(std::move(result), offset);
-        if (update_legacy)
-          candidate.node.UseOldOutOfFlowPositioning();
       } else {
         container_builder_->AddOutOfFlowDescendant(candidate);
       }

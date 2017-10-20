@@ -11,7 +11,6 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
 
     this.element.classList.add('ax-subpane');
     UI.ARIAUtils.markAsTree(this.element);
-    this.element.tabIndex = -1;
 
     this._axSidebarView = axSidebarView;
 
@@ -19,6 +18,8 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
     this._preselectedBreadcrumb = null;
     /** @type {?Accessibility.AXBreadcrumb} */
     this._inspectedNodeBreadcrumb = null;
+
+    this._selectedByUser = true;
 
     this._hoveredBreadcrumb = null;
     this._rootElement = this.element.createChild('div', 'ax-breadcrumbs');
@@ -33,27 +34,18 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
   }
 
   /**
-   * @override
-   */
-  focus() {
-    if (this._inspectedNodeBreadcrumb)
-      this._inspectedNodeBreadcrumb.nodeElement().focus();
-    else
-      this.element.focus();
-  }
-
-  /**
    * @param {?Accessibility.AccessibilityNode} axNode
    * @override
    */
   setAXNode(axNode) {
-    var hadFocus = this.element.hasFocus();
     super.setAXNode(axNode);
 
     this._rootElement.removeChildren();
 
-    if (!axNode)
+    if (!axNode) {
+      this._selectedByUser = false;
       return;
+    }
 
     var ancestorChain = [];
     var ancestor = axNode;
@@ -77,7 +69,7 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
     }
 
     this._inspectedNodeBreadcrumb = breadcrumb;
-    this._inspectedNodeBreadcrumb.setPreselected(true, hadFocus);
+    this._inspectedNodeBreadcrumb.setPreselected(true, this._selectedByUser);
 
     this._setPreselectedBreadcrumb(this._inspectedNodeBreadcrumb);
 
@@ -97,6 +89,15 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
 
     for (var child of axNode.children())
       append(this._inspectedNodeBreadcrumb, child, depth);
+
+    this._selectedByUser = false;
+  }
+
+  /**
+   * @override
+   */
+  wasShown() {
+    this._selectedByUser = true;
   }
 
   /**
@@ -136,6 +137,7 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
     var previousBreadcrumb = this._preselectedBreadcrumb.previousBreadcrumb();
     if (!previousBreadcrumb)
       return false;
+    this._selectedByUser = true;
     this._setPreselectedBreadcrumb(previousBreadcrumb);
     return true;
   }
@@ -147,6 +149,7 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
     var nextBreadcrumb = this._preselectedBreadcrumb.nextBreadcrumb();
     if (!nextBreadcrumb)
       return false;
+    this._selectedByUser = true;
     this._setPreselectedBreadcrumb(nextBreadcrumb);
     return true;
   }
@@ -157,16 +160,14 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
   _setPreselectedBreadcrumb(breadcrumb) {
     if (breadcrumb === this._preselectedBreadcrumb)
       return;
-    var hadFocus = this.element.hasFocus();
     if (this._preselectedBreadcrumb)
-      this._preselectedBreadcrumb.setPreselected(false, hadFocus);
-
+      this._preselectedBreadcrumb.setPreselected(false, this._selectedByUser);
     if (breadcrumb)
       this._preselectedBreadcrumb = breadcrumb;
     else
       this._preselectedBreadcrumb = this._inspectedNodeBreadcrumb;
-    this._preselectedBreadcrumb.setPreselected(true, hadFocus);
-    if (!breadcrumb && hadFocus)
+    this._preselectedBreadcrumb.setPreselected(true, this._selectedByUser);
+    if (!breadcrumb && this._selectedByUser)
       SDK.OverlayModel.hideDOMNodeHighlight();
   }
 
@@ -249,6 +250,8 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
   _inspectDOMNode(axNode) {
     if (!axNode.isDOMNode())
       return false;
+
+    this._selectedByUser = true;
 
     axNode.deferredDOMNode().resolve(domNode => {
       this._axSidebarView.setNode(domNode, true /* fromAXTree */);

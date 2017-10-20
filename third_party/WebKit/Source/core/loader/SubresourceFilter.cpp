@@ -74,7 +74,7 @@ bool SubresourceFilter::AllowWebSocketConnection(const KURL& url) {
   // thread. Note that this unconditionally calls reportLoad unlike allowLoad,
   // because there aren't developer-invisible connections (like speculative
   // preloads) happening here.
-  scoped_refptr<WebTaskRunner> task_runner =
+  RefPtr<WebTaskRunner> task_runner =
       TaskRunnerHelper::Get(TaskType::kNetworking, execution_context_);
   DCHECK(task_runner->RunsTasksInCurrentSequence());
   task_runner->PostTask(BLINK_FROM_HERE,
@@ -117,7 +117,7 @@ void SubresourceFilter::ReportLoad(
   }
 }
 
-void SubresourceFilter::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SubresourceFilter) {
   visitor->Trace(execution_context_);
 }
 

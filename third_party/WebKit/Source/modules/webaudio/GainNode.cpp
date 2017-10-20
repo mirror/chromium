@@ -178,7 +178,7 @@ AudioParam* GainNode::gain() const {
   return gain_;
 }
 
-void GainNode::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(GainNode) {
   visitor->Trace(gain_);
   AudioNode::Trace(visitor);
 }

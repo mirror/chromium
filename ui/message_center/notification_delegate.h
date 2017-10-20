@@ -33,6 +33,9 @@ class MESSAGE_CENTER_EXPORT NotificationDelegate
   // user explicitly (as opposed to timeout/script), |by_user| should be true.
   virtual void Close(bool by_user);
 
+  // Returns true if the delegate can handle click event.
+  virtual bool HasClickedListener();
+
   // To be called when a desktop notification is clicked.
   virtual void Click();
 
@@ -84,6 +87,7 @@ class MESSAGE_CENTER_EXPORT HandleNotificationClickedDelegate
 
   // message_center::NotificationDelegate overrides:
   void Click() override;
+  bool HasClickedListener() override;
 
  protected:
   ~HandleNotificationClickedDelegate() override;

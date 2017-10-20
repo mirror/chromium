@@ -34,7 +34,7 @@ class CSSInheritedValue : public CSSValue {
 
   bool Equals(const CSSInheritedValue&) const { return true; }
 
-  void TraceAfterDispatch(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE_AFTER_DISPATCH() {
     CSSValue::TraceAfterDispatch(visitor);
   }
 

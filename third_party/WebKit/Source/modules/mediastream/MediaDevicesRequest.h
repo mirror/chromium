@@ -57,7 +57,7 @@ class MODULES_EXPORT MediaDevicesRequest final
   // ContextLifecycleObserver
   void ContextDestroyed(ExecutionContext*) override;
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   MediaDevicesRequest(ScriptState*, UserMediaController*);

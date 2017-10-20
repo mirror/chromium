@@ -29,18 +29,16 @@ class SourceListDirectiveTest : public ::testing::Test {
   };
 
   virtual void SetUp() {
-    KURL secure_url("https://example.test/image.png");
-    scoped_refptr<SecurityOrigin> secure_origin(
-        SecurityOrigin::Create(secure_url));
+    KURL secure_url(kParsedURLString, "https://example.test/image.png");
+    RefPtr<SecurityOrigin> secure_origin(SecurityOrigin::Create(secure_url));
     document = Document::CreateForTest();
     document->SetSecurityOrigin(secure_origin);
     csp->BindToExecutionContext(document.Get());
   }
 
   ContentSecurityPolicy* SetUpWithOrigin(const String& origin) {
-    KURL secure_url(origin);
-    scoped_refptr<SecurityOrigin> secure_origin(
-        SecurityOrigin::Create(secure_url));
+    KURL secure_url(kParsedURLString, origin);
+    RefPtr<SecurityOrigin> secure_origin(SecurityOrigin::Create(secure_url));
     Document* document = Document::CreateForTest();
     document->SetSecurityOrigin(secure_origin);
     ContentSecurityPolicy* csp = ContentSecurityPolicy::Create();
@@ -107,7 +105,7 @@ TEST_F(SourceListDirectiveTest, StarallowsSelf) {
   SourceListDirective source_list("script-src", sources, csp.Get());
 
   // With a protocol of 'file', '*' allows 'file:':
-  scoped_refptr<SecurityOrigin> origin = SecurityOrigin::Create("file", "", 0);
+  RefPtr<SecurityOrigin> origin = SecurityOrigin::Create("file", "", 0);
   csp->SetupSelf(*origin);
   EXPECT_TRUE(source_list.Allows(KURL(base, "file:///etc/hosts")));
 

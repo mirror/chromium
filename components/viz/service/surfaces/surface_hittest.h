@@ -52,7 +52,7 @@ class VIZ_SERVICE_EXPORT SurfaceHittest {
   // neither surface is contained with the other.
   bool TransformPointToTargetSurface(const SurfaceId& original_surface_id,
                                      const SurfaceId& target_surface_id,
-                                     gfx::PointF* point);
+                                     gfx::Point* point);
 
  private:
   bool GetTargetSurfaceAtPointInternal(

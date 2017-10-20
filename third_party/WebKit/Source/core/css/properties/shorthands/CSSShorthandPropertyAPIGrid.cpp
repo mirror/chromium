@@ -9,7 +9,6 @@
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSPropertyGridUtils.h"
-#include "core/layout/LayoutObject.h"
 
 namespace blink {
 
@@ -172,12 +171,6 @@ bool CSSShorthandPropertyAPIGrid::ParseShorthand(
       CSSPropertyGridAutoRows, CSSPropertyGrid, *auto_rows_value, important,
       CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
   return true;
-}
-
-bool CSSShorthandPropertyAPIGrid::IsLayoutDependent(
-    const ComputedStyle* style,
-    LayoutObject* layout_object) const {
-  return layout_object && layout_object->IsLayoutGrid();
 }
 
 }  // namespace blink

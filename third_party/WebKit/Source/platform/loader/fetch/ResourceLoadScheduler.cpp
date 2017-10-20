@@ -80,7 +80,7 @@ ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
                                    this);
 }
 
-void ResourceLoadScheduler::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ResourceLoadScheduler) {
   visitor->Trace(pending_request_map_);
   visitor->Trace(context_);
 }

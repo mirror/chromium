@@ -49,12 +49,12 @@ bool IsOriginSecure(const GURL& url) {
 
   if (url.SchemeIsFileSystem() || url.SchemeIsBlob()) {
     // Should use inner URL.
-    url::Origin origin = url::Origin::Create(url);
+    url::Origin origin(url);
     if (IsSecureScheme(origin.scheme()))
       return true;
   }
 
-  return IsOriginWhiteListedTrustworthy(url::Origin::Create(url));
+  return IsOriginWhiteListedTrustworthy(url::Origin(url));
 }
 
 // Should return the same value as the resource URL checks assigned to
@@ -62,10 +62,9 @@ bool IsOriginSecure(const GURL& url) {
 bool IsUrlPotentiallySecure(const GURL& url) {
   // blob: and filesystem: URLs never hit the network, and access is restricted
   // to same-origin contexts, so they are not blocked.
-  bool is_secure = url.SchemeIs(url::kBlobScheme) ||
-                   url.SchemeIs(url::kFileSystemScheme) ||
-                   IsOriginSecure(url) ||
-                   IsPotentiallyTrustworthyOrigin(url::Origin::Create(url));
+  bool is_secure =
+      url.SchemeIs(url::kBlobScheme) || url.SchemeIs(url::kFileSystemScheme) ||
+      IsOriginSecure(url) || IsPotentiallyTrustworthyOrigin(url::Origin(url));
 
   // TODO(mkwst): Remove this once the following draft is implemented:
   // https://tools.ietf.org/html/draft-west-let-localhost-be-localhost-03. See:
@@ -361,7 +360,7 @@ void MixedContentNavigationThrottle::ReportBasicMixedContentFeatures(
 bool MixedContentNavigationThrottle::IsMixedContentForTesting(
     const GURL& origin_url,
     const GURL& url) {
-  const url::Origin origin = url::Origin::Create(origin_url);
+  const url::Origin origin(origin_url);
   return !IsUrlPotentiallySecure(url) &&
          DoesOriginSchemeRestrictMixedContent(origin);
 }

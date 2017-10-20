@@ -44,7 +44,7 @@ SVGAnimatedNumberOptionalNumber::SVGAnimatedNumberOptionalNumber(
   second_number_->SetParentOptionalNumber(this);
 }
 
-void SVGAnimatedNumberOptionalNumber::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGAnimatedNumberOptionalNumber) {
   visitor->Trace(first_number_);
   visitor->Trace(second_number_);
   SVGAnimatedPropertyCommon<SVGNumberOptionalNumber>::Trace(visitor);

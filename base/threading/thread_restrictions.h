@@ -77,7 +77,6 @@ class CommandBufferLocal;
 class GpuState;
 }
 namespace net {
-class MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
 class NetworkChangeNotifierMac;
 class OCSPScopedAllowBaseSyncPrimitives;
 namespace internal {
@@ -218,7 +217,6 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
   friend class leveldb::LevelDBMojoProxy;
   friend class media::BlockingUrlProtocol;
-  friend class net::MultiThreadedCertVerifierScopedAllowBaseSyncPrimitives;
   friend class net::OCSPScopedAllowBaseSyncPrimitives;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;

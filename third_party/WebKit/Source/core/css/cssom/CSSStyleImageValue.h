@@ -38,15 +38,15 @@ class CORE_EXPORT CSSStyleImageValue : public CSSResourceValue,
     return true;
   }
   FloatSize ElementSize(const FloatSize& default_object_size) const final;
-  scoped_refptr<Image> GetSourceImageForCanvas(SourceImageStatus*,
-                                               AccelerationHint,
-                                               SnapshotReason,
-                                               const FloatSize&) final {
+  RefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
+                                        AccelerationHint,
+                                        SnapshotReason,
+                                        const FloatSize&) final {
     return GetImage();
   }
   bool IsAccelerated() const override;
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(image_value_);
     CSSResourceValue::Trace(visitor);
   }
@@ -75,7 +75,7 @@ class CORE_EXPORT CSSStyleImageValue : public CSSResourceValue,
   const CSSImageValue* CssImageValue() const { return image_value_.Get(); };
 
  private:
-  scoped_refptr<Image> GetImage() const;
+  RefPtr<Image> GetImage() const;
 
   Member<const CSSImageValue> image_value_;
 };

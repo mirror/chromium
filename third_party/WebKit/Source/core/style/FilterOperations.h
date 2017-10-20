@@ -74,7 +74,7 @@ class CORE_EXPORT FilterOperations {
   void AddClient(SVGResourceClient*) const;
   void RemoveClient(SVGResourceClient*) const;
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   FilterOperationVector operations_;
@@ -94,7 +94,7 @@ class FilterOperationsWrapper
 
   const FilterOperations& Operations() const { return operations_; }
 
-  void Trace(blink::Visitor* visitor) { visitor->Trace(operations_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(operations_); }
 
  private:
   FilterOperationsWrapper() {}

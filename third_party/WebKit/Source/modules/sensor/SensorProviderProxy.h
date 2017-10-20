@@ -32,7 +32,7 @@ class SensorProviderProxy final
 
   SensorProxy* GetSensorProxy(device::mojom::blink::SensorType);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class SensorProxy;  // To call getSensorProvider().

@@ -32,7 +32,7 @@ inline SVGStopElement::SVGStopElement(Document& document)
   AddToPropertyMap(offset_);
 }
 
-void SVGStopElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGStopElement) {
   visitor->Trace(offset_);
   SVGElement::Trace(visitor);
 }

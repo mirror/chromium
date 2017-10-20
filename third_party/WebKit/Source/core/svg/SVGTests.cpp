@@ -40,7 +40,7 @@ SVGTests::SVGTests(SVGElement* context_element)
   context_element->AddToPropertyMap(system_language_);
 }
 
-void SVGTests::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(SVGTests) {
   visitor->Trace(required_extensions_);
   visitor->Trace(system_language_);
 }

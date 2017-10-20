@@ -17,7 +17,7 @@ AnimationWorkletProxyClientImpl::AnimationWorkletProxyClientImpl(
   DCHECK(IsMainThread());
 }
 
-void AnimationWorkletProxyClientImpl::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(AnimationWorkletProxyClientImpl) {
   AnimationWorkletProxyClient::Trace(visitor);
   CompositorAnimator::Trace(visitor);
 }
@@ -39,17 +39,11 @@ void AnimationWorkletProxyClientImpl::Dispose() {
   global_scope_ = nullptr;
 }
 
-void AnimationWorkletProxyClientImpl::Mutate(
-    double monotonic_time_now,
-    const CompositorMutatorInputState& state) {
+void AnimationWorkletProxyClientImpl::Mutate(double monotonic_time_now) {
   DCHECK(global_scope_->IsContextThread());
 
-  std::unique_ptr<CompositorMutatorOutputState> output = nullptr;
-
   if (global_scope_)
-    output = global_scope_->Mutate(state);
-
-  mutator_->SetMutationUpdate(std::move(output));
+    global_scope_->Mutate();
 }
 
 // static

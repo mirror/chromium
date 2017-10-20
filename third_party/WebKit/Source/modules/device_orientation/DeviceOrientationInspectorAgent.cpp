@@ -27,7 +27,7 @@ DeviceOrientationInspectorAgent::DeviceOrientationInspectorAgent(
     InspectedFrames* inspected_frames)
     : inspected_frames_(inspected_frames) {}
 
-void DeviceOrientationInspectorAgent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DeviceOrientationInspectorAgent) {
   visitor->Trace(inspected_frames_);
   InspectorBaseAgent::Trace(visitor);
 }

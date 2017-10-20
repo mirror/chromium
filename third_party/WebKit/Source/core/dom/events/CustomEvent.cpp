@@ -74,11 +74,11 @@ const AtomicString& CustomEvent::InterfaceName() const {
   return EventNames::CustomEvent;
 }
 
-void CustomEvent::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(CustomEvent) {
   Event::Trace(visitor);
 }
 
-void CustomEvent::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(CustomEvent) {
   visitor->TraceWrappers(detail_);
   Event::TraceWrappers(visitor);
 }

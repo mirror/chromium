@@ -74,7 +74,7 @@ class MatchedRule {
     return GetRuleData()->Specificity() + specificity_;
   }
   const CSSStyleSheet* ParentStyleSheet() const { return parent_style_sheet_; }
-  void Trace(blink::Visitor* visitor) { visitor->Trace(parent_style_sheet_); }
+  DEFINE_INLINE_TRACE() { visitor->Trace(parent_style_sheet_); }
 
  private:
   // TODO(Oilpan): RuleData is in the oilpan heap and this pointer
@@ -170,8 +170,7 @@ class ElementRuleCollector {
  private:
   const ElementResolveContext& context_;
   const SelectorFilter& selector_filter_;
-  scoped_refptr<ComputedStyle>
-      style_;  // FIXME: This can be mutated during matching!
+  RefPtr<ComputedStyle> style_;  // FIXME: This can be mutated during matching!
 
   PseudoStyleRequest pseudo_style_request_;
   SelectorChecker::Mode mode_;

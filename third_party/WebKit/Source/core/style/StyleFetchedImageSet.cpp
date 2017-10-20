@@ -93,9 +93,8 @@ LayoutSize StyleFetchedImageSet::ImageSize(
   // border-image, etc.)
   //
   // https://drafts.csswg.org/css-images-3/#the-image-orientation
-  LayoutSize natural_size(
-      best_fit_image_->IntrinsicSize(kDoNotRespectImageOrientation));
-  LayoutSize scaled_image_size(ApplyZoom(natural_size, multiplier));
+  LayoutSize scaled_image_size =
+      best_fit_image_->ImageSize(kDoNotRespectImageOrientation, multiplier);
   scaled_image_size.Scale(1 / image_scale_factor_);
   return scaled_image_size;
 }
@@ -136,7 +135,7 @@ bool StyleFetchedImageSet::KnownToBeOpaque(const Document&,
       Image::kPreCacheMetadata);
 }
 
-void StyleFetchedImageSet::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(StyleFetchedImageSet) {
   visitor->Trace(best_fit_image_);
   visitor->Trace(image_set_value_);
   StyleImage::Trace(visitor);

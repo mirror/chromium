@@ -295,9 +295,8 @@ GURL URLRequestJob::ComputeReferrerForPolicy(URLRequest::ReferrerPolicy policy,
   bool secure_referrer_but_insecure_destination =
       original_referrer.SchemeIsCryptographic() &&
       !destination.SchemeIsCryptographic();
-  url::Origin referrer_origin = url::Origin::Create(original_referrer);
-  bool same_origin =
-      referrer_origin.IsSameOriginWith(url::Origin::Create(destination));
+  url::Origin referrer_origin(original_referrer);
+  bool same_origin = referrer_origin.IsSameOriginWith(url::Origin(destination));
   switch (policy) {
     case URLRequest::CLEAR_REFERRER_ON_TRANSITION_FROM_SECURE_TO_INSECURE:
       return secure_referrer_but_insecure_destination ? GURL()

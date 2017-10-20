@@ -156,7 +156,7 @@ DeviceMotionData::DeviceMotionData(Acceleration* acceleration,
       rotation_rate_(rotation_rate),
       interval_(interval) {}
 
-void DeviceMotionData::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(DeviceMotionData) {
   visitor->Trace(acceleration_);
   visitor->Trace(acceleration_including_gravity_);
   visitor->Trace(rotation_rate_);

@@ -8,7 +8,6 @@
 #include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/files/file_util.h"
-#include "base/metrics/histogram_macros.h"
 #include "base/process/process_iterator.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
@@ -200,12 +199,7 @@ void ProfilingProcessHost::BrowserChildProcessLaunchedAndConnected(
 
   // Tell the child process to start profiling.
   ProfilingClientBinder client(host);
-  profiling::mojom::ProcessType type =
-      (data.process_type == content::ProcessType::PROCESS_TYPE_GPU)
-          ? profiling::mojom::ProcessType::GPU
-          : profiling::mojom::ProcessType::OTHER;
-  AddClientToProfilingService(client.take(), base::GetProcId(data.handle),
-                              type);
+  AddClientToProfilingService(client.take(), base::GetProcId(data.handle));
 }
 
 void ProfilingProcessHost::Observe(
@@ -232,8 +226,8 @@ void ProfilingProcessHost::Observe(
   content::RenderProcessHost* host =
       content::Source<content::RenderProcessHost>(source).ptr();
   ProfilingClientBinder client(host);
-  AddClientToProfilingService(client.take(), base::GetProcId(host->GetHandle()),
-                              profiling::mojom::ProcessType::RENDERER);
+  AddClientToProfilingService(client.take(),
+                              base::GetProcId(host->GetHandle()));
 }
 
 bool ProfilingProcessHost::OnMemoryDump(
@@ -289,8 +283,7 @@ void ProfilingProcessHost::OnDumpProcessesForTracingCallback(
 
 void ProfilingProcessHost::AddClientToProfilingService(
     profiling::mojom::ProfilingClientPtr client,
-    base::ProcessId pid,
-    profiling::mojom::ProcessType process_type) {
+    base::ProcessId pid) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
 
   // Writes to the data_channel must be atomic to ensure that the profiling
@@ -308,8 +301,7 @@ void ProfilingProcessHost::AddClientToProfilingService(
   profiling_service_->AddProfilingClient(
       pid, std::move(client),
       mojo::WrapPlatformFile(data_channel.PassClientHandle().release().handle),
-      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle),
-      process_type);
+      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle));
 }
 
 // static
@@ -358,9 +350,6 @@ ProfilingProcessHost* ProfilingProcessHost::Start(
   host->MakeConnector(connection);
   host->LaunchAsService();
   host->ConfigureBackgroundProfilingTriggers();
-  host->metrics_timer_.Start(
-      FROM_HERE, base::TimeDelta::FromHours(24),
-      base::Bind(&ProfilingProcessHost::ReportMetrics, base::Unretained(host)));
   return host;
 }
 
@@ -441,8 +430,7 @@ void ProfilingProcessHost::LaunchAsService() {
   connector_->BindInterface(mojom::kServiceName, &profiling_service_);
 
   ProfilingClientBinder client(connector_.get());
-  AddClientToProfilingService(client.take(), base::Process::Current().Pid(),
-                              profiling::mojom::ProcessType::BROWSER);
+  AddClientToProfilingService(client.take(), base::Process::Current().Pid());
 }
 
 void ProfilingProcessHost::GetOutputFileOnBlockingThread(
@@ -529,11 +517,6 @@ ProfilingProcessHost::GetMetadataJSONForTrace() {
   metadata_dict->SetKey(
       "os-arch", base::Value(base::SysInfo::OperatingSystemArchitecture()));
   return metadata_dict;
-}
-
-void ProfilingProcessHost::ReportMetrics() {
-  UMA_HISTOGRAM_ENUMERATION("OutOfProcessHeapProfiling.ProfilingMode", mode(),
-                            Mode::kCount);
 }
 
 }  // namespace profiling

@@ -9,14 +9,9 @@
 #include "platform/geometry/LayoutRect.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scroll/ScrollableArea.h"
-#include "platform/scroll/ScrollbarThemeMock.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-namespace {
-blink::ScrollbarThemeMock scrollbar_theme_;
-}
 
 namespace blink {
 
@@ -70,17 +65,11 @@ class ScrollableAreaStub : public GarbageCollectedFinalized<ScrollableAreaStub>,
     contents_size_ = contents_size;
   }
 
-  scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final {
+  RefPtr<WebTaskRunner> GetTimerTaskRunner() const final {
     return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
   }
 
-  ScrollbarTheme& GetPageScrollbarTheme() const override {
-    return scrollbar_theme_;
-  }
-
-  virtual void Trace(blink::Visitor* visitor) {
-    ScrollableArea::Trace(visitor);
-  }
+  DEFINE_INLINE_VIRTUAL_TRACE() { ScrollableArea::Trace(visitor); }
 
  protected:
   ScrollableAreaStub(const IntSize& viewport_size, const IntSize& contents_size)

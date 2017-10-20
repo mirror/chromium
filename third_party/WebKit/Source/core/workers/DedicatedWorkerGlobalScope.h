@@ -59,7 +59,7 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
   const AtomicString& InterfaceName() const override;
 
   void postMessage(ScriptState*,
-                   scoped_refptr<SerializedScriptValue>,
+                   RefPtr<SerializedScriptValue>,
                    const MessagePortArray&,
                    ExceptionState&);
 
@@ -68,7 +68,7 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
   DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(messageerror);
 
-  virtual void Trace(blink::Visitor*);
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   DedicatedWorkerObjectProxy& WorkerObjectProxy() const;

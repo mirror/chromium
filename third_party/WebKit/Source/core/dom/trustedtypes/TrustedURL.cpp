@@ -15,7 +15,7 @@ TrustedURL* TrustedURL::create(ScriptState* script_state, const String& url) {
   KURL result(ExecutionContext::From(script_state)->CompleteURL(url));
 
   if (!result.IsValid() || !result.ProtocolIsInHTTPFamily())
-    result = KURL("about:invalid");
+    result = KURL(kParsedURLString, "about:invalid");
 
   return TrustedURL::Create(result);
 }

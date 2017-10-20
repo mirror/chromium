@@ -148,15 +148,14 @@ void MutationObserverRegistration::AddRegistrationNodesToSet(
     nodes.insert(iter->Get());
 }
 
-void MutationObserverRegistration::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(MutationObserverRegistration) {
   visitor->Trace(observer_);
   visitor->Trace(registration_node_);
   visitor->Trace(registration_node_keep_alive_);
   visitor->Trace(transient_registration_nodes_);
 }
 
-void MutationObserverRegistration::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(MutationObserverRegistration) {
   visitor->TraceWrappers(observer_);
 }
 

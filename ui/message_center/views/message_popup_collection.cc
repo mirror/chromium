@@ -108,6 +108,11 @@ std::unique_ptr<ui::MenuModel> MessagePopupCollection::CreateMenuModel(
   return tray_->CreateNotificationMenuModel(notification);
 }
 
+bool MessagePopupCollection::HasClickedListener(
+    const std::string& notification_id) {
+  return message_center_->HasClickedListener(notification_id);
+}
+
 void MessagePopupCollection::ClickOnNotificationButton(
     const std::string& notification_id,
     int button_index) {

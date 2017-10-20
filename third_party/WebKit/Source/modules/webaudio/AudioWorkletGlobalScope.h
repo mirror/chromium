@@ -66,8 +66,8 @@ class MODULES_EXPORT AudioWorkletGlobalScope final
   double currentTime() const { return current_time_; }
   float sampleRate() const { return sample_rate_; }
 
-  void Trace(blink::Visitor*);
-  void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
  private:
   AudioWorkletGlobalScope(const KURL&,

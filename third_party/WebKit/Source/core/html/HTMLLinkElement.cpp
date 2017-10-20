@@ -273,7 +273,7 @@ void HTMLLinkElement::DidSendDOMContentLoadedForLinkPrerender() {
   DispatchEvent(Event::Create(EventTypeNames::webkitprerenderdomcontentloaded));
 }
 
-scoped_refptr<WebTaskRunner> HTMLLinkElement::GetLoadingTaskRunner() {
+RefPtr<WebTaskRunner> HTMLLinkElement::GetLoadingTaskRunner() {
   return TaskRunnerHelper::Get(TaskType::kNetworking, &GetDocument());
 }
 
@@ -365,7 +365,7 @@ DOMTokenList* HTMLLinkElement::sizes() const {
   return sizes_.Get();
 }
 
-void HTMLLinkElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLLinkElement) {
   visitor->Trace(link_);
   visitor->Trace(sizes_);
   visitor->Trace(link_loader_);
@@ -374,8 +374,7 @@ void HTMLLinkElement::Trace(blink::Visitor* visitor) {
   LinkLoaderClient::Trace(visitor);
 }
 
-void HTMLLinkElement::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
+DEFINE_TRACE_WRAPPERS(HTMLLinkElement) {
   visitor->TraceWrappers(rel_list_);
   HTMLElement::TraceWrappers(visitor);
 }

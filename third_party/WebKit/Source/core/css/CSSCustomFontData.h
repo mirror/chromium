@@ -31,9 +31,8 @@ class CSSCustomFontData final : public CustomFontData {
  public:
   enum FallbackVisibility { kInvisibleFallback, kVisibleFallback };
 
-  static scoped_refptr<CSSCustomFontData> Create(
-      RemoteFontFaceSource* source,
-      FallbackVisibility visibility) {
+  static RefPtr<CSSCustomFontData> Create(RemoteFontFaceSource* source,
+                                          FallbackVisibility visibility) {
     return WTF::AdoptRef(new CSSCustomFontData(source, visibility));
   }
 

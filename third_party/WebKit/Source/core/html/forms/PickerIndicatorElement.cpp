@@ -144,7 +144,7 @@ void PickerIndicatorElement::DetachLayoutTree(const AttachContext& context) {
 }
 
 AXObject* PickerIndicatorElement::PopupRootAXObject() const {
-  return chooser_ ? chooser_->RootAXObject() : nullptr;
+  return chooser_ ? chooser_->RootAXObject() : 0;
 }
 
 bool PickerIndicatorElement::IsPickerIndicatorElement() const {
@@ -171,7 +171,7 @@ void PickerIndicatorElement::DidNotifySubtreeInsertionsToDocument() {
   setAttribute(roleAttr, "button");
 }
 
-void PickerIndicatorElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(PickerIndicatorElement) {
   visitor->Trace(picker_indicator_owner_);
   visitor->Trace(chooser_);
   HTMLDivElement::Trace(visitor);

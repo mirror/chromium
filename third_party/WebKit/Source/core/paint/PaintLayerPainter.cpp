@@ -254,16 +254,13 @@ static bool ShouldRepaintSubsequence(
   return needs_repaint;
 }
 
-void PaintLayerPainter::AdjustForPaintOffsetTranslation(
+bool PaintLayerPainter::AdjustForPaintOffsetTranslation(
     PaintLayerPaintingInfo& painting_info) {
   if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
-    return;
-  // Paint offset translation for transforms or composited layers is already
-  // taken care of.
-  if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()) ||
-      paint_layer_.PaintsComposited(painting_info.GetGlobalPaintFlags()))
-    return;
-
+    return false;
+  // Paint offset translation for transforms is already taken care of.
+  if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()))
+    return false;
   if (const auto* properties =
           paint_layer_.GetLayoutObject().FirstFragment()->PaintProperties()) {
     if (properties->PaintOffsetTranslation()) {
@@ -274,8 +271,10 @@ void PaintLayerPainter::AdjustForPaintOffsetTranslation(
 
       painting_info.sub_pixel_accumulation =
           ToLayoutSize(paint_layer_.GetLayoutObject().PaintOffset());
+      return true;
     }
   }
+  return false;
 }
 
 PaintResult PaintLayerPainter::PaintLayerContents(
@@ -539,6 +538,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
         fragment.pagination_offset.Move(negative_offset);
       }
     } else if (should_paint_content) {
+      // TODO(wangxianzhu): This is for old slow scrolling. Implement similar
+      // optimization for slimming paint v2.
       should_paint_content = AtLeastOneFragmentIntersectsDamageRect(
           layer_fragments, local_painting_info, paint_flags, offset_from_root);
       if (!should_paint_content)
@@ -1047,8 +1048,8 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   Optional<ScrollRecorder> scroll_recorder;
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    new_cull_rect.Move(painting_info.scroll_offset_accumulation);
     paint_offset += paint_layer_.GetLayoutObject().PaintOffset();
+    new_cull_rect.Move(painting_info.scroll_offset_accumulation);
   } else {
     paint_offset += ToSize(fragment.layer_bounds.Location());
     if (!painting_info.scroll_offset_accumulation.IsZero()) {

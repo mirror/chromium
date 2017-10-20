@@ -95,7 +95,6 @@ void InstallComplete(
 void InstallOnBlockingTaskRunner(
     const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
     const base::FilePath& unpack_path,
-    const std::string& public_key,
     const std::string& fingerprint,
     const scoped_refptr<CrxInstaller>& installer,
     const InstallOnBlockingTaskRunnerCompleteCallback& callback) {
@@ -142,8 +141,7 @@ void UnpackCompleteOnBlockingTaskRunner(
   base::PostTaskWithTraits(
       FROM_HERE, kTaskTraits,
       base::BindOnce(&InstallOnBlockingTaskRunner, main_task_runner,
-                     result.unpack_path, result.public_key, fingerprint,
-                     installer, callback));
+                     result.unpack_path, fingerprint, installer, callback));
 }
 
 void StartInstallOnBlockingTaskRunner(

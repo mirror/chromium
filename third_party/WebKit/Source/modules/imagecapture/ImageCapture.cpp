@@ -842,7 +842,7 @@ void ImageCapture::ResolveWithMediaTrackConstraints(
   resolver->Resolve(constraints);
 }
 
-void ImageCapture::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(ImageCapture) {
   visitor->Trace(stream_track_);
   visitor->Trace(capabilities_);
   visitor->Trace(settings_);

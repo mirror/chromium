@@ -56,7 +56,7 @@ class HeapLinkedStack : public GarbageCollected<HeapLinkedStack<T>> {
 
   size_t size();
 
-  void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_TRACE() {
     for (Node* current = head_; current; current = current->next_)
       visitor->Trace(current);
   }
@@ -66,7 +66,7 @@ class HeapLinkedStack : public GarbageCollected<HeapLinkedStack<T>> {
    public:
     Node(const T&, Node* next);
 
-    void Trace(blink::Visitor* visitor) { visitor->Trace(data_); }
+    DEFINE_INLINE_TRACE() { visitor->Trace(data_); }
 
     T data_;
     Member<Node> next_;

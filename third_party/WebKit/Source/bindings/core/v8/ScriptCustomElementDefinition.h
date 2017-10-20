@@ -42,7 +42,7 @@ class CORE_EXPORT ScriptCustomElementDefinition final
 
   virtual ~ScriptCustomElementDefinition() = default;
 
-  virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   v8::Local<v8::Object> Constructor() const;
 

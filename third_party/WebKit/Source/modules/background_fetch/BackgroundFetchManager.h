@@ -47,7 +47,7 @@ class MODULES_EXPORT BackgroundFetchManager final
   ScriptPromise get(ScriptState*, const String& id);
   ScriptPromise getIds(ScriptState*);
 
-  void Trace(blink::Visitor*);
+  DECLARE_TRACE();
 
  private:
   friend class BackgroundFetchManagerTest;

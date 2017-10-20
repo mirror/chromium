@@ -89,7 +89,7 @@ class HTMLMarqueeElement::RequestAnimationFrameCallback final
     marquee_->ContinueAnimation();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(marquee_);
     FrameRequestCallbackCollection::FrameCallback::Trace(visitor);
   }
@@ -114,7 +114,7 @@ class HTMLMarqueeElement::AnimationFinished final : public EventListener {
     marquee_->start();
   }
 
-  virtual void Trace(blink::Visitor* visitor) {
+  DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(marquee_);
     EventListener::Trace(visitor);
   }
@@ -248,12 +248,12 @@ StringKeyframeEffectModel* HTMLMarqueeElement::CreateEffectModel(
       mover_->GetDocument().ElementSheet().Contents();
   MutableStylePropertySet::SetResult set_result;
 
-  scoped_refptr<StringKeyframe> keyframe1 = StringKeyframe::Create();
+  RefPtr<StringKeyframe> keyframe1 = StringKeyframe::Create();
   set_result = keyframe1->SetCSSPropertyValue(
       CSSPropertyTransform, parameters.transform_begin, style_sheet_contents);
   DCHECK(set_result.did_parse);
 
-  scoped_refptr<StringKeyframe> keyframe2 = StringKeyframe::Create();
+  RefPtr<StringKeyframe> keyframe2 = StringKeyframe::Create();
   set_result = keyframe2->SetCSSPropertyValue(
       CSSPropertyTransform, parameters.transform_end, style_sheet_contents);
   DCHECK(set_result.did_parse);
@@ -480,7 +480,7 @@ AtomicString HTMLMarqueeElement::CreateTransform(double value) const {
          String::NumberToStringECMAScript(value) + "px)";
 }
 
-void HTMLMarqueeElement::Trace(blink::Visitor* visitor) {
+DEFINE_TRACE(HTMLMarqueeElement) {
   visitor->Trace(mover_);
   visitor->Trace(player_);
   HTMLElement::Trace(visitor);

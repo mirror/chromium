@@ -48,7 +48,7 @@ class V0CustomElementMicrotaskStep
 
   virtual Result Process() = 0;
 
-  virtual void Trace(blink::Visitor* visitor) {}
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
 
 #if !defined(NDEBUG)
   virtual void Show(unsigned indent) = 0;
