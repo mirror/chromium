@@ -127,6 +127,8 @@ display::DisplayConnectionType GetDisplayType(drmModeConnector* connector) {
     case DRM_MODE_CONNECTOR_HDMIA:
     case DRM_MODE_CONNECTOR_HDMIB:
       return display::DISPLAY_CONNECTION_TYPE_HDMI;
+    case DRM_MODE_CONNECTOR_VIRTUAL:
+      return display::DISPLAY_CONNECTION_TYPE_VIRTUAL;
     default:
       return display::DISPLAY_CONNECTION_TYPE_UNKNOWN;
   }
