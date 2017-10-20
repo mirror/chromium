@@ -40,6 +40,7 @@
 #if defined(OS_WIN)
 #include "chrome/browser/profile_resetter/triggered_profile_resetter.h"
 #include "chrome/browser/profile_resetter/triggered_profile_resetter_factory.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #endif  // defined(OS_WIN)
 
 namespace settings {
