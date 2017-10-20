@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ed03e5a_49f53b7e",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "I\u0027d replace returns with breaks, and call ConnectionClosed once at the end of this function.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9771ce0_05698409",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "This uses weak ptr on a different thread from where it was constructed.",
+      "range": {
+        "startLine": 184,
+        "startChar": 23,
+        "endLine": 184,
+        "endChar": 49
+      },
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaed19c4_ba0411d3",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "No need for write thread if read thread did not start and vice versa.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5272af_4c97bd39",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "Don\u0027t you have to delete them on the same thread they were created? If so, perhaps we should pass BrowserThread::UI to post task?",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9c4c73_f518b299",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "Can also reset browser_target.",
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8a90ed_1c8f9c0c",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "Why bind twice?",
+      "range": {
+        "startLine": 225,
+        "startChar": 24,
+        "endLine": 225,
+        "endChar": 53
+      },
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abffa4d_e564345b",
+        "filename": "content/browser/devtools/devtools_pipe_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bf7d8f_97c56d05",
+        "filename": "content/browser/devtools/devtools_pipe_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-20T14:46:34Z",
+      "side": 1,
+      "message": "drop explicit",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "d7889d2cd385af3af3a262c89a44867b380503f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
