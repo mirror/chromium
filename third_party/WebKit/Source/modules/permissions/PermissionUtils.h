@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef PermissionUtils_h
-#define PermissionUtils_h
+#ifndef THIRD_PARTY_WEBKIT_SOURCE_MODULES_PERMISSIONS_PERMISSIONUTILS_H_
+#define THIRD_PARTY_WEBKIT_SOURCE_MODULES_PERMISSIONS_PERMISSIONUTILS_H_
 
 #include "public/platform/modules/permissions/permission.mojom-blink.h"
 
@@ -20,6 +20,10 @@ mojom::blink::PermissionDescriptorPtr CreatePermissionDescriptor(
 mojom::blink::PermissionDescriptorPtr CreateMidiPermissionDescriptor(
     bool sysex);
 
+mojom::blink::PermissionDescriptorPtr CreateClipboardPermissionDescriptor(
+    mojom::blink::PermissionName,
+    bool allowWithoutGesture);
+
 }  // namespace blink
 
-#endif  // PermissionUtils_h
+#endif  // THIRD_PARTY_WEBKIT_SOURCE_MODULES_PERMISSIONS_PERMISSIONUTILS_H_
