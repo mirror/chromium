@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ceb7fa3b_c2a5908f",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "That makes sense, thanks. Moving it to RegisterExtensionMediaRouteProvider().",
+      "parentUuid": "59ea22e2_eff7e164",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3ccccce_73e69659",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 15

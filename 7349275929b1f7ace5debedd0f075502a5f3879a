@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df634ed7_7cd97b76",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "I\u0027m moving it to RegisterExtensionMediaRouteProvider(), so that it gets called each time the extension wakes up.",
+      "parentUuid": "93695322_61f54e35",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d65f0c90_84cca143",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ec0e6f_4a212b4b",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Removed this method. This was for ProvideSinks(), which is only used by Cast/DIAL for which we do in-browser discovery.",
+      "parentUuid": "d65f0c90_84cca143",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "998fdb19_88069880",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d53568_29970370",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "238daa92_96255a3c",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd400c7_70d8d718",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Yes, this behavior of returning an empty string when no provider for the sink is found is consistent with what the MRPM does.",
+      "parentUuid": "238daa92_96255a3c",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ec4ee236_b48a514b",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Removed GetCanonicalProvider(). Making MRDesktop::ProvideSinks() call extension MRP proxy directly.",
+      "parentUuid": "242fc5ba_80628cbd",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb619ec6_19450cbc",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 16
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "33963544_c31c414a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Replaced.\n\nNo, MRMojoImpl makes no guarantee about the order of the sinks. MRUI sorts them alphabetically.",
+      "parentUuid": "fb619ec6_19450cbc",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bb27b6f_be4135c7",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 16
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-18T22:32:48Z",
       "side": 1,
       "message": "Is there a check somewhere to prevent duplicates by route ID?",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec292995_193615de",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "That\u0027s not something that MR or MRPM does right now. If route IDs contain presentation IDs (which I believe they currently do), duplicates shouldn\u0027t be a concern, but I don\u0027t think that\u0027s enforced right now.",
+      "parentUuid": "2bb27b6f_be4135c7",
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "a723aada_41f9f01f",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "I agree that adding provider_id field to MediaRoute and MediaSink would simplify things a bit. The benefits I see are:\n- Per-provider route/sink collections would no longer be necessary in Media{Routes,Sinks}Query\n- GetProviderForRoute/Sink() would no longer need for-loops\n\nI tried adding the field to MediaRoute/Sink, and when I included media_router.mojom.h from media_route/sink.h (to use the mojom::MRP::Id enum) I got many errors that seemed to be due to namespace conflict (e.g. No member named \u0027MediaSink\u0027 in namespace \u0027media_router\u0027). Do we need to typemap the ID enum to a C++ enum instead?",
+      "parentUuid": "405e7032_bc443c16",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b36740e2_54143618",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 16
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "c79f8d1b_dee40ca9",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Yes, changed the wording.\n\nThe mojo call simply gets dropped in that case.",
+      "parentUuid": "9f7e404d_a3e7f954",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abdc117a_dae34160",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 16
@@ -203,6 +365,24 @@
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746afc02_42d985eb",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "crrev.com/c/714819 moved ProvideSinks(), the only caller of this method, into MRDesktop, so this is no longer needed. MRDesktop::ProvideSinks() will call the extension MRP proxy directly, since no other MRP will need it.",
+      "parentUuid": "abdc117a_dae34160",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "1acb8eed_de5fdd15",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "15e456b7_84a5c92d",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95ce237f_d7b0e83a",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
         "patchSetId": 16
@@ -234,6 +432,24 @@
       "writtenOn": "2017-10-18T22:32:48Z",
       "side": 1,
       "message": "A better test would verify that the route returned by CreateRouteInternal matched the one passed to SetRouteToReturn above (and was tied to kSinkId).",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fe9e8f_fba4c381",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "We\u0027re testing that the router can choose the right MRP to send the CreateRoute() call to, so the route returned by the MRP isn\u0027t important (it\u0027s just there so that CreateRoute\u0027s callback can get called). Maybe the way I set this test up is confusing?",
+      "parentUuid": "95ce237f_d7b0e83a",
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "94e13445_a6ab8fa3",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Changed to ProvideTestRoute(provider_id, route_id) and ProvideTestSink(provider_id, sink_id).",
+      "parentUuid": "91e5246a_896d183a",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c874740_eb385878",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
         "patchSetId": 16
@@ -288,6 +522,24 @@
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28364d9_34b31c4e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Yes. Renamed the providers to mock_extension_provider_ and mock_wired_display_provider_.",
+      "parentUuid": "0c874740_eb385878",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +560,24 @@
     },
     {
       "key": {
+        "uuid": "c0d95db9_2197ca00",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "I didn\u0027t want to make the mock MRPs strict mocks, since we send them other uninteresting calls like StartObservingMediaRoutes() that we\u0027d have to make explicit if we used strict mocks.",
+      "parentUuid": "cf7fa32b_623c2209",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dfc88b9_63bfeb0e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
         "patchSetId": 16
@@ -322,6 +592,24 @@
       "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1043ff6_a3a013b0",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Right, guaranteeing some order is not part of the interface, so I didn\u0027t want to test that.",
+      "parentUuid": "1dfc88b9_63bfeb0e",
+      "revId": "7349275929b1f7ace5debedd0f075502a5f3879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

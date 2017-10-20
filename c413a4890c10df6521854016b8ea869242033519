@@ -301,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "2cb0e305_aac76b70",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b5b5e1e_33f4c8dd",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3186fec5_1711eef2",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 10
@@ -1465,6 +1483,24 @@
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9527e1_7e414959",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-10-20T08:54:17Z",
+      "side": 1,
+      "message": "Ah I missed that. Using BindingSet.",
+      "parentUuid": "0f51a7b3_66f53343",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
