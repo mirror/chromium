@@ -362,28 +362,6 @@ BoxPainterBase::FillLayerInfo::FillLayerInfo(
 
 namespace {
 
-class InterpolationQualityContext {
- public:
-  InterpolationQualityContext(const ComputedStyle& style,
-                              GraphicsContext& context)
-      : context_(context),
-        previous_interpolation_quality_(context.ImageInterpolationQuality()) {
-    interpolation_quality_ = style.GetInterpolationQuality();
-    if (interpolation_quality_ != previous_interpolation_quality_)
-      context.SetImageInterpolationQuality(interpolation_quality_);
-  }
-
-  ~InterpolationQualityContext() {
-    if (interpolation_quality_ != previous_interpolation_quality_)
-      context_.SetImageInterpolationQuality(previous_interpolation_quality_);
-  }
-
- private:
-  GraphicsContext& context_;
-  InterpolationQuality interpolation_quality_;
-  InterpolationQuality previous_interpolation_quality_;
-};
-
 inline bool PaintFastBottomLayer(const DisplayItemClient& image_client,
                                  Node* node,
                                  const PaintInfo& paint_info,
@@ -553,7 +531,7 @@ void BoxPainterBase::PaintFillLayer(const PaintInfo& paint_info,
 
   RefPtr<Image> image;
   SkBlendMode composite_op = op;
-  Optional<InterpolationQualityContext> interpolation_quality_context;
+  Optional<ScopedInterpolationQuality> interpolation_quality_context;
   if (info.should_paint_image) {
     geometry.Calculate(paint_info.PaintContainer(),
                        paint_info.GetGlobalPaintFlags(), bg_layer,
@@ -561,7 +539,8 @@ void BoxPainterBase::PaintFillLayer(const PaintInfo& paint_info,
     image = info.image->GetImage(
         geometry.ImageClient(), geometry.ImageDocument(), geometry.ImageStyle(),
         FlooredIntSize(geometry.TileSize()), &geometry.LogicalTileSize());
-    interpolation_quality_context.emplace(geometry.ImageStyle(), context);
+    interpolation_quality_context.emplace(
+        context, geometry.ImageStyle().GetInterpolationQuality());
 
     if (bg_layer.MaskSourceType() == kMaskLuminance)
       context.SetColorFilter(kColorFilterLuminanceToAlpha);
