@@ -7,6 +7,7 @@
 #include <roapi.h>
 #include <robuffer.h>
 #include <string.h>
+#include <windows.storage.streams.h>
 #include <wrl/client.h>
 
 #include "base/strings/string_util.h"

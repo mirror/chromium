@@ -8,10 +8,19 @@
 #include <hstring.h>
 #include <inspectable.h>
 #include <windef.h>
-#include <windows.storage.streams.h>
 
 #include "base/base_export.h"
 #include "base/strings/string16.h"
+
+namespace ABI {
+namespace Windows {
+namespace Storage {
+namespace Streams {
+struct IBuffer;
+}  // namespace Streams
+}  // namespace Storage
+}  // namespace Windows
+}  // namespace ABI
 
 namespace base {
 namespace win {
