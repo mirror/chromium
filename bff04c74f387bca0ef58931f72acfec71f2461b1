@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20861440_aea7b7d8",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-20T15:58:05Z",
+      "side": 1,
+      "message": "nit: s/backward/back navigation\nsame below",
+      "revId": "bff04c74f387bca0ef58931f72acfec71f2461b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74cfb211_0e12f088",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-10-20T15:58:05Z",
+      "side": 1,
+      "message": "nit: s/forward/forward navigation\nsame below",
+      "revId": "bff04c74f387bca0ef58931f72acfec71f2461b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
