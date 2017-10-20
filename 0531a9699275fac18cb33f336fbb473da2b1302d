@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea14b889_3a4ee009",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-20T20:31:51Z",
+      "side": 1,
+      "message": "Ah, Done. good catch! I hope we can simply this logic soon so it\u0027s less likely to make mistakes like this :)",
+      "parentUuid": "e8e6acf0_6b1504ae",
+      "range": {
+        "startLine": 98,
+        "startChar": 20,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "0531a9699275fac18cb33f336fbb473da2b1302d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9497ed14_cbbd281d",
         "filename": "content/network/network_service_unittest.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T20:20:05Z",
       "side": 1,
       "message": "Why this change?",
+      "range": {
+        "startLine": 365,
+        "startChar": 25,
+        "endLine": 365,
+        "endChar": 26
+      },
+      "revId": "0531a9699275fac18cb33f336fbb473da2b1302d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74998d96_5053e0b0",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-20T20:31:51Z",
+      "side": 1,
+      "message": "These two tests do not work for OS_FUCHSIA because they do not have an OS implementation for NCN there. Their bot was broken due to yesterday\u0027s CL: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d776599",
+      "parentUuid": "9497ed14_cbbd281d",
       "range": {
         "startLine": 365,
         "startChar": 25,
