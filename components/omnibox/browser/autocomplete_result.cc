@@ -133,7 +133,6 @@ void AutocompleteResult::SortAndCull(
   SortAndDedupMatches(input.current_page_classification(), &matches_);
 
   // Sort and trim to the most relevant GetMaxMatches() matches.
-  size_t max_num_matches = std::min(GetMaxMatches(), matches_.size());
   CompareWithDemoteByType<AutocompleteMatch> comparing_object(
       input.current_page_classification());
   std::sort(matches_.begin(), matches_.end(), comparing_object);
@@ -142,8 +141,31 @@ void AutocompleteResult::SortAndCull(
   ACMatches::iterator it = FindTopMatch(&matches_);
   if (it != matches_.end())
     std::rotate(matches_.begin(), it, it + 1);
+  // Make matches exclusively tail suggest or not.
+  if (matches_.size() >= 2) {
+    if (matches_[0].type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL ||
+        matches_[1].type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
+      // Skip default match.
+      matches_.erase(
+          std::remove_if(matches_.begin() + 1, matches_.end(),
+                         [&](const AutocompleteMatch& match) {
+                           return match.type !=
+                                  AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+                         }),
+          matches_.end());
+    } else {
+      matches_.erase(
+          std::remove_if(matches_.begin(), matches_.end(),
+                         [&](const AutocompleteMatch& match) {
+                           return match.type ==
+                                  AutocompleteMatchType::SEARCH_SUGGEST_TAIL;
+                         }),
+          matches_.end());
+    }
+  }
   // In the process of trimming, drop all matches with a demoted relevance
   // score of 0.
+  size_t max_num_matches = std::min(GetMaxMatches(), matches_.size());
   size_t num_matches;
   for (num_matches = 0u; (num_matches < max_num_matches) &&
        (comparing_object.GetDemotedRelevance(*match_at(num_matches)) > 0);
