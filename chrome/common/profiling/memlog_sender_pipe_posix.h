@@ -20,9 +20,14 @@ class MemlogSenderPipe {
   explicit MemlogSenderPipe(base::ScopedPlatformFile file);
   ~MemlogSenderPipe();
 
-  bool Connect();
+  enum class Result { kSuccess, kTimeout, kError };
 
-  bool Send(const void* data, size_t sz);
+  // Attempts to atomically write all the |data| into the pipe. kError is
+  // returned on failure, kTimeout after 10s of timeout.
+  Result Send(const void* data, size_t sz);
+
+  // Closes the underlying pipe.
+  void Close();
 
  private:
   mojo::edk::ScopedPlatformHandle handle_;
