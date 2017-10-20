@@ -1066,6 +1066,10 @@ void WebContentsImpl::SetAccessibilityMode(ui::AXMode mode) {
         node->render_manager()->pending_frame_host();
     if (pending_frame_host)
       UpdateAccessibilityModeOnFrame(pending_frame_host);
+    RenderFrameHost* speculative_frame_host =
+        node->render_manager()->speculative_frame_host();
+    if (speculative_frame_host)
+      UpdateAccessibilityModeOnFrame(speculative_frame_host);
   }
 }
 
