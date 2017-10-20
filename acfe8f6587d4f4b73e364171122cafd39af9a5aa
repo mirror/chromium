@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5a423d7b_938fe859",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T18:33:27Z",
+      "side": 1,
+      "message": "\u003e \u003e  I think we might also need to keep returning false for webview guests no matter what.\n\u003e \n\u003e Good point-- should we move the kGuestScheme check to be at the top of this function?  (Maybe in a followup, since that\u0027s a good observation even without this change?)\n\nSure, I\u0027ll do that in a followup.",
+      "parentUuid": "947fec12_4f20ed3f",
+      "range": {
+        "startLine": 1488,
+        "startChar": 0,
+        "endLine": 1492,
+        "endChar": 0
+      },
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aa254ed_54ed03c0",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 7
@@ -60,6 +84,24 @@
       "writtenOn": "2017-10-20T18:08:30Z",
       "side": 1,
       "message": "Looks like this works because of the IsSuitableHost call within here, right?  Sure, that should work.\n\nIn general, I feel like HasWrongProcessForURL isn\u0027t a great mechanism (it was one we introduced for swapping on reload after installing/uninstalling a hosted app), but I don\u0027t have concrete plans to remove it yet.  I think we\u0027ll want to do a simplifying pass over RFHM once the non-PlzNav code is gone, and we can come back to it then.  :)",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d560d652_89386dbf",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T18:33:27Z",
+      "side": 1,
+      "message": "\u003e Looks like this works because of the IsSuitableHost call within here, right?  Sure, that should work.\n\nRight.\n\n\u003e In general, I feel like HasWrongProcessForURL isn\u0027t a great mechanism (it was one we introduced for swapping on reload after installing/uninstalling a hosted app), but I don\u0027t have concrete plans to remove it yet.  I think we\u0027ll want to do a simplifying pass over RFHM once the non-PlzNav code is gone, and we can come back to it then.  :)\n\nAck. :)",
+      "parentUuid": "5aa254ed_54ed03c0",
       "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "d66e2b0f_e636281a",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T18:33:27Z",
+      "side": 1,
+      "message": "I think that\u0027s basically what this test is doing though without --site-per-process -- www.foo.com is slow to commit, and isolated.foo.com grabs its process in the meantime, causing us to hit the NO_LOCK CHECK (unisolated origin commits in isolated origin\u0027s process) when www.foo.com tries to commit.  Were you thinking of another case?",
+      "parentUuid": "3395eb54_698e810a",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c6f7ede_28525e80",
         "filename": "content/browser/isolated_origin_browsertest.cc",
         "patchSetId": 7
@@ -112,6 +172,24 @@
       "writtenOn": "2017-10-20T18:08:30Z",
       "side": 1,
       "message": "Just curious-- is this navigation necessary?  I was under the impression the RFH starts in that state for tests.",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3e011d_444bd8f1",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T18:33:27Z",
+      "side": 1,
+      "message": "Interestingly, for some reason that causes the ExecuteScript below to not work.  Perhaps the tests start in a state where the RF is not created until the first navigation?  I also thought this would keep this test working even if the page from which the tests start changes in the future (though that\u0027s probably unlikely). :)",
+      "parentUuid": "0c6f7ede_28525e80",
       "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -132,6 +210,24 @@
       "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb247f3_f7975139",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-20T18:33:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8297f55e_a022628a",
+      "revId": "acfe8f6587d4f4b73e364171122cafd39af9a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
