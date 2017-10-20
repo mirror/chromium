@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "610983a1_6d0e5581",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-20T22:41:40Z",
+      "side": 1,
+      "message": "Could you please add documentation to this method that its return value is recorded to an UMA histogram and persisted to logs, and therefore the semantics of the values should never be changed?",
+      "range": {
+        "startLine": 1119,
+        "startChar": 42,
+        "endLine": 1119,
+        "endChar": 75
+      },
+      "revId": "59b6eb640b81c27203cafa4aabe272596d8a14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b2845a_8aa764b3",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-20T22:41:40Z",
+      "side": 1,
+      "message": "I\u0027m concerned that someone adding a new possible state is likely to forget to update this constant.  Can it be defined as part of an enum instead?",
+      "range": {
+        "startLine": 1124,
+        "startChar": 56,
+        "endLine": 1124,
+        "endChar": 57
+      },
+      "revId": "59b6eb640b81c27203cafa4aabe272596d8a14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
