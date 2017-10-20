@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa4de68b_c367b370",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-20T23:18:27Z",
+      "side": 1,
+      "message": "Your comment about the restoration order made me think about this line more. Why don\u0027t we just set the interpolation quality here and rely on the GraphicsContextStateSaver to restore the interpolation quality?",
+      "revId": "e0a09dae1c075ddf39163aab2f82315ca0580f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
