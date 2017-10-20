@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf315612_0e6ac864",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathMax.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-20T05:43:52Z",
+      "side": 1,
+      "message": "Do you know if these should be exposed to PaintWorklet?",
+      "revId": "c37ab603c7f9e6309265d92c0a1e1541fe820005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
