@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4dc00ce_150365af",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-20T20:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b6d8e2_cf5bb6c5",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca28443_2c3a76ff",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e94a9f26_1f063e38",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-20T20:21:15Z",
+      "side": 1,
+      "message": "Changed the code implementation to use the correct referenced definition of nesting layer size.",
+      "parentUuid": "dca28443_2c3a76ff",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f363e58d_4d008d8e",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00aec275_98b37ed1",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-20T20:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f363e58d_4d008d8e",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

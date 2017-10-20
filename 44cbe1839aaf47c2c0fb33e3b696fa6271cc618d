@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "3f4d6042_a1fed283",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-10-20T20:21:15Z",
+      "side": 1,
+      "message": "Please let me know what the preferred way would be! Also, if we were to add an optional parameter (whether or not to enforce canonical CBOR requirements) to exposed Write() function, what would be the expected behavior when the optional parameter is set to TRUE, and the total nesting layer exceeds 4? Would currently implemented DCHECK() be the right response?",
+      "parentUuid": "52af3203_1d142521",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07b04528_cf8ea360",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4
