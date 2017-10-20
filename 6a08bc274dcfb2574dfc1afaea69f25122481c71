@@ -105,6 +105,23 @@
     },
     {
       "key": {
+        "uuid": "6eddd8ef_41133191",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-10-20T19:09:55Z",
+      "side": 1,
+      "message": "We always need to set mSystemLanguageTag after registering the receiver. Otherwise, it\u0027s possible the locale will change while the receiver is not registered, and mSystemLanguageTag will be wrong.",
+      "revId": "6a08bc274dcfb2574dfc1afaea69f25122481c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ff352e4_729c4c09",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
         "patchSetId": 4
