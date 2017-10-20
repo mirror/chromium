@@ -553,6 +553,22 @@ ConsoleModel.ConsoleMessage = class {
   }
 
   /**
+   * @return {boolean}
+   */
+  isBrowserMessage() {
+    var jsLog = this.source === ConsoleModel.ConsoleMessage.MessageSource.JS &&
+        (this.type === ConsoleModel.ConsoleMessage.MessageType.Error ||
+         this.level === ConsoleModel.ConsoleMessage.MessageLevel.Error ||
+         this.level === ConsoleModel.ConsoleMessage.MessageLevel.Info);
+    return this.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI && !jsLog &&
+        (this.type === ConsoleModel.ConsoleMessage.MessageType.Log ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Debug ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Info ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Error ||
+         this.type === ConsoleModel.ConsoleMessage.MessageType.Warning || !this.type);
+  }
+
+  /**
    * @param {?ConsoleModel.ConsoleMessage} msg
    * @return {boolean}
    */
