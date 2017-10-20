@@ -6,6 +6,8 @@
 
 namespace download {
 
+const int DeviceStatus::kDefaultOptimalBatteryPercentage = 50;
+
 DeviceStatus::Result::Result()
     : meets_battery_requirement(false), meets_network_requirement(false) {}
 
@@ -15,14 +17,23 @@ bool DeviceStatus::Result::MeetsRequirements() const {
 
 DeviceStatus::DeviceStatus()
     : battery_status(BatteryStatus::NOT_CHARGING),
+      battery_percentage(0),
       network_status(NetworkStatus::DISCONNECTED) {}
 
 DeviceStatus::DeviceStatus(BatteryStatus battery, NetworkStatus network)
-    : battery_status(battery), network_status(network) {}
+    : DeviceStatus(battery, 0, network) {}
+
+DeviceStatus::DeviceStatus(BatteryStatus battery,
+                           int battery_percentage,
+                           NetworkStatus network)
+    : battery_status(battery),
+      battery_percentage(battery_percentage),
+      network_status(network) {}
 
 bool DeviceStatus::operator==(const DeviceStatus& rhs) const {
   return network_status == rhs.network_status &&
-         battery_status == rhs.battery_status;
+         battery_status == rhs.battery_status &&
+         battery_percentage == rhs.battery_percentage;
 }
 
 bool DeviceStatus::operator!=(const DeviceStatus& rhs) const {
@@ -39,7 +50,8 @@ DeviceStatus::Result DeviceStatus::MeetsCondition(
       break;
     case SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE:
       result.meets_battery_requirement =
-          battery_status == BatteryStatus::CHARGING;
+          battery_status == BatteryStatus::CHARGING ||
+          battery_percentage >= kDefaultOptimalBatteryPercentage;
       break;
     default:
       NOTREACHED();
