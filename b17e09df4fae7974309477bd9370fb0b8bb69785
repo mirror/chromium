@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73ee6431_4661ab00",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "I thought that NSViews defaulted to being ignored by VO. What happens without this?",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525e2622_b8b9930f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "optional: Since it doesn\u0027t modify the type (e.g. adding by protocol conformances), everything in this @interface section can be done in the @implementation.",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb0e97f_60e7a653",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "optional: @private no longer seems necessary, esp. if you do end up merging this with the @implementation section, but I don\u0027t mind if you want to keep it.",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fcec38_4b5bb33b",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "\"showing\" sounds like a BOOL to me — something like \"attentionType_\" makes more sense to me, but maybe there\u0027s an even better name?",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a2cb54_052f4fef",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "It looks like updateIconWithToastAnimation: is called every time showingAttentionIndicator_ is changed. Maybe consider a property with a setter that calls it? E.g.\n\n    self.attentionType \u0026\u003d ~AttentionType::kPinnedTabTitleChange;",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b49bec_94adb847",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "Is |blocked_| the same as |(showingAttentionIndicator_ \u0026 AttentionType:kBlockedWebContents) !\u003d 0|? If so, maybe this ivar is redundant.",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ab8d14_609f7a7f",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "Would you consider masking the icon view\u0027s layer instead of doing custom drawing? Perhaps something like (untested):\n\n    CAShapeLayer* maskLayer \u003d [CAShapeLayer layer];\n    maskLayer.path \u003d base::ScopedCFTypeRef\u003cCGPathRef\u003e(\n        CGPathCreateWithEllipseInRect(cropCircleBounds, nullptr));\n    maskLayer.fillRule \u003d kCAFillRuleEvenOdd;\n    maskLayer.backgroundColor \u003d CGColorGetConstantColor(kCGColorBlack);\n    iconView_.layer.mask \u003d maskLayer;",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13daeff_a09f4bfc",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-20T22:05:38Z",
+      "side": 1,
+      "message": "This could be a plain NSView with a CAShapeLayer.",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
