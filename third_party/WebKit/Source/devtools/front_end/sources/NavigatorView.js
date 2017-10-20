@@ -229,7 +229,9 @@ Sources.NavigatorView = class extends UI.VBox {
     this._workspace.addEventListener(
         Workspace.Workspace.Events.ProjectAdded,
         event => this._projectAdded(/** @type {!Workspace.Project} */ (event.data)), this);
-    this._workspace.addEventListener(Workspace.Workspace.Events.ProjectRemoved, this._projectRemoved.bind(this), this);
+    this._workspace.addEventListener(
+        Workspace.Workspace.Events.ProjectRemoved,
+        event => this._removeProject(/** @type {!Workspace.Project} */ (event.data)), this);
     this._workspace.projects().forEach(this._projectAdded.bind(this));
   }
 
@@ -350,22 +352,44 @@ Sources.NavigatorView = class extends UI.VBox {
   }
 
   /**
+   * @protected
    * @param {!Workspace.Project} project
    */
-  _projectAdded(project) {
-    if (!this.acceptProject(project) || project.type() !== Workspace.projectTypes.FileSystem)
-      return;
-    var fileSystemNode = new Sources.NavigatorGroupTreeNode(
-        this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
-    this._rootNode.appendChild(fileSystemNode);
+  onProjectAdded(project) {
   }
 
   /**
-   * @param {!Common.Event} event
+   * @protected
+   * @param {!Workspace.Project} project
    */
-  _projectRemoved(event) {
-    var project = /** @type {!Workspace.Project} */ (event.data);
+  onProjectRemoved(project) {
+  }
 
+  /**
+   * @protected
+   * @param {!Workspace.Project} project
+   */
+  tryAddProject(project) {
+    this._projectAdded(project);
+    project.uiSourceCodes().forEach(this._addUISourceCode.bind(this));
+  }
+
+  /**
+   * @param {!Workspace.Project} project
+   */
+  _projectAdded(project) {
+    if (!this.acceptProject(project) || project.type() !== Workspace.projectTypes.FileSystem ||
+        this._rootNode.child(project.id()))
+      return;
+    this._rootNode.appendChild(new Sources.NavigatorGroupTreeNode(
+        this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName()));
+    this.onProjectAdded(project);
+  }
+
+  /**
+   * @param {!Workspace.Project} project
+   */
+  _removeProject(project) {
     var uiSourceCodes = project.uiSourceCodes();
     for (var i = 0; i < uiSourceCodes.length; ++i)
       this._removeUISourceCode(uiSourceCodes[i]);
@@ -375,6 +399,7 @@ Sources.NavigatorView = class extends UI.VBox {
     if (!fileSystemNode)
       return;
     this._rootNode.removeChild(fileSystemNode);
+    this.onProjectRemoved(project);
   }
 
   /**
@@ -726,32 +751,8 @@ Sources.NavigatorView = class extends UI.VBox {
 
     contextMenu.appendSeparator();
     Sources.NavigatorView.appendAddFolderItem(contextMenu);
-    if (node instanceof Sources.NavigatorGroupTreeNode) {
-      if (Runtime.experiments.isEnabled('networkPersistence')) {
-        var hasMapping = Persistence.networkPersistenceManager.projects().has(project);
-        if (hasMapping) {
-          var domainPath = Persistence.networkPersistenceManager.domainPathForProject(project);
-          contextMenu.appendItem(
-              Common.UIString('Stop serving folder for \'' + domainPath + '\''),
-              () => Persistence.networkPersistenceManager.removeFileSystemProject(project));
-        } else {
-          var parsedURL = new Common.ParsedURL(SDK.targetManager.mainTarget().inspectedURL());
-          var canServeDomain = parsedURL.isValid && (parsedURL.scheme === 'http' || parsedURL.scheme === 'https');
-          for (var activeProject of Persistence.networkPersistenceManager.projects()) {
-            if (Persistence.networkPersistenceManager.domainPathForProject(activeProject) !== parsedURL.domain() + '/')
-              continue;
-            canServeDomain = false;
-            break;
-          }
-          if (canServeDomain) {
-            contextMenu.appendItem(
-                Common.UIString('Start serving folder for \'' + parsedURL.domain() + '\''),
-                () => Persistence.networkPersistenceManager.addFileSystemProject(parsedURL.domain() + '/', project));
-          }
-        }
-      }
+    if (node instanceof Sources.NavigatorGroupTreeNode)
       contextMenu.appendItem(Common.UIString('Remove folder from workspace'), removeFolder);
-    }
 
     contextMenu.show();
   }
@@ -991,7 +992,7 @@ Sources.NavigatorSourceTreeElement = class extends UI.TreeElement {
       var icon = UI.Icon.create('largeicon-navigator-file-sync', 'icon');
       var badge = UI.Icon.create('badge-navigator-file-sync', 'icon-badge');
       // TODO(allada) This does not play well with dark theme. Add an actual icon and use it.
-      if (Persistence.networkPersistenceManager.projects().has(binding.fileSystem.project()))
+      if (Persistence.networkPersistenceManager.activeProject() === binding.fileSystem.project())
         badge.style.filter = 'hue-rotate(160deg)';
       container.appendChild(icon);
       container.appendChild(badge);
