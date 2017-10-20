@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c10c1c7b_422cd729",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-20T01:54:55Z",
+      "side": 1,
+      "message": "Sounds useful. Can we implement it later?",
+      "parentUuid": "25d5f42a_ce3d2f5b",
+      "range": {
+        "startLine": 87,
+        "startChar": 29,
+        "endLine": 87,
+        "endChar": 47
+      },
+      "revId": "52ffa1b2036be2b9a5f4bb9c31a9913bfb5c8f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e393bbd_76a5d283",
         "filename": "base/callback_with_delete.h",
         "patchSetId": 2
@@ -130,6 +154,30 @@
       "writtenOn": "2017-10-20T01:28:48Z",
       "side": 1,
       "message": "Are the abbreviations necessary?",
+      "range": {
+        "startLine": 95,
+        "startChar": 71,
+        "endLine": 95,
+        "endChar": 73
+      },
+      "revId": "52ffa1b2036be2b9a5f4bb9c31a9913bfb5c8f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1208a3_eaaccd5f",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-20T01:54:55Z",
+      "side": 1,
+      "message": "For my sanity!",
+      "parentUuid": "3e393bbd_76a5d283",
       "range": {
         "startLine": 95,
         "startChar": 71,
