@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94561628_7591b302",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "corrupt\n\nShould any action be taken here? DVLOG?",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3592d0a4_03f964da",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "This method should never be invoked before initial sync is done, though, right? DCHECK?",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59702496_efb5f89e",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "This seems wrong. You don\u0027t know if hit max_entries or not, right?",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920c8dd1_af4b6c64",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "Can you rewrite this into the DCHECK? ie\n\nDCHECK(data.is_deleted() || type_ \u003d\u003d GetModelTypeFromSpecifics(data.specifics)) \u003c\u003c \"Non-deleted data had wrong type, expected \" \u003c\u003c type_ \u003c\u003c \" found \" \u003c\u003c GetModelTypeFromSpecifics(data.specifics);",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f217f3_67703d41",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "Is this TODO obsolete now?",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47afce95_9733d270",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "When would this return false? I vaguely remember you saying something about deleting the WorkerEntityTracker class, did you decide not to do that?",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49102d5c_dee95c97",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "This whole second loop seems unnecessary, can you combine with the above for loop, unless I\u0027m mistaken of course :)",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5134a2b_2e5f299c",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "I think this continue is against our style guide. Can you rewrite this as DCHECK(entity) \u003c\u003c \"Blah\"",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d664f8af_eb2e0305",
+        "filename": "components/sync/engine_impl/model_type_worker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "Are we not doing the | | thing anymore?",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfefde43_d026b476",
+        "filename": "components/sync/engine_impl/model_type_worker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "Ready to encrypt them makes it sound like you must have encryption enabled for this to do anything.",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57a25d0_77ba3ae7",
+        "filename": "components/sync/test/engine/mock_model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "Your two CaptureCommitRequest methods don\u0027t use a consistent naming convention for the second parameter, not that it really matters.",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0988128e_10c5a714",
+        "filename": "components/sync/test/engine/mock_model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba82fe6_54eee506",
+        "filename": "components/sync/test/engine/mock_model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-20T00:31:44Z",
+      "side": 1,
+      "message": "This is about to crash if you fail the expect, right? Would it make more sense to return true/false early if something is going wrong?",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
