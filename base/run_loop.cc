@@ -47,6 +47,30 @@ RunLoop::Delegate::~Delegate() {
     tls_delegate.Get().Set(nullptr);
 }
 
+RunLoop::Delegate::Client::TaskProcessingAllowance::TaskProcessingAllowance(
+    Delegate* outer)
+    : assigned_run_loop_(outer->active_run_loops_.top()),
+      // A new task is only allowed to be processed by this RunLoop if:
+      //  1) It isn't already processing one (reentrancy from system loops is
+      //     always blocked)
+      //  2) It is not a nested RunLoop or it explicitly allows nestable tasks.
+      allowed_(!assigned_run_loop_->task_in_progress_ &&
+               (assigned_run_loop_->type_ == Type::kNestableTasksAllowed ||
+                outer->active_run_loops_.size() == 1U)) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(assigned_run_loop_->sequence_checker_);
+  if (allowed_) {
+    DCHECK(!assigned_run_loop_->task_in_progress_);
+    assigned_run_loop_->task_in_progress_ = true;
+  }
+}
+
+RunLoop::Delegate::Client::TaskProcessingAllowance::~TaskProcessingAllowance() {
+  if (allowed_) {
+    DCHECK(assigned_run_loop_->task_in_progress_);
+    assigned_run_loop_->task_in_progress_ = false;
+  }
+}
+
 bool RunLoop::Delegate::Client::ShouldQuitWhenIdle() const {
   DCHECK_CALLED_ON_VALID_THREAD(outer_->bound_thread_checker_);
   DCHECK(outer_->bound_);
@@ -59,12 +83,11 @@ bool RunLoop::Delegate::Client::IsNested() const {
   return outer_->active_run_loops_.size() > 1;
 }
 
-bool RunLoop::Delegate::Client::ProcessingTasksAllowed() const {
+RunLoop::Delegate::Client::TaskExecutionAllowance RunLoop::Delegate::Client::RequestTaskExecutionAllowance() const {
   DCHECK_CALLED_ON_VALID_THREAD(outer_->bound_thread_checker_);
   DCHECK(outer_->bound_);
   DCHECK(!outer_->active_run_loops_.empty());
-  return outer_->active_run_loops_.size() == 1U ||
-         outer_->active_run_loops_.top()->type_ == Type::kNestableTasksAllowed;
+  return TaskExecutionAllowance(outer_);
 }
 
 RunLoop::Delegate::Client::Client(Delegate* outer) : outer_(outer) {}

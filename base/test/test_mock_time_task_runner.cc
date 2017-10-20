@@ -377,11 +377,14 @@ void TestMockTimeTaskRunner::Run() {
 
   // Since TestMockTimeTaskRunner doesn't process system messages: there's no
   // hope for anything but a chrome task to call Quit(). If this RunLoop can't
-  // process chrome tasks (i.e. disallowed by default in nested RunLoops), it's
-  // thereby guaranteed to hang...
-  DCHECK(run_loop_client_->ProcessingTasksAllowed())
+  // process chrome tasks (disallowed by default in nested RunLoops), it's
+  // guaranteed to hang... Request the allowance for the entire Run() instead of
+  // per tasks as it's impossible to reenter TestMockTimeTaskRunner from a
+  // system call and the distinction is therefore nil.
+  auto task_execution_allowance = run_loop_client_->RequestTaskExecutionAllowance();
+  DCHECK(task_execution_allowance)
       << "This is a nested RunLoop instance and needs to be of "
-         "Type::NESTABLE_TASKS_ALLOWED.";
+         "Type::kNestableTasksAllowed.";
 
   while (!quit_run_loop_) {
     RunUntilIdle();

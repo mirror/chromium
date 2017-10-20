@@ -165,6 +165,38 @@ class BASE_EXPORT RunLoop {
     // Delegate via RegisterDelegateForCurrentThread.
     class BASE_EXPORT Client {
      public:
+      // A TaskExecutionAllowance is effectively a bool with an RAII effect in
+      // its scope. It can be used purely as a bool but its owner is also
+      // permitted to execute a task while holding it in scope.
+      class TaskExecutionAllowance {
+       public:
+        ~TaskExecutionAllowance();
+
+        operator bool() const { return allowed_; }
+
+       private:
+        // Only Clients may instantiate TaskExecutionAllowances.
+        friend class Client;
+        TaskExecutionAllowance(Delegate* outer);
+
+        // The active RunLoop on which this TaskExecutionAllowance was granted.
+        RunLoop* const assigned_run_loop_;
+
+        const bool previous_task_in_progress_;
+        const bool allowed_;
+
+        DISALLOW_COPY_AND_ASSIGN(TaskExecutionAllowance);
+      };
+
+      // Returns a TaskExecutionAllowance which evaluates to true iff the
+      // Delegate is allowed to process the next application task. The returned
+      // TaskExecutionAllowance typically evaluates to true unless the call is
+      // reentrant and reentrancy hasn't been explictly allowed (i.e. isn't
+      // coming from a kNestableTasksAllowed nested RunLoop). The returned
+      // TaskExecutionAllowance needs to remain alive through the entire scope
+      // during which reentrant calls should be prevented
+      TaskExecutionAllowance RequestTaskExecutionAllowance() const;
+
       // Returns true if the Delegate should return from the topmost Run() when
       // it becomes idle. The Delegate is responsible for probing this when it
       // becomes idle.
@@ -174,12 +206,6 @@ class BASE_EXPORT RunLoop {
       // shortcut for RunLoop::IsNestedOnCurrentThread() for the owner of this
       // interface.
       bool IsNested() const;
-
-      // Returns true if the Delegate is allowed to process application tasks.
-      // This typically returns true except in nested RunLoops outside the scope
-      // of a ScopedNestableTaskAllowed as, by default, nested RunLoops are only
-      // meant to process system events.
-      bool ProcessingTasksAllowed() const;
 
      private:
       // Only a Delegate can instantiate a Delegate::Client.
@@ -202,9 +228,10 @@ class BASE_EXPORT RunLoop {
     // call should result in the topmost active Run() call returning. The only
     // other trigger for Run() to return is Client::ShouldQuitWhenIdle() which
     // the Delegate should probe before sleeping when it becomes idle. Run()
-    // implementations should also check Client::ProcessingTasksAllowed() before
-    // processing assigned application tasks (they should only process system
-    // tasks otherwise).
+    // implementations are also required to call
+    // Client::RequestTaskExecutionAllowance() before processing each
+    // application task and should stop processing application tasks if this
+    // returns false (i.e. should only process system tasks).
     virtual void Run() = 0;
     virtual void Quit() = 0;
 
@@ -315,6 +342,10 @@ class BASE_EXPORT RunLoop {
   // here rather than pushed to Delegate via, e.g., Delegate::QuitWhenIdle() to
   // support nested RunLoops.
   bool quit_when_idle_received_ = false;
+
+  // Whether this RunLoop is currently processing a task. Used to prevent
+  // reentrancy.
+  bool task_in_progress_ = false;
 
   // RunLoop is not thread-safe. Its state/methods, unless marked as such, may
   // not be accessed from any other sequence than the thread it was constructed

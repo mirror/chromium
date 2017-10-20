@@ -1564,6 +1564,62 @@ TEST_P(MessageLoopTypedTest, RecursivePosts) {
   RunLoop().Run();
 }
 
+TEST_P(MessageLoopTypedTest, NestableTasksDisallowed) {
+  MessageLoop loop(GetParam());
+  loop.SetNestableTasksAllowed(false);
+  EXPECT_FALSE(MessageLoop::current()->NestableTasksAllowed());
+
+  // Should also be disallowed inside of a task running on this loop (regression
+  // test for https://crbug.com/754112).
+  {
+    RunLoop run_loop;
+    loop.task_runner()->PostTask(
+        FROM_HERE,
+        BindOnce(
+            [](RunLoop* run_loop) {
+              EXPECT_FALSE(MessageLoop::current()->NestableTasksAllowed());
+              run_loop->Quit();
+            },
+            Unretained(&run_loop)));
+    run_loop.Run();
+  }
+
+  // But it's okay if explicitly allowed in that RunLoop's scope.
+  {
+    RunLoop run_loop(RunLoop::Type::kNestableTasksAllowed);
+    loop.task_runner()->PostTask(
+        FROM_HERE,
+        BindOnce(
+            [](RunLoop* run_loop) {
+              EXPECT_TRUE(MessageLoop::current()->NestableTasksAllowed());
+              run_loop->Quit();
+            },
+            Unretained(&run_loop)));
+    run_loop.Run();
+  }
+
+  // As well as through the MessageLoop based scoped API.
+  {
+    RunLoop run_loop;
+    loop.task_runner()->PostTask(
+        FROM_HERE,
+        BindOnce(
+            [](RunLoop* run_loop) {
+              {
+                MessageLoop::ScopedNestableTaskAllower(MessageLoop::current())
+                    allow;
+                EXPECT_TRUE(MessageLoop::current()->NestableTasksAllowed());
+              }
+              EXPECT_FALSE(MessageLoop::current()->NestableTasksAllowed());
+              run_loop->Quit();
+            },
+            Unretained(&run_loop)));
+    run_loop.Run();
+  }
+}
+
+}  // namespace base
+
 INSTANTIATE_TEST_CASE_P(,
                         MessageLoopTypedTest,
                         ::testing::Values(MessageLoop::TYPE_DEFAULT,

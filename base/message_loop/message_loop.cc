@@ -242,7 +242,7 @@ void MessageLoop::SetNestableTasksAllowed(bool allowed) {
 }
 
 bool MessageLoop::NestableTasksAllowed() const {
-  return nestable_tasks_allowed_ || run_loop_client_->ProcessingTasksAllowed();
+  return nestable_tasks_allowed_ || run_loop_client_->RequestTaskExecutionAllowance();
 }
 
 // TODO(gab): Migrate TaskObservers to RunLoop as part of separating concerns
