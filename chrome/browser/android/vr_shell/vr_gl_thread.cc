@@ -13,6 +13,8 @@
 #include "chrome/browser/vr/toolbar_state.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
+#include "chrome/browser/vr/autocomplete_match.h"
+
 namespace vr_shell {
 
 VrGLThread::VrGLThread(
@@ -146,6 +148,19 @@ void VrGLThread::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
                             weak_vr_shell_, bounds));
 }
 
+void VrGLThread::OnAutocompleteText(const base::string16& string) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&VrShell::OnAutocompleteText, weak_vr_shell_, string));
+}
+
+void VrGLThread::StopAutocomplete() {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::StopAutocomplete, weak_vr_shell_));
+}
+
 void VrGLThread::SetFullscreen(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
@@ -246,6 +261,14 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetExitVrPromptEnabled,
                             browser_ui_, enabled, reason));
+}
+
+void VrGLThread::SetAutocompleteResult(
+    std::unique_ptr<vr::VrAutocompleteResult> result) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetAutocompleteResult,
+                            browser_ui_, base::Passed(std::move(result))));
 }
 
 bool VrGLThread::OnMainThread() const {

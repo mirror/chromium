@@ -65,6 +65,8 @@ class Ui : public BrowserUiInterface, public UiInterface {
   void SetBluetoothConnectedIndicator(bool enabled) override;
   void SetLocationAccessIndicator(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
+  void SetAutocompleteResult(
+      std::unique_ptr<VrAutocompleteResult> result) override;
 
   // UiInterface
   bool ShouldRenderWebVr() override;

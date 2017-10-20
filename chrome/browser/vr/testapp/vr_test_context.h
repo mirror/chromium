@@ -60,6 +60,8 @@ class VrTestContext : public vr::ContentInputDelegate,
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
+  void OnAutocompleteText(const base::string16& string) override;
+  void StopAutocomplete() override;
 
  private:
   unsigned int CreateFakeContentTexture();

@@ -37,6 +37,7 @@ class WindowAndroid;
 }  // namespace ui
 
 namespace vr {
+class AutocompleteController;
 class BrowserUiInterface;
 class ToolbarHelper;
 class WebContentsEventForwarder;
@@ -201,6 +202,9 @@ class VrShell : device::GvrGamepadDataProvider,
   content::WebContents* GetActiveWebContents() const override;
   bool ShouldDisplayURL() const override;
 
+  void OnAutocompleteText(const base::string16& string);
+  void StopAutocomplete();
+
  private:
   ~VrShell() override;
   void PostToGlThread(const base::Location& from_here,
@@ -271,6 +275,8 @@ class VrShell : device::GvrGamepadDataProvider,
 
   gfx::SizeF display_size_meters_;
   gfx::Size display_size_pixels_;
+
+  std::unique_ptr<vr::AutocompleteController> autocomplete_controller_;
 
   base::WeakPtrFactory<VrShell> weak_ptr_factory_;
 

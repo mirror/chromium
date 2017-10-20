@@ -9,6 +9,7 @@
 #include "base/numerics/ranges.h"
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/toolbar_state.h"
 #include "chrome/browser/vr/ui.h"
@@ -18,8 +19,10 @@
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
 #include "chrome/browser/vr/vr_shell_renderer.h"
+#include "components/omnibox/browser/vector_icons.h"
 #include "components/security_state/core/security_state.h"
 #include "components/toolbar/vector_icons.h"
+#include "components/vector_icons/vector_icons.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -118,6 +121,23 @@ void VrTestContext::HandleInput(ui::Event* event) {
         incognito_ = !incognito_;
         ui_->SetIncognito(incognito_);
         break;
+      case ui::DomCode::US_S: {
+        static int i = 0;
+        i++;
+        auto result = base::MakeUnique<VrAutocompleteResult>();
+        result->matches.emplace_back(
+            Suggestion(base::UTF8ToUTF16("Suggestion 1"),
+                       base::UTF8ToUTF16("Description 1"),
+                       AutocompleteMatch::Type::VOICE_SUGGEST));
+        if (i % 2) {
+          result->matches.emplace_back(
+              Suggestion(base::UTF8ToUTF16("Suggestion 2"),
+                         base::UTF8ToUTF16("Description 2"),
+                         AutocompleteMatch::Type::VOICE_SUGGEST));
+        }
+        ui_->SetAutocompleteResult(std::move(result));
+        break;
+      }
       default:
         break;
     }
@@ -193,7 +213,7 @@ void VrTestContext::OnGlInitialized(const gfx::Size& window_size) {
 unsigned int VrTestContext::CreateFakeContentTexture() {
   sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(1, 1);
   SkCanvas* canvas = surface->getCanvas();
-  canvas->clear(0xFF000080);
+  canvas->clear(0xFFDDDDDD);
 
   SkPixmap pixmap;
   CHECK(surface->peekPixels(&pixmap));
@@ -249,5 +269,7 @@ void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {}
 void VrTestContext::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                                          vr::ExitVrPromptChoice choice) {}
 void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
+void VrTestContext::OnAutocompleteText(const base::string16& string) {}
+void VrTestContext::StopAutocomplete() {}
 
 }  // namespace vr

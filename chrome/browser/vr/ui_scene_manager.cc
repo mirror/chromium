@@ -29,6 +29,7 @@
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 #include "chrome/browser/vr/elements/ui_texture.h"
 #include "chrome/browser/vr/elements/url_bar.h"
+#include "chrome/browser/vr/elements/vector_icon.h"
 #include "chrome/browser/vr/elements/viewport_aware_root.h"
 #include "chrome/browser/vr/elements/webvr_url_toast.h"
 #include "chrome/browser/vr/model/model.h"
@@ -42,6 +43,9 @@
 #include "components/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/transform_util.h"
+
+#include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/vr/databinding/vector_binding.h"
 
 namespace vr {
 
@@ -69,6 +73,80 @@ void BindColor(UiSceneManager* model, Text* text, P p) {
                  base::Unretained(text))));
 }
 
+typedef LinearLayout SuggestionItem;
+typedef VectorBinding<Suggestion, SuggestionItem> SuggestionSetBinding;
+typedef typename SuggestionSetBinding::ElementBinding SuggestionBinding;
+
+void OnSuggestionModelAdded(UiScene* scene,
+                            SuggestionBinding* element_binding) {
+  auto icon = base::MakeUnique<VectorIcon>(100);
+  icon->SetVisible(true);
+  icon->SetSize(0.15, 0.15);
+  icon->set_draw_phase(kPhaseForeground);
+  icon->Initialize();
+  VectorIcon* p_icon = icon.get();
+
+  auto content_text = base::MakeUnique<Text>(512, 0.1, 1.0);
+  content_text->SetText(base::UTF8ToUTF16("Suggestion content"));
+  content_text->set_draw_phase(kPhaseForeground);
+  content_text->SetVisible(true);
+  content_text->Initialize();
+  Text* p_content_text = content_text.get();
+
+  auto description_text = base::MakeUnique<Text>(512, 0.1, 1.0);
+  description_text->SetText(base::UTF8ToUTF16("Suggestion description"));
+  description_text->set_draw_phase(kPhaseForeground);
+  description_text->SetVisible(true);
+  description_text->Initialize();
+  Text* p_description_text = description_text.get();
+
+  auto text_layout = base::MakeUnique<LinearLayout>(LinearLayout::kVertical);
+  text_layout->set_hit_testable(false);
+  text_layout->set_margin(kIndicatorGap);
+  text_layout->AddChild(std::move(content_text));
+  text_layout->AddChild(std::move(description_text));
+  text_layout->SetVisible(true);
+
+  auto suggestion_layout =
+      base::MakeUnique<LinearLayout>(LinearLayout::kHorizontal);
+  suggestion_layout->set_hit_testable(false);
+  suggestion_layout->set_margin(kIndicatorGap);
+  suggestion_layout->set_y_anchoring(YAnchoring::YTOP);
+  suggestion_layout->SetVisible(true);
+  suggestion_layout->AddChild(std::move(icon));
+  suggestion_layout->AddChild(std::move(text_layout));
+
+  element_binding->set_view(suggestion_layout.get());
+
+  element_binding->bindings().push_back(
+      base::MakeUnique<Binding<base::string16>>(
+          base::Bind([](Suggestion* m) { return m->content; },
+                     base::Unretained(element_binding->model())),
+          base::Bind([](Text* t, const base::string16& s) { t->SetText(s); },
+                     base::Unretained(p_content_text))));
+  element_binding->bindings().push_back(
+      base::MakeUnique<Binding<base::string16>>(
+          base::Bind([](Suggestion* m) { return m->description; },
+                     base::Unretained(element_binding->model())),
+          base::Bind([](Text* t, const base::string16& s) { t->SetText(s); },
+                     base::Unretained(p_description_text))));
+  element_binding->bindings().push_back(
+      base::MakeUnique<Binding<AutocompleteMatch::Type>>(
+          base::Bind([](Suggestion* m) { return m->type; },
+                     base::Unretained(element_binding->model())),
+          base::Bind(
+              [](VectorIcon* t, const AutocompleteMatch::Type& type) {
+                t->SetIcon(AutocompleteMatch::TypeToVectorIcon(type));
+              },
+              base::Unretained(p_icon))));
+
+  scene->AddUiElement(kSuggestionLayout, std::move(suggestion_layout));
+}
+
+void OnSuggestionModelRemoved(UiScene* scene, SuggestionBinding* binding) {
+  scene->RemoveUiElement(binding->view()->id());
+}
+
 }  // namespace
 
 UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
@@ -93,6 +171,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateWebVRExitWarning();
   CreateSystemIndicators();
   CreateUrlBar(model);
+  CreateSuggestionList(model);
   CreateWebVrUrlToast();
   CreateCloseButton();
   CreateScreenDimmer();
@@ -444,6 +523,27 @@ void UiSceneManager::CreateUrlBar(Model* model) {
   scene_->AddUiElement(kLoadingIndicator, std::move(indicator_fg));
 }
 
+void UiSceneManager::CreateSuggestionList(Model* model) {
+  auto layout = base::MakeUnique<LinearLayout>(LinearLayout::kVertical);
+
+  layout->set_name(kSuggestionLayout);
+  layout->set_hit_testable(false);
+  layout->set_y_anchoring(YAnchoring::YTOP);
+  layout->SetTranslate(0, 0, -0.1);
+  layout->set_margin(kIndicatorGap);
+  layout->SetVisible(true);
+
+  SuggestionSetBinding::ModelAddedCallback added_callback =
+      base::Bind(&OnSuggestionModelAdded, base::Unretained(scene_));
+  SuggestionSetBinding::ModelRemovedCallback removed_callback =
+      base::Bind(&OnSuggestionModelRemoved, base::Unretained(scene_));
+
+  auto binding = base::MakeUnique<SuggestionSetBinding>(
+      &model->autocomplete_matches_, added_callback, removed_callback);
+  layout->AddBinding(std::move(binding));
+  scene_->AddUiElement(kContentQuad, std::move(layout));
+}
+
 TransientElement* UiSceneManager::AddTransientParent(UiElementName name,
                                                      UiElementName parent_name,
                                                      int timeout_seconds,
@@ -792,6 +892,22 @@ void UiSceneManager::OnGlInitialized(
 }
 
 void UiSceneManager::OnAppButtonClicked() {
+  // static int i = 0;
+  // const std::vector<std::string> strings = {
+  //"",
+  //"w",
+  //"wi",
+  //"wik",
+  //"wiki",
+  //"",
+  //"y",
+  //"yo",
+  //"you",
+  //};
+  // browser_->OnAutocompleteText(base::UTF8ToUTF16(strings[i]));
+  // i = (i + 1) % strings.size();
+  // return;
+
   // App button clicks should be a no-op when auto-presenting WebVR.
   if (started_for_autopresentation_)
     return;

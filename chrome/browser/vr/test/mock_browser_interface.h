@@ -24,6 +24,8 @@ class MockBrowserInterface : public UiBrowserInterface {
   MOCK_METHOD2(OnExitVrPromptResult,
                void(UiUnsupportedMode reason, ExitVrPromptChoice choice));
   MOCK_METHOD1(OnContentScreenBoundsChanged, void(const gfx::SizeF& bounds));
+  MOCK_METHOD1(OnAutocompleteText, void(const base::string16& string));
+  MOCK_METHOD0(StopAutocomplete, void());
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBrowserInterface);

@@ -22,9 +22,11 @@ class TextTexture : public UiTexture {
   ~TextTexture() override {}
 
   void SetText(const base::string16& text) {
+    LOG(INFO) << "Setting new text string in texture: " << text;
     if (text_ == text)
       return;
     text_ = text;
+    LOG(INFO) << "... and dirty";
     set_dirty();
   }
 
@@ -76,6 +78,7 @@ UiTexture* Text::GetTexture() const {
 }
 
 void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
+  LOG(INFO) << "Text draw!";
   cc::SkiaPaintCanvas paint_canvas(sk_canvas);
   gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
   gfx::Canvas* canvas = &gfx_canvas;
@@ -92,8 +95,10 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
       PrepareDrawStringRect(text_, fonts, color_, &text_bounds,
                             kTextAlignmentCenter, kWrappingBehaviorWrap);
   // Draw the text.
-  for (auto& render_text : lines)
+  for (auto& render_text : lines) {
+    LOG(INFO) << "Drawing a line of text!";
     render_text->Draw(canvas);
+  }
 
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());

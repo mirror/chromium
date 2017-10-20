@@ -92,6 +92,15 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
   scene_manager_->SetExitVrPromptEnabled(enabled, reason);
 }
 
+void Ui::SetAutocompleteResult(std::unique_ptr<VrAutocompleteResult> result) {
+  // model_->autocomplete_matches_ = result->matches;
+  model_->autocomplete_matches_.clear();
+  for (const auto& item : result->matches) {
+    model_->autocomplete_matches_.emplace_back(Suggestion(item));
+  }
+  result.reset();
+}
+
 bool Ui::ShouldRenderWebVr() {
   return scene_manager_->ShouldRenderWebVr();
 }
