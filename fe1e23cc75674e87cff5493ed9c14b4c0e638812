@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0327ebee_cf0acc79",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T17:44:27Z",
+      "side": 1,
+      "message": "(This can be a follow-up patch) Do you know why we check provider_host_ and context_ here even if they aren\u0027t used below?\n\nIf we don\u0027t need this block we can remove it... otherwise we should comment why it\u0027s needed.\n\nSame with UpdateComplete above.",
+      "range": {
+        "startLine": 176,
+        "startChar": 24,
+        "endLine": 176,
+        "endChar": 34
+      },
+      "revId": "fe1e23cc75674e87cff5493ed9c14b4c0e638812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
