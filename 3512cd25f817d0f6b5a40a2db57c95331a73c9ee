@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b933248_09422aae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T23:27:26Z",
+      "side": 1,
+      "message": "nit: Exits",
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0416364f_d8fd3158",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-20T23:27:26Z",
+      "side": 1,
+      "message": "nit: I would give this a more descriptive name, like ExitHighlighterMode() or StopHighlighting() or StopSelection()",
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
