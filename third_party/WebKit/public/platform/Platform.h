@@ -63,6 +63,7 @@
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "public/platform/scheduler/single_thread_task_runner.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace device {
 class Gamepads;
@@ -608,6 +609,9 @@ class BLINK_PLATFORM_EXPORT Platform {
   virtual service_manager::Connector* GetConnector();
 
   virtual InterfaceProvider* GetInterfaceProvider();
+
+  virtual void AddConnectionFilter(
+      std::unique_ptr<service_manager::BinderRegistry>);
 
   virtual const char* GetBrowserServiceName() const { return ""; }
 

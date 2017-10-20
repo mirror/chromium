@@ -79,6 +79,7 @@
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseManager.h"
 #include "modules/webdatabase/InspectorDatabaseAgent.h"
+#include "modules/webdatabase/WebDatabaseImpl.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "platform/mojo/MojoHelper.h"
@@ -113,6 +114,8 @@ void ModulesInitializer::Initialize() {
     TimeZoneMonitorClient::Init();
 
   CoreInitializer::Initialize();
+
+  InitMojo();
 
   // Canvas context types must be registered with the HTMLCanvasElement.
   HTMLCanvasElement::RegisterRenderingContextFactory(
@@ -277,6 +280,15 @@ void ModulesInitializer::ForceNextWebGLContextCreationToFail() const {
 
 void ModulesInitializer::CollectAllGarbageForAnimationWorklet() const {
   AnimationWorkletThread::CollectAllGarbage();
+}
+
+void ModulesInitializer::InitMojo() const {
+  auto registry = std::make_unique<service_manager::BinderRegistry>();
+  // registry->AddInterface(WTF::Bind(&WebDatabaseImpl::Create),
+  //                        GetIOTaskRunner());
+  registry->AddInterface(
+      ConvertToBaseCallback(WTF::Bind(&WebDatabaseImpl::Create)));
+  Platform::Current()->AddConnectionFilter(std::move(registry));
 }
 
 }  // namespace blink

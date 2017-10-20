@@ -21,6 +21,7 @@ include_rules = [
     "-public/web",
     "+services/network/public/interfaces",
     "+services/service_manager/public/interfaces",
+    "+services/service_manager/public/cpp/binder_registry.h",
     "+storage/public/interfaces",
     "+third_party/skia",
     "+ui/gfx",
