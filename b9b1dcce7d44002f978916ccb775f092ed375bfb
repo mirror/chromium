@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38a5cf6c_d00c54c8",
+        "filename": "base/memory/protected_memory_cfi.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-20T18:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40e7b8a_e4942171",
+      "revId": "b9b1dcce7d44002f978916ccb775f092ed375bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "684c9d95_8771e9fa",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 6
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fc8eddf1_78a34b5f",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-20T18:37:35Z",
+      "side": 1,
+      "message": "read(2) says that EAGAIN is only possible for non-blocking fd/sockets, so eintr_wrapper.h is enough here.",
+      "parentUuid": "a7dfddbe_1ea44a95",
+      "revId": "b9b1dcce7d44002f978916ccb775f092ed375bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1899cc50_e6013905",
         "filename": "base/memory/protected_memory_posix.cc",
         "patchSetId": 6
@@ -86,6 +122,24 @@
       "revId": "b9b1dcce7d44002f978916ccb775f092ed375bfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eea325_73e96547",
+        "filename": "base/memory/protected_memory_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-20T18:37:35Z",
+      "side": 1,
+      "message": "I inlined this to make it clearer.",
+      "parentUuid": "405468d2_d0838c8c",
+      "revId": "b9b1dcce7d44002f978916ccb775f092ed375bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
