@@ -22,6 +22,29 @@
       "revId": "c0e69616b027bc0a3a179301762197eec0a26434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e08a259_879206dc",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-20T01:09:33Z",
+      "side": 1,
+      "message": "nit: drop ::?",
+      "range": {
+        "startLine": 229,
+        "startChar": 15,
+        "endLine": 229,
+        "endChar": 17
+      },
+      "revId": "c0e69616b027bc0a3a179301762197eec0a26434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
