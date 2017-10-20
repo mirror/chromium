@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "94fdb0d4_8f0d70e3",
+        "filename": "chrome/browser/ui/views/feature_promos/bookmark_promo_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-20T02:50:34Z",
+      "side": 1,
+      "message": "Sorry for not being clear. I\u0027m suggesting the following:\n\n1. CreateIncognitoFeaturePromoBubble() *already* takes a Browser. There is no need to also pass the Browser to show, so remove it.\n2. Do you really need a separate Create/Show step? Can CreateIncognitoFeaturePromoBubble() be renamed ShowIncognitoFeaturePromoBubble(Browser*) and remove ShowPromoBubble from from FeaturePromoBubble.\n3. Remove ClosePromoBubble and have close triggered by deleting FeaturePromoBubble. I realize this means you end up with an empty interface, but it clears up expectations and makes it clear how this class is used. That is, the bubble can and is only shown once and that deleting closes.",
+      "parentUuid": "772df54b_32de7111",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "a11095ae8e07929cb349221760366c19c7f319d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9647b124_8715fc6e",
         "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.cc",
         "patchSetId": 10
