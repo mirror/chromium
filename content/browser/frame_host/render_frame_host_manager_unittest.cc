@@ -3173,4 +3173,42 @@ TEST_F(RenderFrameHostManagerTest,
   EXPECT_FALSE(initial_rfh->navigation_handle());
 }
 
+// Tests that sandbox flags received after a navigation away has started do not
+// affect the document being navigated to.
+TEST_F(RenderFrameHostManagerTest, ReceivedFramePolicyAfterNavigationStarted) {
+  const GURL kUrl1("http://www.google.com");
+  const GURL kUrl2("http://www.chromium.org");
+
+  contents()->NavigateAndCommit(kUrl1);
+  TestRenderFrameHost* initial_rfh = main_test_rfh();
+
+  // The RFH should start out with an empty frame policy.
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            initial_rfh->frame_tree_node()->active_sandbox_flags());
+
+  // Navigate cross-site but don't commit the navigation.
+  RenderFrameHostManager* manager =
+      main_test_rfh()->frame_tree_node()->render_manager();
+  auto navigation_to_kUrl2 =
+      NavigationSimulator::CreateBrowserInitiated(kUrl2, contents());
+  navigation_to_kUrl2->ReadyToCommit();
+
+  // Now send the frame policy for the initial page.
+  initial_rfh->SendFramePolicy(blink::WebSandboxFlags::kAll, {});
+  // Verify that the policy landed in the frame tree.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll,
+            initial_rfh->frame_tree_node()->active_sandbox_flags());
+
+  // Commit the naviagation; the new frame should have a clear frame policy.
+  if (IsBrowserSideNavigationEnabled()) {
+    static_cast<TestRenderFrameHost*>(manager->speculative_frame_host())
+        ->SimulateNavigationCommit(kUrl2);
+  } else {
+    static_cast<TestRenderFrameHost*>(manager->pending_frame_host())
+        ->SimulateNavigationCommit(kUrl2);
+  }
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            main_test_rfh()->frame_tree_node()->active_sandbox_flags());
+}
+
 }  // namespace content
