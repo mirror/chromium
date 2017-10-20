@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a52c1a61_f0133ef8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-20T03:54:43Z",
+      "side": 1,
+      "message": "I don\u0027t think DCHECK indicates \"logically impossible even if there are unforeseen bugs\". I think it indicates \"hey, I found a bug\". The chances of LOG(ERROR) being noticed are much less than a DCHECK, plus there\u0027s that thing in the style guide indicating we shouldn\u0027t try to handle failing DCHECKs.\n\n(We should never get more than one NotificationClosed for a single shown Notification, or a NotificationClosed with an ID that doesn\u0027t match one we requested.)",
+      "parentUuid": "06fd1475_6ea65543",
+      "revId": "0b82f66b14355394d55041d9f42ae0f4a2430436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f92ca190_7cadd7f5",
         "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
         "patchSetId": 5
