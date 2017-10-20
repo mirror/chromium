@@ -35,12 +35,12 @@ void NonBlockingTypeCommitContribution::AddToCommitMessage(
   sync_pb::CommitMessage* commit_message = msg->mutable_commit();
   entries_start_index_ = commit_message->entries_size();
 
-  int startIndex = commit_message->entries_size();
   std::copy(entities_.begin(), entities_.end(),
             RepeatedPtrFieldBackInserter(commit_message->mutable_entries()));
 
   if (clear_client_defined_unique_tags_) {
-    for (int i = startIndex; i < commit_message->entries_size(); ++i) {
+    for (int i = entries_start_index_; i < commit_message->entries_size();
+         ++i) {
       commit_message->mutable_entries(i)->clear_client_defined_unique_tag();
     }
   }
