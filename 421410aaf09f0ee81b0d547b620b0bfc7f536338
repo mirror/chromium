@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e1aeda5_fd3fd5c4",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-20T23:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bfc9b16_e249ab87",
+      "revId": "421410aaf09f0ee81b0d547b620b0bfc7f536338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e38519f_4e0ac286",
         "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-20T01:06:44Z",
       "side": 1,
       "message": "Please help me see what this normalizeUrl function is doing. My reading of it is that it passes all the strings (url) that it\u0027s called with as-is. Err, I mean in this test code. It would return something different iff the url started and ended with a slash \u0027/\u0027, but none of them do.",
+      "revId": "421410aaf09f0ee81b0d547b620b0bfc7f536338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd1ba5b_48786f2d",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-20T23:06:36Z",
+      "side": 1,
+      "message": "it normalizes for leading OR trailing slashes. Without it, it would think chrome://extensions/shortcuts/ and chrome://extensions/shortcuts are different URLs. NavigationHelper is doing the same thing, but it feels unnecessary to expose the currentRoute_ property just for this test, so I copied the small logic over.\n\nsee: https://chromium-review.googlesource.com/c/chromium/src/+/724271/7/chrome/browser/resources/md_extensions/navigation_helper.js#60",
+      "parentUuid": "9e38519f_4e0ac286",
       "revId": "421410aaf09f0ee81b0d547b620b0bfc7f536338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
