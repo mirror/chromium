@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e6acf0_6b1504ae",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T20:20:05Z",
+      "side": 1,
+      "message": "I think we still need to create NetworkChangeManager, even in single process mode?",
+      "range": {
+        "startLine": 98,
+        "startChar": 20,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "0531a9699275fac18cb33f336fbb473da2b1302d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9497ed14_cbbd281d",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-20T20:20:05Z",
+      "side": 1,
+      "message": "Why this change?",
+      "range": {
+        "startLine": 365,
+        "startChar": 25,
+        "endLine": 365,
+        "endChar": 26
+      },
+      "revId": "0531a9699275fac18cb33f336fbb473da2b1302d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
