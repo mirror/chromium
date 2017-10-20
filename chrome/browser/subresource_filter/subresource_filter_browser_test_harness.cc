@@ -11,7 +11,6 @@
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
@@ -24,6 +23,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
+#include "components/safe_browsing/db/v4_test_util.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
@@ -91,7 +91,7 @@ void SubresourceFilterBrowserTest::SetUpOnMainThread() {
 
 std::unique_ptr<TestSafeBrowsingDatabaseHelper>
 SubresourceFilterBrowserTest::CreateTestDatabase() {
-  return base::MakeUnique<TestSafeBrowsingDatabaseHelper>();
+  return std::make_unique<TestSafeBrowsingDatabaseHelper>();
 }
 
 GURL SubresourceFilterBrowserTest::GetTestUrl(
@@ -101,14 +101,14 @@ GURL SubresourceFilterBrowserTest::GetTestUrl(
 
 void SubresourceFilterBrowserTest::ConfigureAsPhishingURL(const GURL& url) {
   safe_browsing::ThreatMetadata metadata;
-  database_helper_->MarkUrlAsMatchingListIdWithMetadata(
+  database_helper_->MarkUrlAsBadAndInsertIntoFullHashCache(
       url, safe_browsing::GetUrlSocEngId(), metadata);
 }
 
 void SubresourceFilterBrowserTest::ConfigureAsSubresourceFilterOnlyURL(
     const GURL& url) {
   safe_browsing::ThreatMetadata metadata;
-  database_helper_->MarkUrlAsMatchingListIdWithMetadata(
+  database_helper_->MarkUrlAsBadAndInsertIntoFullHashCache(
       url, safe_browsing::GetUrlSubresourceFilterId(), metadata);
 }
 
@@ -121,7 +121,7 @@ void SubresourceFilterBrowserTest::ConfigureURLWithWarning(
     metadata.subresource_filter_match[type] =
         safe_browsing::SubresourceFilterLevel::WARN;
   }
-  database_helper_->MarkUrlAsMatchingListIdWithMetadata(
+  database_helper_->MarkUrlAsBadAndInsertIntoFullHashCache(
       url, safe_browsing::GetUrlSubresourceFilterId(), metadata);
 }
 
@@ -249,7 +249,9 @@ std::unique_ptr<TestSafeBrowsingDatabaseHelper>
 SubresourceFilterListInsertingBrowserTest::CreateTestDatabase() {
   std::vector<safe_browsing::ListIdentifier> list_ids = {
       safe_browsing::GetUrlSubresourceFilterId()};
-  return base::MakeUnique<TestSafeBrowsingDatabaseHelper>(std::move(list_ids));
+  return std::make_unique<TestSafeBrowsingDatabaseHelper>(
+      std::make_unique<safe_browsing::TestV4GetHashProtocolManagerFactory>(),
+      std::move(list_ids));
 }
 
 }  // namespace subresource_filter
