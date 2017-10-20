@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4b793f_39420034",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T23:11:58Z",
+      "side": 1,
+      "message": "Since this is used in 2 places and they don\u0027t agree on the signedness of their inputs, why not just leave this as const char since that\u0027s more common, and move the cast to the other user?",
+      "revId": "138dfbae2385e5ddb144ea546ffcbc939f8b1100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8effe1a7_ec4c9764",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T23:11:58Z",
+      "side": 1,
+      "message": "Assuming the intent is to test all types, Add \"kAllTypes\" in the anonymous namespace, and use it here and in the GetPrinterCapabilities test.",
+      "revId": "138dfbae2385e5ddb144ea546ffcbc939f8b1100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

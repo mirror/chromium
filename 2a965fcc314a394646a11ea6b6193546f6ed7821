@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "77f9cfaf_b0c89101",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T23:11:58Z",
+      "side": 1,
+      "message": "No, I was just curious. Maybe reference the JS file here and vice versa? Likely if we add something to the JS file, we would need to update this.",
+      "parentUuid": "d6709dcf_2afb45f9",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "692223c2_c06dd9ab",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "692223c2_c06dd9ab",
+      "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be8c56df_8c2396f2",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-20T23:11:58Z",
+      "side": 1,
+      "message": "Since you are going to check it, I would suggest adding 2 bools for print_with_privet and print_with_extension. Then you can use the values on lines 91/94 and here, without having to remember to check |cloud| in multiple places.",
+      "parentUuid": "81a1055f_40eb8106",
       "revId": "2a965fcc314a394646a11ea6b6193546f6ed7821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
