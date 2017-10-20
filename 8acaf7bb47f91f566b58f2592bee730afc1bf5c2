@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "494b250e_32189614",
+        "filename": "chrome/browser/net/proxy_resolver_manager.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T20:54:46Z",
+      "side": 1,
+      "message": "I think someone recommended to me in a review to use the static local, but I can\u0027t find any rules for that.",
+      "parentUuid": "53a6355e_f80387da",
+      "range": {
+        "startLine": 104,
+        "startChar": 13,
+        "endLine": 104,
+        "endChar": 14
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bcc72d8_41c6be33",
         "filename": "chrome/browser/net/proxy_resolver_manager.h",
         "patchSetId": 27
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I don\u0027t think that works - if a ProxyResolverFactoryImpl disconnects itself when there are no proxies, there could be another in-flight request to it that fails.  If it tells us it has no connections left, we don\u0027t know if we\u0027ve tried to initiate a new once since it failed, so we again risk causing a request to fail.\n\nIf we gave each connection attempt an increasing id, and it told us the last id it had seen, that would work, but I\u0027m not a fan of adding ids to the API.\n\nI agree it\u0027s confusing, but I don\u0027t currently see a simpler option that\u0027s as robust.",
       "parentUuid": "e1a55759_e2c4b315",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fb8119_e04d49b2",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T20:54:46Z",
+      "side": 1,
+      "message": "Good point.\nIt still feels like doing this bookkeeping is duplicating some of the work that the service manager is doing by keeping the service alive until no connections are bound. \nSo I have another suggestion :-)\nIf we were to drop the ProxyResolverFactoryPtr after each use and there were still connected ProxyResolverPtrs, the service wouldn\u0027t go away until the last ProxyResolverPtr goes away. In that case calling ProxyResolverManager::ResolverFactory() would rebind the factory in the existing util process on every call. That might be too slow to do every time (it incurs 2 IPC across 2 processes).\nBut what about if we had the timer to destroy the factory started every time ResolverFactory() is called. That would mean the factory wouldn\u0027t be recreated unless it had been unused for more than 5 seconds.\nWDYT?",
+      "parentUuid": "c492c808_1bbfaccd",
       "range": {
         "startLine": 27,
         "startChar": 0,
