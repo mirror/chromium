@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20a6419d_e0ebb003",
+        "filename": "components/download/internal/android/battery_status_listener_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "This could just be a static method, no need for a helper object",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c4419f_f39f2420",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/BatteryStatusListenerAndroid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "This is unused?",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66561d27_3f0dd869",
+        "filename": "components/download/internal/android/java/src/org/chromium/components/download/internal/BatteryStatusListenerAndroid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "We already have: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/offlinepages/DeviceConditions.java?rcl\u003da23ba5120eba56756fc5804491fe99a0c0b476cd\u0026l\u003d71\n\nIt is currently \"offlinepages\" code but might be reasonable to reuse in this case?",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b927f5_399a0a99",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "optional: instead of BuildPlatformListeners you could accept a Listener in the constructor, then testing would be simpler",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "294d9c2a_e5d822cf",
+        "filename": "components/download/internal/scheduler/device_status_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "nit: \"May update\"",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafd3747_4e0ff66f",
+        "filename": "components/download/internal/test/test_device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "no .h file in the CL?",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db16733_9c2643d8",
+        "filename": "components/download/internal/test/test_device_status_listener.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "these could use /* name */-style comments for clarity",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7d01d9_8862fa59",
+        "filename": "components/download/public/download_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-20T17:32:28Z",
+      "side": 1,
+      "message": "Would it be clearer to just write:\nint optimal_battery_percentage \u003d 50;\n\nthen the default is obvious?",
+      "revId": "c06bc0cdb9e68d4b148b4c5a1e9d07d71bca3329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
