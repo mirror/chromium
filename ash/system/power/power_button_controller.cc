@@ -29,6 +29,13 @@ namespace {
 constexpr base::TimeDelta kDisplayOffAfterLockDelay =
     base::TimeDelta::FromSeconds(3);
 
+// Returns true if a user(s) has logged in *and* login UI is hidden i.e. user
+// session is not blocked.
+bool IsActiveUserSession() {
+  return Shell::Get()->session_controller()->GetSessionState() ==
+         session_manager::SessionState::ACTIVE;
+}
+
 }  // namespace
 
 PowerButtonController::PowerButtonController()
@@ -72,8 +79,7 @@ void PowerButtonController::OnPowerButtonEvent(
     // running on official hardware, just lock the screen or shut down
     // immediately.
     if (down) {
-      if (session_controller->CanLockScreen() &&
-          !session_controller->IsUserSessionBlocked() &&
+      if (session_controller->CanLockScreen() && IsActiveUserSession() &&
           !lock_state_controller_->LockRequested()) {
         lock_state_controller_->StartLockAnimationAndLockImmediately();
       } else {
@@ -88,8 +94,7 @@ void PowerButtonController::OnPowerButtonEvent(
     if (lock_state_controller_->LockRequested())
       return;
 
-    if (session_controller->CanLockScreen() &&
-        !session_controller->IsUserSessionBlocked()) {
+    if (session_controller->CanLockScreen() && IsActiveUserSession()) {
       lock_state_controller_->StartLockThenShutdownAnimation(
           ShutdownReason::POWER_BUTTON);
       started_lock_animation_for_power_button_down_ = true;
