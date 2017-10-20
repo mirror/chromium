@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d6c59633_5c96364a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T02:14:24Z",
+      "side": 1,
+      "message": "Should we do these renderer kill checks first, before the common IPC check? Reasoning that a malformed message means we should kill the renderer rather than return a graceful error message.",
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b6c220_e8dcc031",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-20T02:14:24Z",
+      "side": 1,
+      "message": "Please add something about watching out for 776408 also.",
+      "revId": "1e2ce91ac708484965de15df0306376247cbda5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfc941b6_a351e060",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 3
