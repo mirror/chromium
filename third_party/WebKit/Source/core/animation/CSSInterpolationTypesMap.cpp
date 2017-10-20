@@ -27,6 +27,7 @@
 #include "core/animation/CSSPathInterpolationType.h"
 #include "core/animation/CSSPositionAxisListInterpolationType.h"
 #include "core/animation/CSSPositionInterpolationType.h"
+#include "core/animation/CSSRayInterpolationType.h"
 #include "core/animation/CSSResolutionInterpolationType.h"
 #include "core/animation/CSSRotateInterpolationType.h"
 #include "core/animation/CSSScaleInterpolationType.h"
@@ -192,9 +193,8 @@ const InterpolationTypes& CSSInterpolationTypesMap::Get(
           WTF::MakeUnique<CSSPaintInterpolationType>(used_property));
       break;
     case CSSPropertyOffsetPath:
-      // TODO(ericwilligers): Animate rays using CSSRayInterpolationType
-      // crbug.com/696395
-
+      applicable_types->push_back(
+          WTF::MakeUnique<CSSRayInterpolationType>(used_property));
       applicable_types->push_back(
           WTF::MakeUnique<CSSPathInterpolationType>(used_property));
       break;
