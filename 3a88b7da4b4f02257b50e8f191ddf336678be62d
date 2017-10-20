@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7503547_13f885e3",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T18:28:36Z",
+      "side": 1,
+      "message": "you\u0027re looking for a specific character in an array of characters, there\u0027s a function for that -- use memchr()",
+      "revId": "3a88b7da4b4f02257b50e8f191ddf336678be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492035cc_1bebb0fb",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T18:28:36Z",
+      "side": 1,
+      "message": "redundant, along with first check in Shutdown() I guess.",
+      "revId": "3a88b7da4b4f02257b50e8f191ddf336678be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b7567c_d48b8c51",
+        "filename": "content/browser/devtools/devtools_pipe_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-20T18:28:36Z",
+      "side": 1,
+      "message": "consider std::unique_ptr\u003cThread, OnTaskRunnerDeleter\u003e",
+      "revId": "3a88b7da4b4f02257b50e8f191ddf336678be62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
