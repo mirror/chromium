@@ -25,6 +25,7 @@ namespace content {
 
 class ChildURLLoaderFactoryGetter;
 class ControllerServiceWorkerConnector;
+struct ServiceWorkerFetchRequest;
 
 // S13nServiceWorker:
 // A custom URLLoader implementation used by Service Worker controllees
@@ -34,7 +35,8 @@ class ControllerServiceWorkerConnector;
 class CONTENT_EXPORT ServiceWorkerSubresourceLoader
     : public mojom::URLLoader,
       public mojom::URLLoaderClient,
-      public mojom::ServiceWorkerFetchResponseCallback {
+      public mojom::ServiceWorkerFetchResponseCallback,
+      public ControllerServiceWorkerConnector::Observer {
  public:
   // See the comments for ServiceWorkerSubresourceLoaderFactory's ctor (below)
   // to see how each parameter is used.
@@ -54,12 +56,17 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
 
   ~ServiceWorkerSubresourceLoader() override;
 
+  // ControllerServiceWorkerConnector::Observer overrdies:
+  void OnConnectionClosed() override;
+
  private:
   void DeleteSoon();
 
   void StartRequest(const ResourceRequest& resource_request);
+  void DispatchFetchEvent();
   void OnFetchEventFinished(blink::mojom::ServiceWorkerEventStatus status,
                             base::Time dispatch_event_time);
+  void SettleInflightFetchRequestIfNeeded();
 
   // mojom::ServiceWorkerFetchResponseCallback overrides:
   void OnResponse(const ServiceWorkerResponse& response,
@@ -118,6 +125,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   mojo::Binding<ServiceWorkerFetchResponseCallback> response_callback_binding_;
 
   scoped_refptr<ControllerServiceWorkerConnector> controller_connector_;
+
+  std::unique_ptr<ServiceWorkerFetchRequest> inflight_fetch_request_;
 
   // These are given by the constructor (as the params for
   // URLLoaderFactory::CreateLoaderAndStart).
