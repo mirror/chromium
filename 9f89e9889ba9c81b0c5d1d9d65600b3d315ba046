@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56aceebc_af317657",
+        "filename": "pdf/pdfium/fuzzers/dicts/pdf_fm2js.dict",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-20T16:55:59Z",
+      "side": 1,
+      "message": "Instead of duplicating pdf_formcalc.dict, I think we should change the dict of pdf_fm2js.dict to \"dicts/pdf_formcalc.dict\" in the BUILD.GN, once https://chromium-review.googlesource.com/c/chromium/src/+/728406 lands",
+      "revId": "9f89e9889ba9c81b0c5d1d9d65600b3d315ba046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
