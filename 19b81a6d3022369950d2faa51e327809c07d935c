@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3226ebf_c6b0cd06",
+        "filename": "chrome/browser/chromeos/login/hid_detection_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "This space is unnecessary. I\u0027m not sure why this line got wrapped.",
+      "range": {
+        "startLine": 95,
+        "startChar": 53,
+        "endLine": 95,
+        "endChar": 54
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966b4f45_927f6fa7",
+        "filename": "chrome/browser/chromeos/login/hid_detection_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "This space is unnecessary. I\u0027m not sure why this line got wrapped.",
+      "range": {
+        "startLine": 95,
+        "startChar": 53,
+        "endLine": 95,
+        "endChar": 54
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1236eab_8a0aec53",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "It remains unclear why we have to call GetDevices() on a separate InputDeviceManagerPtr. I suggest adding a shared ConnectToInputDeviceManager() function that ensures that |input_device_manager_| has been initialized and then use the same connection here and in GetInputDeviceList(). The two uses of this connection will not interfere.",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 33
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f54e4e9_954cfbde",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "// Saves and processes the list of input devices returned by the request\n// made in GetInputDevicesList().",
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c7d086_21072d16",
+        "filename": "components/pairing/bluetooth_host_pairing_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "Make this connection in the constructor as it appears that this method can be called more than once and we want only a single connection.",
+      "range": {
+        "startLine": 366,
+        "startChar": 0,
+        "endLine": 367,
+        "endChar": 72
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da80761_8becf3b7",
+        "filename": "device/hid/fake_input_service_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "Same comment about already being in the device namespace.",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c864dc3a_911ca07f",
+        "filename": "device/hid/fake_input_service_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "We are already in the device namespace so device:: isn\u0027t required here and below.",
+      "range": {
+        "startLine": 18,
+        "startChar": 37,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba96873_6ecc3dcc",
+        "filename": "device/hid/input_service_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32972ba5_890ca962",
+        "filename": "device/hid/input_service_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "Call this BindRequest() as it doesn\u0027t always create a new InputServiceLinux.",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bccb157_d4dc4d67",
+        "filename": "device/hid/input_service_linux_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-20T01:21:18Z",
+      "side": 1,
+      "message": "Instead of this, try:\n\nASSERT_TRUE(service);\nbase::RunLoop run_loop;\nservice-\u003eGetDevices(base::BindOnce(\u0026OnGetDevices, run_loop.QuitClosure()));\nrun_loop.Run();\n\nOnGetDevices() should run the callback passed to it and that will trigger the completion of the test.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 53
+      },
+      "revId": "19b81a6d3022369950d2faa51e327809c07d935c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
