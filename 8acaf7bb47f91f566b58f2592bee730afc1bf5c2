@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c465955_df3ace97",
+        "filename": "chrome/browser/net/proxy_resolver_manager.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T19:09:37Z",
+      "side": 1,
+      "message": "I thought it was OK these days to use a static local var instead of a base::Singleton().",
+      "range": {
+        "startLine": 104,
+        "startChar": 13,
+        "endLine": 104,
+        "endChar": 14
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcc72d8_41c6be33",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T19:09:37Z",
+      "side": 1,
+      "message": "nit: looks like we might not need some of the includes: \u003cstring\u003e, binding.h, connector.mojom.h\nand we need set, singleton.\n(I realize these were in the previous version, but that\u0027s an opportunity to fix them since we are there)",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a55759_e2c4b315",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T19:09:37Z",
+      "side": 1,
+      "message": "I find the ResolverFactoryChannel a bit confusing. I understand why it\u0027s there (tracking the number of ProxyResolver bound by the factory so we can clean up the factory when none are left), but the bookkeeping and proxying by locally binding a proxy_resolver::mojom::ProxyResolverFactory that forwards to the actual factory seems complicated.\nI wonder if the bookkeeping could not be done by the actual ProxyResolverfactoryImpl. It could use non strong bindings to the Proxyresolvers and detect when one is disconnected, and when none is left disconnect its end of the pipe (or cleaner, it could have a client interface that notifies the client when no connection is left and let it decide what it wants to do, in our case run the timer and disconnect our end of the pipe if no new connection happened).\nJust a thought, may be this would not end up being that much simpler?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418b52f9_d37b8b98",
+        "filename": "chrome/browser/net/proxy_resolver_manager.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T19:09:37Z",
+      "side": 1,
+      "message": "Nit: the the",
+      "range": {
+        "startLine": 58,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4319090_89c4c0a6",
+        "filename": "content/network/proxy_resolver_factory_mojo_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T19:09:37Z",
+      "side": 1,
+      "message": "Nit: typo",
+      "range": {
+        "startLine": 430,
+        "startChar": 45,
+        "endLine": 430,
+        "endChar": 59
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0caff8_4440506f",
+        "filename": "content/test/test_mojo_proxy_resolver_factory.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-20T19:09:37Z",
+      "side": 1,
+      "message": "Nit: should it be renamed TestProxyResolverFactory?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "8acaf7bb47f91f566b58f2592bee730afc1bf5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
