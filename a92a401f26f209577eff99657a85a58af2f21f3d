@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b6d8e2_cf5bb6c5",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-20T16:41:34Z",
+      "side": 1,
+      "message": "Since the important part here is the structure, not actual bytes, can we use the diagnostic notation instead? ex:\n{\"a\": 1, \n \"b\": {\"c\": 2, \n       \"d\": 3}}\n\nI think it\u0027s a little easier to see the layers.",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca28443_2c3a76ff",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-20T16:41:34Z",
+      "side": 1,
+      "message": "Also, I think this may only be 2 layers?\nIf we take nesting level to be \"defined by the number of \"{\" or \"[\" characters without their matching closing parenthesis crossed to reach a given character in a string\" (found in one of the cbor reference implementation: http://pod.tst.eu/http://cvs.schmorp.de/CBOR-XS/XS.pm).\ne.g. [1[2[3[4]]]]",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f363e58d_4d008d8e",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-20T16:41:34Z",
+      "side": 1,
+      "message": "I\u0027m being hypocritical, since I wrote and didn\u0027t annotate the original test cases in this file :-), but could you also add comments with diagnostic notation to this and the following two tests?",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
