@@ -83,6 +83,13 @@ public class AppMenuPropertiesDelegate {
     }
 
     /**
+     * @return Whether the app menu for the Chrome Home bottom sheet NTP should be shown.
+     */
+    public boolean shouldShowBottomSheetNtpMenu() {
+        return mActivity.getBottomSheet() != null && mActivity.getBottomSheet().isShowingNewTab();
+    }
+
+    /**
      * Allows the delegate to show and hide items before the App Menu is shown. It is called every
      * time the menu is shown. This assumes that the provided menu contains all the items expected
      * in the application menu (i.e. that the main menu has been inflated into it).
@@ -93,8 +100,7 @@ public class AppMenuPropertiesDelegate {
         boolean isPageMenu = shouldShowPageMenu();
         boolean isOverviewMenu;
         boolean isTabletEmptyModeMenu;
-        boolean isBottomSheetNtpMenu =
-                mActivity.getBottomSheet() != null && mActivity.getBottomSheet().isShowingNewTab();
+        boolean isBottomSheetNtpMenu = shouldShowBottomSheetNtpMenu();
 
         boolean isOverview = mActivity.isInOverviewMode();
         boolean isIncognito = mActivity.getCurrentTabModel().isIncognito();
@@ -359,12 +365,12 @@ public class AppMenuPropertiesDelegate {
     }
 
     /**
-     * @return Resource layout id for the header if there should be one. O otherwise. The header
-     *         will be displayed as the first item in the app menu. It will be scrolled off as the
-     *         menu scrolls.
+     * @return The View to use as the app menu header if there should be one. null otherwise. The
+     *         header will be displayed as the first item in the app menu. It will be scrolled off
+     *         as the menu scrolls.
      */
-    public int getHeaderResourceId() {
-        return 0;
+    public View getHeaderView() {
+        return null;
     }
 
     /**
