@@ -40,6 +40,8 @@
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutFlowThread.h"
 #include "core/layout/LayoutInline.h"
+#include "core/layout/LayoutListItem.h"
+#include "core/layout/LayoutListMarker.h"
 #include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutPagedFlowThread.h"
@@ -799,6 +801,21 @@ void LayoutBlockFlow::InsertForcedBreakBeforeChildIfNeeded(
   }
 }
 
+static bool IsAnonymousParentForListMarker(const LayoutObject* parent) {
+  if (!parent || !parent->IsAnonymousBlock())
+    return false;
+
+  LayoutObject* list = parent->Parent();
+  if (!list || !list->IsListItem())
+    return false;
+
+  LayoutListMarker* marker = ToLayoutListItem(list)->Marker();
+  if (marker && marker->Parent() == parent && !marker->NextSibling())
+    return true;
+
+  return false;
+}
+
 void LayoutBlockFlow::LayoutBlockChild(LayoutBox& child,
                                        BlockChildrenLayoutInfo& layout_info) {
   MarginInfo& margin_info = layout_info.GetMarginInfo();
@@ -906,7 +923,8 @@ void LayoutBlockFlow::LayoutBlockChild(LayoutBox& child,
   // We are no longer at the top of the block if we encounter a non-empty child.
   // This has to be done after checking for clear, so that margins can be reset
   // if a clear occurred.
-  if (margin_info.AtBeforeSideOfBlock() && !child_is_self_collapsing)
+  if (margin_info.AtBeforeSideOfBlock() && !child_is_self_collapsing &&
+      !IsAnonymousParentForListMarker(&child))
     margin_info.SetAtBeforeSideOfBlock(false);
 
   // Now place the child in the correct left position
@@ -2094,7 +2112,8 @@ void LayoutBlockFlow::MarginBeforeEstimateForChild(
   LayoutBox* grandchild_box = child_block_flow->FirstChildBox();
   for (; grandchild_box; grandchild_box = grandchild_box->NextSiblingBox()) {
     if (!grandchild_box->IsFloatingOrOutOfFlowPositioned() &&
-        !grandchild_box->IsColumnSpanAll())
+        !grandchild_box->IsColumnSpanAll() &&
+        !IsAnonymousParentForListMarker(grandchild_box))
       break;
   }
 
