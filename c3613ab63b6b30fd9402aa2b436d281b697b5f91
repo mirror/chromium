@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0cfff56_ab574097",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-20T21:22:38Z",
+      "side": 1,
+      "message": "Minimal example: https://jsfiddle.net/m22L5u8e/1/.",
+      "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
