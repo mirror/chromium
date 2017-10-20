@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9e22549_b2992b23",
+        "filename": "chromeos/network/device_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-20T19:10:24Z",
+      "side": 1,
+      "message": "We should remove the country altogether, or do you prefer I submit a follow-up CL for that?",
+      "range": {
+        "startLine": 67,
+        "startChar": 28,
+        "endLine": 67,
+        "endChar": 41
+      },
+      "revId": "2614035c34ece854ad2b4bdacfa80bd898c33061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
