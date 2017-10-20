@@ -765,6 +765,7 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   {
     CommonNavigationParams common_params;
     common_params.url = kUrl2;
+    common_params.initiator_origin = url::Origin::Create(kUrl0);
     common_params.referrer = Referrer(kUrl0, blink::kWebReferrerPolicyDefault);
     common_params.transition = ui::PageTransitionFromInt(
         ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_CLIENT_REDIRECT);
@@ -775,8 +776,8 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
         false,             // skip_service_worker
         REQUEST_CONTEXT_TYPE_SCRIPT,
         blink::WebMixedContentContextType::kBlockable,
-        false,  // is_form_submission
-        url::Origin::Create(kUrl0));
+        false  // is_form_submission
+        );
     main_test_rfh()->OnMessageReceived(FrameHostMsg_BeginNavigation(
         main_test_rfh()->GetRoutingID(), common_params, begin_params));
   }

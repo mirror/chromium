@@ -77,6 +77,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   virtual bool IsRemoteFrame() const = 0;
 
   virtual void Navigate(Document& origin_document,
+                        scoped_refptr<SecurityOrigin> requestor_origin,
                         const KURL&,
                         bool replace_current_item,
                         UserGestureStatus) = 0;

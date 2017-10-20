@@ -426,25 +426,24 @@ DOMWindow* CreateWindow(const String& url_string,
   WebWindowFeatures window_features =
       GetWindowFeaturesFromString(window_features_string);
 
-  FrameLoadRequest frame_request(calling_window.document(),
-                                 ResourceRequest(completed_url), frame_name);
-  frame_request.SetShouldSetOpener(window_features.noopener ? kNeverSetOpener
-                                                            : kMaybeSetOpener);
-  frame_request.GetResourceRequest().SetFrameType(
-      WebURLRequest::kFrameTypeAuxiliary);
-  frame_request.GetResourceRequest().SetRequestorOrigin(
+  ResourceRequest resource_request(completed_url);
+  resource_request.SetRequestorOrigin(
       SecurityOrigin::Create(active_frame->GetDocument()->Url()));
-
+  resource_request.SetFrameType(WebURLRequest::kFrameTypeAuxiliary);
   // Normally, FrameLoader would take care of setting the referrer for a
   // navigation that is triggered from javascript. However, creating a window
   // goes through sufficient processing that it eventually enters FrameLoader as
   // an embedder-initiated navigation.  FrameLoader assumes no responsibility
   // for generating an embedder-initiated navigation's referrer, so we need to
   // ensure the proper referrer is set now.
-  frame_request.GetResourceRequest().SetHTTPReferrer(
-      SecurityPolicy::GenerateReferrer(
-          active_frame->GetDocument()->GetReferrerPolicy(), completed_url,
-          active_frame->GetDocument()->OutgoingReferrer()));
+  resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
+      active_frame->GetDocument()->GetReferrerPolicy(), completed_url,
+      active_frame->GetDocument()->OutgoingReferrer()));
+
+  FrameLoadRequest frame_request(calling_window.document(), resource_request,
+                                 frame_name);
+  frame_request.SetShouldSetOpener(window_features.noopener ? kNeverSetOpener
+                                                            : kMaybeSetOpener);
 
   // Records HasUserGesture before the value is invalidated inside
   // createWindow(LocalFrame& openerFrame, ...).
@@ -474,14 +473,20 @@ DOMWindow* CreateWindow(const String& url_string,
   // causes the navigation to be flagged as a client redirect, which is
   // observable via the webNavigation extension api.
   if (created) {
-    FrameLoadRequest request(calling_window.document(),
-                             ResourceRequest(completed_url));
-    request.GetResourceRequest().SetHasUserGesture(has_user_gesture);
+    ResourceRequest resource_request(completed_url);
+    resource_request.SetRequestorOrigin(
+        SecurityOrigin::Create(calling_window.document()->Url()));
+    resource_request.SetHasUserGesture(has_user_gesture);
+    FrameLoadRequest request(calling_window.document(), resource_request);
     new_frame->Navigate(request);
   } else if (!url_string.IsEmpty()) {
-    new_frame->Navigate(*calling_window.document(), completed_url, false,
-                        has_user_gesture ? UserGestureStatus::kActive
-                                         : UserGestureStatus::kNone);
+    DCHECK(calling_window.document());
+    new_frame->Navigate(
+        *calling_window.document(),
+        SecurityOrigin::Create(calling_window.document()->Url()), completed_url,
+        false,
+        has_user_gesture ? UserGestureStatus::kActive
+                         : UserGestureStatus::kNone);
   }
   return window_features.noopener ? nullptr : new_frame->DomWindow();
 }

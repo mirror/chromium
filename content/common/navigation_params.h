@@ -70,6 +70,7 @@ struct CONTENT_EXPORT CommonNavigationParams {
                          std::string method,
                          const scoped_refptr<ResourceRequestBody>& post_data,
                          base::Optional<SourceLocation> source_location,
+                         base::Optional<url::Origin> initiator_origin,
                          CSPDisposition should_check_main_world_csp);
   CommonNavigationParams(const CommonNavigationParams& other);
   ~CommonNavigationParams();
@@ -139,6 +140,12 @@ struct CONTENT_EXPORT CommonNavigationParams {
   // not be set.
   base::Optional<SourceLocation> source_location;
 
+  // PlzNavigate
+  // Indicates the initiator of the request. In auxilliary navigations, this is
+  // the origin of the document that triggered the navigation. This parameter
+  // can be null during browser-initiated navigations.
+  base::Optional<url::Origin> initiator_origin;
+
   // Whether or not the CSP of the main world should apply. When the navigation
   // is initiated from a content script in an isolated world, the CSP defined
   // in the main world should not apply.
@@ -168,8 +175,7 @@ struct CONTENT_EXPORT BeginNavigationParams {
       bool skip_service_worker,
       RequestContextType request_context_type,
       blink::WebMixedContentContextType mixed_content_context_type,
-      bool is_form_submission,
-      const base::Optional<url::Origin>& initiator_origin);
+      bool is_form_submission);
   BeginNavigationParams(const BeginNavigationParams& other);
   ~BeginNavigationParams();
 
@@ -197,11 +203,6 @@ struct CONTENT_EXPORT BeginNavigationParams {
   // See WebSearchableFormData for a description of these.
   GURL searchable_form_url;
   std::string searchable_form_encoding;
-
-  // Indicates the initiator of the request. In auxilliary navigations, this is
-  // the origin of the document that triggered the navigation. This parameter
-  // can be null during browser-initiated navigations.
-  base::Optional<url::Origin> initiator_origin;
 
   // If the transition type is a client side redirect, then this holds the URL
   // of the page that had the client side redirect.

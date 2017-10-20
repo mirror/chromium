@@ -1611,8 +1611,9 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
     if (url_string.IsEmpty())
       return target_frame->DomWindow();
 
-    target_frame->Navigate(*active_document, completed_url, false,
-                           UserGestureStatus::kNone);
+    target_frame->Navigate(*active_document,
+                           SecurityOrigin::Create(active_document->Url()),
+                           completed_url, false, UserGestureStatus::kNone);
     return target_frame->DomWindow();
   }
 

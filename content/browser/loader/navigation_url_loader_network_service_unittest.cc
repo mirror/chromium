@@ -113,12 +113,13 @@ class NavigationURLLoaderNetworkServiceTest : public testing::Test {
         headers, net::LOAD_NORMAL, false /* has_user_gesture */,
         false /* skip_service_worker */, REQUEST_CONTEXT_TYPE_LOCATION,
         blink::WebMixedContentContextType::kBlockable,
-        false /* is_form_submission */, url::Origin::Create(url));
+        false /* is_form_submission */);
 
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.method = method;
     common_params.allow_download = allow_download;
+    common_params.initiator_origin = url::Origin::Create(url);
 
     std::unique_ptr<NavigationRequestInfo> request_info(
         new NavigationRequestInfo(

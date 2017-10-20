@@ -1076,10 +1076,11 @@ class ResourceDispatcherHostTest : public testing::Test, public IPC::Sender {
           std::string(), net::LOAD_NORMAL, false, false,
           REQUEST_CONTEXT_TYPE_LOCATION,
           blink::WebMixedContentContextType::kBlockable,
-          false,  // is_form_submission
-          url::Origin::Create(url));
+          false  // is_form_submission
+          );
       CommonNavigationParams common_params;
       common_params.url = url;
+      common_params.initiator_origin = url::Origin::Create(url);
       std::unique_ptr<NavigationRequestInfo> request_info(
           new NavigationRequestInfo(common_params, begin_params, url, true,
                                     false, false, -1, false, false,

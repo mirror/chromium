@@ -300,8 +300,10 @@ void Location::SetLocation(const String& url,
     argv.push_back(completed_url);
     activity_logger->LogEvent("blinkSetAttribute", argv.size(), argv.data());
   }
+  DCHECK(current_window->document());
   dom_window_->GetFrame()->Navigate(
-      *current_window->document(), completed_url,
+      *current_window->document(),
+      SecurityOrigin::Create(current_window->document()->Url()), completed_url,
       set_location_policy == SetLocationPolicy::kReplaceThisFrame,
       UserGestureStatus::kNone);
 }

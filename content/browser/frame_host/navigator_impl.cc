@@ -448,7 +448,8 @@ bool NavigatorImpl::NavigateToEntry(
       dest_render_frame_host->Navigate(
           entry.ConstructCommonNavigationParams(
               frame_entry, post_body, dest_url, dest_referrer, navigation_type,
-              previews_state, navigation_start),
+              previews_state, navigation_start,
+              /* initiator_origin = */ base::Optional<url::Origin>()),
           entry.ConstructStartNavigationParams(),
           entry.ConstructRequestNavigationParams(
               frame_entry, GURL(), std::string(),

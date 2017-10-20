@@ -237,11 +237,12 @@ void LocalFrame::Trace(blink::Visitor* visitor) {
 }
 
 void LocalFrame::Navigate(Document& origin_document,
+                          scoped_refptr<SecurityOrigin> requestor_origin,
                           const KURL& url,
                           bool replace_current_item,
                           UserGestureStatus user_gesture_status) {
-  navigation_scheduler_->ScheduleFrameNavigation(&origin_document, url,
-                                                 replace_current_item);
+  navigation_scheduler_->ScheduleFrameNavigation(
+      &origin_document, requestor_origin, url, replace_current_item);
 }
 
 void LocalFrame::Navigate(const FrameLoadRequest& request) {

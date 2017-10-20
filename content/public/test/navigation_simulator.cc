@@ -791,8 +791,8 @@ bool NavigationSimulator::SimulateRendererInitiatedStart() {
         std::string(), net::LOAD_NORMAL, has_user_gesture_,
         false /* skip_service_worker */, REQUEST_CONTEXT_TYPE_HYPERLINK,
         blink::WebMixedContentContextType::kBlockable,
-        false,  // is_form_submission
-        url::Origin());
+        false  // is_form_submission
+        );
     CommonNavigationParams common_params;
     common_params.url = navigation_url_;
     common_params.referrer = referrer_;
