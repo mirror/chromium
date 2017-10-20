@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9914388_acca9d4f",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "q: Is it possible to drop this swap and just return the x.span.start for the insert_mode case below?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e3ded4_b932ace4",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "nit: |code_point_count|?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b17e9a_ba277053",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "aside: I hope GetDisplayText is safe to call here! ie. this code path isn\u0027t used when calculating the display text from the layout text or similar, ditto below. Existing tests should reveal any issues.",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680576b3_41d6cc79",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "q: Are these bounds not reversed for RTL text at the given index? If this DCHECK is important, perhaps we should do the same for the span returned for right_index? Maybe it\u0027d be nice to clarify the return value for GetGraphemeBounds.",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28566145_83ddc4bf",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "q: DCHECK that the text_range.end() index is in the same run? (maybe not, given your comment below)",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2adf879_a9357e02",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "nit: s/jump/span/?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1fe9e6_ad96561c",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "Hmm, if that\u0027s a bug, I wonder if there are other legit cases where the span isn\u0027t contained in a single run? It would be good to cite a proper example, otherwise, maybe tweak the example to emphasize the incorrectness of the current behavior, maybe something like \"For example, Unicode Variation Selectors are incorrectly placed in the next run; see crbug.com/775404\"",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c30b8e_937c4e63",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4898,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "ditto nit: \"Each flag is 4\"",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9f4959_cf84c89d",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4917,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "nit: also check that this middle_cursor.x() is LE half_width + 1?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13b663d_34dceb30",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4922,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "ditto nit: also check that this end_cursor.x() is LE whole_width + 1?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c17647b_4d337309",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4930,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "nit: s/British/first/?",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364f82c6_13c4b07d",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4935,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 1,
+      "message": "ditto nit: check that selection_bounds.width() + 1 is GE half_width.\n(optionally make this expectation match the pattern above a bit better)",
+      "revId": "f36c337727da130ce7978469efef17c0bf2b2b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

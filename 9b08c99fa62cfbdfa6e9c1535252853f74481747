@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bbf2fc4_fa818fc6",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 0,
+      "message": "aside: hmm, I hope that we test cursor bounds at bidi level changes, etc.",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80917fd6_5ebda801",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-20T00:30:49Z",
+      "side": 0,
+      "message": "Why not just update this to mention GetCursorSpan instead?",
+      "revId": "9b08c99fa62cfbdfa6e9c1535252853f74481747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
