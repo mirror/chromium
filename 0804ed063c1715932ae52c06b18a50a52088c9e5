@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df456170_52d41c0f",
+        "filename": "chrome/browser/download/navigation_monitor_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T20:22:01Z",
+      "side": 1,
+      "message": "Would really like to avoid moving this!  We can\u0027t make shutdown cleaner?  Can we set dependencies on the factory or something?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "0804ed063c1715932ae52c06b18a50a52088c9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d297f253_fbf31b9a",
+        "filename": "components/download/content/test/test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T20:22:01Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "0804ed063c1715932ae52c06b18a50a52088c9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5697b96_a9b7a83a",
+        "filename": "components/download/content/test/test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T20:22:01Z",
+      "side": 1,
+      "message": "Do we need this comment?  We probably want to use a test one regardless of platform?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "0804ed063c1715932ae52c06b18a50a52088c9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
