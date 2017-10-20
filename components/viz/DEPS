@@ -1,6 +1,7 @@
 include_rules = [
   "-components/viz",
   "+components/viz/common",
+  "+components/viz/test",
   "+ui/base",
   "+ui/gfx",
 ]

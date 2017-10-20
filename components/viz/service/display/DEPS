@@ -27,7 +27,6 @@ specific_include_rules = {
   ".*_(unit|pixel|perf)test\.cc": [
     "+cc/test",
     "+components/viz/service/frame_sinks",
-    "+components/viz/test",
     "+gpu/GLES2",
   ],
 }
