@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b66bdf35_b5d2730f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:48:29Z",
+      "side": 1,
+      "message": "List?",
+      "range": {
+        "startLine": 738,
+        "startChar": 61,
+        "endLine": 738,
+        "endChar": 70
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d402767_0777bd23",
+        "filename": "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:48:29Z",
+      "side": 1,
+      "message": "Should you only call this if dismiss_suggestion_callbacks_ was previously empty (e.g. if there wasn\u0027t a request already outstanding)?",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf0d318_7805b0c1",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:48:29Z",
+      "side": 1,
+      "message": "Actually why do we need this intermediate single_item_get_callbacks_ list?  Can we just pass the call directly through?",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 1
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68241f24_6a80f234",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:48:29Z",
+      "side": 1,
+      "message": "We should just clear this after notifying the callbacks.  It\u0027d be expensive to leave this in memory forever until the next GetAllItems call.  Just DCHECK it\u0027s empty here?",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 28
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb740568_99be3056",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:48:29Z",
+      "side": 1,
+      "message": "Can we just pass the Provider* here?",
+      "range": {
+        "startLine": 172,
+        "startChar": 49,
+        "endLine": 172,
+        "endChar": 78
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bec7bc_0b80ddce",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:48:29Z",
+      "side": 1,
+      "message": "Is this a list of providers we are waiting on a callback on?  Can we update the name?",
+      "range": {
+        "startLine": 138,
+        "startChar": 36,
+        "endLine": 138,
+        "endChar": 54
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdbaaf71_7de7092a",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-20T17:48:29Z",
+      "side": 1,
+      "message": "Do you need a map of ContentId -\u003e List of callbacks?  What if there are two calls made for the same ContentId?",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 50
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
