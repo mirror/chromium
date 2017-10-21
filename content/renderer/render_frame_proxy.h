@@ -10,6 +10,7 @@
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "content/common/content_export.h"
 #include "content/common/feature_policy/feature_policy.h"
+#include "content/public/common/screen_info.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
@@ -123,6 +124,10 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   // when a compositor frame has committed.
   void DidCommitCompositorFrame();
 
+  // Out-of-process child frames receive a signal from RenderWidget when the
+  // ScreenInfo has changed.
+  void OnScreenInfoChanged(const ScreenInfo& screen_info);
+
   // Pass replicated information, such as security origin, to this
   // RenderFrameProxy's WebRemoteFrame.
   void SetReplicatedState(const FrameReplicationState& state);
@@ -176,7 +181,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   void ResendFrameRects();
 
-  void MaybeUpdateCompositingHelper();
+  void MaybeUpdatePrimarySurfaceInfo();
 
   void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                             const viz::SurfaceSequence& sequence);
@@ -233,6 +238,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   RenderWidget* render_widget_;
 
   gfx::Rect frame_rect_;
+  ScreenInfo screen_info_;
   viz::FrameSinkId frame_sink_id_;
   viz::LocalSurfaceId local_surface_id_;
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;

@@ -1470,6 +1470,7 @@ void RenderWidgetHostViewAura::OnDisplayMetricsChanged(
   // The screen info should be updated regardless of the metric change.
   display::Screen* screen = display::Screen::GetScreen();
   if (display.id() == screen->GetDisplayNearestWindow(window_).id()) {
+    window_->AllocateLocalSurfaceId();
     UpdateScreenInfo(window_);
     current_cursor_.SetDisplayInfo(display);
     UpdateCursorIfOverSelf();

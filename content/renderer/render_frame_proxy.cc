@@ -24,6 +24,7 @@
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/screen_info.h"
 #include "content/renderer/child_frame_compositing_helper.h"
 #include "content/renderer/frame_owner_properties.h"
 #include "content/renderer/mash_util.h"
@@ -264,6 +265,16 @@ void RenderFrameProxy::WillBeginCompositorFrame() {
 void RenderFrameProxy::DidCommitCompositorFrame() {
 }
 
+void RenderFrameProxy::OnScreenInfoChanged(const ScreenInfo& screen_info) {
+  const bool did_change_screen_info = screen_info_ != screen_info;
+  if (did_change_screen_info || !local_surface_id_.is_valid()) {
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+    MaybeUpdatePrimarySurfaceInfo();
+  }
+  Send(new FrameHostMsg_ScreenInfoChanged(routing_id_, screen_info,
+                                          local_surface_id_));
+}
+
 void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
   DCHECK(web_frame_);
   web_frame_->SetReplicatedOrigin(state.origin);
@@ -304,7 +315,7 @@ void RenderFrameProxy::OnDidUpdateFramePolicy(const FramePolicy& frame_policy) {
       FeaturePolicyHeaderToWeb(frame_policy.container_policy));
 }
 
-void RenderFrameProxy::MaybeUpdateCompositingHelper() {
+void RenderFrameProxy::MaybeUpdatePrimarySurfaceInfo() {
   if (!frame_sink_id_.is_valid() || !local_surface_id_.is_valid())
     return;
 
@@ -348,6 +359,7 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_SetChildFrameSurface, OnSetChildFrameSurface)
     IPC_MESSAGE_HANDLER(FrameMsg_UpdateOpener, OnUpdateOpener)
     IPC_MESSAGE_HANDLER(FrameMsg_ViewChanged, OnViewChanged)
+    // IPC_MESSAGE_HANDLER(FrameMsg_ScreenInfoChanged, OnScreenInfoChanged)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStartLoading, OnDidStartLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStopLoading, OnDidStopLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateFramePolicy, OnDidUpdateFramePolicy)
@@ -585,7 +597,7 @@ void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
 
   if (did_size_change || !local_surface_id_.is_valid()) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    MaybeUpdateCompositingHelper();
+    MaybeUpdatePrimarySurfaceInfo();
   }
 
 #if defined(USE_AURA)
@@ -650,7 +662,7 @@ void RenderFrameProxy::OnMusEmbeddedFrameSurfaceChanged(
 void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
     const viz::FrameSinkId& frame_sink_id) {
   frame_sink_id_ = frame_sink_id;
-  MaybeUpdateCompositingHelper();
+  MaybeUpdatePrimarySurfaceInfo();
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
   ResendFrameRects();

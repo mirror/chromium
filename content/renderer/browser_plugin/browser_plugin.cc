@@ -194,7 +194,7 @@ void BrowserPlugin::Attach() {
     }
   }
 
-  ViewRectsChanged(view_rect());
+  WasResized();
 }
 
 void BrowserPlugin::Detach() {
@@ -210,6 +210,53 @@ void BrowserPlugin::Detach() {
 }
 
 void BrowserPlugin::DidCommitCompositorFrame() {
+}
+
+void BrowserPlugin::WasResized() {
+  if (!resize_params_.view_rect || !resize_params_.screen_info)
+    return;
+
+  const bool rect_size_changed =
+      !old_resize_params_.view_rect ||
+      old_resize_params_.view_rect->size() != resize_params_.view_rect->size();
+
+  const bool rect_changed =
+      old_resize_params_.view_rect != resize_params_.view_rect;
+
+  const bool screen_info_changed =
+      old_resize_params_.screen_info != resize_params_.screen_info;
+
+  bool synchronized_params_dirty = rect_size_changed || screen_info_changed;
+
+  if (synchronized_params_dirty)
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+
+  if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
+    RenderWidget* render_widget =
+        RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())
+            ->GetRenderWidget();
+    float device_scale_factor = render_widget->GetOriginalDeviceScaleFactor();
+    viz::SurfaceInfo surface_info(
+        viz::SurfaceId(frame_sink_id_, local_surface_id_), device_scale_factor,
+        gfx::ScaleToCeiledSize(view_rect().size(), device_scale_factor));
+    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+  }
+
+  bool dirty = rect_changed || screen_info_changed;
+
+  if (dirty && attached()) {
+    // Let the browser know about the updated view rect.
+    BrowserPluginManager::Get()->Send(
+        new BrowserPluginHostMsg_UpdateResizeParams(browser_plugin_instance_id_,
+                                                    view_rect(), screen_info(),
+                                                    local_surface_id_));
+  }
+
+  if (delegate_ && rect_size_changed)
+    delegate_->DidResizeElement(view_rect().size());
+
+  if (dirty && attached())
+    old_resize_params_ = resize_params_;
 }
 
 void BrowserPlugin::OnAdvanceFocus(int browser_plugin_instance_id,
@@ -231,12 +278,8 @@ void BrowserPlugin::OnGuestReady(int browser_plugin_instance_id,
                                  const viz::FrameSinkId& frame_sink_id) {
   guest_crashed_ = false;
   frame_sink_id_ = frame_sink_id;
-  if (!view_rect_)
-    return;
 
-  gfx::Rect view_rect = *view_rect_;
-  view_rect_ = gfx::Rect();
-  ViewRectsChanged(view_rect);
+  WasResized();
 }
 
 void BrowserPlugin::OnSetCursor(int browser_plugin_instance_id,
@@ -290,36 +333,6 @@ void BrowserPlugin::UpdateInternalInstanceId() {
       base::UTF8ToUTF16(base::IntToString(browser_plugin_instance_id_)));
 }
 
-void BrowserPlugin::ViewRectsChanged(const gfx::Rect& view_rect) {
-  bool rect_size_changed =
-      !view_rect_ || view_rect_->size() != view_rect.size();
-  if (rect_size_changed || !local_surface_id_.is_valid()) {
-    local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
-      RenderWidget* render_widget =
-          RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())
-              ->GetRenderWidget();
-      float device_scale_factor = render_widget->GetOriginalDeviceScaleFactor();
-      viz::SurfaceInfo surface_info(
-          viz::SurfaceId(frame_sink_id_, local_surface_id_),
-          device_scale_factor,
-          gfx::ScaleToCeiledSize(view_rect.size(), device_scale_factor));
-      compositing_helper_->SetPrimarySurfaceInfo(surface_info);
-    }
-  }
-
-  view_rect_ = view_rect;
-
-  if (attached()) {
-    // Let the browser know about the updated view rect.
-    BrowserPluginManager::Get()->Send(new BrowserPluginHostMsg_UpdateGeometry(
-        browser_plugin_instance_id_, *view_rect_, local_surface_id_));
-  }
-
-  if (rect_size_changed && delegate_)
-    delegate_->DidResizeElement(view_rect_->size());
-}
-
 void BrowserPlugin::UpdateGuestFocusState(blink::WebFocusType focus_type) {
   if (!attached())
     return;
@@ -328,6 +341,11 @@ void BrowserPlugin::UpdateGuestFocusState(blink::WebFocusType focus_type) {
       browser_plugin_instance_id_,
       should_be_focused,
       focus_type));
+}
+
+void BrowserPlugin::ScreenInfoChanged(const ScreenInfo& screen_info) {
+  resize_params_.screen_info = screen_info;
+  WasResized();
 }
 
 bool BrowserPlugin::ShouldGuestBeFocused() const {
@@ -438,7 +456,8 @@ void BrowserPlugin::UpdateGeometry(const WebRect& plugin_rect_in_viewport,
     ready_ = true;
   }
 
-  ViewRectsChanged(view_rect);
+  resize_params_.view_rect = view_rect;
+  WasResized();
 }
 
 void BrowserPlugin::UpdateFocus(bool focused, blink::WebFocusType focus_type) {
@@ -661,5 +680,9 @@ bool BrowserPlugin::HandleMouseLockedInputEvent(
                                                 &event));
   return true;
 }
+
+BrowserPlugin::ResizeParams::ResizeParams() = default;
+
+BrowserPlugin::ResizeParams::~ResizeParams() = default;
 
 }  // namespace content

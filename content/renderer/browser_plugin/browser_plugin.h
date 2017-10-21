@@ -16,6 +16,7 @@
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "content/public/common/screen_info.h"
 #include "content/renderer/mouse_lock_dispatcher.h"
 #include "content/renderer/render_view_impl.h"
 #include "third_party/WebKit/public/web/WebDragStatus.h"
@@ -56,6 +57,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // Informs the guest of an updated focus state.
   void UpdateGuestFocusState(blink::WebFocusType focus_type);
 
+  void ScreenInfoChanged(const ScreenInfo& screen_info);
+
   // Indicates whether the guest should be focused.
   bool ShouldGuestBeFocused() const;
 
@@ -73,6 +76,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // Notify the plugin about a compositor commit so that frame ACKs could be
   // sent, if needed.
   void DidCommitCompositorFrame();
+
+  void WasResized();
 
   // Returns whether a message should be forwarded to BrowserPlugin.
   static bool ShouldForwardToBrowserPlugin(const IPC::Message& message);
@@ -146,11 +151,15 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
 
   ~BrowserPlugin() override;
 
-  gfx::Rect view_rect() const { return view_rect_.value_or(gfx::Rect()); }
+  gfx::Rect view_rect() const {
+    return resize_params_.view_rect.value_or(gfx::Rect());
+  }
+
+  ScreenInfo screen_info() const {
+    return resize_params_.screen_info.value_or(ScreenInfo());
+  }
 
   void UpdateInternalInstanceId();
-
-  void ViewRectsChanged(const gfx::Rect& view_rect);
 
   // IPC message handlers.
   // Please keep in alphabetical order.
@@ -176,7 +185,6 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   const int render_frame_routing_id_;
   blink::WebPluginContainer* container_;
   // The plugin's rect in css pixels.
-  base::Optional<gfx::Rect> view_rect_;
   bool guest_crashed_;
   bool plugin_focused_;
   // Tracks the visibility of the browser plugin regardless of the whole
@@ -203,6 +211,16 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   bool enable_surface_synchronization_ = false;
+
+  struct ResizeParams {
+    ResizeParams();
+    ~ResizeParams();
+    base::Optional<gfx::Rect> view_rect;
+    base::Optional<ScreenInfo> screen_info;
+  };
+  ResizeParams old_resize_params_;
+  ResizeParams resize_params_;
+
   // We call lifetime managing methods on |delegate_|, but we do not directly
   // own this. The delegate destroys itself.
   base::WeakPtr<BrowserPluginDelegate> delegate_;
