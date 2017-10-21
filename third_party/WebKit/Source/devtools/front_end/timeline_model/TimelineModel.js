@@ -1125,7 +1125,7 @@ TimelineModel.TimelineModel.RecordType = {
   V8Sample: 'V8Sample',
   JitCodeAdded: 'JitCodeAdded',
   JitCodeMoved: 'JitCodeMoved',
-  ParseScriptOnBackground: 'v8.parseOnBackground',
+  ParseScriptOnBackgroundTask: 'ParseOnBackgroundTask',
 
   UpdateCounters: 'UpdateCounters',
 

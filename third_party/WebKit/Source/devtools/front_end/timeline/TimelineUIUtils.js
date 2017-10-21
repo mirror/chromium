@@ -103,8 +103,8 @@ Timeline.TimelineUIUtils = class {
         new Timeline.TimelineRecordStyle(Common.UIString('Compile Script'), categories['scripting']);
     eventStyles[recordTypes.EvaluateScript] =
         new Timeline.TimelineRecordStyle(Common.UIString('Evaluate Script'), categories['scripting']);
-    eventStyles[recordTypes.ParseScriptOnBackground] =
-        new Timeline.TimelineRecordStyle(Common.UIString('Parse Script'), categories['scripting']);
+    eventStyles[recordTypes.ParseScriptOnBackgroundTask] =
+        new Timeline.TimelineRecordStyle(Common.UIString('Parse Script Chunk'), categories['scripting']);
     eventStyles[recordTypes.MarkLoad] =
         new Timeline.TimelineRecordStyle(Common.UIString('Load event'), categories['scripting'], true);
     eventStyles[recordTypes.MarkDOMContent] =
@@ -530,7 +530,7 @@ Timeline.TimelineUIUtils = class {
         if (url)
           detailsText = Bindings.displayNameForURL(url) + ':' + (eventData['lineNumber'] + 1);
         break;
-      case recordType.ParseScriptOnBackground:
+      case recordType.ParseScriptOnBackgroundTask:
       case recordType.XHRReadyStateChange:
       case recordType.XHRLoad:
         var url = eventData['url'];
@@ -686,7 +686,7 @@ Timeline.TimelineUIUtils = class {
         if (url)
           details = linkifyLocation('', url, eventData['lineNumber'], 0);
         break;
-      case recordType.ParseScriptOnBackground:
+      case recordType.ParseScriptOnBackgroundTask:
         var url = eventData['url'];
         if (url)
           details = linkifyLocation('', url, 0, 0);
