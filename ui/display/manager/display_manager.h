@@ -30,6 +30,7 @@
 #if defined(OS_CHROMEOS)
 #include "base/optional.h"
 #include "ui/display/manager/chromeos/display_configurator.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 #endif
 
 namespace gfx {
@@ -192,14 +193,12 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // |overscan_insets| is null if the display has no custom overscan insets.
   // |touch_calibration_data| is null if the display has no touch calibration
   // associated data.
-  void RegisterDisplayProperty(
-      int64_t display_id,
-      Display::Rotation rotation,
-      float ui_scale,
-      const gfx::Insets* overscan_insets,
-      const gfx::Size& resolution_in_pixels,
-      float device_scale_factor,
-      std::map<uint32_t, TouchCalibrationData>* touch_calibration_data_map);
+  void RegisterDisplayProperty(int64_t display_id,
+                               Display::Rotation rotation,
+                               float ui_scale,
+                               const gfx::Insets* overscan_insets,
+                               const gfx::Size& resolution_in_pixels,
+                               float device_scale_factor);
 
   // Register stored rotation properties for the internal display.
   void RegisterDisplayRotationProperties(bool rotation_lock,
@@ -329,10 +328,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
       int64_t display_id,
       const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
       const gfx::Size& display_bounds,
-      uint32_t touch_device_identifier);
+      const TouchDeviceIdentifier& touch_device_identifier);
   void ClearTouchCalibrationData(
       int64_t display_id,
-      base::Optional<uint32_t> touch_device_identifier);
+      base::Optional<TouchDeviceIdentifier> touch_device_identifier);
 #endif
 
   // Sets/gets default multi display mode.
@@ -380,6 +379,12 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // swapping is an obsolete feature pre-dating multi-display support so remove
   // it.
   const Display& GetSecondaryDisplay() const;
+
+#if defined(OS_CHROMEOS)
+  TouchDeviceManager* touch_device_manager() const {
+    return touch_device_manager_.get();
+  }
+#endif
 
  private:
   friend class test::DisplayManagerTestApi;
@@ -520,6 +525,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   base::Closure created_mirror_window_;
 
   base::ObserverList<DisplayObserver> observers_;
+
+#if defined(OS_CHROMEOS)
+  std::unique_ptr<TouchDeviceManager> touch_device_manager_;
+#endif
 
   // This is incremented whenever a BeginEndNotifier is created and decremented
   // when destroyed. BeginEndNotifier uses this to track when it should call
