@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53dc8363_fcc27864",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:33:01Z",
+      "side": 1,
+      "message": "nit: Please keep this line above the constructor, just below \"protected\"",
+      "range": {
+        "startLine": 335,
+        "startChar": 46,
+        "endLine": 335,
+        "endChar": 0
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395e35b1_3340f96c",
+        "filename": "components/variations/field_trial_config/field_trial_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:33:01Z",
+      "side": 1,
+      "message": "nit: DVLOG(1) is probably sufficient for this log stmt",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 17
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923657f3_47fa45d7",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:33:01Z",
+      "side": 1,
+      "message": "nit: Can this be in the initialization list, above?",
+      "range": {
+        "startLine": 110,
+        "startChar": 70,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03590108_3931c228",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:33:01Z",
+      "side": 1,
+      "message": "Is it possible that this switch is already present on the command line?  Would there by any issues if that were the case?",
+      "range": {
+        "startLine": 263,
+        "startChar": 36,
+        "endLine": 263,
+        "endChar": 63
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57ddadf_4d9a4a34",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:33:01Z",
+      "side": 1,
+      "message": "Please document what this code is doing.  Something like\n\n// The current global field trial list contains any trials that were activated prior to main browser startup.  That global field trial list is about to be destroyed below, and will be recreated during the browser process startup code.  Pass the currently active trials to the subsequent list via the command line.\n\n(As always, feel free to refine that phrasing further.)",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 3
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfedb53_bc5e8788",
+        "filename": "content/public/test/browser_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:33:01Z",
+      "side": 1,
+      "message": "Please add documentation for this member variable.  Something like:\n\n// A field trial list that\u0027s used to support field trials activated prior to SetUpOnMainThread().",
+      "range": {
+        "startLine": 152,
+        "startChar": 58,
+        "endLine": 152,
+        "endChar": 0
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
