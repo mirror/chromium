@@ -39,10 +39,14 @@ const char kInsetsLeftKey[] = "insets_left";
 const char kInsetsBottomKey[] = "insets_bottom";
 const char kInsetsRightKey[] = "insets_right";
 
-const char kTouchCalibrationMap[] = "touch_calibration_map";
 const char kTouchCalibrationWidth[] = "touch_calibration_width";
 const char kTouchCalibrationHeight[] = "touch_calibration_height";
 const char kTouchCalibrationPointPairs[] = "touch_calibration_point_pairs";
+
+constexpr char kTouchAssociationTimestamp[] = "touch_association_timestamp";
+constexpr char kTouchAssociationDisplayId[] = "touch_association_display_id";
+constexpr char kTouchAssociationCalibrationData[] =
+    "touch_association_calibration_data";
 
 // This kind of boilerplates should be done by base::JSONValueConverter but it
 // doesn't support classes like gfx::Insets for now.
@@ -123,29 +127,6 @@ bool ValueToTouchData(const base::DictionaryValue& value,
   return true;
 }
 
-bool ValueToTouchDataMap(
-    const base::DictionaryValue& value,
-    std::map<uint32_t, display::TouchCalibrationData>* touch_calibration_map) {
-  const base::DictionaryValue* map_dictionary;
-
-  if (!value.GetDictionary(kTouchCalibrationMap, &map_dictionary))
-    return false;
-
-  for (const auto& data_pair : *map_dictionary) {
-    uint32_t touch_device_identifier;
-    if (!base::StringToUint(data_pair.first, &touch_device_identifier))
-      return false;
-    const base::DictionaryValue* data_dict;
-    if (!data_pair.second->GetAsDictionary(&data_dict))
-      return false;
-    display::TouchCalibrationData data;
-    if (!ValueToTouchData(*data_dict, &data))
-      return false;
-    touch_calibration_map->emplace(touch_device_identifier, data);
-  }
-  return true;
-}
-
 // Stores the touch calibration data into the dictionary.
 void TouchDataToValue(
     const display::TouchCalibrationData& touch_calibration_data,
@@ -173,25 +154,6 @@ void TouchDataToValue(
                     touch_calibration_data.bounds.width());
   value->SetInteger(kTouchCalibrationHeight,
                     touch_calibration_data.bounds.height());
-}
-
-// Stores the entire touch calibration data map to the dictionary.
-void TouchDataMapToValue(
-    const std::map<uint32_t, display::TouchCalibrationData>& touch_data_map,
-    base::DictionaryValue* value) {
-  std::unique_ptr<base::DictionaryValue> touch_data_map_dictionary =
-      std::make_unique<base::DictionaryValue>();
-
-  for (const auto& pair : touch_data_map) {
-    std::unique_ptr<base::DictionaryValue> touch_data_dictionary =
-        std::make_unique<base::DictionaryValue>();
-    TouchDataToValue(pair.second, touch_data_dictionary.get());
-
-    touch_data_map_dictionary->SetDictionary(base::UintToString(pair.first),
-                                             std::move(touch_data_dictionary));
-  }
-  value->SetDictionary(kTouchCalibrationMap,
-                       std::move(touch_data_map_dictionary));
 }
 
 display::DisplayManager* GetDisplayManager() {
@@ -280,39 +242,9 @@ void LoadDisplayProperties() {
     if (ValueToInsets(*dict_value, &insets))
       insets_to_set = &insets;
 
-    // Retrive any legacy touch calibration data.
-    display::TouchCalibrationData calibration_data;
-    display::TouchCalibrationData* calibration_data_to_set = nullptr;
-    if (ValueToTouchData(*dict_value, &calibration_data))
-      calibration_data_to_set = &calibration_data;
-
-    std::map<uint32_t, display::TouchCalibrationData> calibration_data_map;
-    std::map<uint32_t, display::TouchCalibrationData>*
-        calibration_data_map_to_set = nullptr;
-    if (ValueToTouchDataMap(*dict_value, &calibration_data_map))
-      calibration_data_map_to_set = &calibration_data_map;
-
-    // Migrate legacy touch calibration data to updated model. Use it as a
-    // fallback mechanism.
-    if (calibration_data_to_set) {
-      const uint32_t fallback_identifier =
-          display::TouchCalibrationData::GetFallbackTouchDeviceIdentifier();
-      // Store the legacy cailbration data in the calibration data map if we
-      // have a non-null calibration data map with no previous fallback
-      // calibration data stored in it.
-      if (calibration_data_map_to_set &&
-          calibration_data_map_to_set->count(fallback_identifier) == 0) {
-        (*calibration_data_map_to_set)[fallback_identifier] =
-            *calibration_data_to_set;
-      } else {
-        calibration_data_map[fallback_identifier] = *calibration_data_to_set;
-        calibration_data_map_to_set = &calibration_data_map;
-      }
-    }
-
     GetDisplayManager()->RegisterDisplayProperty(
         id, rotation, ui_scale, insets_to_set, resolution_in_pixels,
-        device_scale_factor, calibration_data_map_to_set);
+        device_scale_factor);
   }
 }
 
@@ -331,6 +263,81 @@ void LoadDisplayRotationState() {
 
   GetDisplayManager()->RegisterDisplayRotationProperties(
       rotation_lock, static_cast<display::Display::Rotation>(rotation));
+}
+
+void LoadDisplayTouchAssociations() {
+  PrefService* local_state = g_browser_process->local_state();
+  const base::DictionaryValue* properties =
+      local_state->GetDictionary(prefs::kDisplayTouchAssociations);
+
+  display::TouchDeviceManager::TouchAssociationMap touch_associations;
+  for (const auto& item : properties->DictItems()) {
+    uint32_t identifier_raw;
+    if (!base::StringToUint(item.first, &identifier_raw))
+      continue;
+
+    display::TouchDeviceIdentifier identifier(identifier_raw);
+    touch_associations.emplace(
+        identifier,
+        std::vector<display::TouchDeviceManager::TouchAssociationInfo>());
+    for (const auto& list_item : item.second.GetList()) {
+      display::TouchDeviceManager::TouchAssociationInfo info;
+      auto* value = list_item.FindPath({kTouchAssociationTimestamp});
+      if (!value->is_double())
+        continue;
+      info.timestamp = base::Time().FromDoubleT(value->GetDouble());
+
+      value = list_item.FindPath({kTouchAssociationDisplayId});
+      if (!value->is_string())
+        continue;
+      base::StringToInt64(value->GetString(), &info.display_id);
+
+      value = list_item.FindPath({kTouchAssociationCalibrationData});
+      if (!value->is_dict())
+        continue;
+      const base::DictionaryValue* calibration_data_dict = nullptr;
+      if (!value->GetAsDictionary(&calibration_data_dict))
+        continue;
+      ValueToTouchData(*calibration_data_dict, &info.calibration_data);
+
+      touch_associations.at(identifier).push_back(info);
+    }
+  }
+  // Retrieve all the legacy format identifiers. This should be removed after
+  // a couple of milestones when everything is stable.
+  const display::TouchDeviceIdentifier& fallback_identifier =
+      display::TouchDeviceIdentifier::GetFallbackTouchDeviceIdentifier();
+  local_state = g_browser_process->local_state();
+  properties = local_state->GetDictionary(prefs::kDisplayProperties);
+  for (base::DictionaryValue::Iterator it(*properties); !it.IsAtEnd();
+       it.Advance()) {
+    const base::DictionaryValue* dict_value = nullptr;
+    if (!it.value().GetAsDictionary(&dict_value) || dict_value == nullptr)
+      continue;
+    int64_t id = display::kInvalidDisplayId;
+    if (!base::StringToInt64(it.key(), &id) ||
+        id == display::kInvalidDisplayId) {
+      continue;
+    }
+    display::TouchCalibrationData calibration_data;
+    display::TouchCalibrationData* calibration_data_to_set = nullptr;
+    if (ValueToTouchData(*dict_value, &calibration_data))
+      calibration_data_to_set = &calibration_data;
+
+    if (calibration_data_to_set) {
+      if (!touch_associations.count(fallback_identifier)) {
+        touch_associations.emplace(
+            fallback_identifier,
+            std::vector<display::TouchDeviceManager::TouchAssociationInfo>());
+      }
+      display::TouchDeviceManager::TouchAssociationInfo info;
+      info.display_id = id;
+      info.calibration_data = *calibration_data_to_set;
+      touch_associations.at(fallback_identifier).push_back(info);
+    }
+  }
+  GetDisplayManager()->touch_device_manager()->RegisterTouchAssociations(
+      &touch_associations);
 }
 
 void StoreDisplayLayoutPref(const display::DisplayIdList& list,
@@ -380,6 +387,17 @@ void StoreCurrentDisplayProperties() {
   DictionaryPrefUpdate update(local_state, prefs::kDisplayProperties);
   base::DictionaryValue* pref_data = update.Get();
 
+  const display::TouchDeviceIdentifier& fallback_identifier =
+      display::TouchDeviceIdentifier::GetFallbackTouchDeviceIdentifier();
+  std::vector<display::TouchDeviceManager::TouchAssociationInfo>
+      legacy_data_list;
+  if (display_manager->touch_device_manager()->touch_associations().count(
+          fallback_identifier)) {
+    legacy_data_list =
+        display_manager->touch_device_manager()->touch_associations().at(
+            fallback_identifier);
+  }
+
   size_t num = display_manager->GetNumDisplays();
   for (size_t i = 0; i < num; ++i) {
     const display::Display& display = display_manager->GetDisplayAt(i);
@@ -411,16 +429,14 @@ void StoreCurrentDisplayProperties() {
     if (!info.overscan_insets_in_dip().IsEmpty())
       InsetsToValue(info.overscan_insets_in_dip(), property_value.get());
 
-    if (info.touch_calibration_data_map().size()) {
-      TouchDataMapToValue(info.touch_calibration_data_map(),
-                          property_value.get());
-
-      // Ensure that the legacy data is still stored just in case.
-      uint32_t fallback_identifier =
-          display::TouchCalibrationData::GetFallbackTouchDeviceIdentifier();
-      if (info.HasTouchCalibrationData(fallback_identifier)) {
-        TouchDataToValue(info.GetTouchCalibrationData(fallback_identifier),
-                         property_value.get());
+    // Store the legacy format touch calibration data. This can be removed after
+    // a couple of milestones when every device has migrated to the new format.
+    if (legacy_data_list.size()) {
+      for (const auto& info : legacy_data_list) {
+        if (info.display_id == id) {
+          TouchDataToValue(info.calibration_data, property_value.get());
+          break;
+        }
       }
     }
 
@@ -471,6 +487,47 @@ void StoreCurrentDisplayRotationLockPrefs() {
   StoreDisplayRotationPrefs(rotation_lock);
 }
 
+void StoreDisplayTouchAssociations() {
+  display::TouchDeviceManager* touch_device_manager =
+      GetDisplayManager()->touch_device_manager();
+
+  PrefService* local_state = g_browser_process->local_state();
+
+  DictionaryPrefUpdate update(local_state, prefs::kDisplayTouchAssociations);
+  base::DictionaryValue* pref_data = update.Get();
+  const display::TouchDeviceManager::TouchAssociationMap& touch_associations =
+      touch_device_manager->touch_associations();
+
+  for (const auto& association : touch_associations) {
+    std::unique_ptr<base::ListValue> association_info_list_value(
+        new base::ListValue());
+    for (const auto& association_info : association.second) {
+      std::unique_ptr<base::DictionaryValue> association_info_value(
+          new base::DictionaryValue());
+
+      association_info_value->SetPath(
+          {kTouchAssociationTimestamp},
+          base::Value(association_info.timestamp.ToDoubleT()));
+
+      association_info_value->SetPath(
+          {kTouchAssociationDisplayId},
+          base::Value(base::Int64ToString(association_info.display_id)));
+
+      base::DictionaryValue calibration_data_value;
+      TouchDataToValue(association_info.calibration_data,
+                       &calibration_data_value);
+
+      association_info_value->SetPath({kTouchAssociationCalibrationData},
+                                      calibration_data_value.Clone());
+
+      association_info_list_value->GetList().push_back(
+          association_info_value->Clone());
+    }
+    pref_data->SetPath({association.first.ToString()},
+                       association_info_list_value->Clone());
+  }
+}
+
 }  // namespace
 
 void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
@@ -481,6 +538,7 @@ void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
       GetDisplayPowerStateToStringMap()->find(chromeos::DISPLAY_POWER_ALL_ON);
   registry->RegisterStringPref(prefs::kDisplayPowerState, iter->second);
   registry->RegisterDictionaryPref(prefs::kDisplayRotationLock);
+  registry->RegisterDictionaryPref(prefs::kDisplayTouchAssociations);
 }
 
 void StoreDisplayPrefs() {
@@ -498,6 +556,7 @@ void StoreDisplayPrefs() {
 
   StoreCurrentDisplayLayoutPrefs();
   StoreCurrentDisplayProperties();
+  StoreDisplayTouchAssociations();
 }
 
 void StoreDisplayRotationPrefs(bool rotation_lock) {
@@ -519,6 +578,7 @@ void LoadDisplayPreferences(bool first_run_after_boot) {
   LoadDisplayLayouts();
   LoadDisplayProperties();
   LoadDisplayRotationState();
+  LoadDisplayTouchAssociations();
   if (!first_run_after_boot) {
     PrefService* local_state = g_browser_process->local_state();
     // Restore DisplayPowerState:
@@ -540,6 +600,22 @@ void StoreDisplayLayoutPrefForTest(const display::DisplayIdList& list,
 // Stores the given |power_state|.
 void StoreDisplayPowerStateForTest(DisplayPowerState power_state) {
   StoreDisplayPowerState(power_state);
+}
+
+void LoadTouchAssociationPreferenceForTest() {
+  LoadDisplayTouchAssociations();
+}
+
+void StoreLegacyTouchDataForTest(int64_t display_id,
+                                 const display::TouchCalibrationData& data) {
+  PrefService* local_state = g_browser_process->local_state();
+
+  DictionaryPrefUpdate update(local_state, prefs::kDisplayProperties);
+  base::DictionaryValue* pref_data = update.Get();
+  std::unique_ptr<base::DictionaryValue> property_value(
+      new base::DictionaryValue());
+  TouchDataToValue(data, property_value.get());
+  pref_data->Set(base::Int64ToString(display_id), std::move(property_value));
 }
 
 bool ParseTouchCalibrationStringForTest(
