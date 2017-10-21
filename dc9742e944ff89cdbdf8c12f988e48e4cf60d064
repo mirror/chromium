@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6545ae_93db507c",
+        "filename": "base/memory/shared_memory_handle_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-21T00:26:01Z",
+      "side": 1,
+      "message": "I\u0027m not an expert on Chrome\u0027s IPC or Mojo, but rather than creating a new socket pair just to send the AHardwareBuffer to it, and then send the read socket\u0027s fd to the other process, is it possible to send the AHardwareBuffer\u0027s handle on the socket which Mojo uses?",
+      "revId": "dc9742e944ff89cdbdf8c12f988e48e4cf60d064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
