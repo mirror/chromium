@@ -2156,6 +2156,21 @@ TEST_F(BluetoothRemoteGattCharacteristicTest,
 #endif  // defined(OS_ANDROID) || defined(OS_MACOSX)
 
 #if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
+TEST_F(BluetoothRemoteGattCharacteristicTest, GattCharacteristicAdded) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  ASSERT_NO_FATAL_FAILURE(FakeCharacteristicBoilerplate());
+  TestBluetoothAdapterObserver observer(adapter_);
+
+  SimulateGattCharacteristic(service_, kTestUUIDDeviceName, 0);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, observer.gatt_characteristic_added_count());
+}
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
+
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 // Tests Characteristic Value changes during a Notify Session.
 TEST_F(BluetoothRemoteGattCharacteristicTest, GattCharacteristicValueChanged) {
   if (!PlatformSupportsLowEnergy()) {
