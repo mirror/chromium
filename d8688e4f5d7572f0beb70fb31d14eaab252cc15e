@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4688487b_fec16777",
+        "filename": "ios/chrome/browser/prerender/preload_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-21T05:51:14Z",
+      "side": 1,
+      "message": "This should eventually be moved to the corresponding tab helpers, but for the moment, it is simpler to put it in PreloadController. If you want, I can add a TODO to move this to the correct tab helper (snapshot, geolocation, metrics) once they are created.",
+      "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804fe116_8f2834b4",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-21T05:51:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure how simple it would be to not use a boolean and instead set the correct offset and play the animation when adding the pre-rendered Tab. I\u0027ve found it simpler to just use a boolean for the moment.",
+      "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58634792_4ae94db3",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3091,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-21T05:51:14Z",
+      "side": 1,
+      "message": "Without this the web content is incorrectly placed behind the omnibox.",
+      "revId": "d8688e4f5d7572f0beb70fb31d14eaab252cc15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
