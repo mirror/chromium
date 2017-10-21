@@ -1017,7 +1017,8 @@ RenderText::RenderText()
       clip_to_display_rect_(true),
       baseline_(kInvalidBaseline),
       cached_bounds_and_offset_valid_(false),
-      strike_thickness_factor_(kLineThicknessFactor) {}
+      strike_thickness_factor_(kLineThicknessFactor),
+      letter_spacing_(0) {}
 
 SelectionModel RenderText::GetAdjacentSelectionModel(
     const SelectionModel& current,
