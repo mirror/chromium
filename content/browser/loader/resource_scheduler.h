@@ -36,6 +36,8 @@ class NetworkQualityEstimator;
 
 namespace content {
 
+CONTENT_EXPORT extern const base::Feature kThrottleDelayble;
+
 class ResourceThrottle;
 
 // There is one ResourceScheduler. All renderer-initiated HTTP requests are
