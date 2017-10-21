@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c2a4eb6_a488fca3",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2711702_3297ec73",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db5f8b90_eb1dbf43",
         "filename": "components/previews/core/previews_black_list.cc",
         "patchSetId": 12
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "a269ea9a_5d678909",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8225fac0_16a4184b",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdf0997b_0701631d",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "I think it is more accurate to have |time| here, because it is the time of the navigation was made, and it is guaranteed to have the right blacklisted state. While base::Time::Now() may not be accurate, because there might be other decisions happen between |time| and Time::Now() that may change the blacklisted state of |item|.",
+      "parentUuid": "db5f8b90_eb1dbf43",
+      "range": {
+        "startLine": 118,
+        "startChar": 48,
+        "endLine": 118,
+        "endChar": 52
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47727248_a1cf2b34",
         "filename": "components/previews/core/previews_black_list.cc",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37316c00_2296aba6",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47727248_a1cf2b34",
+      "range": {
+        "startLine": 245,
+        "startChar": 6,
+        "endLine": 245,
+        "endChar": 53
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "47825758_d457f7c8",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4f8ec2_f9126290",
+      "range": {
+        "startLine": 79,
+        "startChar": 47,
+        "endLine": 79,
+        "endChar": 55
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28eb8f1d_5aee1c9b",
         "filename": "components/previews/core/previews_logger.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c54094_35ccd0a5",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28eb8f1d_5aee1c9b",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 20
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "343c3659_94d94247",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3d7233d_42d2f3cb",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b26b191b_aa29efd2",
         "filename": "components/previews/core/previews_logger_unittest.cc",
         "patchSetId": 12
@@ -183,6 +351,30 @@
       "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c429c38_094904f5",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b26b191b_aa29efd2",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,54 @@
     },
     {
       "key": {
+        "uuid": "59382b82_3138fb10",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e42f5f_9bee0d3f",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b79b740a_4a6590b8",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a91210_3ecc41f4",
+      "range": {
+        "startLine": 84,
+        "startChar": 26,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e78bbd_8808f1fb",
         "filename": "components/previews/core/previews_logger_unittest.cc",
         "patchSetId": 12
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "f3d05ab3_0fbfe92f",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e78bbd_8808f1fb",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f9971dd_b86bce41",
         "filename": "components/previews/core/previews_ui_service_unittest.cc",
         "patchSetId": 12
@@ -275,6 +539,30 @@
       "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97e8b14_ac86b3ff",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-21T18:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f9971dd_b86bce41",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
