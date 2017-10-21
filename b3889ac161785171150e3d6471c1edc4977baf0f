@@ -259,6 +259,30 @@
       "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3b2a3f_9ee6c41b",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-21T20:05:43Z",
+      "side": 1,
+      "message": "Nah, that randomization test sounds like a reasonable idea.  Done.  \n\nI\u0027m not sure what you mean, though, by \"I think it\u0027s valuable to explicitly document that we delete cookies based on domain and time\"--is the documentation in /services/network/public/interfaces/cookie_manager.mojom not enough?",
+      "parentUuid": "cb13fb52_af9c5c7f",
+      "range": {
+        "startLine": 916,
+        "startChar": 52,
+        "endLine": 916,
+        "endChar": 74
+      },
+      "revId": "b3889ac161785171150e3d6471c1edc4977baf0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
