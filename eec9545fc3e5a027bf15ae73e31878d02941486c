@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "607b500c_a35bbc10",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-21T00:38:42Z",
+      "side": 1,
+      "message": "Got a presubmit error here; any tips on how to resolve?  This doesn\u0027t build without these includes.\n\nYou added one or more #includes that violate checkdeps rules.\n  components/autofill/core/browser/credit_card_save_manager_unittest.cc\n      Illegal include: \"components/ukm/test_ukm_recorder.h\"\n    Because of \"-components\" from components\u0027s include_rules. \\\n  components/autofill/core/browser/credit_card_save_manager_unittest.cc\n      Illegal include: \"components/ukm/ukm_source.h\"\n    Because of \"-components\" from components\u0027s include_rules.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d74cdbc_13b61045",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-21T00:38:42Z",
+      "side": 1,
+      "message": "Unsure how much of this is necessary and what might be plumbing for the Fake class.  Would it be safest to leave this be, then try to coalesce all uses of TestPersonalDataManager across tests into a reusable Fake class as a future refactor?  I really think we need to do that anyway; having every unit test create its own TestXYZ class is overkill and slowing everything down.",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737d3131_19f85b7b",
+        "filename": "components/autofill/core/browser/form_data_importer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-21T00:38:42Z",
+      "side": 1,
+      "message": "Chromium presubmits threw an error and marked this as a banned function (I bypassed them just to get this review out).  Does anyone have experience with this?  Error details below:\n\n/form_data_importer_unittest.cc:106: - Banned function\n    Please migrate away from RunLoop::QuitCurrent*() methods.\n    Use member methods of a specific RunLoop instance instead.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
