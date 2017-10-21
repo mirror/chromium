@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa45b4c3_9e6e87d2",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-21T04:03:52Z",
+      "side": 1,
+      "message": "I just landed the correct ones for these (I think) if you wouldn\u0027t mind pulling again, it should just be \"fuchsia_x64\" and \"fuchsia_am64\" I think now.\n\n(I don\u0027t think I can commit to refs/meta/config)",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "7353005c2102b0c6cef73df36936bad0a7806f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
