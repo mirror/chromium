@@ -183,6 +183,8 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER;
       case gfx::GpuMemoryBufferType::NATIVE_PIXMAP:
         return gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP;
+      case gfx::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER:
+        return gfx::mojom::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER;
     }
     NOTREACHED();
     return gfx::mojom::GpuMemoryBufferType::LAST;
@@ -202,6 +204,9 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return true;
       case gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP:
         *out = gfx::GpuMemoryBufferType::NATIVE_PIXMAP;
+        return true;
+      case gfx::mojom::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER:
+        *out = gfx::GpuMemoryBufferType::ANDROID_HARDWARE_BUFFER;
         return true;
     }
     return false;

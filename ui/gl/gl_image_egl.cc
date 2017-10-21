@@ -73,4 +73,8 @@ bool GLImageEGL::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
   return false;
 }
 
+void GLImageEGL::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
+                              uint64_t process_tracing_id,
+                              const std::string& dump_name) {}
+
 }  // namespace gl
