@@ -10,6 +10,7 @@
 #include "ash/system/web_notification/web_notification_tray.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "base/command_line.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -18,6 +19,7 @@
 #include "ui/chromeos/devicetype_utils.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout_builder.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
@@ -26,13 +28,18 @@
 
 namespace ash {
 
-class ScreenLayoutObserverTest : public AshTestBase {
+class ScreenLayoutObserverTest : public AshTestBase,
+                                 public testing::WithParamInterface<bool> {
  public:
   ScreenLayoutObserverTest();
   ~ScreenLayoutObserverTest() override;
 
  protected:
   void SetUp() override {
+    if (GetParam()) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          ::switches::kEnableMultiDisplayMirroring);
+    }
     AshTestBase::SetUp();
     WebNotificationTray::DisableAnimationsForTest(true);
   }
@@ -60,6 +67,10 @@ class ScreenLayoutObserverTest : public AshTestBase {
 
   DISALLOW_COPY_AND_ASSIGN(ScreenLayoutObserverTest);
 };
+
+// Instantiate the Boolean which is used to toggle the multi-display mirroring
+// switch in the parameterized tests.
+INSTANTIATE_TEST_CASE_P(, ScreenLayoutObserverTest, testing::Bool());
 
 ScreenLayoutObserverTest::ScreenLayoutObserverTest() {}
 
@@ -97,6 +108,10 @@ base::string16 ScreenLayoutObserverTest::GetSecondDisplayName() {
 }
 
 base::string16 ScreenLayoutObserverTest::GetMirroringDisplayName() {
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    return base::UTF8ToUTF16(display_manager()->GetDisplayNameForId(
+        display_manager()->GetMirroringDisplayIdList()[0]));
+  }
   return base::UTF8ToUTF16(display_manager()->GetDisplayNameForId(
       display_manager()->mirroring_display_id()));
 }
@@ -113,7 +128,7 @@ ScreenLayoutObserverTest::GetDisplayNotification() const {
   return nullptr;
 }
 
-TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
+TEST_P(ScreenLayoutObserverTest, DisplayNotifications) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
 
@@ -222,7 +237,7 @@ TEST_F(ScreenLayoutObserverTest, DisplayNotifications) {
 
 // Verify that notification shows up when display is switched from dock mode to
 // extend mode.
-TEST_F(ScreenLayoutObserverTest, DisplayConfigurationChangedTwice) {
+TEST_P(ScreenLayoutObserverTest, DisplayConfigurationChangedTwice) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
   UpdateDisplay("400x400,200x200");
@@ -249,7 +264,7 @@ TEST_F(ScreenLayoutObserverTest, DisplayConfigurationChangedTwice) {
 
 // Verify the notification message content when one of the 2 displays that
 // connected to the device is rotated.
-TEST_F(ScreenLayoutObserverTest, UpdateAfterSuppressDisplayNotification) {
+TEST_P(ScreenLayoutObserverTest, UpdateAfterSuppressDisplayNotification) {
   UpdateDisplay("400x400,200x200");
 
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
@@ -265,7 +280,7 @@ TEST_F(ScreenLayoutObserverTest, UpdateAfterSuppressDisplayNotification) {
 }
 
 // Verify that no notification is shown when overscan of a screen is changed.
-TEST_F(ScreenLayoutObserverTest, OverscanDisplay) {
+TEST_P(ScreenLayoutObserverTest, OverscanDisplay) {
   UpdateDisplay("400x400, 300x300");
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
@@ -285,7 +300,7 @@ TEST_F(ScreenLayoutObserverTest, OverscanDisplay) {
 
 // Tests that exiting mirror mode by closing the lid shows the correct "exiting
 // mirror mode" message.
-TEST_F(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfDockedModeMessage) {
+TEST_P(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfDockedModeMessage) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
   UpdateDisplay("400x400,200x200");
@@ -310,7 +325,7 @@ TEST_F(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfDockedModeMessage) {
 
 // Tests that exiting mirror mode because of adding a third display shows the
 // correct "3+ displays mirror mode is not supported" message.
-TEST_F(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfThirdDisplayMessage) {
+TEST_P(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfThirdDisplayMessage) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
   UpdateDisplay("400x400,200x200");
@@ -334,7 +349,7 @@ TEST_F(ScreenLayoutObserverTest, ExitMirrorModeBecauseOfThirdDisplayMessage) {
 
 // Special case: tests that exiting mirror mode by removing a display shows the
 // correct message.
-TEST_F(ScreenLayoutObserverTest,
+TEST_P(ScreenLayoutObserverTest,
        ExitMirrorModeNoInternalDisplayBecauseOfDisplayRemovedMessage) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
@@ -359,7 +374,7 @@ TEST_F(ScreenLayoutObserverTest,
 
 // Tests notification messages shown when adding and removing displays in
 // extended mode.
-TEST_F(ScreenLayoutObserverTest, AddingRemovingDisplayExtendedModeMessage) {
+TEST_P(ScreenLayoutObserverTest, AddingRemovingDisplayExtendedModeMessage) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
   UpdateDisplay("400x400");
@@ -383,7 +398,7 @@ TEST_F(ScreenLayoutObserverTest, AddingRemovingDisplayExtendedModeMessage) {
 
 // Tests notification messages shown when entering and exiting unified desktop
 // mode.
-TEST_F(ScreenLayoutObserverTest, EnteringExitingUnifiedModeMessage) {
+TEST_P(ScreenLayoutObserverTest, EnteringExitingUnifiedModeMessage) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
   UpdateDisplay("400x400");
@@ -423,7 +438,7 @@ TEST_F(ScreenLayoutObserverTest, EnteringExitingUnifiedModeMessage) {
 
 // Special case: Tests notification messages shown when entering docked mode
 // by closing the lid and the internal display is the secondary display.
-TEST_F(ScreenLayoutObserverTest, DockedModeWithExternalPrimaryDisplayMessage) {
+TEST_P(ScreenLayoutObserverTest, DockedModeWithExternalPrimaryDisplayMessage) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
   UpdateDisplay("400x400,200x200");
@@ -449,7 +464,7 @@ TEST_F(ScreenLayoutObserverTest, DockedModeWithExternalPrimaryDisplayMessage) {
 
 // Tests that rotation notifications are only shown when the rotation source is
 // a user action. The accelerometer source nevber produces any notifications.
-TEST_F(ScreenLayoutObserverTest, RotationNotification) {
+TEST_P(ScreenLayoutObserverTest, RotationNotification) {
   Shell::Get()->screen_layout_observer()->set_show_notifications_for_testing(
       true);
   UpdateDisplay("400x400");

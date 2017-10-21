@@ -280,10 +280,30 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   // Returns the mirroring status.
   bool IsInMirrorMode() const;
-  int64_t mirroring_display_id() const { return mirroring_display_id_; }
+
+  // Returns true if software mirror mode is on.
+  bool IsInSoftwareMirrorMode() const;
+
+  // Returns true if hardware mirror mode is on.
+  bool IsInHardwareMirrorMode() const;
+
+  // Returns mirroring source display id in software mirror mode. Returns
+  // first mirroring display id in hardware mirror mode.
+  int64_t mirroring_source_id() const { return mirroring_source_id_; }
+
+  // Returns a list of mirroring target display ids in software mirror mode.
+  // Returns a list of mirroring display ids (except for the first one) in
+  // hardware mirror mode.
+  DisplayIdList GetMirroringDisplayIdList() const;
+
+  // Returns a list of software mirroring target displays.
   const Displays& software_mirroring_display_list() const {
     return software_mirroring_display_list_;
   }
+
+  // TODO(weidongg/774795) Remove this when multi display mirroring is enabled
+  // by default.
+  int64_t mirroring_display_id() const { return mirroring_display_id_; }
 
   // Sets/gets if the unified desktop feature is enabled.
   void SetUnifiedDesktopEnabled(bool enabled);
@@ -375,6 +395,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // swapping is an obsolete feature pre-dating multi-display support so remove
   // it.
   const Display& GetSecondaryDisplay() const;
+
+  bool is_multi_display_mirroring_enabled() const {
+    return is_multi_display_mirroring_enabled_;
+  }
 
  private:
   friend class test::DisplayManagerTestApi;
@@ -499,6 +523,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // 2. when unified mode is enabled this is the set of physical displays.
   Displays software_mirroring_display_list_;
 
+  DisplayIdList hardware_mirroring_display_id_list_;
+
   // Cached mirror mode for metrics changed notification.
   bool mirror_mode_for_metrics_ = false;
 
@@ -520,6 +546,12 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // when destroyed. BeginEndNotifier uses this to track when it should call
   // OnWillProcessDisplayChanges() and OnDidProcessDisplayChanges().
   int notify_depth_ = 0;
+
+  bool is_multi_display_mirroring_enabled_;
+
+  // The software mirroring source display id. Set to kInvalidDisplayId if not
+  // exist.
+  int64_t mirroring_source_id_ = kInvalidDisplayId;
 
   base::WeakPtrFactory<DisplayManager> weak_ptr_factory_;
 
