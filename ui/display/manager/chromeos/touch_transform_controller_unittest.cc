@@ -12,6 +12,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/display/manager/chromeos/default_touch_transform_setter.h"
+#include "ui/display/manager/chromeos/touch_device_manager.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/screen_base.h"
 #include "ui/events/devices/device_data_manager.h"
@@ -24,22 +25,6 @@ constexpr int kDisplayId1 = 1;
 constexpr int kDisplayId2 = 2;
 constexpr int kTouchId1 = 5;
 constexpr int kTouchId2 = 6;
-
-ManagedDisplayInfo CreateDisplayInfo(int64_t id,
-                                     const ui::TouchscreenDevice& device,
-                                     const gfx::Rect& bounds) {
-  ManagedDisplayInfo info(id, std::string(), false);
-  info.SetBounds(bounds);
-  info.AddTouchDevice(
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(device));
-
-  // Create a default mode.
-  ManagedDisplayInfo::ManagedDisplayModeList default_modes(
-      1, ManagedDisplayMode(bounds.size(), 60, false, true));
-  info.SetManagedDisplayModes(default_modes);
-
-  return info;
-}
 
 ui::TouchDeviceTransform CreateTouchDeviceTransform(
     int64_t display_id,
@@ -131,12 +116,17 @@ class TouchTransformControllerTest : public testing::Test {
                                                                 touch_device);
   }
 
+  TouchDeviceManager* touch_device_manager() const {
+    return touch_device_manager_;
+  }
+
   // testing::Test:
   void SetUp() override {
     ui::DeviceDataManager::CreateInstance();
     std::unique_ptr<ScreenBase> screen = std::make_unique<ScreenBase>();
     Screen::SetScreenInstance(screen.get());
     display_manager_ = std::make_unique<DisplayManager>(std::move(screen));
+    touch_device_manager_ = display_manager_->touch_device_manager();
     touch_transform_controller_ = std::make_unique<TouchTransformController>(
         nullptr, display_manager_.get(),
         std::make_unique<DefaultTouchTransformSetter>());
@@ -147,9 +137,27 @@ class TouchTransformControllerTest : public testing::Test {
     ui::DeviceDataManager::DeleteInstance();
   }
 
+  ManagedDisplayInfo CreateDisplayInfo(int64_t id,
+                                       const ui::TouchscreenDevice& device,
+                                       const gfx::Rect& bounds) {
+    ManagedDisplayInfo info(id, std::string(), false);
+    info.SetBounds(bounds);
+
+    // Create a default mode.
+    ManagedDisplayInfo::ManagedDisplayModeList default_modes(
+        1, ManagedDisplayMode(bounds.size(), 60, false, true));
+    info.SetManagedDisplayModes(default_modes);
+
+    // Associate the display and touch device.
+    touch_device_manager_->Associate(&info, &device);
+
+    return info;
+  }
+
  private:
   std::unique_ptr<DisplayManager> display_manager_;
   std::unique_ptr<TouchTransformController> touch_transform_controller_;
+  TouchDeviceManager* touch_device_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchTransformControllerTest);
 };
@@ -550,11 +558,12 @@ TEST_F(TouchTransformControllerTest, AccurateUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  touch_device_manager()->AddTouchCalibrationData(
+      TouchDeviceIdentifier(touchscreen), display.id(), touch_data);
 
-  display.SetTouchCalibrationData(touch_device_identifier, touch_data);
-  EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
+  EXPECT_FALSE(touch_device_manager()
+                   ->GetCalibrationData(touchscreen, display.id())
+                   .IsEmpty());
 
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
   std::vector<ui::TouchDeviceTransform> transforms;
@@ -598,11 +607,12 @@ TEST_F(TouchTransformControllerTest, ErrorProneUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  touch_device_manager()->AddTouchCalibrationData(
+      TouchDeviceIdentifier(touchscreen), display.id(), touch_data);
 
-  display.SetTouchCalibrationData(touch_device_identifier, touch_data);
-  EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
+  EXPECT_FALSE(touch_device_manager()
+                   ->GetCalibrationData(touchscreen, display.id())
+                   .IsEmpty());
 
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
   std::vector<ui::TouchDeviceTransform> transforms;
@@ -648,11 +658,12 @@ TEST_F(TouchTransformControllerTest, ResolutionChangeUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  touch_device_manager()->AddTouchCalibrationData(
+      TouchDeviceIdentifier(touchscreen), display.id(), touch_data);
 
-  display.SetTouchCalibrationData(touch_device_identifier, touch_data);
-  EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
+  EXPECT_FALSE(touch_device_manager()
+                   ->GetCalibrationData(touchscreen, display.id())
+                   .IsEmpty());
 
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
   std::vector<ui::TouchDeviceTransform> transforms;
@@ -693,11 +704,12 @@ TEST_F(TouchTransformControllerTest, DifferentBoundsUserTouchCalibration) {
 
   const std::string msg = GetTouchPointString(user_input);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+  touch_device_manager()->AddTouchCalibrationData(
+      TouchDeviceIdentifier(touchscreen), display.id(), touch_data);
 
-  display.SetTouchCalibrationData(touch_device_identifier, touch_data);
-  EXPECT_TRUE(display.HasTouchCalibrationData(touch_device_identifier));
+  EXPECT_FALSE(touch_device_manager()
+                   ->GetCalibrationData(touchscreen, display.id())
+                   .IsEmpty());
 
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
 
@@ -740,9 +752,6 @@ TEST_F(TouchTransformControllerTest, LetterboxingUserTouchCalibration) {
                          60, false, false));
   internal_display_info.SetManagedDisplayModes(internal_modes);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(internal_touchscreen);
-
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
 
   // Assuming the user provided inaccurate inputs during calibration. ie the
@@ -757,10 +766,14 @@ TEST_F(TouchTransformControllerTest, LetterboxingUserTouchCalibration) {
   }};
   // The calibration was performed at the native display resolution.
   TouchCalibrationData touch_data(user_input, kNativeDisplaySize);
-  internal_display_info.SetTouchCalibrationData(touch_device_identifier,
-                                                touch_data);
-  EXPECT_TRUE(
-      internal_display_info.HasTouchCalibrationData(touch_device_identifier));
+  touch_device_manager()->AddTouchCalibrationData(
+      TouchDeviceIdentifier(internal_touchscreen), internal_display_info.id(),
+      touch_data);
+
+  EXPECT_FALSE(
+      touch_device_manager()
+          ->GetCalibrationData(internal_touchscreen, internal_display_info.id())
+          .IsEmpty());
 
   std::vector<ui::TouchDeviceTransform> transforms;
   transforms.push_back(CreateTouchDeviceTransform(
@@ -818,9 +831,6 @@ TEST_F(TouchTransformControllerTest, PillarBoxingUserTouchCalibration) {
                          60, false, false));
   internal_display_info.SetManagedDisplayModes(internal_modes);
 
-  uint32_t touch_device_identifier =
-      TouchCalibrationData::GenerateTouchDeviceIdentifier(internal_touchscreen);
-
   ui::DeviceDataManager* device_manager = ui::DeviceDataManager::GetInstance();
 
   // Assuming the user provided accurate inputs during calibration. ie the user
@@ -835,10 +845,15 @@ TEST_F(TouchTransformControllerTest, PillarBoxingUserTouchCalibration) {
   }};
   // The calibration was performed at the native display resolution.
   TouchCalibrationData touch_data(user_input, kNativeDisplaySize);
-  internal_display_info.SetTouchCalibrationData(touch_device_identifier,
-                                                touch_data);
-  EXPECT_TRUE(
-      internal_display_info.HasTouchCalibrationData(touch_device_identifier));
+
+  touch_device_manager()->AddTouchCalibrationData(
+      TouchDeviceIdentifier(internal_touchscreen), internal_display_info.id(),
+      touch_data);
+
+  EXPECT_FALSE(
+      touch_device_manager()
+          ->GetCalibrationData(internal_touchscreen, internal_display_info.id())
+          .IsEmpty());
 
   std::vector<ui::TouchDeviceTransform> transforms;
   transforms.push_back(CreateTouchDeviceTransform(
