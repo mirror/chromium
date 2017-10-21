@@ -52,6 +52,24 @@
       "revId": "3ed7a146edad65a55dd9f8e01dd4010b7a9d19d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c98449_18f125fd",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-21T00:39:00Z",
+      "side": 0,
+      "message": "OK, it looks like the Fuchsia-side change is basically to default to \"/\" within the child\u0027s root namespace, as the CWD, unless PWD is set in the environment - this will cause confusion if we e.g. copy base_unittests into /system and then run:\n\ncd /system/\nbase_unittests\n\nsince all the child processes of base_unittests will have a CWD of \"/\" rather than \"/system/\"",
+      "parentUuid": "4ecee9fc_9fcdf058",
+      "revId": "3ed7a146edad65a55dd9f8e01dd4010b7a9d19d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
