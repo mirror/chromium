@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e43c8c7_83f4c276",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12290,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:20:39Z",
+      "side": 1,
+      "message": "nit: Please use BooleanExpired, defining it in enums.xml if it\u0027s not already present.",
+      "range": {
+        "startLine": 12290,
+        "startChar": 10,
+        "endLine": 12290,
+        "endChar": 17
+      },
+      "revId": "2889244b826d3fc20c2fa0cda26c88f48d0c08c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b546f36b_1ed8d8b7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12294,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:20:39Z",
+      "side": 1,
+      "message": "nit: s/if/whether",
+      "range": {
+        "startLine": 12294,
+        "startChar": 12,
+        "endLine": 12294,
+        "endChar": 14
+      },
+      "revId": "2889244b826d3fc20c2fa0cda26c88f48d0c08c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
