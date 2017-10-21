@@ -268,6 +268,9 @@ class VIZ_SERVICE_EXPORT FragmentShader {
   int mask_tex_coord_scale_location_ = -1;
   int mask_tex_coord_offset_location_ = -1;
 
+  bool has_color_temperature_ = false;
+  int color_temperature_scale_location_ = -1;
+
   bool has_color_matrix_ = false;
   int color_matrix_location_ = -1;
   int color_offset_location_ = -1;

@@ -35,6 +35,8 @@ struct CC_EXPORT EffectNode {
   // be assumed to have semantic meaning.
   uint64_t stable_id;
 
+  float color_temperature;
+
   float opacity;
   float screen_space_opacity;
 

@@ -51,6 +51,7 @@ class CCParamTraitsTest : public testing::Test {
  protected:
   void Compare(const RenderPass* a, const RenderPass* b) {
     EXPECT_EQ(a->id, b->id);
+    EXPECT_EQ(a->color_temperature, b->color_temperature);
     EXPECT_EQ(a->output_rect.ToString(), b->output_rect.ToString());
     EXPECT_EQ(a->damage_rect.ToString(), b->damage_rect.ToString());
     EXPECT_EQ(a->transform_to_root_target, b->transform_to_root_target);
@@ -286,6 +287,9 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   int child_id = 30;
   int root_id = 14;
 
+  float temperature_1 = 0.5f;
+  float temperature_2 = 0.8f;
+
   FilterOperations arbitrary_filters1;
   arbitrary_filters1.Append(
       FilterOperation::CreateGrayscaleFilter(arbitrary_float1));
@@ -299,22 +303,24 @@ TEST_F(CCParamTraitsTest, AllQuads) {
       FilterOperation::CreateBrightnessFilter(arbitrary_float2));
 
   std::unique_ptr<RenderPass> child_pass_in = RenderPass::Create();
-  child_pass_in->SetAll(
-      child_id, arbitrary_rect2, arbitrary_rect3, arbitrary_matrix2,
-      arbitrary_filters1, arbitrary_filters2, arbitrary_color_space,
-      arbitrary_bool2, arbitrary_bool3, arbitrary_bool4, arbitrary_bool5);
+  child_pass_in->SetAll(child_id, temperature_2, arbitrary_rect2,
+                        arbitrary_rect3, arbitrary_matrix2, arbitrary_filters1,
+                        arbitrary_filters2, arbitrary_color_space,
+                        arbitrary_bool2, arbitrary_bool3, arbitrary_bool4,
+                        arbitrary_bool5);
 
   std::unique_ptr<RenderPass> child_pass_cmp = RenderPass::Create();
-  child_pass_cmp->SetAll(
-      child_id, arbitrary_rect2, arbitrary_rect3, arbitrary_matrix2,
-      arbitrary_filters1, arbitrary_filters2, arbitrary_color_space,
-      arbitrary_bool2, arbitrary_bool3, arbitrary_bool4, arbitrary_bool5);
+  child_pass_cmp->SetAll(child_id, temperature_2, arbitrary_rect2,
+                         arbitrary_rect3, arbitrary_matrix2, arbitrary_filters1,
+                         arbitrary_filters2, arbitrary_color_space,
+                         arbitrary_bool2, arbitrary_bool3, arbitrary_bool4,
+                         arbitrary_bool5);
 
   std::unique_ptr<RenderPass> pass_in = RenderPass::Create();
-  pass_in->SetAll(root_id, arbitrary_rect1, arbitrary_rect2, arbitrary_matrix1,
-                  arbitrary_filters2, arbitrary_filters1, arbitrary_color_space,
-                  arbitrary_bool1, arbitrary_bool2, arbitrary_bool3,
-                  arbitrary_bool4);
+  pass_in->SetAll(root_id, temperature_1, arbitrary_rect1, arbitrary_rect2,
+                  arbitrary_matrix1, arbitrary_filters2, arbitrary_filters1,
+                  arbitrary_color_space, arbitrary_bool1, arbitrary_bool2,
+                  arbitrary_bool3, arbitrary_bool4);
 
   SharedQuadState* shared_state1_in = pass_in->CreateAndAppendSharedQuadState();
   shared_state1_in->SetAll(arbitrary_matrix1, arbitrary_rect1, arbitrary_rect1,
@@ -323,8 +329,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
                            arbitrary_context_id1);
 
   std::unique_ptr<RenderPass> pass_cmp = RenderPass::Create();
-  pass_cmp->SetAll(root_id, arbitrary_rect1, arbitrary_rect2, arbitrary_matrix1,
-                   arbitrary_filters2, arbitrary_filters1,
+  pass_cmp->SetAll(root_id, temperature_1, arbitrary_rect1, arbitrary_rect2,
+                   arbitrary_matrix1, arbitrary_filters2, arbitrary_filters1,
                    arbitrary_color_space, arbitrary_bool1, arbitrary_bool2,
                    arbitrary_bool3, arbitrary_bool4);
 
@@ -493,7 +499,7 @@ TEST_F(CCParamTraitsTest, AllQuads) {
 
 TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
   std::unique_ptr<RenderPass> pass_in = RenderPass::Create();
-  pass_in->SetAll(1, gfx::Rect(100, 100), gfx::Rect(), gfx::Transform(),
+  pass_in->SetAll(1, 0.f, gfx::Rect(100, 100), gfx::Rect(), gfx::Transform(),
                   FilterOperations(), FilterOperations(),
                   gfx::ColorSpace::CreateSRGB(), false, false, false, false);
 

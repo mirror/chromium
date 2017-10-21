@@ -682,6 +682,14 @@ static inline int NumDescendantsThatDrawContent(LayerImpl* layer) {
   return num_descendants_that_draw_content;
 }
 
+static inline float ColorTemperature(Layer* layer) {
+  return layer->color_temperature();
+}
+
+static inline float ColorTemperature(LayerImpl* layer) {
+  return layer->test_properties()->color_temperature;
+}
+
 static inline float EffectiveOpacity(Layer* layer) {
   return layer->EffectiveOpacity();
 }
@@ -949,6 +957,7 @@ bool PropertyTreeBuilderContext<LayerType>::AddEffectNodeIfNeeded(
   EffectNode* node = effect_tree_.back();
 
   node->stable_id = layer->id();
+  node->color_temperature = ColorTemperature(layer);
   node->opacity = Opacity(layer);
   node->blend_mode = BlendMode(layer);
   node->unscaled_mask_target_size = layer->bounds();
