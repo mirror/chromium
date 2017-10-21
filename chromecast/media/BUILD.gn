@@ -28,6 +28,10 @@ group("libcast_media") {
         "//chromecast/media/cma/backend:cast_media_android_dummy",
       ]
     }
+  } else if (is_fuchsia) {
+    deps = [
+      "//chromecast/media/cma/backend/fuchsia",
+    ]
   } else {
     deps = [
       "//chromecast/media/cma/backend:libcast_media_1.0",
