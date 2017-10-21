@@ -10,31 +10,27 @@
 <script src="../resources/presentation-setup.js"></script>
 <script>
 let fakeDisplays = fakeVRDisplays();
-
 vr_test( (t) => {
-  return navigator.vr.requestDevice().then( (pixel) => {
+  return navigator.vr.requestDevice().then( (magicWindowOnly) => {
     runWithUserGesture( () => {
-      pixel.requestSession({ exclusive: true }).then( (session) => {
-        t.step( () => {
-          assert_true(session.exclusive);
-          assert_equals(session.device, pixel);
-          assert_approx_equals(session.depthNear, 0.1, FLOAT_EPSILON);
-          assert_approx_equals(session.depthFar, 1000.0, FLOAT_EPSILON);
-        }, "requestSession returned correct results");
-      }, (err) => {
-        t.step( () => {
-          assert_unreached("requestSession rejected");
-        });
-      }).then( () => {
+
+      magicWindowOnly.requestSession({ exclusive: true }).then(() => {
+        assert_unreached("requestSession resolved unexpectedly");
+      }).catch((e) => {
+        assert_equals(e.name, "NotSupportedError");
         t.done();
-      });
+      })
+
+      //TODO(offenwanger): 
+      // Add magicWindowOnly.requestSession({ exclusive: false })
+
     });
   }, (err) => {
     t.step( () => {
       assert_unreached("requestDevice rejected");
     });
   });
-}, [fakeDisplays["Pixel"]],
-"supportsSession returns expected exclusive session");
+}, [fakeDisplays["FakeMagicWindowOnly"]],
+"supportsSession properly creates or rejects exclusive sessions");
 
 </script>

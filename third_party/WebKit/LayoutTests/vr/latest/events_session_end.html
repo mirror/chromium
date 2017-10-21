@@ -13,8 +13,7 @@ let fakeDisplays = fakeVRDisplays();
 vr_test((t, mockService) => {
   let watcherDone = new Event("watcherdone");
 
-  navigator.vr.getDevices().then( (devices) => {
-    let pixel = devices[0];
+  navigator.vr.requestDevice().then( (pixel) => {
     runWithUserGesture( () => {
       pixel.requestSession({ exclusive: true }).then( (session) => {
         let eventWatcher = new EventWatcher(t, session, ["end", "watcherdone"]);
@@ -40,7 +39,7 @@ vr_test((t, mockService) => {
     });
   }, (err) => {
     t.step( () => {
-      assert_unreached("getDevices rejected");
+      assert_unreached("requestDevice rejected");
     });
   });
 }, [fakeDisplays["Pixel"]],
