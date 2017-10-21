@@ -101,6 +101,13 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     return this._workspace.project(Persistence.FileSystemWorkspaceBinding.projectId(fileSystemPath)) || null;
   }
 
+  /**
+   * @return {?Workspace.Project}
+   */
+  projectForActiveDomain() {
+    return this.projectForDomain(Persistence.NetworkPersistenceManager.inspectedPageDomain());
+  }
+
   _enabledChanged() {
     if (this._enabledSetting.get()) {
       this._eventDescriptors = [
@@ -268,15 +275,32 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
    * @param {string} content
    */
   _onUISourceCodeWorkingCopyCommitted(uiSourceCode, content) {
-    if (!this._activeProject || uiSourceCode.project().type() !== Workspace.projectTypes.Network ||
-        uiSourceCode[this._bindingSymbol])
+    this.saveUISourceCodeForOverrides(uiSourceCode);
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   */
+  canSaveUISourceCodeForOverrides(uiSourceCode) {
+    return this._activeProject && uiSourceCode.project().type() === Workspace.projectTypes.Network &&
+        !uiSourceCode[this._bindingSymbol];
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   */
+  async saveUISourceCodeForOverrides(uiSourceCode) {
+    if (!this.canSaveUISourceCodeForOverrides(uiSourceCode))
       return;
     var urlDomain = uiSourceCode.url().replace(/^https?:\/\//, '');
     var fileName = urlDomain.substr(urlDomain.lastIndexOf('/') + 1);
     var relativeFolderPath = urlDomain.substr(0, urlDomain.length - fileName.length);
     if (!fileName)
       fileName = 'index.html';
-    this._activeProject.createFile(relativeFolderPath, this._encodeUrlPathToLocalPath(fileName), content);
+    var content = await uiSourceCode.requestContent();
+    // TODO: bring contentEncoded back into the ContentProvider.
+    var isBase64 = uiSourceCode.contentType() === Common.resourceTypes.Image;
+    this._activeProject.createFile(relativeFolderPath, this._encodeUrlPathToLocalPath(fileName), content, isBase64);
   }
 
   /**
