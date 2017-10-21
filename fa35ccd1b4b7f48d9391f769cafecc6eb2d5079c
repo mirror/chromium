@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32fccc5d_39443a4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "can we just change the target level for chrome? why is dynamic loading not needed just because target level changed? do we build chrome for each target level we support?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c6787a_96f773e9",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "Please cleanup all this type of debug logging before asking for review.",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdf3d1e_1e10bb0e",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "move this into a separate helper function like other GMB impls",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa3338e_1315c107",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "move this into a separate helper function like other GMB impls",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a8b271_a77d324b",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "what is this used for?",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 20
+      },
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902eb4a3_31e77be7",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "I think it would be a bit more consistent to have an AHardwareBufferDesc(size, format, usage) function that cannot fail and then call AHardwareBuffer_allocate here.",
+      "range": {
+        "startLine": 108,
+        "startChar": 32,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531a33c4_9c920029",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "fyi, no need to handle failures in this case. just DCHECK if format or anything else is not supported as we shouldn\u0027t be trying to test unsupported configurations.",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a069bb6_92b443b4",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "can you remove this and have the caller use eglGetNativeClientBufferANDROID?",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447ddccd_73da97d7",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-21T03:53:49Z",
+      "side": 1,
+      "message": "why add this as part of this patch?",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
