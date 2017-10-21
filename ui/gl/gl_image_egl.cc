@@ -39,6 +39,16 @@ bool GLImageEGL::Initialize(EGLenum target,
   return true;
 }
 
+bool GLImageEGL::InitializeFromHardwareBuffer(
+    const struct AHardwareBuffer* buffer,
+    const EGLint* attrs) {
+  if (!buffer)
+    return false;
+
+  EGLClientBuffer clientBuffer = eglGetNativeClientBufferANDROID(buffer);
+  return Initialize(EGL_NATIVE_BUFFER_ANDROID, clientBuffer, attrs);
+}
+
 gfx::Size GLImageEGL::GetSize() {
   return size_;
 }
@@ -72,5 +82,9 @@ bool GLImageEGL::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                                       const gfx::RectF& crop_rect) {
   return false;
 }
+
+void GLImageEGL::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
+                              uint64_t process_tracing_id,
+                              const std::string& dump_name) {}
 
 }  // namespace gl
