@@ -217,6 +217,15 @@ Workspace.UISourceCode = class extends Common.Object {
   }
 
   /**
+   * @override
+   * @return {!Promise<boolean>}
+   */
+  async contentEncoded() {
+    await this.requestContent();
+    return !!this._contentEncoded;
+  }
+
+  /**
    * @return {!Workspace.Project}
    */
   project() {
@@ -236,9 +245,10 @@ Workspace.UISourceCode = class extends Common.Object {
     } else {
       var fulfill;
       this._requestContentPromise = new Promise(x => fulfill = x);
-      this._project.requestFileContent(this, content => {
+      this._project.requestFileContent(this, (content, encoded) => {
         this._contentLoaded = true;
         this._content = content;
+        this._contentEncoded = encoded;
         fulfill(content);
       });
     }
@@ -257,9 +267,10 @@ Workspace.UISourceCode = class extends Common.Object {
 
     /**
      * @param {?string} updatedContent
+     * @param {boolean} encoded
      * @this {Workspace.UISourceCode}
      */
-    function contentLoaded(updatedContent) {
+    function contentLoaded(updatedContent, encoded) {
       this._checkingContent = false;
       if (updatedContent === null) {
         var workingCopy = this.workingCopy();
@@ -297,10 +308,11 @@ Workspace.UISourceCode = class extends Common.Object {
    * @return {!Promise<?string>}
    */
   requestOriginalContent() {
-    var callback;
-    var promise = new Promise(fulfill => callback = fulfill);
-    this._project.requestFileContent(this, callback);
-    return promise;
+    return new Promise(fulfill => {
+      this._project.requestFileContent(this, (content, encoded) => {
+        fulfill(content);
+      });
+    });
   }
 
   /**
@@ -762,6 +774,14 @@ Workspace.Revision = class {
    */
   contentType() {
     return this._uiSourceCode.contentType();
+  }
+
+  /**
+   * @override
+   * @return {!Promise<boolean>}
+   */
+  contentEncoded() {
+    return Promise.resolve(false);
   }
 
   /**
