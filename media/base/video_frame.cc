@@ -21,7 +21,109 @@
 #include "media/base/video_util.h"
 #include "ui/gfx/geometry/point.h"
 
+#include "base/unbindable_as_pointer.h"
+#include "media/base/sequenced_object.h"
+#include "media/base/sequenced_scoped_ref_ptr.h"
+#include "media/base/sequenced_unique_ptr.h"
+#include "media/base/sequenced_weak_ptr.h"
+
 namespace media {
+
+class Foo : public SequencedObject<Foo> {
+ public:
+  void method(int) {}
+  void method_const(int) const {}
+  void method2(base::WeakPtr<Foo>) {}
+  void method3(base::UnbindableAsPointer*) {}
+};
+
+struct Goo {
+  void method(int){};
+  /*
+  private:
+  // weak ptr factory.
+  SequencedObjectState<Goo> state_;
+  */
+};
+
+#if 0
+class Bar {
+SequencedObjectWrapper<Goo> goo_;
+};
+#endif
+
+void fn(base::UnbindableAsPointer*) {}
+void fn2(std::unique_ptr<Foo>) {}
+
+template <typename T>
+struct E {
+  static_assert(std::is_convertible<void*, T>::value, "hi");
+};
+template <typename C, typename... A>
+struct E<void (C::*)(A...)> {
+  static_assert(std::is_convertible<void*, C>::value, "hi");
+};
+
+void test_stuff() {
+  // base::internal::IsAnyUnbindableAsPointer<base::UnbindableAsPointer*> t1_;
+  // base::internal::IsAnyMethodArgAnUnbindablePointer<void(int,base::UnbindableAsPointer*)>
+  // t_;
+  // base::Bind(&fn, (base::UnbindableAsPointer*)nullptr);
+  // static_assert(base::internal::DoesIncorrectlyUseUnbindableAsPointerType<base::UnbindableAsPointer*>::value,
+  // "hi");
+  // static_assert(IsWeakPtr<base::WeakPtr<base::UnbindableAsPointer>>::value,
+  // "is not weak ptr");  static_assert(IsWeakPtr<base::WeakPtr<Foo>>::value,
+  // "is not weak ptr");
+  // static_assert(base::internal::DoesIncorrectlyUseUnbindableAsPointerType<base::WeakPtr<base::UnbindableAsPointer>>::value,
+  // "is not incorrectly");
+  // static_assert(base::internal::DoesIncorrectlyUseUnbindableAsPointerType<base::WeakPtr<Foo>>::value,
+  // "is not incorrectly");
+  // static_assert(base::internal::DoesIncorrectlyUseUnbindableAsPointerType<base::WeakPtr<Goo>>::value,
+  // "is not incorrectly");
+
+  // static_assert(!std::is_convertible<base::WeakPtr<base::UnbindableAsPointer>,
+  // base::WeakPtr<VideoFrame>>::value, "these are not supposed to be
+  // convertible");  static_assert(!std::is_convertible<base::WeakPtr<Goo>,
+  // base::WeakPtr<VideoFrame>>::value, "these are not supposed to be
+  // convertible");  static_assert(!std::is_convertible<Foo*, Goo*>::value,
+  // "these are not supposed to be convertible");
+  // static_assert(!std::is_convertible<base::UnbindableAsPointer, Foo>::value,
+  // "these are not supposed to be convertible");
+
+  SequencedScopedRefPtr<Foo> owner(nullptr);
+
+  static_assert(
+      !base::internal::DoesIncorrectlyUseUnbindableAsPointerType<Goo*>::value,
+      "Goo* should be false.");
+  static_assert(base::internal::DoesIncorrectlyUseUnbindableAsPointerType<
+                    base::UnbindableAsPointer*>::value,
+                "should be true");
+
+  Foo foo;
+  base::WeakPtr<Foo> weak;
+  // all of these should fail to compile.
+  // base::Bind(&fn);
+  // base::Bind(&fn2);
+  // base::BindOnce(&fn, nullptr);  // fn arg
+  // base::BindOnce(&fn2, nullptr);  // fn arg
+  // base::Bind(&Foo::method, base::Unretained(&foo), 123);  // instance raw ptr
+  // base::Bind(&Foo::method, weak, 123);  // instance weak ptr
+  // base::Bind(&Foo::method2, base::Unretained(&foo), weak);
+  // base::Bind(&Foo::method3, base::Unretained(&foo));
+
+  // TODO: this should fail.
+  base::Bind(&Foo::method);
+  // base::Bind(&Foo::method4);
+
+  // using t = base::internal::MakeFunctorTraits<decltype(&Foo::method)>;
+  // E<t::RunType>* e_ = nullptr;
+  // delete e_;
+
+  SequencedWeakPtr<Foo> wp(foo);
+  wp.BindOnce(&Foo::method, 123).Run();
+  wp.BindOnce(&Foo::method).Run(123);
+  wp.BindOnce(&Foo::method_const, 123).Run();
+}
 
 namespace {
 
