@@ -109,16 +109,7 @@ double DOMVisualViewport::width() const {
   if (!frame)
     return 0;
 
-  if (!frame->IsMainFrame()) {
-    FloatSize viewport_size = window_->GetViewportSize(kExcludeScrollbars);
-    return AdjustForAbsoluteZoom(ExpandedIntSize(viewport_size).Width(),
-                                 frame->PageZoomFactor());
-  }
-
-  if (Page* page = frame->GetPage())
-    return page->GetVisualViewport().Width();
-
-  return 0;
+  return window_->GetViewportSizeAdjustedForZoom(kExcludeScrollbars).Width();
 }
 
 double DOMVisualViewport::height() const {
@@ -126,16 +117,7 @@ double DOMVisualViewport::height() const {
   if (!frame)
     return 0;
 
-  if (!frame->IsMainFrame()) {
-    FloatSize viewport_size = window_->GetViewportSize(kExcludeScrollbars);
-    return AdjustForAbsoluteZoom(ExpandedIntSize(viewport_size).Height(),
-                                 frame->PageZoomFactor());
-  }
-
-  if (Page* page = frame->GetPage())
-    return page->GetVisualViewport().Height();
-
-  return 0;
+  return window_->GetViewportSizeAdjustedForZoom(kExcludeScrollbars).Height();
 }
 
 double DOMVisualViewport::scale() const {

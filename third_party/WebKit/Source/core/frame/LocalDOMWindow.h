@@ -314,7 +314,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   void AcceptLanguagesChanged();
 
-  FloatSize GetViewportSize(IncludeScrollbarsInRect) const;
+  FloatSize GetViewportSizeAdjustedForZoom(IncludeScrollbarsInRect) const;
 
  protected:
   // EventTarget overrides.
