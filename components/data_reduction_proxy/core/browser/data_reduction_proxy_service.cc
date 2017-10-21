@@ -72,18 +72,43 @@ void DataReductionProxyService::SetIOData(
   for (DataReductionProxyServiceObserver& observer : observer_list_)
     observer.OnServiceInitialized();
 
-  // Load the Data Reduction Proxy configuration from |prefs_| and apply it.
-  if (prefs_) {
-    std::string config_value =
-        prefs_->GetString(prefs::kDataReductionProxyConfig);
-    if (!config_value.empty()) {
-      io_task_runner_->PostTask(
-          FROM_HERE,
-          base::Bind(
-              &DataReductionProxyIOData::SetDataReductionProxyConfiguration,
-              io_data_, config_value));
-    }
-  }
+  ReadPersistedClientConfig();
+}
+
+void DataReductionProxyService::ReadPersistedClientConfig() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (!prefs_)
+    return;
+
+  base::Time last_config_retrieval_time =
+      base::Time() + base::TimeDelta::FromMicroseconds(prefs_->GetInt64(
+                         prefs::kDataReductionProxyLastConfigRetrievalTime));
+  base::TimeDelta time_since_last_config_retrieval =
+      base::Time::Now() - last_config_retrieval_time;
+
+  // A config older than 24 hours should not be used.
+  bool persisted_config_is_expired =
+      !last_config_retrieval_time.is_null() &&
+      time_since_last_config_retrieval > base::TimeDelta::FromHours(24);
+
+  UMA_HISTOGRAM_BOOLEAN(
+      "DataReductionProxy.ConfigService.PersistedConfigIsExpired",
+      persisted_config_is_expired);
+
+  if (persisted_config_is_expired)
+    return;
+
+  const std::string config_value =
+      prefs_->GetString(prefs::kDataReductionProxyConfig);
+
+  if (config_value.empty())
+    return;
+
+  io_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&DataReductionProxyIOData::SetDataReductionProxyConfiguration,
+                 io_data_, config_value));
 }
 
 void DataReductionProxyService::Shutdown() {
