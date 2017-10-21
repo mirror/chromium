@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bde3a250_21d247c2",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:16:27Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of code, so I\u0027d recommend creating a small wrapper function RecordEncryptedEvent(boolean) that you could call here.  It also helps avoid typos in the histogram name spelling.",
+      "range": {
+        "startLine": 299,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 59
+      },
+      "revId": "5dfcaa10fa9bf80df1de4b74918e4b62895db0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5e95c1_391ea65c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 32323,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:16:27Z",
+      "side": 1,
+      "message": "Please update this description to document the baseline as well.",
+      "range": {
+        "startLine": 32323,
+        "startChar": 0,
+        "endLine": 32323,
+        "endChar": 1
+      },
+      "revId": "5dfcaa10fa9bf80df1de4b74918e4b62895db0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
