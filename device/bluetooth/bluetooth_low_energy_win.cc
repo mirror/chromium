@@ -14,6 +14,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/windows_version.h"
+#include "third_party/re2/src/re2/re2.h"
 
 namespace {
 
@@ -34,6 +35,7 @@ const char kDeviceAddressError[] =
     "address.";
 const char kDeviceFriendlyNameError[] = "Device name is not valid.";
 const char kInvalidBluetoothAddress[] = "Bluetooth address format is invalid.";
+const RE2 kAddressRegex(R"(_([0-9A-f]{12})\\)");
 
 // Like ScopedHandle but for HDEVINFO.  Only use this on HDEVINFO returned from
 // SetupDiGetClassDevs.
@@ -58,38 +60,6 @@ class DeviceInfoSetTraits {
 typedef base::win::GenericScopedHandle<DeviceInfoSetTraits,
                                        base::win::DummyVerifierTraits>
     ScopedDeviceInfoSetHandle;
-
-bool StringToBluetoothAddress(const std::string& value,
-                              BLUETOOTH_ADDRESS* btha,
-                              std::string* error) {
-  if (value.length() != 6 * 2) {
-    *error = kInvalidBluetoothAddress;
-    return false;
-  }
-
-  int buffer[6];
-  int result = sscanf_s(value.c_str(),
-                        "%02X%02X%02X%02X%02X%02X",
-                        &buffer[5],
-                        &buffer[4],
-                        &buffer[3],
-                        &buffer[2],
-                        &buffer[1],
-                        &buffer[0]);
-  if (result != 6) {
-    *error = kInvalidBluetoothAddress;
-    return false;
-  }
-
-  ZeroMemory(btha, sizeof(*btha));
-  btha->rgBytes[0] = buffer[0];
-  btha->rgBytes[1] = buffer[1];
-  btha->rgBytes[2] = buffer[2];
-  btha->rgBytes[3] = buffer[3];
-  btha->rgBytes[4] = buffer[4];
-  btha->rgBytes[5] = buffer[5];
-  return true;
-}
 
 std::string FormatBluetoothError(const char* message, HRESULT hr) {
   std::ostringstream string_stream;
@@ -309,22 +279,28 @@ bool CollectBluetoothLowEnergyDeviceFriendlyName(
 bool ExtractBluetoothAddressFromDeviceInstanceId(const std::string& instance_id,
                                                  BLUETOOTH_ADDRESS* btha,
                                                  std::string* error) {
-  size_t start = instance_id.find("_");
-  if (start == std::string::npos) {
-    *error = kDeviceAddressError;
-    return false;
-  }
-  size_t end = instance_id.find("\\", start);
-  if (end == std::string::npos) {
+  std::string address;
+  if (!RE2::PartialMatch(instance_id, kAddressRegex, &address)) {
     *error = kDeviceAddressError;
     return false;
   }
 
-  start++;
-  std::string address = instance_id.substr(start, end - start);
-  if (!StringToBluetoothAddress(address, btha, error))
+  int buffer[6];
+  int result =
+      sscanf_s(address.c_str(), "%02X%02X%02X%02X%02X%02X", &buffer[5],
+               &buffer[4], &buffer[3], &buffer[2], &buffer[1], &buffer[0]);
+  if (result != 6) {
+    *error = kInvalidBluetoothAddress;
     return false;
+  }
 
+  ZeroMemory(btha, sizeof(*btha));
+  btha->rgBytes[0] = buffer[0];
+  btha->rgBytes[1] = buffer[1];
+  btha->rgBytes[2] = buffer[2];
+  btha->rgBytes[3] = buffer[3];
+  btha->rgBytes[4] = buffer[4];
+  btha->rgBytes[5] = buffer[5];
   return true;
 }
 
@@ -336,8 +312,13 @@ bool CollectBluetoothLowEnergyDeviceAddress(
   // TODO(rpaquay): We exctract the bluetooth device address from the device
   // instance ID string, as we did not find a more formal API for retrieving the
   // bluetooth address of a Bluetooth Low Energy device.
-  // An Bluetooth device instance ID has the following format (under Win8+):
+  // A Bluetooth device instance ID often has the following format (under
+  // Win8+):
   // BTHLE\DEV_BC6A29AB5FB0\8&31038925&0&BC6A29AB5FB0
+  // However, they have also been seen with the following, more expanded,
+  // format:
+  // BTHLEDEVICE\{0000180F-0000-1000-8000-00805F9B34FB}_DEV_VID&01000A_PID&
+  // 014C_REV&0100_818B4B0BACE6\8&4C387F7&0&0020
   return ExtractBluetoothAddressFromDeviceInstanceId(
       device_info->id, &device_info->address, error);
 }
