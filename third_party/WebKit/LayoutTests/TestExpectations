@@ -707,8 +707,8 @@ crbug.com/636207 [ Win Debug ] fast/dom/HTMLImageElement/image-srcset-w-onerror.
 crbug.com/569139 fast/js/string-replace-2.html [ Failure ]
 crbug.com/569139 fast/js/regexp-caching.html [ Failure ]
 crbug.com/597221 fast/dom/Window/window-postmessage-clone-deep-array.html [ Failure ]
-crbug.com/498539 [ Win ] http/tests/devtools/tracing/decode-resize.html [ Failure Timeout ]
-crbug.com/667560 [ Win ] virtual/mojo-loading/http/tests/devtools/tracing/decode-resize.html [ Failure Timeout ]
+crbug.com/498539 [ Win ] http/tests/devtools/tracing/decode-resize.js [ Failure Timeout ]
+crbug.com/667560 [ Win ] virtual/mojo-loading/http/tests/devtools/tracing/decode-resize.js [ Failure Timeout ]
 crbug.com/498539 http/tests/devtools/tracing/timeline-misc/timeline-bound-function.html [ Pass Failure ]
 crbug.com/667560 virtual/mojo-loading/http/tests/devtools/tracing/timeline-misc/timeline-bound-function.html [ Pass Failure ]
 crbug.com/498539 virtual/threaded/http/tests/devtools/tracing/timeline-misc/timeline-bound-function.html [ Pass Failure ]
@@ -2719,9 +2719,9 @@ crbug.com/700374 [ Win ] virtual/mojo-loading/http/tests/devtools/workers-on-nav
 crbug.com/700374 [ Win ] http/tests/devtools/workers-on-navigation.html [ Failure Pass ]
 
 # Sheriff failures 2017-03-21
-crbug.com/703518 http/tests/devtools/tracing/worker-js-frames.html [ Failure Pass ]
-crbug.com/667560 virtual/mojo-loading/http/tests/devtools/tracing/worker-js-frames.html [ Failure Pass ]
-crbug.com/703518 virtual/threaded/http/tests/devtools/tracing/worker-js-frames.html [ Failure Pass ]
+crbug.com/703518 http/tests/devtools/tracing/worker-js-frames.js [ Failure Pass ]
+crbug.com/667560 virtual/mojo-loading/http/tests/devtools/tracing/worker-js-frames.js [ Failure Pass ]
+crbug.com/703518 virtual/threaded/http/tests/devtools/tracing/worker-js-frames.js [ Failure Pass ]
 crbug.com/674720 http/tests/loading/preload-img-test.html [ Pass Failure ]
 crbug.com/674720 virtual/mojo-loading/http/tests/loading/preload-img-test.html [ Pass Failure ]
 
@@ -3557,8 +3557,8 @@ crbug.com/667560 virtual/mojo-loading/http/tests/devtools/tracing/timeline-js/ti
 # Tests timing out on WebKit Linux Trusty MSAN
 crbug.com/760543 [ Linux Release ] http/tests/devtools/profiler/heap-snapshot-inspect-dom-wrapper.html [ Pass Timeout ]
 crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/profiler/heap-snapshot-inspect-dom-wrapper.html [ Pass Timeout ]
-crbug.com/760543 [ Linux Release ] http/tests/devtools/tracing/console-timeline.html [ Pass Timeout ]
-crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/tracing/console-timeline.html [ Pass Timeout ]
+crbug.com/760543 [ Linux Release ] http/tests/devtools/tracing/console-timeline.js [ Pass Timeout ]
+crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/tracing/console-timeline.js [ Pass Timeout ]
 crbug.com/760543 [ Linux Release ] http/tests/devtools/tracing/timeline-layout/timeline-layout-with-invalidations.html [ Pass Timeout ]
 crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/tracing/timeline-layout/timeline-layout-with-invalidations.html [ Pass Timeout ]
 crbug.com/760543 [ Linux Release ] http/tests/devtools/tracing/timeline-paint/timeline-paint-with-layout-invalidations.html [ Pass Timeout ]

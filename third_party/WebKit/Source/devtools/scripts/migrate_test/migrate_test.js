@@ -116,6 +116,10 @@ function migrateTest(inputPath, identifierMap) {
     const docType = htmlTestFile.match(/<!DOCTYPE.*>/) ? htmlTestFile.match(/<!DOCTYPE.*>/)[0] : '';
     if (docType)
       domFixture = docType + (domFixture.length ? '\n' : '') + domFixture;
+    const inlineStylesheets =
+        $('style').toArray().map(n => n.children[0].data).map(text => `<style>${text}</style>`).join('\n');
+    if (inlineStylesheets)
+      domFixture = inlineStylesheets + (domFixture.length ? '\n' : '') + domFixture;
     outputCode = transformTestScript(
         inputCode, prologue, identifierMap, testHelpers, javascriptFixtures, getPanel(inputPath), domFixture,
         onloadFunctionName, relativeResourcePaths, stylesheetPaths, inputFilename);
@@ -397,9 +401,12 @@ function mapTestHelpers(testHelpers, includeConsole) {
     if (!mappedHelper) {
       throw Error('Could not map helper ' + helper);
     }
-    if (mappedHelper !== 'inspector_test_runner') {
-      mappedHelpers.add(mappedHelper);
-    }
+    if (mappedHelper === 'inspector_test_runner')
+      continue;
+    // Some tests reference tracing-test.js which doesn't exist
+    if (mappedHelper === 'tracing_test_runner')
+      continue;
+    mappedHelpers.add(mappedHelper);
   }
   if (includeConsole)
     mappedHelpers.add('console_test_runner');
