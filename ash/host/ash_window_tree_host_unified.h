@@ -11,6 +11,12 @@
 #include "base/macros.h"
 #include "ui/aura/window_observer.h"
 
+namespace aura {
+namespace client {
+class ScreenPositionClient;
+}  // namespace client
+}  // namespace aura
+
 namespace ash {
 
 // A WTH used for unified desktop mode. This creates an offscreen
@@ -37,6 +43,8 @@ class AshWindowTreeHostUnified : public AshWindowTreeHostPlatform,
 
   // aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
+
+  std::unique_ptr<aura::client::ScreenPositionClient> screen_position_client_;
 
   std::vector<AshWindowTreeHost*> mirroring_hosts_;
 

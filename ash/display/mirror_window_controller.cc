@@ -8,7 +8,6 @@
 
 #include "ash/display/cursor_window_controller.h"
 #include "ash/display/root_window_transformers.h"
-#include "ash/display/screen_position_controller.h"
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/host/ash_window_tree_host.h"
 #include "ash/host/ash_window_tree_host_init_params.h"
@@ -18,6 +17,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/aura/client/capture_client.h"
+#include "ui/aura/client/screen_position_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -33,54 +33,6 @@
 
 namespace ash {
 namespace {
-
-// ScreenPositionClient for mirroring windows.
-class MirroringScreenPositionClient
-    : public aura::client::ScreenPositionClient {
- public:
-  explicit MirroringScreenPositionClient(MirrorWindowController* controller)
-      : controller_(controller) {}
-
-  void ConvertPointToScreen(const aura::Window* window,
-                            gfx::PointF* point) override {
-    const aura::Window* root = window->GetRootWindow();
-    aura::Window::ConvertPointToTarget(window, root, point);
-    const display::Display& display =
-        controller_->GetDisplayForRootWindow(root);
-    const gfx::Point display_origin = display.bounds().origin();
-    point->Offset(display_origin.x(), display_origin.y());
-  }
-
-  void ConvertPointFromScreen(const aura::Window* window,
-                              gfx::PointF* point) override {
-    const aura::Window* root = window->GetRootWindow();
-    const display::Display& display =
-        controller_->GetDisplayForRootWindow(root);
-    const gfx::Point display_origin = display.bounds().origin();
-    point->Offset(-display_origin.x(), -display_origin.y());
-    aura::Window::ConvertPointToTarget(root, window, point);
-  }
-
-  void ConvertHostPointToScreen(aura::Window* root_window,
-                                gfx::Point* point) override {
-    aura::Window* not_used;
-    ScreenPositionController::ConvertHostPointToRelativeToRootWindow(
-        root_window, controller_->GetAllRootWindows(), point, &not_used);
-    aura::client::ScreenPositionClient::ConvertPointToScreen(root_window,
-                                                             point);
-  }
-
-  void SetBounds(aura::Window* window,
-                 const gfx::Rect& bounds,
-                 const display::Display& display) override {
-    NOTREACHED();
-  }
-
- private:
-  MirrorWindowController* controller_;  // not owned.
-
-  DISALLOW_COPY_AND_ASSIGN(MirroringScreenPositionClient);
-};
 
 // A trivial CaptureClient that does nothing. That is, calls to set/release
 // capture are dropped.
@@ -124,8 +76,8 @@ MirrorWindowController::MirroringHostInfo::MirroringHostInfo() {}
 MirrorWindowController::MirroringHostInfo::~MirroringHostInfo() {}
 
 MirrorWindowController::MirrorWindowController()
-    : multi_display_mode_(display::DisplayManager::EXTENDED),
-      screen_position_client_(new MirroringScreenPositionClient(this)) {}
+    : current_event_targeter_src_host_(nullptr),
+      multi_display_mode_(display::DisplayManager::EXTENDED) {}
 
 MirrorWindowController::~MirrorWindowController() {
   // Make sure the root window gets deleted before cursor_window_delegate.
@@ -195,8 +147,6 @@ void MirrorWindowController::UpdateWindow(
                 ->GetAshWindowTreeHostForDisplayId(
                     display::Screen::GetScreen()->GetPrimaryDisplay().id());
         unified_ash_host->RegisterMirroringHost(host_info->ash_host.get());
-        aura::client::SetScreenPositionClient(host->window(),
-                                              screen_position_client_.get());
       }
 
       aura::client::SetCaptureClient(host->window(), new NoneCaptureClient());

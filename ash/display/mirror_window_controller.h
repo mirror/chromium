@@ -23,9 +23,6 @@
 
 namespace aura {
 class Window;
-namespace client {
-class ScreenPositionClient;
-}
 }
 
 namespace display {
@@ -77,6 +74,15 @@ class ASH_EXPORT MirrorWindowController : public aura::WindowTreeHostObserver {
   // Returns all root windows hosting mirroring displays.
   aura::Window::Windows GetAllRootWindows() const;
 
+  void set_current_event_targeter_src_host(
+      aura::WindowTreeHost* targeter_src_host) {
+    current_event_targeter_src_host_ = targeter_src_host;
+  }
+
+  const aura::WindowTreeHost* current_event_targeter_src_host() const {
+    return current_event_targeter_src_host_;
+  }
+
  private:
   friend class MirrorWindowTestApi;
 
@@ -93,9 +99,9 @@ class ASH_EXPORT MirrorWindowController : public aura::WindowTreeHostObserver {
   typedef std::map<int64_t, MirroringHostInfo*> MirroringHostInfoMap;
   MirroringHostInfoMap mirroring_host_info_map_;
 
-  display::DisplayManager::MultiDisplayMode multi_display_mode_;
+  aura::WindowTreeHost* current_event_targeter_src_host_;
 
-  std::unique_ptr<aura::client::ScreenPositionClient> screen_position_client_;
+  display::DisplayManager::MultiDisplayMode multi_display_mode_;
 
   std::unique_ptr<ui::Reflector> reflector_;
 
