@@ -32,6 +32,7 @@
 #include "content/renderer/child_frame_compositing_helper.h"
 #include "content/renderer/cursor_utils.h"
 #include "content/renderer/drop_data_builder.h"
+#include "content/renderer/mash_util.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/sad_plugin.h"
 #include "third_party/WebKit/public/platform/WebCoalescedInputEvent.h"
@@ -46,6 +47,11 @@
 #include "third_party/WebKit/public/web/WebPluginContainer.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+
+#if defined(USE_AURA)
+#include "content/renderer/mus/mus_embedded_frame.h"
+#include "content/renderer/mus/renderer_window_tree_client.h"
+#endif
 
 using blink::WebPluginContainer;
 using blink::WebPoint;
@@ -120,6 +126,9 @@ bool BrowserPlugin::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_GuestReady, OnGuestReady)
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_SetCursor, OnSetCursor)
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_SetMouseLock, OnSetMouseLock)
+#if defined(USE_AURA)
+    IPC_MESSAGE_HANDLER(BrowserPluginMsg_SetMusEmbedToken, OnSetMusEmbedToken)
+#endif
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_SetTooltipText, OnSetTooltipText)
     IPC_MESSAGE_HANDLER(BrowserPluginMsg_ShouldAcceptTouchEvents,
                         OnShouldAcceptTouchEvents)
@@ -133,7 +142,7 @@ void BrowserPlugin::OnSetChildFrameSurface(
     int browser_plugin_instance_id,
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
-  if (!attached())
+  if (!attached() || IsRunningInMash())
     return;
 
   if (!enable_surface_synchronization_)
@@ -174,6 +183,14 @@ void BrowserPlugin::Attach() {
             ->GetDocument()
             .IsPluginDocument();
   }
+#if defined(USE_AURA)
+  if (pending_embed_token_) {
+    std::unique_ptr<base::UnguessableToken> embed_token =
+        std::move(pending_embed_token_);
+    CreateMusWindowAndEmbed(*embed_token);
+  }
+#endif
+
   BrowserPluginManager::Get()->Send(new BrowserPluginHostMsg_Attach(
       render_frame_routing_id_,
       browser_plugin_instance_id_,
@@ -211,6 +228,25 @@ void BrowserPlugin::Detach() {
 
 void BrowserPlugin::DidCommitCompositorFrame() {
 }
+
+#if defined(USE_AURA)
+void BrowserPlugin::CreateMusWindowAndEmbed(
+    const base::UnguessableToken& embed_token) {
+  RenderFrameImpl* render_frame =
+      RenderFrameImpl::FromRoutingID(render_frame_routing_id_);
+  if (!render_frame) {
+    pending_embed_token_ =
+        base::MakeUnique<base::UnguessableToken>(embed_token);
+    return;
+  }
+  RendererWindowTreeClient* renderer_window_tree_client =
+      RendererWindowTreeClient::Get(
+          render_frame->GetRenderWidget()->routing_id());
+  DCHECK(renderer_window_tree_client);
+  mus_embedded_frame_ =
+      renderer_window_tree_client->CreateMusEmbeddedFrame(this, embed_token);
+}
+#endif
 
 void BrowserPlugin::OnAdvanceFocus(int browser_plugin_instance_id,
                                    bool reverse) {
@@ -265,6 +301,21 @@ void BrowserPlugin::OnSetMouseLock(int browser_plugin_instance_id,
   }
 }
 
+#if defined(USE_AURA)
+void BrowserPlugin::OnSetMusEmbedToken(
+    int instance_id,
+    const base::UnguessableToken& embed_token) {
+  DCHECK(IsRunningInMash());
+  if (!attached_) {
+    pending_embed_token_ =
+        base::MakeUnique<base::UnguessableToken>(embed_token);
+  } else {
+    pending_embed_token_.reset();
+    CreateMusWindowAndEmbed(embed_token);
+  }
+}
+#endif
+
 void BrowserPlugin::OnSetTooltipText(int instance_id,
                                      const base::string16& tooltip_text) {
   // Show tooltip text by setting the BrowserPlugin's |title| attribute.
@@ -306,6 +357,12 @@ void BrowserPlugin::ViewRectsChanged(const gfx::Rect& view_rect) {
           gfx::ScaleToCeiledSize(view_rect.size(), device_scale_factor));
       compositing_helper_->SetPrimarySurfaceInfo(surface_info);
     }
+#if defined(USE_AURA)
+    if (IsRunningInMash() && mus_embedded_frame_) {
+      // |view_rect| is in pixels, which is what mus wants.
+      mus_embedded_frame_->SetWindowBounds(local_surface_id_, view_rect);
+    }
+#endif
   }
 
   view_rect_ = view_rect;
@@ -660,6 +717,19 @@ bool BrowserPlugin::HandleMouseLockedInputEvent(
       new BrowserPluginHostMsg_HandleInputEvent(browser_plugin_instance_id_,
                                                 &event));
   return true;
+}
+
+void BrowserPlugin::OnMusEmbeddedFrameSurfaceChanged(
+    const viz::SurfaceInfo& surface_info) {
+  if (!enable_surface_synchronization_)
+    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+  compositing_helper_->SetFallbackSurfaceId(surface_info.id(),
+                                            viz::SurfaceSequence());
+}
+
+void BrowserPlugin::OnMusEmbeddedFrameSinkIdAllocated(
+    const viz::FrameSinkId& frame_sink_id) {
+  OnGuestReady(browser_plugin_instance_id_, frame_sink_id);
 }
 
 }  // namespace content

@@ -12,6 +12,7 @@
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
 #include "content/browser/frame_host/render_widget_host_view_guest.h"
+#include "content/browser/mus_util.h"
 #include "content/browser/renderer_host/render_view_host_factory.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -77,14 +78,17 @@ void WebContentsViewGuest::OnGuestAttached(WebContentsView* parent_view) {
   // view hierarchy. We add this view as embedder's child here.
   // This would go in WebContentsViewGuest::CreateView, but that is too early to
   // access embedder_web_contents(). Therefore, we do it here.
-  parent_view->GetNativeView()->AddChild(platform_view_->GetNativeView());
+  if (!IsUsingMus())
+    parent_view->GetNativeView()->AddChild(platform_view_->GetNativeView());
 #endif  // defined(USE_AURA)
 }
 
 void WebContentsViewGuest::OnGuestDetached(WebContentsView* old_parent_view) {
 #if defined(USE_AURA)
-  old_parent_view->GetNativeView()->RemoveChild(
-      platform_view_->GetNativeView());
+  if (!IsUsingMus()) {
+    old_parent_view->GetNativeView()->RemoveChild(
+        platform_view_->GetNativeView());
+  }
 #endif  // defined(USE_AURA)
 }
 
@@ -146,11 +150,21 @@ RenderWidgetHostViewBase* WebContentsViewGuest::CreateViewForWidget(
         render_widget_host->GetView());
   }
 
+#if defined(USE_AURA)
+  // Mus does not need a RenderWidgetHostView for the guest, it's entirely
+  // handled in the renderer side.
+  const bool create_platform_widget = !IsUsingMus();
+#else
+  const bool create_platform_widget = true;
+#endif
   RenderWidgetHostViewBase* platform_widget =
-      platform_view_->CreateViewForWidget(render_widget_host, true);
+      create_platform_widget
+          ? platform_view_->CreateViewForWidget(render_widget_host, true)
+          : nullptr;
 
-  return RenderWidgetHostViewGuest::Create(render_widget_host, guest_,
-                                           platform_widget->GetWeakPtr());
+  return RenderWidgetHostViewGuest::Create(
+      render_widget_host, guest_,
+      platform_widget ? platform_widget->GetWeakPtr() : nullptr);
 }
 
 RenderWidgetHostViewBase* WebContentsViewGuest::CreateViewForPopupWidget(

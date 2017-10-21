@@ -23,6 +23,14 @@
 #include "third_party/WebKit/public/web/WebInputMethodController.h"
 #include "third_party/WebKit/public/web/WebNode.h"
 
+#if defined(USE_AURA)
+#include "content/renderer/mus/mus_embedded_frame_delegate.h"
+#endif
+
+namespace base {
+class UnguessableToken;
+}
+
 namespace viz {
 class SurfaceInfo;
 struct SurfaceSequence;
@@ -34,7 +42,14 @@ class BrowserPluginDelegate;
 class BrowserPluginManager;
 class ChildFrameCompositingHelper;
 
+#if defined(USE_AURA)
+class MusEmbeddedFrame;
+#endif
+
 class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
+#if defined(USE_AURA)
+                                     public MusEmbeddedFrameDelegate,
+#endif
                                      public MouseLockDispatcher::LockTarget {
  public:
   static BrowserPlugin* GetFromNode(blink::WebNode& node);
@@ -152,6 +167,10 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
 
   void ViewRectsChanged(const gfx::Rect& view_rect);
 
+#if defined(USE_AURA)
+  void CreateMusWindowAndEmbed(const base::UnguessableToken& embed_token);
+#endif
+
   // IPC message handlers.
   // Please keep in alphabetical order.
   void OnAdvanceFocus(int instance_id, bool reverse);
@@ -163,9 +182,21 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   void OnSetContentsOpaque(int instance_id, bool opaque);
   void OnSetCursor(int instance_id, const WebCursor& cursor);
   void OnSetMouseLock(int instance_id, bool enable);
+#if defined(USE_AURA)
+  void OnSetMusEmbedToken(int instance_id,
+                          const base::UnguessableToken& embed_token);
+#endif
   void OnSetTooltipText(int browser_plugin_instance_id,
                         const base::string16& tooltip_text);
   void OnShouldAcceptTouchEvents(int instance_id, bool accept);
+
+#if defined(USE_AURA)
+  // MusEmbeddedFrameDelegate
+  void OnMusEmbeddedFrameSurfaceChanged(
+      const viz::SurfaceInfo& surface_info) override;
+  void OnMusEmbeddedFrameSinkIdAllocated(
+      const viz::FrameSinkId& frame_sink_id) override;
+#endif
 
   // This indicates whether this BrowserPlugin has been attached to a
   // WebContents and is ready to receive IPCs.
@@ -206,6 +237,13 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   // We call lifetime managing methods on |delegate_|, but we do not directly
   // own this. The delegate destroys itself.
   base::WeakPtr<BrowserPluginDelegate> delegate_;
+
+#if defined(USE_AURA)
+  // Set if OnSetMusEmbedToken() is called before attached.
+  std::unique_ptr<base::UnguessableToken> pending_embed_token_;
+
+  std::unique_ptr<MusEmbeddedFrame> mus_embedded_frame_;
+#endif
 
   // Weak factory used in v8 |MakeWeak| callback, since the v8 callback might
   // get called after BrowserPlugin has been destroyed.
