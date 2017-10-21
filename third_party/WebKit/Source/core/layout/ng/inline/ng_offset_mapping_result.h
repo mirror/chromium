@@ -6,6 +6,7 @@
 #define NGOffsetMappingResult_h
 
 #include "core/CoreExport.h"
+#include "core/editing/Forward.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
@@ -54,6 +55,9 @@ class CORE_EXPORT NGOffsetMappingUnit {
 
   unsigned ConvertDOMOffsetToTextContent(unsigned) const;
 
+  unsigned ConvertTextContentToFirstDOMOffset(unsigned) const;
+  unsigned ConvertTextContentToLastDOMOffset(unsigned) const;
+
  private:
   const NGOffsetMappingUnitType type_ = NGOffsetMappingUnitType::kIdentity;
 
@@ -99,6 +103,8 @@ class CORE_EXPORT NGOffsetMappingResult {
   const RangeMap& GetRanges() const { return ranges_; }
   const String& GetText() const { return text_; }
 
+  // ------ Mapping APIs from DOM to text content ------
+
   // TODO(xiaochengh): Change the functions to take Positions instead of (node,
   // offset) pairs.
 
@@ -141,7 +147,21 @@ class CORE_EXPORT NGOffsetMappingResult {
   // content character before the offset. Returns nullopt if it does not exist.
   Optional<UChar> GetCharacterBefore(const Node&, unsigned offset) const;
 
-  // TODO(xiaochengh): Add APIs for reverse mapping.
+  // ------ Mapping APIs from text content to DOM ------
+
+  // Maps a text content offset back to DOM position. Returns null when the
+  // offset is in content not associated to any DOM node (list markers,
+  // ::before/after, generated BiDi control characters, ...).
+  // Note that the relation between Positions and text content offsets is
+  // many-to-one (e.g., when the offset is in collapsed whitespaces or at node
+  // boundary), so the functions return the first and last position,
+  // respectively. The returned Position, when not null, is either
+  // OffsetInAnchor in a text node, or Before/AfterAnchor to an atomic inline
+  // (IMG, BR...).
+  // TODO(xiaochengh): How do we define first and last? DOM tree order?
+  // Flat tree order? layout tree order?
+  Position GetFirstPosition(unsigned) const;
+  Position GetLastPosition(unsigned) const;
 
  private:
   UnitVector units_;
