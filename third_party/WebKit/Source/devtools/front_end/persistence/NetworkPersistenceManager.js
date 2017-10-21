@@ -101,6 +101,13 @@ Persistence.NetworkPersistenceManager = class extends Common.Object {
     return this._workspace.project(Persistence.FileSystemWorkspaceBinding.projectId(fileSystemPath)) || null;
   }
 
+  /**
+   * @return {?Workspace.Project}
+   */
+  projectForActiveDomain() {
+    return this.projectForDomain(Persistence.NetworkPersistenceManager.inspectedPageDomain());
+  }
+
   _enabledChanged() {
     if (this._enabledSetting.get()) {
       this._eventDescriptors = [
