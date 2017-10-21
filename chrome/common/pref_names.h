@@ -218,6 +218,7 @@ extern const char kDataSaverPromptsShown[];
 extern const char kChromeOSReleaseNotesVersion[];
 extern const char kDisplayPowerState[];
 extern const char kDisplayProperties[];
+extern const char kDisplayTouchAssociations[];
 extern const char kSecondaryDisplays[];
 extern const char kDisplayRotationLock[];
 extern const char kNoteTakingAppId[];
