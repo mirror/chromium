@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d20b9ad_67c192f1",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-21T23:12:04Z",
+      "side": 1,
+      "message": "I realize that it reads strangely here, but I don\u0027t think it\u0027s as weird as it seems. The animator animates fundamental types. Eventually I hope to move this out to ui/gfx. It\u0027s up to the \"animation target\" to interpret the meaning of the animated value based on the property id. Check out spinner.cc for an example of a non-opacity float animation.",
+      "parentUuid": "4393ebc1_306eb7e4",
+      "range": {
+        "startLine": 285,
+        "startChar": 16,
+        "endLine": 285,
+        "endChar": 41
+      },
+      "revId": "3f4d9e1ab85f75738c73591da85eaf819209a887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a713c38_0d3db273",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T19:48:58Z",
       "side": 1,
       "message": "This should dirty the scene. Is this something you can do with a binding? Something like a generic one-shot binding would be sweet.",
+      "range": {
+        "startLine": 684,
+        "startChar": 4,
+        "endLine": 684,
+        "endChar": 78
+      },
+      "revId": "3f4d9e1ab85f75738c73591da85eaf819209a887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50bf87f_c2ba727d",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-21T23:12:04Z",
+      "side": 1,
+      "message": "Happily, it turns out that a new binding type is unnecessary. I\u0027ve achieve the same effect using our existing binding types.",
+      "parentUuid": "6a713c38_0d3db273",
       "range": {
         "startLine": 684,
         "startChar": 4,
