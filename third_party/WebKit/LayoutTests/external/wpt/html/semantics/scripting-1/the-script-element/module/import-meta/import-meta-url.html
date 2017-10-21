@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script type="module">
+// Run with --enable-features=ModuleScriptsImportMetaUrl e.g.
+// $ ./third_party/WebKit/Tools/Scripts/run-blink-wptserve &
+// $ ./out/Release/content_shell --enable-features=ModuleScriptsImportMetaUrl http://localhost:8001/html/semantics/scripting-1/the-script-element/module/import-meta/import-meta-url.html
+
+import { importMetaOnRootModule, importMetaOnDependentModule }
+    from "./import-meta-root.js";
+
+var base = location.href.slice(0, location.href.lastIndexOf('/'));
+
+test(() => {
+  assert_equals(import.meta.url, location.href);
+}, "import.meta.url for a root inline script");
+
+test(() => {
+  assert_equals(importMetaOnRootModule.url,
+                base + "/import-meta-root.js");
+}, "import.meta.url for a root external script");
+
+test(() => {
+  assert_equals(importMetaOnDependentModule.url,
+                base + "/import-meta-dependent.js");
+}, "import.meta.url for a dependent external script");
+</script>
