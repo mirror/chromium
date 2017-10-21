@@ -139,7 +139,7 @@ static void* SystemAllocPages(void* hint,
       break;
     if (have_retried) {
       s_allocPageErrorCode = errno;
-      ret = 0;
+      ret = nullptr;
       break;
     }
     ReleaseReservation();
