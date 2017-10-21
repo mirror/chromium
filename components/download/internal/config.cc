@@ -46,7 +46,7 @@ const base::TimeDelta kDefaultFileCleanupWindow =
     base::TimeDelta::FromHours(24);
 
 // Default value for the start window time for OS to schedule background task.
-const base::TimeDelta kDefaultWindowStartTime = base::TimeDelta::FromMinutes(5);
+const base::TimeDelta kDefaultWindowStartTime = base::TimeDelta::Minutes(5);
 
 // Default value for the end window time for OS to schedule background task.
 const base::TimeDelta kDefaultWindowEndTime = base::TimeDelta::FromHours(8);
