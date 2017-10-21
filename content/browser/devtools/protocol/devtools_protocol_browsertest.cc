@@ -252,7 +252,7 @@ class DevToolsProtocolTest : public ContentBrowserTest,
   }
 
   bool HasValue(const std::string& path) {
-    base::Value* value = 0;
+    base::Value* value = nullptr;
     return result_->Get(path, &value);
   }
 

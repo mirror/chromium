@@ -81,9 +81,9 @@ static const gchar* browser_accessibility_get_description(AtkAction* atk_action,
   BrowserAccessibilityAuraLinux* obj =
       ToBrowserAccessibilityAuraLinux(atk_action);
   if (!obj)
-    return 0;
+    return nullptr;
 
-  return 0;
+  return nullptr;
 }
 
 static const gchar* browser_accessibility_get_name(AtkAction* atk_action,
@@ -110,7 +110,7 @@ static const gchar* browser_accessibility_get_keybinding(AtkAction* atk_action,
   BrowserAccessibilityAuraLinux* obj =
       ToBrowserAccessibilityAuraLinux(atk_action);
   if (!obj)
-    return 0;
+    return nullptr;
 
   return obj->GetStringAttribute(ui::AX_ATTR_ACCESS_KEY).c_str();
 }
@@ -124,7 +124,8 @@ static void ActionInterfaceInit(AtkActionIface* iface) {
 }
 
 static const GInterfaceInfo ActionInfo = {
-    reinterpret_cast<GInterfaceInitFunc>(ActionInterfaceInit), 0, 0};
+    reinterpret_cast<GInterfaceInitFunc>(ActionInterfaceInit), nullptr,
+    nullptr};
 
 //
 // AtkComponent interface.
@@ -204,9 +205,8 @@ static void ComponentInterfaceInit(AtkComponentIface* iface) {
 }
 
 static const GInterfaceInfo ComponentInfo = {
-    reinterpret_cast<GInterfaceInitFunc>(ComponentInterfaceInit),
-    0,
-    0};
+    reinterpret_cast<GInterfaceInitFunc>(ComponentInterfaceInit), nullptr,
+    nullptr};
 
 //
 // AtkDocument interface.
@@ -232,7 +232,7 @@ static const gchar* GetDocumentAttributeValue(
   else if (!g_ascii_strcasecmp(attribute, "URI"))
     return obj->manager()->GetTreeData().url.c_str();
 
-  return 0;
+  return nullptr;
 }
 
 AtkAttributeSet* SetAtkAttributeSet(AtkAttributeSet* attribute_set,
@@ -252,7 +252,7 @@ static const gchar* browser_accessibility_get_attribute_value(
   g_return_val_if_fail(ATK_IS_DOCUMENT(atk_doc), 0);
   BrowserAccessibilityAuraLinux* obj = ToBrowserAccessibilityAuraLinux(atk_doc);
   if (!obj)
-    return 0;
+    return nullptr;
 
   return GetDocumentAttributeValue(obj, attribute);
 }
@@ -262,11 +262,11 @@ static AtkAttributeSet* browser_accessibility_get_attributes(
   g_return_val_if_fail(ATK_IS_DOCUMENT(atk_doc), 0);
   BrowserAccessibilityAuraLinux* obj = ToBrowserAccessibilityAuraLinux(atk_doc);
   if (!obj)
-    return 0;
+    return nullptr;
 
-  AtkAttributeSet* attribute_set = 0;
+  AtkAttributeSet* attribute_set = nullptr;
   const gchar* doc_attributes[] = {"DocType", "MimeType", "Title", "URI"};
-  const gchar* value = 0;
+  const gchar* value = nullptr;
 
   for (unsigned i = 0; i < G_N_ELEMENTS(doc_attributes); i++) {
     value = GetDocumentAttributeValue(obj, doc_attributes[i]);
@@ -285,7 +285,8 @@ static void DocumentInterfaceInit(AtkDocumentIface* iface) {
 }
 
 static const GInterfaceInfo DocumentInfo = {
-    reinterpret_cast<GInterfaceInitFunc>(DocumentInterfaceInit), 0, 0};
+    reinterpret_cast<GInterfaceInitFunc>(DocumentInterfaceInit), nullptr,
+    nullptr};
 
 //
 // AtkImage interface.
@@ -333,7 +334,7 @@ static const gchar* browser_accessibility_get_image_description(
   g_return_val_if_fail(ATK_IMAGE(atk_img), 0);
   BrowserAccessibilityAuraLinux* obj = ToBrowserAccessibilityAuraLinux(atk_img);
   if (!obj)
-    return 0;
+    return nullptr;
 
   return obj->GetStringAttribute(ui::AX_ATTR_DESCRIPTION).c_str();
 }
@@ -356,7 +357,7 @@ void ImageInterfaceInit(AtkImageIface* iface) {
 }
 
 static const GInterfaceInfo ImageInfo = {
-    reinterpret_cast<GInterfaceInitFunc>(ImageInterfaceInit), 0, 0};
+    reinterpret_cast<GInterfaceInitFunc>(ImageInterfaceInit), nullptr, nullptr};
 
 //
 // AtkValue interface.
@@ -449,9 +450,7 @@ static void ValueInterfaceInit(AtkValueIface* iface) {
 }
 
 static const GInterfaceInfo ValueInfo = {
-    reinterpret_cast<GInterfaceInitFunc>(ValueInterfaceInit),
-    0,
-    0};
+    reinterpret_cast<GInterfaceInitFunc>(ValueInterfaceInit), nullptr, nullptr};
 
 //
 // AtkObject interface
@@ -638,15 +637,15 @@ GType browser_accessibility_get_type() {
   if (g_once_init_enter(&type_volatile)) {
     static const GTypeInfo tinfo = {
         sizeof(BrowserAccessibilityAtkClass),
-        (GBaseInitFunc)0,
-        (GBaseFinalizeFunc)0,
+        (GBaseInitFunc) nullptr,
+        (GBaseFinalizeFunc) nullptr,
         (GClassInitFunc)browser_accessibility_class_init,
-        (GClassFinalizeFunc)0,
-        0,                               /* class data */
+        (GClassFinalizeFunc) nullptr,
+        nullptr,                         /* class data */
         sizeof(BrowserAccessibilityAtk), /* instance size */
         0,                               /* nb preallocs */
-        (GInstanceInitFunc)0,
-        0 /* value table */
+        (GInstanceInitFunc) nullptr,
+        nullptr /* value table */
     };
 
     GType type = g_type_register_static(ATK_TYPE_OBJECT, "BrowserAccessibility",
@@ -711,15 +710,15 @@ static GType GetAccessibilityTypeFromObject(
     BrowserAccessibilityAuraLinux* obj) {
   static const GTypeInfo type_info = {
       sizeof(BrowserAccessibilityAtkClass),
-      (GBaseInitFunc)0,
-      (GBaseFinalizeFunc)0,
-      (GClassInitFunc)0,
-      (GClassFinalizeFunc)0,
-      0,                               /* class data */
+      (GBaseInitFunc) nullptr,
+      (GBaseFinalizeFunc) nullptr,
+      (GClassInitFunc) nullptr,
+      (GClassFinalizeFunc) nullptr,
+      nullptr,                         /* class data */
       sizeof(BrowserAccessibilityAtk), /* instance size */
       0,                               /* nb preallocs */
-      (GInstanceInitFunc)0,
-      0 /* value table */
+      (GInstanceInitFunc) nullptr,
+      nullptr /* value table */
   };
 
   int interface_mask = GetInterfaceMaskFromObject(obj);
@@ -755,7 +754,7 @@ BrowserAccessibilityAtk* browser_accessibility_new(
   #endif
 
   GType type = GetAccessibilityTypeFromObject(obj);
-  AtkObject* atk_object = static_cast<AtkObject*>(g_object_new(type, 0));
+  AtkObject* atk_object = static_cast<AtkObject*>(g_object_new(type, nullptr));
 
   atk_object_initialize(atk_object, obj);
 

@@ -162,7 +162,7 @@ class CompressedTraceDataEndpoint
 
     already_tried_open_ = true;
     stream_.reset(new z_stream);
-    *stream_ = {0};
+    *stream_ = {nullptr};
     stream_->zalloc = Z_NULL;
     stream_->zfree = Z_NULL;
     stream_->opaque = Z_NULL;

@@ -2211,7 +2211,7 @@ bool IndexedDBBackingStore::Cursor::FirstSeek(Status* s) {
     if (!s->ok())
       return false;
   }
-  return Continue(0, READY, s);
+  return Continue(nullptr, READY, s);
 }
 
 bool IndexedDBBackingStore::Cursor::Advance(uint32_t count, Status* s) {

@@ -2218,7 +2218,7 @@ void RenderWidgetHostImpl::OnShowDisambiguationPopup(
 
   // It is assumed that the disambiguation popup will make a copy of the
   // provided zoomed image, so we delete this one.
-  zoomed_bitmap.setPixels(0);
+  zoomed_bitmap.setPixels(nullptr);
   Send(new ViewMsg_ReleaseDisambiguationPopupBitmap(GetRoutingID(), id));
 }
 

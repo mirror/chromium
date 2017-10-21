@@ -867,7 +867,8 @@ TEST_F(NavigationControllerTest, LoadURL_SamePage_DifferentMethod) {
   params.transition = ui::PAGE_TRANSITION_TYPED;
   params.method = "POST";
   params.post_id = 123;
-  params.page_state = PageState::CreateForTesting(url1, false, 0, 0);
+  params.page_state =
+      PageState::CreateForTesting(url1, false, nullptr, nullptr);
   main_test_rfh()->PrepareForCommit();
   main_test_rfh()->SendNavigateWithParams(&params);
 
