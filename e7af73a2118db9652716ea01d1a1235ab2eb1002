@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7de3c2f7_438e744c",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-21T01:05:20Z",
+      "side": 1,
+      "message": "nit: Prefer not abbreviating Inc/Dec",
+      "revId": "e7af73a2118db9652716ea01d1a1235ab2eb1002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c25e855_d71cded6",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-21T01:05:20Z",
+      "side": 1,
+      "message": "Process lifetime management ?",
+      "revId": "e7af73a2118db9652716ea01d1a1235ab2eb1002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ececa84_27970f0a",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-21T01:05:20Z",
+      "side": 1,
+      "message": "Please also document that this needs to be called on the main thread.",
+      "revId": "e7af73a2118db9652716ea01d1a1235ab2eb1002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e89205_ccdc6d92",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-21T01:05:20Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "e7af73a2118db9652716ea01d1a1235ab2eb1002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
