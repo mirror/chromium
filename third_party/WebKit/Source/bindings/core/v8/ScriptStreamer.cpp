@@ -17,6 +17,7 @@
 #include "platform/Histogram.h"
 #include "platform/SharedBuffer.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
+#include "core/inspector/InspectorTraceEvents.h"
 #include "platform/loader/fetch/CachedMetadata.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/Deque.h"
@@ -197,6 +198,8 @@ class SourceStream : public v8::ScriptCompiler::ExternalSourceStream {
         return 0;
     }
     size_t length = 0;
+    TRACE_EVENT_END0(TRACE_DISABLED_BY_DEFAULT("v8,devtools.timeline"), "ParseOnBackgroundTask");
+
     // This will wait until there is data.
     data_queue_.Consume(src, &length);
     {
@@ -204,6 +207,10 @@ class SourceStream : public v8::ScriptCompiler::ExternalSourceStream {
       if (cancelled_)
         return 0;
     }
+
+    TRACE_EVENT_BEGIN1(TRACE_DISABLED_BY_DEFAULT("v8,devtools.timeline"), "ParseOnBackgroundTask", "data",
+      TracedValue::Create());
+
     queue_lead_position_ += length;
     return length;
   }

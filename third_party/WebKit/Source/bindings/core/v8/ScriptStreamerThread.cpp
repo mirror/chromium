@@ -59,13 +59,16 @@ WebThread& ScriptStreamerThread::PlatformThread() {
 void ScriptStreamerThread::RunScriptStreamingTask(
     std::unique_ptr<v8::ScriptCompiler::ScriptStreamingTask> task,
     ScriptStreamer* streamer) {
-  TRACE_EVENT1(
-      "v8,devtools.timeline", "v8.parseOnBackground", "data",
+
+  TRACE_EVENT_BEGIN1(TRACE_DISABLED_BY_DEFAULT("v8,devtools.timeline"), "ParseOnBackgroundTask", "data",
       InspectorParseScriptEvent::Data(streamer->ScriptResourceIdentifier(),
                                       streamer->ScriptURLString()));
+
   // Running the task can and will block: SourceStream::GetSomeData will get
   // called and it will block and wait for data from the network.
   task->Run();
+  TRACE_EVENT_END0(TRACE_DISABLED_BY_DEFAULT("v8,devtools.timeline"), "ParseOnBackgroundTask");
+
   streamer->StreamingCompleteOnBackgroundThread();
   MutexLocker locker(*g_mutex);
   ScriptStreamerThread* thread = Shared();
