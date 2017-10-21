@@ -1425,6 +1425,20 @@ hooks = [
     ],
   },
 
+  {
+    'name': 'chromeos_qemu',
+    'pattern': '\\.sha1',
+    'condition': 'checkout_chromeos',
+    'action': [
+      'python',
+      'src/third_party/depot_tools/download_from_google_storage.py',
+      '--no_resume',
+      '--no_auth',
+      '--bucket', 'chromium-gvr-static-shim',
+      '-s', 'src/third_party/qemu/linux64/qemu-system-x86_64.sha1',
+    ],
+  },
+
   # Download and initialize "vpython" VirtualEnv environment packages.
   {
     'name': 'vpython_common',
