@@ -96,7 +96,8 @@ class VIZ_SERVICE_EXPORT ProgramKey {
                                AAMode aa_mode,
                                MaskMode mask_mode,
                                bool mask_for_background,
-                               bool has_color_matrix);
+                               bool has_color_matrix,
+                               bool has_color_temperature);
   static ProgramKey VideoStream(TexCoordPrecision precision);
   static ProgramKey YUVVideo(TexCoordPrecision precision,
                              SamplerType sampler,
@@ -134,6 +135,8 @@ class VIZ_SERVICE_EXPORT ProgramKey {
   const gfx::ColorTransform* color_transform_ = nullptr;
 
   bool has_tex_clamp_rect_ = false;
+
+  bool has_color_temperature_ = false;
 };
 
 struct ProgramKeyHash {
@@ -153,7 +156,8 @@ struct ProgramKeyHash {
            (static_cast<size_t>(key.yuv_alpha_texture_mode_) << 24) ^
            (static_cast<size_t>(key.uv_texture_mode_) << 25) ^
            (static_cast<size_t>(key.color_conversion_mode_) << 26) ^
-           (static_cast<size_t>(key.has_tex_clamp_rect_) << 28);
+           (static_cast<size_t>(key.has_tex_clamp_rect_) << 28) ^
+           (static_cast<size_t>(key.has_color_temperature_) << 29);
   }
 };
 
@@ -296,6 +300,9 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
   int uv_clamp_rect_location() const {
     return fragment_shader_.uv_clamp_rect_location_;
   }
+  int color_temperature_scale_location() const {
+    return fragment_shader_.color_temperature_scale_location_;
+  }
 
  private:
   void InitializeDebugBorderProgram() {
@@ -381,6 +388,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     fragment_shader_.frag_color_mode_ = FRAG_COLOR_MODE_APPLY_BLEND_MODE;
     fragment_shader_.has_uniform_alpha_ = true;
     fragment_shader_.has_color_matrix_ = key.has_color_matrix_;
+    fragment_shader_.has_color_temperature_ = key.has_color_temperature_;
     if (key.mask_mode_ == HAS_MASK) {
       fragment_shader_.ignore_sampler_type_ = true;
     } else {

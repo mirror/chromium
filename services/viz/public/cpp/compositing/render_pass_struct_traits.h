@@ -24,6 +24,11 @@ struct StructTraits<viz::mojom::RenderPassDataView,
     return input->id;
   }
 
+  static float color_temperature(
+      const std::unique_ptr<viz::RenderPass>& input) {
+    return input->color_temperature;
+  }
+
   static const gfx::Rect& output_rect(
       const std::unique_ptr<viz::RenderPass>& input) {
     return input->output_rect;

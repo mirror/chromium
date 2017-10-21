@@ -469,6 +469,8 @@ void FragmentShader::Init(GLES2Interface* context,
     uniforms.push_back("lut_texture");
     uniforms.push_back("lut_size");
   }
+  if (has_color_temperature_)
+    uniforms.emplace_back("colorTemperatureScale");
 
   locations.resize(uniforms.size());
 
@@ -525,6 +527,9 @@ void FragmentShader::Init(GLES2Interface* context,
     lut_texture_location_ = locations[index++];
     lut_size_location_ = locations[index++];
   }
+  if (has_color_temperature_)
+    color_temperature_scale_location_ = locations[index++];
+
   DCHECK_EQ(index, locations.size());
 }
 
@@ -1036,6 +1041,12 @@ std::string FragmentShader::GetShaderSource() const {
       line += " * TextureLookup(a_texture, ya_clamped).x";
     line += ";\n";
     source += line;
+  }
+
+  if (has_color_temperature_) {
+    HDR("uniform vec4 colorTemperatureScale;");
+    SRC("// Apply the color temperature scaling");
+    SRC("texColor = colorTemperatureScale * texColor;");
   }
 
   // Write the fragment color.

@@ -13,6 +13,7 @@ import "ui/gfx/mojo/transform.mojom";
 // See components/viz/common/quads/render_pass.h.
 struct RenderPass {
   uint64 id;
+  float color_temperature;
   gfx.mojom.Rect output_rect;
   gfx.mojom.Rect damage_rect;
   gfx.mojom.Transform transform_to_root_target;

@@ -133,6 +133,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   virtual void SetNeedsDisplayRect(const gfx::Rect& dirty_rect);
   void SetNeedsDisplay() { SetNeedsDisplayRect(gfx::Rect(bounds())); }
 
+  void SetColorTemperature(float temperature);
+  float color_temperature() const { return inputs_.color_temperature; }
+
   virtual void SetOpacity(float opacity);
   float opacity() const { return inputs_.opacity; }
   float EffectiveOpacity() const;
@@ -547,6 +550,11 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     bool masks_to_bounds;
 
     scoped_refptr<Layer> mask_layer;
+
+    // The global color temperature value (0.0f ~ 1.0f). Used to calculate the
+    // layer blue and green colors scales. 0.0f is least warm (default), and
+    // 1.0f is most warm.
+    float color_temperature;
 
     float opacity;
     SkBlendMode blend_mode;

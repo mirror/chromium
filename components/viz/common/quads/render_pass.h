@@ -84,6 +84,7 @@ class VIZ_COMMON_EXPORT RenderPass {
               const gfx::Transform& transform_to_root_target);
 
   void SetAll(RenderPassId id,
+              float color_temperature,
               const gfx::Rect& output_rect,
               const gfx::Rect& damage_rect,
               const gfx::Transform& transform_to_root_target,
@@ -111,6 +112,8 @@ class VIZ_COMMON_EXPORT RenderPass {
 
   // Uniquely identifies the render pass in the compositor's current frame.
   RenderPassId id = 0;
+
+  float color_temperature = 0.f;
 
   // These are in the space of the render pass' physical pixels.
   gfx::Rect output_rect;

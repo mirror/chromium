@@ -745,6 +745,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
 
 TEST_F(StructTraitsTest, RenderPass) {
   const RenderPassId render_pass_id = 3u;
+  const float temperature = 0.5f;
   const gfx::Rect output_rect(45, 22, 120, 13);
   const gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
@@ -762,8 +763,8 @@ TEST_F(StructTraitsTest, RenderPass) {
   const bool has_damage_from_contributing_content = true;
   const bool generate_mipmap = true;
   std::unique_ptr<RenderPass> input = RenderPass::Create();
-  input->SetAll(render_pass_id, output_rect, damage_rect, transform_to_root,
-                filters, background_filters, color_space,
+  input->SetAll(render_pass_id, temperature, output_rect, damage_rect,
+                transform_to_root, filters, background_filters, color_space,
                 has_transparent_background, cache_render_pass,
                 has_damage_from_contributing_content, generate_mipmap);
 
@@ -809,6 +810,7 @@ TEST_F(StructTraitsTest, RenderPass) {
   std::unique_ptr<RenderPass> output;
   SerializeAndDeserialize<mojom::RenderPass>(input, &output);
 
+  EXPECT_EQ(temperature, output->color_temperature);
   EXPECT_EQ(input->quad_list.size(), output->quad_list.size());
   EXPECT_EQ(input->shared_quad_state_list.size(),
             output->shared_quad_state_list.size());
@@ -881,6 +883,7 @@ TEST_F(StructTraitsTest, RenderPass) {
 
 TEST_F(StructTraitsTest, RenderPassWithEmptySharedQuadStateList) {
   const RenderPassId render_pass_id = 3u;
+  const float temperature = 0.f;
   const gfx::Rect output_rect(45, 22, 120, 13);
   const gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
@@ -893,10 +896,11 @@ TEST_F(StructTraitsTest, RenderPassWithEmptySharedQuadStateList) {
   const bool has_damage_from_contributing_content = false;
   const bool generate_mipmap = false;
   std::unique_ptr<RenderPass> input = RenderPass::Create();
-  input->SetAll(render_pass_id, output_rect, damage_rect, transform_to_root,
-                cc::FilterOperations(), cc::FilterOperations(), color_space,
-                has_transparent_background, cache_render_pass,
-                has_damage_from_contributing_content, generate_mipmap);
+  input->SetAll(render_pass_id, temperature, output_rect, damage_rect,
+                transform_to_root, cc::FilterOperations(),
+                cc::FilterOperations(), color_space, has_transparent_background,
+                cache_render_pass, has_damage_from_contributing_content,
+                generate_mipmap);
 
   // Unlike the previous test, don't add any quads to the list; we need to
   // verify that the serialization code can deal with that.

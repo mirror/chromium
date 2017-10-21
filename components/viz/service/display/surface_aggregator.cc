@@ -314,8 +314,8 @@ void SurfaceAggregator::EmitSurfaceContent(
     RenderPassId remapped_pass_id = RemapPassId(source.id, surface_id);
 
     copy_pass->SetAll(
-        remapped_pass_id, source.output_rect, source.output_rect,
-        source.transform_to_root_target, source.filters,
+        remapped_pass_id, source.color_temperature, source.output_rect,
+        source.output_rect, source.transform_to_root_target, source.filters,
         source.background_filters, blending_color_space_,
         source.has_transparent_background, source.cache_render_pass,
         source.has_damage_from_contributing_content, source.generate_mipmap);
@@ -711,8 +711,8 @@ void SurfaceAggregator::CopyPasses(const CompositorFrame& frame,
         RemapPassId(source.id, surface->surface_id());
 
     copy_pass->SetAll(
-        remapped_pass_id, source.output_rect, source.output_rect,
-        source.transform_to_root_target, source.filters,
+        remapped_pass_id, source.color_temperature, source.output_rect,
+        source.output_rect, source.transform_to_root_target, source.filters,
         source.background_filters, blending_color_space_,
         source.has_transparent_background, source.cache_render_pass,
         source.has_damage_from_contributing_content, source.generate_mipmap);

@@ -2762,7 +2762,7 @@ TEST_F(GLRendererPixelTest, DISABLED_TrilinearFiltering) {
       ScaleToCeiledSize(this->device_viewport_size_, 4.0f));
   bool generate_mipmap = true;
   std::unique_ptr<RenderPass> child_pass = RenderPass::Create();
-  child_pass->SetAll(child_pass_id, child_pass_rect, child_pass_rect,
+  child_pass->SetAll(child_pass_id, 0.f, child_pass_rect, child_pass_rect,
                      transform_to_root, cc::FilterOperations(),
                      cc::FilterOperations(), gfx::ColorSpace(), false, false,
                      false, generate_mipmap);

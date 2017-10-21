@@ -190,6 +190,7 @@ struct DrawRenderPassDrawQuadParams {
   gfx::Transform window_matrix;
   gfx::Transform projection_matrix;
   gfx::Transform quad_to_target_transform;
+  float color_temperature = 0.f;
   const cc::FilterOperations* filters = nullptr;
   const cc::FilterOperations* background_filters = nullptr;
 
@@ -1137,6 +1138,7 @@ bool GLRenderer::InitializeRPDQParameters(
   SkMatrix local_matrix;
   local_matrix.setTranslate(quad->filters_origin.x(), quad->filters_origin.y());
   local_matrix.postScale(quad->filters_scale.x(), quad->filters_scale.y());
+  params->color_temperature = ColorTemperatureForPass(quad->render_pass_id);
   params->filters = FiltersForPass(quad->render_pass_id);
   params->background_filters = BackgroundFiltersForPass(quad->render_pass_id);
   gfx::Rect dst_rect = params->filters
@@ -1390,11 +1392,12 @@ void GLRenderer::ChooseRPDQProgram(DrawRenderPassDrawQuadParams* params) {
     sampler_type =
         SamplerTypeFromTextureTarget(params->mask_resource_lock->target());
   }
-  SetUseProgram(ProgramKey::RenderPass(
-                    tex_coord_precision, sampler_type, shader_blend_mode,
-                    params->use_aa ? USE_AA : NO_AA, mask_mode,
-                    mask_for_background, params->use_color_matrix),
-                params->contents_color_space);
+  SetUseProgram(
+      ProgramKey::RenderPass(
+          tex_coord_precision, sampler_type, shader_blend_mode,
+          params->use_aa ? USE_AA : NO_AA, mask_mode, mask_for_background,
+          params->use_color_matrix, params->color_temperature > 0.f),
+      params->contents_color_space);
 }
 
 void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
@@ -1517,6 +1520,7 @@ void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
     }
   }
 
+  SetShaderColorTemperature(params);
   SetShaderOpacity(params->quad);
   SetShaderQuadF(params->surface_quad);
 }
@@ -2686,6 +2690,24 @@ void GLRenderer::SetShaderQuadF(const gfx::QuadF& quad) {
   gl_quad[6] = quad.p4().x();
   gl_quad[7] = quad.p4().y();
   gl_->Uniform2fv(current_program_->quad_location(), 4, gl_quad);
+}
+
+void GLRenderer::SetShaderColorTemperature(
+    DrawRenderPassDrawQuadParams* params) {
+  if (!current_program_ ||
+      current_program_->color_temperature_scale_location() == -1) {
+    return;
+  }
+
+  const float color_temperature = params->color_temperature;
+  // If we only tone down the blue scale, the screen will look very green so we
+  // also need to tone down the green, but with a less value compared to the
+  // blue scale to avoid making things look very red.
+  const float layer_blue_scale = 1.0f - color_temperature;
+  const float layer_green_scale = 1.0f - 0.3f * color_temperature;
+
+  gl_->Uniform4f(current_program_->color_temperature_scale_location(),
+                 1.0f, layer_green_scale, layer_blue_scale, 1.0f);
 }
 
 void GLRenderer::SetShaderOpacity(const DrawQuad* quad) {

@@ -103,6 +103,10 @@ gfx::RectF RenderSurfaceImpl::DrawableContentRect() const {
   return drawable_content_rect;
 }
 
+float RenderSurfaceImpl::ColorTemperature() const {
+  return OwningEffectNode()->color_temperature;
+}
+
 SkBlendMode RenderSurfaceImpl::BlendMode() const {
   return OwningEffectNode()->blend_mode;
 }
@@ -372,6 +376,7 @@ std::unique_ptr<viz::RenderPass> RenderSurfaceImpl::CreateRenderPass() {
   damage_rect.Intersect(content_rect());
   pass->SetNew(id(), content_rect(), damage_rect,
                draw_properties_.screen_space_transform);
+  pass->color_temperature = ColorTemperature();
   pass->filters = Filters();
   pass->background_filters = BackgroundFilters();
   pass->generate_mipmap = TrilinearFiltering();

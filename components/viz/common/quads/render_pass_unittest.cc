@@ -44,6 +44,7 @@ static void CompareRenderPassLists(const RenderPassList& expected_list,
     RenderPass* actual = actual_list[i].get();
 
     EXPECT_EQ(expected->id, actual->id);
+    EXPECT_EQ(expected->color_temperature, actual->color_temperature);
     EXPECT_EQ(expected->output_rect, actual->output_rect);
     EXPECT_EQ(expected->transform_to_root_target,
               actual->transform_to_root_target);
@@ -70,6 +71,7 @@ static void CompareRenderPassLists(const RenderPassList& expected_list,
 
 TEST(RenderPassTest, CopyShouldBeIdenticalExceptIdAndQuads) {
   RenderPassId render_pass_id = 3u;
+  const float temperature = 0.f;
   gfx::Rect output_rect(45, 22, 120, 13);
   gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
@@ -85,8 +87,8 @@ TEST(RenderPassTest, CopyShouldBeIdenticalExceptIdAndQuads) {
   bool generate_mipmap = false;
 
   std::unique_ptr<RenderPass> pass = RenderPass::Create();
-  pass->SetAll(render_pass_id, output_rect, damage_rect, transform_to_root,
-               filters, background_filters, color_space,
+  pass->SetAll(render_pass_id, temperature, output_rect, damage_rect,
+               transform_to_root, filters, background_filters, color_space,
                has_transparent_background, cache_render_pass,
                has_damage_from_contributing_content, generate_mipmap);
   pass->copy_requests.push_back(CopyOutputRequest::CreateStubForTesting());
@@ -104,6 +106,7 @@ TEST(RenderPassTest, CopyShouldBeIdenticalExceptIdAndQuads) {
 
   std::unique_ptr<RenderPass> copy = pass->Copy(new_render_pass_id);
   EXPECT_EQ(new_render_pass_id, copy->id);
+  EXPECT_EQ(pass->color_temperature, copy->color_temperature);
   EXPECT_EQ(pass->output_rect, copy->output_rect);
   EXPECT_EQ(pass->transform_to_root_target, copy->transform_to_root_target);
   EXPECT_EQ(pass->damage_rect, copy->damage_rect);
@@ -124,6 +127,7 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   RenderPassList pass_list;
 
   int id = 3;
+  const float temperature = 0.f;
   gfx::Rect output_rect(45, 22, 120, 13);
   gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
@@ -139,10 +143,10 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   bool generate_mipmap = false;
 
   std::unique_ptr<RenderPass> pass = RenderPass::Create();
-  pass->SetAll(id, output_rect, damage_rect, transform_to_root, filters,
-               background_filters, color_space, has_transparent_background,
-               cache_render_pass, has_damage_from_contributing_content,
-               generate_mipmap);
+  pass->SetAll(id, temperature, output_rect, damage_rect, transform_to_root,
+               filters, background_filters, color_space,
+               has_transparent_background, cache_render_pass,
+               has_damage_from_contributing_content, generate_mipmap);
 
   // Two quads using one shared state.
   SharedQuadState* shared_state1 = pass->CreateAndAppendSharedQuadState();
@@ -176,6 +180,7 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
 
   // A second render pass with a quad.
   int contrib_id = 4;
+  const float contrib_temperature = 0.f;
   gfx::Rect contrib_output_rect(10, 15, 12, 17);
   gfx::Transform contrib_transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
@@ -192,12 +197,12 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   bool contrib_generate_mipmap = false;
 
   std::unique_ptr<RenderPass> contrib = RenderPass::Create();
-  contrib->SetAll(contrib_id, contrib_output_rect, contrib_damage_rect,
-                  contrib_transform_to_root, contrib_filters,
-                  contrib_background_filters, contrib_color_space,
-                  contrib_has_transparent_background, contrib_cache_render_pass,
-                  contrib_has_damage_from_contributing_content,
-                  contrib_generate_mipmap);
+  contrib->SetAll(
+      contrib_id, contrib_temperature, contrib_output_rect, contrib_damage_rect,
+      contrib_transform_to_root, contrib_filters, contrib_background_filters,
+      contrib_color_space, contrib_has_transparent_background,
+      contrib_cache_render_pass, contrib_has_damage_from_contributing_content,
+      contrib_generate_mipmap);
 
   SharedQuadState* contrib_shared_state =
       contrib->CreateAndAppendSharedQuadState();
@@ -231,6 +236,7 @@ TEST(RenderPassTest, CopyAllWithCulledQuads) {
   RenderPassList pass_list;
 
   int id = 3;
+  const float temperature = 0.f;
   gfx::Rect output_rect(45, 22, 120, 13);
   gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
@@ -246,10 +252,10 @@ TEST(RenderPassTest, CopyAllWithCulledQuads) {
   bool generate_mipmap = false;
 
   std::unique_ptr<RenderPass> pass = RenderPass::Create();
-  pass->SetAll(id, output_rect, damage_rect, transform_to_root, filters,
-               background_filters, color_space, has_transparent_background,
-               cache_render_pass, has_damage_from_contributing_content,
-               generate_mipmap);
+  pass->SetAll(id, temperature, output_rect, damage_rect, transform_to_root,
+               filters, background_filters, color_space,
+               has_transparent_background, cache_render_pass,
+               has_damage_from_contributing_content, generate_mipmap);
 
   // A shared state with a quad.
   SharedQuadState* shared_state1 = pass->CreateAndAppendSharedQuadState();

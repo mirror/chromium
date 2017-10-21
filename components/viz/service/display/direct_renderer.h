@@ -147,6 +147,8 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
                      const gfx::Rect& render_pass_scissor,
                      bool use_render_pass_scissor);
 
+  float ColorTemperatureForPass(RenderPassId render_pass_id) const;
+
   const cc::FilterOperations* FiltersForPass(RenderPassId render_pass_id) const;
   const cc::FilterOperations* BackgroundFiltersForPass(
       RenderPassId render_pass_id) const;
@@ -206,6 +208,8 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   // This counts the number of draws since the last time
   // DirectComposition layers needed to be used.
   int frames_since_using_dc_layers_ = 0;
+
+  base::flat_map<RenderPassId, float> render_pass_color_temperatures_;
 
   // A map from RenderPass id to the texture used to draw the RenderPass from.
   base::flat_map<RenderPassId, std::unique_ptr<cc::ScopedResource>>
