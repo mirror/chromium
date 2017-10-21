@@ -16,6 +16,24 @@
       "revId": "dc9742e944ff89cdbdf8c12f988e48e4cf60d064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb0b309_de8014f0",
+        "filename": "base/memory/shared_memory_handle_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-21T01:20:34Z",
+      "side": 1,
+      "message": "I was thinking about this also, but got lost in IPC internals while looking for a way to do this, and I got the impression it might end up too invasive. dcheng@ or others, please let me know if you think that would be the right way to do it.",
+      "parentUuid": "8e6545ae_93db507c",
+      "revId": "dc9742e944ff89cdbdf8c12f988e48e4cf60d064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
