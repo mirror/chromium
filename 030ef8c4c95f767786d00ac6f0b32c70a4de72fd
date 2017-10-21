@@ -16,6 +16,24 @@
       "revId": "030ef8c4c95f767786d00ac6f0b32c70a4de72fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0891b3f_313cd87f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-21T00:49:46Z",
+      "side": 1,
+      "message": "The rest of the file has been using parenthesis so I\u0027ll keep it consistent.",
+      "parentUuid": "cc0b6b3b_af71936f",
+      "revId": "030ef8c4c95f767786d00ac6f0b32c70a4de72fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
