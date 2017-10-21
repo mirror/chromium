@@ -495,6 +495,12 @@ class GFX_EXPORT RenderText {
 
   void set_strike_thickness_factor(SkScalar f) { strike_thickness_factor_ = f; }
 
+  void set_letter_spacing(int letter_spacing) {
+    letter_spacing_ = letter_spacing;
+  }
+
+  int letter_spacing() const { return letter_spacing_; }
+
  protected:
   RenderText();
 
@@ -832,6 +838,8 @@ class GFX_EXPORT RenderText {
 
   // The ratio of strike-through line thickness to text height.
   SkScalar strike_thickness_factor_;
+
+  int letter_spacing_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderText);
 };
