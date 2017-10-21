@@ -290,6 +290,9 @@ void BluetoothRemoteGattCharacteristicWin::UpdateIncludedDescriptors(
           base::WrapUnique(descriptor);
     }
   }
+
+  // Report discovery complete.
+  parent_service_->GattCharacteristicDiscoveryComplete(this);
 }
 
 bool BluetoothRemoteGattCharacteristicWin::IsDescriptorDiscovered(

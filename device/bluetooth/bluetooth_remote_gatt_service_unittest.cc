@@ -21,7 +21,7 @@ namespace device {
 
 #if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 class BluetoothRemoteGattServiceTest : public BluetoothTest {};
-#endif
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 
 // Android is excluded because it fires a single discovery event per device.
 #if defined(OS_WIN) || defined(OS_MACOSX)
@@ -45,6 +45,43 @@ TEST_F(BluetoothRemoteGattServiceTest, IsDiscoveryComplete) {
   EXPECT_TRUE(service->IsDiscoveryComplete());
 }
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
+
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
+TEST_F(BluetoothRemoteGattServiceTest, DiscoveryCompleteObserved) {
+  if (!PlatformSupportsLowEnergy()) {
+    LOG(WARNING) << "Low Energy Bluetooth unavailable, skipping unit test.";
+    return;
+  }
+  InitWithFakeAdapter();
+  StartLowEnergyDiscoverySession();
+
+  TestBluetoothAdapterObserver observer(adapter_);
+  BluetoothDevice* device = SimulateLowEnergyDevice(3);
+  device->CreateGattConnection(GetGattConnectionCallback(Call::EXPECTED),
+                               GetConnectErrorCallback(Call::NOT_EXPECTED));
+  SimulateGattConnection(device);
+  base::RunLoop().RunUntilIdle();
+
+  // Different platforms will report discovery complete at different points.
+  // The important thing is that they report it by the time they are populated
+  // with a descriptor.
+  EXPECT_EQ(0, observer.gatt_discovery_complete_count());
+  // Simulate a service, with several Characteristics.
+  SimulateGattServicesDiscovered(
+      device, std::vector<std::string>({kTestUUIDGenericAccess}));
+  base::RunLoop().RunUntilIdle();
+  BluetoothRemoteGattService* service = device->GetGattServices()[0];
+  // Windows and Mac will report discovery complete at this point.
+  SimulateGattCharacteristic(service, kTestUUIDDeviceName, /* properties */ 0);
+  BluetoothRemoteGattCharacteristic* characteristic =
+      service->GetCharacteristics()[0];
+  SimulateGattDescriptor(
+      characteristic,
+      BluetoothRemoteGattDescriptor::ClientCharacteristicConfigurationUuid()
+          .canonical_value());
+  EXPECT_EQ(1, observer.gatt_discovery_complete_count());
+}
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 
 #if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 TEST_F(BluetoothRemoteGattServiceTest, GetIdentifier) {
@@ -151,13 +188,14 @@ TEST_F(BluetoothRemoteGattServiceTest,
   }
   InitWithFakeAdapter();
   StartLowEnergyDiscoverySession();
+
   BluetoothDevice* device = SimulateLowEnergyDevice(3);
   device->CreateGattConnection(GetGattConnectionCallback(Call::EXPECTED),
                                GetConnectErrorCallback(Call::NOT_EXPECTED));
   SimulateGattConnection(device);
   base::RunLoop().RunUntilIdle();
 
-  // Simulate a service, with several Characteristics:
+  // Simulate a service, with several Characteristics.
   SimulateGattServicesDiscovered(
       device, std::vector<std::string>({kTestUUIDGenericAccess}));
   base::RunLoop().RunUntilIdle();
