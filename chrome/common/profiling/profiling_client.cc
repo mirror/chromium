@@ -52,7 +52,12 @@ void ProfilingClient::StartProfiling(mojo::ScopedHandle memlog_sender_pipe) {
 
   StreamHeader header;
   header.signature = kStreamSignature;
-  memlog_sender_pipe_->Send(&header, sizeof(header));
+  MemlogSenderPipe::Result result =
+      memlog_sender_pipe_->Send(&header, sizeof(header), 10000);
+  if (result != MemlogSenderPipe::Result::kSuccess) {
+    memlog_sender_pipe_->Close();
+    return;
+  }
 
   InitAllocatorShim(memlog_sender_pipe_.get());
 }

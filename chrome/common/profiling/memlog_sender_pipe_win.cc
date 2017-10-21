@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/common/profiling/memlog_sender_pipe_win.h"
+#include "chrome/common/profiling/memlog_sender_pipe.h"
 
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
@@ -10,26 +10,86 @@
 
 namespace profiling {
 
+namespace {
+
+DWORD g_error = 0;
+DWORD g_bytes_written = ERROR_SUCCESS;
+bool g_waiting_for_write = false;
+
+// A global function called by ::WriteFileEx when the write has finished, or
+// errored. Since there is only 1 MemlogSenderPipe per process, we can use a
+// global variable to track the state.
+void AsyncWriteFinished(DWORD error,
+                        DWORD bytes_written,
+                        LPOVERLAPPED overlap) {
+  g_error = error;
+  g_bytes_written = bytes_written;
+  g_waiting_for_write = false;
+}
+
+}  // namespace
+
 MemlogSenderPipe::MemlogSenderPipe(base::ScopedPlatformFile file)
     : file_(std::move(file)) {}
 
 MemlogSenderPipe::~MemlogSenderPipe() {
 }
 
-bool MemlogSenderPipe::Send(const void* data, size_t sz) {
-  // The pipe uses a blocking wait mode (it doesn't specify PIPE_NOWAIT) so
-  // WriteFile should do only complete writes.
-  //
-  // Note: don't use logging here (CHECK, DCHECK) because they will allocate,
-  // and this function is called from within a malloc hook.
-  //
-  // ::WriteFile is not thread-safe, so wrap it in a lock.
+MemlogSenderPipe::Result MemlogSenderPipe::Send(const void* data, size_t size,
+                                                int timeout_ms) {
+  // The pipe is nonblocking. However, to ensure that messages on different
+  // threads are serialized and in order:
+  //   1) We grab a global lock.
+  //   2) We attempt to synchronously write, but with a timeout. On timeout
+  //   or error, the MemlogSenderPipe is shut down.
   base::AutoLock lock(lock_);
-  DWORD bytes_written = 0;
-  if (!::WriteFile(file_.Get(), data, static_cast<DWORD>(sz), &bytes_written,
-                   NULL))
-    return false;
-  return true;
+
+  // This can happen if Close() was called on another thread, while this thread
+  // was already waiting to call MemlogSenderPipe::Send().
+  if (!file_.IsValid())
+    return Result::kError;
+
+  // Queue an asynchronous write.
+  g_waiting_for_write = true;
+  g_bytes_written = 0;
+  g_error = ERROR_SUCCESS;
+  OVERLAPPED overlapped;
+  overlapped.Offset = 0xFFFFFFFF;
+  overlapped.OffsetHigh = 0xFFFFFFFF;
+  BOOL write_result = ::WriteFileEx(file_.Get(), data, static_cast<DWORD>(size),
+                                    &overlapped, AsyncWriteFinished);
+
+  // Check for errors.
+  if (!write_result)
+    return Result::kError;
+  if (GetLastError() != ERROR_SUCCESS)
+    return Result::kError;
+
+  // Sleep for up to timeout_ms milliseconds.
+  DWORD sleep_result = ::SleepEx(timeout_ms, true);
+
+  // Timeout reached.
+  if (sleep_result == 0) {
+    g_waiting_for_write = false;
+    ::CancelIo(file_.Get());
+    return Result::kTimeout;
+  }
+
+  // Unexpected error.
+  if (sleep_result != WAIT_IO_COMPLETION)
+    return Result::kError;
+
+  // AsyncWriteFinished has been called.
+  if (g_error != ERROR_SUCCESS)
+    return Result::kError;
+
+  // Partial writes should not be possible.
+  return g_bytes_written == size ? Result::kSuccess : Result::kError;
+}
+
+void MemlogSenderPipe::Close() {
+  base::AutoLock lock(lock_);
+  file_.Close();
 }
 
 }  // namespace profiling
