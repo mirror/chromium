@@ -35,7 +35,7 @@ TEST_F(TabViewTest, Display) {
   for (int i = 0; i < 5; i++) {
     for (int j = 0; j < 5; j++) {
       [view_ setHoverAlpha:i*0.2];
-      [view_ setAlertAlpha:j*0.2];
+      [view_ setPulseAlpha:j * 0.2];
       [view_ display];
     }
   }
@@ -50,15 +50,15 @@ TEST_F(TabViewTest, Glow) {
   // TODO(viettrungluu): Figure out how to test this, which is timing-sensitive
   // and which moreover uses |-performSelector:withObject:afterDelay:|.
 
-  // Call |-startOnceAlert|/|-cancelAlert| and make sure it doesn't crash.
+  // Call |-startPulse|/|-stopPulse| and make sure it doesn't crash.
   for (int i = 0; i < 5; i++) {
-    [view_ startOnceAlert];
-    [view_ cancelAlert];
+    [view_ startPulse];
+    [view_ stopPulse];
   }
-  [view_ startOnceAlert];
-  [view_ startOnceAlert];
-  [view_ cancelAlert];
-  [view_ cancelAlert];
+  [view_ startPulse];
+  [view_ startPulse];
+  [view_ stopPulse];
+  [view_ stopPulse];
 }
 
 // Test that clicks outside of the visible boundaries are ignored.
