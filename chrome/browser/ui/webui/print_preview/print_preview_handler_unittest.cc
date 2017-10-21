@@ -278,9 +278,7 @@ class PrintPreviewHandlerTest : public testing::Test {
 };
 
 TEST_F(PrintPreviewHandlerTest, InitialSettings) {
-  base::ListValue list_args;
-  list_args.AppendString("test-callback-id-0");
-  handler()->HandleGetInitialSettings(&list_args);
+  handler()->HandleGetInitialSettings("test-callback-id-0");
 
   // In response to get initial settings, the initial settings are sent back
   // and a use-cloud-print event is dispatched.
@@ -297,9 +295,7 @@ TEST_F(PrintPreviewHandlerTest, InitialSettings) {
 
 TEST_F(PrintPreviewHandlerTest, GetPrinters) {
   // Initial settings first to enable javascript.
-  base::ListValue list_args;
-  list_args.AppendString("test-callback-id-0");
-  handler()->HandleGetInitialSettings(&list_args);
+  handler()->HandleGetInitialSettings("test-callback-id-0");
 
   // In response to get initial settings, the initial settings are sent back
   // and a use-cloud-print event is dispatched.
@@ -318,12 +314,9 @@ TEST_F(PrintPreviewHandlerTest, GetPrinters) {
   for (size_t i = 0; i < arraysize(types); i++) {
     printing::PrinterType type = types[i];
     handler()->reset_calls();
-    base::ListValue args;
     std::string callback_id_in =
         "test-callback-id-" + base::UintToString(i + 1);
-    args.AppendString(callback_id_in);
-    args.AppendInteger(type);
-    handler()->HandleGetPrinters(&args);
+    handler()->HandleGetPrinters(callback_id_in, type);
     EXPECT_TRUE(handler()->CalledOnlyForType(type));
 
     // Start with 2 calls from initial settings, then add 2 more for each loop
@@ -361,9 +354,7 @@ TEST_F(PrintPreviewHandlerTest, GetPrinterCapabilities) {
   printer_handler()->SetPrinters(printers());
 
   // Initial settings first to enable javascript.
-  base::ListValue list_args;
-  list_args.AppendString("test-callback-id-0");
-  handler()->HandleGetInitialSettings(&list_args);
+  handler()->HandleGetInitialSettings("test-callback-id-0");
   // In response to get initial settings, the initial settings are sent back
   // and a use-cloud-print event is dispatched.
   ASSERT_EQ(2u, web_ui()->call_data().size());
@@ -381,13 +372,10 @@ TEST_F(PrintPreviewHandlerTest, GetPrinterCapabilities) {
   for (size_t i = 0; i < arraysize(types); i++) {
     printing::PrinterType type = types[i];
     handler()->reset_calls();
-    base::ListValue args;
     std::string callback_id_in =
         "test-callback-id-" + base::UintToString(i + 1);
-    args.AppendString(callback_id_in);
-    args.AppendString(printing::kDummyPrinterName);
-    args.AppendInteger(type);
-    handler()->HandleGetPrinterCapabilities(&args);
+    handler()->HandleGetPrinterCapabilities(callback_id_in,
+                                            printing::kDummyPrinterName, type);
     EXPECT_TRUE(handler()->CalledOnlyForType(type));
 
     // Start with 2 calls from initial settings, then add 1 more for each loop
@@ -417,10 +405,8 @@ TEST_F(PrintPreviewHandlerTest, GetPrinterCapabilities) {
     base::ListValue args;
     std::string callback_id_in =
         "test-callback-id-" + base::UintToString(i + arraysize(types) + 1);
-    args.AppendString(callback_id_in);
-    args.AppendString("EmptyPrinter");
-    args.AppendInteger(type);
-    handler()->HandleGetPrinterCapabilities(&args);
+    handler()->HandleGetPrinterCapabilities(callback_id_in, "EmptyPrinter",
+                                            type);
     EXPECT_TRUE(handler()->CalledOnlyForType(type));
 
     // Start with 2 calls from initial settings plus arraysize(types) from
