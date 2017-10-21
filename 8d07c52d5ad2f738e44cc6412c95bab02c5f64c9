@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "236815a8_c9384028",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-21T16:41:39Z",
+      "side": 1,
+      "message": "Don\u0027t use \u0027browser\u0027, it is misleading.",
+      "revId": "8d07c52d5ad2f738e44cc6412c95bab02c5f64c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbaae71b_965c0e3d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-21T16:41:39Z",
+      "side": 1,
+      "message": "Your experiments are orthogonal.",
+      "revId": "8d07c52d5ad2f738e44cc6412c95bab02c5f64c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465e3c7c_2e67f8a8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-21T16:41:39Z",
+      "side": 1,
+      "message": "shouldGroupMessage()",
+      "revId": "8d07c52d5ad2f738e44cc6412c95bab02c5f64c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9063bd_67ea8b90",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-21T16:41:39Z",
+      "side": 1,
+      "message": "MessageType is only there for ConsoleAPI Source, this check and the ones below don\u0027t make sense to me.",
+      "revId": "8d07c52d5ad2f738e44cc6412c95bab02c5f64c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
