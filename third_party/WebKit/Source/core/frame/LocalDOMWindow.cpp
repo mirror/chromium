@@ -946,7 +946,12 @@ int LocalDOMWindow::outerWidth() const {
   return chrome_client.RootWindowRect().Width();
 }
 
-FloatSize LocalDOMWindow::GetViewportSize(
+static FloatSize AdjustSizeForAbsoluteZoom(FloatSize size, float zoom) {
+  return FloatSize(AdjustForAbsoluteZoom(size.Width(), zoom),
+                   AdjustForAbsoluteZoom(size.Height(), zoom));
+}
+
+FloatSize LocalDOMWindow::GetViewportSizeAdjustedForZoom(
     IncludeScrollbarsInRect scrollbar_inclusion) const {
   if (!GetFrame())
     return FloatSize();
@@ -959,19 +964,6 @@ FloatSize LocalDOMWindow::GetViewportSize(
   if (!page)
     return FloatSize();
 
-  // The main frame's viewport size depends on the page scale. If viewport is
-  // enabled, the initial page scale depends on the content width and is set
-  // after a layout, perform one now so queries during page load will use the
-  // up to date viewport.
-  bool affectedByScale =
-      page->GetSettings().GetViewportEnabled() && GetFrame()->IsMainFrame();
-  bool affectedByScrollbars =
-      scrollbar_inclusion == kExcludeScrollbars &&
-      !page->GetScrollbarTheme().UsesOverlayScrollbars();
-
-  if (affectedByScale || affectedByScrollbars)
-    document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
   // FIXME: This is potentially too much work. We really only need to know the
   // dimensions of the parent frame's layoutObject.
   if (Frame* parent = GetFrame()->Tree().Parent()) {
@@ -981,28 +973,52 @@ FloatSize LocalDOMWindow::GetViewportSize(
           ->UpdateStyleAndLayoutIgnorePendingStylesheets();
   }
 
-  return GetFrame()->IsMainFrame() &&
-                 !page->GetSettings().GetInertVisualViewport()
-             ? FloatSize(page->GetVisualViewport().VisibleRect().Size())
-             : FloatSize(view->VisibleContentRect(scrollbar_inclusion).Size());
+  // The main frame's viewport size depends on the page scale. If viewport is
+  // enabled, the initial page scale depends on the content width and is set
+  // after a layout, perform one now so queries during page load will use the
+  // up to date viewport.
+  if (page->GetSettings().GetViewportEnabled() && GetFrame()->IsMainFrame())
+    document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  bool include_scrollbars = scrollbar_inclusion == kIncludeScrollbars ||
+                            page->GetScrollbarTheme().UsesOverlayScrollbars();
+  if (include_scrollbars) {
+    // TODO(pdr): Snapping these values to IntSize seems incorrect.
+    IntSize size =
+        GetFrame()->IsMainFrame()
+            ? ExpandedIntSize(page->GetVisualViewport().VisibleRect().Size())
+            : document()->View()->Size();
+    return AdjustSizeForAbsoluteZoom(FloatSize(size),
+                                     GetFrame()->PageZoomFactor());
+  }
+
+  // A layout is required to make sure scrollbars are updated.
+  document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  if (GetFrame()->IsMainFrame()) {
+    // These values are already adjusted for zoom.
+    return FloatSize(page->GetVisualViewport().VisibleWidthCSSPx(),
+                     page->GetVisualViewport().VisibleHeightCSSPx());
+  }
+  return AdjustSizeForAbsoluteZoom(
+      FloatSize(view->LayoutViewportScrollableArea()
+                    ->VisibleContentRect(scrollbar_inclusion)
+                    .Size()),
+      GetFrame()->PageZoomFactor());
 }
 
 int LocalDOMWindow::innerHeight() const {
   if (!GetFrame())
     return 0;
 
-  FloatSize viewport_size = GetViewportSize(kIncludeScrollbars);
-  return AdjustForAbsoluteZoom(ExpandedIntSize(viewport_size).Height(),
-                               GetFrame()->PageZoomFactor());
+  return GetViewportSizeAdjustedForZoom(kIncludeScrollbars).Height();
 }
 
 int LocalDOMWindow::innerWidth() const {
   if (!GetFrame())
     return 0;
 
-  FloatSize viewport_size = GetViewportSize(kIncludeScrollbars);
-  return AdjustForAbsoluteZoom(ExpandedIntSize(viewport_size).Width(),
-                               GetFrame()->PageZoomFactor());
+  return GetViewportSizeAdjustedForZoom(kIncludeScrollbars).Width();
 }
 
 int LocalDOMWindow::screenX() const {
