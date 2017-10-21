@@ -7,10 +7,10 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
 #include "services/resource_coordinator/observers/metrics_collector.h"
 #include "services/resource_coordinator/observers/tab_signal_generator_impl.h"
-#include "services/resource_coordinator/service_callbacks_impl.h"
 #include "services/resource_coordinator/tracing/agent_registry.h"
 #include "services/resource_coordinator/tracing/coordinator.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -36,9 +36,7 @@ void ResourceCoordinatorService::OnStart() {
       base::Bind(&service_manager::ServiceContext::RequestQuit,
                  base::Unretained(context()))));
 
-  registry_.AddInterface(base::Bind(ServiceCallbacksImpl::Create,
-                                    base::Unretained(ref_factory_.get()),
-                                    base::Unretained(this)));
+  ukm_recorder_ = ukm::MojoUkmRecorder::Create(context()->connector());
 
   registry_.AddInterface(
       base::Bind(&CoordinationUnitIntrospectorImpl::BindToInterface,
@@ -56,6 +54,7 @@ void ResourceCoordinatorService::OnStart() {
       base::MakeUnique<MetricsCollector>());
 
   coordination_unit_manager_.OnStart(&registry_, ref_factory_.get());
+  coordination_unit_manager_.set_ukm_recorder(ukm_recorder_.get());
 
   // TODO(chiniforooshan): The abstract class Coordinator in the
   // public/cpp/memory_instrumentation directory should not be needed anymore.
@@ -86,12 +85,6 @@ void ResourceCoordinatorService::OnBindInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   registry_.BindInterface(interface_name, std::move(interface_pipe),
                           source_info);
-}
-
-void ResourceCoordinatorService::SetUkmRecorder(
-    std::unique_ptr<ukm::MojoUkmRecorder> ukm_recorder) {
-  ukm_recorder_ = std::move(ukm_recorder);
-  coordination_unit_manager_.set_ukm_recorder(ukm_recorder_.get());
 }
 
 }  // namespace resource_coordinator
