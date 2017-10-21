@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2711702_3297ec73",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "Add:\nDCHECK(observer_);",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5f8b90_eb1dbf43",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "Why check at |time|, and not at base::Time::Now()?",
+      "range": {
+        "startLine": 118,
+        "startChar": 48,
+        "endLine": 118,
+        "endChar": 52
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8225fac0_16a4184b",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "s/hostWasBlacklisted/host_was_blacklisted/",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47727248_a1cf2b34",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "There is no need of this DCHECK.\nIf this is null, Chrome would anyways crash on the next line.",
+      "range": {
+        "startLine": 245,
+        "startChar": 6,
+        "endLine": 245,
+        "endChar": 53
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4f8ec2_f9126290",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "maybe say something about |observer| in the method comments?",
+      "range": {
+        "startLine": 79,
+        "startChar": 47,
+        "endLine": 79,
+        "endChar": 55
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28eb8f1d_5aee1c9b",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "nit: first update map, and then notify observers.",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 20
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d7233d_42d2f3cb",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "#include \u003cunordered_map\u003e",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26b191b_aa29efd2",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "s/user_status_change_calls_/user_status_change_calls/",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a91210_3ecc41f4",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "range": {
+        "startLine": 84,
+        "startChar": 26,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e42f5f_9bee0d3f",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "#include \u003cunordered_map\u003e",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e78bbd_8808f1fb",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "s/__/_/",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9971dd_b86bce41",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-21T00:17:45Z",
+      "side": 1,
+      "message": "init to false in constructor?",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "fa30a9bb382ea9ca521bc1cd8f6d9da12491c9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
