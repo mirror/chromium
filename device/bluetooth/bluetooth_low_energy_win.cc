@@ -14,6 +14,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/windows_version.h"
+#include "third_party/re2/src/re2/re2.h"
 
 namespace {
 
@@ -34,6 +35,7 @@ const char kDeviceAddressError[] =
     "address.";
 const char kDeviceFriendlyNameError[] = "Device name is not valid.";
 const char kInvalidBluetoothAddress[] = "Bluetooth address format is invalid.";
+const RE2 kAddressRegex(R"(_([0-9A-Z]{12})\\)");
 
 // Like ScopedHandle but for HDEVINFO.  Only use this on HDEVINFO returned from
 // SetupDiGetClassDevs.
@@ -309,23 +311,13 @@ bool CollectBluetoothLowEnergyDeviceFriendlyName(
 bool ExtractBluetoothAddressFromDeviceInstanceId(const std::string& instance_id,
                                                  BLUETOOTH_ADDRESS* btha,
                                                  std::string* error) {
-  size_t start = instance_id.find("_");
-  if (start == std::string::npos) {
-    *error = kDeviceAddressError;
-    return false;
-  }
-  size_t end = instance_id.find("\\", start);
-  if (end == std::string::npos) {
+  std::string address;
+  if (!RE2::PartialMatch(instance_id, kAddressRegex, &address)) {
     *error = kDeviceAddressError;
     return false;
   }
 
-  start++;
-  std::string address = instance_id.substr(start, end - start);
-  if (!StringToBluetoothAddress(address, btha, error))
-    return false;
-
-  return true;
+  return StringToBluetoothAddress(address, btha, error);
 }
 
 bool CollectBluetoothLowEnergyDeviceAddress(
@@ -336,8 +328,12 @@ bool CollectBluetoothLowEnergyDeviceAddress(
   // TODO(rpaquay): We exctract the bluetooth device address from the device
   // instance ID string, as we did not find a more formal API for retrieving the
   // bluetooth address of a Bluetooth Low Energy device.
-  // An Bluetooth device instance ID has the following format (under Win8+):
+  // A Bluetooth device instance ID often has the following format (under
+  // Win8+):
   // BTHLE\DEV_BC6A29AB5FB0\8&31038925&0&BC6A29AB5FB0
+  // However, they have also been seen with the following, more expanded,
+  // format:
+  // BTHLEDEVICE\{0000180F-0000-1000-8000-00805F9B34FB}_DEV_VID&01000A_PID&014C_REV&0100_818B4B0BACE6\8&4C387F7&0&0020
   return ExtractBluetoothAddressFromDeviceInstanceId(
       device_info->id, &device_info->address, error);
 }
