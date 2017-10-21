@@ -13,6 +13,7 @@
 #include "base/time/time.h"
 #include "remoting/codec/scoped_vpx_codec.h"
 #include "remoting/codec/webrtc_video_encoder.h"
+#include "remoting/codec/webrtc_video_encoder_selector.h"
 #include "third_party/libvpx/source/libvpx/vpx/vpx_encoder.h"
 
 typedef struct vpx_image vpx_image_t;
@@ -29,9 +30,17 @@ namespace remoting {
 // once the old implementation is no longer in use.
 class WebrtcVideoEncoderVpx : public WebrtcVideoEncoder {
  public:
-  // Create encoder for the specified protocol.
+  // Creates encoder for the specified protocol.
   static std::unique_ptr<WebrtcVideoEncoderVpx> CreateForVP8();
   static std::unique_ptr<WebrtcVideoEncoderVpx> CreateForVP9();
+
+  // Checks whether the WebrtcVideoEncoderSelector::Profile is supported by VP8.
+  static bool IsProfileSupportedByVP8(
+      const WebrtcVideoEncoderSelector::Profile& profile);
+
+  // Checks whether the WebrtcVideoEncoderSelector::Profile is supported by VP9.
+  static bool IsProfileSupportedByVP9(
+      const WebrtcVideoEncoderSelector::Profile& profile);
 
   ~WebrtcVideoEncoderVpx() override;
 
