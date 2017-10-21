@@ -694,7 +694,7 @@ class LayerTreeHostContextTestLostContextAndEvictTextures
  public:
   LayerTreeHostContextTestLostContextAndEvictTextures()
       : LayerTreeHostContextTest(),
-        impl_host_(0),
+        impl_host_(nullptr),
         num_commits_(0),
         lost_context_(false) {}
 

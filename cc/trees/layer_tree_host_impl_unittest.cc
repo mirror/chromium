@@ -1095,7 +1095,7 @@ TEST_F(LayerTreeHostImplTest, ScrollBlocksOnTouchEventHandlers) {
   DrawFrame();
   LayerImpl* root = host_impl_->active_tree()->root_layer_for_testing();
 
-  LayerImpl* child = 0;
+  LayerImpl* child = nullptr;
   {
     std::unique_ptr<LayerImpl> child_layer =
         LayerImpl::Create(host_impl_->active_tree(), 6);
