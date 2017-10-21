@@ -203,15 +203,6 @@ static_library("protocol") {
   defines = []
 
   if (!is_nacl) {
-    # This condition needs to match with //remoting/codec/BUILD.gn
-    if (is_win || is_linux) {
-      defines += [ "USE_H264_ENCODER" ]
-      deps += [
-        "//media",
-        "//skia",
-      ]
-    }
-
     sources += [
       "chromium_port_allocator_factory.cc",
       "chromium_port_allocator_factory.h",
@@ -233,6 +224,11 @@ static_library("protocol") {
       "webrtc_transport.h",
       "webrtc_video_renderer_adapter.cc",
       "webrtc_video_renderer_adapter.h",
+    ]
+
+    deps += [
+      "//media",
+      "//skia",
     ]
 
     if (enable_remoting_host) {
