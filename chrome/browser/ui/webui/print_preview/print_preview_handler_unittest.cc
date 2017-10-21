@@ -286,9 +286,7 @@ class PrintPreviewHandlerTest : public testing::Test {
   void Initialize() {
     // Sending this message will enable javascript, so it must always be called
     // before any other messages are sent.
-    base::ListValue list_args;
-    list_args.AppendString("test-callback-id-0");
-    handler()->HandleGetInitialSettings(&list_args);
+    handler()->HandleGetInitialSettings("test-callback-id-0");
 
     // In response to get initial settings, the initial settings are sent back
     // and a use-cloud-print event is dispatched.
@@ -393,12 +391,9 @@ TEST_F(PrintPreviewHandlerTest, GetPrinters) {
   for (size_t i = 0; i < arraysize(types); i++) {
     printing::PrinterType type = types[i];
     handler()->reset_calls();
-    base::ListValue args;
     std::string callback_id_in =
         "test-callback-id-" + base::UintToString(i + 1);
-    args.AppendString(callback_id_in);
-    args.AppendInteger(type);
-    handler()->HandleGetPrinters(&args);
+    handler()->HandleGetPrinters(callback_id_in, type);
     EXPECT_TRUE(handler()->CalledOnlyForType(type));
 
     // Start with 2 calls from initial settings, then add 2 more for each loop
@@ -437,13 +432,10 @@ TEST_F(PrintPreviewHandlerTest, GetPrinterCapabilities) {
   for (size_t i = 0; i < arraysize(printing::kAllTypes); i++) {
     printing::PrinterType type = printing::kAllTypes[i];
     handler()->reset_calls();
-    base::ListValue args;
     std::string callback_id_in =
         "test-callback-id-" + base::UintToString(i + 1);
-    args.AppendString(callback_id_in);
-    args.AppendString(printing::kDummyPrinterName);
-    args.AppendInteger(type);
-    handler()->HandleGetPrinterCapabilities(&args);
+    handler()->HandleGetPrinterCapabilities(callback_id_in,
+                                            printing::kDummyPrinterName, type);
     EXPECT_TRUE(handler()->CalledOnlyForType(type));
 
     // Start with 2 calls from initial settings, then add 1 more for each loop
@@ -464,14 +456,11 @@ TEST_F(PrintPreviewHandlerTest, GetPrinterCapabilities) {
   for (size_t i = 0; i < arraysize(printing::kAllTypes); i++) {
     printing::PrinterType type = printing::kAllTypes[i];
     handler()->reset_calls();
-    base::ListValue args;
     std::string callback_id_in =
         "test-callback-id-" +
         base::UintToString(i + arraysize(printing::kAllTypes) + 1);
-    args.AppendString(callback_id_in);
-    args.AppendString("EmptyPrinter");
-    args.AppendInteger(type);
-    handler()->HandleGetPrinterCapabilities(&args);
+    handler()->HandleGetPrinterCapabilities(callback_id_in, "EmptyPrinter",
+                                            type);
     EXPECT_TRUE(handler()->CalledOnlyForType(type));
 
     // Start with 2 calls from initial settings plus
@@ -496,15 +485,12 @@ TEST_F(PrintPreviewHandlerTest, Print) {
     printing::PrinterType type =
         cloud ? printing::kPrivetPrinter : printing::kAllTypes[i];
     handler()->reset_calls();
-    base::ListValue args;
     std::string callback_id_in =
         "test-callback-id-" + base::UintToString(i + 1);
-    args.AppendString(callback_id_in);
     base::Value print_ticket = printing::GetPrintTicket(type, cloud);
     std::string json;
     base::JSONWriter::Write(print_ticket, &json);
-    args.AppendString(json);
-    handler()->HandlePrint(&args);
+    handler()->HandlePrint(callback_id_in, json);
 
     // Verify correct PrinterHandler was called or that no handler was requested
     // for local and cloud printers.
