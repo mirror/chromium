@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a3cbc6_a3e4662a",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-21T14:37:21Z",
+      "side": 1,
+      "message": "Comment at top of file to orient the reader to the structure of the implementation?  My style would be to list the classes that will be defined in the file and talk about the relationships between them, but I don\u0027t have particular investment in that style; I just want something that\u0027ll give readers a framework to hang more detailed knowledge on.  I wouldn\u0027t be adverse to hoisting the comments about BodyReader and BodyHandler up to this point (as part of a larger comment).",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "5808e0ad36c5d5f494b829f18ede9b1a3cb88746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56ae25a_e295cedc",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-21T14:37:21Z",
+      "side": 1,
+      "message": "Not a change in this CL, so optional, but I find these two paragraphs different structure (first one names the class it\u0027s referring to, second is a forward reference to the class defined right after it) jarring to read.  Maybe regularize?  \n\nThis comment may be moot if you hoist these up to the top of the file and integrate them with a larger file implementation comment.",
+      "range": {
+        "startLine": 198,
+        "startChar": 19,
+        "endLine": 198,
+        "endChar": 26
+      },
+      "revId": "5808e0ad36c5d5f494b829f18ede9b1a3cb88746",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
