@@ -7,9 +7,19 @@
 
 namespace vr {
 
+enum WebVrTimeoutState {
+  kWebVrNoTimeoutPending,
+  kWebVrAwaitingFirstFrame,
+  kWebVrTimeoutImminent,
+  kWebVrTimedOut,
+};
+
 struct Model {
   bool loading = false;
   float load_progress = 0.0f;
+
+  WebVrTimeoutState web_vr_timeout_state = kWebVrNoTimeoutPending;
+  bool started_for_autopresentation = false;
 };
 
 }  // namespace vr
