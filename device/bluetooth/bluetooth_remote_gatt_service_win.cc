@@ -169,6 +169,7 @@ void BluetoothRemoteGattServiceWin::UpdateIncludedCharacteristics(
           new BluetoothRemoteGattCharacteristicWin(this, info, ui_task_runner_);
       included_characteristics_[characteristic_object->GetIdentifier()] =
           base::WrapUnique(characteristic_object);
+      GattCharacteristicDiscoveryComplete(characteristic_object);
     }
   }
 
