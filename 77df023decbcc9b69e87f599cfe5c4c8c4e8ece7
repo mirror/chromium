@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed8d565b_cb4947e0",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_deviceconnect.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a94158f8_e5f903ad",
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d581f1fe_08ad6a27",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_always_resolves.html",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3372a18d_e0ef6809",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_always_resolves.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d581f1fe_08ad6a27",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5129a4bd_ba859b8a",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_two_devices.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de2c164a_a286dc56",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2e1e5b0_bcd549f7",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_zero_devices.html",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebf608a_f3ac1a1d",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/requestDevice_zero_devices.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e1e5b0_bcd549f7",
+      "range": {
+        "startLine": 13,
+        "startChar": 45,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "2ea473ad_7835faee",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_no_gesture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Eheh. Always one that escapes.",
+      "parentUuid": "7a6a9c2c_8cec4026",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f961255_7f57fbfc",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_unsupported.html",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d1968d_373306d1",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_unsupported.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f961255_7f57fbfc",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "2af3e8e2_3b5752df",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee7b670_5764ba29",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fff8a72_91075b2f",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
         "patchSetId": 2
@@ -177,6 +339,30 @@
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36942b52_04c7676a",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fff8a72_91075b2f",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "46909a8b_8e23529a",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a76c7d_15323336",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8941a8bb_8ca167d9",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
         "patchSetId": 2
@@ -223,6 +433,30 @@
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71969fd_3ad938b3",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8941a8bb_8ca167d9",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "59fac79c_6b3931d3",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_non_exclusive.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7051e073_f46692e6",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09e9a21_f37832f9",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_non_exclusive.html",
         "patchSetId": 2
@@ -269,6 +527,30 @@
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b0ad5f_36eca7a0",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_non_exclusive.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09e9a21_f37832f9",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "a7c6d0c6_a2738222",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Yes, I tried to give it nullptr, but it had a hissy fit.",
+      "parentUuid": "a42fdf3f_0cb785a0",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 12
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "417f44e8_132660d4",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
         "patchSetId": 2
@@ -315,6 +621,30 @@
       "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a792b09_b52cdcb1",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-21T00:41:43Z",
+      "side": 1,
+      "message": "Went for ResolveRequestDevice on account of the other function being called requestDevice.",
+      "parentUuid": "417f44e8_132660d4",
+      "range": {
+        "startLine": 138,
+        "startChar": 9,
+        "endLine": 138,
+        "endChar": 24
+      },
+      "revId": "77df023decbcc9b69e87f599cfe5c4c8c4e8ece7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
