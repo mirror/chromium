@@ -21,7 +21,7 @@ namespace device {
 
 #if defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 class BluetoothRemoteGattServiceTest : public BluetoothTest {};
-#endif
+#endif  // defined(OS_ANDROID) || defined(OS_MACOSX) || defined(OS_WIN)
 
 // Android is excluded because it fires a single discovery event per device.
 #if defined(OS_WIN) || defined(OS_MACOSX)
@@ -151,6 +151,8 @@ TEST_F(BluetoothRemoteGattServiceTest,
   }
   InitWithFakeAdapter();
   StartLowEnergyDiscoverySession();
+
+  TestBluetoothAdapterObserver observer(adapter_);
   BluetoothDevice* device = SimulateLowEnergyDevice(3);
   device->CreateGattConnection(GetGattConnectionCallback(Call::EXPECTED),
                                GetConnectErrorCallback(Call::NOT_EXPECTED));
@@ -162,7 +164,9 @@ TEST_F(BluetoothRemoteGattServiceTest,
       device, std::vector<std::string>({kTestUUIDGenericAccess}));
   base::RunLoop().RunUntilIdle();
   BluetoothRemoteGattService* service = device->GetGattServices()[0];
+  EXPECT_EQ(0, observer.gatt_discovery_complete_count());
   SimulateGattCharacteristic(service, kTestUUIDDeviceName, /* properties */ 0);
+  EXPECT_EQ(1, observer.gatt_discovery_complete_count());
   SimulateGattCharacteristic(service, kTestUUIDAppearance,
                              /* properties */ 0);
   // Duplicate UUID.
@@ -170,6 +174,7 @@ TEST_F(BluetoothRemoteGattServiceTest,
                              /* properties */ 0);
   SimulateGattCharacteristic(service, kTestUUIDReconnectionAddress,
                              /* properties */ 0);
+  EXPECT_EQ(1, observer.gatt_discovery_complete_count());
 
   // Verify that GetCharacteristic can retrieve characteristics again by ID,
   // and that the same Characteristics come back.
