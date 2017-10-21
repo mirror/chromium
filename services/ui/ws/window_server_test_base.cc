@@ -109,12 +109,18 @@ void WindowServerTestBase::SetUp() {
 
 void WindowServerTestBase::TearDown() {
   // WindowTreeHost depends on WindowTreeClient.
+  LOG(ERROR) << ".";
   window_tree_hosts_.clear();
+  LOG(ERROR) << ".";
   window_tree_clients_.clear();
+  LOG(ERROR) << ".";
   env_.reset();
+  LOG(ERROR) << ".";
   display::Screen::SetScreenInstance(nullptr);
+  LOG(ERROR) << ".";
 
   WindowServerServiceTestBase::TearDown();
+  LOG(ERROR) << ".";
 }
 
 void WindowServerTestBase::OnBindInterface(
