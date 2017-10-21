@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9db3770_5580ded7",
+        "filename": "chrome/browser/vr/vr_shell_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-21T18:24:35Z",
+      "side": 1,
+      "message": "nit: Add comment explaining what purpose this all serves.",
+      "range": {
+        "startLine": 318,
+        "startChar": 4,
+        "endLine": 318,
+        "endChar": 11
+      },
+      "revId": "b72679546098b5616011eab8d53091627099fe62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
