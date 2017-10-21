@@ -2358,10 +2358,16 @@ void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
     }
     case WebInputEvent::kGestureScrollBegin:
       current_gesture_location_ = WebPoint(x, y);
-      event.x = current_gesture_location_.x;
-      event.y = current_gesture_location_.y;
-      break;
     case WebInputEvent::kGestureScrollEnd:
+      if (GetScrollUnits(args, &event.data.scroll_update.delta_units)) {
+        float user_delta_x, user_delta_y;
+        if (args->GetNext(&user_delta_x)) {
+          event.data.scroll_update.delta_x = user_delta_x;
+          if (args->GetNext(&user_delta_y))
+            event.data.scroll_update.delta_y = user_delta_y;
+        }
+      }
+    // fallthrough
     case WebInputEvent::kGestureFlingStart:
       event.x = current_gesture_location_.x;
       event.y = current_gesture_location_.y;
