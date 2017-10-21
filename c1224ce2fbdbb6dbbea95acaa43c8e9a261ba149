@@ -16,6 +16,24 @@
       "revId": "c1224ce2fbdbb6dbbea95acaa43c8e9a261ba149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f516664_6d2c4cf4",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-10-21T00:50:41Z",
+      "side": 1,
+      "message": "I split the condition into two conditions. I think both existent and non-existent resources not included in the package will trigger the HasTreeHashRoot condition. \n\nThere\u0027s a comment specifically for non-existent resources on line 80 and 81 for the PathExists condition.",
+      "parentUuid": "4f9f7caf_8a264b56",
+      "revId": "c1224ce2fbdbb6dbbea95acaa43c8e9a261ba149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
