@@ -153,11 +153,8 @@
     margin-left: 16px;
 }
 
-.console-group-title {
-    font-weight: bold;
-}
-
 .console-group-title:not(.repeated-message) {
+    font-weight: bold;
     margin-left: 12px;
 }
 
@@ -169,6 +166,13 @@
     left: 10px;
     top: 5px;
     margin-right: 2px;
+}
+
+.console-message-repeat-count .expand-group-icon {
+    left: 2px;
+    top: 2px;
+    background-color: #fff;
+    margin-right: 4px;
 }
 
 .console-group {

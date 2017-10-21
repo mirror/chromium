@@ -1003,12 +1003,8 @@ Console.ConsoleViewMessage = class {
 
     this._element.className = 'console-message-wrapper';
     this._element.removeChildren();
-
-    this._nestingLevelMarkers = [];
-    for (var i = 0; i < this._nestingLevel; ++i)
-      this._nestingLevelMarkers.push(this._element.createChild('div', 'nesting-level-marker'));
-    this._updateCloseGroupDecorations();
     this._element.message = this;
+    this.updateNestingLevel(this._nestingLevel);
 
     switch (this._message.level) {
       case ConsoleModel.ConsoleMessage.MessageLevel.Verbose:
@@ -1033,6 +1029,27 @@ Console.ConsoleViewMessage = class {
     this._element.appendChild(this.contentElement());
     if (this._repeatCount > 1)
       this._showRepeatCountElement();
+  }
+
+  /**
+   * @param {number} nestingLevel
+   */
+  updateNestingLevel(nestingLevel) {
+    this._nestingLevel = nestingLevel;
+    if (!this._element)
+      return;
+    if (this._nestingLevelMarkers) {
+      if (this._nestingLevelMarkers.length === nestingLevel)
+        return;
+      for (var marker of this._nestingLevelMarkers)
+        marker.remove();
+    }
+    this._nestingLevelMarkers = [];
+    for (var i = 0; i < this._nestingLevel; ++i) {
+      var markerElement = createElementWithClass('div', 'nesting-level-marker');
+      this._nestingLevelMarkers.push(this._element.insertBefore(markerElement, this._element.firstChild));
+    }
+    this._updateCloseGroupDecorations();
   }
 
   /**
@@ -1084,6 +1101,14 @@ Console.ConsoleViewMessage = class {
     this._showRepeatCountElement();
   }
 
+  /**
+   * @param {number} repeatCount
+   */
+  setRepeatCount(repeatCount) {
+    this._repeatCount = repeatCount;
+    this._showRepeatCountElement();
+  }
+
   _showRepeatCountElement() {
     if (!this._element)
       return;
@@ -1110,6 +1135,8 @@ Console.ConsoleViewMessage = class {
       this._contentElement.classList.add('repeated-message');
     }
     this._repeatCountElement.textContent = this._repeatCount;
+    if (this._expandGroupIcon)
+      this._repeatCountElement.insertBefore(this._expandGroupIcon, this._repeatCountElement.firstChild);
   }
 
   get text() {
@@ -1264,9 +1291,8 @@ Console.ConsoleViewMessage = class {
    */
   static _linkifyWithCustomLinkifier(string, linkifier) {
     var container = createDocumentFragment();
-    var linkStringRegEx =
-        /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~]/;
-    var pathLineRegex = /(?:\/[\w\.-]*)+\:[\d]+/;
+    var linkStringRegEx = Console.ConsoleViewMessage.LinkStringRegEx;
+    var pathLineRegex = Console.ConsoleViewMessage.PathLineRegex;
 
     while (string && string.length < Components.Linkifier.MaxLengthToIgnoreLinkifier) {
       var linkString = linkStringRegEx.exec(string) || pathLineRegex.exec(string);
@@ -1350,7 +1376,10 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
     if (!this._element) {
       super.toMessageElement();
       this._expandGroupIcon = UI.Icon.create('', 'expand-group-icon');
-      this._element.insertBefore(this._expandGroupIcon, this._contentElement);
+      if (this._repeatCountElement)
+        this._repeatCountElement.insertBefore(this._expandGroupIcon, this._repeatCountElement.firstChild);
+      else
+        this._element.insertBefore(this._expandGroupIcon, this._contentElement);
       this.setCollapsed(this._collapsed);
     }
     return this._element;
@@ -1362,3 +1391,16 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
  * @type {number}
  */
 Console.ConsoleViewMessage.MaxLengthForLinks = 40;
+
+/**
+ * @const
+ * @type {!RegExp}
+ */
+Console.ConsoleViewMessage.LinkStringRegEx =
+    /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~]/;
+
+/**
+ * @const
+ * @type {!RegExp}
+ */
+Console.ConsoleViewMessage.PathLineRegex = /(?:\/[\w\.-]*)+\:[\d]+/;

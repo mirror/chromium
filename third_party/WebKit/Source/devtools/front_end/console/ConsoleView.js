@@ -71,6 +71,12 @@ Console.ConsoleView = class extends UI.VBox {
     this._urlToMessageCount = {};
     this._hiddenByFilterCount = 0;
 
+    this._isLogGroupingEnabled = Runtime.experiments.isEnabled('groupConsoleLogs');
+    /** @type {!Multimap<string, !Console.ConsoleViewMessage>} */
+    this._groupableMessages = new Multimap();
+    /** @type {!Map<string, !Console.ConsoleViewMessage>} */
+    this._groupableMessageTitle = new Map();
+
     /**
      * @type {!Array.<!Console.ConsoleView.RegexMatchRange>}
      */
@@ -218,6 +224,19 @@ Console.ConsoleView = class extends UI.VBox {
 
   static clearConsole() {
     ConsoleModel.consoleModel.requestClearMessages();
+  }
+
+  /**
+   * @param {!ConsoleModel.ConsoleMessage} message
+   * @return {string}
+   */
+  static _groupableMessageKey(message) {
+    // TODO(luoe): instead of replacing times and quoted strings, send substitution parameters from the backend.
+    var simpleReplacement = message.messageText.replace(/\d+ms/, '* ms').replace(/'\w+'/, '*').replace(/ %o/, '');
+    if (simpleReplacement.length < message.messageText.length)
+      return simpleReplacement;
+    return simpleReplacement.replace(Console.ConsoleViewMessage.LinkStringRegEx, Common.UIString('<URL>'))
+        .replace(Console.ConsoleViewMessage.PathLineRegex, Common.UIString('<URL>'));
   }
 
   _onFilterChanged() {
@@ -459,7 +478,16 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._filter.onMessageAdded(message);
     this._sidebar.onMessageAdded(viewMessage);
-    if (!insertedInMiddle) {
+
+    // If we already have similar messages, go slow path.
+    var shouldGoIntoGroup = false;
+    if (this._isLogGroupingEnabled && message.isGroupable()) {
+      var key = Console.ConsoleView._groupableMessageKey(message);
+      shouldGoIntoGroup = !!this._groupableMessages.get(key).size;
+      this._groupableMessages.set(key, viewMessage);
+    }
+
+    if (!shouldGoIntoGroup && !insertedInMiddle) {
       this._appendMessageToEnd(viewMessage);
       this._updateFilterStatus();
       this._searchableView.updateSearchMatchesCount(this._regexMatchRanges.length);
@@ -500,10 +528,18 @@ Console.ConsoleView = class extends UI.VBox {
 
   /**
    * @param {!Console.ConsoleViewMessage} viewMessage
+   * @return {boolean}
+   */
+  _shouldMessageBeVisible(viewMessage) {
+    return this._filter.shouldBeVisible(viewMessage) &&
+        (!this._isSidebarOpen || this._sidebar.shouldBeVisible(viewMessage));
+  }
+
+  /**
+   * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _appendMessageToEnd(viewMessage) {
-    if (!this._filter.shouldBeVisible(viewMessage) ||
-        (this._isSidebarOpen && !this._sidebar.shouldBeVisible(viewMessage))) {
+    if (!this._shouldMessageBeVisible(viewMessage)) {
       this._hiddenByFilterCount++;
       return;
     }
@@ -559,6 +595,8 @@ Console.ConsoleView = class extends UI.VBox {
   _consoleCleared() {
     this._currentMatchRangeIndex = -1;
     this._consoleMessages = [];
+    this._groupableMessages.clear();
+    this._groupableMessageTitle.clear();
     this._sidebar.clear();
     this._updateMessageList();
     this._hidePromptSuggestBox();
@@ -682,11 +720,66 @@ Console.ConsoleView = class extends UI.VBox {
       this._visibleViewMessages[i].resetIncrementRepeatCount();
     }
     this._visibleViewMessages = [];
-    for (var i = 0; i < this._consoleMessages.length; ++i)
-      this._appendMessageToEnd(this._consoleMessages[i]);
+    if (this._isLogGroupingEnabled) {
+      this._addGroupableMessagesToEnd();
+    } else {
+      for (var i = 0; i < this._consoleMessages.length; ++i)
+        this._appendMessageToEnd(this._consoleMessages[i]);
+    }
     this._updateFilterStatus();
     this._searchableView.updateSearchMatchesCount(this._regexMatchRanges.length);
     this._viewport.invalidate();
+  }
+
+  _addGroupableMessagesToEnd() {
+    /** @type {!Set<!ConsoleModel.ConsoleMessage>} */
+    var alreadyAdded = new Set();
+    for (var i = 0; i < this._consoleMessages.length; ++i) {
+      var viewMessage = this._consoleMessages[i];
+      var message = viewMessage.consoleMessage();
+      if (alreadyAdded.has(message))
+        continue;
+
+      var key = Console.ConsoleView._groupableMessageKey(message);
+      var viewMessagesInGroup = this._groupableMessages.get(key);
+      if (viewMessagesInGroup.size <= 1) {
+        viewMessage.updateNestingLevel(this._currentGroup.nestingLevel());
+        this._appendMessageToEnd(viewMessage);
+        continue;
+      }
+
+      var groupHasVisibleChildren = false;
+      for (var viewMessageInGroup of viewMessagesInGroup) {
+        if (this._shouldMessageBeVisible(viewMessageInGroup)) {
+          groupHasVisibleChildren = true;
+          break;
+        }
+      }
+      if (!groupHasVisibleChildren)
+        continue;
+
+      // Create artificial group start and end messages.
+      var startGroupViewMessage = this._groupableMessageTitle.get(key);
+      if (!startGroupViewMessage) {
+        var startGroupText = Console.ConsoleView._keyToGroupTitleText.get(key) || key;
+        var startGroupMessage = new ConsoleModel.ConsoleMessage(
+            null, message.source, message.level, startGroupText, ConsoleModel.ConsoleMessage.MessageType.StartGroupCollapsed);
+        startGroupViewMessage = this._createViewMessage(startGroupMessage);
+        this._groupableMessageTitle.set(key, startGroupViewMessage);
+      }
+      startGroupViewMessage.setRepeatCount(viewMessagesInGroup.size);
+      this._appendMessageToEnd(startGroupViewMessage);
+
+      for (var viewMessageInGroup of viewMessagesInGroup) {
+        viewMessageInGroup.updateNestingLevel(this._currentGroup.nestingLevel());
+        this._appendMessageToEnd(viewMessageInGroup);
+        alreadyAdded.add(viewMessageInGroup.consoleMessage());
+      }
+
+      var endGroupMessage = new ConsoleModel.ConsoleMessage(
+          null, message.source, message.level, message.messageText, ConsoleModel.ConsoleMessage.MessageType.EndGroup);
+      this._appendMessageToEnd(this._createViewMessage(endGroupMessage));
+    }
   }
 
   /**
@@ -1379,3 +1472,9 @@ Console.ConsoleView.RegexMatchRange;
 
 /** @type {symbol} */
 Console.ConsoleView._messageSortingTimeSymbol = Symbol('messageSortingTime');
+
+/** @type {!Map<string, string>} */
+Console.ConsoleView._keyToGroupTitleText = new Map([
+  ['* handler took * ms', Common.UIString('Event handler took too long')],
+  ['Forced reflow while executing JavaScript took * ms', Common.UIString('Performance may be slowed by reflows')],
+]);
