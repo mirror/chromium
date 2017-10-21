@@ -286,6 +286,29 @@
       "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4111b971_0837bb26",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 29695,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-21T00:22:06Z",
+      "side": 1,
+      "message": "nit: Please define a custom enum in enums.xml with semantically appropriate labels, and use it here.",
+      "range": {
+        "startLine": 29695,
+        "startChar": 55,
+        "endLine": 29695,
+        "endChar": 62
+      },
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
