@@ -15,6 +15,7 @@
 #include "base/optional.h"
 #include "base/stl_util.h"
 #include "base/task_scheduler/post_task.h"
+#include "chrome/browser/chromeos/printing/specifics_translation.h"
 #include "components/sync/base/report_unrecoverable_error.h"
 #include "components/sync/model/model_type_change_processor.h"
 #include "components/sync/model/model_type_store.h"
@@ -43,6 +44,19 @@ std::unique_ptr<EntityData> CopyToEntityData(
   entity_data->non_unique_name =
       specifics.display_name().empty() ? "PRINTER" : specifics.display_name();
   return entity_data;
+}
+
+// Computes the make_and_model field for old |specifics| where it is missing.
+// Returns true if an update was made.  make_and_model is computed from the
+// manufacturer and model strings.
+bool MigrateMakeAndModel(sync_pb::PrinterSpecifics* specifics) {
+  if (specifics->has_make_and_model()) {
+    return false;
+  }
+
+  specifics->set_make_and_model(
+      printing::MakeAndModel(specifics->manufacturer(), specifics->model()));
+  return true;
 }
 
 }  // namespace
@@ -190,7 +204,11 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::MergeSyncData(
     // appropriate metadata.
     for (const auto& entry : all_data_) {
       const std::string& local_entity_id = entry.first;
-      if (!base::ContainsKey(sync_entity_ids, local_entity_id)) {
+
+      // TODO(crbug.com/737809): Remove when all data is expected to have been
+      // migrated.
+      bool migrated = MigrateMakeAndModel(entry.second.get());
+      if (!base::ContainsKey(sync_entity_ids, local_entity_id) || migrated) {
         // Only local objects which were not updated are uploaded.  Objects for
         // which there was a remote copy are overwritten.
         change_processor()->Put(local_entity_id,
