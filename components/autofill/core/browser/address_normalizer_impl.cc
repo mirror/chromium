@@ -30,6 +30,30 @@ namespace {
 using ::i18n::addressinput::Source;
 using ::i18n::addressinput::Storage;
 
+bool NormalizeProfileWithValidator(AutofillProfile* profile,
+                                   const std::string& region_code,
+                                   AddressValidator* address_validator) {
+  DCHECK(address_validator);
+
+  // Create the AddressData from the profile.
+  ::i18n::addressinput::AddressData address_data =
+      *autofill::i18n::CreateAddressDataFromAutofillProfile(*profile,
+                                                            region_code);
+
+  // Normalize the address.
+
+  if (!address_validator->NormalizeAddress(&address_data))
+    return false;
+
+  profile->SetRawInfo(ADDRESS_HOME_STATE,
+                      base::UTF8ToUTF16(address_data.administrative_area));
+  profile->SetRawInfo(ADDRESS_HOME_CITY,
+                      base::UTF8ToUTF16(address_data.locality));
+  profile->SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY,
+                      base::UTF8ToUTF16(address_data.dependent_locality));
+  return true;
+}
+
 }  // namespace
 
 class AddressNormalizerImpl::NormalizationRequest {
@@ -74,23 +98,10 @@ class AddressNormalizerImpl::NormalizationRequest {
     // The rules should be loaded.
     DCHECK(address_validator_->AreRulesLoadedForRegion(region_code_));
 
-    // Create the AddressData from the profile.
-    ::i18n::addressinput::AddressData address_data =
-        *autofill::i18n::CreateAddressDataFromAutofillProfile(profile_,
-                                                              region_code_);
+    bool normalization_success = NormalizeProfileWithValidator(
+        &profile_, region_code_, address_validator_);
 
-    // Normalize the address.
-    if (address_validator_ &&
-        address_validator_->NormalizeAddress(&address_data)) {
-      profile_.SetRawInfo(ADDRESS_HOME_STATE,
-                          base::UTF8ToUTF16(address_data.administrative_area));
-      profile_.SetRawInfo(ADDRESS_HOME_CITY,
-                          base::UTF8ToUTF16(address_data.locality));
-      profile_.SetRawInfo(ADDRESS_HOME_DEPENDENT_LOCALITY,
-                          base::UTF8ToUTF16(address_data.dependent_locality));
-    }
-
-    std::move(callback_).Run(/*success=*/true, profile_);
+    std::move(callback_).Run(/*success=*/normalization_success, profile_);
   }
 
  private:
@@ -135,7 +146,7 @@ bool AddressNormalizerImpl::AreRulesLoadedForRegion(
   return address_validator_.AreRulesLoadedForRegion(region_code);
 }
 
-void AddressNormalizerImpl::NormalizeAddress(
+void AddressNormalizerImpl::NormalizeAddressAsync(
     const AutofillProfile& profile,
     const std::string& region_code,
     int timeout_seconds,
@@ -171,6 +182,16 @@ void AddressNormalizerImpl::NormalizeAddress(
   // Start loading the rules for that region. If the rules were already in the
   // process of being loaded, this call will do nothing.
   LoadRulesForRegion(region_code);
+}
+
+bool AddressNormalizerImpl::NormalizeAddressSync(
+    AutofillProfile* profile,
+    const std::string& region_code) {
+  if (!AreRulesLoadedForRegion(region_code))
+    return false;
+
+  return NormalizeProfileWithValidator(profile, region_code,
+                                       &address_validator_);
 }
 
 void AddressNormalizerImpl::OnAddressValidationRulesLoaded(

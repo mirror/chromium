@@ -487,7 +487,7 @@ void ShippingAddressEditorViewController::OnDataChanged(bool synchronous) {
   // (there's no data to go in the region combobox anyways).
   std::string country_code = countries_[chosen_country_index_].first;
   if (state()->GetAddressNormalizer()->AreRulesLoadedForRegion(country_code)) {
-    state()->GetAddressNormalizer()->NormalizeAddress(
+    state()->GetAddressNormalizer()->NormalizeAddressAsync(
         temporary_profile_, country_code, /*timeout_seconds=*/1,
         base::BindOnce(
             &ShippingAddressEditorViewController::OnAddressNormalized,
