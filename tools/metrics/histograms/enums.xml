@@ -26080,6 +26080,7 @@ from previous Chrome versions.
   <int value="585" label="scroll-boundary-behavior"/>
   <int value="586" label="scroll-boundary-behavior-x"/>
   <int value="587" label="scroll-boundary-behavior-y"/>
+  <int value="588" label="scroll-customization"/>
 </enum>
 
 <enum name="MappedEditingCommands">
