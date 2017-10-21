@@ -562,6 +562,11 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
 
+  // Stores whether the Tab currently inserted was a pre-rendered Tab. This
+  // is used to determine whether the pre-rendering animation should be played
+  // or not.
+  BOOL _insertedTabWasPrerenderedTab;
+
   // Constraint specifying the height of the toolbar. Used to update the height
   // of the toolbar if the safe area changes.
   __weak NSLayoutConstraint* toolbarHeightConstraint_;
@@ -2085,11 +2090,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_toolbarCoordinator updateToolbarState];
   [_toolbarCoordinator setShareButtonEnabled:self.canShowShareMenu];
 
-  PrerenderService* prerenderService =
-      PrerenderServiceFactory::GetForBrowserState(self.browserState);
-  BOOL isPrerenderTab =
-      prerenderService && prerenderService->IsWebStatePrerendered(tab.webState);
-  if (isPrerenderTab && !_toolbarModelIOS->IsLoading())
+  if (_insertedTabWasPrerenderedTab && !_toolbarModelIOS->IsLoading())
     [_toolbarCoordinator showPrerenderingAnimation];
 
   // Also update the loading state for the tools menu (that is really an
@@ -2418,6 +2419,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)installDelegatesForTab:(Tab*)tab {
+  // There should be no pre-rendered Tabs in TabModel.
+  PrerenderService* prerenderService =
+      PrerenderServiceFactory::GetForBrowserState(_browserState);
+  DCHECK(!prerenderService ||
+         !prerenderService->IsWebStatePrerendered(tab.webState));
+
   // Unregistration happens when the Tab is removed from the TabModel.
   tab.iOSCaptivePortalBlockingPageDelegate = self;
   tab.dispatcher = self.dispatcher;
@@ -2987,15 +2994,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
                       proposedCredential:(NSURLCredential*)proposedCredential
                        completionHandler:(void (^)(NSString* username,
                                                    NSString* password))handler {
-  Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  if ([tab isPrerenderTab]) {
-    [tab discardPrerender];
-    if (handler) {
-      handler(nil, nil);
-    }
-    return;
-  }
-
   [self.dialogPresenter runAuthDialogForProtectionSpace:protectionSpace
                                      proposedCredential:proposedCredential
                                                webState:webState
@@ -3090,7 +3088,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
   // Prerender tab does not have a toolbar, return |headerHeight| as promised by
   // API documentation.
-  if ([[[self tabModel] currentTab] isPrerenderTab])
+  if (_insertedTabWasPrerenderedTab)
     return [self headerHeight];
 
   UIView* topHeader = headers[0].view;
@@ -3889,13 +3887,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
       [newTab navigationManager]->CopyStateFromAndPrune(
           [oldTab navigationManager]);
 
+      // Set _insertedTabWasPrerenderedTab to YES while the Tab is inserted
+      // so that the correct toolbar height is used and animation are played.
+      _insertedTabWasPrerenderedTab = YES;
       [_model webStateList]->ReplaceWebStateAt([_model indexOfTab:oldTab],
                                                std::move(newWebState));
-
-      // Set isPrerenderTab to NO after replacing the tab. This will allow the
-      // BrowserViewController to detect that a pre-rendered tab is switched in,
-      // and show the prerendering animation.
-      newTab.isPrerenderTab = NO;
+      _insertedTabWasPrerenderedTab = NO;
 
       [self tabLoadComplete:newTab withSuccess:newTab.loadFinished];
       return;
