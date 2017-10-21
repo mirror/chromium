@@ -16,6 +16,24 @@
       "revId": "a3310e204fa9a1d4b37a25c4b974e9703ced8842",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da52f88_4f1567c1",
+        "filename": "components/viz/service/display/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-21T16:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d719603d_3840ce8d",
+      "revId": "a3310e204fa9a1d4b37a25c4b974e9703ced8842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
