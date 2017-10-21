@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97555352_37313929",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-21T00:44:47Z",
+      "side": 1,
+      "message": "Can we put this directly in the HTML and use [hidden] to show/hide it? This code would then toggle the var used for hidden$\u003d\"[[foo_]]\". The two reasons for doing so are: to keep the html in the .html file; and to use $i18n{learnMore} which is much higher performance.",
+      "revId": "aea309f41da96ee604280b24b64f12929204f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
