@@ -219,6 +219,25 @@ def compute_interfaces_info_overall(info_individuals):
         if parent:
             parent_interfaces[interface_name] = parent
 
+    # Assign a unique number to each IDL interface.
+    # Sorted by include path so it's relatively stable and likely to be close to
+    # related interfaces.
+    def is_ordinary_interface(info):
+        return not (info['is_legacy_treat_as_partial_interface'] or
+                    info['is_callback_interface'] or
+                    info['is_dictionary'] or
+                    info['is_partial'])
+    sorted_interfaces = sorted(
+        (info.get('include_path'), name)
+        for name, info in interfaces_info.iteritems()
+        if is_ordinary_interface(info))
+    interface_index_by_name = {
+        name: index
+        for index, (_, name) in enumerate(sorted_interfaces)
+    }
+    for interface_name, interface_info in interfaces_info.iteritems():
+        interface_info['interface_index'] = interface_index_by_name.get(interface_name)
+
     # Once all individual files handled, can compute inheritance information
     # and dependencies
 

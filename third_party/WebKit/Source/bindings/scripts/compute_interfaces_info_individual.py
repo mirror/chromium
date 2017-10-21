@@ -318,6 +318,7 @@ class InterfaceInfoCollector(object):
             # FIXME: temporary private field, while removing old treatement of
             # 'implements': http://crbug.com/360435
             'is_legacy_treat_as_partial_interface': 'LegacyTreatAsPartialInterface' in extended_attributes,
+            'is_partial': definition.is_partial,
             'parent': definition.parent,
             'relative_dir': relative_dir_posix(idl_filename, source_path),
         })

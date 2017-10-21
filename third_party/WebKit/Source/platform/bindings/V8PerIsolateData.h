@@ -107,6 +107,10 @@ class PLATFORM_EXPORT V8PerIsolateData {
     virtual ~Data() = default;
   };
 
+  // May periodically need to be adjusted as IDL interfaces are added.
+  // Presently two elements are used per IDL interface.
+  static const int kInterfaceTemplateArraySize = 1700;
+
   static v8::Isolate* Initialize(WebTaskRunner*,
                                  const intptr_t* reference_table,
                                  V8ContextSnapshotMode);
@@ -148,9 +152,18 @@ class PLATFORM_EXPORT V8PerIsolateData {
   // Accessors to the cache of interface templates.
   v8::Local<v8::FunctionTemplate> FindInterfaceTemplate(const DOMWrapperWorld&,
                                                         const void* key);
+  v8::Local<v8::FunctionTemplate> FindInterfaceTemplateByIndex(int index) {
+    auto& eternal = interface_template_array_[index];
+    return eternal.IsEmpty() ? v8::Local<v8::FunctionTemplate>()
+                             : eternal.Get(GetIsolate());
+  }
   void SetInterfaceTemplate(const DOMWrapperWorld&,
                             const void* key,
                             v8::Local<v8::FunctionTemplate>);
+  void SetInterfaceTemplateByIndex(int index,
+                                   v8::Local<v8::FunctionTemplate> templ) {
+    interface_template_array_[index].Set(GetIsolate(), templ);
+  }
 
   // When v8::SnapshotCreator::CreateBlob() is called, we must not have
   // persistent handles in Blink. This method clears them.
@@ -314,6 +327,9 @@ class PLATFORM_EXPORT V8PerIsolateData {
 
   Persistent<ActiveScriptWrappableSet> active_script_wrappables_;
   std::unique_ptr<ScriptWrappableVisitor> script_wrappable_visitor_;
+
+  v8::Eternal<v8::FunctionTemplate>
+      interface_template_array_[kInterfaceTemplateArraySize];
 
   RuntimeCallStats runtime_call_stats_;
 };

@@ -27,6 +27,12 @@
 
 namespace blink {
 
+static const int kV8TestInterfaceGarbageCollectedTemplateForMainWorldIndex = 46;
+static const int kV8TestInterfaceGarbageCollectedTemplateForNonMainWorldIndex = 47;
+static_assert(
+    kV8TestInterfaceGarbageCollectedTemplateForNonMainWorldIndex < V8PerIsolateData::kInterfaceTemplateArraySize,
+    "You need to increase V8PerIsolateData::kInterfaceTemplateArraySize.");
+
 // Suppress warning: global constructors, because struct WrapperTypeInfo is trivial
 // and does not depend on another global objects.
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
@@ -471,11 +477,26 @@ void V8TestInterfaceGarbageCollected::InstallRuntimeEnabledFeaturesOnTemplate(
 }
 
 v8::Local<v8::FunctionTemplate> V8TestInterfaceGarbageCollected::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
-  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestInterfaceGarbageCollectedTemplate);
+  v8::Local<v8::FunctionTemplate> templ = V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestInterfaceGarbageCollectedTemplate);
+  auto* per_isolate_data = V8PerIsolateData::From(isolate);
+  if (per_isolate_data->GetV8ContextSnapshotMode() != V8PerIsolateData::V8ContextSnapshotMode::kTakeSnapshot) {
+    per_isolate_data->SetInterfaceTemplateByIndex(
+        world.IsMainWorld() ? kV8TestInterfaceGarbageCollectedTemplateForMainWorldIndex
+                            : kV8TestInterfaceGarbageCollectedTemplateForNonMainWorldIndex,
+        templ);
+  }
+  return templ;
 }
 
 bool V8TestInterfaceGarbageCollected::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
-  return V8PerIsolateData::From(isolate)->HasInstance(&wrapperTypeInfo, v8Value);
+  auto* per_isolate_data = V8PerIsolateData::From(isolate);
+  auto matches_template = [&](int index) {
+    v8::Local<v8::FunctionTemplate> templ =
+        per_isolate_data->FindInterfaceTemplateByIndex(index);
+    return !templ.IsEmpty() && templ->HasInstance(v8Value);
+  };
+  return matches_template(kV8TestInterfaceGarbageCollectedTemplateForMainWorldIndex) ||
+         matches_template(kV8TestInterfaceGarbageCollectedTemplateForNonMainWorldIndex);
 }
 
 v8::Local<v8::Object> V8TestInterfaceGarbageCollected::findInstanceInPrototypeChain(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {

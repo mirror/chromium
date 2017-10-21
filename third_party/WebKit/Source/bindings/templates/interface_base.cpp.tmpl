@@ -8,6 +8,15 @@
 {% endfor %}
 
 namespace blink {
+
+{% if interface_index is not none and not is_array_buffer_or_view and not is_partial %}
+static const int k{{v8_class}}TemplateForMainWorldIndex = {{2 * interface_index}};
+static const int k{{v8_class}}TemplateForNonMainWorldIndex = {{2 * interface_index + 1}};
+static_assert(
+    k{{v8_class}}TemplateForNonMainWorldIndex < V8PerIsolateData::kInterfaceTemplateArraySize,
+    "You need to increase V8PerIsolateData::kInterfaceTemplateArraySize.");
+{% endif %}
+
 {% set dom_template = '%s::domTemplate' % v8_class if not is_array_buffer_or_view else 'nullptr' %}
 {% set parent_wrapper_type_info = '&V8%s::wrapperTypeInfo' % parent_interface
                                   if parent_interface else 'nullptr' %}
