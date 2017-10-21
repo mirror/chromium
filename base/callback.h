@@ -23,7 +23,9 @@ template <typename R, typename... Args>
 class OnceCallback<R(Args...)> : public internal::CallbackBase {
  public:
   using RunType = R(Args...);
-  using PolymorphicInvoke = R (*)(internal::BindStateBase*, Args&&...);
+  using PolymorphicInvoke =
+      R (*)(internal::BindStateBase*,
+            typename internal::PassingTraits<Args>::Type...);
 
   OnceCallback() : internal::CallbackBase(nullptr) {}
 
@@ -69,7 +71,9 @@ template <typename R, typename... Args>
 class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
  public:
   using RunType = R(Args...);
-  using PolymorphicInvoke = R (*)(internal::BindStateBase*, Args&&...);
+  using PolymorphicInvoke =
+      R (*)(internal::BindStateBase*,
+            typename internal::PassingTraits<Args>::Type...);
 
   RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
 
