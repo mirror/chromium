@@ -7,11 +7,12 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/time/time.h"
 #include "components/download/internal/config.h"
 #include "components/download/internal/entry.h"
 #include "components/download/internal/scheduler/device_status.h"
-#include "components/download/public/task_scheduler.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -21,25 +22,16 @@ using testing::InSequence;
 namespace download {
 namespace {
 
-class MockTaskScheduler : public TaskScheduler {
- public:
-  MockTaskScheduler() = default;
-  ~MockTaskScheduler() override = default;
-
-  MOCK_METHOD5(ScheduleTask, void(DownloadTaskType, bool, bool, long, long));
-  MOCK_METHOD1(CancelTask, void(DownloadTaskType));
-};
-
 class DownloadSchedulerImplTest : public testing::Test {
  public:
   DownloadSchedulerImplTest() {}
+
   ~DownloadSchedulerImplTest() override = default;
 
   void TearDown() override { DestroyScheduler(); }
 
   void BuildScheduler(const std::vector<DownloadClient> clients) {
-    scheduler_ =
-        base::MakeUnique<SchedulerImpl>(&task_scheduler_, &config_, clients);
+    scheduler_ = base::MakeUnique<SchedulerImpl>(&config_, clients);
   }
   void DestroyScheduler() { scheduler_.reset(); }
 
@@ -88,7 +80,6 @@ class DownloadSchedulerImplTest : public testing::Test {
 
  protected:
   std::unique_ptr<SchedulerImpl> scheduler_;
-  MockTaskScheduler task_scheduler_;
   Configuration config_;
 
   // Entries owned by the test fixture.
@@ -415,39 +406,35 @@ TEST_F(DownloadSchedulerImplTest, Reschedule) {
   entries_[1].scheduling_params.network_requirements =
       SchedulingParams::NetworkRequirements::UNMETERED;
 
-  Criteria criteria;
-  EXPECT_CALL(task_scheduler_, CancelTask(DownloadTaskType::DOWNLOAD_TASK))
-      .RetiresOnSaturation();
-  EXPECT_CALL(task_scheduler_,
-              ScheduleTask(DownloadTaskType::DOWNLOAD_TASK,
-                           criteria.requires_unmetered_network,
-                           criteria.requires_battery_charging, _, _))
-      .RetiresOnSaturation();
-  scheduler_->Reschedule(entries());
+  TaskManager::TaskParams expected_params;
+  expected_params.requires_unmetered_network = true;
+  expected_params.requires_battery_charging = true;
+  expected_params.window_start_seconds =
+      base::saturated_cast<long>(config_.window_start_time.InSeconds());
+  expected_params.window_end_seconds =
+      base::saturated_cast<long>(config_.window_end_time.InSeconds());
+
+  base::Optional<TaskManager::TaskParams> params =
+      scheduler_->Reschedule(entries());
+  EXPECT_TRUE(params.has_value());
+  EXPECT_EQ(expected_params, params);
 
   entries_[0].scheduling_params.battery_requirements =
       SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE;
-  criteria.requires_battery_charging = false;
-  EXPECT_CALL(task_scheduler_, CancelTask(DownloadTaskType::DOWNLOAD_TASK))
-      .RetiresOnSaturation();
-  EXPECT_CALL(task_scheduler_,
-              ScheduleTask(DownloadTaskType::DOWNLOAD_TASK,
-                           criteria.requires_unmetered_network,
-                           criteria.requires_battery_charging, _, _))
-      .RetiresOnSaturation();
-  scheduler_->Reschedule(entries());
+  expected_params.requires_battery_charging = false;
+  params = scheduler_->Reschedule(entries());
+  EXPECT_TRUE(params.has_value());
+  EXPECT_EQ(expected_params, params);
 
   entries_[0].scheduling_params.network_requirements =
       SchedulingParams::NetworkRequirements::NONE;
-  criteria.requires_unmetered_network = false;
-  EXPECT_CALL(task_scheduler_, CancelTask(DownloadTaskType::DOWNLOAD_TASK))
-      .RetiresOnSaturation();
-  EXPECT_CALL(task_scheduler_,
-              ScheduleTask(DownloadTaskType::DOWNLOAD_TASK,
-                           criteria.requires_unmetered_network,
-                           criteria.requires_battery_charging, _, _))
-      .RetiresOnSaturation();
-  scheduler_->Reschedule(entries());
+  expected_params.requires_unmetered_network = false;
+  params = scheduler_->Reschedule(entries());
+  EXPECT_TRUE(params.has_value());
+  EXPECT_EQ(expected_params, params);
+
+  params = scheduler_->Reschedule(std::vector<Entry*>());
+  EXPECT_FALSE(params.has_value());
 }
 
 }  // namespace

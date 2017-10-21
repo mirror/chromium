@@ -32,6 +32,10 @@ class DeviceStatusListener : public NetworkStatusListener::Observer,
   // Returns the current device status for download scheduling.
   const DeviceStatus& CurrentDeviceStatus() const;
 
+  // Whether or not the DeviceStatusListener is currently starting up.  If not,
+  // the device status will be more restrictive (network disabled, etc.).
+  bool IsStartingUp() const;
+
   // Starts/stops to listen network and battery change events, virtual for
   // testing.
   virtual void Start(DeviceStatusListener::Observer* observer);
@@ -50,8 +54,12 @@ class DeviceStatusListener : public NetworkStatusListener::Observer,
   // The observer that listens to device status change events.
   Observer* observer_;
 
-  // If device status listener is started.
+  // If device status listener is active.
   bool listening_;
+
+  // Whether or not the device listener is starting up and the state is not
+  // valid.
+  bool starting_up_;
 
  private:
   // Start after a delay to wait for potential network stack setup.

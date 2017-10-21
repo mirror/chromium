@@ -48,6 +48,7 @@ DeviceStatusListener::DeviceStatusListener(const base::TimeDelta& startup_delay,
                                            const base::TimeDelta& online_delay)
     : observer_(nullptr),
       listening_(false),
+      starting_up_(true),
       startup_delay_(startup_delay),
       online_delay_(online_delay) {}
 
@@ -57,6 +58,10 @@ DeviceStatusListener::~DeviceStatusListener() {
 
 const DeviceStatus& DeviceStatusListener::CurrentDeviceStatus() const {
   return status_;
+}
+
+bool DeviceStatusListener::IsStartingUp() const {
+  return starting_up_;
 }
 
 void DeviceStatusListener::Start(DeviceStatusListener::Observer* observer) {
@@ -88,11 +93,10 @@ void DeviceStatusListener::StartAfterDelay() {
   status_.network_status =
       ToNetworkStatus(network_listener_->GetConnectionType());
   listening_ = true;
+  starting_up_ = false;
 
-  // Notify the current status if we are online or charging.
-  // TODO(xingliu): Do we need to notify if we are disconnected?
-  if (status_ != DeviceStatus())
-    NotifyStatusChange();
+  // Notify the current status now that we have started up.
+  NotifyStatusChange();
 }
 
 void DeviceStatusListener::Stop() {
