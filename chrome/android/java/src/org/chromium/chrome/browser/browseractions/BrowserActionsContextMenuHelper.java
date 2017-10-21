@@ -24,6 +24,7 @@ import android.view.View.OnCreateContextMenuListener;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.contextmenu.ChromeContextMenuItem;
 import org.chromium.chrome.browser.contextmenu.ContextMenuItem;
@@ -64,6 +65,15 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
                 ProgressDialog progressDialog);
     }
 
+    private static final String HISTOGRAM_NAME = "BrowserActions.SelectedOption";
+    private static final int ACTION_OPEN_IN_NEW_CHROME_TAB = 0;
+    private static final int ACTION_OPEN_IN_INCOGNITO_TAB = 1;
+    private static final int ACTION_DOWNLOAD_PAGE = 2;
+    private static final int ACTION_COPY_LINK = 3;
+    private static final int ACTION_SHARE = 4;
+    // Actions for selecting custom items.
+    private static final int ACTION_APP_PROVIDED = 5;
+    private static final int NUM_ACTIONS = 6;
 
     static final List<Integer> CUSTOM_BROWSER_ACTIONS_ID_GROUP =
             Arrays.asList(R.id.browser_actions_custom_item_one,
@@ -189,28 +199,39 @@ public class BrowserActionsContextMenuHelper implements OnCreateContextMenuListe
     boolean onItemSelected(int itemId) {
         if (itemId == R.id.browser_actions_open_in_background) {
             if (mIsNativeInitialized) {
+                RecordHistogram.recordEnumeratedHistogram(
+                        HISTOGRAM_NAME, ACTION_OPEN_IN_NEW_CHROME_TAB, NUM_ACTIONS);
                 handleOpenInBackground();
             } else {
                 mPendingItemId = itemId;
                 waitNativeInitialized();
             }
         } else if (itemId == R.id.browser_actions_open_in_incognito_tab) {
+            RecordHistogram.recordEnumeratedHistogram(
+                    HISTOGRAM_NAME, ACTION_OPEN_IN_INCOGNITO_TAB, NUM_ACTIONS);
             mMenuItemDelegate.onOpenInIncognitoTab(mCurrentContextMenuParams.getLinkUrl());
             notifyBrowserActionSelected(BrowserActionsIntent.ITEM_OPEN_IN_INCOGNITO);
         } else if (itemId == R.id.browser_actions_save_link_as) {
             if (mIsNativeInitialized) {
+                RecordHistogram.recordEnumeratedHistogram(
+                        HISTOGRAM_NAME, ACTION_DOWNLOAD_PAGE, NUM_ACTIONS);
                 handleDownload();
             } else {
                 mPendingItemId = itemId;
                 waitNativeInitialized();
             }
         } else if (itemId == R.id.browser_actions_copy_address) {
+            RecordHistogram.recordEnumeratedHistogram(
+                    HISTOGRAM_NAME, ACTION_COPY_LINK, NUM_ACTIONS);
             mMenuItemDelegate.onSaveToClipboard(mCurrentContextMenuParams.getLinkUrl());
             notifyBrowserActionSelected(BrowserActionsIntent.ITEM_COPY);
         } else if (itemId == R.id.browser_actions_share) {
+            RecordHistogram.recordEnumeratedHistogram(HISTOGRAM_NAME, ACTION_SHARE, NUM_ACTIONS);
             mMenuItemDelegate.share(false, mCurrentContextMenuParams.getLinkUrl());
             notifyBrowserActionSelected(BrowserActionsIntent.ITEM_SHARE);
         } else if (mCustomItemActionMap.indexOfKey(itemId) >= 0) {
+            RecordHistogram.recordEnumeratedHistogram(
+                    HISTOGRAM_NAME, ACTION_APP_PROVIDED, NUM_ACTIONS);
             mMenuItemDelegate.onCustomItemSelected(mCustomItemActionMap.get(itemId));
         }
         return true;
