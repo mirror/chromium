@@ -16,6 +16,24 @@
       "revId": "05897e53a446eac09002d6008e2fde4ab3503989",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21b30f7_089f7856",
+        "filename": "testing/buildbot/chromium.chromiumos.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-21T02:19:43Z",
+      "side": 1,
+      "message": "They are sorted; the presubmit checks won\u0027t let them not be. It\u0027s just that upper case comes before lower, so \"Linux ChromeOS Builder\" shows up before \"linux-chromeos-rel\".",
+      "parentUuid": "906778a4_2228a1a9",
+      "revId": "05897e53a446eac09002d6008e2fde4ab3503989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
