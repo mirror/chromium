@@ -61,18 +61,26 @@ bool IsIndexFileCurrent(const base::FilePath& cache_dir) {
   base::File::Info info;
   const base::FilePath index_path =
       cache_dir.AppendASCII(CacheStorage::kIndexFileName);
-  if (!GetFileInfo(index_path, &info))
+  if (!GetFileInfo(index_path, &info)) {
+    LOG(ERROR) << "GetFileInfo 0 for " << index_path.value() << " failed";
     return false;
+  }
   base::Time index_last_modified = info.last_modified;
 
   base::FileEnumerator enumerator(cache_dir, false,
                                   base::FileEnumerator::DIRECTORIES);
   for (base::FilePath file_path = enumerator.Next(); !file_path.empty();
        file_path = enumerator.Next()) {
-    if (!GetFileInfo(file_path, &info))
+    if (!GetFileInfo(file_path, &info)) {
+      LOG(ERROR) << "GetFileInfo 1 for " << file_path.value() << " failed";
       return false;
-    if (index_last_modified < info.last_modified)
+    }
+    if (index_last_modified < info.last_modified) {
+      LOG(ERROR) << "compare failed " << index_last_modified << " vs "
+                 << info.last_modified << " for " << index_path.value()
+                 << " vs " << file_path.value();
       return false;
+    }
   }
 
   return true;

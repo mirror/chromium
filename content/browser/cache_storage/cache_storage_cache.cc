@@ -1201,6 +1201,8 @@ void CacheStorageCache::Put(const CacheStorageBatchOperation& operation,
       operation.response.response_type,
       static_cast<int>(network::mojom::FetchResponseType::kLast) + 1);
 
+  LOG(ERROR) << "CacheStorage::Put for " << operation.request.url << ", "
+             << blob_data_handle->uuid();
   std::unique_ptr<PutContext> put_context(new PutContext(
       std::move(request), std::move(response), std::move(blob_data_handle),
       scheduler_->WrapCallbackToRunNext(std::move(callback))));
@@ -1262,6 +1264,7 @@ void CacheStorageCache::PutDidDeleteEntry(
 
   int rv = backend_ptr->CreateEntry(request_ptr->url.spec(), entry_ptr,
                                     create_entry_callback);
+  LOG(ERROR) << "called CreateEntry " << request_ptr->url.spec();
 
   if (rv != net::ERR_IO_PENDING)
     create_entry_callback.Run(rv);
