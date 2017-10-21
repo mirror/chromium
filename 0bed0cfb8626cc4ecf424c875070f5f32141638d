@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35f763e1_d67a118c",
+        "filename": "chrome/browser/chromeos/status/data_promo_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-21T00:57:15Z",
+      "side": 1,
+      "message": "this should probably be device-\u003eoperator_name() as the logic is checking if carrier ID is empty (but GetName() could return \"wwan0\" if the operator name is empty)",
+      "range": {
+        "startLine": 136,
+        "startChar": 44,
+        "endLine": 136,
+        "endChar": 51
+      },
+      "revId": "0bed0cfb8626cc4ecf424c875070f5f32141638d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
