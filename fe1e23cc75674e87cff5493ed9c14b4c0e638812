@@ -22,6 +22,30 @@
       "revId": "fe1e23cc75674e87cff5493ed9c14b4c0e638812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca8a007_65e0c299",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-21T01:37:00Z",
+      "side": 1,
+      "message": "Got it, I\u0027d like to investigate more to try to figure out some possible scenarios and then upload another CL for this.",
+      "parentUuid": "0327ebee_cf0acc79",
+      "range": {
+        "startLine": 176,
+        "startChar": 24,
+        "endLine": 176,
+        "endChar": 34
+      },
+      "revId": "fe1e23cc75674e87cff5493ed9c14b4c0e638812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
