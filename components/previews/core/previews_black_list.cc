@@ -29,9 +29,8 @@ void EvictOldestOptOut(BlackListItemMap* black_list_item_map) {
       item_to_delete = iter;
       break;
     }
-    if (!oldest_opt_out ||
-        iter->second->most_recent_opt_out_time().value() <
-            oldest_opt_out.value()) {
+    if (!oldest_opt_out || iter->second->most_recent_opt_out_time().value() <
+                               oldest_opt_out.value()) {
       oldest_opt_out = iter->second->most_recent_opt_out_time().value();
       item_to_delete = iter;
     }
@@ -54,11 +53,14 @@ PreviewsBlackListItem* GetBlackListItemFromMap(
 
 PreviewsBlackList::PreviewsBlackList(
     std::unique_ptr<PreviewsOptOutStore> opt_out_store,
-    std::unique_ptr<base::Clock> clock)
+    std::unique_ptr<base::Clock> clock,
+    PreviewsBlacklistObserver* observer)
     : loaded_(false),
       opt_out_store_(std::move(opt_out_store)),
       clock_(std::move(clock)),
+      observer_(observer),
       weak_factory_(this) {
+  DCHECK(observer_);
   if (opt_out_store_) {
     opt_out_store_->LoadBlackList(base::Bind(
         &PreviewsBlackList::LoadBlackListDone, weak_factory_.GetWeakPtr()));
@@ -112,10 +114,33 @@ void PreviewsBlackList::AddPreviewNavigationSync(const GURL& url,
   std::string host_name = url.host();
   PreviewsBlackListItem* item =
       GetOrCreateBlackListItemForMap(black_list_item_map_.get(), host_name);
+
+  // Check if the host has already been blacklisted.
+  bool host_was_blacklisted = item->IsBlackListed(time);
   item->AddPreviewNavigation(opt_out, time);
+
+  DCHECK(observer_);
+  if (!host_was_blacklisted && item->IsBlackListed(time)) {
+    // Notify |observer_| about a new blacklisted host.
+    observer_->OnNewBlacklistedHost(url.host(), time);
+  }
+
   DCHECK_LE(black_list_item_map_->size(),
             params::MaxInMemoryHostsInBlackList());
+
+  // Check if the user has already been blacklisted.
+  bool userWasBlacklisted =
+      host_indifferent_black_list_item_->IsBlackListed(time);
   host_indifferent_black_list_item_->AddPreviewNavigation(opt_out, time);
+
+  DCHECK(observer_);
+  if (userWasBlacklisted !=
+      host_indifferent_black_list_item_->IsBlackListed(time)) {
+    // Notify |observer_| on user blacklisted status change.
+    observer_->OnUserBlacklistedStatusChange(
+        host_indifferent_black_list_item_->IsBlackListed(time));
+  }
+
   if (!opt_out_store_)
     return;
   opt_out_store_->AddPreviewNavigation(opt_out, host_name, type, time);
@@ -174,6 +199,11 @@ void PreviewsBlackList::ClearBlackListSync(base::Time begin_time,
   black_list_item_map_.reset();
   host_indifferent_black_list_item_.reset();
   loaded_ = false;
+
+  // Notify |observer_| that the blacklist is cleared.
+  DCHECK(observer_);
+  observer_->OnBlacklistCleared(clock_->Now());
+
   // Delete relevant entries and reload the blacklist into memory.
   if (opt_out_store_) {
     opt_out_store_->ClearBlackList(begin_time, end_time);
@@ -203,6 +233,20 @@ void PreviewsBlackList::LoadBlackListDone(
   black_list_item_map_ = std::move(black_list_item_map);
   host_indifferent_black_list_item_ =
       std::move(host_indifferent_black_list_item);
+
+  // Notify |observer_| on current user blacklisted status.
+  DCHECK(observer_);
+  observer_->OnUserBlacklistedStatusChange(
+      host_indifferent_black_list_item_->IsBlackListed(clock_->Now()));
+
+  // Notify the |observer_| on historical blacklisted hosts.
+  for (auto it = black_list_item_map_->begin();
+       it != black_list_item_map_->end(); ++it) {
+    if (it->second->IsBlackListed(clock_->Now())) {
+      observer_->OnNewBlacklistedHost(it->first,
+                                      *it->second->most_recent_opt_out_time());
+    }
+  }
 
   // Run all pending tasks. |loaded_| may change if ClearBlackList is queued.
   while (pending_callbacks_.size() > 0 && loaded_) {
