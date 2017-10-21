@@ -169,6 +169,7 @@ if (!is_win) {
   static_library("vr_common") {
     public_deps = [
       ":vr_common_source",
+      "//chrome/app/vector_icons:vector_icons",
     ]
 
     deps = [
@@ -181,7 +182,6 @@ if (!is_win) {
       "//components/strings",
       "//components/toolbar",
       "//components/url_formatter",
-      "//components/vector_icons",
       "//components/vector_icons",
       "//skia",
       "//ui/base",
