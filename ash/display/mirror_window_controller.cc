@@ -124,7 +124,8 @@ MirrorWindowController::MirroringHostInfo::MirroringHostInfo() {}
 MirrorWindowController::MirroringHostInfo::~MirroringHostInfo() {}
 
 MirrorWindowController::MirrorWindowController()
-    : multi_display_mode_(display::DisplayManager::EXTENDED),
+    : current_event_targeter_src_host_(nullptr),
+      multi_display_mode_(display::DisplayManager::EXTENDED),
       screen_position_client_(new MirroringScreenPositionClient(this)) {}
 
 MirrorWindowController::~MirrorWindowController() {

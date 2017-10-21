@@ -30,6 +30,7 @@ class AshWindowTreeHostMus : public AshWindowTreeHost,
   void SetCursorConfig(const display::Display& display,
                        display::Display::Rotation rotation) override;
   void ClearCursorConfig() override;
+  void SetMirroringForUnified(bool b) override;
 
   // aura::WindowTreeHostMus:
   void SetRootTransform(const gfx::Transform& transform) override;

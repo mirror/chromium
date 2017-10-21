@@ -53,6 +53,8 @@ class ASH_EXPORT AshWindowTreeHost {
                                display::Display::Rotation rotation) = 0;
   virtual void ClearCursorConfig() = 0;
 
+  virtual void SetMirroringForUnified(bool b) = 0;
+
  protected:
   // Translates the native mouse location into screen coordinates.
   void TranslateLocatedEvent(ui::LocatedEvent* event);

@@ -63,6 +63,30 @@ void AshWindowTreeHostPlatform::ClearCursorConfig() {
       GetAcceleratedWidget());
 }
 
+void AshWindowTreeHostPlatform::SetMirroringForUnified(bool b) {
+  mirroring_for_unified_ = b;
+}
+
+void AshWindowTreeHostPlatform::ConvertDIPToScreenInPixels(
+    gfx::Point* point) const {
+  if (mirroring_for_unified_) {
+    gfx::Point location = GetLocationOnScreenInPixels();
+    point->Offset(location.x(), location.y());
+  } else {
+    WindowTreeHost::ConvertDIPToScreenInPixels(point);
+  }
+}
+
+void AshWindowTreeHostPlatform::ConvertScreenInPixelsToDIP(
+    gfx::Point* point) const {
+  if (mirroring_for_unified_) {
+    gfx::Point location = GetLocationOnScreenInPixels();
+    point->Offset(-location.x(), -location.y());
+  } else {
+    WindowTreeHost::ConvertScreenInPixelsToDIP(point);
+  }
+}
+
 void AshWindowTreeHostPlatform::SetRootWindowTransformer(
     std::unique_ptr<RootWindowTransformer> transformer) {
   transformer_helper_.SetRootWindowTransformer(std::move(transformer));

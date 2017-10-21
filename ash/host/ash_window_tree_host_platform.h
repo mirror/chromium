@@ -34,6 +34,11 @@ class ASH_EXPORT AshWindowTreeHostPlatform
   void SetCursorConfig(const display::Display& display,
                        display::Display::Rotation rotation) override;
   void ClearCursorConfig() override;
+  void SetMirroringForUnified(bool b) override;
+
+  // WindowTreeHost:
+  void ConvertDIPToScreenInPixels(gfx::Point* point) const override;
+  void ConvertScreenInPixelsToDIP(gfx::Point* point) const override;
 
   // aura::WindowTreeHostPlatform:
   void SetRootTransform(const gfx::Transform& transform) override;
@@ -52,6 +57,7 @@ class ASH_EXPORT AshWindowTreeHostPlatform
   // ui::PlatformWindowDelegate:
   void OnBoundsChanged(const gfx::Rect& new_bounds) override;
 
+  bool mirroring_for_unified_ = false;
   TransformerHelper transformer_helper_;
 
   DISALLOW_COPY_AND_ASSIGN(AshWindowTreeHostPlatform);

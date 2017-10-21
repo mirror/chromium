@@ -110,10 +110,10 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
 
   // Converts |point| from the root window's coordinate system to native
   // screen's.
-  void ConvertDIPToScreenInPixels(gfx::Point* point) const;
+  virtual void ConvertDIPToScreenInPixels(gfx::Point* point) const;
 
   // Converts |point| from native screen coordinate system to the root window's.
-  void ConvertScreenInPixelsToDIP(gfx::Point* point) const;
+  virtual void ConvertScreenInPixelsToDIP(gfx::Point* point) const;
 
   // Converts |point| from the root window's coordinate system to the
   // host window's.

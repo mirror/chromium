@@ -76,6 +76,10 @@ void AshWindowTreeHostMus::ClearCursorConfig() {
   // Nothing to do here, mus takes care of this.
 }
 
+void AshWindowTreeHostMus::SetMirroringForUnified(bool b) {
+  NOTIMPLEMENTED();
+}
+
 void AshWindowTreeHostMus::SetRootTransform(const gfx::Transform& transform) {
   transformer_helper_->SetTransform(transform);
 }
