@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e336370_fc5047a6",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3069,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-21T00:05:20Z",
+      "side": 0,
+      "message": "You still need to preserve this test (as I can\u0027t find an equivalent in your CL):\nThe tests above (e.g. SpeechRecognitionAPI_HasPermissionAllow) explicitly lists \"audioCapture\" permission in its manifest.json where this test from web_view/common doesn\u0027t. So it tests what happens when you don\u0027t have permission to use the API.",
+      "revId": "92fe72eb70004bcd00ac5747268cb35024e4c4d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
