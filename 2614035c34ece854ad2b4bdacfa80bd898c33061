@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61fd274d_8a2a8be4",
+        "filename": "chromeos/network/device_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-21T00:42:45Z",
+      "side": 1,
+      "message": "Ahh, right. Thanks for tracking that down. I\u0027ll have to think about how best to address that.",
+      "parentUuid": "7c3630ce_17115926",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 67
+      },
+      "revId": "2614035c34ece854ad2b4bdacfa80bd898c33061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9e22549_b2992b23",
         "filename": "chromeos/network/device_state.cc",
         "patchSetId": 2
