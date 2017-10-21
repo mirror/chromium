@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d5909dd_094b2354",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-21T01:35:09Z",
+      "side": 1,
+      "message": "This is a unit test, so it\u0027s fine as-is. Just as an fyi though:\nit\u0027s 10x to 18x faster to test that the url.length \u003e 1 \u0026\u0026 url.endsWith(\u0027/\u0027).\n\n(actually, it\u0027s either 10x or 18x faster, depending on whether the url ends with a \u0027/\u0027. The .endsWith() is fairly consistent, but the replace(/.../, ...) takes almost twice as long if the ending / is not present).",
+      "revId": "9aa09fafed50e113ae85ef37803ec2cc79c9594f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
