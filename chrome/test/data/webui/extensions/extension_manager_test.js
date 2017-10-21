@@ -149,7 +149,7 @@ cr.define('extension_manager_tests', function() {
 
     test(assert(TestNames.UrlNavigationToDetails), function() {
       isActiveView(Page.DETAILS);
-      var detailsView = manager.$['details-view'];
+      var detailsView = manager.$.detailsView;
       expectEquals('ldnnhddmnhbkjipkidpdiheffobcpfmf', detailsView.data.id);
     });
 
@@ -169,7 +169,7 @@ cr.define('extension_manager_tests', function() {
       extensions.navigation.navigateTo(
           {page: Page.DETAILS, extensionId: extension.id});
       Polymer.dom.flush();
-      var detailsView = manager.$['details-view'];
+      var detailsView = manager.$.detailsView;
       expectEquals(extension.id, detailsView.data.id);
       expectEquals(oldDescription, detailsView.data.description);
       expectEquals(
