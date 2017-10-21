@@ -68,8 +68,10 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
       public base::RefCounted<WebServiceWorkerRegistrationImpl,
                               WebServiceWorkerRegistrationImpl> {
  public:
-  // |io_task_runner| is used to bind |host_for_global_scope_|, as it's a
-  // Channel-associated interface and needs to be bound on either the main or IO
+  // |io_task_runner| is used to bind |host_for_global_scope_| and |binding_|
+  // for service worker execution context, as both of
+  // ServiceWorkerRegistrationObjectHost and ServiceWorkerRegistrationObject are
+  // Channel-associated interfaces and need to be bound on either the main or IO
   // thread.
   static scoped_refptr<WebServiceWorkerRegistrationImpl>
   CreateForServiceWorkerGlobalScope(
@@ -124,9 +126,16 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
  private:
   friend class base::RefCounted<WebServiceWorkerRegistrationImpl,
                                 WebServiceWorkerRegistrationImpl>;
+  friend class base::DeleteHelper<WebServiceWorkerRegistrationImpl>;
   explicit WebServiceWorkerRegistrationImpl(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
   ~WebServiceWorkerRegistrationImpl() override;
+
+  // Implements blink::mojom::ServiceWorkerRegistrationObject.
+  void SetVersionAttributes(
+      blink::mojom::ServiceWorkerObjectInfoPtr installing,
+      blink::mojom::ServiceWorkerObjectInfoPtr waiting,
+      blink::mojom::ServiceWorkerObjectInfoPtr active) override;
 
   // RefCounted traits implementation, rather than delete |impl| directly, calls
   // |impl->DetachAndMaybeDestroy()| to notify that the last reference to it has
@@ -154,6 +163,8 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
   GetRegistrationObjectHost();
   void Attach(blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
   void DetachAndMaybeDestroy();
+  void BindRequest(
+      blink::mojom::ServiceWorkerRegistrationObjectAssociatedRequest request);
   void OnConnectionError();
 
   void OnUpdated(std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks,
@@ -203,11 +214,22 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
 
   // |binding_| keeps the Mojo binding to serve its other Mojo endpoint (i.e.
   // the caller end) held by the content::ServiceWorkerRegistrationHandle in the
-  // browser process, is bound with |info_->request| by the constructor.
+  // browser process, is bound with |info_->request| by BindRequest() function.
   // This also controls lifetime of |this|, its connection error handler will
   // delete |this|.
+  // It is bound on the main thread for service worker clients (document, shared
+  // worker).
+  // It is bound on the IO thread for service worker execution context,
+  // but always uses PostTask to handle received messages actually on the worker
+  // thread. because it's a channel- associated interface which can be bound
+  // only on the main or IO thread.
+  // TODO(leonhsl): Once we can detach this interface out from the legacy IPC
+  // channel-associated interfaces world, for service worker execution context
+  // we should bind it always on the worker thread on which |this| lives.
   mojo::AssociatedBinding<blink::mojom::ServiceWorkerRegistrationObject>
       binding_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> creation_task_runner_;
 
   std::vector<QueuedTask> queued_tasks_;
 
