@@ -15,6 +15,7 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/cursor_manager_test_api.h"
+#include "base/command_line.h"
 #include "base/synchronization/waitable_event.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -23,6 +24,7 @@
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
@@ -113,10 +115,19 @@ class TestEventHandler : public ui::EventHandler {
   DISALLOW_COPY_AND_ASSIGN(TestEventHandler);
 };
 
-class RootWindowTransformersTest : public AshTestBase {
+class RootWindowTransformersTest : public AshTestBase,
+                                   public testing::WithParamInterface<bool> {
  public:
   RootWindowTransformersTest() {}
   ~RootWindowTransformersTest() override {}
+
+  void SetUp() override {
+    if (GetParam()) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          ::switches::kEnableMultiDisplayMirroring);
+    }
+    AshTestBase::SetUp();
+  }
 
   float GetStoredUIScale(int64_t id) {
     return display_manager()->GetDisplayInfo(id).GetEffectiveUIScale();
@@ -127,7 +138,9 @@ class RootWindowTransformersTest : public AshTestBase {
     DCHECK(display_manager()->IsInMirrorMode());
     const display::ManagedDisplayInfo& mirror_display_info =
         display_manager()->GetDisplayInfo(
-            display_manager()->mirroring_display_id());
+            display_manager()->is_multi_display_mirroring_enabled()
+                ? display_manager()->GetMirroringDisplayIdList()[0]
+                : display_manager()->mirroring_display_id());
     const display::ManagedDisplayInfo& source_display_info =
         display_manager()->GetDisplayInfo(
             display::Screen::GetScreen()->GetPrimaryDisplay().id());
@@ -139,9 +152,13 @@ class RootWindowTransformersTest : public AshTestBase {
   DISALLOW_COPY_AND_ASSIGN(RootWindowTransformersTest);
 };
 
+// Instantiate the Boolean which is used to toggle the multi-display mirroring
+// switch in the parameterized tests.
+INSTANTIATE_TEST_CASE_P(, RootWindowTransformersTest, testing::Bool());
+
 }  // namespace
 
-TEST_F(RootWindowTransformersTest, RotateAndMagnify) {
+TEST_P(RootWindowTransformersTest, RotateAndMagnify) {
   MagnificationController* magnifier = Shell::Get()->magnification_controller();
 
   TestEventHandler event_handler;
@@ -241,7 +258,7 @@ TEST_F(RootWindowTransformersTest, RotateAndMagnify) {
   Shell::Get()->RemovePreTargetHandler(&event_handler);
 }
 
-TEST_F(RootWindowTransformersTest, ScaleAndMagnify) {
+TEST_P(RootWindowTransformersTest, ScaleAndMagnify) {
   TestEventHandler event_handler;
   Shell::Get()->AddPreTargetHandler(&event_handler);
 
@@ -283,7 +300,7 @@ TEST_F(RootWindowTransformersTest, ScaleAndMagnify) {
   Shell::Get()->RemovePreTargetHandler(&event_handler);
 }
 
-TEST_F(RootWindowTransformersTest, TouchScaleAndMagnify) {
+TEST_P(RootWindowTransformersTest, TouchScaleAndMagnify) {
   TestEventHandler event_handler;
   Shell::Get()->AddPreTargetHandler(&event_handler);
 
@@ -318,7 +335,7 @@ TEST_F(RootWindowTransformersTest, TouchScaleAndMagnify) {
   Shell::Get()->RemovePreTargetHandler(&event_handler);
 }
 
-TEST_F(RootWindowTransformersTest, ConvertHostToRootCoords) {
+TEST_P(RootWindowTransformersTest, ConvertHostToRootCoords) {
   TestEventHandler event_handler;
   Shell::Get()->AddPreTargetHandler(&event_handler);
   MagnificationController* magnifier = Shell::Get()->magnification_controller();
@@ -403,7 +420,7 @@ TEST_F(RootWindowTransformersTest, ConvertHostToRootCoords) {
   Shell::Get()->RemovePreTargetHandler(&event_handler);
 }
 
-TEST_F(RootWindowTransformersTest, LetterBoxPillarBox) {
+TEST_P(RootWindowTransformersTest, LetterBoxPillarBox) {
   MirrorWindowTestApi test_api;
   display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
   UpdateDisplay("400x200,500x500");
@@ -418,7 +435,7 @@ TEST_F(RootWindowTransformersTest, LetterBoxPillarBox) {
   EXPECT_EQ("125,0,125,0", transformer->GetHostInsets().ToString());
 }
 
-TEST_F(RootWindowTransformersTest, ShouldSetWindowSize) {
+TEST_P(RootWindowTransformersTest, ShouldSetWindowSize) {
   UpdateDisplay("800x600");
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
   aura::Window* root_window = root_windows[0];
@@ -431,7 +448,7 @@ TEST_F(RootWindowTransformersTest, ShouldSetWindowSize) {
   EXPECT_EQ(root_window->GetTargetBounds(), gfx::Rect(0, 0, 600, 800));
 }
 
-TEST_F(RootWindowTransformersTest,
+TEST_P(RootWindowTransformersTest,
        ShouldNotSetWindowSizeWithEnqueuedTransformAnimation) {
   UpdateDisplay("800x600");
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
@@ -458,7 +475,7 @@ TEST_F(RootWindowTransformersTest,
   EXPECT_NE(root_window->GetTargetBounds(), gfx::Rect(0, 0, 600, 800));
 }
 
-TEST_F(RootWindowTransformersTest,
+TEST_P(RootWindowTransformersTest,
        ShouldSetWindowSizeWithStoppedTransformAnimation) {
   UpdateDisplay("800x600");
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
@@ -485,7 +502,7 @@ TEST_F(RootWindowTransformersTest,
   EXPECT_EQ(root_window->GetTargetBounds(), gfx::Rect(0, 0, 600, 800));
 }
 
-TEST_F(RootWindowTransformersTest, ShouldSetWindowSizeDuringOpacityAnimation) {
+TEST_P(RootWindowTransformersTest, ShouldSetWindowSizeDuringOpacityAnimation) {
   UpdateDisplay("800x600");
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
   aura::Window* root_window = root_windows[0];
