@@ -22,6 +22,16 @@ const aura::WindowTreeHost* MirrorWindowTestApi::GetHost() const {
   return window ? window->GetHost() : NULL;
 }
 
+void MirrorWindowTestApi::GetHosts(
+    std::vector<aura::WindowTreeHost*>& host_list) {
+  const aura::Window::Windows& windows = Shell::Get()
+                                             ->window_tree_host_manager()
+                                             ->mirror_window_controller()
+                                             ->GetWindows();
+  for (auto* window : windows)
+    host_list.push_back(window->GetHost());
+}
+
 ui::CursorType MirrorWindowTestApi::GetCurrentCursorType() const {
   return Shell::Get()
       ->window_tree_host_manager()

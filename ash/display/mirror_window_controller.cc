@@ -325,6 +325,19 @@ aura::Window* MirrorWindowController::GetWindow() {
       ->window();
 }
 
+aura::Window::Windows MirrorWindowController::GetWindows() {
+  display::DisplayManager* display_manager = Shell::Get()->display_manager();
+  aura::Window::Windows list;
+  if (!display_manager->IsInSoftwareMirrorMode() ||
+      mirroring_host_info_map_.empty())
+    return list;
+  for (auto it = mirroring_host_info_map_.begin();
+       it != mirroring_host_info_map_.end(); ++it) {
+    list.push_back(it->second->ash_host->AsWindowTreeHost()->window());
+  }
+  return list;
+}
+
 display::Display MirrorWindowController::GetDisplayForRootWindow(
     const aura::Window* root) const {
   for (const auto& pair : mirroring_host_info_map_) {

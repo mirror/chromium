@@ -51,7 +51,9 @@
 -DisplayManagerOrientationTest.LockToSpecificOrientation
 -DisplayManagerOrientationTest.SaveRestoreUserRotationLock
 -DisplayManagerOrientationTest.UserRotationLockReverse
+-DisplayManagerTest.AddAndRemoveDisplayInMultiSoftwareMirroring/1
 -DisplayManagerTest.CheckInitializationOfRotationProperty
+-DisplayManagerTest.CompositingCursorInMultiSoftwareMirroring/1
 -DisplayManagerTest.DisplayAddRemoveAtTheSameTime
 -DisplayManagerTest.DockMode
 -DisplayManagerTest.DontRegisterBadConfig
@@ -62,8 +64,9 @@
 -DisplayManagerTest.GuessDisplayIdFieldsInDisplayLayout
 -DisplayManagerTest.LayoutMorethanThreeDisplaysTest
 -DisplayManagerTest.MirroredLayout
+-DisplayManagerTest.MultiSoftwareMirroringBasic/1
 -DisplayManagerTest.NativeDisplaysChangedAfterPrimaryChange
--DisplayManagerTest.NoMirrorInThreeDisplays
+-DisplayManagerTest.NoMirrorInThreeDisplays/1
 -DisplayManagerTest.NoOverlappedDisplays
 -DisplayManagerTest.NoOverlappedDisplaysAfterResolutionChange
 -DisplayManagerTest.NoOverlappedDisplaysNotFitBetweenTwo
@@ -72,6 +75,7 @@
 -DisplayManagerTest.NotifyPrimaryChange
 -DisplayManagerTest.NotifyPrimaryChangeUndock
 -DisplayManagerTest.OverscanInsetsTest
+-DisplayManagerTest.PrimaryDisplayChangeInMultiSoftwareMirroring/1
 -DisplayManagerTest.RejectInvalidLayoutData
 -DisplayManagerTest.ResetInternalDisplayZoomFor1_25x
 -DisplayManagerTest.ResolutionChangeInUnifiedMode
@@ -81,7 +85,9 @@
 -DisplayManagerTest.ScaleOnlyChange
 -DisplayManagerTest.SingleDisplayToSoftwareMirroring
 -DisplayManagerTest.SoftwareMirroring
--DisplayManagerTest.SoftwareMirroringWithCompositingCursor
+-DisplayManagerTest.SoftwareMirroringWithCompositingCursor/0
+-DisplayManagerTest.SoftwareMirroringWithCompositingCursor/1
+-DisplayManagerTest.SwitchToAndFromMultiSoftwareMirroring/1
 -DisplayManagerTest.TestDeviceScaleOnlyChange
 -DisplayManagerTest.TestNativeDisplaysChanged
 -DisplayManagerTest.TestNativeDisplaysChangedNoInternal

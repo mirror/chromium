@@ -33,7 +33,9 @@ namespace {
 using DisplayUnitInfoList = DisplayInfoProvider::DisplayUnitInfoList;
 using DisplayLayoutList = DisplayInfoProvider::DisplayLayoutList;
 
-class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
+class DisplayInfoProviderChromeosTest
+    : public ash::AshTestBase,
+      public testing::WithParamInterface<bool> {
  public:
   DisplayInfoProviderChromeosTest() {}
 
@@ -42,6 +44,10 @@ class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFirstDisplayAsInternal);
+    if (GetParam()) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          ::switches::kEnableMultiDisplayMirroring);
+    }
 
     ash::AshTestBase::SetUp();
 
@@ -109,7 +115,11 @@ class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
   DISALLOW_COPY_AND_ASSIGN(DisplayInfoProviderChromeosTest);
 };
 
-TEST_F(DisplayInfoProviderChromeosTest, GetBasic) {
+// Instantiate the Boolean which is used to toggle the multi-display mirroring
+// switch in the parameterized tests.
+INSTANTIATE_TEST_CASE_P(, DisplayInfoProviderChromeosTest, testing::Bool());
+
+TEST_P(DisplayInfoProviderChromeosTest, GetBasic) {
   UpdateDisplay("500x600,400x520");
   DisplayUnitInfoList result = GetAllDisplaysInfo();
 
@@ -147,7 +157,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetBasic) {
   EXPECT_TRUE(result[1].is_enabled);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, GetWithUnifiedDesktop) {
+TEST_P(DisplayInfoProviderChromeosTest, GetWithUnifiedDesktop) {
   UpdateDisplay("500x600,400x520");
 
   // Check initial state.
@@ -266,7 +276,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetWithUnifiedDesktop) {
   EXPECT_TRUE(result[1].is_enabled);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, GetWithUnifiedDesktopForSettings) {
+TEST_P(DisplayInfoProviderChromeosTest, GetWithUnifiedDesktopForSettings) {
   UpdateDisplay("500x600,400x520");
 
   // Check initial state.
@@ -372,7 +382,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetWithUnifiedDesktopForSettings) {
   EXPECT_TRUE(result[1].is_enabled);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, GetRotation) {
+TEST_P(DisplayInfoProviderChromeosTest, GetRotation) {
   UpdateDisplay("500x600/r");
   DisplayUnitInfoList result = GetAllDisplaysInfo();
 
@@ -423,7 +433,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetRotation) {
   EXPECT_EQ(0, result[0].rotation);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, GetDPI) {
+TEST_P(DisplayInfoProviderChromeosTest, GetDPI) {
   UpdateDisplay("500x600,400x520*2");
   DisplayUnitInfoList result;
   result = GetAllDisplaysInfo();
@@ -456,7 +466,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetDPI) {
   EXPECT_EQ(96 / 2, result[1].dpi_y);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, GetVisibleArea) {
+TEST_P(DisplayInfoProviderChromeosTest, GetVisibleArea) {
   UpdateDisplay("640x720*2/o, 400x520/o");
   DisplayUnitInfoList result;
   result = GetAllDisplaysInfo();
@@ -501,7 +511,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetVisibleArea) {
   EXPECT_EQ("10,20,30,40", SystemInfoDisplayInsetsToString(result[0].overscan));
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, GetMirroring) {
+TEST_P(DisplayInfoProviderChromeosTest, GetMirroring) {
   UpdateDisplay("600x600, 400x520/o");
   DisplayUnitInfoList result;
   result = GetAllDisplaysInfo();
@@ -531,8 +541,13 @@ TEST_F(DisplayInfoProviderChromeosTest, GetMirroring) {
 
   ASSERT_EQ(1u, result.size());
   EXPECT_EQ(base::Int64ToString(display_id_primary), result[0].id);
-  EXPECT_EQ(base::Int64ToString(display_id_secondary),
-            result[0].mirroring_source_id);
+  if (display_manager()->is_multi_display_mirroring_enabled()) {
+    EXPECT_EQ(base::Int64ToString(display_id_primary),
+              result[0].mirroring_source_id);
+  } else {
+    EXPECT_EQ(base::Int64ToString(display_id_secondary),
+              result[0].mirroring_source_id);
+  }
 
   GetDisplayManager()->SetMirrorMode(false);
   ASSERT_FALSE(GetDisplayManager()->IsInMirrorMode());
@@ -546,7 +561,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetMirroring) {
   EXPECT_TRUE(result[1].mirroring_source_id.empty());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, GetBounds) {
+TEST_P(DisplayInfoProviderChromeosTest, GetBounds) {
   UpdateDisplay("600x600, 400x520");
   GetDisplayManager()->SetLayoutForCurrentDisplays(
       display::test::CreateDisplayLayout(display_manager(),
@@ -581,7 +596,7 @@ TEST_F(DisplayInfoProviderChromeosTest, GetBounds) {
             SystemInfoDisplayBoundsToString(result[1].bounds));
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, Layout) {
+TEST_P(DisplayInfoProviderChromeosTest, Layout) {
   UpdateDisplay("500x400,500x400,500x400");
 
   DisplayUnitInfoList displays = GetAllDisplaysInfo();
@@ -634,7 +649,7 @@ TEST_F(DisplayInfoProviderChromeosTest, Layout) {
   EXPECT_FALSE(DisplayInfoProvider::Get()->SetDisplayLayout(layout));
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginLeftExact) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginLeftExact) {
   UpdateDisplay("1200x600,520x400");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -653,7 +668,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginLeftExact) {
   EXPECT_EQ("-520,50 520x400", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginRightExact) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginRightExact) {
   UpdateDisplay("1200x600,520x400");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -672,7 +687,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginRightExact) {
   EXPECT_EQ("1200,100 520x400", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginTopExact) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginTopExact) {
   UpdateDisplay("1200x600,520x400");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -691,7 +706,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginTopExact) {
   EXPECT_EQ("1100,-400 520x400", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginBottomExact) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginBottomExact) {
   UpdateDisplay("1200x600,520x400");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -710,7 +725,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginBottomExact) {
   EXPECT_EQ("-350,600 520x400", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginSameCenter) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginSameCenter) {
   UpdateDisplay("1200x600,520x400");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -729,7 +744,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginSameCenter) {
   EXPECT_EQ("1200,100 520x400", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginLeftOutside) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginLeftOutside) {
   UpdateDisplay("1200x600,520x400");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -748,7 +763,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginLeftOutside) {
   EXPECT_EQ("-520,100 520x400", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginTopOutside) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginTopOutside) {
   UpdateDisplay("1200x600,520x400");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -767,7 +782,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginTopOutside) {
   EXPECT_EQ("-360,-400 520x400", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest,
+TEST_P(DisplayInfoProviderChromeosTest,
        SetBoundsOriginLeftButSharesBottomSide) {
   UpdateDisplay("1200x600,1000x100");
 
@@ -787,7 +802,7 @@ TEST_F(DisplayInfoProviderChromeosTest,
   EXPECT_EQ("-650,600 1000x100", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginRightButSharesTopSide) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginRightButSharesTopSide) {
   UpdateDisplay("1200x600,1000x100");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -806,7 +821,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginRightButSharesTopSide) {
   EXPECT_EQ("850,-100 1000x100", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginTopButSharesLeftSide) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginTopButSharesLeftSide) {
   UpdateDisplay("1200x600,1000x100/l");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -825,7 +840,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginTopButSharesLeftSide) {
   EXPECT_EQ("-100,-650 100x1000", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest,
+TEST_P(DisplayInfoProviderChromeosTest,
        SetBoundsOriginBottomButSharesRightSide) {
   UpdateDisplay("1200x600,1000x100/l");
 
@@ -845,7 +860,7 @@ TEST_F(DisplayInfoProviderChromeosTest,
   EXPECT_EQ("1200,450 100x1000", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginPrimaryHiDPI) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginPrimaryHiDPI) {
   UpdateDisplay("1200x600*2,500x500");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -864,7 +879,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginPrimaryHiDPI) {
   EXPECT_EQ("600,-100 500x500", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginSecondaryHiDPI) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginSecondaryHiDPI) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -883,7 +898,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginSecondaryHiDPI) {
   EXPECT_EQ("450,-500 300x500", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginOutOfBounds) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginOutOfBounds) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -902,7 +917,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginOutOfBounds) {
   EXPECT_EQ("1200,0 300x500", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginOutOfBoundsNegative) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginOutOfBoundsNegative) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -921,7 +936,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginOutOfBoundsNegative) {
   EXPECT_EQ("1200,0 300x500", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginMaxValues) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginMaxValues) {
   UpdateDisplay("1200x4600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -940,7 +955,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginMaxValues) {
   EXPECT_EQ("1200,10 300x500", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginOnPrimary) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginOnPrimary) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -963,7 +978,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginOnPrimary) {
             secondary.id());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginWithMirroring) {
+TEST_P(DisplayInfoProviderChromeosTest, SetBoundsOriginWithMirroring) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -985,7 +1000,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetBoundsOriginWithMirroring) {
             error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetRotation) {
+TEST_P(DisplayInfoProviderChromeosTest, SetRotation) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -1042,7 +1057,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetRotation) {
 
 // Tests that rotation changes made before entering tablet mode are restored
 // upon exiting tablet mode, and that a rotation lock is not set.
-TEST_F(DisplayInfoProviderChromeosTest, SetRotationBeforeTabletMode) {
+TEST_P(DisplayInfoProviderChromeosTest, SetRotationBeforeTabletMode) {
   ash::ScreenOrientationController* screen_orientation_controller =
       ash::Shell::Get()->screen_orientation_controller();
   api::system_display::DisplayProperties info;
@@ -1078,7 +1093,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetRotationBeforeTabletMode) {
 
 // Tests that rotation changes made during tablet mode lock the display
 // against accelerometer rotations, and is set as user rotation locked.
-TEST_F(DisplayInfoProviderChromeosTest, SetRotationDuringTabletMode) {
+TEST_P(DisplayInfoProviderChromeosTest, SetRotationDuringTabletMode) {
   // Entering tablet mode enables accelerometer screen rotations.
   EnableTabletMode(true);
 
@@ -1106,7 +1121,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetRotationDuringTabletMode) {
                   ->user_rotation_locked());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetInvalidRotation) {
+TEST_P(DisplayInfoProviderChromeosTest, SetInvalidRotation) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -1122,7 +1137,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetInvalidRotation) {
   EXPECT_EQ("Invalid rotation.", error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetNegativeOverscan) {
+TEST_P(DisplayInfoProviderChromeosTest, SetNegativeOverscan) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -1185,7 +1200,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetNegativeOverscan) {
   EXPECT_EQ("1200,0 300x500", secondary.bounds().ToString());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetOverscanLargerThanHorizontalBounds) {
+TEST_P(DisplayInfoProviderChromeosTest, SetOverscanLargerThanHorizontalBounds) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -1207,7 +1222,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetOverscanLargerThanHorizontalBounds) {
             error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetOverscanLargerThanVerticalBounds) {
+TEST_P(DisplayInfoProviderChromeosTest, SetOverscanLargerThanVerticalBounds) {
   UpdateDisplay("1200x600,600x1000");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -1228,7 +1243,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetOverscanLargerThanVerticalBounds) {
   EXPECT_EQ("Vertical overscan is more than half of the screen height.", error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetOverscan) {
+TEST_P(DisplayInfoProviderChromeosTest, SetOverscan) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const display::Display& secondary = display_manager()->GetSecondaryDisplay();
@@ -1257,7 +1272,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetOverscan) {
   EXPECT_EQ(51, overscan.bottom());
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, SetOverscanForInternal) {
+TEST_P(DisplayInfoProviderChromeosTest, SetOverscanForInternal) {
   UpdateDisplay("1200x600,600x1000*2");
   const int64_t internal_display_id =
       display::test::DisplayManagerTestApi(ash::Shell::Get()->display_manager())
@@ -1280,7 +1295,7 @@ TEST_F(DisplayInfoProviderChromeosTest, SetOverscanForInternal) {
   EXPECT_EQ("Overscan changes not allowed for the internal monitor.", error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, DisplayMode) {
+TEST_P(DisplayInfoProviderChromeosTest, DisplayMode) {
   UpdateDisplay("1200x600,600x1000");
 
   DisplayUnitInfoList result = GetAllDisplaysInfo();
@@ -1333,7 +1348,7 @@ TEST_F(DisplayInfoProviderChromeosTest, DisplayMode) {
   EXPECT_TRUE(active_mode.IsEquivalent(other_mode_ash));
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInternal) {
+TEST_P(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInternal) {
   UpdateDisplay("1200x600,600x1000*2");
   const int64_t internal_display_id =
       display::test::DisplayManagerTestApi(ash::Shell::Get()->display_manager())
@@ -1352,7 +1367,7 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInternal) {
   EXPECT_EQ(expected_err, error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationWithoutStart) {
+TEST_P(DisplayInfoProviderChromeosTest, CustomTouchCalibrationWithoutStart) {
   UpdateDisplay("1200x600,600x1000*2");
 
   api::system_display::TouchCalibrationPairQuad pairs;
@@ -1368,8 +1383,7 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationWithoutStart) {
   EXPECT_EQ(expected_err, error);
 }
 
-
-TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNonTouchDisplay) {
+TEST_P(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNonTouchDisplay) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const int64_t internal_display_id =
@@ -1399,7 +1413,7 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNonTouchDisplay) {
   EXPECT_EQ(expected_err, error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNegativeBounds) {
+TEST_P(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNegativeBounds) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const int64_t internal_display_id =
@@ -1447,7 +1461,7 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNegativeBounds) {
   EXPECT_EQ(expected_err, error);
 }
 
-TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInvalidPoints) {
+TEST_P(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInvalidPoints) {
   UpdateDisplay("1200x600,600x1000*2");
 
   const int64_t internal_display_id =
