@@ -314,41 +314,39 @@ Persistence.IsolatedFileSystem = class {
 
   /**
    * @param {string} path
-   * @return {!Promise<?string>}
+   * @param {function(?string,boolean)} callback
    */
-  async requestFileContentPromise(path) {
+  async requestFileContent(path, callback) {
     var blob = await this.requestFileBlob(path);
     if (!blob)
       return null;
 
     var reader = new FileReader();
-    var fileContentsLoadedPromise = new Promise(resolve => reader.onloadend = resolve);
-    if (Persistence.IsolatedFileSystem.ImageExtensions.has(Common.ParsedURL.extractExtension(path)))
-      reader.readAsDataURL(blob);
+    var encoded = Persistence.IsolatedFileSystem.ImageExtensions.has(Common.ParsedURL.extractExtension(path));
+    reader.onloadend = content => {
+      if (reader.error) {
+        console.error('Can\'t read file: ' + path + ': ' + reader.error);
+        callback(null, false);
+        return;
+      }
+      var result;
+      try {
+        result = reader.result;
+      } catch (e) {
+        result = null;
+        console.error('Can\'t read file: ' + path + ': ' + e);
+      }
+      if (result === undefined) {
+        callback(null, false);
+        return;
+      }
+      callback(encoded ? btoa(result) : result, encoded);
+    };
+
+    if (encoded)
+      reader.readAsBinaryString(blob);
     else
       reader.readAsText(blob);
-    await fileContentsLoadedPromise;
-    if (reader.error) {
-      console.error('Can\'t read file: ' + path + ': ' + reader.error);
-      return null;
-    }
-    try {
-      var result = reader.result;
-    } catch (e) {
-      result = null;
-      console.error('Can\'t read file: ' + path + ': ' + e);
-    }
-    if (result === undefined)
-      return null;
-    return result;
-  }
-
-  /**
-   * @param {string} path
-   * @param {function(?string)} callback
-   */
-  requestFileContent(path, callback) {
-    this.requestFileContentPromise(path).then(callback);
   }
 
   /**
