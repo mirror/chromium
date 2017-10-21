@@ -52,7 +52,7 @@ class BustedLevelDBDatabase : public LevelDBDatabase {
   leveldb::Status Get(const base::StringPiece& key,
                       std::string* value,
                       bool* found,
-                      const LevelDBSnapshot* = 0) override {
+                      const LevelDBSnapshot* = nullptr) override {
     return leveldb::Status::IOError("It's busted!");
   }
 
@@ -65,7 +65,7 @@ class BustedLevelDBFactory : public LevelDBFactory {
   leveldb::Status OpenLevelDB(const base::FilePath& file_name,
                               const LevelDBComparator* comparator,
                               std::unique_ptr<LevelDBDatabase>* db,
-                              bool* is_disk_full = 0) override {
+                              bool* is_disk_full = nullptr) override {
     if (open_error_.ok())
       *db = BustedLevelDBDatabase::Open(file_name, comparator);
     return open_error_;

@@ -397,7 +397,7 @@ leveldb::Status LevelDBDatabase::Get(const StringPiece& key,
   leveldb::ReadOptions read_options;
   read_options.verify_checksums = true;  // TODO(jsbell): Disable this if the
                                          // performance impact is too great.
-  read_options.snapshot = snapshot ? snapshot->snapshot_ : 0;
+  read_options.snapshot = snapshot ? snapshot->snapshot_ : nullptr;
 
   const leveldb::Status s =
       db_->Get(read_options, leveldb_env::MakeSlice(key), value);
@@ -434,7 +434,7 @@ std::unique_ptr<LevelDBIterator> LevelDBDatabase::CreateIterator(
   leveldb::ReadOptions read_options;
   read_options.verify_checksums = true;  // TODO(jsbell): Disable this if the
                                          // performance impact is too great.
-  read_options.snapshot = snapshot ? snapshot->snapshot_ : 0;
+  read_options.snapshot = snapshot ? snapshot->snapshot_ : nullptr;
 
   num_iterators_++;
   max_iterators_ = std::max(max_iterators_, num_iterators_);

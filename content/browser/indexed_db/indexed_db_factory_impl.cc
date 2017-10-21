@@ -556,7 +556,7 @@ scoped_refptr<IndexedDBBackingStore> IndexedDBFactoryImpl::OpenBackingStore(
     return backing_store;
   }
 
-  return 0;
+  return nullptr;
 }
 
 void IndexedDBFactoryImpl::Open(

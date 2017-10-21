@@ -164,7 +164,7 @@ int MatchFontFaceWithFallback(const std::string& face,
   FcDefaultSubstitute(pattern);
 
   FcResult result;
-  FcFontSet* font_set = FcFontSort(0, pattern, 0, 0, &result);
+  FcFontSet* font_set = FcFontSort(nullptr, pattern, 0, nullptr, &result);
   int font_fd = -1;
   int good_enough_index = -1;
   bool good_enough_index_set = false;

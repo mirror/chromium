@@ -1273,16 +1273,16 @@ void RendererBlinkPlatformImpl::SendFakeDeviceEventDataForTesting(
   PlatformEventObserverBase* observer = platform_event_observers_.Lookup(type);
   CHECK(observer);
 
-  void* data = 0;
+  void* data = nullptr;
 
   switch (type) {
     case blink::kWebPlatformEventTypeDeviceMotion:
-      if (!(g_test_device_motion_data == 0))
+      if (!(g_test_device_motion_data == nullptr))
         data = &g_test_device_motion_data.Get();
       break;
     case blink::kWebPlatformEventTypeDeviceOrientation:
     case blink::kWebPlatformEventTypeDeviceOrientationAbsolute:
-      if (!(g_test_device_orientation_data == 0))
+      if (!(g_test_device_orientation_data == nullptr))
         data = &g_test_device_orientation_data.Get();
       break;
     default:

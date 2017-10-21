@@ -362,8 +362,8 @@ bool VideoDecoderShim::YUVConverter::Initialize() {
 void VideoDecoderShim::YUVConverter::Convert(
     const scoped_refptr<media::VideoFrame>& frame,
     GLuint tex_out) {
-  const float* yuv_matrix = 0;
-  const float* yuv_adjust = 0;
+  const float* yuv_matrix = nullptr;
+  const float* yuv_adjust = nullptr;
 
   if (video_format_ != frame->format()) {
     // The constants below were taken from
@@ -557,7 +557,7 @@ void VideoDecoderShim::YUVConverter::Convert(
   gl_->BindBuffer(GL_ARRAY_BUFFER, vertex_buffer_);
   gl_->EnableVertexAttribArray(0);
   gl_->VertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat),
-                           static_cast<const void*>(0));
+                           static_cast<const void*>(nullptr));
 
   gl_->DrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
