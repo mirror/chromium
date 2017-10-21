@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76b4f6d3_e3407784",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-21T01:59:18Z",
+      "side": 1,
+      "message": "Looks reasonable to me. Stretching metrics may need more thoughts, but this is fragment height, and after metrics and positioning is done. I can\u0027t find any reasons not to do this too.",
+      "parentUuid": "59f0b42d_e616a08d",
+      "range": {
+        "startLine": 602,
+        "startChar": 28,
+        "endLine": 602,
+        "endChar": 54
+      },
+      "revId": "dc126a780bff3ef5a3bfa8cc0831e23a33dfa7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f899d9f8_ec02b610",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 30
@@ -48,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "221788fb_50530de9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-21T01:59:18Z",
+      "side": 1,
+      "message": "s/to//",
+      "revId": "dc126a780bff3ef5a3bfa8cc0831e23a33dfa7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a19dad07_1424c539",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 30
@@ -59,6 +100,30 @@
       "writtenOn": "2017-10-20T17:08:48Z",
       "side": 1,
       "message": "@kojii - The block algorithm will now append empty line-boxes in the fragment tree, which is why this is needed.\n\nWe need to add any PositionedFloats from an empty line-box NGLayoutResult, but don\u0027t necessarily have to add the empty line-box fragment. Thoughts?",
+      "range": {
+        "startLine": 1296,
+        "startChar": 8,
+        "endLine": 1296,
+        "endChar": 38
+      },
+      "revId": "dc126a780bff3ef5a3bfa8cc0831e23a33dfa7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a1794c_4c9a0f04",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-21T01:59:18Z",
+      "side": 1,
+      "message": "Yeah, skipping here, or not to add, either looks fine to me. FYI but when we support editing, empty line box will have height (maybe only when there\u0027s a caret inside, don\u0027t remember but there\u0027s a special code in the current code base.)",
+      "parentUuid": "a19dad07_1424c539",
       "range": {
         "startLine": 1296,
         "startChar": 8,
