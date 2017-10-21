@@ -115,14 +115,15 @@ Sources.RevisionHistoryView = class extends UI.VBox {
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   _revertToOriginal(uiSourceCode) {
-    uiSourceCode.revertToOriginal();
+    WorkspaceDiff.workspaceDiff().revertToOriginal(uiSourceCode);
   }
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   _clearHistory(uiSourceCode) {
-    uiSourceCode.revertAndClearHistory(this._removeUISourceCode.bind(this));
+    var contentPromise = WorkspaceDiff.workspaceDiff().requestOriginalContentForUISourceCode(uiSourceCode);
+    uiSourceCode.revertAndClearHistory(contentPromise, this._removeUISourceCode.bind(this));
   }
 
   _revisionAdded(event) {
@@ -217,8 +218,9 @@ Sources.RevisionHistoryTreeElement = class extends UI.TreeElement {
     this.childrenListElement.classList.add('source-code');
     Promise
         .all([
-          this._baseRevision ? this._baseRevision.requestContent() :
-                               this._revision.uiSourceCode.requestOriginalContent(),
+          this._baseRevision ?
+              this._baseRevision.requestContent() :
+              WorkspaceDiff.workspaceDiff().requestOriginalContentForUISourceCode(this._revision.uiSourceCode),
           this._revision.requestContent()
         ])
         .spread(diff.bind(this));

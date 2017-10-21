@@ -237,9 +237,11 @@ Workspace.UISourceCode = class extends Common.Object {
       var fulfill;
       this._requestContentPromise = new Promise(x => fulfill = x);
       this._project.requestFileContent(this, content => {
-        this._contentLoaded = true;
-        this._content = content;
-        fulfill(content);
+        if (!this._contentLoaded) {
+          this._contentLoaded = true;
+          this._content = content;
+        }
+        fulfill(this._content);
       });
     }
     return this._requestContentPromise;
@@ -291,16 +293,6 @@ Workspace.UISourceCode = class extends Common.Object {
 
   forceLoadOnCheckContent() {
     this._forceLoadOnCheckContent = true;
-  }
-
-  /**
-   * @return {!Promise<?string>}
-   */
-  requestOriginalContent() {
-    var callback;
-    var promise = new Promise(fulfill => callback = fulfill);
-    this._project.requestFileContent(this, callback);
-    return promise;
   }
 
   /**
@@ -366,28 +358,10 @@ Workspace.UISourceCode = class extends Common.Object {
   }
 
   /**
-   * @return {!Promise}
-   */
-  revertToOriginal() {
-    /**
-     * @this {Workspace.UISourceCode}
-     * @param {?string} content
-     */
-    function callback(content) {
-      if (typeof content !== 'string')
-        return;
-
-      this.addRevision(content);
-    }
-
-    Host.userMetrics.actionTaken(Host.UserMetrics.Action.RevisionApplied);
-    return this.requestOriginalContent().then(callback.bind(this));
-  }
-
-  /**
+   * @param {!Promise<?string>} contentPromise
    * @param {function(!Workspace.UISourceCode)} callback
    */
-  revertAndClearHistory(callback) {
+  revertAndClearHistory(contentPromise, callback) {
     /**
      * @this {Workspace.UISourceCode}
      * @param {?string} content
@@ -402,7 +376,7 @@ Workspace.UISourceCode = class extends Common.Object {
     }
 
     Host.userMetrics.actionTaken(Host.UserMetrics.Action.RevisionApplied);
-    this.requestOriginalContent().then(revert.bind(this));
+    contentPromise.then(revert.bind(this));
   }
 
   /**

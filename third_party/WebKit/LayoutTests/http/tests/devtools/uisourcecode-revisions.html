@@ -44,7 +44,7 @@ function test() {
 
       TestRunner.addResult('Second revision added.');
       dumpUISourceCodeWithRevisions(uiSourceCode);
-      uiSourceCode.revertToOriginal().then(onReverted);
+      WorkspaceDiff.workspaceDiff().revertToOriginal(uiSourceCode).then(onReverted);
 
       function onReverted() {
         TestRunner.addResult('Reverted to original.');
@@ -68,7 +68,7 @@ function test() {
 
       TestRunner.addResult('Second revision added.');
       dumpUISourceCodeWithRevisions(uiSourceCode);
-      uiSourceCode.revertAndClearHistory(revertedAndClearedHistory);
+      uiSourceCode.revertAndClearHistory(WorkspaceDiff.workspaceDiff().requestOriginalContentForUISourceCode(uiSourceCode), revertedAndClearedHistory);
 
       function revertedAndClearedHistory() {
         TestRunner.addResult('Reverted and cleared history.');
@@ -120,7 +120,7 @@ function test() {
 
         TestRunner.addResult('Second revision added.');
         dumpUISourceCodeWithRevisions(uiSourceCode);
-        uiSourceCode.revertToOriginal().then(onReverted);
+        WorkspaceDiff.workspaceDiff().revertToOriginal(uiSourceCode).then(onReverted);
 
         function onReverted() {
           TestRunner.addResult('Reverted to original.');
@@ -149,7 +149,7 @@ function test() {
 
         TestRunner.addResult('Second revision added.');
         dumpUISourceCodeWithRevisions(uiSourceCode);
-        uiSourceCode.revertAndClearHistory(revertedAndClearedHistory);
+        uiSourceCode.revertAndClearHistory(WorkspaceDiff.workspaceDiff().requestOriginalContentForUISourceCode(uiSourceCode), revertedAndClearedHistory);
 
         function revertedAndClearedHistory() {
           TestRunner.addResult('Reverted and cleared history.');

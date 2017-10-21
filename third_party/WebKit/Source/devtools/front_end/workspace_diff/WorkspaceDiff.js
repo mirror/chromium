@@ -154,7 +154,8 @@ WorkspaceDiff.WorkspaceDiff = class extends Common.Object {
       return;
     }
 
-    var contentsPromise = Promise.all([uiSourceCode.requestOriginalContent(), uiSourceCode.requestContent()]);
+    var contentsPromise =
+        Promise.all([this.requestOriginalContentForUISourceCode(uiSourceCode), uiSourceCode.requestContent()]);
     this._loadingUISourceCodes.set(uiSourceCode, contentsPromise);
     var contents = await contentsPromise;
     if (this._loadingUISourceCodes.get(uiSourceCode) !== contentsPromise)
@@ -165,6 +166,33 @@ WorkspaceDiff.WorkspaceDiff = class extends Common.Object {
       this._markAsModified(uiSourceCode);
     else
       this._markAsUnmodified(uiSourceCode);
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {!Promise<?string>}
+   */
+  requestOriginalContentForUISourceCode(uiSourceCode) {
+    return this._uiSourceCodeDiff(uiSourceCode)._originalContent();
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {!Promise}
+   */
+  revertToOriginal(uiSourceCode) {
+    /**
+     * @param {?string} content
+     */
+    function callback(content) {
+      if (typeof content !== 'string')
+        return;
+
+      uiSourceCode.addRevision(content);
+    }
+
+    Host.userMetrics.actionTaken(Host.UserMetrics.Action.RevisionApplied);
+    return this.requestOriginalContentForUISourceCode(uiSourceCode).then(callback);
   }
 };
 
@@ -214,9 +242,29 @@ WorkspaceDiff.WorkspaceDiff.UISourceCodeDiff = class extends Common.Object {
   }
 
   /**
+   * @return {!Promise<?string>}
+   */
+  _originalContent() {
+    var originalNetworkContent =
+        Persistence.networkPersistenceManager.originalContentForNetworkUISourceCode(this._uiSourceCode);
+    if (originalNetworkContent)
+      return originalNetworkContent;
+
+    var callback;
+    var promise = new Promise(fulfill => callback = fulfill);
+    this._uiSourceCode.project().requestFileContent(this._uiSourceCode, callback);
+    return promise;
+  }
+
+  /**
    * @return {!Promise<?Diff.Diff.DiffArray>}
    */
   async _innerRequestDiff() {
+    if (this._dispose)
+      return null;
+
+    var baseline = await this._originalContent();
+    // ------------ ASYNC ------------
     if (this._dispose)
       return null;
 
@@ -224,11 +272,7 @@ WorkspaceDiff.WorkspaceDiff.UISourceCodeDiff = class extends Common.Object {
     if (!current && !this._uiSourceCode.contentLoaded())
       current = await this._uiSourceCode.requestContent();
     // ------------ ASYNC ------------
-    if (this._dispose)
-      return null;
 
-    var baseline = await this._uiSourceCode.requestOriginalContent();
-    // ------------ ASYNC ------------
     if (this._dispose)
       return null;
 
