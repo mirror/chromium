@@ -137,88 +137,85 @@ class PrintPreviewHandler
   FRIEND_TEST_ALL_PREFIXES(PrintPreviewHandlerTest, GetPrinters);
   FRIEND_TEST_ALL_PREFIXES(PrintPreviewHandlerTest, GetPrinterCapabilities);
   FRIEND_TEST_ALL_PREFIXES(PrintPreviewHandlerTest, Print);
+  template <typename... Args>
+  friend void RegisterMessage(PrintPreviewHandler* handler,
+                              const std::string& message,
+                              void (PrintPreviewHandler::*method)(Args...));
+
   class AccessTokenService;
 
   content::WebContents* preview_web_contents() const;
 
   PrintPreviewUI* print_preview_ui() const;
 
-  // Gets the list of printers. First element of |args| is the Javascript
-  // callback, second element of |args| is the printer type to fetch.
-  void HandleGetPrinters(const base::ListValue* args);
+  // Gets the list of printers.
+  void HandleGetPrinters(const std::string& callback_id, int type);
 
-  // Grants an extension access to a provisional printer.  First element of
-  // |args| is the provisional printer ID.
-  void HandleGrantExtensionPrinterAccess(const base::ListValue* args);
+  // Grants an extension access to a provisional printer.
+  void HandleGrantExtensionPrinterAccess(const std::string& callback_id,
+                                         const std::string& printer_name);
 
-  // Asks the initiator renderer to generate a preview.  First element of |args|
-  // is a job settings JSON string.
-  void HandleGetPreview(const base::ListValue* args);
+  // Asks the initiator renderer to generate a preview.
+  void HandleGetPreview(const std::string& callback_id,
+                        const std::string& json_str,
+                        int page_count);
 
-  // Gets the job settings from Web UI and initiate printing. First element of
-  // |args| is a job settings JSON string.
-  void HandlePrint(const base::ListValue* args);
+  // Gets the job settings from Web UI and initiate printing.
+  void HandlePrint(const std::string& callback_id, const std::string& json_str);
 
   // Handles the request to hide the preview dialog for printing.
-  // |args| is unused.
-  void HandleHidePreview(const base::ListValue* args);
+  void HandleHidePreview();
 
-  // Handles the request to cancel the pending print request. |args| is unused.
-  void HandleCancelPendingPrintRequest(const base::ListValue* args);
+  // Handles the request to cancel the pending print request.
+  void HandleCancelPendingPrintRequest();
 
   // Handles a request to store data that the web ui wishes to persist.
-  // First element of |args| is the data to persist.
-  void HandleSaveAppState(const base::ListValue* args);
+  void HandleSaveAppState(const std::string& data_to_save);
 
-  // Gets the printer capabilities. Fist element of |args| is the Javascript
-  // callback, second element is the printer ID of the printer whose
-  // capabilities are requested, and the third element is the type of the
-  // printer whose capabilities are requested.
-  void HandleGetPrinterCapabilities(const base::ListValue* args);
+  // Gets the printer capabilities.
+  void HandleGetPrinterCapabilities(const std::string& callback_id,
+                                    const std::string& printer_name,
+                                    int type);
 
-  // Performs printer setup. First element of |args| is the printer name.
-  void HandlePrinterSetup(const base::ListValue* args);
+  // Performs printer setup.
+  void HandlePrinterSetup(const std::string& callback_id,
+                          const std::string& printer_name);
 
 #if BUILDFLAG(ENABLE_BASIC_PRINT_DIALOG)
-  // Asks the initiator renderer to show the native print system dialog. |args|
-  // is unused.
-  void HandleShowSystemDialog(const base::ListValue* args);
+  // Asks the initiator renderer to show the native print system dialog.
+  void HandleShowSystemDialog();
 #endif
 
   // Callback for the signin dialog to call once signin is complete.
   void OnSigninComplete(const std::string& callback_id);
 
   // Brings up a dialog to allow the user to sign into cloud print.
-  // |args| is unused.
-  void HandleSignin(const base::ListValue* args);
+  void HandleSignin(const std::string& callback_id, bool add_account);
 
   // Generates new token and sends back to UI.
-  void HandleGetAccessToken(const base::ListValue* args);
+  void HandleGetAccessToken(const std::string& callback_id,
+                            const std::string& type);
 
   // Brings up a web page to allow the user to configure cloud print.
-  // |args| is unused.
-  void HandleManageCloudPrint(const base::ListValue* args);
+  void HandleManageCloudPrint(const std::string& user);
 
   // Gathers UMA stats when the print preview dialog is about to close.
-  // |args| is unused.
-  void HandleClosePreviewDialog(const base::ListValue* args);
+  void HandleClosePreviewDialog();
 
   // Asks the browser to show the native printer management dialog.
-  // |args| is unused.
-  void HandleManagePrinters(const base::ListValue* args);
+  void HandleManagePrinters();
 
   // Asks the browser for several settings that are needed before the first
   // preview is displayed.
-  void HandleGetInitialSettings(const base::ListValue* args);
+  void HandleGetInitialSettings(const std::string& callback_id);
 
-  // Forces the opening of a new tab. |args| should consist of one element: the
-  // URL to set the new tab to.
+  // Forces the opening of a new tab.
   //
   // NOTE: This is needed to open register promo for Cloud Print as a new tab.
   // Javascript's "window.open" opens a new window popup (since initiated from
   // async HTTP request) and worse yet, on Windows and Chrome OS, the opened
   // window opens behind the initiator window.
-  void HandleForceOpenNewTab(const base::ListValue* args);
+  void HandleForceOpenNewTab(const std::string& url);
 
   void SendInitialSettings(const std::string& callback_id,
                            const std::string& default_printer);

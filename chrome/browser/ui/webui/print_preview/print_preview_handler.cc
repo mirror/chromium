@@ -305,7 +305,66 @@ printing::StickySettings* GetStickySettings() {
   return g_sticky_settings.Pointer();
 }
 
+template <typename T>
+T GetValue(const base::Value& value);
+
+template <>
+bool GetValue<bool>(const base::Value& value) {
+  return value.GetBool();
+}
+
+template <>
+int GetValue<int>(const base::Value& value) {
+  return value.GetInt();
+}
+
+template <>
+const std::string& GetValue<const std::string&>(const base::Value& value) {
+  return value.GetString();
+}
+
+template <typename... Tail>
+struct Join {
+  template <typename Func, typename... Args>
+  static void Apply(PrintPreviewHandler* handler,
+                    Func func,
+                    const base::ListValue* list,
+                    base::ListValue::const_iterator it,
+                    Args&&... args) {
+    CHECK(it == list->end());
+    (handler->*func)(std::forward<Args>(args)...);
+  }
+};
+
+template <typename Head, typename... Tail>
+struct Join<Head, Tail...> {
+  template <typename Func, typename... Args>
+  static void Apply(PrintPreviewHandler* handler,
+                    Func func,
+                    const base::ListValue* list,
+                    base::ListValue::const_iterator it,
+                    Args&&... args) {
+    Join<Tail...>::Apply(handler, func, list, it + 1,
+                         std::forward<Args>(args)..., GetValue<Head>(*it));
+  }
+};
+
+template <typename... Args>
+void Handle(PrintPreviewHandler* handler,
+            void (PrintPreviewHandler::*func)(Args...),
+            const base::ListValue* list) {
+  Join<Args...>::Apply(handler, func, list, list->begin());
+}
+
 }  // namespace
+
+template <typename... Args>
+void RegisterMessage(PrintPreviewHandler* handler,
+                     const std::string& message,
+                     void (PrintPreviewHandler::*method)(Args...)) {
+  handler->web_ui()->RegisterMessageCallback(
+      message, base::Bind(&Handle<Args...>, base::Unretained(handler), method));
+}
 
 class PrintPreviewHandler::AccessTokenService
     : public OAuth2TokenService::Consumer {
@@ -408,61 +467,37 @@ PrintPreviewHandler::~PrintPreviewHandler() {
 }
 
 void PrintPreviewHandler::RegisterMessages() {
-  web_ui()->RegisterMessageCallback("getPrinters",
-      base::Bind(&PrintPreviewHandler::HandleGetPrinters,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("getPreview",
-      base::Bind(&PrintPreviewHandler::HandleGetPreview,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("print",
-      base::Bind(&PrintPreviewHandler::HandlePrint,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback(
-      "getPrinterCapabilities",
-      base::Bind(&PrintPreviewHandler::HandleGetPrinterCapabilities,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback(
-      "setupPrinter", base::Bind(&PrintPreviewHandler::HandlePrinterSetup,
-                                 base::Unretained(this)));
+  RegisterMessage(this, "getPrinters", &PrintPreviewHandler::HandleGetPrinters);
+  RegisterMessage(this, "getPreview", &PrintPreviewHandler::HandleGetPreview);
+  RegisterMessage(this, "print", &PrintPreviewHandler::HandlePrint);
+  RegisterMessage(this, "getPrinterCapabilities",
+                  &PrintPreviewHandler::HandleGetPrinterCapabilities);
+  RegisterMessage(this, "setupPrinter",
+                  &PrintPreviewHandler::HandlePrinterSetup);
 #if BUILDFLAG(ENABLE_BASIC_PRINT_DIALOG)
-  web_ui()->RegisterMessageCallback("showSystemDialog",
-      base::Bind(&PrintPreviewHandler::HandleShowSystemDialog,
-                 base::Unretained(this)));
+  RegisterMessage(this, "showSystemDialog",
+                  &PrintPreviewHandler::HandleShowSystemDialog);
 #endif
-  web_ui()->RegisterMessageCallback("signIn",
-      base::Bind(&PrintPreviewHandler::HandleSignin,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("getAccessToken",
-      base::Bind(&PrintPreviewHandler::HandleGetAccessToken,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("manageCloudPrinters",
-      base::Bind(&PrintPreviewHandler::HandleManageCloudPrint,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("manageLocalPrinters",
-      base::Bind(&PrintPreviewHandler::HandleManagePrinters,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("closePrintPreviewDialog",
-      base::Bind(&PrintPreviewHandler::HandleClosePreviewDialog,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("hidePreview",
-      base::Bind(&PrintPreviewHandler::HandleHidePreview,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("cancelPendingPrintRequest",
-      base::Bind(&PrintPreviewHandler::HandleCancelPendingPrintRequest,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("saveAppState",
-      base::Bind(&PrintPreviewHandler::HandleSaveAppState,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("getInitialSettings",
-      base::Bind(&PrintPreviewHandler::HandleGetInitialSettings,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback("forceOpenNewTab",
-      base::Bind(&PrintPreviewHandler::HandleForceOpenNewTab,
-                 base::Unretained(this)));
-  web_ui()->RegisterMessageCallback(
-      "grantExtensionPrinterAccess",
-      base::Bind(&PrintPreviewHandler::HandleGrantExtensionPrinterAccess,
-                 base::Unretained(this)));
+  RegisterMessage(this, "signIn", &PrintPreviewHandler::HandleSignin);
+  RegisterMessage(this, "getAccessToken",
+                  &PrintPreviewHandler::HandleGetAccessToken);
+  RegisterMessage(this, "manageCloudPrinters",
+                  &PrintPreviewHandler::HandleManageCloudPrint);
+  RegisterMessage(this, "manageLocalPrinters",
+                  &PrintPreviewHandler::HandleManagePrinters);
+  RegisterMessage(this, "closePrintPreviewDialog",
+                  &PrintPreviewHandler::HandleClosePreviewDialog);
+  RegisterMessage(this, "hidePreview", &PrintPreviewHandler::HandleHidePreview);
+  RegisterMessage(this, "cancelPendingPrintRequest",
+                  &PrintPreviewHandler::HandleCancelPendingPrintRequest);
+  RegisterMessage(this, "saveAppState",
+                  &PrintPreviewHandler::HandleSaveAppState);
+  RegisterMessage(this, "getInitialSettings",
+                  &PrintPreviewHandler::HandleGetInitialSettings);
+  RegisterMessage(this, "forceOpenNewTab",
+                  &PrintPreviewHandler::HandleForceOpenNewTab);
+  RegisterMessage(this, "grantExtensionPrinterAccess",
+                  &PrintPreviewHandler::HandleGrantExtensionPrinterAccess);
 }
 
 void PrintPreviewHandler::OnJavascriptAllowed() {
@@ -486,12 +521,9 @@ PrintPreviewUI* PrintPreviewHandler::print_preview_ui() const {
   return static_cast<PrintPreviewUI*>(web_ui()->GetController());
 }
 
-void PrintPreviewHandler::HandleGetPrinters(const base::ListValue* args) {
-  std::string callback_id;
-  CHECK(args->GetString(0, &callback_id));
+void PrintPreviewHandler::HandleGetPrinters(const std::string& callback_id,
+                                            int type) {
   CHECK(!callback_id.empty());
-  int type;
-  CHECK(args->GetInteger(1, &type));
   PrinterType printer_type = static_cast<PrinterType>(type);
 
   PrinterHandler* handler = GetPrinterHandler(printer_type);
@@ -510,12 +542,9 @@ void PrintPreviewHandler::HandleGetPrinters(const base::ListValue* args) {
 }
 
 void PrintPreviewHandler::HandleGrantExtensionPrinterAccess(
-    const base::ListValue* args) {
-  std::string callback_id;
-  std::string printer_id;
-  bool ok = args->GetString(0, &callback_id) &&
-            args->GetString(1, &printer_id) && !callback_id.empty();
-  DCHECK(ok);
+    const std::string& callback_id,
+    const std::string& printer_id) {
+  DCHECK(!callback_id.empty());
 
   GetPrinterHandler(PrinterType::kExtensionPrinter)
       ->StartGrantPrinterAccess(
@@ -525,13 +554,10 @@ void PrintPreviewHandler::HandleGrantExtensionPrinterAccess(
 }
 
 void PrintPreviewHandler::HandleGetPrinterCapabilities(
-    const base::ListValue* args) {
-  std::string callback_id;
-  std::string printer_name;
-  int type;
-  if (!args->GetString(0, &callback_id) || !args->GetString(1, &printer_name) ||
-      !args->GetInteger(2, &type) || callback_id.empty() ||
-      printer_name.empty()) {
+    const std::string& callback_id,
+    const std::string& printer_name,
+    int type) {
+  if (callback_id.empty() || printer_name.empty()) {
     RejectJavascriptCallback(base::Value(callback_id), base::Value());
     return;
   }
@@ -548,16 +574,12 @@ void PrintPreviewHandler::HandleGetPrinterCapabilities(
                                weak_factory_.GetWeakPtr(), callback_id));
 }
 
-void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
-  DCHECK_EQ(3U, args->GetSize());
-  std::string callback_id;
-  std::string json_str;
-
+void PrintPreviewHandler::HandleGetPreview(const std::string& callback_id,
+                                           const std::string& json_str,
+                                           int page_count) {
   // All of the conditions below should be guaranteed by the print preview
   // javascript.
-  args->GetString(0, &callback_id);
   CHECK(!callback_id.empty());
-  args->GetString(1, &json_str);
   std::unique_ptr<base::DictionaryValue> settings =
       GetSettingsDictionary(json_str);
   CHECK(settings);
@@ -614,21 +636,15 @@ void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
                                  &generate_draft_data);
   DCHECK(success);
 
-  if (!generate_draft_data) {
-    int page_count = -1;
-    success = args->GetInteger(2, &page_count);
+  if (!generate_draft_data && page_count != -1) {
+    bool preview_modifiable = false;
+    success = settings->GetBoolean(printing::kSettingPreviewModifiable,
+                                   &preview_modifiable);
     DCHECK(success);
 
-    if (page_count != -1) {
-      bool preview_modifiable = false;
-      success = settings->GetBoolean(printing::kSettingPreviewModifiable,
-                                     &preview_modifiable);
-      DCHECK(success);
-
-      if (preview_modifiable &&
-          print_preview_ui()->GetAvailableDraftPageCount() != page_count) {
-        settings->SetBoolean(printing::kSettingGenerateDraftData, true);
-      }
+    if (preview_modifiable &&
+        print_preview_ui()->GetAvailableDraftPageCount() != page_count) {
+      settings->SetBoolean(printing::kSettingGenerateDraftData, true);
     }
   }
 
@@ -637,18 +653,15 @@ void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
   rfh->Send(new PrintMsg_PrintPreview(rfh->GetRoutingID(), *settings));
 }
 
-void PrintPreviewHandler::HandlePrint(const base::ListValue* args) {
+void PrintPreviewHandler::HandlePrint(const std::string& callback_id,
+                                      const std::string& json_str) {
   ReportStats();
 
   // Record the number of times the user requests to regenerate preview data
   // before printing.
   UMA_HISTOGRAM_COUNTS("PrintPreview.RegeneratePreviewRequest.BeforePrint",
                        regenerate_preview_request_count_);
-  std::string callback_id;
-  CHECK(args->GetString(0, &callback_id));
   CHECK(!callback_id.empty());
-  std::string json_str;
-  CHECK(args->GetString(1, &json_str));
 
   std::unique_ptr<base::DictionaryValue> settings =
       GetSettingsDictionary(json_str);
@@ -789,7 +802,7 @@ void PrintPreviewHandler::HandlePrint(const base::ListValue* args) {
 #endif   // BUILDFLAG(ENABLE_BASIC_PRINTING)
 }
 
-void PrintPreviewHandler::HandleHidePreview(const base::ListValue* /*args*/) {
+void PrintPreviewHandler::HandleHidePreview() {
   print_preview_ui()->OnHidePreviewDialog();
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
   if (settings_) {
@@ -815,18 +828,16 @@ void PrintPreviewHandler::HandleHidePreview(const base::ListValue* /*args*/) {
 #endif
 }
 
-void PrintPreviewHandler::HandleCancelPendingPrintRequest(
-    const base::ListValue* /*args*/) {
+void PrintPreviewHandler::HandleCancelPendingPrintRequest() {
   WebContents* initiator = GetInitiator();
   if (initiator)
     ClearInitiatorDetails();
   chrome::ShowPrintErrorDialog();
 }
 
-void PrintPreviewHandler::HandleSaveAppState(const base::ListValue* args) {
-  std::string data_to_save;
+void PrintPreviewHandler::HandleSaveAppState(const std::string& data_to_save) {
   printing::StickySettings* sticky_settings = GetStickySettings();
-  if (args->GetString(0, &data_to_save) && !data_to_save.empty())
+  if (!data_to_save.empty())
     sticky_settings->StoreAppState(data_to_save);
   sticky_settings->SaveInPrefs(Profile::FromBrowserContext(
       preview_web_contents()->GetBrowserContext())->GetPrefs());
@@ -834,11 +845,9 @@ void PrintPreviewHandler::HandleSaveAppState(const base::ListValue* args) {
 
 // |args| is expected to contain a string with representing the callback id
 // followed by a list of arguments the first of which should be the printer id.
-void PrintPreviewHandler::HandlePrinterSetup(const base::ListValue* args) {
-  std::string callback_id;
-  std::string printer_name;
-  if (!args->GetString(0, &callback_id) || !args->GetString(1, &printer_name) ||
-      callback_id.empty() || printer_name.empty()) {
+void PrintPreviewHandler::HandlePrinterSetup(const std::string& callback_id,
+                                             const std::string& printer_name) {
+  if (callback_id.empty() || printer_name.empty()) {
     RejectJavascriptCallback(base::Value(callback_id),
                              base::Value(printer_name));
     return;
@@ -855,12 +864,9 @@ void PrintPreviewHandler::OnSigninComplete(const std::string& callback_id) {
   ResolveJavascriptCallback(base::Value(callback_id), base::Value());
 }
 
-void PrintPreviewHandler::HandleSignin(const base::ListValue* args) {
-  std::string callback_id;
-  bool add_account = false;
-  CHECK(args->GetString(0, &callback_id));
+void PrintPreviewHandler::HandleSignin(const std::string& callback_id,
+                                       bool add_account) {
   CHECK(!callback_id.empty());
-  CHECK(args->GetBoolean(1, &add_account));
 
   Profile* profile = Profile::FromBrowserContext(
       preview_web_contents()->GetBrowserContext());
@@ -871,26 +877,18 @@ void PrintPreviewHandler::HandleSignin(const base::ListValue* args) {
                  weak_factory_.GetWeakPtr(), callback_id));
 }
 
-void PrintPreviewHandler::HandleGetAccessToken(const base::ListValue* args) {
-  std::string callback_id;
-  std::string type;
-
-  bool ok = args->GetString(0, &callback_id) && args->GetString(1, &type) &&
-            !callback_id.empty();
-  DCHECK(ok);
+void PrintPreviewHandler::HandleGetAccessToken(const std::string& callback_id,
+                                               const std::string& type) {
+  DCHECK(!callback_id.empty());
 
   if (!token_service_)
     token_service_ = base::MakeUnique<AccessTokenService>(this);
   token_service_->RequestToken(type, callback_id);
 }
 
-void PrintPreviewHandler::HandleManageCloudPrint(
-    const base::ListValue* args) {
+void PrintPreviewHandler::HandleManageCloudPrint(const std::string& user) {
   ++manage_cloud_printers_dialog_request_count_;
   GURL manage_url(cloud_devices::GetCloudPrintRelativeURL("manage.html"));
-  std::string user;
-  if (!args->GetString(0, &user))
-    return;
   if (!user.empty())
     manage_url = net::AppendQueryParameter(manage_url, "authuser", user);
   preview_web_contents()->OpenURL(
@@ -900,8 +898,7 @@ void PrintPreviewHandler::HandleManageCloudPrint(
 }
 
 #if BUILDFLAG(ENABLE_BASIC_PRINT_DIALOG)
-void PrintPreviewHandler::HandleShowSystemDialog(
-    const base::ListValue* /*args*/) {
+void PrintPreviewHandler::HandleShowSystemDialog() {
   ReportStats();
   ReportUserActionHistogram(FALLBACK_TO_ADVANCED_SETTINGS_DIALOG);
 
@@ -919,8 +916,7 @@ void PrintPreviewHandler::HandleShowSystemDialog(
 }
 #endif
 
-void PrintPreviewHandler::HandleManagePrinters(
-    const base::ListValue* /*args*/) {
+void PrintPreviewHandler::HandleManagePrinters() {
   ++manage_printers_dialog_request_count_;
 #if defined(OS_CHROMEOS)
   GURL local_printers_manage_url(chrome::kChromeUIMdCupsSettingsURL);
@@ -933,8 +929,7 @@ void PrintPreviewHandler::HandleManagePrinters(
 #endif
 }
 
-void PrintPreviewHandler::HandleClosePreviewDialog(
-    const base::ListValue* /*args*/) {
+void PrintPreviewHandler::HandleClosePreviewDialog() {
   ReportStats();
   ReportUserActionHistogram(CANCEL);
 
@@ -973,9 +968,7 @@ void PrintPreviewHandler::GetNumberFormatAndMeasurementSystem(
 }
 
 void PrintPreviewHandler::HandleGetInitialSettings(
-    const base::ListValue* args) {
-  std::string callback_id;
-  CHECK(args->GetString(0, &callback_id));
+    const std::string& callback_id) {
   CHECK(!callback_id.empty());
 
   AllowJavascript();
@@ -987,10 +980,7 @@ void PrintPreviewHandler::HandleGetInitialSettings(
                                      weak_factory_.GetWeakPtr(), callback_id));
 }
 
-void PrintPreviewHandler::HandleForceOpenNewTab(const base::ListValue* args) {
-  std::string url;
-  if (!args->GetString(0, &url))
-    return;
+void PrintPreviewHandler::HandleForceOpenNewTab(const std::string& url) {
   Browser* browser = chrome::FindBrowserWithWebContents(GetInitiator());
   if (!browser)
     return;
@@ -1232,7 +1222,7 @@ void PrintPreviewHandler::OnPrintPreviewCancelled() {
 }
 
 void PrintPreviewHandler::OnPrintRequestCancelled() {
-  HandleCancelPendingPrintRequest(nullptr);
+  HandleCancelPendingPrintRequest();
 }
 
 void PrintPreviewHandler::ClearInitiatorDetails() {
