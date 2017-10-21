@@ -41,10 +41,21 @@ Criteria GetSchedulingCriteria(const Model::EntryList& entries) {
   for (auto* const entry : entries) {
     DCHECK(entry);
     const SchedulingParams& scheduling_params = entry->scheduling_params;
-    if (scheduling_params.battery_requirements ==
-        SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE) {
-      criteria.requires_battery_charging = false;
+    switch (scheduling_params.battery_requirements) {
+      case SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE:
+        criteria.requires_battery_charging = false;
+        criteria.optimal_battery_percentage =
+            DeviceStatus::kMinimumBatteryPercentage;
+        break;
+      case SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE:
+        criteria.requires_battery_charging = false;
+        break;
+      case SchedulingParams::BatteryRequirements::BATTERY_CHARGING:
+        break;
+      default:
+        NOTREACHED();
     }
+
     if (scheduling_params.network_requirements ==
         SchedulingParams::NetworkRequirements::NONE) {
       criteria.requires_unmetered_network = false;

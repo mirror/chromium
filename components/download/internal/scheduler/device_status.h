@@ -26,8 +26,18 @@ enum class NetworkStatus {
 
 // Contains battery and network status.
 struct DeviceStatus {
+  // The default minimum battery level to allow download to start when battery
+  // requirement is sensitive.
+  static const int kDefaultOptimalBatteryPercentage;
+
+  // Minimum battery percentage when battery requirement is not charging.
+  static const int kMinimumBatteryPercentage;
+
   DeviceStatus();
   DeviceStatus(BatteryStatus battery, NetworkStatus network);
+  DeviceStatus(BatteryStatus battery,
+               int battery_percentage,
+               NetworkStatus network);
 
   struct Result {
     Result();
@@ -37,6 +47,10 @@ struct DeviceStatus {
   };
 
   BatteryStatus battery_status;
+
+  // Battery percentage which is in the range of [0, 100].
+  int battery_percentage;
+
   NetworkStatus network_status;
 
   bool operator==(const DeviceStatus& rhs) const;
@@ -51,9 +65,13 @@ struct DeviceStatus {
 struct Criteria {
   Criteria();
   Criteria(bool requires_battery_charging, bool requires_unmetered_network);
+  Criteria(bool requires_battery_charging,
+           bool requires_unmetered_network,
+           int optimal_battery_percentage);
   bool operator==(const Criteria& other) const;
   bool requires_battery_charging;
   bool requires_unmetered_network;
+  int optimal_battery_percentage;
 };
 
 }  // namespace download

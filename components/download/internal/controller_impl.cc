@@ -1041,7 +1041,7 @@ void ControllerImpl::ScheduleCleanupTask() {
             std::ceil(end_time.InSecondsF()))
       << "GCM requires start time to be less than end time";
 
-  task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
+  task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false, 0,
                                 std::ceil(start_time.InSecondsF()),
                                 std::ceil(end_time.InSecondsF()));
 }

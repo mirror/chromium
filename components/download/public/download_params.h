@@ -46,8 +46,11 @@ struct SchedulingParams {
     // conditions.
     BATTERY_SENSITIVE = 1,
 
+    // Download can only occur when the device is charging.
+    BATTERY_CHARGING = 2,
+
     // Last value of the enum.
-    COUNT = 2,
+    COUNT = 3,
   };
 
   enum class Priority {
