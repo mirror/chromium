@@ -16,6 +16,24 @@
       "revId": "687613ef24335589ae501c08328f9bb572071f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16b012e_2cc87272",
+        "filename": "base/callback_with_delete.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-22T23:11:28Z",
+      "side": 1,
+      "message": "This was already in ScopedCallbackRunner, from which this file was branched (but git doesn\u0027t have \"git cp\" and Gerrit probably wouldn\u0027t see the similarity with that file).\n\nI\u0027m happy to get rid of this, but am curious why ScopedCallbackRunner had it in the first place? Perhaps the std::move() is part of the magic?",
+      "parentUuid": "54a29150_36c2b19d",
+      "revId": "687613ef24335589ae501c08328f9bb572071f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
