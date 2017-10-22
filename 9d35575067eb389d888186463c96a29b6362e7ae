@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b155631_b6cdc7fc",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-22T01:28:12Z",
+      "side": 1,
+      "message": "Should we make these optional (with \u0027?\u0027) and remove unnecessary ::New()s that we don\u0027t really fill their body?",
+      "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
