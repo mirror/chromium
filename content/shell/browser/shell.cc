@@ -74,9 +74,9 @@ class Shell::DevToolsWebContentsObserver : public WebContentsObserver {
 Shell::Shell(WebContents* web_contents)
     : WebContentsObserver(web_contents),
       web_contents_(web_contents),
-      devtools_frontend_(NULL),
+      devtools_frontend_(nullptr),
       is_fullscreen_(false),
-      window_(NULL),
+      window_(nullptr),
 #if defined(OS_MACOSX)
       url_edit_view_(NULL),
 #endif
@@ -171,7 +171,7 @@ Shell* Shell::FromRenderViewHost(RenderViewHost* rvh) {
       return windows_[i];
     }
   }
-  return NULL;
+  return nullptr;
 }
 
 // static
@@ -312,12 +312,12 @@ void Shell::CloseDevTools() {
     return;
   devtools_observer_.reset();
   devtools_frontend_->Close();
-  devtools_frontend_ = NULL;
+  devtools_frontend_ = nullptr;
 }
 
 gfx::NativeView Shell::GetContentView() {
   if (!web_contents_)
-    return NULL;
+    return nullptr;
   return web_contents_->GetNativeView();
 }
 
@@ -536,7 +536,7 @@ void Shell::TitleWasSet(NavigationEntry* entry) {
 
 void Shell::OnDevToolsWebContentsDestroyed() {
   devtools_observer_.reset();
-  devtools_frontend_ = NULL;
+  devtools_frontend_ = nullptr;
 }
 
 }  // namespace content

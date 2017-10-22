@@ -125,7 +125,7 @@ std::string StatsCollectionController::GetHistogram(
 
 std::string StatsCollectionController::GetBrowserHistogram(
     const std::string& histogram_name) {
-  RenderViewImpl *render_view_impl = NULL;
+  RenderViewImpl* render_view_impl = nullptr;
   if (!CurrentRenderViewImpl(&render_view_impl)) {
     NOTREACHED();
     return std::string();
@@ -138,7 +138,7 @@ std::string StatsCollectionController::GetBrowserHistogram(
 }
 
 std::string StatsCollectionController::GetTabLoadTiming() {
-  RenderViewImpl *render_view_impl = NULL;
+  RenderViewImpl* render_view_impl = nullptr;
   if (!CurrentRenderViewImpl(&render_view_impl)) {
     NOTREACHED();
     return std::string();

@@ -494,9 +494,9 @@ base::string16 BrowserAccessibility::GetValue() const {
 BrowserAccessibility* BrowserAccessibility::ApproximateHitTest(
     const gfx::Point& point) {
   // The best result found that's a child of this object.
-  BrowserAccessibility* child_result = NULL;
+  BrowserAccessibility* child_result = nullptr;
   // The best result that's an indirect descendant like grandchild, etc.
-  BrowserAccessibility* descendant_result = NULL;
+  BrowserAccessibility* descendant_result = nullptr;
 
   // Walk the children recursively looking for the BrowserAccessibility that
   // most tightly encloses the specified point. Walk backwards so that in
@@ -542,8 +542,8 @@ void BrowserAccessibility::Destroy() {
       BrowserAccessibilityEvent::FromTreeChange,
       ui::AX_EVENT_HIDE,
       this);
-  node_ = NULL;
-  manager_ = NULL;
+  node_ = nullptr;
+  manager_ = nullptr;
 
   NativeReleaseReference();
 }

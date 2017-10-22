@@ -472,7 +472,7 @@ void RenderWidgetHostViewAura::InitAsPopup(
       transient_window_client->RemoveTransientChild(
         popup_parent_host_view_->window_, old_child->window_);
     }
-    old_child->popup_parent_host_view_ = NULL;
+    old_child->popup_parent_host_view_ = nullptr;
   }
   popup_parent_host_view_->SetPopupChild(this);
   CreateAuraWindow(aura::client::WINDOW_TYPE_MENU);
@@ -506,7 +506,7 @@ void RenderWidgetHostViewAura::InitAsFullscreen(
   CreateAuraWindow(aura::client::WINDOW_TYPE_NORMAL);
   window_->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_FULLSCREEN);
 
-  aura::Window* parent = NULL;
+  aura::Window* parent = nullptr;
   gfx::Rect bounds;
   if (reference_host_view) {
     aura::Window* reference_window =
@@ -595,7 +595,7 @@ gfx::NativeViewAccessible RenderWidgetHostViewAura::GetNativeViewAccessible() {
 #endif
 
   NOTIMPLEMENTED();
-  return static_cast<gfx::NativeViewAccessible>(NULL);
+  return static_cast<gfx::NativeViewAccessible>(nullptr);
 }
 
 ui::TextInputClient* RenderWidgetHostViewAura::GetTextInputClient() {
@@ -1135,7 +1135,7 @@ InputEventAckState RenderWidgetHostViewAura::FilterChildGestureEvent(
 BrowserAccessibilityManager*
 RenderWidgetHostViewAura::CreateBrowserAccessibilityManager(
     BrowserAccessibilityDelegate* delegate, bool for_root_frame) {
-  BrowserAccessibilityManager* manager = NULL;
+  BrowserAccessibilityManager* manager = nullptr;
 #if defined(OS_WIN)
   manager = new BrowserAccessibilityManagerWin(
       BrowserAccessibilityManagerWin::GetEmptyDocument(), delegate);
@@ -1161,7 +1161,7 @@ RenderWidgetHostViewAura::AccessibilityGetNativeViewAccessible() {
   if (legacy_render_widget_host_HWND_)
     return legacy_render_widget_host_HWND_->window_accessible();
 #endif
-  return NULL;
+  return nullptr;
 }
 
 void RenderWidgetHostViewAura::SetMainFrameAXTreeID(
@@ -1861,7 +1861,7 @@ RenderWidgetHostViewAura::~RenderWidgetHostViewAura() {
     if (window_->GetHost())
       window_->GetHost()->RemoveObserver(this);
     UnlockMouse();
-    wm::SetTooltipText(window_, NULL);
+    wm::SetTooltipText(window_, nullptr);
     display::Screen::GetScreen()->RemoveObserver(this);
 
     // This call is usually no-op since |this| object is already removed from
@@ -1870,14 +1870,14 @@ RenderWidgetHostViewAura::~RenderWidgetHostViewAura() {
     DetachFromInputMethod();
   }
   if (popup_parent_host_view_) {
-    DCHECK(popup_parent_host_view_->popup_child_host_view_ == NULL ||
+    DCHECK(popup_parent_host_view_->popup_child_host_view_ == nullptr ||
            popup_parent_host_view_->popup_child_host_view_ == this);
     popup_parent_host_view_->SetPopupChild(nullptr);
   }
   if (popup_child_host_view_) {
-    DCHECK(popup_child_host_view_->popup_parent_host_view_ == NULL ||
+    DCHECK(popup_child_host_view_->popup_parent_host_view_ == nullptr ||
            popup_child_host_view_->popup_parent_host_view_ == this);
-    popup_child_host_view_->popup_parent_host_view_ = NULL;
+    popup_child_host_view_->popup_parent_host_view_ = nullptr;
   }
   event_filter_for_popup_exit_.reset();
 

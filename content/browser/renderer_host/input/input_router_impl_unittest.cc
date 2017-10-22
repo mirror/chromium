@@ -73,7 +73,7 @@ bool ShouldBlockEventStream(const blink::WebInputEvent& event) {
 }
 
 WebInputEvent& GetEventWithType(WebInputEvent::Type type) {
-  WebInputEvent* event = NULL;
+  WebInputEvent* event = nullptr;
   if (WebInputEvent::IsMouseEventType(type)) {
     static WebMouseEvent mouse;
     event = &mouse;

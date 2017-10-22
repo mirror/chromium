@@ -996,7 +996,7 @@ void GpuProcessTransportFactory::OnLostMainThreadSharedContext() {
   // the same share group.
   scoped_refptr<ContextProvider> lost_shared_main_thread_contexts =
       shared_main_thread_contexts_;
-  shared_main_thread_contexts_  = NULL;
+  shared_main_thread_contexts_ = nullptr;
 
   std::unique_ptr<viz::GLHelper> lost_gl_helper = std::move(gl_helper_);
 
@@ -1005,7 +1005,7 @@ void GpuProcessTransportFactory::OnLostMainThreadSharedContext() {
 
   // Kill things that use the shared context before killing the shared context.
   lost_gl_helper.reset();
-  lost_shared_main_thread_contexts  = NULL;
+  lost_shared_main_thread_contexts = nullptr;
 }
 
 scoped_refptr<viz::VulkanInProcessContextProvider>

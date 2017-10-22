@@ -16,8 +16,9 @@ namespace content {
 namespace {
 
 FileSystemDispatcher* GetFileSystemDispatcher() {
-  return ChildThreadImpl::current() ?
-      ChildThreadImpl::current()->file_system_dispatcher() : NULL;
+  return ChildThreadImpl::current()
+             ? ChildThreadImpl::current()->file_system_dispatcher()
+             : nullptr;
 }
 
 }  // namespace

@@ -166,7 +166,7 @@ BrowserAccessibilityManager::BrowserAccessibilityManager(
 }
 
 BrowserAccessibilityManager::~BrowserAccessibilityManager() {
-  tree_.reset(NULL);
+  tree_.reset(nullptr);
   g_ax_tree_id_map.Get().erase(ax_tree_id_);
 }
 
