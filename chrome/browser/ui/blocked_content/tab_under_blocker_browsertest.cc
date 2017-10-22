@@ -36,6 +36,11 @@ class TabUnderBlockerBrowserTest : public InProcessBrowserTest {
     ASSERT_TRUE(embedded_test_server()->Start());
   }
 
+  static std::string GetError(const GURL& blocked_url) {
+    return base::StringPrintf(kBlockTabUnderFormatMessage,
+                              blocked_url.spec().c_str());
+  }
+
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
 
@@ -61,11 +66,20 @@ IN_PROC_BROWSER_TEST_F(TabUnderBlockerBrowserTest, SimpleTabUnder_IsBlocked) {
   content::TestNavigationObserver tab_under_observer(opener, 1);
   const GURL cross_origin_url =
       embedded_test_server()->GetURL("a.com", "/title1.html");
+
+  std::string expected_error = GetError(cross_origin_url);
+  content::ConsoleObserverDelegate console_observer(opener, expected_error);
+  opener->SetDelegate(&console_observer);
+
   EXPECT_TRUE(content::ExecuteScriptWithoutUserGesture(
       opener, base::StringPrintf("window.location = '%s';",
                                  cross_origin_url.spec().c_str())));
   tab_under_observer.Wait();
   EXPECT_FALSE(tab_under_observer.last_navigation_succeeded());
+
+  // Round trip to the renderer to ensure the message was sent.
+  EXPECT_TRUE(content::ExecuteScript(opener, "var a = 0;"));
+  EXPECT_EQ(expected_error, console_observer.message());
 }
 
 IN_PROC_BROWSER_TEST_F(TabUnderBlockerBrowserTest,
@@ -91,9 +105,15 @@ IN_PROC_BROWSER_TEST_F(TabUnderBlockerBrowserTest,
   content::TestNavigationObserver tab_under_observer(opener, 1);
   const GURL cross_origin_url =
       embedded_test_server()->GetURL("a.com", "/title1.html");
+  content::ConsoleObserverDelegate console_observer(opener,
+                                                    GetError(cross_origin_url));
+  opener->SetDelegate(&console_observer);
   EXPECT_TRUE(content::ExecuteScriptWithoutUserGesture(
       opener, base::StringPrintf("window.location = '%s';",
                                  cross_origin_url.spec().c_str())));
   tab_under_observer.Wait();
   EXPECT_TRUE(tab_under_observer.last_navigation_succeeded());
+  // Round trip to the renderer to ensure the message was sent.
+  EXPECT_TRUE(content::ExecuteScript(opener, "var a = 0;"));
+  EXPECT_TRUE(console_observer.message().empty());
 }
