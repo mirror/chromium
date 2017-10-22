@@ -178,6 +178,23 @@
     },
     {
       "key": {
+        "uuid": "0dbbcb8c_bf481799",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-22T22:23:43Z",
+      "side": 1,
+      "message": "What do we want from this method?\n\nAs a user, I expected this action to do the following:\n1. Create a binding so that purple bubble appears and subsequent saves are saved to fs.\n2. Mark my text editor as clean (i.e. the asterisk next to the filename disappears).",
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec2a1cb_9df5c1ce",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/PersistenceActions.js",
         "patchSetId": 3
@@ -195,6 +212,23 @@
         "endLine": 35,
         "endChar": 72
       },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609b3870_b897042f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesNavigator.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-22T22:23:43Z",
+      "side": 1,
+      "message": "I\u0027d be surprised if SaveAs for snippets is ever used. I\u0027d remove the functionality altogether",
       "revId": "7fe9908490e40207e15419177514fa2010e2189d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
