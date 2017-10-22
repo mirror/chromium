@@ -1973,7 +1973,13 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumingDownload) {
   EXPECT_TRUE(EnsureNoPendingDownloads());
 }
 
-IN_PROC_BROWSER_TEST_F(DownloadContentTest, RemoveResumedDownload) {
+// Flaky on Win. See http://crbug.com/777220.
+#if defined(OS_WIN)
+#define MAYBE_RemoveResumedDownload DISABLED_RemoveResumedDownload
+#else
+#define MAYBE_RemoveResumedDownload RemoveResumedDownload
+#endif
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, MAYBE_RemoveResumedDownload) {
   SetupErrorInjectionDownloads();
   TestDownloadHttpResponse::Parameters parameters =
       TestDownloadHttpResponse::Parameters::WithSingleInterruption(
@@ -2007,7 +2013,13 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, RemoveResumedDownload) {
   EXPECT_TRUE(EnsureNoPendingDownloads());
 }
 
-IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumedDownload) {
+// Flaky on Win. See http://crbug.com/777220.
+#if defined(OS_WIN)
+#define MAYBE_CancelResumedDownload DISABLED_CancelResumedDownload
+#else
+#define MAYBE_CancelResumedDownload CancelResumedDownload
+#endif
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, MAYBE_CancelResumedDownload) {
   SetupErrorInjectionDownloads();
   TestDownloadHttpResponse::Parameters parameters =
       TestDownloadHttpResponse::Parameters::WithSingleInterruption(
