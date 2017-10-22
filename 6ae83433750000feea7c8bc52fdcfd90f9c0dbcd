@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "13ccc18f_916ec0c2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T17:24:01Z",
+      "side": 1,
+      "message": "On a second though, I need to implement entire program to do this. We\u0027ll do it when it gets removed - there is no intent yet.",
+      "parentUuid": "f84b6cc6_416c6ac1",
+      "range": {
+        "startLine": 347,
+        "startChar": 13,
+        "endLine": 347,
+        "endChar": 31
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1431b7e4_ab1dad71",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
         "patchSetId": 5
