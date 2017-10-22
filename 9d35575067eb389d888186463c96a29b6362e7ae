@@ -16,6 +16,24 @@
       "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577ae6c0_ab12b1cd",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-22T13:51:27Z",
+      "side": 1,
+      "message": "In most cases these 3 should always have valid values, unnecessary ::New()s happen at the only one exception in ServiceWorkerProviderHost::GetRegistrationComplete() when there is not registration found or the found registration is uninstalling. So, personally I feel we\u0027d better not to make them optional, to avoid any unintentional behaviors that somewhere may use null values by mistakes.  \nAlso, about ServiceWorkerRegistrationObjectHost.GetRegistration()\u0027s response, I\u0027m considering to pass a null ServiceWorkerRegistrationObjectInfoPtr in case that no registration has been found or the found one is uninstalling, together with a kNone |error| though. Thus we can remove those unnecessary ::New()s there, and also can remove \u0027?\u0027 at line43 of this file. WDYT? Thanks.",
+      "parentUuid": "5b155631_b6cdc7fc",
+      "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
