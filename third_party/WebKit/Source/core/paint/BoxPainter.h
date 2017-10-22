@@ -38,11 +38,15 @@ class BoxPainter {
   LayoutRect BoundsForDrawingRecorder(const PaintInfo&,
                                       const LayoutPoint& adjusted_paint_offset);
 
+  LayoutPoint AdjustPaintOffset(PaintInfo&, const LayoutPoint& paint_offset);
+
  private:
   void PaintBackground(const PaintInfo&,
                        const LayoutRect&,
                        const Color& background_color,
                        BackgroundBleedAvoidance = kBackgroundBleedNone);
+
+  bool ShouldAdjustForPaintOffsetTranslation(const PaintInfo&);
 
   const LayoutBox& layout_box_;
 };

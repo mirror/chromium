@@ -37,9 +37,11 @@ void TableCellPainter::PaintContainerBackgroundBehindCell(
       !layout_table_cell_.FirstChild())
     return;
 
+  PaintInfo local_paint_info(paint_info);
   LayoutRect paint_rect = PaintRectNotIncludingVisualOverflow(
-      paint_offset + layout_table_cell_.Location());
-  PaintBackground(paint_info, paint_rect, background_object);
+      BoxPainter(layout_table_cell_)
+          .AdjustPaintOffset(local_paint_info, paint_offset));
+  PaintBackground(local_paint_info, paint_rect, background_object);
 }
 
 void TableCellPainter::PaintBackground(const PaintInfo& paint_info,

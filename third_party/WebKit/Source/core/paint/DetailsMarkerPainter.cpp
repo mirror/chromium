@@ -6,6 +6,7 @@
 
 #include "core/layout/LayoutDetailsMarker.h"
 #include "core/paint/BlockPainter.h"
+#include "core/paint/BoxPainter.h"
 #include "core/paint/PaintInfo.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/graphics/Path.h"
@@ -25,23 +26,26 @@ void DetailsMarkerPainter::Paint(const PaintInfo& paint_info,
           paint_info.context, layout_details_marker_, paint_info.phase))
     return;
 
-  LayoutPoint box_origin(paint_offset + layout_details_marker_.Location());
+  PaintInfo local_paint_info(paint_info);
+  LayoutPoint box_origin =
+      BoxPainter(layout_details_marker_)
+          .AdjustPaintOffset(local_paint_info, paint_offset);
   LayoutRect overflow_rect(layout_details_marker_.VisualOverflowRect());
   overflow_rect.MoveBy(box_origin);
 
-  if (!paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
+  if (!local_paint_info.GetCullRect().IntersectsCullRect(overflow_rect))
     return;
 
-  DrawingRecorder recorder(paint_info.context, layout_details_marker_,
-                           paint_info.phase, overflow_rect);
+  DrawingRecorder recorder(local_paint_info.context, layout_details_marker_,
+                           local_paint_info.phase, overflow_rect);
   const Color color(layout_details_marker_.ResolveColor(CSSPropertyColor));
-  paint_info.context.SetFillColor(color);
+  local_paint_info.context.SetFillColor(color);
 
   box_origin.Move(
       layout_details_marker_.BorderLeft() +
           layout_details_marker_.PaddingLeft(),
       layout_details_marker_.BorderTop() + layout_details_marker_.PaddingTop());
-  paint_info.context.FillPath(GetPath(box_origin));
+  local_paint_info.context.FillPath(GetPath(box_origin));
 }
 
 static Path CreatePath(const FloatPoint* path) {
