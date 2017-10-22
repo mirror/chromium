@@ -269,6 +269,20 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
       } else if (child.fragment) {
         box.AddChild(std::move(child.fragment), child.offset - box_offset);
         DCHECK(!child.fragment);
+      } else if (child.out_of_flow_layout_box &&
+                 style->CanContainAbsolutePositionObjects()) {
+// TODO(kojii): This abspos object should be placed by the inline
+// containing box, with the static position (child.offset - box_offset).
+// Note, its block_offset is at the baseline. What's needed for abspos
+// needs more investigations.
+#if 0
+        box.AddOutOfFlowDescendant(
+            {NGBlockNode(child.out_of_flow_layout_box),
+             NGStaticPosition::Create(ConstraintSpace().WritingMode(),
+                                      ConstraintSpace().Direction(),
+                                      NGPhysicalOffset())});
+        child.out_of_flow_layout_box = nullptr;
+#endif
       }
     }
 
@@ -278,23 +292,10 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     box.SetBorderEdges(placeholder.border_edges);
     box.SetInlineSize(placeholder.size.inline_size);
     box.SetBlockSize(placeholder.size.block_size);
-    DCHECK(!(*line_box)[placeholder.fragment_end].HasFragment());
+    DCHECK((*line_box)[placeholder.fragment_end].IsEmpty());
     (*line_box)[placeholder.fragment_end].layout_result = box.ToBoxFragment();
   }
   box_placeholders_.clear();
-
-  // Add the list to line_box by skipping null fragments; i.e., fragments added
-  // to box children.
-  NGLineBoxFragmentBuilder::ChildList new_children;
-  new_children.ReserveInitialCapacity(line_box->size());
-  for (unsigned i = 0; i < (*line_box).size(); i++) {
-    NGLineBoxFragmentBuilder::Child& child = (*line_box)[i];
-    if (child.layout_result)
-      new_children.AddChild(std::move(child.layout_result), child.offset);
-    else if (child.fragment)
-      new_children.AddChild(std::move(child.fragment), child.offset);
-  }
-  *line_box = std::move(new_children);
 }
 
 NGInlineLayoutStateStack::PositionPending
