@@ -1,0 +1,371 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20e33d2a_6f3f4678",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "Multimap.has() should clean up properly if the Set is empty. Other areas would break if .has() does not work.",
+      "range": {
+        "startLine": 475,
+        "startChar": 66,
+        "endLine": 475,
+        "endChar": 70
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5525f4_f6a3cc5b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "lastMessage will always exist now.",
+      "range": {
+        "startLine": 693,
+        "startChar": 28,
+        "endLine": 693,
+        "endChar": 39
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bb5158_4f960c9e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "viewMessage may not exist any more.",
+      "range": {
+        "startLine": 693,
+        "startChar": 44,
+        "endLine": 693,
+        "endChar": 55
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd0a79e_f4cc8c71",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "Can we move this into a listener when the setting changes? This appears to be a hot path.",
+      "range": {
+        "startLine": 718,
+        "startChar": 8,
+        "endLine": 718,
+        "endChar": 58
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc2f050_7083daae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "nit: this._shouldMessageBeVisible.bind(this)",
+      "range": {
+        "startLine": 745,
+        "startChar": 41,
+        "endLine": 745,
+        "endChar": 77
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f1dc4a_6e107ff1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "Who is the TODO for? and why should we fix it?",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1966e62e_4c5b966f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "Can we cleanly not have it create this marker in two different places?",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c687c851_fba01d11",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "This function is going to get ran quite a bit, can we shortcut it to 1357 if we have the types and regexs already built?",
+      "range": {
+        "startLine": 1340,
+        "startChar": 9,
+        "endLine": 1340,
+        "endChar": 29
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6183848a_97100af3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "I don\u0027t understand what \u0027pathLine\u0027 is or why it needs to end with \u0027:\\d+\u0027? Maybe we should remove this?",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90405f26_145abe42",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "Simplified would be: /\\/[\\w\\.-\\/]*:\\d+/",
+      "range": {
+        "startLine": 1343,
+        "startChar": 28,
+        "endLine": 1343,
+        "endChar": 38
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0090fe4_78cd4e9f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "/took (?:\\d+)ms/ ... We try not to capture.",
+      "range": {
+        "startLine": 1344,
+        "startChar": 26,
+        "endLine": 1344,
+        "endChar": 33
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ac5025_ede2a66f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "(?:\\w+) ... We try not to capture.",
+      "range": {
+        "startLine": 1345,
+        "startChar": 23,
+        "endLine": 1345,
+        "endChar": 28
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6595c0_d2585d25",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "Do we really want to force ourselves to keep updating this every year? This means within 2 years we\u0027ll need to change this to [6-8].",
+      "range": {
+        "startLine": 1346,
+        "startChar": 27,
+        "endLine": 1346,
+        "endChar": 32
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4388a49c_af6016eb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "It might be a good idea to consider ensuring there is a spacelike character on each side of this, otherwise we are going to get crazy matching on things like base64.",
+      "range": {
+        "startLine": 1346,
+        "startChar": 26,
+        "endLine": 1346,
+        "endChar": 27
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f099b3_6f5f99dc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "Lets extract this named types into an enum. Then we can do something like:\n\nresult \u003d tokens.reduce((acc, token) \u003d\u003e acc + (myEnum[token.type] || token.text));",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9aba8f7_30d066e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "\u003cN\u003e for consistency?",
+      "range": {
+        "startLine": 1382,
+        "startChar": 37,
+        "endLine": 1382,
+        "endChar": 38
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf29724_81268c5a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:24:03Z",
+      "side": 1,
+      "message": "what is this?",
+      "range": {
+        "startLine": 1391,
+        "startChar": 27,
+        "endLine": 1391,
+        "endChar": 31
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
