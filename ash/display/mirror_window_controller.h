@@ -68,6 +68,10 @@ class ASH_EXPORT MirrorWindowController : public aura::WindowTreeHostObserver {
   // display is not mirrored by the compositor path.
   aura::Window* GetWindow();
 
+  // Return the root windows used to mirror the content. Return empty list if
+  // the display is not mirrored by the compositor path.
+  aura::Window::Windows GetWindows();
+
   // Returns the display::Display for the mirroring root window.
   display::Display GetDisplayForRootWindow(const aura::Window* root) const;
 
