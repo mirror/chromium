@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "53be85b6_5e7ceae2",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Done.\n\nChanged to a DCHECK.",
+      "parentUuid": "d6b95b3a_5d3290ff",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76fc7d25_2d55bba0",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07779d44_e95bf630",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76fc7d25_2d55bba0",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c4f2c5f8_3c9424e9",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Moved VulkanInitialize to ClientBase::InitVulkan, it\u0027s now using ScopedVk* objects, so the clean up should now happen automatically.",
+      "parentUuid": "c32b1c74_87d3074b",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c75015f8_95f62eff",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceef383d_9d87f223",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "We\u0027re now using a ScopedVkInstance.",
+      "parentUuid": "c75015f8_95f62eff",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "34fa8783_1d1a69b5",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Using ScopedVkStuff now :)",
+      "parentUuid": "8d8fe449_dfa64900",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8cdf803_913a14f1",
         "filename": "components/exo/wayland/clients/client_base.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7167f8_35aadff2",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Done.\nAlso, we\u0027re now putting it into a ScopedFD to properly close it.",
+      "parentUuid": "f8cdf803_913a14f1",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "513b8321_d874f5d0",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Changed to:\nScopedVkImage vk_image_view(VK_NULL_HANDLE, {vk_device});\nresult \u003d vkCreateImageView(..., vk_image_view-\u003ereceive());\nif (result !\u003d VK_SUCCESS) ...\n\nIn this way the vkImageView in the ScopedVk gets initialized.",
+      "parentUuid": "81422dc2_656295cc",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e39c56e_e5c6dc95",
         "filename": "components/exo/wayland/clients/client_base.h",
         "patchSetId": 7
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-18T01:31:17Z",
       "side": 1,
       "message": "Do any other configuration options for Chromium define USE_VULKAN? In particular, if someone enables Vulkan for Skia, will that incidentally define USE_VULKAN here? If yes, then #include \u003cvulkan/vulkan_intel.h\u003e will obviously break the build for many users.",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2ea685_01835b05",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "USE_VULKAN is not used anywhere else.\nIf you enable Vulkan for Skia you get SK_VULKAN.\nI\u0027m afraid currently no one is building Chromium with Vulkan (I suspect it wouldn\u0027t even build today).\n\nWe could define something like USE_VULKAN_WAYLAND_CLIENT to make it more explicit that this define is specifically for wayland clients though.",
+      "parentUuid": "8e39c56e_e5c6dc95",
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c03e0fe7_df33b665",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "~Buffer satisfies #1. All the members dtors are called in the inverse order of declaration, and, if I didn\u0027t make any mistake, I declared them in order of allocation, so the reverse should satisfy #1.\n\nRegarding #2, that is up to whoever owns Buffer instances. Right now that is VulkanClient, VulkanClient waits on the queue after every frame.",
+      "parentUuid": "826b2215_f2ed8c83",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f66b0c3_ccc82d5c",
         "filename": "components/exo/wayland/clients/client_helper.cc",
         "patchSetId": 7
@@ -169,6 +331,24 @@
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be71ff7c_5099156d",
+        "filename": "components/exo/wayland/clients/client_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "It does, I just wanted to be consistent with the Traits::InvalidValue defined for the gl traits.\nMiguel also suggested a way to avoid all these lines of code: crrev.com/c/732608",
+      "parentUuid": "5f66b0c3_ccc82d5c",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "5e96ecb4_5a404417",
+        "filename": "components/exo/wayland/clients/client_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Uploaded the suggested solution to another CL: http://crrev.com/c/732608, so we can focus on Vulkan related issues in this CL and on metaprogramming stuff in the other CL.\n\nBtw, the callback can\u0027t be made a OnceCallback without changing ScopedGeneric (we could use a const_cast otherwise, but we don\u0027t want to go there.)",
+      "parentUuid": "1a5f3cdd_1c2fdfd5",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 1
+      },
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d9dcf38_439eae28",
         "filename": "components/exo/wayland/clients/vulkan.cc",
         "patchSetId": 7
@@ -209,6 +413,24 @@
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055123fa_94140284",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9dcf38_439eae28",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "6d5219c6_8ec18e5c",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "CHECK_EQ kills the process on failure.\n\nThis file is a standalone binary. We typically build it manually and scp it to the device, and then run it.\n\nThey\u0027re working on getting Wayland clients to run in an automated way to check regressions, but this Vulkan client won\u0027t probably be part of it, at least initially.\n\nHow often should we expect a queuesubmit failure?",
+      "parentUuid": "249ae81c_608732eb",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9002e010_d00b18be",
         "filename": "components/exo/wayland/clients/vulkan.cc",
         "patchSetId": 7
@@ -243,6 +483,24 @@
       "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d545f1a7_02054b6e",
+        "filename": "components/exo/wayland/clients/vulkan.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T19:30:32Z",
+      "side": 1,
+      "message": "We call vkQueueWaitIdle because it was the easiest thing to do.\n\nWe should definitely improve it in the future. It can be a nice exercise to have it work with fences and pass them around once we get wayland/exo support.",
+      "parentUuid": "9002e010_d00b18be",
+      "revId": "1f4cde3e268ae89d3ab1b41558fefd78bf0348ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
