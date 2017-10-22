@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "53b7a1ae_c9a7e29e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-22T22:40:44Z",
+      "side": 1,
+      "message": "the \"requestContent\" returns original content for uiSourceCode. Why would we want this?",
+      "parentUuid": "aab1e328_7439cdd4",
+      "range": {
+        "startLine": 300,
+        "startChar": 37,
+        "endLine": 300,
+        "endChar": 51
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbbcb8c_bf481799",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 3
