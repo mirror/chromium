@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f783f726_3463c4e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-22T22:48:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90d046ee_efffa0fb",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6c28099_2ea04d4d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
         "patchSetId": 3
@@ -201,6 +225,30 @@
       "side": 1,
       "message": "You are accepting the possibility that the task is scheduled at some point later, is that correct?\n\nI\u0027d put a comment on top of updateNow() call:\n// Updates one WebAPK and finishes indicating if more work is needed.",
       "parentUuid": "01e6f4ad_1d514e43",
+      "range": {
+        "startLine": 69,
+        "startChar": 32,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662c6092_8c320b52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-22T22:48:59Z",
+      "side": 1,
+      "message": "- My understanding is that passing true to the callback causes the task to be rescheduled.\n- I understand that the task will not be rescheduled if it is stopped prior to finishing. I don\u0027t think that this scenario will occur often though",
+      "parentUuid": "cea210a7_f519bd48",
       "range": {
         "startLine": 69,
         "startChar": 32,
