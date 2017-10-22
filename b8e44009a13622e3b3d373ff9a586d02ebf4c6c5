@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40854341_10fc52bf",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-22T17:08:50Z",
+      "side": 1,
+      "message": "Renamed to url_with_meta_refresh_tag for consistency with other tests.",
+      "parentUuid": "22f1b97d_d4b1f18f",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9c1e261_5fcb0c95",
         "filename": "chrome/browser/ui/tab_helpers.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5afa33f0_03670733",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-22T17:08:50Z",
+      "side": 1,
+      "message": "I honestly don\u0027t remember why this was needed, so I\u0027ll revert and see if tests pass.",
+      "parentUuid": "c9c1e261_5fcb0c95",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9116d323_9ef87a9f",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ac762e_bc07b7d0",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-22T17:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9116d323_9ef87a9f",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -84,6 +138,24 @@
       "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4322cf80_474ea70a",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-22T17:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3934dc_71cb45b5",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
