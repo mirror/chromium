@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e226fba2_ab0a1576",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "Ok, then it seems like the right thing to do is always use dynamic loading for now and protect the code that will use this with a:\n\nif (base::android::BuildInfo::GetInstance()-\u003esdk_int() \u003e\u003d\n    base::android::SDK_VERSION_OREO)\n\ncheck. There\u0027s some precedence for this here:\nhttps://cs.chromium.org/chromium/src/net/socket/udp_socket_posix.cc?l\u003d505\n\nAnd I think this check should be done by the GMB code that advertises native support but fine of course to have a helper function such as IsAndroidHardwareBufferSupported in base/ if useful.",
+      "parentUuid": "bdfca6ed_c97b3af4",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42c6787a_96f773e9",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
         "patchSetId": 13
@@ -347,6 +371,24 @@
       "side": 1,
       "message": "I\u0027m actually confused about this myself. OnMemoryDump is a pure abstract method in GlImage that didn\u0027t get defined or overridden for GlImageEGL (as far as I can tell), so the compiler complained to me that the \"new gl: GLImageEGL(size)\" call in the factory code was an invalid attempt to construct an abstract class instance. I agree with the compiler, but it\u0027s unclear to me how come this never caused issues previously. My guess is that these were only being instantiated via GLImageNativePixmap which does override OnMemoryDump.",
       "parentUuid": "447ddccd_73da97d7",
+      "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9399e018_489be0c9",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "GLImageEGL is not meant to be a full implementation. I think we should add a GLImageAHardwareBuffer to be consistent with GLImageNativePixmap.",
+      "parentUuid": "1b914eb3_7e4a85a4",
       "revId": "fa35ccd1b4b7f48d9391f769cafecc6eb2d5079c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

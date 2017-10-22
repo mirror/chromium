@@ -1,0 +1,375 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce15f26d_cc6ac297",
+        "filename": "base/android/android_hardware_buffer_abi.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "should we add hardware_buffer.h to third_party instead of this copy and paste here?",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2060fe3_3cab8c47",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "g_did_check_ahardware_buffer_support, if you keep this but I feel like this is better handled using on demand loading of all symbols when first needed.",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e922e34d_436d010e",
+        "filename": "base/android/android_hardware_buffer_compat.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "This seems racy. what if LoadFunctions is called from another thread in between DidCheckAHardwareBufferSupport is set to true and HaveAHardwareBufferSupport is assigned a value?",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2960e511_53bf4186",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "GetBufferDescription?",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2feee488_09f47f5f",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "maybe \"desc \u003d {}\" above instead of setting rfu fields below",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929eb439_0b018903",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "is it RGB_565 you want instead? I\u0027d remove this TODO unless it\u0027s something you know we need to add in the future.",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948f1963_f28f184f",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "DCHECK? I\u0027d like us to fail much earlier if this is not supported.",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86be8713_a1cd6b41",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "remove this as we shouldn\u0027t reach this if not supported and you already have DCHECKs in GetBufferConfig.",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f10250_528778b1",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "nit: buffer",
+      "range": {
+        "startLine": 91,
+        "startChar": 19,
+        "endLine": 91,
+        "endChar": 22
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8ab1e4_acc112a6",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "LOG(ERROR) \u003c\u003c \"Failed to allocate AHardwareBuffer\";",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 73
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb61ba3_d642935e",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "nit: buffer",
+      "range": {
+        "startLine": 160,
+        "startChar": 19,
+        "endLine": 160,
+        "endChar": 22
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b769397a_29d14b14",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "nit: \"Android hardware buffer\" or just \"AHardwareBuffer\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 71
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c7c12c_d50d1faa",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "we have the same test for shmem. can we add it to the template instead of duplicating code?",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0482a7e6_a6c17d08",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "remove blank line here and below. and they should be in alphabetical order",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e370a104_b338a3b8",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "either have trace event here or remove it completely",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00a825a_bbe1eb7b",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ede0db9_c66aec8d",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "why would this fail? can we DCHECK instead?",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32485baa_e8fb20d3",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_android_hardware_buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "some of these includes are clearly not needed. please only include what you use in this and other files",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 54
+      },
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e744279_84fdb469",
+        "filename": "ui/gl/gl_image_egl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-22T22:57:08Z",
+      "side": 1,
+      "message": "Instead of this, please add a minimal GLImageAndroidHardwareBuffer class and appropriate GLImage unit tests. See unit tests for other GLImage impls.",
+      "revId": "bd48db76e68d794d2149e332b46243f3a3886f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
