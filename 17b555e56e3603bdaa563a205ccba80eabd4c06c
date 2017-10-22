@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09125039_ec014873",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-22T06:17:23Z",
+      "side": 1,
+      "message": "I think range for-loop works.",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618036d2_4f32acc1",
+        "filename": "content/child/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-22T06:17:23Z",
+      "side": 1,
+      "message": "not needed.",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5575f8_93ed2017",
+        "filename": "content/child/service_worker/controller_service_worker_connector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-22T06:17:23Z",
+      "side": 1,
+      "message": "nit: have a one-liner class-level comment.",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ff5707_73dbba08",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-22T06:17:23Z",
+      "side": 1,
+      "message": "I think in the second try this could return nullptr?",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b6d180_00665c51",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-22T06:17:23Z",
+      "side": 1,
+      "message": "Should we make sure we aren\u0027t in an infinite loop?",
+      "revId": "17b555e56e3603bdaa563a205ccba80eabd4c06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
