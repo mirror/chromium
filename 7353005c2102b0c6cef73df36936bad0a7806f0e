@@ -46,6 +46,30 @@
       "revId": "7353005c2102b0c6cef73df36936bad0a7806f0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfdf354_09483c0d",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-22T21:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed0b87e4_835ad6a0",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "7353005c2102b0c6cef73df36936bad0a7806f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
