@@ -1,0 +1,26 @@
+Name: qemu
+URL: https://download.qemu.org/qemu-2.9.1.tar.xz
+Version: 2.9.1
+Security Critical: no
+License: GPLv2
+License File: NOT_SHIPPED
+
+Description:
+
+Qemu is a processor emulator. We use it to run ChromiumOS vm images,
+so that we can run tests on the VMs.
+
+To build a new version, on a Trusty host w/ a Linux checkout:
+
+```bash
+$ wget https://download.qemu.org/qemu-2.9.1.tar.xz 
+$ sha1sum qemu-2.9.1.tar.xz
+feca4c4099abd486b2526a160aa64528ac3cbce2  qemu-2.9.1.tar.xz
+$ tar xJf qemu-2.9.1.tar.xz
+$ cd qemu-2.9.1
+$ ./configure --target-list=x86_64-softmmu
+$ make
+$ cp x86_64-softmmu/qemu-system-x86_64 ../linux64 
+$ cd ..
+$ upload_to_google_storage.py -b chromium-chromiumos-qemu linux64/qemu-system-x86_64
+```
