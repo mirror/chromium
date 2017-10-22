@@ -46,6 +46,30 @@
       "revId": "45a9833453ae06f05e0261269be5f90155eeceb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ba9eb4_ef8e4940",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 2828,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-22T11:36:27Z",
+      "side": 1,
+      "message": "Yeah, my reaction would be the same as Charlie\u0027s - presume hostility and include the full space. Is there a good rubric for when to prefer one over the other?",
+      "parentUuid": "71792891_f3ea917a",
+      "range": {
+        "startLine": 2828,
+        "startChar": 13,
+        "endLine": 2828,
+        "endChar": 33
+      },
+      "revId": "45a9833453ae06f05e0261269be5f90155eeceb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
