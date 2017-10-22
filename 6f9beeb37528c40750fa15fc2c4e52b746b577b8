@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa46df2_99dc1c07",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-10-22T22:26:38Z",
+      "side": 1,
+      "message": "This duplicates code here:\n\nhttps://cs.chromium.org/chromium/src/components/translate/core/browser/translate_prefs.cc",
+      "revId": "6f9beeb37528c40750fa15fc2c4e52b746b577b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bea51f0_6e46a49b",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-10-22T22:26:38Z",
+      "side": 1,
+      "message": "CHECK for scale !\u003d 0?",
+      "revId": "6f9beeb37528c40750fa15fc2c4e52b746b577b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb40300_ca058b95",
+        "filename": "components/language/core/browser/heuristic_language_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-10-22T22:26:38Z",
+      "side": 1,
+      "message": "Are we sure this has reasonable performance? RVO is working here?",
+      "revId": "6f9beeb37528c40750fa15fc2c4e52b746b577b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
