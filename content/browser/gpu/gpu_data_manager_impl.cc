@@ -71,21 +71,6 @@ bool GpuDataManagerImpl::IsFeatureBlacklisted(int feature) const {
   return private_->IsFeatureBlacklisted(feature);
 }
 
-bool GpuDataManagerImpl::IsFeatureEnabled(int feature) const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsFeatureEnabled(feature);
-}
-
-bool GpuDataManagerImpl::IsWebGLEnabled() const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsWebGLEnabled();
-}
-
-bool GpuDataManagerImpl::IsWebGL2Enabled() const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsWebGL2Enabled();
-}
-
 gpu::GPUInfo GpuDataManagerImpl::GetGPUInfo() const {
   base::AutoLock auto_lock(lock_);
   return private_->GetGPUInfo();
@@ -200,6 +185,17 @@ void GpuDataManagerImpl::UpdateGpuFeatureInfo(
 gpu::GpuFeatureInfo GpuDataManagerImpl::GetGpuFeatureInfo() const {
   base::AutoLock auto_lock(lock_);
   return private_->GetGpuFeatureInfo();
+}
+
+gpu::GpuFeatureStatus GpuDataManagerImpl::GetFeatureStatus(
+    gpu::GpuFeatureType feature) const {
+  base::AutoLock auto_lock(lock_);
+  return private_->GetFeatureStatus(feature);
+}
+
+bool GpuDataManagerImpl::IsGpuFeatureInfoAvailable() const {
+  base::AutoLock auto_lock(lock_);
+  return private_->IsGpuFeatureInfoAvailable();
 }
 
 void GpuDataManagerImpl::AppendRendererCommandLine(

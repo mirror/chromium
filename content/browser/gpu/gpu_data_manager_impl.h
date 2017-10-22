@@ -22,7 +22,6 @@
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/common/three_d_api_types.h"
 #include "gpu/config/gpu_control_list.h"
-#include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
 
 class GURL;
@@ -67,9 +66,8 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
   // GpuDataManager implementation.
   void BlacklistWebGLForTesting() override;
   bool IsFeatureBlacklisted(int feature) const override;
-  bool IsFeatureEnabled(int feature) const override;
-  bool IsWebGLEnabled() const override;
-  bool IsWebGL2Enabled() const override;
+  gpu::GpuFeatureStatus GetFeatureStatus(
+      gpu::GpuFeatureType feature) const override;
   gpu::GPUInfo GetGPUInfo() const override;
   bool GpuAccessAllowed(std::string* reason) const override;
   void RequestCompleteGpuInfoIfNeeded() override;
@@ -116,6 +114,8 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
   void UpdateGpuFeatureInfo(const gpu::GpuFeatureInfo& gpu_feature_info);
 
   gpu::GpuFeatureInfo GetGpuFeatureInfo() const;
+
+  bool IsGpuFeatureInfoAvailable() const;
 
   // Insert disable-feature switches corresponding to preliminary gpu feature
   // flags into the renderer process command line.
