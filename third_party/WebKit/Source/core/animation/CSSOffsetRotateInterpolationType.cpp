@@ -61,12 +61,13 @@ class UnderlyingRotationTypeChecker
   OffsetRotationType underlying_rotation_type_;
 };
 
-class InheritedRotationChecker
+class OffsetInheritedRotationChecker
     : public CSSInterpolationType::CSSConversionChecker {
  public:
-  static std::unique_ptr<InheritedRotationChecker> Create(
+  static std::unique_ptr<OffsetInheritedRotationChecker> Create(
       StyleOffsetRotation inherited_rotation) {
-    return WTF::WrapUnique(new InheritedRotationChecker(inherited_rotation));
+    return WTF::WrapUnique(
+        new OffsetInheritedRotationChecker(inherited_rotation));
   }
 
   bool IsValid(const StyleResolverState& state,
@@ -75,7 +76,7 @@ class InheritedRotationChecker
   }
 
  private:
-  InheritedRotationChecker(StyleOffsetRotation inherited_rotation)
+  OffsetInheritedRotationChecker(StyleOffsetRotation inherited_rotation)
       : inherited_rotation_(inherited_rotation) {}
 
   StyleOffsetRotation inherited_rotation_;
@@ -113,7 +114,7 @@ InterpolationValue CSSOffsetRotateInterpolationType::MaybeConvertInherit(
   const StyleOffsetRotation& inherited_rotation =
       state.ParentStyle()->OffsetRotate();
   conversion_checkers.push_back(
-      InheritedRotationChecker::Create(inherited_rotation));
+      OffsetInheritedRotationChecker::Create(inherited_rotation));
   return ConvertOffsetRotate(inherited_rotation);
 }
 
