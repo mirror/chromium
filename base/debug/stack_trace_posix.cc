@@ -236,7 +236,7 @@ void StackDumpSignalHandler(int signal, siginfo_t* info, void* void_context) {
     action.sa_sigaction = &StackDumpSignalHandler;
     sigemptyset(&action.sa_mask);
 
-    sigaction(signal, &action, NULL);
+    sigaction(signal, &action, nullptr);
     return;
   }
 
@@ -667,7 +667,7 @@ class SandboxSymbolizeHelper {
   // Unregister symbolization callback.
   void UnregisterCallback() {
     if (is_initialized_) {
-      google::InstallSymbolizeOpenObjectFileCallback(NULL);
+      google::InstallSymbolizeOpenObjectFileCallback(nullptr);
       is_initialized_ = false;
     }
   }
@@ -717,7 +717,7 @@ bool EnableInProcessStackDumping() {
   memset(&sigpipe_action, 0, sizeof(sigpipe_action));
   sigpipe_action.sa_handler = SIG_IGN;
   sigemptyset(&sigpipe_action.sa_mask);
-  bool success = (sigaction(SIGPIPE, &sigpipe_action, NULL) == 0);
+  bool success = (sigaction(SIGPIPE, &sigpipe_action, nullptr) == 0);
 
   // Avoid hangs during backtrace initialization, see above.
   WarmUpBacktrace();
@@ -728,11 +728,11 @@ bool EnableInProcessStackDumping() {
   action.sa_sigaction = &StackDumpSignalHandler;
   sigemptyset(&action.sa_mask);
 
-  success &= (sigaction(SIGILL, &action, NULL) == 0);
-  success &= (sigaction(SIGABRT, &action, NULL) == 0);
-  success &= (sigaction(SIGFPE, &action, NULL) == 0);
-  success &= (sigaction(SIGBUS, &action, NULL) == 0);
-  success &= (sigaction(SIGSEGV, &action, NULL) == 0);
+  success &= (sigaction(SIGILL, &action, nullptr) == 0);
+  success &= (sigaction(SIGABRT, &action, nullptr) == 0);
+  success &= (sigaction(SIGFPE, &action, nullptr) == 0);
+  success &= (sigaction(SIGBUS, &action, nullptr) == 0);
+  success &= (sigaction(SIGSEGV, &action, nullptr) == 0);
 // On Linux, SIGSYS is reserved by the kernel for seccomp-bpf sandboxing.
 #if !defined(OS_LINUX)
   success &= (sigaction(SIGSYS, &action, NULL) == 0);
@@ -785,11 +785,11 @@ char* itoa_r(intptr_t i, char* buf, size_t sz, int base, size_t padding) {
   // Make sure we can write at least one NUL byte.
   size_t n = 1;
   if (n > sz)
-    return NULL;
+    return nullptr;
 
   if (base < 2 || base > 16) {
     buf[0] = '\000';
-    return NULL;
+    return nullptr;
   }
 
   char* start = buf;
@@ -804,7 +804,7 @@ char* itoa_r(intptr_t i, char* buf, size_t sz, int base, size_t padding) {
     // Make sure we can write the '-' character.
     if (++n > sz) {
       buf[0] = '\000';
-      return NULL;
+      return nullptr;
     }
     *start++ = '-';
   }
@@ -816,7 +816,7 @@ char* itoa_r(intptr_t i, char* buf, size_t sz, int base, size_t padding) {
     // Make sure there is still enough space left in our output buffer.
     if (++n > sz) {
       buf[0] = '\000';
-      return NULL;
+      return nullptr;
     }
 
     // Output the next digit.
