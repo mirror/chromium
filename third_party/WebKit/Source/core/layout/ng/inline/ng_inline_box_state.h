@@ -130,6 +130,7 @@ class NGInlineLayoutStateStack {
   void AddBoxFragmentPlaceholder(NGInlineBoxState*,
                                  NGLineBoxFragmentBuilder::ChildList*,
                                  FontBaseline);
+
   void CreateBoxFragments(NGLineBoxFragmentBuilder::ChildList*);
 
   enum PositionPending { kPositionNotPending, kPositionPending };
