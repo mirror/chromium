@@ -28,7 +28,7 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "core/css/RuleFeature.h"
+#include "core/css/RuleFeatureSet.h"
 
 #include "core/css/CSSCustomIdentValue.h"
 #include "core/css/CSSFunctionValue.h"
@@ -519,9 +519,10 @@ void RuleFeatureSet::UpdateInvalidationSets(RuleData& rule_data) {
     UpdateRuleSetInvalidation(features);
     return;
   }
-  if (last_in_compound)
+  if (last_in_compound) {
     UpdateFeaturesFromCombinator(*last_in_compound, nullptr, features,
                                  sibling_features, features);
+  }
 
   AddFeaturesToInvalidationSets(*next_compound, sibling_features, features);
   UpdateRuleSetInvalidation(features);
@@ -651,9 +652,10 @@ const CSSSelector* RuleFeatureSet::ExtractInvalidationSetFeaturesFromCompound(
     // That is, ".a" should not have ".b" in its invalidation set for
     // ".a :not(.b)", but there should be an invalidation set for ".a" in
     // ":not(.a) .b".
-    if (pseudo != CSSSelector::kPseudoNot)
+    if (pseudo != CSSSelector::kPseudoNot) {
       ExtractInvalidationSetFeaturesFromSimpleSelector(*simple_selector,
                                                        features);
+    }
 
     // Initialize the entry in the invalidation set map for self-
     // invalidation, if supported.
@@ -768,12 +770,13 @@ void RuleFeatureSet::AddFeaturesToInvalidationSetsForSimpleSelector(
     sibling_invalidation_set->UpdateMaxDirectAdjacentSelectors(
         sibling_features->max_direct_adjacent_selectors);
     AddFeaturesToInvalidationSet(*invalidation_set, *sibling_features);
-    if (sibling_features == &descendant_features)
+    if (sibling_features == &descendant_features) {
       sibling_invalidation_set->SetInvalidatesSelf();
-    else
+    } else {
       AddFeaturesToInvalidationSet(
           sibling_invalidation_set->EnsureSiblingDescendants(),
           descendant_features);
+    }
     return;
   }
 
@@ -804,11 +807,12 @@ RuleFeatureSet::AddFeaturesToInvalidationSetsForCompoundSelector(
       break;
   }
 
-  if (compound_has_id_class_or_attribute)
+  if (compound_has_id_class_or_attribute) {
     descendant_features.has_features_for_rule_set_invalidation = true;
-  else if (sibling_features)
+  } else if (sibling_features) {
     AddFeaturesToUniversalSiblingInvalidationSet(*sibling_features,
                                                  descendant_features);
+  }
 
   return simple_selector;
 }
@@ -1164,9 +1168,10 @@ void RuleFeatureSet::CollectUniversalSiblingInvalidationSet(
 
 SiblingInvalidationSet&
 RuleFeatureSet::EnsureUniversalSiblingInvalidationSet() {
-  if (!universal_sibling_invalidation_set_)
+  if (!universal_sibling_invalidation_set_) {
     universal_sibling_invalidation_set_ =
         SiblingInvalidationSet::Create(nullptr);
+  }
   return *universal_sibling_invalidation_set_;
 }
 
@@ -1207,11 +1212,12 @@ void RuleFeatureSet::AddFeaturesToUniversalSiblingInvalidationSet(
   universal_set.UpdateMaxDirectAdjacentSelectors(
       sibling_features.max_direct_adjacent_selectors);
 
-  if (&sibling_features == &descendant_features)
+  if (&sibling_features == &descendant_features) {
     universal_set.SetInvalidatesSelf();
-  else
+  } else {
     AddFeaturesToInvalidationSet(universal_set.EnsureSiblingDescendants(),
                                  descendant_features);
+  }
 }
 
 void RuleFeatureSet::InvalidationSetFeatures::Add(
