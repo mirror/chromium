@@ -25,7 +25,7 @@ class IMEBridgeImpl : public IMEBridge {
         current_input_context_(ui::TEXT_INPUT_TYPE_NONE,
                                ui::TEXT_INPUT_MODE_DEFAULT,
                                0),
-        candidate_window_handler_(NULL) {}
+        candidate_window_handler_(nullptr) {}
 #else
   IMEBridgeImpl()
       : input_context_handler_(NULL),
