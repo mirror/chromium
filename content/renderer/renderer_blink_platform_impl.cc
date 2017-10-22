@@ -27,10 +27,7 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/url_formatter/url_formatter.h"
-#include "content/child/blob_storage/webblobregistry_impl.h"
 #include "content/child/file_info_util.h"
-#include "content/child/fileapi/webfilesystem_impl.h"
-#include "content/child/indexed_db/webidbfactory_impl.h"
 #include "content/child/quota_dispatcher.h"
 #include "content/child/quota_message_filter.h"
 #include "content/child/storage_util.h"
@@ -47,14 +44,18 @@
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/media_stream_utils.h"
 #include "content/public/renderer/render_frame.h"
+#include "content/renderer/blob_storage/webblobregistry_impl.h"
 #include "content/renderer/cache_storage/webserviceworkercachestorage_impl.h"
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
 #include "content/renderer/device_sensors/device_orientation_event_pump.h"
 #include "content/renderer/dom_storage/local_storage_cached_areas.h"
 #include "content/renderer/dom_storage/local_storage_namespace.h"
 #include "content/renderer/dom_storage/webstoragenamespace_impl.h"
+#include "content/renderer/feature_policy/feature_policy_platform.h"
+#include "content/renderer/fileapi/webfilesystem_impl.h"
 #include "content/renderer/gamepad_shared_memory_reader.h"
 #include "content/renderer/image_capture/image_capture_frame_grabber.h"
+#include "content/renderer/indexed_db/webidbfactory_impl.h"
 #include "content/renderer/loader/child_url_loader_factory_getter_impl.h"
 #include "content/renderer/loader/cors_url_loader_factory.h"
 #include "content/renderer/loader/web_data_consumer_handle_impl.h"
@@ -1372,6 +1373,29 @@ void RendererBlinkPlatformImpl::WorkerContextCreated(
     const v8::Local<v8::Context>& worker) {
   GetContentClient()->renderer()->DidInitializeWorkerContextOnWorkerThread(
       worker);
+}
+
+//------------------------------------------------------------------------------
+
+std::unique_ptr<blink::WebFeaturePolicy>
+RendererBlinkPlatformImpl::CreateFeaturePolicy(
+    const blink::WebFeaturePolicy* parent_policy,
+    const blink::WebParsedFeaturePolicy& container_policy,
+    const blink::WebParsedFeaturePolicy& policy_header,
+    const blink::WebSecurityOrigin& origin) {
+  std::unique_ptr<FeaturePolicy> policy = FeaturePolicy::CreateFromParentPolicy(
+      static_cast<const FeaturePolicy*>(parent_policy),
+      FeaturePolicyHeaderFromWeb(container_policy), url::Origin(origin));
+  policy->SetHeaderPolicy(FeaturePolicyHeaderFromWeb(policy_header));
+  return std::move(policy);
+}
+
+std::unique_ptr<blink::WebFeaturePolicy>
+RendererBlinkPlatformImpl::DuplicateFeaturePolicyWithOrigin(
+    const blink::WebFeaturePolicy& policy,
+    const blink::WebSecurityOrigin& new_origin) {
+  return FeaturePolicy::CreateFromPolicyWithOrigin(
+      static_cast<const FeaturePolicy&>(policy), url::Origin(new_origin));
 }
 
 //------------------------------------------------------------------------------

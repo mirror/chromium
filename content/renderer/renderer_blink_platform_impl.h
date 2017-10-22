@@ -29,6 +29,7 @@
 #include "content/renderer/webpublicsuffixlist_impl.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBFactory.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
+#include "third_party/WebKit/public/public_features.h"
 
 namespace IPC {
 class SyncMessageFilter;
@@ -217,6 +218,14 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   std::unique_ptr<blink::TrialPolicy> OriginTrialPolicy() override;
   blink::WebNotificationManager* GetNotificationManager() override;
   void WorkerContextCreated(const v8::Local<v8::Context>& worker) override;
+  std::unique_ptr<blink::WebFeaturePolicy> CreateFeaturePolicy(
+      const blink::WebFeaturePolicy* parentPolicy,
+      const blink::WebParsedFeaturePolicy& containerPolicy,
+      const blink::WebParsedFeaturePolicy& policyHeader,
+      const blink::WebSecurityOrigin& origin) override;
+  std::unique_ptr<blink::WebFeaturePolicy> DuplicateFeaturePolicyWithOrigin(
+      const blink::WebFeaturePolicy& policy,
+      const blink::WebSecurityOrigin& new_origin) override;
 
   // Set the PlatformEventObserverBase in |platform_event_observers_| associated
   // with |type| to |observer|. If there was already an observer associated to
