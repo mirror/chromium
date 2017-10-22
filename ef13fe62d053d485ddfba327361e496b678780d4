@@ -117,6 +117,23 @@
     },
     {
       "key": {
+        "uuid": "a779f2a3_9ee98369",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-22T23:38:37Z",
+      "side": 1,
+      "message": "this can be cached per group; otherwise, if all messages fall into the same group, it will be N^2?",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2f1dc4a_6e107ff1",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -363,6 +380,23 @@
         "endLine": 1391,
         "endChar": 31
       },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5382760a_2550956b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-22T23:38:37Z",
+      "side": 1,
+      "message": "why is this needed? renderedItems have exactly lastActiveIndex - firstActiveIndex + 1 elements:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js?q\u003dfirstactiveindex+f:viewport\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d377",
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
