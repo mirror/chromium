@@ -248,7 +248,6 @@ if (target_os == "android") {
   # On Windows we use the same toolchain for host and target by default.
   # Beware, win cross builds mostly don't work yet, see docs/win_cross.md
   # TODO(thakis): Allow on Mac as well soon.
-  assert(host_os != "mac", "https://crbug.com/774209")
   if (is_clang) {
     _default_toolchain = "//build/toolchain/win:win_clang_$target_cpu"
   } else {
