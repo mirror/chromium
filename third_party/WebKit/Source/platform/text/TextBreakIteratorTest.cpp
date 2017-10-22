@@ -226,4 +226,20 @@ TEST_F(TextBreakIteratorTest, NextBreakOpportunityAtEnd) {
   }
 }
 
+TEST_F(TextBreakIteratorTest, KeepBaseCombiningMarkTogether) {
+  SetTestString(u8"ab a\u0348b\u0349c ef");
+  MATCH_LINE_BREAKS(LineBreakType::Normal, {2, 8, 11});
+  MATCH_LINE_BREAKS(LineBreakType::BreakAll, {1, 2, 5, 7, 8, 10, 11});
+  MATCH_LINE_BREAKS(LineBreakType::KeepAll, {2, 8, 11});
+}
+
+TEST_F(TextBreakIteratorTest, KeepFlagSequenceTogether) {
+  SetTestString(u8"ab \U0001F1EF\U0001F1F5\U0001F1EB\U0001F1F7 ef");
+  MATCH_LINE_BREAKS(LineBreakType::Normal, {2, 7, 11, 14});
+  MATCH_LINE_BREAKS(LineBreakType::BreakAll, {1, 2, 7, 11, 13, 14});
+  // TODO: Update the expected result if RI pairs have to be treated like
+  // LB=Ideographic for word-break: keep-all.
+  MATCH_LINE_BREAKS(LineBreakType::KeepAll, {2, 7, 11, 14});
+}
+
 }  // namespace blink
