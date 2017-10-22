@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb506e5_7150e763",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-10-22T08:00:20Z",
+      "side": 1,
+      "message": "NetworkRequest.contentData() exists pretty much just to solve the same issue that you are solving here. Lets remove contentData() if we want to go with the approach suggested in your patch.",
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4874e7b2_760371a8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-10-22T08:00:20Z",
+      "side": 1,
+      "message": "btoa(null) results in null being turned into a string.",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 37
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0752f8e9_4e06256e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-10-22T08:00:20Z",
+      "side": 1,
+      "message": "btoa can throw, you are probably safe because of readASBinaryString though.",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 29
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d0e88a_1f06f087",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-10-22T08:00:20Z",
+      "side": 1,
+      "message": "readAsBinaryString is on track for removal, maybe use readAsArrayBuffer instead?",
+      "range": {
+        "startLine": 347,
+        "startChar": 13,
+        "endLine": 347,
+        "endChar": 31
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1431b7e4_ab1dad71",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-10-22T08:00:20Z",
+      "side": 1,
+      "message": "This function looks like it has been butchered over the years. Maybe move everything up into requestContent and use promise/resolve? Or at least a todo.",
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb28bbdd_caa6f5a8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-10-22T08:00:20Z",
+      "side": 1,
+      "message": "nit: add this to the constructor and remove the double-bang.",
+      "range": {
+        "startLine": 225,
+        "startChar": 18,
+        "endLine": 225,
+        "endChar": 33
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662a0a75_cbf05278",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-10-22T08:00:20Z",
+      "side": 1,
+      "message": "I assume closure was not smart enough to work without a second parameter?",
+      "range": {
+        "startLine": 312,
+        "startChar": 55,
+        "endLine": 312,
+        "endChar": 62
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
