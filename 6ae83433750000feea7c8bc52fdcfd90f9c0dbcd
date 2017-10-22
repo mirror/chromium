@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aa5285df_8cdd197c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:40:22Z",
+      "side": 1,
+      "message": "Then can we add a TODO on the contentData() function for removal?",
+      "parentUuid": "05fec5f6_9fafc405",
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4874e7b2_760371a8",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
         "patchSetId": 5
@@ -272,6 +290,30 @@
       "side": 1,
       "message": "Sure. Note though - it is going to kill hundreds of KBs for 100K files workspace, so don\u0027t add anything other than null/boolean into the constructor.",
       "parentUuid": "eb28bbdd_caa6f5a8",
+      "range": {
+        "startLine": 225,
+        "startChar": 18,
+        "endLine": 225,
+        "endChar": 33
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a29d662c_5fefdfd7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T23:40:22Z",
+      "side": 1,
+      "message": "then lets just tag it in the constructor for closure as a {boolean|undefined}\n\nand here use:\nreturn this._contentEncoded || false;\n\nIt should stop closure from complaining if @unrestricted was to be removed and will save your KBs.",
+      "parentUuid": "bfd36ab8_621a93b7",
       "range": {
         "startLine": 225,
         "startChar": 18,
