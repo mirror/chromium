@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a2bf728_c52459d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-22T23:17:35Z",
+      "side": 1,
+      "message": "Please describe exactly the changes that are being made in this changeset. (Like: \"use 2 shards for WebGL 1.0 conformance and 20 shards for WebGL 2.0 conformance on desktop machines.\")\n\nAlso, the shards auto-rebalance themselves based on the test times recorded from a previous run in src/content/test/data/gpu/webgl_conformance_tests_output.json and webgl2_conformance_tests_output.json. If we\u0027ve added significant numbers of tests since the last time these files were generated then we should regenerate them from a recent run on the waterfall. See src/content/test/gpu/gather_swarming_json_results.py .",
+      "revId": "c169faa497fb1e05e0836fc7810f282e6deda560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9dc344e_93fef0cd",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-22T23:17:35Z",
+      "side": 1,
+      "message": "Please double-check that the android_swarming and desktop_swarming sections override this, so it acts as a default.",
+      "range": {
+        "startLine": 1947,
+        "startChar": 7,
+        "endLine": 1947,
+        "endChar": 13
+      },
+      "revId": "c169faa497fb1e05e0836fc7810f282e6deda560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
