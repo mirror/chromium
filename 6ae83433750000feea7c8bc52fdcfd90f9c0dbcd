@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05fec5f6_9fafc405",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:33:45Z",
+      "side": 1,
+      "message": "This can be done incrementally.",
+      "parentUuid": "4cb506e5_7150e763",
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4874e7b2_760371a8",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
         "patchSetId": 5
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "7dbb956b_db431a11",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:33:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0752f8e9_4e06256e",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 29
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a30ae3c_1cde1f07",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4874e7b2_760371a8",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 37
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3d0e88a_1f06f087",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "f84b6cc6_416c6ac1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3d0e88a_1f06f087",
+      "range": {
+        "startLine": 347,
+        "startChar": 13,
+        "endLine": 347,
+        "endChar": 31
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1431b7e4_ab1dad71",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
         "patchSetId": 5
@@ -102,6 +192,24 @@
       "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee864a56_feeb87f2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:33:45Z",
+      "side": 1,
+      "message": "Seems unrelated to my patch.",
+      "parentUuid": "1431b7e4_ab1dad71",
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "bfd36ab8_621a93b7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:33:45Z",
+      "side": 1,
+      "message": "Sure. Note though - it is going to kill hundreds of KBs for 100K files workspace, so don\u0027t add anything other than null/boolean into the constructor.",
+      "parentUuid": "eb28bbdd_caa6f5a8",
+      "range": {
+        "startLine": 225,
+        "startChar": 18,
+        "endLine": 225,
+        "endChar": 33
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "662a0a75_cbf05278",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
         "patchSetId": 5
@@ -148,6 +280,30 @@
       "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78201626_7bfe0b29",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:33:45Z",
+      "side": 1,
+      "message": "I rather want it to be explicit - UISourceCode is doing fragile things here via ignoring encoding.",
+      "parentUuid": "662a0a75_cbf05278",
+      "range": {
+        "startLine": 312,
+        "startChar": 55,
+        "endLine": 312,
+        "endChar": 62
+      },
+      "revId": "6ae83433750000feea7c8bc52fdcfd90f9c0dbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
