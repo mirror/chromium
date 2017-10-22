@@ -69,7 +69,7 @@ class UI_BASE_IME_EXPORT IMEBridge {
   virtual chromeos::IMECandidateWindowHandlerInterface*
   GetCandidateWindowHandler() const = 0;
 
-  // Updates current CandidatWindowHandler. If there is no active candidate
+  // Updates current CandidateWindowHandler. If there is no active candidate
   // window service, pass NULL for |handler|. Caller must release |handler|.
   virtual void SetCandidateWindowHandler(
       chromeos::IMECandidateWindowHandlerInterface* handler) = 0;

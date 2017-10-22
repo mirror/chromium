@@ -23,9 +23,17 @@ RemoteTextInputClient::RemoteTextInputClient(
       text_input_mode_(text_input_mode),
       text_direction_(text_direction),
       text_input_flags_(text_input_flags),
-      caret_bounds_(caret_bounds) {}
+      caret_bounds_(caret_bounds) {
+#if defined(OS_CHROMEOS)
+  chromeos::InputMethodEngine::AddObserver(this);
+#endif
+}
 
-RemoteTextInputClient::~RemoteTextInputClient() {}
+RemoteTextInputClient::~RemoteTextInputClient() {
+#if defined(OS_CHROMEOS)
+  chromeos::InputMethodEngine::RemoveObserver(this);
+#endif
+}
 
 void RemoteTextInputClient::SetTextInputType(
     ui::TextInputType text_input_type) {
@@ -176,4 +184,10 @@ ui::EventDispatchDetails RemoteTextInputClient::DispatchKeyEventPostIME(
   remote_client_->DispatchKeyEventPostIME(ui::Event::Clone(*event),
                                           base::OnceCallback<void(bool)>());
   return ui::EventDispatchDetails();
+}
+
+void RemoteTextInputClient::OnCandidateWindowVisibilityChanged(bool visible) {
+#if defined(OS_CHROMEOS)
+  remote_client_->SetCandidateWindowVisible(visible);
+#endif
 }
