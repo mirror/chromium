@@ -34,6 +34,8 @@ inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
   const ComputedStyle& style = *item.Style();
   // TODO(kojii): We might need more conditions to create box fragments.
   return style.HasBoxDecorationBackground() || style.HasOutline() ||
+         style.CanContainAbsolutePositionObjects() ||
+         style.CanContainFixedPositionObjects() ||
          item_result.needs_box_when_empty;
 }
 
@@ -229,16 +231,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
       PlaceListMarker(item, &item_result, *line_info);
       DCHECK_GT(line_box_.size(), list_marker_index.value());
     } else if (item.Type() == NGInlineItem::kOutOfFlowPositioned) {
-      // TODO(layout-dev): Report the correct static position for the out of
-      // flow descendant. We can't do this here yet as it doesn't know the
-      // size of the line box.
-      container_builder_.AddOutOfFlowDescendant(
-          // Absolute positioning blockifies the box's display type.
-          // https://drafts.csswg.org/css-display/#transformations
-          {NGBlockNode(ToLayoutBox(item.GetLayoutObject())),
-           NGStaticPosition::Create(ConstraintSpace().WritingMode(),
-                                    ConstraintSpace().Direction(),
-                                    NGPhysicalOffset())});
+      PlaceOutOfFlowPositioned(item, position);
       continue;
     } else {
       continue;
@@ -301,9 +294,17 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   NGLineBoxFragmentBuilder line_box(Node(), &line_style,
                                     ConstraintSpace().WritingMode());
   line_box.SetBreakToken(std::move(break_token));
-  line_box.AddChildren(line_box_);
   line_box.SetInlineSize(inline_size);
   line_box.SetMetrics(line_box_metrics);
+  line_box.ReserveCapacity(line_box_.size());
+  for (auto& child : line_box_) {
+    if (child.out_of_flow_layout_box) {
+      PlaceOutOfFlowPositioned(child);
+      continue;
+    }
+    line_box.Add(child);
+    DCHECK(child.IsEmpty());
+  }
   container_builder_.AddChild(line_box.ToLineBoxFragment(), line_offset);
 
   max_inline_size_ = std::max(max_inline_size_, inline_size);
@@ -420,6 +421,30 @@ void NGInlineLayoutAlgorithm::PlaceListMarker(const NGInlineItem& item,
 
   // The inline position is adjusted later, when we knew the line width.
   PlaceLayoutResult(item_result, LayoutUnit(), nullptr);
+}
+
+void NGInlineLayoutAlgorithm::PlaceOutOfFlowPositioned(const NGInlineItem& item,
+                                                       LayoutUnit position) {
+  // Place as a child.
+  // This maybe added to inline boxes in this line box, or handled later if not.
+  // Having a Child helps when an inline containing box handles this item.
+  line_box_.AddChild(ToLayoutBox(item.GetLayoutObject()),
+                     {position, LayoutUnit()});
+}
+
+void NGInlineLayoutAlgorithm::PlaceOutOfFlowPositioned(
+    const NGLineBoxFragmentBuilder::Child& child) {
+  DCHECK(child.out_of_flow_layout_box);
+  // Reaching here means that this item is not contained in an inline containing
+  // box.
+  // TODO(kojii): The static position is |child.offset|, with its block_offset
+  // adjusted to line_top or line_bottom depends on writing modes. How can we
+  // convert it to NGStaticPosition?
+  container_builder_.AddOutOfFlowDescendant(
+      {NGBlockNode(child.out_of_flow_layout_box),
+       NGStaticPosition::Create(ConstraintSpace().WritingMode(),
+                                ConstraintSpace().Direction(),
+                                NGPhysicalOffset())});
 }
 
 // Justify the line. This changes the size of items by adding spacing.
