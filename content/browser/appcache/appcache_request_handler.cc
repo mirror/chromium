@@ -77,7 +77,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadResource(
   if (!host_ ||
       !AppCacheRequest::IsSchemeAndMethodSupportedForAppCache(request_.get()) ||
       cache_entry_not_found_) {
-    return NULL;
+    return nullptr;
   }
 
   // This method can get called multiple times over the life
@@ -89,7 +89,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadResource(
   // This time through, we return NULL so the request hits the wire.
   if (is_delivering_network_response_) {
     is_delivering_network_response_ = false;
-    return NULL;
+    return nullptr;
   }
 
   // Clear out our 'found' fields since we're starting a request for a
@@ -123,15 +123,15 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForRedirect(
   if (!host_ ||
       !AppCacheRequest::IsSchemeAndMethodSupportedForAppCache(request_.get()) ||
       cache_entry_not_found_)
-    return NULL;
+    return nullptr;
   if (is_main_resource())
-    return NULL;
+    return nullptr;
   // TODO(vabr) This is a temporary fix (see crbug/141114). We should get rid of
   // it once a more general solution to crbug/121325 is in place.
   if (!maybe_load_resource_executed_)
-    return NULL;
+    return nullptr;
   if (request_->GetURL().GetOrigin() == location.GetOrigin())
-    return NULL;
+    return nullptr;
 
   // In network service land, the existing job initiates a fallback request.
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
@@ -164,13 +164,13 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
   if (!host_ ||
       !AppCacheRequest::IsSchemeAndMethodSupportedForAppCache(request_.get()) ||
       cache_entry_not_found_)
-    return NULL;
+    return nullptr;
   if (!found_fallback_entry_.has_response_id())
-    return NULL;
+    return nullptr;
 
   if (request_->IsCancelled()) {
     // 6.9.6, step 4: But not if the user canceled the download.
-    return NULL;
+    return nullptr;
   }
 
   // We don't fallback for responses that we delivered.
@@ -180,17 +180,17 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
     // delivered an AppCached or error response.
     if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
       DCHECK(!job_->IsDeliveringNetworkResponse());
-      return NULL;
+      return nullptr;
     } else if (job_->IsDeliveringAppCacheResponse() ||
                job_->IsDeliveringErrorResponse()) {
-      return NULL;
+      return nullptr;
     }
   }
 
   if (request_->IsSuccess()) {
     int code_major = request_->GetResponseCode() / 100;
     if (code_major !=4 && code_major != 5)
-      return NULL;
+      return nullptr;
 
     // Servers can override the fallback behavior with a response header.
     const std::string kFallbackOverrideHeader(
@@ -200,7 +200,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
     std::string header_value;
     header_value = request_->GetResponseHeaderByName(kFallbackOverrideHeader);
     if (header_value == kFallbackOverrideValue)
-      return NULL;
+      return nullptr;
   }
 
   // 6.9.6, step 4: If this results in a 4xx or 5xx status code
@@ -294,7 +294,7 @@ AppCacheRequestHandler::InitializeForNavigationNetworkService(
 
 void AppCacheRequestHandler::OnDestructionImminent(AppCacheHost* host) {
   storage()->CancelDelegateCallbacks(this);
-  host_ = NULL;  // no need to RemoveObserver, the host is being deleted
+  host_ = nullptr;  // no need to RemoveObserver, the host is being deleted
 
   // Since the host is being deleted, we don't have to complete any job
   // that is current running. It's destined for the bit bucket anyway.

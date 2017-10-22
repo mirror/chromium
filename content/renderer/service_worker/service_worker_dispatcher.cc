@@ -167,7 +167,7 @@ ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
     base::SingleThreadTaskRunner* main_thread_task_runner) {
   if (g_dispatcher_tls.Pointer()->Get() == kHasBeenDeleted) {
     NOTREACHED() << "Re-instantiating TLS ServiceWorkerDispatcher.";
-    g_dispatcher_tls.Pointer()->Set(NULL);
+    g_dispatcher_tls.Pointer()->Set(nullptr);
   }
   if (g_dispatcher_tls.Pointer()->Get())
     return static_cast<ServiceWorkerDispatcher*>(
@@ -182,7 +182,7 @@ ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
 
 ServiceWorkerDispatcher* ServiceWorkerDispatcher::GetThreadSpecificInstance() {
   if (g_dispatcher_tls.Pointer()->Get() == kHasBeenDeleted)
-    return NULL;
+    return nullptr;
   return static_cast<ServiceWorkerDispatcher*>(
       g_dispatcher_tls.Pointer()->Get());
 }

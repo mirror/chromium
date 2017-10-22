@@ -237,7 +237,7 @@ storage::ExternalMountPoints* BrowserContext::GetMountPoints(
   return UserDataAdapter<storage::ExternalMountPoints>::Get(context,
                                                             kMountPointsKey);
 #else
-  return NULL;
+  return nullptr;
 #endif
 }
 
@@ -305,7 +305,7 @@ void BrowserContext::ForEachStoragePartition(
 
 StoragePartition* BrowserContext::GetDefaultStoragePartition(
     BrowserContext* browser_context) {
-  return GetStoragePartition(browser_context, NULL);
+  return GetStoragePartition(browser_context, nullptr);
 }
 
 // static

@@ -113,7 +113,7 @@ LinuxSandbox::LinuxSandbox()
       yama_is_enforcing_(false),
       initialize_sandbox_ran_(false),
       setuid_sandbox_client_(sandbox::SetuidSandboxClient::Create()) {
-  if (setuid_sandbox_client_ == NULL) {
+  if (setuid_sandbox_client_ == nullptr) {
     LOG(FATAL) << "Failed to instantiate the setuid sandbox client.";
   }
 #if defined(ANY_OF_AMTLU_SANITIZER)
