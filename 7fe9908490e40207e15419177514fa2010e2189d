@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f907b2c8_fc21a61a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T08:42:22Z",
+      "side": 1,
+      "message": "No point in putting a mime-type here.",
+      "range": {
+        "startLine": 381,
+        "startChar": 39,
+        "endLine": 381,
+        "endChar": 63
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3d406d_282ac22b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T08:42:22Z",
+      "side": 1,
+      "message": "remove this.",
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696a4cb0_11175acc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T08:42:22Z",
+      "side": 1,
+      "message": "Maybe just remove this?",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 277,
+        "endChar": 37
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9c5d55_94f34c7f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T08:42:22Z",
+      "side": 1,
+      "message": "I believe we want workingCopy() here instead of requestContent otherwise you\u0027ll end up getting the last saved copy.",
+      "range": {
+        "startLine": 300,
+        "startChar": 37,
+        "endLine": 300,
+        "endChar": 51
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec2a1cb_9df5c1ce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/PersistenceActions.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T08:42:22Z",
+      "side": 1,
+      "message": "nit: dont wrap in arrow.",
+      "range": {
+        "startLine": 35,
+        "startChar": 66,
+        "endLine": 35,
+        "endChar": 72
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
