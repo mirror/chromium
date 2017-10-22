@@ -66,7 +66,7 @@ uint32_t ranval(ranctx* x) {
 #else
     pid = static_cast<uint32_t>(getpid());
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, nullptr);
     usec = static_cast<uint32_t>(tv.tv_usec);
 #endif
     seed ^= pid;
