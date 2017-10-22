@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfadee72_0659bd4b",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-22T05:23:31Z",
+      "side": 1,
+      "message": "Or let\u0027s just disallow out_loader_ptr to be nullptr.",
+      "parentUuid": "2504db62_471a9190",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6096bc0f_eb475b94",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 1
