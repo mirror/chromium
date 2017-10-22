@@ -59,6 +59,8 @@ InputMethodEngine::Candidate::Candidate(const Candidate& other) = default;
 
 InputMethodEngine::Candidate::~Candidate() {}
 
+static InputMethodEngine* instance_ = NULL;
+
 // When the default values are changed, please modify
 // CandidateWindow::CandidateWindowProperty defined in chromeos/ime/ too.
 InputMethodEngine::CandidateWindowProperty::CandidateWindowProperty()
@@ -70,9 +72,16 @@ InputMethodEngine::CandidateWindowProperty::CandidateWindowProperty()
 InputMethodEngine::CandidateWindowProperty::~CandidateWindowProperty() {}
 
 InputMethodEngine::InputMethodEngine()
-    : candidate_window_(new ui::CandidateWindow()), window_visible_(false) {}
+    : candidate_window_(new ui::CandidateWindow()), window_visible_(false) {
+  instance_ = this;
+}
 
 InputMethodEngine::~InputMethodEngine() {}
+
+// static.
+InputMethodEngine* InputMethodEngine::Get() {
+  return instance_;
+}
 
 const InputMethodEngine::CandidateWindowProperty&
 InputMethodEngine::GetCandidateWindowProperty() const {
@@ -104,6 +113,10 @@ void InputMethodEngine::SetCandidateWindowProperty(
       cw_handler->UpdateLookupTable(*candidate_window_, window_visible_);
   }
 }
+void InputMethodEngine::NotifyObservers(bool visible) {
+  for (auto& observer : observer_list_)
+    observer.OnCandidateWindowVisibilityChanged(visible);
+}
 
 bool InputMethodEngine::SetCandidateWindowVisible(bool visible,
                                                   std::string* error) {
@@ -111,6 +124,9 @@ bool InputMethodEngine::SetCandidateWindowVisible(bool visible,
     *error = kErrorNotActive;
     return false;
   }
+
+  if (window_visible_ != visible)
+    NotifyObservers(visible);
 
   window_visible_ = visible;
   IMECandidateWindowHandlerInterface* cw_handler =

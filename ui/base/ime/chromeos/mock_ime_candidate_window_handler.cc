@@ -4,16 +4,14 @@
 
 #include "ui/base/ime/chromeos/mock_ime_candidate_window_handler.h"
 
+#include "ui/base/ime/ime_bridge.h"
+
 namespace chromeos {
 
 MockIMECandidateWindowHandler::MockIMECandidateWindowHandler()
-    : set_cursor_bounds_call_count_(0),
-      update_lookup_table_call_count_(0) {
-}
+    : set_cursor_bounds_call_count_(0), update_lookup_table_call_count_(0) {}
 
-MockIMECandidateWindowHandler::~MockIMECandidateWindowHandler() {
-
-}
+MockIMECandidateWindowHandler::~MockIMECandidateWindowHandler() {}
 
 void MockIMECandidateWindowHandler::UpdateLookupTable(
     const ui::CandidateWindow& table,
