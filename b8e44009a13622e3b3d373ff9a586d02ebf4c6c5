@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22f1b97d_d4b1f18f",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-22T15:39:34Z",
+      "side": 1,
+      "message": "Can you please add a comment that |url| has a meta refresh which redirects to |landing_url|.\n\nMaybe rename |url| to |initial_url| or |redirect_from_url|.",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c1e261_5fcb0c95",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-22T15:39:34Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9116d323_9ef87a9f",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-22T15:39:34Z",
+      "side": 1,
+      "message": "- Progapate -\u003e Propagate\n- \"from the one when observed when SetFavicon() was called.\" -\u003e \"from the one observed the previous time the page URL was visited.\"\n  It is unclear whether your comment refers to SetFavicon() being called in this \"FaviconHandler run\" or in a previous \"FaviconHandler run\"\n\nCan you add this to the comment: \"\n\nDo the propagation now because we want the propagation to occur in all scenarios and this is an easy way of guaranteeing it. For instance, we want the propagation to occur when:\n- The favicon in the database is expired\nAND\n- Redownloading the favicon fails with a non-404 error code\n\"",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48071db_3a067769",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-22T15:39:34Z",
+      "side": 1,
+      "message": "Mappigs -\u003e Mappings",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3934dc_71cb45b5",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-22T15:39:34Z",
+      "side": 1,
+      "message": "Nit: Fetch the icon mappings from the db after checking whether there are any redirects. Fetching the redirects (a map lookup) is a faster operation than fetching the icon mappings (a db select)\n\nI think that it will be common for a page to have no associated redirects.",
+      "revId": "b8e44009a13622e3b3d373ff9a586d02ebf4c6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
