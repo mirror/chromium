@@ -1,4 +1,9 @@
 {
+  "ChromiumOS amd64-generic Compile": {
+    "additional_compile_targets": [
+      "chromiumos_preflight"
+    ]
+  },
   "Linux ChromiumOS Builder": {
     "additional_compile_targets": [
       "All"
@@ -905,11 +910,23 @@
   "chromeos-amd64-generic-rel": {
     "additional_compile_targets": [
       "chromiumos_preflight"
+    ],
+    "scripts": [
+      {
+        "name": "cros_vm_test",
+        "script": "run_cros_vm_test.py"
+      }
     ]
   },
   "chromeos-betty-rel": {
     "additional_compile_targets": [
       "chromiumos_preflight"
+    ],
+    "scripts": [
+      {
+        "name": "cros_vm_test",
+        "script": "run_cros_vm_test.py"
+      }
     ]
   },
   "chromeos-daisy-rel": {
