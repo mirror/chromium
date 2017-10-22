@@ -12,6 +12,7 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/scoped_generic.h"
 #include "components/exo/wayland/aura-shell-client-protocol.h"
 
@@ -82,65 +83,28 @@ struct DeleteEglSyncTraits {
 using ScopedEglSync = base::ScopedGeneric<void*, DeleteEglSyncTraits>;
 
 #if defined(USE_VULKAN)
-struct DeleteVkInstanceTraits {
-  static VkInstance InvalidValue();
-  static void Free(VkInstance instance);
+template <typename T>
+struct DeleteVkTraits {
+  using ReleaseCallback = base::Callback<void(T, const VkAllocationCallbacks*)>;
+  ReleaseCallback release_cb;
+  DeleteVkTraits(){};
+  explicit DeleteVkTraits(const ReleaseCallback& release_cb)
+      : release_cb(release_cb) {}
+  static T InvalidValue() { return VK_NULL_HANDLE; }
+  void Free(T param) { release_cb.Run(param, nullptr); }
 };
-using ScopedVkInstance =
-    base::ScopedGeneric<VkInstance, DeleteVkInstanceTraits>;
 
-struct DeleteVkDeviceTraits {
-  static VkDevice InvalidValue();
-  static void Free(VkDevice device);
-};
-using ScopedVkDevice = base::ScopedGeneric<VkDevice, DeleteVkDeviceTraits>;
+template <typename T>
+using ScopedVkHandle = base::ScopedGeneric<T, DeleteVkTraits<T>>;
 
-struct DeleteVkCommandPoolTraits {
-  VkDevice vk_device;
-  static VkCommandPool InvalidValue();
-  void Free(VkCommandPool command_pool);
-};
-using ScopedVkCommandPool =
-    base::ScopedGeneric<VkCommandPool, DeleteVkCommandPoolTraits>;
-
-struct DeleteVkRenderPassTraits {
-  VkDevice vk_device;
-  static VkRenderPass InvalidValue();
-  void Free(VkRenderPass render_pass);
-};
-using ScopedVkRenderPass =
-    base::ScopedGeneric<VkRenderPass, DeleteVkRenderPassTraits>;
-
-struct DeleteVkDeviceMemoryTraits {
-  VkDevice vk_device;
-  static VkDeviceMemory InvalidValue();
-  void Free(VkDeviceMemory device_memory);
-};
-using ScopedVkDeviceMemory =
-    base::ScopedGeneric<VkDeviceMemory, DeleteVkDeviceMemoryTraits>;
-
-struct DeleteVkImageTraits {
-  VkDevice vk_device;
-  static VkImage InvalidValue();
-  void Free(VkImage image);
-};
-using ScopedVkImage = base::ScopedGeneric<VkImage, DeleteVkImageTraits>;
-
-struct DeleteVkImageViewTraits {
-  VkDevice vk_device;
-  static VkImageView InvalidValue();
-  void Free(VkImageView image_view);
-};
-using ScopedVkImageView =
-    base::ScopedGeneric<VkImageView, DeleteVkImageViewTraits>;
-
-struct DeleteVkFramebufferTraits {
-  VkDevice vk_device;
-  static VkFramebuffer InvalidValue();
-  void Free(VkFramebuffer framebuffer);
-};
-using ScopedVkFramebuffer =
-    base::ScopedGeneric<VkFramebuffer, DeleteVkFramebufferTraits>;
+using ScopedVkInstance = ScopedVkHandle<VkInstance>;
+using ScopedVkDevice = ScopedVkHandle<VkDevice>;
+using ScopedVkCommandPool = ScopedVkHandle<VkCommandPool>;
+using ScopedVkRenderPass = ScopedVkHandle<VkRenderPass>;
+using ScopedVkDeviceMemory = ScopedVkHandle<VkDeviceMemory>;
+using ScopedVkImage = ScopedVkHandle<VkImage>;
+using ScopedVkImageView = ScopedVkHandle<VkImageView>;
+using ScopedVkFramebuffer = ScopedVkHandle<VkFramebuffer>;
 
 #endif  // defined(USE_VULKAN)
 #endif  // defined(USE_GBM)

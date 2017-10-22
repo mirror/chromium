@@ -396,8 +396,9 @@ bool ClientBase::Init(const InitParams& params) {
         .subpassCount = 1,
         .pSubpasses = subpass_description,
     };
-    vk_render_pass_.reset(
-        new ScopedVkRenderPass(VK_NULL_HANDLE, {vk_device_->get()}));
+    vk_render_pass_.reset(new ScopedVkRenderPass(
+        VK_NULL_HANDLE, DeleteVkTraits<VkRenderPass>(base::Bind(
+                            &vkDestroyRenderPass, vk_device_->get()))));
     result = vkCreateRenderPass(vk_device_->get(), &render_pass_create_info,
                                 nullptr, vk_render_pass_->receive());
     CHECK_EQ(VK_SUCCESS, result);
@@ -545,8 +546,9 @@ VkResult ClientBase::InitVulkan() {
                VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
       .queueFamilyIndex = queue_family_index,
   };
-  vk_command_pool_.reset(
-      new ScopedVkCommandPool(VK_NULL_HANDLE, {vk_device_->get()}));
+  vk_command_pool_.reset(new ScopedVkCommandPool(
+      VK_NULL_HANDLE, DeleteVkTraits<VkCommandPool>(base::Bind(
+                          &vkDestroyCommandPool, vk_device_->get()))));
   result = vkCreateCommandPool(vk_device_->get(), &command_pool_create_info,
                                nullptr, vk_command_pool_->receive());
   if (result != VK_SUCCESS) {
@@ -699,10 +701,12 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateDrmBuffer(
           .strideInBytes = gbm_bo_get_stride(buffer->bo.get()),
       };
 
-      buffer->vk_memory.reset(
-          new ScopedVkDeviceMemory(VK_NULL_HANDLE, {vk_device_->get()}));
-      buffer->vk_image.reset(
-          new ScopedVkImage(VK_NULL_HANDLE, {vk_device_->get()}));
+      buffer->vk_memory.reset(new ScopedVkDeviceMemory(
+          VK_NULL_HANDLE, DeleteVkTraits<VkDeviceMemory>(
+                              base::Bind(&vkFreeMemory, vk_device_->get()))));
+      buffer->vk_image.reset(new ScopedVkImage(
+          VK_NULL_HANDLE, DeleteVkTraits<VkImage>(
+                              base::Bind(&vkDestroyImage, vk_device_->get()))));
       VkResult result = create_dma_buf_image_intel(
           vk_device_->get(), &dma_buf_image_create_info, nullptr,
           buffer->vk_memory->receive(), buffer->vk_image->receive());
@@ -733,8 +737,9 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateDrmBuffer(
               },
       };
 
-      buffer->vk_image_view.reset(
-          new ScopedVkImageView(VK_NULL_HANDLE, {vk_device_->get()}));
+      buffer->vk_image_view.reset(new ScopedVkImageView(
+          VK_NULL_HANDLE, DeleteVkTraits<VkImageView>(base::Bind(
+                              &vkDestroyImageView, vk_device_->get()))));
       result = vkCreateImageView(vk_device_->get(), &vk_image_view_create_info,
                                  nullptr, buffer->vk_image_view->receive());
       if (result != VK_SUCCESS) {
@@ -750,8 +755,9 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateDrmBuffer(
           .height = size.height(),
           .layers = 1,
       };
-      buffer->vk_framebuffer.reset(
-          new ScopedVkFramebuffer(VK_NULL_HANDLE, {vk_device_->get()}));
+      buffer->vk_framebuffer.reset(new ScopedVkFramebuffer(
+          VK_NULL_HANDLE, DeleteVkTraits<VkFramebuffer>(base::Bind(
+                              &vkDestroyFramebuffer, vk_device_->get()))));
 
       result =
           vkCreateFramebuffer(vk_device_->get(), &vk_framebuffer_create_info,
