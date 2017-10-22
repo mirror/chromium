@@ -5,7 +5,9 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_IME_DRIVER_REMOTE_TEXT_INPUT_CLIENT_H_
 #define CHROME_BROWSER_UI_VIEWS_IME_DRIVER_REMOTE_TEXT_INPUT_CLIENT_H_
 
+#include "chrome/browser/chromeos/input_method/input_method_engine.h"
 #include "services/ui/public/interfaces/ime/ime.mojom.h"
+#include "ui/base/ime/chromeos/ime_candidate_window_handler_interface.h"
 #include "ui/base/ime/input_method_delegate.h"
 #include "ui/base/ime/text_input_client.h"
 
@@ -13,7 +15,8 @@
 // a remote client. This is intended to be passed to the overrides of
 // ui::InputMethod::SetFocusedTextInputClient().
 class RemoteTextInputClient : public ui::TextInputClient,
-                              public ui::internal::InputMethodDelegate {
+                              public ui::internal::InputMethodDelegate,
+                              public chromeos::InputMethodEngine::Observer {
  public:
   RemoteTextInputClient(ui::mojom::TextInputClientPtr remote_client,
                         ui::TextInputType text_input_type,
@@ -60,6 +63,9 @@ class RemoteTextInputClient : public ui::TextInputClient,
   // ui::internal::InputMethodDelegate:
   ui::EventDispatchDetails DispatchKeyEventPostIME(
       ui::KeyEvent* event) override;
+
+  // chromeos::InputMethodEngine::Observer:
+  void OnCandidateWindowVisibilityChanged(bool visible) override;
 
   ui::mojom::TextInputClientPtr remote_client_;
   ui::TextInputType text_input_type_;
