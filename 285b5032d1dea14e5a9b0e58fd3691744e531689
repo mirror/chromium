@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e423ac93_171f256b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T21:15:43Z",
+      "side": 1,
+      "message": "Why do you prefer to have LOG_IF at the beginning instead of putting the log statements in the if body, if the if is already needed for some actual logic and not only for logging?",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5110121c_376548db",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T21:15:43Z",
+      "side": 1,
+      "message": "Is __func__ needed? Doesn\u0027t DVLOG_IF already logs file and line?",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00073eda_9af5a3d1",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T21:15:43Z",
+      "side": 1,
+      "message": "This DVLOG_IF and the next one could be in the else branch.",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8268c27_787c83e8",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T21:15:43Z",
+      "side": 1,
+      "message": "IIUC this the color space that eventually gets set to the compositor as the display target color space.\n\nHow does this interact with the color space conversion matrix that gets (rarely) set to the CTM property of KMS?",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a74bacc_8048d78a",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T21:15:43Z",
+      "side": 1,
+      "message": "You said you would clean up files you touched, you didn\u0027t touch this one.",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce7b8da_e3c08384",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-22T21:15:43Z",
+      "side": 1,
+      "message": "nit: They seem to have a comment for every member, it\u0027d be nice to be consistent.",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
