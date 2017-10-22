@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "39f7ca6d_eba20139",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-22T23:41:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06b23802_6a955284",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 84
+      },
+      "revId": "f1f9fbb77a9c30c4e9e9062ee30b55c6cff74d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a16104_66f849b8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
         "patchSetId": 6
@@ -307,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "b8f6743a_df35bc62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-22T23:41:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "05ec8069_e5661f13",
+      "range": {
+        "startLine": 192,
+        "startChar": 5,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "f1f9fbb77a9c30c4e9e9062ee30b55c6cff74d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f10823a9_6eec619e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
         "patchSetId": 6
@@ -351,6 +399,30 @@
       "revId": "f1f9fbb77a9c30c4e9e9062ee30b55c6cff74d6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7de091_099e52b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-22T23:41:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3823e23e_677c8784",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 69
+      },
+      "revId": "f1f9fbb77a9c30c4e9e9062ee30b55c6cff74d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -436,6 +508,30 @@
       "side": 1,
       "message": "Which new line are you referring to. Line 503 or line 505 (or both)?\n\nI think that separating this comment from the one below is useful because it indicates what we are simulating occurred, not the expectations. We don\u0027t have an assert to check whether WebApkUpdateCallback#onResultFromNative() is called",
       "parentUuid": "854a23d7_89024445",
+      "range": {
+        "startLine": 504,
+        "startChar": 11,
+        "endLine": 504,
+        "endChar": 17
+      },
+      "revId": "f1f9fbb77a9c30c4e9e9062ee30b55c6cff74d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e11dbd_b4dbc948",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-22T23:41:07Z",
+      "side": 1,
+      "message": "I meant 505. It\u0027s strange to have a comment floating by itself. You can rephrase it like:\n\n\"Simulate {@link WebApkUpdateCallback#onResultFromNative} not being called (i.e. Chrome was killed) and check the WebappDataStorage state\".",
+      "parentUuid": "7c13f9b0_b2b6aa5c",
       "range": {
         "startLine": 504,
         "startChar": 11,
