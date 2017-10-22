@@ -13360,6 +13360,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DeclarativeNetRequest.ShouldBlockRequestTime.AllExtensions"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Time taken to evaluate whether a network request should be blocked as per
+    the Declarative Net Request API. This includes the time taken to evaluate
+    all the extension rulesets. Emitted whenever a non-sensitive network request
+    is seen by the Extension System.
+  </summary>
+</histogram>
+
 <histogram name="DefaultBrowser.ActivateSettings.ErrorHresult" enum="Hresult">
   <owner>pmonette@chromium.org</owner>
   <owner>grt@chromium.org</owner>
