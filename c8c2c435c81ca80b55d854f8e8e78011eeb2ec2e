@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "676bcf12_af04ee31",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-22T22:45:16Z",
+      "side": 1,
+      "message": "Ah thanks for explaining. Yes I think the logic at line 301 was the reason why I didn\u0027t put this into the algorithm in the first place.",
+      "parentUuid": "dfd5a75a_09f78265",
+      "revId": "c8c2c435c81ca80b55d854f8e8e78011eeb2ec2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da6e8b6_8c54cef0",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 1
