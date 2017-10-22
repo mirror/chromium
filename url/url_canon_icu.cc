@@ -10,9 +10,10 @@
 
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "third_party/icu/source/common/unicode/char16ptr.h"
+#include "third_party/icu/source/common/unicode/idna.h"
 #include "third_party/icu/source/common/unicode/ucnv.h"
 #include "third_party/icu/source/common/unicode/ucnv_cb.h"
-#include "third_party/icu/source/common/unicode/uidna.h"
 #include "url/url_canon_icu.h"
 #include "url/url_canon_internal.h"  // for _itoa_s
 
@@ -73,8 +74,8 @@ class AppendHandlerInstaller {
   const void* old_context_;
 };
 
-// A wrapper to use LazyInstance<>::Leaky with ICU's UIDNA, a C pointer to
-// a UTS46/IDNA 2008 handling object opened with uidna_openUTS46().
+// A wrapper to use LazyInstance<>::Leaky with icu::IDNA (UTS46/IDNA 2008
+// handling class).
 //
 // We use UTS46 with BiDiCheck to migrate from IDNA 2003 (with unassigned
 // code points allowed) to IDNA 2008 with
@@ -94,19 +95,19 @@ class AppendHandlerInstaller {
 // http://goo.gl/3XBhqw ).
 // See http://http://unicode.org/reports/tr46/ and references therein
 // for more details.
-struct UIDNAWrapper {
-  UIDNAWrapper() {
+struct IDNAWrapper {
+  IDNAWrapper() {
     UErrorCode err = U_ZERO_ERROR;
     // TODO(jungshik): Change options as different parties (browsers,
     // registrars, search engines) converge toward a consensus.
-    value = uidna_openUTS46(UIDNA_CHECK_BIDI, &err);
+    value = icu::IDNA::createUTS46Instance(UIDNA_CHECK_BIDI, err);
     if (U_FAILURE(err)) {
       CHECK(false) << "failed to open UTS46 data with error: " << err;
-      value = NULL;
+      value = nullptr;
     }
   }
 
-  UIDNA* value;
+  icu::IDNA* value;
 };
 
 }  // namespace
@@ -145,8 +146,8 @@ void ICUCharsetConverter::ConvertFromUTF16(const base::char16* input,
   } while (true);
 }
 
-static base::LazyInstance<UIDNAWrapper>::Leaky
-    g_uidna = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<IDNAWrapper>::Leaky g_idna =
+    LAZY_INSTANCE_INITIALIZER;
 
 // Converts the Unicode input representing a hostname to ASCII using IDN rules.
 // The output must be ASCII, but is represented as wide characters.
@@ -165,26 +166,22 @@ static base::LazyInstance<UIDNAWrapper>::Leaky
 bool IDNToASCII(const base::char16* src, int src_len, CanonOutputW* output) {
   DCHECK(output->length() == 0);  // Output buffer is assumed empty.
 
-  UIDNA* uidna = g_uidna.Get().value;
-  DCHECK(uidna != NULL);
-  while (true) {
-    UErrorCode err = U_ZERO_ERROR;
-    UIDNAInfo info = UIDNA_INFO_INITIALIZER;
-    int output_length = uidna_nameToASCII(uidna, src, src_len, output->data(),
-                                          output->capacity(), &info, &err);
-    if (U_SUCCESS(err) && info.errors == 0) {
-      output->set_length(output_length);
-      return true;
-    }
-
-    // TODO(jungshik): Look at info.errors to handle them case-by-case basis
-    // if necessary.
-    if (err != U_BUFFER_OVERFLOW_ERROR || info.errors != 0)
-      return false;  // Unknown error, give up.
-
-    // Not enough room in our buffer, expand.
-    output->Resize(output_length);
+  icu::IDNA* idna = g_idna.Get().value;
+  DCHECK(idna != NULL);
+  icu::UnicodeString ascii;
+  icu::IDNAInfo info;
+  UErrorCode err = U_ZERO_ERROR;
+  idna->nameToASCII(icu::UnicodeString(FALSE, src, src_len), ascii, info, err);
+  if (U_SUCCESS(err) && !info.hasErrors()) {
+    int output_length = ascii.length();
+    if (output_length > output->capacity())
+      output->Resize(output_length);
+    output->Append(icu::toUCharPtr(ascii.getBuffer()), ascii.length());
+    return true;
   }
+  // TODO(jungshik): Look at info.getErrors() to handle them case-by-case basis
+  // if necessary.
+  return false;  // Unknown error, give up.
 }
 
 }  // namespace url
