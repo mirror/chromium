@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29066d2e_d3c1275f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T21:35:55Z",
+      "side": 1,
+      "message": "This looks funny to me too. Idea: http://www.iconsdb.com/black-icons/console-icon.html ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 70,
+        "endLine": 34,
+        "endChar": 95
+      },
+      "revId": "aa8f62fb40a37c79993aeb51acfedeccd3837100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633eb72a_6241a333",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-22T21:35:55Z",
+      "side": 1,
+      "message": "Bug icon for a verbose message? This is strange to me. Maybe something like: https://cdn4.iconfinder.com/data/icons/symbol-black-common-3/32/warning-information-128.png ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "aa8f62fb40a37c79993aeb51acfedeccd3837100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
