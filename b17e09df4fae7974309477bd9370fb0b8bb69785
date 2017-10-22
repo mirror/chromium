@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "083667ad_f4adab83",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "You appear to be correct. Removed.",
+      "parentUuid": "73ee6431_4661ab00",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "525e2622_b8b9930f",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8a57b1_26bae068",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "This is a class extension. You can put properties in the implementation?\n\nI just tried and now Chrome dies in -[TabStripController regenerateSubviewList]. Guess not?",
+      "parentUuid": "525e2622_b8b9930f",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1f20a523_1a0117ed",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb0e97f_60e7a653",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31fcec38_4b5bb33b",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f15c6b2b_9f5e6d13",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "It was a bool. Renaming.",
+      "parentUuid": "31fcec38_4b5bb33b",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75a2cb54_052f4fef",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-20T22:05:38Z",
       "side": 1,
       "message": "It looks like updateIconWithToastAnimation: is called every time showingAttentionIndicator_ is changed. Maybe consider a property with a setter that calls it? E.g.\n\n    self.attentionType \u0026\u003d ~AttentionType::kPinnedTabTitleChange;",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548117cf_1a69e43e",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "Nice suggestion, and that allows an early out if it\u0027s not a real change.",
+      "parentUuid": "75a2cb54_052f4fef",
       "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dbaafeb1_521506d9",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8b49bec_94adb847",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ab8d14_609f7a7f",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 6
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e6633aac_ab8d9224",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ab8d14_609f7a7f",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f13daeff_a09f4bfc",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f54a22d_994a7716",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-22T02:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f13daeff_a09f4bfc",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
