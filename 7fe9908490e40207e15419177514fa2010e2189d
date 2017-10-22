@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b12f838_973fe0ee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:23:18Z",
+      "side": 1,
+      "message": "I understand, I just want it to be super clear.",
+      "parentUuid": "f907b2c8_fc21a61a",
+      "range": {
+        "startLine": 381,
+        "startChar": 39,
+        "endLine": 381,
+        "endChar": 63
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f3d406d_282ac22b",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "7fe9908490e40207e15419177514fa2010e2189d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed77573_95ae2264",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:23:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f3d406d_282ac22b",
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c69df90e_3b547e53",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:23:18Z",
+      "side": 1,
+      "message": "It is good for readability.",
+      "parentUuid": "696a4cb0_11175acc",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 277,
+        "endChar": 37
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f9c5d55_94f34c7f",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "7fe9908490e40207e15419177514fa2010e2189d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab1e328_7439cdd4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-22T15:23:18Z",
+      "side": 1,
+      "message": "I\u0027d rather commit working copy here, except for it could come from the commit listener. So I leave it up to the client.",
+      "parentUuid": "0f9c5d55_94f34c7f",
+      "range": {
+        "startLine": 300,
+        "startChar": 37,
+        "endLine": 300,
+        "endChar": 51
+      },
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
