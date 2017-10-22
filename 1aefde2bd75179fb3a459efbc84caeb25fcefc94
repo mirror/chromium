@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de805381_f7c64b17",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-22T12:12:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33fb2ad2_f9b05dae",
+      "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01a1e6cb_86468d4b",
         "filename": "components/favicon/core/large_icon_service.cc",
         "patchSetId": 3
@@ -170,6 +188,24 @@
       "side": 1,
       "message": "I think that having decicated tests would be clearer. In my first reading of the test I did not realize that one was google.com and the other google.de",
       "parentUuid": "f104ae8d_a4447117",
+      "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5b9dd29_4a6f5f84",
+        "filename": "components/favicon/core/large_icon_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-22T12:12:04Z",
+      "side": 1,
+      "message": "Done, added and split into more dedicated tests. I start to fear we might be overdoing this.",
+      "parentUuid": "c5828918_0371edb3",
       "revId": "1aefde2bd75179fb3a459efbc84caeb25fcefc94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
