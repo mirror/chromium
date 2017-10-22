@@ -236,6 +236,9 @@ source_set("material_components_ios") {
     "src/components/private/ThumbTrack/src/MDCThumbView.h",
     "src/components/private/ThumbTrack/src/MDCThumbView.m",
     "src/components/private/ThumbTrack/src/MaterialThumbTrack.h",
+    "src/components/private/UIMetrics/src/MDCLayoutMetrics.h",
+    "src/components/private/UIMetrics/src/MDCLayoutMetrics.m",
+    "src/components/private/UIMetrics/src/MaterialUIMetrics.h",
   ]
   include_dirs = [
     "src/components/ActivityIndicator/src",
@@ -259,6 +262,7 @@ source_set("material_components_ios") {
     "src/components/private/Overlay/src",
     "src/components/private/RTL/src",
     "src/components/private/ThumbTrack/src",
+    "src/components/private/UIMetrics/src",
   ]
 
   libs = [
