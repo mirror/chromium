@@ -219,6 +219,23 @@
     },
     {
       "key": {
+        "uuid": "49d4af8c_8cc7cb6b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/PersistenceActions.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-22T22:44:31Z",
+      "side": 1,
+      "message": "we need to do this for \"Save For Overrides\" action as well",
+      "revId": "7fe9908490e40207e15419177514fa2010e2189d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec2a1cb_9df5c1ce",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/PersistenceActions.js",
         "patchSetId": 3
