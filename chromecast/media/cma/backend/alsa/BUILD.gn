@@ -89,3 +89,12 @@ source_set("test_support") {
     "//testing/gmock",
   ]
 }
+
+# Alias for ../post_processors:test_support for internal targets that still
+# depend on post_processor_test_support
+group("post_processor_test_support") {
+  testonly = true
+  deps = [
+    "//chromecast/media/cma/backend/post_processors:test_support",
+  ]
+}
