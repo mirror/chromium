@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5472f592_3a9911f2",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "At this call site, the only thing this call will do is cancel the timeouts, duplicating what\u0027s done manually in the else case.  What about renaming this ScheduleOrCancel..., making it check web_vr_mode_, and calling it unconditionally here?",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab98a6ea_cf9e312f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "Are you sure you want the debug code to be submitted?  I feel like code like this is used all the time to land features, but not committed.  Why do it in this case?",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dc9df6_ca657e25",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "UI\u0027s ShouldRenderWebVr is \"in web_vr and showing splash screen\".  This CL feels like it could eliminate the UI\u0027s control in this regard, and instead simply be told \"you\u0027re showing the splash screen\".  Thoughts?",
+      "range": {
+        "startLine": 1143,
+        "startChar": 30,
+        "endLine": 1143,
+        "endChar": 47
+      },
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232602e8_ea6138d8",
+        "filename": "chrome/browser/vr/color_scheme.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "- Background \u003d foreground ?  But more importantly, the WebVr warnings were removed, but it looks like the color scheme elements were missed.  transient_warning... and permanent_warning... elements should be removed.",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b1a6930_f88c7daa",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "Similar to a previous comment.  This feels so close to encompassing WebVR enabled state.",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4808f2f5_d3ab2df0",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "I think it\u0027d be worth a paragraphy-comment above this enum describing the sequence(s).  \"imminent timeout\" isn\u0027t intuitive.",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a788be_27a41b54",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "You\u0027re asking the scene, which is now a graph.  ControllerWouldBeVisible()?\n\nOr at least please nuke \"The\" from the name.",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 62
+      },
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467decad_1074fa58",
+        "filename": "chrome/browser/vr/ui_renderer_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this list have multiple elements per line like the others?  I can\u0027t spot the reason...",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba82c42e_80c8e7af",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "Even though this is a temporary method, it probably shouldn\u0027t blow up if particular elements are missing, right?  Ie. thinking of scene unit tests...",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36aa4b56_1fbf6a89",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "Why are we ditching base::Unretained?  I thought this wasn\u0027t supposed to compile.",
+      "range": {
+        "startLine": 67,
+        "startChar": 17,
+        "endLine": 67,
+        "endChar": 22
+      },
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f42370_88954d26",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "Trying to sneak in one non-auto initializer eh??  ;)",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7295e305_d92774b6",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "OOC:  Is this kind of in-binding logic something you see us doing a lot of, or a hack?  I\u0027m honestly not sure.",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d1d515_1c4e816c",
+        "filename": "chrome/browser/vr/vector_icons/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "So this icon is not available in components, ui, or anywhere else that we currently pull from?",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b0f09e_1878eb4b",
+        "filename": "chrome/browser/vr/vector_icons/sad_tab.icon",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-23T15:21:16Z",
+      "side": 1,
+      "message": "Date",
+      "revId": "64d3a14a392b25d74353c527abe19a75d88aa651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
