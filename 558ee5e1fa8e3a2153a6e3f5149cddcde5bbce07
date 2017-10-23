@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "bc388b83_b43bb5f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-23T22:43:09Z",
+      "side": 1,
+      "message": "There are a few approaches:\n\n1. Refuse to encode objects that you don\u0027t fully control, and for which you therefore can know the recursion depth is acceptable\n\n2. Set a recursion limit, and stop encoding past that limit\n\n3. Perform the encoding in a separate, non-critical process, possibly also making use of a job object/resource limits/other platform-relevant limit\n\nI have been suggesting (2), since it\u0027s easy to implement and appears to have been anticipated by the CBOR designers, and because (1) and (3) don\u0027t seem to be applicable in this context.\n\n((3) is a more canonical Chromium approach, because it solves a wider range of security concerns. But for as long as stack exhaustion DoS is our only concern, (2) should be sufficient.)",
+      "parentUuid": "7fc3c3ec_c771119b",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7348cc5_5a37ae2e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
