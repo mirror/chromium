@@ -2913,6 +2913,7 @@ void Document::open(Document* entered_document,
       KURL new_url = entered_document->Url();
       new_url.SetFragmentIdentifier(String());
       SetURL(new_url);
+      SetReferrerPolicy(entered_document->GetReferrerPolicy());
     }
 
     cookie_url_ = entered_document->CookieURL();
@@ -4015,9 +4016,18 @@ ReferrerPolicy Document::GetReferrerPolicy() const {
   if (!frame_ || policy != kReferrerPolicyDefault || !IsSrcdocDocument()) {
     return policy;
   }
-  LocalFrame* frame = ToLocalFrame(frame_->Tree().Parent());
-  DCHECK(frame);
-  return frame->GetDocument()->GetReferrerPolicy();
+  const Document* referrer_document = this;
+  if (LocalFrame* frame = frame_) {
+    while (frame->GetDocument()->IsSrcdocDocument()) {
+      // Srcdoc documents must be local within the containing frame.
+      frame = ToLocalFrame(frame->Tree().Parent());
+      // Srcdoc documents cannot be top-level documents, by definition,
+      // because they need to be contained in iframes with the srcdoc.
+      DCHECK(frame);
+    }
+    referrer_document = frame->GetDocument();
+  }
+  return referrer_document->GetReferrerPolicy();
 }
 
 MouseEventWithHitTestResults Document::PerformMouseEventHitTest(
