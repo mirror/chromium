@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2691dce2_38b1ae7e",
+        "filename": "chrome/browser/ui/cocoa/autofill/card_unmask_prompt_view_views.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-10-23T23:41:55Z",
+      "side": 1,
+      "message": "Wait - are you planning to launch this independent of Views Dialogs for Mac? Otherwise, what happened to ShowAllDialogsWithViewsToolkit?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 78
+      },
+      "revId": "73fc83eb3a7ea7c5728d5983d680ef2ab7f4cd3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
