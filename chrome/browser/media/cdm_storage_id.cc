@@ -5,19 +5,18 @@
 #include "chrome/browser/media/cdm_storage_id.h"
 
 #include "base/callback.h"
-#include "build/build_config.h"
-#include "media/media_features.h"
-
-// TODO(jrummell): Only compile this file if ENABLE_CDM_STORAGE_ID specified.
-// TODO(jrummell): Move this to the chrome namespace.
-
-#if BUILDFLAG(ENABLE_CDM_STORAGE_ID)
 #include "base/logging.h"
+#include "build/build_config.h"
 #include "chrome/browser/media/cdm_storage_id_key.h"
 #include "chrome/browser/media/media_storage_id_salt.h"
+#include "chrome/browser/profiles/profile.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "crypto/secure_hash.h"
 #include "crypto/sha2.h"
+#include "media/media_features.h"
 #include "rlz/features/features.h"
+#include "url/origin.h"
 
 #if defined(OS_CHROMEOS)
 #include "base/bind.h"
@@ -33,13 +32,16 @@
 #endif  // BUILDFLAG(ENABLE_RLZ)
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
-#endif  // BUILDFLAG(ENABLE_CDM_STORAGE_ID)
-
-namespace cdm_storage_id {
+namespace chrome {
 
 namespace {
 
-#if BUILDFLAG(ENABLE_CDM_STORAGE_ID)
+std::vector<uint8_t> GetSalt(content::RenderFrameHost* rfh) {
+  DCHECK(rfh);
+  Profile* profile =
+      Profile::FromBrowserContext(rfh->GetProcess()->GetBrowserContext());
+  return MediaStorageIdSalt::GetSalt(profile->GetPrefs());
+}
 
 // Calculates the Storage Id based on:
 //   |storage_id_key| - a browser identifier
@@ -49,10 +51,11 @@ namespace {
 // If all the parameters appear valid, this function returns the SHA256
 // checksum of the above values. If any of the values are invalid, the empty
 // vector is returned.
-std::vector<uint8_t> ComputeStorageId(const std::string& storage_id_key,
-                                      const std::vector<uint8_t>& profile_salt,
-                                      const url::Origin& origin,
-                                      const std::string& machine_id) {
+std::vector<uint8_t> CalculateStorageId(
+    const std::string& storage_id_key,
+    const std::vector<uint8_t>& profile_salt,
+    const url::Origin& origin,
+    const std::string& machine_id) {
   if (storage_id_key.length() < chrome::kMinimumCdmStorageIdKeyLength) {
     DLOG(ERROR) << "Storage key not set correctly, length: "
                 << storage_id_key.length();
@@ -94,27 +97,27 @@ void ComputeAndReturnStorageId(const std::vector<uint8_t>& profile_salt,
                                const url::Origin& origin,
                                CdmStorageIdCallback callback,
                                const std::string& machine_id) {
-  std::string storage_id_key = chrome::GetCdmStorageIdKey();
+  std::string storage_id_key = GetCdmStorageIdKey();
   std::move(callback).Run(
-      ComputeStorageId(storage_id_key, profile_salt, origin, machine_id));
+      CalculateStorageId(storage_id_key, profile_salt, origin, machine_id));
 }
 #endif  // defined(OS_CHROMEOS)
 
-#endif  // BUILDFLAG(ENABLE_CDM_STORAGE_ID)
-
 }  // namespace
 
-void ComputeStorageId(const std::vector<uint8_t>& salt,
-                      const url::Origin& origin,
+void ComputeStorageId(content::RenderFrameHost* rfh,
                       CdmStorageIdCallback callback) {
-#if BUILDFLAG(ENABLE_CDM_STORAGE_ID)
+  DCHECK(rfh);
+
+  std::vector<uint8_t> profile_salt = GetSalt(rfh);
+  url::Origin origin = rfh->GetLastCommittedOrigin();
 
 #if defined(OS_WIN) || defined(OS_MACOSX)
   std::string machine_id;
-  std::string storage_id_key = chrome::GetCdmStorageIdKey();
+  std::string storage_id_key = GetCdmStorageIdKey();
   rlz_lib::GetMachineId(&machine_id);
   std::move(callback).Run(
-      ComputeStorageId(storage_id_key, salt, origin, machine_id));
+      CalculateStorageId(storage_id_key, salt, origin, machine_id));
 
 #elif defined(OS_CHROMEOS)
   CdmStorageIdCallback scoped_callback =
@@ -126,11 +129,6 @@ void ComputeStorageId(const std::vector<uint8_t>& salt,
 #else
 #error Storage ID enabled but not implemented for this platform.
 #endif
-
-#else
-  // CDM Storage ID not enabled.
-  std::move(callback).Run(std::vector<uint8_t>());
-#endif  // BUILDFLAG(ENABLE_CDM_STORAGE_ID)
 }
 
-}  // namespace cdm_storage_id
+}  // namespace chrome
