@@ -24,6 +24,8 @@
 #include "components/prefs/pref_service.h"
 #include "components/update_client/activity_data_service.h"
 #include "components/update_client/update_query_params.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
@@ -161,7 +163,10 @@ net::URLRequestContextGetter* ChromeConfigurator::RequestContext() const {
 
 scoped_refptr<update_client::OutOfProcessPatcher>
 ChromeConfigurator::CreateOutOfProcessPatcher() const {
-  return base::MakeRefCounted<ChromeOutOfProcessPatcher>();
+  return base::MakeRefCounted<ChromeOutOfProcessPatcher>(
+      content::ServiceManagerConnection::GetForProcess()
+          ->GetConnector()
+          ->Clone());
 }
 
 bool ChromeConfigurator::EnabledDeltas() const {
