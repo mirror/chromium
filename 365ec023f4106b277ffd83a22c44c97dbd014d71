@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b981fa65_57b9d372",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-23T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441510f8_3003216e",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "332f94f3_d2fc401d",
         "filename": "ash/wm/overview/window_selector.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8de0ff_d06052a7",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-23T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332f94f3_d2fc401d",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3d2de7bc_9921a5e2",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-23T22:28:17Z",
+      "side": 1,
+      "message": "I change this up a bit to handle much longer text cleanly (multline \u003d true, and fixed the positioning up), but there\u0027s always the case if like the user opens 100+ windows/apps. Should we check if the label preferred size is \u003e than bounds size and do something else instead of label?",
+      "parentUuid": "199dbeb7_f291e11a",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99556629_7416941d",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-23T18:54:25Z",
       "side": 1,
       "message": "prefer to use EXPECT so that the test can continue even this line fails.",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d3a2fc_e0767eaf",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-23T22:28:17Z",
+      "side": 1,
+      "message": "I like ASSERT when something is required for the test to be useful later on. In this case, lines 2568 and 2570 will crash should this be false so there\u0027s no point letting this continue. Also, I think it would be harder to debug the crash at those lines without the ASSERT, in my opinion. What do you think?",
+      "parentUuid": "99556629_7416941d",
       "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
