@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a9a229b_15f2bb44",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T04:11:33Z",
+      "side": 1,
+      "message": "Thanks, introduced URLLoaderAndClient.",
+      "parentUuid": "cfadee72_0659bd4b",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6096bc0f_eb475b94",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400dcbb8_2d696da1",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T04:11:33Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "6096bc0f_eb475b94",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fe8b1de9_ad9a5dee",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T04:11:33Z",
+      "side": 1,
+      "message": "I agree with it. Kept it only in Basic and DropController, and removed others.",
+      "parentUuid": "8aeb859f_1a459cd9",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cf4672f_2a9f868c",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 1
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "e133b0c8_d5ce515e",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T04:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cf4672f_2a9f868c",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1a1ca46_c5a29102",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 1
@@ -102,6 +174,24 @@
       "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ba7430_4d115486",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T04:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a1ca46_c5a29102",
+      "revId": "0ef1e1ab2038a3717456d5073b2483937c5f60ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
