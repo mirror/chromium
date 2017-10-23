@@ -5,6 +5,8 @@
 #include "chrome/browser/ui/views/tabs/tab.h"
 
 #include <stddef.h>
+
+#include <algorithm>
 #include <limits>
 #include <utility>
 
@@ -76,6 +78,7 @@ namespace {
 const int kTouchWidth = 120;
 
 const int kExtraLeftPaddingToBalanceCloseButtonPadding = 2;
+const int kMultipleIconSeparation = 1;
 const int kAfterTitleSpacing = 4;
 
 // When a non-pinned tab becomes a pinned tab the width of the tab animates. If
@@ -359,7 +362,7 @@ class Tab::TabCloseButton : public views::ImageButton,
 // A Layer-backed view for updating a waiting or loading tab throbber.
 class Tab::ThrobberView : public views::View {
  public:
-  explicit ThrobberView(Tab* owner);
+  ThrobberView(Tab* owner, size_t icon_index);
 
   // Resets the times tracking when the throbber changes state.
   void ResetStartTimes();
@@ -369,6 +372,7 @@ class Tab::ThrobberView : public views::View {
 
  private:
   Tab* owner_;  // Weak. Owns |this|.
+  size_t icon_index_;
 
   // The point in time when the tab icon was first painted in the waiting state.
   base::TimeTicks waiting_start_time_;
@@ -382,7 +386,8 @@ class Tab::ThrobberView : public views::View {
   DISALLOW_COPY_AND_ASSIGN(ThrobberView);
 };
 
-Tab::ThrobberView::ThrobberView(Tab* owner) : owner_(owner) {
+Tab::ThrobberView::ThrobberView(Tab* owner, size_t icon_index)
+    : owner_(owner), icon_index_(icon_index) {
   set_can_process_events_within_subtree(false);
 }
 
@@ -393,7 +398,8 @@ void Tab::ThrobberView::ResetStartTimes() {
 }
 
 void Tab::ThrobberView::OnPaint(gfx::Canvas* canvas) {
-  const TabRendererData::NetworkState state = owner_->data().network_state;
+  const TabRendererData::NetworkState state =
+      owner_->data()[icon_index_].network_state;
   CHECK(ShouldShowThrobber(state));
 
   const ui::ThemeProvider* tp = GetThemeProvider();
@@ -436,7 +442,6 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
       pulse_animation_(this),
       crash_icon_animation_(base::MakeUnique<FaviconCrashAnimation>(this)),
       animation_container_(container),
-      throbber_(nullptr),
       alert_indicator_button_(nullptr),
       close_button_(nullptr),
       title_(new views::Label()),
@@ -466,10 +471,6 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
 
   SetEventTargeter(
       std::unique_ptr<views::ViewTargeter>(new views::ViewTargeter(this)));
-
-  throbber_ = new ThrobberView(this);
-  throbber_->SetVisible(false);
-  AddChildView(throbber_);
 
   alert_indicator_button_ = new AlertIndicatorButton(this);
   AddChildView(alert_indicator_button_);
@@ -528,19 +529,19 @@ bool Tab::IsSelected() const {
   return controller_->IsTabSelected(this);
 }
 
-void Tab::SetData(const TabRendererData& data) {
+void Tab::SetData(base::span<const TabRendererData> data) {
   DCHECK(GetWidget());
 
-  if (data_ == data)
+  if (std::equal(data_.begin(), data_.end(), data.begin(), data.end()))
     return;
 
-  TabRendererData old(std::move(data_));
-  data_ = data;
+  std::vector<TabRendererData> old(std::move(data_));
+  data_.assign(data.begin(), data.end());
   UpdateThrobber(old);
 
-  base::string16 title = data_.title;
+  base::string16 title = data_[0].title;
   if (title.empty()) {
-    title = ShouldShowThrobber(data_.network_state)
+    title = ShouldShowThrobber(data_[0].network_state)
                 ? l10n_util::GetStringUTF16(IDS_TAB_LOADING_TITLE)
                 : CoreTabHelper::GetDefaultTitle();
   } else {
@@ -548,18 +549,20 @@ void Tab::SetData(const TabRendererData& data) {
   }
   title_->SetText(title);
 
-  if (!data_.IsCrashed()) {
+  // FIXME(brettw) do crashed animation per icon.
+  if (!data_[0].IsCrashed()) {
     crash_icon_animation_->Stop();
     SetShouldDisplayCrashedFavicon(false);
     favicon_hiding_offset_ = 0;
   } else if (!should_display_crashed_favicon_ &&
              !crash_icon_animation_->is_animating()) {
-    data_.alert_state = TabAlertState::NONE;
+    data_[0].alert_state = TabAlertState::NONE;
     crash_icon_animation_->Start();
   }
 
-  if (data_.alert_state != old.alert_state)
-    alert_indicator_button_->TransitionToAlertState(data_.alert_state);
+  // TODO(brettw) should do alert state per icon.
+  if (data_[0].alert_state != old[0].alert_state)
+    alert_indicator_button_->TransitionToAlertState(data_[0].alert_state);
 
   if (old.pinned != data_.pinned)
     showing_alert_indicator_ = false;
@@ -571,10 +574,10 @@ void Tab::SetData(const TabRendererData& data) {
 }
 
 void Tab::StepLoadingAnimation() {
-  if (!throbber_->visible())
-    return;
-
-  RefreshThrobber();
+  for (size_t i = 0; i < throbbers_.size(); i++) {
+    if (throbbers_[i]->visible()) 
+      RefreshThrobber(i);
+  }
 }
 
 void Tab::StartPulse() {
@@ -695,7 +698,7 @@ void Tab::ButtonPressed(views::Button* sender, const ui::Event& event) {
     base::RecordAction(UserMetricsAction("CloseTab_NoAlertIndicator"));
   else if (alert_indicator_button_->enabled())
     base::RecordAction(UserMetricsAction("CloseTab_MuteToggleAvailable"));
-  else if (data_.alert_state == TabAlertState::AUDIO_PLAYING)
+  else if (data_[0].alert_state == TabAlertState::AUDIO_PLAYING)
     base::RecordAction(UserMetricsAction("CloseTab_AudioIndicator"));
   else
     base::RecordAction(UserMetricsAction("CloseTab_RecordingIndicator"));
@@ -749,7 +752,7 @@ void Tab::ViewHierarchyChanged(const ViewHierarchyChangedDetails& details) {
 void Tab::OnPaint(gfx::Canvas* canvas) {
   // Don't paint if we're narrower than we can render correctly. (This should
   // only happen during animations).
-  if (width() < GetMinimumInactiveSize().width() && !data().pinned)
+  if (width() < GetMinimumInactiveSize().width() && !data_[0].pinned)
     return;
 
   gfx::Path clip;
@@ -774,11 +777,26 @@ void Tab::Layout() {
   const int start = lb.x() + extra_padding;
   favicon_bounds_.SetRect(start, lb.y(), 0, 0);
   if (showing_icon_) {
-    favicon_bounds_.set_size(gfx::Size(gfx::kFaviconSize, gfx::kFaviconSize));
-    favicon_bounds_.set_y(lb.y() + (lb.height() - gfx::kFaviconSize + 1) / 2);
-    MaybeAdjustLeftForPinnedTab(&favicon_bounds_);
+    int icon_left = start;
+    int favicon_y =  lb.y() + (lb.height() - gfx::kFaviconSize + 1) / 2;
+
+    for (size_t i = 0; i < favicons_.size(); i++) {
+      if (i > 0)
+        icon_left += kMultipleIconSeparation;
+      gfx::Rect cur_icon_rect(
+          icon_left, favicon_y, gfx::kFaviconSize, gfx::kFaviconSize);
+      if (favicons_.size() == 1)
+        MaybeAdjustLeftForPinnedTab(&cur_icon_rect);
+      throbbers_[i]->SetBoundsRect(cur_icon_rect);
+    }
+    favicon_bounds_ =
+        gfx::Rect(start, favicon_y, icon_left - start, gfx::kFaviconSize);
+  } else {
+    // FIXME(brettw): This should be cleaned up. It assumes not showing the
+    // icon implies there is only one icon.
+    if (!throbbers_.empty())
+      throbbers_[0]->SetBoundsRect(favicon_bounds_);
   }
-  throbber_->SetBoundsRect(favicon_bounds_);
 
   showing_close_button_ = ShouldShowCloseBox();
   if (showing_close_button_) {
@@ -859,7 +877,7 @@ void Tab::Layout() {
 
 void Tab::OnThemeChanged() {
   OnButtonColorMaybeChanged();
-  favicon_ = gfx::ImageSkia();
+  favicons_.clear();
 }
 
 const char* Tab::GetClassName() const {
@@ -869,7 +887,7 @@ const char* Tab::GetClassName() const {
 bool Tab::GetTooltipText(const gfx::Point& p, base::string16* tooltip) const {
   // Note: Anything that affects the tooltip text should be accounted for when
   // calling TooltipTextChanged() from Tab::DataChanged().
-  *tooltip = chrome::AssembleTabTooltipText(data_.title, data_.alert_state);
+  *tooltip = chrome::AssembleTabTooltipText(data_[0].title, data_[0].alert_state);
   return !tooltip->empty();
 }
 
@@ -1045,16 +1063,26 @@ void Tab::DataChanged(const TabRendererData& old) {
   // We may overzealously reset the favicon cache here but this check eliminates
   // at least some unnecessary re-computations and fixes the behavior of
   // about:crash.
-  if (!old.favicon.BackedBySameObjectAs(data().favicon))
-    favicon_ = gfx::ImageSkia();
+  for (size_t i = 0; i < data_.size() && i < old.size(); i++) {
+    if (!old[i].favicon.BackedBySameObjectAs(data_[i].favicon))
+      favicons_[i] = gfx::ImageSkia();
+  }
 
-  if (data().alert_state != old.alert_state || data().title != old.title)
+  if (old.empty() || data_[0].alert_state != old[0].alert_state ||
+      data_[0].title != old[0].title)
     TooltipTextChanged();
 
-  if (data().blocked == old.blocked)
+  bool old_blocked = false;
+  for (size_t i = 0; i < old.size(); i++)
+    old_blocked |= old[i].blocked;
+  bool new_blocked = false;
+  for (size_t i = 0; i < data_.size(); i++)
+    new_blocked |= data_[i].blocked;
+
+  if (old_blocked == new_blocked)
     return;
 
-  if (data().blocked)
+  if (new_blocked)
     StartPulse();
   else
     StopPulse();
@@ -1289,25 +1317,30 @@ void Tab::PaintIcon(gfx::Canvas* canvas) {
   if (bounds.IsEmpty())
     return;
 
-  // Throbber will do its own painting.
-  if (throbber_->visible())
-    return;
   // Ensure that |favicon_| is created.
-  if (favicon_.isNull()) {
-    ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
-    favicon_ = should_display_crashed_favicon_
+  ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
+  favicons_.resize(data_.size());
+  for (size_t i = 0; i < favicons_.size(); i++) {
+    if (throbbers_[i]->visible())
+      continue;  // Throbber will do its own painting.
+
+    if (favicon_.isNull()) {
+      favicons_[i] = should_display_crashed_favicon_  // <- FIXME(brettw)
                    ? *rb->GetImageSkiaNamed(IDR_CRASH_SAD_FAVICON)
-                   : data().favicon;
-    // Themify the icon if it's a chrome:// page or if it's the sadtab favicon.
-    // This ensures chrome:// pages are visible over the tab background. This is
-    // similar to code in the bookmarks bar.
-    if (!favicon_.isNull() &&
-        (should_display_crashed_favicon_ ||
-         favicon_.BackedBySameObjectAs(
-             *rb->GetImageSkiaNamed(IDR_DEFAULT_FAVICON)) ||
-         ShouldThemifyFaviconForUrl(data().url))) {
-      favicon_ = gfx::ImageSkiaOperations::CreateHSLShiftedImage(
-          favicon_, GetThemeProvider()->GetTint(ThemeProperties::TINT_BUTTONS));
+                   : data_[i].favicon;
+
+      // Themify the icon if it's a chrome:// page or if it's the sadtab favicon.
+      // This ensures chrome:// pages are visible over the tab background. This is
+      // similar to code in the bookmarks bar.
+      if (!favicons_[i].isNull() &&
+          (should_display_crashed_favicon_ ||
+           favicons_[i].BackedBySameObjectAs(
+               *rb->GetImageSkiaNamed(IDR_DEFAULT_FAVICON)) ||
+           ShouldThemifyFaviconForUrl(data_[i].url))) {
+        favicons_[i] = gfx::ImageSkiaOperations::CreateHSLShiftedImage(
+            favicons_[i],
+            GetThemeProvider()->GetTint(ThemeProperties::TINT_BUTTONS));
+      }
     }
   }
 
@@ -1321,19 +1354,37 @@ void Tab::PaintIcon(gfx::Canvas* canvas) {
 }
 
 void Tab::UpdateThrobber(const TabRendererData& old) {
-  const bool should_show = ShouldShowThrobber(data_.network_state);
-  const bool is_showing = throbber_->visible();
+  // Add new throbbers as necessary.
+  while (throbbers_.size() < data_.size()) {
+    ThrobberView* throbber = new ThrobberView(this, throbbers_.size());
+    throbber->SetVisible(false);
+    AddChildView(throbber);  // Takes ownership of pointer.
+    throbbers_.push_back(throbber);
+  }
 
-  if (!is_showing && !should_show)
-    return;
+  // Remove extra throbbers as necessary.
+  while (throbbers_.size() > data_.size()) {
+    ThrobberView* throbber = throbbers_.back();
+    RemoveChildView(throbber);
+    delete throbber;
+    throbbers_.pop_back();
+  }
 
-  RefreshThrobber();
+  for (size_t i = 0; i < throbbers_.size(); i++) {
+    bool should_show = ShouldShowThrobber(data_[i].network_state);
+    bool is_showing = throbbers_[i]->visible();
+
+    if (is_showing || should_show)
+      RefreshThrobber(i);
+  }
 }
 
-void Tab::RefreshThrobber() {
-  if (!ShouldShowThrobber(data().network_state)) {
-    throbber_->ResetStartTimes();
-    throbber_->SetVisible(false);
+void Tab::RefreshThrobber(size_t icon_index) {
+  Throbber* throbber = throbbers_[icon_index];
+
+  if (!ShouldShowThrobber(data_[icon_index].network_state)) {
+    throbber->ResetStartTimes();
+    throbber->SetVisible(false);
     ScheduleIconPaint();
     return;
   }
@@ -1341,20 +1392,20 @@ void Tab::RefreshThrobber() {
   // Since the throbber can animate for a long time, paint to a separate layer
   // when possible to reduce repaint overhead.
   const bool paint_to_layer = controller_->CanPaintThrobberToLayer();
-  if (paint_to_layer != !!throbber_->layer()) {
+  if (paint_to_layer != !!throbber->layer()) {
     if (paint_to_layer) {
-      throbber_->SetPaintToLayer();
-      throbber_->layer()->SetFillsBoundsOpaquely(false);
+      throbber->SetPaintToLayer();
+      throbber->layer()->SetFillsBoundsOpaquely(false);
       ScheduleIconPaint();  // Ensure the non-layered throbber goes away.
     } else {
-      throbber_->DestroyLayer();
+      throbber->DestroyLayer();
     }
   }
-  if (!throbber_->visible()) {
+  if (!throbber->visible()) {
     ScheduleIconPaint();  // Repaint the icon area to hide the favicon.
-    throbber_->SetVisible(true);
+    throbber->SetVisible(true);
   }
-  throbber_->SchedulePaint();
+  throbber->SchedulePaint();
 }
 
 int Tab::IconCapacity() const {
@@ -1382,29 +1433,31 @@ int Tab::IconCapacity() const {
 }
 
 bool Tab::ShouldShowIcon() const {
-  return chrome::ShouldTabShowFavicon(
-      IconCapacity(), data().pinned, IsActive(), data().show_icon,
+  return data_.size() == 1 && chrome::ShouldTabShowFavicon(
+      IconCapacity(), data_[0].pinned, IsActive(), data_[0].show_icon,
       alert_indicator_button_ ? alert_indicator_button_->showing_alert_state()
                               : data_.alert_state);
 }
 
 bool Tab::ShouldShowAlertIndicator() const {
   return chrome::ShouldTabShowAlertIndicator(
-      IconCapacity(), data().pinned, IsActive(), data().show_icon,
+      IconCapacity(), data_[0].pinned, IsActive(), data_[0].show_icon,
       alert_indicator_button_ ? alert_indicator_button_->showing_alert_state()
                               : data_.alert_state);
 }
 
 bool Tab::ShouldShowCloseBox() const {
+  if (data_.size() > 1)
+    return false;  // Don't show for multiple grouped tabs.
   if (!IsActive() && controller_->ShouldHideCloseButtonForInactiveTabs())
     return false;
 
   return chrome::ShouldTabShowCloseButton(
-      IconCapacity(), data().pinned, IsActive());
+      IconCapacity(), data_[0].pinned, IsActive());
 }
 
 bool Tab::ShouldRenderAsNormalTab() const {
-  return !data().pinned ||
+  return !data_[0].pinned ||
       (width() >= (GetPinnedWidth() + kPinnedTabExtraWidthToRenderAsNormal));
 }
 
@@ -1425,8 +1478,10 @@ void Tab::SetShouldDisplayCrashedFavicon(bool value) {
   if (value == should_display_crashed_favicon_)
     return;
 
+  // TODO(brettw) need to track this per-icon.
   should_display_crashed_favicon_ = value;
-  favicon_ = gfx::ImageSkia();
+  for (size_t i = 0; i < favicons_.size(); i++)
+    favicons_[i] = gfx::ImageSkia();
 }
 
 void Tab::SetFaviconHidingOffset(int offset) {

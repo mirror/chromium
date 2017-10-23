@@ -170,9 +170,12 @@ class TabStripModel {
   // the |index| is changed is if using the index would result in breaking the
   // constraint that all pinned tabs occur before non-pinned tabs.
   // See also AddWebContents.
+  //
+  // FIXME(brettw) clean up this persistent group flag.
   void InsertWebContentsAt(int index,
                            content::WebContents* contents,
-                           int add_types);
+                           int add_types,
+                           bool inherit_persistent_group = false);
 
   // Closes the WebContents at the specified index. This causes the
   // WebContents to be destroyed, but it may not happen immediately.
@@ -264,6 +267,13 @@ class TabStripModel {
   // Returns the WebContents that opened the WebContents at |index|, or NULL if
   // there is no opener on record.
   content::WebContents* GetOpenerOfWebContentsAt(int index);
+
+  content::WebContents* GetGroupAt(int index);
+
+  // The persistent group ID is an identifier for the group. Unlike the pointer
+  // returned by GetGroupAt(), this is not reset and will live even if the
+  // original tab that created the group is destroyed.
+  int64_t GetPersistentGroupIdAt(int index);
 
   // Changes the |opener| of the WebContents at |index|.
   // Note: |opener| must be in this tab strip.

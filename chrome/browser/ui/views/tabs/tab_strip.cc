@@ -2173,7 +2173,20 @@ void TabStrip::StartMouseInitiatedRemoveTabAnimation(int model_index) {
   int delta = tab_closing->width() - Tab::GetOverlap();
   // If the tab being closed is a pinned tab next to a non-pinned tab, be sure
   // to add the extra padding.
-  DCHECK_LT(model_index, tab_count() - 1);
+  
+  // FIXME(brettw) TabStrip::RemoveTabAt checks to see if the tab is the last
+  // one only calls this function if it's not the last. That's what this DCHECK
+  // is verifying. But the way it checks whether the tab was the last is by
+  // comparing it to the size of the new model assuming that the model has
+  // decreased in size by one entry. But with groups the model size may not
+  // have changed which makes that check incorrect. We need to check the
+  // current tab view to see if the requested tab is the last one and whether
+  // animation is required.
+  //
+  // To repro: make a group of two tabs and a last one that's selected. Then
+  // close the last one. The group will open because it's now selected.
+  //
+  // DCHECK_LT(model_index, tab_count() - 1);
   if (tab_closing->data().pinned && !tab_at(model_index + 1)->data().pinned)
     delta += kPinnedToNonPinnedOffset;
 

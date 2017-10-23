@@ -967,7 +967,8 @@ void TabDragController::Detach(ReleaseCapture release_capture) {
   TabStripModel* attached_model = GetModel(attached_tabstrip_);
   std::vector<TabRendererData> tab_data;
   for (size_t i = 0; i < drag_data_.size(); ++i) {
-    tab_data.push_back(drag_data_[i].attached_tab->data());
+    tab_data.insert(tab_data.end(), drag_data_[i].attached_tab->data().begin(),
+                    drag_data_[i].attached_tab->data().end());
     int index = attached_model->GetIndexOfWebContents(drag_data_[i].contents);
     DCHECK_NE(-1, index);
 
