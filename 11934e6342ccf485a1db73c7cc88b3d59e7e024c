@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "4118a5e0_05d04f48",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "We should probably parameterize only the mirroring related tests.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 63
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16899242_6e7c208b",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "multi-line condition, please add braces.",
+      "range": {
+        "startLine": 333,
+        "startChar": 4,
+        "endLine": 333,
+        "endChar": 16
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a296684_2c32afd8",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Why not use a foreach syntax?",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 52
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45c8206_47e7dee6",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Nit: emplace_back.",
+      "range": {
+        "startLine": 336,
+        "startChar": 9,
+        "endLine": 336,
+        "endChar": 18
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2db3c19_b1d54b92",
         "filename": "ash/display/mirror_window_controller_unittest.cc",
         "patchSetId": 8
@@ -13,6 +105,443 @@
       "writtenOn": "2017-10-23T18:38:01Z",
       "side": 1,
       "message": "s/tis/this",
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e423676_606ce394",
+        "filename": "ash/display/mirror_window_test_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Nit: emplace_back.",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caecbc1a_ffc31646",
+        "filename": "ash/display/mirror_window_test_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Nit: name it |out_host_list|.",
+      "range": {
+        "startLine": 34,
+        "startChar": 52,
+        "endLine": 34,
+        "endChar": 61
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb5e86f_665c3a52",
+        "filename": "ash/display/mirror_window_test_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "*\n\nuse pointers for out params.",
+      "range": {
+        "startLine": 34,
+        "startChar": 50,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be807541_9e76b130",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Nit: please change this to const Display\u0026 to match the return value of GetDisplayForId()\n\nAlso move the DCHECK(display-\u003eis_valid()); right after this call, since GetDisplayForId() returns an invalid display if not found.",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c7618c_e4f73437",
+        "filename": "ash/system/screen_layout_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of keeping mirroring_display_id() and GetMirroringDisplayIdList() separate. There should be a single list, even if is_multi_display_mirroring_enabled() is false, the mirroring display id is list[0]",
+      "range": {
+        "startLine": 61,
+        "startChar": 33,
+        "endLine": 63,
+        "endChar": 80
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1517bb5_437124ec",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "I thought you are not using mirroring_source_id() if multi display mirroring is enabled.",
+      "range": {
+        "startLine": 614,
+        "startChar": 45,
+        "endLine": 614,
+        "endChar": 66
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9cc90f_9e45fc24",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "You can use this also in dual display mirroring as well. It can be active_display_list_[0];\n\nTry to minimize the conditions and unify as much as you can.",
+      "range": {
+        "startLine": 685,
+        "startChar": 4,
+        "endLine": 685,
+        "endChar": 24
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74140d0c_3a471d7f",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Let\u0027s simplify:\n\nfor (const auto\u0026 display_info : updated_displays)\n  ...",
+      "range": {
+        "startLine": 691,
+        "startChar": 0,
+        "endLine": 692,
+        "endChar": 48
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c35f04_d3233416",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "This |iter| shadows the outer |iter|.",
+      "range": {
+        "startLine": 704,
+        "startChar": 15,
+        "endLine": 704,
+        "endChar": 19
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ccb0cf_e6fa67a4",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Nit: emplacing.",
+      "range": {
+        "startLine": 712,
+        "startChar": 44,
+        "endLine": 712,
+        "endChar": 53
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f48f2f0_284776ae",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "There are too many conditions which makes the logic a bit hairy. I would expect IsInMirrorMode() to something as simple as:\n\nbool DisplayManager::IsInMirrorMode() const {\n  return IsInSoftwareMirrorMode() || IsInHardwareMirrorMode();\n}\n\nregardless of dual or multi display mirroring.",
+      "range": {
+        "startLine": 1023,
+        "startChar": 0,
+        "endLine": 1026,
+        "endChar": 52
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3342b01f_57fce128",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Why do you check this here and not in the other function?",
+      "range": {
+        "startLine": 1030,
+        "startChar": 9,
+        "endLine": 1030,
+        "endChar": 41
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77f4339_7e9ca812",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Remove this TODO, dupe the crbug into your bug.",
+      "range": {
+        "startLine": 1099,
+        "startChar": 19,
+        "endLine": 1099,
+        "endChar": 71
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926b0e08_788f6769",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "unify",
+      "range": {
+        "startLine": 1275,
+        "startChar": 0,
+        "endLine": 1288,
+        "endChar": 5
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2dd3d5_cac38c06",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "As agreed, we will change this for now.",
+      "range": {
+        "startLine": 1391,
+        "startChar": 8,
+        "endLine": 1391,
+        "endChar": 49
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60becdb6_d1917c5c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "foreach",
+      "range": {
+        "startLine": 1395,
+        "startChar": 0,
+        "endLine": 1396,
+        "endChar": 52
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb8933f_7109aa66",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "emplacing",
+      "range": {
+        "startLine": 1404,
+        "startChar": 43,
+        "endLine": 1404,
+        "endChar": 52
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f4e4d6_c0485710",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "I would use an else here to be clear that we\u0027re still part of the same case:",
+      "range": {
+        "startLine": 1410,
+        "startChar": 8,
+        "endLine": 1410,
+        "endChar": 14
+      },
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28d8dfe_1d92b513",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1562,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-23T18:59:16Z",
+      "side": 1,
+      "message": "Creating this temp list is not needed.\n\nfor (const auto\u0026 display : software_mirroring_display_list_) {\n  display_info_list-\u003eemplace_back(GetDisplayInfo(display.id()));\n}",
+      "range": {
+        "startLine": 1560,
+        "startChar": 0,
+        "endLine": 1562,
+        "endChar": 30
+      },
       "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
