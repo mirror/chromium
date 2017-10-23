@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5705737d_3890689e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T18:03:46Z",
+      "side": 1,
+      "message": "Querying every time might be expensive. Let\u0027s cache.\n\nOr, perhaps, you could just set Protocol.InspectorBackend.Options.suppressRequestErrors to true locally?",
+      "range": {
+        "startLine": 641,
+        "startChar": 9,
+        "endLine": 641,
+        "endChar": 45
+      },
+      "revId": "6cdec7efe94847913c89f70d4b62d53d01beda71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
