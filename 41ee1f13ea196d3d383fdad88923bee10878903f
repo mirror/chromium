@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "0cd59462_6706d2a6",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-23T22:06:24Z",
+      "side": 1,
+      "message": "If we don\u0027t want to trust the server, NOTREACHED is the wrong thing to do, then, right?",
+      "parentUuid": "e1360ba3_a19d26ca",
+      "revId": "41ee1f13ea196d3d383fdad88923bee10878903f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d664f8af_eb2e0305",
         "filename": "components/sync/engine_impl/model_type_worker.h",
         "patchSetId": 1

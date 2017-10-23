@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "960f360d_9a5974db",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-23T22:06:24Z",
+      "side": 1,
+      "message": "Why is this DCHECK all the way down here? Should it be at the top of this method?",
+      "revId": "5ab48aef19b711704b9a111e72cb9ab3e225698a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f71fe6c_a566af81",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-23T22:06:24Z",
+      "side": 1,
+      "message": "Seems like this deserves a TODO to fix the inefficient iteration.",
+      "revId": "5ab48aef19b711704b9a111e72cb9ab3e225698a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
