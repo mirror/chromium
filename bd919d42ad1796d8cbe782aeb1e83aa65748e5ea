@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a0e9ef7_f9992b26",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-23T23:26:04Z",
+      "side": 1,
+      "message": "Maybe you can think of a better name now that it\u0027s sometimes reboot and sometimes poweroff. `shutdown`, `shutdown_machine`?",
+      "range": {
+        "startLine": 236,
+        "startChar": 5,
+        "endLine": 236,
+        "endChar": 14
+      },
+      "revId": "bd919d42ad1796d8cbe782aeb1e83aa65748e5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb2a37f_7fe9a74c",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-23T23:26:04Z",
+      "side": 1,
+      "message": "Move this comment outside this `if`.",
+      "revId": "bd919d42ad1796d8cbe782aeb1e83aa65748e5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
