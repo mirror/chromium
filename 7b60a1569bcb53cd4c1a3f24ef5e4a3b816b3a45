@@ -16,6 +16,24 @@
       "revId": "7b60a1569bcb53cd4c1a3f24ef5e4a3b816b3a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4951c9a6_d2bae58e",
+        "filename": "content/browser/service_worker/service_worker_response_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-23T13:36:10Z",
+      "side": 1,
+      "message": "This is not a new enum, let me land as is but may follow-up if it looks strictly better.",
+      "parentUuid": "67bca7d1_4c3b4c93",
+      "revId": "7b60a1569bcb53cd4c1a3f24ef5e4a3b816b3a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
