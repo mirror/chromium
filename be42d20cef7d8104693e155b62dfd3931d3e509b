@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f459e3ef_6e0b4840",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "According to the design of this class, it should always return a different encoder each time CreateEncoder() is called. It solves the problem that one DesktopFrame may not be able to be encoded even if |is_supported| returns true.\n\nSo the |last_codec_| is reset only when SetDesktopFrame() is called with a different sized DesktopFrame.",
+      "parentUuid": "deeba780_cd99bbf6",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c59dce_0f71909c",
         "filename": "remoting/codec/webrtc_video_encoder_selector.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d9b131bf_1dc9f50c",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "Talked offline with Lambros. The design of this class returns different encoders each time CreateEncoder() is called.",
+      "parentUuid": "f7c59dce_0f71909c",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "141151a8_f7242d0d",
         "filename": "remoting/codec/webrtc_video_encoder_selector.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-23T21:51:41Z",
       "side": 1,
       "message": "Is there a reason for adding dependency and using gfx::Size instead of using webrtc::DesktopSize ?",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff686a6_665db8c3",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "gfx::Size provides a convenient function GetArea() to check whether H264 can support the DesktopFrame. (H264 has a limitation to the count of pixels instead of width and height.)",
+      "parentUuid": "141151a8_f7242d0d",
       "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "902c9b12_dd3203a6",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c14e9383_c4ae4208",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be1beb10_8b05f2e6",
         "filename": "remoting/codec/webrtc_video_encoder_selector.h",
         "patchSetId": 3
@@ -96,6 +174,30 @@
       "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997e1876_0f90fd82",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be1beb10_8b05f2e6",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "4bbdf41d_e5f5d0b8",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fbf1116_b585abad",
+      "range": {
+        "startLine": 57,
+        "startChar": 55,
+        "endLine": 57,
+        "endChar": 60
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aa4e52d_2ea6ae3b",
         "filename": "remoting/codec/webrtc_video_encoder_selector.h",
         "patchSetId": 3
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "ab4bff16_c4bdffff",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aa4e52d_2ea6ae3b",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2227599_c8aafcd7",
         "filename": "remoting/codec/webrtc_video_encoder_selector_unittest.cc",
         "patchSetId": 3
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "7ea16618_1bfe1644",
+        "filename": "remoting/codec/webrtc_video_encoder_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2227599_c8aafcd7",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4690e5_fbb41343",
         "filename": "remoting/codec/webrtc_video_encoder_selector_unittest.cc",
         "patchSetId": 3
@@ -176,6 +344,24 @@
       "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ea127b_ff89ba93",
+        "filename": "remoting/codec/webrtc_video_encoder_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-23T23:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4690e5_fbb41343",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
