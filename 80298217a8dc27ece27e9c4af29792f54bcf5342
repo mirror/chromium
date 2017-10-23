@@ -16,6 +16,24 @@
       "revId": "80298217a8dc27ece27e9c4af29792f54bcf5342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4151f5af_ba18a523",
+        "filename": "content/browser/gpu/compositor_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-23T23:23:03Z",
+      "side": 0,
+      "message": "Yes, because there is no place in Chromium to query accelerated_video_encode status.",
+      "parentUuid": "c07fabc8_29978996",
+      "revId": "80298217a8dc27ece27e9c4af29792f54bcf5342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
