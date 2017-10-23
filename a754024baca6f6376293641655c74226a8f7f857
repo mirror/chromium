@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "360905a8_8ccb1ef9",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:27:20Z",
+      "side": 1,
+      "message": "We had a discussion offline about this. Maybe expand the comment saying that the previous pass does propagate the weak status across edges, so at this point if this node\u0027s child did own/(was owned) the other edges would be marked weak as well and deleted anyways.",
+      "parentUuid": "86e97c5f_a7bfc922",
+      "range": {
+        "startLine": 231,
+        "startChar": 7,
+        "endLine": 231,
+        "endChar": 23
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c7a29e0_823152c5",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 6
@@ -242,6 +266,29 @@
         "startChar": 4,
         "endLine": 253,
         "endChar": 28
+      },
+      "revId": "a754024baca6f6376293641655c74226a8f7f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d35e20c_623e8e9c",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-23T11:27:20Z",
+      "side": 1,
+      "message": "can you also add a test where we get a similar coverage in a multi-process dump scenario.\nI mean, you don\u0027t need to create processes, but create different PMDs in the same global dump and check that weakness propagates as expected when you have two distinct PMDs",
+      "range": {
+        "startLine": 243,
+        "startChar": 26,
+        "endLine": 243,
+        "endChar": 53
       },
       "revId": "a754024baca6f6376293641655c74226a8f7f857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
