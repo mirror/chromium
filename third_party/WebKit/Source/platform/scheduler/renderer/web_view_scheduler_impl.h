@@ -84,6 +84,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   void WillNavigateBackForwardSoon(WebFrameSchedulerImpl* frame_scheduler);
   void DidBeginProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
   void DidEndProvisionalLoad(WebFrameSchedulerImpl* frame_scheduler);
+  void SetPendingDomStorageMessageCount(int pending_count);
 
   void OnBeginNestedRunLoop();
   void OnExitNestedRunLoop();
@@ -134,6 +135,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl
   RefPtr<WebTaskRunnerImpl> virtual_time_control_task_queue_;
   TaskHandle virtual_time_budget_expired_task_handle_;
   int background_parser_count_;
+  int pending_dom_storage_message_count_;
 
   // The maximum number amount of delayed task starvation we will allow in
   // VirtualTimePolicy::ADVANCE or VirtualTimePolicy::DETERMINISTIC_LOADING

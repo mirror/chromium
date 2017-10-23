@@ -279,4 +279,38 @@ class FrameDetatchWithPendingResourceLoadVirtualTimeTest
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(
     FrameDetatchWithPendingResourceLoadVirtualTimeTest);
 
+class VirtualTimeDomStorageTest : public VirtualTimeBrowserTest {
+ public:
+  VirtualTimeDomStorageTest() {
+    EXPECT_TRUE(embedded_test_server()->Start());
+    SetInitialURL(embedded_test_server()
+                      ->GetURL("/virtual_time_dom_storage.html")
+                      .spec());
+  }
+
+  void MaybeSetVirtualTimePolicy() override {
+    if (!page_enabled || !runtime_enabled)
+      return;
+
+    // To avoid race conditions start with virtual time paused.
+    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
+        emulation::SetVirtualTimePolicyParams::Builder()
+            .SetPolicy(emulation::VirtualTimePolicy::PAUSE)
+            .SetMaxVirtualTimeTaskStarvationCount(100)
+            .Build(),
+        base::Bind(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
+                   base::Unretained(this)));
+  }
+
+  // emulation::Observer implementation:
+  void OnVirtualTimeBudgetExpired(
+      const emulation::VirtualTimeBudgetExpiredParams& params) override {
+    // If SetMaxVirtualTimeTaskStarvationCount was not set, this callback would
+    // never fire.
+    FinishAsynchronousTest();
+  }
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeDomStorageTest);
+
 }  // namespace headless
