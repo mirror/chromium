@@ -7,6 +7,25 @@
 
 #import <Cocoa/Cocoa.h>
 
+// Histogram values for share service. Must be kept in sync with enums.xml.
+// These values are persisted to logs. Entries should not be renumbered and
+// numeric values should never be reused.
+enum class MacShareMenuServices {
+  // User-installed services go in this bucket to preserve privacy.
+  kUnknownCustom = 0,
+  kEmail = 1,
+  kMessage = 2,
+  kNote = 3,
+  kReminder = 4,
+  kTwitter = 5,
+  kFacebook = 6,
+  kLinkedIn = 7,
+  kSinaWeibo = 8,
+  kTencentWeibo = 9,
+  // This must be the last value in the enum.
+  kShareServiceCount,
+};
+
 // Set this as the delegate of a menu to populate with potential sharing service
 // items. Handles performing share actions chosen by the user and opening the
 // sharing service pref pane so that the user can enable or disable services.
