@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd6fe98_0db56904",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphMenuHeader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-23T17:28:18Z",
+      "side": 1,
+      "message": "Optional: Any particular reason why these aren\u0027t prefixed with \"on\"?",
+      "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39762688_eaf2f501",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphMenuHeader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-23T17:28:18Z",
+      "side": 1,
+      "message": "Optional: Would we want to assert this happens on the main thread, since we\u0027re mostly reading it from that thread later? Just so we don\u0027t get weird flaky tests?",
+      "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97df948b_1dac09a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-23T17:28:18Z",
+      "side": 1,
+      "message": "Optional: Assert on main thread?",
+      "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
