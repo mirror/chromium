@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ec9047c_50b6dbdc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T02:32:29Z",
+      "side": 1,
+      "message": "Why invalidate text cache on mutation?  Matters if we care about updating cache in these cases:\n- Anchor link text that updates (e.g. from pretty print)\n- Functions that we asynchronously fetch\n- Expanding an ObjectPropertiesSection that populates async",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "1548ad0db8351fe6b4fe6d800baeb4a4f7bdff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
