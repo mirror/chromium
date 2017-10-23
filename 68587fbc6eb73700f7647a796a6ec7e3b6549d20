@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07034f67_bc21bfca",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-23T15:55:18Z",
+      "side": 1,
+      "message": "nit: how about RegisterProfilePrefs?",
+      "range": {
+        "startLine": 503,
+        "startChar": 10,
+        "endLine": 503,
+        "endChar": 48
+      },
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6b6094_4a044ffc",
+        "filename": "components/signin/core/browser/profile_management_switches_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-23T15:55:18Z",
+      "side": 1,
+      "message": "nit: const\u0026\n\nIf you wish you should be able to simplify this to\n\nstruct {\n  AccountConsistencyMethod method;\n  bool expect_dice_enabled_for_profile;\n} test_cases[] \u003d { ... };\n\nfor (const auto\u0026 test_case : test_cases) {\n\n}",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 15
+      },
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78d95ed_52fd5888",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-23T15:55:18Z",
+      "side": 1,
+      "message": "that\u0027s a simple migration. Do you need some todo here?",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 59
+      },
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9490f321_0fa613fa",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-23T15:55:18Z",
+      "side": 1,
+      "message": "Should this be moved up to IsDiceMigrationEnabled?",
+      "revId": "68587fbc6eb73700f7647a796a6ec7e3b6549d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
