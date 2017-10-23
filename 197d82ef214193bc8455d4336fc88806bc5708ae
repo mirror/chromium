@@ -16,6 +16,24 @@
       "revId": "197d82ef214193bc8455d4336fc88806bc5708ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b5d039_1e567959",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14594,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-23T23:11:58Z",
+      "side": 1,
+      "message": "Thanks for catching this.  What scheme should we use here?  I assume that http:// is the way to go (I assume that tests do not require a https loopback).  WDYT?",
+      "parentUuid": "06a185f7_065b486e",
+      "revId": "197d82ef214193bc8455d4336fc88806bc5708ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
