@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bec588d_cdc615f3",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-23T23:15:25Z",
+      "side": 1,
+      "message": "Did you try fixing the default bullet rendering so we don\u0027t need to customize here?\n\nIf so, then we should file a bug that password bullet rendering on CrOS is broken and needs to be updated. Then, add a comment here referencing the bug.",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ca7ad2_287bfa37",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-23T23:15:25Z",
+      "side": 1,
+      "message": "nit: initialize in header (letter_spacing_ \u003d 0)",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f9ff68_61a42782",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-23T23:15:25Z",
+      "side": 1,
+      "message": "I wonder if this will cause issues with certain unicode characters.",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b008bd08_8c63469d",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-23T23:15:25Z",
+      "side": 1,
+      "message": "nit: Consider adding a helper method, GetPlaceholderFontList(), similar to GetFontList().",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
