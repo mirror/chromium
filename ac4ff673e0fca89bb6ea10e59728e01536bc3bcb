@@ -93,6 +93,30 @@
       "revId": "ac4ff673e0fca89bb6ea10e59728e01536bc3bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d79e3a4_35687428",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T18:06:32Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a common problem. It\u0027s particularly important for Chrome Home because our FeatureUtilities#isChromeHome() check returns early if isTablet() is true.",
+      "parentUuid": "4b408314_514ea354",
+      "range": {
+        "startLine": 415,
+        "startChar": 41,
+        "endLine": 415,
+        "endChar": 58
+      },
+      "revId": "ac4ff673e0fca89bb6ea10e59728e01536bc3bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
