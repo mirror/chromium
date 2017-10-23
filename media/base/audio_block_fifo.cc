@@ -9,6 +9,7 @@
 #include "media/base/audio_block_fifo.h"
 
 #include "base/logging.h"
+#include "base/trace_event/trace_event.h"
 
 namespace media {
 
@@ -27,10 +28,12 @@ AudioBlockFifo::~AudioBlockFifo() {}
 void AudioBlockFifo::Push(const void* source,
                           int frames,
                           int bytes_per_sample) {
+  TRACE_EVENT1("audio", "AudioBlockFifo::Push", "frame count", frames);
   PushInternal(source, frames, bytes_per_sample);
 }
 
 void AudioBlockFifo::PushSilence(int frames) {
+  TRACE_EVENT1("audio", "AudioBlockFifo::PushSilence", "frame count", frames);
   PushInternal(nullptr, frames, 0);
 }
 
