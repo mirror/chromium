@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4b638fb_20e807ff",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-23T20:31:03Z",
+      "side": 1,
+      "message": "I will add a new patch soon to take the renderpassdrawquad calculation into place. Thank yous for working on this.",
+      "parentUuid": "d5a9df21_e3f8562e",
+      "revId": "d3ee539fa9f39b972833b091a30c48347a04fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e444eafa_02148b48",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "d3ee539fa9f39b972833b091a30c48347a04fba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6e6d09_0df26946",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-10-23T20:31:03Z",
+      "side": 1,
+      "message": "I agree, we can remove this condition now.",
+      "parentUuid": "e444eafa_02148b48",
+      "revId": "d3ee539fa9f39b972833b091a30c48347a04fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
