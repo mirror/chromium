@@ -52,6 +52,24 @@
       "revId": "bbb3beda8df280b8c9cb8e4c1ea585859ea49935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553442c0_3d0bba26",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3920,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-23T18:53:40Z",
+      "side": 1,
+      "message": "Looks like the bots are happy with deps.",
+      "parentUuid": "89c82329_d4f57bd5",
+      "revId": "bbb3beda8df280b8c9cb8e4c1ea585859ea49935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
