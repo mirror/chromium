@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77020490_97b6a60c",
+        "filename": "services/shape_detection/PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "It has existed in line-985 [1].\n[1] https://cs.chromium.org/chromium/src/testing/buildbot/chromium.win.json?type\u003dcs\u0026q\u003dservices_unittests\u0026l\u003d985",
+      "parentUuid": "f2cbdbd1_eeba1545",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 62
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93b365e4_1fdf6ade",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 13
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a1879b67_d5797903",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "How about using SystemErrorCodeToString(hr)[1] appending DLOG.\n\n[1] https://cs.chromium.org/chromium/src/base/logging.cc?type\u003dcs\u0026l\u003d928",
+      "parentUuid": "3e8d608c_44c18270",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d17853ea_48f53a23",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 13
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b8c241d3_2113b04f",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d17853ea_48f53a23",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a27a652b_d55c37b4",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 13
@@ -108,6 +180,24 @@
       "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6a8732_762b54b7",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a27a652b_d55c37b4",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "f116b4fa_68abc6ad",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98ba0684_6c65394d",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46a0c3aa_50776841",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 13
@@ -145,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "403ad747_1be30a1a",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46a0c3aa_50776841",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f139cdb0_5c8f9d63",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 13
@@ -159,6 +285,24 @@
       "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee14321_07ccc89e",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f139cdb0_5c8f9d63",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "a450b168_52fb5d09",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "We should call Windows::Foundation::Initialize to initialize the thread instead of CoInitializeEx if we want to use the Windows Runtime APIs or if we want to use both COM and Windows Runtime components as commented in CoInitializeEx function[1]. \n\n[1] https://msdn.microsoft.com/en-us/library/windows/desktop/ms695279(v\u003dvs.85).aspx",
+      "parentUuid": "3b3596f4_0f42b83a",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b84e5cd_904b0a51",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 13
@@ -226,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "190eabbb_befce538",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b84e5cd_904b0a51",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9a1fefb_180e1800",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 13
@@ -240,6 +426,24 @@
       "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8948a25e_3f12f6a0",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9a1fefb_180e1800",
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "fd109112_77aa551d",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "463a836b_1262f3f4",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f542808_c12ce4fc",
         "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
         "patchSetId": 13
@@ -286,6 +514,30 @@
       "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a98bf8_1031caa7",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-23T08:38:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f542808_c12ce4fc",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 75
+      },
+      "revId": "f90001bad0c13e8a853abee9c1342a2fe2d45770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
