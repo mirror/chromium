@@ -234,6 +234,30 @@
     },
     {
       "key": {
+        "uuid": "f23f363a_40f7aefe",
+        "filename": "components/autofill/core/browser/form_data_importer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-23T19:49:50Z",
+      "side": 1,
+      "message": "Actually, I found a cleaner way. To make sure it works, I created a draft CL you can copy from.\n\nhttps://chromium-review.googlesource.com/#/c/chromium/src/+/734129",
+      "parentUuid": "7f1adf40_40f56986",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "755d0abe_88da3256",
         "filename": "components/autofill/core/browser/payments/payments_client.h",
         "patchSetId": 2
