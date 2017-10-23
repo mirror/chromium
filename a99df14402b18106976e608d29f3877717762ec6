@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56e163fc_b1db5cbd",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "I don\u0027t think this condition is needed, removed from the new patch.",
+      "parentUuid": "2e245d53_de588f3a",
+      "range": {
+        "startLine": 324,
+        "startChar": 17,
+        "endLine": 325,
+        "endChar": 73
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc5a94b9_f0285240",
         "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
         "patchSetId": 54
@@ -45,6 +69,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67acac55_959eb8d8",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc5a94b9_f0285240",
+      "range": {
+        "startLine": 635,
+        "startChar": 13,
+        "endLine": 635,
+        "endChar": 38
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4082070a_e1ff5a63",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a70e15c2_9342a6b4",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6377fc7_aa023611",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 54
@@ -91,6 +163,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8940ba1c_d4c2d5d1",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6377fc7_aa023611",
+      "range": {
+        "startLine": 47,
+        "startChar": 30,
+        "endLine": 47,
+        "endChar": 59
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1ae5ad80_bafc98fa",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c0910f_4c8ecb8f",
+      "range": {
+        "startLine": 50,
+        "startChar": 75,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd520ef1_216cd2e1",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 54
@@ -137,6 +257,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fc7bca_f6c0dcd4",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd520ef1_216cd2e1",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0c92d17a_ca01d73e",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "I rewrote the comments here, hopefully it is more clear.",
+      "parentUuid": "9284f416_841bf03a",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 54
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a164af6_37876aa2",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 54
@@ -183,6 +351,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd57edbb_cc1b46fc",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a164af6_37876aa2",
+      "range": {
+        "startLine": 97,
+        "startChar": 45,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "2958a4b0_87fbcb99",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "050842dd_3a7bd310",
+      "range": {
+        "startLine": 171,
+        "startChar": 60,
+        "endLine": 171,
+        "endChar": 66
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe1f1abe_a238ed12",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 54
@@ -229,6 +445,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15269fce_a83dac7b",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I want it to say.",
+      "parentUuid": "fe1f1abe_a238ed12",
+      "range": {
+        "startLine": 172,
+        "startChar": 43,
+        "endLine": 172,
+        "endChar": 65
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "9eb12a03_9337b6e2",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "I added a DCHECK. I think if we are here, then the |suppress_manipulation_events_| should have value.",
+      "parentUuid": "f64334f8_37badfdc",
+      "range": {
+        "startLine": 237,
+        "startChar": 38,
+        "endLine": 237,
+        "endChar": 67
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bfd8b7_ebc1459c",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 54
@@ -275,6 +539,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd568e1_72892202",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92bfd8b7_ebc1459c",
+      "range": {
+        "startLine": 267,
+        "startChar": 10,
+        "endLine": 267,
+        "endChar": 28
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "168fad5e_a0bc5d30",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Thanks. I am surprised that presubmit check didn\u0027t catch this :)",
+      "parentUuid": "ef16d0ac_373d3586",
+      "range": {
+        "startLine": 269,
+        "startChar": 74,
+        "endLine": 269,
+        "endChar": 0
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1694ee_439d179a",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 54
@@ -321,6 +633,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c03c3b1_0861f984",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "I changed to OnReceiveWhiteListedTouchAction.",
+      "parentUuid": "7f1694ee_439d179a",
+      "range": {
+        "startLine": 311,
+        "startChar": 26,
+        "endLine": 311,
+        "endChar": 29
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "5e123d07_9b8869e2",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a4ca0e_aa3965a3",
+      "range": {
+        "startLine": 337,
+        "startChar": 18,
+        "endLine": 337,
+        "endChar": 38
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60efc251_ab9d3e4c",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 54
@@ -367,6 +727,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f652b67_4fc0edb6",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60efc251_ab9d3e4c",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "d6964fff_beb23315",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "949c1c8e_2f18d0cb",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f5f3f68_9db5f09e",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 54
@@ -413,6 +821,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944713b8_99bbfb93",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Right, this together with the local var |allowed_touch_action| do make things unclear. I like the idea of |acked_touch_action_|, the only concern I have is this: we are changing the response from the compositor to say |DID_HANDLE_NON_BLOCKING| instead of |DID_NOT_HANDLE|, which means the compositor is acking the event. So |acked| could mean acked from compositor. Instead I propose |blink_computed_touch_action_| which implies its meaning: this is the touch action computed and sent by blink. WDYT?",
+      "parentUuid": "5f5f3f68_9db5f09e",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 56
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "2216eaa2_61676cd9",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 6296,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4285903f_b38f3e0b",
+      "range": {
+        "startLine": 6296,
+        "startChar": 37,
+        "endLine": 6296,
+        "endChar": 57
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40044255_e11bfa2e",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 54
@@ -462,6 +918,30 @@
     },
     {
       "key": {
+        "uuid": "eb54bd1c_a4466480",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40044255_e11bfa2e",
+      "range": {
+        "startLine": 1051,
+        "startChar": 7,
+        "endLine": 1051,
+        "endChar": 56
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10ae420e_ab3cb90d",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 54
@@ -482,6 +962,30 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0c878e_141a68a4",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Yes, it is better to be outside.",
+      "parentUuid": "10ae420e_ab3cb90d",
+      "range": {
+        "startLine": 1053,
+        "startChar": 4,
+        "endLine": 1053,
+        "endChar": 38
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -528,6 +1032,54 @@
       "revId": "a99df14402b18106976e608d29f3877717762ec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666b30bb_eda57a64",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b3f70d_800d1fa7",
+      "range": {
+        "startLine": 1084,
+        "startChar": 5,
+        "endLine": 1084,
+        "endChar": 11
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db8a2fba_b92b3d87",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T11:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb7cd9d5_a7f452d8",
+      "range": {
+        "startLine": 1084,
+        "startChar": 60,
+        "endLine": 1084,
+        "endChar": 63
+      },
+      "revId": "a99df14402b18106976e608d29f3877717762ec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
