@@ -86,7 +86,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      * @param methodNames                    A set of payment method names supported by the payment
      *                                       app.
      * @param capabilities                   A set of capabilities of the payment instruments in
-     *                                       this payment app (only valid for basic-card payment 
+     *                                       this payment app (only valid for basic-card payment
      *                                       method for now).
      * @param preferredRelatedApplicationIds A set of preferred related application Ids.
      */
@@ -124,6 +124,8 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             Map<String, PaymentDetailsModifier> modifiers, final InstrumentsCallback callback) {
         if (isOnlySupportBasiccard(methodDataMap)
                 && !matchBasiccardCapabilities(methodDataMap.get(BASIC_CARD_PAYMENT_METHOD))) {
+            // Do not list this app if 'basic-card' is the only supported payment method with
+            // unmatched capabilities.
             new Handler().post(() -> {
                 List<PaymentInstrument> instruments = new ArrayList();
                 callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
@@ -152,7 +154,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     }
 
     private boolean isOnlySupportBasiccard(Map<String, PaymentMethodData> methodDataMap) {
-        Set<String> requestMethods = methodDataMap.keySet();
+        Set<String> requestMethods = new HashSet<>(methodDataMap.keySet());
         requestMethods.retainAll(mMethodNames);
         if (requestMethods.size() == 1 && requestMethods.contains(BASIC_CARD_PAYMENT_METHOD)) {
             return true;
@@ -160,24 +162,29 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         return false;
     }
 
-    private boolean matchBasiccardCapabilities(PaymentMethodData methodData) {
-        if (methodData.supportedTypes.length == 0 && methodData.supportedNetworks.length == 0) {
+    private boolean matchBasiccardCapabilities(PaymentMethodData requestMethodData) {
+        // Empty supported card types and networks in payment request method data indicates it
+        // supports all card types and networks.
+        if (requestMethodData.supportedTypes.length == 0
+                && requestMethodData.supportedNetworks.length == 0) {
             return true;
         }
+        // Payment app with emtpy capabilities can only match payment request method data with empty
+        // supported card types and networks.
         if (mCapabilities.length == 0) return false;
 
-        Set<Integer> methodSupportedTypes = new HashSet<>();
-        for (int i = 0; i < methodData.supportedTypes.length; i++) {
-            methodSupportedTypes.add(methodData.supportedTypes[i]);
+        Set<Integer> requestSupportedTypes = new HashSet<>();
+        for (int i = 0; i < requestMethodData.supportedTypes.length; i++) {
+            requestSupportedTypes.add(requestMethodData.supportedTypes[i]);
         }
-        Set<Integer> methodSupportedNetworks = new HashSet<>();
-        for (int i = 0; i < methodData.supportedNetworks.length; i++) {
-            methodSupportedNetworks.add(methodData.supportedNetworks[i]);
+        Set<Integer> requestSupportedNetworks = new HashSet<>();
+        for (int i = 0; i < requestMethodData.supportedNetworks.length; i++) {
+            requestSupportedNetworks.add(requestMethodData.supportedNetworks[i]);
         }
 
         int j = 0;
         for (; j < mCapabilities.length; j++) {
-            if (!methodSupportedTypes.isEmpty()) {
+            if (!requestSupportedTypes.isEmpty()) {
                 int[] supportedTypes = mCapabilities[j].getSupportedCardTypes();
 
                 Set<Integer> capabilitiesSupportedCardTypes = new HashSet<>();
@@ -185,11 +192,11 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
                     capabilitiesSupportedCardTypes.add(supportedTypes[i]);
                 }
 
-                capabilitiesSupportedCardTypes.retainAll(methodSupportedTypes);
+                capabilitiesSupportedCardTypes.retainAll(requestSupportedTypes);
                 if (capabilitiesSupportedCardTypes.isEmpty()) continue;
             }
 
-            if (!methodSupportedNetworks.isEmpty()) {
+            if (!requestSupportedNetworks.isEmpty()) {
                 int[] supportedNetworks = mCapabilities[j].getSupportedCardNetworks();
 
                 Set<Integer> capabilitiesSupportedCardNetworks = new HashSet<>();
@@ -197,7 +204,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
                     capabilitiesSupportedCardNetworks.add(supportedNetworks[i]);
                 }
 
-                capabilitiesSupportedCardNetworks.retainAll(methodSupportedNetworks);
+                capabilitiesSupportedCardNetworks.retainAll(requestSupportedNetworks);
                 if (capabilitiesSupportedCardNetworks.isEmpty()) continue;
             }
 
