@@ -16,6 +16,47 @@
       "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55cc13d_78391182",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T04:45:18Z",
+      "side": 1,
+      "message": "Nothing obvious.  But then I haven\u0027t developed on iOS so I don\u0027t know it\u0027s foibles.\n\nOne thing that come to mind: are you testing it on a regular page?  Zero suggest is disabled on certain page types such as the new tab page.  Make sure you\u0027re testing on a non-special page.\n\nOther than that, I have no other other than debugging.  Is the provider getting created?  If so, when you focus, which mode of usage is it trying?  Contextual-URL?  Most visited? etc?  Does that mode return results?\n\nFor reference, contextual suggestion requests are ignored by the server on phone (again a chrome versus chrome-omni thing), so if that\u0027s the mode Chrome is in, that\u0027s why you\u0027re not getting results.",
+      "parentUuid": "2a8a3a88_3f158bb9",
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5c3a76_46b0ac90",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T04:45:18Z",
+      "side": 1,
+      "message": "BTW, don\u0027t you need an #else for desktop platforms?",
+      "range": {
+        "startLine": 333,
+        "startChar": 6,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
