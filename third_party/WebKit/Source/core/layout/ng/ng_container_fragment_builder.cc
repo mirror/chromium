@@ -77,4 +77,9 @@ NGContainerFragmentBuilder& NGContainerFragmentBuilder::AddOutOfFlowDescendant(
   return *this;
 }
 
+void NGContainerFragmentBuilder::ReserveCapacity(unsigned capacity) {
+  children_.ReserveCapacity(capacity);
+  offsets_.ReserveCapacity(capacity);
+}
+
 }  // namespace blink
