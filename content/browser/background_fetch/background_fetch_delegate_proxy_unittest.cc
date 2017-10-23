@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "base/guid.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
@@ -67,19 +68,17 @@ class FakeController : public BackgroundFetchDelegateProxy::Controller {
  public:
   FakeController() : weak_ptr_factory_(this) {}
 
-  void DidStartRequest(const scoped_refptr<BackgroundFetchRequestInfo>& request,
-                       const std::string& download_guid) override {
+  void DidStartRequest(
+      const scoped_refptr<BackgroundFetchRequestInfo>& request) override {
     request_started_ = true;
   }
 
   void DidUpdateRequest(
       const scoped_refptr<BackgroundFetchRequestInfo>& request,
-      const std::string& download_guid,
       uint64_t bytes_downloaded) override {}
 
   void DidCompleteRequest(
-      const scoped_refptr<BackgroundFetchRequestInfo>& request,
-      const std::string& download_guid) override {
+      const scoped_refptr<BackgroundFetchRequestInfo>& request) override {
     request_completed_ = true;
   }
 
@@ -109,14 +108,14 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest) {
   FakeController controller;
   ServiceWorkerFetchRequest fetch_request;
   auto request = base::MakeRefCounted<BackgroundFetchRequestInfo>(
-      0 /* request_index */, fetch_request);
+      0 /* request_index */, base::GenerateGUID(), fetch_request);
 
   EXPECT_FALSE(controller.request_started_);
   EXPECT_FALSE(controller.request_completed_);
 
   delegate_proxy_.StartRequest(kExampleUniqueId,
                                controller.weak_ptr_factory_.GetWeakPtr(),
-                               url::Origin(), request);
+                               base::GenerateGUID(), url::Origin(), request);
   base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(controller.request_started_);
@@ -127,7 +126,7 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest_NotCompleted) {
   FakeController controller;
   ServiceWorkerFetchRequest fetch_request;
   auto request = base::MakeRefCounted<BackgroundFetchRequestInfo>(
-      0 /* request_index */, fetch_request);
+      0 /* request_index */, base::GenerateGUID(), fetch_request);
 
   EXPECT_FALSE(controller.request_started_);
   EXPECT_FALSE(controller.request_completed_);
@@ -135,7 +134,7 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest_NotCompleted) {
   delegate_.set_complete_downloads(false);
   delegate_proxy_.StartRequest(kExampleUniqueId,
                                controller.weak_ptr_factory_.GetWeakPtr(),
-                               url::Origin(), request);
+                               base::GenerateGUID(), url::Origin(), request);
   base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(controller.request_started_);

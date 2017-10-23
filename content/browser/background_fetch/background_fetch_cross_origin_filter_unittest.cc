@@ -7,6 +7,7 @@
 #include <map>
 #include <string>
 
+#include "base/guid.h"
 #include "base/macros.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
 #include "content/common/service_worker/service_worker_types.h"
@@ -38,7 +39,8 @@ class BackgroundFetchCrossOriginFilterTest : public ::testing::Test {
           response_headers) {
     scoped_refptr<BackgroundFetchRequestInfo> request_info =
         base::MakeRefCounted<BackgroundFetchRequestInfo>(
-            0 /* request_info */, ServiceWorkerFetchRequest());
+            0 /* request_info */, base::GenerateGUID(),
+            ServiceWorkerFetchRequest());
 
     request_info->response_headers_ = response_headers;
     request_info->url_chain_ = {GURL(response_url)};

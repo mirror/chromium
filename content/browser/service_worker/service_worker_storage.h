@@ -74,6 +74,10 @@ class CONTENT_EXPORT ServiceWorkerStorage
   typedef base::Callback<void(
       const std::vector<std::pair<int64_t, std::string>>& user_data,
       ServiceWorkerStatusCode status)> GetUserDataForAllRegistrationsCallback;
+  using GetLeastUserDataKeyForAllRegistrationsCallback =
+      base::Callback<void(int64_t /* registration_id */,
+                          const std::string& /* key */,
+                          ServiceWorkerStatusCode /* status */)>;
 
   ~ServiceWorkerStorage() override;
 
@@ -207,11 +211,16 @@ class CONTENT_EXPORT ServiceWorkerStorage
   void GetUserDataForAllRegistrations(
       const std::string& key,
       const GetUserDataForAllRegistrationsCallback& callback);
-  // Responds with all registrations that have user data with a particular key,
-  // as well as that user data.
+  // Responds with all user data whose key starts with |key_prefix|, and the
+  // corresponding registrations.
   void GetUserDataForAllRegistrationsByKeyPrefix(
       const std::string& key_prefix,
       const GetUserDataForAllRegistrationsCallback& callback);
+  // Get the lexicographically smallest key that starts with |key_prefix|, and
+  // its corresponding registration.
+  void GetLeastUserDataKeyForAllRegistrationsByKeyPrefix(
+      const std::string& key_prefix,
+      const GetLeastUserDataKeyForAllRegistrationsCallback& callback);
 
   // Returns true if any service workers at |origin| have registered for foreign
   // fetch.

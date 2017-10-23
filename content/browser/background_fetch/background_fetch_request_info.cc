@@ -17,10 +17,12 @@ namespace content {
 
 BackgroundFetchRequestInfo::BackgroundFetchRequestInfo(
     int request_index,
+    const std::string& download_guid,
     const ServiceWorkerFetchRequest& fetch_request)
     : RefCountedDeleteOnSequence<BackgroundFetchRequestInfo>(
           base::SequencedTaskRunnerHandle::Get()),
       request_index_(request_index),
+      download_guid_(download_guid),
       fetch_request_(fetch_request) {}
 
 BackgroundFetchRequestInfo::~BackgroundFetchRequestInfo() {

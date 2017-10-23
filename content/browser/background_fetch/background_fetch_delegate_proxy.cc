@@ -55,7 +55,6 @@ class BackgroundFetchDelegateProxy::Core
   }
 
   void StartRequest(const std::string& job_unique_id,
-                    const std::string& guid,
                     const url::Origin& origin,
                     scoped_refptr<BackgroundFetchRequestInfo> request) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -113,8 +112,9 @@ class BackgroundFetchDelegateProxy::Core
       headers.SetHeader("Origin", origin.Serialize());
     }
 
-    delegate_->DownloadUrl(job_unique_id, guid, fetch_request.method,
-                           fetch_request.url, traffic_annotation, headers);
+    delegate_->DownloadUrl(job_unique_id, request.download_guid(),
+                           fetch_request.method, fetch_request.url,
+                           traffic_annotation, headers);
   }
 
   // BackgroundFetchDelegate::Client implementation:
@@ -219,14 +219,11 @@ void BackgroundFetchDelegateProxy::StartRequest(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(job_controller);
 
-  std::string download_guid(base::GenerateGUID());
-
   controller_map_[download_guid] = std::make_pair(request, job_controller);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&Core::StartRequest, ui_core_ptr_, job_unique_id,
-                     download_guid, origin, request));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(&Core::StartRequest, ui_core_ptr_,
+                                         job_unique_id, origin, request));
 }
 
 void BackgroundFetchDelegateProxy::UpdateUI(const std::string& job_unique_id,

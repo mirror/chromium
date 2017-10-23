@@ -10,81 +10,87 @@ import "url/mojo/url.mojom";
 
 // The mode associated with a request.
 // https://fetch.spec.whatwg.org/#concept-request-mode
+// Do not renumber these, since Background Fetch persists them to disk.
 enum FetchRequestMode {
-  SAME_ORIGIN,
-  NO_CORS,
-  CORS,
-  CORS_WITH_FORCED_PREFLIGHT,
-  NAVIGATE,
+  SAME_ORIGIN = 0,
+  NO_CORS = 1,
+  CORS = 2,
+  CORS_WITH_FORCED_PREFLIGHT = 3,
+  NAVIGATE = 4,
 };
 
 // Type of the context associated with a request.
+// Do not renumber these, since Background Fetch persists them to disk.
 enum RequestContextType {
-  UNSPECIFIED,
-  AUDIO,
-  BEACON,
-  CSP_REPORT,
-  DOWNLOAD,
-  EMBED,
-  EVENT_SOURCE,
-  FAVICON,
-  FETCH,
-  FONT,
-  FORM,
-  FRAME,
-  HYPERLINK,
-  IFRAME,
-  IMAGE,
-  IMAGE_SET,
-  IMPORT,
-  INTERNAL,
-  LOCATION,
-  MANIFEST,
-  OBJECT,
-  PING,
-  PLUGIN,
-  PREFETCH,
-  SCRIPT,
-  SERVICE_WORKER,
-  SHARED_WORKER,
-  SUBRESOURCE,
-  STYLE,
-  TRACK,
-  VIDEO,
-  WORKER,
-  XML_HTTP_REQUEST,
-  XSLT,
+  UNSPECIFIED = 0,
+  AUDIO = 1,
+  BEACON = 2,
+  CSP_REPORT = 3,
+  DOWNLOAD = 4,
+  EMBED = 5,
+  EVENT_SOURCE = 6,
+  FAVICON = 7,
+  FETCH = 8,
+  FONT = 9,
+  FORM = 10,
+  FRAME = 11,
+  HYPERLINK = 12,
+  IFRAME = 13,
+  IMAGE = 14,
+  IMAGE_SET = 15,
+  IMPORT = 16,
+  INTERNAL = 17,
+  LOCATION = 18,
+  MANIFEST = 19,
+  OBJECT = 20,
+  PING = 21,
+  PLUGIN = 22,
+  PREFETCH = 23,
+  SCRIPT = 24,
+  SERVICE_WORKER = 25,
+  SHARED_WORKER = 26,
+  SUBRESOURCE = 27,
+  STYLE = 28,
+  TRACK = 29,
+  VIDEO = 30,
+  WORKER = 31,
+  XML_HTTP_REQUEST = 32,
+  XSLT = 33,
 };
 
 // Frame type of the context associated with a request.
+// Do not renumber these, since Background Fetch persists them to disk.
 enum RequestContextFrameType {
-  AUXILIARY,
-  NESTED,
-  NONE,
-  TOP_LEVEL,
+  AUXILIARY = 0,
+  NESTED = 1,
+  NONE = 2,
+  TOP_LEVEL = 3,
 };
 
 // Credentials mode indicating which credentials should be included with a
 // request.
+// Do not renumber these, since Background Fetch persists them to disk.
 enum FetchCredentialsMode {
-  OMIT,
-  SAME_ORIGIN,
-  INCLUDE,
-  PASSWORD,
+  OMIT = 0,
+  SAME_ORIGIN = 1,
+  INCLUDE = 2,
+  PASSWORD = 3,
 };
 
 // The redirect mode indicating how redirects should be handled.
 // https://fetch.spec.whatwg.org/#concept-request-redirect-mode
+// Do not renumber these, since Background Fetch persists them to disk.
 enum FetchRedirectMode {
-  FOLLOW,
-  ERROR_MODE,
-  MANUAL,
+  FOLLOW = 0,
+  ERROR_MODE = 1,
+  MANUAL = 2,
 };
 
 // Whether this is a regular fetch, or a foreign fetch request.
+// Do not renumber these, since Background Fetch persists them to disk.
 enum ServiceWorkerFetchType {
-  FETCH,
-  FOREIGN_FETCH,
+  FETCH = 0,
+  FOREIGN_FETCH = 1,
 };
 
 struct FetchAPIRequest {

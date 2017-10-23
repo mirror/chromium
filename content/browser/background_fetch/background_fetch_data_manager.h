@@ -113,13 +113,6 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
                       NextRequestCallback callback);
 
   // Marks that the |request|, part of the Background Fetch identified by
-  // |registration_id|, has been started as |download_guid|.
-  void MarkRequestAsStarted(
-      const BackgroundFetchRegistrationId& registration_id,
-      BackgroundFetchRequestInfo* request,
-      const std::string& download_guid);
-
-  // Marks that the |request|, part of the Background Fetch identified by
   // |registration_id|, has completed.
   void MarkRequestAsComplete(
       const BackgroundFetchRegistrationId& registration_id,
@@ -133,9 +126,10 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
       const BackgroundFetchRegistrationId& registration_id,
       SettledFetchesCallback callback);
 
-  // Marks that the backgroundfetched/backgroundfetchfail/backgroundfetchabort
-  // event is being dispatched. It would be nice to just call DeleteRegistration
-  // at this point, but unfortunately if JavaScript holds a reference to a
+  // Marks a registration as no longer active. Call this when the
+  // backgroundfetched/backgroundfetchfail/backgroundfetchabort event is about
+  // to be dispatched. It would be nice to just call DeleteRegistration at this
+  // point, but unfortunately if JavaScript holds a reference to a
   // BackgroundFetchRegistration object we need to keep the corresponding data
   // around until the last such reference is released (or until shutdown). And
   // we can't just move the Background Fetch registration's data to RAM as it
