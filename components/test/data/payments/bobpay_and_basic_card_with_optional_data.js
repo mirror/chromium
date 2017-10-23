@@ -193,3 +193,36 @@
       print('exception thrown<br>' + error.message);
     }
  }
+
+ /**
+ * Launches the PaymentRequest UI with Bob Pay and visa card as payment methods.
+ */
+ function buyWithBobPayAndVisa() {  // eslint-disable-line no-unused-vars
+  try {
+    new PaymentRequest(
+        [{
+          supportedMethods: ['https://bobpay.com', 'basic-card'],
+          data: {
+            supportedNetworks: ['visa'],
+          },
+        }],
+        {
+          total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+        })
+      .show()
+      .then(function(resp) {
+        resp.complete('success')
+          .then(function() {
+            print(JSON.stringify(resp, undefined, 2));
+          })
+          .catch(function(error) {
+            print('complete() rejected<br>' + error.message);
+          });
+        })
+      .catch(function(error) {
+        print('show() rejected<br>' + error.message);
+      });
+    } catch (error) {
+      print('exception thrown<br>' + error.message);
+    }
+ }

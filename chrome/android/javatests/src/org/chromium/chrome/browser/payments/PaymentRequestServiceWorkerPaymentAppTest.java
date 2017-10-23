@@ -247,4 +247,18 @@ public class PaymentRequestServiceWorkerPaymentAppTest {
                 "buy_with_visa", mPaymentRequestTestRule.getReadyForInput());
         Assert.assertEquals(1, mPaymentRequestTestRule.getNumberOfPaymentInstruments());
     }
+
+    @Test
+    @MediumTest
+    @Feature({"Payments"})
+    public void testHasBobPayAndNoCapabilities()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        String[] supportedMethodNames = {"https://bobpay.com", "basic-card"};
+        ServiceWorkerPaymentApp.Capabilities[] capabilities = {};
+        installMockServiceWorkerPaymentApp(supportedMethodNames, capabilities);
+
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "buy_with_bobpay_and_visa", mPaymentRequestTestRule.getReadyForInput());
+        Assert.assertEquals(1, mPaymentRequestTestRule.getNumberOfPaymentInstruments());
+    }
 }

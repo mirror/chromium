@@ -85,9 +85,9 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      * @param icon                           The drawable icon of the payment app.
      * @param methodNames                    A set of payment method names supported by the payment
      *                                       app.
-     * @param capabilities                   A set of capabilities of the payment instruments in this
-     *                                       payment app (only valid for basic-card payment method
-     *                                       for now).
+     * @param capabilities                   A set of capabilities of the payment instruments in
+     *                                       this payment app (only valid for basic-card payment 
+     *                                       method for now).
      * @param preferredRelatedApplicationIds A set of preferred related application Ids.
      */
     public ServiceWorkerPaymentApp(WebContents webContents, long registrationId, URI scope,
@@ -122,15 +122,13 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     public void getInstruments(Map<String, PaymentMethodData> methodDataMap, String origin,
             String iframeOrigin, byte[][] unusedCertificateChain,
             Map<String, PaymentDetailsModifier> modifiers, final InstrumentsCallback callback) {
-        if (methodDataMap.containsKey(BASIC_CARD_PAYMENT_METHOD)
-                && mMethodNames.contains(BASIC_CARD_PAYMENT_METHOD)) {
-            if (!matchBasiccardCapabilities(methodDataMap.get(BASIC_CARD_PAYMENT_METHOD))) {
-                new Handler().post(() -> {
-                    List<PaymentInstrument> instruments = new ArrayList();
-                    callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
-                });
-                return;
-            }
+        if (isOnlySupportBasiccard(methodDataMap)
+                && !matchBasiccardCapabilities(methodDataMap.get(BASIC_CARD_PAYMENT_METHOD))) {
+            new Handler().post(() -> {
+                List<PaymentInstrument> instruments = new ArrayList();
+                callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
+            });
+            return;
         }
 
         if (mIsIncognito) {
@@ -151,6 +149,15 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
                     }
                     callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
                 });
+    }
+
+    private boolean isOnlySupportBasiccard(Map<String, PaymentMethodData> methodDataMap) {
+        Set<String> requestMethods = methodDataMap.keySet();
+        requestMethods.retainAll(mMethodNames);
+        if (requestMethods.size() == 1 && requestMethods.contains(BASIC_CARD_PAYMENT_METHOD)) {
+            return true;
+        }
+        return false;
     }
 
     private boolean matchBasiccardCapabilities(PaymentMethodData methodData) {
