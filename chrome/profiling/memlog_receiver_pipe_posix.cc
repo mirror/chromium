@@ -18,11 +18,8 @@ namespace profiling {
 
 namespace {
 
-// Use a large buffer for our pipe. We don't want the sender to block
-// if at all possible since it will slow the app down quite a bit.
-//
-// TODO(ajwong): Figure out how to size this. Currently the number is cribbed
-// from the right size for windows named pipes.
+// The read buffer should be the same as the write buffer, 64kb. See
+// memlog_allocator_shim.cc
 const int kReadBufferSize = 1024 * 64;
 
 }  // namespace
@@ -46,16 +43,8 @@ void MemlogReceiverPipe::OnFileCanReadWithoutBlocking(int fd) {
   do {
     base::circular_deque<mojo::edk::PlatformHandle> dummy_for_receive;
 
-#if defined(OS_MACOSX)
-    // macOS uses a pipe rather than a socket, so we cannot call
-    // PlatformChannelRecvmsg. See the creation in ProfilingProcessHost for more
-    // details.
     bytes_read = HANDLE_EINTR(
         read(handle_.get().handle, read_buffer_.get(), kReadBufferSize));
-#else
-    bytes_read = mojo::edk::PlatformChannelRecvmsg(
-        handle_.get(), read_buffer_.get(), kReadBufferSize, &dummy_for_receive);
-#endif
     if (bytes_read > 0) {
       receiver_task_runner_->PostTask(
           FROM_HERE,
