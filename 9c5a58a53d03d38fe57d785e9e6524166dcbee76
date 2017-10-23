@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4774728c_7a4bf584",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-23T09:03:11Z",
+      "side": 1,
+      "message": "Nit: Use `for (NearOomObserver\u0026 observer : observers_)`?\n\nOr alternatively, see my comment on NearOomObserver.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "9c5a58a53d03d38fe57d785e9e6524166dcbee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c887d07c_211a0974",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-23T09:03:11Z",
+      "side": 1,
+      "message": "We could even replace this interface with a base::Closure and the ObserverList\u003c\u003e with a base::CallbackList\u003c\u003e.",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "9c5a58a53d03d38fe57d785e9e6524166dcbee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
