@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e4e228_d531c116",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-23T17:53:40Z",
+      "side": 1,
+      "message": "TODO: It\u0027d be good to validate this more comprehensively (pulling out the parsing and validation to a helper function that returns a bool; for example use base::IsValidGUIDOutputString for unique_id).",
+      "range": {
+        "startLine": 574,
+        "startChar": 8,
+        "endLine": 578,
+        "endChar": 72
+      },
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebf7462_a6491fe7",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-23T17:53:40Z",
+      "side": 1,
+      "message": "This will need to be defined either in content/browser/background_fetch/background_fetch.proto or in a centralized place near where mojom::FetchAPIRequest is defined. If Background Fetch ends up needing special logic to serialize request bodies to disk (though ideally that problem would also be solved centrally, since similar solutions are likely to be required for anyone else that needs to persist FetchAPIRequests), then that may be a reason to have a background-fetch-specific definition of the proto.\n\nDitto it should be parsed and validated in a helper function. Obviously the fields won\u0027t be called foo bar baz :) And that helper function should probably return the scoped_refptr\u003cBackgroundFetchRequestInfo\u003e used below.",
+      "range": {
+        "startLine": 592,
+        "startChar": 4,
+        "endLine": 592,
+        "endChar": 33
+      },
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e81f2f_5856c658",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-23T17:53:40Z",
+      "side": 1,
+      "message": "Delete this if block. The scoped_refptr\u003cBackgroundFetchRequestInfo\u003e should be generated above, see previous comment.",
+      "range": {
+        "startLine": 602,
+        "startChar": 4,
+        "endLine": 605,
+        "endChar": 5
+      },
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8c4527_fac3fae9",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-23T17:53:40Z",
+      "side": 1,
+      "message": "Delete this commented out line.",
+      "range": {
+        "startLine": 611,
+        "startChar": 2,
+        "endLine": 611,
+        "endChar": 61
+      },
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8634eca_d114eb18",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-23T17:53:40Z",
+      "side": 1,
+      "message": "Add comment: The |unique_id| GUID only needs to be generated when the request becomes active, but it was easier to generate one in advance in this legacy flow. The kEnableBackgroundFetchPersistence flow generates it at the right point.",
+      "range": {
+        "startLine": 908,
+        "startChar": 27,
+        "endLine": 908,
+        "endChar": 47
+      },
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8285e730_ec147929",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-23T17:53:40Z",
+      "side": 1,
+      "message": "This method is needed because if we separately clear then store or store then clear, the database can get stuck in an inconsistent state where a request is either both active and pending at once, or neither active nor pending. BackgroundFetchDataManager::Cleanup doesn\u0027t help, since even if we detect the inconsistencies, the operations to clean them up can fail.\n\nThis need is not Background Fetch specific, but is actually a core primitive that it makes sense for the SWDB to expose (indeed, WriteBatches are one of the only primitives exposed by the underlying leveldb).\n\nThe method declaration needs a definition. Mirror the implementation (and naming and tests) of StoreRegistrationUserData and ClearRegistrationUserData, creating a corresponding ServiceWorkerDatabase::DeleteAndWriteUserData that does both operations in the same leveldb::WriteBatch. And comment the ServiceWorkerStorage version to explain that this atomically both clears and deletes or does neither. \n\nFor bonus points (assuming the owners approve), delete ServiceWorkerDatabase::DeleteUserData and ServiceWorkerDatabase::WriteUserData, and make both StoreRegistrationUserData and ClearRegistrationUserData be backed by the new ServiceWorkerDatabase::DeleteAndWriteUserData instead.",
+      "range": {
+        "startLine": 223,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 40
+      },
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57063fb2_d23f35c8",
+        "filename": "content/browser/service_worker/service_worker_storage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-23T17:53:40Z",
+      "side": 1,
+      "message": "This method also needs an implementation. It\u0027ll ultimately behave very similarly to GetUserDataForAllRegistrationsByKeyPrefix, except that in the ServiceWorkerDatabase part it\u0027ll just return the first key found by the iterator, if any.\n\nNote that currently we\u0027re only operating on a single unique_id at a time, so we could do a GetLeastUserDataKeyByKeyPrefix(registration_id, key_prefix, callback) instead - but once we implement global scheduling, we\u0027ll want to be able to get the globally smallest key, across all unique_ids (and hence across all [service_worker_]registration_ids), so implementing it that way in the first place as I\u0027ve declared here reduces churn.",
+      "range": {
+        "startLine": 221,
+        "startChar": 7,
+        "endLine": 221,
+        "endChar": 56
+      },
+      "revId": "b31e0539c74ead8aa1d280bc4b144d91a5d96a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
