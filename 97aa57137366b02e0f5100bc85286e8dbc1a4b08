@@ -22,6 +22,57 @@
       "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8b4b59_d3ccc8bc",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-10-23T21:51:32Z",
+      "side": 1,
+      "message": "Would it make sense to do this as part of the usual commit flow instead of a separate PostTask? Do we need to worry about the URL getting updated out-of-sync with the page that\u0027s currently being drawn?",
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e5024a_f7805d12",
+        "filename": "cc/trees/single_thread_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-10-23T21:51:32Z",
+      "side": 1,
+      "message": "This sounds a bit confusing. How about something like \"Single-threaded mode is only for browser compositing and for renderers in layout tests. This will still get called in the latter case, but we don\u0027t need to record UKM in that case.\"",
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860e97f2_66cebb7b",
+        "filename": "cc/trees/ukm_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-10-23T21:51:32Z",
+      "side": 1,
+      "message": "Should this call only happen if we\u0027re in smoothness mode?",
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
