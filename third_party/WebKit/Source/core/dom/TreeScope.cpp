@@ -195,8 +195,10 @@ HTMLMapElement* TreeScope::GetImageMap(const String& url) const {
       image_maps_by_name_->GetElementByMapName(AtomicString(name), *this));
 }
 
-static bool PointWithScrollAndZoomIfPossible(const Document& document,
-                                             IntPoint& point) {
+// If the point is not in the viewport, returns false. Otherwise, adjusts the
+// point to account for the frame's zoom and scroll.
+static bool PointWithFrameScrollAndZoomIfPossible(Document& document,
+                                                  IntPoint& point) {
   LocalFrame* frame = document.GetFrame();
   if (!frame)
     return false;
@@ -204,24 +206,31 @@ static bool PointWithScrollAndZoomIfPossible(const Document& document,
   if (!frame_view)
     return false;
 
+  // The visibleContentRect check below requires that scrollbars are up-to-date.
+  document.UpdateStyleAndLayoutIgnorePendingStylesheets();
+
   FloatPoint point_in_document(point);
   point_in_document.Scale(frame->PageZoomFactor(), frame->PageZoomFactor());
-  point_in_document.Move(frame_view->GetScrollOffset());
+  auto* scrollable_area = frame_view->LayoutViewportScrollableArea();
+  point_in_document.Move(scrollable_area->GetScrollOffset());
   IntPoint rounded_point_in_document = RoundedIntPoint(point_in_document);
 
-  if (!frame_view->VisibleContentRect().Contains(rounded_point_in_document))
+  if (!scrollable_area->VisibleContentRect().Contains(
+          rounded_point_in_document)) {
     return false;
+  }
 
-  point = rounded_point_in_document;
+  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+    point = rounded_point_in_document;
   return true;
 }
 
-HitTestResult HitTestInDocument(const Document* document,
+HitTestResult HitTestInDocument(Document* document,
                                 int x,
                                 int y,
                                 const HitTestRequest& request) {
   IntPoint hit_point(x, y);
-  if (!PointWithScrollAndZoomIfPossible(*document, hit_point))
+  if (!PointWithFrameScrollAndZoomIfPossible(*document, hit_point))
     return HitTestResult();
 
   if (!document->IsActive())
@@ -292,7 +301,7 @@ HeapVector<Member<Element>> TreeScope::ElementsFromHitTestResult(
 HeapVector<Member<Element>> TreeScope::ElementsFromPoint(int x, int y) const {
   Document& document = RootNode().GetDocument();
   IntPoint hit_point(x, y);
-  if (!PointWithScrollAndZoomIfPossible(document, hit_point))
+  if (!PointWithFrameScrollAndZoomIfPossible(document, hit_point))
     return HeapVector<Member<Element>>();
 
   HitTestRequest request(HitTestRequest::kReadOnly | HitTestRequest::kActive |
