@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f4cebbc_585b981f",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-23T16:39:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2e5552_ec70fa74",
+      "revId": "9f01ea144f4531f59377d9e305a82c9f6a57e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f933c46_55fa5b1b",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8e440cb4_8a3718f9",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-23T16:39:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f933c46_55fa5b1b",
+      "range": {
+        "startLine": 132,
+        "startChar": 46,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "9f01ea144f4531f59377d9e305a82c9f6a57e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2d5455_473ffe90",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "9f01ea144f4531f59377d9e305a82c9f6a57e69d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d929806_8edb975a",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-23T16:39:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2d5455_473ffe90",
+      "revId": "9f01ea144f4531f59377d9e305a82c9f6a57e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
