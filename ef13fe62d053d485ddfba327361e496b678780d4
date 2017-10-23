@@ -134,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "fce87809_78e12378",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T02:24:35Z",
+      "side": 1,
+      "message": "When a group contains N repeats, they are collapsed into the first occurring viewMessage.  Really, we want `lastVisibleViewMessageInGroup \u003d\u003d\u003d viewMessageInGroup`, which we don\u0027t have.\n\nRepro: on about:blank, evaluate `document.write()` many times, expand the group, the \u0027group-closed\u0027 isn\u0027t applied to the visible child.\n\nMight be fixable if ConsoleViewMessage L944 adds the similar-group-marker to the message\u0027s ._nestingLevelMarkers.  Or maybe we could expose updateNestingLevel() ?  That would also allow us to rely on our EndGroup to add the \u0027group-closed\u0027 for us.",
+      "range": {
+        "startLine": 761,
+        "startChar": 51,
+        "endLine": 761,
+        "endChar": 109
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2f1dc4a_6e107ff1",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -323,6 +346,52 @@
     },
     {
       "key": {
+        "uuid": "d4df9373_9629cf07",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T02:24:35Z",
+      "side": 1,
+      "message": "nit: /** @type {!Map\u003c!RegExp, string\u003e} */ (new Map())",
+      "range": {
+        "startLine": 1348,
+        "startChar": 23,
+        "endLine": 1348,
+        "endChar": 26
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257586fd_708cea1e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T02:24:35Z",
+      "side": 1,
+      "message": "Could we also add a handlerRegex?  I think it\u0027d be nice in a demo to group these:\n\u0027DOMContentLoaded\u0027 handler took 955ms\n\u0027setTimeout\u0027 handler took 63ms\n\nas\nEvent handler took Nms",
+      "range": {
+        "startLine": 1352,
+        "startChar": 17,
+        "endLine": 1352,
+        "endChar": 27
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17efcdd8_442ecfde",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -380,6 +449,29 @@
     },
     {
       "key": {
+        "uuid": "af28e2c3_ba5cd8dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T02:24:35Z",
+      "side": 1,
+      "message": "If we set the string to `Common.UIString(\u0027the future\u0027)`, we can get more messages to group together:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp?l\u003d742\nhttps://cs.chromium.org/chromium/src/chrome/renderer/chrome_content_renderer_client.cc?l\u003d1696",
+      "range": {
+        "startLine": 1386,
+        "startChar": 34,
+        "endLine": 1386,
+        "endChar": 36
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf29724_81268c5a",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -391,6 +483,30 @@
       "writtenOn": "2017-10-22T23:24:03Z",
       "side": 1,
       "message": "what is this?",
+      "range": {
+        "startLine": 1391,
+        "startChar": 27,
+        "endLine": 1391,
+        "endChar": 31
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09676bf0_c6adca1a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T02:24:35Z",
+      "side": 1,
+      "message": "We use `%o` as a substitution parameter from the backend.  Perhaps the regex can be `/ [%]o/g` to ensure we don\u0027t match on a \u0027%o\u0027 that happens to be inside a user\u0027s URL.",
+      "parentUuid": "5bf29724_81268c5a",
       "range": {
         "startLine": 1391,
         "startChar": 27,
