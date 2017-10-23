@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fcb00b3_58077513",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_session_end.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "General comment: We should use promise tests. I filed https://crbug.com/777567.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d190fddf_416964eb",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_no_gesture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "Is there a reason for the empty line at the beginning of some of these tests?",
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4289a4_29502fe9",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_no_gesture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "Should this be the string at the end rather than a comment? Now that there is a single test, we probably don\u0027t need to comment it here.",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f98a9f1_a4715004",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_supported.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 2
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e460096f_74e5d2cd",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_supported.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "This isn\u0027t very helpful. If we\u0027re going to have strings, they should explain the result.",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 51
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c80962d_e8789c04",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_unsupported.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "Should this be the string at the end rather than a comment?",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68f0224_b5fc3b22",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "Perhaps something like \"supportsSession does not return device that does not support requested exclusive property\"",
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b34cfd_e8540746",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-23T20:45:10Z",
+      "side": 1,
+      "message": "Similar comment",
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
