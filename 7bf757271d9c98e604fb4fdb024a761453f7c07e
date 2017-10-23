@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d918cd6b_3d65eb92",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:24:12Z",
+      "side": 1,
+      "message": "well that\u0027s the same thing, only contextual search uses this it, then it can just be resolved in contextual search code in chrome",
+      "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2cc412_aded88af",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:24:12Z",
+      "side": 1,
+      "message": "does this work for device scale implemented as zoom?",
+      "range": {
+        "startLine": 423,
+        "startChar": 50,
+        "endLine": 423,
+        "endChar": 61
+      },
+      "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfc7aa6_a0081a61",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:24:12Z",
+      "side": 1,
+      "message": "early out if nothing changed, ditto below",
+      "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba2e199_2fcb37ac",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:24:12Z",
+      "side": 1,
+      "message": "shrink should be on the window, rather than individual views, right?\n\nand the controls should just be stored out of band in content, rather than going through views?",
+      "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1f91a6_0a045a0c",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:24:12Z",
+      "side": 1,
+      "message": "extensive comment on what these are, including physical size, so that the next person looking at this don\u0027t have go through what I went through",
+      "revId": "7bf757271d9c98e604fb4fdb024a761453f7c07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
