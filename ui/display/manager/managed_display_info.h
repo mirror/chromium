@@ -323,13 +323,11 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   }
 
   // Returns a string representation of the ManagedDisplayInfo, excluding
-  // display
-  // modes.
+  // display modes.
   std::string ToString() const;
 
   // Returns a string representation of the ManagedDisplayInfo, including
-  // display
-  // modes.
+  // display modes.
   std::string ToFullString() const;
 
  private:
