@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "66628d7b_4615b23d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "style nit: switch?",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ee0ccda_870737fc",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 10
@@ -42,6 +59,23 @@
         "endLine": 37,
         "endChar": 40
       },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea95fe16_e1e96d3d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "definitely needs comments here what all these values are. looks like some of these are char indices, some of these are word indices?\n\nand then some things are adjusted to the start of the original selection, and some are not?\n\nI\u0027m having a really hard time grokking this class..",
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +128,23 @@
     },
     {
       "key": {
+        "uuid": "6cb5b975_36aece13",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "null check getContext as well",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f6fc0be_baeb296e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 10
@@ -128,6 +179,30 @@
       "writtenOn": "2017-10-20T19:23:40Z",
       "side": 1,
       "message": "Could you guard all of these with DEBUG constant? We probably don\u0027t want to spam developers with these logs.",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a529e22e_740ab943",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "665913be_48dba06b",
       "range": {
         "startLine": 103,
         "startChar": 8,
@@ -187,6 +262,91 @@
     },
     {
       "key": {
+        "uuid": "1e81bd95_69c8a9f5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "I\u0027m confused why does a \"logger\" contain any business logic state at all? Why is it that we don\u0027t want to shrink the logged selection here? I guess I\u0027m echoing changwan\u0027s point that actual logging, and business logic should be kept separate, and need a comment explaining the business logic, because code is very difficult to understand\n\nalso does all these index tracking make sense when the selection text could change?",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98a23ca_48641d22",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "this doesn\u0027t \"get\" anything",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9760457b_9a2b105d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "is this really a special case? shouldn\u0027t countWordsForward be returning 0 anyway?",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39741d8_1e382025",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "what if these return BreakIterator.DONE?",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd4f405_d4402afe",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "what is this? not understanding..",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba89a769_c742cfc8",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 10
@@ -204,6 +364,23 @@
         "endLine": 266,
         "endChar": 29
       },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384d7f4f_783ecdaa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "why are we doing reflection upstream? is this class going to be added in omr1? in which case need to move this code downstream so it can compile against omr1.",
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -239,6 +416,40 @@
       "side": 1,
       "message": "I suppose it\u0027s related to the comment for why this was added:\nThe clang-format tool is confused by the java 8 usage of default in an interface.",
       "parentUuid": "5923d89a_11393e8b",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f16c74_65dfda8b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "don\u0027t put things into the public interface unless it\u0027s used by a content embedder. and from the look of things, the entire body of this interface is not required, and embedder only really needs to know this opaque type exists?",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44a2eb8_4a0d08e5",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T15:08:18Z",
+      "side": 1,
+      "message": "are these names/values copied from somewhere? If so, write so in a comment",
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
