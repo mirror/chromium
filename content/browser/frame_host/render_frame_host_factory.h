@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "content/common/content_export.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 
 namespace content {
 
