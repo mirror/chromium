@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3afbe9a_774ee056",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T20:59:02Z",
+      "side": 1,
+      "message": "This is triggering on external/wpt/cssom-view/elementFromPoint.html which demonstrates how to hit this: call elementFromPoint on a detached document. Once again Stefan is right and we must admit defeat.\n\nThis DCHECK line has been replaced by an early return right before the hit test step.",
+      "revId": "53af9be6ba614965a0bd1ff3405f6e3b8479aa29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
