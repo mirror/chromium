@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6540ea1_4b18c8ae",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T17:47:43Z",
+      "side": 1,
+      "message": "Can we use \u0027rem\u0027 units instead? Longer explanation follows:\n\nUsing percentages is not the suggested way of achieving consistent font sizes, because they suffer from compounding problem. In other words, percentages are calculated with respect to their parent\u0027s font-size. So for example, if the \u003cinput\u003e\u0027s parent chain has a different font-size than the #slash parent\u0027s chain, the 81% evaluates to different absolute values for each.\n\nInstead \u0027rem\u0027 units are much easier to use, because they only depend on the \u003chtml\u003e element\u0027s font-size. See more info at https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Rems.",
+      "revId": "cee18b37e7d77a7f8f31e87adf18612af8f41d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
