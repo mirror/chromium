@@ -30,6 +30,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/Deprecation.h"
+#include "core/frame/Frame.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -1204,6 +1205,40 @@ bool UseCounter::HasRecordedMeasurement(WebFeature feature) const {
   DCHECK_GE(WebFeature::kNumberOfFeatures, feature);
 
   return features_recorded_.QuickGet(static_cast<int>(feature));
+}
+
+// Static
+void UseCounter::CountIfFeatureWouldBeBlockedByFeaturePolicy(
+    const LocalFrame* frame,
+    WebFeature blockedCrossOrigin,
+    WebFeature blockedSameOrigin) {
+  if (!frame)
+    return;
+
+  // Get the origin of the top-level document
+  SecurityOrigin* topOrigin =
+      frame->Tree().Top().GetSecurityContext()->GetSecurityOrigin();
+
+  // Check if this frame is same-origin with the top-level
+  if (!frame->GetSecurityContext()->GetSecurityOrigin()->CanAccess(topOrigin)) {
+    // This frame is cross-origin with the top-level frame, and so would be
+    // blocked without a feature policy.
+    UseCounter::Count(frame, blockedCrossOrigin);
+    return;
+  }
+
+  // Walk up the frame tree looking for any cross-origin embeds. Even if this
+  // frame is same-origin with the top-level, if it is embedded by a cross-
+  // origin frame (like A->B->A) it would be blocked without a feature policy.
+  const Frame* f =
+      frame;  // Cast to Frame* as the tree may include remote nodes.
+  while (!f->IsMainFrame()) {
+    if (!f->GetSecurityContext()->GetSecurityOrigin()->CanAccess(topOrigin)) {
+      UseCounter::Count(frame, blockedSameOrigin);
+      return;
+    }
+    f = f->Tree().Parent();
+  }
 }
 
 void UseCounter::Trace(blink::Visitor* visitor) {
