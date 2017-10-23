@@ -46,6 +46,30 @@
       "revId": "72593c409b261dd6a0036aef64c2a92a9485ffa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617dd4d5_c9696054",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-23T16:10:33Z",
+      "side": 1,
+      "message": "Here are a couple of CLs chained off of this one to show how this is used:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/732284\nhttps://chromium-review.googlesource.com/c/chromium/src/+/732343\n\nYou\u0027ll see base::Value::ToUniquePtrValue() is conveniently the same length as base::MakeUnique\u003cbase::Value\u003e(), so it\u0027s drop-in replacement, which I hope is more readable.",
+      "parentUuid": "c7a78efb_17f03eda",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "72593c409b261dd6a0036aef64c2a92a9485ffa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
