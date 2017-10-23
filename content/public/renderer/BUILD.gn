@@ -73,6 +73,7 @@ target(link_target_type, "renderer_sources") {
     "window_features_converter.cc",
     "window_features_converter.h",
     "worker_thread.h",
+    "v8_value_converter.h",
   ]
 
   configs += [ "//content:content_implementation" ]

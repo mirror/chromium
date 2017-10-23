@@ -531,6 +531,8 @@ target(link_target_type, "renderer") {
     "worker_thread_message_filter.h",
     "worker_thread_registry.cc",
     "worker_thread_registry.h",
+    "v8_value_converter_impl.cc",
+    "v8_value_converter_impl.h",
   ]
 
   if (!is_component_build) {
