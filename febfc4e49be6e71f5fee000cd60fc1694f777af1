@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d1d1ee8_1aa9d5a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T23:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b46a4897_1eb2c235",
+      "revId": "febfc4e49be6e71f5fee000cd60fc1694f777af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c84b953_832f4415",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T21:29:50Z",
       "side": 1,
       "message": "Why not all the titles are bold?",
+      "revId": "febfc4e49be6e71f5fee000cd60fc1694f777af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f923eda_80cacbef",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-23T23:06:08Z",
+      "side": 1,
+      "message": "This lets console.group()s remain bold, while our artificial groups are not.",
+      "parentUuid": "7c84b953_832f4415",
       "revId": "febfc4e49be6e71f5fee000cd60fc1694f777af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
