@@ -235,11 +235,15 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
 
   if power_off:
     autorun_file.write('echo Sleeping and shutting down...\n')
+    if use_device:
+      # A delay is required to give the guest OS or remote device a chance to
+      # flush its output before it terminates.
+      autorun_file.write('msleep 8000\n')
+      autorun_file.write('dm reboot\n')
+    else:
+      autorun_file.write('msleep 3000\n')
+      autorun_file.write('dm poweroff\n')
 
-    # A delay is required to give the guest OS or remote device a chance to
-    # flush its output before it terminates.
-    autorun_file.write('msleep %d\n' % (8000 if use_device else 3000))
-    autorun_file.write('dm poweroff\n')
 
   autorun_file.flush()
   os.chmod(autorun_file.name, 0750)
