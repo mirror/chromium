@@ -1032,6 +1032,30 @@
       "src/third_party/android_tools/sdk/platform-tools/adb",
     ],
   },
+  "validating_command_buffer_perftests": {
+    "label": "//gpu:command_buffer_perftests",
+    "type": "script",
+    "script": "//testing/scripts/run_gtest_perf_test.py",
+    "args": [
+      "command_buffer_perftests",
+      "--use-cmd-decoder=validating",
+      "--use-stub",
+      "--adb-path",
+      "src/third_party/android_tools/sdk/platform-tools/adb",
+    ],
+  },
+  "passthrough_command_buffer_perftests": {
+    "label": "//gpu:command_buffer_perftests",
+    "type": "script",
+    "script": "//testing/scripts/run_gtest_perf_test.py",
+    "args": [
+      "command_buffer_perftests",
+      "--use-cmd-decoder=passthrough",
+      "--use-angle=gl-null",
+      "--adb-path",
+      "src/third_party/android_tools/sdk/platform-tools/adb",
+    ],
+  },
   "angle_perftests": {
     "label": "//chrome/test:angle_perftests",
     "type": "script",
