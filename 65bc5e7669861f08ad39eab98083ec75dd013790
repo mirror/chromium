@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de87bd3_999a4beb",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 2324,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-23T22:01:27Z",
+      "side": 1,
+      "message": "Do we need to add args somewhere to have validating_command_buffer_perftests and passthrough_command_buffer_perftests do different things?",
+      "revId": "65bc5e7669861f08ad39eab98083ec75dd013790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
