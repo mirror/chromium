@@ -378,8 +378,7 @@ SkColor Textfield::GetTextColor() const {
   if (!use_default_text_color_)
     return text_color_;
 
-  return style::GetColor(style::CONTEXT_TEXTFIELD, GetTextStyle(),
-                         GetNativeTheme());
+  return style::GetColor(style::CONTEXT_TEXTFIELD, GetTextStyle(), *this);
 }
 
 void Textfield::SetTextColor(SkColor color) {

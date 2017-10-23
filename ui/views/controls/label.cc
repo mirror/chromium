@@ -58,8 +58,7 @@ Label::Label(const base::string16& text, int text_context, int text_style)
 
   // If an explicit style is given, ignore color changes due to the NativeTheme.
   if (text_style != style::STYLE_PRIMARY) {
-    SetEnabledColor(
-        style::GetColor(text_context, text_style, GetNativeTheme()));
+    SetEnabledColor(style::GetColor(text_context, text_style, *this));
   }
 }
 
@@ -526,7 +525,7 @@ void Label::OnPaint(gfx::Canvas* canvas) {
 }
 
 void Label::OnNativeThemeChanged(const ui::NativeTheme* theme) {
-  UpdateColorsFromTheme(theme);
+  UpdateColorsFromTheme();
 }
 
 gfx::NativeCursor Label::GetCursor(const ui::MouseEvent& event) {
@@ -832,7 +831,7 @@ void Label::Init(const base::string16& text, const gfx::FontList& font_list) {
   auto_color_readability_ = true;
   multi_line_ = false;
   max_lines_ = 0;
-  UpdateColorsFromTheme(GetNativeTheme());
+  UpdateColorsFromTheme();
   handles_tooltips_ = true;
   collapse_when_hidden_ = false;
   fixed_width_ = 0;
@@ -1000,21 +999,23 @@ void Label::ApplyTextColors() const {
   }
 }
 
-void Label::UpdateColorsFromTheme(const ui::NativeTheme* theme) {
+void Label::UpdateColorsFromTheme() {
   if (!enabled_color_set_) {
     requested_enabled_color_ =
-        style::GetColor(text_context_, style::STYLE_PRIMARY, theme);
+        style::GetColor(text_context_, style::STYLE_PRIMARY, *this);
   }
+  const ui::NativeTheme* native_theme = GetNativeTheme();
+  DCHECK(native_theme);
   if (!background_color_set_) {
-    background_color_ =
-        theme->GetSystemColor(ui::NativeTheme::kColorId_DialogBackground);
+    background_color_ = native_theme->GetSystemColor(
+        ui::NativeTheme::kColorId_DialogBackground);
   }
   if (!selection_text_color_set_) {
-    requested_selection_text_color_ = theme->GetSystemColor(
+    requested_selection_text_color_ = native_theme->GetSystemColor(
         ui::NativeTheme::kColorId_LabelTextSelectionColor);
   }
   if (!selection_background_color_set_) {
-    selection_background_color_ = theme->GetSystemColor(
+    selection_background_color_ = native_theme->GetSystemColor(
         ui::NativeTheme::kColorId_LabelTextSelectionBackgroundFocused);
   }
   RecalculateColors();

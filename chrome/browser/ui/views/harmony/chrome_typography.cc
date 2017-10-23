@@ -64,10 +64,10 @@ const gfx::FontList& LegacyTypographyProvider::GetFont(int context,
 
 SkColor LegacyTypographyProvider::GetColor(int context,
                                            int style,
-                                           const ui::NativeTheme& theme) const {
+                                           const views::View& view) const {
   // Use "disabled grey" for HINT and SECONDARY when Harmony is disabled.
   if (style == STYLE_HINT || style == STYLE_SECONDARY)
     style = views::style::STYLE_DISABLED;
 
-  return DefaultTypographyProvider::GetColor(context, style, theme);
+  return DefaultTypographyProvider::GetColor(context, style, view);
 }

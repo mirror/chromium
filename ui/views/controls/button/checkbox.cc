@@ -268,7 +268,7 @@ SkColor Checkbox::GetIconImageColor(bool checked) const {
                    ui::NativeTheme::kColorId_FocusedBorderColor)
              // When unchecked, the icon color matches push button text color.
              : style::GetColor(style::CONTEXT_BUTTON_MD, style::STYLE_PRIMARY,
-                               theme);
+                               *this);
 }
 
 void Checkbox::NotifyClick(const ui::Event& event) {

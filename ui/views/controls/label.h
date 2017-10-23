@@ -317,7 +317,7 @@ class VIEWS_EXPORT Label : public View,
   void ApplyTextColors() const;
 
   // Updates any colors that have not been explicitly set from the theme.
-  void UpdateColorsFromTheme(const ui::NativeTheme* theme);
+  void UpdateColorsFromTheme();
 
   bool ShouldShowDefaultTooltip() const;
 
