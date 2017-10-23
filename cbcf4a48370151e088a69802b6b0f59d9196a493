@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd0dbfd4_0995c217",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T19:21:07Z",
+      "side": 1,
+      "message": "Now there is :-)",
+      "parentUuid": "890f4976_468e43af",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "beaafc56_b7538a98",
         "filename": "content/browser/devtools/devtools_target_registry.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb71031_c7a84758",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T19:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beaafc56_b7538a98",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "267ed463_95305c5c",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T19:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c17e2d_1408a0a2",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5b14c3f_46f300d4",
         "filename": "content/browser/devtools/devtools_target_registry.h",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ba30687a_f497bef7",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T19:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5b14c3f_46f300d4",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f17cb7_06ec69f0",
         "filename": "content/browser/devtools/devtools_target_registry.h",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-20T00:00:00Z",
       "side": 1,
       "message": "The typical way is to Registry::GetInstance()-\u003eCallTheMethod. This makes it easier to have two instances later.",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb632a88_a80a469a",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T19:21:07Z",
+      "side": 1,
+      "message": "As discussed, got rid of the singleton.",
+      "parentUuid": "e3f17cb7_06ec69f0",
       "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "fd81fb29_78418959",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T19:21:07Z",
+      "side": 1,
+      "message": "Not sure if we want this -- for one, this would change on each update of the intercepted filters. Let\u0027s leave this for later.",
+      "parentUuid": "f671f887_8c614178",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "025341a2_aec3f82f",
         "filename": "content/browser/devtools/protocol/network_handler.cc",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0309319_df21a168",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-23T19:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025341a2_aec3f82f",
+      "revId": "cbcf4a48370151e088a69802b6b0f59d9196a493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
