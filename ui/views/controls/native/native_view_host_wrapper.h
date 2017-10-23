@@ -56,9 +56,16 @@ class NativeViewHostWrapper {
   // adjusted its position.
   virtual void UninstallClip() = 0;
 
-  // Shows the gfx::NativeView at the specified position (relative to the parent
-  // native view).
-  virtual void ShowWidget(int x, int y, int w, int h) = 0;
+  // Shows the gfx::NativeView within the specified region (relative to the
+  // parent native view) and with the given rendering size. The content will
+  // appear scaled if the |render_w| or |render_h| are different from |w| or
+  // |h|.
+  virtual void ShowWidget(int x,
+                          int y,
+                          int w,
+                          int h,
+                          int render_w,
+                          int render_h) = 0;
 
   // Hides the gfx::NativeView. NOTE: this may be invoked when the native view
   // is already hidden.
