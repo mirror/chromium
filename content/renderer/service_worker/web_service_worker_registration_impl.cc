@@ -56,10 +56,16 @@ scoped_refptr<WebServiceWorkerRegistrationImpl>
 WebServiceWorkerRegistrationImpl::CreateForServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
+  DCHECK(info->request.is_pending());
   auto* impl = new WebServiceWorkerRegistrationImpl(std::move(info));
   impl->host_for_global_scope_ =
       blink::mojom::ThreadSafeServiceWorkerRegistrationObjectHostAssociatedPtr::
           Create(std::move(impl->info_->host_ptr_info), io_task_runner);
+  io_task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WebServiceWorkerRegistrationImpl::BindRequest,
+                     base::Unretained(impl), std::move(impl->info_->request)));
+  impl->state_ = LifeState::NORMAL;
   return impl;
 }
 
@@ -67,16 +73,20 @@ WebServiceWorkerRegistrationImpl::CreateForServiceWorkerGlobalScope(
 scoped_refptr<WebServiceWorkerRegistrationImpl>
 WebServiceWorkerRegistrationImpl::CreateForServiceWorkerClient(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
+  DCHECK(info->request.is_pending());
   auto* impl = new WebServiceWorkerRegistrationImpl(std::move(info));
   impl->host_for_client_.Bind(std::move(impl->info_->host_ptr_info));
+  impl->BindRequest(std::move(impl->info_->request));
+  impl->state_ = LifeState::NORMAL;
   return impl;
 }
 
 void WebServiceWorkerRegistrationImpl::AttachForServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
-  if (info_)
+  if (state_ == LifeState::NORMAL)
     return;
+  DCHECK_EQ(LifeState::DETACHED, state_);
   DCHECK(!info->request.is_pending());
   Attach(std::move(info));
 
@@ -85,24 +95,28 @@ void WebServiceWorkerRegistrationImpl::AttachForServiceWorkerGlobalScope(
   host_for_global_scope_ =
       blink::mojom::ThreadSafeServiceWorkerRegistrationObjectHostAssociatedPtr::
           Create(std::move(info_->host_ptr_info), io_task_runner);
+  state_ = LifeState::NORMAL;
 }
 
 void WebServiceWorkerRegistrationImpl::AttachForServiceWorkerClient(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
-  if (info_)
+  if (state_ == LifeState::NORMAL)
     return;
+  DCHECK_EQ(LifeState::DETACHED, state_);
   DCHECK(!info->request.is_pending());
   Attach(std::move(info));
 
   DCHECK(!host_for_global_scope_);
   DCHECK(!host_for_client_);
   host_for_client_.Bind(std::move(info_->host_ptr_info));
+  state_ = LifeState::NORMAL;
 }
 
 void WebServiceWorkerRegistrationImpl::SetInstalling(
     const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
-  if (!info_)
+  if (state_ == LifeState::DETACHED)
     return;
+  DCHECK_EQ(LifeState::NORMAL, state_);
   if (proxy_)
     proxy_->SetInstalling(WebServiceWorkerImpl::CreateHandle(service_worker));
   else
@@ -111,8 +125,9 @@ void WebServiceWorkerRegistrationImpl::SetInstalling(
 
 void WebServiceWorkerRegistrationImpl::SetWaiting(
     const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
-  if (!info_)
+  if (state_ == LifeState::DETACHED)
     return;
+  DCHECK_EQ(LifeState::NORMAL, state_);
   if (proxy_)
     proxy_->SetWaiting(WebServiceWorkerImpl::CreateHandle(service_worker));
   else
@@ -121,8 +136,9 @@ void WebServiceWorkerRegistrationImpl::SetWaiting(
 
 void WebServiceWorkerRegistrationImpl::SetActive(
     const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
-  if (!info_)
+  if (state_ == LifeState::DETACHED)
     return;
+  DCHECK_EQ(LifeState::NORMAL, state_);
   if (proxy_)
     proxy_->SetActive(WebServiceWorkerImpl::CreateHandle(service_worker));
   else
@@ -130,8 +146,9 @@ void WebServiceWorkerRegistrationImpl::SetActive(
 }
 
 void WebServiceWorkerRegistrationImpl::OnUpdateFound() {
-  if (!info_)
+  if (state_ == LifeState::DETACHED)
     return;
+  DCHECK_EQ(LifeState::NORMAL, state_);
   if (proxy_)
     proxy_->DispatchUpdateFoundEvent();
   else
@@ -140,6 +157,7 @@ void WebServiceWorkerRegistrationImpl::OnUpdateFound() {
 
 void WebServiceWorkerRegistrationImpl::SetProxy(
     blink::WebServiceWorkerRegistrationProxy* proxy) {
+  DCHECK_EQ(LifeState::NORMAL, state_);
   DCHECK(info_);
   DCHECK(host_for_global_scope_ || host_for_client_);
   proxy_ = proxy;
@@ -196,10 +214,39 @@ void WebServiceWorkerRegistrationImpl::DetachAndMaybeDestroy() {
   host_for_client_.reset();
   host_for_global_scope_ = nullptr;
   info_ = nullptr;
+  if (state_ == LifeState::UNBOUND) {
+    state_ = LifeState::DEAD;
+    delete this;
+    return;
+  }
+  DCHECK_EQ(LifeState::NORMAL, state_);
+  state_ = LifeState::DETACHED;
+}
+
+void WebServiceWorkerRegistrationImpl::BindRequest(
+    blink::mojom::ServiceWorkerRegistrationObjectAssociatedRequest request) {
+  DCHECK(request.is_pending());
+  binding_.Bind(std::move(request));
+  binding_.set_connection_error_handler(
+      base::Bind(&WebServiceWorkerRegistrationImpl::OnConnectionError,
+                 base::Unretained(this)));
 }
 
 void WebServiceWorkerRegistrationImpl::OnConnectionError() {
-  delete this;
+  if (!creation_task_runner_->RunsTasksInCurrentSequence()) {
+    creation_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&WebServiceWorkerRegistrationImpl::OnConnectionError,
+                       base::Unretained(this)));
+    return;
+  }
+  if (state_ == LifeState::DETACHED) {
+    state_ = LifeState::DEAD;
+    delete this;
+    return;
+  }
+  DCHECK_EQ(LifeState::NORMAL, state_);
+  state_ = LifeState::UNBOUND;
 }
 
 blink::WebServiceWorkerRegistrationProxy*
@@ -321,14 +368,11 @@ void WebServiceWorkerRegistrationImpl::Destruct(
 
 WebServiceWorkerRegistrationImpl::WebServiceWorkerRegistrationImpl(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info)
-    : handle_id_(info->handle_id), proxy_(nullptr), binding_(this) {
+    : handle_id_(info->handle_id),
+      proxy_(nullptr),
+      binding_(this),
+      creation_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
   Attach(std::move(info));
-
-  DCHECK(info_->request.is_pending());
-  binding_.Bind(std::move(info_->request));
-  binding_.set_connection_error_handler(
-      base::Bind(&WebServiceWorkerRegistrationImpl::OnConnectionError,
-                 base::Unretained(this)));
 
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
@@ -337,6 +381,7 @@ WebServiceWorkerRegistrationImpl::WebServiceWorkerRegistrationImpl(
 }
 
 WebServiceWorkerRegistrationImpl::~WebServiceWorkerRegistrationImpl() {
+  DCHECK_EQ(LifeState::DEAD, state_);
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   if (dispatcher)
