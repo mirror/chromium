@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "002a50f8_45f99590",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T21:41:44Z",
+      "side": 1,
+      "message": "Remove the whitespace at end of line (here and above).",
+      "revId": "21dae16d8e0182d1474dad3b2c6483aba7a188c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b32e1ac_ccab4f05",
+        "filename": "services/ui/public/interfaces/ime/ime.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T21:41:44Z",
+      "side": 1,
+      "message": "Fix indentation",
+      "revId": "21dae16d8e0182d1474dad3b2c6483aba7a188c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0e3823_1ad66d31",
+        "filename": "ui/aura/mus/text_input_client_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T21:41:44Z",
+      "side": 1,
+      "message": "Send gfx::Range() etc. instead.",
+      "revId": "21dae16d8e0182d1474dad3b2c6483aba7a188c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437b6c33_ac33dd62",
+        "filename": "ui/base/ime/text_input_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T21:41:44Z",
+      "side": 1,
+      "message": "I think it\u0027s best to send no data here at all. i.e. send just gfx::Range(), base::string16() etc.",
+      "revId": "21dae16d8e0182d1474dad3b2c6483aba7a188c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
