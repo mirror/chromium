@@ -2255,7 +2255,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
 # These isolated tests don't use telemetry. They need to be placed in the
 # isolated_scripts section of the generated json.
 NON_TELEMETRY_ISOLATED_SCRIPT_TESTS = {
-  # We run angle_perftests on the ANGLE CQ to ensure the tests don't crash.
+  # We run perf tests on the CQ to ensure the tests don't crash.
   'angle_perftests': {
     'tester_configs': [
       {
@@ -2289,6 +2289,33 @@ NON_TELEMETRY_ISOLATED_SCRIPT_TESTS = {
     'args': [
       # Tell the tests to exit after one frame for faster iteration.
       '--one-frame-only',
+    ],
+  },
+
+  'command_buffer_perftests': {
+    'tester_configs': [
+      {
+        'predicate': Predicates.FYI_AND_OPTIONAL,
+        # Run on the Win/Linux Release NVIDIA bots.
+        'build_configs': ['Release'],
+        'swarming_dimension_sets': [
+          {
+            'gpu': NVIDIA_GEFORCE_610_ALL_DRIVERS,
+            'os': 'Windows-2008ServerR2-SP1'
+          },
+          {
+            'gpu': '10de:104a',
+            'os': 'Ubuntu'
+          },
+        ],
+      },
+    ],
+    'disabled_tester_configs': [
+      {
+        'names': [
+          'Linux Ozone (Intel)',
+        ],
+      },
     ],
   },
 }
