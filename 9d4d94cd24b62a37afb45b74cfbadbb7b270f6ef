@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c8c268ce_e163f53b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2300,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T23:30:10Z",
+      "side": 1,
+      "message": "The -tabLoadComplete:withSuccess: is invoked only from -pageLoadCompleted: which is attached to kTabModelTabDidFinishLoadingNotification notification. The notification itself is send from Tab -webState:didLoadPageWithSuccess: which is a method from CRWWebStateObserver.\n\nSo, IMO, putting the call here is incorrect. Instead the tab helper should be a WebStateObserver, listen to that method (well WebStateObserver::PageLoaded).\n\nIn general, tab helper should listen to the events they are interested directly instead of relying on other objects to invoke them (otherwise you still have a god class that call to all the tab helpers).",
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426d8dd0_b84aeada",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 3901,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T23:30:10Z",
+      "side": 1,
+      "message": "This should go into PreloadController -releasePrerenderContents.",
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980189ae_28bd7e2e",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -46,6 +80,23 @@
       "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4855e6ca_981bb38d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 3927,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T23:30:10Z",
+      "side": 1,
+      "message": "Same here, this should go to a WebStateObserver method implemented by LoadTimingTabHelper.",
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
