@@ -30,16 +30,16 @@ import org.chromium.ui.mojom.WindowOpenDisposition;
 /**
  * A class that represents the view for a single card snippet.
  */
-public class SnippetArticleViewHolder extends CardViewHolder implements ImpressionTracker.Listener {
+public class SnippetArticleViewHolder extends CardViewHolder {
     private final SuggestionsUiDelegate mUiDelegate;
     private final SuggestionsBinder mSuggestionsBinder;
     private final OfflinePageBridge mOfflinePageBridge;
+    private final ImpressionTracker mImpressionTracker;
 
     private SuggestionsCategoryInfo mCategoryInfo;
     private SnippetArticle mArticle;
 
     private final DisplayStyleObserverAdapter mDisplayStyleObserver;
-
     /**
      * Constructs a {@link SnippetArticleViewHolder} item used to display snippets.
      * @param parent The SuggestionsRecyclerView that is going to contain the newly created view.
@@ -60,33 +60,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
 
         mOfflinePageBridge = offlinePageBridge;
 
-        new ImpressionTracker(itemView, this);
-    }
-
-    @Override
-    public void onImpression() {
-        if (mArticle != null && mArticle.trackImpression()) {
-            if (SectionList.shouldReportPrefetchedSuggestionsMetrics(mArticle.mCategory)
-                    && mOfflinePageBridge.isOfflinePageModelLoaded()) {
-                // Before reporting prefetched suggestion impression, we ask Offline Page model
-                // whether the page is actually prefetched to avoid race condition when suggestion
-                // surface is opened.
-
-                // TabId is relevant only for recent tab offline pages, which we do not handle here,
-                // so we do not care about tab id.
-                mOfflinePageBridge.selectPageForOnlineUrl(
-                        mArticle.getUrl(), /* tabId = */ 0, item -> {
-                            if (!SuggestionsOfflineModelObserver.isPrefetchedOfflinePage(item)) {
-                                return;
-                            }
-                            NewTabPageUma.recordPrefetchedArticleSuggestionImpressionPosition(
-                                    mArticle.getPerSectionRank());
-                        });
-            }
-
-            mUiDelegate.getEventReporter().onSuggestionShown(mArticle);
-            mRecyclerView.onSnippetImpression();
-        }
+        mImpressionTracker = new ImpressionTracker(itemView);
     }
 
     @Override
@@ -139,6 +113,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
 
         mDisplayStyleObserver.attach();
         mSuggestionsBinder.updateViewInformation(mArticle);
+        mImpressionTracker.setListener(this::onImpression);
 
         refreshOfflineBadgeVisibility();
     }
@@ -147,6 +122,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
     public void recycle() {
         mDisplayStyleObserver.detach();
         mSuggestionsBinder.recycle();
+        mImpressionTracker.setListener(null);
         super.recycle();
     }
 
@@ -208,5 +184,30 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
             return R.layout.new_tab_page_snippets_card_large_thumbnail;
         }
         return R.layout.new_tab_page_snippets_card;
+    }
+
+    private void onImpression() {
+        if (mArticle != null && mArticle.trackImpression()) {
+            if (SectionList.shouldReportPrefetchedSuggestionsMetrics(mArticle.mCategory)
+                    && mOfflinePageBridge.isOfflinePageModelLoaded()) {
+                // Before reporting prefetched suggestion impression, we ask Offline Page model
+                // whether the page is actually prefetched to avoid race condition when suggestion
+                // surface is opened.
+
+                // TabId is relevant only for recent tab offline pages, which we do not handle here,
+                // so we do not care about tab id.
+                mOfflinePageBridge.selectPageForOnlineUrl(
+                        mArticle.getUrl(), /* tabId = */ 0, item -> {
+                            if (!SuggestionsOfflineModelObserver.isPrefetchedOfflinePage(item)) {
+                                return;
+                            }
+                            NewTabPageUma.recordPrefetchedArticleSuggestionImpressionPosition(
+                                    mArticle.getPerSectionRank());
+                        });
+            }
+
+            mUiDelegate.getEventReporter().onSuggestionShown(mArticle);
+            mRecyclerView.onSnippetImpression();
+        }
     }
 }
