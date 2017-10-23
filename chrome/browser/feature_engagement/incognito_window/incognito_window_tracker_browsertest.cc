@@ -37,10 +37,12 @@ class MockTracker : public Tracker {
  public:
   MockTracker() = default;
   MOCK_METHOD1(NotifyEvent, void(const std::string& event));
-  MOCK_METHOD1(GetTriggerState, TriggerState(const base::Feature& feature));
+  MOCK_CONST_METHOD1(GetTriggerState,
+                     TriggerState(const base::Feature& feature));
   MOCK_METHOD1(ShouldTriggerHelpUI, bool(const base::Feature& feature));
+  MOCK_CONST_METHOD1(WouldTriggerHelpUI, bool(const base::Feature& feature));
   MOCK_METHOD1(Dismissed, void(const base::Feature& feature));
-  MOCK_METHOD0(IsInitialized, bool());
+  MOCK_CONST_METHOD0(IsInitialized, bool());
   MOCK_METHOD1(AddOnInitializedCallback, void(OnInitializedCallback callback));
 
  private:
