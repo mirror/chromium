@@ -9,7 +9,16 @@
 #ifndef COMPONENTS_SIGNIN_CORE_COMMON_PROFILE_MANAGEMENT_SWITCHES_H_
 #define COMPONENTS_SIGNIN_CORE_COMMON_PROFILE_MANAGEMENT_SWITCHES_H_
 
+#include <memory>
+
 #include "base/feature_list.h"
+#include "components/prefs/pref_member.h"
+
+class PrefService;
+
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
 
 namespace signin {
 
@@ -46,6 +55,9 @@ enum class AccountConsistencyMethod {
   kDice
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// AccountConsistencyMethod related functions:
+
 // Returns the account consistency method.
 AccountConsistencyMethod GetAccountConsistencyMethod();
 
@@ -53,15 +65,52 @@ AccountConsistencyMethod GetAccountConsistencyMethod();
 // management UI is available in the avatar bubble.
 bool IsAccountConsistencyMirrorEnabled();
 
-// Checks whether Dice account consistency is available. If true, then account
-// management UI is available on the Gaia webpages.
-// Returns true when the account consistency method is kDice or kDiceMigration.
-// WARNING: returns false when the method is kDiceFixAuthErrors.
-bool IsDiceMigrationEnabled();
-
 // Returns true if the account consistency method is kDiceFixAuthErrors,
 // kDiceMigration or kDice.
 bool IsDiceFixAuthErrorsEnabled();
+
+// Returns true if Dice account consistency is enabled or if the Dice migration
+// process is in progress (account consistency method is kDice or
+// kDiceMigration).
+// To check wether Dice is enabled (i.e. the migration is complete), use
+// IsDiceEnabledForProfile().
+// WARNING: returns false when the method is kDiceFixAuthErrors.
+bool IsDiceMigrationEnabled();
+
+////////////////////////////////////////////////////////////////////////////////
+// Functions to test if Dice is enabled for a user profile:
+
+// If true, then account management is done through Gaia webpages.
+// Can only be used on the UI thread.
+bool IsDiceEnabledForProfile(PrefService* user_prefs);
+
+// If true, then account management is done through Gaia webpages.
+// Can be called on any thread, using a pref member obtained with
+// CreateDicePrefMember().
+// On the UI thread, consider using IsDiceEnabledForProfile() instead.
+// Example usage:
+//
+// // On UI thread:
+// std::unique_ptr<BooleanPrefMember> pref_member = GetDicePrefMember(prefs);
+// pref_member->MoveToThread(io_thread);
+//
+// // Later, on IO thread:
+// bool dice_enabled = GetDicePrefMember(pref_member.get());
+bool IsDiceEnabled(BooleanPrefMember* dice_pref_member);
+
+// Gets a pref member suitable to use with IsDiceEnabled().
+std::unique_ptr<BooleanPrefMember> CreateDicePrefMember(
+    PrefService* user_prefs);
+
+// Called to migrate a profile to Dice. After this call, it is enabled forever.
+void MigrateProfileToDice(PrefService* user_prefs);
+
+////////////////////////////////////////////////////////////////////////////////
+// Other functions:
+
+// Register account consistency user preferences.
+void RegisterAccountConsistencyProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry);
 
 // Whether the chrome.identity API should be multi-account.
 bool IsExtensionsMultiAccount();
