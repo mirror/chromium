@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a7cce7c_dda12570",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "nit: could also use the cross_site_iframe_factory.html and use the neat ability to specify inline sandbox flags that I think you added at some point :)\n (https://cs.chromium.org/chromium/src/content/test/data/cross_site_iframe_factory.html?l\u003d23\u0026rcl\u003dac3681da24eee3ba2d792ee56575888377e945c8)",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667ec8c6_58992fb7",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "For this and similar checks, should we also verify the flags on root-\u003echild_at(0)-\u003ecurrent_frame_host()-\u003eactive_sandbox_flags()?",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf19253_aea0af0a",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "Maybe also check the case that the main frame navigates away, which should also clear the CSP flags?",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e127d777_ae530b72",
+        "filename": "content/browser/frame_host/frame_tree_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "Also, would it make sense to write a test explicitly for the scenario broken in https://crbug.com/740556?  I.e., from a CSP-sandboxed document, window.open() a new popup for a  cross-process URL, and make sure that inherits the opener flags?",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1ec011_757ff518",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "just active_sandbox_flags()?",
+      "range": {
+        "startLine": 377,
+        "startChar": 18,
+        "endLine": 377,
+        "endChar": 57
+      },
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a4ce21_cff9b607",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "Does a change in active sandbox flags need to trigger the replication of new sandbox flags to any proxies, similarly to what happens in RenderFrameHostManager::CommitPendingFramePolicy?\n\nE.g., suppose we have A(B,C), B is an OOPIF, and B navigates to B2 which sets sandbox flags F via the CSP header.  Seems like we should let B\u0027s proxy in processes A and C know about the new flags?",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49027139_52a29ead",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "nit: initially",
+      "range": {
+        "startLine": 1299,
+        "startChar": 69,
+        "endLine": 1299,
+        "endChar": 77
+      },
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094c41bc_48919dda",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "We reset the replicated CSP policies and FP headers in NavigatorImpl::DidNavigate, just before calling this function.  There, the check is gated on !is_same_document_navigation.  Should we also do this reset there?  Otherwise, it seems we\u0027d be incorrectly resetting sandbox flags even for fragment navigations.",
+      "range": {
+        "startLine": 437,
+        "startChar": 0,
+        "endLine": 438,
+        "endChar": 76
+      },
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55b2f0a_f3d2d41b",
+        "filename": "content/browser/frame_host/render_frame_host_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3203,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "Would navigation_to_kUrl2-\u003eCommit() just work here?",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31a4bda_4a862521",
+        "filename": "content/browser/frame_host/render_frame_host_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3211,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "If you use the NavigationSimulator::Commit, you can use navigation_to_kUrl2-\u003eGetFinalRenderFrameHost() here.",
+      "range": {
+        "startLine": 3211,
+        "startChar": 12,
+        "endLine": 3211,
+        "endChar": 27
+      },
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675e8e3e_92fdb6fa",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 12087,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "nit: pointer",
+      "range": {
+        "startLine": 12087,
+        "startChar": 11,
+        "endLine": 12087,
+        "endChar": 19
+      },
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f501a39c_c680c08b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 12138,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "Since you added a copy of active_sandbox_flags to RFH, should we also have a test to verify that the a pending deletion RFH\u0027s flags are tracked properly?  There are some examples of how to do this in this file, e.g., WebUIJavascriptDisallowedAfterSwapOut.  They mostly involve calling rfh-\u003eDisableSwapOutTimerForTesting() (which simulates unload events never sending back the ACK), then waiting for a cross-process commit, then checking whatever we care about on |rfh|.",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2b4c60_95e0999e",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "While passing the opener RFH here seems cleaner, I\u0027m curious if if was needed for this CL?  Since you cannot do a window.open from an unload handler, we should never get here with a pending-delete RFH (see IsCurrent() check in RenderFrameHostImpl::CreateNewWindow), so in practice using the opener FTN\u0027s active_sandbox_flags() should be sufficient.  Or was there another reason for doing it?",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c699ed95_b5b71f28",
+        "filename": "content/test/data/sandboxed_main_frame.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-23T22:47:37Z",
+      "side": 1,
+      "message": "nit: remove commented-out code?",
+      "revId": "afc51c9caa209faad9514e5e0d56a9544381981f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
