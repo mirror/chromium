@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4bd5981_33b256a5",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T23:10:41Z",
+      "side": 1,
+      "message": "blergh. atomics are hard.\n\nOkay, wrapped in a class as you suggested. Also updated the comments. Hopefully it\u0027s clearer now.",
+      "parentUuid": "4f45d949_bfc04141",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 38
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95f9d8bd_b6da48b2",
         "filename": "chrome/common/profiling/memlog_sender_pipe.h",
         "patchSetId": 20
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "f54c6c9b_92f0f7e7",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T23:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95f9d8bd_b6da48b2",
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1837086e_a05b0b68",
         "filename": "chrome/common/profiling/memlog_sender_pipe.h",
         "patchSetId": 20
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-23T22:21:48Z",
       "side": 1,
       "message": "disallow copy and assign for a struct feels weird....",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de006a50_738e8068",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T23:10:41Z",
+      "side": 1,
+      "message": "changed to a class?",
+      "parentUuid": "1837086e_a05b0b68",
       "range": {
         "startLine": 24,
         "startChar": 4,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "779277d1_54a7e58d",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T23:10:41Z",
+      "side": 1,
+      "message": "Done for macOS and Linux. Couldn\u0027t find the documentatio nfor windows sector [writes are supposed to be atomic? ] so I just dropped that.",
+      "parentUuid": "3e1cf8ac_94f67c74",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "188cd48e_640c15b5",
         "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
         "patchSetId": 20
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "1b0c8fdb_ca146caa",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T23:10:41Z",
+      "side": 1,
+      "message": "yup, done",
+      "parentUuid": "188cd48e_640c15b5",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f28828aa_d08804a3",
         "filename": "chrome/profiling/memlog_receiver_pipe_win.cc",
         "patchSetId": 20
@@ -122,6 +236,30 @@
       "writtenOn": "2017-10-23T22:21:48Z",
       "side": 1,
       "message": "That\u0027s weird that the receiver pipe uses pipesize from inside MemlogSenderPipe...",
+      "range": {
+        "startLine": 21,
+        "startChar": 28,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7e6b71_ec10eae6",
+        "filename": "chrome/profiling/memlog_receiver_pipe_win.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-23T23:10:41Z",
+      "side": 1,
+      "message": "it\u0027s in chrome/common/profiling...shrug?\n\nWe could make a new file there and have it included everywhere relevant...but seems unnecessary.",
+      "parentUuid": "f28828aa_d08804a3",
       "range": {
         "startLine": 21,
         "startChar": 28,
