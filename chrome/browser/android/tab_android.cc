@@ -495,6 +495,26 @@ void TabAndroid::OnPhysicalBackingSizeChanged(
   web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
 }
 
+int TabAndroid::GetViewportWidthPix(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  auto* view = web_contents->GetNativeView();
+  return view->GetViewportSize().width() * view->GetDipScale();
+}
+
+int TabAndroid::GetViewportHeightPix(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  auto* view = web_contents->GetNativeView();
+  return view->GetViewportSize().height() * view->GetDipScale();
+}
+
 base::android::ScopedJavaLocalRef<jobject> TabAndroid::GetProfileAndroid(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {

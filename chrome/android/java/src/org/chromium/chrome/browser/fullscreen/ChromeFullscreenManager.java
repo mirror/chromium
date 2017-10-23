@@ -21,6 +21,7 @@ import org.chromium.base.BaseChromiumApplication.WindowFocusChangedListener;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.library_loader.LibraryLoader;
+import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.fullscreen.FullscreenHtmlApiHandler.FullscreenHtmlApiDelegate;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
@@ -30,6 +31,7 @@ import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.BrowserControlsState;
 
 import java.util.ArrayList;
@@ -53,6 +55,7 @@ public class ChromeFullscreenManager
     private ControlContainer mControlContainer;
     private int mTopControlContainerHeight;
     private int mBottomControlContainerHeight;
+    private boolean mControlsResizeView;
     private TabModelSelectorTabModelObserver mTabModelObserver;
 
     private float mRendererTopControlOffset = Float.NaN;
@@ -343,6 +346,13 @@ public class ChromeFullscreenManager
         return mBottomControlContainerHeight;
     }
 
+    /**
+     * @return {@code true} if browser controls are in the state of resizing view.
+     */
+    public boolean controlsResizeView() {
+        return mControlsResizeView;
+    }
+
     @Override
     public float getContentOffset() {
         return mRendererTopContentOffset;
@@ -423,10 +433,10 @@ public class ChromeFullscreenManager
     /**
      * Updates the content view's viewport size to have it render the content correctly.
      *
-     * @param viewCore The ContentViewCore to update.
+     * @param contents {@link WebContents} whose viewport should be resized.
      */
-    public void updateContentViewViewportSize(ContentViewCore viewCore) {
-        if (viewCore == null) return;
+    public void updateContentViewViewportSize(WebContents contents) {
+        if (contents == null) return;
         if (mInGesture || mContentViewScrolling) return;
 
         // Update content viewport size only when the browser controls are not animating.
@@ -439,9 +449,12 @@ public class ChromeFullscreenManager
         boolean controlsResizeView =
                 topContentOffset > 0 || bottomControlOffset < getBottomControlsHeight();
         controlsResizeView &= !VrShellDelegate.isInVr();
+        mControlsResizeView = controlsResizeView;
 
-        viewCore.setTopControlsHeight(getTopControlsHeight(), controlsResizeView);
-        viewCore.setBottomControlsHeight(getBottomControlsHeight());
+        CompositorViewHolder compositorView = getTab().getActivity().getCompositorViewHolder();
+        compositorView.setTopControlsHeight(contents, getTopControlsHeight(), controlsResizeView);
+        compositorView.setBottomControlsHeight(contents, getBottomControlsHeight());
+        compositorView.setSize(contents, compositorView.getWidth(), compositorView.getHeight());
     }
 
     @Override
@@ -454,7 +467,7 @@ public class ChromeFullscreenManager
         float bottomMargin = getBottomControlsHeight() - getBottomControlOffset();
         applyTranslationToTopChildViews(view, topViewsTranslation);
         applyMarginToFullChildViews(view, topViewsTranslation, bottomMargin);
-        updateContentViewViewportSize(contentViewCore);
+        updateContentViewViewportSize(getTab().getWebContents());
     }
 
     /**

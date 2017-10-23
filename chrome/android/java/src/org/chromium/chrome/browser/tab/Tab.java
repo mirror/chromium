@@ -2158,8 +2158,8 @@ public class Tab
                 mTabUma = new TabUma(TabCreationState.FROZEN_ON_RESTORE_FAILED);
                 mFailedToRestore = true;
             }
-            View compositorView = getActivity().getCompositorViewHolder();
-            webContents.setSize(compositorView.getWidth(), compositorView.getHeight());
+            View view = getActivity().getCompositorViewHolder();
+            setSize(webContents, view.getWidth(), view.getHeight());
 
             mFrozenContentsState = null;
             initContentViewCore(webContents);
@@ -2172,6 +2172,10 @@ public class Tab
         } finally {
             TraceEvent.end("Tab.unfreezeContents");
         }
+    }
+
+    private void setSize(WebContents webContents, int width, int height) {
+        getActivity().getCompositorViewHolder().setSize(webContents, width, height);
     }
 
     /**
@@ -2415,8 +2419,8 @@ public class Tab
         int originalWidth = 0;
         int originalHeight = 0;
         if (mContentViewCore != null) {
-            originalWidth = mContentViewCore.getViewportWidthPix();
-            originalHeight = mContentViewCore.getViewportHeightPix();
+            originalWidth = getViewportWidthPix();
+            originalHeight = getViewportHeightPix();
             mContentViewCore.onHide();
         }
 
@@ -2430,13 +2434,12 @@ public class Tab
         destroyContentViewCore(deleteOldNativeWebContents);
         NativePage previousNativePage = mNativePage;
         mNativePage = null;
-        // Size of the new ContentViewCore is zero at this point. If we don't call onSizeChanged(),
+        // Size of the new ContentViewCore is zero at this point. If we don't call setSize(),
         // next onShow() call would send a resize message with the current ContentViewCore size
         // (zero) to the renderer process, although the new size will be set soon.
         // However, this size fluttering may confuse Blink and rendered result can be broken
         // (see http://crbug.com/340987).
-        newContentViewCore.onSizeChanged(originalWidth, originalHeight, 0, 0);
-        newContentViewCore.getWebContents().setSize(originalWidth, originalHeight);
+        setSize(newContentViewCore.getWebContents(), originalWidth, originalHeight);
 
         if (!bounds.isEmpty()) {
             nativeOnPhysicalBackingSizeChanged(mNativeTabAndroid,
@@ -2695,6 +2698,14 @@ public class Tab
     }
 
     /**
+     * Returns the height of the top controls in physical pixel.
+     */
+    @VisibleForTesting
+    public int getTopControlsHeight() {
+        return getActivity().getCompositorViewHolder().getTopControlsHeightPixels();
+    }
+
+    /**
      * Performs any subclass-specific tasks when the Tab crashes.
      */
     void handleTabCrash() {
@@ -2926,6 +2937,15 @@ public class Tab
         return 0;
     }
 
+    @VisibleForTesting
+    public int getViewportWidthPix() {
+        return nativeGetViewportWidthPix(mNativeTabAndroid, getWebContents());
+    }
+
+    public int getViewportHeightPix() {
+        return nativeGetViewportHeightPix(mNativeTabAndroid, getWebContents());
+    }
+
     /**
      * @return the UMA object for the tab. Note that this may be null in some
      * cases.
@@ -3053,8 +3073,7 @@ public class Tab
         Rect bounds = getEstimatedContentSize(context);
         int width = bounds.right - bounds.left;
         int height = bounds.bottom - bounds.top;
-        tab.getContentViewCore().onSizeChanged(width, height, 0, 0);
-        tab.getWebContents().setSize(width, height);
+        tab.setSize(tab.getWebContents(), width, height);
 
         tab.detach();
         return tab;
@@ -3286,6 +3305,8 @@ public class Tab
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeTabAndroid, WebContents webContents, int width, int height);
     private native Profile nativeGetProfileAndroid(long nativeTabAndroid);
+    private native int nativeGetViewportWidthPix(long nativeTabAndroid, WebContents webContents);
+    private native int nativeGetViewportHeightPix(long nativeTabAndroid, WebContents webContents);
     private native int nativeLoadUrl(long nativeTabAndroid, String url, String extraHeaders,
             ResourceRequestBody postData, int transition, String referrerUrl, int referrerPolicy,
             boolean isRendererInitiated, boolean shoulReplaceCurrentEntry,

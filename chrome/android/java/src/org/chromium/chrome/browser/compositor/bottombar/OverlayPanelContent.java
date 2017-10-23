@@ -14,6 +14,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.WebContentsFactory;
+import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler;
 import org.chromium.chrome.browser.tab.Tab;
@@ -346,12 +347,14 @@ public class OverlayPanelContent {
                 mNativeOverlayPanelContentPtr, mInterceptNavigationDelegate, panelWebContents);
 
         mContentDelegate.onContentViewCreated(mContentViewCore);
+
+        CompositorViewHolder compositorView = mActivity.getCompositorViewHolder();
+        compositorView.setTopControlsHeight(getWebContents(), mBarHeightPx, false);
+        compositorView.setBottomControlsHeight(getWebContents(), 0);
         if (mContentViewWidth != 0 && mContentViewHeight != 0) {
+            getWebContents().setSize(mContentViewWidth, mContentViewHeight);
             onPhysicalBackingSizeChanged(mContentViewWidth, mContentViewHeight);
         }
-
-        mContentViewCore.setTopControlsHeight(mBarHeightPx, false);
-        mContentViewCore.setBottomControlsHeight(0);
     }
 
     /**
@@ -496,9 +499,8 @@ public class OverlayPanelContent {
     }
 
     void onSizeChanged(int width, int height) {
-        if (mContentViewCore == null) return;
-        mContentViewCore.onSizeChanged(width, height, mContentViewCore.getViewportWidthPix(),
-                mContentViewCore.getViewportHeightPix());
+        WebContents webContents = getWebContents();
+        if (webContents != null) webContents.setSize(width, height);
     }
 
     void onPhysicalBackingSizeChanged(int width, int height) {

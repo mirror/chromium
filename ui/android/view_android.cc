@@ -81,7 +81,12 @@ ViewAndroid::ScopedAnchorView::view() const {
 }
 
 ViewAndroid::ViewAndroid(ViewClient* view_client, LayoutType layout_type)
-    : parent_(nullptr), client_(view_client), layout_type_(layout_type) {}
+    : parent_(nullptr),
+      client_(view_client),
+      layout_type_(layout_type),
+      top_controls_height_(0),
+      bottom_controls_height_(0),
+      shrink_blink_size_(false) {}
 
 ViewAndroid::ViewAndroid() : ViewAndroid(nullptr, LayoutType::NORMAL) {}
 
@@ -143,7 +148,7 @@ void ViewAndroid::AddChild(ViewAndroid* child) {
   // Empty view size also need not propagating down in order to prevent
   // spurious events with empty size from being sent down.
   if (child->match_parent() && !view_rect_.IsEmpty()) {
-    child->OnSizeChangedInternal(view_rect_.size());
+    child->OnSizeChangedInternal(GetSize());
     DispatchOnSizeChanged();
   }
 
@@ -400,6 +405,43 @@ void ViewAndroid::OnSizeChangedInternal(const gfx::Size& size) {
     if (child->match_parent())
       child->OnSizeChangedInternal(size);
   }
+}
+
+gfx::Size ViewAndroid::GetSize() const {
+  return view_rect_.size();
+}
+
+gfx::Size ViewAndroid::GetViewportSize() const {
+  gfx::Size size = GetSize();
+  if (shrink_blink_size_)
+    size.set_height(size.height() + top_controls_height_ +
+                    bottom_controls_height_);
+  return size;
+}
+
+void ViewAndroid::SetTopControlsHeight(int height, bool shrink_blink_size) {
+  SetTopControlsHeightInternal(std::ceil(height / GetDipScale()),
+                               shrink_blink_size);
+}
+
+void ViewAndroid::SetTopControlsHeightInternal(int height,
+                                               bool shrink_blink_size) {
+  top_controls_height_ = height;
+  shrink_blink_size_ = shrink_blink_size;
+
+  for (auto* child : children_)
+    child->SetTopControlsHeightInternal(height, shrink_blink_size);
+}
+
+void ViewAndroid::SetBottomControlsHeight(int height) {
+  SetBottomControlsHeightInternal(std::ceil(height / GetDipScale()));
+}
+
+void ViewAndroid::SetBottomControlsHeightInternal(int height) {
+  bottom_controls_height_ = height;
+
+  for (auto* child : children_)
+    child->SetBottomControlsHeightInternal(height);
 }
 
 void ViewAndroid::DispatchOnSizeChanged() {

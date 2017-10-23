@@ -664,11 +664,10 @@ bool RenderWidgetHostViewAndroid::IsShowing() {
 
 void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_dip,
                                                                int y_dip) {
-  if (!selection_popup_controller_ || !content_view_core_)
+  if (!selection_popup_controller_)
     return;
   // Validate the coordinates are within the viewport.
-  // TODO(jinsukkim): Get viewport size from ViewAndroid.
-  gfx::Size viewport_size = content_view_core_->GetViewportSizeDip();
+  gfx::Size viewport_size = view_.GetViewportSize();
   if (x_dip < 0 || x_dip > viewport_size.width() ||
       y_dip < 0 || y_dip > viewport_size.height())
     return;
@@ -689,7 +688,7 @@ gfx::Rect RenderWidgetHostViewAndroid::GetViewBounds() const {
   if (!content_view_core_)
     return default_bounds_;
 
-  gfx::Size size(content_view_core_->GetViewSize());
+  gfx::Size size(view_.GetSize());
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableOSKOverscroll)) {
     size.Enlarge(0, view_.GetSystemWindowInsetBottom() / view_.GetDipScale());
@@ -702,7 +701,7 @@ gfx::Size RenderWidgetHostViewAndroid::GetVisibleViewportSize() const {
   if (!content_view_core_)
     return default_bounds_.size();
 
-  return content_view_core_->GetViewSize();
+  return view_.GetSize();
 }
 
 gfx::Size RenderWidgetHostViewAndroid::GetPhysicalBackingSize() const {
@@ -720,8 +719,7 @@ gfx::Size RenderWidgetHostViewAndroid::GetPhysicalBackingSize() const {
 bool RenderWidgetHostViewAndroid::DoBrowserControlsShrinkBlinkSize() const {
   // Whether or not Blink's viewport size should be shrunk by the height of the
   // URL-bar.
-  return content_view_core_ &&
-         content_view_core_->DoBrowserControlsShrinkBlinkSize();
+  return view_.do_browser_controls_shrink_blink_size();
 }
 
 float RenderWidgetHostViewAndroid::GetTopControlsHeight() const {
@@ -729,7 +727,7 @@ float RenderWidgetHostViewAndroid::GetTopControlsHeight() const {
     return default_bounds_.x();
 
   // The height of the browser controls.
-  return content_view_core_->GetTopControlsHeightDip();
+  return view_.top_controls_height();
 }
 
 float RenderWidgetHostViewAndroid::GetBottomControlsHeight() const {
@@ -737,7 +735,7 @@ float RenderWidgetHostViewAndroid::GetBottomControlsHeight() const {
     return 0.f;
 
   // The height of the browser controls.
-  return content_view_core_->GetBottomControlsHeightDip();
+  return view_.bottom_controls_height();
 }
 
 void RenderWidgetHostViewAndroid::UpdateCursor(const WebCursor& cursor) {
@@ -2091,9 +2089,8 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
     RunAckCallbacks();
     // TODO(yusufo) : Get rid of the below conditions and have a better handling
     // for resizing after crbug.com/628302 is handled.
-    bool is_size_initialized = !content_view_core
-        || content_view_core->GetViewportSizeDip().width() != 0
-        || content_view_core->GetViewportSizeDip().height() != 0;
+    bool is_size_initialized =
+        !content_view_core || !view_.GetViewportSize().IsEmpty();
     if (content_view_core_ || is_size_initialized)
       resize = true;
     if (content_view_core_) {
@@ -2175,6 +2172,14 @@ void RenderWidgetHostViewAndroid::OnGestureEvent(
     web_gesture.SetModifiers(blink::WebInputEvent::kNoModifiers);
   }
   SendGestureEvent(web_gesture);
+}
+
+void RenderWidgetHostViewAndroid::OnSizeChanged() {
+  WasResized();
+  if (ime_adapter_android_)
+    ime_adapter_android_->UpdateAfterViewSizeChanged();
+  if (popup_zoomer_)
+    popup_zoomer_->HidePopup();
 }
 
 void RenderWidgetHostViewAndroid::OnPhysicalBackingSizeChanged() {
