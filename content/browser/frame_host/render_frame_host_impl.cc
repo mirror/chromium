@@ -3384,21 +3384,9 @@ void RenderFrameHostImpl::CommitNavigation(
       response->head : ResourceResponseHead();
   FrameMsg_CommitDataNetworkService_Params commit_data;
   commit_data.handle = handle.release();
-  // TODO(scottmg): Pass a factory for SW, etc. once we have one.
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    if (!subresource_url_loader_factory_info.is_valid()) {
-      const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
-      if (std::find(schemes.begin(), schemes.end(),
-                    common_params.url.scheme()) != schemes.end()) {
-        commit_data.url_loader_factory = CreateWebUIURLLoader(frame_tree_node_)
-                                             .PassInterface()
-                                             .PassHandle()
-                                             .release();
-      }
-    } else {
-      commit_data.url_loader_factory =
-          subresource_url_loader_factory_info.PassHandle().release();
-    }
+  if (subresource_url_loader_factory_info.is_valid()) {
+    commit_data.url_loader_factory =
+        subresource_url_loader_factory_info.PassHandle().release();
   }
   Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url, commit_data,
                                      common_params, request_params));
