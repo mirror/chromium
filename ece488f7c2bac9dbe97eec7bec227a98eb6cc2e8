@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f962e5ad_a6d79454",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-23T13:08:49Z",
+      "side": 1,
+      "message": "DCHECK is only enabled in Debug builds.\n\nAs GetTextContentOffset can return nullopt it needs to be handled, either using an explicit check or the OrDefault construct.",
+      "parentUuid": "7acd7706_70a238b3",
+      "range": {
+        "startLine": 1975,
+        "startChar": 25,
+        "endLine": 1975,
+        "endChar": 0
+      },
+      "revId": "ece488f7c2bac9dbe97eec7bec227a98eb6cc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0249144f_90f7c690",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTextFragment.cpp",
         "patchSetId": 2
@@ -101,6 +125,30 @@
       "side": 1,
       "message": "Same pattern is used in StartOfNextNonCollapsedCharacter() and EndOfLastNonCollapsedCharacter(). And also a lot of places in editing code.\n\nDo we have a style guide preferring nullopt than {}?",
       "parentUuid": "378a1e5c_1c58bbab",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 13
+      },
+      "revId": "ece488f7c2bac9dbe97eec7bec227a98eb6cc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61115324_2fa1337d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-23T13:08:49Z",
+      "side": 1,
+      "message": "nullopt immediately indicates that a null value is returned. {} does not, it can be a variety of things. Always strive for clarity over brevity.",
+      "parentUuid": "86e64e17_0b95d3be",
       "range": {
         "startLine": 117,
         "startChar": 12,
