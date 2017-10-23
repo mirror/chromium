@@ -238,7 +238,7 @@ void PictureLayerTiling::SetRasterSourceAndResize(
   }
   if (after_bottom > before_bottom) {
     DCHECK_EQ(after_bottom, before_bottom + 1);
-    for (int i = before_left; i <= before_right; ++i) {
+    for (int i = before_left; i <= after_right; ++i) {
       Tile::CreateInfo info = CreateInfoForTile(i, after_bottom);
       if (ShouldCreateTileAt(info))
         CreateTile(info);
