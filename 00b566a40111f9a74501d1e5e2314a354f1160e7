@@ -16,6 +16,24 @@
       "revId": "00b566a40111f9a74501d1e5e2314a354f1160e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48bbf73_3125602e",
+        "filename": "third_party/WebKit/Source/core/exported/WebNode.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-23T18:02:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83e442d_66a876ae",
+      "revId": "00b566a40111f9a74501d1e5e2314a354f1160e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
