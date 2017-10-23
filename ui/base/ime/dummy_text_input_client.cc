@@ -76,6 +76,11 @@ bool DummyTextInputClient::GetTextRange(gfx::Range* range) const {
   return false;
 }
 
+bool DummyTextInputClient::GetTextInputClientInfo(
+    ui::TextInputClient::GetTextInputClientInfoCallback callback) const {
+  return false;
+}
+
 bool DummyTextInputClient::GetCompositionTextRange(gfx::Range* range) const {
   return false;
 }

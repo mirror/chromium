@@ -8,18 +8,16 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/callback.h"
 #include "base/i18n/rtl.h"
 #include "base/strings/string16.h"
 #include "ui/base/ime/composition_text.h"
 #include "ui/base/ime/text_input_mode.h"
 #include "ui/base/ime/text_input_type.h"
 #include "ui/base/ime/ui_base_ime_export.h"
+#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/range/range.h"
-
-namespace gfx {
-class Rect;
-}
 
 namespace ui {
 
@@ -103,6 +101,20 @@ class UI_BASE_IME_EXPORT TextInputClient {
   // the View. It must cover the composition and selection range.
   // Returns false if the information cannot be retrieved right now.
   virtual bool GetTextRange(gfx::Range* range) const = 0;
+
+  // Callback type to return text range, text within text range, selection
+  // range, and composition bounds.
+  using GetTextInputClientInfoCallback =
+      base::OnceCallback<void(bool,
+                              const gfx::Range&,
+                              const base::string16&,
+                              const gfx::Range&,
+                              const gfx::Rect&)>;
+
+  // Retrieve text range, text within text range, selection range, and
+  // composition bounds and send them back to |callback| function.
+  virtual bool GetTextInputClientInfo(
+      GetTextInputClientInfoCallback callback) const = 0;
 
   // Retrieves the UTF-16 based character range of current composition text.
   // Returns false if the information cannot be retrieved right now.
