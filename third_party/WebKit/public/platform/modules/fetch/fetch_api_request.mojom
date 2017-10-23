@@ -105,6 +105,12 @@ enum FetchCacheMode {
   // "same-origin". Any cached redirects will be followed assuming request’s
   // redirect mode is "follow" and the redirects do not violate request’s mode.)
   kOnlyIfCached,
+
+  // Unspecified ones
+  // Similar to ONLY_IF_CACHED, but checks freshness strictly.
+  kUnspecifiedOnlyIfCachedStrict,
+  // Used by devtools to trigger a request which ends up in CACHE_MISS.
+  kUnspecifiedForceCacheMiss,
 };
 
 // The redirect mode indicating how redirects should be handled.
