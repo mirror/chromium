@@ -14,6 +14,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "base/time/time.h"
+#include "components/machine_intelligence/ranker_model.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
@@ -24,7 +25,6 @@ class SequencedTaskRunner;
 namespace machine_intelligence {
 
 class RankerURLFetcher;
-class RankerModel;
 
 // Enumeration denoting the outcome of an attempt to download the model. This
 // must be kept in sync with the RankerModelStatus enum in histograms.xml

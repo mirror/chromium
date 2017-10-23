@@ -20,7 +20,6 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "components/machine_intelligence/proto/ranker_model.pb.h"
-#include "components/machine_intelligence/ranker_model.h"
 #include "components/machine_intelligence/ranker_url_fetcher.h"
 
 namespace machine_intelligence {
