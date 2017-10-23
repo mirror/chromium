@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c8f690a3_0b9857f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T19:08:21Z",
+      "side": 1,
+      "message": "So the decoder is usually some embedded system we talk to over USB/BLE, hence the mere \"promise\".\n\nWhat do you think about the other concern, though, i.e. preventing a stack overflow in Chrome? Are there any steps we need to take there?",
+      "parentUuid": "d84b72d9_b0110ab6",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7348cc5_5a37ae2e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
