@@ -22,6 +22,30 @@
       "revId": "ff6485f54a440a54727a2b1b2337ce6a2127322c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35459a29_1f32d5b3",
+        "filename": "third_party/crashpad/crashpad/util/win/safe_terminate_process.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-23T16:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f084720e_03b22571",
+      "range": {
+        "startLine": 23,
+        "startChar": 63,
+        "endLine": 23,
+        "endChar": 65
+      },
+      "revId": "ff6485f54a440a54727a2b1b2337ce6a2127322c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
