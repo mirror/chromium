@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8762fcc3_1e5732fa",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T16:53:49Z",
+      "side": 1,
+      "message": "\u003e\u003e \"descriptive text\" perhaps?\n\u003e\u003e And can you add an example or something?\n\u003e\u003e For example, I may see a suggestion for \"chromium code review - Google Search\".  Is that the match_text?  (Answer: no, not the way you use.)\n\u003e Changed this to clarify that it\u0027s the match URL.\nBut it\u0027s not the URL.  Sometimes it\u0027s a query!  Please revise, perhaps \"descriptive_text\" or something\n\n\u003e I would like to also incorporate the match text, but the spoken description shouldn\u0027t be *too* long and I think the URL is more important.",
+      "revId": "8d31359bbc349192b80df21b52df9528f2f7a609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
