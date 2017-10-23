@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "bdc74322_888b0656",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-23T23:41:25Z",
+      "side": 1,
+      "message": "I\u0027d remove this TODO, since it is not really a TODO. (There is a ToT page somewhere about this exact topic)",
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4580354_1ef5c822",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-23T23:41:25Z",
+      "side": 1,
+      "message": "I\u0027d simply use NOTIMPLEMENTED() here if you don\u0027t really intend ot implement this and eventually want to remove this method. Same below.",
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2c82bbf_18ac7aa2",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 2
@@ -134,6 +168,23 @@
         "endLine": 103,
         "endChar": 29
       },
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df76729_36249c5a",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-23T23:41:25Z",
+      "side": 1,
+      "message": "For the purposes of this CL, I\u0027d remove all the unused data members. And add them back with CLs where they start to be used. This better guarantees that only relevant members are here and keeps history of the code looking more \u0027natural\u0027.",
       "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
