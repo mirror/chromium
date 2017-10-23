@@ -36,6 +36,19 @@ config("content_shell_lib_warnings") {
   }
 }
 
+static_library("content_shell_switches") {
+  testonly = true
+  sources = [
+    "common/layout_test/layout_test_switches.cc",
+    "common/layout_test/layout_test_switches.h",
+    "common/shell_switches.cc",
+    "common/shell_switches.h",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
 static_library("content_shell_lib") {
   testonly = true
   sources = [
@@ -158,8 +171,6 @@ static_library("content_shell_lib") {
     "common/layout_test/layout_test_content_client.h",
     "common/layout_test/layout_test_messages.cc",
     "common/layout_test/layout_test_messages.h",
-    "common/layout_test/layout_test_switches.cc",
-    "common/layout_test/layout_test_switches.h",
     "common/leak_detection_result.h",
     "common/power_monitor_test_impl.cc",
     "common/power_monitor_test_impl.h",
@@ -169,8 +180,6 @@ static_library("content_shell_lib") {
     "common/shell_messages.h",
     "common/shell_origin_trial_policy.cc",
     "common/shell_origin_trial_policy.h",
-    "common/shell_switches.cc",
-    "common/shell_switches.h",
     "gpu/shell_content_gpu_client.cc",
     "gpu/shell_content_gpu_client.h",
     "renderer/layout_test/blink_test_helpers.cc",
@@ -220,6 +229,7 @@ static_library("content_shell_lib") {
   ]
   deps = [
     ":content_shell_packaged_services_manifest_overlay",
+    ":content_shell_switches",
     ":mojo_bindings",
     ":resources",
     "//base",
