@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6720b2c8_8b740e54",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "352db6f8_6279807f",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "423d715f_2517d45a",
         "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-20T15:33:00Z",
       "side": 1,
       "message": "Do we actually need this?",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b57d813_666dec9e",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:57:45Z",
+      "side": 1,
+      "message": "Yeah, looks like we don\u0027t need thread safety. Replaced it with ObserverList.",
+      "parentUuid": "423d715f_2517d45a",
       "range": {
         "startLine": 32,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d0de9d35_5b308c22",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:57:45Z",
+      "side": 1,
+      "message": "Oops. Done :)",
+      "parentUuid": "000b1be6_78ced9e9",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1d5ff69_f4ad16e3",
         "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da99151_fab52db6",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1d5ff69_f4ad16e3",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1b7e5b63_48aa1883",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46b7c129_a71f420a",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 23
+      },
+      "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b60c142_8e41a101",
         "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "983b2c19_65c2c09f",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b60c142_8e41a101",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56a9479a_66e2e80c",
         "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861dabbe_77764bb6",
+        "filename": "chrome/browser/android/oom_intervention/near_oom_monitor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T01:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a9479a_66e2e80c",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 14
+      },
+      "revId": "6ed2d3a815be549424fa04e38eb9f55dd89f473d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
