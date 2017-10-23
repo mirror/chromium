@@ -35,7 +35,7 @@ navigator.geolocation.getCurrentPosition(function(p) {
     errorCallbackInvoked = true;
     checkPermissionError(e);
     continueTest();
-});
+}, { maximumAge: 1000 });
 
 function continueTest() {
     navigator.geolocation.getCurrentPosition(function(p) {
@@ -44,7 +44,7 @@ function continueTest() {
     }, function(e) {
         checkPermissionError(e);
         finishJSTest();
-    });
+    }, { maximumAge: 1000 });
 }
 
 window.jsTestIsAsync = true;
