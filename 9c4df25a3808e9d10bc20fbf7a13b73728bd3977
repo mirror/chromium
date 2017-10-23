@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92bcda04_22540887",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T22:05:31Z",
+      "side": 1,
+      "message": "Hmm...I don\u0027t see a need to mention screen capture in the naming since, conceivably, there could someday be other use cases for using this functionality. Also, beware that the word \"Capture\" is overloaded in UI code: It more-often means user input capture (e.g., the widget being focused, grabbing the keyboard input).\n\nI can see how SetRenderingSize() was confusing. I like Scott\u0027s suggestion of SetNativeViewSize(). WDYT?",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "9c4df25a3808e9d10bc20fbf7a13b73728bd3977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
