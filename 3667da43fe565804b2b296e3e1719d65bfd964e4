@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a71c48c5_b5eaaf89",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3017,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ff47d3_b7fb8e52",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "097e5e63_96a826aa",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9319f96e_8282f24c",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "pkasting had mentioned that it should be easy to maintain a mapping from URL to WebContents, which would speed up the look-up. I wasn\u0027t quite ready to add that, so I thought a comment was in order. I\u0027ve made it more readable.",
+      "parentUuid": "097e5e63_96a826aa",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9cf035ed_571062af",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8fbd8b3_4eb5f8fd",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce137096_b507bb71",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9798a9_c19bcda2",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce137096_b507bb71",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "9f609da8_e4308392",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2091,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7dfe7a6_f4cc76ff",
+      "range": {
+        "startLine": 2091,
+        "startChar": 5,
+        "endLine": 2091,
+        "endChar": 13
+      },
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ab48a6_9ed12b2c",
         "filename": "chrome/browser/flag_descriptions.h",
         "patchSetId": 8
@@ -107,6 +203,24 @@
       "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda78119_36e1c116",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done here and C file.",
+      "parentUuid": "06ab48a6_9ed12b2c",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "727e1518_3060e68f",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done, and uses range for-loop.",
+      "parentUuid": "83441092_6a53e78d",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05576f13_48b9a634",
         "filename": "components/metrics/proto/omnibox_event.proto",
         "patchSetId": 8
@@ -141,6 +273,24 @@
       "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bc561e_877b6a64",
+        "filename": "components/metrics/proto/omnibox_event.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05576f13_48b9a634",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "588997e2_eccc891f",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4659cdc7_8fdb5439",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094b2d6a_02aa84bb",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 8
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "4ad90a98_e86299b0",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Ok, but it\u0027s not like we can\u0027t change it later.",
+      "parentUuid": "094b2d6a_02aa84bb",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c684b6b4_8223504d",
         "filename": "components/omnibox/browser/shortcuts_backend.cc",
         "patchSetId": 8
@@ -192,6 +378,24 @@
       "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d7e1e5_81322257",
+        "filename": "components/omnibox/browser/shortcuts_backend.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c684b6b4_8223504d",
+      "revId": "3667da43fe565804b2b296e3e1719d65bfd964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

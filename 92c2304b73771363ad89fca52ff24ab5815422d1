@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fe4ef016_7da7093e",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "What I have seems to work. (I can\u0027t break it.) I could be wrong, but it\u0027s my impression that GetText() is only empty in a new tab (that did not instantly navigate somewhere.)\n\nRegarding clicking to switch tabs, are you referring to clicking on a tab? Here, the user just hit enter or clicked on a suggestion. We always blur the Omnibox in this case.",
+      "parentUuid": "3bc5e57a_0637459d",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c31f0ab_df8a4c87",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 5
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "5cf6ca04_6fdb8c49",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Odd, it\u0027s not in my copy. It must have missed the upload.",
+      "parentUuid": "8c31f0ab_df8a4c87",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d36df644_e537867a",
         "filename": "components/omnibox/browser/history_quick_provider.cc",
         "patchSetId": 5
@@ -188,6 +224,24 @@
       "writtenOn": "2017-10-20T20:20:57Z",
       "side": 1,
       "message": "More than just a constant, this should be an i18n\u0027d template.",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7c175e_e386434a",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Agreed, did you want them to start on it before UI is settled?",
+      "parentUuid": "d36df644_e537867a",
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -244,6 +298,24 @@
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d937d6_07da9184",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "Then code search is (still) failing me. I look through all the calls (and their callers when relevant) and these 2 are all I see. Anyways, I\u0027ll leave it alone for now.",
+      "parentUuid": "f9eb2a28_000dbc50",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +401,24 @@
       "side": 1,
       "message": "Good point. But GetText().empty() has the same problem, doesn\u0027t it?",
       "parentUuid": "70dfdf0a_8263a836",
+      "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d5cce61_8511c1a8",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-23T15:25:00Z",
+      "side": 1,
+      "message": "In my example, GetText() would not be empty.",
+      "parentUuid": "3a755a3b_097c3c15",
       "revId": "92c2304b73771363ad89fca52ff24ab5815422d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
