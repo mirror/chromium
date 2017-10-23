@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01a630f_f4e4a7d3",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-23T18:00:13Z",
+      "side": 1,
+      "message": "Could you tell us a bit more about E164. Is it for humans or machines to read? :)",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "920d8cf63e46f87cbea01a371b1599af33aeaab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d90e7a_93a150e4",
+        "filename": "components/autofill/core/browser/address_normalizer_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-23T18:00:13Z",
+      "side": 1,
+      "message": "I would create another test for this one, or maybe add a comment to explain what it is testing.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 60
+      },
+      "revId": "920d8cf63e46f87cbea01a371b1599af33aeaab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
