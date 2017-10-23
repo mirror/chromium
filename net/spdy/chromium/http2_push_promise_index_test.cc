@@ -43,11 +43,6 @@ class Http2PushPromiseIndexTest : public testing::Test {
   Http2PushPromiseIndex index_;
 };
 
-TEST_F(Http2PushPromiseIndexTest, Empty) {
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
-}
-
 TEST_F(Http2PushPromiseIndexTest, FindMultipleSessionsWithDifferentUrl) {
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
   SSLSocketDataProvider ssl(SYNCHRONOUS, OK);
@@ -68,28 +63,55 @@ TEST_F(Http2PushPromiseIndexTest, FindMultipleSessionsWithDifferentUrl) {
   // Read hanging socket data.
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that Claim() resets outparams if no stream found.
+  base::WeakPtr<SpdySession> spdy_session = spdy_session1;
+  SpdyStreamId stream_id = 2;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that Claim() works correctly with one stream in the index.
+  index_.Register(url1_, spdy_session1, 2);
 
-  index_.RegisterUnclaimedPushedStream(url2_, spdy_session2);
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(spdy_session1.get(), spdy_session.get());
+  EXPECT_EQ(2u, stream_id);
 
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
+  // Test that the previous call of Claim() removed the pushed stream from the
+  // index.
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
+  // Test that Claim() works correctly with two streams in the index.
+  index_.Register(url1_, spdy_session1, 2);
+  index_.Register(url2_, spdy_session2, 4);
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(spdy_session1.get(), spdy_session.get());
+  EXPECT_EQ(2u, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url2_, spdy_session2.get());
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(spdy_session2.get(), spdy_session.get());
+  EXPECT_EQ(4u, stream_id);
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that the previous calls of Claim() removed the pushed streams from the
+  // index.
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
+
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
   // SpdySession weak pointers must still be valid,
   // otherwise comparisons above are not meaningful.
@@ -122,42 +144,98 @@ TEST_F(Http2PushPromiseIndexTest, MultipleSessionsForSingleUrl) {
   // Read hanging socket data.
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url1_));
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that Claim() resets outparams if no stream found.
+  base::WeakPtr<SpdySession> spdy_session = spdy_session1;
+  SpdyStreamId stream_id = 2;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url1_, key2_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
+
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
+
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
+
+  // Test that Claim() works correctly with one stream in the index.
+  index_.Register(url1_, spdy_session1, 2);
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(spdy_session1.get(), spdy_session.get());
+  EXPECT_EQ(2u, stream_id);
+
+  // Test that the previous call of Claim() removed the pushed stream from the
+  // index.
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
   // Note that Find() only uses its SpdySessionKey argument to verify proxy and
   // privacy mode.  Cross-origin pooling is supported, therefore HostPortPair of
   // SpdySessionKey does not matter.
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  index_.Register(url1_, spdy_session1, 2);
+  index_.Claim(url1_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(spdy_session1.get(), spdy_session.get());
+  EXPECT_EQ(2u, stream_id);
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session2);
+  // Test that the previous call of Claim() removed the pushed stream from the
+  // index.
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
-  // Find returns the first SpdySession if there are multiple for the same URL.
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  index_.Register(url1_, spdy_session1, 2);
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url1_).get());
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session2.get());
+  index_.Register(url1_, spdy_session2, 4);
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url1_));
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
+
+  spdy_session = spdy_session1;
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
+
+  // Claim() returns the first SpdySession if there are multiple for the same
+  // URL.
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(spdy_session1.get(), spdy_session.get());
+  EXPECT_EQ(2u, stream_id);
+
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(spdy_session2.get(), spdy_session.get());
+  EXPECT_EQ(4u, stream_id);
+
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_FALSE(spdy_session);
+  EXPECT_EQ(0u, stream_id);
 
   // SpdySession weak pointers must still be valid,
   // otherwise comparisons above are not meaningful.
