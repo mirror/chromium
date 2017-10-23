@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "platform/scheduler/base/queueing_time_estimator.h"
+#include "platform/scheduler/renderer/queueing_time_estimator.h"
 
 #include "base/memory/ptr_util.h"
 
@@ -12,6 +12,20 @@ namespace blink {
 namespace scheduler {
 
 namespace {
+
+// Strings used for reporting messages for Expected Queueing Time by
+// TaskQueueType.
+constexpr char kPrefixString[] = "RendererScheduler.ExpectedQueueingTimeBy";
+
+constexpr MainThreadTaskQueue::QueueType kSupportedQueueTypes[8] = {
+    MainThreadTaskQueue::QueueType::DEFAULT,
+    MainThreadTaskQueue::QueueType::DEFAULT_LOADING,
+    MainThreadTaskQueue::QueueType::UNTHROTTLED,
+    MainThreadTaskQueue::QueueType::FRAME_LOADING,
+    MainThreadTaskQueue::QueueType::FRAME_THROTTLEABLE,
+    MainThreadTaskQueue::QueueType::FRAME_PAUSABLE,
+    MainThreadTaskQueue::QueueType::COMPOSITOR,
+    MainThreadTaskQueue::QueueType::OTHER};
 
 // On Windows, when a computer sleeps, we may end up getting an extremely long
 // task. We'll ignore tasks longer than |invalidTaskThreshold|.
@@ -74,8 +88,9 @@ QueueingTimeEstimator::QueueingTimeEstimator(const State& state)
     : client_(nullptr), state_(state) {}
 
 void QueueingTimeEstimator::OnTopLevelTaskStarted(
-    base::TimeTicks task_start_time) {
-  state_.OnTopLevelTaskStarted(client_, task_start_time);
+    base::TimeTicks task_start_time,
+    MainThreadTaskQueue::QueueType queue_type) {
+  state_.OnTopLevelTaskStarted(client_, task_start_time, queue_type);
 }
 
 void QueueingTimeEstimator::OnTopLevelTaskCompleted(
@@ -93,15 +108,71 @@ void QueueingTimeEstimator::OnRendererStateChanged(
   state_.OnRendererStateChanged(client_, backgrounded, transition_time);
 }
 
+QueueingTimeEstimator::SplitCalculator::SplitCalculator(int steps_per_window)
+    : steps_per_window_(steps_per_window) {
+  for (auto supported_queue_type : kSupportedQueueTypes) {
+    message_by_queue_type_[supported_queue_type] =
+        GetReportingMessageFromQueueType(supported_queue_type);
+  }
+}
+
+// static
+std::string
+QueueingTimeEstimator::SplitCalculator::GetReportingMessageFromQueueType(
+    MainThreadTaskQueue::QueueType queue_type) {
+  DCHECK(IsSupportedQueueType(queue_type));
+  std::string message = kPrefixString;
+  message += MainThreadTaskQueue::NameForQueueType(queue_type);
+  return message;
+}
+
+// static
+bool QueueingTimeEstimator::SplitCalculator::IsSupportedQueueType(
+    MainThreadTaskQueue::QueueType queue_type) {
+  for (auto supported_queue_type : kSupportedQueueTypes) {
+    if (queue_type == supported_queue_type)
+      return true;
+  }
+  return false;
+}
+
+void QueueingTimeEstimator::SplitCalculator::UpdateQueueType(
+    MainThreadTaskQueue::QueueType queue_type) {
+  if (current_queue_type_ == queue_type)
+    return;
+
+  current_queue_type_ = IsSupportedQueueType(queue_type)
+                            ? queue_type
+                            : MainThreadTaskQueue::QueueType::OTHER;
+}
+
+void QueueingTimeEstimator::SplitCalculator::AddQueueingTime(
+    base::TimeDelta queueing_time) {
+  eqt_by_queue_types_[current_queue_type_] += queueing_time;
+}
+
+void QueueingTimeEstimator::SplitCalculator::ReportSplitExpectedQueueingTimes(
+    Client* client) {
+  for (auto supported_queue_type : kSupportedQueueTypes) {
+    client->OnReportSplitExpectedQueueingTime(
+        message_by_queue_type_[supported_queue_type],
+        eqt_by_queue_types_[supported_queue_type] / steps_per_window_);
+  }
+  eqt_by_queue_types_.clear();
+}
+
 QueueingTimeEstimator::State::State(int steps_per_window)
-    : step_queueing_times(steps_per_window) {}
+    : step_queueing_times(steps_per_window),
+      split_calculator_(steps_per_window) {}
 
 void QueueingTimeEstimator::State::OnTopLevelTaskStarted(
     QueueingTimeEstimator::Client* client,
-    base::TimeTicks task_start_time) {
+    base::TimeTicks task_start_time,
+    MainThreadTaskQueue::QueueType queue_type) {
   AdvanceTime(client, task_start_time);
   current_task_start_time = task_start_time;
   processing_task = true;
+  split_calculator_.UpdateQueueType(queue_type);
 }
 
 void QueueingTimeEstimator::State::OnTopLevelTaskCompleted(
@@ -155,9 +226,11 @@ void QueueingTimeEstimator::State::AdvanceTime(
   while (TimePastStepEnd(current_time)) {
     if (processing_task) {
       // Include the current task in this window.
-      step_expected_queueing_time += ExpectedQueueingTimeFromTask(
+      base::TimeDelta queueing_time = ExpectedQueueingTimeFromTask(
           current_task_start_time, current_time, step_start_time,
           step_start_time + window_step_width);
+      step_expected_queueing_time += queueing_time;
+      split_calculator_.AddQueueingTime(queueing_time);
     }
     step_queueing_times.Add(step_expected_queueing_time);
 
@@ -169,13 +242,18 @@ void QueueingTimeEstimator::State::AdvanceTime(
     // Report:                          |-------window EQT------|
     client->OnQueueingTimeForWindowEstimated(step_queueing_times.GetAverage(),
                                              step_queueing_times.IndexIsZero());
+    if (step_queueing_times.IndexIsZero())
+      split_calculator_.ReportSplitExpectedQueueingTimes(client);
+
     step_start_time += window_step_width;
     step_expected_queueing_time = base::TimeDelta();
   }
   if (processing_task) {
-    step_expected_queueing_time += ExpectedQueueingTimeFromTask(
+    base::TimeDelta queueing_time = ExpectedQueueingTimeFromTask(
         current_task_start_time, current_time, step_start_time,
         step_start_time + window_step_width);
+    step_expected_queueing_time += queueing_time;
+    split_calculator_.AddQueueingTime(queueing_time);
   }
 }
 
@@ -216,6 +294,10 @@ class RecordQueueingTimeClient : public QueueingTimeEstimator::Client {
     queueing_time_ = queueing_time;
   }
 
+  void OnReportSplitExpectedQueueingTime(
+      const std::string& split_description,
+      base::TimeDelta queueing_time) override {}
+
   base::TimeDelta queueing_time() { return queueing_time_; }
 
   RecordQueueingTimeClient() {}
@@ -240,7 +322,8 @@ base::TimeDelta QueueingTimeEstimator::EstimateQueueingTimeIncludingCurrentTask(
   if (temporary_queueing_time_estimator_state.current_task_start_time
           .is_null()) {
     temporary_queueing_time_estimator_state.OnTopLevelTaskStarted(
-        &record_queueing_time_client, now);
+        &record_queueing_time_client, now,
+        MainThreadTaskQueue::QueueType::OTHER);
   }
   temporary_queueing_time_estimator_state.OnTopLevelTaskCompleted(
       &record_queueing_time_client, now);
