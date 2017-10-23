@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03de1340_803966aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "20e33d2a_6f3f4678",
+      "range": {
+        "startLine": 475,
+        "startChar": 66,
+        "endLine": 475,
+        "endChar": 70
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa5525f4_f6a3cc5b",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "3220a0e1_d1880f99",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "I\u0027ll make viewMessage non-null.",
+      "parentUuid": "aa5525f4_f6a3cc5b",
+      "range": {
+        "startLine": 693,
+        "startChar": 28,
+        "endLine": 693,
+        "endChar": 39
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39ca203d_7159d80a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Same as above?",
+      "parentUuid": "d5bb5158_4f960c9e",
+      "range": {
+        "startLine": 693,
+        "startChar": 44,
+        "endLine": 693,
+        "endChar": 55
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dd0a79e_f4cc8c71",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d34cb4_851189c9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "It is not too hot - one need to expand the group and have element in the tree for serious overhead.",
+      "parentUuid": "3dd0a79e_f4cc8c71",
+      "range": {
+        "startLine": 718,
+        "startChar": 8,
+        "endLine": 718,
+        "endChar": 58
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +230,48 @@
     },
     {
       "key": {
+        "uuid": "013a6c22_6f1852a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "If all the messages are in the same group, we only get here once.",
+      "parentUuid": "a779f2a3_9ee98369",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f51a9e2a_ec0d4e04",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "I now use arrows when I can - it reads better.",
+      "parentUuid": "6dc2f050_7083daae",
+      "range": {
+        "startLine": 745,
+        "startChar": 41,
+        "endLine": 745,
+        "endChar": 77
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fce87809_78e12378",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "643b4fa3_64beef0d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": ":( I see. This is getting too complicated, I\u0027ll need to follow up.",
+      "parentUuid": "fce87809_78e12378",
+      "range": {
+        "startLine": 761,
+        "startChar": 51,
+        "endLine": 761,
+        "endChar": 109
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2f1dc4a_6e107ff1",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -174,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "e9d5fa52_3bb5bfc3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Well, it is testing based on the classes it should not know about! Just look at the groupMessage.parentElement.message below. Basically, all the code below this line should not exist.",
+      "parentUuid": "a2f1dc4a_6e107ff1",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1966e62e_4c5b966f",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -185,6 +365,24 @@
       "writtenOn": "2017-10-22T23:24:03Z",
       "side": 1,
       "message": "Can we cleanly not have it create this marker in two different places?",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef75bbc_cb02d315",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Why not?",
+      "parentUuid": "1966e62e_4c5b966f",
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -211,6 +409,30 @@
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3052aa1d_e2cfe7e3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Done (it was taking 2 microseconds)",
+      "parentUuid": "c687c851_fba01d11",
+      "range": {
+        "startLine": 1340,
+        "startChar": 9,
+        "endLine": 1340,
+        "endChar": 29
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +476,48 @@
     },
     {
       "key": {
+        "uuid": "65f4aece_185ea1e0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "This has not changed.",
+      "parentUuid": "90405f26_145abe42",
+      "range": {
+        "startLine": 1343,
+        "startChar": 28,
+        "endLine": 1343,
+        "endChar": 38
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9bf035e4_5aa1c1ef",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "This has not changed.",
+      "parentUuid": "6183848a_97100af3",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0090fe4_78cd4e9f",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -277,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "c631814a_b872a829",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0090fe4_78cd4e9f",
+      "range": {
+        "startLine": 1344,
+        "startChar": 26,
+        "endLine": 1344,
+        "endChar": 33
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97ac5025_ede2a66f",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -297,6 +585,30 @@
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f7aa4c_adf3ed3b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ac5025_ede2a66f",
+      "range": {
+        "startLine": 1345,
+        "startChar": 23,
+        "endLine": 1345,
+        "endChar": 28
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -346,6 +658,54 @@
     },
     {
       "key": {
+        "uuid": "bbd8fdec_5293a768",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Yey! We\u0027ll celebrate Chrome 80 with updating it in a couple of years!",
+      "parentUuid": "ce6595c0_d2585d25",
+      "range": {
+        "startLine": 1346,
+        "startChar": 27,
+        "endLine": 1346,
+        "endChar": 32
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfda368f_f49b2207",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4388a49c_af6016eb",
+      "range": {
+        "startLine": 1346,
+        "startChar": 26,
+        "endLine": 1346,
+        "endChar": 27
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4df9373_9629cf07",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -369,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "7e4f7ac3_d66808dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4df9373_9629cf07",
+      "range": {
+        "startLine": 1348,
+        "startChar": 23,
+        "endLine": 1348,
+        "endChar": 26
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "257586fd_708cea1e",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -380,6 +764,30 @@
       "writtenOn": "2017-10-23T02:24:35Z",
       "side": 1,
       "message": "Could we also add a handlerRegex?  I think it\u0027d be nice in a demo to group these:\n\u0027DOMContentLoaded\u0027 handler took 955ms\n\u0027setTimeout\u0027 handler took 63ms\n\nas\nEvent handler took Nms",
+      "range": {
+        "startLine": 1352,
+        "startChar": 17,
+        "endLine": 1352,
+        "endChar": 27
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3caf3fe3_3cbc1de9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Let\u0027s follow up. I haven\u0027t seen them trigger, so did not spot them.",
+      "parentUuid": "257586fd_708cea1e",
       "range": {
         "startLine": 1352,
         "startChar": 17,
@@ -409,6 +817,24 @@
     },
     {
       "key": {
+        "uuid": "f1854a04_2c42e778",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "We cache the console view message itself.",
+      "parentUuid": "17efcdd8_442ecfde",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f099b3_6f5f99dc",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -423,6 +849,24 @@
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b2de91_bdcdaf2f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "That\u0027s too generic to my taste.",
+      "parentUuid": "e7f099b3_6f5f99dc",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -449,6 +893,30 @@
     },
     {
       "key": {
+        "uuid": "e191a698_e113fcb9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9aba8f7_30d066e6",
+      "range": {
+        "startLine": 1382,
+        "startChar": 37,
+        "endLine": 1382,
+        "endChar": 38
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af28e2c3_ba5cd8dd",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -469,6 +937,30 @@
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6616bc9f_863df2f4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af28e2c3_ba5cd8dd",
+      "range": {
+        "startLine": 1386,
+        "startChar": 34,
+        "endLine": 1386,
+        "endChar": 36
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -516,6 +1008,30 @@
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98b11b4_34e2208b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09676bf0_c6adca1a",
+      "range": {
+        "startLine": 1391,
+        "startChar": 27,
+        "endLine": 1391,
+        "endChar": 31
+      },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -573,6 +1089,24 @@
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b65677_f4d377e5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:54:49Z",
+      "side": 1,
+      "message": "I\u0027m not breaking the invariant. This code was broken:\n\ninvalidate() is doing\n1. this._itemCount \u003d this._provider.itemCount()\n2. this._rebuildCumulativeHeights\n\n(2) fails because itemCount is out of sync with this._renderedItems.\n\nIt never worked...",
+      "parentUuid": "e234478c_22b84736",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
