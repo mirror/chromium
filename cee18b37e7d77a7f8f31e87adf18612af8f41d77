@@ -34,6 +34,24 @@
       "revId": "cee18b37e7d77a7f8f31e87adf18612af8f41d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421d5749_2ffc1149",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-23T17:59:33Z",
+      "side": 1,
+      "message": "BTW, you are correct about the compounding problem. In devtools, the font size is something odd like 14.1528...",
+      "parentUuid": "ee013875_c8fa0b5e",
+      "revId": "cee18b37e7d77a7f8f31e87adf18612af8f41d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
