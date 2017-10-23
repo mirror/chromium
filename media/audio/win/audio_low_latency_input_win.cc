@@ -437,9 +437,15 @@ void WASAPIAudioInputStream::Run() {
         if (num_frames_to_read != 0) {
           if (flags & AUDCLNT_BUFFERFLAGS_SILENT) {
             fifo_->PushSilence(num_frames_to_read);
+            TRACE_EVENT2("audio", "WASAPIAudioInputStream::Push",
+                         "PushedSilenceFrames", num_frames_to_read,
+                         "AvailableFrames", fifo_->GetAvailableFrames());
           } else {
             fifo_->Push(data_ptr, num_frames_to_read,
                         format_.wBitsPerSample / 8);
+            TRACE_EVENT2("audio", "WASAPIAudioInputStream::Push",
+                         "PushedFrames", num_frames_to_read, "AvailableFrames",
+                         fifo_->GetAvailableFrames());
           }
         }
 
@@ -462,14 +468,22 @@ void WASAPIAudioInputStream::Run() {
               break;
             }
             converter_->Convert(convert_bus_.get());
+            int num_frames = convert_bus_->GetBitstreamFrames();
             sink_->OnData(convert_bus_.get(), capture_time, volume);
+            TRACE_EVENT2("audio", "WASAPIAudioInputStream::OnData",
+                         "ConsumedConvertedFrames", num_frames,
+                         "AvailableConvertedFrames",
+                         convert_bus_->GetBitstreamFrames());
 
             // Move the capture time forward for each vended block.
             capture_time += AudioTimestampHelper::FramesToTime(
                 convert_bus_->frames(), format_.nSamplesPerSec);
           } else {
+            int num_frames = fifo_->GetAvailableFrames();
             sink_->OnData(fifo_->Consume(), capture_time, volume);
-
+            TRACE_EVENT2("audio", "WASAPIAudioInputStream::OnData",
+                         "ConsumedFrames", num_frames, "AvailableFrames",
+                         fifo_->GetAvailableFrames());
             // Move the capture time forward for each vended block.
             capture_time += AudioTimestampHelper::FramesToTime(
                 packet_size_frames_, format_.nSamplesPerSec);
@@ -652,6 +666,10 @@ bool WASAPIAudioInputStream::DesiredFormatIsSupported() {
     converter_->AddInput(this);
     converter_->PrimeWithSilence();
     convert_bus_ = AudioBus::Create(output);
+
+    TRACE_EVENT2("audio", "WASAPIAudioInputStream::Resample",
+                 "ConfiguredSampleRate", format_.nSamplesPerSec,
+                 "RequestedSampleRate", closest_match->nSamplesPerSec);
 
     // Now change the format we're going to ask for to better match with what
     // the OS can provide.  If we succeed in opening the stream with these
