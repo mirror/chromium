@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4038ec6a_072939b2",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-textMetrics-all.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T17:22:09Z",
+      "side": 1,
+      "message": "I\u0027ll add more tests.",
+      "parentUuid": "8a6e1ee2_baf675d6",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00d9169f_a25aaebf",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-textMetrics-all.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb3188f_efcf761d",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-textMetrics-all.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T17:22:09Z",
+      "side": 1,
+      "message": "the width: it was just returning 248.666 (which would be closer to 248.5). Now it\u0027s returning the int, so I just updated to that.\n\nThe ascent/descent before were the lines one. Now they are the actual box.",
+      "parentUuid": "00d9169f_a25aaebf",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "32e0465e_4f5ba672",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T17:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a70d8a1b_b72ae20e",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f23bac93_0c9302b3",
         "filename": "third_party/WebKit/Source/platform/fonts/Font.h",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e5c73920_307e2cc2",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T17:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23bac93_0c9302b3",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66678898_bcaa6c16",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBuffer.cpp",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ccd649_d0eae64b",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T17:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66678898_bcaa6c16",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
