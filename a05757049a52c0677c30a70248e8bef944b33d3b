@@ -16,6 +16,52 @@
       "revId": "a05757049a52c0677c30a70248e8bef944b33d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71279200_6aabccb0",
+        "filename": "testing/libfuzzer/fuzzers/icu_date_format_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-23T22:30:25Z",
+      "side": 1,
+      "message": "C-style type casting, please prefer C++ casts as per https://google.github.io/styleguide/cppguide.html#Casting",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "a05757049a52c0677c30a70248e8bef944b33d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b12b6b_cd6206f3",
+        "filename": "testing/libfuzzer/fuzzers/icu_number_format_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-23T22:30:25Z",
+      "side": 1,
+      "message": "same here, please use C++ type casts",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 28
+      },
+      "revId": "a05757049a52c0677c30a70248e8bef944b33d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
