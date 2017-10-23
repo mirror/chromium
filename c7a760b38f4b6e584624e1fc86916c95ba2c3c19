@@ -22,6 +22,30 @@
       "revId": "c7a760b38f4b6e584624e1fc86916c95ba2c3c19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9c51ec_37991dbb",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-23T20:27:40Z",
+      "side": 1,
+      "message": "Changed to \u003d\u003d. Just premature optimization.",
+      "parentUuid": "43bed597_7961cc67",
+      "range": {
+        "startLine": 255,
+        "startChar": 25,
+        "endLine": 255,
+        "endChar": 29
+      },
+      "revId": "c7a760b38f4b6e584624e1fc86916c95ba2c3c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
