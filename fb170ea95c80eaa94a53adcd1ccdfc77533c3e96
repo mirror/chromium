@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3465412b_6a106d81",
+        "filename": "components/encrypted_messages/message_encrypter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-23T23:06:07Z",
+      "side": 1,
+      "message": "nit: name these globals with a `g_` prefix",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "fb170ea95c80eaa94a53adcd1ccdfc77533c3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e781b5cc_76d94208",
+        "filename": "components/encrypted_messages/message_encrypter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-23T23:06:07Z",
+      "side": 1,
+      "message": "Do we actually need this? If we\u0027re only testing that DecryptMessageForTesting(EncryptSerializedMessage(m)) \u003d\u003d m, it doesn\u0027t seem like we need to fix a private key.",
+      "range": {
+        "startLine": 170,
+        "startChar": 22,
+        "endLine": 170,
+        "endChar": 45
+      },
+      "revId": "fb170ea95c80eaa94a53adcd1ccdfc77533c3e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
