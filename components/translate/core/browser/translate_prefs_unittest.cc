@@ -707,4 +707,241 @@ TEST_F(TranslatePrefsTest, RemoveFromLanguageListFeatureEnabled) {
   ExpectBlockedLanguageListContent({"en", "es"});
 }
 
+TEST_F(TranslatePrefsTest, MoveLanguageToTheTop) {
+  std::vector<std::string> languages;
+  std::string enabled;
+
+  // First we test all cases that result in no change.
+  // The method needs to handle them gracefully and simply do no-op.
+
+  // Empty language list.
+  languages = {};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::TOP, "en-US");
+  ExpectLanguagePrefs("");
+
+  // Search for empty string.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("", TranslatePrefs::TOP, "en-US");
+  ExpectLanguagePrefs("en-US");
+
+  // List of enabled languages is empty.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::TOP, "");
+  ExpectLanguagePrefs("en-US");
+
+  // Everything empty.
+  languages = {""};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("", TranslatePrefs::TOP, "");
+  ExpectLanguagePrefs("");
+
+  // Only one element in the list.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::TOP, "en-US");
+  ExpectLanguagePrefs("en-US");
+
+  // Element is already at the top.
+  languages = {"en-US", "fr"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::TOP, "en-US,fr");
+  ExpectLanguagePrefs("en-US,fr");
+
+  // Below we test cases that result in a valid rearrangement of the list.
+
+  // The language is already at the top of the enabled languages, but not at the
+  // top of the list: we still need to push it to the top.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("it", TranslatePrefs::TOP, "it,es-AR");
+  ExpectLanguagePrefs("it,en-US,fr,es-AR");
+
+  // Swap two languages.
+  languages = {"en-US", "fr"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("fr", TranslatePrefs::TOP, "en-US,fr");
+  ExpectLanguagePrefs("fr,en-US");
+
+  // Language in the middle.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("it", TranslatePrefs::TOP,
+                                      "en-US,fr,it,es-AR");
+  ExpectLanguagePrefs("it,en-US,fr,es-AR");
+
+  // Language at the bottom.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("es-AR", TranslatePrefs::TOP,
+                                      "en-US,fr,it,es-AR");
+  ExpectLanguagePrefs("es-AR,en-US,fr,it");
+
+  // Skip languages that are not enabled.
+  languages = {"en-US", "fr", "it", "es-AR", "zh"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("zh", TranslatePrefs::TOP, "en-US,fr,zh");
+  ExpectLanguagePrefs("zh,en-US,fr,it,es-AR");
+}
+
+TEST_F(TranslatePrefsTest, MoveLanguageUp) {
+  std::vector<std::string> languages;
+  std::string enabled;
+
+  // First we test all cases that result in no change.
+  // The method needs to handle them gracefully and simply do no-op.
+
+  // Empty language list.
+  languages = {};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::UP, "en-US");
+  ExpectLanguagePrefs("");
+
+  // Search for empty string.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("", TranslatePrefs::UP, "en-US");
+  ExpectLanguagePrefs("en-US");
+
+  // List of enabled languages is empty.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::UP, "");
+  ExpectLanguagePrefs("en-US");
+
+  // Everything empty.
+  languages = {""};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("", TranslatePrefs::UP, "");
+  ExpectLanguagePrefs("");
+
+  // Only one element in the list.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::UP, "en-US");
+  ExpectLanguagePrefs("en-US");
+
+  // Element is already at the top.
+  languages = {"en-US", "fr"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::UP, "en-US,fr");
+  ExpectLanguagePrefs("en-US,fr");
+
+  // The language is already at the top of the enabled languages.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("it", TranslatePrefs::UP, "it,es-AR");
+  ExpectLanguagePrefs("en-US,fr,it,es-AR");
+
+  // Below we test cases that result in a valid rearrangement of the list.
+
+  // Swap two languages.
+  languages = {"en-US", "fr"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("fr", TranslatePrefs::UP, "en-US,fr");
+  ExpectLanguagePrefs("fr,en-US");
+
+  // Language in the middle.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("it", TranslatePrefs::UP,
+                                      "en-US,fr,it,es-AR");
+  ExpectLanguagePrefs("en-US,it,fr,es-AR");
+
+  // Language at the bottom.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("es-AR", TranslatePrefs::UP,
+                                      "en-US,fr,it,es-AR");
+  ExpectLanguagePrefs("en-US,fr,es-AR,it");
+
+  // Skip languages that are not enabled.
+  languages = {"en-US", "fr", "it", "es-AR", "zh"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("zh", TranslatePrefs::UP, "en-US,fr,zh");
+  ExpectLanguagePrefs("en-US,zh,fr,it,es-AR");
+}
+
+TEST_F(TranslatePrefsTest, MoveLanguageDown) {
+  std::vector<std::string> languages;
+  std::string enabled;
+
+  // First we test all cases that result in no change.
+  // The method needs to handle them gracefully and simply do no-op.
+
+  // Empty language list.
+  languages = {};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::DOWN, "en-US");
+  ExpectLanguagePrefs("");
+
+  // Search for empty string.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("", TranslatePrefs::DOWN, "en-US");
+  ExpectLanguagePrefs("en-US");
+
+  // List of enabled languages is empty.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::DOWN, "");
+  ExpectLanguagePrefs("en-US");
+
+  // Everything empty.
+  languages = {""};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("", TranslatePrefs::DOWN, "");
+  ExpectLanguagePrefs("");
+
+  // Only one element in the list.
+  languages = {"en-US"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::DOWN, "en-US");
+  ExpectLanguagePrefs("en-US");
+
+  // Element is already at the bottom.
+  languages = {"en-US", "fr"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("fr", TranslatePrefs::DOWN, "en-US,fr");
+  ExpectLanguagePrefs("en-US,fr");
+
+  // The language is already at the bottom of the enabled languages.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("it", TranslatePrefs::DOWN, "fr,it");
+  ExpectLanguagePrefs("en-US,fr,it,es-AR");
+
+  // Below we test cases that result in a valid rearrangement of the list.
+
+  // Swap two languages.
+  languages = {"en-US", "fr"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::DOWN,
+                                      "en-US,fr");
+  ExpectLanguagePrefs("fr,en-US");
+
+  // Language in the middle.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("fr", TranslatePrefs::DOWN,
+                                      "en-US,fr,it,es-AR");
+  ExpectLanguagePrefs("en-US,it,fr,es-AR");
+
+  // Language at the top.
+  languages = {"en-US", "fr", "it", "es-AR"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::DOWN,
+                                      "en-US,fr,it,es-AR");
+  ExpectLanguagePrefs("fr,en-US,it,es-AR");
+
+  // Skip languages that are not enabled.
+  languages = {"en-US", "fr", "it", "es-AR", "zh"};
+  translate_prefs_->UpdateLanguageList(languages);
+  translate_prefs_->RearrangeLanguage("en-US", TranslatePrefs::DOWN,
+                                      "en-US,es-AR,zh");
+  ExpectLanguagePrefs("fr,it,es-AR,en-US,zh");
+}
+
 }  // namespace translate
