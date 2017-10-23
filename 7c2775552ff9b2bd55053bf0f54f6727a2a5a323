@@ -234,6 +234,29 @@
     },
     {
       "key": {
+        "uuid": "fc92ad05_610e272d",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-23T15:56:38Z",
+      "side": 1,
+      "message": "It would be nice to override const char* views::GetClassName() const.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "7c2775552ff9b2bd55053bf0f54f6727a2a5a323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4ea4d08_de49f6d6",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
