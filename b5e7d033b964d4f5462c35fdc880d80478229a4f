@@ -16,6 +16,24 @@
       "revId": "b5e7d033b964d4f5462c35fdc880d80478229a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cacd3dad_33052c9f",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/test_summary.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-23T17:58:08Z",
+      "side": 1,
+      "message": "Discussed in-person: there will be a spreadsheet shared with the team.",
+      "parentUuid": "5082f65f_b023de04",
+      "revId": "b5e7d033b964d4f5462c35fdc880d80478229a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
