@@ -34,6 +34,24 @@
       "revId": "dffed812f73d27c3c8549c7c36fa215f1f19dcac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2412b723_e27c0994",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T19:45:31Z",
+      "side": 1,
+      "message": "I don\u0027t understand - why would it hurt to just always call\nmWebContentsAccessibility.onAttachedToWindow() on all Android\nversions?\n\nThe base WebContentsAccessibility could just ignore it and\nonly LollipopWCA would need to do something with it.\n\nAlso, do we really need to rely on onAttachedToWindow? Does it\nwork to register the broadcast receiver in the constructor\nand only unregister it in onDetachedFromWindow?",
+      "parentUuid": "fbbb12e8_74d6042c",
+      "revId": "dffed812f73d27c3c8549c7c36fa215f1f19dcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
