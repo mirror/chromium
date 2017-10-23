@@ -174,6 +174,7 @@
 #include "ios/chrome/browser/upgrade/upgrade_center.h"
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
 #import "ios/chrome/browser/web/error_page_content.h"
+#import "ios/chrome/browser/web/load_timing_tab_helper.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #include "ios/chrome/browser/web/print_tab_helper.h"
 #import "ios/chrome/browser/web/repost_form_tab_helper.h"
@@ -2297,6 +2298,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)tabLoadComplete:(Tab*)tab withSuccess:(BOOL)success {
   DCHECK(tab && ([_model indexOfTab:tab] != NSNotFound));
 
+  LoadTimingTabHelper* timer = LoadTimingTabHelper::FromWebState(tab.webState);
+  if (success) {
+    timer->ResetAndReportLoadTime();
+  } else {
+    timer->Reset();
+  }
+
   // Persist the session on a delay.
   [_model saveSessionImmediately:NO];
 }
@@ -3870,6 +3878,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
     return;
   }
 
+  bool typed_or_generated_transition =
+      PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_TYPED) ||
+      PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_GENERATED);
+
   PrerenderService* prerenderService =
       PrerenderServiceFactory::GetForBrowserState(self.browserState);
   if (prerenderService && prerenderService->HasPrerenderForUrl(url)) {
@@ -3896,6 +3908,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
       // BrowserViewController to detect that a pre-rendered tab is switched in,
       // and show the prerendering animation.
       newTab.isPrerenderTab = NO;
+      if (typed_or_generated_transition) {
+        LoadTimingTabHelper::FromWebState(newTab.webState)
+            ->DidInitiatePageLoad();
+      }
 
       [self tabLoadComplete:newTab withSuccess:newTab.loadFinished];
       return;
@@ -3916,6 +3932,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
                 inBackground:NO
                     appendTo:kCurrentTab];
     return;
+  }
+
+  if (typed_or_generated_transition) {
+    LoadTimingTabHelper::FromWebState([_model currentTab].webState)
+        ->DidInitiatePageLoad();
   }
 
   // If this is a reload initiated from the omnibox.
