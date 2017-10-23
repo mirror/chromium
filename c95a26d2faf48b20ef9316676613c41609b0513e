@@ -1,0 +1,300 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e42f695_07f7ac28",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "2 news",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd510b4_5b6dfc15",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "nit: s/blacklisted or not/be blacklisted or not/",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4dbf66_d0aa81be",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "nit: s/ui/UI/",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366f63dd_af099c92",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "why did this formatting change?",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f39c62a_3675018a",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "DCHECK observer_ when it is passedinto the constructor and nowhere else.",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d343e01_a7fc36bf",
+        "filename": "components/previews/core/previews_black_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "Can you try const auto it?",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b05fd9_3745e230",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "not using this header anymore",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb7c63b_7c28ed68",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "If there is only one observer, can we change the name to PreviewsBlacklistDelegate?",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad20935_e19faa85",
+        "filename": "components/previews/core/previews_black_list_observer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "see comment about naming this differently above.",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b74da9_8788c2a8",
+        "filename": "components/previews/core/previews_black_list_observer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "range": {
+        "startLine": 21,
+        "startChar": 47,
+        "endLine": 21,
+        "endChar": 53
+      },
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae4b65c_33e679ee",
+        "filename": "components/previews/core/previews_black_list_observer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "s/itt/it",
+      "range": {
+        "startLine": 24,
+        "startChar": 64,
+        "endLine": 24,
+        "endChar": 67
+      },
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e584da1_b4b913e3",
+        "filename": "components/previews/core/previews_black_list_observer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure why these are protected instead of public, the subclass will make it\u0027s own decision  about public/protected, and this can\u0027t be call directly because of pure virtual methods anyway.",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88723b04_6d959ec1",
+        "filename": "components/previews/core/previews_black_list_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "This whole section might read more cleanly as EXPECT_EQ(i \u003e host_indifferent_threshold, observer_.user_blacklisted());",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8726077_bfdcbb37",
+        "filename": "components/previews/core/previews_black_list_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "-\u003eoperator[] sometimes reads poorly to people. I\u0027d go with insert (std::make_pair(url_a.host,base::WrapUnique(item_a))",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327d6d9c_eb8a5f35",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "Can you change this to SetPreviewsBlacklistForTesting (the name is repetitive), sorry I didn\u0027t see earlier.",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56320721_78f901f7",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-23T22:15:38Z",
+      "side": 1,
+      "message": "why not set this in the constructor initialization list?",
+      "revId": "c95a26d2faf48b20ef9316676613c41609b0513e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
