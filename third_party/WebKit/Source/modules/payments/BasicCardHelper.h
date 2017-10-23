@@ -10,6 +10,7 @@
 #include "public/platform/modules/payments/payment_request.mojom-blink.h"
 
 namespace blink {
+
 using ::payments::mojom::blink::BasicCardNetwork;
 using ::payments::mojom::blink::BasicCardType;
 

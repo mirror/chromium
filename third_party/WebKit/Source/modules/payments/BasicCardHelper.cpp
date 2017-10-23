@@ -10,6 +10,7 @@
 namespace blink {
 
 namespace {
+
 static const size_t kMaxListSize = 1024;
 
 const struct {
@@ -30,6 +31,7 @@ const struct {
 } kBasicCardTypes[] = {{BasicCardType::CREDIT, "credit"},
                        {BasicCardType::DEBIT, "debit"},
                        {BasicCardType::PREPAID, "prepaid"}};
+
 }  // namespace
 
 void BasicCardHelper::parseBasiccardData(
