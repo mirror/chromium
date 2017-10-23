@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "ui/aura_extra/image_window_delegate.h"
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/files/file_util.h"
@@ -807,7 +808,8 @@ void WebContentsViewAura::CreateView(
   window_->set_owned_by_parent(false);
   window_->SetType(aura::client::WINDOW_TYPE_CONTROL);
   window_->SetName("WebContentsViewAura");
-  window_->Init(ui::LAYER_NOT_DRAWN);
+  window_->Init(ui::LAYER_SOLID_COLOR);
+  window_->layer()->SetColor(SK_ColorGREEN);
   window_->AddObserver(this);
   aura::Window* root_window = context ? context->GetRootWindow() : nullptr;
   if (root_window) {
@@ -1319,6 +1321,28 @@ void WebContentsViewAura::OnWindowVisibilityChanged(aura::Window* window,
   // Ignore any visibility changes in the hierarchy below.
   if (window != window_.get() && window_->Contains(window))
     return;
+
+  if (window == window_.get()) {
+
+    const NavigationControllerImpl& controller = web_contents_->GetController();
+    const NavigationEntryImpl* entry = controller.GetLastCommittedEntry();
+    if (entry && entry->screenshot().get() && !screenshot_window_) {
+      // If we have a screenshot.
+      LOG(ERROR) << "SCREENSHOT";
+      std::vector<gfx::ImagePNGRep> image_reps;
+      image_reps.push_back(gfx::ImagePNGRep(entry->screenshot(), 1.0f));
+      aura_extra::ImageWindowDelegate* delegate = new aura_extra::ImageWindowDelegate();
+      delegate->SetImage(gfx::Image(image_reps));
+      aura::Window* screenshot_window_ = new aura::Window(delegate);
+      screenshot_window_->Init(ui::LAYER_TEXTURED);
+      screenshot_window_->layer()->SetMasksToBounds(false);
+      screenshot_window_->SetName("OverscrollOverlay");
+      window_->AddChild(screenshot_window_);
+      screenshot_window_->SetBounds(gfx::Rect(0, 0, window_->bounds().width(), window_->bounds().height()));
+      screenshot_window_->Show();
+    }
+
+  }
 
   web_contents_->UpdateWebContentsVisibility(visible);
 }

@@ -542,6 +542,8 @@ void NavigatorImpl::DidNavigate(
   FrameTreeNode* frame_tree_node = render_frame_host->frame_tree_node();
   FrameTree* frame_tree = frame_tree_node->frame_tree();
 
+  LOG(ERROR) << "did navigate";
+
   bool is_same_document_navigation = controller_->IsURLSameDocumentNavigation(
       params.url, params.origin, params.was_within_same_document,
       render_frame_host);
@@ -556,6 +558,9 @@ void NavigatorImpl::DidNavigate(
     is_same_document_navigation = false;
   }
 
+        LOG(ERROR) << "taking screenshot.....................";
+          controller_->TakeScreenshot();
+
   if (ui::PageTransitionIsMainFrame(params.transition)) {
     if (delegate_) {
       // When overscroll navigation gesture is enabled, a screenshot of the page
@@ -564,14 +569,13 @@ void NavigatorImpl::DidNavigate(
       // calling RenderFrameHostManager::DidNavigateMainFrame, because that can
       // change WebContents::GetRenderViewHost to return the new host, instead
       // of the one that may have just been swapped out.
-      if (delegate_->CanOverscrollContent()) {
+     // if (delegate_->CanOverscrollContent()) {
         // Don't take screenshots if we are staying on the same document. We
         // want same-document navigations to be super fast, and taking a
         // screenshot currently blocks GPU for a longer time than we are willing
         // to tolerate in this use case.
-        if (!params.was_within_same_document)
-          controller_->TakeScreenshot();
-      }
+        //if (!params.was_within_same_document)
+    //  }
 
       // Run tasks that must execute just before the commit.
       delegate_->DidNavigateMainFramePreCommit(is_same_document_navigation);

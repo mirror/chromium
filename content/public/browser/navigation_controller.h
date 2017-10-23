@@ -25,6 +25,7 @@
 #include "content/public/common/resource_request_body.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
+#include "base/callback_forward.h"
 
 namespace base {
 
@@ -454,6 +455,10 @@ class NavigationController {
   // |CanPruneAllButLastCommitted| returns true before calling this, or it will
   // crash.
   virtual void PruneAllButLastCommitted() = 0;
+
+  // Ensures that a screenshot of the current navigation entry is available and
+  // invokes |screenshot_available_callback|.
+  virtual void CaptureScreenshot(base::OnceClosure screenshot_available_callback) = 0;
 
   // Clears all screenshots associated with navigation entries in this
   // controller. Useful to reduce memory consumption in low-memory situations.
