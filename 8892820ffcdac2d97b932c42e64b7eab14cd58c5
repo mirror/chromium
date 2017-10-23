@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6e30578_05010802",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-23T18:35:21Z",
+      "side": 1,
+      "message": "This is the problem, instead of doing eventSequence +\u003d \u0027ontrack;\u0027 on the event firing, we resolve a promise and do eventSequence +\u003d \u0027ontrack;\u0027 on that promise resolving. This adds an additional delay that, apparently, with two \"independent\" promise chains, had an indeterminate resolution order only visibly wrong on one bot.\n\nChanging ontrack to { eventSequence +\u003d \u0027ontrack;\u0027 ontrackResolver.resolve(); } should do the trick.",
+      "revId": "8892820ffcdac2d97b932c42e64b7eab14cd58c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
