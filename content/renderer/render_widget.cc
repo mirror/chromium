@@ -43,6 +43,7 @@
 #include "content/public/common/context_menu_params.h"
 #include "content/public/common/drop_data.h"
 #include "content/public/renderer/content_renderer_client.h"
+#include "content/renderer/browser_plugin/browser_plugin_manager.h"
 #include "content/renderer/cursor_utils.h"
 #include "content/renderer/devtools/render_widget_screen_metrics_emulator.h"
 #include "content/renderer/drop_data_builder.h"
@@ -1339,6 +1340,13 @@ void RenderWidget::Resize(const ResizeParams& params) {
 
   if (orientation_changed)
     OnOrientationChange();
+
+  for (auto& observer : render_frame_proxies_)
+    observer.OnScreenInfoChanged(params.screen_info);
+
+  // Notify all BrowserPlugins of the updated ScreenInfo.
+  if (BrowserPluginManager::Get())
+    BrowserPluginManager::Get()->ScreenInfoChanged(params.screen_info);
 
   // If a resize ack is requested and it isn't set-up, then no more resizes will
   // come in and in general things will go wrong.
