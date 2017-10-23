@@ -22,6 +22,30 @@
       "revId": "4254a407dd7d13736d011fe88c17c4093f1d56c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551ebc24_cfc079e0",
+        "filename": "tools/binary_size/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-23T19:20:06Z",
+      "side": 0,
+      "message": "Because CSV is no longer in the roadmap :)",
+      "parentUuid": "5e9f8254_6ee09db1",
+      "range": {
+        "startLine": 229,
+        "startChar": 5,
+        "endLine": 229,
+        "endChar": 49
+      },
+      "revId": "4254a407dd7d13736d011fe88c17c4093f1d56c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
