@@ -41,10 +41,10 @@ initWithAvatarManager:(AccountAvatarFetcherManager*)avatarManager
 
 - (instancetype)initWithDelegate:
     (id<BasePasswordsContentViewDelegate>)delegate {
-  auto* request_context = delegate.model->GetProfile()->GetRequestContext();
+  auto* loader_factory = content::BrowserContext::GetDefaultStoragePartition(delegate.model->GetProfile())->GetURLLoaderFactory();
   base::scoped_nsobject<AccountAvatarFetcherManager> avatarManager(
       [[AccountAvatarFetcherManager alloc]
-          initWithRequestContext:request_context]);
+          initWithLoaderFactory:loader_factory]);
   return [self initWithAvatarManager:avatarManager delegate:delegate];
 }
 
