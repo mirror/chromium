@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a548732c_045a9395",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-23T20:21:25Z",
+      "side": 1,
+      "message": "nit: extra \"",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29773fa_d8d10f55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-23T20:21:25Z",
+      "side": 1,
+      "message": "Is this the right Bug#?",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7feee03e_3ec6e72e",
+        "filename": "chrome/app/nibs/MainMenu.xib",
+        "patchSetId": 11
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-23T20:21:25Z",
+      "side": 1,
+      "message": "This item has no key equivalent associated with it, so it shouldn\u0027t have modifiers.",
+      "range": {
+        "startLine": 395,
+        "startChar": 89,
+        "endLine": 395,
+        "endChar": 116
+      },
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b61ef65_63c22d04",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-23T20:21:25Z",
+      "side": 1,
+      "message": "Should this be |#if defined(OS_MACOSX)|?",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e01a2c_eae67a62",
+        "filename": "chrome/browser/ui/cocoa/applescript/bookmark_item_applescript_browsertest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-23T20:21:25Z",
+      "side": 1,
+      "message": "Maybe test that when the feature is not enabled the JS execution fails too?",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31443e52_e8417ba8",
+        "filename": "chrome/browser/ui/cocoa/applescript/tab_applescript.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-23T20:21:25Z",
+      "side": 1,
+      "message": "I think you can avoid passing |profile| by doing:\n\nProfile::FromBrowserContext(webContents-\u003eGetBrowserContext())",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513d1940_be280d7d",
+        "filename": "chrome/browser/ui/cocoa/applescript/tab_applescript_browsertest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-23T20:21:25Z",
+      "side": 1,
+      "message": "Prefer |using| to |typedef|",
+      "revId": "1b8ef771792724d0ad7f319a94c3a5dac84bdef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
