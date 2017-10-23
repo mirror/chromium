@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c778adb0_8aa34d43",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-23T13:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53dc8363_fcc27864",
+      "range": {
+        "startLine": 335,
+        "startChar": 46,
+        "endLine": 335,
+        "endChar": 0
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "395e35b1_3340f96c",
         "filename": "components/variations/field_trial_config/field_trial_util.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-21T00:33:01Z",
       "side": 1,
       "message": "nit: DVLOG(1) is probably sufficient for this log stmt",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 17
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67021b8a_484dba1d",
+        "filename": "components/variations/field_trial_config/field_trial_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-23T13:56:30Z",
+      "side": 1,
+      "message": "But should we keep it same as below.",
+      "parentUuid": "395e35b1_3340f96c",
       "range": {
         "startLine": 136,
         "startChar": 6,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c1f2ed48_7568440c",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-23T13:56:30Z",
+      "side": 1,
+      "message": "I add a DCHECK at latest patch for prevent developer setup field trials and change command line at the same time.",
+      "parentUuid": "03590108_3931c228",
+      "range": {
+        "startLine": 263,
+        "startChar": 36,
+        "endLine": 263,
+        "endChar": 63
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c57ddadf_4d9a4a34",
         "filename": "content/public/test/browser_test_base.cc",
         "patchSetId": 3
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "85ddfc91_01e43926",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-23T13:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57ddadf_4d9a4a34",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 3
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebfedb53_bc5e8788",
         "filename": "content/public/test/browser_test_base.h",
         "patchSetId": 3
@@ -137,6 +233,30 @@
       "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cfbad5_0078ae4b",
+        "filename": "content/public/test/browser_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-23T13:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebfedb53_bc5e8788",
+      "range": {
+        "startLine": 152,
+        "startChar": 58,
+        "endLine": 152,
+        "endChar": 0
+      },
+      "revId": "5b2d1fe1801da30ab417de3937523a2cdbffdf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
