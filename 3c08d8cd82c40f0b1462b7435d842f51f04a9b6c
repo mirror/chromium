@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "123faeb6_0d920527",
+        "filename": "chrome/browser/payments/payment_manifest_parser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-23T16:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "923fe647_13aa62ed",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "3c08d8cd82c40f0b1462b7435d842f51f04a9b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d57b745_01fb4737",
         "filename": "components/payments/content/android/java/src/org/chromium/components/payments/WebAppManifestSection.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7e61457f_fcdea4e2",
+        "filename": "components/payments/content/android/java/src/org/chromium/components/payments/WebAppManifestSection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-23T16:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d57b745_01fb4737",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "3c08d8cd82c40f0b1462b7435d842f51f04a9b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec52f09a_b8b9c24d",
         "filename": "components/payments/content/utility/payment_manifest_parser.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "3c08d8cd82c40f0b1462b7435d842f51f04a9b6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d1b1a4_276ca417",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-23T16:21:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec52f09a_b8b9c24d",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "3c08d8cd82c40f0b1462b7435d842f51f04a9b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
