@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a296ff8_5bed2fed",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T10:12:27Z",
+      "side": 1,
+      "message": "Could we do that in CSS using flex?",
+      "revId": "eb589cf1d649c421d507627c800ffc0c8889fa00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cade4e2d_5916149d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T10:12:27Z",
+      "side": 1,
+      "message": "I think you are defining a similarly named method in many places. This will most likely break this new build system Opera is working on (merging all the files in one compilation unit). Maybe it would make sense to merge this into MediaControlsImpl::IsModern() as a static method? Can be done in a follow-up.",
+      "revId": "eb589cf1d649c421d507627c800ffc0c8889fa00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88761c12_24b4d7c5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T10:12:27Z",
+      "side": 1,
+      "message": "style: { }",
+      "revId": "eb589cf1d649c421d507627c800ffc0c8889fa00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eae577b_3227a43c",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 10355,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T10:12:27Z",
+      "side": 1,
+      "message": "Usually, we set either self + media-dev@chromium.org or just the mailing list. (This is a \"new\" thing so many entries do not follow it yet.)",
+      "revId": "eb589cf1d649c421d507627c800ffc0c8889fa00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
