@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14e5a88_2ea93f98",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-23T09:48:32Z",
+      "side": 1,
+      "message": "Maybe:\ns/kDiceMigrationComplete/kDiceMigrationCompletePref",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "256b5bab562a677c5b549c3594ad6b0df162fdbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3ecab6_6e4c61e1",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-23T09:48:32Z",
+      "side": 1,
+      "message": "s/wether/whether",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "256b5bab562a677c5b549c3594ad6b0df162fdbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34249dc7_9e98b0c1",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-23T09:48:32Z",
+      "side": 1,
+      "message": "Maybe (I do not see any profile in this function):\ns/IsDiceEnabledForProfile/IsDiceEnabledForPrefValue",
+      "revId": "256b5bab562a677c5b549c3594ad6b0df162fdbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100ed5e9_c081467d",
+        "filename": "components/signin/core/common/profile_management_switches.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-23T09:48:32Z",
+      "side": 1,
+      "message": "Maybe: s/GetDicePrefMember/CreateDicePrefMember ?",
+      "range": {
+        "startLine": 122,
+        "startChar": 35,
+        "endLine": 122,
+        "endChar": 52
+      },
+      "revId": "256b5bab562a677c5b549c3594ad6b0df162fdbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7691f8e_d1429e56",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-23T09:48:32Z",
+      "side": 1,
+      "message": "I think this function name is misleading (at least for someone now knowing how pref members work). Could we group these flags somehow differently (say in the following order):\n\n// DICE flags first (in the order of level)\n* IsDiceFixAuthErrorsEnabled()\n* IsDiceMigrationEnabled();\n\n// DICE profile functions:\n* IsDiceEnabledForProfile();\n* MigrateProfileToDice();\n\n// Pref members:\n* IfDiceEnabledForPrefMember();\n\nAlso, can we avoid exposing the GetDicePrefMember?",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 18
+      },
+      "revId": "256b5bab562a677c5b549c3594ad6b0df162fdbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
