@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d3db3d9_6408f1f1",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-23T08:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca40357_3177754d",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 23
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa5dd254_66c3dedd",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
         "patchSetId": 6
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6dd2362b_248a76ea",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-23T08:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2129573c_32bbfdf0",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32650a34_3730b71d",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
         "patchSetId": 6
@@ -116,6 +164,30 @@
       "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11097ed3_43b17503",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-23T08:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32650a34_3730b71d",
+      "range": {
+        "startLine": 48,
+        "startChar": 51,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "43164a7b_4156a04a",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-23T08:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02bad0b0_ffa3290c",
+      "range": {
+        "startLine": 105,
+        "startChar": 37,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbafe50e_d9aecc14",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
         "patchSetId": 6
@@ -210,6 +306,30 @@
       "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79761c14_92419323",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-23T08:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65452bc1_7fb45f48",
+      "range": {
+        "startLine": 106,
+        "startChar": 9,
+        "endLine": 106,
+        "endChar": 13
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "92402ee4_56df250f",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-23T08:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0526a37f_0c05e11c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a62798b_1a372d68",
         "filename": "media/gpu/mojo/jpeg_decoder.mojom",
         "patchSetId": 6
@@ -304,6 +448,30 @@
       "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c75160b_c01456b6",
+        "filename": "media/gpu/mojo/jpeg_decoder.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1124415
+      },
+      "writtenOn": "2017-10-23T08:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53baa8d0_a7ce606d",
+      "range": {
+        "startLine": 62,
+        "startChar": 46,
+        "endLine": 62,
+        "endChar": 47
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
