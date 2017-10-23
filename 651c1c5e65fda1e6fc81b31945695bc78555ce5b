@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "d5c6fbf1_3f8e6012",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-23T16:48:14Z",
+      "side": 1,
+      "message": "Non-obvious. Worth a comment?",
+      "parentUuid": "736c5f5c_0d6d77af",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bce31d2_3a7de4e8",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 5
@@ -381,6 +399,24 @@
       "side": 1,
       "message": "I\u0027d like Blink to be a lot more dumb, because:\n\n* Walking the tree is more expensive in Blink, so every\n  event that needs to walk the tree is slowing down the page\n* We get callbacks in Blink in the middle of layout\n  so sometimes we can\u0027t even walk the tree, or if we\n  accidentally access the wrong thing we can crash\n* Blink doesn\u0027t know about other frames or windows\n* We don\u0027t keep the full state of the accessibility tree in\n  Blink, so it\u0027s hard to know if a particular state actually\n  changed or not - we end up firing extra unnecessary events.\n\nInstead, my new vision is:\n\n* Blink fires events only for things that can\u0027t be inferred\n  just from the state of the tree, like \"scrolled to anchor\".\n* For everything else, Blink just marks nodes as dirty and\n  updates them. This is much more foolproof and it\u0027s 100% safe\n  to sometimes mark a node as dirty even if it didn\u0027t change.\n  It\u0027s usually faster to do that sometimes rather than to do\n  a lot of work to determine if it\u0027s necessary.\n\nFinally, another huge advantage is that we can use\nAXEventGenerator for other sources, not just Blink:\n\n* Views / native UI (we can get rid of all of the code\n  that fires events there and replace it with this)\n* PDF (currently it\u0027s pretty simple, but if we added\n  forms support, for example)\n* ARC++/Android\n\nMy goal for AXEventGenerator is for it to just handle the\njob of diffing the tree and consolidating things on different\nnodes. For example if there are lots of changes to a live region,\nit propagates to a single \"live region changed\".\n\nIt shouldn\u0027t have the platform-specific logic, as in how to\nfire events on each platform - but it does contain the superset\nof \"things that could happen to an accessibility tree that\nat least one platform might want to know about\".",
       "parentUuid": "c4b756af_2cf98c6c",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b0480f_b0073b6e",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-23T16:48:14Z",
+      "side": 1,
+      "message": "Cool. My style preferences is for of the important logic be broken up into pieces so that each distinct job has a separate method with an easy-to-understand name. Long methods with blocks that each deal with a special case can be difficult to understand.",
+      "parentUuid": "5a30940a_dc1accfd",
       "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
