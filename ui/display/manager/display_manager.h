@@ -102,7 +102,7 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 #if defined(OS_CHROMEOS)
   ~DisplayManager() override;
 #else
-  virtual ~DisplayManager();
+  ~DisplayManager();
 #endif
 
   DisplayLayoutStore* layout_store() { return layout_store_.get(); }
@@ -395,10 +395,6 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
     DISALLOW_COPY_AND_ASSIGN(BeginEndNotifier);
   };
-
-  bool software_mirroring_enabled() const {
-    return multi_display_mode_ == MIRRORING;
-  }
 
   void set_change_display_upon_host_resize(bool value) {
     change_display_upon_host_resize_ = value;

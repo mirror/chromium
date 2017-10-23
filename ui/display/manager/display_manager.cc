@@ -309,7 +309,7 @@ DisplayIdList DisplayManager::GetCurrentDisplayIdList() const {
   if (IsInUnifiedMode()) {
     return CreateDisplayIdList(software_mirroring_display_list_);
   } else if (IsInMirrorMode()) {
-    if (software_mirroring_enabled()) {
+    if (SoftwareMirroringEnabled()) {
       CHECK_EQ(2u, num_connected_displays());
       // This comment is to make it easy to distinguish the crash
       // between two checks.
@@ -626,9 +626,17 @@ gfx::Insets DisplayManager::GetOverscanInsets(int64_t display_id) const {
 
 void DisplayManager::OnNativeDisplaysChanged(
     const DisplayInfoList& updated_displays) {
+  DVLOG_IF(1, updated_displays.empty())
+      << __func__
+      << "(0): # of current displays=" << active_display_list_.size();
+  DVLOG_IF(1, updated_displays.size() == 1)
+      << __func__ << "(1):" << updated_displays[0].ToString();
+  DVLOG_IF(1, updated_displays.size() > 1)
+      << __func__ << "(" << updated_displays.size()
+      << ") [0]=" << updated_displays[0].ToString()
+      << ", [1]=" << updated_displays[1].ToString();
+
   if (updated_displays.empty()) {
-    VLOG(1) << "OnNativeDisplaysChanged(0): # of current displays="
-            << active_display_list_.size();
     // If the device is booted without display, or chrome is started
     // without --ash-host-window-bounds on linux desktop, use the
     // default display.
@@ -654,14 +662,6 @@ void DisplayManager::OnNativeDisplaysChanged(
   }
   first_display_id_ = updated_displays[0].id();
   std::set<gfx::Point> origins;
-
-  if (updated_displays.size() == 1) {
-    VLOG(1) << "OnNativeDisplaysChanged(1):" << updated_displays[0].ToString();
-  } else {
-    VLOG(1) << "OnNativeDisplaysChanged(" << updated_displays.size()
-            << ") [0]=" << updated_displays[0].ToString()
-            << ", [1]=" << updated_displays[1].ToString();
-  }
 
   bool internal_display_connected = false;
   num_connected_displays_ = updated_displays.size();
@@ -1103,7 +1103,7 @@ void DisplayManager::SetSoftwareMirroring(bool enabled) {
 }
 
 bool DisplayManager::SoftwareMirroringEnabled() const {
-  return software_mirroring_enabled();
+  return multi_display_mode_ == MIRRORING;
 }
 
 void DisplayManager::SetTouchCalibrationData(
@@ -1133,9 +1133,9 @@ void DisplayManager::SetTouchCalibrationData(
     }
     display_info_list.push_back(info);
   }
-  if (update)
+  if (update) {
     UpdateDisplaysWith(display_info_list);
-  else {
+  } else {
     display_info_[display_id].SetTouchCalibrationData(touch_device_identifier,
                                                       calibration_data);
   }
@@ -1157,9 +1157,9 @@ void DisplayManager::ClearTouchCalibrationData(
     }
     display_info_list.push_back(info);
   }
-  if (update)
+  if (update) {
     UpdateDisplaysWith(display_info_list);
-  else {
+  } else {
     if (touch_device_identifier) {
       display_info_[display_id].ClearTouchCalibrationData(
           *touch_device_identifier);
@@ -1204,7 +1204,7 @@ bool DisplayManager::UpdateDisplayBounds(int64_t display_id,
   if (change_display_upon_host_resize_) {
     display_info_[display_id].SetBounds(new_bounds);
     // Don't notify observers if the mirrored window has changed.
-    if (software_mirroring_enabled() && mirroring_display_id_ == display_id)
+    if (SoftwareMirroringEnabled() && mirroring_display_id_ == display_id)
       return false;
 
     // In unified mode then |active_display_list_| won't have a display for
@@ -1445,7 +1445,7 @@ Display* DisplayManager::FindDisplayForId(int64_t id) {
 
 void DisplayManager::AddMirrorDisplayInfoIfAny(
     DisplayInfoList* display_info_list) {
-  if (software_mirroring_enabled() && IsInMirrorMode()) {
+  if (SoftwareMirroringEnabled() && IsInMirrorMode()) {
     display_info_list->push_back(GetDisplayInfo(mirroring_display_id_));
     software_mirroring_display_list_.clear();
   }
