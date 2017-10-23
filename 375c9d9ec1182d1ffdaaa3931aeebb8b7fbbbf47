@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f44d5d3_4c69f1da",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-23T18:28:12Z",
+      "side": 1,
+      "message": "This looks like a bitmask: won\u0027t this fail IPC validation if the high bit and any other value are combined?\n\nUsually, we say just to use the legacy IPC_ENUM_TRAITS() macro instead (mojo prefers to just use integral constants).",
+      "revId": "375c9d9ec1182d1ffdaaa3931aeebb8b7fbbbf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
