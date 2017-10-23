@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "649e7c92_09d494bf",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T15:02:00Z",
+      "side": 1,
+      "message": "Yeah - the reason is that the original pattern of \nif (bla)\n  VLOG(...)\nelse\n  VLOG(...)\n\ndoesn\u0027t get completely removed by the compiler, which is a waste\nof space. DVLOG_IF() gets absolutely obliterated in Release\nbuilds, see [1]: \"prefer DVLOG(1) to other logging methods\".\n\nBut this is a bit beside the point of this CL, so I\u0027ll split it\ninto another cleanup CL :-)\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#logging",
+      "parentUuid": "e423ac93_171f256b",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5110121c_376548db",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380ebcf1_e080ee35",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T15:02:00Z",
+      "side": 1,
+      "message": "The original log included \"OnNativeDisplaysChanged(\" as \nprefix; this code tends to rot whereas __func__ is shorter\nand automatically updated.\n\nThe DLOG macro family has file and line but not function\nor method indication",
+      "parentUuid": "5110121c_376548db",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "27d87757_537a7087",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T15:02:00Z",
+      "side": 1,
+      "message": "\u003e IIUC this the color space that eventually gets set to the compositor as the display target color space.\n\u003e \nYes, it\u0027s used in Renderer image decoding path [1] to decode\nonto.\n\n[1] https://cs.chromium.org/chromium/src/cc/tiles/software_image_decode_cache.cc?type\u003dcs\u0026q\u003dImageDecodeCacheKey::FromDrawImage\u0026l\u003d1041\n\n\u003e How does this interact with the color space conversion matrix that gets (rarely) set to the CTM property of KMS?\n\nAssuming you mean the quirks code around [2]: First, the Quirks code \nalmost never finds an ICC. Even if it does, not all CrOs devices support \na CTM matrix. But more importantly, I believe that Skia uses the target \ncolor space destination in its decoding process as a way to interpret \nthe images to be decoded, and doesn\u0027t interfere with the display being \nable or not to display those.\n\n\n[2] https://cs.chromium.org/chromium/src/components/quirks/quirks_client.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d26",
+      "parentUuid": "c8268c27_787c83e8",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a74bacc_8048d78a",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "8dda760a_c5b8ce3b",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T15:02:00Z",
+      "side": 1,
+      "message": "Yeah, cleanup got the best of me, will split into a\nseparate CL :-)",
+      "parentUuid": "7a74bacc_8048d78a",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bce7b8da_e3c08384",
         "filename": "ui/display/manager/managed_display_info.h",
         "patchSetId": 4
@@ -101,6 +173,24 @@
       "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b68636_5b0b08e2",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T15:02:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce7b8da_e3c08384",
+      "revId": "285b5032d1dea14e5a9b0e58fd3691744e531689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
