@@ -27,7 +27,10 @@ interface ServiceWorkerContainerHost {
 
   // Corresponds to navigator.serviceWorker.getRegistration().
   // Gets the service worker registration for the |client_url|.
-  // On success, |error| is kNone with |registration| and |attributes| set.
+  // On success, |error| is kNone with |registration| and |attributes| set, the
+  // only exception is for cases that no registration has been found or the
+  // found one is uninstalling, in such cases |error| is kNone with
+  // null |registration|.
   // Otherwise, |error| and |error_msg| describe the failure.
   GetRegistration(url.mojom.Url client_url)
     => (blink.mojom.ServiceWorkerErrorType error,
