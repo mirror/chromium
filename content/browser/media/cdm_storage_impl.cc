@@ -11,6 +11,8 @@
 
 #include "base/callback.h"
 #include "base/logging.h"
+#include "base/task_scheduler/post_task.h"
+#include "content/browser/media/cdm_file_impl.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -69,6 +71,18 @@ class FileLockMap {
     entry->second = std::move(on_close_callback);
   }
 
+  // Run the on_close_callback for the file represented by |key|.
+  void RunOnCloseCallback(const Key& key) {
+    DVLOG(3) << __func__ << " file: " << key.file_name;
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+    DCHECK(!file_lock_map_.empty());
+    auto entry = file_lock_map_.find(key);
+    DCHECK(entry != file_lock_map_.end());
+    if (entry->second)
+      std::move(entry->second).Run();
+  }
+
   // Release the lock held on the file represented by |key|. If
   // |on_close_callback| has been set, run it before releasing the lock.
   void ReleaseFileLock(const Key& key) {
@@ -77,7 +91,7 @@ class FileLockMap {
 
     auto entry = file_lock_map_.find(key);
     if (entry == file_lock_map_.end()) {
-      NOTREACHED() << "Unable to relase lock on file " << key.file_name;
+      NOTREACHED() << "Unable to release lock on file " << key.file_name;
       return;
     }
 
@@ -99,29 +113,6 @@ FileLockMap* GetFileLockMap() {
   static auto* file_lock_map = new FileLockMap();
   return file_lock_map;
 }
-
-// mojom::CdmStorage::Open() returns a mojom::CdmFileReleaser reference to keep
-// track of the file being used. This object is created when the file is being
-// passed to the client. When the client is done using the file, the connection
-// should be broken and this will release the lock held on the file.
-class CdmFileReleaserImpl final : public media::mojom::CdmFileReleaser {
- public:
-  using Key = CdmStorageImpl::FileLockKey;
-
-  explicit CdmFileReleaserImpl(const Key& key) : key_(key) {
-    DVLOG(1) << __func__;
-  }
-
-  ~CdmFileReleaserImpl() override {
-    DVLOG(1) << __func__;
-    GetFileLockMap()->ReleaseFileLock(key_);
-  }
-
- private:
-  Key key_;
-
-  DISALLOW_COPY_AND_ASSIGN(CdmFileReleaserImpl);
-};
 
 }  // namespace
 
@@ -217,61 +208,157 @@ void CdmStorageImpl::Open(const std::string& file_name, OpenCallback callback) {
     return;
   }
 
+  // In case this object gets destroyed before everything completes, keep
+  // track of |file_lock_key| so that it can be released if the file is
+  // never successfully opened.
+  pending_open_.insert(file_lock_key);
+
+  // Open the file system first. Once that completes call OpenFileLocked()
+  // to open the file for reading.
+  OpenFileSystem(base::BindOnce(
+      &CdmStorageImpl::OpenFileLocked, weak_factory_.GetWeakPtr(),
+      file_lock_key, base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_READ,
+      base::BindOnce(&CdmStorageImpl::OnOpenComplete,
+                     weak_factory_.GetWeakPtr(), file_name,
+                     std::move(callback))));
+}
+
+void CdmStorageImpl::OnOpenComplete(const std::string& file_name,
+                                    OpenCallback callback,
+                                    base::File file) {
+  DVLOG(3) << __func__ << " file: " << file_name;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  if (!file.IsValid()) {
+    DLOG(WARNING) << "Unable to open file " << file_name << ", error: "
+                  << base::File::ErrorToString(file.error_details());
+    std::move(callback).Run(Status::kFailure, std::move(file), nullptr);
+    return;
+  }
+
+  // File opened successfully, so create an CdmFileImpl object and return
+  // the binding to this new object.
+  media::mojom::CdmFileAssociatedPtrInfo cdm_file;
+  cdm_file_bindings_.AddBinding(std::make_unique<CdmFileImpl>(file_name, this),
+                                mojo::MakeRequest(&cdm_file));
+  std::move(callback).Run(Status::kSuccess, std::move(file),
+                          std::move(cdm_file));
+}
+
+void CdmStorageImpl::OpenFile(const std::string& file_name,
+                              int flags,
+                              OpenFileCallback callback) {
+  DVLOG(3) << __func__ << " file: " << file_name;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_EQ(FileSystemState::kOpened, file_system_state_);
+
+  // If the file system failed to open, report an error.
+  if (file_system_opened_result_ != base::File::FILE_OK) {
+    std::move(callback).Run(base::File(file_system_opened_result_));
+    return;
+  }
+
+  FileLockKey file_lock_key(cdm_file_system_id_, origin(), file_name);
+  if (!GetFileLockMap()->AcquireFileLock(file_lock_key)) {
+    DVLOG(1) << "File " << file_name << " is already in use.";
+    std::move(callback).Run(base::File(base::File::FILE_ERROR_IN_USE));
+    return;
+  }
+
+  // In case this object gets destroyed before everything completes, keep
+  // track of |file_lock_key| so that it can be released if the file is
+  // never successfully opened.
+  pending_open_.insert(file_lock_key);
+
+  OpenFileLocked(file_lock_key, flags, std::move(callback));
+}
+
+void CdmStorageImpl::OpenFileSystem(
+    base::OnceClosure file_system_opened_callback) {
+  DVLOG(3) << __func__;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  // Only open the file system once.
+  if (file_system_state_ == FileSystemState::kOpened) {
+    std::move(file_system_opened_callback).Run();
+    return;
+  }
+
+  // Save |callback| for when the file system is open. If it is already in
+  // progress, nothing more to do until the existing
+  // OpenPluginPrivateFileSystem() call completes.
+  pending_open_filesystem_callbacks_.push_back(
+      std::move(file_system_opened_callback));
+  if (file_system_state_ == FileSystemState::kOpening)
+    return;
+
+  DCHECK_EQ(FileSystemState::kUnopened, file_system_state_);
+  file_system_state_ = FileSystemState::kOpening;
+
   std::string fsid =
       storage::IsolatedContext::GetInstance()->RegisterFileSystemForVirtualPath(
           storage::kFileSystemTypePluginPrivate, ppapi::kPluginPrivateRootName,
           base::FilePath());
   if (!storage::ValidateIsolatedFileSystemId(fsid)) {
     DVLOG(1) << "Invalid file system ID.";
-    GetFileLockMap()->ReleaseFileLock(file_lock_key);
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    OnFileSystemOpened(base::File::FILE_ERROR_NOT_FOUND);
     return;
   }
-
-  // In case this object gets destroyed before OpenPluginPrivateFileSystem()
-  // completes, keep track of |file_lock_key| so that it can be released if
-  // OnFileSystemOpened() or OnFileOpened() never get called.
-  pending_open_.insert(file_lock_key);
 
   // Grant full access of isolated file system to child process.
   ChildProcessSecurityPolicy::GetInstance()->GrantCreateReadWriteFileSystem(
       child_process_id_, fsid);
 
+  // Keep track of the URI for this instance of the PluginPrivateFileSystem.
+  file_system_root_uri_ = storage::GetIsolatedFileSystemRootURIString(
+      origin().GetURL(), fsid, ppapi::kPluginPrivateRootName);
+
   file_system_context_->OpenPluginPrivateFileSystem(
       origin().GetURL(), storage::kFileSystemTypePluginPrivate, fsid,
       cdm_file_system_id_, storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT,
       base::Bind(&CdmStorageImpl::OnFileSystemOpened,
-                 weak_factory_.GetWeakPtr(), file_lock_key, fsid,
-                 base::Passed(&callback)));
+                 weak_factory_.GetWeakPtr()));
 }
 
-void CdmStorageImpl::OnFileSystemOpened(const FileLockKey& file_lock_key,
-                                        const std::string& fsid,
-                                        OpenCallback callback,
-                                        base::File::Error error) {
+void CdmStorageImpl::OnFileSystemOpened(base::File::Error error) {
   DVLOG(3) << __func__;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_EQ(FileSystemState::kOpening, file_system_state_);
 
-  if (error != base::File::FILE_OK) {
-    DVLOG(1) << "Unable to access the file system.";
+  file_system_state_ = FileSystemState::kOpened;
+  file_system_opened_result_ = error;
+
+  // Now run any saved callbacks.
+  std::vector<base::OnceClosure> pending_callbacks;
+  pending_callbacks.swap(pending_open_filesystem_callbacks_);
+  for (size_t i = 0; i < pending_callbacks.size(); ++i)
+    std::move(pending_callbacks[i]).Run();
+}
+
+void CdmStorageImpl::OpenFileLocked(const FileLockKey& file_lock_key,
+                                    int flags,
+                                    OpenFileCallback callback) {
+  DVLOG(3) << __func__ << " file: " << file_lock_key.file_name;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_EQ(FileSystemState::kOpened, file_system_state_);
+  DCHECK_EQ(1u, pending_open_.count(file_lock_key));
+
+  // If the file system failed to open, report an error.
+  if (file_system_opened_result_ != base::File::FILE_OK) {
     pending_open_.erase(file_lock_key);
     GetFileLockMap()->ReleaseFileLock(file_lock_key);
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    std::move(callback).Run(base::File(file_system_opened_result_));
     return;
   }
 
-  std::string root = storage::GetIsolatedFileSystemRootURIString(
-                         origin().GetURL(), fsid, ppapi::kPluginPrivateRootName)
-                         .append(file_lock_key.file_name);
-  storage::FileSystemURL file_url = file_system_context_->CrackURL(GURL(root));
+  storage::FileSystemURL file_url = file_system_context_->CrackURL(
+      GURL(file_system_root_uri_ + file_lock_key.file_name));
   storage::AsyncFileUtil* file_util = file_system_context_->GetAsyncFileUtil(
       storage::kFileSystemTypePluginPrivate);
   auto operation_context =
       std::make_unique<storage::FileSystemOperationContext>(
           file_system_context_.get());
   operation_context->set_allowed_bytes_growth(storage::QuotaManager::kNoLimit);
-  int flags = base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_READ |
-              base::File::FLAG_WRITE;
   DVLOG(1) << "Opening " << file_url.DebugString();
   file_util->CreateOrOpen(
       std::move(operation_context), file_url, flags,
@@ -280,16 +367,15 @@ void CdmStorageImpl::OnFileSystemOpened(const FileLockKey& file_lock_key,
 }
 
 void CdmStorageImpl::OnFileOpened(const FileLockKey& file_lock_key,
-                                  OpenCallback callback,
+                                  OpenFileCallback callback,
                                   base::File file,
                                   const base::Closure& on_close_callback) {
-  // |on_close_callback| should be called after the |file| is closed in the
-  // child process. See AsyncFileUtil for details.
-  DVLOG(3) << __func__;
+  DVLOG(3) << __func__ << " file: " << file_lock_key.file_name;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_EQ(1u, pending_open_.count(file_lock_key));
 
-  // |file_lock_key| will either be used by CdmFileReleaserImpl on a successful
-  // open or released if |file| is not valid, so the open is no longer pending.
+  // Open is no longer pending. If successful some CdmFileImpl instance will
+  // keep track of this file.
   pending_open_.erase(file_lock_key);
 
   if (!file.IsValid()) {
@@ -297,22 +383,85 @@ void CdmStorageImpl::OnFileOpened(const FileLockKey& file_lock_key,
                   << ", error: "
                   << base::File::ErrorToString(file.error_details());
     GetFileLockMap()->ReleaseFileLock(file_lock_key);
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    std::move(callback).Run(std::move(file));
     return;
   }
 
+  // When the connection to |cdm_file| is closed, |on_close_callback|
+  // will be run.
   GetFileLockMap()->SetOnCloseCallback(file_lock_key,
                                        std::move(on_close_callback));
+  std::move(callback).Run(std::move(file));
+}
 
-  // When the connection to |releaser| is closed, ReleaseFileLock() will be
-  // called. This will release the lock on the file and cause
-  // |on_close_callback| to be run.
-  media::mojom::CdmFileReleaserAssociatedPtrInfo releaser;
-  mojo::MakeStrongAssociatedBinding(
-      std::make_unique<CdmFileReleaserImpl>(file_lock_key),
-      mojo::MakeRequest(&releaser));
-  std::move(callback).Run(Status::kSuccess, std::move(file),
-                          std::move(releaser));
+void CdmStorageImpl::RenameAndReopenFile(const std::string& src_file_name,
+                                         const std::string& dest_file_name,
+                                         OpenFileCallback callback) {
+  DVLOG(3) << __func__;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK_EQ(FileSystemState::kOpened, file_system_state_);
+
+  // If the file system failed to open, report an error.
+  if (file_system_opened_result_ != base::File::FILE_OK) {
+    std::move(callback).Run(base::File(file_system_opened_result_));
+    return;
+  }
+
+  // Both |src_file_name| and |src_file_name| have locks on them. Keep the
+  // locks active, but run the on_close_callback to fully close these files.
+  FileLockKey src_file_key(cdm_file_system_id_, origin(), src_file_name);
+  FileLockKey dest_file_key(cdm_file_system_id_, origin(), dest_file_name);
+  GetFileLockMap()->RunOnCloseCallback(src_file_key);
+  GetFileLockMap()->RunOnCloseCallback(dest_file_key);
+
+  storage::FileSystemURL src_file_url = file_system_context_->CrackURL(
+      GURL(file_system_root_uri_ + src_file_name));
+  storage::FileSystemURL dest_file_url = file_system_context_->CrackURL(
+      GURL(file_system_root_uri_ + dest_file_name));
+  storage::AsyncFileUtil* file_util = file_system_context_->GetAsyncFileUtil(
+      storage::kFileSystemTypePluginPrivate);
+  auto operation_context =
+      std::make_unique<storage::FileSystemOperationContext>(
+          file_system_context_.get());
+  DVLOG(1) << "Renaming " << src_file_url.DebugString() << " to "
+           << dest_file_url.DebugString();
+  file_util->MoveFileLocal(
+      std::move(operation_context), src_file_url, dest_file_url,
+      storage::FileSystemOperation::OPTION_NONE,
+      base::Bind(&CdmStorageImpl::OnFileRenamed, weak_factory_.GetWeakPtr(),
+                 src_file_key, dest_file_key, base::Passed(&callback)));
+}
+
+void CdmStorageImpl::OnFileRenamed(const FileLockKey& src_file_key,
+                                   const FileLockKey& dest_file_key,
+                                   OpenFileCallback callback,
+                                   base::File::Error move_result) {
+  DVLOG(3) << __func__;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  // Both files have locks. Release the lock on src_file but keep it
+  // on dest_file as it will be reopened for reading.
+  GetFileLockMap()->ReleaseFileLock(src_file_key);
+
+  // Was the rename successful?
+  if (move_result != base::File::FILE_OK) {
+    std::move(callback).Run(base::File(move_result));
+    return;
+  }
+
+  // In case this object gets destroyed before the file can be reopened, keep
+  // track of |dest_file_key| so that it can be released if the file is
+  // never successfully reopened.
+  pending_open_.insert(dest_file_key);
+
+  OpenFileLocked(dest_file_key,
+                 base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_READ,
+                 std::move(callback));
+}
+
+void CdmStorageImpl::CloseFile(const std::string& file_name) {
+  FileLockKey file_lock_key(cdm_file_system_id_, origin(), file_name);
+  GetFileLockMap()->ReleaseFileLock(file_lock_key);
 }
 
 }  // namespace content
