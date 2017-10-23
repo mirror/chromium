@@ -251,7 +251,7 @@ const base::Feature kNewRemotePlaybackPipeline{
 
 // Set preload to "metadata" by default for <video> and <audio>.
 const base::Feature kPreloadDefaultIsMetadata{
-    "PreloadDefaultIsMetadata", base::FEATURE_DISABLED_BY_DEFAULT};
+    "PreloadDefaultIsMetadata", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // CanPlayThrough issued according to standard.
 const base::Feature kSpecCompliantCanPlayThrough{

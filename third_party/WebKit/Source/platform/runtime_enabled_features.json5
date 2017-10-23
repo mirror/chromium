@@ -816,7 +816,7 @@
     },
     {
       name: "PreloadDefaultIsMetadata",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "Presentation",
