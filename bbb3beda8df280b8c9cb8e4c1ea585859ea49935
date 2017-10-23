@@ -34,6 +34,24 @@
       "revId": "bbb3beda8df280b8c9cb8e4c1ea585859ea49935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c82329_d4f57bd5",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3920,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-23T17:34:36Z",
+      "side": 1,
+      "message": "My reading of `gn help public_deps` is that regular deps should work for this case -- let\u0027s see what the bots say :-)",
+      "parentUuid": "a29f10f5_7f4009d1",
+      "revId": "bbb3beda8df280b8c9cb8e4c1ea585859ea49935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
