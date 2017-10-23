@@ -777,12 +777,19 @@ CommandHandler.onCommand = function(command) {
     if (scrollable) {
       var callback = function(result) {
         if (result) {
-          var innerCallback = function(evt) {
+          var innerCallback = function(currentNode, evt) {
             scrollable.removeEventListener(
                 EventType.SCROLL_POSITION_CHANGED, innerCallback);
 
             // Jump.
             if (pred) {
+              CommandHandler.onCommand(command);
+              return;
+            }
+
+            // If ,there is a valid current range, then move from it since we
+            // have refreshed node data.
+            if (currentNode && currentNode.root) {
               CommandHandler.onCommand(command);
               return;
             }
@@ -798,7 +805,7 @@ CommandHandler.onCommand = function(command) {
             }
             ChromeVoxState.instance.navigateToRange(
                 cursors.Range.fromNode(sync), false, speechProps);
-          };
+          }.bind(this, current.start.node);
           scrollable.addEventListener(
               EventType.SCROLL_POSITION_CHANGED, innerCallback, true);
         } else {
