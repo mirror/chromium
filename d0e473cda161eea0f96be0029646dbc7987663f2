@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e06b70a2_6047af2a",
+        "filename": "tools/binary_size/libsupersize/nm.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-23T18:45:18Z",
+      "side": 1,
+      "message": "NIT: exactly two or multiple?",
+      "range": {
+        "startLine": 296,
+        "startChar": 14,
+        "endLine": 296,
+        "endChar": 17
+      },
+      "revId": "d0e473cda161eea0f96be0029646dbc7987663f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
