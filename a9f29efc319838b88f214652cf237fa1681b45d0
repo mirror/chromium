@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d950f31_27b2fd5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-23T16:05:53Z",
+      "side": 1,
+      "message": "Technically it didn’t regress, it was never fully fixed to begin with.",
+      "revId": "a9f29efc319838b88f214652cf237fa1681b45d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
