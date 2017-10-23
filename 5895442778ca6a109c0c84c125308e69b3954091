@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7261ff19_84e3d806",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T17:01:29Z",
+      "side": 1,
+      "message": "s/to pause/from advancing/?",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "5895442778ca6a109c0c84c125308e69b3954091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8657c1b9_90699941",
+        "filename": "content/renderer/dom_storage/dom_storage_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-23T17:01:29Z",
+      "side": 1,
+      "message": "Too bad there doesn\u0027t seem to be an easy way to tie these back to the respective frame so we could avoid going through the RendererScheduler.",
+      "range": {
+        "startLine": 52,
+        "startChar": 37,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "5895442778ca6a109c0c84c125308e69b3954091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
