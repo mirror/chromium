@@ -262,7 +262,7 @@ cr.define('certificate_manager', function() {
       browserProxy.forceCertificatesError();
 
       var whenErrorEventFired =
-          test_util.eventToPromise('certificates-error', dialog);
+          webui_test_util.eventToPromise('certificates-error', dialog);
 
       return browserProxy.whenCalled('getCaCertificateTrust')
           .then(function() {
@@ -319,7 +319,7 @@ cr.define('certificate_manager', function() {
     test('DeleteError', function() {
       browserProxy.forceCertificatesError();
       var whenErrorEventFired =
-          test_util.eventToPromise('certificates-error', dialog);
+          webui_test_util.eventToPromise('certificates-error', dialog);
 
       // Simulate clicking 'OK'.
       MockInteractions.tap(dialog.$.ok);
@@ -402,7 +402,7 @@ cr.define('certificate_manager', function() {
       triggerInputEvent(passwordInputElement);
 
       var whenErrorEventFired =
-          test_util.eventToPromise('certificates-error', dialog);
+          webui_test_util.eventToPromise('certificates-error', dialog);
       MockInteractions.tap(dialog.$.ok);
 
       return browserProxy.whenCalled(methodName).then(function() {
@@ -465,7 +465,7 @@ cr.define('certificate_manager', function() {
       triggerInputEvent(passwordInputElement);
 
       var whenErrorEventFired =
-          test_util.eventToPromise('certificates-error', dialog);
+          webui_test_util.eventToPromise('certificates-error', dialog);
       MockInteractions.tap(dialog.$.ok);
       return browserProxy.whenCalled(methodName).then(function() {
         return whenErrorEventFired;
@@ -483,7 +483,7 @@ cr.define('certificate_manager', function() {
      * @return {!Promise} A promise firing once |CertificateActionEvent| fires.
      */
     var actionEventToPromise = function() {
-      return test_util.eventToPromise(CertificateActionEvent, subentry);
+      return webui_test_util.eventToPromise(CertificateActionEvent, subentry);
     };
 
     setup(function() {
@@ -710,7 +710,7 @@ cr.define('certificate_manager', function() {
       // Some dialogs are opened after some async operation to fetch initial
       // data. Ensure that the underlying cr-dialog is actually opened before
       // returning.
-      return test_util.whenAttributeIs(dialog.$.dialog, 'open', '');
+      return webui_test_util.whenAttributeIs(dialog.$.dialog, 'open', '');
     }
 
     test('OpensDialog_DeleteConfirmation', function() {
@@ -804,7 +804,7 @@ cr.define('certificate_manager', function() {
       assertTrue(!!importButton);
 
       var waitForActionEvent = actionEventExpected ?
-          test_util.eventToPromise(CertificateActionEvent, element) :
+          webui_test_util.eventToPromise(CertificateActionEvent, element) :
           Promise.resolve(null);
 
       MockInteractions.tap(importButton);
