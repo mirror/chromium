@@ -42,6 +42,8 @@ const char* AutocompleteProvider::TypeToString(Type type) {
       return "ClipboardURL";
     case TYPE_PHYSICAL_WEB:
       return "PhysicalWeb";
+    case TYPE_TAB_SEARCH:
+      return "TabSearch";
     default:
       NOTREACHED() << "Unhandled AutocompleteProvider::Type " << type;
       return "Unknown";

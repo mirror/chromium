@@ -19,6 +19,7 @@ class ChromeOmniboxEditController : public OmniboxEditController {
  public:
   // Returns the WebContents of the currently active tab.
   virtual content::WebContents* GetWebContents() = 0;
+  bool SwitchToTabWithURL(const std::string& url, bool close_this) override;
 
   // Called when the the controller should update itself without restoring any
   // tab state.

@@ -31,6 +31,10 @@ class OmniboxEditController {
   virtual ToolbarModel* GetToolbarModel() = 0;
   virtual const ToolbarModel* GetToolbarModel() const = 0;
 
+  // Called to try to switch to existing tab with given URL, and
+  // close current tab if requested.
+  virtual bool SwitchToTabWithURL(const std::string& url, bool close_this);
+
  protected:
   OmniboxEditController();
   virtual ~OmniboxEditController();
