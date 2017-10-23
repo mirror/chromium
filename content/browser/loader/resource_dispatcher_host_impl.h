@@ -751,6 +751,8 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   // request_id_.
   int request_id_;
 
+  bool init_done_;
+
   // True if the resource dispatcher host has been shut down.
   bool is_shutdown_;
 
