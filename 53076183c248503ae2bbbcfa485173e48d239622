@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61df75c7_23b998d9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-23T20:30:53Z",
+      "side": 1,
+      "message": "This is probably off by subpixel accumulation. Here is my train of thoughts:\n--\u003e The cull rect came from the intersection of GraphicsLayer bounds and clip rects computed by PaintLayerClipper. Both of them are computed relative to snapped border box location.\n--\u003e In SPv175, paint offset is relative to the transform node.\n--\u003e In SPv175, we want the cull rect to be relative to the transform node as well.\n--\u003e Therefore, cull rect should be adjusted by the snapped border box location relative to its transform node, which is object_paint_offset - subpixel_accumulation, or simply PixelSnappedIntPoint(object_paint_offset). (Always equivalent probably?)\n\nIt is also questionable to only adjust for layers that has owned or grouped backing. For descendant layers the cull rect is relative to painting_info.root_layer\u0027s snapped border box, which is not necessarily equal to the transform node.\n\nI think maybe the right thing to do is to always\nnew_cull_rect.MoveBy(PixelSnappedIntPoint(painting_info.root_layer-\u003eGetLayoutObject().PaintOffset()));\n\nDoes it sound right to you?",
+      "revId": "53076183c248503ae2bbbcfa485173e48d239622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
