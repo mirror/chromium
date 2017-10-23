@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "67ae5717_abe886dc",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-23T17:43:52Z",
+      "side": 1,
+      "message": "So, it looks like this matches the real impl, which does not invoke |callback| on an error, although from a UI perspective that pattern is extremely difficult to deal with (and I would bet that we do not handle it well). Hopefully the follow-up mentioned will fix tha tin both places?",
+      "revId": "c74b7573b5aaee3763ddfa2a4519b8a24570aaff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d0bfb23_34095045",
         "filename": "chromeos/dbus/fake_power_manager_client.h",
         "patchSetId": 1
