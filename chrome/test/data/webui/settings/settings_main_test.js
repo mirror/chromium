@@ -251,13 +251,15 @@ cr.define('settings_main_page', function() {
 
       var basicPage = settingsMain.$$('settings-basic-page');
       var advancedPage = null;
-      return basicPage.$$('#advancedPageTemplate').get().then(
-          function(advanced) {
+      return basicPage.$$('#advancedPageTemplate')
+          .get()
+          .then(function(advanced) {
             advancedPage = advanced;
             return assertPageVisibility('block', 'block');
-          }).then(function() {
-            var whenHidden = test_util.whenAttributeIs(
-                advancedPage, 'hidden', '');
+          })
+          .then(function() {
+            var whenHidden =
+                webui_test_util.whenAttributeIs(advancedPage, 'hidden', '');
 
             var advancedToggle =
                 getToggleContainer().querySelector('#advancedToggle');
@@ -265,7 +267,8 @@ cr.define('settings_main_page', function() {
             MockInteractions.tap(advancedToggle);
 
             return whenHidden;
-          }).then(function() {
+          })
+          .then(function() {
             return assertPageVisibility('block', 'none');
           });
     });

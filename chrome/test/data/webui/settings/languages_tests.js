@@ -43,7 +43,7 @@ cr.define('settings-languages', function() {
       languageHelper = document.createElement('settings-languages');
 
       // Prefs would normally be data-bound to settings-languages.
-      test_util.fakeDataBind(settingsPrefs, languageHelper, 'prefs');
+      webui_test_util.fakeDataBind(settingsPrefs, languageHelper, 'prefs');
 
       document.body.appendChild(languageHelper);
       return languageHelper.whenReady().then(function() {

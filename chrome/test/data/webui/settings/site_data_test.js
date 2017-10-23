@@ -22,7 +22,7 @@ suite('SiteDataTest', function() {
 
   test('remove button (trash) calls remove on origin', function() {
     let promise =
-        test_util.eventToPromise('site-data-list-complete', siteData)
+        webui_test_util.eventToPromise('site-data-list-complete', siteData)
             .then(() => {
               Polymer.dom.flush();
               var button =
@@ -45,17 +45,18 @@ suite('SiteDataTest', function() {
   });
 
   test('remove button hidden when no search results', function() {
-    let promise = test_util.eventToPromise('site-data-list-complete', siteData)
-                      .then(() => {
-                        assertEquals(2, siteData.$.list.items.length);
-                        let promise2 = test_util.eventToPromise(
-                            'site-data-list-complete', siteData);
-                        siteData.filter = 'Hello';
-                        return promise2;
-                      })
-                      .then(() => {
-                        assertEquals(1, siteData.$.list.items.length);
-                      });
+    let promise =
+        webui_test_util.eventToPromise('site-data-list-complete', siteData)
+            .then(() => {
+              assertEquals(2, siteData.$.list.items.length);
+              let promise2 = webui_test_util.eventToPromise(
+                  'site-data-list-complete', siteData);
+              siteData.filter = 'Hello';
+              return promise2;
+            })
+            .then(() => {
+              assertEquals(1, siteData.$.list.items.length);
+            });
     var sites = [
       {site: 'Hello', id: '1', localData: 'Cookiez!'},
       {site: 'World', id: '2', localData: 'Cookiez!'},

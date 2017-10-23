@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-cr.define('test_util', function() {
+cr.define('webui_test_util', function() {
   /**
    * Observes an HTML attribute and fires a promise when it matches a given
    * value.
@@ -26,8 +26,11 @@ cr.define('test_util', function() {
             return;
           }
         }
-      }).observe(
-          target, {attributes: true, childList: false, characterData: false});
+      }).observe(target, {
+        attributes: true,
+        childList: false,
+        characterData: false
+      });
     });
   }
 
@@ -38,6 +41,15 @@ cr.define('test_util', function() {
    * @return {!Promise} A promise firing once the event occurs.
    */
   function eventToPromise(eventType, target) {
+    assert(
+        typeof(eventType) == 'string',
+        'eventToPromise() requires an event string.');
+    assert(
+        typeof(target) == 'object',
+        'eventToPromise() requires a HTMLElement target.');
+    assert(
+        arguments.length == 2,
+        'too many arguments passed to eventToPromise().');
     return new Promise(function(resolve, reject) {
       target.addEventListener(eventType, function f(e) {
         target.removeEventListener(eventType, f);
