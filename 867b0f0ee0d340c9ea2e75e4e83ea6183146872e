@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90f1af22_8d75d9bf",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:04:08Z",
+      "side": 1,
+      "message": "std::move(factory)",
+      "revId": "867b0f0ee0d340c9ea2e75e4e83ea6183146872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be89574e_1ae0d8cf",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:04:08Z",
+      "side": 1,
+      "message": "omit \"explicit\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "867b0f0ee0d340c9ea2e75e4e83ea6183146872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a90828_4d3a8bac",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:04:08Z",
+      "side": 1,
+      "message": "std::move(factory)",
+      "revId": "867b0f0ee0d340c9ea2e75e4e83ea6183146872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfd089d_1a59406d",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:04:08Z",
+      "side": 1,
+      "message": "please use \"protected\" as per examples in Google Test documentation -- each TEST_F generates a subclass of the fixture.",
+      "revId": "867b0f0ee0d340c9ea2e75e4e83ea6183146872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2e462b_8653e0a7",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:04:08Z",
+      "side": 1,
+      "message": "do you expect this failed case to be hit? should the test continue if so? how about moving this to a SetUp override so that you can ASSERT that it succeeded?",
+      "revId": "867b0f0ee0d340c9ea2e75e4e83ea6183146872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fe1a88_3bd1fe08",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:04:08Z",
+      "side": 1,
+      "message": "private:",
+      "revId": "867b0f0ee0d340c9ea2e75e4e83ea6183146872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4535cb7_bb4dbb94",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-23T11:04:08Z",
+      "side": 1,
+      "message": "std::move(factory)",
+      "revId": "867b0f0ee0d340c9ea2e75e4e83ea6183146872e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
