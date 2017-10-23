@@ -27,6 +27,7 @@ class Widget;
 
 namespace ash {
 class FrameCaptionButtonContainerView;
+class FrameCaptionButton;
 
 // Helper class for painting the default window header.
 class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
@@ -52,6 +53,9 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
 
   // Sets the left header view for the header. Passing NULL removes the view.
   void UpdateLeftHeaderView(views::View* left_header_view);
+
+  // Sets the back button for the header. Passing NULL removes the view.
+  void UpdateBackButton(FrameCaptionButton* button);
 
   // Sets the active and inactive frame colors. Note the inactive frame color
   // will have some transparency added when the frame is drawn.
@@ -100,6 +104,7 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   const mojom::WindowStyle window_style_;
   views::Widget* frame_;
   views::View* view_;
+  FrameCaptionButton* back_button_;  // May be NULL.
   views::View* left_header_view_;  // May be NULL.
   SkColor active_frame_color_;
   SkColor inactive_frame_color_;

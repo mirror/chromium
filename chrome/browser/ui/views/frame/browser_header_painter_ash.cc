@@ -301,6 +301,7 @@ gfx::Rect BrowserHeaderPainterAsh::GetPaintedBounds() const {
 }
 
 gfx::Rect BrowserHeaderPainterAsh::GetTitleBounds() const {
-  return ash::HeaderPainterUtil::GetTitleBounds(window_icon_,
-      caption_button_container_, BrowserFrame::GetTitleFontList());
+  return ash::HeaderPainterUtil::GetTitleBounds(
+      nullptr, window_icon_, caption_button_container_,
+      BrowserFrame::GetTitleFontList());
 }

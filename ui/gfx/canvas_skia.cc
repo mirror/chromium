@@ -62,7 +62,6 @@ void UpdateRenderText(const Rect& rect,
   render_text->SetText(text);
   render_text->SetCursorEnabled(false);
   render_text->SetDisplayRect(rect);
-
   // Set the text alignment explicitly based on the directionality of the UI,
   // if not specified.
   if (!(flags & (Canvas::TEXT_ALIGN_CENTER |

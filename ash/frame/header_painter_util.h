@@ -37,7 +37,8 @@ class ASH_EXPORT HeaderPainterUtil {
   // Returns the bounds for the header's title given the views to the left and
   // right of the title, and the font used.
   // |left_view| should be NULL if there is no view to the left of the title.
-  static gfx::Rect GetTitleBounds(const views::View* left_view,
+  static gfx::Rect GetTitleBounds(const views::View* back_button,
+                                  const views::View* left_view,
                                   const views::View* right_view,
                                   const gfx::FontList& title_font_list);
 
