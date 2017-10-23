@@ -252,7 +252,10 @@ class GpuProcessIntegrationTest(gpu_integration_test.GpuIntegrationTest):
       self.fail('Browser must support GPU aux attributes')
     if not 'gl_renderer' in system_info.gpu.aux_attributes:
       self.fail('Browser must have gl_renderer in aux attribs')
-    if len(system_info.gpu.aux_attributes['gl_renderer']) <= 0:
+    if (len(system_info.gpu.aux_attributes['gl_renderer']) <= 0 and
+        sys.platform != 'darwin'):
+      # We don't create a GL context and collect GL strings on GPU process
+      # startup on MacOSX because it's too slow.
       self.fail('Must have a non-empty gl_renderer string')
 
   def _GpuProcess_no_gpu_process(self, test_path):
