@@ -1778,6 +1778,10 @@ void NavigationControllerImpl::PruneAllButLastCommittedInternal() {
   last_committed_entry_index_ = 0;
 }
 
+void NavigationControllerImpl::CaptureScreenshot(base::OnceClosure screenshot_available_callback) {
+  screenshot_manager_->TakeScreenshot();
+}
+
 void NavigationControllerImpl::ClearAllScreenshots() {
   screenshot_manager_->ClearAllScreenshots();
 }

@@ -393,7 +393,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       popup_child_host_view_(nullptr),
       is_loading_(false),
       has_composition_text_(false),
-      background_color_(SK_ColorWHITE),
+      background_color_(SK_ColorMAGENTA),
       needs_begin_frames_(false),
       added_frame_observer_(false),
       cursor_visibility_state_in_renderer_(UNKNOWN),
@@ -438,14 +438,28 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, RenderWidgetHostView implementation:
 
+namespace {
+
+void PrintIt(aura::Window* window, std::string depth) {
+  LOG(ERROR) << depth << window->GetName();
+  for (auto child : window->children()) {
+    PrintIt(child, depth + "  ");
+  }
+}
+
+}  // namespace
+
 void RenderWidgetHostViewAura::InitAsChild(
     gfx::NativeView parent_view) {
   CreateDelegatedFrameHostClient();
 
   CreateAuraWindow(aura::client::WINDOW_TYPE_CONTROL);
 
-  if (parent_view)
+  if (parent_view) {
     parent_view->AddChild(GetNativeView());
+    LOG(ERROR) << "-----------";
+    PrintIt(parent_view->GetRootWindow(), "");
+  }
 
   device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
 }
@@ -732,11 +746,12 @@ gfx::Rect RenderWidgetHostViewAura::GetViewBounds() const {
 void RenderWidgetHostViewAura::SetBackgroundColor(SkColor color) {
   // The renderer will feed its color back to us with the first CompositorFrame.
   // We short-cut here to show a sensible color before that happens.
-  UpdateBackgroundColorFromRenderer(color);
+ /* UpdateBackgroundColorFromRenderer(color);
 
   DCHECK(SkColorGetA(color) == SK_AlphaOPAQUE ||
          SkColorGetA(color) == SK_AlphaTRANSPARENT);
   host_->SetBackgroundOpaque(SkColorGetA(color) == SK_AlphaOPAQUE);
+  */
 }
 
 SkColor RenderWidgetHostViewAura::background_color() const {
@@ -745,6 +760,7 @@ SkColor RenderWidgetHostViewAura::background_color() const {
 
 void RenderWidgetHostViewAura::UpdateBackgroundColorFromRenderer(
     SkColor color) {
+  /*
   if (color == background_color())
     return;
   background_color_ = color;
@@ -752,6 +768,7 @@ void RenderWidgetHostViewAura::UpdateBackgroundColorFromRenderer(
   bool opaque = SkColorGetA(color) == SK_AlphaOPAQUE;
   window_->layer()->SetFillsBoundsOpaquely(opaque);
   window_->layer()->SetColor(color);
+  */
 }
 
 bool RenderWidgetHostViewAura::IsMouseLocked() {
