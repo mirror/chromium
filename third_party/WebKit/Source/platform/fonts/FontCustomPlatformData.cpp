@@ -44,6 +44,7 @@
 #endif
 #include "platform/fonts/opentype/FontSettings.h"
 #include "platform/fonts/opentype/VariableFontCheck.h"
+#include "platform/graphics/paint/PaintTypeface.h"
 #include "third_party/skia/include/core/SkStream.h"
 #include "third_party/skia/include/core/SkTypeface.h"
 #if defined(OS_WIN) || defined(OS_MACOSX)
@@ -139,7 +140,10 @@ FontPlatformData FontCustomPlatformData::GetFontPlatformData(
     ReportWebFontInstantiationResult(kSuccessConventionalWebFont);
   }
 
-  return FontPlatformData(return_typeface, "", size,
+  // TODO(vmpstr): Handle web fonts PaintTypefaces.
+  PaintTypeface paint_typeface(return_typeface->uniqueID());
+  paint_typeface.SetWebFont();
+  return FontPlatformData(return_typeface, paint_typeface, "", size,
                           bold && !base_typeface_->isBold(),
                           italic && !base_typeface_->isItalic(), orientation);
 }

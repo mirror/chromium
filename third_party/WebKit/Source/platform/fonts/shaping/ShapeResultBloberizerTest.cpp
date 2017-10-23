@@ -11,6 +11,7 @@
 #include "platform/fonts/opentype/OpenTypeVerticalData.h"
 #include "platform/fonts/shaping/CachingWordShaper.h"
 #include "platform/fonts/shaping/ShapeResultTestInfo.h"
+#include "platform/graphics/paint/PaintTypeface.h"
 #include "platform/wtf/Optional.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -23,8 +24,14 @@ namespace {
 class TestSimpleFontData : public SimpleFontData {
  public:
   static RefPtr<TestSimpleFontData> Create(bool force_rotation = false) {
+    auto tf = SkTypeface::MakeDefault();
+    PaintTypeface paint_tf(tf->uniqueID());
+    // We just need to set some data for DCHECK purposes, otherwise this is
+    // unused.
+    paint_tf.SetWebFont();
+
     FontPlatformData platform_data(
-        SkTypeface::MakeDefault(), nullptr, 10, false, false,
+        std::move(tf), paint_tf, nullptr, 10, false, false,
         force_rotation ? FontOrientation::kVerticalUpright
                        : FontOrientation::kHorizontal);
     RefPtr<OpenTypeVerticalData> vertical_data(
