@@ -1,0 +1,261 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98c468e4_3c8d5c98",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "could you clarify this a bit? you mean \"make CropRect change ImageData instead of returning a copy\"?",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9da929_16b4a99f",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "This function is weird. Maybe rename it to \"SwapU16EndiannesFor...\"?",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bd1cd6_b432dad6",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "DCHECK",
+      "range": {
+        "startLine": 713,
+        "startChar": 7,
+        "endLine": 713,
+        "endChar": 16
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d2feff_b661cf96",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "leave a comment here explaining that Xform U16s are big-endian and that ImageData is always little-endian (is it?) so we must convert back-forth when using U16.",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d138c0_d28adac4",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "if (u16), also below.",
+      "range": {
+        "startLine": 759,
+        "startChar": 8,
+        "endLine": 759,
+        "endChar": 47
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3817b9af_ef197cb9",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "This looks weird. \nCould you rename it to has_color_space_conversion or something like that?\nMake it positive and don\u0027t refer to the underlying option.",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57041d5b_f88f253b",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "Could you explicit initialize the defaults for this here?",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b34e96_9dab07bc",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "wait wat? An alpha of 0 is equal to 255?",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b810605_b0bfc451",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "this is too big for ternary. if()?",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2028b1c_f977f7e7",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "Talking to Justin, we think we agreed on doing this comparison always on premul space, in which the tolerance will always be 1.",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350137e6_15bec991",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "hmmmm. Do you have a good reason for that? Just make the parameter explicit all the time and skip this.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 7
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d19f500_7b6841a2",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "what happens if I pass a @transfer_function_behavior and the color spaces are the same? Wouldn\u0027t I want it to be applied anyway?",
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eed3e5_8112c0d1",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-23T14:43:45Z",
+      "side": 1,
+      "message": "what does equality mean here? Same pointer? If so, this looks unnecessary. What if makeColorSpace optimizes something and want to return the same image? What\u0027s the problem?",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 8
+      },
+      "revId": "aefaafb4601ef2e6575532cd2e4e185105d66dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
