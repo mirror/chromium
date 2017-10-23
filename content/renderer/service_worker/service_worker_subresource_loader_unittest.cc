@@ -375,6 +375,54 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, DropController) {
   }
 }
 
+TEST_F(ServiceWorkerSubresourceLoaderTest, DropController_InflightFetchEvent) {
+  const GURL kScope("https://www.example.com/");
+  std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
+      CreateSubresourceLoaderFactory(kScope.GetOrigin());
+
+  {
+    ResourceRequest request =
+        CreateRequest(GURL("https://www.example.com/foo.png"));
+    std::unique_ptr<TestURLLoaderClient> loader_client =
+        StartRequest(factory.get(), request);
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_EQ(request.url, fake_controller_.fetch_event_request().url);
+    EXPECT_EQ(request.method, fake_controller_.fetch_event_request().method);
+    EXPECT_EQ(1, fake_controller_.fetch_event_count());
+    EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+  }
+
+  {
+    ResourceRequest request =
+        CreateRequest(GURL("https://www.example.com/foo2.png"));
+    std::unique_ptr<TestURLLoaderClient> loader_client =
+        StartRequest(factory.get(), request);
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_EQ(request.url, fake_controller_.fetch_event_request().url);
+    EXPECT_EQ(request.method, fake_controller_.fetch_event_request().method);
+    EXPECT_EQ(2, fake_controller_.fetch_event_count());
+    EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+  }
+
+  ResourceRequest request =
+      CreateRequest(GURL("https://www.example.com/foo3.png"));
+  std::unique_ptr<TestURLLoaderClient> loader_client =
+      StartRequest(factory.get(), request);
+
+  // Drop the connection to the ControllerServiceWorker.
+  fake_controller_.CloseAllBindings();
+  base::RunLoop().RunUntilIdle();
+
+  // If connection is closed during fetch event, it's restarted and successfully
+  // finishes.
+  EXPECT_EQ(request.url, fake_controller_.fetch_event_request().url);
+  EXPECT_EQ(request.method, fake_controller_.fetch_event_request().method);
+  EXPECT_EQ(3, fake_controller_.fetch_event_count());
+  EXPECT_EQ(2, fake_container_host_.get_controller_service_worker_count());
+}
+
 TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
   // Construct the Stream to respond with.
   const char kResponseBody[] = "Here is sample text for the Stream.";
