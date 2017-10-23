@@ -238,8 +238,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   typedef base::TimeTicks (*TimeFunc)(void);
 
   // Container class for unclaimed pushed streams on a SpdySession.  Guarantees
-  // that |spdy_session_.pool_| gets notified every time a stream is pushed or
-  // an unclaimed pushed stream is claimed.
+  // that the Http2PushPromiseIndex instance belonging to SpdySessionPool gets
+  // notified every time a stream with https scheme is pushed by the server or
+  // an unclaimed pushed stream with https scheme is claimed.
   class UnclaimedPushedStreamContainer {
    public:
     struct PushedStreamInfo {
@@ -256,9 +257,10 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
     using iterator = PushedStreamMap::iterator;
     using const_iterator = PushedStreamMap::const_iterator;
 
-    UnclaimedPushedStreamContainer() = delete;
-    explicit UnclaimedPushedStreamContainer(SpdySession* spdy_session);
+    UnclaimedPushedStreamContainer();
     ~UnclaimedPushedStreamContainer();
+
+    void Initialize(base::WeakPtr<SpdySession> spdy_session);
 
     bool empty() const { return streams_.empty(); }
     size_t size() const { return streams_.size(); }
@@ -282,7 +284,7 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
     size_t EstimateMemoryUsage() const;
 
    private:
-    SpdySession* spdy_session_;
+    base::WeakPtr<SpdySession> spdy_session_;
 
     // (Bijective) map from the URL to the ID of the streams that have
     // already started to be pushed by the server, but do not have
@@ -337,12 +339,26 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // reset).  Returns an error (not ERR_IO_PENDING) otherwise, and
   // resets |spdy_stream|.
   //
+  // If pushed_stream_id != kNoPushedStreamFound, then the pushed stream with
+  // pushed_stream_id is used.  An error is returned if it is not possible.
+  //
+  // If pushed_stream_id == kNoPushedStreamFound, then any matching pushed
+  // stream that has not been claimed by another request can be used.  This
+  // can happen, for example, with http scheme pushed streams that are not
+  // registered with Http2PushPromiseIndex and therefore are not claimed by
+  // requests until this point, or if the pushed stream was received from the
+  // server in the meanwhile.
+  //
   // If a stream was found and the stream is still open, the priority
   // of that stream is updated to match |priority|.
   int GetPushStream(const GURL& url,
+                    SpdyStreamId pushed_stream_id,
                     RequestPriority priority,
                     SpdyStream** spdy_stream,
                     const NetLogWithSource& stream_net_log);
+
+  // Called by Http2PushPromiseIndex when request claims a pushed stream.
+  void ClaimPushStream(const GURL& url);
 
   // Called when the pushed stream should be cancelled. If the pushed stream is
   // not claimed and active, sends RST to the server to cancel the stream.
@@ -800,11 +816,6 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // that |stream| may hold the last reference to the session.
   void DeleteStream(std::unique_ptr<SpdyStream> stream, int status);
 
-  // Check if we have a pending pushed-stream for this url
-  // Returns the stream if found (and returns it from the pending
-  // list). Returns NULL otherwise.
-  SpdyStream* GetActivePushStream(const GURL& url);
-
   void RecordPingRTTHistogram(base::TimeDelta duration);
   void RecordHistograms();
   void RecordProtocolErrorHistogram(SpdyProtocolErrorDetails details);
@@ -826,6 +837,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // Called right before closing a (possibly-inactive) stream for a
   // reason other than being requested to by the stream.
   void LogAbandonedStream(SpdyStream* stream, Error status);
+
+  // Called when pushed stream is claimed by a request.
+  void LogPushStreamClaimed(const GURL& url, const SpdyStream& stream);
 
   // Called right before closing an active stream for a reason other
   // than being requested to by the stream.

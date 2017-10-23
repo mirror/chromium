@@ -198,6 +198,7 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
       was_alpn_negotiated_(false),
       negotiated_protocol_(kProtoUnknown),
       num_streams_(0),
+      pushed_stream_id_(kNoPushedStreamFound),
       spdy_session_direct_(
           !(proxy_info.is_https() && origin_url_.SchemeIs(url::kHttpScheme))),
       spdy_session_key_(using_quic_
@@ -926,9 +927,9 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
   // connection this request can pool to.  If so, then go straight to using
   // that.
   if (CanUseExistingSpdySession()) {
-    existing_spdy_session_ =
-        session_->spdy_session_pool()->push_promise_index()->Find(
-            spdy_session_key_, origin_url_);
+    session_->spdy_session_pool()->push_promise_index()->Claim(
+        origin_url_, spdy_session_key_, &existing_spdy_session_,
+        &pushed_stream_id_);
     if (!existing_spdy_session_) {
       existing_spdy_session_ =
           session_->spdy_session_pool()->FindAvailableSession(
@@ -1138,6 +1139,7 @@ int HttpStreamFactoryImpl::Job::DoWaitingUserAction(int result) {
 
 int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
     base::WeakPtr<SpdySession> session,
+    SpdyStreamId pushed_stream_id,
     bool direct) {
   // TODO(ricea): Restore the code for WebSockets over SPDY once it's
   // implemented.
@@ -1155,8 +1157,8 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
 
   bool use_relative_url =
       direct || request_info_.url.SchemeIs(url::kHttpsScheme);
-  stream_ = std::make_unique<SpdyHttpStream>(session, use_relative_url,
-                                             net_log_.source());
+  stream_ = std::make_unique<SpdyHttpStream>(
+      session, pushed_stream_id, use_relative_url, net_log_.source());
   return OK;
 }
 
@@ -1198,9 +1200,9 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
   // It is possible that a pushed stream has been opened by a server since last
   // time Job checked above.
   if (!existing_spdy_session_) {
-    existing_spdy_session_ =
-        session_->spdy_session_pool()->push_promise_index()->Find(
-            spdy_session_key_, origin_url_);
+    session_->spdy_session_pool()->push_promise_index()->Claim(
+        origin_url_, spdy_session_key_, &existing_spdy_session_,
+        &pushed_stream_id_);
     // It is also possible that an HTTP/2 connection has been established since
     // last time Job checked above.
     if (!existing_spdy_session_) {
@@ -1216,7 +1218,7 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
     connection_->Reset();
 
     int set_result = SetSpdyHttpStreamOrBidirectionalStreamImpl(
-        existing_spdy_session_, spdy_session_direct_);
+        existing_spdy_session_, pushed_stream_id_, spdy_session_direct_);
     existing_spdy_session_.reset();
     return set_result;
   }
@@ -1252,8 +1254,8 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
   // iteration later, so if the SpdySession is closed between then, allow
   // reuse state from the underlying socket, sampled by SpdyHttpStream,
   // bubble up to the request.
-  return SetSpdyHttpStreamOrBidirectionalStreamImpl(new_spdy_session_,
-                                                    spdy_session_direct_);
+  return SetSpdyHttpStreamOrBidirectionalStreamImpl(
+      new_spdy_session_, kNoPushedStreamFound, spdy_session_direct_);
 }
 
 int HttpStreamFactoryImpl::Job::DoCreateStreamComplete(int result) {

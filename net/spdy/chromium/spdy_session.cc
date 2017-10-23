@@ -618,10 +618,14 @@ void SpdyStreamRequest::Reset() {
   callback_.Reset();
 }
 
-SpdySession::UnclaimedPushedStreamContainer::UnclaimedPushedStreamContainer(
-    SpdySession* spdy_session)
-    : spdy_session_(spdy_session) {}
+SpdySession::UnclaimedPushedStreamContainer::UnclaimedPushedStreamContainer() {}
+
 SpdySession::UnclaimedPushedStreamContainer::~UnclaimedPushedStreamContainer() {
+}
+
+void SpdySession::UnclaimedPushedStreamContainer::Initialize(
+    base::WeakPtr<SpdySession> spdy_session) {
+  spdy_session_ = spdy_session;
 }
 
 size_t SpdySession::UnclaimedPushedStreamContainer::erase(const GURL& url) {
@@ -639,8 +643,8 @@ SpdySession::UnclaimedPushedStreamContainer::erase(const_iterator it) {
   DCHECK(it != end());
   // Only allow cross-origin push for secure resources.
   if (it->first.SchemeIsCryptographic()) {
-    spdy_session_->pool_->push_promise_index()->UnregisterUnclaimedPushedStream(
-        it->first, spdy_session_);
+    spdy_session_->pool_->push_promise_index()->Unregister(
+        it->first, spdy_session_, it->second.stream_id);
   }
   return streams_.erase(it);
 }
@@ -652,8 +656,8 @@ bool SpdySession::UnclaimedPushedStreamContainer::insert(
   DCHECK(spdy_session_->pool_);
   // Only allow cross-origin push for https resources.
   if (url.SchemeIsCryptographic()) {
-    spdy_session_->pool_->push_promise_index()->RegisterUnclaimedPushedStream(
-        url, spdy_session_->GetWeakPtr());
+    spdy_session_->pool_->push_promise_index()->Register(
+        url, spdy_session_->GetWeakPtr(), stream_id);
   }
   auto result = streams_.insert(std::make_pair(
       url, SpdySession::UnclaimedPushedStreamContainer::PushedStreamInfo(
@@ -742,7 +746,6 @@ SpdySession::SpdySession(
       transport_security_state_(transport_security_state),
       stream_hi_water_mark_(kFirstStreamId),
       last_accepted_push_stream_id_(0),
-      unclaimed_pushed_streams_(this),
       push_delegate_(push_delegate),
       num_pushed_streams_(0u),
       num_active_pushed_streams_(0u),
@@ -794,6 +797,7 @@ SpdySession::SpdySession(
   next_unclaimed_push_stream_sweep_time_ =
       time_func_() +
       base::TimeDelta::FromSeconds(kMinPushedStreamLifetimeSeconds);
+  unclaimed_pushed_streams_.Initialize(GetWeakPtr());
 
   DCHECK(base::ContainsKey(initial_settings_, SETTINGS_HEADER_TABLE_SIZE));
   DCHECK(base::ContainsKey(initial_settings_, SETTINGS_MAX_CONCURRENT_STREAMS));
@@ -818,6 +822,7 @@ SpdySession::~SpdySession() {
 }
 
 int SpdySession::GetPushStream(const GURL& url,
+                               SpdyStreamId pushed_stream_id,
                                RequestPriority priority,
                                SpdyStream** stream,
                                const NetLogWithSource& stream_net_log) {
@@ -828,9 +833,42 @@ int SpdySession::GetPushStream(const GURL& url,
     return ERR_CONNECTION_CLOSED;
   }
 
-  *stream = GetActivePushStream(url);
-  if (!*stream)
-    return OK;
+  if (pushed_stream_id == kNoPushedStreamFound) {
+    // Even if no pushed stream was claimed earlier, there could still be one
+    // corresponding the request, if it was received in the meanwhile, or if the
+    // scheme is http (those pushed are not registered with
+    // Http2PushPromiseIndex).
+    UnclaimedPushedStreamContainer::const_iterator unclaimed_it =
+        unclaimed_pushed_streams_.find(url);
+    if (unclaimed_it == unclaimed_pushed_streams_.end()) {
+      *stream = nullptr;
+      return OK;
+    }
+
+    SpdyStreamId stream_id = unclaimed_it->second.stream_id;
+    unclaimed_pushed_streams_.erase(unclaimed_it);
+
+    ActiveStreamMap::iterator active_it = active_streams_.find(stream_id);
+    if (active_it == active_streams_.end()) {
+      NOTREACHED();
+      *stream = nullptr;
+      return ERR_SPDY_PUSHED_STREAM_NOT_AVAILABLE;
+    }
+
+    *stream = active_it->second;
+    LogPushStreamClaimed(url, **stream);
+  } else {
+    ActiveStreamMap::iterator active_it =
+        active_streams_.find(pushed_stream_id);
+    if (active_it == active_streams_.end()) {
+      // A previously claimed pushed stream might not be available, for example,
+      // if the server reset it in the meanwhile.
+      *stream = nullptr;
+      return ERR_SPDY_PUSHED_STREAM_NOT_AVAILABLE;
+    }
+
+    *stream = active_it->second;
+  }
 
   DCHECK_LT(streams_pushed_and_claimed_count_, streams_pushed_count_);
   streams_pushed_and_claimed_count_++;
@@ -853,6 +891,20 @@ int SpdySession::GetPushStream(const GURL& url,
   }
 
   return OK;
+}
+
+void SpdySession::ClaimPushStream(const GURL& url) {
+  UnclaimedPushedStreamContainer::const_iterator unclaimed_it =
+      unclaimed_pushed_streams_.find(url);
+  DCHECK(unclaimed_it != unclaimed_pushed_streams_.end());
+
+  SpdyStreamId stream_id = unclaimed_it->second.stream_id;
+  unclaimed_pushed_streams_.erase(unclaimed_it);
+
+  ActiveStreamMap::iterator active_it = active_streams_.find(stream_id);
+  DCHECK(active_it != active_streams_.end());
+
+  LogPushStreamClaimed(url, *active_it->second);
 }
 
 void SpdySession::CancelPush(const GURL& url) {
@@ -2368,31 +2420,6 @@ void SpdySession::DeleteStream(std::unique_ptr<SpdyStream> stream, int status) {
   }
 }
 
-SpdyStream* SpdySession::GetActivePushStream(const GURL& url) {
-  UnclaimedPushedStreamContainer::const_iterator unclaimed_it =
-      unclaimed_pushed_streams_.find(url);
-  if (unclaimed_it == unclaimed_pushed_streams_.end())
-    return nullptr;
-
-  SpdyStreamId stream_id = unclaimed_it->second.stream_id;
-  unclaimed_pushed_streams_.erase(unclaimed_it);
-
-  ActiveStreamMap::iterator active_it = active_streams_.find(stream_id);
-  if (active_it == active_streams_.end()) {
-    NOTREACHED();
-    return nullptr;
-  }
-
-  SpdyStream* stream = active_it->second;
-  net_log_.AddEvent(NetLogEventType::HTTP2_STREAM_ADOPTED_PUSH_STREAM,
-                    base::Bind(&NetLogSpdyAdoptedPushStreamCallback,
-                               stream->stream_id(), &url));
-  // A stream is in reserved remote state until response headers arrive.
-  UMA_HISTOGRAM_BOOLEAN("Net.PushedStreamAlreadyHasResponseHeaders",
-                        !stream->IsReservedRemote());
-  return stream;
-}
-
 void SpdySession::RecordPingRTTHistogram(base::TimeDelta duration) {
   UMA_HISTOGRAM_CUSTOM_TIMES("Net.SpdyPing.RTT", duration,
                              base::TimeDelta::FromMilliseconds(1),
@@ -2497,6 +2524,16 @@ void SpdySession::LogAbandonedStream(SpdyStream* stream, Error status) {
   // stream isn't active (i.e., it hasn't written anything to the wire
   // yet) then it's as if it never existed. If it is active, then
   // LogAbandonedActiveStream() will increment the counters.
+}
+
+void SpdySession::LogPushStreamClaimed(const GURL& url,
+                                       const SpdyStream& stream) {
+  net_log_.AddEvent(NetLogEventType::HTTP2_STREAM_ADOPTED_PUSH_STREAM,
+                    base::Bind(&NetLogSpdyAdoptedPushStreamCallback,
+                               stream.stream_id(), &url));
+  // A stream is in reserved remote state until response headers arrive.
+  UMA_HISTOGRAM_BOOLEAN("Net.PushedStreamAlreadyHasResponseHeaders",
+                        !stream.IsReservedRemote());
 }
 
 void SpdySession::LogAbandonedActiveStream(ActiveStreamMap::const_iterator it,
