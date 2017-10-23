@@ -368,4 +368,10 @@ gfx::Size SearchResultTileItemView::CalculatePreferredSize() const {
   return TileItemView::CalculatePreferredSize();
 }
 
+void SearchResultTileItemView::GetAccessibleNodeData(
+    ui::AXNodeData* node_data) {
+  TileItemView::GetAccessibleNodeData(node_data);
+  node_data->AddStringAttribute(ui::AX_ATTR_DESCRIPTION, "");
+}
+
 }  // namespace app_list

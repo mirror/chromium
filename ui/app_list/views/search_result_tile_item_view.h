@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/search_result_observer.h"
 #include "ui/app_list/views/tile_item_view.h"
 #include "ui/views/context_menu_controller.h"
@@ -43,6 +44,7 @@ class APP_LIST_EXPORT SearchResultTileItemView
 
   // Overridden from TileItemView:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   void OnFocus() override;
 
