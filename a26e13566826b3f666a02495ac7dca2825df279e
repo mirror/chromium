@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d7c9e02b_de8d0ab7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-23T13:52:42Z",
+      "side": 1,
+      "message": "One is for the overlay and one is for the old play button.",
+      "parentUuid": "54defd54_62c10ff7",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "111630e5_54d9a440",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 2
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "My understanding is that it will check the entire parent chain if one parent has .state-playing. I guess it will stop at the first occurrence and only the play button in the media controls will match this so... okay :)",
       "parentUuid": "18104f9c_aa480190",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c905a4f7_2b838e2b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-23T13:52:42Z",
+      "side": 1,
+      "message": "\u003cvideo\u003e\n  #shadow-dom\n    \u003cdiv class\u003d\"state-playing\"\u003e\n      \u003cinput pseudo\u003d\"-internal-media-controls-play-button\"\u003e\n        #shadow-dom\n          \u003cdiv pseudo\u003d\"-internal-media-controls-play-button-internal\"\u003e\n\nThe pseudo bit after the :: is treated differently so the CSS parser starts from the left of the ::. It first finds the \u003cinput psuedo\u003d\"...\"\u003e and then traverses up the DOM looking for \"state-playing\". It will stop at the #shadow-dom root and it won\u0027t look outside that. Once it has found the element it will then look at the pseudo-element selector which is the only selector that can traverse the shadow DOM boundary.",
+      "parentUuid": "5d5edffe_38d98082",
       "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
