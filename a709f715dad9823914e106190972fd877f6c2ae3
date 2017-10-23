@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f46a396c_9ed1c183",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-23T18:25:42Z",
+      "side": 1,
+      "message": "I tried to simplify this by just doing this check entirely in the renderer, but it didn\u0027t work. See patchset 1.",
+      "revId": "a709f715dad9823914e106190972fd877f6c2ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
