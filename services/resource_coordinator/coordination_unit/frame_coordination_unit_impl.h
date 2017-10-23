@@ -5,12 +5,16 @@
 #ifndef SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_FRAME_COORDINATION_UNIT_IMPL_H_
 #define SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_FRAME_COORDINATION_UNIT_IMPL_H_
 
-#include <set>
-
 #include "base/macros.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
+#include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 
 namespace resource_coordinator {
+
+class PageCoordinationUnitImpl;
+class ProcessCoordinationUnitImpl;
 
 // Frame Coordination Units form a tree structure, each FrameCoordinationUnit at
 // most has one parent that is a FrameCoordinationUnit.
@@ -18,29 +22,75 @@ namespace resource_coordinator {
 class FrameCoordinationUnitImpl : public CoordinationUnitBase,
                                   public mojom::FrameCoordinationUnit {
  public:
+  static FrameCoordinationUnitImpl* Create(
+      const CoordinationUnitID& id,
+      std::unique_ptr<service_manager::ServiceContextRef> service_ref);
+  static const FrameCoordinationUnitImpl* FromCoordinationUnitBase(
+      const CoordinationUnitBase* cu);
+  static FrameCoordinationUnitImpl* FromCoordinationUnitBase(
+      CoordinationUnitBase* cu);
+  static CoordinationUnitType Type() { return CoordinationUnitType::kFrame; }
+
   FrameCoordinationUnitImpl(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~FrameCoordinationUnitImpl() override;
 
-  // CoordinationUnitBase implementation.
-  std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
-      CoordinationUnitType type) const override;
+  void Bind(mojom::FrameCoordinationUnitRequest request);
 
   // FrameCoordinationUnit implementation.
+  void GetID(
+      const mojom::FrameCoordinationUnit::GetIDCallback& callback) override;
+  void AddBinding(mojom::FrameCoordinationUnitRequest request) override;
+  void AddChildFrame(const CoordinationUnitID& cu_id) override;
+  void RemoveChildFrame(const CoordinationUnitID& cu_id) override;
   void SetAudibility(bool audible) override;
   void SetNetworkAlmostIdleness(bool idle) override;
   void OnAlertFired() override;
   void OnNonPersistentNotificationCreated() override;
 
+  FrameCoordinationUnitImpl* GetParentFrameCoordinationUnit() const;
   PageCoordinationUnitImpl* GetPageCoordinationUnit() const;
+  ProcessCoordinationUnitImpl* GetProcessCoordinationUnit() const;
+  std::set<FrameCoordinationUnitImpl*> GetChildFrameCoordinationUnits();
   bool IsMainFrame() const;
 
+  mojo::Binding<mojom::FrameCoordinationUnit>& binding() { return binding_; }
+  const std::set<FrameCoordinationUnitImpl*>&
+  child_frame_coordination_units_for_testing() const {
+    return child_frame_coordination_units_;
+  }
+
  private:
-  // CoordinationUnitBase implementation.
-  void OnEventReceived(const mojom::Event event) override;
-  void OnPropertyChanged(const mojom::PropertyType property_type,
+  friend class PageCoordinationUnitImpl;
+  friend class ProcessCoordinationUnitImpl;
+
+  static FrameCoordinationUnitImpl* GetCoordinationUnitByID(
+      const CoordinationUnitID cu_id);
+
+  // CoordinationUnitInterface implementation.
+  bool HasAncestor(CoordinationUnitBase* ancestor) override;
+  bool HasDescendant(CoordinationUnitBase* descendant) override;
+  void OnEventReceived(mojom::Event event) override;
+  void OnPropertyChanged(mojom::PropertyType property_type,
                          int64_t value) override;
+
+  void AddPageCoordinationUnit(PageCoordinationUnitImpl* page_cu);
+  void AddProcessCoordinationUnit(ProcessCoordinationUnitImpl* process_cu);
+  void RemovePageCoordinationUnit(PageCoordinationUnitImpl* page_cu);
+  void RemoveProcessCoordinationUnit(ProcessCoordinationUnitImpl* process_cu);
+  void AddParentFrame(FrameCoordinationUnitImpl* parent_frame_cu);
+  bool AddChildFrame(FrameCoordinationUnitImpl* child_frame_cu);
+  void RemoveParentFrame(FrameCoordinationUnitImpl* parent_frame_cu);
+  bool RemoveChildFrame(FrameCoordinationUnitImpl* child_frame_cu);
+
+  FrameCoordinationUnitImpl* parent_frame_coordination_unit_;
+  PageCoordinationUnitImpl* page_coordination_unit_;
+  ProcessCoordinationUnitImpl* process_coordination_unit_;
+  std::set<FrameCoordinationUnitImpl*> child_frame_coordination_units_;
+
+  mojo::BindingSet<mojom::FrameCoordinationUnit> bindings_;
+  mojo::Binding<mojom::FrameCoordinationUnit> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameCoordinationUnitImpl);
 };
