@@ -24,6 +24,7 @@
 #include "components/download/internal/navigation_monitor_impl.h"
 #include "components/download/internal/scheduler/scheduler.h"
 #include "components/download/internal/stats.h"
+#include "components/download/internal/task_manager.h"
 #include "components/download/internal/test/black_hole_log_sink.h"
 #include "components/download/internal/test/entry_utils.h"
 #include "components/download/internal/test/test_device_status_listener.h"
@@ -36,6 +37,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using testing::_;
+using testing::Invoke;
 using testing::NiceMock;
 using testing::Return;
 using testing::SaveArg;
@@ -63,6 +65,11 @@ DriverEntry BuildDriverEntry(const Entry& entry, DriverEntry::State state) {
   return dentry;
 }
 
+void TriggerCallback(const Model::EntryList& entries,
+                     const base::Closure& completion_callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, completion_callback);
+}
+
 void NotifyTaskFinished(bool success) {}
 
 class MockTaskScheduler : public TaskScheduler {
@@ -80,7 +87,9 @@ class MockScheduler : public Scheduler {
   MockScheduler() = default;
   ~MockScheduler() override = default;
 
-  MOCK_METHOD1(Reschedule, void(const Model::EntryList&));
+  MOCK_METHOD1(
+      Reschedule,
+      base::Optional<TaskManager::TaskParams>(const Model::EntryList&));
   MOCK_METHOD2(Next, Entry*(const Model::EntryList&, const DeviceStatus&));
 };
 
@@ -449,7 +458,9 @@ TEST_F(DownloadServiceControllerImplTest,
 
   std::vector<Entry> entries = {entry1, entry2, entry3};
 
-  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_, _)).Times(2);
+  EXPECT_CALL(*file_monitor_, CleanupFilesForCompletedEntries(_, _))
+      .WillRepeatedly(Invoke(TriggerCallback));
+
   EXPECT_CALL(*task_scheduler_,
               ScheduleTask(DownloadTaskType::CLEANUP_TASK, _, _, _, _))
       .Times(1);
@@ -460,7 +471,6 @@ TEST_F(DownloadServiceControllerImplTest,
   file_monitor_->TriggerInit(true);
   controller_->OnStartScheduledTask(DownloadTaskType::CLEANUP_TASK,
                                     base::Bind(&NotifyTaskFinished));
-
   task_runner_->RunUntilIdle();
 }
 
@@ -1537,7 +1547,7 @@ TEST_F(DownloadServiceControllerImplTest, ThrottlingConfigMaxRunning) {
 
   // Hit the max running configuration threshold, nothing should be called.
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(0);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(2);
+  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
 
@@ -1578,7 +1588,7 @@ TEST_F(DownloadServiceControllerImplTest, ThrottlingConfigMaxConcurrent) {
   ON_CALL(*scheduler_, Next(_, _))
       .WillByDefault(Return(model_->Get(entry2.guid)));
 
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(2);
+  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
 

@@ -113,9 +113,14 @@ TEST_F(DeviceStatusListenerTest, InitialNoOptState) {
   listener_->Start(&mock_observer_);
 
   // We are in no opt state, don't notify the observer.
-  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(_)).Times(0);
+  {
+    EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(_)).Times(0);
+    EXPECT_TRUE(listener_->IsStartingUp());
+  }
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(_)).Times(1);
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(DeviceStatus(), listener_->CurrentDeviceStatus());
+  EXPECT_FALSE(listener_->IsStartingUp());
 }
 
 // Ensures the observer is notified when network condition changes.

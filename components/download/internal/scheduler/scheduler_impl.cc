@@ -27,40 +27,32 @@ std::vector<T> ToList(const std::set<T>& set) {
 
 }  // namespace
 
-SchedulerImpl::SchedulerImpl(TaskScheduler* task_scheduler,
-                             Configuration* config,
-                             const ClientSet* clients)
-    : SchedulerImpl(task_scheduler,
-                    config,
+SchedulerImpl::SchedulerImpl(Configuration* config, const ClientSet* clients)
+    : SchedulerImpl(config,
                     ToList<DownloadClient>(clients->GetRegisteredClients())) {}
 
-SchedulerImpl::SchedulerImpl(TaskScheduler* task_scheduler,
-                             Configuration* config,
+SchedulerImpl::SchedulerImpl(Configuration* config,
                              const std::vector<DownloadClient>& clients)
-    : task_scheduler_(task_scheduler),
-      config_(config),
-      download_clients_(clients),
-      current_client_index_(0) {
-  DCHECK(task_scheduler_);
-}
+    : config_(config), download_clients_(clients), current_client_index_(0) {}
 
 SchedulerImpl::~SchedulerImpl() = default;
 
-void SchedulerImpl::Reschedule(const Model::EntryList& entries) {
-  if (entries.empty()) {
-    task_scheduler_->CancelTask(DownloadTaskType::DOWNLOAD_TASK);
-    return;
-  }
+base::Optional<TaskManager::TaskParams> SchedulerImpl::Reschedule(
+    const Model::EntryList& entries) {
+  if (entries.empty())
+    return base::nullopt;
 
   // TODO(xingliu): Support NetworkRequirements::OPTIMISTIC.
-  task_scheduler_->CancelTask(DownloadTaskType::DOWNLOAD_TASK);
-
   Criteria criteria = util::GetSchedulingCriteria(entries);
-  task_scheduler_->ScheduleTask(
-      DownloadTaskType::DOWNLOAD_TASK, criteria.requires_unmetered_network,
-      criteria.requires_battery_charging,
-      base::saturated_cast<long>(config_->window_start_time.InSeconds()),
-      base::saturated_cast<long>(config_->window_end_time.InSeconds()));
+
+  TaskManager::TaskParams params;
+  params.requires_unmetered_network = criteria.requires_unmetered_network;
+  params.requires_battery_charging = criteria.requires_battery_charging;
+  params.window_start_seconds =
+      base::saturated_cast<long>(config_->window_start_time.InSeconds());
+  params.window_end_seconds =
+      base::saturated_cast<long>(config_->window_end_time.InSeconds());
+  return params;
 }
 
 Entry* SchedulerImpl::Next(const Model::EntryList& entries,

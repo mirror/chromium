@@ -16,7 +16,6 @@
 namespace download {
 
 class ClientSet;
-class TaskScheduler;
 struct Configuration;
 
 // Scheduler implementation that
@@ -27,16 +26,14 @@ struct Configuration;
 // Provides load balancing between download clients using the service.
 class SchedulerImpl : public Scheduler {
  public:
-  SchedulerImpl(TaskScheduler* task_scheduler,
-                Configuration* config,
-                const ClientSet* clients);
-  SchedulerImpl(TaskScheduler* task_scheduler,
-                Configuration* config,
+  SchedulerImpl(Configuration* config, const ClientSet* clients);
+  SchedulerImpl(Configuration* config,
                 const std::vector<DownloadClient>& clients);
   ~SchedulerImpl() override;
 
   // Scheduler implementation.
-  void Reschedule(const Model::EntryList& entries) override;
+  base::Optional<TaskManager::TaskParams> Reschedule(
+      const Model::EntryList& entries) override;
   Entry* Next(const Model::EntryList& entries,
               const DeviceStatus& device_status) override;
 
@@ -48,9 +45,6 @@ class SchedulerImpl : public Scheduler {
   std::map<DownloadClient, Entry*> FindCandidates(
       const Model::EntryList& entries,
       const DeviceStatus& device_status);
-
-  // Used to create platform dependent background tasks.
-  TaskScheduler* task_scheduler_;
 
   // Download service configuration.
   Configuration* config_;

@@ -66,6 +66,8 @@ static_library("internal") {
     "stats.cc",
     "stats.h",
     "store.h",
+    "task_manager.cc",
+    "task_manager.h",
   ]
 
   deps = [
@@ -121,6 +123,7 @@ source_set("unit_tests") {
     "scheduler/device_status_listener_unittest.cc",
     "scheduler/scheduler_impl_unittest.cc",
     "service_config_impl_unittest.cc",
+    "task_manager_unittest.cc",
   ]
 
   deps = [

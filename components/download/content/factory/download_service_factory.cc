@@ -49,8 +49,8 @@ DownloadService* CreateDownloadService(
   NavigationMonitor* navigation_monitor =
       NavigationMonitorFactory::GetForBrowserContext(
           download_manager->GetBrowserContext());
-  auto scheduler = base::MakeUnique<SchedulerImpl>(
-      task_scheduler.get(), config.get(), client_set.get());
+  auto scheduler =
+      base::MakeUnique<SchedulerImpl>(config.get(), client_set.get());
   auto file_monitor = base::MakeUnique<FileMonitorImpl>(
       files_storage_dir, background_task_runner, config->file_keep_alive_time);
   auto logger = base::MakeUnique<LoggerImpl>();
