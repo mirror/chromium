@@ -675,10 +675,7 @@ void ThreadState::ScheduleIdleLazySweep() {
 
 void ThreadState::SchedulePreciseGC() {
   DCHECK(CheckThread());
-  if (IsSweepingInProgress()) {
-    SetGCState(kSweepingAndPreciseGCScheduled);
-    return;
-  }
+  DCHECK(!IsSweepingInProgress());
 
   SetGCState(kPreciseGCScheduled);
 }
@@ -699,7 +696,6 @@ void UnexpectedGCState(ThreadState::GCState gc_state) {
     UNEXPECTED_GCSTATE(kGCRunning);
     UNEXPECTED_GCSTATE(kSweeping);
     UNEXPECTED_GCSTATE(kSweepingAndIdleGCScheduled);
-    UNEXPECTED_GCSTATE(kSweepingAndPreciseGCScheduled);
     UNEXPECTED_GCSTATE(kIncrementalMarkingStartScheduled);
     UNEXPECTED_GCSTATE(kIncrementalMarkingStepScheduled);
     UNEXPECTED_GCSTATE(kIncrementalMarkingFinalizeScheduled);
@@ -746,8 +742,7 @@ void ThreadState::SetGCState(GCState gc_state) {
           gc_state_ == kNoGCScheduled || gc_state_ == kIdleGCScheduled ||
           gc_state_ == kPreciseGCScheduled || gc_state_ == kFullGCScheduled ||
           gc_state_ == kPageNavigationGCScheduled || gc_state_ == kSweeping ||
-          gc_state_ == kSweepingAndIdleGCScheduled ||
-          gc_state_ == kSweepingAndPreciseGCScheduled);
+          gc_state_ == kSweepingAndIdleGCScheduled);
       CompleteSweep();
       break;
     case kGCRunning:
@@ -760,11 +755,9 @@ void ThreadState::SetGCState(GCState gc_state) {
       VERIFY_STATE_TRANSITION(gc_state_ == kGCRunning);
       break;
     case kSweepingAndIdleGCScheduled:
-    case kSweepingAndPreciseGCScheduled:
       DCHECK(CheckThread());
       VERIFY_STATE_TRANSITION(gc_state_ == kSweeping ||
-                              gc_state_ == kSweepingAndIdleGCScheduled ||
-                              gc_state_ == kSweepingAndPreciseGCScheduled);
+                              gc_state_ == kSweepingAndIdleGCScheduled);
       break;
     default:
       NOTREACHED();
@@ -998,9 +991,6 @@ void ThreadState::PostSweep() {
   switch (GcState()) {
     case kSweeping:
       SetGCState(kNoGCScheduled);
-      break;
-    case kSweepingAndPreciseGCScheduled:
-      SetGCState(kPreciseGCScheduled);
       break;
     case kSweepingAndIdleGCScheduled:
       SetGCState(kNoGCScheduled);

@@ -145,7 +145,6 @@ class PLATFORM_EXPORT ThreadState {
     kGCRunning,
     kSweeping,
     kSweepingAndIdleGCScheduled,
-    kSweepingAndPreciseGCScheduled,
   };
 
   // The NoAllocationScope class is used in debug mode to catch unwanted
@@ -249,7 +248,6 @@ class PLATFORM_EXPORT ThreadState {
   bool IsInGC() const { return GcState() == kGCRunning; }
   bool IsSweepingInProgress() const {
     return GcState() == kSweeping ||
-           GcState() == kSweepingAndPreciseGCScheduled ||
            GcState() == kSweepingAndIdleGCScheduled;
   }
 
