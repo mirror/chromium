@@ -231,16 +231,31 @@ v8::Local<v8::FunctionTemplate> V8PerIsolateData::FindInterfaceTemplate(
 
 void V8PerIsolateData::SetInterfaceTemplate(
     const DOMWrapperWorld& world,
-    const void* key,
+    const WrapperTypeInfo* type,
     v8::Local<v8::FunctionTemplate> value) {
   if (GetV8ContextSnapshotMode() == V8ContextSnapshotMode::kTakeSnapshot) {
     auto& map = interface_template_map_for_v8_context_snapshot_;
-    const WrapperTypeInfo* type = reinterpret_cast<const WrapperTypeInfo*>(key);
     map.Set(type, value);
   } else {
+    v8::Eternal<v8::FunctionTemplate> eternal(GetIsolate(), value);
+
     auto& map = SelectInterfaceTemplateMap(world);
-    map.insert(key, v8::Eternal<v8::FunctionTemplate>(GetIsolate(), value));
+    map.insert(type, eternal);
+
+    // This must match the way numbers are generated in interface.cpp.tmpl.
+    int index = 2 * type->interface_index + (world.IsMainWorld() ? 0 : 1);
+    DCHECK_LT(index, kInterfaceTemplateArraySize);
+    interface_template_array_[index] = eternal;
   }
+}
+
+void V8PerIsolateData::SetInterfaceTemplate(
+    const DOMWrapperWorld& world,
+    const int* key,
+    v8::Local<v8::FunctionTemplate> value) {
+  DCHECK_NE(GetV8ContextSnapshotMode(), V8ContextSnapshotMode::kTakeSnapshot);
+  auto& map = SelectInterfaceTemplateMap(world);
+  map.insert(key, v8::Eternal<v8::FunctionTemplate>(GetIsolate(), value));
 }
 
 void V8PerIsolateData::ClearPersistentsForV8ContextSnapshot() {

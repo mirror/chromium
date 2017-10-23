@@ -185,6 +185,7 @@ struct WrapperTypeInfo {
   const unsigned  // ActiveScriptWrappableInheritance
       active_script_wrappable_inheritance : 1;
   const unsigned lifetime : 1;  // Lifetime
+  const unsigned interface_index : 10;  // Unique per WrapperTypeInfo
 };
 
 template <typename T, int offset>

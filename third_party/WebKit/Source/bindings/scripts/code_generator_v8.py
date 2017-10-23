@@ -223,6 +223,9 @@ class CodeGeneratorV8(CodeGeneratorV8Base):
             interface_info.get('additional_header_includes', []))
         header_path, cpp_path = self.output_paths(interface_name)
         template_context['this_include_header_name'] = posixpath.basename(header_path)
+
+        template_context['interface_index'] = interface_info['interface_index']
+
         header_template = self.jinja_env.get_template(header_template_filename)
         cpp_template = self.jinja_env.get_template(cpp_template_filename)
         header_text, cpp_text = self.render_template(

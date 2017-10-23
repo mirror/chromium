@@ -41,6 +41,12 @@
 
 namespace blink {
 
+static const int kV8TestInterfaceTemplateForMainWorldIndex = 48;
+static const int kV8TestInterfaceTemplateForNonMainWorldIndex = 49;
+static_assert(
+    kV8TestInterfaceTemplateForNonMainWorldIndex < V8PerIsolateData::kInterfaceTemplateArraySize,
+    "You need to increase V8PerIsolateData::kInterfaceTemplateArraySize.");
+
 // Suppress warning: global constructors, because struct WrapperTypeInfo is trivial
 // and does not depend on another global objects.
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
@@ -59,6 +65,7 @@ WrapperTypeInfo V8TestInterface::wrapperTypeInfo = {
     WrapperTypeInfo::kObjectClassId,
     WrapperTypeInfo::kInheritFromActiveScriptWrappable,
     WrapperTypeInfo::kDependent,
+    24,
 };
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
 #pragma clang diagnostic pop
@@ -3651,7 +3658,14 @@ v8::Local<v8::FunctionTemplate> V8TestInterface::domTemplate(v8::Isolate* isolat
 }
 
 bool V8TestInterface::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
-  return V8PerIsolateData::From(isolate)->HasInstance(&wrapperTypeInfo, v8Value);
+  auto* per_isolate_data = V8PerIsolateData::From(isolate);
+  auto matches_template = [&](int index) {
+    v8::Local<v8::FunctionTemplate> templ =
+        per_isolate_data->FindInterfaceTemplateByIndex(index);
+    return !templ.IsEmpty() && templ->HasInstance(v8Value);
+  };
+  return matches_template(kV8TestInterfaceTemplateForMainWorldIndex) ||
+         matches_template(kV8TestInterfaceTemplateForNonMainWorldIndex);
 }
 
 v8::Local<v8::Object> V8TestInterface::findInstanceInPrototypeChain(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {

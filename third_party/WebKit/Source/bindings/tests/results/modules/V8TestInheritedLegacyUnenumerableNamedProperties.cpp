@@ -22,6 +22,12 @@
 
 namespace blink {
 
+static const int kV8TestInheritedLegacyUnenumerableNamedPropertiesTemplateForMainWorldIndex = 72;
+static const int kV8TestInheritedLegacyUnenumerableNamedPropertiesTemplateForNonMainWorldIndex = 73;
+static_assert(
+    kV8TestInheritedLegacyUnenumerableNamedPropertiesTemplateForNonMainWorldIndex < V8PerIsolateData::kInterfaceTemplateArraySize,
+    "You need to increase V8PerIsolateData::kInterfaceTemplateArraySize.");
+
 // Suppress warning: global constructors, because struct WrapperTypeInfo is trivial
 // and does not depend on another global objects.
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
@@ -40,6 +46,7 @@ const WrapperTypeInfo V8TestInheritedLegacyUnenumerableNamedProperties::wrapperT
     WrapperTypeInfo::kObjectClassId,
     WrapperTypeInfo::kNotInheritFromActiveScriptWrappable,
     WrapperTypeInfo::kIndependent,
+    36,
 };
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
 #pragma clang diagnostic pop
@@ -250,7 +257,14 @@ v8::Local<v8::FunctionTemplate> V8TestInheritedLegacyUnenumerableNamedProperties
 }
 
 bool V8TestInheritedLegacyUnenumerableNamedProperties::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
-  return V8PerIsolateData::From(isolate)->HasInstance(&wrapperTypeInfo, v8Value);
+  auto* per_isolate_data = V8PerIsolateData::From(isolate);
+  auto matches_template = [&](int index) {
+    v8::Local<v8::FunctionTemplate> templ =
+        per_isolate_data->FindInterfaceTemplateByIndex(index);
+    return !templ.IsEmpty() && templ->HasInstance(v8Value);
+  };
+  return matches_template(kV8TestInheritedLegacyUnenumerableNamedPropertiesTemplateForMainWorldIndex) ||
+         matches_template(kV8TestInheritedLegacyUnenumerableNamedPropertiesTemplateForNonMainWorldIndex);
 }
 
 v8::Local<v8::Object> V8TestInheritedLegacyUnenumerableNamedProperties::findInstanceInPrototypeChain(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {

@@ -25,6 +25,12 @@
 
 namespace blink {
 
+static const int kV8TestInterfaceNamedConstructorTemplateForMainWorldIndex = 50;
+static const int kV8TestInterfaceNamedConstructorTemplateForNonMainWorldIndex = 51;
+static_assert(
+    kV8TestInterfaceNamedConstructorTemplateForNonMainWorldIndex < V8PerIsolateData::kInterfaceTemplateArraySize,
+    "You need to increase V8PerIsolateData::kInterfaceTemplateArraySize.");
+
 // Suppress warning: global constructors, because struct WrapperTypeInfo is trivial
 // and does not depend on another global objects.
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
@@ -43,6 +49,7 @@ const WrapperTypeInfo V8TestInterfaceNamedConstructor::wrapperTypeInfo = {
     WrapperTypeInfo::kObjectClassId,
     WrapperTypeInfo::kInheritFromActiveScriptWrappable,
     WrapperTypeInfo::kDependent,
+    25,
 };
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
 #pragma clang diagnostic pop
@@ -107,6 +114,7 @@ const WrapperTypeInfo V8TestInterfaceNamedConstructorConstructor::wrapperTypeInf
     WrapperTypeInfo::kObjectClassId,
     WrapperTypeInfo::kInheritFromActiveScriptWrappable,
     WrapperTypeInfo::kDependent,
+    -1 /* n/a */,
 };
 #if defined(COMPONENT_BUILD) && defined(WIN32) && defined(__clang__)
 #pragma clang diagnostic pop
@@ -285,7 +293,14 @@ v8::Local<v8::FunctionTemplate> V8TestInterfaceNamedConstructor::domTemplate(v8:
 }
 
 bool V8TestInterfaceNamedConstructor::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
-  return V8PerIsolateData::From(isolate)->HasInstance(&wrapperTypeInfo, v8Value);
+  auto* per_isolate_data = V8PerIsolateData::From(isolate);
+  auto matches_template = [&](int index) {
+    v8::Local<v8::FunctionTemplate> templ =
+        per_isolate_data->FindInterfaceTemplateByIndex(index);
+    return !templ.IsEmpty() && templ->HasInstance(v8Value);
+  };
+  return matches_template(kV8TestInterfaceNamedConstructorTemplateForMainWorldIndex) ||
+         matches_template(kV8TestInterfaceNamedConstructorTemplateForNonMainWorldIndex);
 }
 
 v8::Local<v8::Object> V8TestInterfaceNamedConstructor::findInstanceInPrototypeChain(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
