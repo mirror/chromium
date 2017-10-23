@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26e0c38a_f01c6549",
+        "filename": "components/browser_sync/profile_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-23T19:06:22Z",
+      "side": 1,
+      "message": "This is weird. I wish this was more clean. model_type_store_factory_ is acting as a test only, device info only override.",
+      "revId": "8283957a9380063c0d1429dd5f2c7d93a48c54c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a289fd_41cae435",
+        "filename": "components/browser_sync/profile_sync_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-23T19:06:22Z",
+      "side": 1,
+      "message": "Needs a comment explaining what it\u0027s for, and I\u0027m not happy with the variable name.",
+      "revId": "8283957a9380063c0d1429dd5f2c7d93a48c54c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
