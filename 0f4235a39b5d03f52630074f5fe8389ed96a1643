@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "e125e326_83e4fb67",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-23T18:29:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6b57157_5fea82e6",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 36
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9ccff25_38351bf4",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 4
@@ -104,6 +128,30 @@
       "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26fb6728_f31fa5d0",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-23T18:29:45Z",
+      "side": 1,
+      "message": "Ack, I think adding this here is totally fine.",
+      "parentUuid": "d9ccff25_38351bf4",
+      "range": {
+        "startLine": 1074,
+        "startChar": 2,
+        "endLine": 1075,
+        "endChar": 11
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +199,30 @@
       "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73566337_a9cd508f",
+        "filename": "components/download/internal/task_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-23T18:29:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "081f55fc_c17be0ef",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
