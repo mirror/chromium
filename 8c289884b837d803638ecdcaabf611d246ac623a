@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87111f55_5ac38852",
+        "filename": "device/bluetooth/bluetooth_discovery_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-23T21:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f76b2453_636b08b7",
+      "range": {
+        "startLine": 106,
+        "startChar": 5,
+        "endLine": 106,
+        "endChar": 59
+      },
+      "revId": "8c289884b837d803638ecdcaabf611d246ac623a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8150f750_387ce96d",
         "filename": "device/bluetooth/bluez/bluetooth_bluez_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "8c289884b837d803638ecdcaabf611d246ac623a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66801794_5df77f29",
+        "filename": "device/bluetooth/bluez/bluetooth_bluez_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-23T21:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8150f750_387ce96d",
+      "range": {
+        "startLine": 737,
+        "startChar": 0,
+        "endLine": 738,
+        "endChar": 14
+      },
+      "revId": "8c289884b837d803638ecdcaabf611d246ac623a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
