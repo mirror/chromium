@@ -56,8 +56,15 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using testing::WithoutArgs;
+using testing::Invoke;
+
 namespace autofill {
 namespace {
+
+ACTION_P(QuitMessageLoop, loop) {
+  loop->Quit();
+}
 
 enum UserMode { USER_MODE_NORMAL, USER_MODE_INCOGNITO };
 
@@ -71,10 +78,6 @@ const char kUTF8MidlineEllipsis[] =
 const base::Time kArbitraryTime = base::Time::FromDoubleT(25);
 const base::Time kSomeLaterTime = base::Time::FromDoubleT(1000);
 const base::Time kMuchLaterTime = base::Time::FromDoubleT(5000);
-
-ACTION(QuitMainMessageLoop) {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
-}
 
 class PersonalDataLoadedObserverMock : public PersonalDataManagerObserver {
  public:
@@ -131,10 +134,10 @@ class PersonalDataManagerTestBase {
     personal_data_->AddObserver(&personal_data_observer_);
     personal_data_->OnSyncServiceInitialized(nullptr);
 
-    // Verify that the web database has been updated and the notification sent.
+    base::RunLoop run_loop;
     EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-        .WillOnce(QuitMainMessageLoop());
-    base::RunLoop().Run();
+        .WillOnce(QuitMessageLoop(&run_loop));
+    run_loop.Run();
   }
 
   void ResetProfiles() {
@@ -162,9 +165,10 @@ class PersonalDataManagerTestBase {
                          "Hollywood", "CA", "91601", "US", "12345678910");
     personal_data_->AddProfile(profile);
 
+    base::RunLoop run_loop;
     EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-        .WillOnce(QuitMainMessageLoop());
-    base::RunLoop().Run();
+        .WillOnce(QuitMessageLoop(&run_loop));
+    run_loop.Run();
 
     ASSERT_EQ(1U, personal_data_->GetProfiles().size());
   }
@@ -235,10 +239,10 @@ class PersonalDataManagerTestBase {
                             "1");
     personal_data_->AddCreditCard(credit_card2);
 
+    base::RunLoop run_loop;
     EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-        .WillOnce(QuitMainMessageLoop());
-    base::RunLoop().Run();
-
+        .WillOnce(QuitMessageLoop(&run_loop));
+    run_loop.Run();
     ASSERT_EQ(3U, personal_data_->GetCreditCards().size());
   }
 
@@ -304,11 +308,10 @@ class PersonalDataManagerTestBase {
     EXPECT_FALSE(imported_credit_card_matches_masked_server_credit_card);
     personal_data_->SaveImportedCreditCard(*imported_credit_card);
 
-    // Verify that the web database has been updated and the notification sent.
+    base::RunLoop run_loop;
     EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-        .WillOnce(QuitMainMessageLoop());
-    base::RunLoop().Run();
-
+        .WillOnce(QuitMessageLoop(&run_loop));
+    run_loop.Run();
     CreditCard expected(base::GenerateGUID(), "https://www.example.com");
     test::SetCreditCardInfo(&expected, exp_name, exp_cc_num, exp_cc_month,
                             exp_cc_year, "");
@@ -319,9 +322,10 @@ class PersonalDataManagerTestBase {
 
   // Verifies that the web database has been updated and the notification sent.
   void WaitForOnPersonalDataChanged() {
+    base::RunLoop run_loop;
     EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-        .WillOnce(QuitMainMessageLoop());
-    base::RunLoop().Run();
+        .WillOnce(QuitMessageLoop(&run_loop));
+    run_loop.Run();
   }
 
   // The temporary directory should be deleted at the end to ensure that
@@ -586,13 +590,13 @@ TEST_F(PersonalDataManagerTest, AddUpdateRemoveCreditCards) {
   credit_card3.set_record_type(CreditCard::FULL_SERVER_CARD);
   credit_card3.set_server_id("server_id");
 
-  // Verify that the web database has been updated and the notification sent.
+  base::RunLoop run_loop;
   EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-      .WillOnce(QuitMainMessageLoop());
+      .WillOnce(QuitMessageLoop(&run_loop));
 
   personal_data_->AddFullServerCreditCard(credit_card3);
 
-  base::RunLoop().Run();
+  run_loop.Run();
 
   cards.push_back(&credit_card3);
   ExpectSameElements(cards, personal_data_->GetCreditCards());
@@ -756,15 +760,13 @@ TEST_F(PersonalDataManagerTest, AddFullCardAsMaskedCard) {
   test::SetCreditCardInfo(&server_card, "Clyde Barrow",
                           "378282246310005" /* American Express */, "04",
                           "2999", "1");
-
-  // Verify that the web database has been updated and the notification sent.
+  base::RunLoop run_loop;
   EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-      .WillOnce(QuitMainMessageLoop());
+      .WillOnce(QuitMessageLoop(&run_loop));
 
   personal_data_->AddFullServerCreditCard(server_card);
 
-  base::RunLoop().Run();
-
+  run_loop.Run();
   ASSERT_EQ(1U, personal_data_->GetCreditCards().size());
   EXPECT_EQ(CreditCard::MASKED_SERVER_CARD,
             personal_data_->GetCreditCards()[0]->record_type());
