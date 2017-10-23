@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e1b3796e_49b12259",
+        "filename": "content/renderer/image_downloader/image_downloader_base.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-23T07:48:53Z",
+      "side": 1,
+      "message": "Usually \u0027bool bypass_cache\u0027 is used for selecting the reload mode from validate_cache and bypass_cache, but this case, it is just a switch between normal load and reload. so, it still sounds confusing name to me.\n\nBut this argument name change is completely optional, and up to you.",
+      "parentUuid": "20a915cd_13f43530",
+      "range": {
+        "startLine": 85,
+        "startChar": 42,
+        "endLine": 85,
+        "endChar": 54
+      },
+      "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "208539e3_ea68d724",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 14
@@ -93,6 +117,30 @@
       "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a21ae4_67d457db",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-23T07:48:53Z",
+      "side": 1,
+      "message": "yes!",
+      "parentUuid": "2b7de5b3_5a339600",
+      "range": {
+        "startLine": 641,
+        "startChar": 11,
+        "endLine": 641,
+        "endChar": 31
+      },
+      "revId": "7dc6a2dcd2d67fff208022093935956132d35c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

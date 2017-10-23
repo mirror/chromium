@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24237af6_f0a31f66",
+        "filename": "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-23T07:48:53Z",
+      "side": 1,
+      "message": "Current comments are based on the fetch spec, but it would be better if it also explains how Chrome actually uses these modes in current navigation impl.\n\nWe can find the strict definitions in the spec easily, but exploring actual implementation is not easy. and comments help.",
+      "revId": "4661094d7204139fbcf4b8292cec89204dfe062b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
