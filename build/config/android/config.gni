@@ -161,7 +161,7 @@ if (is_android) {
     use_order_profiling = false
 
     # Use a ligthweight variant of order profiling. Does nothing without
-    # use_order_profiling set above. Will either replace use_order_profiling
+    # use_order_profiling set above. Will either replace user_order_profiling
     # or be removed.
     use_lightweight_order_profiling = false
 

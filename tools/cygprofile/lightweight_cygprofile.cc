@@ -16,17 +16,18 @@
 #include "base/strings/stringprintf.h"
 
 extern "C" {
-// Puts the function first, unless another  function has the same priority.
-void dummy_function_to_anchor_text() __attribute__((constructor(0)));
+void dummy_function_to_anchor_text();
 
-void dummy_function_to_check_ordering() {}
-void dummy_function_to_anchor_text() {}
+void __cyg_profile_func_enter(void* unused1, void* unused2)
+    __attribute__((no_instrument_function));
+void __cyg_profile_func_exit(void* unused1, void* unused2)
+    __attribute__((no_instrument_function));
 }
 
 namespace {
 
-constexpr size_t kMaxTextSizeInBytes = 280000000;  // Must be an overestimate.
-constexpr size_t kArraySize = kMaxTextSizeInBytes / (4 * 32);
+constexpr size_t kTextSizeInBytes = 280000000;  // Must be an overestimate.
+constexpr size_t kArraySize = kTextSizeInBytes / (4 * 32);
 
 // Allocated in .bss. std::atomic<uint32_t> is guaranteed to behave as uint32_t
 // with respect to size and initialization.
@@ -36,50 +37,71 @@ std::atomic<uint32_t> g_return_offsets[kArraySize];
 
 // Non-null iff collection is enabled. Also used as the pointer to the array
 // to save a global load in the instrumentation function.
-std::atomic<std::atomic<uint32_t>*> g_enabled_and_array = {g_return_offsets};
+std::atomic<uint32_t>* g_enabled_and_array = g_return_offsets;
 
-// Used to compute the offset of any return address inside .text, as relative
+// This needs the orderfile to contain this function as the first entry.
+// Used to compute th offset of any return address inside .text, as relative
 // to this function.
-const size_t kStartOfText =
-    reinterpret_cast<size_t>(dummy_function_to_anchor_text);
+const void* kStartOfText =
+    reinterpret_cast<void*>(dummy_function_to_anchor_text);
 
-// Disables the logging and dumps the result after |kDelayInS|.
+// Sets a bit in a bitfield atomically. If the bit is already set, does nothing.
+// |index| is the index of the bit to set.
+void AtomicallySetBit(std::atomic<uint32_t>* bitfield, size_t index) {
+  std::atomic<uint32_t>* element = bitfield + (index / 32);
+  // First, a racy check. This saves a CAS if the bit is already set, and allows
+  // the cache line to remain shared acoss CPUs in this case.
+  uint32_t bitfield_element = element->load(std::memory_order_relaxed);
+  uint32_t mask = (1 << (index % 32));
+  if (bitfield_element & mask)
+    return;
+
+  uint32_t expected, desired;
+  do {
+    expected = element->load(std::memory_order_relaxed);
+    desired = expected | mask;
+  } while (element->compare_exchange_weak(expected, desired,
+                                          std::memory_order_release));
+}
+
+extern "C" {
+void dummy_function_to_anchor_text() {}
+}
+
+// Disables the logging and dumps the result after 30s.
 class DelayedDumper {
  public:
   DelayedDumper() {
     // The linker usually keep the input file ordering for symbols.
-    // dummy_function_to_anchor_text() should then be after
-    // dummy_function_to_check_ordering() without ordering.
+    // dummy_function_to_anchor_text() should then be after AtomicallySetBit()
+    // without ordering.
     // This check is thus intended to catch the lack of ordering.
-    CHECK_LT(kStartOfText,
-             reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
+    CHECK_LT(reinterpret_cast<size_t>(&dummy_function_to_anchor_text),
+             reinterpret_cast<size_t>(&AtomicallySetBit));
 
     std::thread([]() {
       sleep(kDelayInS);
       // As Dump() is called from the same thread, ensures that the
       // base functions called in the dumping code will not spuriously appear
       // in the profile.
-      g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
+      g_enabled_and_array = nullptr;
       Dump();
     })
         .detach();
   }
 
  private:
-  // Dumps the data to disk.
+  // Dumps the data to "/data/local/tmp/chrome/function-instrumentation-PID"
   static void Dump() {
     CHECK(!g_enabled_and_array);
 
     auto path = base::StringPrintf(
-        "/data/local/tmp/chrome/cygprofile-instrumented-code-hitmap-%d.txt",
-        getpid());
+        "/data/local/tmp/chrome/function-instrumentation-%d.txt", getpid());
     auto file =
         base::File(base::FilePath(path),
                    base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
-    if (!file.IsValid()) {
-      PLOG(ERROR) << "Could not open " << path;
+    if (!file.IsValid())
       return;
-    }
 
     auto data = std::vector<char>(kArraySize * 32 + 1, '\0');
     for (size_t i = 0; i < kArraySize; i++) {
@@ -95,49 +117,22 @@ class DelayedDumper {
   static constexpr int kDelayInS = 30;
 };
 
-// Static initializer on purpose. Will disable instrumentation after
-// |kDelayInS|.
+// Static initializer on purpose. Will disable instrumentation after 10s.
 DelayedDumper g_dump_later;
 
 extern "C" {
-void __cyg_profile_func_enter(void* unused1, void* unused2)
-    __attribute__((no_instrument_function));
-void __cyg_profile_func_exit(void* unused1, void* unused2)
-    __attribute__((no_instrument_function));
 
 void __cyg_profile_func_enter(void* unused1, void* unused2) {
-  // To avoid any risk of infinite recusion, this *must* *never* call any
-  // instrumented function.
-  auto* array = g_enabled_and_array.load(std::memory_order_relaxed);
+  auto* array = g_enabled_and_array;
   if (!array)
     return;
 
-  size_t return_address = reinterpret_cast<size_t>(__builtin_return_address(0));
-  // Not a CHECK() to avoid the possibility of calling an instrumented function.
-  if (UNLIKELY(return_address < kStartOfText)) {
-    g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
-    LOG(FATAL) << "Return address before start of text (wrong ordering?)";
-  }
-  size_t index = (return_address - kStartOfText) / sizeof(int);
+  void* return_address = __builtin_return_address(0);
+  size_t offset = reinterpret_cast<size_t>(return_address) -
+                  reinterpret_cast<size_t>(kStartOfText);
+  size_t index = offset / sizeof(int);
 
-  // Atomically sets the corresponding bit in the array.
-  std::atomic<uint32_t>* element = array + (index / 32);
-  // First, a racy check. This saves a CAS if the bit is already set, and allows
-  // the cache line to remain shared acoss CPUs in this case.
-  uint32_t value = element->load(std::memory_order_relaxed);
-  uint32_t mask = (1 << (index % 32));
-  if (value & mask)
-    return;
-
-  // On CAS and memory ordering:
-  // - std::atomic::compare_exchange_weak() updates |value| (non-const
-  //   reference)
-  // - We do not need any barrier, hence the relaxed memory ordering.
-  uint32_t desired;
-  do {
-    desired = value | mask;
-  } while (element->compare_exchange_weak(value, desired,
-                                          std::memory_order_relaxed));
+  AtomicallySetBit(array, index);
 }
 
 void __cyg_profile_func_exit(void* unused1, void* unused2) {}
