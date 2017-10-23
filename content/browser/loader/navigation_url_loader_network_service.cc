@@ -17,6 +17,7 @@
 #include "content/browser/loader/navigation_resource_throttle.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/browser/loader/url_loader_request_handler.h"
+#include "content/browser/protocol_handler_url_loader_factory.h"
 #include "content/browser/resource_context_impl.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
 #include "content/browser/service_worker/service_worker_navigation_handle_core.h"
@@ -38,6 +39,7 @@
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
+#include "content/public/common/url_utils.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_content_disposition.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -249,6 +251,16 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     DCHECK_EQ(handlers_.size(), handler_index_);
     if (resource_request_->url.SchemeIs(url::kBlobScheme)) {
       factory = default_url_loader_factory_getter_->GetBlobFactory()->get();
+    } else if (!IsNetworkURL(resource_request_->url)) {
+      if (!non_network_url_loader_factory_) {
+        BrowserThread::PostTask(
+            BrowserThread::UI, FROM_HERE,
+            base::BindOnce(
+                &NavigationURLLoaderNetworkService ::
+                    BindNonNetworkURLLoaderFactoryRequest,
+                owner_, mojo::MakeRequest(&non_network_url_loader_factory_)));
+      }
+      factory = non_network_url_loader_factory_.get();
     } else {
       factory = default_url_loader_factory_getter_->GetNetworkFactory()->get();
       default_loader_used_ = true;
@@ -458,6 +470,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   bool started_ = false;
 
+  // Lazily initialized and used in the case of non-network resource
+  // navigations.
+  mojom::URLLoaderFactoryPtr non_network_url_loader_factory_;
+
   // The completion status if it has been received. This is needed to handle
   // the case that the response is intercepted by download, and OnComplete() is
   // already called while we are transferring the |url_loader_| and response
@@ -478,6 +494,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
     std::vector<std::unique_ptr<URLLoaderRequestHandler>> initial_handlers)
     : delegate_(delegate),
       allow_download_(request_info->common_params.allow_download),
+      storage_partition_(storage_partition),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
@@ -664,6 +681,16 @@ bool NavigationURLLoaderNetworkService::IsDownload() const {
 
   return (!response_->head.headers ||
           response_->head.headers->response_code() / 100 == 2);
+}
+
+void NavigationURLLoaderNetworkService::BindNonNetworkURLLoaderFactoryRequest(
+    mojom::URLLoaderFactoryRequest request) {
+  if (!protocol_handler_url_loader_factory_) {
+    protocol_handler_url_loader_factory_ =
+        ProtocolHandlerURLLoaderFactory::CreateForNavigation(
+            storage_partition_);
+  }
+  protocol_handler_url_loader_factory_->BindRequest(std::move(request));
 }
 
 }  // namespace content

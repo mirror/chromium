@@ -1450,6 +1450,12 @@ ChromeContentBrowserClient::GetOriginsRequiringDedicatedProcess() {
   return isolated_origin_list;
 }
 
+bool ChromeContentBrowserClient::IsFileAccessAllowed(
+    const base::FilePath& path,
+    const base::FilePath& profile_path) {
+  return ChromeNetworkDelegate::IsAccessAllowed(path, profile_path);
+}
+
 namespace {
 
 bool IsAutoReloadEnabled() {

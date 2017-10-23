@@ -12,14 +12,19 @@ namespace content {
 
 ChildURLLoaderFactoryGetter::Info::Info(
     mojom::URLLoaderFactoryPtrInfo network_loader_factory_info,
-    mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info)
+    mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info,
+    mojom::URLLoaderFactoryPtrInfo non_network_loader_factory_info)
     : network_loader_factory_info_(std::move(network_loader_factory_info)),
-      blob_loader_factory_info_(std::move(blob_loader_factory_info)) {}
+      blob_loader_factory_info_(std::move(blob_loader_factory_info)),
+      non_network_loader_factory_info_(
+          std::move(non_network_loader_factory_info)) {}
 
 ChildURLLoaderFactoryGetter::Info::Info(Info&& other)
     : network_loader_factory_info_(
           std::move(other.network_loader_factory_info_)),
-      blob_loader_factory_info_(std::move(other.blob_loader_factory_info_)) {}
+      blob_loader_factory_info_(std::move(other.blob_loader_factory_info_)),
+      non_network_loader_factory_info_(
+          std::move(other.non_network_loader_factory_info_)) {}
 
 ChildURLLoaderFactoryGetter::Info::~Info() = default;
 
@@ -28,25 +33,33 @@ ChildURLLoaderFactoryGetter::Info::Bind() {
   DCHECK(network_loader_factory_info_.is_valid());
   mojom::URLLoaderFactoryPtr network_loader_factory;
   mojom::URLLoaderFactoryPtr blob_loader_factory;
+  mojom::URLLoaderFactoryPtr non_network_loader_factory;
   network_loader_factory.Bind(std::move(network_loader_factory_info_));
   blob_loader_factory.Bind(std::move(blob_loader_factory_info_));
+  non_network_loader_factory.Bind(std::move(non_network_loader_factory_info_));
   return base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
-      std::move(network_loader_factory), std::move(blob_loader_factory));
+      std::move(network_loader_factory), std::move(blob_loader_factory),
+      std::move(non_network_loader_factory));
 }
 
 ChildURLLoaderFactoryGetterImpl::ChildURLLoaderFactoryGetterImpl() = default;
 
 ChildURLLoaderFactoryGetterImpl::ChildURLLoaderFactoryGetterImpl(
     PossiblyAssociatedURLLoaderFactory network_loader_factory,
-    URLLoaderFactoryGetterCallback blob_loader_factory_getter)
+    URLLoaderFactoryGetterCallback blob_loader_factory_getter,
+    URLLoaderFactoryGetterCallback non_network_loader_factory_getter)
     : network_loader_factory_(std::move(network_loader_factory)),
-      blob_loader_factory_getter_(std::move(blob_loader_factory_getter)) {}
+      blob_loader_factory_getter_(std::move(blob_loader_factory_getter)),
+      non_network_loader_factory_getter_(
+          std::move(non_network_loader_factory_getter)) {}
 
 ChildURLLoaderFactoryGetterImpl::ChildURLLoaderFactoryGetterImpl(
     PossiblyAssociatedURLLoaderFactory network_loader_factory,
-    PossiblyAssociatedURLLoaderFactory blob_loader_factory)
+    PossiblyAssociatedURLLoaderFactory blob_loader_factory,
+    mojom::URLLoaderFactoryPtr non_network_loader_factory)
     : network_loader_factory_(std::move(network_loader_factory)),
-      blob_loader_factory_(std::move(blob_loader_factory)) {}
+      blob_loader_factory_(std::move(blob_loader_factory)),
+      non_network_loader_factory_(std::move(non_network_loader_factory)) {}
 
 ChildURLLoaderFactoryGetterImpl::Info
 ChildURLLoaderFactoryGetterImpl::GetClonedInfo() {
@@ -57,16 +70,25 @@ ChildURLLoaderFactoryGetterImpl::GetClonedInfo() {
   mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info;
   GetBlobLoaderFactory()->Clone(mojo::MakeRequest(&blob_loader_factory_info));
 
+  mojom::URLLoaderFactoryPtrInfo non_network_loader_factory_info;
+  GetNonNetworkLoaderFactory()->Clone(
+      mojo::MakeRequest(&non_network_loader_factory_info));
+
   return Info(std::move(network_loader_factory_info),
-              std::move(blob_loader_factory_info));
+              std::move(blob_loader_factory_info),
+              std::move(non_network_loader_factory_info));
 }
 
 mojom::URLLoaderFactory* ChildURLLoaderFactoryGetterImpl::GetFactoryForURL(
     const GURL& url,
     mojom::URLLoaderFactory* default_factory) {
-  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
-      url.SchemeIsBlob()) {
-    return GetBlobLoaderFactory();
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    if (url.SchemeIsBlob())
+      return GetBlobLoaderFactory();
+
+    // TODO(NetworkService): Refine this condition.
+    if (!url.SchemeIsHTTPOrHTTPS())
+      return GetNonNetworkLoaderFactory();
   }
   if (default_factory)
     return default_factory;
@@ -87,6 +109,17 @@ ChildURLLoaderFactoryGetterImpl::GetBlobLoaderFactory() {
     blob_loader_factory_ = std::move(blob_loader_factory_getter_).Run();
   }
   return blob_loader_factory_.get();
+}
+
+mojom::URLLoaderFactory*
+ChildURLLoaderFactoryGetterImpl::GetNonNetworkLoaderFactory() {
+  if (!non_network_loader_factory_) {
+    if (!non_network_loader_factory_getter_)
+      return GetNetworkLoaderFactory();
+    non_network_loader_factory_ =
+        std::move(non_network_loader_factory_getter_).Run();
+  }
+  return non_network_loader_factory_.get();
 }
 
 ChildURLLoaderFactoryGetterImpl::~ChildURLLoaderFactoryGetterImpl() = default;

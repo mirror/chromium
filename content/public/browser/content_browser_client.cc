@@ -159,6 +159,12 @@ ContentBrowserClient::GetOriginsRequiringDedicatedProcess() {
   return std::vector<url::Origin>();
 }
 
+bool ContentBrowserClient::IsFileAccessAllowed(
+    const base::FilePath& path,
+    const base::FilePath& profile_path) {
+  return true;
+}
+
 std::string ContentBrowserClient::GetApplicationLocale() {
   return "en-US";
 }

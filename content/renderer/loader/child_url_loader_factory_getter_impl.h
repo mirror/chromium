@@ -25,11 +25,13 @@ class CONTENT_EXPORT ChildURLLoaderFactoryGetterImpl
 
   ChildURLLoaderFactoryGetterImpl(
       PossiblyAssociatedURLLoaderFactory network_loader_factory,
-      URLLoaderFactoryGetterCallback blob_loader_factory_getter);
+      URLLoaderFactoryGetterCallback blob_loader_factory_getter,
+      URLLoaderFactoryGetterCallback non_network_loader_factory_getter);
 
   ChildURLLoaderFactoryGetterImpl(
       PossiblyAssociatedURLLoaderFactory network_loader_factory,
-      PossiblyAssociatedURLLoaderFactory blob_loader_factory_getter);
+      PossiblyAssociatedURLLoaderFactory blob_loader_factory_getter,
+      mojom::URLLoaderFactoryPtr non_network_loader_factory);
 
   Info GetClonedInfo() override;
 
@@ -38,6 +40,7 @@ class CONTENT_EXPORT ChildURLLoaderFactoryGetterImpl
       mojom::URLLoaderFactory* default_factory) override;
   mojom::URLLoaderFactory* GetNetworkLoaderFactory() override;
   mojom::URLLoaderFactory* GetBlobLoaderFactory() override;
+  mojom::URLLoaderFactory* GetNonNetworkLoaderFactory() override;
 
  private:
   ~ChildURLLoaderFactoryGetterImpl() override;
@@ -49,6 +52,10 @@ class CONTENT_EXPORT ChildURLLoaderFactoryGetterImpl
   // ctor is used).
   URLLoaderFactoryGetterCallback blob_loader_factory_getter_;
   PossiblyAssociatedURLLoaderFactory blob_loader_factory_;
+
+  // Similar to above but for the non-network factory.
+  URLLoaderFactoryGetterCallback non_network_loader_factory_getter_;
+  mojom::URLLoaderFactoryPtr non_network_loader_factory_;
 };
 
 }  // namespace content

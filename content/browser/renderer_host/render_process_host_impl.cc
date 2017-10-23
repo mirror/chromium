@@ -106,6 +106,7 @@
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
+#include "content/browser/protocol_handler_url_loader_factory.h"
 #include "content/browser/push_messaging/push_messaging_manager.h"
 #include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/clipboard_message_filter.h"
@@ -1977,6 +1978,45 @@ void RenderProcessHostImpl::GetBlobURLLoaderFactory(
   }
   storage_partition_impl_->GetBlobURLLoaderFactory()->HandleRequest(
       std::move(request));
+}
+
+void RenderProcessHostImpl::GetNonNetworkURLLoaderFactory(
+    mojom::URLLoaderFactoryRequest request) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    mojo::ReportBadMessage(
+        "Unexpected interface request for non-network URLLoaderFactory.");
+    return;
+  }
+
+  if (!protocol_handler_url_loader_factory_) {
+    protocol_handler_url_loader_factory_ =
+        ProtocolHandlerURLLoaderFactory::CreateForSubresources(this);
+  }
+
+  protocol_handler_url_loader_factory_->BindRequest(std::move(request));
+}
+
+void RenderProcessHostImpl::GetBrowserHistogram(
+    const std::string& name,
+    BrowserHistogramCallback callback) {
+  // Security: Only allow access to browser histograms when running in the
+  // context of a test.
+  bool using_stats_collection_controller =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kStatsCollectionController);
+  if (!using_stats_collection_controller) {
+    std::move(callback).Run(std::string());
+    return;
+  }
+  base::HistogramBase* histogram =
+      base::StatisticsRecorder::FindHistogram(name);
+  std::string histogram_json;
+  if (!histogram) {
+    histogram_json = "{}";
+  } else {
+    histogram->WriteJSON(&histogram_json);
+  }
+  std::move(callback).Run(histogram_json);
 }
 
 void RenderProcessHostImpl::CreateMusGpuRequest(ui::mojom::GpuRequest request) {
@@ -4100,29 +4140,6 @@ void RenderProcessHostImpl::OnMojoError(int render_process_id,
 viz::SharedBitmapAllocationNotifierImpl*
 RenderProcessHostImpl::GetSharedBitmapAllocationNotifier() {
   return &shared_bitmap_allocation_notifier_impl_;
-}
-
-void RenderProcessHostImpl::GetBrowserHistogram(
-    const std::string& name,
-    BrowserHistogramCallback callback) {
-  // Security: Only allow access to browser histograms when running in the
-  // context of a test.
-  bool using_stats_collection_controller =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kStatsCollectionController);
-  if (!using_stats_collection_controller) {
-    std::move(callback).Run(std::string());
-    return;
-  }
-  base::HistogramBase* histogram =
-      base::StatisticsRecorder::FindHistogram(name);
-  std::string histogram_json;
-  if (!histogram) {
-    histogram_json = "{}";
-  } else {
-    histogram->WriteJSON(&histogram_json);
-  }
-  std::move(callback).Run(histogram_json);
 }
 
 }  // namespace content

@@ -23,7 +23,8 @@ class ChildURLLoaderFactoryGetter
   class Info {
    public:
     Info(mojom::URLLoaderFactoryPtrInfo network_loader_factory_info,
-         mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info);
+         mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info,
+         mojom::URLLoaderFactoryPtrInfo non_network_loader_factory_info);
     Info(Info&& other);
     ~Info();
 
@@ -32,6 +33,7 @@ class ChildURLLoaderFactoryGetter
    private:
     mojom::URLLoaderFactoryPtrInfo network_loader_factory_info_;
     mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info_;
+    mojom::URLLoaderFactoryPtrInfo non_network_loader_factory_info_;
   };
 
   virtual Info GetClonedInfo() = 0;
@@ -46,6 +48,7 @@ class ChildURLLoaderFactoryGetter
 
   virtual mojom::URLLoaderFactory* GetNetworkLoaderFactory() = 0;
   virtual mojom::URLLoaderFactory* GetBlobLoaderFactory() = 0;
+  virtual mojom::URLLoaderFactory* GetNonNetworkLoaderFactory() = 0;
 
  protected:
   friend class base::RefCounted<ChildURLLoaderFactoryGetter>;

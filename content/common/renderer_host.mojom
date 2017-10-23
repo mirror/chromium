@@ -12,6 +12,9 @@ interface RendererHost {
   // Requests a URLLoaderFactory for the blob scheme.
   GetBlobURLLoaderFactory(URLLoaderFactory& loader);
 
+  // Requests a generic URLLoaderFactory for non-network (and non-blob) schemes.
+  GetNonNetworkURLLoaderFactory(URLLoaderFactory& loader);
+
   // Request a histogram from the browser. The browser will send the histogram
   // data only if it has been passed the command line flag
   // switches::kDomAutomationController.

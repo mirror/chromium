@@ -205,11 +205,18 @@ media::AudioParameters GetAudioHardwareParams() {
       .output_params();
 }
 
-mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
+mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactory() {
   mojom::URLLoaderFactoryPtr blob_loader_factory;
   RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
       mojo::MakeRequest(&blob_loader_factory));
   return blob_loader_factory;
+}
+
+mojom::URLLoaderFactoryPtr GetNonNetworkURLLoaderFactory() {
+  mojom::URLLoaderFactoryPtr non_network_factory;
+  RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
+      mojo::MakeRequest(&non_network_factory));
+  return non_network_factory;
 }
 
 }  // namespace
@@ -364,11 +371,17 @@ RendererBlinkPlatformImpl::CreateDataConsumerHandle(
 
 scoped_refptr<ChildURLLoaderFactoryGetter>
 RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryGetter() {
+  ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback
+      blob_factory_getter;
+  ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback
+      non_network_factory_getter;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    blob_factory_getter = base::BindOnce(&GetBlobURLLoaderFactory);
+    non_network_factory_getter = base::BindOnce(&GetNonNetworkURLLoaderFactory);
+  }
   return base::MakeRefCounted<ChildURLLoaderFactoryGetterImpl>(
-      CreateNetworkURLLoaderFactory(),
-      base::FeatureList::IsEnabled(features::kNetworkService)
-          ? base::BindOnce(&GetBlobURLLoaderFactoryGetter)
-          : ChildURLLoaderFactoryGetterImpl::URLLoaderFactoryGetterCallback());
+      CreateNetworkURLLoaderFactory(), std::move(blob_factory_getter),
+      std::move(non_network_factory_getter));
 }
 
 PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>

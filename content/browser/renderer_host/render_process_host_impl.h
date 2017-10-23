@@ -76,6 +76,7 @@ class P2PSocketDispatcherHost;
 #endif
 class PermissionServiceContext;
 class PeerConnectionTrackerHost;
+class ProtocolHandlerURLLoaderFactory;
 class PushMessagingManager;
 class RenderFrameMessageFilter;
 class RenderProcessHostFactory;
@@ -445,6 +446,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   // mojom::RendererHost
   void GetBlobURLLoaderFactory(mojom::URLLoaderFactoryRequest request) override;
+  void GetNonNetworkURLLoaderFactory(
+      mojom::URLLoaderFactoryRequest request) override;
   using BrowserHistogramCallback =
       mojom::RendererHost::GetBrowserHistogramCallback;
   void GetBrowserHistogram(const std::string& name,
@@ -773,6 +776,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   viz::SharedBitmapAllocationNotifierImpl
       shared_bitmap_allocation_notifier_impl_;
+
+  std::unique_ptr<ProtocolHandlerURLLoaderFactory>
+      protocol_handler_url_loader_factory_;
 
   base::WeakPtrFactory<RenderProcessHostImpl> weak_factory_;
 
