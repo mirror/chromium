@@ -70,6 +70,24 @@
       "revId": "dffed812f73d27c3c8549c7c36fa215f1f19dcac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ba4de0_b4eabf46",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-23T19:55:30Z",
+      "side": 1,
+      "message": "@Dominic since mContainerView.isAttachedToWindow() is not supported by JellyBean, we have added that check.\n\nJust registering in constructor and unregistering it onDetachedToWindow() did not work.",
+      "parentUuid": "29ea0c52_faa0b7f7",
+      "revId": "dffed812f73d27c3c8549c7c36fa215f1f19dcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
