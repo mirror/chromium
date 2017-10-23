@@ -154,6 +154,7 @@ void URLRequestContext::AssertNoURLRequests() const {
     // many we leaked so we have an idea of how bad it is.
     char url_buf[128];
     const URLRequest* request = *url_requests_.begin();
+    DLOG(ERROR) << "Leaked: " << request;
     base::strlcpy(url_buf, request->url().spec().c_str(), arraysize(url_buf));
     int load_flags = request->load_flags();
     base::debug::Alias(url_buf);
