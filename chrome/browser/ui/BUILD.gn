@@ -3075,6 +3075,15 @@ split_static_library("ui") {
       }
     }
 
+    if (enable_native_window_nav_buttons) {
+      sources += [
+        "views/button_background_painter_delegate.h",
+        "views/frame/native_nav_buttons_frame_view_layout.cc",
+        "views/frame/native_nav_buttons_frame_view_layout.h",
+        "views/nav_button_provider.h",
+      ]
+    }
+
     if (is_desktop_linux) {
       sources += [ "views/chrome_views_delegate_linux.cc" ]
     }

@@ -5,12 +5,20 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_FRAME_BROWSER_NON_CLIENT_FRAME_VIEW_H_
 #define CHROME_BROWSER_UI_VIEWS_FRAME_BROWSER_NON_CLIENT_FRAME_VIEW_H_
 
+#include "build/buildflag.h"
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
+#include "chrome/common/features.h"
 #include "ui/views/window/non_client_view.h"
 
 class BrowserFrame;
 class BrowserView;
+
+namespace views {
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+class NavButtonProvider;
+#endif
+}
 
 // A specialization of the NonClientFrameView object that provides additional
 // Browser-specific methods.
@@ -65,6 +73,15 @@ class BrowserNonClientFrameView : public views::NonClientFrameView,
 
   // Provided for mus to update the minimum window size property.
   virtual void UpdateMinimumSize();
+
+  // Used on desktop Linux to determine if we should use GTK to draw
+  // native-looking window navigation buttons.
+  virtual bool ShouldRenderNativeNavButtons() const;
+
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+  // Used on desktop Linux to get the NavButtonProvider.
+  virtual const views::NavButtonProvider* GetNavButtonProvider() const;
+#endif
 
   // Overriden from views::View.
   void ChildPreferredSizeChanged(views::View* child) override;

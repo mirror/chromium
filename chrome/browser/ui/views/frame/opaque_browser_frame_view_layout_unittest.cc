@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/nav_button_provider.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/tab_icon_view.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
@@ -20,7 +21,6 @@
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/test/views_test_base.h"
-#include "ui/views/window/nav_button_provider.h"
 
 using OBFVL = OpaqueBrowserFrameViewLayout;
 
@@ -169,6 +169,18 @@ class TestNavButtonProvider : public views::NavButtonProvider {
   int GetInterNavButtonSpacing() const override {
     return kInterNavButtonSpacing;
   }
+
+  std::unique_ptr<views::Background> CreateAvatarButtonBackground(
+      std::unique_ptr<views::ButtonBackgroundPainterDelegate> delegate)
+      const override {
+    return nullptr;
+  }
+
+  void CalculateCaptionButtonLayout(
+      const gfx::Size& content_size,
+      int top_area_height,
+      gfx::Size* caption_button_size,
+      gfx::Insets* caption_button_spacing) const override {}
 };
 
 }  // namespace test_nav_button_provider

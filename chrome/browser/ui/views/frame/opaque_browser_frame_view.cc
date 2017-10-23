@@ -37,7 +37,6 @@
 #include "ui/views/resources/grit/views_resources.h"
 #include "ui/views/views_delegate.h"
 #include "ui/views/window/frame_background.h"
-#include "ui/views/window/nav_button_provider.h"
 #include "ui/views/window/window_shape.h"
 
 #if defined(OS_LINUX)
@@ -46,6 +45,11 @@
 
 #if defined(OS_WIN)
 #include "ui/display/win/screen_win.h"
+#endif
+
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+#include "chrome/browser/ui/views/frame/native_nav_buttons_frame_view_layout.h"
+#include "chrome/browser/ui/views/nav_button_provider.h"
 #endif
 
 using content::WebContents;
@@ -64,7 +68,6 @@ const int kResizeAreaCornerSize = 16;
 OpaqueBrowserFrameView::OpaqueBrowserFrameView(BrowserFrame* frame,
                                                BrowserView* browser_view)
     : BrowserNonClientFrameView(frame, browser_view),
-      layout_(new OpaqueBrowserFrameViewLayout(this)),
       minimize_button_(nullptr),
       maximize_button_(nullptr),
       restore_button_(nullptr),
@@ -73,6 +76,15 @@ OpaqueBrowserFrameView::OpaqueBrowserFrameView(BrowserFrame* frame,
       window_title_(nullptr),
       profile_switcher_(this),
       frame_background_(new views::FrameBackground()) {
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+  if (views::LinuxUI::instance()) {
+    nav_button_provider_ =
+        views::LinuxUI::instance()->CreateNavButtonProvider();
+  }
+#endif
+
+  layout_ = CreateLayoutManager();
+
   SetLayoutManager(layout_);
 
   minimize_button_ = InitWindowCaptionButton(IDR_MINIMIZE,
@@ -122,13 +134,6 @@ OpaqueBrowserFrameView::OpaqueBrowserFrameView(BrowserFrame* frame,
   platform_observer_.reset(OpaqueBrowserFrameViewPlatformSpecific::Create(
       this, layout_,
       ThemeServiceFactory::GetForProfile(browser_view->browser()->profile())));
-
-#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
-  if (views::LinuxUI::instance()) {
-    nav_button_provider_ =
-        views::LinuxUI::instance()->CreateNavButtonProvider();
-  }
-#endif
 }
 
 OpaqueBrowserFrameView::~OpaqueBrowserFrameView() {}
@@ -430,18 +435,6 @@ gfx::Size OpaqueBrowserFrameView::GetTabstripPreferredSize() const {
   return s;
 }
 
-bool OpaqueBrowserFrameView::ShouldRenderNativeNavButtons() const {
-#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
-  if (!nav_button_provider_)
-    return false;
-  return ThemeServiceFactory::GetForProfile(
-             browser_view()->browser()->profile())
-      ->UsingSystemTheme();
-#else
-  return false;
-#endif
-}
-
 int OpaqueBrowserFrameView::GetTopAreaHeight() const {
   const gfx::ImageSkia frame_image = GetFrameImage();
   int top_area_height =
@@ -454,10 +447,20 @@ int OpaqueBrowserFrameView::GetTopAreaHeight() const {
   return top_area_height;
 }
 
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+bool OpaqueBrowserFrameView::ShouldRenderNativeNavButtons() const {
+  if (!nav_button_provider_)
+    return false;
+  return ThemeServiceFactory::GetForProfile(
+             browser_view()->browser()->profile())
+      ->UsingSystemTheme();
+}
+
 const views::NavButtonProvider* OpaqueBrowserFrameView::GetNavButtonProvider()
     const {
   return nav_button_provider_.get();
 }
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueBrowserFrameView, protected:
@@ -692,6 +695,7 @@ views::ImageButton* OpaqueBrowserFrameView::GetButtonFromDisplayType(
 }
 
 void OpaqueBrowserFrameView::MaybeRedrawFrameButtons() {
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
   if (ShouldRenderNativeNavButtons()) {
     nav_button_provider_->RedrawImages(GetTopAreaHeight(), IsMaximized(),
                                        ShouldPaintAsActive());
@@ -709,4 +713,16 @@ void OpaqueBrowserFrameView::MaybeRedrawFrameButtons() {
       }
     }
   }
+#endif
+}
+
+OpaqueBrowserFrameViewLayout* OpaqueBrowserFrameView::CreateLayoutManager() {
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+  if (nav_button_provider_ &&
+      ThemeServiceFactory::GetForProfile(browser_view()->browser()->profile())
+          ->UsingSystemTheme()) {
+    return new NativeNavButtonsFrameViewLayout(this);
+  }
+#endif
+  return new OpaqueBrowserFrameViewLayout(this);
 }

@@ -98,9 +98,11 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   int GetTabStripHeight() const override;
   bool IsToolbarVisible() const override;
   gfx::Size GetTabstripPreferredSize() const override;
-  bool ShouldRenderNativeNavButtons() const override;
   int GetTopAreaHeight() const override;
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+  bool ShouldRenderNativeNavButtons() const override;
   const views::NavButtonProvider* GetNavButtonProvider() const override;
+#endif
 
  protected:
   views::ImageButton* minimize_button() const { return minimize_button_; }
@@ -168,6 +170,8 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   // associated with |{minimize,maximize,restore,close}_button_|.
   void MaybeRedrawFrameButtons();
 
+  OpaqueBrowserFrameViewLayout* CreateLayoutManager();
+
   // Our layout manager also calculates various bounds.
   OpaqueBrowserFrameViewLayout* layout_;
 
@@ -190,7 +194,9 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   // Observer that handles platform dependent configuration.
   std::unique_ptr<OpaqueBrowserFrameViewPlatformSpecific> platform_observer_;
 
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
   std::unique_ptr<views::NavButtonProvider> nav_button_provider_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(OpaqueBrowserFrameView);
 };
