@@ -148,7 +148,8 @@ public class WebApkUpdateManagerTest {
 
         @Override
         protected void buildUpdateRequestAndSchedule(WebApkInfo info, String primaryIconUrl,
-                String badgeIconUrl, boolean isManifestStale) {
+                String badgeIconUrl, boolean isManifestStale,
+                @WebApkUpdateReason int updateReason) {
             mUpdateName = info.name();
             String updateRequestPath = mStorage.createAndSetUpdateRequestFilePath(info);
             scheduleUpdate(updateRequestPath);

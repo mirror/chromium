@@ -57,6 +57,9 @@ message WebApk {
   // no longer available.
   optional bool stale_manifest = 9;
 
+  // The reason that a WebAPK update is requested.
+  optional int32 update_reason = 10;
+
   reserved 4;
 }
 

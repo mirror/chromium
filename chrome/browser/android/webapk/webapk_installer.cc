@@ -122,7 +122,8 @@ std::unique_ptr<std::string> BuildProtoInBackground(
     const std::string& package_name,
     const std::string& version,
     const std::map<std::string, std::string>& icon_url_to_murmur2_hash,
-    bool is_manifest_stale) {
+    bool is_manifest_stale,
+    WebApkUpdateReason update_reason) {
   std::unique_ptr<webapk::WebApk> webapk(new webapk::WebApk);
   webapk->set_manifest_url(shortcut_info.manifest_url.spec());
   webapk->set_requester_application_package(
@@ -132,6 +133,7 @@ std::unique_ptr<std::string> BuildProtoInBackground(
   webapk->set_package_name(package_name);
   webapk->set_version(version);
   webapk->set_stale_manifest(is_manifest_stale);
+  webapk->set_update_reason(static_cast<int>(update_reason));
 
   webapk::WebAppManifest* web_app_manifest = webapk->mutable_manifest();
   web_app_manifest->set_name(base::UTF16ToUTF8(shortcut_info.name));
@@ -195,12 +197,13 @@ bool StoreUpdateRequestToFileInBackground(
     const std::string& package_name,
     const std::string& version,
     const std::map<std::string, std::string>& icon_url_to_murmur2_hash,
-    bool is_manifest_stale) {
+    bool is_manifest_stale,
+    WebApkUpdateReason update_reason) {
   base::AssertBlockingAllowed();
 
   std::unique_ptr<std::string> proto = BuildProtoInBackground(
       shortcut_info, primary_icon, badge_icon, package_name, version,
-      icon_url_to_murmur2_hash, is_manifest_stale);
+      icon_url_to_murmur2_hash, is_manifest_stale, update_reason);
 
   // Create directory if it does not exist.
   base::CreateDirectory(update_request_path.DirName());
@@ -297,7 +300,7 @@ void WebApkInstaller::BuildProto(
       GetBackgroundTaskRunner().get(), FROM_HERE,
       base::Bind(&BuildProtoInBackground, shortcut_info, primary_icon,
                  badge_icon, package_name, version, icon_url_to_murmur2_hash,
-                 is_manifest_stale),
+                 is_manifest_stale, WebApkUpdateReason::NONE),
       callback);
 }
 
@@ -311,12 +314,13 @@ void WebApkInstaller::StoreUpdateRequestToFile(
     const std::string& version,
     const std::map<std::string, std::string>& icon_url_to_murmur2_hash,
     bool is_manifest_stale,
+    WebApkUpdateReason update_reason,
     const base::Callback<void(bool)> callback) {
   base::PostTaskAndReplyWithResult(
       GetBackgroundTaskRunner().get(), FROM_HERE,
       base::Bind(&StoreUpdateRequestToFileInBackground, update_request_path,
                  shortcut_info, primary_icon, badge_icon, package_name, version,
-                 icon_url_to_murmur2_hash, is_manifest_stale),
+                 icon_url_to_murmur2_hash, is_manifest_stale, update_reason),
       callback);
 }
 
