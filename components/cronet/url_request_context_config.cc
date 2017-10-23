@@ -163,7 +163,7 @@ URLRequestContextConfig::URLRequestContextConfig(
       bypass_public_key_pinning_for_local_trust_anchors(
           bypass_public_key_pinning_for_local_trust_anchors),
       cert_verifier_data(cert_verifier_data),
-      nqe_persistent_caching_enabled(false),
+      nqe_persistent_caching_enabled(true),
       experimental_options(experimental_options) {}
 
 URLRequestContextConfig::~URLRequestContextConfig() {}
