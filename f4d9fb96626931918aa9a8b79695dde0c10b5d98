@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62addcb6_6290fe1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-23T19:55:29Z",
+      "side": 1,
+      "message": "posciak, do we have a crbug for protected buffers?",
+      "parentUuid": "f0e64700_c7346f68",
+      "revId": "f4d9fb96626931918aa9a8b79695dde0c10b5d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad402ca7_802b615d",
         "filename": "ui/gfx/native_pixmap_handle.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T01:31:23Z",
       "side": 1,
       "message": "The only weird thing about this is that an input const-ref becomes invalid. Any chance this could take |handle| as a pointer instead, to reflect that its state is being mutated?",
+      "revId": "f4d9fb96626931918aa9a8b79695dde0c10b5d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe596b72_19ecda4f",
+        "filename": "ui/gfx/native_pixmap_handle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-23T19:55:29Z",
+      "side": 1,
+      "message": "It\u0027s not really invalid in a technical sense until the owner of the FDs decide to close them. This helper is supposed to be the same as \"base::ScopedFD(handle.fd)\" but needed as the handle contains a vector of FDs in this case. So the handle itself is not being mutated and I think it\u0027s undesirable to require that we need to be able to mutate the handle to call this.\n\nNot sure if there\u0027s something we can do to make this easier to understand. I\u0027ll land this for now that we can always follow up with an improvement if needed.",
+      "parentUuid": "ad402ca7_802b615d",
       "revId": "f4d9fb96626931918aa9a8b79695dde0c10b5d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
