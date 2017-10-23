@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01cc0cd7_7f101625",
+        "filename": "components/cronet/ios/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-10-23T17:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c0c42b_c0e6faaa",
+      "revId": "62739a22bc08055574a64a86c7e0d97c33994aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34bc22d5_01dc9e1b",
         "filename": "ios/web_view/BUILD.gn",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "62739a22bc08055574a64a86c7e0d97c33994aab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f7388e_4b879bac",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-10-23T17:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34bc22d5_01dc9e1b",
+      "revId": "62739a22bc08055574a64a86c7e0d97c33994aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
