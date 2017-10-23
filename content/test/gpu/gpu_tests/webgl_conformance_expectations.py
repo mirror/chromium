@@ -67,7 +67,7 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         ['win', 'amd', 'd3d9'])
 
     self.Fail('WebglExtension_WEBGL_draw_buffers',
-        ['win', 'd3d9', 'no_passthrough'])
+        ['win', 'd3d9'])
 
     # Android general
     self.Fail('WebglExtension_EXT_disjoint_timer_query',
@@ -391,6 +391,61 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         ['win10', 'intel', 'passthrough', 'd3d11'], bug=750813)
     self.Fail('conformance/textures/video/*',
         ['win10', 'intel', 'passthrough', 'd3d11'], bug=750813)
+
+    # D3D9 / Passthrough command decoder
+    self.Fail('conformance/extensions/oes-texture-float.html',
+        ['win', 'd3d9', 'passthrough'], bug=2195) # ANGLE bug ID
+    self.Fail('conformance/extensions/oes-texture-float-linear.html',
+        ['win', 'd3d9', 'passthrough'], bug=2195) # ANGLE bug ID
+    self.Fail('conformance/extensions/oes-texture-half-float.html',
+        ['win', 'd3d9', 'passthrough'], bug=2195) # ANGLE bug ID
+    self.Fail('conformance/extensions/oes-texture-half-float-linear.html',
+        ['win', 'd3d9', 'passthrough'], bug=2195) # ANGLE bug ID
+    self.Fail('conformance/extensions/webgl-depth-texture.html',
+        ['win', 'd3d9', 'passthrough'], bug=2196) # ANGLE bug ID
+    self.Fail('conformance/rendering/default-texture-draw-bug.html',
+        ['win', 'd3d9', 'passthrough'], bug=2196) # ANGLE bug ID
+    self.Fail('conformance/textures/canvas/tex-2d-rgb-rgb-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/canvas/' +
+        'tex-2d-rgb-rgb-unsigned_short_5_6_5.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/canvas/' +
+        'tex-2d-luminance-luminance-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/canvas/' +
+        'tex-2d-luminance_alpha-luminance_alpha-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
+        'tex-2d-luminance-luminance-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/image_bitmap_from_canvas/' +
+        'tex-2d-luminance_alpha-luminance_alpha-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/video/' +
+        'tex-2d-luminance-luminance-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/video/' +
+        'tex-2d-luminance_alpha-luminance_alpha-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/webgl_canvas/' +
+        'tex-2d-luminance-luminance-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/webgl_canvas/' +
+        'tex-2d-luminance_alpha-luminance_alpha-unsigned_byte.html',
+        ['win', 'd3d9', 'passthrough'], bug=2192) # ANGLE bug ID
+    self.Fail('conformance/textures/misc/default-texture.html',
+        ['win', 'd3d9', 'passthrough'], bug=2196) # ANGLE bug ID
+    self.Fail('conformance/textures/misc/texture-complete.html',
+        ['win', 'd3d9', 'passthrough'], bug=2196) # ANGLE bug ID
+    self.Fail('conformance/textures/misc/texture-fakeblack.html',
+        ['win', 'd3d9', 'passthrough'], bug=2196) # ANGLE bug ID
+    self.Fail('conformance/textures/misc/texture-mips.html',
+        ['win', 'd3d9', 'passthrough'], bug=2196) # ANGLE bug ID
+    self.Fail('conformance/textures/misc/texture-npot.html',
+        ['win', 'd3d9', 'passthrough'], bug=2196) # ANGLE bug ID
+    self.Fail('conformance/uniforms/uniform-default-values.html',
+        ['win', 'd3d9', 'passthrough'], bug=2197) # ANGLE bug ID
 
     # Mac failures
     self.Flaky('conformance/extensions/oes-texture-float-with-video.html',
