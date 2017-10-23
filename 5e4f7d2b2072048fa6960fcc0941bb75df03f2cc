@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2742e7e_43a40918",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e5fccc_1383bf2c",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca54ce3_2847877f",
         "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef705beb_92558a41",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T21:44:33Z",
+      "side": 1,
+      "message": "Nice catch, thanks!",
+      "parentUuid": "3ca54ce3_2847877f",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a8600694_4f48c17d",
+        "filename": "services/ui/public/interfaces/ime/ime.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T21:44:33Z",
+      "side": 1,
+      "message": "Done. git cl format doesn\u0027t seem to scan through mojom files.",
+      "parentUuid": "3c16e555_54b22c1f",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fb748fb_27626bc9",
         "filename": "ui/aura/mus/text_input_client_impl.cc",
         "patchSetId": 15
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-23T02:07:02Z",
       "side": 1,
       "message": "Early return or use an else",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fcc2ba_880afc98",
+        "filename": "ui/aura/mus/text_input_client_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T21:44:33Z",
+      "side": 1,
+      "message": "I use else, thanks!",
+      "parentUuid": "0fb748fb_27626bc9",
       "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fd492004_a23b9104",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5681405_97b5e119",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28ac277_134eb570",
         "filename": "ui/base/ime/text_input_client.h",
         "patchSetId": 15
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-23T02:07:02Z",
       "side": 1,
       "message": "Give a name for this callback-type, e.g. something like:\n\nusing TextInputClientInfoCallback \u003d base::OnceCallback\u003c....\nvirtual bool GetTextInputClientInfo(TextInputClientInfoCallback callback) const \u003d 0;\n\nAlso, document which params in the callback represent what (e.g. selection range, text range etc.).\n\nDocument what the return value means. Do we actually need this function to return a value?",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a98a14a_eda0b955",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T21:44:33Z",
+      "side": 1,
+      "message": "Done, thanks for the suggestion. We still need the return value to check if ImeEditingAllowed (i.e. excluding ui::TEXT_INPUT_TYPE_NONE and ui::TEXT_INPUT_TYPE_PASSWORD)",
+      "parentUuid": "a28ac277_134eb570",
       "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010a84ce_55537411",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1959,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T21:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebccc069_ebe5486c",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
