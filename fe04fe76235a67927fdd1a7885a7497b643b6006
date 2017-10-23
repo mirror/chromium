@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5719b227_94435729",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-23T20:20:40Z",
+      "side": 1,
+      "message": "nit: Remove space so it\u0027s parsed correctly.",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 4
+      },
+      "revId": "fe04fe76235a67927fdd1a7885a7497b643b6006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
