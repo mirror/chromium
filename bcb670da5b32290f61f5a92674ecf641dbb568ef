@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a51ba262_16f5e08d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-23T19:56:29Z",
+      "side": 1,
+      "message": "Having non-copying copy constructor sounds like inviting troubles to me...\nA RAII class should be non-copyable, and this kind of almost-copy could use a named constructor, i.e.:\nclass PaintInfo {\n  static PaintInfo NewScope(const PaintInfo\u0026 other);\n\nOr just simply separate the RAII part and the POD part like this:\nclass BoxPainter {\n  class AdjustPaintOffsetScope {\n  public:\n    AdjustPaintOffsetScope(const LayoutBox\u0026, const PaintInfo\u0026);\n    operator const PaintInfo\u0026() const { return local_paint_info; }\n  private:\n    PaintInfo local_paint_info;\n  };\n};\n\nBy the way, paint offset used to be not a part of PaintInfo because paint offset mutate much more often than other fields in PaintInfo. Since now we always make a copy of PaintInfo when paint offset changes, how about just make it part of PaintInfo?",
+      "revId": "bcb670da5b32290f61f5a92674ecf641dbb568ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafbff8b_ac820442",
+        "filename": "third_party/WebKit/Source/core/paint/TableSectionPainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-23T19:56:29Z",
+      "side": 1,
+      "message": "Why is it not adjusted_paint_offset? It seems to change behavior to omit layout_table_section_.Location(), is it fixing a bug?",
+      "revId": "bcb670da5b32290f61f5a92674ecf641dbb568ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
