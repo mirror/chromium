@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cbd38a2_0a389a12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-23T00:32:11Z",
+      "side": 1,
+      "message": "Done, and thanks for the information.",
+      "parentUuid": "8a2bf728_c52459d9",
+      "revId": "c169faa497fb1e05e0836fc7810f282e6deda560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9dc344e_93fef0cd",
         "filename": "content/test/gpu/generate_buildbot_json.py",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "c169faa497fb1e05e0836fc7810f282e6deda560",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfa432a_9b21af47",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-23T00:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9dc344e_93fef0cd",
+      "range": {
+        "startLine": 1947,
+        "startChar": 7,
+        "endLine": 1947,
+        "endChar": 13
+      },
+      "revId": "c169faa497fb1e05e0836fc7810f282e6deda560",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
