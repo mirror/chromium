@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33ac256e_dd96006c",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T12:56:13Z",
+      "side": 1,
+      "message": "nit: better style-wise to reverse the conditional and early-out.",
+      "revId": "d277d69f94744c1154163a8310064a93b8a99498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ac2a24_231aecde",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T12:56:13Z",
+      "side": 1,
+      "message": "nit: move this comment up above the first usage of base::Unretained in this method, since it applies equally to both usages.",
+      "revId": "d277d69f94744c1154163a8310064a93b8a99498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d6ee4f_c91d8ec1",
+        "filename": "services/device/geolocation/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T12:56:13Z",
+      "side": 1,
+      "message": "nit: is there a reason that we would maintain this as a separate source set to the rest of geolocation once that\u0027s moved in?",
+      "revId": "d277d69f94744c1154163a8310064a93b8a99498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b4bc46_64f61ee5",
+        "filename": "services/device/geolocation/public_ip_address_geolocation_provider.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T12:56:13Z",
+      "side": 1,
+      "message": "Worth a comment that this is what \"binds\" the sequence checker.",
+      "revId": "d277d69f94744c1154163a8310064a93b8a99498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03da3fb8_c3557df6",
+        "filename": "services/device/geolocation/public_ip_address_geolocation_provider.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T12:56:13Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit odd to have a whole method that\u0027s used only for debugging...",
+      "revId": "d277d69f94744c1154163a8310064a93b8a99498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658f9f7c_14aa6ea2",
+        "filename": "services/device/geolocation/public_ip_address_geolocation_provider.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-23T12:56:13Z",
+      "side": 1,
+      "message": "nit: Would it better to pass in the task runner on which this object should run, and then it can do the two-phase initialization internally?",
+      "revId": "d277d69f94744c1154163a8310064a93b8a99498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
