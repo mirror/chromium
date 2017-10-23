@@ -862,18 +862,26 @@ void AXObjectCacheImpl::HandleActiveDescendantChanged(Node* node) {
     obj->HandleActiveDescendantChanged();
 }
 
-void AXObjectCacheImpl::HandleAriaRoleChanged(Node* node) {
-  if (AXObject* obj = GetOrCreate(node)) {
-    obj->UpdateAccessibilityRole();
+// Be as safe as possible about changes that could alter the accessibility role,
+// as this may require a different subclass of AXObject.
+void AXObjectCacheImpl::HandlePossibleRoleChange(Node* node) {
+  DCHECK(node);
+  if (AXObject* obj = Get(node)) {
+    Remove(node);
+    GetOrCreate(node);
+    // May have changed children, for example if the ignored status changes.
+    ChildrenChanged(node);
+    // Parent's objects changed children, as the previous AXObject for this node
+    // was destroyed and a different one was created in its place.
+    ChildrenChanged(node->parentNode());
     modification_count_++;
-    obj->NotifyIfIgnoredValueChanged();
   }
 }
 
 void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
                                                Element* element) {
   if (attr_name == roleAttr)
-    HandleAriaRoleChanged(element);
+    HandlePossibleRoleChange(element);
   else if (attr_name == altAttr || attr_name == titleAttr)
     TextChanged(element);
   else if (attr_name == forAttr && IsHTMLLabelElement(*element))
