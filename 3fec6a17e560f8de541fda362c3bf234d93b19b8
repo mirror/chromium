@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a9887ca_10b5b1f4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebb81cc8_78f11153",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 69
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc5215d3_e3b15cd1",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a2e7d0_46e1f78e",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc5215d3_e3b15cd1",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 57
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0ec4e326_06b9c5bc",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d370d36_e0ba3a7a",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "358de8b9_d4a1b057",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40ad2ec_fab619c5",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "358de8b9_d4a1b057",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "74193cac_f094a7c4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e5c183_18d6fba0",
+      "range": {
+        "startLine": 129,
+        "startChar": 40,
+        "endLine": 129,
+        "endChar": 47
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1e6ee64_4f80ebae",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7536f398_9f315044",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1e6ee64_4f80ebae",
+      "range": {
+        "startLine": 340,
+        "startChar": 28,
+        "endLine": 340,
+        "endChar": 29
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e9ca33db_7b92830c",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb06b59_631a6462",
+      "range": {
+        "startLine": 367,
+        "startChar": 57,
+        "endLine": 367,
+        "endChar": 59
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74a0609b_2ef2e86b",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfa43cf_58557e7c",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a0609b_2ef2e86b",
+      "range": {
+        "startLine": 112,
+        "startChar": 54,
+        "endLine": 112,
+        "endChar": 64
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,54 @@
     },
     {
       "key": {
+        "uuid": "4842cfef_53a83cdb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5804ede6_4e7336f7",
+      "range": {
+        "startLine": 132,
+        "startChar": 12,
+        "endLine": 132,
+        "endChar": 17
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c096385c_c8b410b6",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333a1bf9_cc3671f8",
+      "range": {
+        "startLine": 132,
+        "startChar": 29,
+        "endLine": 132,
+        "endChar": 55
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78198fa7_7018fe93",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
         "patchSetId": 2
@@ -252,6 +492,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0313f7fa_f4b84a32",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78198fa7_7018fe93",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 47
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "0fef1c65_9e616014",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e66798d_41e7b33b",
+      "range": {
+        "startLine": 136,
+        "startChar": 31,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "477ebbad_5736a85a",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
         "patchSetId": 2
@@ -298,6 +586,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ee8d8e_764f0cab",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "477ebbad_5736a85a",
+      "range": {
+        "startLine": 136,
+        "startChar": 71,
+        "endLine": 137,
+        "endChar": 16
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "be9e3b2c_213d0290",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15e1e03a_d65d12a2",
+      "range": {
+        "startLine": 866,
+        "startChar": 15,
+        "endLine": 866,
+        "endChar": 23
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14746741_6b0e20aa",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 2
@@ -367,6 +703,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106ca714_9ebd1a47",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Tests added for both push-by-value and push-to-refresh.",
+      "parentUuid": "14746741_6b0e20aa",
+      "range": {
+        "startLine": 871,
+        "startChar": 36,
+        "endLine": 871,
+        "endChar": 37
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "618e905c_4bcfc1e0",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4c32e3_81c8ffdb",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 69
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b01be062_a014de1e",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 2
@@ -413,6 +797,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca79cc1d_64841be1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "No, we need it.\nThis is the proxy that creates the OnceCall back everytime the OnPefreshRequestedCallback is called.",
+      "parentUuid": "b01be062_a014de1e",
+      "range": {
+        "startLine": 312,
+        "startChar": 1,
+        "endLine": 313,
+        "endChar": 52
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +847,30 @@
     },
     {
       "key": {
+        "uuid": "e9b7a28b_db0d857e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48839,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d69825_ae0fd85b",
+      "range": {
+        "startLine": 48837,
+        "startChar": 49,
+        "endLine": 48839,
+        "endChar": 58
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "244b3c1e_c48e81aa",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -462,6 +894,30 @@
     },
     {
       "key": {
+        "uuid": "53d875e3_3db151ea",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48855,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244b3c1e_c48e81aa",
+      "range": {
+        "startLine": 48855,
+        "startChar": 45,
+        "endLine": 48855,
+        "endChar": 75
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b46d202_19301780",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -482,6 +938,30 @@
       "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa34c2ff_2b70f8e1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48857,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-10-23T15:55:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b46d202_19301780",
+      "range": {
+        "startLine": 48856,
+        "startChar": 59,
+        "endLine": 48857,
+        "endChar": 51
+      },
+      "revId": "3fec6a17e560f8de541fda362c3bf234d93b19b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
