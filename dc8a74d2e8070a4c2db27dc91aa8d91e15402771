@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f7d235d_5aa079fa",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-23T00:22:25Z",
+      "side": 1,
+      "message": "It\u0027s because I\u0027ve gated EncryptedMedia and Geolocation FP support on the same RuntimeEnabledFeature. It didn\u0027t seem necessary to have 2 separate features.",
+      "parentUuid": "3e37a9ad_27ac99bd",
+      "range": {
+        "startLine": 279,
+        "startChar": 29,
+        "endLine": 279,
+        "endChar": 64
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9245816_13801c4e",
         "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27ef946_7f179e9c",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-23T00:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9245816_13801c4e",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 23
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "122c109d_b45f1ebd",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-23T00:22:25Z",
+      "side": 1,
+      "message": "No - the idea is that if the feature is actually enabled, we don\u0027t log the deprecation warning. Instead the new console message below will be logged. They are logged under slightly different circumstances.",
+      "parentUuid": "7e635b8d_cc1fe9d3",
+      "range": {
+        "startLine": 160,
+        "startChar": 8,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18e668d9_06a45d2f",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-20T14:18:53Z",
       "side": 1,
       "message": "Same comment, shouldn\u0027t we add be adding a new\nfeaturePolicyEntry (as opposed to removing the\nEncryptedMedia one). This might be intended, but\nthen it\u0027d probably should be noted in the CL\ndescription.",
+      "range": {
+        "startLine": 407,
+        "startChar": 29,
+        "endLine": 407,
+        "endChar": 41
+      },
+      "revId": "dc8a74d2e8070a4c2db27dc91aa8d91e15402771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20385f18_3c793e47",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-23T00:22:25Z",
+      "side": 1,
+      "message": "Yes it\u0027s intended. it didn\u0027t seem necessary to have four separate feature flags for FP support for encrypted media/geolocation/midi/etc. They are all being enabled at the same time. You\u0027re right though, it should be in the CL description, so I\u0027ll update it :)",
+      "parentUuid": "18e668d9_06a45d2f",
       "range": {
         "startLine": 407,
         "startChar": 29,
