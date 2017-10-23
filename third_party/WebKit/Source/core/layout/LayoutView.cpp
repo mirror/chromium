@@ -675,6 +675,11 @@ void LayoutView::CalculateScrollbarModes(ScrollbarMode& h_mode,
       RETURN_SCROLLBAR_MODE(kScrollbarAlwaysOff);
   }
 
+  if (document.Printing()) {
+    // When printing, frame-level scrollbars are never displayed.
+    RETURN_SCROLLBAR_MODE(kScrollbarAlwaysOff);
+  }
+
   if (LocalFrameView* frameView = GetFrameView()) {
     // Scrollbars can be disabled by LocalFrameView::setCanHaveScrollbars.
     if (!frameView->CanHaveScrollbars())
