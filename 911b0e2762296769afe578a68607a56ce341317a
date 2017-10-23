@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7b3d5aa_81bc4315",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/error-clear-watch.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-23T02:51:17Z",
+      "side": 0,
+      "message": "Good find!",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 46
+      },
+      "revId": "911b0e2762296769afe578a68607a56ce341317a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

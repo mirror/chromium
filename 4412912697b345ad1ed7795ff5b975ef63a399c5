@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05c20fe3_502fb8b3",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/reentrant-success.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-23T02:51:17Z",
+      "side": 1,
+      "message": "Would the maximumAge: 1000 approach work here?\nIf not, I don\u0027t quite understand why not ... something to do with the reentrancy? Could you add a comment to explain?",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 22
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff9aa3d_92426d0f",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/timeout-negative-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-23T02:51:17Z",
+      "side": 1,
+      "message": "As per previous comment",
+      "range": {
+        "startLine": 1,
+        "startChar": 55,
+        "endLine": 1,
+        "endChar": 59
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8854d959_37cfd02e",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/timeout-negative.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-23T02:51:17Z",
+      "side": 1,
+      "message": "Is the maximumAge actually relevant/required in relation the TIMEOUT response immediately being provided?\n\nIf so: How about removing the \u0027(\u0027 and \u0027)\u0027 characters?\nIf not: How about removing the entire \u0027(and maximumAge is zero)\u0027 as it seems just a distraction?\n\nWDYT?",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1c0214_59cd8935",
+        "filename": "third_party/WebKit/Source/modules/geolocation/GeoNotifier.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-23T02:51:17Z",
+      "side": 1,
+      "message": "Does this logic need to clip at 0 like this?\n\nI.e. would\n\nreturn request_time_ - position.timestamp() \u003c options_.maximumAge();\n\nwork just as well?\nOr can options_.maximumAge() be negative even though we want to treat it as zero?",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 47
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58043654_fcba2999",
+        "filename": "third_party/WebKit/Source/modules/geolocation/Geolocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-23T02:51:17Z",
+      "side": 1,
+      "message": "From looking at:\n\nhttps://dev.w3.org/geo/api/spec-source.html#max-age\n\nand particularly:\n\n\"In case of a watchPosition(), the maximumAge refers to the first position object returned by the implementation.\"\n\nI am wondering if this is doing the right thing. In other words in addition to updating the request time to Now(), shouldn\u0027t we also be zeroing-out the maximumAge after the first request?",
+      "range": {
+        "startLine": 413,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 36
+      },
+      "revId": "4412912697b345ad1ed7795ff5b975ef63a399c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
