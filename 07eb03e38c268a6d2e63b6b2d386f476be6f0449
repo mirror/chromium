@@ -46,6 +46,30 @@
       "revId": "07eb03e38c268a6d2e63b6b2d386f476be6f0449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1da7be6_0a4bf497",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T18:27:02Z",
+      "side": 1,
+      "message": "Is that correct? It looks like we don\u0027t print the scrollbars but I thought we said that we should print them. I don\u0027t think we need to fix that now, but maybe file a bug? Alternatively, could this be if (is-main-frame \u0026\u0026 document.Printing()) { ...",
+      "parentUuid": "b92d7a2f_37a383d1",
+      "range": {
+        "startLine": 679,
+        "startChar": 34,
+        "endLine": 679,
+        "endChar": 44
+      },
+      "revId": "07eb03e38c268a6d2e63b6b2d386f476be6f0449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
