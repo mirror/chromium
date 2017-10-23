@@ -22,6 +22,30 @@
       "revId": "0ff9c1bdafaba61b68601f1060bf2fbb0fb794a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6265a5e_97f20f64",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-23T17:46:58Z",
+      "side": 1,
+      "message": "Yeah, I was concerned about that too. Unfortunately there\u0027s no \"toolbar view\" that contains all the stuff in TopChrome. I just thought over this though and I just realized that I could just rule out the downloads view and tab contents view.\n\nThis code will probably need to be adjusted if non top chrome elements are added but it\u0027s a lot less likely that will happen :).",
+      "parentUuid": "883c1626_9925b30d",
+      "range": {
+        "startLine": 1216,
+        "startChar": 19,
+        "endLine": 1216,
+        "endChar": 20
+      },
+      "revId": "0ff9c1bdafaba61b68601f1060bf2fbb0fb794a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
