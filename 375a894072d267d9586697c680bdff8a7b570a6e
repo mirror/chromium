@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7611d2d_9bcca95e",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_session_end.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6fcb00b3_58077513",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d190fddf_416964eb",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_no_gesture.html",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b015d7f4_744f5521",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_no_gesture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "Makes it easier to see what\u0027s test and what\u0027s boilerplate.",
+      "parentUuid": "d190fddf_416964eb",
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6c14a3bc_1184b517",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_no_gesture.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c4289a4_29502fe9",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f98a9f1_a4715004",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_supported.html",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e5d90d_b21018aa",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_supported.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "That\u0027s to separate the test from the boiler plate (meaning how request device must be called for all of these tests)",
+      "parentUuid": "3f98a9f1_a4715004",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 2
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "474d7e0b_221122ee",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_supported.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e460096f_74e5d2cd",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 51
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c80962d_e8789c04",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_unsupported.html",
         "patchSetId": 5
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "80f651ad_2f86427e",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive_unsupported.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c80962d_e8789c04",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a68f0224_b5fc3b22",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
         "patchSetId": 5
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "1568b829_c6b891a2",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_rejects.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "Modified message.",
+      "parentUuid": "a68f0224_b5fc3b22",
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91b34cfd_e8540746",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
         "patchSetId": 5
@@ -165,6 +321,24 @@
       "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbba920_b0ccf1f3",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_supportsSession_exclusive_resolves.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-10-23T23:13:45Z",
+      "side": 1,
+      "message": "Modified message",
+      "parentUuid": "91b34cfd_e8540746",
+      "revId": "375a894072d267d9586697c680bdff8a7b570a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
