@@ -31,7 +31,12 @@ class CORE_EXPORT ClassicPendingScript final
 
  public:
   // For script from an external file.
-  static ClassicPendingScript* Create(ScriptElementBase*, ScriptResource*);
+  static ClassicPendingScript* Fetch(ScriptElementBase*,
+                                     FetchParameters&,
+                                     ResourceFetcher*);
+  // For script from an external file.
+  static ClassicPendingScript* CreateForTest(ScriptElementBase*,
+                                             ScriptResource*);
   // For inline script.
   static ClassicPendingScript* Create(ScriptElementBase*, const TextPosition&);
 
@@ -74,8 +79,8 @@ class CORE_EXPORT ClassicPendingScript final
   };
 
   ClassicPendingScript(ScriptElementBase*,
-                       ScriptResource*,
-                       const TextPosition&);
+                       const TextPosition&,
+                       bool is_external);
   ClassicPendingScript() = delete;
 
   // Advances the current state of the script, reporting to the client if

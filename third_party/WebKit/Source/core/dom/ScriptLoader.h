@@ -45,7 +45,6 @@ class ResourceFetcher;
 class ScriptResource;
 
 class Modulator;
-class ModulePendingScriptTreeClient;
 
 class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
                                  public PendingScriptClient,
@@ -87,8 +86,9 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   // PendingScript::Dispose() is called in ExecuteScriptBlock().
   void ExecuteScriptBlock(PendingScript*, const KURL&);
 
-  // Creates a PendingScript for external script whose fetch is started in
+  // Gets a PendingScript for external script whose fetch is started in
   // FetchClassicScript()/FetchModuleScriptTree().
+  // TODO before commit: Rename this to GetPendingScript().
   PendingScript* CreatePendingScript();
 
   // The entry point only for ScriptRunner that wraps ExecuteScriptBlock().
@@ -237,8 +237,11 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
 
   DocumentWriteIntervention document_write_intervention_;
 
+  // ScriptRunner-controlled PendingScript. ScriptLoader is its client.
+  // TODO before commit: Rename these members.
   TraceWrapperMember<PendingScript> pending_script_;
-  TraceWrapperMember<ModulePendingScriptTreeClient> module_tree_client_;
+
+  TraceWrapperMember<PendingScript> prepared_pending_script_;
 
   String nonce_;
 
