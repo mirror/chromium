@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f68b93e_e978ecf0",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T08:33:49Z",
+      "side": 1,
+      "message": "I (and most experts out there) recommend using NiceMock unless you have good reasons not to. I admit it took me a while to get used to it too...\n\nRationale: StrictMock tends to verify too much, beyond the purpose of the test.",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f4cdd3_4a872b8d",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T08:33:49Z",
+      "side": 1,
+      "message": "Optional: you might consider instantiating the real ThumbnailServiceImpl too and delegate all calls from the mock to the real one ([1]). It seems like all you want to do is to verify the timing and parameters to the call to SetPageThumbnail(). And in general, the browsertest would serve better its purpose the more real pieces you use.\n\n[1] https://github.com/google/googletest/blob/master/googlemock/docs/CookBook.md#delegating-calls-to-a-real-object",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7bd751_a61f7e22",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T08:33:49Z",
+      "side": 1,
+      "message": "What\u0027s the exact purpose of the EXPECT_CALL above? Are you really verifying some requirement, or is it more an artifact of using StrictMock?",
+      "range": {
+        "startLine": 132,
+        "startChar": 31,
+        "endLine": 132,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07de797_8cea3946",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T08:33:49Z",
+      "side": 1,
+      "message": "How about moving both URLs (GURL(\"about:blank\") and GetURL(\"/simple.html\")) to constants?",
+      "range": {
+        "startLine": 133,
+        "startChar": 66,
+        "endLine": 133,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c1593a_1c4b64b8",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T08:33:49Z",
+      "side": 1,
+      "message": "I\u0027ve never seen nested runloops in browser tests, where you really want to diverge as little as possible from the regular flow. Why do you need it? Many browser tests use ui_test_utils::NavigateToURLWithDisposition() for the purpose of blocking until a navigation finishes.",
+      "range": {
+        "startLine": 136,
+        "startChar": 25,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbfba51_549cb58d",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T08:33:49Z",
+      "side": 1,
+      "message": "Assuming you switched to NiceMock: this EXPECT_CALL above doesn\u0027t seem an actual requirement you\u0027re verifying, but a test fixture. You can use ON_CALL instead, so there a clear split between what\u0027s being instrumented as fixture and what are the actual test expectations.\n\nBesides, if you managed to use the real ThumnailServiceImpl, as I was suggesting optionally earlier, you might as well skip these details, since that\u0027s what it\u0027ll return.",
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e68731_7316ad5b",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-23T08:33:49Z",
+      "side": 1,
+      "message": "Optional for a follow-up patch: it shouldn\u0027t be too hard to verify the actual content of the image. Is that worth testing? You could introduce an HTML with some background color and then use a matcher similar to https://cs.chromium.org/chromium/src/components/favicon/core/favicon_handler_unittest.cc?l\u003d65\u0026rcl\u003dc19a68086e41f8a50e51ddb1b8d0a0d2adc395e6",
+      "range": {
+        "startLine": 142,
+        "startChar": 79,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "d87dca2e2f257cb72245a22de39321ce49b2efa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
