@@ -34,6 +34,24 @@
       "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54185b66_02ba79bd",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-23T05:11:31Z",
+      "side": 1,
+      "message": "Makes sense, thanks. And yeah returning null SWRegistrationObjectInfoPtr if no registration is found sounds good to me.",
+      "parentUuid": "577ae6c0_ab12b1cd",
+      "revId": "9d35575067eb389d888186463c96a29b6362e7ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
