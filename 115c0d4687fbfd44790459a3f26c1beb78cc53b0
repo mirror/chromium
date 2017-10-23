@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "61b7169a_95057b20",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3290,
+      "author": {
+        "id": 1239244
+      },
+      "writtenOn": "2017-10-23T21:48:44Z",
+      "side": 1,
+      "message": "Yes, let\u0027s use all the strings included in Khalil\u0027s mocks, i.e., \"Resume.\" The mocks reflect what we officially received approval for.",
+      "parentUuid": "e0ff5de7_9e86fa66",
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36a7075d_ceeee001",
         "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
         "patchSetId": 3
