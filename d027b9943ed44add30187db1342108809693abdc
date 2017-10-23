@@ -122,6 +122,24 @@
       "revId": "d027b9943ed44add30187db1342108809693abdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58a719eb_f4a24367",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37501,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T21:37:31Z",
+      "side": 1,
+      "message": "Acknowledged.\n\nThanks for the link.\n\nIf you think there\u0027s a remote chance users might press the share button by mistake, then being able to track canceled shares seems important.",
+      "parentUuid": "6ba041e2_abab7fe4",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
