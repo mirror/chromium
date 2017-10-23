@@ -77,24 +77,21 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
   ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
   DCHECK(csp);
 
-  WorkerThreadStartMode start_mode =
-      GetWorkerInspectorProxy()->WorkerStartMode(document);
-  std::unique_ptr<WorkerSettings> worker_settings =
-      WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
-
   auto global_scope_creation_params =
-      WTF::MakeUnique<GlobalScopeCreationParams>(
-          script_url, user_agent, source_code, nullptr, start_mode,
+      std::make_unique<GlobalScopeCreationParams>(
+          script_url, user_agent, source_code, nullptr,
           csp->Headers().get(), referrer_policy, starter_origin,
           ReleaseWorkerClients(), document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
-          std::move(worker_settings), kV8CacheOptionsDefault,
+          std::make_unique<WorkerSettings>(document->GetSettings()),
+          kV8CacheOptionsDefault,
           ConnectToWorkerInterfaceProvider(document,
                                            SecurityOrigin::Create(script_url)));
 
-  InitializeWorkerThread(std::move(global_scope_creation_params),
-                         CreateBackingThreadStartupData(ToIsolate(document)),
-                         script_url);
+  InitializeWorkerThread(
+      std::move(global_scope_creation_params),
+      CreateBackingThreadStartupData(ToIsolate(document)),
+      script_url);
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
