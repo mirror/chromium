@@ -26,10 +26,6 @@ class BackgroundSyncLauncherAndroid {
 
   static bool ShouldDisableBackgroundSync();
 
-  // TODO(iclelland): Remove this once the bots have their play services package
-  // updated before every test run. (https://crbug.com/514449)
-  static void SetPlayServicesVersionCheckDisabledForTests(bool disabled);
-
  private:
   friend struct base::LazyInstanceTraitsBase<BackgroundSyncLauncherAndroid>;
 

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.OneoffTask;
 import com.google.android.gms.gcm.Task;
@@ -187,6 +188,9 @@ public class BackgroundSyncLauncher {
             if (!canUseGooglePlayServices()) {
                 setGCMEnabled(false);
                 Log.i(TAG, "Disabling Background Sync because Play Services is not up to date.");
+                Log.i(TAG,
+                        "Available version is "
+                                + GoogleApiAvailability.GOOGLE_PLAY_SERVICES_VERSION_CODE);
                 isAvailable = false;
             }
             RecordHistogram.recordBooleanHistogram(

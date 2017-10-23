@@ -12,12 +12,6 @@ using content::BrowserThread;
 namespace {
 base::LazyInstance<BackgroundSyncLauncherAndroid>::DestructorAtExit
     g_background_sync_launcher = LAZY_INSTANCE_INITIALIZER;
-
-// Disables the Play Services version check for testing on Chromium build bots.
-// TODO(iclelland): Remove this once the bots have their play services package
-// updated before every test run. (https://crbug.com/514449)
-bool disable_play_services_version_check_for_tests = false;
-
 }  // namespace
 
 // static
@@ -47,18 +41,8 @@ void BackgroundSyncLauncherAndroid::LaunchBrowserIfStoppedImpl(
 }
 
 // static
-void BackgroundSyncLauncherAndroid::SetPlayServicesVersionCheckDisabledForTests(
-    bool disabled) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  disable_play_services_version_check_for_tests = disabled;
-}
-
-// static
 bool BackgroundSyncLauncherAndroid::ShouldDisableBackgroundSync() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (disable_play_services_version_check_for_tests) {
-    return false;
-  }
   return Java_BackgroundSyncLauncher_shouldDisableBackgroundSync(
       base::android::AttachCurrentThread());
 }

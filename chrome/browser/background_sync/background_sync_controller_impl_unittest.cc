@@ -6,6 +6,9 @@
 
 #include <stdint.h>
 
+#include <map>
+#include <string>
+
 #include "base/macros.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/rappor/test_rappor_service.h"
@@ -51,10 +54,6 @@ class BackgroundSyncControllerImplTest : public testing::Test {
         controller_(
             new TestBackgroundSyncControllerImpl(&profile_, &rappor_service_)) {
     ResetFieldTrialList();
-#if defined(OS_ANDROID)
-    BackgroundSyncLauncherAndroid::SetPlayServicesVersionCheckDisabledForTests(
-        true);
-#endif
   }
 
   void ResetFieldTrialList() {
@@ -71,6 +70,7 @@ class BackgroundSyncControllerImplTest : public testing::Test {
   std::unique_ptr<TestBackgroundSyncControllerImpl> controller_;
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(BackgroundSyncControllerImplTest);
 };
 
