@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514e42d7_8d67f539",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T22:14:27Z",
+      "side": 1,
+      "message": "FrameDeleted",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "c09cfe3be4c76c42c2c12ee1390640649a3dd41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4612d43_e2cb2a2e",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T22:14:27Z",
+      "side": 1,
+      "message": "Swap the old_info and new_info parameters.",
+      "revId": "c09cfe3be4c76c42c2c12ee1390640649a3dd41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22723281_55dbb606",
+        "filename": "content/browser/devtools/devtools_target_registry.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T22:14:27Z",
+      "side": 1,
+      "message": "I think you should also cleanup impl_ maps.",
+      "revId": "c09cfe3be4c76c42c2c12ee1390640649a3dd41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4b5de3_6a6d6517",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T22:14:27Z",
+      "side": 1,
+      "message": "Aren\u0027t there resource_types as well?",
+      "revId": "c09cfe3be4c76c42c2c12ee1390640649a3dd41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef01aa70_86f88dff",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T22:14:27Z",
+      "side": 1,
+      "message": "This does not work for multiclient, although it didn\u0027t work before either.",
+      "revId": "c09cfe3be4c76c42c2c12ee1390640649a3dd41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e64532c_f451d028",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T22:14:27Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "revId": "c09cfe3be4c76c42c2c12ee1390640649a3dd41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
