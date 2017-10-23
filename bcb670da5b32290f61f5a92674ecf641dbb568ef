@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "50aee638_c1a87861",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-23T22:59:05Z",
+      "side": 1,
+      "message": "\u003e The NewScope() method doesn\u0027t work because we still need the copy constructor when assigning the result to a local variable.\n\nActually we only need move constructor. :\u003e\nA scope class SGTM.\n\n\u003e About making paint offset a part of PaintInfo, I wouldn\u0027t bother it because we\u0027ll eventually remove the paint offset parameter.\n\nThat\u0027s good point.",
+      "parentUuid": "bc4cec95_bd1c4b01",
+      "revId": "bcb670da5b32290f61f5a92674ecf641dbb568ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aafbff8b_ac820442",
         "filename": "third_party/WebKit/Source/core/paint/TableSectionPainter.cpp",
         "patchSetId": 6
