@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "43810ef8_a1f16035",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "How about we delete this do-nothing method, and just rename DeliverNewFrame() to SendNewFrame()?",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 1
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6498dd5_6c456f9e",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "Don\u0027t give up! libyuv has was you need to convert with any source stride. See comment below.",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 54
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a415f078_ef76701b",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "Based on how you use this in downstream code, how about a SkBitmap instead:\n\n  SkBitmap result_bitmap;\n  result_bitmap.allocPixels(SkImageInfo::Make(image-\u003ewidth(), image-\u003eheight(), image-\u003ecolorType(), image-\u003ealphaType(), image-\u003erefColorSpace()));",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 76
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464c0fa5_6ac8f35b",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "You can remove one level of indentation if you combine these:\n\n  if (image-\u003eisTextureBacked() \u0026\u0026 context_provider) {\n    ...\n  }",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 27
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ad15c3f_2b92a7f1",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 15
@@ -18,6 +110,121 @@
         "startChar": 33,
         "endLine": 252,
         "endChar": 65
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9178c7_5fa80a14",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "nit: It feels weird to use two different vars that are pointers to the same thing: context_provider vs context_provider_impl. Can you just use context_provider_impl everywhere?",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 24
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f55ed4_9c25f270",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "I don\u0027t think this is what you wanted. This would set the single, global lost-context callback for the WebGraphicsContext3DProvider. IIUC, WGC3DProvider is not exclusively used by this class.\n\nPlease see DelegatedFrameHost constructor for example code: https://cs.chromium.org/chromium/src/content/browser/renderer_host/delegated_frame_host.cc?rcl\u003d55bc0f387b6c98bb0ad9c0f3d2cde9968b311d68\u0026l\u003d60",
+      "range": {
+        "startLine": 256,
+        "startChar": 26,
+        "endLine": 256,
+        "endChar": 49
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660aa2ed_7917e019",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary, since OnContextLost() should have been called.",
+      "range": {
+        "startLine": 276,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 23
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec13abf8_043950bb",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "This allows for converting with any source stride:\n\n  if (bitmap.colorType() \u003d\u003d kBGRA_8888_SkColorType) {\n    CHECK_EQ(0, libyuv::ARGBToI420(bitmap.getPixels(), bitmap.rowBytes(), y_out,\n                                   y_out_stride, u_out, u_out_stride, v_out,\n                                   v_out_stride, bitmap.width(),\n                                   bitmap.height()));\n  } else if (bitmap.colorType() \u003d\u003d kRGBA_8888_SkColorType) {\n    CHECK_EQ(0, libyuv::ABGRToI420(bitmap.getPixels(), bitmap.rowBytes(), y_out,\n                                   y_out_stride, u_out, u_out_stride, v_out,\n                                   v_out_stride, bitmap.width(),\n                                   bitmap.height()));\n  } else {\n    NOTIMPLEMENTED();\n  }",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 63
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee43ea4_5ae79efa",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "When would success be false? It seems this would indicate temporary issues, like readback during shutdown, or a temporary context loss. So, I would not recommend calling ReadPixelsSync().",
+      "range": {
+        "startLine": 373,
+        "startChar": 4,
+        "endLine": 373,
+        "endChar": 38
       },
       "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -48,6 +255,76 @@
     },
     {
       "key": {
+        "uuid": "cdedef63_daa0a19e",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "While I agree testing would be good, isn\u0027t it the responsibility of the WebGraphicsContext3DProviderImpl unit tests to do so? At some point, client code has to assume external implementation is correct. :)\n\nFWIW, this exact same OnContextLost() method is in DelegatedFrameHost, and there aren\u0027t DFH unit tests for that.",
+      "parentUuid": "18fa99f6_9edebe2e",
+      "range": {
+        "startLine": 383,
+        "startChar": 13,
+        "endLine": 383,
+        "endChar": 18
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b605f18f_333d7d46",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "You should check the result to make sure:\n\n1. It is not null.\n2. It has the correct format (I420 with or without alpha).\n3. It has the correct size.\n\nWith gmock, I usually do something like:\n\n  scoped_refptr\u003cmedia::VideoFrame\u003e result;\n  EXPECT_CALL(*this, DoOnDeliverFrame(_, _))\n    .Times(1)\n    .WillOnce(DoAll(SaveArg\u003c0\u003e(\u0026result), RunClosure(quit_closure)));\n  ...do operations...\n  ASSERT_TRUE(!!result);\n  EXPECT_EQ(320, result-\u003ewidth());\n  ...etc...",
+      "range": {
+        "startLine": 232,
+        "startChar": 38,
+        "endLine": 232,
+        "endChar": 42
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48114e09_98791a0b",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "ditto: Examine the resulting video frame.",
+      "range": {
+        "startLine": 270,
+        "startChar": 38,
+        "endLine": 270,
+        "endChar": 42
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77c65120_259c6bd3",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasDrawListener.cpp",
         "patchSetId": 15
@@ -64,6 +341,29 @@
         "startChar": 49,
         "endLine": 17,
         "endChar": 52
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50978a3d_537f0382",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasDrawListener.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-23T21:42:44Z",
+      "side": 1,
+      "message": "Why is this a weak pointer? How about a raw pointer?",
+      "range": {
+        "startLine": 25,
+        "startChar": 28,
+        "endLine": 25,
+        "endChar": 72
       },
       "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
