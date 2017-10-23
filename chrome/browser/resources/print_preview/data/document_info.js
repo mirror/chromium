@@ -52,7 +52,7 @@ cr.define('print_preview', function() {
       // page-related information won't be set until preview generation occurs,
       // so we'll use some defaults until then. This way, the print ticket store
       // will be valid even if no preview can be generated.
-      var initialPageSize = new print_preview.Size(612, 792);  // 8.5"x11"
+      const initialPageSize = new print_preview.Size(612, 792);  // 8.5"x11"
 
       /**
        * Size of the pages of the document in points.
