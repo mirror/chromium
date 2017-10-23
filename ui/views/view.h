@@ -75,6 +75,7 @@ class DragController;
 class FocusManager;
 class FocusTraversable;
 class LayoutManager;
+class MenuRunner;
 class NativeViewAccessibility;
 class ScrollView;
 class ViewObserver;
@@ -993,6 +994,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   virtual void ShowContextMenu(const gfx::Point& p,
                                ui::MenuSourceType source_type);
 
+  virtual void ShowDebugContextMenu(const gfx::Point& p);
+
   // On some platforms, we show context menu on mouse press instead of release.
   // This method returns true for those platforms.
   static bool ShouldShowContextMenuOnMousePress();
@@ -1790,6 +1793,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
 
   // The menu controller.
   ContextMenuController* context_menu_controller_;
+
+  std::unique_ptr<views::MenuRunner> debug_context_menu_runner_;
 
   // Drag and drop -------------------------------------------------------------
 

@@ -25,6 +25,7 @@
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/ime/input_method.h"
+#include "ui/base/models/menu_model.h"
 #include "ui/compositor/clip_recorder.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/dip_util.h"
@@ -33,6 +34,7 @@
 #include "ui/compositor/paint_context.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/compositor/transform_recorder.h"
+#include "ui/views/controls/menu/menu_runner.h"
 #include "ui/display/screen.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/event_target_iterator.h"
@@ -1351,6 +1353,56 @@ void View::ShowContextMenu(const gfx::Point& p,
   context_menu_controller_->ShowContextMenuForView(this, p, source_type);
 }
 
+class DebugMenuModel : public ui::MenuModel {
+ public:
+  bool HasIcons() const override { return false; }
+  int GetItemCount() const override { return 1; }
+  ItemType GetTypeAt(int index) const override { return TYPE_COMMAND; }
+  ui::MenuSeparatorType GetSeparatorTypeAt(int index) const override {
+      return ui::NORMAL_SEPARATOR;
+  }
+  int GetCommandIdAt(int index) const override { return 0; }
+  base::string16 GetLabelAt(int index) const override { return base::UTF8ToUTF16("Ow!"); }
+  base::string16 GetSublabelAt(int index) const override { return base::string16(); }
+  base::string16 GetMinorTextAt(int index) const override { return base::string16();
+}
+  bool IsItemDynamicAt(int index) const override { return false; }
+  const gfx::FontList* GetLabelFontListAt(int index) const override {
+    return nullptr;
+  }
+  bool GetAcceleratorAt(int index, ui::Accelerator* accelerator) const override
+{
+    return false;
+  }
+  bool IsItemCheckedAt(int index) const override { return false; }
+  int GetGroupIdAt(int index) const override { return 0; }
+  bool GetIconAt(int index, gfx::Image* icon) override { return false; }
+  ui::ButtonMenuItemModel* GetButtonMenuItemAt(int index) const override {
+    return nullptr;
+  }
+  bool IsEnabledAt(int index) const override { return true; }
+  bool IsVisibleAt(int index) const override { return true; }
+  MenuModel* GetSubmenuModelAt(int index) const override { return nullptr; }
+  void HighlightChangedTo(int index) override {}
+  void ActivatedAt(int index) override {}
+
+  void SetMenuModelDelegate(ui::MenuModelDelegate* delegate) override {}
+  ui::MenuModelDelegate* GetMenuModelDelegate() const override {
+    return nullptr;
+  }
+};
+
+void View::ShowDebugContextMenu(const gfx::Point& p) {
+  LOG(ERROR) << "ShowDebugContextMenu " << p.ToString();
+
+  DebugMenuModel model;
+  int run_types = 0;
+  debug_context_menu_runner_.reset(new views::MenuRunner(&model, run_types));
+  debug_context_menu_runner_->RunMenuAt(GetWidget(), NULL,
+      gfx::Rect(p, gfx::Size()), views::MENU_ANCHOR_TOPLEFT,
+      ui::MENU_SOURCE_MOUSE);
+}
+
 // static
 bool View::ShouldShowContextMenuOnMousePress() {
   return kContextMenuOnMousePress;
@@ -2513,6 +2565,14 @@ bool View::ProcessMousePressed(const ui::MouseEvent& event) {
       ShowContextMenu(location, ui::MENU_SOURCE_MOUSE);
       return true;
     }
+  }
+
+  if (event.IsOnlyRightMouseButton() && event.IsControlDown() &&
+      HitTestPoint(event.location())) {
+    gfx::Point location(event.location());
+    ConvertPointToScreen(this, &location);
+    ShowDebugContextMenu(location);
+    return true;
   }
 
   // WARNING: we may have been deleted, don't use any View variables.

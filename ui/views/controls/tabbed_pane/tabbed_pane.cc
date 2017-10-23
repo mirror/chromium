@@ -21,6 +21,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/tabbed_pane/tabbed_pane_listener.h"
@@ -407,6 +408,9 @@ MdTabStrip::MdTabStrip() {
 
   contract_animation_.reset(new gfx::LinearAnimation(this));
   contract_animation_->SetDuration(base::TimeDelta::FromMilliseconds(180));
+
+  SetBackground(views::CreateSolidBackground(
+      SkColorSetA(SK_ColorRED, 0x20)));
 }
 
 MdTabStrip::~MdTabStrip() {}

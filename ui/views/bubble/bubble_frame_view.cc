@@ -115,6 +115,9 @@ BubbleFrameView::BubbleFrameView(const gfx::Insets& title_margins,
   close_->SetTooltipText(base::string16());
 #endif
   AddChildView(close_);
+
+  default_title_->SetBackground(views::CreateSolidBackground(
+      SkColorSetA(SK_ColorBLUE, 0x20)));
 }
 
 BubbleFrameView::~BubbleFrameView() {}

@@ -47,6 +47,7 @@
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/tabbed_pane/tabbed_pane.h"
 #include "ui/views/controls/tree/tree_view.h"
+#include "ui/views/debug_utils.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/widget/widget.h"
@@ -282,6 +283,7 @@ base::string16 CollectedCookiesViews::GetDialogButtonLabel(
 }
 
 bool CollectedCookiesViews::Accept() {
+  views::PrintViewHierarchy(GetWidget()->GetRootView());
   // If the user closes our parent tab while we're still open, this method will
   // (eventually) be called in response to a WebContentsDestroyed() call from
   // the WebContentsImpl to its observers.  But since the InfoBarService is also
