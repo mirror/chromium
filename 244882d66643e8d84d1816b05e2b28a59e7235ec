@@ -419,6 +419,24 @@
     },
     {
       "key": {
+        "uuid": "09aba3c9_210c0188",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T17:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "513d35a8_5fa719d4",
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7358c60_eae8d7eb",
         "filename": "components/policy/tools/template_writers/policy_template_generator.py",
         "patchSetId": 9
