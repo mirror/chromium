@@ -46,15 +46,15 @@
           // one in the popup or in our subframe.
           if (data.fromPopup) {
             t3.step(function() {
-              assert_false(data.exception);
-              assert_true(data.error);
+              assert_false(data.exception, "exception");
+              assert_true(data.error, "error");
             });
             t3.done();
           } else {
             t1.step(function() {
-              assert_false(data.exception);
-              assert_false(data.error);
-              assert_true(data.isSecureContext);
+              assert_false(data.exception, "exception");
+              assert_false(data.error, "error");
+              assert_true(data.isSecureContext, "isSecureContext");
             });
             t1.done();
           }
@@ -63,15 +63,15 @@
           // check whether it's the one in the popup or in our subframe.
           if (data.fromPopup) {
             t4.step(function() {
-              assert_false(data.exception);
-              assert_true(data.error);
+              assert_false(data.exception, "exception");
+              assert_true(data.error, "error");
             });
             t4.done();
           } else {
             t2.step(function() {
-              assert_false(data.exception);
-              assert_false(data.error);
-              assert_true(data.isSecureContext);
+              assert_false(data.exception, "exception");
+              assert_false(data.error, "error");
+              assert_true(data.isSecureContext, "isSecureContext");
             });
             t2.done();
           }

@@ -52,7 +52,8 @@ const eLoadInEverything        = eLoadInPopup | eLoadInUnsandboxedIframe | eLoad
 
 // Flags indicating if a document type is expected to be a Secure Context:
 const eSecureNo              = 1;
-const eSecureIfCreatorSecure = 2;
+const eSecureIfNewWindow     = 2;
+const eSecureIfCreatorSecure = 3;
 
 // Flags indicating how the result of a test is obtained:
 const eResultFromPostMessage       = 1;
@@ -69,7 +70,7 @@ const loadTypes = [
   new LoadType("an https: URI",
                eLoadInEverything,
                https_dir + "postMessage-helper.https.html",
-               eSecureIfCreatorSecure,
+               eSecureIfNewWindow,
                eResultFromPostMessage),
   new LoadType("a blob: URI",
                eLoadInEverything,
@@ -80,7 +81,7 @@ const loadTypes = [
                // popup not relevant:
                eLoadInUnsandboxedIframe | eLoadInSandboxedIframe,
                "<script>(opener||parent).postMessage(isSecureContext, '*')</script>",
-               eSecureIfCreatorSecure,
+               eSecureIfNewWindow,
                eResultFromPostMessage),
   new LoadType("a javascript: URI",
                // can't load in sandbox:
@@ -179,31 +180,39 @@ LoadTarget.prototype.load_and_get_result_for = function(loadType) {
                                 " loading " + loadType.desc)
   if (loadType.resultFrom == eResultFromExaminationSync) {
     let domTarget = this.open(loadType);
-    let result = domTarget instanceof Window ?
+    let isFrame = domTarget instanceof HTMLIFrameElement;
+    let result = !isFrame ?
           domTarget.isSecureContext : domTarget.contentWindow.isSecureContext;
     this.close(domTarget);
-    return Promise.resolve(result);
+    return Promise.resolve({ result: result, isFrame: isFrame});
   }
   let target = this;
   if (loadType.resultFrom == eResultFromExaminationOnLoad) {
     return new Promise(function(resolve, reject) {
       function handleLoad(event) {
-        let result = domTarget instanceof Window ?
+        clearTimeout(timer);
+        let isFrame = domTarget instanceof HTMLIFrameElement;
+        let result = !isFrame ?
               domTarget.isSecureContext : domTarget.contentWindow.isSecureContext;
         domTarget.removeEventListener("load", handleLoad);
         target.close(domTarget);
-        resolve(result);
+        resolve({ result: result, isFrame: isFrame});
       }
       let domTarget = target.open(loadType);
       domTarget.addEventListener("load", handleLoad, false);
+
+      // Some browsers don't fire `load` events for `about:blank`. That's weird, but it also
+      // isn't what we're testing here.
+      let timer = setTimeout(handleLoad, 500);
     });
   }
   if (loadType.resultFrom == eResultFromPostMessage) {
     return new Promise(function(resolve, reject) {
       function handleMessage(event) {
+        let isFrame = domTarget instanceof HTMLIFrameElement;
         window.removeEventListener("message", handleMessage);
         target.close(domTarget);
-        resolve(event.data);
+        resolve({ result: event.data, isFrame: isFrame});
       }
       window.addEventListener("message", handleMessage, false);
       let domTarget = target.open(loadType);
@@ -233,12 +242,22 @@ function run_next_test() {
       run_next_test_soon();
       loadTarget.currentTest.step(function() {
         if (loadType.expectedSecureFlag == eSecureNo) {
-          assert_false(value, loadType.desc + " in " + loadTarget.desc + " should not create a Secure Context");
+          assert_false(value.result, loadType.desc + " in " + loadTarget.desc + " should not create a Secure Context");
+        } else if (loadType.expectedSecureFlag == eSecureIfNewWindow) {
+          if (value.isFrame) {
+            if (!window.isSecureContext) {
+              assert_false(value.result, loadType.desc + " in " + loadTarget.desc + " should not create a Secure Context when its creator is not a Secure Context.");
+            } else {
+              assert_true(value.result, loadType.desc + " in " + loadTarget.desc + " should create a Secure Context when its creator is a Secure Context");
+            }
+          } else {
+            assert_true(value.result, loadType.desc + " in " + loadTarget.desc + " should create a secure context regardless of its creator's state.");
+          }
         } else if (loadType.expectedSecureFlag == eSecureIfCreatorSecure) {
           if (!window.isSecureContext) {
-            assert_false(value, loadType.desc + " in " + loadTarget.desc + " should not create a Secure Context when its creator is not a Secure Context.");
+            assert_false(value.result, loadType.desc + " in " + loadTarget.desc + " should not create a Secure Context when its creator is not a Secure Context.");
           } else {
-            assert_true(value, loadType.desc + " in " + loadTarget.desc + " should create a Secure Context when its creator is a Secure Context");
+            assert_true(value.result, loadType.desc + " in " + loadTarget.desc + " should create a Secure Context when its creator is a Secure Context");
           }
         } else {
           assert_unreached(loadType.desc + " - unknown expected secure flag: " + expectedSecureFlag);

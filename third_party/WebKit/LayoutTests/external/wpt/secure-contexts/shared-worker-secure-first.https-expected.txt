@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Shared worker in subframe
+FAIL Nested worker in shared worker in subframe assert_true: isSecureContext expected true got "Nested workers not supported."
+FAIL Shared worker in popup assert_true: error expected true got false
+FAIL Nested worker from shared worker in popup assert_true: error expected true got false
+Harness: the test ran to completion.
+
