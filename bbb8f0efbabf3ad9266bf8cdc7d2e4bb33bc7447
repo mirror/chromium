@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acac85a1_4bd6c91c",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-23T22:24:08Z",
+      "side": 1,
+      "message": "Don\u0027t we need to retry stopping the session in this case?",
+      "range": {
+        "startLine": 2057,
+        "startChar": 25,
+        "endLine": 2057,
+        "endChar": 47
+      },
+      "revId": "bbb8f0efbabf3ad9266bf8cdc7d2e4bb33bc7447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
