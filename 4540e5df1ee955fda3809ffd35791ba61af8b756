@@ -16,6 +16,24 @@
       "revId": "4540e5df1ee955fda3809ffd35791ba61af8b756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4e30c9_20261b34",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-23T21:24:10Z",
+      "side": 1,
+      "message": "I tried that in patch set 1, but it didn\u0027t work. Can you spot what I did wrong? https://chromium.googlesource.com/chromium/src/+/4eee307274d8bc941e52111b93e7c759108cb089/docs/win_cross.md",
+      "parentUuid": "24abca01_8677dc64",
+      "revId": "4540e5df1ee955fda3809ffd35791ba61af8b756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
