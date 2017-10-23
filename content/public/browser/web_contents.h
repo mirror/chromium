@@ -65,7 +65,6 @@ namespace content {
 class BrowserContext;
 class BrowserPluginGuestDelegate;
 class InterstitialPage;
-class PageState;
 class RenderFrameHost;
 class RenderViewHost;
 class RenderWidgetHost;
@@ -638,12 +637,6 @@ class WebContents : public PageNavigator,
   // the getter only useful from within TAB_CLOSED notification
   virtual void SetClosedByUserGesture(bool value) = 0;
   virtual bool GetClosedByUserGesture() const = 0;
-
-  // Opens view-source tab for this contents.
-  virtual void ViewSource() = 0;
-
-  virtual void ViewFrameSource(const GURL& url,
-                               const PageState& page_state) = 0;
 
   // Gets the minimum/maximum zoom percent.
   virtual int GetMinimumZoomPercent() const = 0;
