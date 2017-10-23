@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99a1aa29_3a5c6136",
+        "filename": "components/subresource_filter/core/common/indexed_ruleset_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-23T13:15:21Z",
+      "side": 1,
+      "message": "Hm, how likely is it that the execution will turn up at this point? Seems like random data should rarely pass the above return 0.",
+      "revId": "edd4257e0dbe9da12c7c42097e39d79ac67c543f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
