@@ -47,15 +47,14 @@ Polymer({
       value: 'automatic',
     },
 
-    /**
-     * Array of nameserver types.
-     * @private
-     */
-    nameserverTypeNames_: {
-      type: Array,
-      value: ['automatic', 'google', 'custom'],
-      readOnly: true,
-    },
+    /** @private */
+    googleNameserversText_: {
+      type: String,
+      value: function() {
+        return this.i18nAdvanced(
+            'networkNameserversGoogle', {substitutions: [], tags: ['a']});
+      }
+    }
   },
 
   /** @const */
@@ -101,39 +100,30 @@ Polymer({
     } else {
       type = 'automatic';
     }
-    this.setNameservers_(type, nameservers);
+    this.setNameservers_(type, nameservers, false /* send */);
   },
 
   /**
    * @param {string} nameserversType
    * @param {!Array<string>} nameservers
+   * @param {boolean} sendNameservers If true, send the nameservers once they
+   *     have been set in the UI.
    * @private
    */
-  setNameservers_: function(nameserversType, nameservers) {
+  setNameservers_: function(nameserversType, nameservers, sendNameservers) {
     if (nameserversType == 'custom') {
       // Add empty entries for unset custom nameservers.
       for (var i = nameservers.length; i < this.MAX_NAMESERVERS; ++i)
         nameservers[i] = '';
+      this.savedNameservers_ = nameservers.slice();
     }
     this.nameservers_ = nameservers;
     // Set nameserversType_ after dom-repeat has been stamped.
     this.async(() => {
       this.nameserversType_ = nameserversType;
+      if (sendNameservers)
+        this.sendNameServers_();
     });
-  },
-
-  /**
-   * @param {string} type The nameservers type.
-   * @return {string} The description for |type|.
-   * @private
-   */
-  nameserverTypeDesc_: function(type) {
-    // TODO(stevenjb): Translate.
-    if (type == 'custom')
-      return 'Custom name servers';
-    if (type == 'google')
-      return 'Google name servers';
-    return 'Automatic name servers';
   },
 
   /**
@@ -147,23 +137,27 @@ Polymer({
   },
 
   /**
+   * @param {string} nameserversType
+   * @return {boolean}
+   * @private
+   */
+  isType_: function(nameserversType, type) {
+    return nameserversType == type;
+  },
+
+  /**
    * Event triggered when the selected type changes. Updates nameservers and
    * sends the change value if necessary.
    * @param {!Event} event
    * @private
    */
   onTypeChange_: function(event) {
-    if (this.nameserversType_ == 'custom')
-      this.savedNameservers_ = this.nameservers_;
-    var target = /** @type {!HTMLSelectElement} */ (event.target);
-    var type = target.value;
+    var type = this.$$('#nameserverType').selected;
     this.nameserversType_ = type;
     if (type == 'custom') {
       // Restore the saved nameservers.
-      this.setNameservers_(type, this.savedNameservers_);
-      // Only send custom nameservers if they are not empty.
-      if (this.savedNameservers_.length == 0)
-        return;
+      this.setNameservers_(type, this.savedNameservers_, true /* send */);
+      return;
     }
     this.sendNameServers_();
   },
@@ -194,6 +188,7 @@ Polymer({
         var nameserverInput = this.$$('#nameserver' + i);
         nameservers[i] = nameserverInput ? nameserverInput.value : '';
       }
+      this.savedNameservers_ = nameservers.slice();
       this.fire('nameservers-change', {
         field: 'NameServers',
         value: nameservers,
