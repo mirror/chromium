@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "135a6275_484c5e40",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-23T17:12:51Z",
+      "side": 1,
+      "message": "Is this also true for iframes?",
+      "range": {
+        "startLine": 679,
+        "startChar": 34,
+        "endLine": 679,
+        "endChar": 44
+      },
+      "revId": "07eb03e38c268a6d2e63b6b2d386f476be6f0449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
