@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24abca01_8677dc64",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-23T21:17:06Z",
+      "side": 1,
+      "message": "nit: rest of file uses `indent by 4` to mark code blocks instead of ```, consider switching to that",
+      "revId": "4540e5df1ee955fda3809ffd35791ba61af8b756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
