@@ -69,6 +69,24 @@
       "revId": "ebb4c95e588fda47697f34374fe74bb61512408e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a37217_1801eb56",
+        "filename": "chrome/browser/chromeos/settings/install_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T14:43:49Z",
+      "side": 1,
+      "message": "Thank you for explanation!",
+      "parentUuid": "b760cfc9_609a2f7f",
+      "revId": "ebb4c95e588fda47697f34374fe74bb61512408e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
