@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2db3c19_b1d54b92",
+        "filename": "ash/display/mirror_window_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-23T18:38:01Z",
+      "side": 1,
+      "message": "s/tis/this",
+      "revId": "11934e6342ccf485a1db73c7cc88b3d59e7e024c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
