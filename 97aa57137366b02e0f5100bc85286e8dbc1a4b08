@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "b183c88d_23974d2a",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-23T22:52:33Z",
+      "side": 1,
+      "message": "I had considered that too. But this plumbing felt cleaner than having to cache it on LayerTreeHost and LayerTreeImpl to push it using the commit/activation.\n\nIts possible that the active tree is out of sync with the URL, but you\u0027d have to be actively scrolling when the navigation commits and even so it should only get a few frames wrong, so I didn\u0027t worry about that case much. I can go the commit route too if you think its better to handle this case.",
+      "parentUuid": "ca8b4b59_d3ccc8bc",
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4e5024a_f7805d12",
         "filename": "cc/trees/single_thread_proxy.h",
         "patchSetId": 2
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "32fda417_d46e756d",
+        "filename": "cc/trees/single_thread_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-23T22:52:33Z",
+      "side": 1,
+      "message": "Yup. This sounds much better.",
+      "parentUuid": "e4e5024a_f7805d12",
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "860e97f2_66cebb7b",
         "filename": "cc/trees/ukm_manager.cc",
         "patchSetId": 2
@@ -73,6 +109,24 @@
       "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003f65b0_59cf26d9",
+        "filename": "cc/trees/ukm_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-23T22:52:33Z",
+      "side": 1,
+      "message": "num_of_frames_ \u003e 0 check in RecordCheckerboardUkm will make sure a recording is only made if we had accumulated any stats, which would happen only if we\u0027re in smoothness mode.",
+      "parentUuid": "860e97f2_66cebb7b",
+      "revId": "97aa57137366b02e0f5100bc85286e8dbc1a4b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
