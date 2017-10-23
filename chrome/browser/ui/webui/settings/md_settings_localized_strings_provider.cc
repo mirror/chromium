@@ -1005,6 +1005,8 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
       l10n_util::GetStringFUTF16(
           IDS_SETTINGS_INTERNET_NO_NETWORKS_MOBILE_DATA,
           base::ASCIIToUTF16(chrome::kInstantTetheringLearnMoreURL)));
+  html_source->AddString("networkGoogleNameserversLearnMoreUrl",
+                         chrome::kGoogleNameserversLearnMoreURL);
 }
 #endif
 

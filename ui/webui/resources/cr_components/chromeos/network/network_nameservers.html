@@ -3,29 +3,53 @@
 <link rel="import" href="chrome://resources/cr_elements/chromeos/network/cr_onc_types.html">
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/html/md_select_css.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-input/paper-input-container.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="network_shared_css.html">
 
 <dom-module id="network-nameservers">
   <template>
-    <style include=" network-shared md-select">
+    <style include="network-shared md-select iron-flex">
       paper-input-container {
         -webkit-padding-start: 4px;
       }
+
+      paper-radio-group {
+        width: 100%;
+      }
+
+      --paper-radio-group-item-padding: 0;
+
+      #radioGroup {
+        -webkit-padding-end: var(--cr-section-padding);
+        -webkit-padding-start: var(--cr-section-indent-padding);
+        align-items: center;
+        display: block;
+      }
+
     </style>
 
     <div class="property-box">
-      <div class="start">[[i18n('networkNameservers')]]</div>
-      <div class="md-select-wrapper">
-        <select id="nameserverType" class="md-select" on-change="onTypeChange_"
-            value="[[nameserversType_]]"
-            aria-label="[[i18n('networkNameservers')]]">
-          <template is="dom-repeat" items="[[nameserverTypeNames_]]">
-            <option value="[[item]]">[[nameserverTypeDesc_(item)]]</option>
-          </template>
-        </select>
-        <span class="md-select-underline"></span>
-      </div>
+      [[i18n('networkNameservers')]]
+    </div>
+
+    <div id="radioGroup">
+      <paper-radio-group id="nameserverType" class="layout vertical"
+          selected="[[nameserversType_]]"
+          on-paper-radio-group-changed="onTypeChange_"
+          aria-label="[[i18n('networkNameservers')]]">
+        <paper-radio-button name="automatic">
+          [[i18n('networkNameserversAutomatic')]]
+        </paper-radio-button>
+        <paper-radio-button name="custom">
+          [[i18n('networkNameserversCustom')]]
+        </paper-radio-button>
+        <paper-radio-button name="google">
+          [[i18n('networkNameserversGoogle')]]
+        </paper-radio-button>
+      </paper-radio-group>
     </div>
 
     <div class="property-box single-column two-line indented"
