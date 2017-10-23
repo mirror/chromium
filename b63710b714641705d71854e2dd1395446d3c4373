@@ -224,6 +224,24 @@
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3438edb3_015ff2ca",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-23T10:31:07Z",
+      "side": 1,
+      "message": "I suppose it\u0027s related to the comment for why this was added:\nThe clang-format tool is confused by the java 8 usage of default in an interface.",
+      "parentUuid": "5923d89a_11393e8b",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
