@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "980189ae_28bd7e2e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 3925,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-23T18:57:05Z",
+      "side": 1,
+      "message": "If you move |DidInitiatePageLoad| call to the top of this method, there will be no need for |DidPromotePrerenderTab|. ReportLoadTime will record 0 for prerender and normal load time for non-prerender cases.",
+      "range": {
+        "startLine": 3925,
+        "startChar": 6,
+        "endLine": 3925,
+        "endChar": 30
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af20125_d8b6d77b",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-23T18:57:05Z",
+      "side": 1,
+      "message": "Is this also called for the failed navigation? Should we reset load_start_time_ in DidFinishNavigation if NavigationContext::GetError has a non null error?",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00d28ad_146a3536",
+        "filename": "ios/chrome/browser/web/load_timing_tab_helper_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-23T18:57:05Z",
+      "side": 1,
+      "message": "Do you think this will not be flaky?",
+      "range": {
+        "startLine": 36,
+        "startChar": 36,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98388e2d_ec8c9cb6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29738,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-23T18:57:05Z",
+      "side": 1,
+      "message": "Document that metric is reported only for GENERATE and TYPED navigations?",
+      "range": {
+        "startLine": 29738,
+        "startChar": 20,
+        "endLine": 29738,
+        "endChar": 0
+      },
+      "revId": "9d4d94cd24b62a37afb45b74cfbadbb7b270f6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
