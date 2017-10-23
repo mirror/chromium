@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d183c180_0f23bab0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImageResource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-23T12:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e349863_288a2dc0",
+      "revId": "883845cd4b2c79ea2f24d693d7342a4b326f5dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aab45e87_a7b41331",
         "filename": "third_party/WebKit/Source/core/layout/LayoutImageResource.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "10c657a6_a7bd4f76",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImageResource.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-23T12:03:50Z",
+      "side": 1,
+      "message": "Maybe not, but it should definitely be updated...",
+      "parentUuid": "aab45e87_a7b41331",
+      "range": {
+        "startLine": 79,
+        "startChar": 22,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "883845cd4b2c79ea2f24d693d7342a4b326f5dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed75efa2_a0c7bc96",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-20T17:39:07Z",
       "side": 1,
       "message": "Are we losing anything by not returning the broken image here?",
+      "revId": "883845cd4b2c79ea2f24d693d7342a4b326f5dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff88f71f_691e3ef5",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceContent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-23T12:03:50Z",
+      "side": 1,
+      "message": "What we could be losing is something having dimensions or not (NullImage is 0x0.) I\u0027ve however only noticed one case where that could make a difference (see dependency.) In general we shouldn\u0027t show (or use) the \"broken image\" for decorative images or in any way consider it in other cases (and most callsites check ErrorOccurred explicitly.)",
+      "parentUuid": "ed75efa2_a0c7bc96",
       "revId": "883845cd4b2c79ea2f24d693d7342a4b326f5dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
