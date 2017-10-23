@@ -572,6 +572,7 @@ blink_core_sources("css") {
     "properties/longhands/CSSPropertyAPIRadius.cpp",
     "properties/longhands/CSSPropertyAPIRotate.cpp",
     "properties/longhands/CSSPropertyAPIScale.cpp",
+    "properties/longhands/CSSPropertyAPIScrollCustomization.cpp",
     "properties/longhands/CSSPropertyAPIScrollPadding.cpp",
     "properties/longhands/CSSPropertyAPIScrollPaddingBlockEnd.cpp",
     "properties/longhands/CSSPropertyAPIScrollPaddingBlockStart.cpp",
