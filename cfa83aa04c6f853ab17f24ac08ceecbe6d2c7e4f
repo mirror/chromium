@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "94d91e36_d0ab7526",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:44:31Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abc5ef9_871cee89",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:44:31Z",
+      "side": 1,
+      "message": "Would you help me understand why you need to wrapper-trace exclusive_session_? In the first place, who wrapper-traces VRFrameProvider?\n\nI think we can simply remove TraceWrappers from VRFrameProvider since VRSession is traced by V8\u0027s wrappers.",
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9b814e_011e2d2a",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:44:31Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55ee3046_11722fb5",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.h",
         "patchSetId": 7
