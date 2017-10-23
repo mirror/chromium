@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "718a7295_b0a51294",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1585,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T18:46:45Z",
+      "side": 1,
+      "message": "We\u0027re going to experiment with an opt-in/opt-out for Chrome Home, exact launch plans TBD. If the feature is enabled, we show a menu header that says \"You\u0027re using the new Chrome\". When the header is tapped, it launches a dialog that explains what Chrome Home is and gives users the option to turn it off.",
+      "parentUuid": "86d651dc_4523d405",
+      "range": {
+        "startLine": 1585,
+        "startChar": 87,
+        "endLine": 1585,
+        "endChar": 0
+      },
+      "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd6fe98_0db56904",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphMenuHeader.java",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1603dfe3_40c1531b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphMenuHeader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T18:46:45Z",
+      "side": 1,
+      "message": "Nope. Added \"on\".",
+      "parentUuid": "2fd6fe98_0db56904",
+      "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6cfa2272_fddcefdc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphMenuHeader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39762688_eaf2f501",
+      "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97df948b_1dac09a5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb9967c_19f44106",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97df948b_1dac09a5",
+      "revId": "b4d0250bde7a2d5da5f552328a1333fdf96f01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
