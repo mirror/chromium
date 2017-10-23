@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66380ea5_185eef03",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T10:37:03Z",
+      "side": 1,
+      "message": "Note: renamed to follow the google\u0027s style guide (now this became not just an accessor).",
+      "revId": "c74b7573b5aaee3763ddfa2a4519b8a24570aaff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0bfb23_34095045",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T10:37:03Z",
+      "side": 1,
+      "message": "Note: chose to use base::Optional\u003cdouble\u003e to represent invalid value, rather than out-of-range value like -1.\nWe\u0027re migrating GetScreenBrightnessPercentCallback into DBusMethodCallback in a following CL.\nThen, this will be an exact value to be returned.",
+      "revId": "c74b7573b5aaee3763ddfa2a4519b8a24570aaff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
