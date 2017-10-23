@@ -63,6 +63,7 @@ class FakeRendererScheduler : public RendererScheduler {
   bool MainThreadSeemsUnresponsive(
       base::TimeDelta main_thread_responsiveness_threshold) override;
   void SetRendererProcessType(RendererProcessType type) override;
+  void SetPendingDomStorageMessageCount(int pending_count) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeRendererScheduler);

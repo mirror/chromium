@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "content/public/test/browser_test.h"
 #include "headless/public/devtools/domains/emulation.h"
@@ -278,5 +279,55 @@ class FrameDetatchWithPendingResourceLoadVirtualTimeTest
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(
     FrameDetatchWithPendingResourceLoadVirtualTimeTest);
+
+class VirtualTimeDomStorageTest : public VirtualTimeBrowserTest {
+ public:
+  VirtualTimeDomStorageTest() {
+    EXPECT_TRUE(embedded_test_server()->Start());
+    SetInitialURL(embedded_test_server()
+                      ->GetURL("/virtual_time_dom_storage.html")
+                      .spec());
+  }
+
+  void MaybeSetVirtualTimePolicy() override {
+    if (!page_enabled || !runtime_enabled)
+      return;
+
+    // To avoid race conditions start with virtual time paused.
+    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
+        emulation::SetVirtualTimePolicyParams::Builder()
+            .SetPolicy(emulation::VirtualTimePolicy::PAUSE)
+            .SetBudget(4000)
+            .SetMaxVirtualTimeTaskStarvationCount(100)
+            .Build(),
+        base::Bind(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
+                   base::Unretained(this)));
+  }
+
+  void OnConsoleAPICalled(
+      const runtime::ConsoleAPICalledParams& params) override {
+    EXPECT_EQ(runtime::ConsoleAPICalledType::LOG, params.GetType());
+    ASSERT_EQ(1u, params.GetArgs()->size());
+    ASSERT_EQ(runtime::RemoteObjectType::STRING,
+              (*params.GetArgs())[0]->GetType());
+    std::string count_string = (*params.GetArgs())[0]->GetValue()->GetString();
+    int count;
+    ASSERT_TRUE(base::StringToInt(count_string, &count)) << count_string;
+    // We don't care what exact number |count| has as long as it's not too small
+    // or too large.
+    EXPECT_GT(count, 100);
+    EXPECT_LT(count, 1000);
+  }
+
+  // emulation::Observer implementation:
+  void OnVirtualTimeBudgetExpired(
+      const emulation::VirtualTimeBudgetExpiredParams& params) override {
+    // If SetMaxVirtualTimeTaskStarvationCount was not set, this callback would
+    // never fire.
+    FinishAsynchronousTest();
+  }
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeDomStorageTest);
 
 }  // namespace headless
