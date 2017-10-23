@@ -401,6 +401,24 @@
     },
     {
       "key": {
+        "uuid": "b976a87b_95202984",
+        "filename": "ios/chrome/browser/web/external_app_launcher_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-23T17:06:56Z",
+      "side": 1,
+      "message": "If we can not test ExternalApplauncher then we should not test it. Instead we should try to make the minimal possible changes to untestable class and create a new class to test the logic we want. The main values of tests are preventing regressions and validating the architecture. Tests which build backdoors can not accomplish those 2 goals. For example Chrome has Tab unit tests, which never caught any regressions during my refactoring, but same tests aways fail during implementation changes and require changes. Those Tab tests bring more harm than value, and for that reason I don\u0027t think we should test ExternalAppLauncher in this CL.",
+      "parentUuid": "abf41482_e12bc0ed",
+      "revId": "cf7c8b0f9035cc10ccc13d09d2b4369bbaa50ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1570fa4f_b2f2e9f1",
         "filename": "ios/chrome/browser/web/external_application_state.h",
         "patchSetId": 8
