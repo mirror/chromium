@@ -16,6 +16,24 @@
       "revId": "e04445861fe2f31fe5a9130321cc9933ce59c841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0009546b_e632a44b",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-23T03:40:41Z",
+      "side": 1,
+      "message": "Yeah, good point. I got confused by what the update vs finish interaction was.\n\nDone.",
+      "parentUuid": "e8dd747c_74de2a66",
+      "revId": "e04445861fe2f31fe5a9130321cc9933ce59c841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
