@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66f7f8d8_f061d45d",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is a bug in the component updater itself. My initial version of this source file had a slight bug, where I mistakenly initialized only the first 24 bytes of  kPublicKeySHA256 (hence the last 8 bytes were all zero). What happened was that:\n\n- Since this didn\u0027t change the CRX ID at all, the update check and download occurred as\n  expected. The content matched the SHA256 in the Omaha answer as well.\n\n- crx_file::Verify() failed (returning VerifierResult::ERROR_REQUIRED_PROOF_MISSING),\n  but its caller didn\u0027t propagate the error.\n\n- This happened in an update operation that also downloaded other components correctly\n  (even though I only asked for an OnDemandUpdate() for the DownloadableStringsComponent),\n  which did download / install correctly though.\n\n  And since it was a bug in my code, I\u0027m not sure it technically qualifies as a bug in\n  the updater code per se.\n\nFor the record, I tried to follow the code after the crx_file::Verify() failure, it looks like it ends up into Component::StateRun::ActionRunComplete(), which seems to record the error codes to send them back to the Update servers, but them drops them completely. However, I\u0027m not 100% sure of what\u0027s going on here.\n\nI can probably setup a reproducible test case if you\u0027re interested. In the meantime the current code is here to detect this edge case.\n\n[1] https://cs.chromium.org/chromium/src/components/update_client/component.cc?gsn\u003dcallback_\u0026l\u003d752\n[2] https://cs.chromium.org/chromium/src/components/update_client/protocol_builder.cc?l\u003d169\u0026gsn\u003dBuildActionRunEventElement",
+      "parentUuid": "b423e668_374a029c",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f81bfc6_9e1fc05a",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "888ffdf0_53fba0f7",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f81bfc6_9e1fc05a",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ebb268e_259dc583",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-20T18:30:13Z",
       "side": 1,
       "message": "Chromium style prefers the assignment syntax for direct initialization: https://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts",
+      "range": {
+        "startLine": 137,
+        "startChar": 20,
+        "endLine": 137,
+        "endChar": 21
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678ffe07_ac96f25c",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "The assignment form actually doesn\u0027t compile\n(no viable conversion from const base::StringPiece to std::string) :-(",
+      "parentUuid": "3ebb268e_259dc583",
       "range": {
         "startLine": 137,
         "startChar": 20,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "26c49c90_16d65438",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "759cd1a6_ea87379a",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 20
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4475d7c_d7d3b495",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 3
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c6a1f960_14b97c86",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4475d7c_d7d3b495",
+      "range": {
+        "startLine": 198,
+        "startChar": 20,
+        "endLine": 198,
+        "endChar": 30
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3a98882_fe2b98cf",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 3
@@ -122,6 +236,24 @@
       "writtenOn": "2017-10-20T18:30:13Z",
       "side": 1,
       "message": "what is the purpose of the empty block here?",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb6c3a0_898bc12b",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Suggested by a compiler warning when I initially wrote \"default: ;\", which I tend to use from previous projects. However, I\u0027ve replaced that with a \"break\", since this is more consistent with our coding style. Thanks for spotting this!",
+      "parentUuid": "e3a98882_fe2b98cf",
       "revId": "cfd966692119fedffce52dead504db80f6b328e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "c5093bc9_ac46f66f",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a073c803_18e31fb9",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8baf115_6d3cfcc7",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 3
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "56c56a48_054c8472",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Yes, I added a const here.",
+      "parentUuid": "e8baf115_6d3cfcc7",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8aa7623c_57f259cb",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 3
@@ -173,6 +341,30 @@
       "writtenOn": "2017-10-20T18:30:13Z",
       "side": 1,
       "message": "what is the meaning of this magic const?",
+      "range": {
+        "startLine": 232,
+        "startChar": 30,
+        "endLine": 232,
+        "endChar": 31
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a162d2b_23a378af",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "I\u0027ve added a much more explicative comment in the newest patch. In a nutshell: we only care about the first 3 digits, and should ignore the rest.",
+      "parentUuid": "8aa7623c_57f259cb",
       "range": {
         "startLine": 232,
         "startChar": 30,
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "ff05a0b8_777cf305",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f32b4371_8a6ba27b",
+      "range": {
+        "startLine": 240,
+        "startChar": 16,
+        "endLine": 240,
+        "endChar": 31
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a561a3_165feb10",
         "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
         "patchSetId": 3
@@ -228,6 +444,30 @@
       "revId": "cfd966692119fedffce52dead504db80f6b328e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b129d3f_1ed198fa",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a561a3_165feb10",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 8
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "25a0b5c9_a5bf89a9",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "459d972a_90717f0f",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05d44d54_5ac5ceec",
         "filename": "components/crx_file/id_util.cc",
         "patchSetId": 3
@@ -268,6 +532,24 @@
       "revId": "cfd966692119fedffce52dead504db80f6b328e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d967a8_59266df5",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d44d54_5ac5ceec",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +570,24 @@
     },
     {
       "key": {
+        "uuid": "d1748a02_79305431",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "affa31e2_d7205cba",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a725dad8_33d5e554",
         "filename": "components/crx_file/id_util.cc",
         "patchSetId": 3
@@ -305,6 +605,24 @@
     },
     {
       "key": {
+        "uuid": "64261ac5_9d159ee7",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a725dad8_33d5e554",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42421a75_0284d55f",
         "filename": "components/update_client/utils.cc",
         "patchSetId": 3
@@ -319,6 +637,24 @@
       "revId": "cfd966692119fedffce52dead504db80f6b328e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db43fc06_2c4dffa6",
+        "filename": "components/update_client/utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-23T09:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42421a75_0284d55f",
+      "revId": "cfd966692119fedffce52dead504db80f6b328e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
