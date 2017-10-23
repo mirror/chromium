@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71bd330d_767d39f2",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:28:56Z",
+      "side": 1,
+      "message": "Can you add tests for this logic?",
+      "revId": "9c92c190e961dfb73cfadf6e55fbe012874b309d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041eface_d6a60a46",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:28:56Z",
+      "side": 1,
+      "message": "Can you add tests for the fallback/baseline logic?",
+      "revId": "9c92c190e961dfb73cfadf6e55fbe012874b309d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1e2002_74f5e290",
+        "filename": "third_party/WebKit/common/origin_manifest/origin_manifest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:28:56Z",
+      "side": 1,
+      "message": "Nit: Sorry I missed this on the first pass. This `bool` should also be an `enum`. Perhaps:\n\n```\nenum class FallbackDisposition {\n  kBaselineOnly,\n  kIncludeFallbacks,\n};\n```\n\n?",
+      "revId": "9c92c190e961dfb73cfadf6e55fbe012874b309d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
