@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "027f48ad_dfaa24b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Too long :-P",
+      "parentUuid": "fe23f365_bf226e58",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35a9a798_0b0f0b07",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d058d00c_411737ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a9a798_0b0f0b07",
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e551c275_ad7dfa6e",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6421c82_a36cc6e8",
+      "range": {
+        "startLine": 343,
+        "startChar": 54,
+        "endLine": 343,
+        "endChar": 56
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1d1a1b1_33ed618c",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e8da9bae_af37048c",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d1a1b1_33ed618c",
+      "range": {
+        "startLine": 474,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 57
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40924bb1_437fa6aa",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2017-10-23T14:49:37Z",
       "side": 1,
       "message": "I\u0027m confused between these items. Is one the Google management domain and the other the AD domain? Can you think of better names? Also, name the strings similar to the keys if possible to avoid confusion.",
+      "range": {
+        "startLine": 512,
+        "startChar": 0,
+        "endLine": 514,
+        "endChar": 1
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34931a4_ac9728d4",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "One is management realm. the other comes from policy https://cs.chromium.org/chromium/src/components/policy/proto/device_management_backend.proto?type\u003dcs\u0026q\u003dfile:device_management_backend.proto+display_domain\u0026sq\u003dpackage:chromium\u0026l\u003d451\n\nYou think I should rename management_realm_ to enterprise_enrollment_domain_?",
+      "parentUuid": "40924bb1_437fa6aa",
       "range": {
         "startLine": 512,
         "startChar": 0,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "2f0a895c_83e47617",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Yep. This is the only way to run OnceCallbacks.",
+      "parentUuid": "e6bd5f53_626f4a58",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 23
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d19bf2a1_07587055",
         "filename": "chromeos/dbus/fake_auth_policy_client.cc",
         "patchSetId": 1
@@ -145,6 +283,30 @@
       "writtenOn": "2017-10-23T14:49:37Z",
       "side": 1,
       "message": "Can you use an explicit bool here (\u0027device_policy_stored_\u0027)? Relying on clearing the machine name is pretty fragile as someone might need the name somewhere else and remove the clear() below.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 30
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2009916_4fe46cbd",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "I did this just because we have machine name just after JoinAdDomain. We should store it into Device Policy and not overwrite later. If we store it multiple times - it\u0027s ok. It used to be that way.",
+      "parentUuid": "d19bf2a1_07587055",
       "range": {
         "startLine": 161,
         "startChar": 0,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "6e7de3b1_59dee83f",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Yep",
+      "parentUuid": "19792af7_13e7eaf1",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 24
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c14680ba_f404d061",
         "filename": "chromeos/dbus/fake_auth_policy_client.cc",
         "patchSetId": 1
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "f8bb3f95_93c7a40b",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c14680ba_f404d061",
+      "range": {
+        "startLine": 184,
+        "startChar": 1,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ad34e7_adcfaed9",
         "filename": "chromeos/dbus/fake_auth_policy_client.cc",
         "patchSetId": 1
@@ -214,6 +424,30 @@
       "writtenOn": "2017-10-23T14:49:37Z",
       "side": 1,
       "message": "Why do you store device policy only once, but user policy every time?",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 45
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61f7500_739bf703",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Device policy is only one. User policies exist for every user. Also we don\u0027t know machine name after the first device policy store. We could retrieve it though...",
+      "parentUuid": "d7ad34e7_adcfaed9",
       "range": {
         "startLine": 208,
         "startChar": 0,
@@ -246,6 +480,30 @@
       "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9931bbe_4180ac78",
+        "filename": "components/policy/core/common/policy_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-23T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fe87692_02361b36",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 34
+      },
+      "revId": "5215e000b2d34f2368fa018c7369bc9abac4cf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
