@@ -22,6 +22,30 @@
       "revId": "ae179719612d560ad60beb859bc4dfa8f0077efe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27526a96_2f0fbbcb",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_metadata.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-23T18:09:46Z",
+      "side": 1,
+      "message": "This one is similar to frame_token. 0 value means invalid token. I think both with or without optional make sense to me.\nAnd in this structure, many fields can be optional. (for example, selection, content_source_id, frame_token, etc) \nTo keep them consistent and code simpler, I feel without optional is light better. WDYT?",
+      "parentUuid": "d461d48a_d6000fc8",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "ae179719612d560ad60beb859bc4dfa8f0077efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
