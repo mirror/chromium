@@ -1,3 +1,5 @@
+CONSOLE WARNING: line 979: Heap snapshot: 7 nodes are unreachable from the root. Following nodes have only weak retainers:
+   @2805  weak retainers: (Global handles)@29.59
 Test that event listeners not user reachable from the root are still present in the class list.
 
 PASS: the class name is found
