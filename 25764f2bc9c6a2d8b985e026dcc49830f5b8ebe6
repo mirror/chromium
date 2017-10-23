@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6792c37b_af227db9",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T16:10:10Z",
+      "side": 1,
+      "message": "One more thought: if you\u0027re trying with a new profile, you\u0027re not going to see any suggestions.  Yes, I know the NTP will have tiles, mostly from prepopulated stuff that comes from the server.  But the zero suggest suggestions are from most visited, which is purely client-side.  So you have visited things several times on the client in various manners, it won\u0027t have anything for you.",
+      "parentUuid": "f55cc13d_78391182",
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5c3a76_46b0ac90",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 1
