@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f162c821_20f504e9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-23T23:32:08Z",
+      "side": 1,
+      "message": "I\u0027m still confused why this change makes a difference. nextAtGranularity should be called when moving forward and not backward, right?\nAlso, any reason why you are using |mSelectionStartIndex| vs |mSelectionEndIndex| here? Seems like you should change previousAtGranularity to move with cursor_index set to |mSelectionStartIndex|.",
+      "revId": "2661165ee08a8ca8cffee5e254616069e894a300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
