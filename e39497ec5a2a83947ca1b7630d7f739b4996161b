@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3afff39a_0747ad45",
+        "filename": "chrome/android/java/res/layout/infobar_control_url_ellipsizer.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-23T23:19:11Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 86
+      },
+      "revId": "e39497ec5a2a83947ca1b7630d7f739b4996161b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
