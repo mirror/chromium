@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "441510f8_3003216e",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-23T18:54:25Z",
+      "side": 1,
+      "message": "nit: suers try -\u003e user tries",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332f94f3_d2fc401d",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-23T18:54:25Z",
+      "side": 1,
+      "message": "put this in the else {}.",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199dbeb7_f291e11a",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-23T18:54:25Z",
+      "side": 1,
+      "message": "What if the text (or translated text) can\u0027t fix into the bounds?",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99556629_7416941d",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2565,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-23T18:54:25Z",
+      "side": 1,
+      "message": "prefer to use EXPECT so that the test can continue even this line fails.",
+      "revId": "365ec023f4106b277ffd83a22c44c97dbd014d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
