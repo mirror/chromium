@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e87da658_5cf97bfb",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "dc15ff67_5a327335",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d168fb24_86fa8f05",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f822cfd_7f420fc3",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d168fb24_86fa8f05",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4d57034a_eca41598",
+        "filename": "ash/metrics/login_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. It does look better!",
+      "parentUuid": "cc8a4f9d_1df9f259",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a153337_75ccd2bd",
         "filename": "ash/metrics/login_metrics_recorder.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd34861_496d7440",
+        "filename": "ash/metrics/login_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a153337_75ccd2bd",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "92562622_47ea284c",
+        "filename": "ash/metrics/login_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Thanks for the information! It is more about the showing relative counts to compare the usage of shelf buttons in the lock screen. So I will keep it as is.",
+      "parentUuid": "e09458fe_8444ef1c",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71254dcd_853940fb",
         "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
         "patchSetId": 6
@@ -137,6 +227,24 @@
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9091ca_b4e8a33d",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71254dcd_853940fb",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "e13823de_4ca40fcd",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53c8512_696119ea",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4502018_53a6ff92",
         "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
         "patchSetId": 6
@@ -171,6 +297,24 @@
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560cdbc1_021a5f8f",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Unfortunately compiler still needs LoginMetricsRecorder:: prefix. I\u0027ve added helper functions to make some lines shorter.",
+      "parentUuid": "a4502018_53a6ff92",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "5bfa70fa_7ee6a31c",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4b69996_7aa7edde",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "735e0a6e_5e4acb2e",
         "filename": "ash/metrics/user_metrics_recorder.cc",
         "patchSetId": 6
@@ -202,6 +364,24 @@
       "writtenOn": "2017-10-20T01:18:27Z",
       "side": 1,
       "message": "Why do you need the HasInstance() check? This object is owned by Shell, so it seems unlikely anyone could access it without a Shell instance. If you must do this, document why.",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2962d3_0297c31b",
+        "filename": "ash/metrics/user_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "This is a static function that could be accessed before the object is initialized?",
+      "parentUuid": "735e0a6e_5e4acb2e",
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -225,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "fb890c7f_9975c4a8",
+        "filename": "ash/metrics/user_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb69ab47_bc6a65fa",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a70e402_d5ecdfc4",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 6
@@ -239,6 +437,24 @@
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a4e9b9_fa92825b",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-10-23T18:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a70e402_d5ecdfc4",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
