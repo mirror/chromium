@@ -16,14 +16,18 @@ import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
 import org.chromium.chrome.browser.suggestions.MostVisitedSites;
 import org.chromium.chrome.browser.suggestions.SiteSuggestion;
+import org.chromium.chrome.test.util.browser.offlinepages.FakeOfflinePageBridge;
 import org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils;
 import org.chromium.chrome.test.util.browser.suggestions.DummySuggestionsEventReporter;
 import org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedSites;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -44,15 +48,24 @@ public class NtpUiCaptureTestData {
     private static final String SHOP_PUBLISHER = "Shop.rr";
     private static final String ENTERTAINMENT_PUBLISHER = "Now Entertainment";
 
+    private static final String QUERIES_SITE_URL = "https://example.com/queries";
+    private static final String SPORTS_SITE_URL = "https://example.com/sports";
+    private static final String MEME_SITE_URL = "https://example.com/meme";
+    private static final String FACTS_SITE_URL = "https://example.com/facts";
+    private static final String NEWS_SITE_URL = "https://example.com/news";
+    private static final String TECH_SITE_URL = "https://example.com/tech";
+    private static final String SHOP_SITE_URL = "https://example.com/shop";
+    private static final String ENTERTAINMENT_SITE_URL = "https://example.com/entertainment";
+
     private static final SiteSuggestion[] SITE_SUGGESTIONS = {
-            createSiteSuggestion(QUERIES_PUBLISHER, "queries"),
-            createSiteSuggestion(SPORTS_PUBLISHER, "sports"),
-            createSiteSuggestion(MEME_PUBLISHER, "meme"),
-            createSiteSuggestion(FACTS_PUBLISHER, "facts"),
-            createSiteSuggestion(NEWS_PUBLISHER, "news"),
-            createSiteSuggestion(TECH_PUBLISHER, "tech"),
-            createSiteSuggestion(SHOP_PUBLISHER, "shop"),
-            createSiteSuggestion(ENTERTAINMENT_PUBLISHER, "movies")};
+            createSiteSuggestion(QUERIES_PUBLISHER, QUERIES_SITE_URL),
+            createSiteSuggestion(SPORTS_PUBLISHER, SPORTS_SITE_URL),
+            createSiteSuggestion(MEME_PUBLISHER, MEME_SITE_URL),
+            createSiteSuggestion(FACTS_PUBLISHER, FACTS_SITE_URL),
+            createSiteSuggestion(NEWS_PUBLISHER, NEWS_SITE_URL),
+            createSiteSuggestion(TECH_PUBLISHER, TECH_SITE_URL),
+            createSiteSuggestion(SHOP_PUBLISHER, SHOP_SITE_URL),
+            createSiteSuggestion(ENTERTAINMENT_PUBLISHER, ENTERTAINMENT_SITE_URL)};
 
     /** Grey, the default fallback color as defined in fallback_icon_style.cc. */
     private static final int DEFAULT_ICON_COLOR = 0xff787878;
@@ -84,11 +97,12 @@ public class NtpUiCaptureTestData {
     private static final SnippetArticle[] FAKE_ARTICLE_SUGGESTIONS = new SnippetArticle[] {
             new SnippetArticle(KnownCategories.ARTICLES, "suggestion0",
                     "James Roderick to step down as conductor for Laville orchestra after 5 years",
-                    NEWS_PUBLISHER, "http://example.com", getTimestamp(2017, Calendar.JUNE, 1),
-                    0.0f, 0L, false, /* thumbnailDominantColor = */ null),
+                    NEWS_PUBLISHER, "http://example.com/conductor",
+                    getTimestamp(2017, Calendar.JUNE, 1), 0.0f, 0L, false,
+                    /* thumbnailDominantColor = */ null),
             new SnippetArticle(KnownCategories.ARTICLES, "suggestion1",
                     "Boy raises orphaned goat on love and pancakes", MEME_PUBLISHER,
-                    "http://example.com", getTimestamp(2017, Calendar.JANUARY, 30), 0.0f, 0L, false,
+                    "http://example.com", getTimestamp(2017, Calendar.JANUARY, 30), 0.0f, 0L, true,
                     /* thumbnailDominantColor = */ null),
             new SnippetArticle(KnownCategories.ARTICLES, "suggestion2",
                     "Top gigs this week in your city", ENTERTAINMENT_PUBLISHER,
@@ -107,7 +121,7 @@ public class NtpUiCaptureTestData {
                     /* thumbnailDominantColor = */ null),
             new SnippetArticle(KnownCategories.ARTICLES, "suggestion6",
                     "Report finds that freelancers are happier", ENTERTAINMENT_PUBLISHER,
-                    "http://example.com", getTimestamp(2017, Calendar.JANUARY, 30), 0.0f, 0L, false,
+                    "http://example.com", getTimestamp(2017, Calendar.JANUARY, 30), 0.0f, 0L, true,
                     /* thumbnailDominantColor = */ null),
             new SnippetArticle(KnownCategories.ARTICLES, "suggestion7",
                     "Dog denies eating the cookies", MEME_PUBLISHER, "http://example.com",
@@ -140,9 +154,13 @@ public class NtpUiCaptureTestData {
                 KnownCategories.ARTICLES, Arrays.asList(FAKE_ARTICLE_SUGGESTIONS));
         suggestionsSource.setFaviconForId("suggestion0", NEWS_ICON);
         suggestionsSource.setThumbnailForId("suggestion0", "/android/UiCapture/conductor.jpg");
+        suggestionsSource.setFaviconForId("suggestion1", MEME_ICON);
+        suggestionsSource.setThumbnailForId("suggestion1", "/android/UiCapture/goat.jpg");
         suggestionsSource.setFaviconForId("suggestion2", ENTERTAINMENT_ICON);
         suggestionsSource.setThumbnailForId("suggestion2", "/android/UiCapture/gig.jpg");
+        suggestionsSource.setFaviconForId("suggestion3", MEME_ICON);
         suggestionsSource.setThumbnailForId("suggestion3", "/android/UiCapture/bench.jpg");
+        suggestionsSource.setThumbnailForId("suggestion4", "/android/UiCapture/soldiers.jpg");
         suggestionsSource.setFaviconForId("suggestion5", NEWS_ICON);
         suggestionsSource.setThumbnailForId("suggestion5", "/android/UiCapture/violin.jpg");
         suggestionsSource.setFaviconForId("suggestion6", ENTERTAINMENT_ICON);
@@ -204,6 +222,17 @@ public class NtpUiCaptureTestData {
         };
     }
 
+    private static OfflinePageBridge createOfflinePageBridge() {
+        FakeOfflinePageBridge bridge = new FakeOfflinePageBridge();
+        List<OfflinePageItem> items = new ArrayList<>();
+        items.add(FakeOfflinePageBridge.createOfflinePageItem(SITE_SUGGESTIONS[6].url, 42L));
+        items.add(FakeOfflinePageBridge.createOfflinePageItem(
+                FAKE_ARTICLE_SUGGESTIONS[0].getUrl(), 43L));
+        bridge.setItems(items);
+        bridge.setIsOfflinePageModelLoaded(true);
+        return bridge;
+    }
+
     public static SuggestionsDependenciesRule.TestFactory createFactory() {
         SuggestionsDependenciesRule.TestFactory result =
                 new SuggestionsDependenciesRule.TestFactory();
@@ -211,6 +240,7 @@ public class NtpUiCaptureTestData {
         result.eventReporter = new DummySuggestionsEventReporter();
         result.largeIconBridge = createLargeIconBridge();
         result.mostVisitedSites = createMostVisitedSites();
+        result.offlinePageBridge = createOfflinePageBridge();
         return result;
     }
 
