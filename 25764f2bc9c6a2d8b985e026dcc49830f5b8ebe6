@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f7e0426f_fdf9125e",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-23T17:09:09Z",
+      "side": 1,
+      "message": "Thanks for the suggestions but I expected and encountered each of those limitations when I initially just turned it on without the flag. It turns out that these command-line flags just aren\u0027t processed on iOS. (The Finch configs are, obviously, just not --force-fieldtrial[s|-params].)\n\nFeature command-line invocations are, though, so I think what I need to do is add a Feature to control loading the provider on iOS instead. While I\u0027m at it, I propose removing OmniboxFieldTrial::InZeroSuggestFieldTrial() since it\u0027s always true on all other platforms and kZeroSuggestRule isn\u0027t being specified in any field trial configs. What do you think?",
+      "parentUuid": "6792c37b_af227db9",
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5c3a76_46b0ac90",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 1
@@ -66,6 +84,30 @@
       "writtenOn": "2017-10-23T04:45:18Z",
       "side": 1,
       "message": "BTW, don\u0027t you need an #else for desktop platforms?",
+      "range": {
+        "startLine": 333,
+        "startChar": 6,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6443897e_4499d935",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-23T17:09:09Z",
+      "side": 1,
+      "message": "Oops, yeah, will fix.",
+      "parentUuid": "4f5c3a76_46b0ac90",
       "range": {
         "startLine": 333,
         "startChar": 6,
