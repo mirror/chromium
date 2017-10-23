@@ -11,6 +11,7 @@
   // https://w3c.github.io/webrtc-pc/archives/20171002/webrtc.html
 
   // The following helper functions are called from RTCPeerConnection-helper.js:
+  //   expectCalled
   //   getUserMediaTracksAndStreams
   //   performOffer
   //   Resolver
@@ -23,35 +24,35 @@
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(1)
-    .then(t.step_func(([tracks, streams]) => {
+    .then(expectCalled(t, ([tracks, streams]) => {
       let localTrack = tracks[0];
       caller.addTrack(localTrack);
       let offerPromise = performOffer(caller, callee);
-      callee.ontrack = t.step_func(trackEvent => {
+      callee.ontrack = expectCalled(t, trackEvent => {
         let remoteTrack = trackEvent.track;
         assert_equals(remoteTrack.id, localTrack.id,
                       'Expected local and remote track IDs to match.');
         assert_equals(trackEvent.streams.length, 0,
                       'Expected remote track not to belong to a stream.');
         t.done();
-      });
+      }, 1000, 'Expected callee.ontrack to fire but it timed out.');
       return offerPromise;
-    }))
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
-  }, 'addTrack with a track and no stream makes ontrack fire with a track and no stream.');
+  }, 'addTrack() with a track and no stream makes ontrack fire with a track and no stream.');
 
   async_test(t => {
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(1)
-    .then(t.step_func(([tracks, streams]) => {
+    .then(expectCalled(t, ([tracks, streams]) => {
       let localTrack = tracks[0];
       let localStream = streams[0];
       caller.addTrack(localTrack, localStream);
       let offerPromise = performOffer(caller, callee);
-      callee.ontrack = t.step_func(trackEvent => {
+      callee.ontrack = expectCalled(t, trackEvent => {
         assert_equals(trackEvent.streams.length, 1,
                       'Expected track event to fire with a single stream.');
         let remoteTrack = trackEvent.track;
@@ -63,26 +64,26 @@
         assert_array_equals(remoteStream.getTracks(), [remoteTrack],
                             'Expected the remote stream\'s tracks to be the remote track.');
         t.done();
-      });
+      }, 1000, 'Expected callee.ontrack to fire but it timed out.');
       return offerPromise;
-    }))
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
-  }, 'addTrack with a track and a stream makes ontrack fire with a track and a stream.');
+  }, 'addTrack() with a track and a stream makes ontrack fire with a track and a stream.');
 
   async_test(t => {
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(2)
-    .then(t.step_func(([tracks, streams]) => {
+    .then(expectCalled(t, ([tracks, streams]) => {
       let localTrack1 = tracks[0];
       let localTrack2 = tracks[1];
       let localStream = streams[0];
       caller.addTrack(localTrack1, localStream);
       caller.addTrack(localTrack2, localStream);
       let offerPromise = performOffer(caller, callee);
-      callee.ontrack = t.step_func(trackEvent => {
+      callee.ontrack = expectCalled(t, trackEvent => {
         assert_equals(trackEvent.streams.length, 1,
                       'Expected track event to fire with a single stream.');
         let remoteTrack1 = trackEvent.track;
@@ -91,7 +92,7 @@
                       'Expected first remote track ID to match first local track ID.');
         assert_equals(remoteStream.getTracks().length, 2,
                       'Expected the remote stream to contain two tracks.');
-        callee.ontrack = t.step_func(trackEvent => {
+        callee.ontrack = expectCalled(t, trackEvent => {
           assert_equals(trackEvent.streams.length, 1,
                         'Expected track event to fire with a single stream.');
           let remoteTrack2 = trackEvent.track;
@@ -104,25 +105,25 @@
           assert_array_equals(remoteStream.getTracks(), [remoteTrack1, remoteTrack2],
                               'Expected the remote stream\'s tracks to be the [first, second] remote tracks.');
           t.done();
-        });
-      });
+        }, 1000, 'Expected callee.ontrack to be called a second time but timed out.');
+      }, 1000, 'Expected callee.ontrack to fire but it timed out.');
       return offerPromise;
-    }))
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
-  }, 'addTrack with two tracks and one stream makes ontrack fire twice with the tracks and shared stream.');
+  }, 'addTrack() with two tracks and one stream makes ontrack fire twice with the tracks and shared stream.');
 
   async_test(t => {
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(2)
-    .then(t.step_func(([tracks, streams]) => {
+    .then(expectCalled(t, ([tracks, streams]) => {
       let localTrack = tracks[0];
       let localStreams = streams;
       caller.addTrack(localTrack, localStreams[0], localStreams[1]);
       let performOffer = performOffer(caller, callee);
-      callee.ontrack = t.step_func(trackEvent => {
+      callee.ontrack = expectCalled(t, trackEvent => {
         assert_equals(trackEvent.streams.length, 2,
                       'Expected the track event to fire with two streams.');
         let remoteTrack = trackEvent.track;
@@ -138,20 +139,20 @@
         assert_array_equals(remoteStreams[1].getTracks(), [remoteTrack],
                             'Expected the remote stream\'s tracks to be the remote track.');
         t.done();
-      });
+      }, 1000, 'Expected callee.ontrack to fire but it timed out.');
       return performOffer;
-    }))
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
-  }, 'addTrack with a track and two streams makes ontrack fire with a track and two streams.');
+  }, 'addTrack() with a track and two streams makes ontrack fire with a track and two streams.');
 
   async_test(t => {
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     let eventSequence = '';
     return getUserMediaTracksAndStreams(1)
-    .then(t.step_func(([tracks, streams]) => {
+    .then(expectCalled(t, ([tracks, streams]) => {
       caller.addTrack(tracks[0]);
       let ontrackResolver = new Resolver();
       callee.ontrack = () => {
@@ -164,11 +165,11 @@
           eventSequence += 'setRemoteDescription;';
         })
       ]);
-    }))
-    .then(t.step_func(() => {
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
+    .then(expectCalled(t, () => {
       assert_equals(eventSequence, 'ontrack;setRemoteDescription;');
       t.done();
-    }))
+    }, 1000, 'Expected ontrack to fire and performOffer()\'s promise to resolve but timed out.'))
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
@@ -178,15 +179,15 @@
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(1)
-    .then(t.step_func(([tracks, streams]) => {
+    .then(expectCalled(t, ([tracks, streams]) => {
       caller.addTrack(tracks[0]);
       let offerPromise = performOffer(caller, callee);
-      callee.ontrack = t.step_func(trackEvent => {
+      callee.ontrack = expectCalled(t, trackEvent => {
         assert_array_equals(callee.getReceivers(), [trackEvent.receiver]);
         t.done();
-      });
+      }, 1000, 'Expected callee.ontrack to fire but it timed out.');
       return offerPromise;
-    }))
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
@@ -196,27 +197,78 @@
     const caller = new RTCPeerConnection();
     const callee = new RTCPeerConnection();
     return getUserMediaTracksAndStreams(1)
-    .then(t.step_func(([tracks, streams]) => {
+    .then(expectCalled(t, ([tracks, streams]) => {
       let sender = caller.addTrack(tracks[0]);
       assert_true(sender != null);
       let offerPromise = performOffer(caller, callee);
-      callee.ontrack = t.step_func(trackEvent => {
+      callee.ontrack = expectCalled(t, trackEvent => {
         let receivers = callee.getReceivers();
         assert_equals(receivers.length, 1,
                       'Expected getReceivers() to be the track event\'s receiver.');
         caller.removeTrack(sender);
         performOffer(caller, callee)
-        .then(t.step_func(() => {
+        .then(expectCalled(t, () => {
           assert_array_equals(callee.getReceivers(), receivers,
                               'Expected the set of receivers to remain the same.');
           t.done();
-        }));
-      });
+        }, 1000, 'Expected performOffer()\'s promise to resolve but it timed out.'));
+      }, 1000, 'Expected callee.ontrack to fire but it timed out.');
       return offerPromise;
-    }))
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
     .catch(t.step_func(reason => {
       assert_unreached(reason);
     }));
-  }, 'removeTrack does not remove the receiver.');
+  }, 'removeTrack() does not remove the receiver.');
+
+  async_test(t => {
+    const caller = new RTCPeerConnection();
+    const callee = new RTCPeerConnection();
+    return getUserMediaTracksAndStreams(1)
+    .then(expectCalled(t, ([tracks, streams]) => {
+      let sender = caller.addTrack(tracks[0], streams[0]);
+      assert_true(sender != null);
+      let offerPromise = performOffer(caller, callee);
+      callee.ontrack = expectCalled(t, trackEvent => {
+        assert_not_equals(trackEvent.track, null);
+        assert_equals(trackEvent.streams.length, 1);
+        assert_true(trackEvent.streams[0].getTracks().includes(trackEvent.track));
+        caller.removeTrack(sender);
+        performOffer(caller, callee);
+        trackEvent.streams[0].onremovetrack = expectCalled(t, removeEvent => {
+          assert_equals(removeEvent.track, trackEvent.track);
+          assert_false(trackEvent.streams[0].getTracks().includes(trackEvent.track));
+          t.done();
+        }, 1000, 'Expected stream\'s onremovetrack to fire but it timed out.');
+      }), 1000, 'Expected callee.ontrack to fire but it timed out.';
+      return offerPromise;
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
+    .catch(t.step_func(reason => {
+      assert_unreached(reason);
+    }));
+  }, 'removeTrack() causes onremovetrack and the track to be removed from the stream.');
+
+  async_test(t => {
+    const caller = new RTCPeerConnection();
+    const callee = new RTCPeerConnection();
+    return getUserMediaTracksAndStreams(1)
+    .then(expectCalled(t, ([tracks, streams]) => {
+      let sender = caller.addTrack(tracks[0]);
+      assert_true(sender != null);
+      let offerPromise = performOffer(caller, callee);
+      callee.ontrack = expectCalled(t, trackEvent => {
+        assert_not_equals(trackEvent.track, null);
+        caller.removeTrack(sender);
+        performOffer(caller, callee);
+        trackEvent.track.onmute = expectCalled(t, () => {
+          assert_true(trackEvent.track.muted);
+          t.done();
+        }, 1000, 'Expected track\'s onmute to fire but it timed out.');
+      }), 1000, 'Expected callee.ontrack to fire but it timed out.';
+      return offerPromise;
+    }, 1000, 'Expected getUserMediaTracksAndStreams()\'s promise to resolve but it timed out.'))
+    .catch(t.step_func(reason => {
+      assert_unreached(reason);
+    }));
+  }, 'removeTrack() causes onmute and the track to be muted.');
 
 </script>
