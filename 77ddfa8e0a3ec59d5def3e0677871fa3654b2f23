@@ -94,6 +94,30 @@
       "revId": "77ddfa8e0a3ec59d5def3e0677871fa3654b2f23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ee349e_dd27fbcf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-23T08:52:14Z",
+      "side": 1,
+      "message": "If you don\u0027t mind :)",
+      "parentUuid": "5cadc7f2_360be54f",
+      "range": {
+        "startLine": 672,
+        "startChar": 12,
+        "endLine": 672,
+        "endChar": 32
+      },
+      "revId": "77ddfa8e0a3ec59d5def3e0677871fa3654b2f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
