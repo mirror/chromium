@@ -9,10 +9,15 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "base/values.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
+
+namespace base {
+class WaitableEvent;
+}  // namespace base
 
 namespace tracing {
 
@@ -56,6 +61,8 @@ class Recorder : public mojom::Recorder {
   bool is_recording() const { return is_recording_; }
   mojom::TraceDataType data_type() const { return data_type_; }
 
+  void ShutdownOnBackgroundThread(base::WaitableEvent* completion);
+
  private:
   friend class RecorderTest;  // For testing.
   // mojom::Recorder
@@ -76,6 +83,8 @@ class Recorder : public mojom::Recorder {
   scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
   mojo::Binding<mojom::Recorder> binding_;
 
+  base::WeakPtrFactory<Recorder> background_weak_ptr_factory_;
+  base::WeakPtrFactory<Recorder> ui_weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(Recorder);
 };
 
