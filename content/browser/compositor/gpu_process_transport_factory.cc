@@ -428,7 +428,8 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       {
         // Note: If context is lost, we delete reference after releasing the
         // lock.
-        base::AutoLock lock(*shared_worker_context_provider_->GetLock());
+        viz::ContextProvider::ScopedContextLock lock(
+            shared_worker_context_provider_.get());
         lost = shared_worker_context_provider_->ContextGL()
                    ->GetGraphicsResetStatusKHR() != GL_NO_ERROR;
       }
