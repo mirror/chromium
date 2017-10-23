@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac59eb20_6aceacf7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T00:10:42Z",
+      "side": 1,
+      "message": "Persistence.FileSystemWorkspaceBinding._binaryExtensions has more binary extensions.",
+      "revId": "8e71f674274c6b908c84f47cddcef06da5b06f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67d753c_175897c5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T00:10:42Z",
+      "side": 1,
+      "message": "I am worried this non-backwards-compatible change could break something, e.g. application panel previews.",
+      "revId": "8e71f674274c6b908c84f47cddcef06da5b06f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
