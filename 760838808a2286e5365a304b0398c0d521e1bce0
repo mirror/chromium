@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "feb5e646_6ea193f3",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-23T23:35:12Z",
+      "side": 1,
+      "message": "Hum, yeah it\u0027s confusing - the team doing the Ads stuff I think used to name everything SUBRESOURCE_FILTER, and now stuff is also named ADS, so I think they use it interchangeably. I\u0027ll go ahead and change it since it\u0027s easier to understand for someone without context though, thanks.",
+      "parentUuid": "0d4fade0_03ec4554",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "593baad3_5f897152",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49c8edf_32e4057e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-23T23:35:12Z",
+      "side": 1,
+      "message": "Making it a source would be easier to maintain probably, and I discussed with Raymes - we don\u0027t think there\u0027s anything special about this case that would behave differently to the other source strings. I\u0027ve added it for now, but may need to revisit when we come by to consolidate some of this logic to re-use for other UI surfaces (e.g. Page Info).",
+      "parentUuid": "593baad3_5f897152",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "91977d24_4fe88642",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-23T23:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a70e461_6decf714",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb836e15_18167ac9",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7ff9d70f_d1d93c76",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-23T23:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb836e15_18167ac9",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b295fdf_2bc2bebd",
         "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705ef7c3_87f93e29",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-23T23:35:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b295fdf_2bc2bebd",
+      "revId": "760838808a2286e5365a304b0398c0d521e1bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
