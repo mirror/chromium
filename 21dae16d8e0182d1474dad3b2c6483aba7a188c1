@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "f0bbb7d0_e5177dde",
+        "filename": "ui/aura/mus/text_input_client_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T22:19:35Z",
+      "side": 1,
+      "message": "Could you elaborate more? Do you mean to erase lines 75-\u003e87,  only use\nstd::move(callback).Run(false, gfx::Range(), base::string16(), gfx::Range(), composition_head)?\n\nI thought we still need to return some values here from client.\n\nThanks.",
+      "parentUuid": "dd0e3823_1ad66d31",
+      "revId": "21dae16d8e0182d1474dad3b2c6483aba7a188c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "437b6c33_ac33dd62",
         "filename": "ui/base/ime/text_input_client.cc",
         "patchSetId": 21
@@ -64,6 +82,24 @@
       "writtenOn": "2017-10-23T21:41:44Z",
       "side": 1,
       "message": "I think it\u0027s best to send no data here at all. i.e. send just gfx::Range(), base::string16() etc.",
+      "revId": "21dae16d8e0182d1474dad3b2c6483aba7a188c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9225cfd_7334123c",
+        "filename": "ui/base/ime/text_input_client.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-23T22:19:35Z",
+      "side": 1,
+      "message": "Could you elaborate here as well? Do you mean just use this line\n\nstd::move(callback).Run(false, gfx::Range(), base::string16(), gfx::Range(), composition_head)?\n\ncomposition_head still needs to send back so that they can be set on the callback. I thought ideally all of these variables should have some values when they are sent back to callback function like the code is right now.",
+      "parentUuid": "437b6c33_ac33dd62",
       "revId": "21dae16d8e0182d1474dad3b2c6483aba7a188c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
