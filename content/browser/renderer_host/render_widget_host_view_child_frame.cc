@@ -331,10 +331,9 @@ SkColor RenderWidgetHostViewChildFrame::background_color() const {
 gfx::Size RenderWidgetHostViewChildFrame::GetPhysicalBackingSize() const {
   gfx::Size size;
   if (frame_connector_) {
-    content::ScreenInfo screen_info;
-    host_->GetScreenInfo(&screen_info);
-    size = gfx::ScaleToCeiledSize(frame_connector_->ChildFrameRect().size(),
-                                  screen_info.device_scale_factor);
+    size = gfx::ScaleToCeiledSize(
+        frame_connector_->ChildFrameRect().size(),
+        frame_connector_->screen_info().device_scale_factor);
   }
   return size;
 }
@@ -926,6 +925,11 @@ RenderWidgetHostViewChildFrame::CreateBrowserAccessibilityManager(
     bool for_root_frame) {
   return BrowserAccessibilityManager::Create(
       BrowserAccessibilityManager::GetEmptyDocument(), delegate);
+}
+
+void RenderWidgetHostViewChildFrame::GetScreenInfo(ScreenInfo* screen_info) {
+  if (screen_info && frame_connector_)
+    *screen_info = frame_connector_->screen_info();
 }
 
 void RenderWidgetHostViewChildFrame::ClearCompositorSurfaceIfNecessary() {
