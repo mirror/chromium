@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f45d949_bfc04141",
+        "filename": "chrome/common/profiling/memlog_allocator_shim.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-23T22:21:48Z",
+      "side": 1,
+      "message": "I don\u0027t follow how the first to sentences lead to the conclusion that we only need atomicity? Can you expand?\n\nWhat if the optimizer reorders the assignment before the completion of the constructor for g_send_buffers?\n\nAlso, can we maybe wrap this in a class with semantically valid accessors/mutators so we know exactly what the API surface is for this variable?",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 38
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f9d8bd_b6da48b2",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-23T22:21:48Z",
+      "side": 1,
+      "message": "This feels very similar to PlatformChannelPair.  Can we name it PipePair or something?",
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1837086e_a05b0b68",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-23T22:21:48Z",
+      "side": 1,
+      "message": "disallow copy and assign for a struct feels weird....",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1cf8ac_94f67c74",
+        "filename": "chrome/common/profiling/memlog_sender_pipe.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-23T22:21:48Z",
+      "side": 1,
+      "message": "cite documentation please?",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188cd48e_640c15b5",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-23T22:21:48Z",
+      "side": 1,
+      "message": "Does this need to handle EINTR as well?",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28828aa_d08804a3",
+        "filename": "chrome/profiling/memlog_receiver_pipe_win.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-23T22:21:48Z",
+      "side": 1,
+      "message": "That\u0027s weird that the receiver pipe uses pipesize from inside MemlogSenderPipe...",
+      "range": {
+        "startLine": 21,
+        "startChar": 28,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "13ce778ccadfebe65ed789ea998249cfa22c6200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
