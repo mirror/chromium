@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "399dc877_7c13f968",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:29:03Z",
+      "side": 1,
+      "message": "we maybe need tests unless we can reuse some existing stuff to get a simpler fix..\n\nand we should document the layout with the images we got from UX in a separate crbug so a reader can refer back to it.\n\nReally... I think we need to do something in a custom Layout() method, not GetContentSize().  It\u0027s hard to think about different combo boxes matching their width to each other without actually looking at the width of the other comboboxes (but just assuming they will have the same menus?).  I think this solution means we\u0027re iterating over the models multiple times and calculating gfx::GetStringWidth() which is a really expensive operation. Maybe it\u0027s OK to let Combobox do it, but it would be nice to only increase the width in Layout() by looking at the widest combobox width below the threshold, rather than calculating string widths again",
+      "revId": "78cc48df6c609fa742fab58bcc575c2dc85c209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f17939_239d692f",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:29:03Z",
+      "side": 1,
+      "message": "BUTTON_MINIMUM_WIDTH seems an odd choice. maybe MAX_LINKABLE_WIDTH? (or comment why)",
+      "range": {
+        "startLine": 233,
+        "startChar": 13,
+        "endLine": 233,
+        "endChar": 49
+      },
+      "revId": "78cc48df6c609fa742fab58bcc575c2dc85c209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
