@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02f63a2d_f1d61d63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Made it protected, Capabilities is instantiated in ServiceWorkerPaymentAppBridge, might no worth the effort to make it private.",
+      "parentUuid": "876b9fa1_a133a717",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce929d4e_a04a8413",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0327eaab_96f4f631",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce929d4e_a04a8413",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fc7c7162_8bfe0969",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7644465_735693bd",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 42
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "045e946b_ccfc7608",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d4cdfe_ca6b0750",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045e946b_ccfc7608",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 87
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "14f180b7_11dcbfeb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71241d09_41509801",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "605bf18a_ca1203c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a516d48_830e0e2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "605bf18a_ca1203c4",
+      "range": {
+        "startLine": 185,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 16
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "334c3825_443241f3",
+        "filename": "content/public/browser/stored_payment_app.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f80dcdf_7a11a5df",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 48
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd753944_0cf54df3",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentInstruments.cpp",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956fb12d_f032112f",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentInstruments.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd753944_0cf54df3",
+      "range": {
+        "startLine": 244,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 3
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e1095284_25cc8c21",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentInstruments.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23cb69ff_1b476ea8",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 5
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f6546f1_af77ea76",
         "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
         "patchSetId": 4
@@ -229,6 +445,30 @@
       "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beffc259_453433cd",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-10-23T20:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f6546f1_af77ea76",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
