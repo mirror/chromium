@@ -34,6 +34,24 @@
       "revId": "82b240094ec8e9d82e7802b0fb953998a04f211e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49c5f01_f69fb7a2",
+        "filename": "chrome/browser/resources/bluetooth_internals/bluetooth_internals.css",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T18:13:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ff1d62f_2e20f604",
+      "revId": "82b240094ec8e9d82e7802b0fb953998a04f211e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
