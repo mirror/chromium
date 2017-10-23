@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "06b34ad0_45b3544f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-23T18:28:10Z",
+      "side": 1,
+      "message": "It\u0027d be helpful to say what CTAP is here. :)\n\nAlso, you list 5 requirements. Stack overflow? ;)",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84b72d9_b0110ab6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-23T18:28:10Z",
+      "side": 1,
+      "message": "So we\u0027re trying to stop CBOR decoders from being DoS\u0027d by CBOR strings we send. Is that right?\n\nIf so, my instinct is to argue that (a) we should simply refuse to serialize anything that needs more than 4 levels, bumping a hard failure to our caller; and (b) it\u0027s mostly the CBOR decoder\u0027s responsibility to protect itself (they can\u0027t count on all encoders being as polite as us).",
+      "revId": "558ee5e1fa8e3a2153a6e3f5149cddcde5bbce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7348cc5_5a37ae2e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 9
