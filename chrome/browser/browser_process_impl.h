@@ -100,6 +100,7 @@ class BrowserProcessImpl : public BrowserProcess,
   rappor::RapporServiceImpl* rappor_service() override;
   IOThread* io_thread() override;
   SystemNetworkContextManager* system_network_context_manager() override;
+  content::NetworkConnectionTracker* network_connection_tracker() override;
   WatchDogThread* watchdog_thread() override;
   ProfileManager* profile_manager() override;
   PrefService* local_state() override;
@@ -215,6 +216,9 @@ class BrowserProcessImpl : public BrowserProcess,
   std::unique_ptr<PrefService> local_state_;
 
   std::unique_ptr<SystemNetworkContextManager> system_network_context_manager_;
+
+  std::unique_ptr<content::NetworkConnectionTracker>
+      network_connection_tracker_;
 
   bool created_icon_manager_;
   std::unique_ptr<IconManager> icon_manager_;
