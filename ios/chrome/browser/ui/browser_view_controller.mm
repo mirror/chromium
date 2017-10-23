@@ -4755,8 +4755,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   _sadTabCoordinator.webState = newTab.webState;
 
   [self tabSelected:newTab];
-  DCHECK_EQ(newTab, [model currentTab]);
-  [self installDelegatesForTab:newTab];
 }
 
 // Observer method, tab changed.
