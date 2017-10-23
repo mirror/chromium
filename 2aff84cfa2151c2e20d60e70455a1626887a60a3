@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad15c3f_2b92a7f1",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T15:17:36Z",
+      "side": 1,
+      "message": "This downcast is unfortunate. Hopefully it will go away soon by eliminating blink\u0027s platfrom integration interface layer in favor of direct integration with chromium.  Fine for now.",
+      "range": {
+        "startLine": 252,
+        "startChar": 33,
+        "endLine": 252,
+        "endChar": 65
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fa99f6_9edebe2e",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T15:17:36Z",
+      "side": 1,
+      "message": "This seems excellent, but it needs to be covered by a test that does something like:\n1) Send a gpu-accelerated frame\n2) Trigger a synthetic context loss (see LoseContextCHROMIUM)\n3) create a new context\n4) Send another gpu-accelerated frame",
+      "range": {
+        "startLine": 383,
+        "startChar": 13,
+        "endLine": 383,
+        "endChar": 18
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c65120_259c6bd3",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasDrawListener.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-23T15:17:36Z",
+      "side": 1,
+      "message": "Nit: .get() is not necessary.",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "2aff84cfa2151c2e20d60e70455a1626887a60a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
