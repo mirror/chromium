@@ -1023,7 +1023,7 @@ void ArcBluetoothBridge::StartDiscovery() {
   bluetooth_adapter_->StartDiscoverySession(
       base::Bind(&ArcBluetoothBridge::OnDiscoveryStarted,
                  weak_factory_.GetWeakPtr()),
-      base::Bind(&ArcBluetoothBridge::OnDiscoveryError,
+      base::Bind(&ArcBluetoothBridge::OnDiscoveryStartError,
                  weak_factory_.GetWeakPtr()));
 }
 
@@ -1032,9 +1032,14 @@ void ArcBluetoothBridge::CancelDiscovery() {
     return;
   }
 
+  // Stop discovery operation has been initiated, don't double request.
+  if (stop_discovery_in_progress_)
+    return;
+
+  stop_discovery_in_progress_ = true;
   discovery_session_->Stop(base::Bind(&ArcBluetoothBridge::OnDiscoveryStopped,
                                       weak_factory_.GetWeakPtr()),
-                           base::Bind(&ArcBluetoothBridge::OnDiscoveryError,
+                           base::Bind(&ArcBluetoothBridge::OnDiscoveryStopError,
                                       weak_factory_.GetWeakPtr()));
 }
 
@@ -1095,6 +1100,7 @@ void ArcBluetoothBridge::OnDiscoveryStarted(
 void ArcBluetoothBridge::OnDiscoveryStopped() {
   auto* bluetooth_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->bluetooth(), OnDiscoveryStateChanged);
+  stop_discovery_in_progress_ = false;
   if (!bluetooth_instance)
     return;
 
@@ -1196,7 +1202,7 @@ void ArcBluetoothBridge::StartLEScan() {
           device::BLUETOOTH_TRANSPORT_LE),
       base::Bind(&ArcBluetoothBridge::OnDiscoveryStarted,
                  weak_factory_.GetWeakPtr()),
-      base::Bind(&ArcBluetoothBridge::OnDiscoveryError,
+      base::Bind(&ArcBluetoothBridge::OnDiscoveryStartError,
                  weak_factory_.GetWeakPtr()));
 }
 
@@ -2044,8 +2050,13 @@ void ArcBluetoothBridge::OnUnregisterAdvertisementError(
   std::move(callback).Run(mojom::BluetoothGattStatus::GATT_FAILURE);
 }
 
-void ArcBluetoothBridge::OnDiscoveryError() {
-  LOG(WARNING) << "failed to change discovery state";
+void ArcBluetoothBridge::OnDiscoveryStartError() {
+  LOG(WARNING) << "failed to start discovery session";
+}
+
+void ArcBluetoothBridge::OnDiscoveryStopError() {
+  stop_discovery_in_progress_ = false;
+  LOG(WARNING) << "failed to stop discovery session";
 }
 
 void ArcBluetoothBridge::OnPairing(mojom::BluetoothAddressPtr addr) const {
