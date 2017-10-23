@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f8c12fa1_0f66e58a",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-23T20:17:28Z",
+      "side": 1,
+      "message": "Thanks for clarification! I added some of Shivani\u0027s comment to DocumentWriteIntervention.h.\n\nI slightly prefer ScriptResource::Fetch() for now, because:\n- As Shivani noted, this is also to fill in the disk cache and thus not a pure \"report-only\" fetch.\n- This CL tries to keep the existing behavior of \"resend the same request as much as possible\", which was the reason for re-using ScriptLoader entirely, IIUC.\n- The requested URL is semantically still a script (not \"raw\" something), even though it is not executed directly.\n\nIt might be an option to migrate this from ScriptResource to e.g. RawResource/PingLoader-ish things (especially when we refactor ScriptResource for better ES6 module support etc.), but I\u0027d like to do it separately.",
+      "parentUuid": "5b535499_c1196960",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28d9aba_01896ee0",
         "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.h",
         "patchSetId": 5
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "94af2ee8_49fdd506",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentWriteIntervention.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-23T20:17:28Z",
+      "side": 1,
+      "message": "This was because ResourceOwner::SetResource() is protected.\n\nAlso, in the latest patchset FetchBlockedDocWriteScriptClient wants to set SelfKeepAlive in SetResource() and thus returning ResourceOwner is not sufficient.",
+      "parentUuid": "a28d9aba_01896ee0",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e9e9e5c_8492dcd4",
         "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
         "patchSetId": 5
@@ -118,6 +154,24 @@
       "writtenOn": "2017-10-18T10:33:36Z",
       "side": 1,
       "message": "client_for_intervention is not strongly referenced by anyone, so it will be collected, right?",
+      "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e5aa96_b9e17ff6",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-23T20:17:28Z",
+      "side": 1,
+      "message": "Oh, right. I added SelfKeepAlive to the client in the latest patchset to keep-alive the client.\n\nAnother option would be to add a reference from ScriptLoader to the client, and clear the reference when NotifyFinished(). This would add a little more dependencies between ScriptLoader and doc.write() intervention, but might be safer in terms of preventing memory leaks.",
+      "parentUuid": "8e9e9e5c_8492dcd4",
       "revId": "f1802ec88edb207bb0a29440cb6613c2452fee76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
