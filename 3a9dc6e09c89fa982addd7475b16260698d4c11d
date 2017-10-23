@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39abcde3_b90a9fc7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-23T23:38:00Z",
+      "side": 1,
+      "message": "Nothing is implemented yet, I don\u0027t think you need this comment.\nPlus, we already have an OKR for that.",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c82bbf_18ac7aa2",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-23T23:38:00Z",
+      "side": 1,
+      "message": "Too much information. Simply:\nTODO(romax): Remove the method after switch. No longer needed with DB.Execute pattern.",
+      "range": {
+        "startLine": 114,
+        "startChar": 3,
+        "endLine": 116,
+        "endChar": 36
+      },
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e9d3c3_25967cab",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-23T23:38:00Z",
+      "side": 1,
+      "message": "can be forward declared I think.",
+      "range": {
+        "startLine": 21,
+        "startChar": 40,
+        "endLine": 21,
+        "endChar": 71
+      },
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ed4009_30329aa1",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-23T23:38:00Z",
+      "side": 1,
+      "message": "Does this need to be forward declared?",
+      "range": {
+        "startLine": 47,
+        "startChar": 22,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9da2a5_239e7192",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-23T23:38:00Z",
+      "side": 1,
+      "message": "can be forward declared.",
+      "range": {
+        "startLine": 59,
+        "startChar": 32,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21035cd6_f0ec96f8",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-23T23:38:00Z",
+      "side": 1,
+      "message": "Could this be declared higher up, where we have various methods dealing with pages.\nThis is already a section for other stuff (policy/archive management/ logging)",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "3a9dc6e09c89fa982addd7475b16260698d4c11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
