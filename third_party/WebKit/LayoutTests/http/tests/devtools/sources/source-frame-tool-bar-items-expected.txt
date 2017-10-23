@@ -1,0 +1,7 @@
+Checks tool bar items for anonymous scripts
+Set timer for test function.
+Script execution paused.
+Line 1, Column 1
+(evaluated atfoo.js:13)
+Script execution resumed.
+

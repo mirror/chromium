@@ -96,6 +96,8 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
     this.onBindingChanged();
     /** @type {?Map<!Object, !Function>} */
     this._continueToLocationDecorations = null;
+
+    this._linkifier = new Components.Linkifier();
   }
 
   /**
@@ -109,6 +111,24 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
       var parsedURL = originURL.asParsedURL();
       if (parsedURL)
         result.push(new UI.ToolbarText(Common.UIString('(source mapped from %s)', parsedURL.displayName)));
+    }
+
+    var location = Bindings.DefaultScriptMapping.uiSourceCodeOrigin(this._debuggerSourceCode);
+    if (location) {
+      var container = createElement('div');
+      var prefix = createElement('div');
+      prefix.textContent = '(evaluated at';
+      container.appendChild(prefix);
+
+      var linkElement = this._linkifier.linkifyRawLocation(location, '');
+      linkElement.style.color = 'rgb(33%, 33%, 33%)';
+      linkElement.style.marginLeft = '5px';
+      container.appendChild(linkElement);
+
+      var suffix = createElement('div');
+      suffix.textContent = ')';
+      container.appendChild(suffix);
+      result.push(new UI.ToolbarItem(container));
     }
 
     if (this.uiSourceCode().project().type() === Workspace.projectTypes.Snippets) {
@@ -1628,6 +1648,8 @@ Sources.JavaScriptSourceFrame = class extends SourceFrame.UISourceCodeFrame {
 
     Common.moduleSetting('skipStackFramesPattern').removeChangeListener(this._showBlackboxInfobarIfNeeded, this);
     Common.moduleSetting('skipContentScripts').removeChangeListener(this._showBlackboxInfobarIfNeeded, this);
+
+    this._linkifier.reset();
     super.dispose();
   }
 };

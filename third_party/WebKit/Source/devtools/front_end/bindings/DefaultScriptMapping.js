@@ -79,6 +79,17 @@ Bindings.DefaultScriptMapping = class {
   }
 
   /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {?SDK.DebuggerModel.Location}
+   */
+  static uiSourceCodeOrigin(uiSourceCode) {
+    var script = Bindings.DefaultScriptMapping.scriptForUISourceCode(uiSourceCode);
+    if (!script)
+      return null;
+    return script.originLocation;
+  }
+
+  /**
    * @override
    * @param {!Workspace.UISourceCode} uiSourceCode
    * @param {number} lineNumber

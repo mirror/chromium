@@ -498,11 +498,12 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {boolean} hasSourceURL
    * @param {boolean} hasSyntaxError
    * @param {number} length
+   * @param {!Array<!Protocol.Debugger.CallFrame>} stackTrace
    * @return {!SDK.Script}
    */
   _parsedScriptSource(
       scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
-      executionContextAuxData, isLiveEdit, sourceMapURL, hasSourceURL, hasSyntaxError, length) {
+      executionContextAuxData, isLiveEdit, sourceMapURL, hasSourceURL, hasSyntaxError, length, stackTrace) {
     var isContentScript = false;
     if (executionContextAuxData && ('isDefault' in executionContextAuxData))
       isContentScript = !executionContextAuxData['isDefault'];
@@ -515,9 +516,13 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     } else {
       sourceURL = this._internString(sourceURL);
     }
+    var originLocation = stackTrace.length ?
+        new SDK.DebuggerModel.Location(
+            this, stackTrace[0].scriptId, stackTrace[0].lineNumber, stackTrace[0].columnNumber) :
+        null;
     var script = new SDK.Script(
         this, scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId,
-        this._internString(hash), isContentScript, isLiveEdit, sourceMapURL, hasSourceURL, length);
+        this._internString(hash), isContentScript, isLiveEdit, sourceMapURL, hasSourceURL, length, originLocation);
     this._registerScript(script);
     if (!hasSyntaxError)
       this.dispatchEventToListeners(SDK.DebuggerModel.Events.ParsedScriptSource, script);
@@ -957,13 +962,15 @@ SDK.DebuggerDispatcher = class {
    * @param {boolean=} hasSourceURL
    * @param {boolean=} isModule
    * @param {number=} length
+   * @param {!Protocol.Runtime.StackTrace=} stackTrace
    */
   scriptParsed(
       scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
-      executionContextAuxData, isLiveEdit, sourceMapURL, hasSourceURL, isModule, length) {
+      executionContextAuxData, isLiveEdit, sourceMapURL, hasSourceURL, isModule, length, stackTrace) {
     this._debuggerModel._parsedScriptSource(
         scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
-        executionContextAuxData, !!isLiveEdit, sourceMapURL, !!hasSourceURL, false, length || 0);
+        executionContextAuxData, !!isLiveEdit, sourceMapURL, !!hasSourceURL, false, length || 0,
+        stackTrace ? stackTrace.callFrames : []);
   }
 
   /**
@@ -981,13 +988,15 @@ SDK.DebuggerDispatcher = class {
    * @param {boolean=} hasSourceURL
    * @param {boolean=} isModule
    * @param {number=} length
+   * @param {!Protocol.Runtime.StackTrace=} stackTrace
    */
   scriptFailedToParse(
       scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
-      executionContextAuxData, sourceMapURL, hasSourceURL, isModule, length) {
+      executionContextAuxData, sourceMapURL, hasSourceURL, isModule, length, stackTrace) {
     this._debuggerModel._parsedScriptSource(
         scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
-        executionContextAuxData, false, sourceMapURL, !!hasSourceURL, true, length || 0);
+        executionContextAuxData, false, sourceMapURL, !!hasSourceURL, true, length || 0,
+        stackTrace ? stackTrace.callFrames : []);
   }
 
   /**

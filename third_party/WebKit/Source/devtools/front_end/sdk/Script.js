@@ -43,10 +43,11 @@ SDK.Script = class {
    * @param {string|undefined} sourceMapURL
    * @param {boolean} hasSourceURL
    * @param {number} length
+   * @param {?SDK.DebuggerModel.Location} originLocation
    */
   constructor(
       debuggerModel, scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
-      isContentScript, isLiveEdit, sourceMapURL, hasSourceURL, length) {
+      isContentScript, isLiveEdit, sourceMapURL, hasSourceURL, length, originLocation) {
     this.debuggerModel = debuggerModel;
     this.scriptId = scriptId;
     this.sourceURL = sourceURL;
@@ -64,6 +65,7 @@ SDK.Script = class {
     this.contentLength = length;
     this._originalContentProvider = null;
     this._originalSource = null;
+    this.originLocation = originLocation;
   }
 
   /**
