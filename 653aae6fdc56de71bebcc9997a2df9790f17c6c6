@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb700e79_06aa0974",
+        "filename": "ppapi/api/dev/pp_video_dev.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-23T20:43:17Z",
+      "side": 1,
+      "message": "Do enums with negative values require special checking?",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "653aae6fdc56de71bebcc9997a2df9790f17c6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19495cdd_1e038622",
+        "filename": "ppapi/api/dev/pp_video_dev.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-23T20:43:17Z",
+      "side": 1,
+      "message": "Here\u0027s one where 0 is illegal. Does it require special handling?",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 36
+      },
+      "revId": "653aae6fdc56de71bebcc9997a2df9790f17c6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
