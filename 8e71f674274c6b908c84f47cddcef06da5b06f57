@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "57e97fb1_3fbaff52",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:21:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac59eb20_6aceacf7",
+      "revId": "8e71f674274c6b908c84f47cddcef06da5b06f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a67d753c_175897c5",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "8e71f674274c6b908c84f47cddcef06da5b06f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb92af8_c23ec944",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/Resource.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-23T06:21:31Z",
+      "side": 1,
+      "message": "I tested things and they seem to work fine. Do you have anything particular in mind?",
+      "parentUuid": "a67d753c_175897c5",
+      "revId": "8e71f674274c6b908c84f47cddcef06da5b06f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
