@@ -22,6 +22,30 @@
       "revId": "4aceb53b00be0773022b0d3d6bf8164454f44499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9424ccdb_4a35bcc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphMenuHeader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-23T16:02:55Z",
+      "side": 1,
+      "message": "It\u0027s explicitly just for testing -- the only way to set an observer is through #setObserverForTests(). I renamed this to ...TestObserver for clarity.",
+      "parentUuid": "dae6f8cb_e0a31f26",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "4aceb53b00be0773022b0d3d6bf8164454f44499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
