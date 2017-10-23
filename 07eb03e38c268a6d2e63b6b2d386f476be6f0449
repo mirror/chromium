@@ -70,6 +70,30 @@
       "revId": "07eb03e38c268a6d2e63b6b2d386f476be6f0449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c541cc9_fa8ee216",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-23T18:46:24Z",
+      "side": 1,
+      "message": "Actually, what I\u0027m seeing is that space is reserved for the iframe\u0027s scrollbars, but they aren\u0027t printed, which looks kinda weird:\n\nhttps://screenshot.googleplex.com/K1u2QEUzYsK\n\nThis patch actually fixes that issue; here\u0027s the new (non-RLS) print preview:\n\nhttps://screenshot.googleplex.com/8g2jFmDkgaD\n\n(The resolution of the fixed one is different because I took the screen shot of chrome running inside remote desktop).",
+      "parentUuid": "e1da7be6_0a4bf497",
+      "range": {
+        "startLine": 679,
+        "startChar": 34,
+        "endLine": 679,
+        "endChar": 44
+      },
+      "revId": "07eb03e38c268a6d2e63b6b2d386f476be6f0449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
