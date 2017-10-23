@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "54defd54_62c10ff7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T10:19:18Z",
+      "side": 1,
+      "message": "You have a rule for \"video::-internal-media-controls-play-button\" below in the CSS file so I was wondering if having the play button as part of this rule was on purpose and whether it was useful.",
+      "parentUuid": "b0798203_70432bc7",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "111630e5_54d9a440",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
         "patchSetId": 2
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "CSS parsers parse selectors from right to left so adding \"state-playing\" should have no effect.",
       "parentUuid": "7359e6d7_04231a4d",
+      "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5edffe_38d98082",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T10:19:18Z",
+      "side": 1,
+      "message": "My understanding is that it will check the entire parent chain if one parent has .state-playing. I guess it will stop at the first occurrence and only the play button in the media controls will match this so... okay :)",
+      "parentUuid": "18104f9c_aa480190",
       "revId": "a26e13566826b3f666a02495ac7dca2825df279e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
