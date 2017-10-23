@@ -34,6 +34,24 @@
       "revId": "8c596719421cc1462e48b286aff6d1a6f4b784c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e0bd9c_3390e970",
+        "filename": "cc/base/simple_region.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-23T17:53:46Z",
+      "side": 1,
+      "message": "I don\u0027t feel like iterating through a vector is that much complexity.\n\nI\u0027m also happy to just use Region if you want to do that.",
+      "parentUuid": "0dda36b2_8bda9b7e",
+      "revId": "8c596719421cc1462e48b286aff6d1a6f4b784c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
