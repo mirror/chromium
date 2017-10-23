@@ -69,6 +69,30 @@
       "revId": "ac4ff673e0fca89bb6ea10e59728e01536bc3bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b408314_514ea354",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-10-23T16:56:28Z",
+      "side": 1,
+      "message": "Interesting! Is this a common problem? I\u0027m surprised we would want to special case such situations, unless there are many users on such devices. I\u0027m also quite sure we do not handle this in some other places where we use the form_factors restriction in configs. Either way, I don\u0027t feel strongly, please go ahead as planned :-)",
+      "parentUuid": "7da579ee_f51532e7",
+      "range": {
+        "startLine": 415,
+        "startChar": 41,
+        "endLine": 415,
+        "endChar": 58
+      },
+      "revId": "ac4ff673e0fca89bb6ea10e59728e01536bc3bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
