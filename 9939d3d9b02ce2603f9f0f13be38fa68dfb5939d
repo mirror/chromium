@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa6851b7_eab64ffa",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:10:18Z",
+      "side": 1,
+      "message": "When we move |setDesignMode(\"on\")| before |SetBodyContent()|, we don\u0027t\nneed call |UpdateAllLifecyclePhase()| since it is done by\n|SetBodyContent()|.",
+      "revId": "9939d3d9b02ce2603f9f0f13be38fa68dfb5939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5c51c3_4aa36741",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:10:18Z",
+      "side": 1,
+      "message": "BTW, do we really need to use document.designMode?",
+      "range": {
+        "startLine": 25,
+        "startChar": 16,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "9939d3d9b02ce2603f9f0f13be38fa68dfb5939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983b33a7_d5895bd3",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:10:18Z",
+      "side": 1,
+      "message": "Could you use |SetSelectionText()| to specify selection explicitly to\nmake this test case independent from \"select all\"",
+      "revId": "9939d3d9b02ce2603f9f0f13be38fa68dfb5939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cb7701_168158b9",
+        "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:10:18Z",
+      "side": 1,
+      "message": "Could you check result HTML to record current behavior to see how future\nchanges handle this kind of edge cases.",
+      "revId": "9939d3d9b02ce2603f9f0f13be38fa68dfb5939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b724331b_5a8692bc",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/delete-non-editable-range-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:10:18Z",
+      "side": 0,
+      "message": "Note: We should use selection marker in sample input instead of using\n\"selectAll\" command.",
+      "revId": "6250ff829f3679626c2e2f1e70fa95ae599eba06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
