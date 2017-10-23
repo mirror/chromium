@@ -4565,7 +4565,8 @@ void Element::LogAddElementIfIsolatedWorldAndInDocument(
   if (!isConnected())
     return;
   V8DOMActivityLogger* activity_logger =
-      V8DOMActivityLogger::CurrentActivityLoggerIfIsolatedWorld();
+      V8DOMActivityLogger::CurrentActivityLoggerIfIsolatedWorld(
+          V8PerIsolateData::MainThreadIsolate());
   if (!activity_logger)
     return;
   Vector<String, 2> argv;
@@ -4581,7 +4582,8 @@ void Element::LogAddElementIfIsolatedWorldAndInDocument(
   if (!isConnected())
     return;
   V8DOMActivityLogger* activity_logger =
-      V8DOMActivityLogger::CurrentActivityLoggerIfIsolatedWorld();
+      V8DOMActivityLogger::CurrentActivityLoggerIfIsolatedWorld(
+          V8PerIsolateData::MainThreadIsolate());
   if (!activity_logger)
     return;
   Vector<String, 3> argv;
@@ -4599,7 +4601,8 @@ void Element::LogAddElementIfIsolatedWorldAndInDocument(
   if (!isConnected())
     return;
   V8DOMActivityLogger* activity_logger =
-      V8DOMActivityLogger::CurrentActivityLoggerIfIsolatedWorld();
+      V8DOMActivityLogger::CurrentActivityLoggerIfIsolatedWorld(
+          V8PerIsolateData::MainThreadIsolate());
   if (!activity_logger)
     return;
   Vector<String, 4> argv;
