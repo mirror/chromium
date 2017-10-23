@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e5fccc_1383bf2c",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:07:02Z",
+      "side": 1,
+      "message": "Add a comment that you are getting the weak-pointer here so that you can use it in a const method.",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca54ce3_2847877f",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:07:02Z",
+      "side": 1,
+      "message": "Looking at other impls of TextInputClient (e.g. RenderWidgetHostViewAura), looks like we should reset has_composition_text_ here too?",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c16e555_54b22c1f",
+        "filename": "services/ui/public/interfaces/ime/ime.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:07:02Z",
+      "side": 1,
+      "message": "Wrap in 80 columns.",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb748fb_27626bc9",
+        "filename": "ui/aura/mus/text_input_client_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:07:02Z",
+      "side": 1,
+      "message": "Early return or use an else",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5681405_97b5e119",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:07:02Z",
+      "side": 1,
+      "message": "Use weakptr",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28ac277_134eb570",
+        "filename": "ui/base/ime/text_input_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:07:02Z",
+      "side": 1,
+      "message": "Give a name for this callback-type, e.g. something like:\n\nusing TextInputClientInfoCallback \u003d base::OnceCallback\u003c....\nvirtual bool GetTextInputClientInfo(TextInputClientInfoCallback callback) const \u003d 0;\n\nAlso, document which params in the callback represent what (e.g. selection range, text range etc.).\n\nDocument what the return value means. Do we actually need this function to return a value?",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebccc069_ebe5486c",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1959,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:07:02Z",
+      "side": 1,
+      "message": "We prefer std::make_unique",
+      "revId": "5e4f7d2b2072048fa6960fcc0941bb75df03f2cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
