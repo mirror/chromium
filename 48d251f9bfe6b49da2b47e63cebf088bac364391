@@ -16,6 +16,24 @@
       "revId": "48d251f9bfe6b49da2b47e63cebf088bac364391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899526eb_acbfbe2b",
+        "filename": "content/renderer/devtools/devtools_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T22:41:11Z",
+      "side": 0,
+      "message": "I ported it to devtools.mojom.",
+      "parentUuid": "d5d48339_6e9a21d7",
+      "revId": "48d251f9bfe6b49da2b47e63cebf088bac364391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
