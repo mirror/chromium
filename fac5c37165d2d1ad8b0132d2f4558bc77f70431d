@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c601c5ca_eb27698b",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-23T17:07:00Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "939ba2e6_c0c2a6fd",
+      "range": {
+        "startLine": 317,
+        "startChar": 34,
+        "endLine": 317,
+        "endChar": 35
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a99f7f4_0eb869c4",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4aba92a_7a623623",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-23T17:07:00Z",
+      "side": 1,
+      "message": "Recreation only happens for partial which are anyways exclusive writers.",
+      "parentUuid": "2a99f7f4_0eb869c4",
+      "range": {
+        "startLine": 644,
+        "startChar": 6,
+        "endLine": 644,
+        "endChar": 49
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a96a7af9_93172b8d",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-23T17:07:00Z",
+      "side": 1,
+      "message": "It also has the issue that the last network transaction might have had a network transaction for validation and it\u0027s statistics were also attributed to this HC::T, that would be wrong if it reports back the sum of 2 network transactions\u0027 headers bytes. It seems simpler to let the transaction that owns the network transaction to be responsible for it\u0027s stats collection.",
+      "parentUuid": "59fbb0da_36366f06",
+      "range": {
+        "startLine": 603,
+        "startChar": 5,
+        "endLine": 603,
+        "endChar": 15
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a276000_0b86dcf1",
         "filename": "net/http/http_cache_unittest.cc",
         "patchSetId": 21
@@ -91,6 +163,30 @@
       "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6832901_15ef8cc8",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2723,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-23T17:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a276000_0b86dcf1",
+      "range": {
+        "startLine": 2723,
+        "startChar": 60,
+        "endLine": 2723,
+        "endChar": 61
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e6ce4794_3e07438d",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 2849,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-23T17:07:00Z",
+      "side": 1,
+      "message": "Corrected",
+      "parentUuid": "6c6309c8_2d22849f",
+      "range": {
+        "startLine": 2849,
+        "startChar": 17,
+        "endLine": 2849,
+        "endChar": 20
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec85286c_10561e64",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 21
@@ -137,6 +257,30 @@
       "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb5faa8_53c23bfc",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-23T17:07:00Z",
+      "side": 1,
+      "message": "I had to do it here because this needs to do some network transaction stats collection but by the time we reach HC network transaction would have been destroyed. Also, since the argument of WritersDoneWritingToEntry is called make_readers, we can assume that the readers concept is known to writers.",
+      "parentUuid": "ec85286c_10561e64",
+      "range": {
+        "startLine": 550,
+        "startChar": 20,
+        "endLine": 550,
+        "endChar": 59
+      },
+      "revId": "fac5c37165d2d1ad8b0132d2f4558bc77f70431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
