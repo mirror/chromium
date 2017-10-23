@@ -92,7 +92,7 @@ void XMLParserScriptRunner::ProcessScriptElement(
   } else if (script_loader->WillBeParserExecuted()) {
     // 1st/2nd Clauses, Step 23 of
     // https://html.spec.whatwg.org/#prepare-a-script
-    parser_blocking_script_ = script_loader->CreatePendingScript();
+    parser_blocking_script_ = script_loader->TakePendingScript();
     parser_blocking_script_->MarkParserBlockingLoadStartTime();
     script_element_ = script_element_base;
     parser_blocking_script_->WatchForLoad(this);
