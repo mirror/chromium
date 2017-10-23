@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "facdcf77_9f19b26b",
+        "filename": "third_party/WebKit/Source/core/events/PageTransitionEventInit.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-23T23:13:08Z",
+      "side": 1,
+      "message": "It points to the IDL definition in the spec, just re-checked.",
+      "parentUuid": "b17bf3ba_5f180893",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 89
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5853fcb2_68d55853",
         "filename": "third_party/WebKit/Source/core/page/Page.cpp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "76ed9b19_ec7f33bd",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-23T23:13:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5853fcb2_68d55853",
+      "range": {
+        "startLine": 451,
+        "startChar": 2,
+        "endLine": 451,
+        "endChar": 37
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3aac81_d918b3e7",
         "filename": "third_party/WebKit/Source/core/page/Page.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-20T20:39:35Z",
       "side": 1,
       "message": "Is there a place to add some unit tests for those functions?",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 24
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3802befc_74f821f6",
+        "filename": "third_party/WebKit/Source/core/page/Page.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-23T23:13:08Z",
+      "side": 1,
+      "message": "We can add PageTest.cpp where there is something to test. Currently this is trivial getter + setter.",
+      "parentUuid": "eb3aac81_d918b3e7",
       "range": {
         "startLine": 269,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5a7485f7_92e4b7dc",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-23T23:13:08Z",
+      "side": 1,
+      "message": "Right, we need to find an incremental path forward.\nIf we add a full list of states, they will sit here unused (or worse yet used by some other code).",
+      "parentUuid": "74f5ac3a_72c3a41e",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32a14054_2636e971",
         "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-20T20:39:35Z",
       "side": 1,
       "message": "Can a page be in the discarded state? Would\u0027t it be already discarded? Or is this going to be used to store last_state?",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "9e6361138eeb5c7e4bc51aa7d9d41ce4e4653cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c542b0_4c691d7a",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-23T23:13:08Z",
+      "side": 1,
+      "message": "That\u0027s right, I haven\u0027t added last_state on the page yet, but will do in next CL.",
+      "parentUuid": "32a14054_2636e971",
       "range": {
         "startLine": 15,
         "startChar": 2,
