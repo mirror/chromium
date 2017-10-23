@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2efcc057_e844106e",
+        "filename": "services/service_manager/sandbox/win/sandbox_win.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-23T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5181d660_4e60ffd6",
+      "range": {
+        "startLine": 581,
+        "startChar": 20,
+        "endLine": 581,
+        "endChar": 43
+      },
+      "revId": "3f5018a6b7b130d8408f68490c49132432ba2e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da3b44f_0904e1d2",
         "filename": "services/service_manager/sandbox/win/sandbox_win.h",
         "patchSetId": 22
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-23T22:48:00Z",
       "side": 1,
       "message": "I don\u0027t think we need to export these - I mean they weren\u0027t before, so probably shouldn\u0027t be now. I know we\u0027re trying on win to make a conscious effort not to export stuff that doesn\u0027t need to be.",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "3f5018a6b7b130d8408f68490c49132432ba2e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2d5fbd_ffd897d3",
+        "filename": "services/service_manager/sandbox/win/sandbox_win.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-23T22:59:35Z",
+      "side": 1,
+      "message": "SandboxWin is still used in content, and this is now a separate component from content.",
+      "parentUuid": "1da3b44f_0904e1d2",
       "range": {
         "startLine": 32,
         "startChar": 6,
