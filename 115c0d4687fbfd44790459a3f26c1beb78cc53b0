@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "36773dd2_f1ec346f",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 3290,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-10-23T13:09:11Z",
+      "side": 1,
+      "message": "🙄 Okay I\u0027ll wait for the UI to be approved then update the CL. Thanks, I missed it!",
+      "parentUuid": "bd09b0be_c07f27ec",
+      "revId": "115c0d4687fbfd44790459a3f26c1beb78cc53b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36a7075d_ceeee001",
         "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
         "patchSetId": 3
