@@ -1350,10 +1350,22 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
     if (!this._element) {
       super.toMessageElement();
       this._expandGroupIcon = UI.Icon.create('', 'expand-group-icon');
-      this._element.insertBefore(this._expandGroupIcon, this._contentElement);
+      if (this._repeatCountElement)
+        this._repeatCountElement.insertBefore(this._expandGroupIcon, this._repeatCountElement.firstChild);
+      else
+        this._element.insertBefore(this._expandGroupIcon, this._contentElement);
       this.setCollapsed(this._collapsed);
     }
     return this._element;
+  }
+
+  /**
+   * @override
+   */
+  _showRepeatCountElement() {
+    super._showRepeatCountElement();
+    if (this._repeatCountElement && this._expandGroupIcon)
+      this._repeatCountElement.insertBefore(this._expandGroupIcon, this._repeatCountElement.firstChild);
   }
 };
 
