@@ -50,6 +50,7 @@
 #include "chrome/browser/chromeos/login/users/supervised_user_manager_impl.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#include "chrome/browser/chromeos/policy/minimum_version_policy_handler.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/session_length_limiter.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
@@ -253,6 +254,12 @@ ChromeUserManagerImpl::ChromeUserManagerImpl()
     return;
   }
 
+  policy::MinimumVersionPolicyHandler* minimum_version_policy_handler =
+      g_browser_process->platform_part()
+          ->browser_policy_connector_chromeos()
+          ->GetMinimumVersionPolicyHandler();
+  minimum_version_policy_handler->AddObserver(this);
+
   avatar_policy_observer_ =
       base::MakeUnique<policy::CloudExternalDataPolicyObserver>(
           cros_settings_, device_local_account_policy_service,
@@ -274,6 +281,12 @@ ChromeUserManagerImpl::~ChromeUserManagerImpl() {}
 void ChromeUserManagerImpl::Shutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ChromeUserManager::Shutdown();
+
+  policy::MinimumVersionPolicyHandler* minimum_version_policy_handler =
+      g_browser_process->platform_part()
+          ->browser_policy_connector_chromeos()
+          ->GetMinimumVersionPolicyHandler();
+  minimum_version_policy_handler->RemoveObserver(this);
 
   local_accounts_subscription_.reset();
 
@@ -1186,6 +1199,17 @@ bool ChromeUserManagerImpl::IsGaiaUserAllowed(
                                      nullptr);
 }
 
+void ChromeUserManagerImpl::OnMinimumVersionStateChanged() {
+  NotifyUsersSignInConstraintsChanged();
+}
+
+bool ChromeUserManagerImpl::ShouldForceUserSignout() const {
+  return !(g_browser_process->platform_part()
+               ->browser_policy_connector_chromeos()
+               ->GetMinimumVersionPolicyHandler()
+               ->RequirementsAreSatisfied());
+}
+
 bool ChromeUserManagerImpl::IsUserAllowed(
     const user_manager::User& user) const {
   DCHECK(user.GetType() == user_manager::USER_TYPE_REGULAR ||
@@ -1200,6 +1224,9 @@ bool ChromeUserManagerImpl::IsUserAllowed(
       !AreSupervisedUsersAllowed())
     return false;
   if (user.HasGaiaAccount() && !IsGaiaUserAllowed(user))
+    return false;
+  if (user.GetType() != user_manager::USER_TYPE_GUEST &&
+      ShouldForceUserSignout())
     return false;
   return true;
 }

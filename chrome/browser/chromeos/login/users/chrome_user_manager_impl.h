@@ -24,6 +24,7 @@
 #include "chrome/browser/chromeos/policy/cloud_external_data_policy_observer.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/policy/device_local_account_policy_service.h"
+#include "chrome/browser/chromeos/policy/minimum_version_policy_handler.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -54,6 +55,7 @@ class ChromeUserManagerImpl
       public content::NotificationObserver,
       public policy::CloudExternalDataPolicyObserver::Delegate,
       public policy::DeviceLocalAccountPolicyService::Observer,
+      public policy::MinimumVersionPolicyHandler::Observer,
       public MultiProfileUserControllerDelegate {
  public:
   ~ChromeUserManagerImpl() override;
@@ -131,6 +133,9 @@ class ChromeUserManagerImpl
 
   void StopPolicyObserverForTesting();
 
+  // policy::MinimumVersionPolicyHandler::Observer implementation.
+  void OnMinimumVersionStateChanged() override;
+
   // UserManagerBase implementation:
   bool AreEphemeralUsersEnabled() const override;
   void OnUserRemoved(const AccountId& account_id) override;
@@ -169,6 +174,7 @@ class ChromeUserManagerImpl
   void RegularUserLoggedIn(const AccountId& account_id) override;
   void RegularUserLoggedInAsEphemeral(const AccountId& account_id) override;
   void SupervisedUserLoggedIn(const AccountId& account_id) override;
+  bool ShouldForceUserSignout() const;
 
  private:
   friend class SupervisedUserManagerImpl;
