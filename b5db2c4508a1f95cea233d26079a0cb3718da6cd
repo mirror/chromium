@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1b86ae7_0753d167",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-23T14:38:05Z",
+      "side": 1,
+      "message": "Please do this in a separate CL...you need to stash the debug labels here locally, and the push them out again on restart.",
+      "revId": "b5db2c4508a1f95cea233d26079a0cb3718da6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
