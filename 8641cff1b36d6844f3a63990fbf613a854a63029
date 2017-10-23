@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a96378_975f9a71",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T20:40:40Z",
+      "side": 1,
+      "message": "nit: _web_view_framework_gen_dir to be consistent with the other file :-)",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 297,
+        "endChar": 21
+      },
+      "revId": "8641cff1b36d6844f3a63990fbf613a854a63029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
