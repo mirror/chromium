@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d75dbf2_8ba19e89",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "Nit: Can you give this a more meaningful name? |manifest| perhaps?",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357472a1_bd5651bf",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "Nit: `if (!directives_dict)`",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146680d2_d2070d9a",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "If we have more than one matching directive, I think this code will parse all of them and tack them all onto the list. Is that the behavior we want? Is it tested?",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6d8f57_e74587aa",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "Nit: \"Ignore unknown directives for forward-compatibility.\"",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50042e8e_cb98332f",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "Do we care about case (here, and for the various pieces below (\"policy\", \"disposition\", \"allow-override\", etc))?",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b853b321_7047e35e",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "For all of these:\n\n1. If multiple \"policy\" items are present, what should we do?\n2. What if \"policy\" isn\u0027t a string?",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813dd59a_1898d075",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "Nit: Need {} for multi-line body.",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e22e2cb_56b5fda6",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "STATIC_ONLY in blink does a little more than this (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/Allocator.h?rcl\u003dbb5f5e95fc2951f2f00bb3813806303f10a024d2\u0026l\u003d58). Not sure why we don\u0027t have a corresponding mechanism in content...",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064f3aed_c8767e03",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-23T10:44:58Z",
+      "side": 1,
+      "message": "Nit: {} for multi-line body.",
+      "revId": "53d32fe83d60115098b2db2dc5e33e1122e4afcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
