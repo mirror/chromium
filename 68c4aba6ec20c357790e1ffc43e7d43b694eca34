@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61c37ae4_171d7a02",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-23T22:02:03Z",
+      "side": 1,
+      "message": "That\u0027s correct. I think it\u0027s OK to list these possible expected error types here -- These exception types are the ones that I think are possible and shouldn\u0027t happen normally, but if they do happen for some reason, we can still continue the import.",
+      "parentUuid": "a41e2df8_bfb1814a",
+      "revId": "68c4aba6ec20c357790e1ffc43e7d43b694eca34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce64c3ea_c103570c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "68c4aba6ec20c357790e1ffc43e7d43b694eca34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a706b32_1e50a545",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-23T22:02:03Z",
+      "side": 1,
+      "message": "Good question -- I think that\u0027s the case.\n\nHypothetically, if they\u0027re using different time zones, it will still be the case that the sheriff should get TBRd on CLs for some time period that will roughly correspond to their shift, 24 hours per day of sheriffing, and there\u0027s no need for immediate sheriff response for these anyway.",
+      "parentUuid": "ce64c3ea_c103570c",
+      "revId": "68c4aba6ec20c357790e1ffc43e7d43b694eca34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
