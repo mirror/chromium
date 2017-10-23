@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596f9188_7612c9da",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/cpu-profiler-agent-crash-on-start.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-23T20:53:49Z",
+      "side": 1,
+      "message": "A good candidate to use await",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55fb505_a9945487",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/cpu-profiler-profile-removal.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-23T20:53:49Z",
+      "side": 1,
+      "message": "await new Promise(resolve \u003d\u003e ProfilerTestRunner.startProfilerTest(resolve));",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6627f52c_a438c84c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/heap-snapshot-comparison-dom-groups-change.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-23T20:53:49Z",
+      "side": 1,
+      "message": "Is that needed?",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72e58e4_3928e2c4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/heap-snapshot-comparison-expansion-preserved-when-sorting.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-23T20:53:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d777f44_6058852e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/heap-snapshot-comparison-show-all.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-23T20:53:49Z",
+      "side": 1,
+      "message": "ditto and below",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10338c6_c84b4454",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/heap-snapshot-event-listeners-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-23T20:53:49Z",
+      "side": 1,
+      "message": "what\u0027s that? also these ids will make the test flaky anyway.",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
