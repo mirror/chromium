@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "ba31a383_5062c1c2",
+        "filename": "media/formats/mp4/box_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-23T19:11:41Z",
+      "side": 1,
+      "message": "nit: Perhaps rewrite this as a caller of ::ReadTopLevelBox in this CL?\n\ne.g.:\nstd::unique_ptr\u003cBoxReader\u003e reader;\nRCHECK_PARSE_RESULT( call to ReadTopLevelBox );\n*out_type \u003d reader-\u003etype();\n*out_box_size \u003d reader-\u003ebox_size();\nreturn ok...\n\n?",
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aae667f_66ae78ab",
         "filename": "media/formats/mp4/box_reader.h",
         "patchSetId": 5
@@ -59,6 +76,23 @@
         "endLine": 99,
         "endChar": 27
       },
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785476b3_c97b2b39",
+        "filename": "media/formats/mp4/box_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-23T19:11:41Z",
+      "side": 1,
+      "message": "nit: Since commenting about kNeedMoreData, also comment about kError and kOk?",
       "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
