@@ -70,6 +70,30 @@
       "revId": "72593c409b261dd6a0036aef64c2a92a9485ffa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0210d499_92ba9d87",
+        "filename": "base/values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-23T17:19:07Z",
+      "side": 1,
+      "message": "Alright, sounds good.",
+      "parentUuid": "617dd4d5_c9696054",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "72593c409b261dd6a0036aef64c2a92a9485ffa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
