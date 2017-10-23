@@ -164,6 +164,7 @@ void ThreadState::RunTerminationGC() {
     Heap().RemoveAllPages();
     return;
   }
+  ScriptForbiddenScope scope;
   DCHECK(CheckThread());
 
   // Finish sweeping.
