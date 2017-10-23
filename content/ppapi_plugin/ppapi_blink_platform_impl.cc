@@ -144,12 +144,12 @@ blink::WebThread* PpapiBlinkPlatformImpl::CurrentThread() {
 
 blink::WebClipboard* PpapiBlinkPlatformImpl::Clipboard() {
   NOTREACHED();
-  return NULL;
+  return nullptr;
 }
 
 blink::WebFileUtilities* PpapiBlinkPlatformImpl::GetFileUtilities() {
   NOTREACHED();
-  return NULL;
+  return nullptr;
 }
 
 blink::WebSandboxSupport* PpapiBlinkPlatformImpl::GetSandboxSupport() {
@@ -195,14 +195,14 @@ blink::WebString PpapiBlinkPlatformImpl::DefaultLocale() {
 
 blink::WebThemeEngine* PpapiBlinkPlatformImpl::ThemeEngine() {
   NOTREACHED();
-  return NULL;
+  return nullptr;
 }
 
 std::unique_ptr<blink::WebURLLoader> PpapiBlinkPlatformImpl::CreateURLLoader(
     const blink::WebURLRequest& request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
   NOTREACHED();
-  return NULL;
+  return nullptr;
 }
 
 void PpapiBlinkPlatformImpl::GetPluginList(

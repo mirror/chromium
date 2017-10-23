@@ -185,7 +185,7 @@ blink::WebFileUtilities* TestBlinkWebUnitTestSupport::GetFileUtilities() {
 blink::WebIDBFactory* TestBlinkWebUnitTestSupport::IdbFactory() {
   NOTREACHED() <<
       "IndexedDB cannot be tested with in-process harnesses.";
-  return NULL;
+  return nullptr;
 }
 
 std::unique_ptr<blink::WebURLLoader>

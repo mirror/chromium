@@ -374,8 +374,8 @@ GpuProcessHost* GpuProcessHost::Get(GpuProcessKind kind, bool force_create) {
   // Don't grant further access to GPU if it is not allowed.
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
   DCHECK(gpu_data_manager);
-  if (!gpu_data_manager->GpuAccessAllowed(NULL))
-    return NULL;
+  if (!gpu_data_manager->GpuAccessAllowed(nullptr))
+    return nullptr;
 
   if (g_gpu_process_hosts[kind] && ValidateHost(g_gpu_process_hosts[kind]))
     return g_gpu_process_hosts[kind];
@@ -400,7 +400,7 @@ GpuProcessHost* GpuProcessHost::Get(GpuProcessKind kind, bool force_create) {
   host->RecordProcessCrash();
 
   delete host;
-  return NULL;
+  return nullptr;
 }
 
 // static
@@ -454,7 +454,7 @@ GpuProcessHost* GpuProcessHost::FromID(int host_id) {
       return host;
   }
 
-  return NULL;
+  return nullptr;
 }
 
 GpuProcessHost::GpuProcessHost(int host_id, GpuProcessKind kind)
@@ -476,7 +476,7 @@ GpuProcessHost::GpuProcessHost(int host_id, GpuProcessKind kind)
 
   // If the 'single GPU process' policy ever changes, we still want to maintain
   // it for 'gpu thread' mode and only create one instance of host and thread.
-  DCHECK(!in_process_ || g_gpu_process_hosts[kind] == NULL);
+  DCHECK(!in_process_ || g_gpu_process_hosts[kind] == nullptr);
 
   g_gpu_process_hosts[kind] = this;
 
@@ -504,7 +504,7 @@ GpuProcessHost::~GpuProcessHost() {
   // This is only called on the IO thread so no race against the constructor
   // for another GpuProcessHost.
   if (g_gpu_process_hosts[kind_] == this)
-    g_gpu_process_hosts[kind_] = NULL;
+    g_gpu_process_hosts[kind_] = nullptr;
 
 #if defined(OS_MACOSX) || defined(OS_ANDROID)
   UMA_HISTOGRAM_COUNTS_100("GPU.AtExitSurfaceCount",
@@ -685,7 +685,7 @@ void GpuProcessHost::EstablishGpuChannel(
   TRACE_EVENT0("gpu", "GpuProcessHost::EstablishGpuChannel");
 
   // If GPU features are already blacklisted, no need to establish the channel.
-  if (!GpuDataManagerImpl::GetInstance()->GpuAccessAllowed(NULL)) {
+  if (!GpuDataManagerImpl::GetInstance()->GpuAccessAllowed(nullptr)) {
     DVLOG(1) << "GPU blacklisted, refusing to open a GPU channel.";
     callback.Run(IPC::ChannelHandle(), gpu::GPUInfo(), gpu::GpuFeatureInfo(),
                  EstablishChannelStatus::GPU_ACCESS_DENIED);
@@ -844,7 +844,7 @@ void GpuProcessHost::OnProcessCrashed(int exit_code) {
   SendOutstandingReplies();
   RecordProcessCrash();
   GpuDataManagerImpl::GetInstance()->ProcessCrashed(
-      process_->GetTerminationStatus(true /* known_dead */, NULL));
+      process_->GetTerminationStatus(true /* known_dead */, nullptr));
 }
 
 void GpuProcessHost::DidInitialize(
@@ -996,7 +996,7 @@ void GpuProcessHost::ForceShutdown() {
   // This is only called on the IO thread so no race against the constructor
   // for another GpuProcessHost.
   if (g_gpu_process_hosts[kind_] == this)
-    g_gpu_process_hosts[kind_] = NULL;
+    g_gpu_process_hosts[kind_] = nullptr;
 
   process_->ForceShutdown();
 }

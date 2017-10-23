@@ -177,7 +177,7 @@ class BrowserGpuChannelHostFactoryTest : public ContentBrowserTest {
 IN_PROC_BROWSER_TEST_F(BrowserGpuChannelHostFactoryTest, MAYBE_Basic) {
   DCHECK(!IsChannelEstablished());
   EstablishAndWait();
-  EXPECT_TRUE(GetGpuChannel() != NULL);
+  EXPECT_TRUE(GetGpuChannel() != nullptr);
 }
 
 #if !defined(OS_ANDROID)

@@ -393,7 +393,7 @@ bool IsBrowserInitiated(NavigationParams* pending) {
 
 // Returns false unless this is a top-level navigation.
 bool IsTopLevelNavigation(WebFrame* frame) {
-  return frame->Parent() == NULL;
+  return frame->Parent() == nullptr;
 }
 
 WebURLRequest CreateURLRequestForNavigation(
@@ -984,7 +984,7 @@ RenderFrameImpl* RenderFrameImpl::FromRoutingID(int routing_id) {
       g_routing_id_frame_map.Get().find(routing_id);
   if (iter != g_routing_id_frame_map.Get().end())
     return iter->second;
-  return NULL;
+  return nullptr;
 }
 
 // static
@@ -1143,7 +1143,7 @@ RenderFrameImpl* RenderFrameImpl::FromWebFrame(blink::WebFrame* web_frame) {
   FrameMap::iterator iter = g_frame_map.Get().find(web_frame);
   if (iter != g_frame_map.Get().end())
     return iter->second;
-  return NULL;
+  return nullptr;
 }
 
 // static
@@ -1180,7 +1180,7 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
 
 // RenderFrameImpl ----------------------------------------------------------
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
-    : frame_(NULL),
+    : frame_(nullptr),
       is_main_frame_(true),
       unique_name_frame_adapter_(this),
       unique_name_helper_(&unique_name_frame_adapter_),
@@ -1197,13 +1197,13 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
       selection_text_offset_(0),
       selection_range_(gfx::Range::InvalidRange()),
       handling_select_range_(false),
-      web_user_media_client_(NULL),
+      web_user_media_client_(nullptr),
       devtools_agent_(nullptr),
-      presentation_dispatcher_(NULL),
-      push_messaging_client_(NULL),
-      screen_orientation_dispatcher_(NULL),
-      manifest_manager_(NULL),
-      render_accessibility_(NULL),
+      presentation_dispatcher_(nullptr),
+      push_messaging_client_(nullptr),
+      screen_orientation_dispatcher_(nullptr),
+      manifest_manager_(nullptr),
+      render_accessibility_(nullptr),
       previews_state_(PREVIEWS_UNSPECIFIED),
       effective_connection_type_(
           blink::WebEffectiveConnectionType::kTypeUnknown),
@@ -1811,7 +1811,7 @@ void RenderFrameImpl::OnSwapOut(
     const FrameReplicationState& replicated_frame_state) {
   TRACE_EVENT1("navigation,rail", "RenderFrameImpl::OnSwapOut",
                "id", routing_id_);
-  RenderFrameProxy* proxy = NULL;
+  RenderFrameProxy* proxy = nullptr;
 
   // Swap this RenderFrame out so the frame can navigate to a page rendered by
   // a different process.  This involves running the unload handler and
@@ -2385,7 +2385,7 @@ void RenderFrameImpl::OnTextTrackSettingsChanged(
 void RenderFrameImpl::OnPostMessageEvent(
     const FrameMsg_PostMessage_Params& params) {
   // Find the source frame if it exists.
-  WebFrame* source_frame = NULL;
+  WebFrame* source_frame = nullptr;
   if (params.source_routing_id != MSG_ROUTING_NONE) {
     RenderFrameProxy* source_proxy =
         RenderFrameProxy::FromRoutingID(params.source_routing_id);
@@ -3088,7 +3088,7 @@ WebExternalPopupMenu* RenderFrameImpl::CreateExternalPopupMenu(
   }
   return external_popup_menu_.get();
 #else
-  return NULL;
+  return nullptr;
 #endif
 }
 
@@ -4220,13 +4220,13 @@ blink::WebColorChooser* RenderFrameImpl::CreateColorChooser(
 
 void RenderFrameImpl::RunModalAlertDialog(const blink::WebString& message) {
   RunJavaScriptDialog(JAVASCRIPT_DIALOG_TYPE_ALERT, message.Utf16(),
-                      base::string16(), frame_->GetDocument().Url(), NULL);
+                      base::string16(), frame_->GetDocument().Url(), nullptr);
 }
 
 bool RenderFrameImpl::RunModalConfirmDialog(const blink::WebString& message) {
   return RunJavaScriptDialog(JAVASCRIPT_DIALOG_TYPE_CONFIRM, message.Utf16(),
                              base::string16(), frame_->GetDocument().Url(),
-                             NULL);
+                             nullptr);
 }
 
 bool RenderFrameImpl::RunModalPromptDialog(
@@ -4746,7 +4746,7 @@ blink::WebString RenderFrameImpl::UserAgentOverride() {
   InternalDocumentStateData* internal_data =
       document_loader
           ? InternalDocumentStateData::FromDocumentLoader(document_loader)
-          : NULL;
+          : nullptr;
   if (internal_data && internal_data->is_overriding_user_agent())
     return WebString::FromUTF8(
         render_view_->renderer_preferences_.user_agent_override);
@@ -5589,9 +5589,9 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
       render_view_->HistoryForwardListCount() < 1 &&
       // The parent page must have set the child's window.opener to null before
       // redirecting to the desired URL.
-      frame_->Opener() == NULL &&
+      frame_->Opener() == nullptr &&
       // Must be a top-level frame.
-      frame_->Parent() == NULL &&
+      frame_->Parent() == nullptr &&
       // Must not have issued the request from this page.
       is_content_initiated &&
       // Must be targeted at the current tab.

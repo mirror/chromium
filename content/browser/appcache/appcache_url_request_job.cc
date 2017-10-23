@@ -43,12 +43,12 @@ void AppCacheURLRequestJob::Kill() {
     handler_source_reader_.reset();
     if (storage_) {
       storage_->CancelDelegateCallbacks(this);
-      storage_ = NULL;
+      storage_ = nullptr;
     }
-    host_ = NULL;
-    info_ = NULL;
-    cache_ = NULL;
-    group_ = NULL;
+    host_ = nullptr;
+    info_ = nullptr;
+    cache_ = nullptr;
+    group_ = nullptr;
     range_response_info_.reset();
     net::URLRequestJob::Kill();
     AppCacheJob::weak_factory_.InvalidateWeakPtrs();
@@ -76,14 +76,14 @@ void AppCacheURLRequestJob::DeliverAppCachedResponse(const GURL& manifest_url,
 void AppCacheURLRequestJob::DeliverNetworkResponse() {
   DCHECK(!has_delivery_orders());
   delivery_type_ = NETWORK_DELIVERY;
-  storage_ = NULL;  // not needed
+  storage_ = nullptr;  // not needed
   MaybeBeginDelivery();
 }
 
 void AppCacheURLRequestJob::DeliverErrorResponse() {
   DCHECK(!has_delivery_orders());
   delivery_type_ = ERROR_DELIVERY;
-  storage_ = NULL;  // not needed
+  storage_ = nullptr;  // not needed
   MaybeBeginDelivery();
 }
 
@@ -241,7 +241,7 @@ void AppCacheURLRequestJob::OnExecutableSourceLoaded(int result) {
 
   AppCacheExecutableHandler* handler = cache_->GetOrCreateExecutableHandler(
       entry_.response_id(), handler_source_buffer_.get());
-  handler_source_buffer_ = NULL;  // not needed anymore
+  handler_source_buffer_ = nullptr;  // not needed anymore
   if (handler) {
     InvokeExecutableHandler(handler);
     return;
@@ -263,7 +263,7 @@ void AppCacheURLRequestJob::OnExecutableResponseCallback(
   DCHECK(!has_been_killed());
   if (response.use_network) {
     delivery_type_ = NETWORK_DELIVERY;
-    storage_ = NULL;
+    storage_ = nullptr;
     BeginDelivery();
     return;
   }
@@ -292,7 +292,7 @@ void AppCacheURLRequestJob::BeginErrorDelivery(const char* message) {
     host_->frontend()->OnLogMessage(host_->host_id(), APPCACHE_LOG_ERROR,
                                     message);
   delivery_type_ = ERROR_DELIVERY;
-  storage_ = NULL;
+  storage_ = nullptr;
   BeginDelivery();
 }
 
@@ -328,7 +328,7 @@ void AppCacheURLRequestJob::OnResponseInfoLoaded(
 
 const net::HttpResponseInfo* AppCacheURLRequestJob::http_info() const {
   if (!info_.get())
-    return NULL;
+    return nullptr;
   if (range_response_info_)
     return range_response_info_.get();
   return info_->http_response_info();

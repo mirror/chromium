@@ -131,7 +131,7 @@ net::URLRequestJob* ServiceWorkerControlleeRequestHandler::MaybeCreateJob(
 
   if (!context_ || !provider_host_) {
     // We can't do anything other than to fall back to network.
-    return NULL;
+    return nullptr;
   }
 
   // This may get called multiple times for original and redirect requests:
@@ -148,7 +148,7 @@ net::URLRequestJob* ServiceWorkerControlleeRequestHandler::MaybeCreateJob(
     // requests.
     if (is_main_resource_load_)
       use_network_ = false;
-    return NULL;
+    return nullptr;
   }
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
