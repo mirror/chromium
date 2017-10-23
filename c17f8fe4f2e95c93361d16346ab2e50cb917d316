@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2ed8c71_7c890981",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "This is still talking about headphones, whereas this CL isn\u0027t specific to headphones - it will work for _any_ USB input device that has a VoiceCommand key (or equivalent).\n\nFor the description I\u0027d suggest something like:\n\n\"Add DOMCode for USB VoiceCommand, and accelerator to launch assistant.\n\nThis CL adds a DOMCode mapping for the USB standard \"VoiceCommand\" key,\nwhich is implemented by some headphone devices to integrate with voice\nassistance capabilities.\n\nWe also add an accelerator action for voice-commands to an assistant.\"\n\nor something along those lines.",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3cd266_ef2fad47",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "What does |voice_mode| mean?  Surely all the |accelerators| that this function handles are to do with voice mode, given the name of the handler function?",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cb6808_48b5380f",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "As noted above, this is not specific to head-phones, so I would recommend a name like VoiceInteraction.Started.VoiceCommandKey",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66bf0cf_1020ec43",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right; the function is called \"HandleToggleVoiceInteraction\", but you\u0027re choosing to (re)start the interaction, not toggle (I assume toggle \u003d start or stop as appropriate in this case?)",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ea89af_5475649c",
+        "filename": "ash/accelerators/accelerator_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "These shouldn\u0027t be in here, since they are completely specific to particular ChromeOS devices; we either need to define them with more generic names so they can be re-used (e.g. VKEY_VOICE_COMMAND and VKEY_TYPED_COMMAND), or make it clear that they are completely specific to Ash, e.g. VKEY_ASH_ASSISTANT_VOICE, for example.",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19361734_536e1d89",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 18373,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "As previously noted, this key isn\u0027t specific to headphone keys; it\u0027s the generic USB Voice Command key - a USB keyboard could implement it in future, for example.",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e52c8d_e4c03b5c",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "As discussed offline, VoiceCommand is in the USB spec, so it is a standard key and we should give it a suitable name (e.g. just \"VoiceCommand\", or \"LaunchVoiceCommand\" - check w/ garykac@ for recommendations) so it\u0027s available for use on other platforms.",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9ed06a3_455a23b1",
         "filename": "ui/events/keycodes/dom/keycode_converter_data.inc",
         "patchSetId": 6
@@ -13,6 +132,40 @@
       "writtenOn": "2017-10-19T02:01:32Z",
       "side": 1,
       "message": "As discussed offline, based on the USB standard this should have USB value 0x0C00CF, and most likely a name like \"VoiceCommand\", to match the USB spec name for the key.",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9f7e70_4cac7184",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "As noted previously, we can\u0027t add non-standard values here - we will need to replace LAUNCH_ASSISTANT and LAUNCH_ASSISTANT_VOICE_COMMAND with standard values - the latter can become DomKey::VOICE_COMMAND and VKEY_VOICE_COMMAND, and garykac@ should be able to advise on the plain LAUNCH_ASSISTANT case.",
+      "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145fb2f1_d471b835",
+        "filename": "ui/events/keycodes/keyboard_codes_posix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-23T16:42:58Z",
+      "side": 1,
+      "message": "As per the comment above, these are \"POSIX specific VKEYs\"; I assume that that means they are the codes we use to represent certain keys under e.g. X11, to cope with Windows not having equivalent VKEY values itself. e.g. if you look below, you\u0027ll see that we define VKEY_ALTGR, because Windows synthesizes that as a mix of VKEY_CONTROL and VKEY_MENU.\n\nWe should keep any ChromeOS-specific keys separate from the more generate POSIX ones; given that this is already mixed-up, let\u0027s do that in a follow-up CL, though.",
       "revId": "c17f8fe4f2e95c93361d16346ab2e50cb917d316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
