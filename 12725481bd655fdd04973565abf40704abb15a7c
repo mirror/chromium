@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13527f4e_a1564f40",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1123977
+      },
+      "writtenOn": "2017-10-23T08:14:55Z",
+      "side": 1,
+      "message": "This does not seem to fire. When I set the value in about:flags to default, the feature is enabled. When I set it to Disabled, the feature is disabled too.",
+      "range": {
+        "startLine": 454,
+        "startChar": 48,
+        "endLine": 454,
+        "endChar": 75
+      },
+      "revId": "12725481bd655fdd04973565abf40704abb15a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
