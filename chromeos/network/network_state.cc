@@ -27,17 +27,6 @@ const char kErrorUnknown[] = "Unknown";
 
 const char kDefaultCellularNetworkPath[] = "/cellular";
 
-bool ConvertListValueToStringVector(const base::ListValue& string_list,
-                                    std::vector<std::string>* result) {
-  for (size_t i = 0; i < string_list.GetSize(); ++i) {
-    std::string str;
-    if (!string_list.GetString(i, &str))
-      return false;
-    result->push_back(str);
-  }
-  return true;
-}
-
 bool IsCaptivePortalState(const base::DictionaryValue& properties, bool log) {
   std::string state;
   properties.GetStringWithoutPathExpansion(shill::kStateProperty, &state);
@@ -313,41 +302,33 @@ void NetworkState::GetStateProperties(base::DictionaryValue* dictionary) const {
 
 void NetworkState::IPConfigPropertiesChanged(
     const base::DictionaryValue& properties) {
-  for (base::DictionaryValue::Iterator iter(properties); !iter.IsAtEnd();
-       iter.Advance()) {
-    std::string key = iter.key();
-    const base::Value& value = iter.value();
+  ipv4_config_.Clear();
+  ipv4_config_.MergeDictionary(&properties);
+}
 
-    if (key == shill::kAddressProperty) {
-      GetStringValue(key, value, &ip_address_);
-    } else if (key == shill::kGatewayProperty) {
-      GetStringValue(key, value, &gateway_);
-    } else if (key == shill::kNameServersProperty) {
-      const base::ListValue* dns_servers;
-      if (value.GetAsList(&dns_servers)) {
-        dns_servers_.clear();
-        ConvertListValueToStringVector(*dns_servers, &dns_servers_);
-      }
-    } else if (key == shill::kPrefixlenProperty) {
-      GetIntegerValue(key, value, &prefix_length_);
-    } else if (key == shill::kWebProxyAutoDiscoveryUrlProperty) {
-      std::string url_string;
-      if (GetStringValue(key, value, &url_string)) {
-        if (url_string.empty()) {
-          web_proxy_auto_discovery_url_ = GURL();
-        } else {
-          GURL gurl(url_string);
-          if (gurl.is_valid()) {
-            web_proxy_auto_discovery_url_ = gurl;
-          } else {
-            NET_LOG(ERROR) << "Invalid WebProxyAutoDiscoveryUrl: " << path()
-                           << ": " << url_string;
-            web_proxy_auto_discovery_url_ = GURL();
-          }
-        }
-      }
-    }
+std::string NetworkState::GetIpAddress() const {
+  const base::Value* v = ipv4_config_.FindKey(shill::kAddressProperty);
+  return v ? v->GetString() : std::string();
+}
+
+std::string NetworkState::GetGateway() const {
+  const base::Value* v = ipv4_config_.FindKey(shill::kGatewayProperty);
+  return v ? v->GetString() : std::string();
+}
+
+GURL NetworkState::GetWebProxyAutoDiscoveryUrl() const {
+  const base::Value* v =
+      ipv4_config_.FindKey(shill::kWebProxyAutoDiscoveryUrlProperty);
+  std::string url = v ? v->GetString() : std::string();
+  if (url.empty())
+    return GURL();
+  GURL gurl(url);
+  if (!gurl.is_valid()) {
+    NET_LOG(ERROR) << "Invalid WebProxyAutoDiscoveryUrl: " << path() << ": "
+                   << url;
+    return GURL();
   }
+  return gurl;
 }
 
 bool NetworkState::RequiresActivation() const {
@@ -421,17 +402,22 @@ std::string NetworkState::GetHexSsid() const {
 }
 
 std::string NetworkState::GetDnsServersAsString() const {
+  const base::Value* listv = ipv4_config_.FindKey(shill::kNameServersProperty);
+  if (!listv)
+    return std::string();
   std::string result;
-  for (size_t i = 0; i < dns_servers_.size(); ++i) {
-    if (i != 0)
+  for (const auto& v : listv->GetList()) {
+    if (!result.empty())
       result += ",";
-    result += dns_servers_[i];
+    result += v.GetString();
   }
   return result;
 }
 
 std::string NetworkState::GetNetmask() const {
-  return network_util::PrefixLengthToNetmask(prefix_length_);
+  const base::Value* v = ipv4_config_.FindKey(shill::kPrefixlenProperty);
+  int prefixlen = v ? v->GetInt() : -1;
+  return network_util::PrefixLengthToNetmask(prefixlen);
 }
 
 std::string NetworkState::GetSpecifier() const {
