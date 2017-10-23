@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "727227df_c587195c",
+        "filename": "ios/chrome/browser/autofill/form_input_accessory_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-23T11:58:23Z",
+      "side": 1,
+      "message": "If I understand correctly this code is going away anyway, but\nFYI, you can have the images automatically be flipped when in RTL.",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 5
+      },
+      "revId": "671ba53bee2efa887c8b6f92c3c6dfba7681c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
