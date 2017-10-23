@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99e08c70_68e6a6d9",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-23T18:39:47Z",
+      "side": 1,
+      "message": "The Time epoch is actually the Windows FILETIME epoch, and I was hoping not to expose these internal details externally, as I really only want this for PageState C++ serialization.",
+      "parentUuid": "c1f17f8d_705b2919",
+      "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0bb7cf0_88a0dbe4",
         "filename": "mojo/common/time.mojom",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T17:59:39Z",
       "side": 1,
       "message": "Please see my comment above.",
+      "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f0087f_dfec7e8c",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-23T18:39:47Z",
+      "side": 1,
+      "message": "Unlike Time, it\u0027s going to be hard for Java or JS to create a synchronized base::TimeTicks object, given that it\u0027s not fixed to an external reference point. I suppose we could wholly leave this one as [Native] and not allow external serialization... though I think this is counter to our eventual goal of getting rid of IPC::ParamTraits.\n\nAnother possibility is to serialize both of these objects as uint8_t[8] internal_bytes, though I\u0027m not sure if this is equivalent in terms of serialization/deserialization cost... and it feels quite awkward.\n\nAnother (rather terrible) idea is to xor |internal_value| with a randomly generated seed... though that has the problem that we need to synchronize the random seed somehow.",
+      "parentUuid": "b0bb7cf0_88a0dbe4",
       "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
