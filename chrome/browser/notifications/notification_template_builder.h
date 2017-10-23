@@ -59,8 +59,12 @@ class NotificationTemplateBuilder {
   void StartBindingElement(const std::string& template_name);
   void EndBindingElement();
 
-  // Writes the <text> element with the given |id| and |content|.
-  void WriteTextElement(const std::string& id, const std::string& content);
+  // Writes the <text> element with the given |id| and |content|. The
+  // |attribution| flag specifies whether |content| contains the source that the
+  // notification is attributed to, or false otherwise.
+  void WriteTextElement(const std::string& id,
+                        const std::string& content,
+                        bool attribution);
 
   // Writes the <actions> element.
   void StartActionsElement();
