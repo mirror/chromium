@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da51b8b_f3abb673",
+        "filename": "chrome/browser/ui/passwords/password_access_authenticator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-23T17:00:03Z",
+      "side": 1,
+      "message": "Move the magic number to the beginning of the file.",
+      "range": {
+        "startLine": 23,
+        "startChar": 64,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9d01d8_5f5e0194",
+        "filename": "chrome/browser/ui/passwords/password_access_authenticator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-23T17:00:03Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md\n\nShould be ForTesting or just use the macros.",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ecec44_c58bbeea",
+        "filename": "chrome/browser/ui/passwords/password_access_authenticator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-23T17:00:03Z",
+      "side": 1,
+      "message": "I think we may reuse the class for the bubble. In such a case it\u0027d be much easier to support if you use the magic numbers provided by PasswordAccessAuthenticator instead of hardcoded values. I suggest to expose 60 seconds somehow from PasswordAccessAuthenticator and use it here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924dba1c_f13675d4",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-23T17:00:03Z",
+      "side": 1,
+      "message": "The comment to the new class says that it\u0027s used on Android too, isn\u0027t it?",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 12
+      },
+      "revId": "cf32b161cebf84602cea9c00bcb239d0b670dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
