@@ -36,7 +36,7 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
   void SetBlockSize(LayoutUnit);
 
-  void AddPositionedFloat(const NGPositionedFloat&);
+  void SwapPositionedFloats(Vector<NGPositionedFloat>*);
 
   // Set the break token for the fragment to build.
   // A finished break token will be attached if not set.
