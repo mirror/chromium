@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56fc2f4b_03bd0bee",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-23T20:09:56Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m probably being dense, but isn\u0027t this going to skip all the non-QEMU lines from a device and not end up symbolizing them?\n\nIf it just happens to match something from loglistener, we should rename the variable.",
+      "revId": "076c23dad1a93f13159f867cc341371ad9102ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18edb349_2b4455a7",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-23T20:09:56Z",
+      "side": 1,
+      "message": "nit; no spaces around for consistency.",
+      "range": {
+        "startLine": 479,
+        "startChar": 14,
+        "endLine": 479,
+        "endChar": 17
+      },
+      "revId": "076c23dad1a93f13159f867cc341371ad9102ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd09671_a8791725",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-23T20:09:56Z",
+      "side": 1,
+      "message": "No () around this expression.",
+      "range": {
+        "startLine": 544,
+        "startChar": 5,
+        "endLine": 544,
+        "endChar": 21
+      },
+      "revId": "076c23dad1a93f13159f867cc341371ad9102ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
