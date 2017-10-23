@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "560a7b07_5302a171",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: I think it\u0027ll be clearer if written like:\n\n  \"\u0027\u0027\u0027\"",
+      "range": {
+        "startLine": 461,
+        "startChar": 39,
+        "endLine": 461,
+        "endChar": 47
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a9402e_e3194cf5",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Maybe add an assertion that |three_quotes_cnt| is even by the end?",
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a37497_f9bd7a9d",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Maybe make it a set? The quadratic check may eventually become significant, given Python\u0027s overall performance.",
+      "range": {
+        "startLine": 517,
+        "startChar": 19,
+        "endLine": 517,
+        "endChar": 20
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55aaeeac_3327018a",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Or will _CheckContains() work here? It\u0027s better as it provides also a type checking (with a clearer error message).",
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969de0b0_390f69a3",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: The \"not in\" operator is IMHO a bit cleaner.",
+      "range": {
+        "startLine": 523,
+        "startChar": 11,
+        "endLine": 523,
+        "endChar": 25
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7358c60_eae8d7eb",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Can you avoid using backslash by indenting it differently?\n\n      self._policy_definitions \u003d self._ExpandGroups(",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed39dc5a_a75ba067",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Add a comma.",
+      "range": {
+        "startLine": 166,
+        "startChar": 72,
+        "endLine": 166,
+        "endChar": 73
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81aabbef_6c743413",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Backslash is not needed.",
+      "range": {
+        "startLine": 173,
+        "startChar": 37,
+        "endLine": 173,
+        "endChar": 38
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7161a3b1_cc19f1ff",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Add a space after \":\".",
+      "range": {
+        "startLine": 173,
+        "startChar": 30,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5f6902_0588628f",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "nit: Backslash is not needed.",
+      "range": {
+        "startLine": 176,
+        "startChar": 48,
+        "endLine": 176,
+        "endChar": 49
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14e2cb3_db04125e",
+        "filename": "components/policy/tools/template_writers/policy_template_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-23T11:05:48Z",
+      "side": 1,
+      "message": "Modifying input parameters is an error-prone practice. Better construct a local object and do all modifications in it.",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 34
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
