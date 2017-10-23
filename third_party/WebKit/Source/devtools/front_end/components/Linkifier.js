@@ -36,14 +36,16 @@ Components.Linkifier = class {
   /**
    * @param {number=} maxLengthForDisplayedURLs
    * @param {boolean=} useLinkDecorator
+   * @param {function(!Element)=} onAnchorUpdated
    */
-  constructor(maxLengthForDisplayedURLs, useLinkDecorator) {
+  constructor(maxLengthForDisplayedURLs, useLinkDecorator, onAnchorUpdated) {
     this._maxLength = maxLengthForDisplayedURLs || UI.MaxLengthForDisplayedURLs;
     /** @type {!Map<!SDK.Target, !Array<!Element>>} */
     this._anchorsByTarget = new Map();
     /** @type {!Map<!SDK.Target, !Bindings.LiveLocationPool>} */
     this._locationPoolByTarget = new Map();
     this._useLinkDecorator = !!useLinkDecorator;
+    this._onAnchorUpdated = onAnchorUpdated;
     Components.Linkifier._instances.add(this);
     SDK.targetManager.observeTargets(this);
   }
@@ -309,6 +311,8 @@ Components.Linkifier = class {
     anchor.title = titleText;
     anchor.classList.toggle('webkit-html-blackbox-link', liveLocation.isBlackboxed());
     Components.Linkifier._updateLinkDecorations(anchor);
+    if (this._onAnchorUpdated)
+      this._onAnchorUpdated(anchor);
   }
 
   /**

@@ -582,7 +582,8 @@ Console.ConsoleViewMessage = class {
       titleElement.classList.add('console-object-preview');
       this._previewFormatter.appendObjectPreview(titleElement, obj.preview, false /* isEntry */);
     } else if (obj.type === 'function') {
-      ObjectUI.ObjectPropertiesSection.formatObjectAsFunction(obj, titleElement, false);
+      ObjectUI.ObjectPropertiesSection.formatObjectAsFunction(
+          obj, titleElement, false, false, this.clearTextCache.bind(this));
       titleElement.classList.add('object-value-function');
     } else {
       titleElement.createTextChild(obj.description || '');
@@ -595,7 +596,8 @@ Console.ConsoleViewMessage = class {
     note.classList.add('info-note');
     note.title = Common.UIString('Value below was evaluated just now.');
 
-    var section = new ObjectUI.ObjectPropertiesSection(obj, titleElement, this._linkifier);
+    var section = new ObjectUI.ObjectPropertiesSection(
+        obj, titleElement, this._linkifier, undefined, undefined, undefined, this.clearTextCache.bind(this));
     section.element.classList.add('console-view-object-properties-section');
     section.enableContextMenu();
     return section.element;
@@ -617,7 +619,8 @@ Console.ConsoleViewMessage = class {
      */
     function formatTargetFunction(targetFunction) {
       var functionElement = createElement('span');
-      ObjectUI.ObjectPropertiesSection.formatObjectAsFunction(targetFunction, functionElement, true, includePreview);
+      ObjectUI.ObjectPropertiesSection.formatObjectAsFunction(
+          targetFunction, functionElement, true, includePreview, this.clearTextCache.bind(this));
       result.appendChild(functionElement);
       if (targetFunction !== func) {
         var note = result.createChild('span', 'object-info-state-note');
@@ -751,6 +754,7 @@ Console.ConsoleViewMessage = class {
         }
         rootElement.appendChild(this._previewFormatter.renderPropertyPreview(type, subtype, description));
       }
+      delete this._cachedText;
     }
 
     return rootElement;
@@ -870,7 +874,7 @@ Console.ConsoleViewMessage = class {
    */
   matchesFilterRegex(regexObject) {
     regexObject.lastIndex = 0;
-    var text = this.contentElement().deepTextContent();
+    var text = this._searchableText();
     return regexObject.test(text);
   }
 
@@ -879,7 +883,7 @@ Console.ConsoleViewMessage = class {
    * @return {boolean}
    */
   matchesFilterText(filter) {
-    var text = this.contentElement().deepTextContent();
+    var text = this._searchableText();
     return text.toLowerCase().includes(filter.toLowerCase());
   }
 
@@ -1177,7 +1181,7 @@ Console.ConsoleViewMessage = class {
     if (!this._searchRegex)
       return;
 
-    var text = this.contentElement().deepTextContent();
+    var text = this._searchableText();
     var match;
     this._searchRegex.lastIndex = 0;
     var sourceRanges = [];
@@ -1188,6 +1192,18 @@ Console.ConsoleViewMessage = class {
       this._searchHighlightNodes =
           UI.highlightSearchResults(this.contentElement(), sourceRanges, this._searchHiglightNodeChanges);
     }
+  }
+
+  /**
+   * @return {string}
+   */
+  _searchableText() {
+    this._cachedText = this._cachedText || this.contentElement().deepTextContent();
+    return this._cachedText;
+  }
+
+  clearTextCache() {
+    delete this._cachedText;
   }
 
   /**

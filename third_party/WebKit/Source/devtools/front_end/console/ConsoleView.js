@@ -174,7 +174,8 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._messagesElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), false);
 
-    this._linkifier = new Components.Linkifier(Console.ConsoleViewMessage.MaxLengthForLinks);
+    this._linkifier = new Components.Linkifier(
+        Console.ConsoleViewMessage.MaxLengthForLinks, false /* useLinkDecorator */, this._onAnchorUpdated.bind(this));
 
     /** @type {!Array.<!Console.ConsoleViewMessage>} */
     this._consoleMessages = [];
@@ -233,6 +234,15 @@ Console.ConsoleView = class extends UI.VBox {
     this._filter._currentFilter.levelsMask = this._isSidebarOpen ? Console.ConsoleFilter.allLevelsFilterValue() :
                                                                    this._filter._messageLevelFiltersSetting.get();
     this._updateMessageList();
+  }
+
+  /**
+   * @param {!Element} anchor
+   */
+  _onAnchorUpdated(anchor) {
+    var messageElement = anchor.enclosingNodeOrSelfWithClass('console-message-wrapper');
+    if (messageElement)
+      messageElement.message.clearTextCache();
   }
 
   /**
