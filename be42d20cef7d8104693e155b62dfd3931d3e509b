@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deeba780_cd99bbf6",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "If last_codec_ is equal to preferred_codec_, (and they are not -1 because that matches the \u0027if\u0027 condition above), you know that the preferred codec was previously returned, so it was previously compatible at that time. And compatibility is not changed (?) since then. So why not just return it here?",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c59dce_0f71909c",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "I assume you are skipping because the preferred_codec_ is already ruled out as incompatible?\nSo you are iterating through the list looking for the first compatible codec. But sometimes you start looking from the beginning and other times you start looking from last_codec.\n\nI have a vague feeling that last_codec_ is some kind of optimization to avoid checking for compatibility over and over again? If so, please could you document this? Is there an invariant that compatibility is known-false for all indexes 0..last_codec_-1 (and true for last_codec_). Is compatibility a property of the triple: (encoder, frame, profile), or can it change due to other factors?",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141151a8_f7242d0d",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "Is there a reason for adding dependency and using gfx::Size instead of using webrtc::DesktopSize ?",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14e9383_c4ae4208",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1beb10_8b05f2e6",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "sets",
+      "range": {
+        "startLine": 56,
+        "startChar": 43,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbf1116_b585abad",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "Do you mean \"settings\" or \"values\" or \"content\"?\nI don\u0027t think \"ones\" is the right word here, because \"information\" is a fluid thing, like water or air.",
+      "range": {
+        "startLine": 57,
+        "startChar": 55,
+        "endLine": 57,
+        "endChar": 60
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa4e52d_2ea6ae3b",
+        "filename": "remoting/codec/webrtc_video_encoder_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "even if",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2227599_c8aafcd7",
+        "filename": "remoting/codec/webrtc_video_encoder_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "I think if you do:\nbool my_array[99] \u003d { false }\nit will initialize all elements to the same value.\nSee http://en.cppreference.com/w/c/language/array_initialization\n\"Initialization from brace-enclosed lists\"",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4690e5_fbb41343",
+        "filename": "remoting/codec/webrtc_video_encoder_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-23T21:51:41Z",
+      "side": 1,
+      "message": "Is this the preferred way to test unique_ptr?\nMaybe\nASSERT_EQ(nullptr, selector_...)\nis more readable? (And ASSERT_NE for non-null test)",
+      "revId": "be42d20cef7d8104693e155b62dfd3931d3e509b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
