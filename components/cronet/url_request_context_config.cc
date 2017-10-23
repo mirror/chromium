@@ -163,7 +163,6 @@ URLRequestContextConfig::URLRequestContextConfig(
       bypass_public_key_pinning_for_local_trust_anchors(
           bypass_public_key_pinning_for_local_trust_anchors),
       cert_verifier_data(cert_verifier_data),
-      nqe_persistent_caching_enabled(false),
       experimental_options(experimental_options) {}
 
 URLRequestContextConfig::~URLRequestContextConfig() {}
@@ -359,12 +358,6 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
                    << "\" is not a dictionary value";
         effective_experimental_options->Remove(it.key(), nullptr);
         continue;
-      }
-
-      bool persistent_caching_enabled;
-      if (nqe_args->GetBoolean(kNQEPersistentCacheReadingEnabled,
-                               &persistent_caching_enabled)) {
-        nqe_persistent_caching_enabled = persistent_caching_enabled;
       }
 
       std::string nqe_option;
