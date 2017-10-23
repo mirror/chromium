@@ -29,6 +29,16 @@ struct WebKitGamepadButton {
   double value;
 };
 
+enum WebKitGamepadHapticActuatorType {
+  WEBKIT_GAMEPAD_HAPTIC_ACTUATOR_TYPE_VIBRATION = 0,
+  WEBKIT_GAMEPAD_HAPTIC_ACTUATOR_TYPE_DUAL_RUMBLE = 1
+};
+
+struct WebKitGamepadHapticActuator {
+  bool notNull;
+  WebKitGamepadHapticActuatorType type;
+};
+
 struct WebKitGamepadVector {
   bool notNull;
   float x, y, z;
@@ -88,6 +98,8 @@ struct WebKitGamepad {
 
   // Normalized values representing buttons, in the range [0..1].
   WebKitGamepadButton buttons[kButtonsLengthCap];
+
+  WebKitGamepadHapticActuator vibrationActuator;
 
   // Mapping type (for example "standard")
   base::char16 mapping[kMappingLengthCap];
