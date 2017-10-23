@@ -34,6 +34,24 @@
       "revId": "23736ce14f528e6b47af018ba379f5e3f103efcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a81fb3c_9faa45b5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-23T17:05:46Z",
+      "side": 1,
+      "message": "\u003e Do we need to support anything prior to L? If yes, I can look for alternatives for versions before L.\n\nYes, chrome supports API 16 and up.\n\nThere is no alternative before L though. You\u0027ll just have to keep a state in CVC which is rather complicated.\n\nOr alternatively, you only query this if it\u0027s running L plus, since it\u0027s only the L accessibility that needs this.",
+      "parentUuid": "7cb772fd_0c5bc7b0",
+      "revId": "23736ce14f528e6b47af018ba379f5e3f103efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
