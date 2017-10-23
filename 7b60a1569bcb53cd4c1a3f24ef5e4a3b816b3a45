@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67bca7d1_4c3b4c93",
+        "filename": "content/browser/service_worker/service_worker_response_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-23T05:30:53Z",
+      "side": 1,
+      "message": "Would it be better to modify the elements too (FOO_BAR to kFooBar)?",
+      "revId": "7b60a1569bcb53cd4c1a3f24ef5e4a3b816b3a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
