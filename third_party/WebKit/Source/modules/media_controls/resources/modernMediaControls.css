@@ -291,3 +291,17 @@ video::-webkit-media-controls-overlay-play-button {
     url(default_100_percent/legacy/mediaplayer_overlay_play.png) 1x);
   background-color: transparent;
 }
+
+/**
+ * Preload state
+ */
+
+.use-default-poster {
+  background: #F1F3F4;
+}
+
+.state-no-source input[pseudo="-webkit-media-controls-overlay-play-button" i],
+.use-default-poster div[pseudo="-internal-media-controls-button-panel" i],
+.use-default-poster input[pseudo="-webkit-media-controls-timeline" i] {
+  display: none;
+}

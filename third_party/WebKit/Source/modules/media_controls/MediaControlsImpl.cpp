@@ -116,6 +116,8 @@ const char* kStateCSSClasses[6] = {
     "phase-ready state-buffering",        // kBuffering
 };
 
+const char* kShowDefaultPosterCSSClass = "use-default-poster";
+
 bool ShouldShowFullscreenButton(const HTMLMediaElement& media_element) {
   // Unconditionally allow the user to exit fullscreen if we are in it
   // now.  Especially on android, when we might not yet know if
@@ -541,7 +543,17 @@ Node::InsertionNotificationRequest MediaControlsImpl::InsertedInto(
 }
 
 void MediaControlsImpl::UpdateCSSClassFromState() {
-  const char* classes = kStateCSSClasses[State()];
+  StringBuilder builder;
+  builder.Append(kStateCSSClasses[State()]);
+
+  if (MediaElement().IsHTMLVideoElement() &&
+      !VideoElement().HasAvailableVideoFrame() &&
+      VideoElement().PosterImageURL().IsEmpty()) {
+    builder.Append(" ");
+    builder.Append(kShowDefaultPosterCSSClass);
+  }
+
+  const AtomicString& classes = builder.ToAtomicString();
   if (getAttribute("class") != classes)
     setAttribute("class", classes);
 }
@@ -1384,6 +1396,15 @@ void MediaControlsImpl::OnWaiting() {
 void MediaControlsImpl::MaybeRecordOverflowTimeToAction() {
   overflow_list_->MaybeRecordTimeTaken(
       MediaControlOverflowMenuListElement::kTimeToAction);
+}
+
+void MediaControlsImpl::OnCanPlay() {
+  UpdateCSSClassFromState();
+}
+
+HTMLVideoElement& MediaControlsImpl::VideoElement() {
+  DCHECK(MediaElement().IsHTMLVideoElement());
+  return *ToHTMLVideoElement(&MediaElement());
 }
 
 void MediaControlsImpl::Trace(blink::Visitor* visitor) {
