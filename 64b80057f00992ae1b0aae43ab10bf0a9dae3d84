@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9797864_2f5e1698",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-23T19:30:52Z",
+      "side": 1,
+      "message": "nit: blank line after?",
+      "revId": "64b80057f00992ae1b0aae43ab10bf0a9dae3d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
