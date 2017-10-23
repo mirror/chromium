@@ -22,6 +22,30 @@
       "revId": "c4a000bb1c3dccc9c1209e37569bb8f46dc78651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8312ed70_8c5e0da8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-23T19:19:08Z",
+      "side": 1,
+      "message": "Oh yes, it is not guaranteed the native has been loaded. Actually the native load is kicked off in mOnMenuShownListener.run(). So I guess we should put this in BrowserActionsContextMenuHelper.onNativeInitialized().",
+      "parentUuid": "548baf03_826aff91",
+      "range": {
+        "startLine": 110,
+        "startChar": 33,
+        "endLine": 110,
+        "endChar": 39
+      },
+      "revId": "c4a000bb1c3dccc9c1209e37569bb8f46dc78651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
