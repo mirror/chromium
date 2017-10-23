@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f538673e_c2307fe2",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "does `if (callback_)` work - I think I\u0027ve seen taht before",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3c3e75_691c509f",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "I don\u0027t think you need a GetMinimumSize override - it usually only does anything for resizable windows. The size should be determined by the layout manager (i.e. its preferred size)",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3eb03c_efcdb21d",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "yeah - this should use typography -- using SetFontList is banned in Harmony dialogs",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb975b6_7c895fc7",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "constexpr .. kFooStyle",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76973bdc_397f099a",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "kFooStyle, but also labels usually need to cater for line wrapping if setting a width. (the layout just fits to the view then).\n\nUsually Label::SizeToFit(kTextWidth);\n\nis used (kTextWidth usually being 320-16 or something).",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb2127d_99bcc48a",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "hm there isn\u0027t a Harmony typography style for 14pt, unless it\u0027s a dialog title... (but that\u0027s IDS_ADD_TO_OS_LAUNCH_SURFACE_BUBBLE_TITLE).",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7239d58b_6567b15b",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "this is normally done in the constructor I think",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3eeae0_850da1f9",
+        "filename": "chrome/browser/ui/views/extensions/web_app_info_image_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:26:35Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY..",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
