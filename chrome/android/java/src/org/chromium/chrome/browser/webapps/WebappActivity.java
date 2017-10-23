@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MINIMAL_UI_WEBAPP;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -15,10 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.support.customtabs.CustomTabsSessionToken;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnSystemUiVisibilityChangeListener;
 import android.view.ViewGroup;
+import android.widget.RemoteViews;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
@@ -33,6 +36,9 @@ import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.SingleTabActivity;
 import org.chromium.chrome.browser.TabState;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
+import org.chromium.chrome.browser.browserservices.BrowserSessionContentHandler;
+import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.customtabs.CustomTabAppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.customtabs.CustomTabLayoutManager;
@@ -91,6 +97,45 @@ public class WebappActivity extends SingleTabActivity {
     private Bitmap mLargestFavicon;
 
     private Runnable mSetImmersiveRunnable;
+
+    private BrowserSessionDataProvider mBrowserSessionDataProvider;
+
+    private TrustedWebContentProvider mTrustedWebContentProvider;
+
+    protected WebappHelper mWebappHelper;
+
+    private class TrustedWebContentProvider implements BrowserSessionContentHandler {
+        @Override
+        public void loadUrlAndTrackFromTimestamp(LoadUrlParams params, long timestamp) {}
+
+        @Override
+        public CustomTabsSessionToken getSession() {
+            return mBrowserSessionDataProvider.getSession();
+        }
+
+        @Override
+        public boolean shouldIgnoreIntent(Intent intent) {
+            return true;
+        }
+
+        @Override
+        public boolean updateCustomButton(int id, Bitmap bitmap, String description) {
+            return false;
+        }
+
+        @Override
+        public boolean updateRemoteViews(
+                RemoteViews remoteViews, int[] clickableIDs, PendingIntent pendingIntent) {
+            return false;
+        }
+
+        @Override
+        public String getCurrentUrl() {
+            if (getActivityTab() == null) return null;
+
+            return getActivityTab().getUrl();
+        }
+    }
 
     /** Initialization-on-demand holder. This exists for thread-safe lazy initialization. */
     private static class Holder {
@@ -205,6 +250,10 @@ public class WebappActivity extends SingleTabActivity {
 
         ScreenOrientationProvider.lockOrientation(
                 getWindowAndroid(), (byte) mWebappInfo.orientation());
+
+        mBrowserSessionDataProvider = new BrowserSessionDataProvider(intent);
+        mTrustedWebContentProvider = new TrustedWebContentProvider();
+        if (mTrustedWebContentProvider.getSession() != null) mWebappHelper = new WebappHelper();
         super.preInflationStartup();
     }
 
@@ -244,17 +293,28 @@ public class WebappActivity extends SingleTabActivity {
     @Override
     public void onStartWithNative() {
         super.onStartWithNative();
+        BrowserSessionContentUtils.setActiveContentHandler(mTrustedWebContentProvider);
         mDirectoryManager.cleanUpDirectories(this, getActivityId());
+        // If WebappStorage is available, check whether to show a disclosure notification. If it's
+        // not available, this check will happen once deferred startup returns with the storage
+        // instance.
+        WebappDataStorage storage =
+                WebappRegistry.getInstance().getWebappDataStorage(mWebappInfo.id());
+        if (storage != null && mWebappHelper != null) {
+            mWebappHelper.maybeShowDisclosure(this, storage);
+        }
     }
 
     @Override
     public void onStopWithNative() {
         super.onStopWithNative();
         mDirectoryManager.cancelCleanup();
+        BrowserSessionContentUtils.setActiveContentHandler(null);
         if (getActivityTab() != null) saveState(getActivityDirectory());
         if (getFullscreenManager() != null) {
             getFullscreenManager().setPersistentFullscreenMode(false);
         }
+        if (mWebappHelper != null) mWebappHelper.onStopWithNative(mWebappInfo);
     }
 
     /**
@@ -381,10 +441,24 @@ public class WebappActivity extends SingleTabActivity {
 
     protected void onDeferredStartupWithStorage(WebappDataStorage storage) {
         updateStorage(storage);
+        if (mWebappHelper != null) mWebappHelper.maybeShowDisclosure(this, storage);
     }
 
     protected void onDeferredStartupWithNullStorage() {
-        return;
+        if (mWebappHelper != null) {
+            mWebappHelper.register(
+                    mWebappInfo.id(), new WebappRegistry.FetchWebappDataStorageCallback() {
+                        @Override
+                        public void onWebappDataStorageRetrieved(WebappDataStorage storage) {
+                            // Initialize the time of the last is-update-needed check with the
+                            // registration time. This prevents checking for updates on the first
+                            // run.
+                            storage.updateTimeOfLastCheckForUpdatedWebManifest();
+
+                            onDeferredStartupWithStorage(storage);
+                        }
+                    });
+        }
     }
 
     @Override
@@ -423,6 +497,13 @@ public class WebappActivity extends SingleTabActivity {
      */
     WebappInfo getWebappInfo() {
         return mWebappInfo;
+    }
+
+    /**
+     * Returns the WebAPK's package name if applies.
+     */
+    public String getWebApkPackageName() {
+        return getWebappInfo().webApkPackageName();
     }
 
     /**
@@ -587,7 +668,8 @@ public class WebappActivity extends SingleTabActivity {
     }
 
     protected WebappScopePolicy scopePolicy() {
-        return WebappScopePolicy.WEBAPP;
+        return mTrustedWebContentProvider.getSession() != null ? WebappScopePolicy.STRICT
+                                                               : WebappScopePolicy.LEGACY;
     }
 
     private void updateToolbarCloseButtonVisibility() {
