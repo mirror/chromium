@@ -68,6 +68,13 @@ extern char** environ;
 
 namespace base {
 
+// Friend and derived class of ScopedAllowBaseSyncPrimitives which allows
+// GetAppOutputInternal() to join a process. GetAppOutputInternal() can't itself
+// be a friend of ScopedAllowBaseSyncPrimitives because it is in the anonymous
+// namespace.
+class GetAppOutputScopedAllowBaseSyncPrimitives
+    : public base::ScopedAllowBaseSyncPrimitives {};
+
 #if !defined(OS_NACL_NONSFI)
 
 namespace {
@@ -638,6 +645,7 @@ static bool GetAppOutputInternal(
       // Always wait for exit code (even if we know we'll declare
       // GOT_MAX_OUTPUT).
       Process process(pid);
+      GetAppOutputScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
       return process.WaitForExit(exit_code);
     }
   }
