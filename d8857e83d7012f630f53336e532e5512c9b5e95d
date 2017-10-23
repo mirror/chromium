@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d2789a_8516e72b",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-23T17:42:28Z",
+      "side": 1,
+      "message": "Should the type of this be AttentionType? On the other hand, that might involve an annoying amount of casting… what if you declared AttentionType like this to be explicit?\n\n    enum AttentionType: int {\n    };\n\n…or declared currentAttentionTypes_ with std::underlying_type\u003cAttentionType\u003e::type.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 5
+      },
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9ad144_2d68e575",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-23T17:42:28Z",
+      "side": 1,
+      "message": "This should just be @synthesize\u0027d. (optional: maybe a good opportunity to delete the ivars that duplicate @synthesize lines?)",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1e3c02_876d37c8",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-23T17:42:28Z",
+      "side": 1,
+      "message": "I believe that `assign` is meaningless here since int isn\u0027t an object type.",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3474964_7e5c82b3",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-23T17:42:28Z",
+      "side": 1,
+      "message": "I think this hits https://github.com/google/styleguide/blob/gh-pages/objcguide.md#bool-pitfalls:\n\n\u003e BOOL in OS X and in 32-bit iOS builds is defined as a signed char, so it may have values other than YES (1) and NO (0). Do not cast or convert general integral values directly to BOOL.\n\u003e\n\u003e Common mistakes include casting or converting an array\u0027s size, a pointer value, or the result of a bitwise logic operation to a BOOL that could, depending on the value of the last byte of the integer value, still result in a NO value. When converting a general integral value to a BOOL use ternary operators to return a YES or NO value.",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3428cd74_d71992e2",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-23T17:42:28Z",
+      "side": 1,
+      "message": "This can be deleted if you use @synthesize.",
+      "revId": "d8857e83d7012f630f53336e532e5512c9b5e95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "75b246d3_d3e9a257",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-23T17:42:28Z",
+      "side": 1,
+      "message": "You\u0027re right. Dying is surprising, though… it shouldn\u0027t build with @property lines in the @implementation. Weird.",
+      "parentUuid": "ca8a57b1_26bae068",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eb0e97f_60e7a653",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 6
@@ -174,6 +192,24 @@
       "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cba216_ac8eda01",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-23T17:42:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "548117cf_1a69e43e",
+      "revId": "b17e09df4fae7974309477bd9370fb0b8bb69785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
