@@ -177,6 +177,8 @@ blink_core_sources("paint") {
     "SVGShapePainter.h",
     "SVGTextPainter.cpp",
     "SVGTextPainter.h",
+    "ScopedPaintOffsetAdjustment.cpp",
+    "ScopedPaintOffsetAdjustment.h",
     "ScrollRecorder.cpp",
     "ScrollRecorder.h",
     "ScrollableAreaPainter.cpp",

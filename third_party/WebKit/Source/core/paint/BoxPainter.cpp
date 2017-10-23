@@ -16,6 +16,7 @@
 #include "core/paint/NinePieceImagePainter.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintInfo.h"
+#include "core/paint/ScopedPaintOffsetAdjustment.h"
 #include "core/paint/ScrollRecorder.h"
 #include "core/paint/ThemePainter.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
@@ -31,9 +32,9 @@ namespace blink {
 
 void BoxPainter::Paint(const PaintInfo& paint_info,
                        const LayoutPoint& paint_offset) {
-  ObjectPainter(layout_box_).CheckPaintOffset(paint_info, paint_offset);
   // Default implementation. Just pass paint through to the children.
-  PaintChildren(paint_info, paint_offset + layout_box_.Location());
+  ScopedPaintOffsetAdjustment adjustment(layout_box_, paint_info, paint_offset);
+  PaintChildren(adjustment.GetPaintInfo(), adjustment.AdjustedPaintOffset());
 }
 
 void BoxPainter::PaintChildren(const PaintInfo& paint_info,
