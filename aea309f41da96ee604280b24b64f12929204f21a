@@ -16,6 +16,24 @@
       "revId": "aea309f41da96ee604280b24b64f12929204f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafb2dcd_e6ab149a",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T23:25:58Z",
+      "side": 1,
+      "message": "This diff is not entirely correct. I must have messed up my master branch before uploading. Please see latest patchset 6 with the correct diff.\n\nAlso, regarding adding the link in the HTML, I prefer not to do this, because I think it will complicate the code. Given that the error message is already coming as HTML and we plug it in the UI using inner-h-t-m-l binding, see [1]. Trying to avoid having to refactor #updateStatusMessage contents.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/about_page/about_page.html?q\u003dabout_page.html\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d107,109,113.",
+      "parentUuid": "97555352_37313929",
+      "revId": "aea309f41da96ee604280b24b64f12929204f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
