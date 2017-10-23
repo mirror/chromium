@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7119dfd_eb40349d",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T17:42:16Z",
+      "side": 1,
+      "message": "Per your comment in the earlier patchset, can you expand this comment to point out when UNVISITED_INTRANET is returned, the URLRow here naturally does not have any visit data; only the URL field is set.\n\n(I know it\u0027s mentioned in Type above; I think it cannot hurt to mention it here too.)",
+      "revId": "caf961a129a1473203f006d88b11122a75fdb9d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f24ad2_02830f84",
+        "filename": "components/omnibox/browser/history_url_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T17:42:16Z",
+      "side": 1,
+      "message": "There\u0027s something missing the above sentence.  Right now it reads,\nIf a URL ... in the past, the return value is built ...\nand doesn\u0027t say anything about, say, how the return value is built if that statement isn\u0027t true.\n\nDid you mean\nIf a URL ... in the past, returns a valid URL.  The return value is built ...",
+      "revId": "caf961a129a1473203f006d88b11122a75fdb9d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

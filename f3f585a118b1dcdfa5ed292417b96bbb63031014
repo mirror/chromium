@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f869311f_d4be9737",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T17:42:16Z",
+      "side": 1,
+      "message": "\u003e It is as much of a lie as it is in the baseline code. |as_known_intranet_url| is not in the history. What is in the history is some other url with the same host. Note that the same applies for |url| in baseline code. \n\nGood point.\n\n\u003e Let me know if I should change the comment above to make this distinction more clear. I can add the fact that \"the structure will be mostly empty\", which is true, as the suggestions is a simple unvisited url with the same host as some visited url, and the same scheme as that visited intranet url.\n\nThat sounds like a good comment to add.\n\n\u003e \n\u003e See L911-913 in history_url_provider_unittest.cc for the expected result.",
+      "parentUuid": "a08d45c5_b10b52ce",
+      "range": {
+        "startLine": 410,
+        "startChar": 15,
+        "endLine": 410,
+        "endChar": 30
+      },
+      "revId": "f3f585a118b1dcdfa5ed292417b96bbb63031014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea73acb2_41f0e24e",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 9
