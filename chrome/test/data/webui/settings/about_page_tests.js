@@ -870,7 +870,7 @@ cr.define('settings_about_page', function() {
             assertTrue(dialog.$.changeChannelAndPowerwash.hidden);
             assertFalse(dialog.$.changeChannel.hidden);
 
-            var whenTargetChannelChangedFired = test_util.eventToPromise(
+            var whenTargetChannelChangedFired = webui_test_util.eventToPromise(
                 'target-channel-changed', dialog);
 
             MockInteractions.tap(dialog.$.changeChannel);
@@ -897,7 +897,7 @@ cr.define('settings_about_page', function() {
             assertFalse(dialog.$.changeChannelAndPowerwash.hidden);
             assertTrue(dialog.$.changeChannel.hidden);
 
-            var whenTargetChannelChangedFired = test_util.eventToPromise(
+            var whenTargetChannelChangedFired = webui_test_util.eventToPromise(
                 'target-channel-changed', dialog);
 
             MockInteractions.tap(dialog.$.changeChannelAndPowerwash);
