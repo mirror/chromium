@@ -22,6 +22,30 @@
       "revId": "73fc83eb3a7ea7c5728d5983d680ef2ab7f4cd3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faa8e9b_1edcc1e6",
+        "filename": "chrome/browser/ui/cocoa/autofill/card_unmask_prompt_view_views.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-23T23:50:35Z",
+      "side": 1,
+      "message": "It was suggested that we go this route by the MacViews team. While more process for our team, it will ensure that we can launch this at our own schedule (possibly sooner than other MacViews dialogs).",
+      "parentUuid": "2691dce2_38b1ae7e",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 78
+      },
+      "revId": "73fc83eb3a7ea7c5728d5983d680ef2ab7f4cd3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
