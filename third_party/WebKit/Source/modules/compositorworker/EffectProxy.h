@@ -24,7 +24,7 @@ class MODULES_EXPORT EffectProxy : public GarbageCollected<EffectProxy>,
     local_time_ = WTF::TimeDelta::FromSecondsD(time);
   }
 
-  double localTime() const { return local_time_.InSecondsF(); }
+  double localTime() const { return local_time_.InMillisecondsF(); }
 
   WTF::TimeDelta GetLocalTime() const { return local_time_; }
 
