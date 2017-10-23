@@ -409,16 +409,14 @@ AutocompleteControllerAndroid::ClassifyPage(const GURL& gurl,
   }
 
   if (url == chrome::kChromeUINativeNewTabURL) {
-    // If the fakebox demotion experiment is not active, pretend all focus
-    // events go to the omnibox.
-    if (!base::FeatureList::IsEnabled(omnibox::kAndroidFakeboxDemotion))
+    // On phones, there is only one box on the NTP.  In this case, treat this
+    // box like the omnibox.  I.e., don't apply the same sort of URL demotion
+    // that happens on tablets and on desktop when the user explicitly selects
+    // the fakebox (which looks more like a search box) rather than the omnibox
+    // (which looks more like a URL bar).
+    if (ui::GetDeviceFormFactor() == ui::DEVICE_FORM_FACTOR_PHONE)
       return OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;
-    // On phones, the specific feature flag for the experiment on phones has to
-    // be enabled.  (Because there is only one box on the NTP on phones, the
-    // case for demoting URLs is less clear; hence the separate experiment)
-    if ((ui::GetDeviceFormFactor() == ui::DEVICE_FORM_FACTOR_PHONE) &&
-        !base::FeatureList::IsEnabled(omnibox::kAndroidFakeboxDemotionOnPhones))
-      return OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;
+
     return focused_from_fakebox ?
         OmniboxEventProto::INSTANT_NTP_WITH_FAKEBOX_AS_STARTING_FOCUS :
         OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS;
