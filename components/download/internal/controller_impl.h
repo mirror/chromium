@@ -35,6 +35,7 @@ class LogSink;
 class Model;
 class NavigationMonitor;
 class Scheduler;
+class TaskManager;
 
 struct Configuration;
 struct DownloadMetaData;
@@ -237,16 +238,15 @@ class ControllerImpl : public Controller,
   std::unique_ptr<DeviceStatusListener> device_status_listener_;
   NavigationMonitor* navigation_monitor_;
   std::unique_ptr<Scheduler> scheduler_;
-  std::unique_ptr<TaskScheduler> task_scheduler_;
   std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
+  std::unique_ptr<TaskManager> task_manager_;
   base::Closure init_callback_;
   State controller_state_;
   StartupStatus startup_status_;
   std::set<std::string> externally_active_downloads_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;
-  std::map<DownloadTaskType, TaskFinishedCallback> task_finished_callbacks_;
   base::CancelableClosure cancel_downloads_callback_;
 
   // Only used to post tasks on the same thread.

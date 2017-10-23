@@ -101,6 +101,7 @@ public class DownloadBackgroundTask extends NativeBackgroundTask {
     protected boolean onStopTaskWithNative(Context context, TaskParameters taskParameters) {
         @DownloadTaskType
         int taskType = taskParameters.getExtras().getInt(DownloadTaskScheduler.EXTRA_TASK_TYPE);
+
         mPendingTaskCounters.remove(taskType);
 
         Profile profile = Profile.getLastUsedProfile().getOriginalProfile();

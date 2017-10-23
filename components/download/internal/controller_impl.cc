@@ -4,6 +4,7 @@
 
 #include "components/download/internal/controller_impl.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -21,6 +22,7 @@
 #include "components/download/internal/model.h"
 #include "components/download/internal/scheduler/scheduler.h"
 #include "components/download/internal/stats.h"
+#include "components/download/internal/task_manager.h"
 #include "components/download/public/client.h"
 #include "components/download/public/download_metadata.h"
 #include "components/download/public/navigation_monitor.h"
@@ -98,8 +100,8 @@ ControllerImpl::ControllerImpl(
       device_status_listener_(std::move(device_status_listener)),
       navigation_monitor_(navigation_monitor),
       scheduler_(std::move(scheduler)),
-      task_scheduler_(std::move(task_scheduler)),
       file_monitor_(std::move(file_monitor)),
+      task_manager_(std::make_unique<TaskManager>(std::move(task_scheduler))),
       controller_state_(State::CREATED),
       weak_ptr_factory_(this) {
   DCHECK(config_);
@@ -270,7 +272,7 @@ DownloadClient ControllerImpl::GetOwnerOfDownload(const std::string& guid) {
 void ControllerImpl::OnStartScheduledTask(
     DownloadTaskType task_type,
     const TaskFinishedCallback& callback) {
-  task_finished_callbacks_[task_type] = callback;
+  task_manager_->OnSystemStartedTask(task_type, callback);
 
   switch (controller_state_) {
     case State::READY:
@@ -282,8 +284,8 @@ void ControllerImpl::OnStartScheduledTask(
       }
       break;
     case State::UNAVAILABLE:
-      HandleTaskFinished(task_type, false,
-                         stats::ScheduledTaskStatus::ABORTED_ON_FAILED_INIT);
+      task_manager_->FinishTask(
+          task_type, false, stats::ScheduledTaskStatus::ABORTED_ON_FAILED_INIT);
       break;
     case State::CREATED:       // Intentional fallthrough.
     case State::INITIALIZING:  // Intentional fallthrough.
@@ -295,14 +297,14 @@ void ControllerImpl::OnStartScheduledTask(
 }
 
 bool ControllerImpl::OnStopScheduledTask(DownloadTaskType task_type) {
-  HandleTaskFinished(task_type, false,
-                     stats::ScheduledTaskStatus::CANCELLED_ON_STOP);
+  task_manager_->FinishTask(task_type, false,
+                            stats::ScheduledTaskStatus::CANCELLED_ON_STOP);
   return true;
 }
 
 void ControllerImpl::OnCompleteCleanupTask() {
-  HandleTaskFinished(DownloadTaskType::CLEANUP_TASK, false,
-                     stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
+  task_manager_->FinishTask(DownloadTaskType::CLEANUP_TASK, false,
+                            stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
 }
 
 void ControllerImpl::RemoveCleanupEligibleDownloads() {
@@ -342,24 +344,6 @@ void ControllerImpl::RemoveCleanupEligibleDownloads() {
     DCHECK_EQ(Entry::State::COMPLETE, entry->state);
     model_->Remove(entry->guid);
   }
-}
-
-void ControllerImpl::HandleTaskFinished(DownloadTaskType task_type,
-                                        bool needs_reschedule,
-                                        stats::ScheduledTaskStatus status) {
-  if (task_finished_callbacks_.find(task_type) ==
-      task_finished_callbacks_.end()) {
-    return;
-  }
-
-  if (status != stats::ScheduledTaskStatus::CANCELLED_ON_STOP) {
-    base::ResetAndReturn(&task_finished_callbacks_[task_type])
-        .Run(needs_reschedule);
-  }
-  // TODO(dtrainor): It might be useful to log how many downloads we have
-  // running when we're asked to stop processing.
-  stats::LogScheduledTaskStatus(task_type, status);
-  task_finished_callbacks_.erase(task_type);
 }
 
 void ControllerImpl::OnDriverReady(bool success) {
@@ -1041,9 +1025,12 @@ void ControllerImpl::ScheduleCleanupTask() {
             std::ceil(end_time.InSecondsF()))
       << "GCM requires start time to be less than end time";
 
-  task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
-                                std::ceil(start_time.InSecondsF()),
-                                std::ceil(end_time.InSecondsF()));
+  TaskManager::TaskParams params;
+  params.requires_unmetered_network = false;
+  params.requires_battery_charging = false;
+  params.window_start_seconds = std::ceil(start_time.InSecondsF());
+  params.window_end_seconds = std::ceil(end_time.InSecondsF());
+  task_manager_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, params);
 }
 
 void ControllerImpl::ScheduleKillDownloadTaskIfNecessary() {
@@ -1084,6 +1071,9 @@ void ControllerImpl::ActivateMoreDownloads() {
   if (controller_state_ != State::READY)
     return;
 
+  if (device_status_listener_->IsStartingUp())
+    return;
+
   // Check all the entries and the configuration to throttle number of
   // downloads.
   std::map<Entry::State, uint32_t> entries_states;
@@ -1100,26 +1090,49 @@ void ControllerImpl::ActivateMoreDownloads() {
   uint32_t paused_count = entries_states[Entry::State::PAUSED];
   uint32_t active_count = entries_states[Entry::State::ACTIVE];
 
-  bool has_actionable_downloads = false;
   while (CanActivateMoreDownloads(config_, active_count, paused_count)) {
     Entry* next = scheduler_->Next(
         model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
     if (!next)
       break;
 
-    has_actionable_downloads = true;
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);
     TransitTo(next, Entry::State::ACTIVE, model_.get());
     active_count++;
     UpdateDriverState(next);
   }
 
-  if (!has_actionable_downloads) {
-    HandleTaskFinished(DownloadTaskType::DOWNLOAD_TASK, false,
-                       stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
+  // Check if any active downloads are actually able to run under the current
+  // conditions.
+  bool has_actionable_downloads = false;
+  for (auto* const entry : model_->PeekEntries()) {
+    if (entry->state != Entry::State::ACTIVE &&
+        entry->state != Entry::State::AVAILABLE) {
+      continue;
+    }
+
+    has_actionable_downloads |= device_status_listener_->CurrentDeviceStatus()
+                                    .MeetsCondition(entry->scheduling_params)
+                                    .MeetsRequirements();
+
+    if (has_actionable_downloads)
+      break;
   }
 
-  scheduler_->Reschedule(scheduling_candidates);
+  base::Optional<TaskManager::TaskParams> params =
+      scheduler_->Reschedule(scheduling_candidates);
+
+  if (params.has_value()) {
+    task_manager_->ScheduleTask(DownloadTaskType::DOWNLOAD_TASK,
+                                params.value());
+  } else {
+    task_manager_->UnscheduleTask(DownloadTaskType::DOWNLOAD_TASK);
+  }
+
+  if (!has_actionable_downloads) {
+    task_manager_->FinishTask(DownloadTaskType::DOWNLOAD_TASK, false,
+                              stats::ScheduledTaskStatus::COMPLETED_NORMALLY);
+  }
 }
 
 void ControllerImpl::OnNavigationEvent() {
