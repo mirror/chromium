@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "2f5f2fc6_97301a4a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T16:54:04Z",
+      "side": 1,
+      "message": "Fair point. The code is gone, so we no longer have to make a call here in any case. :)",
+      "parentUuid": "c4b121a4_c80d9edf",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d456980_025a2219",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 19
