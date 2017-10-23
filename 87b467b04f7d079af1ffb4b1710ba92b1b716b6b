@@ -93,6 +93,30 @@
       "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e4c1e9_0ad165ab",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-10-23T14:31:32Z",
+      "side": 1,
+      "message": "The old code didn\u0027t depend on timeouts either, except as an upper limit. waitForIdle will give a timeout exception if the timeout expires (hence causing the test to fail). For waitForWindowUpdate I should have been checking the return value to ensure that the timeout hadn\u0027t expired, but I never saw evidence that it was expiring when running locally.",
+      "parentUuid": "1f962d9d_44d8d22d",
+      "range": {
+        "startLine": 88,
+        "startChar": 53,
+        "endLine": 88,
+        "endChar": 68
+      },
+      "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
