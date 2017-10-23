@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3d1569f_f1dd381f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-10-23T13:19:27Z",
+      "side": 1,
+      "message": "Has something changed in our static analysis tools here? Having even a public un-referenced member variable used to give errors (in findbugs I think), hence the reason the previous rule is a function not a variable.\n\nIf it has changed please change the previous rule to a variable.",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ef971f_ae94fa80",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-10-23T13:19:27Z",
+      "side": 1,
+      "message": "Does this work reliably? Previously I sometimes had screenshots taken too soon (hence my very conservative waitForWindowUpdates()) but turning off animations might fix that. Unfortunately the only way to check this is to run it multiple times and look at the screen shots.",
+      "range": {
+        "startLine": 88,
+        "startChar": 53,
+        "endLine": 88,
+        "endChar": 68
+      },
+      "revId": "87b467b04f7d079af1ffb4b1710ba92b1b716b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
