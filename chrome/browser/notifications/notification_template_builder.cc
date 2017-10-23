@@ -20,6 +20,7 @@ const char kActionElement[] = "action";
 const char kActionsElement[] = "actions";
 const char kActivationType[] = "activationType";
 const char kArguments[] = "arguments";
+const char kAttribution[] = "attribution";
 const char kBindingElement[] = "binding";
 const char kBindingElementTemplateAttribute[] = "template";
 const char kButtonIndex[] = "buttonIndex=";
@@ -29,6 +30,7 @@ const char kInputElement[] = "input";
 const char kInputId[] = "id";
 const char kInputType[] = "type";
 const char kPlaceholderContent[] = "placeHolderContent";
+const char kPlacement[] = "placement";
 const char kText[] = "text";
 const char kUserResponse[] = "userResponse";
 const char kTextElement[] = "text";
@@ -60,10 +62,12 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
   builder->StartBindingElement(kDefaultTemplate);
 
   // Content for the toast template.
-  builder->WriteTextElement("1", base::UTF16ToUTF8(notification.title()));
-  builder->WriteTextElement("2", base::UTF16ToUTF8(notification.message()));
-  builder->WriteTextElement("3",
-                            builder->FormatOrigin(notification.origin_url()));
+  builder->WriteTextElement("1", base::UTF16ToUTF8(notification.title()),
+                            false);
+  builder->WriteTextElement("2", base::UTF16ToUTF8(notification.message()),
+                            false);
+  builder->WriteTextElement(
+      "3", builder->FormatOrigin(notification.origin_url()), true);
 
   builder->EndBindingElement();
   builder->EndVisualElement();
@@ -131,8 +135,11 @@ void NotificationTemplateBuilder::EndBindingElement() {
 }
 
 void NotificationTemplateBuilder::WriteTextElement(const std::string& id,
-                                                   const std::string& content) {
+                                                   const std::string& content,
+                                                   bool attribution) {
   xml_writer_->StartElement(kTextElement);
+  if (attribution)
+    xml_writer_->AddAttribute(kPlacement, kAttribution);
   xml_writer_->AppendElementContent(content);
   xml_writer_->EndElement();
 }
