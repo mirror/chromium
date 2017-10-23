@@ -445,7 +445,13 @@ def get_waterfall_config():
          ('load_library_perf_tests', 'build94-m1'),
          # crbug.com/735679
          # ('performance_browser_tests', 'build94-m1'),
-         ('media_perftests', 'build95-m1')]
+         ('media_perftests', 'build95-m1'),
+         ('passthrough_command_buffer_perftests', 'build94-m1',
+          ['--use-cmd-decoder=passthrough', '--use-angle=gl-null'],
+          'command_buffer_perftests')
+         ('validating_command_buffer_perftests', 'build94-m1',
+          ['--use-cmd-decoder=validating', '--use-stub'],
+          'command_buffer_perftests')]
       }
     ])
 
@@ -694,13 +700,23 @@ def get_swarming_dimension(dimension, device_id):
     complete_dimension['gpu'] = dimension['gpu']
   return complete_dimension
 
+def generate_cplusplus_isolate_script_entry(name, shard, args, isolate):
+  test_args = []
+  if args:
+    test_args = args
+  isolate_name = name
+  if isolate:
+    isolate_name = isolate
+  return generate_isolate_script_entry(
+      [get_swarming_dimension(dimension, shard)], test_args, name,
+      isolate_name, ignore_task_failure=False)
 
 def generate_cplusplus_isolate_script_test(dimension):
   return [
     generate_isolate_script_entry(
         [get_swarming_dimension(dimension, shard)], [], name,
         name, ignore_task_failure=False)
-    for name, shard in dimension['perf_tests']
+    for name, shard, args, isolate in dimension['perf_tests']
   ]
 
 
