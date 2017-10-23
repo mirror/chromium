@@ -45,14 +45,19 @@ void SaveStatusAndCall(ServiceWorkerStatusCode* out,
 
 }  // namespace
 
-class ProviderHostEndpoints : public mojom::ServiceWorkerContainerHost {
+class ProviderHostEndpoints
+    : public mojom::ServiceWorkerContainerHost,
+      public blink::mojom::ServiceWorkerRegistrationObjectHost {
  public:
-  ProviderHostEndpoints() : binding_(this) {}
+  ProviderHostEndpoints()
+      : container_host_binding_(this),
+        registration_object_host_binding_(this) {}
 
   ~ProviderHostEndpoints() override {}
 
   mojom::ServiceWorkerProviderInfoForStartWorkerPtr CreateProviderInfoPtr() {
-    DCHECK(!binding_.is_bound());
+    DCHECK(!container_host_binding_.is_bound());
+    DCHECK(!registration_object_host_binding_.is_bound());
     DCHECK(!client_.is_bound());
     // Just keep the endpoints.
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info =
@@ -61,7 +66,10 @@ class ProviderHostEndpoints : public mojom::ServiceWorkerContainerHost {
         blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
     provider_info->registration->options =
         blink::mojom::ServiceWorkerRegistrationOptions::New();
-    binding_.Bind(mojo::MakeRequest(&provider_info->host_ptr_info));
+    registration_object_host_binding_.Bind(
+        mojo::MakeRequest(&(provider_info->registration->host_ptr_info)));
+    container_host_binding_.Bind(
+        mojo::MakeRequest(&provider_info->host_ptr_info));
     provider_info->client_request = mojo::MakeRequest(&client_);
     mojo::MakeRequest(&provider_info->interface_provider);
     return provider_info;
@@ -90,8 +98,15 @@ class ProviderHostEndpoints : public mojom::ServiceWorkerContainerHost {
     NOTIMPLEMENTED();
   }
 
+  // Implements blink::mojom::ServiceWorkerRegistrationObjectHost.
+  void Update(UpdateCallback callback) override { NOTIMPLEMENTED(); }
+  void Unregister(UnregisterCallback callback) override { NOTIMPLEMENTED(); }
+
   mojom::ServiceWorkerContainerAssociatedPtr client_;
-  mojo::AssociatedBinding<mojom::ServiceWorkerContainerHost> binding_;
+  mojo::AssociatedBinding<mojom::ServiceWorkerContainerHost>
+      container_host_binding_;
+  mojo::AssociatedBinding<blink::mojom::ServiceWorkerRegistrationObjectHost>
+      registration_object_host_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(ProviderHostEndpoints);
 };

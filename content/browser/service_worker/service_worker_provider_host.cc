@@ -1064,8 +1064,7 @@ void ServiceWorkerProviderHost::GetRegistrationComplete(
     return;
   }
 
-  auto info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
-  info->options = blink::mojom::ServiceWorkerRegistrationOptions::New();
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info;
   ServiceWorkerVersionAttributes attrs;
   if (status == SERVICE_WORKER_OK) {
     DCHECK(registration.get());
