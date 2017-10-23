@@ -22,6 +22,30 @@
       "revId": "1b52d140664c6a81a639fb2f3a6ded939ed0d2e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42439966_e2b97b08",
+        "filename": "chromeos/network/managed_network_configuration_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-23T19:40:58Z",
+      "side": 1,
+      "message": "Hmm, yeah, this is tricky. Name serves might be set manually, even if not connected. We may need to cache the raw dictionary instead.",
+      "parentUuid": "01329090_d559dbb3",
+      "range": {
+        "startLine": 834,
+        "startChar": 44,
+        "endLine": 834,
+        "endChar": 51
+      },
+      "revId": "1b52d140664c6a81a639fb2f3a6ded939ed0d2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
