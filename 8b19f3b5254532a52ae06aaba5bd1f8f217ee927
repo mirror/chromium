@@ -46,6 +46,30 @@
       "revId": "8b19f3b5254532a52ae06aaba5bd1f8f217ee927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce32c70_409da477",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-10-23T12:36:26Z",
+      "side": 0,
+      "message": "Yep, the ones that do not hold on to the deps factory as a member during setup: SuggestionsBottomSheetUiCaptureTest, HomeSheetUiCaptureTest, and HomeSheetTilesUiCaptureTest.",
+      "parentUuid": "6939a395_77519013",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 31
+      },
+      "revId": "8b19f3b5254532a52ae06aaba5bd1f8f217ee927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
