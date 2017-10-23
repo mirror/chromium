@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f7c673b_198e4d78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-23T11:46:42Z",
+      "side": 1,
+      "message": "Please write down the main points here since this doc is (probably) not publicly readable (and we shouldn\u0027t make them readable since people editing the doc might not expect that).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ff1a80_e63f8de8",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-23T11:46:42Z",
+      "side": 1,
+      "message": "You\u0027ll still have to check \u0027policies is not None\u0027 here since _CheckContains just prints an error if it doesn\u0027t exist.",
+      "range": {
+        "startLine": 233,
+        "startChar": 6,
+        "endLine": 233,
+        "endChar": 28
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "560a7b07_5302a171",
         "filename": "components/policy/tools/syntax_check_policy_template_json.py",
         "patchSetId": 9
@@ -58,6 +104,53 @@
         "startChar": 19,
         "endLine": 517,
         "endChar": 20
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbbcd42_6bb5e2f9",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-23T11:46:42Z",
+      "side": 1,
+      "message": "Agreed, this should be a set or a dictionary.",
+      "parentUuid": "43a37497_f9bd7a9d",
+      "range": {
+        "startLine": 517,
+        "startChar": 19,
+        "endLine": 517,
+        "endChar": 20
+      },
+      "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa002a81_a28a4b53",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-23T11:46:42Z",
+      "side": 1,
+      "message": "Call this \u0027policy_name\u0027 because usually the objects are called \u0027policy\u0027.",
+      "range": {
+        "startLine": 522,
+        "startChar": 10,
+        "endLine": 522,
+        "endChar": 16
       },
       "revId": "244882d66643e8d84d1816b05e2b28a59e7235ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
