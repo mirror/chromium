@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac0a972_121632ac",
+        "filename": "chrome/browser/resources/network_speech_synthesis/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133290
+      },
+      "writtenOn": "2017-10-23T15:37:10Z",
+      "side": 1,
+      "message": "You can add bn_bd Bengali (Bangladesh)",
+      "revId": "2bd24bc1db53cf51bafaa3f2e342722995da7bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e393af_820840f8",
+        "filename": "chrome/browser/resources/network_speech_synthesis/manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133290
+      },
+      "writtenOn": "2017-10-23T15:37:10Z",
+      "side": 1,
+      "message": "I\u0027ll either move these 2 to the end or zh-HK here",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 3
+      },
+      "revId": "2bd24bc1db53cf51bafaa3f2e342722995da7bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
