@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558f2988_595882bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-23T02:38:30Z",
+      "side": 1,
+      "message": "Looks like the only caller of this function is in OmniboxViewViews::IsImeShowingPopup [1], and it is called only on non-chromeos. So perhaps we don\u0027t need to implement this right now? (and maybe leave NOTREACHED() to make sure we know if it starts getting used from other places)\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/omnibox/omnibox_view_views.cc?l\u003d563",
+      "revId": "dc39a2ceaabe50f09c37dd95224841e93e88e594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
