@@ -16562,6 +16562,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2184" label="CrossOriginWorkerTextHtml"/>
   <int value="2185" label="CrossOriginWorkerTextPlain"/>
   <int value="2186" label="CrossOriginWorkerTextXml"/>
+  <int value="2187" label="ImageCaptureSetOptions"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -17407,6 +17408,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="10" label="DRIVE_SHARED_WITH_ME"/>
   <int value="11" label="DRIVE_RECENT"/>
   <int value="12" label="MEDIA_VIEW"/>
+  <int value="13" label="RECENT"/>
 </enum>
 
 <enum name="FileManagerVolumeType">
@@ -31900,6 +31902,17 @@ from previous Chrome versions.
   <int value="12" label="RequestDenied"/>
 </enum>
 
+<enum name="PresentationUrlType">
+  <int value="0" label="Other"/>
+  <int value="1" label="Cast"/>
+  <int value="2" label="CastDial"/>
+  <int value="3" label="CastLegacy"/>
+  <int value="4" label="Dial"/>
+  <int value="5" label="Http"/>
+  <int value="6" label="Https"/>
+  <int value="7" label="RemotePlayback"/>
+</enum>
+
 <enum name="PreTapEvents">
   <int value="0" label="no event"/>
   <int value="1" label="tapdown"/>
@@ -38174,6 +38187,7 @@ would be helpful to identify which type is being sent.
   <int value="0" label="Saved on Chrome sign-in"/>
   <int value="1" label="Saved in the content area"/>
   <int value="2" label="Cleared on Chrome sign-out"/>
+  <int value="3" label="Changed in the content area"/>
 </enum>
 
 <enum name="SyncPromoAction">

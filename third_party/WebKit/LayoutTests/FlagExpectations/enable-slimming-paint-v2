@@ -887,6 +887,8 @@ Bug(none) images/cross-fade-invalidation.html [ Crash Failure Pass ]
 Bug(none) paint/pagination/pagination-change-clip-crash.html [ Failure ]
 Bug(none) paint/selection/text-selection-newline-mixed-ltr-rtl.html [ Failure ]
 
+Bug(none) fast/multicol/input-with-overflow-second-column.html [ Failure ]
+
 # Less invalidations or different invalidations without pixel failures.
 # Some might be good. Some might be under-invalidations for which under-invalidation
 # checking failed.
@@ -901,6 +903,7 @@ Bug(none) paint/invalidation/overflow-changed-on-child-of-composited-layer.html 
 Bug(none) paint/invalidation/overflow-hidden-yet-scrolled-with-custom-scrollbar.html [ Failure ]
 Bug(none) paint/invalidation/overflow-hidden-yet-scrolled.html [ Failure ]
 Bug(none) paint/invalidation/paint-invalidation-with-reparent-across-frame-boundaries.html [ Failure ]
+Bug(none) paint/invalidation/scrollbar-ancestor-clip-change.html [ Failure ]
 Bug(none) paint/invalidation/svg/resize-svg-invalidate-children-2.html [ Failure ]
 Bug(none) paint/invalidation/svg/resize-svg-invalidate-children.html [ Failure ]
 
@@ -1715,6 +1718,8 @@ crbug.com/762098 compositing/overflow/non-composited-sticky-element-in-main-thre
 
 # Subsequence under-invalidation of scroller related to ScrollHitTest.
 crbug.com/738613 compositing/overflow/overflow-scroll-with-pointer-events-toggle.html [ Failure Crash ]
+# Null pointer in PaintArtifactCompositor::ScrollHitTestLayerForPendingLayer().
+crbug.com/738613 paint/invalidation/compositing/pointer-events-composited-scrolling.html [ Crash ]
 
 # See comment regarding this test in NeverFixTests. It also fails for other
 # reasons, in particular that the composited layerization algorithm provides

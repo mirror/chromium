@@ -7408,6 +7408,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="BlueZ.AdapterLost" units="losses">
+  <owner>mcchou@chromium.org</owner>
+  <summary>
+    This is specific to Chrome OS. Records an occurance of a Bluetooth adapter
+    being lost. This helps us better understand the Bluetooth controller drop
+    issue in the field.
+  </summary>
+</histogram>
+
+<histogram name="BlueZ.NumberOfExistingAdvertisements" units="advertisements">
+  <owner>mcchou@chromium.org</owner>
+  <summary>
+    This is specific to Chrome OS. Records the number of existing advertisements
+    when registering for a new advertisement. This helps us better understand
+    the common amount of advertisments used and the registration failures due to
+    the limited number of advertisement slots.
+  </summary>
+</histogram>
+
 <histogram name="BlueZ.ReasonOfDisconnection" enum="BlueZReasonOfDisconnection">
   <owner>mcchou@chromium.org</owner>
   <summary>
@@ -24284,6 +24303,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="FileBrowser.OpenFiles.RootType" enum="FileManagerRootType">
+  <owner>fukino@chromium.com</owner>
+  <summary>
+    Chrome OS File Browser: The locations (root types) of files which are opened
+    by the file picker.
+  </summary>
+</histogram>
+
 <histogram name="FileBrowser.OpeningFileType" enum="FileType">
   <obsolete>
     Deprecated 4/2013, and replaced by FileBrowser.ViewingFileType.
@@ -29037,6 +29064,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The duration of time between when a client authenticates with a host, and
     receives a TetherAvailabilityResponse.
+  </summary>
+</histogram>
+
+<histogram name="InstantTethering.UserPreference.OnStartup"
+    enum="BooleanEnabled">
+  <owner>hansberry@chromium.com</owner>
+  <summary>
+    Provides the count of the number of users who have the Instant Tethering
+    toggle enabled vs. disabled on startup. This metric is logged each time a
+    user logs into a Chromebook.
+  </summary>
+</histogram>
+
+<histogram name="InstantTethering.UserPreference.OnToggle"
+    enum="BooleanEnabled">
+  <owner>hansberry@chromium.com</owner>
+  <summary>
+    Provides the count of the number of times users have enabled or disabled the
+    user preference for Mobile data. This metric is logged each time the value
+    is toggled.
   </summary>
 </histogram>
 
@@ -34386,6 +34433,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>btolsch@chromium.org</owner>
   <summary>
     Time between network change events reported by DiscoveryNetworkMonitor.
+  </summary>
+</histogram>
+
+<histogram name="MediaRouter.PresentationRequest.AvailabilityUrlType"
+    enum="PresentationUrlType">
+  <owner>imcheng@chromium.org</owner>
+  <summary>
+    The type of Presentation URL used in a PresentationRequest by a web page.
   </summary>
 </histogram>
 

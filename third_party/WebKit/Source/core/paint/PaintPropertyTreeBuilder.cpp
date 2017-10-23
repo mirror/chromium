@@ -163,7 +163,7 @@ void PaintPropertyTreeBuilder::UpdateProperties(
     context.fixed_position.fixed_position_children_fixed_to_root = true;
     return;
   } else {
-    context.current.paint_offset_root = frame_view.GetLayoutView()->Layer();
+    context.current.paint_offset_root = frame_view.GetLayoutView();
   }
 
 #if DCHECK_IS_ON()
@@ -936,6 +936,30 @@ static bool NeedsOverflowClip(const LayoutObject& object) {
   return object.IsBox() && ToLayoutBox(object).ShouldClipOverflow();
 }
 
+static bool NeedsControlClipFragmentationAdjustment(const LayoutBox& box) {
+  return box.HasControlClip() && !box.Layer() &&
+         box.PaintingLayer()->EnclosingPaginationLayer();
+}
+
+static inline LayoutPoint VisualOffsetFromPaintOffsetRoot(
+    const PaintPropertyTreeBuilderFragmentContext& context,
+    const PaintLayer* child) {
+  const LayoutBoxModelObject* paint_offset_root =
+      context.current.paint_offset_root;
+  PaintLayer* painting_layer = paint_offset_root->PaintingLayer();
+  LayoutPoint result = child->VisualOffsetFromAncestor(painting_layer);
+  if (!paint_offset_root->Layer()) {
+    result.Move(-paint_offset_root->OffsetFromAncestorContainer(
+        &painting_layer->GetLayoutObject()));
+  }
+
+  // Don't include scroll offset of paint_offset_root. Any scroll is
+  // already included in a separate transform node.
+  if (paint_offset_root->HasOverflowClip())
+    result += ToLayoutBox(paint_offset_root)->ScrolledContentOffset();
+  return result;
+}
+
 void PaintPropertyTreeBuilder::UpdateOverflowClip(
     const LayoutObject& object,
     ObjectPaintProperties& properties,
@@ -951,6 +975,32 @@ void PaintPropertyTreeBuilder::UpdateOverflowClip(
       if (context.fragment_clip_context) {
         clip_rect =
             box.OverflowClipRect(context.fragment_clip_context->paint_offset);
+      } else if (NeedsControlClipFragmentationAdjustment(box)) {
+        PaintLayer* painting_layer = box.PaintingLayer();
+        // TODO(chrishtr): remove this workaround once non-PaintLayers can
+        // fragment.
+        LayoutRect object_bounding_box_in_flow_thread =
+            box.OverflowClipRect(LayoutPoint());
+        object_bounding_box_in_flow_thread.Move(
+            object.OffsetFromAncestorContainer(
+                &painting_layer->EnclosingPaginationLayer()
+                     ->GetLayoutObject()));
+
+        const LayoutFlowThread& flow_thread = ToLayoutFlowThread(
+            painting_layer->EnclosingPaginationLayer()->GetLayoutObject());
+        FragmentainerIterator iterator(flow_thread,
+                                       object_bounding_box_in_flow_thread);
+
+        LayoutPoint offset = context.current.paint_offset;
+        if (!iterator.AtEnd()) {
+          offset = object_bounding_box_in_flow_thread.Location();
+          offset.Move(iterator.PaginationOffset());
+          offset.MoveBy(VisualOffsetFromPaintOffsetRoot(
+              context, painting_layer->EnclosingPaginationLayer()));
+          iterator.Advance();
+        }
+
+        clip_rect = box.OverflowClipRect(offset);
       } else {
         clip_rect = box.OverflowClipRect(context.current.paint_offset);
       }
@@ -1269,7 +1319,7 @@ void PaintPropertyTreeBuilder::UpdatePaintOffset(
       // above the scroll of the LayoutView. Child content is relative to that
       // transform, and hence the fixed-position element.
       if (context.fixed_position.fixed_position_children_fixed_to_root)
-        context.current.paint_offset_root = object.Layer();
+        context.current.paint_offset_root = &object;
       break;
     default:
       NOTREACHED();
@@ -1293,17 +1343,55 @@ void PaintPropertyTreeBuilder::UpdatePaintOffset(
   }
 }
 
-static inline LayoutPoint VisualOffsetFromPaintOffsetRoot(
-    const PaintPropertyTreeBuilderFragmentContext& context,
-    const PaintLayer* child) {
-  PaintLayer* paint_offset_root = context.current.paint_offset_root;
-  LayoutPoint result = child->VisualOffsetFromAncestor(paint_offset_root);
+static void SetNeedsPaintPropertyUpdateIfNeeded(const LayoutObject& object) {
+  if (!object.IsBoxModelObject())
+    return;
 
-  // Don't include scroll offset of paint_offset_root. Any scroll is
-  // already included in a separate transform node.
-  if (paint_offset_root->GetLayoutObject().HasOverflowClip())
-    result += paint_offset_root->GetLayoutBox()->ScrolledContentOffset();
-  return result;
+  const LayoutBoxModelObject& box_model_object = ToLayoutBoxModelObject(object);
+  if (box_model_object.Layer() &&
+      box_model_object.Layer()->ShouldFragmentCompositedBounds()) {
+    // Always force-update properties for fragmented content.
+    // TODO(chrishtr): find ways to optimize this in the future.
+    // It may suffice to compare previous and current visual overflow,
+    // but we do not currenly cache that on the LayoutObject or PaintLayer.
+    object.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
+    return;
+  }
+
+  if (!object.IsBox())
+    return;
+
+  const LayoutBox& box = ToLayoutBox(object);
+
+  // Always force-update properties for fragmented content. Boxes with
+  // control clip have a fragment-aware offset.
+  if (NeedsControlClipFragmentationAdjustment(box)) {
+    box.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
+    return;
+  }
+
+  if (box.Size() == box.PreviousSize())
+    return;
+
+  // CSS mask and clip-path comes with an implicit clip to the border box.
+  // Currently only SPv2 generate and take advantage of those.
+  const bool box_generates_property_nodes_for_mask_and_clip_path =
+      RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+      (box.HasMask() || box.HasClipPath());
+  // The overflow clip paint property depends on the border box rect through
+  // overflowClipRect(). The border box rect's size equals the frame rect's
+  // size so we trigger a paint property update when the frame rect changes.
+  if (box.ShouldClipOverflow() ||
+      // The used value of CSS clip may depend on size of the box, e.g. for
+      // clip: rect(auto auto auto -5px).
+      box.HasClip() ||
+      // Relative lengths (e.g., percentage values) in transform, perspective,
+      // transform-origin, and perspective-origin can depend on the size of the
+      // frame rect, so force a property update if it changes. TODO(pdr): We
+      // only need to update properties if there are relative lengths.
+      box.StyleRef().HasTransform() || box.StyleRef().HasPerspective() ||
+      box_generates_property_nodes_for_mask_and_clip_path)
+    box.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
 }
 
 void PaintPropertyTreeBuilder::UpdateForObjectLocationAndSize(
@@ -1351,8 +1439,7 @@ void PaintPropertyTreeBuilder::UpdateForObjectLocationAndSize(
     paint_offset.MoveBy(
         VisualOffsetFromPaintOffsetRoot(context, enclosing_pagination_layer));
     // The paint offset root can have a subpixel paint offset adjustment.
-    paint_offset.MoveBy(
-        context.current.paint_offset_root->GetLayoutObject().PaintOffset());
+    paint_offset.MoveBy(context.current.paint_offset_root->PaintOffset());
 
     if (paint_offset_translation) {
       paint_offset_translation =
@@ -1364,33 +1451,9 @@ void PaintPropertyTreeBuilder::UpdateForObjectLocationAndSize(
   }
 
   if (paint_offset_translation)
-    context.current.paint_offset_root = ToLayoutBoxModelObject(object).Layer();
+    context.current.paint_offset_root = &ToLayoutBoxModelObject(object);
 
-  if (!object.IsBox())
-    return;
-  const LayoutBox& box = ToLayoutBox(object);
-  if (box.Size() == box.PreviousSize())
-    return;
-
-  // CSS mask and clip-path comes with an implicit clip to the border box.
-  // Currently only SPv2 generate and take advantage of those.
-  const bool box_generates_property_nodes_for_mask_and_clip_path =
-      RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-      (box.HasMask() || box.HasClipPath());
-  // The overflow clip paint property depends on the border box rect through
-  // overflowClipRect(). The border box rect's size equals the frame rect's
-  // size so we trigger a paint property update when the frame rect changes.
-  if (box.ShouldClipOverflow() ||
-      // The used value of CSS clip may depend on size of the box, e.g. for
-      // clip: rect(auto auto auto -5px).
-      box.HasClip() ||
-      // Relative lengths (e.g., percentage values) in transform, perspective,
-      // transform-origin, and perspective-origin can depend on the size of the
-      // frame rect, so force a property update if it changes. TODO(pdr): We
-      // only need to update properties if there are relative lengths.
-      box.StyleRef().HasTransform() || box.StyleRef().HasPerspective() ||
-      box_generates_property_nodes_for_mask_and_clip_path)
-    box.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
+  SetNeedsPaintPropertyUpdateIfNeeded(object);
 }
 
 // Match |fragment_clip| against an intersecting one from the parent contexts,
@@ -1475,12 +1538,6 @@ void PaintPropertyTreeBuilder::UpdateFragments(
       PaintLayer* enclosing_pagination_layer =
           paint_layer->EnclosingPaginationLayer();
 
-      // Always force-update properties for fragmented content.
-      // TODO(chrishtr): find ways to optimize this in the future.
-      // It may suffice to compare previous and current visual overflow,
-      // but we do not currenly cache that on the LayoutObject or PaintLayer.
-      object.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
-
       LayoutPoint offset_within_paginated_layer;
       paint_layer->ConvertToLayerCoords(enclosing_pagination_layer,
                                         offset_within_paginated_layer);
@@ -1525,8 +1582,7 @@ void PaintPropertyTreeBuilder::UpdateFragments(
           // component.
           pagination_visual_offset.MoveBy(
               full_context.fragments[0]
-                  .current.paint_offset_root->GetLayoutObject()
-                  .PaintOffset());
+                  .current.paint_offset_root->PaintOffset());
 
           fragment_clip.MoveBy(pagination_visual_offset);
         }
