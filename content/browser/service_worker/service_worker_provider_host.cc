@@ -484,12 +484,12 @@ ServiceWorkerProviderHost::CreateRequestHandler(
   return std::unique_ptr<ServiceWorkerRequestHandler>();
 }
 
-blink::mojom::ServiceWorkerObjectInfo
+blink::mojom::ServiceWorkerObjectInfoPtr
 ServiceWorkerProviderHost::GetOrCreateServiceWorkerHandle(
     ServiceWorkerVersion* version) {
   DCHECK(dispatcher_host_);
   if (!context_ || !version)
-    return blink::mojom::ServiceWorkerObjectInfo();
+    return blink::mojom::ServiceWorkerObjectInfo::New();
   ServiceWorkerHandle* handle = dispatcher_host_->FindServiceWorkerHandle(
       provider_id(), version->version_id());
   if (handle) {
@@ -525,7 +525,7 @@ void ServiceWorkerProviderHost::PostMessageToClient(
   ServiceWorkerMsg_MessageToDocument_Params params;
   params.thread_id = kDocumentMainThreadId;
   params.provider_id = provider_id();
-  params.service_worker_info = GetOrCreateServiceWorkerHandle(version);
+  params.service_worker_info = *GetOrCreateServiceWorkerHandle(version);
   params.message = message;
   params.message_ports = sent_message_ports;
   Send(new ServiceWorkerMsg_MessageToDocument(params));
@@ -568,6 +568,13 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
   DCHECK_EQ(kDocumentMainThreadId, render_thread_id_);
   DCHECK_NE(SERVICE_WORKER_PROVIDER_UNKNOWN, info_.type);
 
+  // Clear the controller from the renderer-side provider, since no one knows
+  // what's going to happen until after cross-site transfer finishes.
+  if (controller_) {
+    SendSetControllerServiceWorker(nullptr,
+                                   false /* notify_controllerchange */);
+  }
+
   std::unique_ptr<ServiceWorkerProviderHost> provisional_host =
       base::WrapUnique(new ServiceWorkerProviderHost(
           process_id(),
@@ -579,13 +586,6 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
     DecreaseProcessReference(pattern);
 
   RemoveAllMatchingRegistrations();
-
-  // Clear the controller from the renderer-side provider, since no one knows
-  // what's going to happen until after cross-site transfer finishes.
-  if (controller_) {
-    SendSetControllerServiceWorker(nullptr,
-                                   false /* notify_controllerchange */);
-  }
 
   render_process_id_ = ChildProcessHost::kInvalidUniqueID;
   render_thread_id_ = kInvalidEmbeddedWorkerThreadId;
@@ -769,11 +769,11 @@ void ServiceWorkerProviderHost::SendSetVersionAttributesMessage(
 
   ServiceWorkerVersionAttributes attrs;
   if (changed_mask.installing_changed())
-    attrs.installing = GetOrCreateServiceWorkerHandle(installing_version);
+    attrs.installing = *GetOrCreateServiceWorkerHandle(installing_version);
   if (changed_mask.waiting_changed())
-    attrs.waiting = GetOrCreateServiceWorkerHandle(waiting_version);
+    attrs.waiting = *GetOrCreateServiceWorkerHandle(waiting_version);
   if (changed_mask.active_changed())
-    attrs.active = GetOrCreateServiceWorkerHandle(active_version);
+    attrs.active = *GetOrCreateServiceWorkerHandle(active_version);
 
   Send(new ServiceWorkerMsg_SetVersionAttributes(
       render_thread_id_, registration_handle_id, changed_mask.changed(),
@@ -893,14 +893,20 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
     DCHECK_EQ(controller_.get(), version);
   }
 
-  ServiceWorkerMsg_SetControllerServiceWorker_Params params;
-  params.thread_id = render_thread_id_;
-  params.provider_id = provider_id();
-  params.object_info = GetOrCreateServiceWorkerHandle(version);
-  params.should_notify_controllerchange = notify_controllerchange;
-  if (version)
-    params.used_features = version->used_features();
-  Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
+  std::vector<blink::mojom::WebFeature> used_features;
+  if (version) {
+    for (const uint32_t feature : version->used_features()) {
+      // TODO: version->used_features() should never have a feature outside the
+      // known feature range. But there is special case, see the details in
+      // crbug.com/758419.
+      if (feature <
+          static_cast<uint32_t>(blink::mojom::WebFeature::kNumberOfFeatures)) {
+        used_features.push_back(static_cast<blink::mojom::WebFeature>(feature));
+      }
+    }
+  }
+  container_->SetController(GetOrCreateServiceWorkerHandle(version),
+                            used_features, notify_controllerchange);
 }
 
 void ServiceWorkerProviderHost::Register(

@@ -537,8 +537,8 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
               blink::mojom::ServiceWorkerObjectInfo>,
           this, worker, message, source_origin, sent_message_ports,
           base::make_optional(timeout), callback,
-          sender_provider_host->GetOrCreateServiceWorkerHandle(
-              sender_provider_host->running_hosted_version())));
+          *(sender_provider_host->GetOrCreateServiceWorkerHandle(
+              sender_provider_host->running_hosted_version()))));
       break;
     }
     case SERVICE_WORKER_PROVIDER_UNKNOWN:
@@ -738,12 +738,12 @@ void ServiceWorkerDispatcherHost::GetRegistrationObjectInfoAndVersionAttributes(
     ServiceWorkerVersionAttributes* out_attrs) {
   *out_info = CreateRegistrationObjectInfo(provider_host, registration);
 
-  out_attrs->installing = provider_host->GetOrCreateServiceWorkerHandle(
-      registration->installing_version());
-  out_attrs->waiting = provider_host->GetOrCreateServiceWorkerHandle(
-      registration->waiting_version());
-  out_attrs->active = provider_host->GetOrCreateServiceWorkerHandle(
-      registration->active_version());
+  out_attrs->installing = *(provider_host->GetOrCreateServiceWorkerHandle(
+      registration->installing_version()));
+  out_attrs->waiting = *(provider_host->GetOrCreateServiceWorkerHandle(
+      registration->waiting_version()));
+  out_attrs->active = *(provider_host->GetOrCreateServiceWorkerHandle(
+      registration->active_version()));
 }
 
 void ServiceWorkerDispatcherHost::OnCountFeature(int64_t version_id,
