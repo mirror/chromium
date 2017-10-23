@@ -171,6 +171,14 @@ class TabAndroid : public CoreTabHelperDelegate,
       const base::android::JavaParamRef<jobject>& jweb_contents,
       jint width,
       jint height);
+  int GetViewportWidthPix(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents);
+  int GetViewportHeightPix(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents);
   base::android::ScopedJavaLocalRef<jobject> GetProfileAndroid(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);

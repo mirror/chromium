@@ -3412,13 +3412,10 @@ public class AwContents implements SmartClipProvider {
         public void onSizeChanged(int w, int h, int ow, int oh) {
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             mScrollOffsetManager.setContainerViewSize(w, h);
-            // The AwLayoutSizer needs to go first so that if we're in
-            // fixedLayoutSize mode the update
-            // to enter fixedLayoutSize mode is sent before the first resize
-            // update.
+            // The AwLayoutSizer needs to go first so that if we're in fixedLayoutSize mode
+            // the update to enter fixedLayoutSize mode is sent before the first resize update.
             mLayoutSizer.onSizeChanged(w, h, ow, oh);
             nativeOnSizeChanged(mNativeAwContents, w, h, ow, oh);
-            mContentViewCore.onSizeChanged(w, h, ow, oh);
         }
 
         @Override

@@ -149,9 +149,10 @@ public class VrShellImpl
         ContentViewCore activeContentViewCore =
                 mActivity.getActivityTab().getActiveContentViewCore();
         assert activeContentViewCore != null;
+        Tab activeTab = mActivity.getActivityTab();
         mLastContentDpr = activeContentViewCore.getDeviceScaleFactor();
-        mLastContentWidth = activeContentViewCore.getViewportWidthPix() / mLastContentDpr;
-        mLastContentHeight = activeContentViewCore.getViewportHeightPix() / mLastContentDpr;
+        mLastContentWidth = activeTab.getViewportWidthPix() / mLastContentDpr;
+        mLastContentHeight = activeTab.getViewportHeightPix() / mLastContentDpr;
 
         mInterceptNavigationDelegate = new InterceptNavigationDelegateImpl(
                 new VrExternalNavigationDelegate(mActivity.getActivityTab()),
@@ -470,8 +471,8 @@ public class VrShellImpl
         Point size = new Point(surfaceWidth, surfaceHeight);
         mContentVirtualDisplay.update(size, dpr, null, null, null, null, null);
         assert mTab != null;
-        if (mTab.getContentViewCore() != null) {
-            mTab.getContentViewCore().onSizeChanged(surfaceWidth, surfaceHeight, 0, 0);
+        if (mTab.getWebContents() != null) {
+            // Updates both physical backing size and view size in the native side.
             nativeOnPhysicalBackingSizeChanged(
                     mNativeVrShell, mTab.getWebContents(), surfaceWidth, surfaceHeight);
         }
@@ -545,9 +546,9 @@ public class VrShellImpl
         restoreTabFromVR();
 
         assert mTab != null;
-        if (mTab.getContentViewCore() != null) {
+        if (mTab.getWebContents() != null) {
             View parent = mTab.getContentViewCore().getContainerView();
-            mTab.getContentViewCore().onSizeChanged(parent.getWidth(), parent.getHeight(), 0, 0);
+            mTab.getWebContents().setSize(parent.getWidth(), parent.getHeight());
         }
         mTab.updateBrowserControlsState(BrowserControlsState.SHOWN, true);
 
