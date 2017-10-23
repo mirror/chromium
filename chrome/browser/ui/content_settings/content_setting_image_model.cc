@@ -133,6 +133,9 @@ const ContentSettingsImageDetails kImageDetails[] = {
      IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT, 0, 0},
     {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, kExtensionIcon,
      IDS_BLOCKED_PPAPI_BROKER_TITLE, 0, IDS_ALLOWED_PPAPI_BROKER_TITLE},
+    {CONTENT_SETTINGS_TYPE_HTTP_AUTH, kMixedContentIcon,
+     IDS_BLOCKED_DISPLAYING_HTTP_AUTH_PROMPT, 0, 0},
+
 };
 
 // The ordering of the models here influences the order in which icons are
@@ -151,6 +154,7 @@ constexpr ContentSettingsType kContentTypeIconOrder[] = {
     CONTENT_SETTINGS_TYPE_ADS,
     CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS,
     CONTENT_SETTINGS_TYPE_MIDI_SYSEX,
+    CONTENT_SETTINGS_TYPE_HTTP_AUTH,
 };
 
 const ContentSettingsImageDetails* GetImageDetails(ContentSettingsType type) {

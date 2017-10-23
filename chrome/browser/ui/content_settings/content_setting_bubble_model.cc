@@ -145,16 +145,16 @@ void ContentSettingSimpleBubbleModel::SetTitle() {
           : nullptr;
 
   static const ContentSettingsTypeIdEntry kBlockedTitleIDs[] = {
-    {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_TITLE},
-    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_BLOCKED_IMAGES_TITLE},
-    {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_BLOCKED_JAVASCRIPT_TITLE},
-    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_BLOCKED_PLUGINS_TITLE},
-    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_BLOCKED_POPUPS_TITLE},
-    {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT,
-        IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT},
-    {CONTENT_SETTINGS_TYPE_PPAPI_BROKER,
-        IDS_BLOCKED_PPAPI_BROKER_TITLE},
-  };
+      {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_TITLE},
+      {CONTENT_SETTINGS_TYPE_IMAGES, IDS_BLOCKED_IMAGES_TITLE},
+      {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_BLOCKED_JAVASCRIPT_TITLE},
+      {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_BLOCKED_PLUGINS_TITLE},
+      {CONTENT_SETTINGS_TYPE_POPUPS, IDS_BLOCKED_POPUPS_TITLE},
+      {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT,
+       IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT},
+      {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, IDS_BLOCKED_PPAPI_BROKER_TITLE},
+      {CONTENT_SETTINGS_TYPE_HTTP_AUTH,
+       IDS_BLOCKED_DISPLAYING_HTTP_AUTH_PROMPT}};
   // Fields as for kBlockedTitleIDs, above.
   static const ContentSettingsTypeIdEntry kAccessedTitleIDs[] = {
     {CONTENT_SETTINGS_TYPE_COOKIES, IDS_ACCESSED_COOKIES_TITLE},
@@ -193,8 +193,9 @@ void ContentSettingSimpleBubbleModel::OnManageButtonClicked() {
 
 void ContentSettingSimpleBubbleModel::SetCustomLink() {
   static const ContentSettingsTypeIdEntry kCustomIDs[] = {
-    {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_INFO},
-    {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, IDS_ALLOW_INSECURE_CONTENT_BUTTON},
+      {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_INFO},
+      {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, IDS_ALLOW_INSECURE_CONTENT_BUTTON},
+      {CONTENT_SETTINGS_TYPE_HTTP_AUTH, IDS_ALLOW_HTTP_AUTH_PROMPT_BUTTON},
   };
   int custom_link_id =
       GetIdForContentType(kCustomIDs, arraysize(kCustomIDs), content_type());
@@ -1135,6 +1136,88 @@ void ContentSettingMixedScriptBubbleModel::SetManageText() {
   set_manage_text_style(ContentSettingBubbleModel::ManageTextStyle::kNone);
 }
 
+// ContentSettinghttpAuthBubbleModel ----------------------------------------
+
+namespace {
+
+void SetAllowHttpAuthPrompt(content::RenderFrameHost* frame) {
+  /*chrome::mojom::InsecureContentRendererPtr renderer;
+  frame->GetRemoteInterfaces()->GetInterface(&renderer);
+  renderer->SetAllowRunningInsecureContent();*/
+}
+
+}  // namespace
+
+class ContentSettingHttpAuthBubbleModel
+    : public ContentSettingSimpleBubbleModel {
+ public:
+  ContentSettingHttpAuthBubbleModel(Delegate* delegate,
+                                    WebContents* web_contents,
+                                    Profile* profile);
+
+  ~ContentSettingHttpAuthBubbleModel() override {}
+
+ private:
+  void SetManageText();
+
+  // ContentSettingBubbleModel:
+  void OnLearnMoreClicked() override;
+  void OnCustomLinkClicked() override;
+
+  DISALLOW_COPY_AND_ASSIGN(ContentSettingHttpAuthBubbleModel);
+};
+
+ContentSettingHttpAuthBubbleModel::ContentSettingHttpAuthBubbleModel(
+    Delegate* delegate,
+    WebContents* web_contents,
+    Profile* profile)
+    : ContentSettingSimpleBubbleModel(delegate,
+                                      web_contents,
+                                      profile,
+                                      CONTENT_SETTINGS_TYPE_HTTP_AUTH) {
+  content_settings::RecordMixedScriptAction(
+      content_settings::MIXED_SCRIPT_ACTION_DISPLAYED_BUBBLE);
+  set_custom_link_enabled(true);
+  set_show_learn_more(true);
+  SetManageText();
+}
+
+void ContentSettingHttpAuthBubbleModel::OnLearnMoreClicked() {
+  if (delegate())
+    delegate()->ShowLearnMorePage(content_type());
+
+  content_settings::RecordMixedScriptAction(
+      content_settings::MIXED_SCRIPT_ACTION_CLICKED_LEARN_MORE);
+}
+
+void ContentSettingHttpAuthBubbleModel::OnCustomLinkClicked() {
+  DCHECK(rappor_service());
+  if (!web_contents())
+    return;
+
+  MixedContentSettingsTabHelper* mixed_content_settings =
+      MixedContentSettingsTabHelper::FromWebContents(web_contents());
+  if (mixed_content_settings) {
+    // Update browser side settings to allow active mixed content.
+    mixed_content_settings->AllowRunningOfInsecureContent();
+  }
+
+  // Update renderer side settings to allow active mixed content.
+  web_contents()->ForEachFrame(base::Bind(&::SetAllowHttpAuthPrompt));
+
+  content_settings::RecordMixedScriptAction(
+      content_settings::MIXED_SCRIPT_ACTION_CLICKED_ALLOW);
+
+  rappor::SampleDomainAndRegistryFromGURL(
+      rappor_service(), "ContentSettings.MixedScript.UserClickedAllow",
+      web_contents()->GetLastCommittedURL());
+}
+
+// Don't set any manage text since none is displayed.
+void ContentSettingHttpAuthBubbleModel::SetManageText() {
+  set_manage_text_style(ContentSettingBubbleModel::ManageTextStyle::kNone);
+}
+
 // ContentSettingRPHBubbleModel ------------------------------------------------
 
 ContentSettingRPHBubbleModel::ContentSettingRPHBubbleModel(
@@ -1578,6 +1661,10 @@ ContentSettingBubbleModel*
   if (content_type == CONTENT_SETTINGS_TYPE_MIXEDSCRIPT) {
     return new ContentSettingMixedScriptBubbleModel(delegate, web_contents,
                                                     profile);
+  }
+  if (content_type == CONTENT_SETTINGS_TYPE_HTTP_AUTH) {
+    return new ContentSettingHttpAuthBubbleModel(delegate, web_contents,
+                                                 profile);
   }
   if (content_type == CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS) {
     ProtocolHandlerRegistry* registry =

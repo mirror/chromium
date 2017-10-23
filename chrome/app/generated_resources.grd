@@ -4923,6 +4923,14 @@ Keep your key file in a safe place. You will need it to create new versions of y
         </message>
       </if>
 
+      <!-- Blocked Displaying/Running HTTP Auth prompt -->
+      <message name="IDS_BLOCKED_DISPLAYING_HTTP_AUTH_PROMPT" desc="Message shown when a website has asked Chrome to display a login dialog.  The message is followed by a learn more link and an allow button.">
+        This page is trying to display login dialogs from other domains
+      </message>
+      <message name="IDS_ALLOW_HTTP_AUTH_PROMPT_BUTTON" desc="Button to allow HTTP Auth prompts to be displayed">
+        Display login dialogs
+      </message>
+
       <!-- chromeos bookmark app add to shelf strings -->
       <message name="IDS_ADD_TO_SHELF_INFOBAR_TITLE" desc="Label displayed in an infobar asking users to add to the site to their shelf">
         Add this site to your shelf to use it any time.

@@ -167,6 +167,7 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
       enable_load_timing_(enable_load_timing),
       enable_upload_progress_(enable_upload_progress),
       do_not_prompt_for_login_(do_not_prompt_for_login),
+      requires_login_(false),
       keepalive_(keepalive),
       counted_as_in_flight_request_(false),
       resource_type_(resource_type),

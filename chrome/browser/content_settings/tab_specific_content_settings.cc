@@ -251,7 +251,8 @@ bool TabSpecificContentSettings::IsContentBlocked(
       content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA ||
       content_type == CONTENT_SETTINGS_TYPE_PPAPI_BROKER ||
       content_type == CONTENT_SETTINGS_TYPE_MIDI_SYSEX ||
-      content_type == CONTENT_SETTINGS_TYPE_ADS) {
+      content_type == CONTENT_SETTINGS_TYPE_ADS ||
+      content_type == CONTENT_SETTINGS_TYPE_HTTP_AUTH) {
     const auto& it = content_settings_status_.find(content_type);
     if (it != content_settings_status_.end())
       return it->second.blocked;
@@ -348,6 +349,9 @@ void TabSpecificContentSettings::OnContentBlockedWithDetail(
     } else if (type == CONTENT_SETTINGS_TYPE_POPUPS) {
       content_settings::RecordPopupsAction(
           content_settings::POPUPS_ACTION_DISPLAYED_BLOCKED_ICON_IN_OMNIBOX);
+    } else if (type == CONTENT_SETTINGS_TYPE_HTTP_AUTH) {
+      // content_settings::RecordMixedScriptAction(
+      //     content_settings::HTTP_AUTH_ACTION_DISPLAYED_SHIELD);
     }
   }
 }

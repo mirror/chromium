@@ -178,6 +178,10 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   void set_do_not_prompt_for_login(bool do_not_prompt) {
     do_not_prompt_for_login_ = do_not_prompt;
   }
+  bool requires_login() const { return requires_login_; }
+  void set_requires_login(bool requires_login) {
+    requires_login_ = requires_login;
+  }
 
   const scoped_refptr<ResourceRequestBody>& body() const { return body_; }
   void ResetBody();
@@ -227,6 +231,7 @@ class ResourceRequestInfoImpl : public ResourceRequestInfo,
   bool enable_load_timing_;
   bool enable_upload_progress_;
   bool do_not_prompt_for_login_;
+  bool requires_login_;
   bool keepalive_;
   bool counted_as_in_flight_request_;
   ResourceType resource_type_;

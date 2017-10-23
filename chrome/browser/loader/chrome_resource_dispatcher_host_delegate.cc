@@ -56,6 +56,7 @@
 #include "components/previews/core/previews_io_data.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/http_auth_resource_throttle.h"
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/plugin_service.h"
@@ -678,6 +679,9 @@ void ChromeResourceDispatcherHostDelegate::AppendStandardResourceThrottles(
       PredictorResourceThrottle::MaybeCreate(request, io_data);
   if (predictor_throttle)
     throttles->push_back(std::move(predictor_throttle));
+
+  throttles->push_back(
+      base::MakeUnique<content::HttpAuthResourceThrottle>(request));
 }
 
 bool ChromeResourceDispatcherHostDelegate::ShouldForceDownloadResource(
