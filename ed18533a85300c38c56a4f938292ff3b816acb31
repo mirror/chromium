@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a791db9_8dbbafe5",
+        "filename": "media/formats/mp4/box_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42e097b2_7c844df9",
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba31a383_5062c1c2",
         "filename": "media/formats/mp4/box_reader.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-23T19:11:41Z",
       "side": 1,
       "message": "nit: Perhaps rewrite this as a caller of ::ReadTopLevelBox in this CL?\n\ne.g.:\nstd::unique_ptr\u003cBoxReader\u003e reader;\nRCHECK_PARSE_RESULT( call to ReadTopLevelBox );\n*out_type \u003d reader-\u003etype();\n*out_box_size \u003d reader-\u003ebox_size();\nreturn ok...\n\n?",
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b51b5e3_e1eb6297",
+        "filename": "media/formats/mp4/box_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "Done. This changes a stack allocation to a heap allocation, but since it\u0027s your suggestion I\u0027ll assume that\u0027s fine ;-)",
+      "parentUuid": "ba31a383_5062c1c2",
       "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "20201ad8_76cdf88d",
+        "filename": "media/formats/mp4/box_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aae667f_66ae78ab",
+      "range": {
+        "startLine": 98,
+        "startChar": 67,
+        "endLine": 98,
+        "endChar": 77
+      },
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45f4d3d5_f507c724",
         "filename": "media/formats/mp4/box_reader.h",
         "patchSetId": 5
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "1a590622_877ee017",
+        "filename": "media/formats/mp4/box_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "If any of them is not used, I expect that a bool would be chosen instead. If the enum grows though, this would make sense.",
+      "parentUuid": "45f4d3d5_f507c724",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 27
+      },
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "785476b3_c97b2b39",
         "filename": "media/formats/mp4/box_reader.h",
         "patchSetId": 5
@@ -93,6 +177,24 @@
       "writtenOn": "2017-10-23T19:11:41Z",
       "side": 1,
       "message": "nit: Since commenting about kNeedMoreData, also comment about kError and kOk?",
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d61314_f3d6464b",
+        "filename": "media/formats/mp4/box_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this. It\u0027s reasonable, however it would imply making the essentially the same comment on every function. Is the documentation for the enum itself too far away?",
+      "parentUuid": "785476b3_c97b2b39",
       "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +264,54 @@
     },
     {
       "key": {
+        "uuid": "d4658d8f_bb5b57ac",
+        "filename": "media/formats/mp4/parse_result.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c3e7568_82b63c36",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81193e00_2cba2757",
+        "filename": "media/formats/mp4/parse_result.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this; ParseResult clearly does not belong in rcheck.h, and the macro depends on the type. If anything, I\u0027d say that rcheck.h should move up to media/base/.",
+      "parentUuid": "e1721417_2462d238",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f122df_c9209b9a",
         "filename": "media/formats/mp4/parse_result.h",
         "patchSetId": 5
@@ -176,6 +326,24 @@
       "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163c9feb_d867c4df",
+        "filename": "media/formats/mp4/parse_result.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-23T22:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f122df_c9209b9a",
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
