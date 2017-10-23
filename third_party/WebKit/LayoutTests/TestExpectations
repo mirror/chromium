@@ -2110,7 +2110,6 @@ crbug.com/763933 virtual/display_list_2d_canvas/fast/canvas/canvas-pattern-no-re
 crbug.com/763933 virtual/display_list_2d_canvas/fast/canvas/image-object-in-canvas.html [ Failure ]
 
 crbug.com/666993 external/wpt/requestidlecallback/callback-idle-periods.html [ Timeout ]
-crbug.com/666993 external/wpt/requestidlecallback/callback-timeout-with-raf.html [ Timeout ]
 
 crbug.com/713732 fast/dom/Window/dom-access-from-closure-iframe.html [ NeedsManualRebaseline ]
 crbug.com/713732 fast/dom/Window/dom-access-from-closure-window-with-gc.html [ NeedsManualRebaseline ]
