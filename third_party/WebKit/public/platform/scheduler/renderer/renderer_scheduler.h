@@ -214,6 +214,11 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   // once.
   virtual void SetRendererProcessType(RendererProcessType type) = 0;
 
+  // Tells the scheduler how many pending DomStorage messages there are. This
+  // may cause virtual time to be paused / unpaused. Can be called on any
+  // thread.
+  virtual void SetPendingDomStorageMessageCount(int pending_count) = 0;
+
  protected:
   RendererScheduler();
   DISALLOW_COPY_AND_ASSIGN(RendererScheduler);
