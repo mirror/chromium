@@ -4,6 +4,7 @@
 
 #include "chrome/test/chromedriver/session_commands.h"
 
+#include <algorithm>
 #include <list>
 #include <utility>
 
@@ -29,6 +30,7 @@
 #include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
 #include "chrome/test/chromedriver/chrome/geoposition.h"
 #include "chrome/test/chromedriver/chrome/javascript_dialog_manager.h"
+#include "chrome/test/chromedriver/chrome/page_load_strategy.h"
 #include "chrome/test/chromedriver/chrome/status.h"
 #include "chrome/test/chromedriver/chrome/web_view.h"
 #include "chrome/test/chromedriver/chrome_launcher.h"
@@ -183,6 +185,370 @@ Status CheckSessionCreated(Session* session) {
   return Status(kOk);
 }
 
+Status DeserializePageLoadStrategy(const base::Value& value,
+                                   std::string& page_load_strategy) {
+  if (!value.IsType(base::Value::Type::STRING))
+    return Status(kInvalidArgument,
+                  "value of pageLoadStrategy must be a string");
+  value.GetAsString(&page_load_strategy);
+  if (page_load_strategy != PageLoadStrategy::kNone &&
+      page_load_strategy != PageLoadStrategy::kEager &&
+      page_load_strategy != PageLoadStrategy::kNormal)
+    return Status(kInvalidArgument,
+                  "pageLoadStrategy must be none, eager or normal");
+
+  return Status(kOk);
+}
+
+Status DeserializeProxy(const base::Value& value,
+                        std::unique_ptr<base::DictionaryValue>& proxy_config) {
+  if (!value.IsType(base::Value::Type::DICTIONARY))
+    return Status(kInvalidArgument, "value of proxy must be a json object");
+  const base::DictionaryValue* proxy;
+  value.GetAsDictionary(&proxy);
+  for (base::DictionaryValue::Iterator it(*proxy); !it.IsAtEnd();
+       it.Advance()) {
+    std::string key = it.key();
+    // check the key with valid proxy configuration keys
+    if (key == "proxyType") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument, "value of proxyType must be a string");
+      std::string proxyType;
+      it.value().GetAsString(&proxyType);
+      // convert to lowercase
+      std::transform(proxyType.begin(), proxyType.end(), proxyType.begin(),
+                     ::tolower);
+      if (proxyType != "pac" && proxyType != "noproxy" &&
+          proxyType != "autodetect" && proxyType != "system" &&
+          proxyType != "manual") {
+        return Status(kInvalidArgument,
+                      "value of proxyType must be pac, noproxy, "
+                      "autodetect, system, manual");
+      }
+      proxy_config->SetString("proxyType", proxyType);
+    } else if (key == "proxyAutoconfigUrl") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument,
+                      "value of proxyAutoconfigUrl must be a string");
+      std::string proxyAutoconfigUrl;
+      it.value().GetAsString(&proxyAutoconfigUrl);
+      // TODO: check if this is a valid url
+      proxy_config->SetString("proxyAutoconfigUrl", proxyAutoconfigUrl);
+    } else if (key == "ftpProxy") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument, "value of ftpProxy must be a string");
+      std::string ftpProxy;
+      it.value().GetAsString(&ftpProxy);
+      // TODO: check if valid ftpProxy
+      proxy_config->SetString("ftpProxy", ftpProxy);
+    } else if (key == "ftpProxyPort") {
+      if (!it.value().IsType(base::Value::Type::INTEGER))
+        return Status(kInvalidArgument,
+                      "value of ftpProxyPort must be a integer");
+      int ftpProxyPort;
+      it.value().GetAsInteger(&ftpProxyPort);
+      proxy_config->SetInteger("ftpProxyPort", ftpProxyPort);
+    } else if (key == "httpProxy") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument, "value of httpProxy must be a string");
+      std::string httpProxy;
+      it.value().GetAsString(&httpProxy);
+      // TODO: check if valid httpProxy
+      proxy_config->SetString("httpProxy", httpProxy);
+    } else if (key == "httpProxyPort") {
+      if (!it.value().IsType(base::Value::Type::INTEGER))
+        return Status(kInvalidArgument,
+                      "value of ftpProxyPort must be a integer");
+      int httpProxyPort;
+      it.value().GetAsInteger(&httpProxyPort);
+      proxy_config->SetInteger("httpProxyPort", httpProxyPort);
+    } else if (key == "sslProxy") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument, "value of sslProxy must be a string");
+      std::string sslProxy;
+      it.value().GetAsString(&sslProxy);
+      // TODO: check if valid sslProxy
+      proxy_config->SetString("sslProxy", sslProxy);
+    } else if (key == "sslProxyPort") {
+      if (!it.value().IsType(base::Value::Type::INTEGER))
+        return Status(kInvalidArgument,
+                      "value of sslProxyPort must be a integer");
+      int sslProxyPort;
+      it.value().GetAsInteger(&sslProxyPort);
+      proxy_config->SetInteger("sslProxyPort", sslProxyPort);
+    } else if (key == "socksProxy") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument, "value of socksProxy must be a string");
+      std::string socksProxy;
+      it.value().GetAsString(&socksProxy);
+      // TODO: check if valid socksProxy
+      proxy_config->SetString("socksProxy", socksProxy);
+    } else if (key == "socksProxyPort") {
+      if (!it.value().IsType(base::Value::Type::INTEGER))
+        return Status(kInvalidArgument,
+                      "value of socksProxyPort must be a intger");
+      int socksProxyPort;
+      it.value().GetAsInteger(&socksProxyPort);
+      proxy_config->SetInteger("socksProxyPort", socksProxyPort);
+    } else if (key == "socksVersion") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument,
+                      "value of socksVersion must be a string");
+      std::string socksVersion;
+      it.value().GetAsString(&socksVersion);
+      // TODO: check if valid socksProxy
+      proxy_config->SetString("socksVersion", socksVersion);
+    } else if (key == "socksUsername") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument,
+                      "value of socksUsername must be a string");
+      std::string socksUsername;
+      it.value().GetAsString(&socksUsername);
+      // TODO: check if valid socksProxy
+      proxy_config->SetString("socksUsername", socksUsername);
+    } else if (key == "socksPassword") {
+      if (!it.value().IsType(base::Value::Type::STRING))
+        return Status(kInvalidArgument,
+                      "value of socksPassword must be a string");
+      std::string socksPassword;
+      it.value().GetAsString(&socksPassword);
+      // TODO: check if valid socksProxy
+      proxy_config->SetString("socksPassword", socksPassword);
+    } else {
+      return Status(kInvalidArgument, "unrecognized proxy option");
+    }
+  }
+  return Status(kOk);
+}
+
+Status DeserializeTimeouts(
+    const base::Value& value,
+    std::unique_ptr<base::DictionaryValue>& timeouts_config) {
+  if (!value.IsType(base::Value::Type::DICTIONARY))
+    return Status(kInvalidArgument, "value of timeouts must be a string");
+  const base::DictionaryValue* timeouts;
+  value.GetAsDictionary(&timeouts);
+
+  for (base::DictionaryValue::Iterator it(*timeouts); !it.IsAtEnd();
+       it.Advance()) {
+    std::string key = it.key();
+    if (key == "script") {
+      if (!it.value().IsType(base::Value::Type::INTEGER))
+        return Status(kInvalidArgument, "value of script must be a integer");
+      int script;
+      it.value().GetAsInteger(&script);
+      timeouts_config->SetInteger("script", script);
+    } else if (key == "pageLoad") {
+      if (!it.value().IsType(base::Value::Type::INTEGER))
+        return Status(kInvalidArgument, "value of pageLoad must be a integer");
+      int pageLoad;
+      it.value().GetAsInteger(&pageLoad);
+      timeouts_config->SetInteger("pageLoad", pageLoad);
+    } else if (key == "implicit") {
+      if (!it.value().IsType(base::Value::Type::INTEGER))
+        return Status(kInvalidArgument, "value of implicit must be a integer");
+      int implicit;
+      it.value().GetAsInteger(&implicit);
+      timeouts_config->SetInteger("implicit", implicit);
+    } else {
+      return Status(kInvalidArgument,
+                    "timeouts values must be integers with keys script, "
+                    "pageLoad or implicit");
+    }
+  }
+  return Status(kOk);
+}
+
+Status DeserializeUnhandledPromptBehavior(
+    const base::Value& value,
+    std::string& unhandled_prompt_behavior) {
+  if (!value.IsType(base::Value::Type::STRING))
+    return Status(kInvalidArgument,
+                  "value of unhandledPromptBehavior must be a string");
+  value.GetAsString(&unhandled_prompt_behavior);
+  if (unhandled_prompt_behavior != "dismiss" &&
+      unhandled_prompt_behavior != "accept")
+    return Status(kInvalidArgument,
+                  "unhandledPromptBehavior must be dismiss or accept");
+  return Status(kOk);
+}
+
+Status ValidateCapabilities(
+    const base::DictionaryValue* capabilities,
+    std::unique_ptr<base::DictionaryValue>& validated_capabilities) {
+  for (base::DictionaryValue::Iterator it(*capabilities); !it.IsAtEnd();
+       it.Advance()) {
+    std::string name = it.key();
+    LOG(WARNING) << name;
+    // check if there is a value
+    if (!it.value().IsType(base::Value::Type::NONE)) {
+      // validate specific keys
+      if (name == "chromeOptions") {
+        if (!it.value().IsType(base::Value::Type::DICTIONARY))
+          return Status(kInvalidArgument,
+                        "value of chromeOptions must be a json object");
+        const base::DictionaryValue* chromeOptions;
+        it.value().GetAsDictionary(&chromeOptions);
+        std::unique_ptr<base::DictionaryValue> temp(
+            new base::DictionaryValue());
+        temp->MergeDictionary(chromeOptions);
+        validated_capabilities->SetDictionary("chromeOptions", std::move(temp));
+      }
+      if (name == "acceptInsecureCerts") {
+        if (!it.value().IsType(base::Value::Type::BOOLEAN))
+          return Status(kInvalidArgument,
+                        "value of acceptInsecureCerts must be boolean");
+        bool acceptInsecureCerts;
+        it.value().GetAsBoolean(&acceptInsecureCerts);
+        validated_capabilities->SetBoolean("acceptInsecureCerts",
+                                           acceptInsecureCerts);
+      } else if (name == "browserName") {
+        if (!it.value().IsType(base::Value::Type::STRING))
+          return Status(kInvalidArgument,
+                        "value of browserName must be a string");
+        std::string browserName;
+        it.value().GetAsString(&browserName);
+        validated_capabilities->SetString("browserName", browserName);
+      } else if (name == "browserVersion") {
+        if (!it.value().IsType(base::Value::Type::STRING))
+          return Status(kInvalidArgument,
+                        "value of browserVersion must be a string");
+        std::string browserVersion;
+        it.value().GetAsString(&browserVersion);
+        validated_capabilities->SetString("browserVersion", browserVersion);
+      } else if (name == "platformName") {
+        if (!it.value().IsType(base::Value::Type::STRING))
+          return Status(kInvalidArgument,
+                        "value of platformName must be a string");
+        std::string platformName;
+        it.value().GetAsString(&platformName);
+        validated_capabilities->SetString("platformName", platformName);
+      } else if (name == "pageLoadStrategy") {
+        // deserialize as a page load strategy
+        std::string page_load_strategy;
+        Status status =
+            DeserializePageLoadStrategy(it.value(), page_load_strategy);
+        if (status.IsError())
+          return status;
+
+        validated_capabilities->SetString("pageLoadStrategy",
+                                          page_load_strategy);
+      } else if (name == "proxy") {
+        LOG(WARNING) << "proxy";
+        // deserialize as a proxy
+        std::unique_ptr<base::DictionaryValue> proxy_config(
+            new base::DictionaryValue);
+        Status status = DeserializeProxy(it.value(), proxy_config);
+        if (status.IsError())
+          return status;
+
+        validated_capabilities->SetDictionary("proxy", std::move(proxy_config));
+      } else if (name == "timeouts") {
+        // deserialize as a timeout
+        std::unique_ptr<base::DictionaryValue> timeouts_config(
+            new base::DictionaryValue);
+        Status status = DeserializeTimeouts(it.value(), timeouts_config);
+        if (status.IsError())
+          return status;
+
+        validated_capabilities->SetDictionary("timeouts",
+                                              std::move(timeouts_config));
+
+      } else if (name == "unhandledPromptBehavior") {
+        // deserialize as an unhandled prompt behavior
+        std::string unhandled_prompt_behavior;
+        Status status = DeserializeUnhandledPromptBehavior(
+            it.value(), unhandled_prompt_behavior);
+        if (status.IsError())
+          return status;
+
+        validated_capabilities->SetString("unhandledPromptBehavior",
+                                          unhandled_prompt_behavior);
+      }
+    } else {
+      LOG(WARNING) << "found a capability we don't support, ignoring...";
+    }
+  }
+  return Status(kOk);
+}
+
+Status ProcessCapabilities(const base::DictionaryValue& params,
+                           base::DictionaryValue& merged_capabilities) {
+  const base::DictionaryValue* capabilities;
+  if (!params.GetDictionary("capabilities", &capabilities))
+    return Status(kInvalidArgument, "capabilities must be a json object");
+
+  const base::DictionaryValue* required_capabilities;
+  if (!capabilities->GetDictionary("alwaysMatch", &required_capabilities)) {
+    LOG(WARNING) << "alwaysMatch not provided as a json object, setting to be "
+                    "an empty json object";
+    // if no alwaysMatch, make required_capabilities a empty dictionary
+    std::unique_ptr<base::DictionaryValue> temp(new base::DictionaryValue());
+    required_capabilities = temp.get();
+  }
+
+  std::unique_ptr<base::DictionaryValue> validated_capabilities(
+      new base::DictionaryValue);
+  Status status =
+      ValidateCapabilities(required_capabilities, validated_capabilities);
+  if (status.IsError())
+    return status;
+
+  const base::ListValue* first_match_list;
+  std::unique_ptr<base::ListValue> tmp_list;
+  if (!(capabilities->GetList("firstMatch", &first_match_list))) {
+    // if no firstMatch, make first_match_list a list with an empty dictionary
+    LOG(WARNING) << "firstMatch was not provided as a list, setting to be a "
+                    "list with a single empty json object entry";
+    tmp_list = std::unique_ptr<base::ListValue>(new base::ListValue());
+    std::unique_ptr<base::DictionaryValue> inner(new base::DictionaryValue());
+    tmp_list->Append(std::move(inner));
+    first_match_list = tmp_list.get();
+  }
+
+  // validate all the first match capabilities
+  std::unique_ptr<base::ListValue> validated_first_match_capabilities_list(
+      new base::ListValue());
+  for (size_t i = 0; i < first_match_list->GetSize(); ++i) {
+    const base::DictionaryValue* first_match;
+    if (!first_match_list->GetDictionary(i, &first_match)) {
+      return Status(kInvalidArgument,
+                    "entry of firstMatch is not a json object");
+    }
+    std::unique_ptr<base::DictionaryValue> validated_first_match_capabilities(
+        new base::DictionaryValue());
+
+    Status status =
+        ValidateCapabilities(first_match, validated_first_match_capabilities);
+    if (status.IsError())
+      return status;
+    validated_first_match_capabilities_list->Append(
+        std::move(validated_first_match_capabilities));
+    LOG(WARNING) << validated_first_match_capabilities_list->GetSize();
+  }
+  LOG(WARNING) << validated_first_match_capabilities_list->GetSize();
+  // merge and match all the capabilities
+  for (size_t i = 0; i < validated_first_match_capabilities_list->GetSize();
+       ++i) {
+    const base::DictionaryValue* first_match;
+    if (!validated_first_match_capabilities_list->GetDictionary(i,
+                                                                &first_match)) {
+      return Status(kInvalidArgument,
+                    "entry of firstMatch is not a json object");
+    }
+    if (!MergeCapabilities(validated_capabilities.get(), first_match,
+                           &merged_capabilities)) {
+      return Status(kSessionNotCreatedException, "Invalid capabilities");
+    }
+    if (MatchCapabilities(&merged_capabilities)) {
+      // If a match is found, we want to use these matched capabilities.
+      break;
+    }
+  }
+
+  return Status(kOk);
+}
+
 Status InitSessionHelper(const InitSessionParams& bound_params,
                          Session* session,
                          const base::DictionaryValue& params,
@@ -192,37 +558,15 @@ Status InitSessionHelper(const InitSessionParams& bound_params,
   const base::DictionaryValue* desired_caps;
   base::DictionaryValue merged_caps;
 
+  Status status = ProcessCapabilities(params, merged_caps);
+  if (status.IsError())
+    return status;
   bool w3c_capability = false;
-  if (params.GetDictionary("capabilities.alwaysMatch", &desired_caps) &&
-      (desired_caps->GetBoolean("goog:chromeOptions.w3c", &w3c_capability) ||
-       desired_caps->GetBoolean("chromeOptions.w3c", &w3c_capability)) &&
+  if ((merged_caps.GetBoolean("goog:chromeOptions.w3c", &w3c_capability) ||
+       merged_caps.GetBoolean("chromeOptions.w3c", &w3c_capability)) &&
       w3c_capability) {
     session->w3c_compliant = true;
-    // TODO(johnchen): Handle capabilities.firstMatch. Currently, we're just
-    // merging, not validating or matching as per the spec.
-    const base::ListValue* first_match_list;
-    std::unique_ptr<base::ListValue> tmp_list;
-    if (!(params.GetList("capabilities.firstMatch", &first_match_list))) {
-      // if no firstMatch, make first_match_list a list with an empty dictionary
-      tmp_list = std::unique_ptr<base::ListValue>(new base::ListValue());
-      std::unique_ptr<base::DictionaryValue> inner(new base::DictionaryValue());
-      tmp_list->Append(std::move(inner));
-      first_match_list = tmp_list.get();
-    }
-    for (size_t i = 0; i < first_match_list->GetSize(); ++i) {
-      const base::DictionaryValue* first_match;
-      if (!first_match_list->GetDictionary(i, &first_match)) {
-        continue;
-      }
-      if (!MergeCapabilities(desired_caps, first_match, &merged_caps)) {
-        return Status(kSessionNotCreatedException, "Invalid capabilities");
-      }
-      if (MatchCapabilities(&merged_caps)) {
-        // If a match is found, we want to use these matched setcapabilities.
-        desired_caps = &merged_caps;
-        break;
-      }
-    }
+    desired_caps = &merged_caps;
   } else if (params.GetDictionary("capabilities.desiredCapabilities",
                                   &desired_caps) &&
              (desired_caps->GetBoolean("goog:chromeOptions.w3c",
@@ -237,7 +581,7 @@ Status InitSessionHelper(const InitSessionParams& bound_params,
   }
 
   Capabilities capabilities;
-  Status status = capabilities.Parse(*desired_caps);
+  status = capabilities.Parse(*desired_caps);
   if (status.IsError())
     return status;
 
