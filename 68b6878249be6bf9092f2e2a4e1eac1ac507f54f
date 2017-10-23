@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b672e9ab_ebe1aa29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-23T16:10:56Z",
+      "side": 1,
+      "message": "ping: s/ARC++ (container)?/ARC/g. Gerrit does not use the uploaded commit message, this needs to be changed from the web UI.",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "68b6878249be6bf9092f2e2a4e1eac1ac507f54f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd6f9848_c22802f2",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
         "patchSetId": 8
