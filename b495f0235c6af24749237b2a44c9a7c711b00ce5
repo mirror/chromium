@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "271f460f_ee84a072",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4738e04_c1ba7eb9",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca64e37_6e1d4856",
         "filename": "chrome/browser/ui/passwords/manage_passwords_test.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0d756f_b3c11890",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca64e37_6e1d4856",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b6add10d_39f89b2b",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "I made test_form_ into password_form_ instead, and use federation_form_ as a separate member (iterating using an initializer-list instead)",
+      "parentUuid": "755476f4_bde73529",
+      "range": {
+        "startLine": 53,
+        "startChar": 48,
+        "endLine": 53,
+        "endChar": 59
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d75c2f_e677753e",
         "filename": "chrome/browser/ui/passwords/manage_passwords_view_utils.cc",
         "patchSetId": 1
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "3bc5bca6_4642fc7c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_view_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3d75c2f_e677753e",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72454802_955d8e26",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.cc",
         "patchSetId": 1
@@ -96,6 +180,24 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8d3c0c_f2778f22",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72454802_955d8e26",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "72435c57_b1e0c0fc",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f106495_d782f4b9",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d90f3b_145022b0",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 1
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "e0953e71_4ab555dc",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d90f3b_145022b0",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76de4513_3c3ad821",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -159,6 +309,24 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff838da6_0421bd06",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76de4513_3c3ad821",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "c61408ba_f566a987",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done, best I got is style_id.",
+      "parentUuid": "c2d134c9_d37e5b3b",
+      "range": {
+        "startLine": 42,
+        "startChar": 60,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ff77260_f6d70f69",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -205,6 +397,30 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290ae35c_d45dc0ad",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ff77260_f6d70f69",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 70
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "eeda0524_52235b90",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee5e59c_3a4c4b80",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c9976ac_102176b6",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -254,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "b573bd5c_ced50ff0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9976ac_102176b6",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "718e3faa_62bc825a",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -265,6 +529,30 @@
       "writtenOn": "2017-10-20T01:28:27Z",
       "side": 1,
       "message": "This can maybe go into the \"cleanup\" CL.",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 29
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81ac53f_ee9b8221",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Not really cleanup and came up w/ style discussions. OK to keep?",
+      "parentUuid": "718e3faa_62bc825a",
       "range": {
         "startLine": 184,
         "startChar": 12,
@@ -300,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "d56b92ee_72b40ff2",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "I prefer early return, since execution is done here and no common code has to be done after the hypothetical else block. Otherwise you have to read past the else block to see if anything else happens, which is higher cognitive load.",
+      "parentUuid": "7fe2f694_c7f6fba4",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 10
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "790be575_fc809915",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -323,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "675ac1ad_f37e97dc",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "790be575_fc809915",
+      "range": {
+        "startLine": 433,
+        "startChar": 2,
+        "endLine": 433,
+        "endChar": 10
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b469cdc0_8627b91a",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -337,6 +673,24 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac969d59_323feab0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Using: CONTEXT_BODY_TEXT_SMALL, not sure when _LARGE is appropriate though?",
+      "parentUuid": "b469cdc0_8627b91a",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -363,6 +717,30 @@
     },
     {
       "key": {
+        "uuid": "ff1cb7cb_b2ace801",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "accd2662_dce97e95",
+      "range": {
+        "startLine": 465,
+        "startChar": 4,
+        "endLine": 465,
+        "endChar": 5
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1935ccbe_7bb8eef8",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -383,6 +761,30 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8018c78_0fbbc1d2",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Only done during testing to ensure that refreshing wouldn\u0027t crash it. Gone now, thanks.",
+      "parentUuid": "1935ccbe_7bb8eef8",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 11
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -409,6 +811,30 @@
     },
     {
       "key": {
+        "uuid": "c9a2dbfb_a23dbf26",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done as RecreateLayout.",
+      "parentUuid": "d11ff682_cc8f6b6b",
+      "range": {
+        "startLine": 479,
+        "startChar": 36,
+        "endLine": 479,
+        "endChar": 43
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61a8b86b_c000936b",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -423,6 +849,24 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91709b1_bcbc446c",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a8b86b_c000936b",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -449,6 +893,30 @@
     },
     {
       "key": {
+        "uuid": "226f5c45_49c33082",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "I looked at the mock again it looks like they want 12pt. I agree this sounds like the right thing. I didn\u0027t know that there was a distinction, done.",
+      "parentUuid": "b6ff6f60_877b1c86",
+      "range": {
+        "startLine": 495,
+        "startChar": 13,
+        "endLine": 495,
+        "endChar": 46
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd8235c_0142186e",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -472,6 +940,30 @@
     },
     {
       "key": {
+        "uuid": "7f393405_fd561366",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afd8235c_0142186e",
+      "range": {
+        "startLine": 517,
+        "startChar": 27,
+        "endLine": 517,
+        "endChar": 34
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b63858c_fa35f1e4",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 1
@@ -486,6 +978,24 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46636b4c_abee0dc1",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b63858c_fa35f1e4",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -512,6 +1022,30 @@
     },
     {
       "key": {
+        "uuid": "7c206006_5e3502f2",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85fca5eb_0674a22e",
+      "range": {
+        "startLine": 547,
+        "startChar": 10,
+        "endLine": 547,
+        "endChar": 29
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc36249_db3cd37a",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 1
@@ -532,6 +1066,30 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2972577b_3d46c2d1",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc36249_db3cd37a",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -558,6 +1116,30 @@
     },
     {
       "key": {
+        "uuid": "5d903c9e_9a55f45a",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22af179a_cdf2b821",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be38f191_fb4b353b",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 1
@@ -578,6 +1160,30 @@
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf7c445_96d00199",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be38f191_fb4b353b",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -604,6 +1210,30 @@
     },
     {
       "key": {
+        "uuid": "64a293ca_0a8bd941",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a6c9e9_9d03abaa",
+      "range": {
+        "startLine": 933,
+        "startChar": 35,
+        "endLine": 933,
+        "endChar": 48
+      },
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9606ee77_d3baff17",
         "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
         "patchSetId": 1
@@ -615,6 +1245,24 @@
       "writtenOn": "2017-10-20T01:28:27Z",
       "side": 1,
       "message": "Can you have this code look for your new bubble and grab its WebContents instead? Even though that\u0027s not so nice, it\u0027s better than adding the global.",
+      "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b83f65_edefa5ae",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "I think this is only used to keep track of whether the current dialog is the one that TabDialogsViews opened. If this holds I was able to remove the global as well. PTAL and let me know if I can get away with this.",
+      "parentUuid": "9606ee77_d3baff17",
       "revId": "b495f0235c6af24749237b2a44c9a7c711b00ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

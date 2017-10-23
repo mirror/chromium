@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9868bc4c_595c2681",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-23T22:51:14Z",
+      "side": 1,
+      "message": "Since the dialog is changing so much anyway do you want me to remove this special case too?",
+      "revId": "0d66ce58fa932bd02071c5b0089509466e34531d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
