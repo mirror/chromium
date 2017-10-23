@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d0eff91_cb0a26f5",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-23T17:12:12Z",
+      "side": 1,
+      "message": "\u003e This might be a dumb question:\n\nThere are no dumb questions.  Feel free to ask as many questions as you want.  This is a tricky issue and I probably am not describing this as best I could in CL comments and description.\n\n\u003e is calling ConnectivityManager.bindProcessToNetwork() the only way to cause process bound to a network, or a not-null default network for versions \u003c M? \n\nI\u0027m not sure I\u0027m completely understanding your question.  setProcessDefaultNetwork() and bindProcessToNetwork() do exactly the same things, we just accidentally made setProcessDefaultNetwork() static, so we added bindProcessToNetwork() which is non-static.  These APIs are the only way to make all the sockets a process creates automatically bound to a network.  I think explicitly binding particular sockets to particular networks overrides the Network set with these APIs.\n\n\u003e \n\u003e If in QUIC layer, we bind sockets to default network explicitly by calling DatagramClientSocket::ConnectUsingDefaultNetwork(const IPEndPoint\u0026 address), would that bind process to network or set process default network not null?\n\nI believe calling ConnectUsingDefaultNetwork() will bind to the device default network, which is not necessarily the same as the process default network (set with setProcessDefaultNetwork/bindProcessToNetwork).  This is why I wanted to land this CL, so that we don\u0027t accidentally override the process default network inadvertently when we use things like QUIC connection migration.",
+      "parentUuid": "b4e0c980_d5ff1626",
+      "revId": "656f1a2a31f6a40643c2e31a56649f8d665b63d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e13cfb8_d80c60c4",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-20T21:36:14Z",
       "side": 1,
       "message": "The way you disable connection migration is to turn off the knob in the constructor of QuicStreamFactory. Is that guaranteed that the app can only ConnectivityManager.bindProcessToNetwork() before a HttpNetworkSession(which constructs QuicStreamFactory) is constructed?",
+      "range": {
+        "startLine": 742,
+        "startChar": 63,
+        "endLine": 742,
+        "endChar": 0
+      },
+      "revId": "656f1a2a31f6a40643c2e31a56649f8d665b63d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63089675_59b314d0",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-23T17:12:12Z",
+      "side": 1,
+      "message": "An app could call bindProcessToNetwork() at any time, but if bindProcessToNetwork() is called while a URLRequestContext (containing socket pools and QUIC session pools) is alive the results are going to be pretty random/arbitrary/unexpected.  I think we can assume that for bindProcessToNetwork() to have useful results when used with Cronet, it must be used while there are no live URLRequestContexts.",
+      "parentUuid": "2e13cfb8_d80c60c4",
       "range": {
         "startLine": 742,
         "startChar": 63,
