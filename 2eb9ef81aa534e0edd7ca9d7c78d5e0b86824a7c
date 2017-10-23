@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f17f8d_705b2919",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-23T17:59:39Z",
+      "side": 1,
+      "message": "How are JavaScript or Java users going to use this opaque |internal_value|? Are there helper/wrapper classes for this?\n\nIf there is no well defined way for JS/Java users to use |internal_value|, does it make more sense to clarify the meaning of this field, say, us_since_epoch (or anything more appropriate)?",
+      "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bb7cf0_88a0dbe4",
+        "filename": "mojo/common/time.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-23T17:59:39Z",
+      "side": 1,
+      "message": "Please see my comment above.",
+      "revId": "2eb9ef81aa534e0edd7ca9d7c78d5e0b86824a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
