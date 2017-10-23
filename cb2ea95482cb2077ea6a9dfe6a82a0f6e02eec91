@@ -36,6 +36,46 @@
     },
     {
       "key": {
+        "uuid": "c3d02c24_e8855f7e",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T22:20:52Z",
+      "side": 1,
+      "message": "This is a big chunk of code.  A helper function looks like it\u0027s in order.",
+      "range": {
+        "startLine": 144,
+        "startChar": 3,
+        "endLine": 144,
+        "endChar": 47
+      },
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2f6f3c_979726b7",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T22:20:52Z",
+      "side": 1,
+      "message": "This behavior works on all platforms, which means that it changes behavior on Android which already has tail suggestions.  It will need to be evaled there if you actually intend to launch this behavior on Android.",
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a42d30f8_9c0240dc",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 2
@@ -70,6 +110,23 @@
         "endLine": 146,
         "endChar": 0
       },
+      "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d60d2f_44c98dd5",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-23T22:20:52Z",
+      "side": 1,
+      "message": "Suppose a suggestion comes back from two sources A \u0026 B (e.g., search history and tail suggest).  Sort \u0026 dedup would put the higher scoring one first.  If that\u0027s tail suggest, that means it\u0027ll be rendered in the tail suggest UI, right?  If it\u0027s not, it won\u0027t be.\n\nThis means that as we turn on tail suggest, it could end up demoting the suggestion by:\n1. scoring higher than the duplicate\n2. hitting this code that decides not enough tail suggestions are displayed and that means filtering them all.\n\nI\u0027m okay with that.  It does mean we\u0027d need to be more careful with interpreting eval data.  (Please make a note of this in the doc that describes metrics to monitor).",
       "revId": "cb2ea95482cb2077ea6a9dfe6a82a0f6e02eec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
