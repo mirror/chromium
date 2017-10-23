@@ -69,6 +69,9 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   // state that depends on |details|.
   void UpdateWith(mojom::PaymentDetailsPtr details);
 
+  // Will recompute every spec state that depends on details.
+  void RecomputeSpecStateForDetails();
+
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
