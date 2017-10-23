@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa209ac3_75854c7f",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "Actually this is confusing. We do open the file for read and write, it\u0027s just we can read from the |file_for_reading| but we can only write through the |cdm_file|.\n\nWe probably also want to add comments on how to do write (using |cdm_file|).",
+      "range": {
+        "startLine": 18,
+        "startChar": 49,
+        "endLine": 18,
+        "endChar": 58
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802f8456_c6774197",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "needs to be updated",
+      "range": {
+        "startLine": 20,
+        "startChar": 64,
+        "endLine": 20,
+        "endChar": 70
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488f6c71_ea037a1e",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "needs to be updated",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe109c68_b845c46a",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "This is only the case on Mac. You can refer to crbug.com/774762",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0c9e15_981e0540",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "This is only the case on Mac. You can refer to crbug.com/774762",
+      "range": {
+        "startLine": 40,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381af911_a64f0f81",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "naming nit: we have both \"ForWrite\" and \"for_writting\" in this file. Maybe the latter is more correct by I like the former as it\u0027s shorter. The bottom line is, we should be consistent in naming.",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5236f569_c55c9258",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "This heavily depends on the implementation detail of CdmStorageImpl, which could in theory close the original fd and make read impossible. In general, I feel we should set State::kError wherever it makes sense to make a clean cut. Our CDM won\u0027t try to recover from these error cases anyways.",
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd65e72_7689297a",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "This is assuming some contract on the browser side. Maybe just CHECK() here so we are sure we are okay in production.",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 44
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263be955_40316c71",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "State is not set here?\n\nAs commented above, I think we should just set the state to be kError in this case.",
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ef03d8_9f31aab1",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "OnTempFileOpenedForWrite to match the mojom call?",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccb4044_6bd1dd3e",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "ditto: OnTempFileWritten?",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 20
+      },
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f2a967_a75ff84b",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T23:14:47Z",
+      "side": 1,
+      "message": "add an empty line here since the comment only applies to |file_name_|",
+      "revId": "da0125cfe75b1a1caee200334a568b2c12ee98b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
