@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "172fa455_2d3d2406",
+        "filename": "chrome/browser/metrics/perf/perf_output.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T12:02:03Z",
+      "side": 1,
+      "message": "Done. We can remove default std::string() call in case the result has value, but it should be negligible.",
+      "parentUuid": "c6afeaa0_fd91cae1",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 72
+      },
+      "revId": "06c68fec317449d8a50ff6d7d4f5271f22e9fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91c73d6b_7806ede9",
         "filename": "chrome/browser/metrics/perf/perf_output.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "982bd3cc_2d835640",
+        "filename": "chrome/browser/metrics/perf/perf_output.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T12:02:03Z",
+      "side": 1,
+      "message": "We delete the instance here to cancel the operation, intentionally.\nIf release()ed, then callback will be invoked twice, unexpectedly, and then leak the instance.",
+      "parentUuid": "91c73d6b_7806ede9",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "06c68fec317449d8a50ff6d7d4f5271f22e9fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c1f0bc_82548c47",
         "filename": "chromeos/dbus/debug_daemon_client.cc",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "06c68fec317449d8a50ff6d7d4f5271f22e9fe04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1431fdbd_2da29cc9",
+        "filename": "chromeos/dbus/debug_daemon_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-23T12:02:03Z",
+      "side": 1,
+      "message": "Refactored a bit more, and done.\n\nNote that when we migrate the callback to DBusMethodCallback, then RunCallbackAndDestroy will be slightly more simplified.",
+      "parentUuid": "93c1f0bc_82548c47",
+      "revId": "06c68fec317449d8a50ff6d7d4f5271f22e9fe04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
