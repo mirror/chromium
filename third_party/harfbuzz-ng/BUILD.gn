@@ -54,13 +54,13 @@ if (use_system_harfbuzz) {
       "src/hb-buffer-serialize.cc",
       "src/hb-buffer.cc",
       "src/hb-buffer.h",
-      "src/hb-cache-private.hh",
       "src/hb-common.cc",
       "src/hb-common.h",
       "src/hb-deprecated.h",
       "src/hb-face-private.hh",
       "src/hb-face.cc",
       "src/hb-face.h",
+      "src/hb-fallback-shape.cc",
       "src/hb-font-private.hh",
       "src/hb-font.cc",
       "src/hb-font.h",
@@ -129,6 +129,7 @@ if (use_system_harfbuzz) {
       "src/hb-ot-var.h",
       "src/hb-ot.h",
       "src/hb-private.hh",
+      "src/hb-set-digest-private.hh",
       "src/hb-set-private.hh",
       "src/hb-set.cc",
       "src/hb-set.h",
@@ -155,6 +156,7 @@ if (use_system_harfbuzz) {
       "HAVE_ICU",
       "HAVE_ICU_BUILTIN",
       "HAVE_INTEL_ATOMIC_PRIMITIVES",
+      "HAVE_FALLBACK",
     ]
 
     if (is_component_build) {
