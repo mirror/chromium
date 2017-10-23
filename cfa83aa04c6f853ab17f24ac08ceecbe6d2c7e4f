@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55ee3046_11722fb5",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameRequestCallbackCollection.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-23T00:16:48Z",
+      "side": 1,
+      "message": "dcheng@ is going to remove this macro.\n\nvoid TraceWrappers(const ScriptWrappableVisitor*) const;\n\n?",
+      "revId": "cfa83aa04c6f853ab17f24ac08ceecbe6d2c7e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
