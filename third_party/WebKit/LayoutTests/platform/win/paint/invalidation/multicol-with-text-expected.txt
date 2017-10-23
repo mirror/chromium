@@ -7,14 +7,29 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutMultiColumnFlowThread (anonymous)",
+          "object": "LayoutMultiColumnSet (anonymous)",
           "rect": [8, 8, 630, 20],
           "reason": "geometry"
         },
         {
-          "object": "LayoutMultiColumnSet (anonymous)",
-          "rect": [8, 8, 630, 20],
+          "object": "LayoutMultiColumnFlowThread (anonymous)",
+          "rect": [488, -52, 150, 80],
           "reason": "geometry"
+        },
+        {
+          "object": "LayoutMultiColumnFlowThread (anonymous)",
+          "rect": [328, -32, 150, 80],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutMultiColumnFlowThread (anonymous)",
+          "rect": [168, -12, 150, 80],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutMultiColumnFlowThread (anonymous)",
+          "rect": [8, 68, 150, 20],
+          "reason": "incremental"
         },
         {
           "object": "LayoutText #text",
@@ -27,10 +42,42 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutMultiColumnFlowThread (anonymous)",
+      "reason": "incremental"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutMultiColumnFlowThread (anonymous)",
       "reason": "geometry"
     },
     {
       "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutMultiColumnFlowThread (anonymous)",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutMultiColumnFlowThread (anonymous)",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutBR BR",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox '\n'",
       "reason": "geometry"
     },
     {

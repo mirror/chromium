@@ -99,13 +99,14 @@ PaintInvalidationReason BoxPaintInvalidator::ComputePaintInvalidationReason() {
 
   if ((style.BackgroundLayers().ThisOrNextLayersUseContentBox() ||
        style.MaskLayers().ThisOrNextLayersUseContentBox()) &&
-      box_.PreviousContentBoxSize() != box_.ContentBoxRect().Size())
+      box_.PreviousContentBoxSize() != box_.ContentBoxRect().Size()) {
     return PaintInvalidationReason::kGeometry;
+  }
 
   LayoutSize old_border_box_size = box_.PreviousSize();
   LayoutSize new_border_box_size = box_.Size();
   bool border_box_changed = old_border_box_size != new_border_box_size;
-  if (!border_box_changed && context_.old_visual_rect == box_.VisualRect())
+  if (!border_box_changed && context_.old_visual_rect == context_.visual_rect)
     return PaintInvalidationReason::kNone;
 
   // If either border box changed or bounds changed, and old or new border box
@@ -116,8 +117,8 @@ PaintInvalidationReason BoxPaintInvalidator::ComputePaintInvalidationReason() {
   // - visual overflows.
   if (context_.old_visual_rect !=
           LayoutRect(context_.old_location, old_border_box_size) ||
-      box_.VisualRect() !=
-          LayoutRect(box_.LocationInBacking(), new_border_box_size)) {
+      context_.visual_rect !=
+          LayoutRect(context_.location, new_border_box_size)) {
     return PaintInvalidationReason::kGeometry;
   }
 
@@ -271,11 +272,11 @@ PaintInvalidationReason BoxPaintInvalidator::InvalidatePaint() {
     bool should_invalidate;
     if (box_.IsLayoutView() &&
         !RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-      should_invalidate = context_.old_visual_rect != box_.VisualRect();
+      should_invalidate = context_.old_visual_rect != context_.visual_rect;
       if (should_invalidate &&
           !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         IncrementallyInvalidatePaint(reason, context_.old_visual_rect,
-                                     box_.VisualRect());
+                                     context_.visual_rect);
       }
     } else {
       should_invalidate = box_.PreviousSize() != box_.Size();
@@ -283,7 +284,7 @@ PaintInvalidationReason BoxPaintInvalidator::InvalidatePaint() {
           !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         IncrementallyInvalidatePaint(
             reason, LayoutRect(context_.old_location, box_.PreviousSize()),
-            LayoutRect(box_.LocationInBacking(), box_.Size()));
+            LayoutRect(context_.location, box_.Size()));
       }
     }
     if (should_invalidate) {
@@ -317,7 +318,7 @@ bool BoxPaintInvalidator::
     NeedsToSavePreviousContentBoxSizeOrLayoutOverflowRect() {
   // Don't save old box geometries if the paint rect is empty because we'll
   // fully invalidate once the paint rect becomes non-empty.
-  if (box_.VisualRect().IsEmpty())
+  if (context_.visual_rect.IsEmpty())
     return false;
 
   if (box_.PaintedOutputOfObjectHasNoEffectRegardlessOfSize())

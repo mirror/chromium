@@ -84,6 +84,7 @@ void PrePaintTreeWalk::Walk(LocalFrameView& frame_view,
     property_tree_builder_.UpdateProperties(frame_view,
                                             *context.tree_builder_context);
   }
+
   paint_invalidator_.InvalidatePaint(frame_view,
                                      context.tree_builder_context.get(),
                                      *context.paint_invalidator_context);
@@ -178,7 +179,6 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
   if (!needs_tree_builder_context_update &&
       !object.ShouldCheckForPaintInvalidation())
     return;
-
   PrePaintTreeWalkContext context(parent_context,
                                   needs_tree_builder_context_update);
 
