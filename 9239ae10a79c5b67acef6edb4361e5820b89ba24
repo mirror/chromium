@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc98da0_29333460",
+        "filename": "ios/chrome/browser/prerender/preload_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T20:35:37Z",
+      "side": 1,
+      "message": "This is not necessary. The WebState will be destroyed and AccountConsistencyHandler calls this method when this happen. Please remove.",
+      "revId": "9239ae10a79c5b67acef6edb4361e5820b89ba24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d0bd79_e0142393",
+        "filename": "ios/chrome/browser/tabs/tab.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T20:35:37Z",
+      "side": 1,
+      "message": "I think we should remove -dispatcher property from Tab in this CL as it was used to implement those three callbacks and thus is no longer needed by Tab (it is still passed to a tab helper, but this should be moved to BrowserViewController).\n\nSo, remove this property here, and change \"tab.dispatcher \u003d self.dispatcher;\" in browser_view_controller.mm to the following:\n\n  // TODO(crbug.com/777557): do not pass the dispatcher to PasswordTabHelper.\n  PasswordTabHelper::FromWebState(tab.webState)-\u003eSetDispatcher(self.dispatcher);\n\nAnd the same thing for \"tab.dispatcher \u003d nil;\".",
+      "revId": "9239ae10a79c5b67acef6edb4361e5820b89ba24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
