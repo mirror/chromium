@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "838fa296_bfc23711",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-23T20:15:10Z",
+      "side": 1,
+      "message": "To prefer filling the first whole number, you could update phone_number_found as you go through the fields on the first pass. \n\ni.e., if you find phone_(home|billing)_number and city_code is not null and !phone_number_found then phone_number_found \u003d true\n\nThen on *_city_and_number and on *_whole_number you can then do\n\n  if (!phone_number_found \u0026\u0026 !found_*_field) {\n    found_*_field \u003d field.get();\n    phone_number_found \u003d true;\n  }\n  break;\n\nThis way, if you find a full componentized phone number first, you won\u0027t save a subsequent complete number first. And if you find a complete phone number first, you won\u0027t save subsequent phonen number parts.",
+      "revId": "455e0959a52cb46fdd50ae37ea49cdc06815e8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045a4ffc_bce534fb",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-23T20:15:10Z",
+      "side": 1,
+      "message": "As discussed offline, I\u0027m not sure you want to enforce phone_number_found here. I think you\u0027ve already set up the pointers above such that you\u0027ll mark things appropriately.\n\nThat said, I think if you move the phone_number_found test/management to the first loop you additionally address ordering (i.e., instead of preferential treatment by field type, you pefer the first complete phone number in the DOM). See my comment attached to line 1232.",
+      "revId": "455e0959a52cb46fdd50ae37ea49cdc06815e8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
