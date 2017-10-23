@@ -211,6 +211,8 @@ don't' set enable_nacl = false then build times may get worse.
 blink to reduce build times, appropriate if you don't plan to debug blink.
 * `win_linker_timing = true` - this should not generally be set but can be
 helpful when trying to understand build times or incremental linking failures.
+* `win_compiler_timing = true` - this should not generally be set but can be
+used to understand and perhaps optimize slow compiles.
 
 In addition, Google employees should consider using goma, a distributed
 compilation system. Detailed information is available internally but the
