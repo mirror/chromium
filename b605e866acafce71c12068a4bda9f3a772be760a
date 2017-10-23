@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2466a50_c5921d4b",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T21:56:37Z",
+      "side": 1,
+      "message": "Nit: Cat fit in previous line.",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97b037d_7fb5e7f1",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T21:56:37Z",
+      "side": 1,
+      "message": "Need to add an attribute name associated-control. Otherwise a runtime error will be thrown if you search from the setting search box. See examples https://cs.chromium.org/search/?q\u003dassociated-control+file:%5Esrc/chrome/browser/resources/settings/+package:%5Echromium$\u0026type\u003dcs.",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c804d6_b7e30fb7",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T21:56:37Z",
+      "side": 1,
+      "message": "s/Localized/Localize",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d04f53a_7362d875",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T21:56:37Z",
+      "side": 1,
+      "message": "Could we always provide this boolean with either true/false values, such that we don\u0027t have to keep calling valueExists from the JS side? Same for chromeCleanupEnabled. Basically something as follows\n\n#if defined(OS_WIN)\nbool chromeCleanupEnabled \u003d false;\nbool userInitiatedCleanupsEnabled \u003d false;\n\nif (base::FeatureList::IsEnabled(safe_browsing::kInBrowserCleanerUIFeature)) {\n  ...\n  chromeCleanupEnabled \u003d cleaner_controller-\u003eShouldShowCleanupInSettingsUI();\n  userInitiatedCleanupsEnabled \u003d safe_browsing::UserInitiatedCleanupsEnabled();\n}\n\nhtml_source-\u003eAddBoolean(\"chromeCleanupEnabled\", chromeCleanupEnabled);\nhtml_source-\u003eAddBoolean(\"userInitiatedCleanupsEnabled\", userInitiatedCleanupsEnabled);",
+      "revId": "b605e866acafce71c12068a4bda9f3a772be760a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
