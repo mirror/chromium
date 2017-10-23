@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f6cd0c6_2c5adc70",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-23T08:56:36Z",
+      "side": 1,
+      "message": "I think existing UMA histograms make little sense in workers. Let\u0027s leave this in FontFaceSetDocument, and add workers\u0027 own version if desirable.",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 25
+      },
+      "revId": "9dc8fc0d2d95e665770142066d920f76230e1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060fa2db_85c48b21",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSetWorker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-23T08:56:36Z",
+      "side": 1,
+      "message": "https://drafts.csswg.org/css-font-loading/#font-face-set-ready\n\n\"Note: Note that the Promise returned by this ready attribute is only ever fulfilled, never rejected, unlike the Promise returned by the FontFace load() method.\"",
+      "revId": "9dc8fc0d2d95e665770142066d920f76230e1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e052e2f9_ef9f5284",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSetWorker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-23T08:56:36Z",
+      "side": 1,
+      "message": "Remove the above 2 lines",
+      "revId": "9dc8fc0d2d95e665770142066d920f76230e1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
