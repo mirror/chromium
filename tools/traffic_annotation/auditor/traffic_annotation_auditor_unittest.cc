@@ -883,3 +883,9 @@ TEST_F(TrafficAnnotationAuditorTest, GetClangLibraryPath) {
   base::FilePath clang_library = auditor().GetClangLibraryPath();
   EXPECT_FALSE(clang_library.empty());
 }
+
+// Tests if 'annotations.xml' is read and has at least one item.
+TEST_F(TrafficAnnotationAuditorTest, AnnotationsXMLLines) {
+  TrafficAnnotationExporter exporter(source_path());
+  EXPECT_LE(1u, exporter.GetXMLItemsCountForTesting());
+}
