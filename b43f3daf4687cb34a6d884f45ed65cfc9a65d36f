@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8b96c96_87c53a56",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1136110
+      },
+      "writtenOn": "2017-10-23T22:08:12Z",
+      "side": 0,
+      "message": "Is there a reason this functionality couldn\u0027t be implemented by changing the state of the source to \"muted\"? May not make a difference, but it seems like we could potentially run into an issue with the source and track getting out of sync.",
+      "revId": "b43f3daf4687cb34a6d884f45ed65cfc9a65d36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
