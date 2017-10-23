@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "83db10dd_e07fbd4d",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-23T23:12:12Z",
+      "side": 1,
+      "message": "How do you make sure that this preferences field only applies to CRD? If this flag is set and WebRTC peerconnection is tried, it will still pick up HW encoder.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 66
+      },
+      "revId": "a31fcfdb10beccc0b492bad4660a062a805724a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd537cd_b093f4ac",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-23T23:12:12Z",
+      "side": 1,
+      "message": "Can you open a crbug and link to it?",
+      "range": {
+        "startLine": 105,
+        "startChar": 71,
+        "endLine": 105,
+        "endChar": 77
+      },
+      "revId": "a31fcfdb10beccc0b492bad4660a062a805724a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c47c8db8_7746536b",
         "filename": "media/gpu/media_foundation_video_encode_accelerator_win.h",
         "patchSetId": 3
