@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeec6385_f8e198d9",
+        "filename": "build/android/test_runner.py.vpython",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-10-23T17:46:46Z",
+      "side": 1,
+      "message": "Please use \"${vpython_platform}\" here instead of the expanded trio. Is easier to look at. For example: https://chromium.googlesource.com/infra/infra/+/master/infra/tools/dockerbuild/wheels.md",
+      "range": {
+        "startLine": 28,
+        "startChar": 36,
+        "endLine": 28,
+        "endChar": 70
+      },
+      "revId": "42401fadf709265b13d2a367cfa43c325a657968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c9408d_b8a619d9",
+        "filename": "build/android/test_runner.py.vpython",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-10-23T17:46:46Z",
+      "side": 1,
+      "message": "Catapult also takes advantage of OpenCV and NumPy when available. Do you want to include these here, too? https://chromium.googlesource.com/chromium/src/+/master/.vpython",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "42401fadf709265b13d2a367cfa43c325a657968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
