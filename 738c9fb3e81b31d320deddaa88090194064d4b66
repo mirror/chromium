@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b30beefd_37d581e3",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-23T20:11:53Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "77ccfdeb_c8e81099",
+      "range": {
+        "startLine": 7177,
+        "startChar": 4,
+        "endLine": 7177,
+        "endChar": 42
+      },
+      "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e10ec07_7fa8897f",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0c3d826c_e346b976",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7212,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-23T20:11:53Z",
+      "side": 1,
+      "message": "That\u0027s one option.  I think the preamble is only two lines of code, so was thinking of passing in the scale, clip, and translate directly.\n\nAlternatively, I could just persist the canvas in the GLES2Implementation too? Not sure what\u0027s best, but can fix in a follow up.",
+      "parentUuid": "9e10ec07_7fa8897f",
+      "range": {
+        "startLine": 7209,
+        "startChar": 2,
+        "endLine": 7212,
+        "endChar": 53
+      },
+      "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "165dfe2d_ffb97a04",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-19T01:28:55Z",
       "side": 1,
       "message": "Is this needed? We are taking care of balancing save/restores added during serialization in the loop above. And I thought for records this balancing is done at record time?",
+      "range": {
+        "startLine": 7246,
+        "startChar": 2,
+        "endLine": 7246,
+        "endChar": 44
+      },
+      "revId": "738c9fb3e81b31d320deddaa88090194064d4b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfc6579_41271062",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7246,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-23T20:11:53Z",
+      "side": 1,
+      "message": "PaintRecorder does balance them because callers of PaintRecorder expect that.  I don\u0027t think there\u0027s any assumption that the commands inside a PaintOpBuffer are balanced.",
+      "parentUuid": "165dfe2d_ffb97a04",
       "range": {
         "startLine": 7246,
         "startChar": 2,
