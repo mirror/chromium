@@ -307,7 +307,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     private void abortLaunch() {
         super.onCreate(null);
         ApiCompatibilityUtils.finishAndRemoveTask(this);
-        overridePendingTransition(R.anim.activity_open_enter, 0);
+        overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
     }
 
     /**
