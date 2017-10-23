@@ -976,11 +976,7 @@ class BASE_EXPORT GlobalActivityTracker {
     if (tracker)
       tracker->RecordProcessLaunch(process_id, exe, args);
   }
-  static void RecordProcessExitIfEnabled(ProcessId process_id, int exit_code) {
-    GlobalActivityTracker* tracker = Get();
-    if (tracker)
-      tracker->RecordProcessExit(process_id, exit_code);
-  }
+  static void RecordProcessExitIfEnabled(ProcessId process_id, int exit_code);
 
   // Sets the "phase" of the current process, useful for knowing what it was
   // doing when it last reported.
