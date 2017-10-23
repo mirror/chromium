@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "174a070d_4b4d17f2",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-23T15:14:31Z",
+      "side": 1,
+      "message": "Done. Added comment. Yeah I think I\u0027m doing too much unusual things recently.. Hope we can make all things looking pretty by detaching interfaces from channel-associated world and Onion Soup efforts later.",
+      "parentUuid": "c7aa8faa_72bd3b5f",
+      "revId": "102de6345de6cd6fb217a8569a94d61d14003652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e3702c_da01ad79",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5b7cbbe0_cb00d17f",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-23T15:14:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54e3702c_da01ad79",
+      "revId": "102de6345de6cd6fb217a8569a94d61d14003652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a41fc86b_273ff238",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "102de6345de6cd6fb217a8569a94d61d14003652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf84234_fecd1529",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-23T15:14:31Z",
+      "side": 1,
+      "message": "Done and Thanks.",
+      "parentUuid": "a41fc86b_273ff238",
+      "revId": "102de6345de6cd6fb217a8569a94d61d14003652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
