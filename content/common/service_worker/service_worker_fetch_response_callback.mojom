@@ -25,6 +25,9 @@ interface ServiceWorkerFetchResponseCallback {
   OnResponseBlob(ServiceWorkerResponse response,
                  blink.mojom.Blob body_as_blob,
                  mojo.common.mojom.Time dispatch_event_time);
+  // TODO(kinuko): Removes the callback once MojoBlob is fully shipped.
+  OnResponseLegacyBlob(ServiceWorkerResponse response,
+                       mojo.common.mojom.Time dispatch_event_time) => ();
   // Responds to the request with |response|. The body is returned as a stream.
   OnResponseStream(ServiceWorkerResponse response,
                    blink.mojom.ServiceWorkerStreamHandle body_as_stream,
