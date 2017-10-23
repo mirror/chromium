@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a07ad0a_7ff5d175",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T15:18:04Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better. But I think it should be gfx::ScalePoint(device_viewport_point, 1 / device_scale_factor)",
+      "parentUuid": "33d014c8_1ef9ee85",
+      "range": {
+        "startLine": 660,
+        "startChar": 4,
+        "endLine": 664,
+        "endChar": 59
+      },
+      "revId": "3c098e05090768f465669294eb12c9d84634079a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ceec62f_b32aa62a",
         "filename": "content/browser/renderer_host/input/input_router_impl.cc",
         "patchSetId": 55
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "66d0a16d_f16f07c4",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T15:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ceec62f_b32aa62a",
+      "range": {
+        "startLine": 222,
+        "startChar": 22,
+        "endLine": 222,
+        "endChar": 36
+      },
+      "revId": "3c098e05090768f465669294eb12c9d84634079a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1f63da_051313db",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 55
@@ -68,6 +116,30 @@
       "revId": "3c098e05090768f465669294eb12c9d84634079a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4211979d_9f482cad",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-23T15:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a1f63da_051313db",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 37
+      },
+      "revId": "3c098e05090768f465669294eb12c9d84634079a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
