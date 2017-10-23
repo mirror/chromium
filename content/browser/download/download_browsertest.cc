@@ -767,6 +767,11 @@ class DownloadContentTest : public ContentBrowserTest {
     return CountingDownloadFile::GetNumberActiveFilesFromFileThread() == 0;
   }
 
+  void WaitForServerToFinishAllResponses(size_t request_num) {
+    while (test_response_handler_.completed_requests().size() != request_num)
+      base::RunLoop().RunUntilIdle();
+  }
+
   void SetupErrorInjectionDownloads() {
     auto factory = base::MakeUnique<ErrorInjectionDownloadFileFactory>();
     inject_error_callback_ = base::Bind(
@@ -1973,8 +1978,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumingDownload) {
   EXPECT_TRUE(EnsureNoPendingDownloads());
 }
 
-// Flaky. See http://crbug.com/777220.
-IN_PROC_BROWSER_TEST_F(DownloadContentTest, DISABLED_RemoveResumedDownload) {
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, RemoveResumedDownload) {
   SetupErrorInjectionDownloads();
   TestDownloadHttpResponse::Parameters parameters =
       TestDownloadHttpResponse::Parameters::WithSingleInterruption(
@@ -2006,10 +2010,10 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DISABLED_RemoveResumedDownload) {
   EXPECT_FALSE(PathExists(intermediate_path));
   EXPECT_FALSE(PathExists(target_path));
   EXPECT_TRUE(EnsureNoPendingDownloads());
+  WaitForServerToFinishAllResponses(2);
 }
 
-// Flaky. See http://crbug.com/777220.
-IN_PROC_BROWSER_TEST_F(DownloadContentTest, DISABLED_CancelResumedDownload) {
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelResumedDownload) {
   SetupErrorInjectionDownloads();
   TestDownloadHttpResponse::Parameters parameters =
       TestDownloadHttpResponse::Parameters::WithSingleInterruption(
@@ -2041,6 +2045,7 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, DISABLED_CancelResumedDownload) {
   EXPECT_FALSE(PathExists(intermediate_path));
   EXPECT_FALSE(PathExists(target_path));
   EXPECT_TRUE(EnsureNoPendingDownloads());
+  WaitForServerToFinishAllResponses(2);
 }
 
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_NoFile) {
