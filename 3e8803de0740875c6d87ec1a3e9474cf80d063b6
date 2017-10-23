@@ -16,6 +16,24 @@
       "revId": "3e8803de0740875c6d87ec1a3e9474cf80d063b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa5c455_e42825d7",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-23T16:45:39Z",
+      "side": 1,
+      "message": "We should definitely think about this and I\u0027m not sure if this is possible. This probably falls under the umbrella of crbug.com/776052 and making context loss work correctly with viz.",
+      "parentUuid": "58269eec_fe16f714",
+      "revId": "3e8803de0740875c6d87ec1a3e9474cf80d063b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
