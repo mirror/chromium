@@ -270,6 +270,14 @@ Console.ConsoleView = class extends UI.VBox {
 
   /**
    * @override
+   */
+  onContentMutation() {
+    for (var viewMessage of this._visibleViewMessages)
+      viewMessage.clearTextCache();
+  }
+
+  /**
+   * @override
    * @return {number}
    */
   minimumRowHeight() {
