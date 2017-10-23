@@ -33,6 +33,144 @@
       "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33b0a30_854c10c1",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-23T16:08:04Z",
+      "side": 1,
+      "message": "Add a NOTREACHED()?",
+      "range": {
+        "startLine": 264,
+        "startChar": 5,
+        "endLine": 264,
+        "endChar": 19
+      },
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962b3186_f6b5d3d1",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-23T16:08:04Z",
+      "side": 1,
+      "message": "nit: GetStateForTesting()",
+      "range": {
+        "startLine": 130,
+        "startChar": 29,
+        "endLine": 130,
+        "endChar": 44
+      },
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c26d75_115025c8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-23T16:08:04Z",
+      "side": 1,
+      "message": "You don\u0027t _need_ the ForTesting() suffix within a test.",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 26
+      },
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3b220c_be1f84b5",
+        "filename": "components/arc/test/fake_voice_interaction_framework_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-23T16:08:04Z",
+      "side": 1,
+      "message": "nit: elide braces. You can also use a ternary here, up to you.",
+      "range": {
+        "startLine": 32,
+        "startChar": 53,
+        "endLine": 32,
+        "endChar": 54
+      },
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf86334_ccb6c8c2",
+        "filename": "components/arc/test/fake_voice_interaction_framework_instance.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-23T16:08:04Z",
+      "side": 1,
+      "message": "nit: newline below.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 1
+      },
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af3bdd1_8480b022",
+        "filename": "components/arc/test/fake_voice_interaction_framework_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-23T16:08:04Z",
+      "side": 1,
+      "message": "Add a newline before to indicate that it\u0027s not part of the mojom::VoiceInteractionFrameworkInstance overrides.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 6
+      },
+      "revId": "3512cd25f817d0f6b5a40a2db57c95331a73c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
