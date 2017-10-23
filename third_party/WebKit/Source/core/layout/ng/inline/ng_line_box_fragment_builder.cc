@@ -37,19 +37,39 @@ const NGPhysicalFragment* NGLineBoxFragmentBuilder::Child::PhysicalFragment()
 void NGLineBoxFragmentBuilder::ChildList::AddChild(
     scoped_refptr<NGLayoutResult> layout_result,
     const NGLogicalOffset& child_offset) {
-  children_.push_back(Child{std::move(layout_result), nullptr, child_offset});
+  children_.push_back(
+      Child{std::move(layout_result), nullptr, nullptr, child_offset});
 }
 
 void NGLineBoxFragmentBuilder::ChildList::AddChild(
     scoped_refptr<NGPhysicalFragment> fragment,
     const NGLogicalOffset& child_offset) {
-  children_.push_back(Child{nullptr, std::move(fragment), child_offset});
+  children_.push_back(
+      Child{nullptr, std::move(fragment), nullptr, child_offset});
+}
+
+void NGLineBoxFragmentBuilder::ChildList::AddChild(
+    LayoutBox* out_of_flow_layout_box,
+    const NGLogicalOffset& child_offset) {
+  children_.push_back(
+      Child{nullptr, nullptr, out_of_flow_layout_box, child_offset});
 }
 
 void NGLineBoxFragmentBuilder::ChildList::AddChild(
     std::nullptr_t,
     const NGLogicalOffset& child_offset) {
-  children_.push_back(Child{nullptr, nullptr, child_offset});
+  children_.push_back(Child{nullptr, nullptr, nullptr, child_offset});
+}
+
+void NGLineBoxFragmentBuilder::AddChildByMove(Child& child) {
+  if (child.fragment) {
+    DCHECK(!child.layout_result);
+    AddChild(std::move(child.fragment), child.offset);
+    DCHECK(!child.fragment);  // ensure moved
+  } else if (child.layout_result) {
+    AddChild(std::move(child.layout_result), child.offset);
+    DCHECK(!child.layout_result);  // ensure moved
+  }
 }
 
 void NGLineBoxFragmentBuilder::ChildList::MoveInBlockDirection(
@@ -81,23 +101,6 @@ void NGLineBoxFragmentBuilder::AddPositionedFloat(
 void NGLineBoxFragmentBuilder::SetBreakToken(
     scoped_refptr<NGInlineBreakToken> break_token) {
   break_token_ = std::move(break_token);
-}
-
-void NGLineBoxFragmentBuilder::AddChildren(ChildList& children) {
-  offsets_.ReserveCapacity(children.size());
-  children_.ReserveCapacity(children.size());
-
-  for (auto& child : children) {
-    if (child.layout_result) {
-      DCHECK(!child.fragment);
-      AddChild(std::move(child.layout_result), child.offset);
-      DCHECK(!child.layout_result);
-    } else {
-      DCHECK(child.fragment);
-      AddChild(std::move(child.fragment), child.offset);
-      DCHECK(!child.fragment);
-    }
-  }
 }
 
 scoped_refptr<NGLayoutResult> NGLineBoxFragmentBuilder::ToLineBoxFragment() {
