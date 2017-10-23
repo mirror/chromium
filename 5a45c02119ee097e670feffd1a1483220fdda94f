@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac9bec48_92d4be80",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T13:42:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this also be a sophisticated dtor? I.e.\nsth in the lines of:\n\n  vk_device_.reset(new ScopedVkDevice(\n      VK_NULL_HANDLE, DeleteVkTraits\u003cVkDevice\u003e(base::Bind(\n                          \u0026vkDestroyDevice, vk_device_-\u003eget()))));\n\n\nOtherwise ScopedVkDevice goes unused.",
+      "range": {
+        "startLine": 535,
+        "startChar": 19,
+        "endLine": 535,
+        "endChar": 39
+      },
+      "revId": "5a45c02119ee097e670feffd1a1483220fdda94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b98dca_78a58ce1",
+        "filename": "components/exo/wayland/clients/client_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T13:42:07Z",
+      "side": 1,
+      "message": "nit: I\u0027d make this a base::OnceCallback (and then use\nbase::BindOnce on instantiation). You\u0027d need to write\n\nvoid Free(T param) { std::move(release_cb).Run(param, nullptr);}\n\n(the std::move() being an established pattern for OnceCallbacks)\n\nthis way is more evident that |release_cb| is not meant to\nbe called more than once.",
+      "range": {
+        "startLine": 88,
+        "startChar": 26,
+        "endLine": 88,
+        "endChar": 40
+      },
+      "revId": "5a45c02119ee097e670feffd1a1483220fdda94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853ed085_cd2bfc9d",
+        "filename": "components/exo/wayland/clients/client_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-23T13:42:07Z",
+      "side": 1,
+      "message": "Why not a class DeleteVkTraits and make this member private?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "5a45c02119ee097e670feffd1a1483220fdda94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
