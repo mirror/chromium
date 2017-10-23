@@ -14,6 +14,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/trace_event/trace_event.h"
 #include "media/base/audio_bus.h"
 #include "media/base/audio_pull_fifo.h"
 #include "media/base/channel_mixer.h"
@@ -156,6 +157,8 @@ void AudioConverter::ConvertWithDelay(uint32_t initial_frames_delayed,
 }
 
 void AudioConverter::Convert(AudioBus* dest) {
+  TRACE_EVENT1("audio", "AudioConverter::Convert", "sample rate ratio",
+               io_sample_rate_ratio_);
   ConvertWithDelay(0, dest);
 }
 
