@@ -685,9 +685,10 @@ void AutocompleteMatch::InlineTailPrefix(const base::string16& common_prefix) {
     // Shift existing styles.
     for (ACMatchClassification& classification : contents_class)
       classification.offset += common_prefix.size();
-    // Prefix with dim text.
-    contents_class.insert(contents_class.begin(),
-                          ACMatchClassification(0, ACMatchClassification::DIM));
+    // Prefix with invisible text.
+    contents_class.insert(
+        contents_class.begin(),
+        ACMatchClassification(0, ACMatchClassification::INVISIBLE));
   } else if (base::StartsWith(contents, common_prefix,
                               base::CompareCase::SENSITIVE)) {
     // Prefix with dim text.
