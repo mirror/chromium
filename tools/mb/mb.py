@@ -764,6 +764,7 @@ class MetaBuildWrapper(object):
     return {
       'args_file': '',
       'cros_passthrough': False,
+      'cros_board': '',
       'gn_args': '',
       'gyp_defines': '',
       'gyp_crosscompile': False,
@@ -779,6 +780,8 @@ class MetaBuildWrapper(object):
 
       mixin_vals = self.mixins[m]
 
+      if 'cros_board' in mixin_vals:
+        vals['cros_board'] = mixin_vals['cros_board']
       if 'cros_passthrough' in mixin_vals:
         vals['cros_passthrough'] = mixin_vals['cros_passthrough']
       if 'args_file' in mixin_vals:
@@ -1018,9 +1021,30 @@ class MetaBuildWrapper(object):
 
   def GNArgs(self, vals):
     if vals['cros_passthrough']:
-      if not 'GN_ARGS' in os.environ:
-        raise MBErr('MB is expecting GN_ARGS to be in the environment')
-      gn_args = os.environ['GN_ARGS']
+      if vals['cros_board']:
+        env = os.environ.copy()
+        if '%SDK_VERSION' in env:
+          env['%SDK_VERSION'].pop()
+        ret, out, err = self.Call([
+            self.PathJoin(CHROMIUM_SRC_DIR, 'third_party', 'depot_tools',
+                          'cros'),
+            'chrome-sdk',
+            '--board', vals['cros_board'],
+            '--cache-dir',
+            self.PathJoin(CHROMIUM_SRC_DIR, 'build', 'chromeos'),
+            '--',
+            'bash',
+            '-c',
+            'echo $GN_ARGS'
+        ], env=env)
+        if ret:
+            raise MBErr('Failed to get args for board "%s": %s' %
+                        (vals['cros_board'], err))
+        gn_args = out.strip()
+      else:
+        if not 'GN_ARGS' in os.environ:
+          raise MBErr('MB is expecting GN_ARGS to be in the environment')
+        gn_args = os.environ['GN_ARGS']
       if not re.search('target_os.*=.*"chromeos"', gn_args):
         raise MBErr('GN_ARGS is missing target_os = "chromeos": (GN_ARGS=%s)' %
                     gn_args)

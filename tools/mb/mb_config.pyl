@@ -101,9 +101,9 @@
       'Linux ChromiumOS Builder (dbg)': 'chromeos_with_codecs_debug_bot',
       'Linux ChromiumOS Full': 'chromeos_with_codecs_release_bot',
 
-      'chromeos-amd64-generic-rel': 'cros_chrome_sdk',
-      'chromeos-betty-rel': 'cros_chrome_sdk',
-      'chromeos-daisy-rel': 'cros_chrome_sdk',
+      'chromeos-amd64-generic-rel': 'chromeos_amd64_generic',
+      'chromeos-betty-rel': 'chromeos_betty',
+      'chromeos-daisy-rel': 'chromeos_daisy',
       'linux-chromeos-rel': 'chromeos_with_codecs_release_bot',
       'linux-chromeos-dbg': 'chromeos_with_codecs_debug_bot',
     },
@@ -574,10 +574,14 @@
     },
 
     'tryserver.chromium.chromiumos': {
-      'chromeos-amd64-generic-rel': 'cros_chrome_sdk',
-      'chromeos-betty-rel': 'cros_chrome_sdk',
-      'chromeos-daisy-rel': 'cros_chrome_sdk',
-      'linux-chromeos-rel': 'chromeos_with_codecs_release_trybot',
+      'chromeos-amd64-generic-rel': 'chromeos_amd64_generic',
+      'chromeos-betty-rel': 'chromeos_betty',
+      'chromeos-daisy-rel': 'chromeos_daisy',
+
+      # TODO(dpranke): uncomment
+      #'linux-chromeos-rel': 'chromeos_with_codecs_release_trybot',
+      'linux-chromeos-rel': 'chromeos_amd64_generic',
+
       'linux-chromeos-compile-dbg': 'chromeos_with_codecs_debug_bot',
       'linux-chromeos-dbg': 'chromeos_with_codecs_debug_bot',
     },
@@ -1085,10 +1089,21 @@
       'cfi_full', 'cfi_diag', 'cfi_icall', 'thin_lto', 'release', 'static', 'dcheck_always_on',
     ],
 
+    'chromeos_amd64_generic': [
+      'cros_board_amd64_generic', 'cros_chrome_sdk',
+    ],
+
     'chromeos_asan_lsan_edge_fuzzer_v8_heap_release_bot': [
       'chromeos', 'asan', 'lsan', 'edge', 'fuzzer', 'v8_heap', 'release_bot',
     ],
 
+    'chromeos_betty': [
+      'cros_board_betty', 'cros_chrome_sdk',
+    ],
+
+    'chromeos_daisy': [
+      'cros_board_daisy', 'cros_chrome_sdk',
+    ],
     'chromeos_msan_release_bot': [
       'chromeos', 'msan', 'release_bot',
     ],
@@ -1789,6 +1804,16 @@
                   'enable_websockets=false use_platform_icu_alternatives=true '
                   'use_partition_alloc=false enable_reporting=false '
                   'include_transport_security_state_preload_list=false'),
+    },
+
+    'cros_board_amd64_generic': {
+      'cros_board': 'amd64-generic',
+    },
+    'cros_board_betty': {
+      'cros_board': 'betty',
+    },
+    'cros_board_daisy': {
+      'cros_board': 'daisy',
     },
 
     'cros_chrome_sdk': {
