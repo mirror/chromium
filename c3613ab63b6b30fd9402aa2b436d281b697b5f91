@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3539e5b5_91f109e7",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9f7cb0_95123464",
+      "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0cfff56_ab574097",
         "filename": "chrome/browser/resources/md_extensions/toggle_row.js",
         "patchSetId": 10
@@ -68,6 +86,24 @@
       "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147ea492_7c76894e",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T21:31:09Z",
+      "side": 1,
+      "message": "Yes, double checked. So, the settings_toggle_button does not actually rely on the double binding (which only works when \"notify: true\" exists). Instead, it is manually updating the value at line https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/controls/settings_toggle_button.js?l\u003d98.\n\nWith the addition of \"notify: true\" that line does no longer seem necessary (this.checked already has the correct value, no need for the assignment), but I prefer cleaning up on a separate CL.",
+      "parentUuid": "8b4c6eaa_d3e0888b",
+      "revId": "c3613ab63b6b30fd9402aa2b436d281b697b5f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
