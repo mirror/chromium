@@ -209,6 +209,24 @@
       "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692da17f_2485d828",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_child_iterator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-23T00:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a804e53e_90c73ab3",
+      "revId": "70f000dcc4b28fa8e5e564657885d081a7a0c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
