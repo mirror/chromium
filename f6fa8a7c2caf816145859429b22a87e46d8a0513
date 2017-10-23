@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8bb1819_ae53b6ba",
+        "filename": "content/browser/frame_host/frame_tree.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a923c092_71bb8c1c",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b49ecc_75923e81",
         "filename": "content/browser/frame_host/interstitial_page_impl.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff74811_45add211",
+        "filename": "content/browser/frame_host/interstitial_page_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Good point! Done in all places.",
+      "parentUuid": "18b49ecc_75923e81",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,42 @@
     },
     {
       "key": {
+        "uuid": "a99dc53c_041362a0",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "I wanted to avoid temporarily storing something into a parameter variable only to take it out in the next line. Let me know if you feel strongly about this.",
+      "parentUuid": "a61c504d_07d3ddec",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097deba5_a6c96d86",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Thanks, added a comment to use FilterRendererExposedInterfaces.\n\nOtherwise N/A, we are no longer taking an interface provider in the constructor.",
+      "parentUuid": "3709cd70_f2691f49",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d456980_025a2219",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 19
@@ -85,6 +157,24 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a35cc21_e18420df",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2747,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Specifically, this comment is N/A as this function no longer exists.\n\nIn general, however, I have added a bunch more DCHECKs so we should be enforcing correct state much more strictly now.",
+      "parentUuid": "5d456980_025a2219",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -120,6 +210,42 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b131633_929bbbe8",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2897,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "I found a nicer solution where we can introduce an override for this function.",
+      "parentUuid": "a30f5fe5_5e443232",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fcee0bf_67dccba0",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2897,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "N/A, went with a much nicer solution using an override in TestRenderFrameHost, where we no longer skip the security check if the security guard is not present.",
+      "parentUuid": "668151a4_c0c3aa3a",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +296,54 @@
     },
     {
       "key": {
+        "uuid": "8bd0d0ab_56c673de",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "N/A, went with a much nicer solution using an override in TestRenderFrameHost.",
+      "parentUuid": "daaa9414_60a88034",
+      "range": {
+        "startLine": 2898,
+        "startChar": 57,
+        "endLine": 2898,
+        "endChar": 59
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f8916b8_15609d83",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "N/A",
+      "parentUuid": "9a77f525_aed7bd7b",
+      "range": {
+        "startLine": 2898,
+        "startChar": 57,
+        "endLine": 2898,
+        "endChar": 59
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7581293_3b048828",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 19
@@ -181,6 +355,24 @@
       "writtenOn": "2017-10-13T22:26:31Z",
       "side": 1,
       "message": "Let\u0027s put this parameter to be before the routing ids, as this way it splits them and makes code of callers a bit harder to read. It will also keep similarly typed arguments together.",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cd3fbe_b8362d75",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2934,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done. Do you want me to do this change across the CL?",
+      "parentUuid": "f7581293_3b048828",
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -210,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "4052479d_e9465c43",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cab832ed_cd50a9a3",
+      "range": {
+        "startLine": 271,
+        "startChar": 51,
+        "endLine": 271,
+        "endChar": 56
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5089198b_d4060c7a",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 19
@@ -230,6 +446,30 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88177e9_dec88cdc",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5089198b_d4060c7a",
+      "range": {
+        "startLine": 272,
+        "startChar": 21,
+        "endLine": 272,
+        "endChar": 29
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "16fa58af_01c2af0f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f2315f_a5f07735",
+      "range": {
+        "startLine": 661,
+        "startChar": 37,
+        "endLine": 661,
+        "endChar": 41
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9010dafd_b665c782",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 19
@@ -273,6 +537,24 @@
     },
     {
       "key": {
+        "uuid": "431bb30d_70c8feea",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Uhm, sorry, this sentence is utter nonsense. Done.",
+      "parentUuid": "9010dafd_b665c782",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c7bc09_a9b941d3",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 19
@@ -287,6 +569,24 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c79323a_961cecbd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Replaced this solution with a much less crazy one.",
+      "parentUuid": "50c7bc09_a9b941d3",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +625,24 @@
     },
     {
       "key": {
+        "uuid": "8f3819c5_ebf4c35a",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Correct + for suppressed window.openers we also don\u0027t have a routing ID or interfaces provider supplied here. Added comment to this effect.",
+      "parentUuid": "483846a3_31d0228c",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35da1a25_d0edaab9",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 19
@@ -342,6 +660,24 @@
     },
     {
       "key": {
+        "uuid": "304086f0_4478c2db",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35da1a25_d0edaab9",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94ee623a_3b94f15c",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 19
@@ -356,6 +692,24 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6421c9e_fa802afa",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Correct, fixed.",
+      "parentUuid": "94ee623a_3b94f15c",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -394,6 +748,24 @@
     },
     {
       "key": {
+        "uuid": "993487d4_f85dc46b",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7862c05b_d243206c",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84cb2566_2a0b2f31",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 19
@@ -426,6 +798,24 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06fdab45_3aa4dc95",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "That\u0027s right, we need to move out the |interfaces| at frame construction, so the only nice option is to make CreateParams a moveable type and pass it around by value. (Not a particularly big fan of passing it by pointer give because of the unclear ownership.)",
+      "parentUuid": "94e73c8c_46cd59c5",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -464,6 +854,24 @@
     },
     {
       "key": {
+        "uuid": "41659e86_d63ea165",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Done on modified lines, in two places total.",
+      "parentUuid": "120915d1_86b7ee03",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e20bef9_2df7d44b",
         "filename": "content/test/test_render_frame_host.cc",
         "patchSetId": 19
@@ -478,6 +886,24 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46303d0_ed287a26",
+        "filename": "content/test/test_render_frame_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "Indeed -- and in fact, removed argument. :-)",
+      "parentUuid": "6e20bef9_2df7d44b",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -501,6 +927,30 @@
       "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fceecb5_0ccff8b4",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-23T15:44:44Z",
+      "side": 1,
+      "message": "I honestly spent 10 minutes thinking about naming this better... and `Isolated` is much better than anything I could think of. Thanks, done!",
+      "parentUuid": "a9d2bfcf_ec5bb1e1",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 32
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
