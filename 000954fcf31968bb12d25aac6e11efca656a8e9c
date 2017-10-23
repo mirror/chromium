@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "79a380b4_ddda03b3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "\u003e Yup can do. I put a screenshot in the CL description, let me know if you think that\u0027s OK.\n\nLooks neat!",
+      "parentUuid": "4a951f5f_7af06b7d",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5921862f_d0321ff7",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -871,6 +889,24 @@
     },
     {
       "key": {
+        "uuid": "61e43418_c0b76b2c",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa3362db_7974328f",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72fa9338_3b47c543",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 4
@@ -1180,6 +1216,24 @@
       "side": 1,
       "message": "It\u0027s always the same thing - (i.e. 0, which is |kPermissionSectionsId| in the previous file). It was hardcoded before but I changed it to be an argument that\u0027s passed into PermissionSelectorRow instead.\n\nNot sure what you mean by examples? E.g. \"Note |column_set_id| should have the correct number of columns for a |PermissionSelectorRow|?\" or something?",
       "parentUuid": "53f24dc1_8762a82d",
+      "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef94b542_01b320ab",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "\u003e It\u0027s always the same thing - (i.e. 0, which is |kPermissionSectionsId| in the previous file). It was hardcoded before but I changed it to be an argument that\u0027s passed into PermissionSelectorRow instead.\n\u003e \n\u003e Not sure what you mean by examples? E.g. \"Note |column_set_id| should have the correct number of columns for a |PermissionSelectorRow|?\" or something?\n\nFor an example, I was thinking something like\n\n|column_set_id| corresponds to either the Foo section or the Bar section of the Page Info bubble.\n\nIf it\u0027s always the same, perhaps we can move the column set id into a constexpr in PageInfoBubbleView.",
+      "parentUuid": "44d550ca_29e81fe1",
       "revId": "000954fcf31968bb12d25aac6e11efca656a8e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "451e51cd_e4dc40e7",
+        "filename": "chrome/browser/ui/views/page_info/chosen_object_row.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "nit: move into constructor",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbc3674_e2036706",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "technically this transfers ownership to the view hierarchy, which we \"can\u0027t\" do for a value member. (Probably what happens is that the PageInfoBubbleView destructor calls the |permisisons_view_| destructor which tears the view out of the hierarchy, but that\u0027s subtle).\n\nA pointer is probably better. There is also View::set_owned_by_client(), but that always feels like a bit of a hack when I see it being used.",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5db61ac_25523bb8",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 7
@@ -13,6 +47,58 @@
       "writtenOn": "2017-10-19T06:58:19Z",
       "side": 1,
       "message": "Leaving this here to reduce churn because I\u0027ll need it again later to change the title text colour depending on whether the page is secure.",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb38ab8c_bed182c2",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e5db61ac_25523bb8",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f992c22_55d41e53",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "nit: auto is usually preferred when initializing with std::make_unique, so the typename isn\u0027t repeated",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c92285_e8d27861",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T00:48:05Z",
+      "side": 1,
+      "message": "nit: add a function comment",
       "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
