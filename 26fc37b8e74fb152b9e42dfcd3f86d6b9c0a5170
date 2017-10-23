@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db1c1900_d975bf26",
+        "filename": "ios/chrome/browser/geolocation/omnibox_geolocation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T22:09:58Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0a76360e_6a7b94a3",
+      "range": {
+        "startLine": 321,
+        "startChar": 6,
+        "endLine": 321,
+        "endChar": 24
+      },
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b894e5a_863c8f19",
         "filename": "ios/chrome/browser/tabs/tab.h",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5b485461_4325152d",
+        "filename": "ios/chrome/browser/tabs/tab.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T22:09:58Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "7b894e5a_863c8f19",
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bc2afea_40cff1ec",
         "filename": "ios/chrome/browser/tabs/tab.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db883b4a_0c1f7274",
+        "filename": "ios/chrome/browser/tabs/tab.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-23T22:09:58Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "2bc2afea_40cff1ec",
+      "revId": "26fc37b8e74fb152b9e42dfcd3f86d6b9c0a5170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
