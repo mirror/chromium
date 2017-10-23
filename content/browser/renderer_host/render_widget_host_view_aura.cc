@@ -92,8 +92,10 @@
 #include "ui/events/gestures/gesture_recognizer.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
+#include "ui/gfx/range/range.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/touch_selection/touch_selection_controller.h"
 #include "ui/wm/core/coordinate_conversion.h"
@@ -1332,6 +1334,11 @@ bool RenderWidgetHostViewAura::GetTextRange(gfx::Range* range) const {
   range->set_start(selection->offset());
   range->set_end(selection->offset() + selection->text().length());
   return true;
+}
+
+bool RenderWidgetHostViewAura::GetTextInputClientInfo(
+    ui::TextInputClient::GetTextInputClientInfoCallback callback) const {
+  return false;
 }
 
 bool RenderWidgetHostViewAura::GetCompositionTextRange(

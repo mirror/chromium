@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "components/arc/ime/arc_ime_bridge.h"
 #include "components/exo/wm_helper.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -19,6 +20,11 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+
+namespace gfx {
+class Rect;
+class Range;
+}  // namespace gfx
 
 namespace aura {
 class Window;
@@ -107,6 +113,9 @@ class ArcImeService : public KeyedService,
   ui::TextInputType GetTextInputType() const override;
   gfx::Rect GetCaretBounds() const override;
   bool GetTextRange(gfx::Range* range) const override;
+  bool GetTextInputClientInfo(
+      ui::TextInputClient::GetTextInputClientInfoCallback callback)
+      const override;
   bool GetSelectionRange(gfx::Range* range) const override;
   bool GetTextFromRange(const gfx::Range& range,
                         base::string16* text) const override;

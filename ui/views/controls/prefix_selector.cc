@@ -7,6 +7,7 @@
 #include "base/i18n/case_conversion.h"
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/text_input_type.h"
+#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/range/range.h"
 #include "ui/views/controls/prefix_delegate.h"
 #include "ui/views/view.h"
@@ -91,6 +92,11 @@ bool PrefixSelector::HasCompositionText() const {
 
 bool PrefixSelector::GetTextRange(gfx::Range* range) const {
   *range = gfx::Range();
+  return false;
+}
+
+bool PrefixSelector::GetTextInputClientInfo(
+    ui::TextInputClient::GetTextInputClientInfoCallback callback) const {
   return false;
 }
 
