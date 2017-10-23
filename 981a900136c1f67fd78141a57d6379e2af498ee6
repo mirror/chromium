@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1646e49f_c939185b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:40:48Z",
+      "side": 1,
+      "message": "nit: remove this line, so the line below is attached to the comment above",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dbc3674_e2036706",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 7
@@ -71,6 +88,29 @@
     },
     {
       "key": {
+        "uuid": "c5d1f0e9_7a57c103",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:40:48Z",
+      "side": 1,
+      "message": "a `using views::GridLayout` might be helpful at the top of the file.",
+      "range": {
+        "startLine": 736,
+        "startChar": 29,
+        "endLine": 736,
+        "endChar": 48
+      },
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f992c22_55d41e53",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 7
@@ -88,6 +128,23 @@
     },
     {
       "key": {
+        "uuid": "e6d8706a_4519cef2",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:40:48Z",
+      "side": 1,
+      "message": "I\u0027d probably use static constexpr for this -- using enum for constants never really took off.",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07c92285_e8d27861",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
         "patchSetId": 7
@@ -99,6 +156,46 @@
       "writtenOn": "2017-10-23T00:48:05Z",
       "side": 1,
       "message": "nit: add a function comment",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4244c97_cb8fd19d",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:40:48Z",
+      "side": 1,
+      "message": "also this probably belongs below the destructor. static `factory` functions appear before constructor/destructor, but other static functions are mixed in.",
+      "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1f1412_610602d2",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:40:48Z",
+      "side": 1,
+      "message": "nit: `const` isn\u0027t normally used on primitive arguments",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 30
+      },
       "revId": "981a900136c1f67fd78141a57d6379e2af498ee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dc1ef69_7181a7ee",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T08:40:48Z",
+      "side": 0,
+      "message": "is there anything still using kSummaryFontSizeDelta?",
+      "range": {
+        "startLine": 621,
+        "startChar": 10,
+        "endLine": 621,
+        "endChar": 31
+      },
+      "revId": "5fd17d1f370d296628fe29b317967dc55b10ef11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
