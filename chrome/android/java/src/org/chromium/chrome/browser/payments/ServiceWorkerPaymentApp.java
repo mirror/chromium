@@ -46,24 +46,42 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
 
     /**
      * This class represents capabilities of a payment instrument. It is currently only used for
-     * basic-card payment instrument.
+     * 'basic-card' payment instrument.
      */
-    public static class Capabilities {
+    protected static class Capabilities {
         // Stores mojom::BasicCardNetwork.
         private int[] mSupportedCardNetworks;
 
         // Stores mojom::BasicCardType.
         private int[] mSupportedCardTypes;
 
+        /**
+         * Build capabilities for a payment instrument.
+         *
+         * @param supportedCardNetworks The supported card networks of a 'basic-card' payment
+         *                              instrument.
+         * @param supportedCardTypes    The supported card types of a 'basic-card' payment
+         *                              instrument.
+         */
         Capabilities(int[] supportedCardNetworks, int[] supportedCardTypes) {
             mSupportedCardNetworks = supportedCardNetworks;
             mSupportedCardTypes = supportedCardTypes;
         }
 
+        /**
+         * Gets supported card networks.
+         *
+         * @return a set of mojom::BasicCardNetwork.
+         */
         int[] getSupportedCardNetworks() {
             return mSupportedCardNetworks;
         }
 
+        /**
+         * Gets supported card types.
+         *
+         * @return a set of mojom::BasicCardType.
+         */
         int[] getSupportedCardTypes() {
             return mSupportedCardTypes;
         }
@@ -153,15 +171,17 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
                 });
     }
 
+    // Returns true if 'basic-card' is the only supported payment method of this payment app in the
+    // payment request.
     private boolean isOnlySupportBasiccard(Map<String, PaymentMethodData> methodDataMap) {
         Set<String> requestMethods = new HashSet<>(methodDataMap.keySet());
         requestMethods.retainAll(mMethodNames);
-        if (requestMethods.size() == 1 && requestMethods.contains(BASIC_CARD_PAYMENT_METHOD)) {
-            return true;
-        }
-        return false;
+        return requestMethods.size() == 1 && requestMethods.contains(BASIC_CARD_PAYMENT_METHOD);
     }
 
+    // Matches |requestMethodData|.supportedTypes and |requestMethodData|.supportedNetwokrs for
+    // 'basic-card' payment method with the Capabilities in this payment app to determine whehter
+    // this payment app supports |requestMethodData|.
     private boolean matchBasiccardCapabilities(PaymentMethodData requestMethodData) {
         // Empty supported card types and networks in payment request method data indicates it
         // supports all card types and networks.
@@ -182,6 +202,10 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
             requestSupportedNetworks.add(requestMethodData.supportedNetworks[i]);
         }
 
+        // If requestSupportedTypes and requestSupportedNetworks are not empty, match them with the
+        // capabilities. Break out of the for loop if a matched capabilities has been found. So 'j
+        // >= mCapabilities.length' indicates that there is matched capabilities in this payment
+        // app.
         int j = 0;
         for (; j < mCapabilities.length; j++) {
             if (!requestSupportedTypes.isEmpty()) {

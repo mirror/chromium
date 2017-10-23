@@ -58,6 +58,9 @@ struct CONTENT_EXPORT StoredPaymentApp {
   std::vector<std::string> enabled_methods;
 
   // A list of capabilities in this payment app.
+  // |capabilities| is non-empty only if |enabled_methods| contains "basic-card"
+  // for now and these |capabilities| apply only to the "basic-card" instrument,
+  // although we don't store the instruments individually.
   std::vector<StoredCapabilities> capabilities;
 
   // A flag indicates whether the app prefers the related applications.

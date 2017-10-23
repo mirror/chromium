@@ -28,6 +28,7 @@ struct PaymentInstrument {
   string stringified_capabilities;
 
   // Parsed basic-card specific capabilities.
+  // Below arrays are non-empty only if enabled_mehthods contains "basic-card".
   array<BasicCardNetwork> supported_networks;
   array<BasicCardType> supported_types;
 };
