@@ -23,6 +23,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "chrome/browser/net/system_network_context_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/image_loader.h"
@@ -365,8 +366,8 @@ void KioskAppData::SetStatus(Status status) {
   }
 }
 
-net::URLRequestContextGetter* KioskAppData::GetRequestContextGetter() {
-  return g_browser_process->system_request_context();
+content::mojom::URLLoaderFactory* KioskAppData::GetURLLoaderFactory() {
+  return g_browser_process->system_network_context_manager()->GetURLLoaderFactory();
 }
 
 bool KioskAppData::LoadFromCache() {
@@ -455,7 +456,7 @@ void KioskAppData::StartFetch() {
   }
 
   webstore_fetcher_.reset(new extensions::WebstoreDataFetcher(
-      this, GetRequestContextGetter(), GURL(), app_id()));
+      this, GetURLLoaderFactory(), GURL(), app_id()));
   webstore_fetcher_->set_max_auto_retries(3);
   webstore_fetcher_->Start();
 }
@@ -492,7 +493,7 @@ void KioskAppData::OnWebstoreResponseParseSuccess(
 
   // WebstoreDataParser deletes itself when done.
   (new WebstoreDataParser(weak_factory_.GetWeakPtr()))
-      ->Start(app_id(), manifest, icon_url, GetRequestContextGetter());
+      ->Start(app_id(), manifest, icon_url, GetURLLoaderFactory());
 }
 
 void KioskAppData::OnWebstoreResponseParseFailure(const std::string& error) {

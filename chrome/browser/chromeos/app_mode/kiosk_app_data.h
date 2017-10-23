@@ -96,8 +96,8 @@ class KioskAppData : public KioskAppDataBase,
 
   void SetStatus(Status status);
 
-  // Returns URLRequestContextGetter to use for fetching web store data.
-  net::URLRequestContextGetter* GetRequestContextGetter();
+  // Returns URLLoaderFactory to use for fetching web store data.
+  content::mojom::URLLoaderFactory* GetURLLoaderFactory();
 
   // Loads the locally cached data. Return false if there is none.
   bool LoadFromCache();
