@@ -13,6 +13,22 @@
 @synthesize animatingTransition = animatingTransition_;
 @synthesize hitTestBoundsContraintRelaxed = hitTestBoundsContraintRelaxed_;
 
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+      // When the toolbar is not in the view hierarchy, UIKit sets the bounds to
+      // CGRectZero. This results in the subviews of the toolbars which are
+      // positioned with autoresizing masks to be moved.
+      // This constraint enforces a minimum width.
+      NSLayoutConstraint* c =
+          [self.widthAnchor constraintGreaterThanOrEqualToConstant:200];
+      c.active = YES;
+    }
+  }
+  return self;
+}
+
 // Some views added to the toolbar have bounds larger than the toolbar bounds
 // and still needs to receive touches. The overscroll actions view is one of
 // those. That method is overridden in order to still perform hit testing on
@@ -44,13 +60,6 @@
 - (void)didMoveToWindow {
   [super didMoveToWindow];
   [delegate_ windowDidChange];
-}
-
-- (void)willMoveToSuperview:(UIView*)newSuperview {
-  [super willMoveToSuperview:newSuperview];
-  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
-    [self removeConstraints:self.constraints];
-  }
 }
 
 - (id<CAAction>)actionForLayer:(CALayer*)layer forKey:(NSString*)event {
