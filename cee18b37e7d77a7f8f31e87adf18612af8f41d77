@@ -16,6 +16,24 @@
       "revId": "cee18b37e7d77a7f8f31e87adf18612af8f41d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee013875_c8fa0b5e",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-page-selector/viewer-page-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-23T17:57:39Z",
+      "side": 1,
+      "message": "I can make the suggested change in a separate CL, where I can audit the rest of c/b/resources/pdf too. Just want to make the elements consist with each other in this CL.",
+      "parentUuid": "f6540ea1_4b18c8ae",
+      "revId": "cee18b37e7d77a7f8f31e87adf18612af8f41d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
