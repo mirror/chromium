@@ -22,6 +22,30 @@
       "revId": "bbb8f0efbabf3ad9266bf8cdc7d2e4bb33bc7447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb6724c_f038d080",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-23T22:42:59Z",
+      "side": 1,
+      "message": "Retry is needed as a response to this hack: crosreview.com/677467, but not because of crosreview.com/728352.\n\nAs a response to crosreview.com/677467, rkc and I discussed this and we decided to not modify any caller other than tether because other callers do not encounter this condition as much. The cost of not retrying in that low chance occasion is just \"dangling\" discovery session, so it is not catastrophic. So rather than retrying this in ARC++, we\u0027d better invest time in replacing that hack with a more proper solution to make a better bluetooth stack that doesn\u0027t require clients to retry on Stop discovery.",
+      "parentUuid": "acac85a1_4bd6c91c",
+      "range": {
+        "startLine": 2057,
+        "startChar": 25,
+        "endLine": 2057,
+        "endChar": 47
+      },
+      "revId": "bbb8f0efbabf3ad9266bf8cdc7d2e4bb33bc7447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
