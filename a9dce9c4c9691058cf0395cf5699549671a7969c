@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "2a94d6ed_6d0ec5dc",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-23T13:25:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ffb92c6_1d8f0e6d",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a341552d_8d5ff9bf",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
         "patchSetId": 22
@@ -178,6 +202,30 @@
       "writtenOn": "2017-10-19T15:49:12Z",
       "side": 1,
       "message": "why is |label_| a member?\n\nIt doesn\u0027t seem like there\u0027s anything here that actually requires a new class. You could do all this initialization in a factory fn.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 11
+      },
+      "revId": "a9dce9c4c9691058cf0395cf5699549671a7969c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4853166_6ed5614d",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-10-23T13:25:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cda2745c_11bb7dc4",
       "range": {
         "startLine": 82,
         "startChar": 4,
