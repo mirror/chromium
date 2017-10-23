@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a92648_7a44b245",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "super nit: constexpr",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798d3b70_14a42ab5",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "Comment explaining what\u0027s going on here.\n\nIt\u0027s also a little bit suprising that sigma is the return value and scale_factor is a parameter.\n\nWhat about something like:\n\nbool AdjectSigma(double max_non_scale_blur_sigma, double* sigma, int* scale_factor);\n\nThe return value could be if the sigma has been adjusted or not.",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf37d82_5ab68e74",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "nit: Should this be \u003e\u003d?",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a222b08_4817edcd",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "This is now copied and pasted in 5 clients, should we move it to client_helper.h?",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ffb8fe_c505413b",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "grid_width seems to be the width of the whole grid, not the width of a cell in the grid.",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8de6dc_c52a5ef2",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "I\u0027d make the type explicit here, since I have no idea if SkSurface::MakeRaster returns a * a object itself, a sk_sp or anything else.\nIt\u0027d be nice to have a hint with the type if it\u0027s going to be clean up or not.",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8a3a27_cd461133",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "Let\u0027s avoid double casting to bool.",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfdd207_0e7cd9d4",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "braces around the if else bodies, or\nSkCanvas* canvas \u003d blur_filter ? ...",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ba149b_cec6d701",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "As per discussion offline, this might be better described at content added by the compositor.",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb6b8d5_0a4b1429",
+        "filename": "components/exo/wayland/clients/blur.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "Is it possible to use a SkColor4f instead?",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f702d2_375b0d37",
+        "filename": "components/exo/wayland/clients/blur.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-23T21:23:15Z",
+      "side": 1,
+      "message": "Comment explaining the main purpose of this client, basically something similar to this CL description.",
+      "revId": "5ec9b10dd01cf53cffa7ca40267389e4e293a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
