@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aadd460c_10bb4d20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-23T18:26:23Z",
+      "side": 1,
+      "message": "nit: outdated commit msg :)",
+      "revId": "2df4dcaf19c58ee5ba426e48ca1a82a914298504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
