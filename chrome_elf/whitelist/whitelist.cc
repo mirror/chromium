@@ -19,6 +19,8 @@ bool g_whitelist_initialized = false;
 
 namespace whitelist {
 
+const wchar_t kRegWhitelistTopKeyName[] = L"\\WL";
+
 bool IsWhitelistInitialized() {
   return g_whitelist_initialized;
 }
