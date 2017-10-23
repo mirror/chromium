@@ -45,6 +45,21 @@ const char kDisableAppContainer[] = "disable-appcontainer";
 // Disables the Win32K process mitigation policy for child processes.
 const char kDisableWin32kLockDown[] = "disable-win32k-lockdown";
 
+// Allows debugging of sandboxed processes (see zygote_main_linux.cc).
+const char kAllowSandboxDebugging[] = "allow-sandbox-debugging";
+
+// Disable the seccomp filter sandbox (seccomp-bpf) (Linux only).
+const char kDisableSeccompFilterSandbox[] = "disable-seccomp-filter-sandbox";
+
+// Disable the setuid sandbox (Linux only).
+const char kDisableSetuidSandbox[] = "disable-setuid-sandbox";
+
+// Allows shmat() system call in the GPU sandbox.
+const char kGpuSandboxAllowSysVShm[] = "gpu-sandbox-allow-sysv-shm";
+
+// Makes GPU sandbox failures fatal.
+const char kGpuSandboxFailuresFatal[] = "gpu-sandbox-failures-fatal";
+
 // Flags spied upon from other layers.
 const char kGpuProcess[] = "gpu-process";
 const char kPpapiBrokerProcess[] = "ppapi-broker";
