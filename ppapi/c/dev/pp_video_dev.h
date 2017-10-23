@@ -3,7 +3,7 @@
  * found in the LICENSE file.
  */
 
-/* From dev/pp_video_dev.idl modified Tue Apr 30 14:58:38 2013. */
+/* From dev/pp_video_dev.idl modified Mon Oct 23 15:28:15 2017. */
 
 #ifndef PPAPI_C_DEV_PP_VIDEO_DEV_H_
 #define PPAPI_C_DEV_PP_VIDEO_DEV_H_
@@ -45,7 +45,8 @@ typedef enum {
   PP_VIDEODECODER_H264PROFILE_SCALABLEHIGH = 9,
   PP_VIDEODECODER_H264PROFILE_STEREOHIGH = 10,
   PP_VIDEODECODER_H264PROFILE_MULTIVIEWHIGH = 11,
-  PP_VIDEODECODER_VP8PROFILE_ANY = 12
+  PP_VIDEODECODER_VP8PROFILE_ANY = 12,
+  PP_VIDEODECODER_PROFILE_LAST = PP_VIDEODECODER_VP8PROFILE_ANY
 } PP_VideoDecoder_Profile;
 PP_COMPILE_ASSERT_SIZE_IN_BYTES(PP_VideoDecoder_Profile, 4);
 /**
@@ -142,7 +143,8 @@ typedef enum {
    * failures include GPU hardware failures, GPU driver failures, GPU library
    * failures, browser programming errors, and so on.
    */
-  PP_VIDEODECODERERROR_PLATFORM_FAILURE = 4
+  PP_VIDEODECODERERROR_PLATFORM_FAILURE = 4,
+  PP_VIDEODECODERERROR_LAST = PP_VIDEODECODERERROR_PLATFORM_FAILURE
 } PP_VideoDecodeError_Dev;
 PP_COMPILE_ASSERT_SIZE_IN_BYTES(PP_VideoDecodeError_Dev, 4);
 /**
