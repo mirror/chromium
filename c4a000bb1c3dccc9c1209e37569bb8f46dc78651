@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "548baf03_826aff91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-23T18:10:02Z",
+      "side": 1,
+      "message": "Do we have native loaded everytime this happens? If not, this will crash.",
+      "range": {
+        "startLine": 110,
+        "startChar": 33,
+        "endLine": 110,
+        "endChar": 39
+      },
+      "revId": "c4a000bb1c3dccc9c1209e37569bb8f46dc78651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
