@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "4715422b_f5be9bf9",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-23T20:27:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9df7ae9_a3a44351",
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5c3a76_46b0ac90",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 1
@@ -126,6 +144,30 @@
       "side": 1,
       "message": "Oops, yeah, will fix.",
       "parentUuid": "4f5c3a76_46b0ac90",
+      "range": {
+        "startLine": 333,
+        "startChar": 6,
+        "endLine": 333,
+        "endChar": 0
+      },
+      "revId": "25764f2bc9c6a2d8b985e026dcc49830f5b8ebe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90b313a_b3d5362e",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-23T20:27:36Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "6443897e_4499d935",
       "range": {
         "startLine": 333,
         "startChar": 6,
