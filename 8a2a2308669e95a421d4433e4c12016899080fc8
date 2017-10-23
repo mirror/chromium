@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b04edf8_0f076bba",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T01:56:41Z",
+      "side": 1,
+      "message": "Does this test just need a rebaseline?",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99cac44_b1ca2ba6",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T01:56:41Z",
+      "side": 1,
+      "message": "Does this test just need a rebaseline?",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d69172_c15accc1",
+        "filename": "third_party/WebKit/Source/core/paint/FramePainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T01:56:41Z",
+      "side": 1,
+      "message": "Optional: It\u0027s confusing that local_paint_flags becomes the global paint flags and root_layer_paint_flags becomes the local paint flags. WYDT of renaming \"local_paint_flags\" to \"updated_global_paint_flags\"?",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df0e3a8_5adf02cd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T01:56:41Z",
+      "side": 1,
+      "message": "A few lines below we will add these back if the scrollbar mode is kScrollbarAlwaysOn. Should that happen?",
+      "revId": "8a2a2308669e95a421d4433e4c12016899080fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
