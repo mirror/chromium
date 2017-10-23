@@ -17,8 +17,8 @@
 #include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_export.h"
 #include "device/geolocation/geolocation_provider.h"
-#include "device/geolocation/geoposition.h"
 #include "device/geolocation/location_provider.h"
+#include "device/geolocation/public/interfaces/geoposition.mojom.h"
 #include "net/url_request/url_request_context_getter.h"
 
 namespace net {
@@ -54,7 +54,7 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
       const LocationProviderUpdateCallback& callback) override;
   bool StartProvider(bool enable_high_accuracy) override;
   void StopProvider() override;
-  const Geoposition& GetPosition() override;
+  const mojom::Geoposition& GetPosition() override;
   void OnPermissionGranted() override;
 
  protected:
@@ -86,13 +86,13 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
 
   // Gets called when a provider has a new position.
   void OnLocationUpdate(const LocationProvider* provider,
-                        const Geoposition& new_position);
+                        const mojom::Geoposition& new_position);
 
   // Returns true if |new_position| is an improvement over |old_position|.
   // Set |from_same_provider| to true if both the positions came from the same
   // provider.
-  bool IsNewPositionBetter(const Geoposition& old_position,
-                           const Geoposition& new_position,
+  bool IsNewPositionBetter(const mojom::Geoposition& old_position,
+                           const mojom::Geoposition& new_position,
                            bool from_same_provider) const;
 
   const std::unique_ptr<GeolocationDelegate> delegate_;
@@ -113,7 +113,7 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
   const LocationProvider* position_provider_;
   bool is_permission_granted_;
   // The current best estimate of our position.
-  Geoposition position_;
+  mojom::Geoposition position_;
 
   // Tracks whether providers should be running.
   bool is_running_;

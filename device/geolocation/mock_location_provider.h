@@ -5,8 +5,8 @@
 #ifndef DEVICE_GEOLOCATION_MOCK_LOCATION_PROVIDER_H_
 #define DEVICE_GEOLOCATION_MOCK_LOCATION_PROVIDER_H_
 
-#include "device/geolocation/geoposition.h"
 #include "device/geolocation/location_provider.h"
+#include "device/geolocation/public/interfaces/geoposition.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace device {
@@ -20,7 +20,7 @@ class MockLocationProvider : public device::LocationProvider {
                void(const LocationProviderUpdateCallback& callback));
   MOCK_METHOD1(StartProvider, bool(bool high_accuracy));
   MOCK_METHOD0(StopProvider, void());
-  MOCK_METHOD0(GetPosition, const Geoposition&());
+  MOCK_METHOD0(GetPosition, const mojom::Geoposition&());
   MOCK_METHOD0(OnPermissionGranted, void());
 
  private:
