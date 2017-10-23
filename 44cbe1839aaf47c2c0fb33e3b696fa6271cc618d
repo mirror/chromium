@@ -227,6 +227,30 @@
     },
     {
       "key": {
+        "uuid": "d1422f23_95135f4b",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-23T17:54:59Z",
+      "side": 1,
+      "message": "H, so maybe the nesting level limit shouldn\u0027t really be called a canonical requirement. It seems the max nesting limit of 4 is a CTAP-specific requirement rather than a generalized \u0027canonical CBOR\u0027 requirement..\n\nFIDO 2.0: \"Because some authenticators are memory constrained, the depth of nested CBOR structures used by all message encodings is limited to at most four (4) levels of any combination of CBOR maps and/or CBOR arrays. Authenticators must support at least 4 levels of CBOR nesting. Clients, platforms, and servers must not use more than 4 levels of CBOR nesting.\"\n\nSo, it\u0027s not necessarily the case that any caller who wants canonical CBOR necessarily wants the same max depth restriction. This makes me think option c is more appropriate.",
+      "parentUuid": "73c12786_c2a4c0de",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "44cbe1839aaf47c2c0fb33e3b696fa6271cc618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07b04528_cf8ea360",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 4

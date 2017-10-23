@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a1a3e6b4_35e310b0",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-23T17:54:59Z",
+      "side": 1,
+      "message": "Yep, for the foreseeable future. I don\u0027t have any plans or need for indefinite length encoding. Jun, can you change this to say that it meets all the requirements?",
+      "parentUuid": "67f641fa_4cc7c13f",
+      "revId": "a92a401f26f209577eff99657a85a58af2f21f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8b6d8e2_cf5bb6c5",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
