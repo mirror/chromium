@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d268ca69_30d1e895",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-23T00:06:01Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned about the impact of a bug here -- collecting/sending for a ton of users would DDoS the backend and more importantly would share PII from people not opted-in.  Can you point me to the code that drops it before sending it?  I suppose since this is temporary code, it\u0027s not worth refactoring for more rigoruous tests...  So I\u0027ll say go for it.",
+      "parentUuid": "2e81128d_b7d391c9",
+      "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "669cc391_b0e23a3c",
         "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
         "patchSetId": 3
