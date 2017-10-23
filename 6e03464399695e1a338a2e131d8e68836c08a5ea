@@ -16,6 +16,24 @@
       "revId": "6e03464399695e1a338a2e131d8e68836c08a5ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e76019_81527542",
+        "filename": "android_webview/tools/system_webview_shell/apk/src/org/chromium/webview_shell/WebViewBrowserActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1226095
+      },
+      "writtenOn": "2017-10-23T15:51:03Z",
+      "side": 0,
+      "message": "Hi Tim, the loadUrlFromUrlBar will call setUrlFail again, if reserved, URL\u0027s color will be set twice in here.",
+      "parentUuid": "d843c970_9afb4429",
+      "revId": "6e03464399695e1a338a2e131d8e68836c08a5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
