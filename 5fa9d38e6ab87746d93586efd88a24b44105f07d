@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "cdfd3fed_a25c7867",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-10-23T00:58:05Z",
+      "side": 1,
+      "message": "Yeah that\u0027s a real concern, but I share the feeling that this is temporary and won\u0027t evolve beyond this so might not be worth sinking more effort into.\n\nThe code is here: https://cs.chromium.org/chromium/src/components/safe_browsing/browser/threat_details.cc?q\u003dthreat_details.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d749\n\nOne other thought I had was to push the \"discard\" step down a layer into ui_manager. ThreatDetails could pass an empty report string to ui_manager (based on the finch feature), and ui_manager already has a line to not send anything if the report is blank (but I don\u0027t like spreading the logic across two classes). Alternatively ui_manager could look at the feature and return early. But at a glance, ui_manager unit tests seem to be in a pretty rough state.",
+      "parentUuid": "d268ca69_30d1e895",
+      "revId": "5fa9d38e6ab87746d93586efd88a24b44105f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "669cc391_b0e23a3c",
         "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
         "patchSetId": 3
