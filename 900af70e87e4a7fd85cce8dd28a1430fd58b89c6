@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b75eef61_5e13ee2d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-23T04:44:09Z",
+      "side": 1,
+      "message": "This seems to be layout tree order, which is the same as flat tree order.\n\nShould we document it like this? And/or should we provide a general API that returns the list of mapping units containing Positions mapped to the offset?",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 40
+      },
+      "revId": "900af70e87e4a7fd85cce8dd28a1430fd58b89c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
