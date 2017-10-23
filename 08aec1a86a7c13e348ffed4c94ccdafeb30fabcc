@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df8a30a_221a70d1",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "It looks like CryptographicallyRandomNumber() internally uses \"/dev/urandom\". Is it acceptable to call it every frame? IIRC, it\u0027s not fast.",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a42f990_d8b67b60",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "private? (This is called only in PaintWorklet, not called in TestPaintWorklet)",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11cab53_c74c1af0",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "Ditto(private)",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fd0a6e_90740d2f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450c8a00_f1dda721",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "size_t",
+      "range": {
+        "startLine": 24,
+        "startChar": 25,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad551aa6_76f9db01",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "I think this doesn\u0027t work when we increase PaintWorklet::kNumberGlobalScopes. How about like this?\n\n  return (GetActiveGlobalScopeForTesting() + 1) % kNumGlobalScope;",
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a25748_a8773fb9",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "Who owns TestPaintWorklet? Is it ok to delete it immediately after CreateGlobalScope()?",
+      "range": {
+        "startLine": 45,
+        "startChar": 35,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b385bb9a_46f1ee46",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-23T04:32:59Z",
+      "side": 1,
+      "message": "Get*() sounds like this returns an existing instance. How about renaming this to CreateTestPaintWorklet(), or adding PaintWorkletTest::GetFrame() instead of GetTestPaintWorklet()?",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "08aec1a86a7c13e348ffed4c94ccdafeb30fabcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
