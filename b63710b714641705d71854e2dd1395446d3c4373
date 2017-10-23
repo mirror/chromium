@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5f8ae39_f9df7a68",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:27:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eac327dc_071139bd",
+      "range": {
+        "startLine": 162,
+        "startChar": 40,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66628d7b_4615b23d",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f6830a_1d788f72",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:27:20Z",
+      "side": 1,
+      "message": "I have tried switch before, R.id.* are not constants, it won\u0027t compile.",
+      "parentUuid": "66628d7b_4615b23d",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +321,24 @@
     },
     {
       "key": {
+        "uuid": "0e4f11b7_18522a8b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:27:20Z",
+      "side": 1,
+      "message": "Yeah, separating them is a better idea. I only realized the hierarchy in the middle of implementing and didn\u0027t write the code explicitly, I probably will forget it in the future myself :P\n\nI can see three layers here:\n1. logger(character indices, used by SelectionPopupController)\n2. character indices to word indices converter\n3. logger(word indices, reflection wrapper))\n\nOn the other hand, a logging session flow will be like this:\n1. a logSelectionStarted() called, it will start a new logging session and end the last logging session if necessary.\n2. one or more logSelectionModified() are called.\n3. one or more logSelectionAction() are called.\nSome of the actions are termination actions, logging session will be stopped in that case.\n\nI gradually combine selections from logSelectionModified() and logSelectionAction() to the original selection here, so I could use it for calculating word indices from character indices. The basic idea is if the current selection is not overlapping with the previous selection, it must be a new selection.\n\nI will think of a way to make this more obvious by combining the idea from Changwan\u0027s comment.",
+      "parentUuid": "1e81bd95_69c8a9f5",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e98a23ca_48641d22",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 10
@@ -370,6 +430,30 @@
     },
     {
       "key": {
+        "uuid": "1c276bdc_b9cd5791",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:27:20Z",
+      "side": 1,
+      "message": "Just to ignore white spaces.\nPunctuation is considered as a word.\nCovered few cases in the current unit tests, adding more tests.\nThis is copying what Android is doing.",
+      "parentUuid": "ba89a769_c742cfc8",
+      "range": {
+        "startLine": 266,
+        "startChar": 17,
+        "endLine": 266,
+        "endChar": 29
+      },
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "384d7f4f_783ecdaa",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
         "patchSetId": 10
@@ -384,6 +468,24 @@
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2205a0f9_628e7c4c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:27:20Z",
+      "side": 1,
+      "message": "This is in OMR1 but it\u0027s a @hide class.",
+      "parentUuid": "384d7f4f_783ecdaa",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -422,6 +524,24 @@
     },
     {
       "key": {
+        "uuid": "5d933f1f_3ddd2a1a",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionClient.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:27:20Z",
+      "side": 1,
+      "message": "clang-format was only confused by \"default\" keyword. It works fine with the method below.",
+      "parentUuid": "5923d89a_11393e8b",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8f16c74_65dfda8b",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionMetricsLogger.java",
         "patchSetId": 10
@@ -450,6 +570,24 @@
       "writtenOn": "2017-10-23T15:08:18Z",
       "side": 1,
       "message": "are these names/values copied from somewhere? If so, write so in a comment",
+      "revId": "b63710b714641705d71854e2dd1395446d3c4373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e97986_59a9c97f",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionMetricsLogger.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-23T19:27:20Z",
+      "side": 1,
+      "message": "Yes, they are copied from Android.",
+      "parentUuid": "a44a2eb8_4a0d08e5",
       "revId": "b63710b714641705d71854e2dd1395446d3c4373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
