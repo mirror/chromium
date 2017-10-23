@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13193522_322fe5c0",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "nit: these should both be `using` declarations - I think that the new trend.",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7b6b56_8ce8f8ff",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "perhaps Basic -\u003e HostedAppFrame ?",
+      "range": {
+        "startLine": 454,
+        "startChar": 59,
+        "endLine": 454,
+        "endChar": 64
+      },
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c083f3d9_dda607ba",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "I\u0027d consider doing this with a simulated event for more coverage. BrowserNonClientFrameViewAshTest.NonClientHitTest above has hit-tests for buttons in the window frame.",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58d2e4e_ecb3d681",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba80285_42bebbba",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "yeah... so normally menu delegates/models are destroyed by the |on_menu_closed_callback| being passed to the MenuRunner constructor. AppMenu owns the menu_runner, and it doesn\u0027t pass that.\n\nThere\u0027s also the OnMenuClosed() MenuDelegate method, which AppMenu doesn\u0027t use either.\n\nui/views/toolbar/app_menu_button.cc has\n\n\nvoid AppMenuButton::CloseMenu() {\n  if (menu_)\n    menu_-\u003eCloseMenu();\n  menu_.reset();\n}\n\nbut there doesn\u0027t seem to be much that actually invokes AppMenuButton::CloseMenu\n\nI guess this is fine.",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5da38a_9c6dcbf9",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "nit: document |use_light|. explicit not required.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df52e0a6_d8cc1f0a",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "if you want to keep this private, you could do something like\n\nAppMenu* HostedAppButtonContainer::GetAppMenuForTest();\n\nthis is OK.",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f98bc0_0c47ef07",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "nit: perhaps call this HostedAppMenuButton?  (there\u0027s already an ::AppMenuButton)",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6757b1a8_ef39c45e",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-23T06:17:44Z",
+      "side": 1,
+      "message": "hmmmm - it seems this is also only really needed for the test. I guess this is preferable to a static cast though.",
+      "revId": "59693a0318ff1ed7a00be1518d0f8ee787d943c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
