@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22eb65da_e1fc5998",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:29:00Z",
+      "side": 1,
+      "message": "This function should take |const Document\u0026| to make sure we use |AXPOsition|\nin expected document.\n\nSee Position::IsValidFor(const Document\u0026)",
+      "revId": "86e9e09e10693425cc5e636bb427a74a47fc3c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2219365d_38cb9769",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:29:00Z",
+      "side": 1,
+      "message": "For ease of debugging and getting more information from debug log,\nit is better to write:\n\nif (child_index_.has_value()) {\n  DCHECK(!offset_.has_value()) \u003c\u003c offset_;\n} else {\n  DCHECK(offset_.has_value());\n}",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 34
+      },
+      "revId": "86e9e09e10693425cc5e636bb427a74a47fc3c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176f678f_f6eba239",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:29:00Z",
+      "side": 1,
+      "message": "nit: s/xiaochengh/ax-dev/",
+      "revId": "86e9e09e10693425cc5e636bb427a74a47fc3c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6357e8b0_fcba7325",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:29:00Z",
+      "side": 1,
+      "message": "I think using two base::Optional\u003cint\u003e is overkill.\nHow about having |int offset_or_child_index_| and using |Offset()| and\n|ChildIndex()| in implementation of |AXPosition|?\n\nint ChildIndex() const {\n  DCHECK(!IsTextPosition()) \u003c\u003c *this \u003c\u003c \" should not be a text position.\";\n  return text_or_child_index_;\n}\n\nint Offset() const {\n  DCHECK(IsTextPosition()) \u003c\u003c *this \u003c\u003c \" should be a text position.\"\n  return text_or_child_index_;\n}",
+      "revId": "86e9e09e10693425cc5e636bb427a74a47fc3c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d2114c_73397e59",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-23T04:29:00Z",
+      "side": 1,
+      "message": "This class should be named |AXSelection|.\nWe use \"range\" as directional and having start and end.",
+      "revId": "86e9e09e10693425cc5e636bb427a74a47fc3c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
