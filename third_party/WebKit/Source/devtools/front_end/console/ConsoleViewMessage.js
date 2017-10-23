@@ -870,7 +870,7 @@ Console.ConsoleViewMessage = class {
    */
   matchesFilterRegex(regexObject) {
     regexObject.lastIndex = 0;
-    var text = this.contentElement().deepTextContent();
+    var text = this._searchableText();
     return regexObject.test(text);
   }
 
@@ -879,7 +879,7 @@ Console.ConsoleViewMessage = class {
    * @return {boolean}
    */
   matchesFilterText(filter) {
-    var text = this.contentElement().deepTextContent();
+    var text = this._searchableText();
     return text.toLowerCase().includes(filter.toLowerCase());
   }
 
@@ -1140,7 +1140,7 @@ Console.ConsoleViewMessage = class {
     if (!this._searchRegex)
       return;
 
-    var text = this.contentElement().deepTextContent();
+    var text = this._searchableText();
     var match;
     this._searchRegex.lastIndex = 0;
     var sourceRanges = [];
@@ -1151,6 +1151,18 @@ Console.ConsoleViewMessage = class {
       this._searchHighlightNodes =
           UI.highlightSearchResults(this.contentElement(), sourceRanges, this._searchHiglightNodeChanges);
     }
+  }
+
+  /**
+   * @return {string}
+   */
+  _searchableText() {
+    this._cachedText = this._cachedText || this.contentElement().deepTextContent();
+    return this._cachedText;
+  }
+
+  clearTextCache() {
+    delete this._cachedText;
   }
 
   /**

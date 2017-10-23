@@ -67,7 +67,10 @@ Console.ConsoleViewport = class {
     // Listen for any changes to descendants and trigger a refresh. This ensures
     // that items updated asynchronously will not break stick-to-bottom behavior
     // if they change the scroll height.
-    this._observer = new MutationObserver(this.refresh.bind(this));
+    this._observer = new MutationObserver(() => {
+      this._provider.onContentMutation();
+      this.refresh();
+    });
     this._observerConfig = {childList: true, subtree: true};
   }
 
@@ -596,7 +599,9 @@ Console.ConsoleViewportProvider.prototype = {
    */
   itemElement(index) {
     return null;
-  }
+  },
+
+  onContentMutation() {}
 };
 
 /**
