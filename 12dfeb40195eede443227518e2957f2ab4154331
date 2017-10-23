@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa59080_d5cb36c5",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-23T22:33:00Z",
+      "side": 0,
+      "message": "Moved to CreditCardSaveManager::AttemptToOfferCardUploadSave",
+      "range": {
+        "startLine": 1326,
+        "startChar": 4,
+        "endLine": 1401,
+        "endChar": 3
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbd1c22_cb8126c5",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-23T22:33:00Z",
+      "side": 0,
+      "message": "Looks like that DumpAutofillData related codes are completely deleted. I\u0027m not sure that do they do. Please make sure this is intended.",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 499,
+        "endChar": 6
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c104eeb7_8ca86514",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-23T22:33:00Z",
+      "side": 0,
+      "message": "Moved to form_data_imported.cc\nhttps://diff.googleplex.com/#lhs\u003dibCQz4YK\u0026rhs\u003dmB-H9nBh",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 1
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9587ed_0236a222",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-23T22:33:00Z",
+      "side": 0,
+      "message": "Moved to form_data_importer.cc: https://diff.googleplex.com/#lhs\u003du0FSlTOY\u0026rhs\u003dvhlRw1g0",
+      "range": {
+        "startLine": 1646,
+        "startChar": 0,
+        "endLine": 1882,
+        "endChar": 1
+      },
+      "revId": "12dfeb40195eede443227518e2957f2ab4154331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -187,6 +187,52 @@
     },
     {
       "key": {
+        "uuid": "12ea7ffd_97e33130",
+        "filename": "components/autofill/core/browser/form_data_importer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-23T22:33:00Z",
+      "side": 1,
+      "message": "Can you mention where are these data import to?",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa84edb_6c68d22e",
+        "filename": "components/autofill/core/browser/form_data_importer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-23T22:33:00Z",
+      "side": 1,
+      "message": "Looks like this method is only used in form_data_importer, so it can be protected?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "737d3131_19f85b7b",
         "filename": "components/autofill/core/browser/form_data_importer_unittest.cc",
         "patchSetId": 2
@@ -269,6 +315,29 @@
       "writtenOn": "2017-10-23T19:15:28Z",
       "side": 1,
       "message": "typo",
+      "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d829c0_fb5ae797",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-23T22:33:00Z",
+      "side": 1,
+      "message": "OnInsufficientFormDataForImport or MarkObserversInsufficientFormDataForImport? I don\u0027t know what does this function do before looking at the implementation.\n\nAlso since this is just for testing, maybe leave a TODO here about removing this function?",
+      "range": {
+        "startLine": 523,
+        "startChar": 26,
+        "endLine": 523,
+        "endChar": 55
+      },
       "revId": "eec9545fc3e5a027bf15ae73e31878d02941486c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
