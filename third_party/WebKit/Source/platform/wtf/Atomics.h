@@ -50,16 +50,28 @@
 
 namespace WTF {
 
+// Atomic{Add,Subtract,TestAndSetToOne,SetOneToZero} return the result of the
+// computation.
+//
+// The Subtract and unsigned Add variants assume their callers intend exactly
+// that, so they CHECK their |increment| and |decrement| arguments for sanity.
+//
+// The signed Add variants assume a caller who adds a negative |increment|
+// intends to do so, so they do *not* CHECK their |increment| argument.
+
 #if defined(COMPILER_MSVC)
 
-// atomicAdd returns the result of the addition.
 ALWAYS_INLINE int AtomicAdd(int volatile* addend, int increment) {
+  // InterlockedExchangeAdd takes long arguments.
+  static_assert(sizeof(int) == sizeof(long), "int must be long");
   return InterlockedExchangeAdd(reinterpret_cast<long volatile*>(addend),
                                 static_cast<long>(increment)) +
          increment;
 }
 ALWAYS_INLINE unsigned AtomicAdd(unsigned volatile* addend,
                                  unsigned increment) {
+  static_assert(sizeof(unsigned) == sizeof(long), "unsigned must be long");
+  CHECK_LE(increment, std::numeric_limits<long>::max());
   return InterlockedExchangeAdd(reinterpret_cast<long volatile*>(addend),
                                 static_cast<long>(increment)) +
          increment;
@@ -67,20 +79,29 @@ ALWAYS_INLINE unsigned AtomicAdd(unsigned volatile* addend,
 #if defined(_WIN64)
 ALWAYS_INLINE unsigned long long AtomicAdd(unsigned long long volatile* addend,
                                            unsigned long long increment) {
+  // InterlockedExchangeAdd64 takes long long arguments.
+  static_assert(sizeof(unsigned long long) == sizeof(long long),
+                "unsigned long long must be long long");
+  static_assert(sizeof(long long) == sizeof(int64_t),
+                "long long must be int64_t");
+  CHECK_LE(increment, std::numeric_limits<long long>::max());
   return InterlockedExchangeAdd64(reinterpret_cast<long long volatile*>(addend),
                                   static_cast<long long>(increment)) +
          increment;
 }
-#endif
+#endif  // defined(_WIN64)
 
-// atomicSubtract returns the result of the subtraction.
 ALWAYS_INLINE int AtomicSubtract(int volatile* addend, int decrement) {
+  static_assert(sizeof(int) == sizeof(long), "int must be long");
+  CHECK_GE(decrement, 0);
   return InterlockedExchangeAdd(reinterpret_cast<long volatile*>(addend),
                                 static_cast<long>(-decrement)) -
          decrement;
 }
 ALWAYS_INLINE unsigned AtomicSubtract(unsigned volatile* addend,
                                       unsigned decrement) {
+  static_assert(sizeof(unsigned) == sizeof(long), "unsigned must be long");
+  CHECK_LE(decrement, std::numeric_limits<long>::max());
   return InterlockedExchangeAdd(reinterpret_cast<long volatile*>(addend),
                                 -static_cast<long>(decrement)) -
          decrement;
@@ -89,40 +110,57 @@ ALWAYS_INLINE unsigned AtomicSubtract(unsigned volatile* addend,
 ALWAYS_INLINE unsigned long long AtomicSubtract(
     unsigned long long volatile* addend,
     unsigned long long decrement) {
+  static_assert(sizeof(long long) == sizeof(long long),
+                "long long must be long long");
+  static_assert(sizeof(int64_t) == sizeof(long long),
+                "int64_t must be long long");
+  CHECK_LE(decrement, std::numeric_limits<long long>::max());
   return InterlockedExchangeAdd64(reinterpret_cast<long long volatile*>(addend),
                                   -static_cast<long long>(decrement)) -
          decrement;
 }
-#endif
+#endif  // defined(_WIN64)
 
 ALWAYS_INLINE int AtomicIncrement(int volatile* addend) {
+  static_assert(sizeof(int) == sizeof(long), "int must be long");
   return InterlockedIncrement(reinterpret_cast<long volatile*>(addend));
 }
 ALWAYS_INLINE int AtomicDecrement(int volatile* addend) {
+  static_assert(sizeof(int) == sizeof(long), "int must be long");
   return InterlockedDecrement(reinterpret_cast<long volatile*>(addend));
 }
 
 ALWAYS_INLINE int64_t AtomicIncrement(int64_t volatile* addend) {
+  static_assert(sizeof(long long) == sizeof(long long),
+                "long long must be long long");
+  static_assert(sizeof(int64_t) == sizeof(long long),
+                "int64_t must be long long");
   return InterlockedIncrement64(reinterpret_cast<long long volatile*>(addend));
 }
+
 ALWAYS_INLINE int64_t AtomicDecrement(int64_t volatile* addend) {
+  static_assert(sizeof(long long) == sizeof(long long),
+                "long long must be long long");
+  static_assert(sizeof(int64_t) == sizeof(long long),
+                "int64_t must be long long");
   return InterlockedDecrement64(reinterpret_cast<long long volatile*>(addend));
 }
 
 ALWAYS_INLINE int AtomicTestAndSetToOne(int volatile* ptr) {
+  static_assert(sizeof(int) == sizeof(long), "int must be long");
   int ret = InterlockedExchange(reinterpret_cast<long volatile*>(ptr), 1);
   DCHECK(!ret || ret == 1);
   return ret;
 }
 
 ALWAYS_INLINE void AtomicSetOneToZero(int volatile* ptr) {
+  static_assert(sizeof(int) == sizeof(long), "int must be long");
   DCHECK_EQ(*ptr, 1);
   InterlockedExchange(reinterpret_cast<long volatile*>(ptr), 0);
 }
 
-#else
+#else   // defined(COMPILER_MSVC)
 
-// atomicAdd returns the result of the addition.
 ALWAYS_INLINE int AtomicAdd(int volatile* addend, int increment) {
   return __sync_add_and_fetch(addend, increment);
 }
@@ -171,7 +209,7 @@ ALWAYS_INLINE void AtomicSetOneToZero(int volatile* ptr) {
   DCHECK_EQ(*ptr, 1);
   __sync_lock_release(ptr);
 }
-#endif
+#endif  // defined(COMPILER_MSVC)
 
 #if defined(THREAD_SANITIZER)
 // The definitions below assume an LP64 data model. This is fine because
