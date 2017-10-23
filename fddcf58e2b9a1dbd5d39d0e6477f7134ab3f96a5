@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0020099_d4a27283",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-23T19:46:21Z",
+      "side": 1,
+      "message": "If I don\u0027t prevent the card from showing up on the Settings page, it will not get rendered on the new page.",
+      "parentUuid": "dab9d3c2_99e50d37",
+      "revId": "fddcf58e2b9a1dbd5d39d0e6477f7134ab3f96a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f760f14d_e346f11e",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-23T18:24:07Z",
       "side": 1,
       "message": "This is fine now since the flag shouldn\u0027t change while Chrome is open.\nIf the logic changes and the value of userInitiatedCleanupsEnabled can change between refreshes (for example as a result of the ChromeCleanerControlelr state changes), we will have to remember to update UpdateCleanupDataSource.",
+      "range": {
+        "startLine": 203,
+        "startChar": 75,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "fddcf58e2b9a1dbd5d39d0e6477f7134ab3f96a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "432c2503_5bc272f8",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-23T19:46:21Z",
+      "side": 1,
+      "message": "Added a comment just in case.",
+      "parentUuid": "f760f14d_e346f11e",
       "range": {
         "startLine": 203,
         "startChar": 75,
