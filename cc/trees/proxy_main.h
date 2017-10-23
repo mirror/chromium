@@ -88,6 +88,8 @@ class CC_EXPORT ProxyMain : public Proxy {
                                   BrowserControlsState current,
                                   bool animate) override;
   void RequestBeginMainFrameNotExpected(bool new_state) override;
+  void SetUkmRecorderAndSource(std::unique_ptr<ukm::UkmRecorder> recorder,
+                               ukm::SourceId source_id) override;
 
   // Returns |true| if the request was actually sent, |false| if one was
   // already outstanding.

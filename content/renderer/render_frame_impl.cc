@@ -3745,6 +3745,11 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   if (is_main_frame_ && !navigation_state->WasWithinSameDocument())
     GetRenderWidget()->IncrementContentSourceId();
 
+  // Update the URL used to key Ukm metrics in the compositor if the navigation
+  // is not in the same document, which represents a new source URL.
+  if (!navigation_state->WasWithinSameDocument())
+    GetRenderWidget()->UpdateURLForCompositorUkm();
+
   // When we perform a new navigation, we need to update the last committed
   // session history entry with state for the page we are leaving. Do this
   // before updating the current history item.

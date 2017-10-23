@@ -28,6 +28,7 @@
 #include "components/viz/common/frame_sinks/delay_based_time_source.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace cc {
 
@@ -704,6 +705,13 @@ ProxyImpl::BlockedMainCommitOnly& ProxyImpl::blocked_main_commit() {
 
 base::SingleThreadTaskRunner* ProxyImpl::MainThreadTaskRunner() {
   return task_runner_provider_->MainThreadTaskRunner();
+}
+
+void ProxyImpl::SetUkmRecorderAndSource(
+    std::unique_ptr<ukm::UkmRecorder> recorder,
+    ukm::SourceId source_id) {
+  DCHECK(IsImplThread());
+  host_impl_->ukm_manager()->UpdateRecorder(std::move(recorder), source_id);
 }
 
 }  // namespace cc
