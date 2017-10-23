@@ -264,20 +264,12 @@ void ChildFrameCompositingHelper::ChildFrameGone() {
 void ChildFrameCompositingHelper::SetPrimarySurfaceInfo(
     const viz::SurfaceInfo& surface_info) {
   last_primary_surface_id_ = surface_info.id();
-  float scale_factor = surface_info.device_scale_factor();
-  // TODO(oshima): This is a stopgap fix so that the compositor does not
-  // scaledown the content when 2x frame data is added to 1x parent frame data.
-  // Fix this in cc/.
-  if (IsUseZoomForDSFEnabled())
-    scale_factor = 1.0f;
 
   surface_layer_ = cc::SurfaceLayer::Create(surface_reference_factory_);
   surface_layer_->SetMasksToBounds(true);
   surface_layer_->SetDefaultBackgroundColor(SK_ColorTRANSPARENT);
 
-  viz::SurfaceInfo modified_surface_info(surface_info.id(), scale_factor,
-                                         surface_info.size_in_pixels());
-  surface_layer_->SetPrimarySurfaceInfo(modified_surface_info);
+  surface_layer_->SetPrimarySurfaceInfo(surface_info);
   surface_layer_->SetFallbackSurfaceId(fallback_surface_id_);
 
   std::unique_ptr<cc_blink::WebLayerImpl> layer(
