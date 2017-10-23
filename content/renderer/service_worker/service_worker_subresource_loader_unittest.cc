@@ -217,6 +217,10 @@ class FakeServiceWorkerContainerHost
 
   ~FakeServiceWorkerContainerHost() override = default;
 
+  void set_fake_controller(FakeControllerServiceWorker* new_fake_controller) {
+    fake_controller_ = new_fake_controller;
+  }
+
   int get_controller_service_worker_count() const {
     return get_controller_service_worker_count_;
   }
@@ -242,6 +246,8 @@ class FakeServiceWorkerContainerHost
   void GetControllerServiceWorker(
       mojom::ControllerServiceWorkerRequest request) override {
     get_controller_service_worker_count_++;
+    if (!fake_controller_)
+      return;
     fake_controller_->Clone(std::move(request));
   }
 
@@ -373,6 +379,73 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, DropController) {
     EXPECT_EQ(3, fake_controller_.fetch_event_count());
     EXPECT_EQ(2, fake_container_host_.get_controller_service_worker_count());
   }
+}
+
+TEST_F(ServiceWorkerSubresourceLoaderTest, DropController_RestartFetchEvent) {
+  const GURL kScope("https://www.example.com/");
+  std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
+      CreateSubresourceLoaderFactory(kScope.GetOrigin());
+
+  {
+    ResourceRequest request =
+        CreateRequest(GURL("https://www.example.com/foo.png"));
+    URLLoaderAndClient loader_endpoint = StartRequest(factory.get(), request);
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_EQ(request.url, fake_controller_.fetch_event_request().url);
+    EXPECT_EQ(request.method, fake_controller_.fetch_event_request().method);
+    EXPECT_EQ(1, fake_controller_.fetch_event_count());
+    EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+  }
+
+  {
+    ResourceRequest request =
+        CreateRequest(GURL("https://www.example.com/foo2.png"));
+    URLLoaderAndClient loader_endpoint = StartRequest(factory.get(), request);
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_EQ(request.url, fake_controller_.fetch_event_request().url);
+    EXPECT_EQ(request.method, fake_controller_.fetch_event_request().method);
+    EXPECT_EQ(2, fake_controller_.fetch_event_count());
+    EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
+  }
+
+  ResourceRequest request =
+      CreateRequest(GURL("https://www.example.com/foo3.png"));
+  URLLoaderAndClient loader_endpoint = StartRequest(factory.get(), request);
+
+  // Drop the connection to the ControllerServiceWorker.
+  fake_controller_.CloseAllBindings();
+  base::RunLoop().RunUntilIdle();
+
+  // If connection is closed during fetch event, it's restarted and successfully
+  // finishes.
+  EXPECT_EQ(request.url, fake_controller_.fetch_event_request().url);
+  EXPECT_EQ(request.method, fake_controller_.fetch_event_request().method);
+  EXPECT_EQ(3, fake_controller_.fetch_event_count());
+  EXPECT_EQ(2, fake_container_host_.get_controller_service_worker_count());
+}
+
+TEST_F(ServiceWorkerSubresourceLoaderTest, DropController_TooManyRestart) {
+  // Simulate the container host fails to start a service worker.
+  fake_container_host_.set_fake_controller(nullptr);
+
+  const GURL kScope("https://www.example.com/");
+  std::unique_ptr<ServiceWorkerSubresourceLoaderFactory> factory =
+      CreateSubresourceLoaderFactory(kScope.GetOrigin());
+  ResourceRequest request =
+      CreateRequest(GURL("https://www.example.com/foo.png"));
+  URLLoaderAndClient loader_endpoint = StartRequest(factory.get(), request);
+
+  // Try to dispatch fetch event to the bad worker.
+  base::RunLoop().RunUntilIdle();
+
+  // The request should be failed instead of infinite loop to restart the
+  // inflight fetch event.
+  EXPECT_EQ(2, fake_container_host_.get_controller_service_worker_count());
+  EXPECT_TRUE(loader_endpoint.client->has_received_completion());
+  EXPECT_EQ(net::ERR_FAILED,
+            loader_endpoint.client->completion_status().error_code);
 }
 
 TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
