@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d07bb924_2ee3b9df",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7205,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-23T22:42:45Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/734169",
+      "parentUuid": "d246bc9d_65504cb3",
+      "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d44c2ef4_b4860689",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-23T22:35:35Z",
       "side": 1,
       "message": "Hmmm, maybe the serialization of these save/restore ops can be avoided but the reason for maintaining a canvas on the client side was to figure out the scale at which images were required. And skipping decoding images for ops which will be clipped out.",
+      "parentUuid": "d44c2ef4_b4860689",
+      "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54de0d7b_f918e27c",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7241,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-23T22:42:45Z",
+      "side": 1,
+      "message": "Re: canvas.  Agreed that having a canvas client-side is sad, but it\u0027s a requirement for the way image decoding works at the moment.  The image decoding system works currently by looking at the current state of the raster canvas to know what size image to request from the image decode cache.\n\nI\u0027ve talked with vmpstr/khushalsagar some about maybe making predecode figuring out what size is needed and then somehow noting that information to be reused at serialization/raster rather than recalculating the scale.  I think that is a larger refactoring than is needed at the moment, and so for now there\u0027s a canvas here.  It looks like it\u0027s not doing much here but counting saves, but it will also be used for images in the future.\n\n\nRe: DrawRecordOp.  This code right now doesn\u0027t serialize a DrawRecordOp explicitly, but pulls out everything inside of it and serializes those ops directly.  I don\u0027t think there\u0027s any blocking reason why I avoided that, but it seemed slightly simpler.\n\nWhat is your particular concern here?  Serialization size?  Code complexity?  It doesn\u0027t seem substantially different to me to have a DrawRecordOp + size of internal record than it does to have a SaveOp+RestoreOp in terms of serialization size.",
       "parentUuid": "d44c2ef4_b4860689",
       "revId": "858a15a5ae0ecbcbffbaa3829b8e6e7c74adbef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
