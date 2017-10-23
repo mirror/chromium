@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c7eb7d7_b27ea121",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-23T04:15:49Z",
+      "side": 1,
+      "message": "Maybe clearer to explicitly mention that we already requested Android permission (if the user allowed), e.g.\n\n// If the user was already prompted for mic/camera, we would already have requested Android permissions if required.",
+      "revId": "82ce59ddf205b7297ae72a2bb96e101b11010f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
