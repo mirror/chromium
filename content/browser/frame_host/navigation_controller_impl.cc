@@ -167,7 +167,7 @@ bool ShouldTreatNavigationAsReload(const NavigationEntry* entry) {
 // as this is a very hacky way of accomplishing this. For now, a handful of
 // error codes are considered, which are more or less known to be cases of
 // blocked navigations.
-bool IsBlockedNavigation(net::Error error_code) {
+/*bool IsBlockedNavigation(net::Error error_code) {
   switch (error_code) {
     case net::ERR_BLOCKED_BY_CLIENT:
     case net::ERR_BLOCKED_BY_RESPONSE:
@@ -177,7 +177,7 @@ bool IsBlockedNavigation(net::Error error_code) {
     default:
       return false;
   }
-}
+}*/
 
 }  // namespace
 
@@ -957,7 +957,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
   // (about:blank) as the one to load if the entry is revisited.
   // TODO(nasko): Consider supporting similar behavior for subframe
   // navigations, including AUTO_SUBFRAME.
-  if (!rfh->GetParent() &&
+  /*if (!rfh->GetParent() &&
       IsBlockedNavigation(navigation_handle->GetNetErrorCode())) {
     DCHECK(params.url_is_unreachable);
     active_entry->SetURL(GURL(url::kAboutBlankURL));
@@ -966,7 +966,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
       frame_entry->SetPageState(
           PageState::CreateFromURL(active_entry->GetURL()));
     }
-  }
+  }*/
 
   // Use histogram to track memory impact of redirect chain because it's now
   // not cleared for committed entries.
