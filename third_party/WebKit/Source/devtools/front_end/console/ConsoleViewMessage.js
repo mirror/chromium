@@ -986,9 +986,6 @@ Console.ConsoleViewMessage = class {
     if (this._messageLevelIcon)
       contentElement.appendChild(this._messageLevelIcon);
     this._contentElement = contentElement;
-    if (this._message.type === ConsoleModel.ConsoleMessage.MessageType.StartGroup ||
-        this._message.type === ConsoleModel.ConsoleMessage.MessageType.StartGroupCollapsed)
-      contentElement.classList.add('console-group-title');
 
     var formattedMessage;
     var shouldIncludeTrace = !!this._message.stackTrace &&
@@ -1027,7 +1024,8 @@ Console.ConsoleViewMessage = class {
 
     this._element.className = 'console-message-wrapper';
     this._element.removeChildren();
-
+    if (this._message.isGroupStartMessage())
+      this._element.classList.add('console-group-title');
     if (this._inSimilarGroup) {
       this._similarGroupMarker = this._element.createChild('div', 'nesting-level-marker');
       this._similarGroupMarker.classList.toggle('group-closed', this._lastInSimilarGroup);
@@ -1386,7 +1384,7 @@ Console.ConsoleViewMessage = class {
       else if (token.type === 'event')
         text = Common.UIString('<some> event');
       else if (token.type === 'milestone')
-        text = Common.UIString('M<XX>');
+        text = Common.UIString(' M<XX>');
       else if (token.type === 'autofill')
         text = Common.UIString('<attribute>');
       return acc + text;
@@ -1437,10 +1435,22 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
     if (!this._element) {
       super.toMessageElement();
       this._expandGroupIcon = UI.Icon.create('', 'expand-group-icon');
-      this._element.insertBefore(this._expandGroupIcon, this._repeatCountElement || this._contentElement);
+      if (this._repeatCountElement)
+        this._repeatCountElement.insertBefore(this._expandGroupIcon, this._repeatCountElement.firstChild);
+      else
+        this._element.insertBefore(this._expandGroupIcon, this._contentElement);
       this.setCollapsed(this._collapsed);
     }
     return this._element;
+  }
+
+  /**
+   * @override
+   */
+  _showRepeatCountElement() {
+    super._showRepeatCountElement();
+    if (this._repeatCountElement && this._expandGroupIcon)
+      this._repeatCountElement.insertBefore(this._expandGroupIcon, this._repeatCountElement.firstChild);
   }
 };
 
