@@ -406,7 +406,8 @@ Resource* ResourceFetcher::ResourceForStaticData(
   // for network loads.
   if (!archive_ && !substitute_data.IsValid() &&
       (factory.GetType() == Resource::kMainResource ||
-       factory.GetType() == Resource::kRaw))
+       factory.GetType() == Resource::kRaw ||
+       factory.GetType() == Resource::kCSSStyleSheet))
     return nullptr;
 
   const String cache_identifier = GetCacheIdentifier();
