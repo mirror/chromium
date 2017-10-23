@@ -2258,7 +2258,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
 # These isolated tests don't use telemetry. They need to be placed in the
 # isolated_scripts section of the generated json.
 NON_TELEMETRY_ISOLATED_SCRIPT_TESTS = {
-  # We run angle_perftests on the ANGLE CQ to ensure the tests don't crash.
+  # We run perf tests on the CQ to ensure the tests don't crash.
   'angle_perftests': {
     'tester_configs': [
       {
@@ -2292,6 +2292,62 @@ NON_TELEMETRY_ISOLATED_SCRIPT_TESTS = {
     'args': [
       # Tell the tests to exit after one frame for faster iteration.
       '--one-frame-only',
+    ],
+    'compile_target': 'command_buffer_perftests',
+  },
+
+  'validating_command_buffer_perftests': {
+    'tester_configs': [
+      {
+        'predicate': Predicates.FYI_AND_OPTIONAL,
+        # Run on the Win/Linux Release NVIDIA bots.
+        'build_configs': ['Release'],
+        'swarming_dimension_sets': [
+          {
+            'gpu': NVIDIA_GEFORCE_610_ALL_DRIVERS,
+            'os': 'Windows-2008ServerR2-SP1'
+          },
+          {
+            'gpu': '10de:104a',
+            'os': 'Ubuntu'
+          },
+        ],
+      },
+    ],
+    'disabled_tester_configs': [
+      {
+        'names': [
+          'Linux Ozone (Intel)',
+        ],
+      },
+    ],
+    'compile_target': 'command_buffer_perftests',
+  },
+
+  'passthrough_command_buffer_perftests': {
+    'tester_configs': [
+      {
+        'predicate': Predicates.FYI_AND_OPTIONAL,
+        # Run on the Win/Linux Release NVIDIA bots.
+        'build_configs': ['Release'],
+        'swarming_dimension_sets': [
+          {
+            'gpu': NVIDIA_GEFORCE_610_ALL_DRIVERS,
+            'os': 'Windows-2008ServerR2-SP1'
+          },
+          {
+            'gpu': '10de:104a',
+            'os': 'Ubuntu'
+          },
+        ],
+      },
+    ],
+    'disabled_tester_configs': [
+      {
+        'names': [
+          'Linux Ozone (Intel)',
+        ],
+      },
     ],
   },
 }
@@ -2574,9 +2630,12 @@ def generate_telemetry_tests(tester_name, tester_config,
 
 def generate_non_telemetry_isolated_test(tester_name, tester_config,
                                          test, test_config):
+  override_compile_targets = None
+  if 'compile_target' in test_config:
+    override_compile_targets = [test_config['compile_target']]
   return generate_isolated_test(tester_name, tester_config, test,
-                                test_config,
-                                None, test, None, [])
+                                test_config, None, test,
+                                override_compile_targets, [])
 
 def generate_non_telemetry_isolated_tests(tester_name, tester_config,
                                           test_dictionary):

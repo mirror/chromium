@@ -981,6 +981,9 @@
         ],
         "isolate_name": "angle_perftests",
         "name": "angle_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -3122,6 +3125,46 @@
         ],
         "isolate_name": "angle_perftests",
         "name": "angle_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "passthrough_command_buffer_perftests",
+        "name": "passthrough_command_buffer_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "validating_command_buffer_perftests",
+        "name": "validating_command_buffer_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -4678,6 +4721,9 @@
         ],
         "isolate_name": "angle_perftests",
         "name": "angle_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -4851,6 +4897,23 @@
       },
       {
         "args": [
+          "-v"
+        ],
+        "isolate_name": "passthrough_command_buffer_perftests",
+        "name": "passthrough_command_buffer_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
           "pixel",
           "--show-stdout",
           "--browser=release",
@@ -4926,6 +4989,26 @@
         "name": "trace_test",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "validating_command_buffer_perftests",
+        "name": "validating_command_buffer_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -10782,6 +10865,9 @@
         ],
         "isolate_name": "angle_perftests",
         "name": "angle_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -10810,6 +10896,43 @@
         "name": "info_collection_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "passthrough_command_buffer_perftests",
+        "name": "passthrough_command_buffer_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a",
+              "os": "Ubuntu",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "validating_command_buffer_perftests",
+        "name": "validating_command_buffer_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -11487,6 +11610,9 @@
         ],
         "isolate_name": "angle_perftests",
         "name": "angle_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -11515,6 +11641,43 @@
         "name": "info_collection_tests",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a-23.21.13.8792",
+              "os": "Windows-2008ServerR2-SP1",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "passthrough_command_buffer_perftests",
+        "name": "passthrough_command_buffer_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a-23.21.13.8792",
+              "os": "Windows-2008ServerR2-SP1",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "validating_command_buffer_perftests",
+        "name": "validating_command_buffer_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -15815,6 +15978,9 @@
         ],
         "isolate_name": "angle_perftests",
         "name": "angle_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -15988,6 +16154,23 @@
       },
       {
         "args": [
+          "-v"
+        ],
+        "isolate_name": "passthrough_command_buffer_perftests",
+        "name": "passthrough_command_buffer_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a-23.21.13.8792",
+              "os": "Windows-2008ServerR2-SP1",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
           "pixel",
           "--show-stdout",
           "--browser=release",
@@ -16063,6 +16246,26 @@
         "name": "trace_test",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a-23.21.13.8792",
+              "os": "Windows-2008ServerR2-SP1",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "validating_command_buffer_perftests",
+        "name": "validating_command_buffer_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
@@ -17827,6 +18030,9 @@
         ],
         "isolate_name": "angle_perftests",
         "name": "angle_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -18000,6 +18206,23 @@
       },
       {
         "args": [
+          "-v"
+        ],
+        "isolate_name": "passthrough_command_buffer_perftests",
+        "name": "passthrough_command_buffer_perftests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a-23.21.13.8792",
+              "os": "Windows-2008ServerR2-SP1",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
           "pixel",
           "--show-stdout",
           "--browser=release",
@@ -18075,6 +18298,26 @@
         "name": "trace_test",
         "override_compile_targets": [
           "telemetry_gpu_integration_test"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "gpu": "10de:104a-23.21.13.8792",
+              "os": "Windows-2008ServerR2-SP1",
+              "pool": "Chrome-GPU"
+            }
+          ]
+        }
+      },
+      {
+        "args": [
+          "-v"
+        ],
+        "isolate_name": "validating_command_buffer_perftests",
+        "name": "validating_command_buffer_perftests",
+        "override_compile_targets": [
+          "command_buffer_perftests"
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
