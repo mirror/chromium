@@ -86,7 +86,7 @@ intptr_t GpuSIGSYS_Handler(const struct arch_seccomp_data& args,
 
 }  // namespace
 
-GpuProcessPolicy::GpuProcessPolicy() : broker_process_(NULL) {}
+GpuProcessPolicy::GpuProcessPolicy() : broker_process_(nullptr) {}
 
 GpuProcessPolicy::~GpuProcessPolicy() {}
 

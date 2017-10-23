@@ -249,7 +249,7 @@ void IndexedDBFactoryImpl::ContextDestroyed() {
   }
   backing_store_map_.clear();
   backing_stores_with_active_blobs_.clear();
-  context_ = NULL;
+  context_ = nullptr;
 }
 
 void IndexedDBFactoryImpl::ReportOutstandingBlobs(const Origin& origin,
@@ -304,13 +304,13 @@ void IndexedDBFactoryImpl::GetDatabaseNames(
                                  "Internal error opening backing store for "
                                  "indexedDB.webkitGetDatabaseNames.");
     callbacks->OnError(error);
-    backing_store = NULL;
+    backing_store = nullptr;
     if (s.IsCorruption())
       HandleBackingStoreCorruption(origin, error);
     return;
   }
   callbacks->OnSuccess(names);
-  backing_store = NULL;
+  backing_store = nullptr;
   ReleaseBackingStore(origin, false /* immediate */);
 }
 
@@ -360,7 +360,7 @@ void IndexedDBFactoryImpl::DeleteDatabase(
                                  "Internal error opening backing store for "
                                  "indexedDB.deleteDatabase.");
     callbacks->OnError(error);
-    backing_store = NULL;
+    backing_store = nullptr;
     if (s.IsCorruption())
       HandleBackingStoreCorruption(origin, error);
     return;
@@ -368,7 +368,7 @@ void IndexedDBFactoryImpl::DeleteDatabase(
   if (!base::ContainsValue(names, name)) {
     const int64_t version = 0;
     callbacks->OnSuccess(version);
-    backing_store = NULL;
+    backing_store = nullptr;
     ReleaseBackingStore(origin, false /* immediate */);
     return;
   }
@@ -384,7 +384,7 @@ void IndexedDBFactoryImpl::DeleteDatabase(
                      "indexedDB.deleteDatabase."));
     callbacks->OnError(error);
     if (s.IsCorruption()) {
-      backing_store = NULL;
+      backing_store = nullptr;
       HandleBackingStoreCorruption(origin, error);
     }
     return;
@@ -394,8 +394,8 @@ void IndexedDBFactoryImpl::DeleteDatabase(
   origin_dbs_.insert(std::make_pair(origin, database.get()));
   database->DeleteDatabase(callbacks, force_close);
   RemoveDatabaseFromMaps(unique_identifier);
-  database = NULL;
-  backing_store = NULL;
+  database = nullptr;
+  backing_store = nullptr;
   ReleaseBackingStore(origin, false /* immediate */);
 }
 
@@ -556,7 +556,7 @@ scoped_refptr<IndexedDBBackingStore> IndexedDBFactoryImpl::OpenBackingStore(
     return backing_store;
   }
 
-  return 0;
+  return nullptr;
 }
 
 void IndexedDBFactoryImpl::Open(
@@ -607,7 +607,8 @@ void IndexedDBFactoryImpl::Open(
                                                 "indexedDB.open."));
       connection->callbacks->OnError(error);
       if (s.IsCorruption()) {
-        backing_store = NULL;  // Closes the LevelDB so that it can be deleted
+        backing_store =
+            nullptr;  // Closes the LevelDB so that it can be deleted
         HandleBackingStoreCorruption(origin, error);
       }
       return;

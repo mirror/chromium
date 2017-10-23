@@ -49,7 +49,7 @@ void InstallCrashTestHandler() {
   CHECK_EQ(0, sigemptyset(&act.sa_mask));
   act.sa_flags = 0;
 
-  PCHECK(0 == sigaction(SIGUSR2, &act, NULL));
+  PCHECK(0 == sigaction(SIGUSR2, &act, nullptr));
 }
 
 bool IsSandboxDebuggingEnabled() {

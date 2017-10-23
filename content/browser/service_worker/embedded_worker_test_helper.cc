@@ -479,7 +479,7 @@ ServiceWorkerContextCore* EmbeddedWorkerTestHelper::context() {
 
 void EmbeddedWorkerTestHelper::ShutdownContext() {
   wrapper_->Shutdown();
-  wrapper_ = NULL;
+  wrapper_ = nullptr;
 }
 
 ServiceWorkerDispatcherHost*
