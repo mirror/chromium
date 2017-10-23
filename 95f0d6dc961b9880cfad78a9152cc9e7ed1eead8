@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a6e1ee2_baf675d6",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-textMetrics-all.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-23T15:53:29Z",
+      "side": 1,
+      "message": "It would be useful to add a test string with descenders, possibly CJK characters.",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d9169f_a25aaebf",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-textMetrics-all.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-23T15:53:29Z",
+      "side": 1,
+      "message": "Could you explain why the width is wider than before? \n\nAre the \u0027relative to baseline\u0027 fixes a result of your baseline relative fixes in TextMetrics or do you need the new rectangle computation for those?",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70d8a1b_b72ae20e",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-23T15:53:29Z",
+      "side": 1,
+      "message": "What was the obstacle with using the approach above in SelectionRectForText based on CharacterRange, but perhaps stripping the PixelSnappedSelectionRect() - why would that bounding box be too large, is \u0027int h\u0027 parameter problematic since you\u0027d prefer the height of the run as determined by shaping?\n\nIs the \u0027int h\u0027 parameter for SelectionRectForText still needed?\n\nPerhaps the SelectionRectForText method could be generalized to RectForText() with an enum chosing whether you want a pixel snapped rect (as before) or a non-rounded one?",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23bac93_0c9302b3",
+        "filename": "third_party/WebKit/Source/platform/fonts/Font.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-23T15:53:29Z",
+      "side": 1,
+      "message": "If we decide to keep this method, can we find better naming? \"Smallest\" compared to what?",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66678898_bcaa6c16",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-23T15:53:29Z",
+      "side": 1,
+      "message": "As far as I understand this is pretty similar to what GetCharacterRange below does, but unfolded for the case of the full run, not handling indices into the middle of the run. I\u0027d prefer to not reimplement this functionality unless it\u0027s really needed.",
+      "revId": "95f0d6dc961b9880cfad78a9152cc9e7ed1eead8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
