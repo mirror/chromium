@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "876b9fa1_a133a717",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "Can this be made private?",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce929d4e_a04a8413",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "Please add JavaDoc.",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7644465_735693bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "Please add a comment about what this function does.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 42
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045e946b_ccfc7608",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "return requestMethods.size() \u003d\u003d 1 \u0026\u0026 requestMethods.contains(BASIC_CARD_PAYMENT_METHOD);",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 87
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71241d09_41509801",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "Please add a comment about what this function does.",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605bf18a_ca1203c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "I find it hard to follow this \"j\" usage pattern, personally. Could you add a comment why \"j \u003e\u003d mCapabilities.length\" means \"capabilities are matching\"?",
+      "range": {
+        "startLine": 185,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 16
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f80dcdf_7a11a5df",
+        "filename": "content/public/browser/stored_payment_app.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "Please add to this comment that |capabilities| is non-empty only if |enabled_methods|\n contains \"basic-card\" and these |capabilities| apply only to the \"basic-card\" instrument, although we don\u0027t store the instruments individually.",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 48
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd753944_0cf54df3",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentInstruments.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "It would be fantastic to pull out this code into BasicCardHelper.h to be shared between here and PaymentRequest.cpp.",
+      "range": {
+        "startLine": 244,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 3
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cb69ff_1b476ea8",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentInstruments.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 5
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6546f1_af77ea76",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-23T18:36:13Z",
+      "side": 1,
+      "message": "Add a comment that these arrays are non-empty only if enabled_mehthods contains \"basic-card\".",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "fe5facbacb34941bd2421eb17d38a21f97400045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
