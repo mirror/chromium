@@ -359,10 +359,6 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
       &last_user_gesture_time_,
       "We don't care about the precise value, see http://crbug.com/92889");
 
-  io_thread_task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&ResourceDispatcherHostImpl::OnInit,
-                                base::Unretained(this)));
-
   update_load_states_timer_ = base::MakeUnique<base::RepeatingTimer>();
 
   // Monitor per-tab outstanding requests only if OOPIF is not enabled, because
@@ -397,6 +393,10 @@ ResourceDispatcherHostImpl* ResourceDispatcherHostImpl::Get() {
 void ResourceDispatcherHostImpl::SetDelegate(
     ResourceDispatcherHostDelegate* delegate) {
   delegate_ = delegate;
+
+  io_thread_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&ResourceDispatcherHostImpl::OnInit,
+                                base::Unretained(this)));
 }
 
 void ResourceDispatcherHostImpl::SetAllowCrossOriginAuthPrompt(bool value) {
