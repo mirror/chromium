@@ -295,6 +295,17 @@ MediaStreamTrack* MediaStreamTrack::clone(ScriptState* script_state) {
   return cloned_track;
 }
 
+bool MediaStreamTrack::SetMuted(bool is_muted) {
+  if (Ended() || muted() == is_muted)
+    return false;
+  component_->SetMuted(is_muted);
+  if (is_muted)
+    DispatchEvent(Event::Create(EventTypeNames::mute));
+  else
+    DispatchEvent(Event::Create(EventTypeNames::unmute));
+  return true;
+}
+
 void MediaStreamTrack::SetConstraints(const WebMediaConstraints& constraints) {
   component_->SetConstraints(constraints);
 }
@@ -474,12 +485,10 @@ void MediaStreamTrack::SourceChangedState() {
   ready_state_ = component_->Source()->GetReadyState();
   switch (ready_state_) {
     case MediaStreamSource::kReadyStateLive:
-      component_->SetMuted(false);
-      DispatchEvent(Event::Create(EventTypeNames::unmute));
+      SetMuted(false);
       break;
     case MediaStreamSource::kReadyStateMuted:
-      component_->SetMuted(true);
-      DispatchEvent(Event::Create(EventTypeNames::mute));
+      SetMuted(true);
       break;
     case MediaStreamSource::kReadyStateEnded:
       DispatchEvent(Event::Create(EventTypeNames::ended));
