@@ -341,6 +341,12 @@ typedef NS_ENUM(NSInteger, ItemType) {
         detailCell.detailTextLabel.font = [MDCTypography body2Font];
         detailCell.detailTextLabel.textColor =
             [[MDCPalette cr_bluePalette] tint500];
+      } else if ([cell isKindOfClass:[PaymentsTextCell class]]) {
+        PaymentsTextCell* paymentsTextCell =
+            base::mac::ObjCCastStrict<PaymentsTextCell>(cell);
+        paymentsTextCell.textLabel.font = [MDCTypography body2Font];
+        paymentsTextCell.textLabel.textColor =
+            [[MDCPalette cr_bluePalette] tint500];
       }
       break;
     }
