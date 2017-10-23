@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c4e96e_1c6055f9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "IMO, we should have `overlay_play_button_` first. This is something we should discuss with UX though so feel free to keep anything that sounds good to you as long as we don\u0027t have specs for this.",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad73077_abd6b936",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "I\u0027m trying to understand what\u0027s the purpose of this. Is this a way to simplify the algorithm and avoid checking for `controls_size.width - element_size.width` or it\u0027s meant to avoid adding some elements after one was dropped? Maybe we could find a name that would better represent what this is meant to accomplish and/or add a comment?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6357af75_f078ad37",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "What about naming this `overflow_wanted` or something that will clarify what is wanted?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c44ee7b_ac316895",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Can we start the loop by this?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69efbe14_45fe6968",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "For clarity, I think we could write:\n```\nif (!does_fit \u0026\u0026 element-HasOverflowButton())\n  overflow_wanted \u003d true;\n```\n\nThis said, it might be better above, such as:\n```\nif (does_fit) {\n  controls_size.width -\u003d ...\n  last_element \u003d element;\n} else {\n  allocate_space \u003d false;\n  if (element-\u003eHasOverflowButton()) {\n    overflow_wanted \u003d true;\n    element-\u003eSetOverflowElementIsWanted(true);\n  }\n}\n```",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbe11a0_a3183fb1",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 960,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Maybe `int overflow_icon_width \u003d overflow_menu_-\u003eGetSizeOrDefault().width;` ?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb81e6e6_9dcc058f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Should it be added to the overflow menu?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dfad60_b17079f4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Should this TODO be dropped?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134dbe28_6caf867d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Could these be `const`?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9023664_524ba9f6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "You should use `Trace()`. This macro shouldn\u0027t be used anymore.",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3206d8f4_936acdab",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Round() seems to return an `int` so. It seems that we don\u0027t need the `ceil()` call here :)",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e1608b_0dc23274",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Same as above regarding the usage of the macro.",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9831a4b_56e19885",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Same as MediaControlElementBase.h",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924ab762_f81c3dd2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use the helper method to handle things like zoom?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c629a9_183c1de2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPlayButtonElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-23T11:03:01Z",
+      "side": 1,
+      "message": "Is this required?",
+      "revId": "2b07fa240ec22f04200cfefe3cbc61c9c8405242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
