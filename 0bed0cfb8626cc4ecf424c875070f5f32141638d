@@ -22,6 +22,30 @@
       "revId": "0bed0cfb8626cc4ecf424c875070f5f32141638d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5a6e46_ec11e61f",
+        "filename": "chrome/browser/chromeos/status/data_promo_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-23T15:42:23Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "35f763e1_d67a118c",
+      "range": {
+        "startLine": 136,
+        "startChar": 44,
+        "endLine": 136,
+        "endChar": 51
+      },
+      "revId": "0bed0cfb8626cc4ecf424c875070f5f32141638d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
