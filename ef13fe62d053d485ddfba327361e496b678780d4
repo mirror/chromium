@@ -323,6 +323,23 @@
     },
     {
       "key": {
+        "uuid": "17efcdd8_442ecfde",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T02:18:51Z",
+      "side": 1,
+      "message": "Should we cache this?",
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7f099b3_6f5f99dc",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 2
@@ -420,6 +437,23 @@
         "endLine": 151,
         "endChar": 32
       },
+      "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e234478c_22b84736",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-23T02:18:51Z",
+      "side": 1,
+      "message": "Hmm... Are you breaking the invariant now? This worked previously. I am concerned something else might break.",
       "revId": "ef13fe62d053d485ddfba327361e496b678780d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
