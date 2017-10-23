@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0812b49_9a125010",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mixed-content/generic/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-23T07:51:02Z",
+      "side": 1,
+      "message": "NIT: I think the format of randomness should be explained in this comment. Also it\u0027s not really a guid anymore if it\u0027s fully randomized because it does not have any of the version/variant information contained in it.",
+      "revId": "522ce0097feaab8dc0f372ccd7d6d00b9b78dd93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
