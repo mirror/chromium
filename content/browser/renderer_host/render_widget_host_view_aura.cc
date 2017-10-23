@@ -157,6 +157,11 @@ class WinScreenKeyboardObserver : public ui::OnScreenKeyboardObserver {
     host_view_->SetInsets(gfx::Insets());
   }
 
+  ~WinScreenKeyboardObserver() override {
+    if (auto* instance = ui::OnScreenKeyboardDisplayManager::GetInstance())
+      instance->RemoveObserver(this);
+  }
+
   // base::win::OnScreenKeyboardObserver overrides.
   void OnKeyboardVisible(const gfx::Rect& keyboard_rect_pixels) override {
     gfx::Point location_in_pixels =
@@ -1881,14 +1886,6 @@ RenderWidgetHostViewAura::~RenderWidgetHostViewAura() {
   // RenderWidgetHostViewAura::OnWindowDestroying and the pointer should
   // be set to NULL.
   DCHECK(!legacy_render_widget_host_HWND_);
-  if (virtual_keyboard_requested_) {
-    DCHECK(keyboard_observer_.get());
-    ui::OnScreenKeyboardDisplayManager* osk_display_manager =
-        ui::OnScreenKeyboardDisplayManager::GetInstance();
-    DCHECK(osk_display_manager);
-    osk_display_manager->RemoveObserver(keyboard_observer_.get());
-  }
-
 #endif
 
   if (text_input_manager_)
