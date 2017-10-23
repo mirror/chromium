@@ -15,6 +15,10 @@
 
 namespace whitelist {
 
+// This is the top-level registry sub-key for containing whitelist-related data.
+// Note: it sits under install_static::GetRegistryPath().
+extern const wchar_t kRegWhitelistTopKeyName[];
+
 // Whitelist support is enabled and initialized in this process.
 bool IsWhitelistInitialized();
 
