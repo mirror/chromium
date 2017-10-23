@@ -10,8 +10,10 @@
 #include <memory>
 
 #include "components/prefs/pref_change_registrar.h"
+#import "components/signin/ios/browser/account_consistency_service.h"
 #import "ios/chrome/browser/net/connection_type_observer_bridge.h"
 #import "ios/chrome/browser/prefs/pref_observer_bridge.h"
+#import "ios/chrome/browser/signin/account_consistency_service_factory.h"
 #import "ios/chrome/browser/tabs/tab_delegate.h"
 #include "ios/web/public/referrer.h"
 #import "ios/web/public/web_state/ui/crw_native_content_provider.h"
@@ -33,6 +35,7 @@ class WebState;
 // webpage.  This class contains methods to queue and cancel prerendering for a
 // given URL as well as a method to return the prerendered Tab.
 @interface PreloadController : NSObject<CRWNativeContentProvider,
+                                        ManageAccountsDelegate,
                                         PrefObserverDelegate,
                                         TabDelegate,
                                         CRConnectionTypeObserverBridge>
