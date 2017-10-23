@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc817a4f_5e33672e",
+        "filename": "ppapi/api/dev/pp_video_dev.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-10-23T21:12:15Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll probably need to use IPC_ENUM_TRAITS_MIN_MAX_VALUE.",
+      "parentUuid": "cb700e79_06aa0974",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "653aae6fdc56de71bebcc9997a2df9790f17c6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19495cdd_1e038622",
         "filename": "ppapi/api/dev/pp_video_dev.idl",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-23T20:43:17Z",
       "side": 1,
       "message": "Here\u0027s one where 0 is illegal. Does it require special handling?",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 36
+      },
+      "revId": "653aae6fdc56de71bebcc9997a2df9790f17c6c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ba12f8_7647ade2",
+        "filename": "ppapi/api/dev/pp_video_dev.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-10-23T21:12:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "19495cdd_1e038622",
       "range": {
         "startLine": 109,
         "startChar": 2,
