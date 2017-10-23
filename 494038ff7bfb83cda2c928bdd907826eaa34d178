@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd12a844_a1ae38ec",
+        "filename": "components/sync/device_info/device_info_sync_bridge_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-23T22:38:52Z",
+      "side": 0,
+      "message": "This looks wrong... Do these tests work like this?",
+      "revId": "494038ff7bfb83cda2c928bdd907826eaa34d178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
