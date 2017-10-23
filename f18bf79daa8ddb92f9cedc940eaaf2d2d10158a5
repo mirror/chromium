@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "750d90e2_82bd524c",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-10-23T05:56:16Z",
+      "side": 1,
+      "message": "Remove this LOG",
+      "revId": "f18bf79daa8ddb92f9cedc940eaaf2d2d10158a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
