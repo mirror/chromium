@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "42e097b2_7c844df9",
+        "filename": "media/formats/mp4/box_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-23T19:01:08Z",
+      "side": 1,
+      "message": "nit: no longer needed in impl since header has this now.",
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aae667f_66ae78ab",
         "filename": "media/formats/mp4/box_reader.h",
         "patchSetId": 5
@@ -18,6 +35,29 @@
         "startChar": 67,
         "endLine": 98,
         "endChar": 77
+      },
+      "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f4d3d5_f507c724",
+        "filename": "media/formats/mp4/box_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-23T19:01:08Z",
+      "side": 1,
+      "message": "nit: Would it make sense here and elsewhere where ParseResult is used to document explicitly in each method\u0027s comments which potential subset of ParseResult enum is possible as a result value of the method?  Or do all such usages return potentially any of the 3 enum values?",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 27
       },
       "revId": "ed18533a85300c38c56a4f938292ff3b816acb31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
