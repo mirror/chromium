@@ -32,7 +32,7 @@ namespace {
 // TODO(eladalon): This blocks the new code path from executing until all
 // CLs associated with it have been landed. When that happens, it will be
 // removed.
-constexpr bool kRtcEventLoggingFromHostApplication = false;
+constexpr bool kRtcEventLoggingFromHostApplication = true;  // TODO(eladalon): !!! Undo
 
 // In addition to the limit to the number of files given below, the size of the
 // files is also capped, see content/renderer/media/peer_connection_tracker.cc.
