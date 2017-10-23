@@ -197,6 +197,9 @@ cr.define('settings_about_page', function() {
 
       var SPINNER_ICON = 'chrome://resources/images/throbber_small.svg';
 
+      var UPDATE_FAILED_HELP_LINK = '<a href="https://support.google.com/' +
+          'chrome?p=update_error" target="_blank">Learn more</a>';
+
       setup(function() {
         lifetimeBrowserProxy = new settings.TestLifetimeBrowserProxy();
         settings.LifetimeBrowserProxyImpl.instance_ = lifetimeBrowserProxy;
@@ -276,7 +279,7 @@ cr.define('settings_about_page', function() {
         fireStatusChanged(UpdateStatus.FAILED);
         assertEquals(null, icon.src);
         assertEquals('settings:error', icon.icon);
-        assertEquals(0, statusMessageEl.textContent.trim().length);
+        assertEquals(UPDATE_FAILED_HELP_LINK, statusMessageEl.innerHTML);
 
         fireStatusChanged(UpdateStatus.DISABLED);
         assertEquals(null, icon.src);
@@ -286,10 +289,10 @@ cr.define('settings_about_page', function() {
 
       test('ErrorMessageWithHtml', function() {
         var htmlError = 'hello<br>there<br>was<pre>an</pre>error';
-        fireStatusChanged(
-            UpdateStatus.FAILED, {message: htmlError});
+        fireStatusChanged(UpdateStatus.FAILED, {message: htmlError});
         var statusMessageEl = page.$.updateStatusMessage;
-        assertEquals(htmlError, statusMessageEl.innerHTML);
+        assertEquals(
+            htmlError + UPDATE_FAILED_HELP_LINK, statusMessageEl.innerHTML);
       });
 
       /**
