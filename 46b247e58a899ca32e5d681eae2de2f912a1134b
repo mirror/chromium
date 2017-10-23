@@ -34,6 +34,24 @@
       "revId": "46b247e58a899ca32e5d681eae2de2f912a1134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687cfc3b_39b0ebf4",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-23T17:18:57Z",
+      "side": 1,
+      "message": "Update: if you like this idea, you\u0027re gonna love patchset 2.",
+      "parentUuid": "f2b8164d_68a9251a",
+      "revId": "46b247e58a899ca32e5d681eae2de2f912a1134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
