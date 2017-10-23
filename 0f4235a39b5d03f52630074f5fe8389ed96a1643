@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb78bb7b_d34b731c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-23T18:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dfe7c0c_e7da9df1",
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4302d04_e8492710",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 4
@@ -42,6 +60,53 @@
     },
     {
       "key": {
+        "uuid": "d6b57157_5fea82e6",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-23T18:07:05Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e is what we\u0027re supposed to use IIUC.  base::MakeUnique\u003c\u003e was there until Chromium supported std::",
+      "parentUuid": "b4302d04_e8492710",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 36
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ccff25_38351bf4",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-23T18:07:05Z",
+      "side": 1,
+      "message": "So apparently we still have the \"disconnected\" issue if we enable wifi and the job starts again before it is killed.  I\u0027m less worried about that, as it\u0027ll just continue on the next job iteration and we\u0027ll auto-reschedule after dropping.  We should fix it but it\u0027s lower priority than the rest of this.  We just need the concept of a \u0027invalid\u0027 period instead of starting up, and just ignore this function until we have a valid result.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 2,
+        "endLine": 1075,
+        "endChar": 11
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f84458d2_3478b061",
         "filename": "components/download/internal/task_manager.cc",
         "patchSetId": 4
@@ -53,6 +118,30 @@
       "writtenOn": "2017-10-23T17:15:21Z",
       "side": 1,
       "message": "Do we need to erase the |scheduled_params_| before calling this?",
+      "range": {
+        "startLine": 84,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "0f4235a39b5d03f52630074f5fe8389ed96a1643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081f55fc_c17be0ef",
+        "filename": "components/download/internal/task_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-23T18:07:05Z",
+      "side": 1,
+      "message": "I don\u0027t think so?  This calls to task_scheduler_, but we don\u0027t want to remove the params because we\u0027ll keep rescheduling the same task.",
+      "parentUuid": "f84458d2_3478b061",
       "range": {
         "startLine": 84,
         "startChar": 3,
