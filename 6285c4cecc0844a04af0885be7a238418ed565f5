@@ -376,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "1db2e10b_d6159f0c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3935,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-23T22:40:03Z",
+      "side": 1,
+      "message": "Good point.  Done.",
+      "parentUuid": "defb36e7_a84b7285",
+      "range": {
+        "startLine": 3935,
+        "startChar": 2,
+        "endLine": 3935,
+        "endChar": 59
+      },
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6af32ac_8e3dcc1b",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 15
@@ -466,6 +490,30 @@
       "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1868724_5590aa00",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-23T22:40:03Z",
+      "side": 1,
+      "message": "Good point - thanks for catching this.  I think that this condition can be safely changed into a DCHECK - if |last_committed_entry| and |frame_entry| are non-null in the original WebContents, then the cloned WebContents should also have a non-null entry here.",
+      "parentUuid": "f1781226_7d5b7a17",
+      "range": {
+        "startLine": 3955,
+        "startChar": 4,
+        "endLine": 3955,
+        "endChar": 10
+      },
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -640,6 +688,24 @@
       "side": 1,
       "message": "Oh, I see.  Yeah, this goes beyond what I\u0027m familiar with.  It does look like we might need more of it, like the delegate_-\u003eWebContentsCreated call (which calls AttachTabHelpers and makes the new tab show in the task manager).  I\u0027m not sure if there\u0027s more we need.\n\nMaybe sky@\u0027s comments about the browser_commands.cc code will help, or we can ask nick@ (who has looked at CreateNewWindow in the past)?",
       "parentUuid": "c535de0e_23463c11",
+      "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd12b74_e38d0785",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3980,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-23T22:40:03Z",
+      "side": 1,
+      "message": "\u003e It does look like we might need more of it, like the delegate_-\u003eWebContentsCreated call (which calls AttachTabHelpers and makes the new tab show in the task manager).  I\u0027m not sure if there\u0027s more we need.\n\nI\u0027ve verified that after this CL the view-source tab still shows up in the task manager, so that it not a concern.  Maybe we can chat tomorrow with Nick how to refactor the code to make it shareable and consistent.  FWIW, I see that the call to WebContentsDelegate::AddNewContents is already happening from a few different locations here, so maybe deduplicating is not that easy.",
+      "parentUuid": "cf08f11c_e6abdf54",
       "revId": "6285c4cecc0844a04af0885be7a238418ed565f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

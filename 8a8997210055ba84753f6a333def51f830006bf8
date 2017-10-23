@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "f3d3cbdc_f3f088d0",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-23T22:40:03Z",
+      "side": 0,
+      "message": "I note that before https://codereview.chromium.org/5716003/patch/16001/17003 we just used NEW_FOREGROUND_TAB.  It seems to me that the code here copied the behavior of Browser::DuplicateContentsAt in https://codereview.chromium.org/5716003/patch/16001/17008, but that the copying was mostly accidental / was not core to the changes being made to support HTTP POST.\n\nI think the new behavior (opening a view-source of a popup in an existing rather than new tabbed browser) is okay from UX perspective.  This is based on 1) the note that this was the behavior long time ago [and changing this behavior seems accidental] and 2) the behavior seemed okay when I tried it manually at http://www.popuptest.com/goodpopups.html",
+      "parentUuid": "9d8d4335_b1978a2e",
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69bd62bc_df587223",
         "filename": "chrome/browser/ui/browser_commands.cc",
         "patchSetId": 15
@@ -93,6 +111,30 @@
       "revId": "8a8997210055ba84753f6a333def51f830006bf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1550a306_0130002c",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-23T22:40:03Z",
+      "side": 0,
+      "message": "Yes.  Similarly to the above, I think inclusion of this call was accidentally copied from Browser::DuplicateContentsAt in https://codereview.chromium.org/5716003/patch/16001/17008 and is not core to the changes made in this old CL.\n\nI think not including this call in the new code is okay.  If session_service work is important, then it should be taken care of for *all* NEW_FOREGROUND_TAB actions (e.g. also for middle-click).",
+      "parentUuid": "69bd62bc_df587223",
+      "range": {
+        "startLine": 1262,
+        "startChar": 2,
+        "endLine": 1263,
+        "endChar": 62
+      },
+      "revId": "8a8997210055ba84753f6a333def51f830006bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
