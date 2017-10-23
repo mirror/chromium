@@ -160,8 +160,7 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
     var networkPersistenceProject = Persistence.networkPersistenceManager.activeProject();
     if (this._uiSourceCode.project().type() === Workspace.projectTypes.Network && networkPersistenceProject) {
       var projectDomain = Persistence.networkPersistenceManager.domainForProject(networkPersistenceProject);
-      var urlDomainPath = this._uiSourceCode.url().replace(/^https?:\/\//, '');
-      if (projectDomain && urlDomainPath.startsWith(projectDomain + '/'))
+      if (projectDomain)
         return true;
     }
     return this._uiSourceCode.contentType() !== Common.resourceTypes.Document;
