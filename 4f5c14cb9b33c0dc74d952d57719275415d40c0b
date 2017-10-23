@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d23237_a4b37097",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T18:10:56Z",
+      "side": 1,
+      "message": "Would it be cleaner to move the newly added code here where we already check for the existence of |dest|?\n\nif (dest) {\n  if ((origin \u003d\u003d\u003d print_preview.DestinationOrigin.LOCAL ||\n       origin \u003d\u003d\u003d print_preview.DestinationOrigin.CROS) \u0026\u0026\n      dest.capabilities) {\n    ...\n    return;\n  }\n  var updateDestination \u003d ....\n}",
+      "revId": "4f5c14cb9b33c0dc74d952d57719275415d40c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62293a3_168c2384",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T18:10:56Z",
+      "side": 1,
+      "message": "Since we are clearing more than just one method, maybe change to nativeLayer.reset().",
+      "revId": "4f5c14cb9b33c0dc74d952d57719275415d40c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f476d691_e09b5e19",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T18:10:56Z",
+      "side": 1,
+      "message": "Let\u0027s extract this to a helper function so that we don\u0027t need to repeat multiple times (3 times in this test and a few more in other tests).",
+      "revId": "4f5c14cb9b33c0dc74d952d57719275415d40c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0609ed1_9ddc8da6",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T18:10:56Z",
+      "side": 1,
+      "message": "Indent off by 4.",
+      "revId": "4f5c14cb9b33c0dc74d952d57719275415d40c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9c37d7_6ff04076",
+        "filename": "chrome/test/data/webui/print_preview/print_preview_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T18:10:56Z",
+      "side": 1,
+      "message": "Indent off by 1.",
+      "revId": "4f5c14cb9b33c0dc74d952d57719275415d40c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
