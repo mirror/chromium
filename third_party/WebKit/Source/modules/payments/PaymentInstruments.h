@@ -5,7 +5,6 @@
 #ifndef PaymentInstruments_h
 #define PaymentInstruments_h
 
-#include "bindings/core/v8/ScriptValue.h"
 #include "modules/ModulesExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
@@ -14,9 +13,6 @@
 #include "public/platform/modules/payments/payment_app.mojom-blink.h"
 
 namespace blink {
-
-using ::payments::mojom::blink::BasicCardNetwork;
-using ::payments::mojom::blink::BasicCardType;
 
 class ExceptionState;
 class PaymentInstrument;
