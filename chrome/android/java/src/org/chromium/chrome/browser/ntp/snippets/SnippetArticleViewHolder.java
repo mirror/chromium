@@ -168,6 +168,10 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         boolean showThumbnail = shouldShowThumbnail(layout);
         boolean showThumbnailVideoBadge = shouldShowThumbnailVideoBadge(showThumbnail);
 
+        if (showThumbnail) {
+
+        }
+
         mSuggestionsBinder.updateFieldsVisibility(
                 showHeadline, showThumbnail, showThumbnailVideoBadge);
     }

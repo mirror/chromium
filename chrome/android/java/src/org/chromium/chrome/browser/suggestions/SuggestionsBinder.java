@@ -116,16 +116,9 @@ public class SuggestionsBinder {
         ViewGroup.MarginLayoutParams publisherBarParams =
                 (ViewGroup.MarginLayoutParams) mPublisherBar.getLayoutParams();
 
-        if (showHeadline) {
-            // When we show a headline and not a description, we reduce the top margin of the
-            // publisher bar.
-            publisherBarParams.topMargin = mPublisherBar.getResources().getDimensionPixelSize(
-                    R.dimen.snippets_publisher_margin_top);
-        } else {
-            // When there is no headline and no description, we remove the top margin of the
-            // publisher bar.
-            publisherBarParams.topMargin = 0;
-        }
+        // When showing a headline, the publisher bar has a top margin, otherwise not.
+        publisherBarParams.topMargin = showHeadline ? mPublisherBar.getResources().getDimensionPixelSize(
+                R.dimen.snippets_publisher_margin_top) : 0;
 
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_LARGE_THUMBNAIL)) {
             mTextLayout.setMinimumHeight(showThumbnail ? mThumbnailSize : 0);
