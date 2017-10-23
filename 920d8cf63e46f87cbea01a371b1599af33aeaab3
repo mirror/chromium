@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4981f17b_548071b1",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-23T18:29:22Z",
+      "side": 1,
+      "message": "Done in address_normalizer.h",
+      "parentUuid": "d01a630f_f4e4a7d3",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "920d8cf63e46f87cbea01a371b1599af33aeaab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d90e7a_93a150e4",
         "filename": "components/autofill/core/browser/address_normalizer_impl_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "920d8cf63e46f87cbea01a371b1599af33aeaab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1db821_b744bf00",
+        "filename": "components/autofill/core/browser/address_normalizer_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-23T18:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d90e7a_93a150e4",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 60
+      },
+      "revId": "920d8cf63e46f87cbea01a371b1599af33aeaab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
