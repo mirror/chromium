@@ -77,6 +77,8 @@ class MODULES_EXPORT MediaStreamTrack
   void stopTrack(ExceptionState&);
   virtual MediaStreamTrack* clone(ScriptState*);
 
+  bool SetMuted(bool is_muted);
+
   // This function is called when constrains have been successfully applied.
   // Called from UserMediaRequest when it succeeds. It is not IDL-exposed.
   void SetConstraints(const WebMediaConstraints&);
