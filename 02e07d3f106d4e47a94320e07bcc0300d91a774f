@@ -22,6 +22,30 @@
       "revId": "02e07d3f106d4e47a94320e07bcc0300d91a774f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11926e3_72cc07ed",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 10354,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-23T18:46:23Z",
+      "side": 1,
+      "message": "We already have a matching \"PlayOverlay\" action so ideally I would like to keep the same naming scheme.",
+      "parentUuid": "25c998a3_47f433a0",
+      "range": {
+        "startLine": 10354,
+        "startChar": 29,
+        "endLine": 10354,
+        "endChar": 41
+      },
+      "revId": "02e07d3f106d4e47a94320e07bcc0300d91a774f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
