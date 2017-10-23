@@ -5,6 +5,7 @@
 #ifndef PaymentInstruments_h
 #define PaymentInstruments_h
 
+#include "bindings/core/v8/ScriptValue.h"
 #include "modules/ModulesExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
@@ -13,6 +14,9 @@
 #include "public/platform/modules/payments/payment_app.mojom-blink.h"
 
 namespace blink {
+
+using ::payments::mojom::blink::BasicCardNetwork;
+using ::payments::mojom::blink::BasicCardType;
 
 class ExceptionState;
 class PaymentInstrument;
@@ -56,6 +60,12 @@ class MODULES_EXPORT PaymentInstruments final
                               payments::mojom::blink::PaymentHandlerStatus);
   void onClearPaymentInstruments(ScriptPromiseResolver*,
                                  payments::mojom::blink::PaymentHandlerStatus);
+
+  void parseBasiccardCapabilities(
+      const ScriptValue& input,
+      Vector<BasicCardNetwork>& supported_networks_output,
+      Vector<BasicCardType>& supported_types_output,
+      ExceptionState&);
 
   const payments::mojom::blink::PaymentManagerPtr& manager_;
 };
