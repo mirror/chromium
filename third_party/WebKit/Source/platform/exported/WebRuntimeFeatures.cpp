@@ -31,6 +31,7 @@
 #include "public/platform/WebRuntimeFeatures.h"
 
 #include "platform/runtime_enabled_features.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {
@@ -399,7 +400,8 @@ void WebRuntimeFeatures::EnableTimerThrottlingForBackgroundTabs(bool enable) {
 }
 
 void WebRuntimeFeatures::EnableTimerThrottlingForHiddenFrames(bool enable) {
-  RuntimeEnabledFeatures::SetTimerThrottlingForHiddenFramesEnabled(enable);
+  ScopedTimerThrottlingForHiddenFramesForTest
+      timer_throttling_for_hidden_frames(enable);
 }
 
 void WebRuntimeFeatures::EnableSendBeaconThrowForBlobWithNonSimpleType(
