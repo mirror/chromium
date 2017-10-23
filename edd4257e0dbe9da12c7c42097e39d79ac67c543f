@@ -16,6 +16,24 @@
       "revId": "edd4257e0dbe9da12c7c42097e39d79ac67c543f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aac4600_c9581d4e",
+        "filename": "components/subresource_filter/core/common/indexed_ruleset_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-23T13:18:46Z",
+      "side": 1,
+      "message": "We can seed the fuzzer with a example ruleset, which it can base future iterations on. I can see about generating one.",
+      "parentUuid": "99a1aa29_3a5c6136",
+      "revId": "edd4257e0dbe9da12c7c42097e39d79ac67c543f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
