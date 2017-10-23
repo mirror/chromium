@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e53730d_44c37690",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:33:38Z",
+      "side": 1,
+      "message": "kSuspectedToNoneInterval ?",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acff9b4_2d837a0a",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:33:38Z",
+      "side": 1,
+      "message": "kConfirmedToSuspectedInterval",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4b7511_537c8416",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:33:38Z",
+      "side": 1,
+      "message": "if none is found",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0f168a_cc89b965",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:33:38Z",
+      "side": 1,
+      "message": "Would it be possible to refactor code and remove last_observation_?\n\nConceptually an observation should be added to the detection window immediately. i.e., it\u0027s not nice that some function records the observation in last_observation_ and calls OnObservation later.",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478f482e_9f08f523",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:33:38Z",
+      "side": 1,
+      "message": "kPageFaultDetectionThreshold ? (for consistency with kPageFaultCooldownThreshold)",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5d150d_918220d0",
+        "filename": "chrome/browser/memory/swap_thrashing_delegate_win.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-23T08:33:38Z",
+      "side": 1,
+      "message": "It might be clearer to rename the \u0027detection\u0027 window to \u0027escalation\u0027 window.",
+      "revId": "e3e7ebc4aa254bf52bad643cf37b5c341cf6e7d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
