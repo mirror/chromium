@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d26fb59b_4f09dfa4",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-23T18:25:46Z",
+      "side": 1,
+      "message": "We have switched to using buildbot filter files to disable tests for mash. Remove this and add a line to testing/buildbot/filters/ash_unittests_mash.filter. See //ash/README.md for details.",
+      "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89353c9_5dc2c8d7",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-23T18:25:46Z",
+      "side": 1,
+      "message": "Which mojo call? If the class owning the interface has a FlushForTesting() method, call that instead. If not, document which class/interface you\u0027re waiting on.",
+      "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e7776a_9b1c0a7a",
+        "filename": "ash/metrics/user_metrics_recorder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-23T18:25:46Z",
+      "side": 1,
+      "message": "nit: \"Record\"",
+      "revId": "74eaa1c684e09bd9f4cb8716d94a79dc39d0845e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

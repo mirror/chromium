@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "42286a26_bb9799d8",
+        "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-23T18:25:46Z",
+      "side": 1,
+      "message": "Looks nice, thanks.",
+      "parentUuid": "560cdbc1_021a5f8f",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4b69996_7aa7edde",
         "filename": "ash/metrics/login_metrics_recorder_unittest.cc",
         "patchSetId": 6
@@ -382,6 +400,24 @@
       "side": 1,
       "message": "This is a static function that could be accessed before the object is initialized?",
       "parentUuid": "735e0a6e_5e4acb2e",
+      "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5056d73d_1ca361a1",
+        "filename": "ash/metrics/user_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-23T18:25:46Z",
+      "side": 1,
+      "message": "But if someone calls this function before shell is initialized they won\u0027t get a metric recorded. That sounds like an error. I would either DCHECK Shell::HasInstance or better yet remove the test for it.",
+      "parentUuid": "fc2962d3_0297c31b",
       "revId": "b43d54b7c0aa10d19a3deaf41a94ce100d13a31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
