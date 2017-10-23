@@ -187,10 +187,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('deqp/functional/gles3/fbocolorbuffer/clear.html',
         ['win10', 'intel', 'd3d11', 'no_passthrough'], bug=483282)
 
-    # Intel HD 530
-    self.Fail('conformance2/textures/misc/angle-stuck-depth-textures.html',
-        ['win', 'intel', 'no_passthrough', 'd3d11'], bug=680797)
-
     # It's unfortunate that these suppressions need to be so broad, but it
     # looks like the D3D11 device can be lost spontaneously on this
     # configuration while running basically any test.
