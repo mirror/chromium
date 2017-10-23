@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40e3ff5_e38c19e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-23T19:13:58Z",
+      "side": 1,
+      "message": "From https://bugs.chromium.org/p/chromium/issues/detail?id\u003d250964 and the TODO in ui_base_types.h, I\u0027d say that we don\u0027t use NONE here but maybe TOUCH as our default the cases where you\u0027re using NONE?",
+      "range": {
+        "startLine": 134,
+        "startChar": 31,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "c95f911480ead0c31b23ff95ae33541863593c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
