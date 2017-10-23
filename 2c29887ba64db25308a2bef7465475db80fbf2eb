@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa02e294_3488dc77",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-23T18:33:05Z",
+      "side": 1,
+      "message": "I think ddorwin@ commented the same somewhere.. This page is titled \"deprecating permissions..\" while for the EME\u0027s case it has nothing to do with permissions.",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 63
+      },
+      "revId": "2c29887ba64db25308a2bef7465475db80fbf2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
