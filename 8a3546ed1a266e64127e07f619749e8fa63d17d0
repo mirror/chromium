@@ -22,6 +22,30 @@
       "revId": "8a3546ed1a266e64127e07f619749e8fa63d17d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ae0599_419c1df4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-23T08:56:10Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t apply the other CL (http://crrev.com/c/732306). Let me check again.",
+      "parentUuid": "cc052c8b_720b484f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "8a3546ed1a266e64127e07f619749e8fa63d17d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
