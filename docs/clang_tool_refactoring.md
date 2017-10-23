@@ -15,14 +15,12 @@ with a traditional find-and-replace regexp:
 
 ## Caveats
 
-An invocation of the clang tool runs on one build config. Code that only
-compiles on one platform or code that is guarded by a set of compile-time flags
-can be problematic. Performing a global refactoring typically requires running
-the tool once in each build config with code that needs to be updated.
+* Clang tools do not work with jumbo builds.
 
-Other minor issues:
-
-*   Requires a git checkout.
+* Invocations of a clang tool runs on on only one build config at a time. For
+example, running the tool across a `target_os="win"` build won't update code
+that is guarded by `OS_POSIX`. Performing a global refactoring will often
+require running the tool once for each build config.
 
 ## Prerequisites
 
@@ -33,7 +31,7 @@ For convenience, add `third_party/llvm-build/Release+Asserts/bin` to `$PATH`.
 ## Writing the tool
 
 LLVM uses C++11 and CMake. Source code for Chromium clang tools lives in
-[//tools/clang](https://chromium.googlesource.com/chromium/src/tools/clang/+/master).
+[//tools/clang][]
 It is generally easiest to use one of the already-written tools as the base for
 writing a new tool.
 
@@ -183,7 +181,7 @@ files the clang tool is run against.
 Dumping the AST for a file:
 
 ```shell
-clang++ -cc1 -ast-dump foo.cc
+clang++ -Xclang -ast-dump -std=c++14 foo.cc | less -R
 ```
 
 Using `clang-query` to dynamically test matchers (requires checking out
@@ -222,3 +220,5 @@ result is saved in `*-actual.cc`.
 When `--apply-edits` switch is not presented, tool outputs are compared to
 `*-expected.txt` and if different, the result is saved in `*-actual.txt`. Note
 that in this case, only one test file is expected.
+
+[//tools/clang]: https://chromium.googlesource.com/chromium/src/+/master/tools/clang/
