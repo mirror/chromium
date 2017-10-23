@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8508acc3_477deae8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/cpu-profiler-agent-crash-on-start.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-23T21:37:31Z",
+      "side": 1,
+      "message": "I agree, but let\u0027s postpone all non-automated test improvements until the migration is done.",
+      "parentUuid": "596f9188_7612c9da",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b55fb505_a9945487",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/cpu-profiler-profile-removal.js",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c8744523_e926df61",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/cpu-profiler-profile-removal.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-23T21:37:31Z",
+      "side": 1,
+      "message": "let\u0027s postpone all non-automated test improvements until the migration is done.",
+      "parentUuid": "b55fb505_a9945487",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6627f52c_a438c84c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/heap-snapshot-comparison-dom-groups-change.js",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-23T20:53:49Z",
       "side": 1,
       "message": "Is that needed?",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4b4652_bf6b469e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/heap-snapshot-comparison-dom-groups-change.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-23T21:37:31Z",
+      "side": 1,
+      "message": "Nope:\n\nI\u0027m using some basic heuristics to automatically clean up the test descriptions as much as possible in my migration script, but it doesn\u0027t work for every test. I will do all of test description \u0026 link references cleanup later. I should be able to clean the rest of this up later automatically.",
+      "parentUuid": "6627f52c_a438c84c",
       "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +152,24 @@
       "writtenOn": "2017-10-23T20:53:49Z",
       "side": 1,
       "message": "what\u0027s that? also these ids will make the test flaky anyway.",
+      "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44f6604_d9c6b6aa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/profiler/heap-snapshot-event-listeners-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-23T21:37:31Z",
+      "side": 1,
+      "message": "Looks like it\u0027s coming from heap snapshot worker:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/heap_snapshot_worker/HeapSnapshot.js?q\u003dheapsnapshot\u0026sq\u003dpackage:chromium\u0026l\u003d1593\n\nI\u0027ve disabled logging in the worker when it\u0027s under test to address this.",
+      "parentUuid": "f10338c6_c84b4454",
       "revId": "597f9d90d470eb2bcefed4e686a597240977f3d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

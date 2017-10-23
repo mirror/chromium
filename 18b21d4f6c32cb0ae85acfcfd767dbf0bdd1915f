@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0005fdfe_e3e30c40",
+        "filename": "third_party/WebKit/Source/devtools/front_end/heap_snapshot_worker/HeapSnapshot.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 3213,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-23T21:37:31Z",
+      "side": 1,
+      "message": "It\u0027s hacky, but it\u0027s how we addressed this in FormatterWorker",
+      "revId": "18b21d4f6c32cb0ae85acfcfd767dbf0bdd1915f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
