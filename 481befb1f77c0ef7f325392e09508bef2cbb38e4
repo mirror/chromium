@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79708fe8_3c21c366",
+        "filename": "chrome/services/chrome_file_util/public/cpp/zip_file_creator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-23T17:48:20Z",
+      "side": 1,
+      "message": "Sorry I missed this before, I think we should make this a standalone function local to this file. No need to make it a class method. src_dir_ can just be bound in as one of the args when posting the task to invoke it. We could also call it BindDirectoryInBackground or something.\n\nThis makes it clear that: a) it\u0027s done on a background sequence and b) it has no real dependency on the ZipFileCreator instance lifetime.\n\nI *think* this also means ZipFileCreator no longer has any reason to be ref counted (looks like it will only be used on the main thread), but I may be overlooking something there.",
+      "revId": "481befb1f77c0ef7f325392e09508bef2cbb38e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
