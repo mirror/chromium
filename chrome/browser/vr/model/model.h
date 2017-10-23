@@ -5,11 +5,17 @@
 #ifndef CHROME_BROWSER_VR_MODEL_MODEL_H_
 #define CHROME_BROWSER_VR_MODEL_MODEL_H_
 
+#include "chrome/browser/vr/omnibox_suggestions.h"
+
 namespace vr {
 
 struct Model {
+  Model();
+  ~Model();
+
   bool loading = false;
   float load_progress = 0.0f;
+  std::vector<OmniboxSuggestion> omnibox_suggestions;
 };
 
 }  // namespace vr
