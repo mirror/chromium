@@ -1061,6 +1061,14 @@ int HttpCache::Transaction::DoOpenEntryComplete(int result) {
     return OK;
   }
 
+  if (result == ERR_CACHE_ENTRY_NOT_SUITABLE) {
+    DCHECK_EQ(mode_, READ_WRITE);
+    // Record this as CantConditionalize, but otherwise proceed as we would
+    // below --- as OpenEntry has already dropped the old entry for us.
+    couldnt_conditionalize_request_ = true;
+    UpdateCacheEntryStatus(CacheEntryStatus::ENTRY_CANT_CONDITIONALIZE);
+  }
+
   if (method_ == "PUT" || method_ == "DELETE" ||
       (method_ == "HEAD" && mode_ == READ_WRITE)) {
     DCHECK(mode_ == READ_WRITE || mode_ == WRITE || method_ == "HEAD");
@@ -2558,11 +2566,10 @@ bool HttpCache::Transaction::RequiresValidation() {
   return validation_required_by_headers;
 }
 
-bool HttpCache::Transaction::ConditionalizeRequest() {
+bool HttpCache::Transaction::ResponseConditionalizable(
+    std::string* etag_value,
+    std::string* last_modified_value) {
   DCHECK(response_.headers.get());
-
-  if (method_ == "PUT" || method_ == "DELETE")
-    return false;
 
   // This only makes sense for cached 200 or 206 responses.
   if (response_.headers->response_code() != 200 &&
@@ -2570,27 +2577,44 @@ bool HttpCache::Transaction::ConditionalizeRequest() {
     return false;
   }
 
+  // Just use the first available ETag and/or Last-Modified header value.
+  // TODO(darin): Or should we use the last?
+
+  if (response_.headers->GetHttpVersion() >= HttpVersion(1, 1))
+    response_.headers->EnumerateHeader(NULL, "etag", etag_value);
+
+  response_.headers->EnumerateHeader(NULL, "last-modified",
+                                     last_modified_value);
+
+  if (etag_value->empty() && last_modified_value->empty())
+    return false;
+
+  return true;
+}
+
+bool HttpCache::Transaction::ConditionalizeRequest() {
+  DCHECK(response_.headers.get());
+
+  if (method_ == "PUT" || method_ == "DELETE")
+    return false;
+
   if (fail_conditionalization_for_test_)
+    return false;
+
+  std::string etag_value;
+  std::string last_modified_value;
+  if (!ResponseConditionalizable(&etag_value, &last_modified_value))
     return false;
 
   DCHECK(response_.headers->response_code() != 206 ||
          response_.headers->HasStrongValidators());
 
-  // Just use the first available ETag and/or Last-Modified header value.
-  // TODO(darin): Or should we use the last?
-
-  std::string etag_value;
-  if (response_.headers->GetHttpVersion() >= HttpVersion(1, 1))
-    response_.headers->EnumerateHeader(NULL, "etag", &etag_value);
-
-  std::string last_modified_value;
-  if (!vary_mismatch_) {
-    response_.headers->EnumerateHeader(NULL, "last-modified",
-                                       &last_modified_value);
+  if (vary_mismatch_) {
+    // Can't rely on last-modified if vary is different.
+    last_modified_value.clear();
+    if (etag_value.empty())
+      return false;
   }
-
-  if (etag_value.empty() && last_modified_value.empty())
-    return false;
 
   if (!partial_) {
     // Need to customize the request, so this forces us to allocate :(
@@ -2627,6 +2651,44 @@ bool HttpCache::Transaction::ConditionalizeRequest() {
           HttpRequestHeaders::kIfModifiedSince, last_modified_value);
     }
   }
+
+  return true;
+}
+
+bool HttpCache::Transaction::MaybeRejectBasedOnEntryInMemoryData(
+    uint8_t in_memory_info) {
+  // Not going to be clever with those...
+  if (partial_)
+    return false;
+
+  // Unclear how to reconcile trying to avoid opening the entry with UPDATE's
+  // semantics.
+  if (mode_ == UPDATE)
+    return false;
+
+  // If we are loading ignoring cache validity (aka back button), obviously
+  // can't reject things based on it.
+  if (effective_load_flags_ & LOAD_SKIP_CACHE_VALIDATION)
+    return false;
+
+  // This is a prefetch resource that hasn't been used yet; those get a slight
+  // loosening of caching rules.
+  if (in_memory_info & HttpCache::HINT_UNUSED_SINCE_PREFETCH)
+    return false;
+
+  // We need the entry to have zero lifetime to be able to tell it's expired
+  // w/o reading full headers --- an expiration date is hard to fit into a few
+  // bits.
+  if (!(in_memory_info & HttpCache::HINT_ZERO_LIFETIME))
+    return false;
+
+  // We also need to know that the entry can't be used for a conditional request
+  // (e.g. perhaps because it has neither ETag nor Last-Modified).
+  //
+  // This could potentially be refined to look at the actual request, since
+  // it may be unconditionalizable for reasons not captured in the hint.
+  if (!(in_memory_info & HttpCache::HINT_RESPONSE_CANT_CONDITIONALIZE))
+    return false;
 
   return true;
 }
@@ -2853,6 +2915,19 @@ int HttpCache::Transaction::WriteResponseInfoToEntry(bool truncated) {
   data->Done();
 
   io_buf_len_ = data->pickle()->size();
+
+  // Summarize some info on cacheability in memory.
+  uint8_t hints = 0;
+  if (response_.headers->GetFreshnessLifetimes(response_.response_time)
+          .freshness.is_zero())
+    hints |= HttpCache::HINT_ZERO_LIFETIME;
+  std::string etag_ignored, last_modified_ignored;
+  if (!ResponseConditionalizable(&etag_ignored, &last_modified_ignored))
+    hints |= HttpCache::HINT_RESPONSE_CANT_CONDITIONALIZE;
+  if (response_.unused_since_prefetch)
+    hints |= HttpCache::HINT_UNUSED_SINCE_PREFETCH;
+  cache_->GetCurrentBackend()->SetEntryInMemoryData(cache_key_, hints);
+
   return entry_->disk_entry->WriteData(kResponseInfoIndex, 0, data.get(),
                                        io_buf_len_, io_callback_, true);
 }

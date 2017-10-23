@@ -31,6 +31,7 @@
 #include "net/base/load_states.h"
 #include "net/base/net_export.h"
 #include "net/base/request_priority.h"
+#include "net/disk_cache/disk_cache.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_transaction_factory.h"
 
@@ -43,7 +44,6 @@ class ProcessMemoryDump;
 }  // namespace base
 
 namespace disk_cache {
-class Backend;
 class Entry;
 }  // namespace disk_cache
 
@@ -65,6 +65,12 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
     // Disables reads and writes from the cache.
     // Equivalent to setting LOAD_DISABLE_CACHE on every request.
     DISABLE
+  };
+
+  enum MemoryEntryDataHints {
+    HINT_ZERO_LIFETIME = 1,
+    HINT_RESPONSE_CANT_CONDITIONALIZE = 2,
+    HINT_UNUSED_SINCE_PREFETCH = 4
   };
 
   // A BackendFactory creates a backend object to be used by the HttpCache.
@@ -378,7 +384,10 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
 
   // Opens the disk cache entry associated with |key|, returning an ActiveEntry
   // in |*entry|. |trans| will be notified via its IO callback if this method
-  // returns ERR_IO_PENDING.
+  // returns ERR_IO_PENDING. If there is no transaction already available,
+  // it will first check with |trans->MaybeRejectBasedOnEntryInMemoryData|,
+  // returning ERR_CACHE_ENTRY_NOT_SUITABLE after dooming the key if that
+  // rejects the entry.
   int OpenEntry(const std::string& key, ActiveEntry** entry,
                 Transaction* trans);
 

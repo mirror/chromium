@@ -191,6 +191,12 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   RequestPriority priority() const { return priority_; }
   PartialData* partial() { return partial_.get(); }
 
+  // Returns true if the resource info MemoryEntryDataHints bit flags in
+  // |in_memory_info| and the current request & load flags suggest that
+  // the cache entry in question is not actually usable for HTTP
+  // (i.e. already expired, and nothing is forcing us to disregard that).
+  bool MaybeRejectBasedOnEntryInMemoryData(uint8_t in_memory_info);
+
  private:
   static const size_t kNumValidationHeaders = 2;
   // Helper struct to pair a header name with its value, for
@@ -385,6 +391,11 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // Called to make the request conditional (to ask the server if the cached
   // copy is valid).  Returns true if able to make the request conditional.
   bool ConditionalizeRequest();
+
+  // Determines if saved response permits conditionalization, and extracts
+  // etag/last-modified values. Only depends on response_.headers.
+  bool ResponseConditionalizable(std::string* etag_value,
+                                 std::string* last_modified_value);
 
   // Makes sure that a 206 response is expected.  Returns true on success.
   // On success, handling_206_ will be set to true if we are processing a
