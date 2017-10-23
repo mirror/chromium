@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70cec392_05b6ba08",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-23T23:08:23Z",
+      "side": 1,
+      "message": "Nit: Is the 0.004 noticeable? Perhaps consider rounding up or down to 2 decimal digits precision.",
+      "revId": "1730a9e1036141d8f44f9b9bb92d546e4a1c2778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
